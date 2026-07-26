@@ -1540,7 +1540,7 @@ If those three came cleanly, you understand why biochemistry begins with water a
 /* --------------------------- bio:0 --------------------------- */
 const T_BIO_AMINO = {
   courseId: "bio",
-  topicIndex: 0,
+  topicIndex: 3,
   title: "Amino Acids",
   minutes: 20,
   note: [
@@ -1727,7 +1727,7 @@ If those came cleanly, you understand amino acids as the foundation of all prote
 const T_PSY_OVERVIEW = {
   courseId: "psy",
   topicIndex: 0,
-  title: "Overview of Medical Psychology",
+  title: "Overview of Psychology",
   minutes: 18,
   note: [
     { q: "Why does a laboratory scientist study psychology at all?",
@@ -1909,7 +1909,7 @@ If those came cleanly, you understand what medical psychology is and why it belo
 const T_COM_PROCESS = {
   courseId: "com",
   topicIndex: 0,
-  title: "The Communication Process",
+  title: "Communication",
   minutes: 18,
   note: [
     { q: "Why does a scientist need a course on communication?",
@@ -3356,7 +3356,7 @@ const CONTENT = {
   "ana:4": T_ANA_GLAND,
   "phy:0": T_PHY_GENERAL,
   "bch:0": T_BCH_INTRO,
-  "bio:0": T_BIO_AMINO,
+  "bio:3": T_BIO_AMINO,
   "psy:0": T_PSY_OVERVIEW,
   "com:0": T_COM_PROCESS,
   "lab:1": T_MLS_SAFETY,
