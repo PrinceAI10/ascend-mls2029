@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { supabase } from "./supabaseClient";
 
 /* =========================================================================
    ASCEND  -  MLS 2029 (KNUST) study platform
@@ -1622,6 +1623,62 @@ const store = {
   }
 };
 
+/* ---------------------------------------------------------------------------
+   Supabase data layer.
+   The whole class shares one database, so the leaderboard shows everyone and
+   progress follows a student across devices. Every function fails soft: if the
+   network or Supabase is unavailable, it returns a safe default and the app
+   keeps working on local data rather than crashing.
+--------------------------------------------------------------------------- */
+const db = {
+  // the id of the signed-in user, or null
+  async uid() {
+    try {
+      const { data } = await supabase.auth.getUser();
+      return data && data.user ? data.user.id : null;
+    } catch { return null; }
+  },
+
+  // load this user's progress JSON (or null if none saved yet)
+  async loadProgress(uid) {
+    try {
+      const { data, error } = await supabase.from("progress").select("data").eq("id", uid).maybeSingle();
+      if (error || !data) return null;
+      return data.data || null;
+    } catch { return null; }
+  },
+
+  // save this user's progress JSON, and mirror name/xp/streak into their profile
+  async saveProgress(uid, progress) {
+    try {
+      await supabase.from("progress").upsert({ id: uid, data: progress, updated_at: new Date().toISOString() });
+      await supabase.from("profiles").upsert({
+        id: uid,
+        name: progress.name,
+        xp: progress.xp,
+        streak: progress.streak,
+        updated_at: new Date().toISOString(),
+      });
+    } catch {}
+  },
+
+  // change the display name / username on the profile
+  async setUsername(uid, name) {
+    try {
+      await supabase.from("profiles").upsert({ id: uid, name, username: name, updated_at: new Date().toISOString() });
+    } catch {}
+  },
+
+  // read the whole class leaderboard (everyone who has signed up)
+  async leaderboard() {
+    try {
+      const { data, error } = await supabase.from("profiles").select("id, name, xp, streak").order("xp", { ascending: false }).limit(500);
+      if (error || !data) return [];
+      return data;
+    } catch { return []; }
+  },
+};
+
 function Ring({ value, size = 46, stroke = 5, color = "var(--amber)" }) {
   const r = (size - stroke) / 2, c = 2 * Math.PI * r, off = c * (1 - Math.min(value, 1));
   return (
@@ -2132,7 +2189,13 @@ function RanksView({ app }) {
   const [others, setOthers] = useState([]);
   useEffect(() => {
     (async () => {
-      // read every registered player from the shared board
+      if (app.supaUid) {
+        // class-wide leaderboard from Supabase - everyone who has signed up
+        const rows = await db.leaderboard();
+        setOthers(rows.filter((r) => r.id !== app.supaUid));
+        return;
+      }
+      // local fallback: read the on-device shared board
       const keys = await store.listShared("ascend_board:");
       const rows = [];
       for (const k of keys) {
@@ -2141,7 +2204,7 @@ function RanksView({ app }) {
       }
       setOthers(rows);
     })();
-  }, [meKey, app.progress.xp]);
+  }, [meKey, app.progress.xp, app.supaUid]);
   const me = { name: app.progress.name, xp: app.progress.xp, streak: app.progress.streak, me: true };
   const board = [...others, me].sort((a, b) => b.xp - a.xp);
   const r = rankOf(app.progress.xp);
@@ -2494,6 +2557,22 @@ function AuthScreen({ onAuthed }) {
 
   const clearMsgs = () => { setErr(""); setOk(""); };
 
+  const signInWithGoogle = async () => {
+    clearMsgs();
+    try {
+      setBusy(true);
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: window.location.origin },
+      });
+      if (error) throw error;
+      // the browser now redirects to Google; on return, onAuthStateChange signs the user in
+    } catch (e) {
+      setErr(e && e.message ? e.message : "Google sign-in could not start. Please try again.");
+      setBusy(false);
+    }
+  };
+
   const submit = async () => {
     clearMsgs();
     const u = username.trim();
@@ -2637,7 +2716,22 @@ function AuthScreen({ onAuthed }) {
         {tab === "login" && (
           <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 10 }} onClick={() => goTab("forgot")}>Forgot password?</button>
         )}
-        <p className="note-hint" style={{ marginTop: 14, textAlign: "center", lineHeight: 1.55 }}>Your browser or phone keychain can save this login and fill it in next time. ASCEND keeps you signed in on this device until you log out.</p>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "18px 0 14px" }}>
+          <div style={{ flex: 1, height: 1, background: "var(--line)" }} />
+          <span style={{ color: "var(--text-3)", fontSize: 12 }}>or</span>
+          <div style={{ flex: 1, height: 1, background: "var(--line)" }} />
+        </div>
+        <button className="btn btn-g auth-btn" style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }} onClick={signInWithGoogle} disabled={busy}>
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden>
+            <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/>
+            <path fill="#FBBC05" d="M3.97 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33z"/>
+            <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.47.9 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
+          </svg>
+          Continue with Google
+        </button>
+        <p className="note-hint" style={{ marginTop: 14, textAlign: "center", lineHeight: 1.55 }}>Sign in with Google to save your progress and rank across all your devices, or use a username and password on this device.</p>
       </div>
     </div>
   );
@@ -2983,6 +3077,7 @@ export default function App() {
   const [route, setRoute] = useState({ view: "home" });
   const [progress, setProgress] = useState(DEFAULT_PROGRESS);
   const [auth, setAuth] = useState(null);
+  const [supaUid, setSupaUid] = useState(null); // set when signed in via Supabase (Google)
   const [loaded, setLoaded] = useState(false);
   const [theme, setTheme] = useState("dark");
   const [notifOpen, setNotifOpen] = useState(false);
@@ -3019,6 +3114,19 @@ export default function App() {
     (async () => {
       const t = await store.get("ascend_theme");
       if (t === "light" || t === "dark") setTheme(t);
+
+      // 1. Supabase session first (Google or email-via-Supabase). If present, it wins.
+      try {
+        const { data } = await supabase.auth.getSession();
+        const sUser = data && data.session ? data.session.user : null;
+        if (sUser) {
+          await adoptSupabaseUser(sUser);
+          setLoaded(true);
+          return;
+        }
+      } catch {}
+
+      // 2. Otherwise fall back to a local username/password session.
       const session = await store.get("ascend_session");
       if (session) {
         const accounts = (await store.get("ascend_accounts")) || {};
@@ -3031,8 +3139,42 @@ export default function App() {
       }
       setLoaded(true);
     })();
-    return () => { try { document.head.removeChild(link); } catch {} };
+
+    // Listen for Google sign-in / sign-out happening after load (OAuth redirect).
+    let sub;
+    try {
+      const res = supabase.auth.onAuthStateChange((event, session) => {
+        if (event === "SIGNED_IN" && session && session.user) {
+          adoptSupabaseUser(session.user);
+          setRoute({ view: "home" });
+        }
+        if (event === "SIGNED_OUT") {
+          setSupaUid(null);
+          setAuth(null);
+        }
+      });
+      sub = res.data ? res.data.subscription : null;
+    } catch {}
+
+    return () => { try { document.head.removeChild(link); } catch {} try { sub && sub.unsubscribe(); } catch {} };
   }, []);
+
+  // Bring a Supabase-authenticated user into the app: set auth, load their
+  // progress from the cloud (creating a fresh record if this is their first time).
+  const adoptSupabaseUser = async (sUser) => {
+    const uid = sUser.id;
+    const displayName =
+      (sUser.user_metadata && (sUser.user_metadata.full_name || sUser.user_metadata.name)) ||
+      (sUser.email ? sUser.email.split("@")[0] : "student");
+    setSupaUid(uid);
+    setAuth({ username: displayName, email: sUser.email, name: displayName, supabase: true });
+    const cloud = await db.loadProgress(uid);
+    const base = freshProgress(displayName);
+    const merged = cloud ? { ...base, ...cloud, name: cloud.name || displayName } : { ...base, name: displayName };
+    setProgress(merged);
+    // ensure a profile/progress row exists from the start
+    db.saveProgress(uid, merged);
+  };
 
   const handleAuthed = async (acct) => {
     setAuth(acct);
@@ -3040,13 +3182,23 @@ export default function App() {
     setProgress(p ? { ...freshProgress(acct.username), ...p, name: acct.username } : freshProgress(acct.username));
     setRoute({ view: "home" });
   };
-  const logout = async () => { await store.set("ascend_session", ""); setAuth(null); setMenuOpen(false); setRoute({ view: "home" }); };
+  const logout = async () => {
+    if (supaUid) { try { await supabase.auth.signOut(); } catch {} setSupaUid(null); }
+    await store.set("ascend_session", "");
+    setAuth(null); setMenuOpen(false); setRoute({ view: "home" });
+  };
   const toggleTheme = () => { const t = theme === "light" ? "dark" : "light"; setTheme(t); store.set("ascend_theme", t); };
 
   const persist = (p) => {
     setProgress(p);
-    if (auth) store.set(progKey(auth.username), p);
-    store.setShared("ascend_board:" + p.name.toLowerCase().replace(/[^a-z0-9]/g, ""), { name: p.name, xp: p.xp, streak: p.streak });
+    if (supaUid) {
+      // signed in via Supabase: save to the cloud (cross-device + class leaderboard)
+      db.saveProgress(supaUid, p);
+    } else if (auth) {
+      // local username/password account: save on this device
+      store.set(progKey(auth.username), p);
+      store.setShared("ascend_board:" + p.name.toLowerCase().replace(/[^a-z0-9]/g, ""), { name: p.name, xp: p.xp, streak: p.streak });
+    }
   };
   const go = (view, extra = {}) => { setRoute({ view, ...extra }); setMenuOpen(false); if (typeof window !== "undefined") window.scrollTo?.(0, 0); };
 
@@ -3070,12 +3222,18 @@ export default function App() {
     if (!raw) return;
     const newName = raw.trim().slice(0, 24);
     if (newName.length < 2 || newName === progress.name) return;
-    // remove the old shared-board entry so the leaderboard does not show a duplicate
+
+    if (supaUid) {
+      // Supabase user: update the profile name in the cloud
+      await db.setUsername(supaUid, newName);
+      persist({ ...progress, name: newName });
+      return;
+    }
+    // local account: remove old shared-board entry to avoid a duplicate, then sync
     if (progress.name) {
       const oldBoardKey = "ascend_board:" + String(progress.name).toLowerCase().replace(/[^a-z0-9]/g, "");
       try { if (hasWS()) { await window.storage.delete?.(oldBoardKey, true); } else { localStorage.removeItem(oldBoardKey); } } catch {}
     }
-    // keep the account record's display name in sync
     if (auth) {
       const accounts = (await store.get("ascend_accounts")) || {};
       const key = auth.username.toLowerCase();
@@ -3084,7 +3242,7 @@ export default function App() {
     persist({ ...progress, name: newName });
   };
 
-  const app = { progress, go, recordDaily, finishQuiz, courseId: route.courseId, topicId: route.topicId };
+  const app = { progress, go, recordDaily, finishQuiz, supaUid, courseId: route.courseId, topicId: route.topicId };
   const render = () => {
     switch (route.view) {
       case "home": return <HomeView app={app} />;
