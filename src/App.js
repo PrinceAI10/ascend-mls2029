@@ -1349,6 +1349,194 @@ If those three came cleanly, you can now read the body's covering and lining epi
   ],
 };
 
+/* --------------------------- bch:0 --------------------------- */
+const T_BCH_INTRO = {
+  courseId: "bch",
+  topicIndex: 0,
+  title: "Introduction to Biochemistry",
+  minutes: 20,
+  note: [
+    { q: "Why does a lab scientist begin with chemistry, not cells?",
+      body: `You have learned the body's structures in anatomy, its tissues in histology, and how those tissues function in physiology. Biochemistry goes one level deeper still - to the molecules those functions are actually made of. It is the chemistry of life.
+
+My Socratic question: every process you have studied so far - a nerve firing, a muscle contracting, a kidney filtering - is at bottom a set of chemical reactions. So what is the one substance that every single one of those reactions happens inside?
+
+The answer is water. Life is a chemical process, and that chemistry runs in water. Roughly sixty percent of your body mass is water, and every reaction in every cell takes place dissolved in it. You cannot understand a single metabolic pathway without first understanding the medium it runs in.
+
+Crucial insight: biochemistry is not memorising molecules. It is understanding how the properties of water, and the behaviour of acids and bases within it, make life's reactions possible and keep them controlled. Master water and pH first, and every pathway you meet later has a stable foundation to stand on. This is why almost every biochemistry course, and almost every biochemistry exam, opens here.` },
+
+    { q: "What makes water so special? Start with its shape.",
+      body: `Water is the most abundant molecule in the body, and its extraordinary behaviour all flows from one structural fact.
+
+My Socratic question: a water molecule is just two hydrogen atoms bonded to one oxygen. Why does such a simple molecule behave so unusually?
+
+(Hint: the atoms do not share their electrons fairly.)
+
+The answer is polarity. Oxygen pulls the shared electrons far more strongly than hydrogen does, so the oxygen end of the molecule carries a slight negative charge and the hydrogen ends carry a slight positive charge. The molecule is electrically lopsided - a dipole. Add to this that the molecule is bent, not straight, so the two positive ends sit on the same side, and the lopsidedness cannot cancel out.
+
+A water molecule is therefore a tiny magnet with a negative pole and a positive pole.
+
+Crucial insight: every remarkable property of water - why it dissolves salts, why it climbs up plants, why it resists temperature change, why oil will not mix with it - traces back to this single fact of polarity. Do not memorise the properties as a list; derive them from the dipole, and they become obvious.` },
+
+    { q: "Hydrogen bonds: the weak force that runs your body.",
+      body: `Because each water molecule is a dipole, the positive hydrogen end of one molecule is attracted to the negative oxygen end of its neighbour. This attraction is the hydrogen bond.
+
+A single hydrogen bond is weak - far weaker than the covalent bonds holding a molecule together. But water molecules form them constantly, each molecule bonding to several neighbours, breaking and reforming billions of times a second.
+
+My Socratic question: if each hydrogen bond is so weak, why does it matter so much?
+
+The answer is that collectively they are immensely strong, and their weakness individually is exactly what makes them useful. Because they break and reform easily, they let water flow while still holding it together, and they let biological structures assemble and come apart as needed.
+
+Hydrogen bonds are not confined to water. They hold the two strands of DNA together - weakly enough that enzymes can unzip them to copy the code, yet collectively strongly enough to keep the genome intact. They fold proteins into their working shapes. They give water almost all its life-supporting properties.
+
+Crucial insight: the hydrogen bond is arguably the most important weak interaction in all of biology. Life depends on bonds strong enough to build structure but weak enough to be undone on demand, and the hydrogen bond is exactly that compromise.` },
+
+    { q: "Why water dissolves the molecules of life - and why some it refuses.",
+      body: `Water is called the universal solvent, and understanding what it dissolves - and what it does not - explains the architecture of every cell.
+
+My Socratic question: table salt, sodium chloride, dissolves instantly in water. Cooking oil will not dissolve at all. Why the difference?
+
+The answer, again, is polarity - like dissolves like. Water, being polar, surrounds and pulls apart other charged or polar substances. When salt enters water, the negative oxygen ends cluster around the positive sodium ions and the positive hydrogen ends cluster around the negative chloride ions, prising the crystal apart. Substances that dissolve in water this way are hydrophilic, meaning water-loving - ions, sugars, and most small biological molecules.
+
+Oil is non-polar, so water has nothing to grip. The water molecules would rather hydrogen-bond with each other than surround the oil, so the oil is pushed together and excluded. Such substances are hydrophobic, water-fearing - fats and oils above all.
+
+Crucial insight: this single divide builds the cell. Recall the cell membrane from physiology - its phospholipids have a hydrophilic head that faces the watery inside and outside, and hydrophobic tails that hide from water in the middle. The membrane assembles itself purely because water pushes the oily tails together. The hydrophobic effect, water excluding non-polar molecules, is one of the great organising forces of biology.` },
+
+    { q: "Water splits itself: the origin of pH.",
+      body: `Water is not chemically silent. Occasionally, a water molecule breaks apart, or ionises, into two charged particles.
+
+One molecule donates a hydrogen ion to become a hydroxide ion, and the hydrogen ion, which is essentially a bare proton, attaches to another water molecule. In shorthand we simply say water dissociates into a hydrogen ion, written H plus, and a hydroxide ion, written OH minus.
+
+In pure water this happens to a tiny, fixed extent, and crucially the two ions are produced in exactly equal numbers. Pure water is therefore neutral - equal hydrogen and hydroxide.
+
+My Socratic question: if we now add a substance that releases extra hydrogen ions, or one that mops them up, what have we created?
+
+The answer is acids and bases. An acid is a substance that increases the hydrogen ion concentration of a solution. A base is a substance that decreases it, either by removing hydrogen ions or by adding hydroxide ions.
+
+Crucial insight: the entire concept of pH is nothing more than a way of tracking one number - the concentration of hydrogen ions in a solution. Everything about acids, bases and buffers is bookkeeping on that single quantity, because hydrogen ion concentration controls the shape and function of nearly every protein in the body.` },
+
+    { q: "The pH scale: why the numbers run backwards.",
+      body: `Hydrogen ion concentrations in the body are tiny numbers with many decimal places, awkward to write and compare. The pH scale is a mathematical trick to make them manageable.
+
+The pH scale runs from 0 to 14. A pH of 7 is neutral, equal hydrogen and hydroxide, as in pure water. Below 7 is acidic - more hydrogen ions. Above 7 is basic, or alkaline - fewer hydrogen ions.
+
+Two features trap students, so hold them deliberately. First, the scale is inverted: a low pH means a high hydrogen ion concentration. The more acidic a solution, the lower its number. This feels backwards because pH is defined as the negative logarithm of the hydrogen ion concentration - the negative sign flips the direction.
+
+Second, the scale is logarithmic, not linear. Each whole step of one pH unit is a tenfold change in hydrogen ion concentration. A solution of pH 4 is not slightly more acidic than pH 5 - it is ten times more acidic. From pH 4 to pH 6 is a hundredfold difference.
+
+Crucial insight: the logarithmic nature is why small pH changes are medical emergencies. Human blood is held at pH 7.4. A drop to 7.0 sounds minor - it is only four tenths of a unit - but it represents more than a doubling of hydrogen ions, and it is fatal. This is why the body guards blood pH so fiercely, which brings us to buffers.` },
+
+    { q: "Buffers: how the body refuses to let pH move.",
+      body: `The reactions of metabolism constantly produce acids. Your muscles pour lactic acid into the blood; your cells produce carbon dioxide, which forms an acid in water. Left unchecked, this would crash the blood pH and kill you within minutes. Something must hold the line.
+
+My Socratic question: what kind of system could absorb both added acid and added base, soaking up hydrogen ions when there are too many and releasing them when there are too few, keeping pH almost constant?
+
+The answer is a buffer. A buffer is a solution that resists changes in pH. It is made of a weak acid paired with its conjugate base - the weak acid ready to release hydrogen ions if pH rises, and the conjugate base ready to absorb hydrogen ions if pH falls. The pair works in both directions, like a chemical shock absorber.
+
+When acid is added, the conjugate base mops up the extra hydrogen ions. When base is added, the weak acid releases hydrogen ions to replace those removed. Either way, the free hydrogen ion concentration barely changes, so the pH barely moves.
+
+Crucial insight: a buffer does not stop pH changing entirely - it blunts the change, turning what would be a lethal swing into a survivable nudge. It works best when the weak acid and its conjugate base are present in similar amounts, which is precisely how the body arranges its buffers.` },
+
+    { q: "The body's own buffers: bicarbonate and beyond.",
+      body: `The most important buffer in your blood is the bicarbonate system, and it is a favourite of examiners because it links biochemistry directly to physiology.
+
+It works as a pairing of carbonic acid, the weak acid, and bicarbonate, its conjugate base. Carbon dioxide from respiring cells dissolves in blood and combines with water to form carbonic acid, which readily gives up a hydrogen ion to become bicarbonate. The whole chain is reversible, so it can run either way depending on what the blood needs.
+
+Here is its genius: the system is open at both ends. If acid builds up, the reaction shifts to form carbon dioxide, which you simply breathe out through the lungs. If the blood becomes too alkaline, the kidneys retain acid and adjust bicarbonate. The buffer is regulated by two whole organ systems at once - the lungs handling it fast, the kidneys slowly.
+
+Other buffers support it. The phosphate system buffers inside cells and in urine, and proteins themselves, including haemoglobin, act as buffers because their amino acids can accept or donate hydrogen ions.
+
+Crucial insight: this is biochemistry meeting physiology in a single mechanism. When you learn respiratory and renal control of acid-base balance in later topics, remember it all rests on this one buffer pair. Fast breathing blows off acid as carbon dioxide; the kidney is the slow, precise backstop. The chemistry you are learning now is the machinery behind those clinical facts.` },
+
+    { q: "Why all of this decides whether you live: acidosis and alkalosis.",
+      body: `Let us make the stakes concrete, because this is where the chemistry becomes clinical.
+
+Blood pH is held in an extraordinarily narrow window, roughly 7.35 to 7.45. Step outside it and the body is in crisis.
+
+Acidosis is a blood pH below 7.35 - too many hydrogen ions. It can come from lung failure, when carbon dioxide is not exhaled and builds up as acid, or from metabolic causes such as uncontrolled diabetes, which floods the blood with acidic ketones. Alkalosis is a blood pH above 7.45 - too few hydrogen ions - from causes such as excessive vomiting, which loses stomach acid, or over-breathing, which blows off too much carbon dioxide.
+
+My Socratic question: why is a shift of just a few tenths of a pH unit so dangerous?
+
+The answer returns to proteins. Every enzyme and every structural protein has a shape that depends on the precise balance of charges around it, and that balance is set by pH. Move the pH and you alter those charges, distorting the protein's shape and destroying its function. At the wrong pH, enzymes stop working, and metabolism grinds to a halt. Because the scale is logarithmic, a small pH number hides a large change in hydrogen ions.
+
+Crucial insight: this is the payoff of the whole topic. The body defends its pH so fiercely not out of fussiness but because its entire molecular machinery - every enzyme you will study for the rest of this course - only works within a razor-thin pH range. Water, dissociation, pH and buffers are not abstract chemistry; they are the conditions under which life's molecules are able to function at all.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the foundations of biochemistry, in five lines.
+
+The medium: life's chemistry runs in water, which fills roughly sixty percent of the body.
+
+The reason water works: it is a polar molecule, a dipole, and this polarity gives it hydrogen bonding, its power as a solvent for hydrophilic substances, and its exclusion of hydrophobic ones - the force that builds membranes.
+
+The origin of pH: water dissociates slightly into hydrogen and hydroxide ions; an acid raises hydrogen ions, a base lowers them.
+
+The scale: pH is the negative logarithm of hydrogen ion concentration, so it runs backwards and moves in tenfold steps - neutral at 7, acidic below, basic above.
+
+The defence: buffers, a weak acid paired with its conjugate base, resist pH change; the bicarbonate buffer, regulated by lungs and kidneys, guards blood at pH 7.4, because every protein in the body needs that narrow range to hold its shape.
+
+Now your final test. A patient with uncontrolled diabetes is producing large amounts of acidic ketone molecules, which are pouring into the blood.
+
+Question one: what will happen to the patient's blood pH, and what is this condition called?
+Question two: the bicarbonate buffer immediately begins to resist the change. In simple terms, which half of the buffer pair is being used up, and why?
+Question three: the patient begins breathing rapidly and deeply without realising it. How does that help, and which organ is acting as the fast line of defence?
+
+Work them through before reading on.
+
+My answers. One: the extra acid raises the blood hydrogen ion concentration, so the pH falls below 7.35 - this is acidosis, specifically a metabolic acidosis. Two: the bicarbonate, the conjugate base half of the pair, is consumed as it mops up the flood of hydrogen ions from the ketones, which is why a low blood bicarbonate is a classic sign of this condition. Three: rapid deep breathing blows off carbon dioxide from the lungs; because carbon dioxide forms acid in the blood, removing it shifts the buffer reaction to reduce hydrogen ions and pushes the pH back up. The lungs are the fast line of defence, buying time for the slower kidneys.
+
+If those three came cleanly, you understand why biochemistry begins with water and pH - and every enzyme and pathway ahead now has solid ground to stand on. Enzymes are next.` },
+  ],
+  theory: [
+    { q: "Why is water central to biochemistry, and roughly what fraction of body mass is it?", a: "All the chemical reactions of life take place dissolved in water, so no metabolic process can be understood without it. Water makes up roughly sixty percent of body mass." },
+    { q: "Explain what makes water a polar molecule.", a: "Oxygen attracts the shared bonding electrons more strongly than hydrogen, so the oxygen end carries a slight negative charge and the hydrogen ends a slight positive charge. Because the molecule is bent, this lopsidedness does not cancel, making water a dipole with distinct positive and negative poles." },
+    { q: "What is a hydrogen bond and why is its weakness biologically valuable?", a: "It is the attraction between the positive hydrogen end of one polar molecule and the negative end of another. Individually weak, hydrogen bonds form and break easily, allowing structures like DNA strands and folded proteins to be held together yet separated on demand, while collectively providing real strength." },
+    { q: "Differentiate hydrophilic from hydrophobic substances and give an example of each.", a: "Hydrophilic (water-loving) substances are charged or polar and dissolve in water, such as sodium chloride or glucose. Hydrophobic (water-fearing) substances are non-polar and are excluded by water, such as fats and oils. Like dissolves like." },
+    { q: "How does the hydrophobic effect help build the cell membrane?", a: "Phospholipids have hydrophilic heads and hydrophobic tails. Water surrounds the heads but excludes the tails, pushing the tails together into the membrane interior. The membrane therefore assembles itself because water forces the non-polar tails away from it." },
+    { q: "Describe the ionisation of water and define an acid and a base in these terms.", a: "Water dissociates slightly into a hydrogen ion (H plus) and a hydroxide ion (OH minus), in equal numbers in pure water, making it neutral. An acid is a substance that increases the hydrogen ion concentration; a base decreases it, by removing hydrogen ions or adding hydroxide." },
+    { q: "State two features of the pH scale that commonly confuse students.", a: "First, it is inverted: pH is the negative logarithm of hydrogen ion concentration, so a lower pH means a higher hydrogen ion concentration and greater acidity. Second, it is logarithmic: each one-unit change represents a tenfold change in hydrogen ion concentration." },
+    { q: "What is a buffer and what two components make one?", a: "A buffer is a solution that resists changes in pH. It consists of a weak acid paired with its conjugate base: the weak acid releases hydrogen ions when pH rises, and the conjugate base absorbs hydrogen ions when pH falls, resisting change in both directions." },
+    { q: "Explain how the bicarbonate buffer system is regulated by two organ systems.", a: "The system pairs carbonic acid with bicarbonate. Excess acid shifts the reaction toward carbon dioxide, which the lungs exhale quickly; the kidneys adjust bicarbonate and acid excretion slowly and precisely. Thus the lungs provide fast control and the kidneys slow, fine control of blood pH." },
+    { q: "Define acidosis and alkalosis and explain why small pH changes are dangerous.", a: "Acidosis is a blood pH below about 7.35 (too many hydrogen ions); alkalosis is above about 7.45 (too few). Small shifts are dangerous because protein shape depends on the charge balance set by pH; altering pH distorts enzymes and structural proteins, halting their function, and because the scale is logarithmic a small pH change means a large change in hydrogen ions." },
+  ],
+  videos: [
+    { channel: "AK Lectures", title: "Water, pH and Buffers", note: "Clear lecture on water's properties, pH, weak acids and buffers - the whole foundation in one place.", url: "https://www.youtube.com/watch?v=i1LyWQ_lPik" },
+    { channel: "Khan Academy", title: "Introduction to pH, Acids and Bases / Buffers", note: "Worked pH examples and the buffer concept, at a gentle pace.", url: "https://www.youtube.com/watch?v=gjKmQ501sAg" },
+    { channel: "ZC OCW", title: "Water, pH and Buffers: Biochemistry", note: "Second lecture going deeper into ionisation and buffering for medical courses.", url: "https://www.youtube.com/watch?v=crTmeIkUIbw" },
+  ],
+  mcqs: [
+    { q: "Approximately what fraction of body mass is water?", o: ["Ten percent", "Ninety percent", "Twenty percent", "Sixty percent"], a: 3, w: "Water is roughly sixty percent of body mass." },
+    { q: "All metabolic reactions in the body take place:", o: ["Dissolved in water", "In the absence of water", "Only in lipids", "In dry conditions"], a: 0, w: "Life's chemistry runs in water, the universal biological solvent." },
+    { q: "Water is a polar molecule because:", o: ["It is a straight molecule", "Oxygen attracts the shared electrons more than hydrogen", "Hydrogen is negative", "It contains carbon"], a: 1, w: "Unequal electron sharing gives oxygen a negative and hydrogen a positive end." },
+    { q: "The slight charges on a water molecule make it a:", o: ["Salt", "Gas at body temperature", "Non-polar molecule", "Dipole"], a: 3, w: "Water has separated positive and negative poles - a dipole." },
+    { q: "A hydrogen bond forms between:", o: ["Two non-polar molecules", "Two oil droplets", "The positive end of one polar molecule and the negative end of another", "Two carbon atoms"], a: 2, w: "It is an attraction between opposite partial charges on polar molecules." },
+    { q: "A single hydrogen bond is:", o: ["Weak individually but strong collectively", "Found only in DNA", "Impossible to break", "Stronger than a covalent bond"], a: 0, w: "Each is weak, but many together are strong and easily reformed." },
+    { q: "Hydrogen bonds hold the two strands of DNA together in a way that is:", o: ["Non-polar", "Permanent and unbreakable", "Weak enough to unzip yet collectively stable", "Ionic"], a: 2, w: "Their weakness lets enzymes separate the strands for copying." },
+    { q: "A substance that dissolves readily in water is described as:", o: ["Non-polar", "Hydrophobic", "Lipid-soluble", "Hydrophilic"], a: 3, w: "Hydrophilic means water-loving - charged or polar substances." },
+    { q: "Oil does not dissolve in water because oil is:", o: ["Non-polar (hydrophobic)", "Charged", "Polar", "Acidic"], a: 0, w: "Water excludes non-polar, hydrophobic substances." },
+    { q: "The principle governing what water dissolves is:", o: ["Heavy dissolves light", "Opposites dissolve", "Acids dissolve bases", "Like dissolves like"], a: 3, w: "Polar water dissolves polar and charged substances." },
+    { q: "The hydrophobic effect helps assemble the cell membrane by:", o: ["Dissolving the tails", "Breaking hydrogen bonds", "Pushing the non-polar tails together away from water", "Charging the heads"], a: 2, w: "Water excludes the oily tails, driving them into the membrane interior." },
+    { q: "When water ionises, it forms:", o: ["Two hydroxide ions", "Oxygen gas", "Two hydrogen ions", "A hydrogen ion and a hydroxide ion"], a: 3, w: "Water dissociates into H plus and OH minus." },
+    { q: "In pure water, hydrogen and hydroxide ions are present in:", o: ["No amount at all", "Equal amounts, making it neutral", "Unequal amounts", "Only trace hydroxide"], a: 1, w: "Equal H plus and OH minus makes pure water neutral." },
+    { q: "An acid is a substance that:", o: ["Has no effect on pH", "Decreases hydrogen ion concentration", "Increases hydrogen ion concentration", "Adds hydroxide only"], a: 2, w: "An acid raises the hydrogen ion concentration of a solution." },
+    { q: "A neutral solution such as pure water has a pH of:", o: ["7", "0", "14", "1"], a: 0, w: "pH 7 is neutral, with equal hydrogen and hydroxide ions." },
+    { q: "A solution with a pH of 4 is:", o: ["Alkaline", "Acidic", "Basic", "Neutral"], a: 1, w: "Below 7 is acidic; pH 4 has a high hydrogen ion concentration." },
+    { q: "On the pH scale, a lower pH means:", o: ["No hydrogen ions", "More hydroxide ions", "Fewer hydrogen ions", "More hydrogen ions"], a: 3, w: "The scale is inverted: low pH means high hydrogen ion concentration." },
+    { q: "A change of one pH unit represents a change in hydrogen ion concentration of:", o: ["Ten times", "One hundred times", "No change", "Two times"], a: 0, w: "The scale is logarithmic - each unit is a tenfold change." },
+    { q: "A solution at pH 4 compared to pH 6 is:", o: ["One hundred times as acidic", "Twice as acidic", "Equally acidic", "Half as acidic"], a: 0, w: "Two units means ten times ten, a hundredfold difference." },
+    { q: "pH is mathematically defined as:", o: ["The hydrogen ion concentration", "The negative logarithm of hydrogen ion concentration", "The number of water molecules", "The hydroxide concentration"], a: 1, w: "pH equals minus the logarithm of the hydrogen ion concentration." },
+    { q: "A buffer is a solution that:", o: ["Resists changes in pH", "Removes all acid", "Raises pH sharply", "Has no acid or base"], a: 0, w: "A buffer resists pH change in both directions." },
+    { q: "A buffer is composed of:", o: ["Two strong bases", "A weak acid and its conjugate base", "Only water", "A strong acid and strong base"], a: 1, w: "The weak-acid and conjugate-base pair absorbs or releases hydrogen ions." },
+    { q: "When acid is added to a buffer, the extra hydrogen ions are absorbed by the:", o: ["Hydroxide", "Conjugate base", "Weak acid", "Water only"], a: 1, w: "The conjugate base mops up the added hydrogen ions." },
+    { q: "The most important buffer in blood is the:", o: ["Ammonia system", "Sulphate system", "Bicarbonate system", "Phosphate system"], a: 2, w: "The bicarbonate buffer is the major blood buffer." },
+    { q: "In the bicarbonate buffer, the lungs help by:", o: ["Producing bicarbonate", "Retaining carbon dioxide", "Exhaling carbon dioxide to remove acid", "Adding hydrogen ions"], a: 2, w: "Breathing off carbon dioxide reduces acid quickly." },
+    { q: "In acid-base balance, the kidneys act as the:", o: ["Only buffer", "Slow, precise line of defence", "Fast line of defence", "Main source of acid"], a: 1, w: "Kidneys adjust bicarbonate and acid slowly and precisely." },
+    { q: "Normal blood pH is maintained at approximately:", o: ["6.8", "7.4", "7.0", "8.0"], a: 1, w: "Blood is held near pH 7.4, in a very narrow range." },
+    { q: "A blood pH below 7.35 is called:", o: ["Buffered", "Alkalosis", "Neutral", "Acidosis"], a: 3, w: "Acidosis is an abnormally low blood pH." },
+    { q: "Small changes in pH are dangerous mainly because they:", o: ["Change body temperature", "Add water to cells", "Alter protein shape and stop enzymes working", "Remove all hydrogen ions"], a: 2, w: "Protein shape depends on pH; wrong pH halts enzyme function." },
+    { q: "Uncontrolled diabetes can cause acidosis by producing:", o: ["Acidic ketone molecules", "Extra hydroxide", "Excess bicarbonate", "Pure water"], a: 0, w: "Ketones are acidic and lower the blood pH, causing metabolic acidosis." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -1356,6 +1544,7 @@ const CONTENT = {
   "ana:2": T_ANA_EPI_OVERVIEW,
   "ana:3": T_ANA_EPI_MEMB,
   "phy:0": T_PHY_GENERAL,
+  "bch:0": T_BCH_INTRO,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
@@ -1473,7 +1662,7 @@ const API_ENDPOINT = "/.netlify/functions/claude";
 /* Password-reset backend (see password-reset.js), e.g. "/api/request-reset".
    While empty, the reset screen explains that email delivery is not yet connected. */
 const AUTH_ENDPOINT = "";
-async function callClaude(system, messages, maxTokens = 1024) {
+async function callClaude(system, messages, maxTokens = 2048) {
   const body = JSON.stringify({ max_tokens: maxTokens, system, messages });
   let res;
   for (let attempt = 0; attempt < 3; attempt++) {
@@ -1570,10 +1759,10 @@ function AITutor({ topicTitle, context }) {
     if (!text || busy) return;
     const next = [...msgs, { role: "user", content: text }];
     setMsgs(next); setInput(""); setBusy(true);
-    const sys = `You are the ASCEND tutor for KNUST medical laboratory science students. Teach the WHY and the mechanism, step by step. No emojis.\n\nTOPIC: ${topicTitle}\n\nSOURCE:\n${context}`;
+    const sys = `You are the ASCEND tutor for KNUST medical laboratory science students. Teach the WHY and the mechanism, step by step. Keep each answer complete but focused - finish within a few clear paragraphs rather than writing an essay, so the reply is never cut off. No emojis.\n\nTOPIC: ${topicTitle}\n\nSOURCE:\n${context}`;
     const apiMsgs = next.slice(1);
     try {
-      const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })));
+      const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })), 2048);
       setMsgs([...next, { role: "assistant", content: reply }]);
     } catch (e) {
       setMsgs([...next, { role: "assistant", content: (e && e.message ? e.message + " " : "") + "The tutor could not respond just now. Please try again in a moment." }]);
