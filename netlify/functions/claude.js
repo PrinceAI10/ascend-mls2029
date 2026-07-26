@@ -1,27 +1,32 @@
 /*
- * ASCEND AI proxy  ->  DeepSeek
+ * ASCEND AI proxy  ->  Google Gemini (free tier, no credit card)
  * ---------------------------------------------------------------------------
  * WHY THIS FILE EXISTS
- * The ASCEND app runs in the student's browser. A browser cannot call DeepSeek
- * directly for two reasons:
- *   1. The API key would be visible to anyone who opens the page (theft = your bill).
- *   2. DeepSeek blocks direct browser calls (CORS).
- * So the browser calls THIS function instead. It runs on Netlify's server, holds
- * the key safely, forwards the request to DeepSeek, and returns the answer.
+ * The browser cannot call Gemini directly (the key would be exposed, and the
+ * provider blocks direct browser calls). So the browser calls THIS function,
+ * which runs on Netlify's server, holds the key safely, forwards to Gemini, and
+ * returns the answer in the shape the app already understands.
+ *
+ * GET A FREE KEY (no credit card, no phone):
+ *   1. Go to  https://aistudio.google.com
+ *   2. Sign in with a Google account.
+ *   3. Left menu -> "Get API Key" -> Create API key. Copy it.
  *
  * DEPLOY
  *   1. This file goes at:  netlify/functions/claude.js
  *      (The app calls /.netlify/functions/claude - the filename must be claude.js.)
- *   2. In Netlify -> Configuration -> Environment variables, add:
- *         DEEPSEEK_API_KEY = your DeepSeek key (starts with sk-...)
+ *   2. Netlify -> Configuration -> Environment variables, add:
+ *         GEMINI_API_KEY = your key from AI Studio
  *   3. Commit, push. Netlify builds the function automatically.
  *
  * The app sends { system, messages, max_tokens }.
- * The app already understands DeepSeek's reply shape, so no app change is needed.
+ * This function converts that to Gemini's format, then converts Gemini's reply
+ * back into { choices:[{message:{content}}] }, which the app already reads.
  */
 
+const MODEL = "gemini-2.5-flash"; // free tier, fast, large context
+
 export async function handler(event) {
-  // CORS preflight (harmless, keeps browsers happy)
   if (event.httpMethod === "OPTIONS") {
     return { statusCode: 200, headers: cors(), body: "" };
   }
@@ -29,9 +34,9 @@ export async function handler(event) {
     return { statusCode: 405, headers: cors(), body: JSON.stringify({ error: "Method not allowed" }) };
   }
 
-  const key = process.env.DEEPSEEK_API_KEY;
+  const key = process.env.GEMINI_API_KEY;
   if (!key) {
-    return { statusCode: 500, headers: cors(), body: JSON.stringify({ error: "DEEPSEEK_API_KEY is not set in Netlify environment variables." }) };
+    return { statusCode: 500, headers: cors(), body: JSON.stringify({ error: "GEMINI_API_KEY is not set in Netlify environment variables." }) };
   }
 
   let payload;
@@ -43,50 +48,63 @@ export async function handler(event) {
 
   const { system, messages, max_tokens } = payload;
 
-  // DeepSeek uses the OpenAI-style format: a single messages array where the
-  // system prompt is the first message with role "system".
-  const dsMessages = [];
-  if (system) dsMessages.push({ role: "system", content: system });
+  // Convert the app's messages into Gemini "contents".
+  // Gemini uses roles "user" and "model" (not "assistant"), and takes the
+  // system prompt separately as systemInstruction.
+  const contents = [];
   if (Array.isArray(messages)) {
     for (const m of messages) {
-      // the app sometimes sends content as an array (for PDFs); flatten to text here,
-      // since DeepSeek's chat endpoint expects string content.
-      let content = m.content;
-      if (Array.isArray(content)) {
-        content = content.map((b) => (typeof b === "string" ? b : b.text || "")).join("\n");
+      let text = m.content;
+      if (Array.isArray(text)) {
+        text = text.map((b) => (typeof b === "string" ? b : b.text || "")).join("\n");
       }
-      dsMessages.push({ role: m.role === "assistant" ? "assistant" : "user", content });
+      contents.push({
+        role: m.role === "assistant" ? "model" : "user",
+        parts: [{ text: String(text || "") }],
+      });
     }
   }
 
+  const bodyOut = {
+    contents,
+    generationConfig: { maxOutputTokens: max_tokens || 1024, temperature: 0.7 },
+  };
+  if (system) {
+    bodyOut.systemInstruction = { parts: [{ text: String(system) }] };
+  }
+
   try {
-    const res = await fetch("https://api.deepseek.com/chat/completions", {
+    const url = "https://generativelanguage.googleapis.com/v1beta/models/" + MODEL + ":generateContent?key=" + key;
+    const res = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + key,
-      },
-      body: JSON.stringify({
-        model: "deepseek-chat",
-        messages: dsMessages,
-        max_tokens: max_tokens || 1024,
-        temperature: 0.7,
-        stream: false,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bodyOut),
     });
 
-    const text = await res.text();
-    // pass DeepSeek's response straight back; the app reads choices[0].message.content
+    const data = await res.json();
+
+    if (!res.ok) {
+      const msg = data && data.error && data.error.message ? data.error.message : "Gemini request failed";
+      return { statusCode: res.status, headers: { ...cors(), "Content-Type": "application/json" }, body: JSON.stringify({ error: msg }) };
+    }
+
+    // Pull the text out of Gemini's response shape.
+    let text = "";
+    if (data.candidates && data.candidates[0] && data.candidates[0].content && Array.isArray(data.candidates[0].content.parts)) {
+      text = data.candidates[0].content.parts.map((p) => p.text || "").join("");
+    }
+
+    // Return it in the OpenAI/DeepSeek shape the app already parses.
     return {
-      statusCode: res.status,
+      statusCode: 200,
       headers: { ...cors(), "Content-Type": "application/json" },
-      body: text,
+      body: JSON.stringify({ choices: [{ message: { content: text } }] }),
     };
   } catch (err) {
     return {
       statusCode: 502,
       headers: cors(),
-      body: JSON.stringify({ error: "Could not reach DeepSeek: " + (err && err.message ? err.message : String(err)) }),
+      body: JSON.stringify({ error: "Could not reach Gemini: " + (err && err.message ? err.message : String(err)) }),
     };
   }
 }
