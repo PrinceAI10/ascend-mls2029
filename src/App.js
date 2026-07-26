@@ -2327,7 +2327,7 @@ function PapersView() {
     if (busy) return;
     setBusy(true); setErr(""); setItems(null);
     try {
-      let text = await callClaude(`You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid JSON array, no prose, no markdown.`, [{ role: "user", content: usr }], 2048);
+      let text = await callClaude(`You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid, compact, complete JSON array, no prose, no markdown, no trailing commas. Keep each question and option short.`, [{ role: "user", content: usr }], 3500);
       const arr = parseAIJson(text);
       const clean = (Array.isArray(arr) ? arr : []).filter((x) => x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number");
       if (!clean.length) throw new Error("No usable questions came back - try again.");
@@ -2376,7 +2376,7 @@ function PapersView() {
 
 /* ------------------------------- resources ------------------------------ */
 const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical laboratory science students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis.";
-const SOCRATIC_TASK = "Break this study material into a Socratic lesson of 5 to 7 steps. For each step: state the question, explain the answer in clear paragraphs, then give the crucial insight. End with a short consolidation and three self-test questions with brief worked answers. Be thorough but economical with words so the whole lesson is complete and never cut off.";
+const SOCRATIC_TASK = "Break this study material into a focused Socratic lesson of 4 to 6 steps. For each step: state the question, explain the answer in one or two clear paragraphs, then give the crucial insight in one line. End with three short self-test questions and their answers. Be economical so the whole lesson is complete and never cut off.";
 
 function ResourcesView() {
   const [text, setText] = useState("");
@@ -2401,7 +2401,7 @@ function ResourcesView() {
           { type: "document", source: { type: "base64", media_type: "application/pdf", data: b64 } },
           { type: "text", text: SOCRATIC_TASK + (typed ? "\n\nFocus especially on: " + typed : "") }
         ];
-        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content }], 8000));
+        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content }], 4000));
       } else {
         let material = typed;
         if (file && !material) {
@@ -2411,7 +2411,7 @@ function ResourcesView() {
         }
         if (!material) throw new Error("That file had no readable text.");
         setStage("Building your lesson...");
-        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 8000));
+        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 4000));
       }
     } catch (e) {
       setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again in a moment.");
@@ -2922,19 +2922,21 @@ function LAMLAView({ app }) {
     if (!courseId || busy) return;
     setBusy(true); setOffline(false);
     const course = courseById(courseId);
-    const topics = TOPICS[courseId] || [];
-    const prompt = `A KNUST medical laboratory science student is cramming for their ${course.name} (${course.code}) exam and has only ${hours} hours left. Preparation level: "${prepOptions[prep]}". Goal: ${goal}. Exam format: ${examType}.
-Full syllabus topics, in order: ${topics.join("; ")}.
+    const allTopics = TOPICS[courseId] || [];
+    // Cap how many topics we ask the AI to detail, so the JSON reply stays small
+    // enough to complete within the function timeout and not get cut off.
+    const maxTopics = Math.max(4, Math.min(8, Math.round(hours * 1.2)));
+    const topics = allTopics.slice(0, maxTopics);
+    const prompt = `A KNUST medical laboratory science student is cramming for their ${course.name} (${course.code}) exam with ${hours} hours left. Preparation: "${prepOptions[prep]}". Goal: ${goal}. Format: ${examType}.
+Topics to cover (already prioritised): ${topics.join("; ")}.
 
-You are triaging for the exam, NOT teaching. Pick ONLY the highest-yield topics that realistically fit in ${hours} hours - the ones almost certain to appear. Order them by how likely they are to be tested.
+You are triaging for the exam, NOT teaching. For each topic give 3 to 5 "bullets" that are the actual exam-guaranteed facts to MEMORISE - specific definitions, values, classifications, steps, enzymes, or one-liners. NOT study instructions. Keep each bullet short. Example style: "Resting potential = -70 mV, set by K+ permeability"; "Na/K pump: 3 Na out, 2 K in per ATP - electrogenic".
 
-For each chosen topic, the "bullets" must be the actual exam-guaranteed facts to MEMORISE - the specific definitions, values, classifications, steps, enzymes, structures, or one-liners that come up in exams. NOT study instructions, NOT "read this" or "revise that". Write each bullet as a compact fact a student can burn into memory in seconds and reproduce in the exam. Examples of the right style: "Resting membrane potential = -70 mV, set by K+ permeability"; "Na/K pump: 3 Na out, 2 K in, per ATP - electrogenic"; "Simple squamous lines alveoli and glomerulus - for diffusion and filtration". Give 4 to 7 such facts per topic.
-
-Return ONLY JSON, no markdown: {"topics":[{"topic":"name","allocatedMinutes":20,"priority":"High|Med|Low","bullets":["fact 1","fact 2","fact 3","fact 4"]}],"summary":{"confidence":"65%","targetScore":"70%","focusAreas":["most likely exam area 1","area 2","area 3"]}}`;
+Return ONLY compact JSON, no markdown, no trailing commas, all strings short: {"topics":[{"topic":"name","allocatedMinutes":20,"priority":"High","bullets":["fact","fact","fact"]}],"summary":{"confidence":"65%","targetScore":"70%","focusAreas":["area","area","area"]}}`;
     let lastErr = "";
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
-        const res = await callClaude("You are LAMLA, the Last Minute Learners Association crammer for KNUST medical laboratory science students. You do exam triage: you identify exactly what is almost certain to appear on the paper and give the precise, memorisable facts for it - definitions, values, classifications, steps. You never give vague study advice. Every bullet is a fact the student can memorise and write in the exam. Return ONLY valid JSON, no prose, no markdown, no trailing commas. Keep it compact so the JSON is complete. No emojis.", [{ role: "user", content: prompt }], 4000);
+        const res = await callClaude("You are LAMLA, an exam-cram assistant for KNUST medical laboratory science students. You give precise, memorisable facts - definitions, values, classifications, steps - never vague study advice. Return ONLY valid, compact, complete JSON. No emojis.", [{ role: "user", content: prompt }], 4000);
         const data = parseAIJson(res);
         if (!data || !Array.isArray(data.topics) || !data.topics.length) throw new Error("unexpected shape from AI");
         setPlan(data); setOffline(false); setStep("plan"); setBusy(false);
