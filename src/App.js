@@ -2635,12 +2635,189 @@ If those came cleanly, you understand electrical safety not as a list of rules b
   ],
 };
 
+/* --------------------------- ana:4 --------------------------- */
+const T_ANA_GLAND = {
+  courseId: "ana",
+  topicIndex: 4,
+  title: "Glandular Epithelium",
+  minutes: 18,
+  note: [
+    { q: "From lining to secreting: the second job of epithelium.",
+      body: `You have studied membranous epithelium - the sheets that cover and line surfaces. Now we meet the other great role of epithelial tissue: secretion. Epithelial cells do not only form barriers; some of them specialise to manufacture and release useful substances, and when they do, they form glands.
+
+My Socratic question: your body must produce sweat, saliva, tears, digestive enzymes, hormones, mucus and milk. What single tissue type is responsible for building the structures that make all of these?
+
+The answer is glandular epithelium. A gland is essentially epithelial cells specialised for secretion - the production and release of a substance the body needs. Glands develop from epithelium: during development, epithelial cells grow down into the underlying connective tissue and specialise to secrete.
+
+Crucial insight: glandular epithelium is epithelium adapted for secretion rather than covering. Understanding it explains where saliva, hormones, sweat, and digestive juices actually come from - all from epithelial cells doing their second great job. This is why, after learning the covering epithelia, we turn to the secreting ones.` },
+
+    { q: "The first great divide: exocrine versus endocrine.",
+      body: `All glands fall into two fundamental categories, distinguished by one question: where do they send their product? This single distinction organises the entire topic.
+
+My Socratic question: a sweat gland releases sweat onto the skin surface, while the thyroid releases hormones into the blood. What is the essential difference in how these two deliver their products?
+
+The answer is that exocrine glands secrete their products through ducts onto a surface, while endocrine glands secrete their products directly into the blood, having no ducts. Exocrine glands - sweat, salivary, mammary, digestive - have a tube, the duct, that carries the secretion to an epithelial surface, whether the skin or the lining of a hollow organ. Endocrine glands - the thyroid, pituitary, adrenal - are ductless; they release hormones straight into the bloodstream, which carries them to distant targets.
+
+Crucial insight: the presence or absence of a duct is the defining difference. Exocrine glands have ducts and secrete onto surfaces; endocrine glands are ductless and secrete hormones into the blood. This one distinction - duct versus no duct, surface versus blood - is the master division of all glands and the foundation for everything that follows.` },
+
+    { q: "Endocrine glands: the ductless messengers.",
+      body: `Let us look more closely at the ductless glands, because they run much of the body's coordination.
+
+Endocrine glands secrete hormones - chemical messengers - directly into the surrounding tissue fluid and blood. The blood then carries these hormones throughout the body to reach specific target cells, sometimes far away, which respond to them. Because they use the bloodstream rather than a duct, their effects are widespread and often slow and sustained.
+
+My Socratic question: examples include the thyroid gland, the adrenal glands, the pituitary, and the islet cells of the pancreas. What links all of these despite their different locations and hormones?
+
+The answer is that all of them are ductless and release their products into the blood to act at a distance. The pancreas is a fascinating special case worth noting - it is both: its endocrine islet cells release insulin into the blood, while its exocrine cells release digestive enzymes through a duct into the gut.
+
+Crucial insight: endocrine glands are the body's slow, blood-borne signalling system - recall from physiology the endocrine system as the sustained partner to the fast nervous system. Their ductless structure is exactly what lets hormones travel widely through the blood. When you measure hormone levels in a laboratory, you are sampling the products of these ductless glands.` },
+
+    { q: "Exocrine glands: structure of a secreting unit.",
+      body: `Now the exocrine glands, which are more varied in structure, and whose anatomy examiners love. Every exocrine gland has two functional parts.
+
+The secretory unit, or acinus, is the group of epithelial cells that actually produce the secretion. The duct is the tube, itself lined by epithelium, that carries the secretion from the secretory unit to the surface.
+
+My Socratic question: glands are classified by the shape of these two parts. If the secretory portion is a rounded sac it is called one thing; if it is a tube, another. What are these two shapes called?
+
+The answer is that a flask-like or rounded secretory unit is called acinar (or alveolar), while a tube-shaped secretory unit is called tubular. Glands can be purely tubular, purely acinar, or a mix - tubuloacinar.
+
+Crucial insight: an exocrine gland is a secretory unit plus a duct, and its classification begins with the shapes of these parts - tubular, acinar, or both. Recognising the secretory unit and duct in a slide, and their shapes, is the first step in identifying and classifying any exocrine gland under the microscope, which is a core laboratory skill.` },
+
+    { q: "Classifying exocrine glands: simple versus compound.",
+      body: `Beyond the shape of the secretory unit, exocrine glands are classified by their duct system, giving a clear two-part naming scheme.
+
+My Socratic question: some glands have a single unbranched duct, while others have a branching, tree-like duct system. What are these two arrangements called?
+
+The answer is that a gland with a single, unbranched duct is simple, while a gland with a branched duct system is compound. Combine this with the secretory-unit shape and you can name any gland: a simple tubular gland (single duct, tube-shaped unit, like intestinal glands), a simple coiled tubular gland (like sweat glands), a compound acinar gland, a compound tubuloacinar gland (like the salivary glands and pancreas), and so on.
+
+Crucial insight: exocrine gland classification is a two-part system - the duct (simple = unbranched, compound = branched) plus the secretory unit shape (tubular, acinar, tubuloacinar). Naming a gland means describing both. This systematic scheme turns the bewildering variety of glands into a small set of combinations you can identify and name, which is exactly what a microscopy exam demands.` },
+
+    { q: "The three modes of secretion: how the product leaves the cell.",
+      body: `Glands also differ in how their cells actually release the product, and this gives three named mechanisms - a classic examinable trio.
+
+Merocrine secretion, the most common, releases the product by exocytosis, with no loss of cell material - the cell packages the secretion in vesicles that fuse with the membrane and release the contents, staying fully intact. Most sweat glands and the salivary glands and pancreas work this way. Apocrine secretion releases the product along with the apical portion of the cell - the top of the cell pinches off with the secretion inside it, losing a little cytoplasm. The mammary glands, releasing the fat in milk, are the classic example. Holocrine secretion is the most dramatic: the entire cell fills with product, dies, and disintegrates, becoming the secretion itself. The sebaceous (oil) glands of the skin work this way.
+
+My Socratic question: which of the three modes destroys the whole cell, and which keeps the cell entirely intact?
+
+The answer is that holocrine destroys the whole cell (holo meaning whole), while merocrine keeps the cell entirely intact; apocrine is the intermediate, losing only the apical tip.
+
+Crucial insight: the three modes - merocrine (intact, exocytosis), apocrine (loses apical tip), holocrine (whole cell dies) - describe how the secretion escapes the cell, from least to most destructive. Linking each to its classic example (merocrine-salivary, apocrine-mammary, holocrine-sebaceous) is exactly the association exams test.` },
+
+    { q: "Serous, mucous and mixed: the nature of the secretion.",
+      body: `Exocrine glands are also described by what they secrete, giving another simple but examinable classification of the secretory cells themselves.
+
+Serous cells produce a watery, thin, often enzyme-rich secretion - the watery part of saliva, or the enzymes of the pancreas. Under the microscope they typically have a rounded nucleus and darker, granular cytoplasm. Mucous cells produce mucus - a thick, viscous, slippery secretion for lubrication and protection. Under the microscope they appear pale and foamy, with a flattened nucleus pushed to the base of the cell by the stored mucus.
+
+My Socratic question: the salivary glands contain both serous and mucous cells. What would we call such a gland, and why is this useful?
+
+The answer is that it is a mixed (seromucous) gland, producing both watery enzyme-rich and thick lubricating secretions - useful because saliva needs both to moisten, lubricate and begin digesting food. In mixed glands, serous cells sometimes form crescent-shaped caps called serous demilunes over mucous units.
+
+Crucial insight: glands are classified by secretion type - serous (watery, enzyme-rich, dark), mucous (thick, lubricating, pale and foamy), or mixed. Recognising serous versus mucous cells by their microscopic appearance - dark and granular versus pale and foamy with a basal nucleus - is a key identification skill at the bench.` },
+
+    { q: "The goblet cell: the simplest gland of all.",
+      body: `One gland is so important and so common that it deserves special attention, and it is the simplest gland in the body: the goblet cell.
+
+A goblet cell is a single, individual mucous-secreting cell scattered among other epithelial cells - a one-celled, or unicellular, exocrine gland. It needs no duct because it sits right at the surface it secretes onto. Shaped like a wine goblet, it has a swollen top full of mucus and a narrow stalk-like base containing the nucleus.
+
+My Socratic question: goblet cells are found abundantly in the lining of the intestines and the respiratory tract. Why is a mucus-secreting cell so valuable in exactly these places?
+
+The answer is that in the intestine, mucus lubricates the passage of food and protects the lining from digestive enzymes and abrasion; in the airways, mucus traps inhaled dust and microbes so they can be swept out. Both are surfaces that need constant lubrication and protection, which the goblet cell provides on the spot.
+
+Crucial insight: the goblet cell is the unicellular exocrine gland - a single mucous cell needing no duct - and the classic example that most exocrine glands are multicellular by contrast. Recognising goblet cells in intestinal and respiratory epithelium, by their pale mucus-filled cup shape, is one of the most common and testable identifications in histology.` },
+
+    { q: "Why glands matter clinically and in the laboratory.",
+      body: `Glandular epithelium is not just a structural topic - it is where much of medicine and laboratory work is focused, because glands are common sites of disease.
+
+My Socratic question: epithelial tissues, including glands, are the origin of the most common human cancers. Why should a tissue that secretes be so prone to disease?
+
+The answer is that glandular epithelial cells divide actively to replace themselves and to produce their secretions, and actively dividing cells are more prone to the mutations that cause cancer. A cancer arising from glandular epithelium has a specific name - an adenocarcinoma - and these are among the most common cancers, including many breast, colon, prostate, and lung cancers. The prefix adeno- means gland.
+
+Glandular tissues are also central to laboratory medicine in other ways: the endocrine glands' hormones are measured in blood tests to diagnose disorders like thyroid disease and diabetes, and the exocrine pancreas's enzymes are measured to detect pancreatitis.
+
+Crucial insight: glandular epithelium connects directly to your future work - adenocarcinomas (gland-derived cancers) are identified in histology, and gland products (hormones and enzymes) are measured in clinical chemistry. The tissue you are learning to recognise is the tissue behind a great deal of diagnosis, which is why mastering its normal appearance matters so much.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for glandular epithelium, in five lines.
+
+The essence: glands are epithelial cells specialised for secretion, developing from epithelium that grows into the underlying tissue.
+
+The master division: exocrine glands secrete through ducts onto surfaces; endocrine glands are ductless and secrete hormones into the blood.
+
+Exocrine structure and classification: a secretory unit (acinar or tubular) plus a duct (simple = unbranched, compound = branched), named by combining both.
+
+How and what they secrete: three modes - merocrine (intact, exocytosis), apocrine (loses apical tip), holocrine (whole cell dies); and secretion types - serous (watery, enzyme-rich), mucous (thick, lubricating), or mixed; the goblet cell is the unicellular mucous gland.
+
+The relevance: gland-derived cancers are adenocarcinomas, among the commonest cancers, and gland products (hormones, enzymes) are measured throughout laboratory medicine.
+
+Now your final test. Under the microscope you examine a salivary gland. You see rounded secretory units, some with dark granular cells and some with pale foamy cells whose nuclei are flattened against the base, all draining into a branching system of ducts. The gland releases its product by exocytosis without losing cells.
+
+Question one: is this gland exocrine or endocrine, and how do you know from what you see?
+Question two: classify its duct system and name the two types of secretory cell present, stating what overall secretion type this makes the gland.
+Question three: name the mode of secretion described, and confirm it matches what is expected of a salivary gland.
+
+Work them through before reading on.
+
+My answers. One: it is exocrine, because it drains its product through a system of ducts rather than being ductless - the presence of ducts is the defining sign of an exocrine gland. Two: the branching duct system makes it a compound gland; the dark granular cells are serous cells and the pale foamy cells with basal flattened nuclei are mucous cells, so having both makes it a mixed (seromucous) gland. Three: releasing product by exocytosis without losing cells is merocrine secretion, which is exactly the mode expected of a salivary gland.
+
+If those came cleanly, you can recognise, classify and understand glandular epithelium - the secreting half of epithelial tissue, and the origin of much of the disease you will one day help diagnose.` },
+  ],
+  theory: [
+    { q: "What is a gland, and from what tissue do glands develop?", a: "A gland is epithelial cells specialised for secretion - the production and release of a useful substance. Glands develop from epithelium, forming when epithelial cells grow down into the underlying connective tissue during development and specialise to secrete." },
+    { q: "State the fundamental difference between exocrine and endocrine glands.", a: "Exocrine glands secrete their products through ducts onto a surface (the skin or a hollow organ's lining), while endocrine glands are ductless and secrete hormones directly into the blood, which carries them to distant target cells. The presence or absence of a duct is the defining difference." },
+    { q: "How do endocrine glands deliver their products, and give two examples.", a: "Endocrine glands release hormones directly into the surrounding tissue fluid and blood, with no duct; the blood then carries the hormones to target cells throughout the body. Examples include the thyroid, adrenal glands, pituitary, and the islet cells of the pancreas." },
+    { q: "Describe the two functional parts of an exocrine gland.", a: "The secretory unit (acinus), the group of epithelial cells that produce the secretion; and the duct, the epithelium-lined tube that carries the secretion from the secretory unit to the surface." },
+    { q: "Explain the simple versus compound classification of exocrine glands.", a: "It is based on the duct system: a simple gland has a single, unbranched duct, while a compound gland has a branched duct system. Combined with the secretory-unit shape (tubular, acinar, or tubuloacinar), this allows any exocrine gland to be named." },
+    { q: "Describe the three modes of secretion.", a: "Merocrine: product released by exocytosis with the cell staying fully intact (e.g. salivary glands). Apocrine: product released with the apical part of the cell pinching off, losing a little cytoplasm (e.g. mammary glands). Holocrine: the whole cell fills with product, dies and disintegrates to become the secretion (e.g. sebaceous glands)." },
+    { q: "Distinguish serous from mucous secretory cells.", a: "Serous cells produce a watery, thin, enzyme-rich secretion and appear with a rounded nucleus and darker, granular cytoplasm. Mucous cells produce thick, viscous, lubricating mucus and appear pale and foamy, with a flattened nucleus pushed to the base of the cell. A gland with both is mixed (seromucous)." },
+    { q: "What is a goblet cell?", a: "A goblet cell is a single, individual mucous-secreting cell scattered among other epithelial cells - a unicellular exocrine gland. Shaped like a goblet, with a mucus-filled swollen top and a narrow base holding the nucleus, it needs no duct and is abundant in the intestinal and respiratory linings." },
+    { q: "Why are goblet cells valuable in the intestine and airways?", a: "In the intestine, their mucus lubricates the passage of food and protects the lining from digestive enzymes and abrasion; in the airways, mucus traps inhaled dust and microbes so they can be cleared. Both are surfaces needing constant lubrication and protection." },
+    { q: "What is an adenocarcinoma and why is glandular epithelium prone to cancer?", a: "An adenocarcinoma is a cancer arising from glandular epithelium (adeno- meaning gland). Glandular epithelium is prone to cancer because its cells divide actively to replace themselves and produce secretions, and actively dividing cells are more susceptible to cancer-causing mutations. Adenocarcinomas include many breast, colon, prostate and lung cancers." },
+  ],
+  videos: [
+    { channel: "Histology", title: "Glandular Epithelium Exocrine and Endocrine", note: "The master division and how each gland type secretes.", url: "" },
+    { channel: "Histology", title: "Classification of Exocrine Glands Simple Compound", note: "Duct and secretory-unit shapes and how glands are named.", url: "" },
+    { channel: "Histology", title: "Modes of Secretion Merocrine Apocrine Holocrine", note: "The three secretion modes with their classic gland examples.", url: "" },
+  ],
+  mcqs: [
+    { q: "A gland is fundamentally made of cells specialised for:", o: ["Support", "Secretion", "Contraction", "Conduction"], a: 1, w: "Glands are epithelial cells specialised to secrete." },
+    { q: "Glands develop from:", o: ["Epithelium", "Bone", "Muscle", "Blood"], a: 0, w: "Glands form from epithelium growing into underlying tissue." },
+    { q: "The defining difference between exocrine and endocrine glands is:", o: ["Their size", "Their location only", "The presence or absence of a duct", "Their colour"], a: 2, w: "Exocrine glands have ducts; endocrine glands are ductless." },
+    { q: "Exocrine glands secrete their products:", o: ["Nowhere", "Through ducts onto a surface", "Into the blood", "Into the bone"], a: 1, w: "Exocrine secretion travels through a duct to a surface." },
+    { q: "Endocrine glands secrete their products:", o: ["Onto the skin", "Into the gut", "Through ducts", "Directly into the blood"], a: 3, w: "Ductless endocrine glands release hormones into the blood." },
+    { q: "Which is an endocrine gland?", o: ["Thyroid gland", "Mammary gland", "Salivary gland", "Sweat gland"], a: 0, w: "The thyroid is ductless and secretes hormones into blood." },
+    { q: "Which is an exocrine gland?", o: ["Pituitary", "Thyroid", "Adrenal", "Salivary gland"], a: 3, w: "The salivary gland uses ducts to secrete onto a surface." },
+    { q: "The pancreas is special because it is:", o: ["Both exocrine and endocrine", "Only endocrine", "A muscle", "Neither gland type"], a: 0, w: "It has endocrine islets and an exocrine enzyme-secreting portion." },
+    { q: "The secretory unit of an exocrine gland is called the:", o: ["Duct", "Nucleus", "Acinus", "Lumen"], a: 2, w: "The acinus is the group of cells producing the secretion." },
+    { q: "A rounded, flask-like secretory unit is described as:", o: ["Simple", "Acinar (alveolar)", "Compound", "Tubular"], a: 1, w: "Acinar or alveolar means a rounded secretory unit." },
+    { q: "A tube-shaped secretory unit is described as:", o: ["Compound", "Acinar", "Holocrine", "Tubular"], a: 3, w: "A tubular secretory unit is tube-shaped." },
+    { q: "A gland with a single, unbranched duct is:", o: ["Simple", "Endocrine", "Compound", "Mixed"], a: 0, w: "Simple glands have one unbranched duct." },
+    { q: "A gland with a branched duct system is:", o: ["Compound", "Unicellular", "Ductless", "Simple"], a: 0, w: "Compound glands have branching ducts." },
+    { q: "Sweat glands, with a coiled tube-shaped unit and single duct, are:", o: ["Compound acinar", "Simple coiled tubular", "Holocrine", "Endocrine"], a: 1, w: "A single duct with a coiled tubular unit is simple coiled tubular." },
+    { q: "Merocrine secretion releases product by:", o: ["Bursting", "Destroying the whole cell", "Losing the apical tip", "Exocytosis with the cell staying intact"], a: 3, w: "Merocrine uses exocytosis and keeps the cell intact." },
+    { q: "Apocrine secretion involves loss of:", o: ["The whole cell", "No cell material", "The apical portion of the cell", "The nucleus only"], a: 2, w: "Apocrine pinches off the apical tip with the secretion." },
+    { q: "Holocrine secretion involves:", o: ["Only the tip", "The entire cell dying and becoming the secretion", "Exocytosis", "No loss of cell"], a: 1, w: "In holocrine secretion the whole cell disintegrates as the product." },
+    { q: "The sebaceous (oil) glands secrete by which mode?", o: ["Endocrine", "Merocrine", "Apocrine", "Holocrine"], a: 3, w: "Sebaceous glands are the classic holocrine glands." },
+    { q: "The mammary glands are the classic example of which mode?", o: ["Apocrine", "Merocrine", "Serous", "Holocrine"], a: 0, w: "Mammary glands release milk fat by apocrine secretion." },
+    { q: "Serous cells produce a secretion that is:", o: ["Solid", "Oily", "Watery and enzyme-rich", "Thick and slippery"], a: 2, w: "Serous secretion is watery and often enzyme-rich." },
+    { q: "Mucous cells produce a secretion that is:", o: ["Watery", "Hormonal", "Thick, viscous and lubricating", "Enzyme-rich"], a: 2, w: "Mucus is thick, viscous and lubricating." },
+    { q: "Under the microscope, mucous cells typically appear:", o: ["Empty", "Pale and foamy with a basal flattened nucleus", "Red", "Dark and granular"], a: 1, w: "Stored mucus makes them pale and foamy with a basal nucleus." },
+    { q: "A gland with both serous and mucous cells is:", o: ["Holocrine", "Mixed (seromucous)", "Purely serous", "Endocrine"], a: 1, w: "Both cell types make it a mixed seromucous gland." },
+    { q: "A goblet cell is best described as a:", o: ["Endocrine gland", "Muscle cell", "Unicellular (single-celled) exocrine gland", "Multicellular gland"], a: 2, w: "The goblet cell is a single-celled exocrine gland." },
+    { q: "A goblet cell secretes:", o: ["Bone", "Mucus", "Enzymes only", "Hormones"], a: 1, w: "Goblet cells are mucous-secreting cells." },
+    { q: "Goblet cells are abundant in the:", o: ["Bone marrow", "Kidney tubules only", "Intestinal and respiratory linings", "Heart muscle"], a: 2, w: "They lubricate and protect the gut and airway linings." },
+    { q: "A goblet cell needs no duct because it:", o: ["Is endocrine", "Is in the blood", "Does not secrete", "Sits at the surface it secretes onto"], a: 3, w: "Being at the surface, it releases mucus directly, no duct needed." },
+    { q: "A cancer arising from glandular epithelium is called a(n):", o: ["Adenocarcinoma", "Melanoma", "Lymphoma", "Sarcoma"], a: 0, w: "Adeno- means gland; adenocarcinoma is a gland-derived cancer." },
+    { q: "Glandular epithelium is prone to cancer largely because its cells:", o: ["Are dead", "Lack nuclei", "Never divide", "Divide actively, risking mutation"], a: 3, w: "Active division raises the chance of cancer-causing mutations." },
+    { q: "Measuring hormones and pancreatic enzymes in blood tests relies on the products of:", o: ["Glandular epithelium", "Nerves", "Bone", "Muscle tissue"], a: 0, w: "Hormones and enzymes are secretions of glandular epithelium." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
   "ana:1": T_ANA_HISTO,
   "ana:2": T_ANA_EPI_OVERVIEW,
   "ana:3": T_ANA_EPI_MEMB,
+  "ana:4": T_ANA_GLAND,
   "phy:0": T_PHY_GENERAL,
   "bch:0": T_BCH_INTRO,
   "bio:0": T_BIO_AMINO,
@@ -2873,13 +3050,27 @@ function loadMermaid() {
 async function callClaude(system, messages, maxTokens = 2048) {
   const body = JSON.stringify({ max_tokens: maxTokens, system, messages });
   let res;
-  for (let attempt = 0; attempt < 3; attempt++) {
-    res = await fetch(API_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body });
+  // Retry on rate limits (429) and transient overload (529/503). The free AI tier
+  // limits requests per minute, so when several people use it at once we wait and
+  // retry rather than failing - most rate limits clear within a few seconds.
+  for (let attempt = 0; attempt < 5; attempt++) {
+    try {
+      res = await fetch(API_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body });
+    } catch (netErr) {
+      // network hiccup - wait briefly and retry
+      if (attempt < 4) { await new Promise((r) => setTimeout(r, 800 * (attempt + 1))); continue; }
+      throw new Error("Could not reach the AI - check your connection and try again.");
+    }
     if (res.ok) break;
-    if (res.status === 429 || res.status === 529) { await new Promise((r) => setTimeout(r, 900 * (attempt + 1))); continue; }
+    if (res.status === 429 || res.status === 529 || res.status === 503) {
+      await new Promise((r) => setTimeout(r, 1200 * (attempt + 1)));
+      continue;
+    }
     throw new Error("The AI service returned an error (" + res.status + ").");
   }
-  if (!res.ok) throw new Error(res.status === 429 ? "The AI is busy right now. Wait a few seconds and try again." : "The AI service is unavailable at the moment.");
+  if (!res.ok) throw new Error((res.status === 429 || res.status === 503 || res.status === 529)
+    ? "The AI is handling lots of requests right now. Wait about 20 seconds and try again - it is free, so it just needs a moment."
+    : "The AI service is unavailable at the moment.");
   const data = await res.json();
   if (data && data.error) throw new Error(typeof data.error === "string" ? data.error : (data.error.message || "AI error"));
   // accept Anthropic ({content:[{type:'text',text}]}) and OpenAI/DeepSeek/Gemini-proxied ({choices:[{message:{content}}]}) shapes
@@ -3888,6 +4079,34 @@ function HomeView({ app }) {
           <p className="hero-p">Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
         </div>
       </div>
+
+      {(() => {
+        // Exam countdown - end-of-semester exams begin 17 August 2026.
+        const examStart = new Date("2026-08-17T00:00:00");
+        const now = new Date();
+        const msPerDay = 1000 * 60 * 60 * 24;
+        const daysLeft = Math.ceil((examStart - now) / msPerDay);
+        if (daysLeft < -30) return null; // hide well after exams
+        const built = Object.keys(CONTENT).length;
+        let line;
+        if (daysLeft > 1) line = `The end-of-semester exams begin in ${daysLeft} days. Some topics you will be examined on you may not have covered yet - ASCEND has you. Start climbing today.`;
+        else if (daysLeft === 1) line = `Exams begin tomorrow. One last climb - revise your weak spots in Review and lock it in. ASCEND has you.`;
+        else if (daysLeft === 0) line = `Exams begin today. Breathe, trust your preparation, and give it everything. ASCEND has you.`;
+        else line = `Exam season is here. Keep going - revise, review, and finish strong. ASCEND has you.`;
+        return (
+          <div className="card card-feature" style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+            <div style={{ flexShrink: 0, width: 72, height: 72, borderRadius: 16, background: "var(--amber-dim)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ fontWeight: 800, fontSize: 26, color: "var(--amber)", lineHeight: 1 }}>{daysLeft > 0 ? daysLeft : 0}</div>
+              <div className="mono" style={{ fontSize: 9.5, color: "var(--amber-2)", marginTop: 2 }}>{daysLeft === 1 ? "DAY" : "DAYS"}</div>
+            </div>
+            <div style={{ flex: 1, minWidth: 200 }}>
+              <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 4 }}>Countdown to exams · 17 Aug 2026</div>
+              <div style={{ fontSize: 14.5, color: "var(--text-2)", lineHeight: 1.55 }}>{line}</div>
+            </div>
+          </div>
+        );
+      })()}
+
       <div className="grid g3" style={{ marginTop: 16 }}>
         <div className="card">
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
