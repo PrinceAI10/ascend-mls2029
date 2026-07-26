@@ -2093,6 +2093,366 @@ If those came cleanly, you understand communication as a process you can analyse
   ],
 };
 
+/* --------------------------- mls:0 --------------------------- */
+const T_MLS_SAFETY = {
+  courseId: "mls",
+  topicIndex: 0,
+  title: "Introduction to Laboratory Safety",
+  minutes: 20,
+  note: [
+    { q: "Why is safety the very first thing a lab scientist learns?",
+      body: `Before you run a single test, before you touch a single sample, you learn safety. This is not bureaucratic caution - it is because the medical laboratory is one of the most hazardous workplaces in healthcare.
+
+My Socratic question: a sample of blood arrives at your bench. It looks harmless - a small tube of red liquid. Why should you treat it as potentially deadly?
+
+The answer is that any sample may carry invisible, lethal pathogens - HIV, hepatitis B, tuberculosis - and you cannot tell by looking. The laboratory concentrates the very dangers medicine exists to fight: infectious agents, corrosive chemicals, sharp instruments, flammable reagents, electrical equipment. A single careless moment can cause a laboratory-acquired infection, a chemical burn, or a fire.
+
+Crucial insight: laboratory safety is the discipline of preventing harm to yourself, your colleagues, your patients and the environment while working with hazardous materials. It is the foundation of everything else, because a scientist who is injured, infected, or dead cannot help anyone. Safety is not the enemy of good work - it is the precondition for it. This is why every laboratory course, and every laboratory career, begins here.` },
+
+    { q: "The kinds of hazards you will face.",
+      body: `To control danger you must first recognise it. Laboratory hazards fall into several clear categories, and naming them is the first step to managing them.
+
+Biological hazards are infectious agents - bacteria, viruses, fungi, parasites - present in patient samples and cultures, capable of causing infection. Chemical hazards are the reagents, acids, bases, solvents and stains that can burn, poison, or react dangerously. Physical hazards include sharp objects, or "sharps" - needles, broken glass, blades - as well as heat, and moving equipment. Electrical hazards come from the many powered instruments. Fire hazards arise from flammable solvents and open flames. Ergonomic hazards come from repetitive work and poor posture over long shifts.
+
+My Socratic question: of all these, which single category is most characteristic of the medical laboratory and most feared?
+
+The answer is the biological hazard - the risk of infection from patient samples - because it is invisible, ever-present, and can be fatal. This is why so much of laboratory safety centres on containing and neutralising biological threats.
+
+Crucial insight: every hazard has its own controls, but the mindset is universal - identify the hazard, assess the risk, and apply the right protection. You cannot protect against a danger you have not recognised, so learning to see the hazards in every task is the first safety skill.` },
+
+    { q: "The hierarchy of controls: the smartest way to stay safe.",
+      body: `Here is a principle that separates real safety thinking from simply wearing gloves. Not all protections are equal, and there is a proper order to them called the hierarchy of controls.
+
+The hierarchy ranks safety measures from most effective to least. At the top is elimination - removing the hazard entirely, the best option of all. Next is substitution - replacing a dangerous material with a safer one, such as a less toxic stain. Then engineering controls - physical devices that contain the hazard, like a biosafety cabinet or a fume hood. Then administrative controls - rules, training, and procedures that change how people work. And only at the very bottom, as the last line of defence, is personal protective equipment, or PPE.
+
+My Socratic question: most people think of gloves and lab coats as the front line of safety. Why does the hierarchy place PPE at the very bottom?
+
+The answer is that PPE only protects the individual wearing it, and only if used perfectly - it fails if forgotten, torn, or removed. The higher controls protect everyone by removing or containing the hazard itself, before it ever reaches a person. PPE is the last resort, not the first.
+
+Crucial insight: good safety works from the top of the hierarchy down. Ask first whether a hazard can be eliminated, substituted, or engineered away, and rely on PPE only for what remains. A laboratory that depends on gloves alone is a laboratory waiting for an accident.` },
+
+    { q: "Personal Protective Equipment: your last line of defence.",
+      body: `Though it sits at the bottom of the hierarchy, PPE is what you wear every day, and using it correctly is essential.
+
+PPE is the protective clothing and equipment that shields you from hazards that could not be otherwise removed. The core items are: the laboratory coat, buttoned and worn over your clothes, protecting skin and clothing from splashes; gloves, protecting the hands from biological and chemical contact; eye protection - safety glasses or goggles - guarding against splashes to the eyes; and face protection or masks when there is a risk of aerosols or splashes to the face.
+
+My Socratic question: PPE only works if used correctly. When, in the sequence of a task, must PPE go on, and what is the most dangerous moment in its use?
+
+The answer is that PPE must be put on - donned - before you begin work with the hazard, and the most dangerous moment is taking it off - doffing - because contaminated gloves or a coat can spread the very material they caught. There is a correct order to remove PPE to avoid contaminating yourself, and hands must always be washed afterward.
+
+Crucial insight: PPE is only as good as its use. Wearing it after exposure is useless; removing it carelessly spreads contamination; a torn glove offers no protection. Treat PPE as a discipline, not a costume - the right equipment, worn at the right time, removed in the right order, every single time.` },
+
+    { q: "Biosafety levels: matching containment to danger.",
+      body: `Not all biological hazards are equal, so laboratories are graded by how much containment they provide. This grading is the system of biosafety levels, and it is a favourite of examiners.
+
+There are four biosafety levels, BSL-1 to BSL-4, rising with the danger of the agents handled. BSL-1 is for agents not known to cause disease in healthy adults, worked on an open bench with basic practices - a teaching lab. BSL-2 is for agents causing human disease that is rarely serious and usually treatable, such as much routine clinical work with blood and body fluids; it adds limited access, biohazard signs, sharps precautions, and a biosafety cabinet for aerosol-generating steps. BSL-3 is for serious or lethal agents that can spread by air, such as tuberculosis, requiring special ventilation and strict controls. BSL-4 is for the most dangerous agents - frequently fatal, with no treatment or vaccine, such as Ebola - requiring maximum containment, full-body suits, and the small number of specialised labs worldwide.
+
+My Socratic question: most routine clinical laboratory work, handling everyday blood and urine samples, takes place at which level?
+
+The answer is BSL-2, because clinical samples may contain bloodborne pathogens like HIV and hepatitis B - serious but treatable, transmitted by percutaneous or mucous-membrane exposure rather than air.
+
+Crucial insight: the biosafety level rises with the danger of the agent, matching the strength of containment to the threat. Knowing that routine clinical work is BSL-2 tells you the daily precautions your career demands: gloves, coat, eye protection, sharps care, and a biosafety cabinet for anything that splashes or aerosolises.` },
+
+    { q: "Universal precautions: the rule that keeps you alive.",
+      body: `Here is perhaps the single most important safety principle in the clinical laboratory, and it flows from one hard truth: you cannot tell an infectious sample from a safe one by looking.
+
+Universal precautions is the practice of treating every patient sample - all blood, body fluids, tissues and cells - as if it were infectious, regardless of the patient or the request. You never assume a sample is safe. Every tube of blood is handled as though it carries HIV, hepatitis B, and every other bloodborne pathogen.
+
+My Socratic question: why treat a sample from an apparently healthy young patient with the same caution as one from a known HIV case?
+
+The answer is that infection is invisible - a patient may be infected without knowing it, may be in a window period before tests turn positive, or the request may simply not mention it. If you only took precautions for samples labelled dangerous, you would be exposed by all the ones that were not labelled. Treating everything as infectious closes that gap entirely.
+
+Crucial insight: universal precautions - sometimes extended as "standard precautions" - is the safety net that does not depend on knowing which samples are dangerous. It removes the fatal assumption of safety. This one principle, applied without exception, prevents the majority of laboratory-acquired infections, and it must become second nature.` },
+
+    { q: "Sharps and the greatest daily danger.",
+      body: `Among all the hazards, one causes more laboratory-acquired infections than any other, and it deserves its own focus: the sharp.
+
+A sharp is any object that can pierce the skin - needles above all, but also lancets, blades, and broken glass. The danger is the needlestick injury: a contaminated needle piercing the skin injects pathogens directly into the bloodstream, bypassing every other defence. This is the classic route by which laboratory and healthcare workers acquire HIV and hepatitis B and C.
+
+My Socratic question: a used needle must be made safe. Recapping it by hand seems tidy - why is it in fact one of the most dangerous things you can do?
+
+The answer is that recapping brings your hand and the contaminated needle together, and most needlestick injuries happen exactly then, as the needle misses the cap and enters the hand. The rule is: never recap a needle by hand. Used sharps go immediately, uncapped, into a rigid, puncture-proof sharps container.
+
+Crucial insight: sharps demand a specific discipline - never recap, never overfill the sharps bin, dispose immediately into the proper puncture-proof container, and never reach into it. Because the needlestick delivers infection past all your PPE straight into your blood, sharps safety is not one rule among many - it is the rule that most directly stands between you and a life-changing infection.` },
+
+    { q: "When things go wrong: spills, exposures and emergencies.",
+      body: `Even with perfect precautions, accidents happen, and knowing how to respond turns a crisis into a manageable event.
+
+For a biological spill, the principle is contain and decontaminate: alert others, cover the spill to stop aerosols, and disinfect with an appropriate agent such as sodium hypochlorite (bleach) after allowing droplets to settle. For an exposure - a needlestick, or a splash to eyes or mucous membranes - immediate first aid comes first: wash the wound with soap and water, or flush the eyes at the eyewash station for many minutes, then report the incident at once so that post-exposure evaluation and, where needed, prophylaxis can begin quickly.
+
+My Socratic question: after a needlestick from a patient sample, why does the speed of reporting matter so much - why not simply wash it and carry on?
+
+The answer is that for some infections, such as HIV, post-exposure prophylaxis - preventive medication - is far more effective the sooner it is started, ideally within hours. Delaying to avoid embarrassment or paperwork can cost you that protection. Reporting is not blame; it is your own safety.
+
+Crucial insight: every laboratory has defined emergency procedures - spill kits, eyewash stations, safety showers, fire extinguishers, and reporting systems - and knowing them before you need them is essential. In an emergency there is no time to learn; the response must already be known. First aid, then report, always and immediately.` },
+
+    { q: "Waste, housekeeping and the culture of safety.",
+      body: `Safety does not end when the test is done. What you do with waste, and how you keep your space, protects the next person and the world outside the laboratory.
+
+Laboratory waste must be segregated by type: infectious or biohazardous waste - anything contaminated with blood or body fluids - goes into designated, often colour-coded biohazard bags and is decontaminated, typically by autoclaving, before disposal; sharps go into puncture-proof containers; chemical waste is collected separately according to its hazard. General housekeeping matters too: clean, uncluttered benches, no food or drink in the laboratory, no mouth-pipetting, tied-back hair, and closed shoes.
+
+My Socratic question: why is the simple rule "no eating or drinking in the laboratory" a genuine safety measure and not mere fussiness?
+
+The answer is that eating, drinking, or touching your face provides a direct route for pathogens and chemicals from contaminated surfaces or hands into your body by ingestion or mucous membrane. The rule closes an entire pathway of exposure.
+
+Crucial insight: beyond any single rule, laboratory safety is ultimately a culture - a shared, constant attention to doing things the safe way, every time, because everyone's safety depends on it. Proper waste disposal protects colleagues, waste handlers, and the community; good housekeeping prevents accidents before they start. Safety is not a set of chores but a professional habit of mind that defines a good laboratory scientist.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for laboratory safety, in five lines.
+
+The hazards: biological (infectious samples, the most feared), chemical, physical including sharps, electrical, and fire - identify the hazard before you can control it.
+
+The hierarchy of controls: from most to least effective - elimination, substitution, engineering controls, administrative controls, and last of all PPE; good safety works from the top down.
+
+The daily armour: PPE - lab coat, gloves, eye and face protection - donned before work, doffed carefully afterward, the last line of defence.
+
+The core principles: biosafety levels (routine clinical work is BSL-2) match containment to danger; and universal precautions treat every sample as infectious, closing the fatal assumption of safety.
+
+The greatest danger and the response: the needlestick injects infection past all defences, so never recap and dispose of sharps immediately; and when accidents happen, first aid then immediate reporting, especially for exposures where prophylaxis is time-critical.
+
+Now your final test. A laboratory scientist is about to process a routine blood sample from a patient whose infection status is unknown. Midway, they suffer a needlestick injury from the used needle.
+
+Question one: before the accident, what biosafety level and what overarching precaution principle should have governed how they handled this "routine" sample, and why?
+Question two: identify the specific unsafe act most likely to have caused the needlestick, and state the rule that forbids it.
+Question three: list, in order, the immediate steps the scientist should take after the injury, and explain why speed matters.
+
+Work them through before reading on.
+
+My answers. One: routine clinical blood work is handled at BSL-2, and under universal precautions the sample must be treated as infectious despite the unknown status - precisely because an unknown status could hide HIV or hepatitis, and assuming safety is the fatal error. Two: the most likely cause is recapping the needle by hand, which is forbidden by the rule never to recap - used sharps go straight, uncapped, into a puncture-proof container. Three: immediately wash the wound with soap and water, then report the incident at once so that post-exposure evaluation and, if indicated, prophylaxis can begin - speed matters because prophylaxis for infections like HIV is far more effective the sooner it starts, ideally within hours.
+
+If those came cleanly, you have the foundation that keeps you alive and effective at the bench. Every technique you learn from here rests on this safety base.` },
+  ],
+  theory: [
+    { q: "Define laboratory safety and explain why it is the foundation of laboratory work.", a: "Laboratory safety is the discipline of preventing harm to oneself, colleagues, patients and the environment while working with hazardous materials. It is foundational because the laboratory concentrates infectious, chemical, physical, electrical and fire hazards, and a scientist who is injured, infected or killed cannot help anyone - safety is the precondition for all good work." },
+    { q: "List the main categories of laboratory hazards and identify the most characteristic one.", a: "Biological (infectious agents in samples), chemical (reagents, acids, solvents), physical (sharps, heat, moving equipment), electrical, fire (flammable solvents), and ergonomic hazards. The biological hazard - infection from patient samples - is the most characteristic and feared, because it is invisible, ever-present and potentially fatal." },
+    { q: "State the hierarchy of controls in order and explain why PPE is placed last.", a: "From most to least effective: elimination, substitution, engineering controls, administrative controls, and personal protective equipment (PPE). PPE is last because it protects only the individual wearing it and only if used perfectly, whereas higher controls remove or contain the hazard itself before it reaches anyone." },
+    { q: "Name the core items of PPE and their functions.", a: "The lab coat (protects skin and clothing from splashes), gloves (protect hands from biological and chemical contact), eye protection such as safety glasses or goggles (guard against eye splashes), and face protection or masks (against aerosols and facial splashes)." },
+    { q: "Why is doffing (removing) PPE considered the most dangerous moment in its use?", a: "Because contaminated gloves or coat can spread the hazardous material they caught onto the wearer or surfaces. PPE must be removed in a correct order to avoid self-contamination, and hands must always be washed afterward." },
+    { q: "Describe the four biosafety levels and which one covers routine clinical work.", a: "BSL-1: agents not causing disease in healthy adults, open bench (teaching labs). BSL-2: agents causing usually treatable human disease, adding limited access, sharps precautions and a biosafety cabinet - this covers routine clinical work with blood and body fluids. BSL-3: serious or lethal airborne agents like TB, needing special ventilation. BSL-4: frequently fatal agents with no treatment like Ebola, needing maximum containment." },
+    { q: "Define universal precautions and explain the reasoning behind it.", a: "Universal precautions is the practice of treating every patient sample - all blood, body fluids and tissues - as if it were infectious, regardless of the patient. The reasoning is that infection is invisible: a patient may be infected unknowingly or be in a window period, so only by treating everything as infectious can the gap left by unlabelled dangerous samples be closed." },
+    { q: "What is a needlestick injury and why is it so dangerous?", a: "A needlestick injury is the piercing of the skin by a contaminated needle or sharp, injecting pathogens directly into the bloodstream and bypassing all other defences including PPE. It is the classic route by which laboratory workers acquire HIV and hepatitis B and C, making it the single greatest cause of laboratory-acquired infections." },
+    { q: "State the key rules for safe sharps handling.", a: "Never recap a needle by hand (most needlesticks occur during recapping); dispose of used sharps immediately and uncapped into a rigid, puncture-proof sharps container; never overfill the container; and never reach into it." },
+    { q: "Outline the immediate response to a needlestick exposure and explain why speed matters.", a: "Immediately wash the wound with soap and water (or flush a splashed eye at the eyewash station), then report the incident at once so post-exposure evaluation and prophylaxis can begin. Speed matters because post-exposure prophylaxis, for example against HIV, is far more effective the sooner it is started, ideally within hours." },
+  ],
+  videos: [
+    { channel: "Ninja Nerd / Microbiology", title: "Biosafety Levels BSL 1 to 4 Explained", note: "Clear overview of the four biosafety levels and what each requires.", url: "" },
+    { channel: "Lab Safety", title: "Personal Protective Equipment PPE in the Laboratory", note: "How to don and doff PPE correctly and in the right order.", url: "" },
+    { channel: "Microbiology", title: "Universal Standard Precautions and Sharps Safety", note: "Why every sample is treated as infectious, and safe needle handling.", url: "" },
+  ],
+  mcqs: [
+    { q: "Laboratory safety is best described as the discipline of:", o: ["Making work slower", "Filing paperwork", "Preventing harm while working with hazardous materials", "Cleaning glassware"], a: 2, w: "Safety prevents harm to people and environment from lab hazards." },
+    { q: "The most characteristic and feared hazard of the medical laboratory is the:", o: ["Biological hazard", "Ergonomic hazard", "Noise hazard", "Lighting hazard"], a: 0, w: "Infection from patient samples is invisible, ever-present and potentially fatal." },
+    { q: "Needles, broken glass and blades are examples of:", o: ["Sharps (physical hazards)", "Chemical hazards", "Electrical hazards", "Biological agents"], a: 0, w: "Sharps are physical hazards that can pierce the skin." },
+    { q: "In the hierarchy of controls, the MOST effective measure is:", o: ["PPE", "Administrative controls", "Warning signs", "Elimination of the hazard"], a: 3, w: "Removing the hazard entirely is the most effective control." },
+    { q: "In the hierarchy of controls, the LEAST effective measure is:", o: ["Engineering controls", "Elimination", "Substitution", "Personal protective equipment"], a: 3, w: "PPE protects only the individual and only if used perfectly." },
+    { q: "A biosafety cabinet or fume hood is an example of a(n):", o: ["Administrative control", "PPE", "Engineering control", "Elimination"], a: 2, w: "Physical devices that contain hazards are engineering controls." },
+    { q: "Replacing a toxic stain with a safer one is an example of:", o: ["Elimination", "Administrative control", "PPE", "Substitution"], a: 3, w: "Substitution swaps a dangerous material for a safer one." },
+    { q: "PPE is placed at the bottom of the hierarchy because it:", o: ["Is uncomfortable", "Protects only the wearer and only if used perfectly", "Is optional", "Is expensive"], a: 1, w: "Higher controls remove or contain the hazard for everyone." },
+    { q: "The core items of PPE include all EXCEPT:", o: ["Gloves", "A mobile phone", "Eye protection", "Lab coat"], a: 1, w: "Lab coat, gloves and eye protection are PPE; a phone is not." },
+    { q: "PPE should be put on (donned):", o: ["Before beginning work with the hazard", "After exposure", "Only if a splash occurs", "At the end of the day"], a: 0, w: "PPE must be worn before contact with the hazard to protect you." },
+    { q: "The most dangerous moment in PPE use is:", o: ["Storing it", "Taking it off (doffing)", "Putting it on", "Buying it"], a: 1, w: "Removing contaminated PPE can spread the material if done carelessly." },
+    { q: "There are how many biosafety levels?", o: ["Two", "Six", "Four", "Ten"], a: 2, w: "Biosafety levels run from BSL-1 to BSL-4." },
+    { q: "Biosafety levels rise with:", o: ["The danger of the agents handled", "The age of the equipment", "The number of staff", "The size of the lab"], a: 0, w: "Higher BSL means more dangerous agents and more containment." },
+    { q: "Routine clinical work with blood and body fluids is done at:", o: ["BSL-4", "BSL-3", "BSL-1", "BSL-2"], a: 3, w: "Clinical samples may carry bloodborne pathogens, requiring BSL-2." },
+    { q: "An open-bench teaching lab with harmless agents is:", o: ["BSL-1", "BSL-3", "BSL-4", "BSL-2"], a: 0, w: "BSL-1 handles agents not known to cause disease in healthy adults." },
+    { q: "Airborne lethal agents like tuberculosis require at least:", o: ["BSL-1", "None", "BSL-3", "BSL-2"], a: 2, w: "BSL-3 is for serious airborne agents needing special ventilation." },
+    { q: "The highest containment, for agents like Ebola, is:", o: ["BSL-4", "BSL-3", "BSL-2", "BSL-5"], a: 0, w: "BSL-4 is maximum containment for frequently fatal, untreatable agents." },
+    { q: "Universal precautions means treating every sample as:", o: ["Chemical waste", "Safe unless labelled", "Infectious regardless of the patient", "Requiring no gloves"], a: 2, w: "All samples are handled as potentially infectious." },
+    { q: "The reasoning behind universal precautions is that:", o: ["Labels are always wrong", "It saves money", "All patients are sick", "Infection is invisible and samples may be unknowingly infectious"], a: 3, w: "You cannot tell an infectious sample by looking, so treat all as infectious." },
+    { q: "A contaminated needle piercing the skin is a:", o: ["Chemical burn", "Splash exposure", "Spill", "Needlestick injury"], a: 3, w: "A needlestick injects pathogens directly into the bloodstream." },
+    { q: "Needlestick injuries are dangerous because they:", o: ["Damage the needle", "Inject pathogens past all other defences into the blood", "Are always harmless", "Cause only minor pain"], a: 1, w: "They bypass PPE and deliver infection straight into the bloodstream." },
+    { q: "The rule about recapping used needles by hand is:", o: ["Never recap by hand", "Always recap tightly", "Recap twice", "Recap only if busy"], a: 0, w: "Most needlesticks happen during hand recapping - never do it." },
+    { q: "Used sharps should be disposed of into a:", o: ["Rigid, puncture-proof sharps container", "Sink", "Normal bin", "Biohazard bag"], a: 0, w: "Sharps go immediately, uncapped, into a puncture-proof container." },
+    { q: "The first action after a needlestick injury is to:", o: ["Recap the needle", "Wash the wound with soap and water", "Go home", "Finish the test"], a: 1, w: "Immediate first aid - washing the wound - comes first." },
+    { q: "After first aid for a needlestick, the scientist must:", o: ["Say nothing", "Continue working", "Report the incident immediately", "Wait a week"], a: 2, w: "Prompt reporting enables timely post-exposure evaluation and prophylaxis." },
+    { q: "Speed of reporting an exposure matters because:", o: ["It is a formality", "Post-exposure prophylaxis is more effective the sooner it starts", "The lab closes", "Paperwork closes early"], a: 1, w: "Prophylaxis, e.g. for HIV, works best started within hours." },
+    { q: "A recommended disinfectant for a biological spill is:", o: ["Plain water", "Cooking oil", "Sodium hypochlorite (bleach)", "Alcohol only"], a: 2, w: "Bleach is an appropriate agent to decontaminate biological spills." },
+    { q: "Infectious (biohazardous) waste is typically decontaminated by:", o: ["Freezing", "Autoclaving", "Air drying", "Burying raw"], a: 1, w: "Autoclaving decontaminates biohazardous waste before disposal." },
+    { q: "Eating and drinking are forbidden in the laboratory because they:", o: ["Distract others", "Provide a route for pathogens and chemicals to enter the body", "Are messy", "Waste time"], a: 1, w: "Ingestion is a direct exposure pathway the rule closes." },
+    { q: "Ultimately, laboratory safety is best understood as:", o: ["Only the supervisor's job", "A one-time training", "A set of forms", "A constant shared culture of working safely"], a: 3, w: "Safety is an ongoing professional habit shared by everyone." },
+  ],
+};
+
+/* --------------------------- phy:1 --------------------------- */
+const T_PHY_HOMEO = {
+  courseId: "phy",
+  topicIndex: 1,
+  title: "Homeostasis",
+  minutes: 18,
+  note: [
+    { q: "The one idea that unifies all of physiology.",
+      body: `In General Physiology you met the body as a system of cooperating parts. Now we meet the single principle that ties every one of those parts together - the idea a great physiologist called the central concept of the whole subject: homeostasis.
+
+My Socratic question: your body temperature stays near 37 degrees whether you are in the hot sun or a cold room; your blood glucose stays controlled whether you have just eaten or fasted all day. How does the body hold its internal conditions steady while the outside world changes wildly?
+
+The answer is homeostasis - and it does not happen by accident but by constant, active regulation. Homeostasis is the maintenance of a relatively stable internal environment despite changes in the external environment. The key word is relatively - conditions are not frozen rigidly, but held fluctuating within a narrow normal range around a target value.
+
+Crucial insight: homeostasis is arguably the most important concept in physiology, because every organ system exists, in part, to help maintain it. The lungs, kidneys, heart, and hormones all work to keep the internal environment stable, because our cells - recall from the water and pH topic - can only function within narrow limits of temperature, pH, glucose and more. Understand homeostasis and you have the thread that runs through every topic in the course.` },
+
+    { q: "The internal environment and why it must be defended.",
+      body: `To grasp homeostasis, you must first appreciate what is being kept stable: the internal environment.
+
+Your cells do not touch the outside world. They are bathed in extracellular fluid - the internal environment - and it is the conditions of this fluid that must be kept constant: its temperature, its pH, its glucose concentration, its ion levels, its oxygen and carbon dioxide.
+
+My Socratic question: why can the body tolerate large swings in the outside world but not in this internal fluid?
+
+The answer returns to your biochemistry. Cells run on enzymes, and enzymes work only within narrow ranges of temperature and pH; too hot, too cold, too acidic, and they fail. The internal environment is where the cells actually live, so it is that environment - not the outside world - that must be held stable for life to continue. The body buffers its cells from the chaos outside by keeping their immediate surroundings constant.
+
+Crucial insight: homeostasis is fundamentally about protecting the cells by controlling the fluid around them. Every homeostatic mechanism you will study - temperature regulation, blood glucose control, acid-base balance, fluid balance - is defending some property of this internal environment so that the cells within it can keep working. This is the why behind the whole topic.` },
+
+    { q: "The set point and the normal range.",
+      body: `Homeostasis works by holding each variable near a target, and two precise terms describe this.
+
+The set point is the ideal target value for a physiological variable - for example, a body temperature set point of about 37 degrees Celsius. The normal range is the narrow band around the set point within which the variable is allowed to fluctuate - a few tenths of a degree either side of 37.
+
+My Socratic question: if the body has a fixed set point, why does it allow any fluctuation at all - why a range rather than a single exact value?
+
+The answer is that perfect constancy is impossible and unnecessary; conditions naturally drift slightly with activity, meals and time of day. What matters is that the variable is kept close - within the normal range - and pulled back whenever it strays too far. Homeostasis is dynamic, a constant small correcting, not a rigid freezing.
+
+Crucial insight: think of the set point as the target and the normal range as the acceptable zone around it. The body's job is to detect when a variable leaves that zone and act to bring it back. This immediately raises the question of how the body detects and corrects such deviations - which is the machinery of the feedback loop, the heart of homeostasis.` },
+
+    { q: "The three components of every control system.",
+      body: `Every homeostatic mechanism in the body, without exception, is built from the same three components. Learn this trio once and you can analyse any regulatory system you meet.
+
+The receptor, also called the sensor, detects changes in the variable - it monitors the condition and reports any deviation. The control centre, also called the integrating centre, receives the information, compares it to the set point, and decides on the response. The effector carries out the response, producing the change that corrects the deviation.
+
+My Socratic question: information must flow through these three in a particular direction. Trace the path a signal takes from a detected change to a correction.
+
+The answer: the receptor detects the change and sends the information to the control centre; the control centre compares it to the set point and, if needed, sends a command to the effector; the effector acts to reverse the change. Receptor to control centre to effector - detect, decide, do.
+
+Crucial insight: this three-part structure - receptor, control centre, effector - is the universal blueprint of physiological regulation. Whenever you study the control of temperature, glucose, blood pressure or anything else, identify these three parts and the mechanism becomes clear. The nervous and endocrine systems provide the communication that links them.` },
+
+    { q: "Negative feedback: the master mechanism.",
+      body: `Now we reach the single most important mechanism in physiology, the one that carries out the vast majority of homeostatic control: negative feedback.
+
+Negative feedback is a mechanism in which a deviation from the set point triggers a response that reverses the deviation, returning the variable toward normal. The word negative means opposing - the response opposes and cancels the original change.
+
+My Socratic question: a variable rises above its set point; negative feedback brings it back down. A variable falls below; negative feedback pushes it back up. Why does this opposing action produce stability?
+
+The answer is that any response which always opposes the change automatically holds the variable near its set point - if it rises, it is lowered; if it falls, it is raised. The system self-corrects in both directions, so the variable oscillates gently around the target rather than drifting away. This is exactly how a thermostat holds a room's temperature.
+
+Crucial insight: negative feedback is the master mechanism of homeostasis, operating throughout the body at all times. The overwhelming majority of the body's control systems are negative feedback loops - temperature, glucose, blood pressure, ion levels, and more. Grasp this one principle deeply and most of physiology's regulation falls into place. It is the mechanism behind stability itself.` },
+
+    { q: "A worked example: temperature regulation.",
+      body: `Let us run negative feedback through a real, examinable example so the abstract structure becomes concrete: the control of body temperature, or thermoregulation.
+
+Suppose you exercise and your body temperature rises above the 37-degree set point. The receptors - thermoreceptors in the skin and, crucially, in the hypothalamus - detect the rise. They report to the control centre, the hypothalamus, which compares the temperature to the set point and finds it too high. The hypothalamus activates effectors: the sweat glands begin to sweat, cooling the body by evaporation, and blood vessels in the skin dilate (vasodilation), releasing heat. Temperature falls back toward 37.
+
+My Socratic question: now imagine you step into the cold and your temperature drops below set point. Predict the effectors the hypothalamus will activate, and their effect.
+
+The answer: the hypothalamus activates different effectors to raise temperature - shivering, the rapid contraction of skeletal muscles, generates heat, and vasoconstriction narrows skin blood vessels to conserve heat. Temperature rises back toward 37.
+
+Crucial insight: notice the same three-part loop and the same opposing logic in both directions - too hot triggers cooling, too cold triggers warming, always returning to set point. The hypothalamus is the body's thermostat. This one example is the template for every negative feedback system, so learn it thoroughly; blood glucose control by insulin and glucagon works in exactly the same way.` },
+
+    { q: "Positive feedback: the useful exception.",
+      body: `Almost all homeostatic control is negative feedback, but the body uses a second, opposite mechanism for special situations: positive feedback.
+
+Positive feedback is a mechanism in which a deviation triggers a response that amplifies the deviation, pushing the variable further from where it started, rather than reversing it. Instead of opposing the change, the response enhances it.
+
+My Socratic question: if positive feedback pushes a variable further from normal - the opposite of stability - why would the body ever use something so seemingly dangerous?
+
+The answer is that positive feedback is used to drive a process rapidly to completion, when an all-or-nothing event is needed. The classic example is childbirth: contractions push the baby against the cervix, stretch receptors trigger release of oxytocin, which causes stronger contractions, which stretch the cervix more - an escalating cycle that intensifies until delivery, then stops. Blood clotting is another example, where each step accelerates the next until the clot is complete.
+
+Crucial insight: positive feedback is the useful exception - rare, self-limiting, and reserved for processes that must be pushed decisively to an endpoint, such as childbirth, clotting, and the nerve action potential. It is not used for maintaining steady states, because it destabilises rather than stabilises. Knowing the difference - negative feedback maintains, positive feedback amplifies - is a classic exam distinction.` },
+
+    { q: "When homeostasis fails: the basis of disease.",
+      body: `Understanding homeostasis is not merely academic - it is the key to understanding illness itself, which makes it central to your future work in the laboratory.
+
+My Socratic question: if the body's whole design is to maintain homeostasis, what, in a fundamental sense, is disease?
+
+The answer is that many diseases are, at their core, a failure of homeostasis - the body losing its ability to keep a variable within its normal range. In diabetes mellitus, the glucose control loop fails and blood glucose rises out of range. In fever, the hypothalamic set point itself is reset higher by infection. In dehydration, fluid balance is disrupted. In each case, a homeostatic mechanism has been overwhelmed or broken.
+
+This is precisely why laboratory tests exist and why your career matters. When you measure a patient's blood glucose, electrolytes, pH, or hormone levels, you are measuring whether their homeostatic mechanisms are holding the internal environment within its normal range. A result outside the reference range is a signal that homeostasis is failing somewhere.
+
+Crucial insight: homeostasis links directly to your profession. The reference ranges on every laboratory report are the normal ranges of homeostasis; a value outside them flags a homeostatic failure and points toward diagnosis. Understanding this concept turns a list of test values into a picture of what is going wrong in the patient's body.` },
+
+    { q: "Nervous and endocrine control: fast and slow.",
+      body: `The feedback loops of homeostasis need communication to link receptor, control centre and effector, and the body has two great communication systems for this, differing in speed.
+
+The nervous system provides fast control. It uses electrical impulses and neurotransmitters, acting in milliseconds, for rapid responses - like the near-instant adjustments of heart rate or the reflexes that protect you. Its effects are quick but generally short-lived. The endocrine system provides slow control. It uses hormones carried in the blood, acting over seconds to hours or longer, for sustained regulation - like the control of blood glucose, metabolism, and growth. Its effects are slower to start but longer-lasting.
+
+My Socratic question: why is it an advantage for the body to have both a fast and a slow control system rather than just one?
+
+The answer is that different homeostatic challenges need different timescales - a sudden drop in blood pressure needs correction in seconds (nervous), while keeping blood glucose steady across a day needs sustained adjustment (endocrine). Having both gives the body both rapid reflexes and enduring regulation.
+
+Crucial insight: the nervous system is fast and brief, the endocrine system is slow and sustained, and together they run the body's homeostatic loops across every timescale. Many systems, like the hypothalamus, bridge both. As you study each organ system later, you will see these two communication networks carrying out the feedback control that keeps the internal environment stable.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for homeostasis, in five lines.
+
+The concept: homeostasis is the maintenance of a relatively stable internal environment despite external change - the central principle of physiology, because cells (and their enzymes) survive only within narrow limits.
+
+The target: each variable has a set point and a narrow normal range around it; homeostasis is dynamic correction, not rigid constancy.
+
+The machinery: every control system has three parts - receptor (detects), control centre (compares to set point and decides), effector (acts to correct).
+
+The master mechanism: negative feedback reverses any deviation, returning the variable to set point - the basis of nearly all regulation, as in temperature control by the hypothalamus. Positive feedback, the rare exception, amplifies a change to drive a process to completion, as in childbirth and clotting.
+
+The relevance: disease is often a failure of homeostasis, and laboratory reference ranges are the normal ranges of homeostasis - a value outside them flags where regulation is breaking down; the nervous system (fast) and endocrine system (slow) provide the communication that runs the loops.
+
+Now your final test. A patient with type 1 diabetes has a very high blood glucose because they produce no insulin.
+
+Question one: name the three components of the blood glucose homeostatic loop that normally lowers glucose after a meal, and identify which is failing in this patient.
+Question two: is the normal glucose-lowering mechanism an example of negative or positive feedback, and why?
+Question three: explain how this patient's condition illustrates the general principle that links homeostasis, disease, and laboratory testing.
+
+Work them through before reading on.
+
+My answers. One: the receptors are the glucose-sensing beta cells of the pancreas, the control centre is also the pancreas comparing glucose to its set point, and the effector response is the release of insulin, which drives glucose into cells and lowers it; in type 1 diabetes the effector step fails, because the beta cells produce no insulin. Two: it is negative feedback, because a rise in glucose triggers a response - insulin - that opposes and reverses the rise, returning glucose toward set point. Three: the patient's disease is fundamentally a failure of the glucose homeostatic loop; their blood glucose leaves its normal range, and it is precisely by measuring that glucose in the laboratory and finding it above the reference range that the homeostatic failure is detected and the diagnosis made - homeostasis, disease and lab testing joined in one case.
+
+If those came cleanly, you hold the thread that runs through the entire course. Every organ system you study from here is, in part, a homeostatic mechanism defending the internal environment.` },
+  ],
+  theory: [
+    { q: "Define homeostasis and explain the significance of the word 'relatively'.", a: "Homeostasis is the maintenance of a relatively stable internal environment despite changes in the external environment. 'Relatively' is significant because conditions are not held perfectly constant but are allowed to fluctuate within a narrow normal range around a set point - homeostasis is dynamic correction, not rigid constancy." },
+    { q: "What is the internal environment, and why must it be kept stable?", a: "The internal environment is the extracellular fluid that bathes the body's cells. It must be kept stable because cells run on enzymes that function only within narrow ranges of temperature, pH, and other conditions; keeping the fluid around the cells constant protects them from the changing external world." },
+    { q: "Distinguish the set point from the normal range.", a: "The set point is the ideal target value for a physiological variable (for example, about 37 degrees Celsius for body temperature). The normal range is the narrow band around the set point within which the variable is allowed to fluctuate." },
+    { q: "Name the three components of a homeostatic control system and state each one's role.", a: "The receptor (sensor) detects changes in the variable and reports them; the control centre (integrating centre) compares the value to the set point and decides on a response; the effector carries out the response that corrects the deviation." },
+    { q: "Define negative feedback and explain why it produces stability.", a: "Negative feedback is a mechanism in which a deviation from the set point triggers a response that reverses the deviation, returning the variable toward normal. It produces stability because the response always opposes the change - raising the variable if it falls and lowering it if it rises - so the variable is continually pulled back toward the set point." },
+    { q: "Using body temperature, describe the negative feedback response to overheating.", a: "When body temperature rises above set point, thermoreceptors in the skin and hypothalamus detect the rise and report to the control centre, the hypothalamus. It activates effectors: sweat glands produce sweat that cools by evaporation, and skin blood vessels dilate (vasodilation) to release heat, returning temperature toward 37 degrees." },
+    { q: "Define positive feedback and give one physiological example.", a: "Positive feedback is a mechanism in which a deviation triggers a response that amplifies the deviation, pushing the variable further from its starting point. An example is childbirth: contractions stretch the cervix, triggering oxytocin release, which strengthens contractions in an escalating cycle until delivery. Blood clotting is another example." },
+    { q: "Contrast the roles of negative and positive feedback in the body.", a: "Negative feedback maintains stability by reversing deviations and is used for nearly all homeostatic control. Positive feedback amplifies a change to drive a process rapidly to completion and is a rare, self-limiting exception used for events like childbirth, blood clotting and the nerve action potential." },
+    { q: "Explain how disease relates to homeostasis, using an example.", a: "Many diseases are fundamentally a failure of homeostasis - the loss of the body's ability to keep a variable within its normal range. For example, in diabetes mellitus the blood glucose control loop fails and glucose rises out of range. Laboratory reference ranges are the normal ranges of homeostasis, so a value outside them flags a homeostatic failure." },
+    { q: "Compare the nervous and endocrine systems as homeostatic control systems.", a: "The nervous system gives fast control using electrical impulses and neurotransmitters, acting in milliseconds with brief effects (e.g. heart rate reflexes). The endocrine system gives slow control using hormones in the blood, acting over seconds to hours with sustained effects (e.g. blood glucose regulation). Together they run the body's feedback loops across all timescales." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Homeostasis and Negative Feedback Loops Explained", note: "The core concept, set point, and the receptor-control centre-effector loop.", url: "" },
+    { channel: "Physiology", title: "Negative vs Positive Feedback Physiology", note: "Clear contrast of the two feedback types with childbirth and temperature examples.", url: "" },
+    { channel: "Physiology", title: "Thermoregulation Negative Feedback Hypothalamus", note: "Body temperature control worked through as a full feedback loop.", url: "" },
+  ],
+  mcqs: [
+    { q: "Homeostasis is best defined as the maintenance of a:", o: ["Stable external environment", "Relatively stable internal environment despite external change", "Changing internal environment", "Perfectly constant internal state"], a: 1, w: "Homeostasis keeps the internal environment relatively stable as the outside changes." },
+    { q: "The word 'relatively' in the definition of homeostasis means conditions are:", o: ["Allowed to swing widely", "Held fluctuating within a narrow normal range", "Frozen exactly", "Never controlled"], a: 1, w: "Variables fluctuate within a narrow range, not held perfectly fixed." },
+    { q: "The internal environment that homeostasis protects is the:", o: ["Extracellular fluid bathing the cells", "Outside air", "Cell nucleus", "Bloodstream only"], a: 0, w: "Cells live in extracellular fluid, whose conditions must stay stable." },
+    { q: "The internal environment must be kept stable chiefly because:", o: ["The skin requires it", "Enzymes and cells work only within narrow limits", "It looks better", "Bones need it"], a: 1, w: "Cells depend on enzymes that function only within narrow ranges." },
+    { q: "The ideal target value for a physiological variable is the:", o: ["Set point", "Normal range", "Effector", "Receptor"], a: 0, w: "The set point is the target value, e.g. 37 degrees for temperature." },
+    { q: "The narrow band around the target within which a variable may fluctuate is the:", o: ["Stimulus", "Feedback loop", "Normal range", "Set point"], a: 2, w: "The normal range is the acceptable zone around the set point." },
+    { q: "The component that detects a change in a variable is the:", o: ["Set point", "Control centre", "Receptor (sensor)", "Effector"], a: 2, w: "The receptor or sensor detects and reports changes." },
+    { q: "The component that compares a value to the set point and decides the response is the:", o: ["Effector", "Receptor", "Stimulus", "Control centre"], a: 3, w: "The control centre integrates information and decides the response." },
+    { q: "The component that carries out the corrective response is the:", o: ["Receptor", "Effector", "Control centre", "Sensor"], a: 1, w: "The effector produces the change that corrects the deviation." },
+    { q: "The correct direction of information flow in a feedback loop is:", o: ["Receptor to control centre to effector", "Effector to control centre to receptor", "Effector to receptor to control centre", "Control centre to receptor to effector"], a: 0, w: "Detect, decide, do: receptor to control centre to effector." },
+    { q: "Negative feedback responds to a deviation by:", o: ["Reversing it toward the set point", "Ignoring it", "Removing the set point", "Amplifying it"], a: 0, w: "Negative feedback opposes and reverses the deviation." },
+    { q: "Negative feedback produces stability because the response:", o: ["Is random", "Always enhances the change", "Stops all change", "Always opposes the change"], a: 3, w: "Opposing the change in both directions holds the variable near set point." },
+    { q: "Most homeostatic control in the body is carried out by:", o: ["No feedback", "Negative feedback", "Feedforward only", "Positive feedback"], a: 1, w: "Negative feedback is the master mechanism of homeostasis." },
+    { q: "When body temperature rises, the hypothalamus activates effectors that cause:", o: ["Sweating and vasodilation", "Shivering and vasoconstriction", "No response", "More heat production"], a: 0, w: "Sweating and vasodilation cool the body back toward set point." },
+    { q: "When body temperature falls, the effectors activated include:", o: ["Shivering and vasoconstriction", "Panting", "Vasodilation", "Sweating"], a: 0, w: "Shivering generates heat and vasoconstriction conserves it." },
+    { q: "The control centre for body temperature is the:", o: ["Skin", "Hypothalamus", "Liver", "Heart"], a: 1, w: "The hypothalamus acts as the body's thermostat." },
+    { q: "Positive feedback responds to a deviation by:", o: ["Reversing it", "Amplifying it further from the start", "Holding it steady", "Ignoring it"], a: 1, w: "Positive feedback enhances the change, pushing it further." },
+    { q: "A classic physiological example of positive feedback is:", o: ["Blood glucose control", "Blood pressure control", "Childbirth (labour)", "Temperature control"], a: 2, w: "Childbirth uses an escalating oxytocin cycle - positive feedback." },
+    { q: "Positive feedback is used by the body to:", o: ["Prevent all change", "Maintain steady states", "Cool the body", "Drive a process rapidly to completion"], a: 3, w: "It pushes all-or-nothing events like childbirth and clotting to an endpoint." },
+    { q: "Which pairing is correct?", o: ["Negative feedback amplifies; positive feedback maintains", "Both maintain steady states", "Negative feedback maintains; positive feedback amplifies", "Both amplify deviations"], a: 2, w: "Negative feedback maintains stability; positive feedback amplifies." },
+    { q: "Many diseases can be understood fundamentally as a:", o: ["Set point with no range", "Type of positive feedback", "Normal variation", "Failure of homeostasis"], a: 3, w: "Disease often reflects loss of homeostatic control of a variable." },
+    { q: "In diabetes mellitus, the homeostatic variable that goes out of range is:", o: ["Body temperature", "Blood pH only", "Heart rate", "Blood glucose"], a: 3, w: "Diabetes is a failure of blood glucose homeostasis." },
+    { q: "Laboratory reference ranges correspond to the:", o: ["Positive feedback loops", "Effector responses", "Set points only", "Normal ranges of homeostasis"], a: 3, w: "A value outside the reference range flags a homeostatic failure." },
+    { q: "A blood result outside the reference range suggests that:", o: ["A homeostatic mechanism may be failing", "The lab erred always", "Nothing is wrong", "The patient is healthy"], a: 0, w: "Out-of-range values point to where regulation is breaking down." },
+    { q: "The nervous system provides control that is:", o: ["Hormonal", "Permanent", "Fast and brief", "Slow and sustained"], a: 2, w: "Nervous control uses electrical impulses - fast and short-lived." },
+    { q: "The endocrine system provides control that is:", o: ["Electrical", "Instant", "Slow and sustained", "Fast and brief"], a: 2, w: "Endocrine control uses hormones - slower to start, longer-lasting." },
+    { q: "The nervous system communicates chiefly using:", o: ["Bile", "Electrical impulses and neurotransmitters", "Hormones in blood", "Enzymes"], a: 1, w: "Nerves use electrical impulses and neurotransmitters." },
+    { q: "The endocrine system communicates chiefly using:", o: ["Hormones carried in the blood", "Light", "Nerve impulses", "Sweat"], a: 0, w: "Endocrine signalling uses blood-borne hormones." },
+    { q: "The body benefits from having both nervous and endocrine control because:", o: ["One is useless", "Neither works alone", "They are identical", "Different challenges need different timescales"], a: 3, w: "Fast reflexes and sustained regulation cover all timescales." },
+    { q: "The single principle described as the central concept of physiology is:", o: ["Digestion", "Respiration", "Homeostasis", "Circulation"], a: 2, w: "Homeostasis unifies all of physiology - every system helps maintain it." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -2104,6 +2464,8 @@ const CONTENT = {
   "bio:0": T_BIO_AMINO,
   "psy:0": T_PSY_OVERVIEW,
   "com:0": T_COM_PROCESS,
+  "mls:0": T_MLS_SAFETY,
+  "phy:1": T_PHY_HOMEO,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
