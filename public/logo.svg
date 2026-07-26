@@ -1,0 +1,96 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512">
+      <stop offset="0%" stop-color="#1A365D"/>
+      <stop offset="100%" stop-color="#0D1F3C"/>
+    </linearGradient>
+
+    <!-- Bar gradients (ascending intensity) -->
+    <linearGradient id="bar1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5FA8FF"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+
+    <linearGradient id="bar2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+
+    <linearGradient id="bar3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+
+    <!-- Gold gradient for upward line -->
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F6D365"/>
+      <stop offset="100%" stop-color="#ECC94B"/>
+    </linearGradient>
+
+    <!-- Glow effect for the arrow -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft shadow -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Rounded app icon background -->
+  <rect x="16" y="16" width="480" height="480" rx="100" fill="url(#bg)" filter="url(#shadow)"/>
+
+  <!-- Bar 1 (small) -->
+  <rect x="110" y="280" width="72" height="140" rx="20" fill="url(#bar1)" filter="url(#shadow)"/>
+
+  <!-- Bar 2 (medium) -->
+  <rect x="218" y="190" width="72" height="230" rx="20" fill="url(#bar2)" filter="url(#shadow)"/>
+
+  <!-- Bar 3 (tall) -->
+  <rect x="326" y="100" width="72" height="320" rx="20" fill="url(#bar3)" filter="url(#shadow)"/>
+
+  <!-- Climbing line through all bars -->
+  <path
+    d="
+      M75 390
+      L146 320
+      L183 355
+      L254 275
+      L290 310
+      L405 185
+    "
+    fill="none"
+    stroke="url(#gold)"
+    stroke-width="20"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    filter="url(#glow)"
+  />
+
+  <!-- Arrow head (climbing peak) -->
+  <path
+    d="
+      M405 185
+      L390 220
+      L440 200
+      Z
+    "
+    fill="url(#gold)"
+    filter="url(#glow)"
+  />
+
+  <!-- Small "A" monogram inside bar 3 -->
+  <text x="360" y="260" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="28" fill="white" opacity="0.12" letter-spacing="2">A</text>
+
+  <!-- Subtle medical cross in bar 2 -->
+  <g opacity="0.08">
+    <rect x="218" y="340" width="72" height="4" rx="2" fill="white"/>
+    <rect x="248" y="310" width="4" height="68" rx="2" fill="white"/>
+  </g>
+</svg>
