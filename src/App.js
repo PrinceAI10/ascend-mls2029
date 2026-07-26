@@ -3458,6 +3458,26 @@ const db = {
     } catch { return null; }
   },
 
+  // Publish a username/password (local) user's standing to the cloud leaderboard.
+  // They have no Supabase auth account, so we give them a stable synthetic id
+  // derived from their username. This lets EVERYONE - Google or username - appear
+  // on the same class-wide leaderboard that everyone reads.
+  async publishLocalUser(username, xp, streak) {
+    try {
+      const clean = String(username).toLowerCase().replace(/[^a-z0-9]/g, "");
+      const synthId = "local-" + clean;
+      await supabase.from("profiles").upsert({
+        id: synthId,
+        name: username,
+        username: username,
+        email: synthId + "@ascend.local",
+        xp: xp || 0,
+        streak: streak || 0,
+        updated_at: new Date().toISOString(),
+      });
+    } catch {}
+  },
+
   // load this user's progress JSON (or null if none saved yet)
   async loadProgress(uid) {
     try {
@@ -3751,7 +3771,7 @@ function QuizView({ app }) {
       // collect the questions the student got wrong, so they can review them later
       const missed = q.filter((item, idx) => answers[idx] !== undefined && answers[idx] !== item.a)
         .map((item) => ({ q: item.q, o: item.o, a: item.a, w: item.w, topic: t.title, courseId: t.courseId }));
-      app.finishQuiz(t.courseId, t.topicIndex, correct, missed);
+      app.finishQuiz(t.courseId, t.topicIndex, correct, missed, bankLen);
     }
     setDone(true);
   };
@@ -4077,22 +4097,38 @@ function DailyView({ app }) {
 function RanksView({ app }) {
   const meKey = String(app.progress.name).toLowerCase().replace(/[^a-z0-9]/g, "");
   const [others, setOthers] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     (async () => {
-      if (app.supaUid) {
-        // class-wide leaderboard from Supabase - everyone who has signed up
+      setLoading(true);
+      // Always read the class-wide leaderboard from Supabase, no matter how the
+      // student logged in (Google or username). Everyone who signed up has a
+      // profile row in the cloud, so everyone sees the same full leaderboard.
+      try {
         const rows = await db.leaderboard();
-        setOthers(rows.filter((r) => r.id !== app.supaUid));
-        return;
-      }
-      // local fallback: read the on-device shared board
-      const keys = await store.listShared("ascend_board:");
-      const rows = [];
-      for (const k of keys) {
-        const v = await store.get(k, true);
-        if (v && v.name && k !== "ascend_board:" + meKey) rows.push(v);
-      }
-      setOthers(rows);
+        if (Array.isArray(rows) && rows.length) {
+          // exclude my own row (matched by id if I have one, else by name) so I am
+          // not shown twice - my own card is added separately below.
+          const mine = app.supaUid;
+          const filtered = rows.filter((r) =>
+            mine ? r.id !== mine : String(r.name || "").toLowerCase().replace(/[^a-z0-9]/g, "") !== meKey
+          );
+          setOthers(filtered);
+          setLoading(false);
+          return;
+        }
+      } catch {}
+      // Only if the cloud returned nothing at all, fall back to the local board.
+      try {
+        const keys = await store.listShared("ascend_board:");
+        const rows = [];
+        for (const k of keys) {
+          const v = await store.get(k, true);
+          if (v && v.name && k !== "ascend_board:" + meKey) rows.push(v);
+        }
+        setOthers(rows);
+      } catch {}
+      setLoading(false);
     })();
   }, [meKey, app.progress.xp, app.supaUid]);
   const me = { name: app.progress.name, xp: app.progress.xp, streak: app.progress.streak, me: true };
@@ -4157,14 +4193,54 @@ function ReviewView({ app }) {
   const [idx, setIdx] = useState(0);
   const [picked, setPicked] = useState(null);
 
+  // Weak-spots: from recorded best scores, list topics scored below 70% so the
+  // student sees exactly where they are weakest and can jump straight to them.
+  const scores = app.progress.scores || {};
+  const scored = Object.keys(scores).map((k) => {
+    const [cid, tid] = k.split(":");
+    const t = contentFor(cid, parseInt(tid, 10));
+    return { key: k, cid, tid: parseInt(tid, 10), pct: scores[k], title: t ? t.title : null, course: courseById(cid) };
+  }).filter((x) => x.title);
+  const weak = scored.filter((x) => x.pct < 70).sort((a, b) => a.pct - b.pct);
+  const strong = scored.filter((x) => x.pct >= 70).length;
+
+  const WeakSpots = () => {
+    if (scored.length === 0) return null;
+    return (
+      <div className="card" style={{ marginTop: 16 }}>
+        <div className="eyebrow" style={{ marginBottom: 10 }}>Your weak spots</div>
+        {weak.length === 0 ? (
+          <p style={{ color: "var(--text-2)", fontSize: 14, margin: 0, lineHeight: 1.6 }}>No weak topics - every quiz you have taken is at 70% or above. Strong work. Keep taking new topics to keep climbing.</p>
+        ) : (
+          <>
+            <p style={{ color: "var(--text-2)", fontSize: 13.5, margin: "0 0 12px", lineHeight: 1.55 }}>Topics you have scored below 70% on. These are where your marks are most easily won - tap one to open it and try again.</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {weak.slice(0, 8).map((w) => (
+                <button key={w.key} className="card hover" style={{ textAlign: "left", padding: 12, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }} onClick={() => app.go("topic", { courseId: w.cid, topicId: w.tid })}>
+                  <div>
+                    <div style={{ fontWeight: 650, fontSize: 14.5 }}>{w.title}</div>
+                    <div className="mono" style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }}>{w.course ? w.course.code : ""}</div>
+                  </div>
+                  <span style={{ fontWeight: 750, fontSize: 15, color: w.pct < 50 ? "var(--bad)" : "var(--amber)", flexShrink: 0 }}>{w.pct}%</span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+        {strong > 0 && <p className="note-hint" style={{ marginTop: 12 }}>{strong} topic{strong === 1 ? "" : "s"} mastered at 70% or above.</p>}
+      </div>
+    );
+  };
+
   if (deck.length === 0) {
     return (
       <div className="view">
-        <div className="eyebrow">Review your mistakes</div>
-        <h1 className="headline" style={{ marginTop: 6 }}>Nothing to review</h1>
+        <div className="eyebrow">Review and weak spots</div>
+        <h1 className="headline" style={{ marginTop: 6 }}>{scored.length === 0 ? "Nothing to review yet" : "Your progress so far"}</h1>
         <div className="card" style={{ marginTop: 16 }}>
-          <p style={{ color: "var(--text-2)", fontSize: 15, lineHeight: 1.6, margin: 0 }}>When you get a question wrong in any quiz, it lands here so you can drill it until it sticks. Right now your review deck is empty - which means either you have not taken a quiz yet, or you got everything right. Either way, keep going.</p>
+          <p style={{ color: "var(--text-2)", fontSize: 15, lineHeight: 1.6, margin: 0 }}>When you get a question wrong in any quiz, it lands here so you can drill it until it sticks. Right now your review deck is empty - so either you have not taken a quiz yet, or you have cleared every missed question. Either way, keep climbing.</p>
         </div>
+        <WeakSpots />
         <button className="btn btn-a" style={{ marginTop: 16 }} onClick={() => app.go("courses")}>Go to courses <Ic.chevR p={16} /></button>
       </div>
     );
@@ -4215,6 +4291,7 @@ function ReviewView({ app }) {
           </div>
         )}
       </div>
+      <WeakSpots />
     </div>
   );
 }
@@ -4727,7 +4804,7 @@ function HomeView({ app }) {
 
 /* ------------------------------- auth ----------------------------------- */
 const encodePw = (s) => { try { return btoa(unescape(encodeURIComponent(s))); } catch { return s; } };
-const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {}, review: [] });
+const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {} });
 const progKey = (u) => "ascend_progress:" + String(u).toLowerCase();
 function AuthScreen({ onAuthed }) {
   const [tab, setTab] = useState("login");        // login | signup | forgot
@@ -4787,6 +4864,7 @@ function AuthScreen({ onAuthed }) {
         await store.set("ascend_last_user", acct.username);
         // register on the class board WITHOUT blocking sign-in (fire and forget)
         store.setShared("ascend_board:" + key.replace(/[^a-z0-9]/g, ""), { name: u, xp: 0, streak: 0 });
+        db.publishLocalUser(u, 0, 0); // also put them on the cloud leaderboard everyone reads
         setBusy(false);
         onAuthed(acct);
         return;
@@ -4797,6 +4875,9 @@ function AuthScreen({ onAuthed }) {
       if (acct.pass !== encodePw(pw)) { setBusy(false); setErr("Password is not right. Try again or reset it."); return; }
       await store.set("ascend_session", key);
       await store.set("ascend_last_user", acct.username);
+      // make sure this returning user is on the cloud leaderboard everyone reads
+      const savedP = await store.get(progKey(acct.username));
+      db.publishLocalUser(acct.username, savedP ? savedP.xp || 0 : 0, savedP ? savedP.streak || 0 : 0);
       setBusy(false);
       onAuthed(acct);
     } catch (e) {
@@ -5271,7 +5352,7 @@ const NAV = [
   { key: "feedback", label: "Feedback", icon: "star" }
 ];
 
-const DEFAULT_PROGRESS = { name: "Prince", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [] };
+const DEFAULT_PROGRESS = { name: "Prince", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {} };
 
 /* ------------------------------- app ------------------------------------ */
 export default function App() {
@@ -5321,6 +5402,14 @@ export default function App() {
     }
     let meta = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
     if (!meta) { meta = document.createElement("meta"); meta.name = "apple-mobile-web-app-capable"; meta.content = "yes"; document.head.appendChild(meta); }
+
+    // Register the service worker so ASCEND works offline and loads instantly,
+    // saving students' mobile data. Fails silently where unsupported.
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      });
+    }
 
     (async () => {
       const t = await store.get("ascend_theme");
@@ -5418,9 +5507,11 @@ export default function App() {
       // signed in via Supabase: save to the cloud (cross-device + class leaderboard)
       db.saveProgress(supaUid, p);
     } else if (auth) {
-      // local username/password account: save on this device
+      // local username/password account: save on this device AND publish to the
+      // cloud leaderboard everyone reads, so this user is visible to the class.
       store.set(progKey(auth.username), p);
       store.setShared("ascend_board:" + p.name.toLowerCase().replace(/[^a-z0-9]/g, ""), { name: p.name, xp: p.xp, streak: p.streak });
+      db.publishLocalUser(p.name, p.xp, p.streak);
     }
   };
   const go = (view, extra = {}) => {
@@ -5442,7 +5533,7 @@ export default function App() {
     const streak = progress.lastActive === shift(-1) ? progress.streak + 1 : (progress.lastActive === tk ? progress.streak : 1);
     persist({ ...progress, xp: progress.xp + (correct ? 20 : 5), streak, lastActive: tk, dailyDone: { ...progress.dailyDone, [tk]: true } });
   };
-  const finishQuiz = (cid, tid, correct, missed = []) => {
+  const finishQuiz = (cid, tid, correct, missed = [], total = 0) => {
     const tkey = `${cid}:${tid}`;
     const firstTime = !progress.completed?.[tkey];
     // XP is only awarded the first time a topic is completed, so the leaderboard
@@ -5454,7 +5545,13 @@ export default function App() {
     const seen = new Set(prevReview.map((m) => m.q));
     const merged = [...prevReview];
     for (const m of missed) { if (!seen.has(m.q)) { merged.push(m); seen.add(m.q); } }
-    persist({ ...progress, xp: progress.xp + gained, completed: { ...progress.completed, [tkey]: true }, review: merged });
+    // Record the best score percent for this topic, so the weak-spots dashboard
+    // can show which topics the student is strongest and weakest on.
+    const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+    const prevScores = progress.scores || {};
+    const bestPrev = prevScores[tkey] || 0;
+    const scores = { ...prevScores, [tkey]: Math.max(bestPrev, pct) };
+    persist({ ...progress, xp: progress.xp + gained, completed: { ...progress.completed, [tkey]: true }, review: merged, scores });
   };
   // Remove a question from the review deck once the student answers it correctly there.
   const clearReviewItem = (questionText) => {
