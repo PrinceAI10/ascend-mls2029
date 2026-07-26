@@ -1719,6 +1719,31 @@ const API_ENDPOINT = "/.netlify/functions/claude";
 /* Password-reset backend (see password-reset.js), e.g. "/api/request-reset".
    While empty, the reset screen explains that email delivery is not yet connected. */
 const AUTH_ENDPOINT = "";
+/* Gemini sometimes wraps JSON in markdown fences, adds prose around it, or
+   leaves a trailing comma - all of which break JSON.parse. This helper pulls out
+   the JSON and cleans the common problems so LAMLA and Papers parse reliably. */
+function parseAIJson(raw) {
+  if (!raw) throw new Error("empty AI response");
+  let s = String(raw).trim();
+  // strip markdown code fences
+  s = s.replace(/```json/gi, "").replace(/```/g, "").trim();
+  // grab the outermost JSON array or object if there is surrounding prose
+  const firstArr = s.indexOf("["), firstObj = s.indexOf("{");
+  let start = -1;
+  if (firstArr === -1) start = firstObj;
+  else if (firstObj === -1) start = firstArr;
+  else start = Math.min(firstArr, firstObj);
+  if (start > 0) s = s.slice(start);
+  const lastArr = s.lastIndexOf("]"), lastObj = s.lastIndexOf("}");
+  const end = Math.max(lastArr, lastObj);
+  if (end >= 0 && end < s.length - 1) s = s.slice(0, end + 1);
+  // remove trailing commas before ] or }
+  s = s.replace(/,\s*([\]}])/g, "$1");
+  // curly quotes -> straight quotes
+  s = s.replace(/[\u201C\u201D]/g, '"').replace(/[\u2018\u2019]/g, "'");
+  return JSON.parse(s);
+}
+
 async function callClaude(system, messages, maxTokens = 2048) {
   const body = JSON.stringify({ max_tokens: maxTokens, system, messages });
   let res;
@@ -1819,7 +1844,8 @@ function AITutor({ topicTitle, context }) {
     const sys = `You are the ASCEND tutor for KNUST medical laboratory science students. Teach the WHY and the mechanism, step by step. Keep each answer complete but focused - finish within a few clear paragraphs rather than writing an essay, so the reply is never cut off. No emojis.\n\nTOPIC: ${topicTitle}\n\nSOURCE:\n${context}`;
     const apiMsgs = next.slice(1);
     try {
-      const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })), 2048);
+      const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })), 3000);
+      // tutor answers capped at 3000 tokens so they stay complete but focused
       setMsgs([...next, { role: "assistant", content: reply }]);
     } catch (e) {
       setMsgs([...next, { role: "assistant", content: (e && e.message ? e.message + " " : "") + "The tutor could not respond just now. Please try again in a moment." }]);
@@ -2301,9 +2327,8 @@ function PapersView() {
     if (busy) return;
     setBusy(true); setErr(""); setItems(null);
     try {
-      let text = await callClaude(`You generate KNUST-style medical laboratory science exam questions.`, [{ role: "user", content: usr }], 2048);
-      text = text.replace(/```json/gi, "").replace(/```/g, "").trim();
-      const arr = JSON.parse(text);
+      let text = await callClaude(`You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid JSON array, no prose, no markdown.`, [{ role: "user", content: usr }], 2048);
+      const arr = parseAIJson(text);
       const clean = (Array.isArray(arr) ? arr : []).filter((x) => x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number");
       if (!clean.length) throw new Error("No usable questions came back - try again.");
       setItems(clean);
@@ -2351,7 +2376,7 @@ function PapersView() {
 
 /* ------------------------------- resources ------------------------------ */
 const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical laboratory science students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis.";
-const SOCRATIC_TASK = "Break this study material into a Socratic lesson of 5 to 8 steps. For each step: state the question, explain the answer in full paragraphs, then give the crucial insight. End with a short consolidation and three self-test questions with worked answers.";
+const SOCRATIC_TASK = "Break this study material into a Socratic lesson of 5 to 7 steps. For each step: state the question, explain the answer in clear paragraphs, then give the crucial insight. End with a short consolidation and three self-test questions with brief worked answers. Be thorough but economical with words so the whole lesson is complete and never cut off.";
 
 function ResourcesView() {
   const [text, setText] = useState("");
@@ -2376,7 +2401,7 @@ function ResourcesView() {
           { type: "document", source: { type: "base64", media_type: "application/pdf", data: b64 } },
           { type: "text", text: SOCRATIC_TASK + (typed ? "\n\nFocus especially on: " + typed : "") }
         ];
-        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content }], 3000));
+        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content }], 8000));
       } else {
         let material = typed;
         if (file && !material) {
@@ -2386,7 +2411,7 @@ function ResourcesView() {
         }
         if (!material) throw new Error("That file had no readable text.");
         setStage("Building your lesson...");
-        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 3000));
+        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 8000));
       }
     } catch (e) {
       setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again in a moment.");
@@ -2872,6 +2897,7 @@ function LAMLAView({ app }) {
   const [plan, setPlan] = useState(null);
   const [busy, setBusy] = useState(false);
   const [offline, setOffline] = useState(false);
+  const [offlineReason, setOfflineReason] = useState("");
 
   const prepOptions = ["Not started", "Read once", "Mostly understand", "Just revising", "Confident"];
   const goalOptions = ["Pass", "B", "A", "Distinction"];
@@ -2905,15 +2931,20 @@ You are triaging for the exam, NOT teaching. Pick ONLY the highest-yield topics 
 For each chosen topic, the "bullets" must be the actual exam-guaranteed facts to MEMORISE - the specific definitions, values, classifications, steps, enzymes, structures, or one-liners that come up in exams. NOT study instructions, NOT "read this" or "revise that". Write each bullet as a compact fact a student can burn into memory in seconds and reproduce in the exam. Examples of the right style: "Resting membrane potential = -70 mV, set by K+ permeability"; "Na/K pump: 3 Na out, 2 K in, per ATP - electrogenic"; "Simple squamous lines alveoli and glomerulus - for diffusion and filtration". Give 4 to 7 such facts per topic.
 
 Return ONLY JSON, no markdown: {"topics":[{"topic":"name","allocatedMinutes":20,"priority":"High|Med|Low","bullets":["fact 1","fact 2","fact 3","fact 4"]}],"summary":{"confidence":"65%","targetScore":"70%","focusAreas":["most likely exam area 1","area 2","area 3"]}}`;
-    try {
-      const res = await callClaude("You are LAMLA, the Last Minute Learners Association crammer for KNUST medical laboratory science students. You do exam triage: you identify exactly what is almost certain to appear on the paper and give the precise, memorisable facts for it - definitions, values, classifications, steps. You never give vague study advice. Every bullet is a fact the student can memorise and write in the exam. No emojis.", [{ role: "user", content: prompt }], 3000);
-      const clean = res.replace(/```json/gi, "").replace(/```/g, "").trim();
-      const data = JSON.parse(clean);
-      if (!data || !Array.isArray(data.topics) || !data.topics.length) throw new Error("bad shape");
-      setPlan(data);
-    } catch (e) {
-      setPlan(fallbackPlan()); setOffline(true);
+    let lastErr = "";
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const res = await callClaude("You are LAMLA, the Last Minute Learners Association crammer for KNUST medical laboratory science students. You do exam triage: you identify exactly what is almost certain to appear on the paper and give the precise, memorisable facts for it - definitions, values, classifications, steps. You never give vague study advice. Every bullet is a fact the student can memorise and write in the exam. Return ONLY valid JSON, no prose, no markdown, no trailing commas. Keep it compact so the JSON is complete. No emojis.", [{ role: "user", content: prompt }], 4000);
+        const data = parseAIJson(res);
+        if (!data || !Array.isArray(data.topics) || !data.topics.length) throw new Error("unexpected shape from AI");
+        setPlan(data); setOffline(false); setStep("plan"); setBusy(false);
+        return;
+      } catch (e) {
+        lastErr = e && e.message ? e.message : "unknown error";
+      }
     }
+    // both attempts failed - fall back to the offline ordering and show why
+    setPlan(fallbackPlan()); setOffline(true); setOfflineReason(lastErr);
     setStep("plan"); setBusy(false);
   };
 
@@ -2979,7 +3010,7 @@ Return ONLY JSON, no markdown: {"topics":[{"topic":"name","allocatedMinutes":20,
           <div><div className="eyebrow">Target</div><div style={{ fontSize: 20, fontWeight: 700, color: "var(--amber)" }}>{plan?.summary?.targetScore || targetFor(goal)}</div></div>
         </div>
       </div>
-      {offline && <div className="card" style={{ marginTop: 12, color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>The live cram sheet needs the AI connection. This is ASCEND's offline ordering - study these topics top to bottom, highest priority first. Connect the key proxy for the full memorise-this list.</div>}
+      {offline && <div className="card" style={{ marginTop: 12, color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>The live cram sheet could not be built this time{offlineReason ? " (" + offlineReason + ")" : ""}, so this is ASCEND's offline ordering - study these topics top to bottom, highest priority first. Try again in a moment for the full memorise-this list.</div>}
       <div className="card" style={{ marginTop: 12 }}>
         <div className="eyebrow">Most likely to be tested</div>
         <p style={{ color: "var(--text-2)", marginTop: 4 }}>{plan?.summary?.focusAreas?.join(" · ") || "Key topics only"}</p>
