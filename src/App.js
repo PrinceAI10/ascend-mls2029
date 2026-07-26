@@ -3686,25 +3686,15 @@ export default function App() {
     link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap";
     document.head.appendChild(link);
 
-    // PWA: let students install ASCEND to the home screen and open it fullscreen like an app.
-    // The real logo lives at /ascend-icon.png in the public folder (navy, no white background).
+    // PWA icon and manifest are declared in public/index.html (real files), which
+    // is the reliable way for phones - especially iPhone - to show the home-screen
+    // icon. We only ensure the apple-touch-icon is present as a safety net here.
     const icon = "/ascend-icon.png";
-    const manifest = {
-      name: "ASCEND - MLS 2029", short_name: "ASCEND", start_url: ".", display: "standalone",
-      background_color: "#0A0F1A", theme_color: "#0A0F1A",
-      description: "The climb to First Class, together. Built by Prince, Ansah, Jeffery and Dacosta.",
-      icons: [
-        { src: icon, sizes: "192x192", type: "image/png", purpose: "any" },
-        { src: icon, sizes: "512x512", type: "image/png", purpose: "any maskable" }
-      ]
-    };
-    const mLink = document.createElement("link");
-    mLink.rel = "manifest";
-    mLink.href = URL.createObjectURL(new Blob([JSON.stringify(manifest)], { type: "application/json" }));
-    document.head.appendChild(mLink);
-    const aLink = document.createElement("link");
-    aLink.rel = "apple-touch-icon"; aLink.href = icon;
-    document.head.appendChild(aLink);
+    if (!document.querySelector('link[rel="apple-touch-icon"]')) {
+      const aLink = document.createElement("link");
+      aLink.rel = "apple-touch-icon"; aLink.href = icon;
+      document.head.appendChild(aLink);
+    }
     let meta = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
     if (!meta) { meta = document.createElement("meta"); meta.name = "apple-mobile-web-app-capable"; meta.content = "yes"; document.head.appendChild(meta); }
 
