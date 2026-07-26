@@ -2697,6 +2697,25 @@ function AuthScreen({ onAuthed }) {
           <button className={tab === "login" ? "on" : ""} onClick={() => goTab("login")}>Log in</button>
           <button className={tab === "signup" ? "on" : ""} onClick={() => goTab("signup")}>Create account</button>
         </div>
+
+        <button className="btn btn-a auth-btn" style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, fontWeight: 700, fontSize: 15.5, marginBottom: 4 }} onClick={signInWithGoogle} disabled={busy}>
+          <svg width="20" height="20" viewBox="0 0 18 18" aria-hidden>
+            <path fill="#fff" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z" opacity="0.0"/>
+            <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/>
+            <path fill="#FBBC05" d="M3.97 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33z"/>
+            <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.47.9 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
+          </svg>
+          Continue with Google
+        </button>
+        <p className="note-hint" style={{ textAlign: "center", margin: "0 0 12px", fontSize: 12 }}>Recommended - saves your progress and rank across all your devices.</p>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "4px 0 14px" }}>
+          <div style={{ flex: 1, height: 1, background: "var(--line)" }} />
+          <span style={{ color: "var(--text-3)", fontSize: 12 }}>or use a username</span>
+          <div style={{ flex: 1, height: 1, background: "var(--line)" }} />
+        </div>
+
         <label className="field">
           <span>{tab === "signup" ? "Username (your name on the leaderboard - a nickname is fine)" : "Username"}</span>
           <input className="auth-input" name="username" autoComplete="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="e.g. prince_a" autoCapitalize="none" autoCorrect="off" />
@@ -2712,26 +2731,10 @@ function AuthScreen({ onAuthed }) {
         )}
         {err && <div className="auth-err">{err}</div>}
         {ok && <div style={{ color: "var(--good)", fontSize: 13, margin: "2px 0 12px" }}>{ok}</div>}
-        <button className="btn btn-a auth-btn" onClick={submit} disabled={busy}>{busy ? "Please wait..." : tab === "signup" ? "Create account" : "Log in"}</button>
+        <button className="btn btn-g auth-btn" onClick={submit} disabled={busy}>{busy ? "Please wait..." : tab === "signup" ? "Create account" : "Log in"}</button>
         {tab === "login" && (
           <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 10 }} onClick={() => goTab("forgot")}>Forgot password?</button>
         )}
-
-        <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "18px 0 14px" }}>
-          <div style={{ flex: 1, height: 1, background: "var(--line)" }} />
-          <span style={{ color: "var(--text-3)", fontSize: 12 }}>or</span>
-          <div style={{ flex: 1, height: 1, background: "var(--line)" }} />
-        </div>
-        <button className="btn btn-g auth-btn" style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }} onClick={signInWithGoogle} disabled={busy}>
-          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden>
-            <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/>
-            <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/>
-            <path fill="#FBBC05" d="M3.97 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33z"/>
-            <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.47.9 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
-          </svg>
-          Continue with Google
-        </button>
-        <p className="note-hint" style={{ marginTop: 14, textAlign: "center", lineHeight: 1.55 }}>Sign in with Google to save your progress and rank across all your devices, or use a username and password on this device.</p>
       </div>
     </div>
   );
