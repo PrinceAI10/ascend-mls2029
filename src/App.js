@@ -2450,7 +2450,10 @@ function QuizView({ app }) {
     if (t) {
       const already = !!app.progress.completed?.[`${t.courseId}:${t.topicIndex}`];
       setEarnedXp(!already);
-      app.finishQuiz(t.courseId, t.topicIndex, correct);
+      // collect the questions the student got wrong, so they can review them later
+      const missed = q.filter((item, idx) => answers[idx] !== undefined && answers[idx] !== item.a)
+        .map((item) => ({ q: item.q, o: item.o, a: item.a, w: item.w, topic: t.title, courseId: t.courseId }));
+      app.finishQuiz(t.courseId, t.topicIndex, correct, missed);
     }
     setDone(true);
   };
@@ -2613,17 +2616,22 @@ function TopicView({ app }) {
       {(t.videos || []).length > 0 && (
         <>
           <div className="divider" />
-          <div className="eyebrow" style={{ marginBottom: 12 }}>Watch</div>
+          <div className="eyebrow" style={{ marginBottom: 6 }}>Watch on YouTube</div>
+          <p style={{ color: "var(--text-2)", fontSize: 13.5, margin: "0 0 12px", lineHeight: 1.55 }}>Tap a topic to open a fresh YouTube search - pick whichever video looks clearest to you. We keep these as searches, not fixed links, so they are always current and you choose the best one.</p>
           <div className="grid g2">
-            {(t.videos || []).map((v, k) => (
-              <a className="card hover" key={k} href={v.url} target="_blank" rel="noreferrer" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 10, background: "var(--amber-dim)", color: "var(--amber)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Ic.play p={18} /></div>
-                  <div><div style={{ fontWeight: 650, fontSize: 14.5 }}>{v.title}</div><div className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>{v.channel.toUpperCase()}</div></div>
-                </div>
-                <p style={{ color: "var(--text-2)", fontSize: 13, margin: "10px 0 0" }}>{v.note}</p>
-              </a>
-            ))}
+            {(t.videos || []).map((v, k) => {
+              const query = encodeURIComponent(v.title + " " + (t.title || ""));
+              const searchUrl = "https://www.youtube.com/results?search_query=" + query;
+              return (
+                <a className="card hover" key={k} href={searchUrl} target="_blank" rel="noreferrer" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <div style={{ width: 40, height: 40, borderRadius: 10, background: "var(--amber-dim)", color: "var(--amber)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Ic.play p={18} /></div>
+                    <div><div style={{ fontWeight: 650, fontSize: 14.5 }}>{v.title}</div><div className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>SEARCH YOUTUBE</div></div>
+                  </div>
+                  <p style={{ color: "var(--text-2)", fontSize: 13, margin: "10px 0 0" }}>{v.note}</p>
+                </a>
+              );
+            })}
           </div>
         </>
       )}
@@ -2837,6 +2845,78 @@ function RanksView({ app }) {
         </div>
       </div>
       <p className="note-hint" style={{ marginTop: 14, lineHeight: 1.6 }}>The class-wide leaderboard turns on with the cloud backend. For now this shows your own standing.</p>
+    </div>
+  );
+}
+
+/* ------------------------------- review --------------------------------- */
+/* Spaced-style review: every question a student got wrong is collected here so
+   they can drill their weak spots. Answer one correctly and it leaves the deck.
+   This is the single most powerful study feature - it makes students revisit
+   exactly what they do not yet know, which is how real retention is built. */
+function ReviewView({ app }) {
+  const deck = Array.isArray(app.progress.review) ? app.progress.review : [];
+  const [idx, setIdx] = useState(0);
+  const [picked, setPicked] = useState(null);
+
+  if (deck.length === 0) {
+    return (
+      <div className="view">
+        <div className="eyebrow">Review your mistakes</div>
+        <h1 className="headline" style={{ marginTop: 6 }}>Nothing to review</h1>
+        <div className="card" style={{ marginTop: 16 }}>
+          <p style={{ color: "var(--text-2)", fontSize: 15, lineHeight: 1.6, margin: 0 }}>When you get a question wrong in any quiz, it lands here so you can drill it until it sticks. Right now your review deck is empty - which means either you have not taken a quiz yet, or you got everything right. Either way, keep going.</p>
+        </div>
+        <button className="btn btn-a" style={{ marginTop: 16 }} onClick={() => app.go("courses")}>Go to courses <Ic.chevR p={16} /></button>
+      </div>
+    );
+  }
+
+  const item = deck[Math.min(idx, deck.length - 1)];
+  const answered = picked !== null;
+  const correct = answered && picked === item.a;
+
+  const next = () => {
+    if (correct) {
+      // remove from the deck; it is learned for now
+      app.clearReviewItem(item.q);
+      setPicked(null);
+      setIdx(0); // deck shrank, restart at top of what remains
+    } else {
+      setPicked(null);
+      setIdx((idx + 1) % deck.length); // cycle to the next missed one
+    }
+  };
+
+  return (
+    <div className="view">
+      <div className="eyebrow">Review your mistakes</div>
+      <h1 className="headline" style={{ marginTop: 6 }}>{deck.length} to master</h1>
+      <p style={{ color: "var(--text-2)", fontSize: 14, margin: "6px 0 18px", lineHeight: 1.55 }}>These are questions you have missed. Answer one correctly and it leaves your deck. Get it wrong and it stays - keep drilling until they are all gone.</p>
+
+      <div className="card">
+        <div className="mono" style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 8 }}>{(item.topic || "").toUpperCase()}</div>
+        <div style={{ fontWeight: 650, fontSize: 16, lineHeight: 1.5, marginBottom: 16 }}>{item.q}</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {item.o.map((opt, k) => {
+            let cls = "opt";
+            if (answered) {
+              if (k === item.a) cls += " opt-correct";
+              else if (k === picked) cls += " opt-wrong";
+            }
+            return (
+              <button key={k} className={cls} disabled={answered} onClick={() => setPicked(k)}>{opt}</button>
+            );
+          })}
+        </div>
+        {answered && (
+          <div style={{ marginTop: 16 }}>
+            <div style={{ fontWeight: 650, color: correct ? "var(--good)" : "var(--bad)", marginBottom: 6 }}>{correct ? "Correct - removing from your deck" : "Not quite - this one stays for another round"}</div>
+            <p style={{ color: "var(--text-2)", fontSize: 14, lineHeight: 1.6, margin: 0 }}>{item.w}</p>
+            <button className="btn btn-a" style={{ marginTop: 14 }} onClick={next}>{correct ? "Next" : "Keep going"} <Ic.chevR p={16} /></button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -3122,7 +3202,7 @@ function HomeView({ app }) {
 
 /* ------------------------------- auth ----------------------------------- */
 const encodePw = (s) => { try { return btoa(unescape(encodeURIComponent(s))); } catch { return s; } };
-const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {} });
+const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {}, review: [] });
 const progKey = (u) => "ascend_progress:" + String(u).toLowerCase();
 function AuthScreen({ onAuthed }) {
   const [tab, setTab] = useState("login");        // login | signup | forgot
@@ -3656,6 +3736,7 @@ const NAV = [
   { key: "home", label: "Home", icon: "home" },
   { key: "courses", label: "Courses", icon: "book" },
   { key: "daily", label: "Daily", icon: "flame" },
+  { key: "review", label: "Review", icon: "target" },
   { key: "ranks", label: "Ranks", icon: "trophy" },
   { key: "papers", label: "Papers", icon: "file" },
   { key: "plan", label: "CWA", icon: "target" },
@@ -3664,7 +3745,7 @@ const NAV = [
   { key: "feedback", label: "Feedback", icon: "star" }
 ];
 
-const DEFAULT_PROGRESS = { name: "Prince", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {} };
+const DEFAULT_PROGRESS = { name: "Prince", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [] };
 
 /* ------------------------------- app ------------------------------------ */
 export default function App() {
@@ -3823,13 +3904,24 @@ export default function App() {
     const streak = progress.lastActive === shift(-1) ? progress.streak + 1 : (progress.lastActive === tk ? progress.streak : 1);
     persist({ ...progress, xp: progress.xp + (correct ? 20 : 5), streak, lastActive: tk, dailyDone: { ...progress.dailyDone, [tk]: true } });
   };
-  const finishQuiz = (cid, tid, correct) => {
+  const finishQuiz = (cid, tid, correct, missed = []) => {
     const tkey = `${cid}:${tid}`;
     const firstTime = !progress.completed?.[tkey];
     // XP is only awarded the first time a topic is completed, so the leaderboard
     // rewards coverage, not grinding the same quiz over and over.
     const gained = firstTime ? correct * 10 : 0;
-    persist({ ...progress, xp: progress.xp + gained, completed: { ...progress.completed, [tkey]: true } });
+    // Build the review deck: keep previously-missed questions, add newly-missed
+    // ones (de-duplicated by question text), so students can drill their weak spots.
+    const prevReview = Array.isArray(progress.review) ? progress.review : [];
+    const seen = new Set(prevReview.map((m) => m.q));
+    const merged = [...prevReview];
+    for (const m of missed) { if (!seen.has(m.q)) { merged.push(m); seen.add(m.q); } }
+    persist({ ...progress, xp: progress.xp + gained, completed: { ...progress.completed, [tkey]: true }, review: merged });
+  };
+  // Remove a question from the review deck once the student answers it correctly there.
+  const clearReviewItem = (questionText) => {
+    const prev = Array.isArray(progress.review) ? progress.review : [];
+    persist({ ...progress, review: prev.filter((m) => m.q !== questionText) });
   };
   const setName = async () => {
     if (typeof window === "undefined") return;
@@ -3857,7 +3949,7 @@ export default function App() {
     persist({ ...progress, name: newName });
   };
 
-  const app = { progress, go, recordDaily, finishQuiz, supaUid, courseId: route.courseId, topicId: route.topicId };
+  const app = { progress, go, recordDaily, finishQuiz, clearReviewItem, supaUid, courseId: route.courseId, topicId: route.topicId };
   const render = () => {
     switch (route.view) {
       case "home": return <HomeView app={app} />;
@@ -3867,6 +3959,7 @@ export default function App() {
       case "quiz": return <QuizView app={app} />;
       case "daily": return <DailyView app={app} />;
       case "ranks": return <RanksView app={app} />;
+      case "review": return <ReviewView app={app} />;
       case "papers": return <PapersView />;
       case "plan": return <PlanView />;
       case "resources": return <ResourcesView />;
