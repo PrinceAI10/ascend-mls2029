@@ -2274,7 +2274,7 @@ function shuffleBank(bank) {
 /* AI endpoint. On the deployed site this points at your serverless proxy, which
    holds the API key (see claude-proxy.js). A browser cannot call an AI provider
    directly - the key would be exposed and the request blocked by CORS. */
-const API_ENDPOINT = "/.netlify/functions/claude";
+const API_ENDPOINT = "/api/claude";
 /* Password-reset backend (see password-reset.js), e.g. "/api/request-reset".
    While empty, the reset screen explains that email delivery is not yet connected. */
 const AUTH_ENDPOINT = "";
