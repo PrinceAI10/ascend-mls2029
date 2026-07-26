@@ -2095,7 +2095,7 @@ If those came cleanly, you understand communication as a process you can analyse
 
 /* --------------------------- mls:0 --------------------------- */
 const T_MLS_SAFETY = {
-  courseId: "mls",
+  courseId: "lab",
   topicIndex: 0,
   title: "Introduction to Laboratory Safety",
   minutes: 20,
@@ -2453,6 +2453,188 @@ If those came cleanly, you hold the thread that runs through the entire course. 
   ],
 };
 
+/* --------------------------- lab:1 --------------------------- */
+const T_LAB_ELECTRICAL = {
+  courseId: "lab",
+  topicIndex: 1,
+  title: "Laboratory Electrical Safety",
+  minutes: 16,
+  note: [
+    { q: "Why does electrical safety deserve its own topic?",
+      body: `You have learned the broad hazards of the laboratory. Now we focus on one that is easy to overlook precisely because it is so familiar: electricity. Nearly every instrument you will use - the centrifuge, the spectrophotometer, the incubator, the analyser - runs on mains electricity, and electricity handled carelessly can injure or kill.
+
+My Socratic question: a centrifuge and a kettle both plug into the same wall socket. Why is the laboratory a setting where electrical danger is actually higher than in an ordinary home?
+
+The answer is the combination of factors unique to the lab: many powered instruments packed together, the frequent presence of water and conductive liquids, wet hands, flammable solvents near electrical sparks, and equipment running for long hours. Each of these raises the risk of electric shock, burns, or fire beyond that of a normal room.
+
+Crucial insight: electrical safety is the set of practices that prevent electric shock, burns and electrical fires when working with powered equipment. It matters because electricity is invisible, silent, and instantly dangerous - and because the laboratory concentrates the exact conditions that make it more hazardous. Respecting electricity is not optional caution; it is a core professional discipline for anyone who works with instruments.` },
+
+    { q: "How electricity harms the body.",
+      body: `To respect a hazard you must understand how it injures. Electricity harms the body in several distinct ways.
+
+The first is electric shock: current passing through the body disrupts the nerves and muscles. A large enough current across the chest can stop the heart - causing cardiac arrest - or paralyse the muscles of breathing. The second is burns: electricity generates heat as it passes through tissue or arcs across a gap, causing deep burns that may be far worse than they look on the surface. The third is the indirect injury: a shock may cause a fall, or a startle that leads to dropping hazardous material.
+
+My Socratic question: two things determine how dangerous a shock is - how much current flows, and what path it takes. Why is the path through the body so critical?
+
+The answer is that a current passing across the chest, through the heart, is far more dangerous than one passing through a single finger, because it can disrupt the heart's rhythm. This is why a shock from one hand to the other, or hand to foot - crossing the body - is especially deadly.
+
+Crucial insight: it is the current, not the voltage alone, that harms, and the path it takes through the body determines the danger. Even ordinary mains electricity is enough to be fatal if the current crosses the heart. This is why the safety measures that follow all aim to stop current from ever flowing through you.` },
+
+    { q: "Earthing (grounding): the invisible safeguard.",
+      body: `The single most important protective feature built into laboratory equipment is one you never see working: earthing, also called grounding.
+
+Most laboratory instruments have a metal casing. Earthing connects that metal casing, through the third pin of the plug, to the ground. Normally no current flows through this earth wire.
+
+My Socratic question: if the earth wire normally carries no current, what is it for - why include a wire that does nothing?
+
+The answer is that it is a safety escape route for fault conditions. If a live wire inside the instrument comes loose and touches the metal casing, the casing would become live and electrocute anyone who touched it. The earth wire gives that fault current a safe path straight to ground instead of through a person, and the sudden surge blows the fuse or trips the breaker, cutting the power. The earth wire does nothing - until the day it saves your life.
+
+Crucial insight: earthing protects you from faults you cannot see inside the equipment. This is why you must never defeat the earth connection - never remove the third pin, never use an adapter that bypasses it, never use equipment with a damaged earth. A missing earth is an invisible time bomb: everything works normally until a fault makes the casing live with nothing to protect you.` },
+
+    { q: "Fuses, circuit breakers and the RCD.",
+      body: `Beyond earthing, several devices stand guard on the electrical supply, each cutting the power when something goes wrong.
+
+A fuse is a deliberate weak link - a thin wire that melts and breaks the circuit if too much current flows, stopping overheating and fire. A circuit breaker does the same job but is a switch that trips and can be reset rather than replaced. Most important for personal safety is the residual current device, or RCD, sometimes called a ground fault interrupter. It constantly compares the current flowing out to the current flowing back; if even a small amount goes missing - because it is leaking through a person to earth - the RCD cuts the power in a fraction of a second.
+
+My Socratic question: a fuse protects against a large fault current, but why is the RCD the device that most directly protects your life?
+
+The answer is that the small current that flows through a person to earth during a shock may be far too small to blow a fuse but is still enough to kill; the RCD detects that tiny imbalance and disconnects fast enough to prevent a fatal shock. It protects the person, not just the equipment.
+
+Crucial insight: fuses and breakers mainly protect equipment and prevent fires by cutting large currents; the RCD protects the human by detecting the small leakage current of a shock. Knowing which device does what tells you why a laboratory socket circuit should be RCD-protected, and why you should never bypass or ignore a device that keeps tripping - it is trying to tell you something is wrong.` },
+
+    { q: "Safe practice: the everyday rules.",
+      body: `Understanding the mechanisms leads directly to the practical rules you follow every day at the bench.
+
+Keep electricity and water apart: never handle plugs, switches or equipment with wet hands, and keep liquids away from sockets and the tops of instruments. Inspect before use: check that cables are not frayed, plugs not cracked, and casings not damaged, and never use equipment that is faulty - report it and take it out of service. Do not overload sockets: avoid daisy-chaining many adapters into one outlet, which can overheat and cause fire. Handle by the plug: pull a plug out by its body, never by yanking the cable, which damages the wire. Keep cables safe: route them so they are not trip hazards, not trapped, and not run across wet areas.
+
+My Socratic question: an instrument gives you a small tingle when you touch its casing. What does this tell you, and what must you do?
+
+The answer is that a tingle means current is leaking to the casing - a fault, and a warning of possible electrocution. You must stop using it immediately, switch off and unplug it at the wall, label it as faulty, and report it. A tingle is never normal and never to be ignored.
+
+Crucial insight: most electrical accidents come not from mysterious failures but from ignoring simple rules - wet hands, damaged cables, overloaded sockets, faulty equipment left in use. The everyday discipline of inspecting, keeping dry, not overloading, and removing faulty equipment prevents the great majority of electrical injuries before they can happen.` },
+
+    { q: "When electricity meets the other hazards.",
+      body: `Electricity in the laboratory is especially dangerous because it does not act alone - it combines with the other hazards you have learned, multiplying the danger.
+
+Electricity plus flammable solvents equals fire and explosion: an electrical spark - from a switch, a motor, or static - can ignite the vapour of a flammable solvent like ether or alcohol, so such solvents must be kept away from electrical equipment and sparks. Electricity plus water equals shock: spilled liquid reaching a socket or a live instrument creates a shock path, which is why spills near equipment must be dealt with immediately and carefully, with the power off. Electricity plus heat equals burns and fire: overloaded or faulty wiring overheats, and hot instruments can start fires if flammable material is nearby.
+
+My Socratic question: you need to clean up a liquid spill that has run underneath a plugged-in instrument. What is the first thing you must do, and why?
+
+The answer is that you must switch off and unplug the instrument at the wall first, before touching the spill - because the liquid may have created a live path, and reaching into it while the power is on risks electrocution. Isolate the electricity before dealing with the liquid.
+
+Crucial insight: the real danger of electricity in the laboratory lies in its combination with solvents, water and heat. Thinking about these interactions - keeping sparks from vapours, power off before touching spills, not overloading circuits near heat - is what separates a safe laboratory scientist from one who treats each hazard in isolation and is caught out by their combination.` },
+
+    { q: "Responding to an electrical accident.",
+      body: `Despite precautions, someone may suffer an electric shock, and your response in those first seconds can save a life - or cost your own if done wrongly.
+
+My Socratic question: you see a colleague collapsed and still gripping a live instrument, being shocked. Your instinct is to grab and pull them free. Why would that be a potentially fatal mistake?
+
+The answer is that if you touch a person who is still in contact with the electricity, the current will pass into you too, and you become a second victim. You must never touch a person who is still connected to a live source. Instead, the first action is to cut the power: switch off at the wall, or pull the plug, or trip the breaker - break the circuit before touching them.
+
+Only once the power is off is it safe to help: check the person, call for emergency help, and if trained, begin resuscitation, because a shock across the heart can cause cardiac arrest. Electrical burns should be treated and the incident reported.
+
+Crucial insight: the golden rule of electrical rescue is switch off first, touch second - never touch a live casualty. This single principle, counter to the instinct to grab, prevents the rescuer from becoming the next casualty. Knowing it before an emergency, when there is no time to think, is what makes the difference between one victim and two.` },
+
+    { q: "The basics: voltage, current, and the three-pin plug.",
+      body: `A little understanding of what electricity actually is makes every safety rule sensible rather than arbitrary. Three simple ideas suffice.
+
+Voltage is the electrical pressure that pushes current along - like the pressure in a water pipe. Current is the actual flow of electric charge - like the water flowing - and it is the current through the body that causes harm. Resistance is how much a material opposes the flow; dry skin has high resistance and resists current, but wet skin has much lower resistance, which is exactly why water makes shocks so much worse.
+
+The standard three-pin plug puts these ideas to work. It has a live pin, which carries the incoming current; a neutral pin, which carries it back; and the earth pin, the third one, connected to the casing for safety. The plug also contains a fuse.
+
+My Socratic question: knowing that wet skin has low resistance, explain in one line why the rule "never touch equipment with wet hands" is really a rule about current.
+
+The answer is that low resistance lets far more current flow through you for the same voltage, turning a harmless contact into a dangerous or fatal one - so keeping dry keeps your resistance high and the current low.
+
+Crucial insight: harm comes from current flowing through the body, voltage is the pressure that drives it, and resistance - raised by dry skin, lowered by water - controls how much flows. The three-pin plug carries current in on live, back on neutral, and safeguards you through earth. These basics turn the safety rules from things to memorise into things you understand.` },
+
+    { q: "Static electricity and sensitive instruments.",
+      body: `Not all electrical hazards come from the mains. A subtler form - static electricity - matters both for safety and for the delicate instruments you will use.
+
+Static electricity is a build-up of electric charge on a surface, produced by friction - the same effect that makes a balloon cling after rubbing. In everyday life it is a harmless spark, but in the laboratory it has two consequences. First, a static spark near flammable solvent vapour can ignite it, just as a mains spark can - a real fire and explosion risk when handling large volumes of volatile solvents. Second, a static discharge can damage sensitive electronic components inside modern analytical instruments and computers.
+
+My Socratic question: why is static a particular concern precisely when pouring or transferring flammable solvents in quantity?
+
+The answer is that the flow and friction of the liquid can build up static charge, and if that discharges as a spark in the presence of solvent vapour, it can ignite it - which is why bulk solvent containers are often earthed to bleed the charge safely away before it can spark.
+
+Crucial insight: static electricity links back to two hazards you know - fire, through igniting solvent vapour, and equipment damage, through discharge into delicate electronics. Being aware of it means handling volatile solvents with earthing and care, and respecting the sensitivity of modern instruments. It is a reminder that electrical safety is not only about the mains supply but about charge in all its forms.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for laboratory electrical safety, in five lines.
+
+The danger: laboratory instruments run on mains electricity, and the lab concentrates the risk with water, solvents, wet hands and long hours; electricity injures by shock (which can stop the heart), by burns, and by causing secondary accidents - and it is the current and its path through the body, especially across the heart, that determine the danger.
+
+The built-in safeguards: earthing gives fault current a safe path to ground and must never be defeated; fuses and breakers cut large currents to protect equipment and prevent fire; the RCD detects the small leakage current of a shock and protects the person.
+
+The everyday rules: keep electricity and water apart, inspect cables and casings before use, never use faulty equipment, do not overload sockets, and handle by the plug.
+
+The combinations: electricity with solvents causes fire, with water causes shock, with heat causes burns - isolate the power before touching a spill near equipment.
+
+The emergency rule: in a shock, switch off first, touch second - never touch a casualty still connected to a live source.
+
+Now your final test. A laboratory scientist notices that a centrifuge occasionally gives a faint tingle when touched, but it still runs, so they keep using it. One day a colleague, with slightly damp hands, touches the same centrifuge and receives a serious shock, collapsing while still holding the machine.
+
+Question one: what did the initial tingle indicate, and what should have been done when it was first noticed?
+Question two: name the two safety features that, if working and not defeated, should have prevented this shock, and explain what each does.
+Question three: state exactly what a bystander must do first on finding the colleague collapsed and still holding the live centrifuge, and why the instinctive response is dangerous.
+
+Work them through before reading on.
+
+My answers. One: the tingle indicated that current was leaking to the metal casing - an earth fault making the casing partly live; the moment it was noticed, the centrifuge should have been switched off, unplugged, labelled faulty, taken out of service, and reported, never kept in use. Two: proper earthing should have carried the fault current safely to ground and blown the fuse or tripped the breaker instead of letting the casing stay live; and an RCD should have detected the small current leaking through the person to earth and cut the power in a fraction of a second - together they protect against exactly this fault. Three: the bystander must first cut the power - switch off at the wall, pull the plug, or trip the breaker - before touching the colleague, because touching a person still connected to a live source would pass the current into the rescuer too, creating a second casualty; only after the power is off is it safe to help and call for emergency aid.
+
+If those came cleanly, you understand electrical safety not as a list of rules but as a chain of protection - built-in safeguards, daily discipline, and a life-saving emergency response - that keeps you and your colleagues alive among the powered instruments you will use every day.` },
+  ],
+  theory: [
+    { q: "Why is the laboratory a higher-risk setting for electrical hazards than an ordinary room?", a: "Because it combines many powered instruments packed together, the frequent presence of water and conductive liquids, wet hands, flammable solvents near possible sparks, and equipment running for long hours - each of which raises the risk of shock, burns or fire above that of a normal room." },
+    { q: "Describe the main ways electricity harms the body.", a: "By electric shock, where current disrupts nerves and muscles and can stop the heart or paralyse breathing; by burns, from heat as current passes through tissue or arcs across a gap; and by indirect injury, such as a fall or dropped hazardous material caused by the shock or startle." },
+    { q: "Why is the path of current through the body important in determining danger?", a: "Because a current passing across the chest and through the heart is far more dangerous than one through a single finger, as it can disrupt the heart's rhythm and cause cardiac arrest. Hand-to-hand or hand-to-foot paths that cross the heart are especially deadly." },
+    { q: "Explain how earthing (grounding) protects the user of an instrument.", a: "Earthing connects the metal casing of an instrument, via the plug's third pin, to the ground. If a live wire touches the casing, the earth wire gives the fault current a safe path to ground rather than through a person, and the resulting surge blows the fuse or trips the breaker, cutting the power. It must never be defeated." },
+    { q: "Distinguish a fuse from a circuit breaker.", a: "A fuse is a thin wire that melts and permanently breaks the circuit when too much current flows, and must be replaced. A circuit breaker performs the same protective function but is a switch that trips and can be reset rather than replaced." },
+    { q: "What is an RCD and why does it most directly protect life?", a: "A residual current device (RCD) compares the current flowing out with that flowing back; if a small amount goes missing because it is leaking through a person to earth, it cuts the power within a fraction of a second. It protects life because that small leakage current can kill but may be too small to blow a fuse - the RCD detects it and disconnects fast enough to prevent a fatal shock." },
+    { q: "List four everyday rules for electrical safety in the laboratory.", a: "Keep electricity and water apart (never handle equipment with wet hands); inspect cables, plugs and casings before use and never use faulty equipment; do not overload sockets by daisy-chaining adapters; and handle plugs by the body, not by pulling the cable. Cables should also be routed to avoid trip hazards and wet areas." },
+    { q: "What does a tingle from an instrument's casing indicate, and what must be done?", a: "It indicates that current is leaking to the casing - an earth fault making the casing partly live and a warning of possible electrocution. The equipment must be switched off, unplugged, labelled as faulty, taken out of service, and reported immediately; it must never be kept in use." },
+    { q: "Explain why isolating the power is essential before cleaning a spill under a plugged-in instrument.", a: "Because the spilled liquid may have created a live electrical path from the instrument, and reaching into it while the power is on risks electrocution. The instrument must be switched off and unplugged at the wall before the spill is touched." },
+    { q: "State the golden rule for rescuing someone receiving an electric shock and explain it.", a: "Switch off first, touch second - never touch a casualty still connected to a live source. Touching a person still in contact with the electricity would pass the current into the rescuer, creating a second victim; the power must be cut (switch off, unplug, or trip the breaker) before the casualty is touched or helped." },
+  ],
+  videos: [
+    { channel: "Electrical Safety", title: "How Electricity Affects the Human Body Shock", note: "Explains current, path through the body, and why shock stops the heart.", url: "" },
+    { channel: "Electrical Safety", title: "Earthing Grounding and RCD Explained", note: "How the earth wire and residual current device protect against shock.", url: "" },
+    { channel: "Lab Safety", title: "Electrical Safety in the Laboratory", note: "Practical rules for using powered instruments safely at the bench.", url: "" },
+  ],
+  mcqs: [
+    { q: "Laboratory electrical risk is higher than in a normal room mainly because of:", o: ["Many instruments plus water, solvents and long running hours", "Cooler temperatures", "Fewer sockets", "Brighter lighting"], a: 0, w: "The lab concentrates instruments, liquids, solvents and long use." },
+    { q: "Electric shock harms the body by:", o: ["Cooling the tissues", "Strengthening muscles", "Improving circulation", "Disrupting nerves and muscles, and possibly stopping the heart"], a: 3, w: "Current disrupts nerve and muscle function and can cause cardiac arrest." },
+    { q: "A current path that is especially dangerous is one that crosses the:", o: ["Hair", "Chest and heart", "Fingernail", "Single finger"], a: 1, w: "Current across the heart can disrupt its rhythm and be fatal." },
+    { q: "The factor that most directly determines how harmful a shock is:", o: ["The brand of plug", "The time of day", "The current and its path through the body", "The colour of the wire"], a: 2, w: "It is the current and its path, not voltage alone, that harm." },
+    { q: "Earthing (grounding) connects the instrument's metal casing to:", o: ["The neutral only", "Nothing", "The live wire", "The ground, via the plug's third pin"], a: 3, w: "The earth wire links the casing to ground as a fault escape route." },
+    { q: "Under normal operation, the earth wire carries:", o: ["Most of the current", "No current", "Half the current", "Only heat"], a: 1, w: "It normally carries no current; it acts only during a fault." },
+    { q: "If a live wire touches the metal casing of an earthed instrument, the earth wire:", o: ["Stores the current", "Does nothing", "Makes the casing more live", "Gives the fault current a safe path to ground and trips protection"], a: 3, w: "It safely diverts fault current and blows the fuse or trips the breaker." },
+    { q: "You should NEVER:", o: ["Inspect a cable", "Defeat or remove the earth connection", "Unplug faulty equipment", "Report a fault"], a: 1, w: "Removing the earth leaves you unprotected against a live-casing fault." },
+    { q: "A fuse protects a circuit by:", o: ["Cooling wires", "Increasing current", "Melting and breaking the circuit when current is too high", "Storing charge"], a: 2, w: "The fuse is a weak link that breaks on excess current." },
+    { q: "A circuit breaker differs from a fuse in that it:", o: ["Is a switch that trips and can be reset", "Melts permanently", "Adds current", "Cannot break a circuit"], a: 0, w: "A breaker trips and resets rather than needing replacement." },
+    { q: "The device that most directly protects a person from a fatal shock is the:", o: ["Light switch", "Extension lead", "Fuse", "RCD (residual current device)"], a: 3, w: "The RCD detects small leakage current through a person and cuts power fast." },
+    { q: "An RCD works by:", o: ["Storing charge", "Comparing outgoing and returning current for an imbalance", "Heating a wire", "Measuring voltage only"], a: 1, w: "A missing amount of returning current signals leakage and trips the RCD." },
+    { q: "A fuse may fail to protect a person from a shock because:", o: ["It protects only lights", "The small current through a person may be too low to blow it", "It only works at night", "It is too fast"], a: 1, w: "Lethal leakage current can be too small to blow a fuse - hence the RCD." },
+    { q: "You should never handle plugs or equipment with:", o: ["Gloved hands", "Both hands", "Dry hands", "Wet hands"], a: 3, w: "Water conducts electricity, so wet hands greatly raise shock risk." },
+    { q: "Before using any powered instrument, you should:", o: ["Ignore its cable", "Inspect for frayed cables, cracked plugs and damaged casing", "Overload the socket", "Pull it by the cable"], a: 1, w: "Inspecting for damage catches faults before they cause harm." },
+    { q: "Plugging many adapters into one socket (daisy-chaining) is dangerous because it can:", o: ["Reduce current", "Save power", "Overheat and cause fire", "Improve earthing"], a: 2, w: "Overloading a socket causes overheating and fire risk." },
+    { q: "A plug should be removed from a socket by:", o: ["Cutting the cord", "Twisting the wire", "Yanking the cable", "Pulling the plug body"], a: 3, w: "Pulling the cable damages the wire; grip the plug itself." },
+    { q: "A faint tingle when touching an instrument's casing means:", o: ["It needs more power", "Current is leaking to the casing - a fault", "It is working perfectly", "The room is cold"], a: 1, w: "A tingle signals a leakage fault and possible electrocution." },
+    { q: "On feeling a tingle from an instrument, you should:", o: ["Switch off, unplug, label faulty and report it", "Add water", "Touch it again", "Keep using it"], a: 0, w: "Take it out of service immediately and report the fault." },
+    { q: "An electrical spark near flammable solvent vapour can cause:", o: ["Nothing", "Better results", "Fire or explosion", "Cooling"], a: 2, w: "Sparks ignite flammable vapours - keep solvents from electricals." },
+    { q: "Before cleaning a liquid spill under a plugged-in instrument, you must first:", o: ["Turn up the power", "Wipe with bare hands", "Switch off and unplug the instrument", "Add more liquid"], a: 2, w: "Isolate the electricity first; the liquid may be a live path." },
+    { q: "The combination of electricity and water creates a risk of:", o: ["Electric shock", "Cooling", "Better conduction of light", "Nothing"], a: 0, w: "Water conducts current, creating a shock path." },
+    { q: "The combination of overloaded wiring and heat creates a risk of:", o: ["Cleaner benches", "Freezing", "Fire", "Lower bills"], a: 2, w: "Overloaded, overheating wiring can start a fire." },
+    { q: "On finding a colleague being shocked and still holding a live instrument, you must FIRST:", o: ["Cut the power - switch off, unplug or trip the breaker", "Pour water on them", "Touch the instrument", "Grab and pull them off"], a: 0, w: "Cut the power before touching, or you become the next casualty." },
+    { q: "Grabbing a person still connected to a live source is dangerous because:", o: ["The current will pass into you too", "It damages the instrument", "It is against policy only", "It wastes time"], a: 0, w: "You would become a second victim of the same current." },
+    { q: "After the power is cut, an electrocution casualty may need:", o: ["Emergency help and possibly resuscitation", "Nothing at all", "Only a plaster", "To keep working"], a: 0, w: "A shock across the heart can cause cardiac arrest needing resuscitation." },
+    { q: "The golden rule of electrical rescue is:", o: ["Use water first", "Switch off first, touch second", "Never help", "Touch first, switch off later"], a: 1, w: "Always cut the power before touching a live casualty." },
+    { q: "Fuses and circuit breakers mainly protect:", o: ["Nothing", "The lighting only", "The person from small leakage", "Equipment and against fire by cutting large currents"], a: 3, w: "They cut large currents; the RCD is what protects the person." },
+    { q: "Faulty electrical equipment in the laboratory should be:", o: ["Taken out of service, labelled and reported", "Kept in use", "Used only at night", "Hidden"], a: 0, w: "Remove faulty equipment from use and report it immediately." },
+    { q: "Overall, laboratory electrical safety is best described as:", o: ["Only the electrician's concern", "A one-time check", "A chain of built-in safeguards, daily discipline and correct emergency response", "An optional extra"], a: 2, w: "It combines safeguards, everyday care and a life-saving response." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -2464,8 +2646,9 @@ const CONTENT = {
   "bio:0": T_BIO_AMINO,
   "psy:0": T_PSY_OVERVIEW,
   "com:0": T_COM_PROCESS,
-  "mls:0": T_MLS_SAFETY,
+  "lab:0": T_MLS_SAFETY,
   "phy:1": T_PHY_HOMEO,
+  "lab:1": T_LAB_ELECTRICAL,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
@@ -4219,7 +4402,19 @@ export default function App() {
     const base = freshProgress(displayName);
     const merged = cloud ? { ...base, ...cloud, name: cloud.name || displayName } : { ...base, name: displayName };
     setProgress(merged);
-    // ensure a profile/progress row exists from the start
+    // Ensure this user appears on the class leaderboard from the moment they log
+    // in - create/refresh their profile row directly, so nobody is missing even
+    // if the signup trigger did not fire or they have not earned XP yet.
+    try {
+      await supabase.from("profiles").upsert({
+        id: uid,
+        name: merged.name,
+        username: merged.name,
+        xp: merged.xp || 0,
+        streak: merged.streak || 0,
+        updated_at: new Date().toISOString(),
+      });
+    } catch {}
     db.saveProgress(uid, merged);
   };
 
