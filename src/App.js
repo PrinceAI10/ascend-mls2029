@@ -2096,8 +2096,8 @@ If those came cleanly, you understand communication as a process you can analyse
 /* --------------------------- mls:0 --------------------------- */
 const T_MLS_SAFETY = {
   courseId: "lab",
-  topicIndex: 0,
-  title: "Introduction to Laboratory Safety",
+  topicIndex: 1,
+  title: "Lab Safety",
   minutes: 20,
   note: [
     { q: "Why is safety the very first thing a lab scientist learns?",
@@ -2456,8 +2456,8 @@ If those came cleanly, you hold the thread that runs through the entire course. 
 /* --------------------------- lab:1 --------------------------- */
 const T_LAB_ELECTRICAL = {
   courseId: "lab",
-  topicIndex: 1,
-  title: "Laboratory Electrical Safety",
+  topicIndex: 2,
+  title: "Lab Electricals and Safety",
   minutes: 16,
   note: [
     { q: "Why does electrical safety deserve its own topic?",
@@ -2646,9 +2646,9 @@ const CONTENT = {
   "bio:0": T_BIO_AMINO,
   "psy:0": T_PSY_OVERVIEW,
   "com:0": T_COM_PROCESS,
-  "lab:0": T_MLS_SAFETY,
+  "lab:1": T_MLS_SAFETY,
   "phy:1": T_PHY_HOMEO,
-  "lab:1": T_LAB_ELECTRICAL,
+  "lab:2": T_LAB_ELECTRICAL,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
