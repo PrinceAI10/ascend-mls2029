@@ -1906,6 +1906,194 @@ If those came cleanly, you understand what medical psychology is and why it belo
   ],
 };
 
+/* --------------------------- com:0 --------------------------- */
+const T_COM_PROCESS = {
+  courseId: "com",
+  topicIndex: 0,
+  title: "The Communication Process",
+  minutes: 18,
+  note: [
+    { q: "Why does a scientist need a course on communication?",
+      body: `You may see communication as a soft subject beside your science courses, but consider what a laboratory result actually is: information that must travel accurately from you to a doctor, and from a doctor to a patient. If that information is distorted anywhere along the way, the science is wasted.
+
+My Socratic question: you correctly identify a dangerous infection in a sample, but the report is unclear and the doctor misreads it. Whose skill failed - the science, or the communication - and what happens to the patient?
+
+The answer is that the communication failed, and the patient may be harmed just as surely as if the test itself were wrong. A brilliant result that is poorly communicated is a useless result. In healthcare, communication failures are among the leading causes of preventable harm.
+
+Crucial insight: communication is not separate from your science - it is how your science reaches the people it is meant to help. A laboratory scientist who cannot communicate clearly is a danger, however skilled at the bench. This course treats communication as a technical skill to be understood and improved, exactly as you would any laboratory technique - and it begins with understanding the process itself.` },
+
+    { q: "What is communication, really?",
+      body: `We use the word constantly, so let us pin it down precisely, because the definition contains the whole secret.
+
+Communication is the process of exchanging information, ideas or feelings between a sender and a receiver, resulting in shared understanding.
+
+My Socratic question: focus on the last two words - shared understanding. If you speak clearly but the other person does not understand you, has communication happened?
+
+The answer is no. This is the single most important idea in the whole topic. Communication is not merely sending a message - it is achieving shared meaning. If the message is sent but not understood, or understood differently from what you intended, communication has failed no matter how well you spoke. The responsibility is not just to transmit but to be understood.
+
+Crucial insight: shift your mental model from communication as sending to communication as sharing meaning. A message only succeeds when the idea in your mind is accurately recreated in the other person's mind. This reframing changes everything - it makes you responsible for the receiver's understanding, not just your own words. Every element of the process that follows exists to serve that one goal: shared understanding.` },
+
+    { q: "The communication process: the sender and encoding.",
+      body: `Communication is a process with distinct stages, and understanding each lets you find exactly where it breaks. It begins in the mind of one person.
+
+The sender, sometimes called the source, is the person who originates the message - who has an idea, thought or feeling they wish to share. But an idea in the mind cannot travel directly to another mind. It must first be turned into a form that can be sent.
+
+This translation is called encoding: the sender converts their idea into words, symbols, gestures or images that can be transmitted. When you decide how to phrase a lab report, choosing your words and terminology, you are encoding.
+
+My Socratic question: a scientist explaining a result to a fellow scientist and to a frightened patient must encode the same idea very differently. Why?
+
+The answer is that effective encoding must match the receiver. The expert can decode technical terms; the patient cannot. Choosing symbols the receiver can actually understand - simple words for the patient, precise terms for the colleague - is the skill of encoding. Encode for your audience, not for yourself.
+
+Crucial insight: many communication failures begin right here, at encoding, before the message is even sent. If you choose words your receiver cannot understand, you have doomed the message from the start. Good communication starts by considering who will receive it and encoding accordingly.` },
+
+    { q: "The message and the channel.",
+      body: `Once encoded, the idea has become a message, and that message needs a route to travel.
+
+The message is the actual encoded information - the words spoken, the report written, the gesture made. It is the content, verbal or non-verbal, that carries the sender's meaning.
+
+The channel is the medium through which the message travels from sender to receiver. Speech travels through sound waves in the air; a written report travels through paper or a screen; a phone call, an email, a text, a face-to-face conversation - each is a different channel.
+
+My Socratic question: a critically abnormal, urgent lab result could be sent by email, or communicated by an immediate phone call. Which channel is right, and why does the choice matter?
+
+The answer is that the urgent result demands a phone call - a channel that is immediate and confirms receipt - not an email that might sit unread for hours. Choosing the wrong channel can be as damaging as a wrong message. Critical results in the laboratory have formal rules requiring direct, confirmed communication precisely because the channel matters.
+
+Crucial insight: matching the channel to the message is a real professional skill. Routine information suits routine channels; urgent or sensitive information demands direct, confirmed ones. The best-worded message fails if sent by a channel that does not reach the receiver in time.` },
+
+    { q: "The receiver and decoding.",
+      body: `The message arrives, but the journey is not over - it must be understood, and this happens through a process that mirrors encoding in reverse.
+
+The receiver is the person for whom the message is intended, who takes in the message. But just as the sender's idea had to be encoded into symbols, the receiver must now translate those symbols back into meaning. This is decoding: the receiver interprets the words, symbols or gestures to extract the idea.
+
+My Socratic question: here lies the central danger of all communication. The sender encodes from their own knowledge and perspective; the receiver decodes from theirs. What happens when the two perspectives differ?
+
+The answer is misunderstanding - the gap between encoding and decoding is where most communication fails. The sender means one thing; the receiver, decoding through their own knowledge, culture and emotional state, understands another. A word clear to you may mean something different, or nothing, to them. The idea recreated in the receiver's mind is not the idea you sent.
+
+Crucial insight: because encoding and decoding happen in two different minds, perfect transmission is never guaranteed. This is why checking understanding matters so much - you cannot assume the receiver decoded your message as you intended. The whole art of communication is narrowing the gap between what you meant and what they understood.` },
+
+    { q: "Feedback: how you know it worked.",
+      body: `If communication is about shared understanding, there must be a way to check whether that understanding was actually achieved. That mechanism is feedback, and it is what turns communication from a hopeful broadcast into a reliable exchange.
+
+Feedback is the receiver's response back to the sender, which shows whether and how the message was understood. It can be a spoken reply, a question, a nod, a puzzled frown, or an action taken. Through feedback, the sender learns whether the message landed as intended and can correct it if not.
+
+My Socratic question: a purely one-way message - a sender transmitting with no feedback - is like the radio announcer who never knows if anyone heard. Why is a two-way process with feedback so much more reliable?
+
+The answer is that feedback closes the loop. Without it, the sender is guessing. With it, the sender can confirm understanding, clarify what was missed, and correct errors before they cause harm. This is exactly why, in healthcare, critical instructions are read back - the nurse repeats the order, giving feedback that confirms correct decoding.
+
+Crucial insight: feedback transforms communication from one-way sending into a genuine two-way exchange, and it is the safeguard against misunderstanding. Never assume you were understood - seek the feedback that proves it. In the laboratory, confirming that an urgent result was received and understood is feedback that can save a life.` },
+
+    { q: "Noise: everything that gets in the way.",
+      body: `The process would work perfectly in an ideal world, but reality constantly interferes. Everything that disrupts communication is grouped under one term: noise.
+
+Noise is anything that interferes with the message and distorts or blocks shared understanding. It can enter at any stage, and it comes in several kinds.
+
+Physical noise is external interference - literal background sound, a bad phone line, poor handwriting, interruptions. Physiological noise comes from the body - pain, deafness, tiredness, hunger that stops someone attending. Psychological noise comes from the mind - stress, fear, prejudice, distraction, strong emotion that colours how a message is received. Semantic noise comes from the language itself - jargon, ambiguous words, or terms the sender and receiver understand differently.
+
+My Socratic question: a frightened patient is given complex results in technical jargon in a noisy corridor. Identify the noise, and predict the outcome.
+
+The answer is that several kinds of noise pile up: psychological noise from the patient's fear, semantic noise from the jargon, physical noise from the corridor. The message has almost no chance of being understood. The outcome is a patient who leaves confused and anxious.
+
+Crucial insight: noise is not just literal sound - it is any barrier, external or internal, physical, psychological or semantic, that degrades understanding. The skilled communicator actively works to reduce noise: choosing a quiet setting, plain language, and a calm moment. Recognising the kinds of noise lets you remove them.` },
+
+    { q: "Putting the whole process together.",
+      body: `Now assemble the complete model, because seeing it whole lets you diagnose any breakdown.
+
+An idea begins in the sender's mind. The sender encodes it into a message. The message travels through a channel to the receiver. The receiver decodes it back into an idea. The receiver sends feedback confirming their understanding. And throughout, noise threatens to distort the message at every stage.
+
+My Socratic question: this whole process exists to achieve one thing we defined at the start. What is it?
+
+The answer is shared understanding - the idea in the sender's mind accurately recreated in the receiver's mind. Every element serves that goal: encoding and decoding to translate, the channel to carry, feedback to confirm, and the constant effort to overcome noise.
+
+The power of this model is diagnostic. When communication fails, you can locate exactly where: Was the encoding poor (wrong words)? The channel wrong (unread email)? The decoding mistaken (receiver misunderstood)? Was there no feedback to catch the error? Was noise the culprit (jargon, fear, a noisy room)?
+
+Crucial insight: the communication process is not just a diagram to memorise - it is a fault-finding tool. Whenever a message fails, run through the stages and you will find the break. This turns communication from a mysterious art into a systematic skill you can analyse and fix, exactly as you would troubleshoot a failed laboratory procedure.` },
+
+    { q: "Verbal and non-verbal communication.",
+      body: `One more essential distinction shapes every message: not all communication happens through words, and the wordless part is often the more powerful.
+
+Verbal communication is the use of words, spoken or written, to convey the message. Non-verbal communication is everything else that carries meaning - facial expression, eye contact, posture, gestures, tone of voice, touch, and the physical distance between people.
+
+My Socratic question: a health worker says "There's nothing to worry about" while frowning, avoiding eye contact and edging toward the door. Which message does the patient believe - the words or the body language?
+
+The answer is the body language, almost always. When verbal and non-verbal messages conflict, people trust the non-verbal, because it is harder to fake and feels more honest. The reassuring words are cancelled out by the anxious body.
+
+Crucial insight: your non-verbal communication is constantly sending messages, whether you intend it or not, and it can support or completely undermine your words. In healthcare this is vital - a warm tone and attentive posture reassure a frightened patient more than the words alone, while a distracted, cold manner frightens them regardless of what you say. Making your non-verbal signals match and reinforce your words is a core professional communication skill.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the communication process, in five lines.
+
+The goal: communication is the exchange of information resulting in shared understanding - not merely sending a message, but ensuring the idea in one mind is accurately recreated in another.
+
+The process: an idea is encoded by the sender into a message, carried by a channel to the receiver, who decodes it, and returns feedback confirming understanding.
+
+The obstacle: noise - physical, physiological, psychological or semantic - threatens the message at every stage and must be actively reduced.
+
+The diagnostic power: when communication fails, the model lets you locate the break - in encoding, channel, decoding, missing feedback, or noise.
+
+The wordless channel: non-verbal communication - expression, tone, posture, eye contact - constantly carries meaning and, when it conflicts with words, is what people believe.
+
+Now your final test. A laboratory scientist phones a busy ward to report a critical potassium result. The ward is noisy, the scientist uses rapid technical shorthand, the nurse who answers is distracted mid-task, and the scientist hangs up without asking the nurse to confirm. The result is never acted upon and the patient deteriorates.
+
+Question one: identify the sender, message, channel and receiver in this scenario.
+Question two: name at least two types of noise present and one element of the process that was skipped.
+Question three: state what single change would most likely have prevented the harm, and link it to the definition of communication.
+
+Work them through before reading on.
+
+My answers. One: the sender is the laboratory scientist, the message is the critical potassium result, the channel is the phone call, and the receiver is the nurse. Two: physical noise from the noisy ward, semantic noise from the rapid technical shorthand, and psychological or physiological noise from the distracted nurse - and the element skipped was feedback, since the scientist never confirmed the nurse understood. Three: the single most important change would be to seek feedback - asking the nurse to read back the result and confirm the action - because communication is defined as achieving shared understanding, and without that confirmation the scientist only sent a message but never established that it was understood. Adding plain language and choosing a calmer moment would further reduce the noise.
+
+If those came cleanly, you understand communication as a process you can analyse, diagnose and improve - a technical skill as real as any at the bench, and one that keeps patients safe.` },
+  ],
+  theory: [
+    { q: "Define communication, and explain why 'shared understanding' is the key part of the definition.", a: "Communication is the process of exchanging information, ideas or feelings between a sender and receiver, resulting in shared understanding. 'Shared understanding' is key because communication is not merely sending a message - it succeeds only when the idea in the sender's mind is accurately recreated in the receiver's mind. A message sent but not understood is a communication failure." },
+    { q: "What is encoding, and why must it match the receiver?", a: "Encoding is the process by which the sender translates their idea into words, symbols, gestures or images that can be transmitted. It must match the receiver because they can only understand symbols they can decode - technical terms for a colleague, plain words for a patient. Encoding for the wrong audience dooms the message from the start." },
+    { q: "Distinguish the message from the channel.", a: "The message is the actual encoded information - the words, report or gesture carrying the meaning. The channel is the medium through which the message travels, such as speech, a written report, a phone call, an email or a face-to-face conversation." },
+    { q: "Why does the choice of channel matter? Give a laboratory example.", a: "Because the channel must suit the message's urgency and sensitivity. A critical, urgent lab result demands an immediate phone call that confirms receipt, not an email that may sit unread. The wrong channel can cause harm even when the message itself is correct, which is why critical results have rules requiring direct, confirmed communication." },
+    { q: "What is decoding, and why is the gap between encoding and decoding the main source of misunderstanding?", a: "Decoding is the receiver's translation of the received symbols back into meaning. The sender encodes from their own knowledge and perspective while the receiver decodes from theirs; when the two differ, the idea recreated in the receiver's mind is not the one sent. This gap between two different minds is where most communication fails." },
+    { q: "Define feedback and explain its importance.", a: "Feedback is the receiver's response back to the sender that shows whether and how the message was understood - a reply, question, nod or action. It closes the loop, letting the sender confirm understanding and correct errors, turning one-way sending into a reliable two-way exchange. Reading back a critical instruction is feedback that prevents harm." },
+    { q: "Define noise and list its four main types.", a: "Noise is anything that interferes with the message and distorts or blocks shared understanding. The four main types are physical (external interference like background sound or poor handwriting), physiological (from the body, such as pain, deafness or tiredness), psychological (from the mind, such as fear, stress or prejudice), and semantic (from language, such as jargon or ambiguous terms)." },
+    { q: "Explain how the communication process model helps diagnose a communication failure.", a: "Because the process has distinct stages, a failure can be located precisely: was the encoding poor (wrong words), the channel wrong (unread email), the decoding mistaken, was feedback missing to catch the error, or was noise the cause? Running through the stages finds the break, making communication a systematic skill to troubleshoot rather than a mysterious art." },
+    { q: "Distinguish verbal from non-verbal communication and explain what happens when they conflict.", a: "Verbal communication uses words, spoken or written. Non-verbal communication is everything else that conveys meaning - facial expression, eye contact, posture, gesture, tone of voice, touch and distance. When the two conflict, people almost always believe the non-verbal message, because it is harder to fake and feels more honest." },
+    { q: "Why is communication a critical skill specifically for a laboratory scientist?", a: "Because a laboratory result is information that must travel accurately from the scientist to the doctor and on to the patient; if it is distorted anywhere, the science is wasted and the patient may be harmed. A result that is poorly communicated is useless, and communication failures are among the leading causes of preventable harm in healthcare." },
+  ],
+  videos: [
+    { channel: "Communication Coach Alexander Lyon", title: "The Communication Process", note: "Clear walk-through of sender, encoding, channel, decoding, feedback and noise.", url: "https://www.youtube.com/watch?v=-flP_rQtIvA" },
+    { channel: "GreggU", title: "The Communication Process Model", note: "Concise breakdown of each element with simple examples.", url: "https://www.youtube.com/watch?v=urTfoNCJ4Ho" },
+    { channel: "Communication Coach Alexander Lyon", title: "Nonverbal Communication", note: "Explores how body language, tone and expression carry meaning alongside words.", url: "https://www.youtube.com/watch?v=8f4wBFEwaTk" },
+  ],
+  mcqs: [
+    { q: "Communication is best defined as the exchange of information that results in:", o: ["A loud voice", "A written report", "A sent message", "Shared understanding"], a: 3, w: "Communication succeeds only when shared understanding is achieved." },
+    { q: "If a message is sent clearly but the receiver does not understand it, communication has:", o: ["Failed", "Not started", "Succeeded", "Been perfect"], a: 0, w: "Without shared understanding, communication has failed." },
+    { q: "The person who originates the message is the:", o: ["Channel", "Sender", "Receiver", "Decoder"], a: 1, w: "The sender (source) originates the idea to be shared." },
+    { q: "Converting an idea into words, symbols or gestures is called:", o: ["Decoding", "Channelling", "Encoding", "Feedback"], a: 2, w: "Encoding is translating the idea into a transmittable form." },
+    { q: "Effective encoding requires that the sender:", o: ["Ignore the audience", "Speak quickly", "Match the symbols to what the receiver can understand", "Use complex terms always"], a: 2, w: "Encode for the receiver - plain words for a patient, precise terms for a colleague." },
+    { q: "The actual encoded information being conveyed is the:", o: ["Noise", "Channel", "Message", "Feedback"], a: 2, w: "The message is the encoded content carrying the meaning." },
+    { q: "The medium through which a message travels is the:", o: ["Message", "Sender", "Decoder", "Channel"], a: 3, w: "The channel is the route, such as speech, email or a phone call." },
+    { q: "An urgent critical lab result is best communicated by:", o: ["A note left on a desk", "An immediate phone call confirming receipt", "A text next week", "An email that may sit unread"], a: 1, w: "Urgent results need a direct, confirmed channel." },
+    { q: "The person for whom the message is intended is the:", o: ["Receiver", "Sender", "Encoder", "Source"], a: 0, w: "The receiver takes in and interprets the message." },
+    { q: "Interpreting the received symbols back into meaning is called:", o: ["Feedback", "Decoding", "Encoding", "Channelling"], a: 1, w: "Decoding is the receiver's translation of symbols into an idea." },
+    { q: "Most misunderstanding arises from the gap between:", o: ["Sender and channel", "Encoding and decoding", "Feedback and reply", "Message and noise"], a: 1, w: "Sender and receiver interpret from different perspectives, causing the gap." },
+    { q: "The receiver's response that shows whether the message was understood is:", o: ["Feedback", "Noise", "Encoding", "The channel"], a: 0, w: "Feedback closes the loop and confirms understanding." },
+    { q: "Feedback is important because it:", o: ["Ends communication", "Adds noise", "Replaces the message", "Confirms understanding and allows correction"], a: 3, w: "It turns one-way sending into a reliable two-way exchange." },
+    { q: "In healthcare, a nurse reading back a critical instruction is an example of:", o: ["Feedback", "A channel", "Encoding", "Noise"], a: 0, w: "The read-back is feedback confirming correct decoding." },
+    { q: "Anything that interferes with a message and distorts understanding is called:", o: ["Feedback", "Noise", "The channel", "Encoding"], a: 1, w: "Noise is any barrier that degrades shared understanding." },
+    { q: "Background sound, a bad phone line and poor handwriting are examples of:", o: ["Semantic noise", "Psychological noise", "Feedback", "Physical noise"], a: 3, w: "Physical noise is external interference." },
+    { q: "Fear, stress and prejudice that colour how a message is received are:", o: ["Physical noise", "Semantic noise", "Psychological noise", "Channels"], a: 2, w: "Psychological noise comes from the receiver's mind and emotions." },
+    { q: "Jargon and ambiguous words that are understood differently are:", o: ["Semantic noise", "Feedback", "Physical noise", "Physiological noise"], a: 0, w: "Semantic noise arises from language itself." },
+    { q: "Pain, deafness and tiredness that stop someone attending are:", o: ["Physical noise", "Semantic noise", "Encoding", "Physiological noise"], a: 3, w: "Physiological noise comes from the body's state." },
+    { q: "The main value of the communication process model is that it:", o: ["Removes all noise", "Lets you locate exactly where communication fails", "Looks impressive", "Replaces speaking"], a: 1, w: "It is a diagnostic tool for finding the break in a failed message." },
+    { q: "Communication using words, spoken or written, is:", o: ["Feedback", "Noise", "Non-verbal communication", "Verbal communication"], a: 3, w: "Verbal communication is the use of words." },
+    { q: "Facial expression, posture, tone and eye contact are:", o: ["Encoding", "Non-verbal communication", "Channels", "Verbal communication"], a: 1, w: "Non-verbal communication is meaning carried without words." },
+    { q: "When verbal and non-verbal messages conflict, people usually believe the:", o: ["Loudest one", "Neither", "Non-verbal message", "Verbal message"], a: 2, w: "Non-verbal signals are harder to fake and are trusted more." },
+    { q: "A worker says 'nothing to worry about' while frowning and backing away. The patient will likely feel:", o: ["Nothing", "Worried, trusting the body language", "Reassured", "Bored"], a: 1, w: "The non-verbal message overrides the reassuring words." },
+    { q: "The idea that the sender is responsible for the receiver's understanding reflects communication as:", o: ["Achieving shared meaning", "Writing reports", "One-way sending", "Speaking loudly"], a: 0, w: "Responsibility extends to being understood, not just transmitting." },
+    { q: "A message poorly encoded in terms the receiver cannot understand fails at the stage of:", o: ["Encoding", "Feedback", "Decoding only", "The channel"], a: 0, w: "Choosing symbols the receiver cannot decode dooms the message at encoding." },
+    { q: "Choosing a quiet room and plain language for a nervous patient is an effort to reduce:", o: ["Feedback", "The channel", "Noise", "Encoding"], a: 2, w: "It removes physical, semantic and psychological noise." },
+    { q: "For a laboratory scientist, a brilliant result that is poorly communicated is:", o: ["Effectively useless", "Better than none", "Still fully useful", "Automatically understood"], a: 0, w: "If the information does not reach and inform correctly, the result is wasted." },
+    { q: "The complete communication process, in order, is:", o: ["Channel, feedback, encode, decode", "Feedback, noise, encode, decode", "Encode, channel, decode, feedback", "Decode, channel, encode, feedback"], a: 2, w: "The sender encodes, the channel carries, the receiver decodes, then gives feedback." },
+    { q: "Every element of the communication process ultimately serves to achieve:", o: ["More noise", "A longer report", "A louder message", "Shared understanding"], a: 3, w: "Shared understanding is the goal the whole process serves." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -1916,6 +2104,7 @@ const CONTENT = {
   "bch:0": T_BCH_INTRO,
   "bio:0": T_BIO_AMINO,
   "psy:0": T_PSY_OVERVIEW,
+  "com:0": T_COM_PROCESS,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
@@ -3497,15 +3686,17 @@ export default function App() {
     link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap";
     document.head.appendChild(link);
 
-    // PWA: let students install ASCEND to the home screen and open it fullscreen like an app
-    const icon = "data:image/svg+xml," + encodeURIComponent(
-      '<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" rx="96" fill="#0A0F1A"/><rect x="96" y="300" width="80" height="130" rx="24" fill="#F5B93F" opacity="0.55"/><rect x="216" y="190" width="80" height="240" rx="24" fill="#F5B93F" opacity="0.8"/><rect x="336" y="70" width="80" height="360" rx="24" fill="#F5B93F"/></svg>'
-    );
+    // PWA: let students install ASCEND to the home screen and open it fullscreen like an app.
+    // The real logo lives at /ascend-icon.png in the public folder (navy, no white background).
+    const icon = "/ascend-icon.png";
     const manifest = {
       name: "ASCEND - MLS 2029", short_name: "ASCEND", start_url: ".", display: "standalone",
       background_color: "#0A0F1A", theme_color: "#0A0F1A",
       description: "The climb to First Class, together. Built by Prince, Ansah, Jeffery and Dacosta.",
-      icons: [{ src: icon, sizes: "512x512", type: "image/svg+xml", purpose: "any maskable" }]
+      icons: [
+        { src: icon, sizes: "192x192", type: "image/png", purpose: "any" },
+        { src: icon, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+      ]
     };
     const mLink = document.createElement("link");
     mLink.rel = "manifest";
