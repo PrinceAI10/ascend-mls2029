@@ -51,8 +51,9 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
 .ascend-root.light .navi.on{background:rgba(231,162,31,.14);color:#B4790A}
 .ascend-root.light .mobile-sidebar{background:var(--bg-2)}
 .shell{display:flex;min-height:100vh;max-width:1440px;margin:0 auto;width:100%}
-.side{width:244px;flex-shrink:0;border-right:1px solid var(--line);padding:22px 16px;
-  position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:6px;overflow-y:auto}
+/* The permanent sidebar is retired in favour of the tap-to-open menu at every
+   screen size, so the layout is consistent between laptop and phone. */
+.side{display:none}
 .main{flex:1;min-width:0;display:flex;flex-direction:column;max-width:100%;overflow-x:hidden}
 .topbar{position:sticky;top:0;z-index:20;background:rgba(10,15,26,.82);
   backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
@@ -71,19 +72,17 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
 .mobile-sidebar .navi:hover{background:var(--bg-3);color:var(--text)}
 .mobile-sidebar .navi.on{background:var(--amber-dim);color:var(--amber-2)}
 .mobile-sidebar .navi.on svg{color:var(--amber)}
-.onlymobile{display:none}
-/* large desktop: give the sidebar a little more room */
+/* the menu button and wordmark now show at every size */
+.onlymobile{display:flex}
+/* comfortable reading width on large screens */
 @media (min-width:1280px){
-  .side{width:270px;padding:26px 20px}
   .content{padding:30px 44px 70px}
 }
-/* the switch to the mobile layout: single column, hamburger nav, full-bleed */
+/* tighter padding on phones */
 @media (max-width:900px){
-  .side{display:none}
   .content{padding:16px 14px 50px}
   .content>.view{max-width:100%}
   .topbar{padding:10px 14px;gap:8px}
-  .onlymobile{display:flex}
   .card{padding:14px}
   .grid{grid-template-columns:1fr;gap:12px}
   .g2,.g3{grid-template-columns:1fr}
