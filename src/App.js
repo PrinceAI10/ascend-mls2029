@@ -3670,6 +3670,24 @@ const DEFAULT_PROGRESS = { name: "Prince", xp: 0, streak: 0, lastActive: shift(-
 /* ------------------------------- app ------------------------------------ */
 export default function App() {
   const [route, setRoute] = useState({ view: "home" });
+
+  // Make the iPhone edge-swipe and the browser/hardware back button work:
+  // when the user goes back, restore the route we saved in history rather than
+  // leaving the app. If there is no saved route (they are at the first screen),
+  // send them to home instead of off the site.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    // seed the first history entry so the very first back press has somewhere to land
+    try { window.history.replaceState({ ascendRoute: { view: "home" } }, ""); } catch {}
+    const onPop = (e) => {
+      const saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : { view: "home" };
+      setRoute(saved);
+      setMenuOpen(false);
+      window.scrollTo?.(0, 0);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
   const [progress, setProgress] = useState(DEFAULT_PROGRESS);
   const [auth, setAuth] = useState(null);
   const [supaUid, setSupaUid] = useState(null); // set when signed in via Supabase (Google)
@@ -3787,7 +3805,18 @@ export default function App() {
       store.setShared("ascend_board:" + p.name.toLowerCase().replace(/[^a-z0-9]/g, ""), { name: p.name, xp: p.xp, streak: p.streak });
     }
   };
-  const go = (view, extra = {}) => { setRoute({ view, ...extra }); setMenuOpen(false); if (typeof window !== "undefined") window.scrollTo?.(0, 0); };
+  const go = (view, extra = {}) => {
+    const next = { view, ...extra };
+    setRoute(next);
+    setMenuOpen(false);
+    if (typeof window !== "undefined") {
+      // Push this navigation into the browser history so the iPhone edge-swipe
+      // and the browser/hardware back button move back through the app instead
+      // of leaving the site.
+      try { window.history.pushState({ ascendRoute: next }, ""); } catch {}
+      window.scrollTo?.(0, 0);
+    }
+  };
 
   const recordDaily = (correct) => {
     const tk = todayKey();
