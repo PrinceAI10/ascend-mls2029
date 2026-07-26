@@ -24,7 +24,7 @@
  * back into { choices:[{message:{content}}] }, which the app already reads.
  */
 
-const MODEL = "gemini-2.5-flash"; // free tier, fast, large context
+const MODEL = "gemini-flash-latest"; // always-current free Flash model
 
 export async function handler(event) {
   if (event.httpMethod === "OPTIONS") {

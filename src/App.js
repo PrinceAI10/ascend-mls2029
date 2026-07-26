@@ -1484,7 +1484,8 @@ async function callClaude(system, messages, maxTokens = 1024) {
   }
   if (!res.ok) throw new Error(res.status === 429 ? "The AI is busy right now. Wait a few seconds and try again." : "The AI service is unavailable at the moment.");
   const data = await res.json();
-  // accept Anthropic ({content:[{type:'text',text}]}) and OpenAI/DeepSeek ({choices:[{message:{content}}]}) shapes
+  if (data && data.error) throw new Error(typeof data.error === "string" ? data.error : (data.error.message || "AI error"));
+  // accept Anthropic ({content:[{type:'text',text}]}) and OpenAI/DeepSeek/Gemini-proxied ({choices:[{message:{content}}]}) shapes
   let text = "";
   if (Array.isArray(data.content)) text = data.content.map((b) => (b.type === "text" ? b.text : "")).join("");
   else if (data.choices && data.choices[0]) text = data.choices[0].message ? data.choices[0].message.content : data.choices[0].text;
@@ -1575,7 +1576,7 @@ function AITutor({ topicTitle, context }) {
       const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })));
       setMsgs([...next, { role: "assistant", content: reply }]);
     } catch (e) {
-      setMsgs([...next, { role: "assistant", content: (e && e.message ? e.message + " " : "") + "The tutor runs live on the Claude API; on your deployed site, point API_ENDPOINT at your key proxy." }]);
+      setMsgs([...next, { role: "assistant", content: (e && e.message ? e.message + " " : "") + "The tutor could not respond just now. Please try again in a moment." }]);
     }
     setBusy(false);
   };
@@ -2055,7 +2056,7 @@ function PapersView() {
       if (!clean.length) throw new Error("No usable questions came back - try again.");
       setItems(clean);
     } catch (e) {
-      setErr((e && e.message ? e.message + " " : "") + "This runs live on the Claude API - it works here inside Claude; on your deployed site, point API_ENDPOINT at your key proxy.");
+      setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again in a moment.");
     }
     setBusy(false);
   };
@@ -2136,7 +2137,7 @@ function ResourcesView() {
         setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 3000));
       }
     } catch (e) {
-      setErr((e && e.message ? e.message + " " : "") + "The breakdown runs live on the Claude API - it works here inside Claude; on your deployed site, point API_ENDPOINT at your key proxy.");
+      setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again in a moment.");
     }
     setStage(""); setBusy(false);
   };
