@@ -2811,6 +2811,542 @@ If those came cleanly, you can recognise, classify and understand glandular epit
   ],
 };
 
+/* --------------------------- phy:2 --------------------------- */
+const T_PHY_TRANSPORT = {
+  courseId: "phy",
+  topicIndex: 2,
+  title: "Membrane Transport Overview",
+  minutes: 18,
+  note: [
+    { q: "Why the cell membrane is the gatekeeper of life.",
+      body: `You learned that homeostasis keeps the internal environment stable. That stability begins at a boundary you must now understand deeply: the cell membrane, which decides what enters and leaves every cell.
+
+My Socratic question: a cell must take in glucose, oxygen and ions while keeping out toxins and holding its contents in - all across one thin membrane. If that membrane let everything through freely, or nothing at all, what would happen to the cell?
+
+The answer is that the cell would die either way - free passage would let its careful internal composition dissolve into the surroundings, while a sealed membrane would starve it. Life depends on the membrane being selectively permeable: allowing some substances across while blocking others, and controlling the rate.
+
+Crucial insight: membrane transport is the set of mechanisms by which substances cross the cell membrane, and it is the foundation of cellular life and homeostasis. Every nutrient absorbed, every waste removed, every nerve impulse and muscle contraction depends on controlled movement across membranes. This is why, having established homeostasis, we now examine exactly how the membrane moves things - the machinery behind the stability.` },
+
+    { q: "The membrane structure that makes selective transport possible.",
+      body: `To understand transport you must recall what the membrane is made of, because its structure dictates what can cross easily and what cannot.
+
+The cell membrane is a phospholipid bilayer - a double sheet of phospholipid molecules. Each phospholipid has a water-loving (hydrophilic) phosphate head and two water-fearing (hydrophobic) fatty acid tails. The heads face outward toward the watery fluids inside and outside the cell, while the tails point inward, forming an oily, water-fearing core in the middle of the membrane. Embedded in this bilayer are proteins that act as channels and carriers.
+
+My Socratic question: given that the middle of the membrane is oily and water-fearing, predict which kind of substance slips through easily and which is blocked.
+
+The answer is that small, non-polar, fat-soluble substances - like oxygen and carbon dioxide - dissolve through the oily core easily, while water-soluble and charged substances - like ions, glucose and even water itself - are repelled by that oily core and cannot cross the lipid directly; they need protein help.
+
+Crucial insight: the phospholipid bilayer's oily core is the key to selectivity - it welcomes fat-soluble molecules and blocks water-soluble and charged ones. This single structural fact explains why some substances cross freely while others need special protein pathways, and it organises the entire topic of transport into those that need help and those that do not.` },
+
+    { q: "The master division: passive versus active transport.",
+      body: `All membrane transport falls into two great categories, separated by one question: does it require the cell to spend energy?
+
+My Socratic question: some substances move across the membrane on their own, while others must be pushed by the cell using energy. What determines which is which, and what is the energy currency the cell spends?
+
+The answer is that the direction of movement relative to the concentration gradient decides it. Passive transport requires no energy - substances move down their concentration gradient, from where they are more concentrated to where they are less concentrated, like a ball rolling downhill. Active transport requires energy, supplied by ATP, because substances are moved up their concentration gradient, from low to high concentration - against the natural flow, like pushing a ball uphill.
+
+Crucial insight: passive transport is downhill and free; active transport is uphill and costs ATP. This single distinction - with or against the gradient, free or energy-requiring - is the master division of all membrane transport. Every specific mechanism you study is a form of one or the other, so fix this contrast firmly before going further.` },
+
+    { q: "The concentration gradient: the driving force.",
+      body: `Both categories are defined by the concentration gradient, so you must understand this idea precisely - it is the engine of passive transport and the obstacle active transport overcomes.
+
+A concentration gradient exists whenever a substance is more concentrated in one region than another. Substances naturally tend to move from high concentration to low concentration, spreading out until evenly distributed - this natural spreading is the basis of diffusion.
+
+My Socratic question: why do particles move from high to low concentration on their own, without any energy being added?
+
+The answer lies in the random motion of all particles. Particles are constantly moving randomly in all directions; where they are crowded (high concentration), more of them happen to move away than move in, so the net movement is outward, toward the less crowded region. No force pushes them - it is simply the statistical result of random motion, which is why it needs no energy. This spreading releases energy rather than requiring it.
+
+Crucial insight: the concentration gradient drives passive transport for free because random particle motion naturally moves substances from high to low concentration. Moving with this gradient is effortless (passive); moving against it, from low to high, requires energy to overcome the natural tendency (active). Understanding why downhill movement is free is the key to understanding why uphill movement must cost ATP.` },
+
+    { q: "Simple diffusion: crossing the membrane directly.",
+      body: `The simplest form of passive transport is simple diffusion, and it applies to exactly those substances the oily membrane core welcomes.
+
+Simple diffusion is the movement of a substance directly through the phospholipid bilayer, down its concentration gradient, with no help from proteins. It works only for substances that can dissolve through the oily core: small, non-polar, lipid-soluble molecules.
+
+My Socratic question: name the two most important gases that cross cell membranes this way, and explain why this matters for every breath you take.
+
+The answer is oxygen and carbon dioxide, both small and non-polar. In the lungs, oxygen diffuses from the air into the blood and carbon dioxide diffuses out, all by simple diffusion down their gradients; in every tissue, the same gases diffuse between blood and cells. Your entire gas exchange depends on simple diffusion.
+
+Crucial insight: simple diffusion moves small, non-polar, lipid-soluble substances directly through the membrane, down their gradient, without energy or proteins - oxygen and carbon dioxide being the vital examples. It is the most straightforward transport, requiring nothing but the gradient and a membrane the substance can dissolve through. When the substance cannot dissolve through the oily core, a different passive mechanism is needed.` },
+
+    { q: "Facilitated diffusion: passive, but with a protein helper.",
+      body: `Many essential substances - glucose, ions - cannot cross the oily membrane directly, yet the cell still moves them without spending energy. How? Through facilitated diffusion.
+
+Facilitated diffusion is the movement of a substance down its concentration gradient with the help of a membrane transport protein. It is still passive - no energy is used, and the substance still moves from high to low concentration - but it needs a protein pathway because the substance cannot dissolve through the lipid.
+
+My Socratic question: if facilitated diffusion uses proteins like active transport does, what makes it passive rather than active?
+
+The answer is the direction of movement: facilitated diffusion moves substances down their gradient, so no energy is needed - the protein simply provides a passage through the membrane the substance could not otherwise cross. The gradient still does the work; the protein just opens a door. Active transport, by contrast, uses proteins to push substances up the gradient, which does require energy.
+
+Crucial insight: facilitated diffusion is passive transport through a protein - down the gradient, no energy, but requiring a channel or carrier for substances that cannot cross the lipid alone, such as glucose and ions. The presence of a protein does not make transport active; only movement against the gradient does. This distinction is a favourite exam trap, so hold it firmly.` },
+
+    { q: "Osmosis: the special case of water.",
+      body: `Water deserves its own attention because its movement across membranes - osmosis - is central to fluid balance and a constant concern in the laboratory.
+
+Osmosis is the diffusion of water across a selectively permeable membrane, from a region of higher water concentration to lower water concentration - which is the same as saying from a dilute solution to a concentrated one. Water moves toward the side with more dissolved solute.
+
+My Socratic question: place a red blood cell in pure water and it swells and bursts; place it in very salty water and it shrivels. Using osmosis, explain both.
+
+The answer is that in pure water, the water concentration outside is higher than inside the cell, so water rushes in by osmosis until the cell bursts; in salty water, the water concentration outside is lower, so water leaves the cell and it shrivels. Water always moves toward the saltier side.
+
+Crucial insight: osmosis is the movement of water toward the more concentrated solution, and it governs whether cells swell, shrink or stay balanced. This is exactly why intravenous fluids and laboratory solutions must be isotonic - matching the cell's concentration - so cells neither burst nor shrivel. When you prepare or handle solutions with cells, osmosis is the principle you are managing.` },
+
+    { q: "Bulk transport: moving the largest cargo.",
+      body: `Some materials are simply too large to cross the membrane by any of the mechanisms so far - even through proteins. For these, the cell uses bulk transport, which packages material in membrane sacs. This always requires energy.
+
+Endocytosis is the process of taking large materials into the cell by wrapping them in a piece of membrane that pinches off inward to form a vesicle. When the material is solid particles, such as a bacterium engulfed by an immune cell, it is called phagocytosis (cell eating); when it is fluid droplets, it is called pinocytosis (cell drinking). Exocytosis is the reverse - a vesicle inside the cell fuses with the membrane and releases its contents outside, as when a gland cell secretes a hormone or a nerve cell releases a neurotransmitter.
+
+My Socratic question: an immune cell must engulf and destroy invading bacteria. Which bulk transport process does it use, and is energy required?
+
+The answer is phagocytosis, a form of endocytosis, and yes - all bulk transport requires energy because it involves actively reshaping the membrane, so it is a form of active transport.
+
+Crucial insight: bulk transport - endocytosis (phagocytosis for solids, pinocytosis for fluids) and exocytosis - moves materials too large for other mechanisms, always using energy. It links directly to immune defence (engulfing microbes) and to secretion (releasing hormones and neurotransmitters), showing how transport underlies whole-body functions you will study later.` },
+
+    { q: "Putting it together: a map of membrane transport.",
+      body: `Let us assemble the whole scheme, because seeing all mechanisms in one framework lets you classify any example you meet.
+
+The first question is always: does it require energy? If no, it is passive - moving down the gradient. Passive transport includes simple diffusion (small non-polar substances directly through the lipid), facilitated diffusion (via proteins, for substances that cannot cross the lipid), and osmosis (water across the membrane). If yes, it is active - moving up the gradient or moving bulk material. Active transport includes primary active transport (using ATP directly, like the sodium-potassium pump), secondary active transport (using a gradient built by primary), and bulk transport (endocytosis and exocytosis).
+
+My Socratic question: a substance moves from an area where it is scarce to an area where it is already abundant. Immediately, what must be true about the transport?
+
+The answer is that it must be active and require energy, because moving from low to high concentration is against the gradient, which never happens on its own. The direction alone tells you energy is involved.
+
+Crucial insight: classify any transport by asking two questions - does it need energy (passive or active), and does it need a protein (direct or protein-mediated). This two-question framework turns the whole topic into a decision you can make about any substance crossing any membrane, which is exactly what exams and laboratory reasoning require.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for membrane transport, in five lines.
+
+The foundation: the cell membrane is a selectively permeable phospholipid bilayer whose oily core admits small non-polar substances and blocks water-soluble and charged ones, which need proteins.
+
+The master division: passive transport moves substances down their gradient with no energy; active transport moves them up their gradient using ATP.
+
+Passive mechanisms: simple diffusion (small non-polar molecules like oxygen and carbon dioxide directly through the lipid), facilitated diffusion (proteins carry substances like glucose down the gradient), and osmosis (water moving toward the more concentrated solution).
+
+Active mechanisms: primary active transport (ATP directly, the sodium-potassium pump), secondary active transport (using a primary-built gradient), and bulk transport - endocytosis (phagocytosis for solids, pinocytosis for fluids) and exocytosis - all requiring energy.
+
+The reasoning tool: ask does it need energy, and does it need a protein - two questions that classify any transport.
+
+Now your final test. A cell must take in glucose, which is present in higher concentration outside the cell than inside, but glucose cannot dissolve through the oily membrane. Separately, the same cell must pump sodium out even though sodium is already more concentrated outside.
+
+Question one: by what mechanism does the glucose enter, and is energy required? Justify using both the gradient and the need for a protein.
+Question two: by what type of mechanism is sodium pumped out, and why must energy be used?
+Question three: state the general two-question framework you used to classify each, and what each answer told you.
+
+Work them through before reading on.
+
+My answers. One: glucose enters by facilitated diffusion - it moves down its gradient from high outside to low inside, so no energy is required, but because it cannot dissolve through the oily core it needs a transport protein; passive, but protein-mediated. Two: sodium is pumped out by active transport, because it is being moved from lower concentration inside to higher concentration outside - up its gradient, against the natural flow - which cannot happen on its own and so requires ATP. Three: the framework is to ask first whether energy is needed (down the gradient means passive and free; up the gradient means active and ATP-requiring) and second whether a protein is needed (substances that cannot cross the lipid require a channel or carrier); glucose answered passive-but-protein-mediated, sodium answered active.
+
+If those came cleanly, you understand the gatekeeping machinery of every cell - the mechanisms behind homeostasis, gas exchange, nutrition, nerve impulses and secretion. The next topics examine these mechanisms one by one in depth.` },
+  ],
+  theory: [
+    { q: "Why must the cell membrane be selectively permeable?", a: "Because a cell must take in needed substances (glucose, oxygen, ions) and remove wastes while holding its contents in and keeping toxins out. Free passage would let its internal composition dissolve away, and a sealed membrane would starve it - so it must allow some substances across while blocking others, and control the rate." },
+    { q: "Describe the structure of the cell membrane and how it affects transport.", a: "It is a phospholipid bilayer: a double sheet of phospholipids with hydrophilic phosphate heads facing the watery fluids and hydrophobic fatty-acid tails forming an oily core, with embedded proteins. The oily core lets small non-polar, fat-soluble substances dissolve through easily but blocks water-soluble and charged substances, which need protein pathways." },
+    { q: "State the master division between passive and active transport.", a: "Passive transport requires no energy: substances move down their concentration gradient (high to low). Active transport requires energy from ATP: substances are moved up their concentration gradient (low to high), against the natural flow." },
+    { q: "What is a concentration gradient, and why does passive movement down it require no energy?", a: "A concentration gradient exists when a substance is more concentrated in one region than another. Movement down it needs no energy because particles are in constant random motion, and where they are crowded more happen to move away than toward, giving a net movement from high to low concentration - a free, statistical result of random motion." },
+    { q: "Define simple diffusion and give the key examples.", a: "Simple diffusion is movement of a substance directly through the phospholipid bilayer, down its concentration gradient, with no proteins and no energy. It works only for small, non-polar, lipid-soluble substances - oxygen and carbon dioxide being the vital examples, driving gas exchange." },
+    { q: "Define facilitated diffusion and explain why it is still passive.", a: "Facilitated diffusion is movement of a substance down its concentration gradient with the help of a membrane transport protein. It is passive because the substance still moves from high to low concentration, so no energy is used; the protein only provides a pathway for substances (like glucose and ions) that cannot dissolve through the lipid. Only movement against the gradient makes transport active." },
+    { q: "Define osmosis and state the direction water moves.", a: "Osmosis is the diffusion of water across a selectively permeable membrane, from higher water concentration to lower - that is, from a dilute solution toward a more concentrated (saltier) one. Water always moves toward the side with more dissolved solute." },
+    { q: "Explain what happens to a red blood cell in pure water and in very salty water.", a: "In pure water, the outside water concentration is higher than inside, so water rushes into the cell by osmosis until it swells and bursts. In very salty water, the outside water concentration is lower, so water leaves the cell and it shrivels. This is why laboratory and IV solutions must be isotonic." },
+    { q: "Describe endocytosis and its two types, and exocytosis.", a: "Endocytosis takes large materials into the cell by wrapping them in membrane that pinches off as a vesicle: phagocytosis (cell eating) engulfs solid particles like bacteria, and pinocytosis (cell drinking) takes in fluid droplets. Exocytosis is the reverse - a vesicle fuses with the membrane and releases its contents outside, as in secretion of hormones or neurotransmitters. All bulk transport requires energy." },
+    { q: "State the two-question framework for classifying any membrane transport.", a: "First, does it require energy? Down the gradient means passive (free); up the gradient or moving bulk material means active (ATP-requiring). Second, does it require a protein? Substances that cannot cross the oily lipid core need a channel or carrier, while small non-polar ones cross directly. These two questions classify any transport." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Cell Membrane Transport Passive and Active Overview", note: "The master division and where each mechanism fits.", url: "" },
+    { channel: "Physiology", title: "Diffusion Osmosis and Facilitated Diffusion", note: "The passive mechanisms compared, with clear examples.", url: "" },
+    { channel: "Physiology", title: "Endocytosis Exocytosis Bulk Transport", note: "How the cell moves its largest cargo, and why it costs energy.", url: "" },
+  ],
+  mcqs: [
+    { q: "A membrane that allows some substances across but not others is:", o: ["Solid", "Selectively permeable", "Freely permeable", "Impermeable"], a: 1, w: "Selective permeability lets the cell control what crosses." },
+    { q: "The cell membrane is structurally a:", o: ["Phospholipid bilayer", "Single protein sheet", "Solid wall", "Layer of sugar"], a: 0, w: "It is a double sheet of phospholipids with embedded proteins." },
+    { q: "The core of the membrane is:", o: ["Made of bone", "Oily and water-fearing", "Empty", "Watery and charged"], a: 1, w: "The fatty-acid tails form an oily, hydrophobic core." },
+    { q: "Which substance crosses the lipid core most easily?", o: ["Oxygen (small, non-polar)", "Glucose", "A charged ion", "A protein"], a: 0, w: "Small non-polar substances dissolve through the oily core." },
+    { q: "Passive transport moves substances:", o: ["Down the gradient with no energy", "Only in bulk", "Up the gradient using ATP", "Against random motion"], a: 0, w: "Passive transport is downhill and requires no energy." },
+    { q: "Active transport moves substances:", o: ["Only water", "Up the gradient using energy (ATP)", "Down the gradient freely", "Without proteins"], a: 1, w: "Active transport pushes substances uphill and costs ATP." },
+    { q: "The key difference between passive and active transport is:", o: ["Colour", "Whether energy is required", "Speed only", "Temperature"], a: 1, w: "Passive is free (down gradient); active requires energy (up gradient)." },
+    { q: "Particles move from high to low concentration on their own because of:", o: ["ATP", "Their constant random motion", "Gravity only", "An added force"], a: 1, w: "Random motion statistically spreads particles from crowded regions." },
+    { q: "Simple diffusion moves substances:", o: ["Directly through the lipid bilayer, down the gradient", "Up the gradient", "In vesicles", "Through proteins"], a: 0, w: "Simple diffusion crosses the lipid directly, no proteins, no energy." },
+    { q: "Which pair crosses membranes mainly by simple diffusion?", o: ["Glucose and sodium", "Bacteria and water", "Proteins and DNA", "Oxygen and carbon dioxide"], a: 3, w: "O2 and CO2 are small and non-polar - ideal for simple diffusion." },
+    { q: "Facilitated diffusion requires:", o: ["Energy and a protein", "Neither protein nor energy", "Only ATP", "A protein but no energy"], a: 3, w: "It uses a protein pathway but moves down the gradient, so no energy." },
+    { q: "Facilitated diffusion is classified as passive because it:", o: ["Moves substances down their gradient with no energy", "Is fast", "Moves water", "Uses proteins"], a: 0, w: "Direction down the gradient, not the protein, makes it passive." },
+    { q: "A substance moving down its gradient through a protein is using:", o: ["Active transport", "Simple diffusion", "Facilitated diffusion", "Exocytosis"], a: 2, w: "Protein-assisted movement down the gradient is facilitated diffusion." },
+    { q: "Osmosis is the movement of:", o: ["Glucose", "Gases", "Water across a selectively permeable membrane", "Ions only"], a: 2, w: "Osmosis is specifically the diffusion of water." },
+    { q: "In osmosis, water moves toward the side with:", o: ["Less solute", "More gas", "No water", "More dissolved solute"], a: 3, w: "Water moves toward the more concentrated (saltier) solution." },
+    { q: "A red blood cell placed in pure water will:", o: ["Swell and possibly burst", "Stay the same", "Shrivel", "Turn blue"], a: 0, w: "Water rushes in by osmosis, swelling and bursting the cell." },
+    { q: "A red blood cell in very salty water will:", o: ["Burst", "Shrivel", "Divide", "Swell"], a: 1, w: "Water leaves the cell toward the saltier outside, shrivelling it." },
+    { q: "Laboratory and IV solutions must be isotonic so that cells:", o: ["Stop working", "Shrink", "Neither burst nor shrivel", "Burst"], a: 2, w: "Isotonic solutions match the cell, preventing osmotic damage." },
+    { q: "Taking large materials into the cell in a vesicle is:", o: ["Osmosis", "Exocytosis", "Endocytosis", "Diffusion"], a: 2, w: "Endocytosis wraps material in membrane and brings it inward." },
+    { q: "Engulfing solid particles like bacteria is:", o: ["Phagocytosis", "Exocytosis", "Pinocytosis", "Osmosis"], a: 0, w: "Phagocytosis (cell eating) engulfs solid particles." },
+    { q: "Taking in fluid droplets is:", o: ["Exocytosis", "Diffusion", "Phagocytosis", "Pinocytosis"], a: 3, w: "Pinocytosis (cell drinking) takes in fluid." },
+    { q: "Releasing contents from the cell by vesicle fusion is:", o: ["Osmosis", "Endocytosis", "Exocytosis", "Diffusion"], a: 2, w: "Exocytosis fuses a vesicle with the membrane to release contents." },
+    { q: "An immune cell engulfing bacteria uses:", o: ["Simple diffusion", "Phagocytosis", "Facilitated diffusion", "Osmosis"], a: 1, w: "Phagocytosis is how immune cells engulf microbes." },
+    { q: "Bulk transport (endocytosis and exocytosis) requires:", o: ["No energy", "Energy (it is active)", "Only a gradient", "Only water"], a: 1, w: "Reshaping the membrane for bulk transport requires energy." },
+    { q: "A hormone or neurotransmitter is released from a cell by:", o: ["Simple diffusion", "Endocytosis", "Exocytosis", "Osmosis"], a: 2, w: "Secretion of hormones and neurotransmitters uses exocytosis." },
+    { q: "If a substance moves from low to high concentration, the transport must be:", o: ["Simple diffusion", "Passive", "Active (requiring energy)", "Osmosis"], a: 2, w: "Moving against the gradient always requires energy." },
+    { q: "The first question to classify any transport is:", o: ["How big is the cell", "What time is it", "What colour is it", "Does it require energy"], a: 3, w: "Energy need separates passive from active transport." },
+    { q: "The second useful question to classify transport is:", o: ["Does it need a protein", "Is it daytime", "Is it warm", "Is it fast"], a: 0, w: "Protein need separates direct from protein-mediated transport." },
+    { q: "The sodium-potassium pump is an example of:", o: ["Facilitated diffusion", "Simple diffusion", "Osmosis", "Primary active transport"], a: 3, w: "It uses ATP directly to pump ions against their gradients." },
+    { q: "Membrane transport ultimately underlies:", o: ["Only digestion", "Only bones", "Nothing important", "Homeostasis, gas exchange, nutrition, nerve impulses and secretion"], a: 3, w: "Controlled transport is the basis of nearly all cell function." },
+  ],
+};
+
+/* --------------------------- phy:3 --------------------------- */
+const T_PHY_FACIL = {
+  courseId: "phy",
+  topicIndex: 3,
+  title: "Facilitated Diffusion",
+  minutes: 16,
+  note: [
+    { q: "Revisiting the problem facilitated diffusion solves.",
+      body: `In the transport overview you met facilitated diffusion briefly. Now we examine it in depth, because it is how many of the most vital substances - glucose, amino acids, and ions - actually cross into your cells.
+
+My Socratic question: glucose is your cells' main fuel and must enter constantly, yet glucose is water-soluble and cannot dissolve through the oily membrane core. It also moves without the cell spending energy. How can something cross a barrier it cannot dissolve through, without any energy?
+
+The answer is facilitated diffusion: a membrane protein provides a passage, and the glucose moves through it down its concentration gradient, driven by the gradient alone. The protein solves the "cannot cross the lipid" problem; the gradient solves the "how does it move" problem, for free.
+
+Crucial insight: facilitated diffusion is the passive movement of a substance down its concentration gradient through a specific membrane transport protein. It exists to move substances that are essential but cannot cross the lipid bilayer directly - and it does so without energy, using the gradient. This combination of protein-mediated yet passive is exactly what makes it distinctive, and often confusing, so we study it carefully.` },
+
+    { q: "The defining features: passive but protein-dependent.",
+      body: `Facilitated diffusion sits in an interesting position - it shares one feature with simple diffusion and one with active transport, and pinning down exactly which is the key to mastering it.
+
+Like simple diffusion, and unlike active transport, facilitated diffusion is passive: it moves substances down their concentration gradient, from high to low, and uses no ATP. Like active transport, and unlike simple diffusion, it requires a membrane protein, because the substances it moves cannot cross the lipid alone.
+
+My Socratic question: a student says "it uses a protein, so it must be active transport." Why is this wrong, and what is the single feature that actually decides passive versus active?
+
+The answer is that the use of a protein does not determine whether transport is active or passive - the direction relative to the gradient does. Facilitated diffusion moves substances down the gradient, so it is passive regardless of the protein. Only movement up the gradient, against the natural flow, requires energy and defines active transport.
+
+Crucial insight: facilitated diffusion is passive because of its direction (down the gradient), and protein-dependent because of its cargo (substances that cannot cross the lipid). Never let the presence of a protein trick you into calling it active - the gradient direction is the sole test. This is the single most important and most tested idea in the topic.` },
+
+    { q: "The two kinds of transport protein: channels and carriers.",
+      body: `Facilitated diffusion is carried out by two distinct types of membrane protein, and distinguishing them is essential.
+
+Channel proteins form a water-filled pore or tunnel through the membrane, through which specific substances - usually ions - can pass. They are like an open doorway; substances flow through quickly when the channel is open. Carrier proteins, by contrast, bind the specific substance on one side, then change shape to move it to the other side and release it - like a revolving door that must turn for each passenger. Carriers move substances like glucose and amino acids.
+
+My Socratic question: which type would you expect to move substances faster, and why?
+
+The answer is that channels are faster, because substances simply flow through an open pore, while carriers are slower because each must physically change shape for every molecule it moves - a revolving door is slower than an open doorway. This is why ions, which must move rapidly, use channels.
+
+Crucial insight: facilitated diffusion uses channel proteins (fast, water-filled pores, mainly for ions) and carrier proteins (slower, shape-changing, for larger solutes like glucose). Both move substances down the gradient without energy; they differ in mechanism and speed. Recognising which type a substance uses, and why, is central to understanding facilitated diffusion.` },
+
+    { q: "Specificity: each protein for its own substance.",
+      body: `A crucial property of these transport proteins is that they are highly selective - each one moves only a particular substance or class of substances, and this specificity has major consequences.
+
+Transport proteins have a specific shape and binding site that fits only certain substances, the way a lock fits only its key. A glucose carrier moves glucose but not amino acids; a potassium channel passes potassium but not sodium. This is why the membrane can control precisely which substances enter and leave.
+
+My Socratic question: why is this specificity essential for the cell rather than just an interesting detail?
+
+The answer is that specificity is what makes the membrane selectively permeable in a controlled way. If proteins moved anything, the cell could not regulate its internal composition; because each protein moves only its own substance, the cell decides exactly what crosses by choosing which proteins it makes and opens. Specificity turns transport from a leak into a control system.
+
+Crucial insight: transport proteins are substance-specific, each recognising and moving only its particular cargo through a matching binding site. This selectivity is the basis of the cell's precise control over its contents, and it explains why a defect in one specific transport protein can cause disease by blocking one substance while leaving others unaffected.` },
+
+    { q: "Saturation: why facilitated diffusion has a speed limit.",
+      body: `Here is a property that sharply distinguishes facilitated diffusion from simple diffusion, and it is a favourite of examiners: facilitated diffusion can be saturated.
+
+In simple diffusion, the rate of movement increases steadily as the concentration gradient increases - more gradient, more movement, without limit. But in facilitated diffusion, the rate rises with the gradient only up to a point, then levels off at a maximum, no matter how much steeper the gradient becomes.
+
+My Socratic question: why does facilitated diffusion reach a maximum rate while simple diffusion does not?
+
+The answer is that facilitated diffusion depends on a limited number of transport proteins. When every protein is working as fast as it can - when they are all occupied - adding more substance cannot speed things up, because there are no free proteins to carry it. The transport is saturated, like a car park that is full: more cars arriving cannot get in until spaces free up. Simple diffusion has no such limit because it needs no proteins.
+
+Crucial insight: facilitated diffusion shows saturation - a maximum transport rate set by the number of transport proteins - whereas simple diffusion has no maximum. This saturation is direct evidence that proteins are involved, and distinguishing the two by their rate-versus-gradient behaviour is a classic exam question.` },
+
+    { q: "Glucose transport: the essential worked example.",
+      body: `Let us ground all of this in the single most important example of facilitated diffusion in the body: the uptake of glucose into cells.
+
+Glucose is the primary fuel of most cells, yet it is water-soluble and cannot cross the lipid membrane. Cells therefore use glucose carrier proteins, called GLUT transporters, which bind glucose on the outside where it is abundant and release it inside where it is scarce - moving it down its gradient, no energy needed.
+
+My Socratic question: after a meal, blood glucose is high; the hormone insulin causes muscle and fat cells to insert more glucose transporters into their membranes. How does this help control blood sugar, and what does it tell you about facilitated diffusion?
+
+The answer is that more transporters mean more glucose can enter cells by facilitated diffusion, lowering blood glucose - and it shows that the cell controls facilitated diffusion by controlling how many transport proteins are present. Facilitated diffusion is passive, but the cell still regulates it by adjusting protein numbers.
+
+Crucial insight: glucose uptake by GLUT carriers is the defining example of facilitated diffusion - passive, carrier-mediated, down the gradient - and its regulation by insulin links directly to blood sugar control and diabetes. When insulin fails, as in diabetes, glucose cannot enter cells efficiently and blood glucose rises - a facilitated-diffusion problem with whole-body consequences you will measure in the laboratory.` },
+
+    { q: "Comparing the three passive routes.",
+      body: `To lock in your understanding, compare facilitated diffusion directly with the other passive mechanisms, since exams love asking you to distinguish them.
+
+Simple diffusion moves small non-polar substances (oxygen, carbon dioxide) directly through the lipid, no protein, no saturation. Facilitated diffusion moves substances that cannot cross the lipid (glucose, ions) through proteins, showing specificity and saturation, but still down the gradient with no energy. Osmosis is the specific case of water moving across the membrane toward the more concentrated solution.
+
+My Socratic question: all three are passive and need no energy. What single feature most clearly separates facilitated diffusion from simple diffusion in an experiment?
+
+The answer is saturation: if the transport rate levels off at a maximum as concentration rises, a limited number of proteins is involved, so it is facilitated diffusion; if the rate keeps rising without limit, it is simple diffusion. Specificity is another distinguishing sign - facilitated diffusion is selective, simple diffusion is not.
+
+Crucial insight: all passive transport moves down the gradient without energy, but they differ in mechanism - simple diffusion needs no protein and does not saturate; facilitated diffusion needs a specific protein and does saturate; osmosis moves water. Being able to tell them apart by protein-dependence, specificity and saturation is exactly the discrimination exams demand.` },
+
+    { q: "Gated channels: doors that open and close.",
+      body: `Not all channel proteins stay permanently open. Many are gated - they open and close in response to signals - and this refinement is essential for understanding nerves and muscles later.
+
+A gated channel has a gate that controls whether the pore is open or shut, so the cell can allow facilitated diffusion at some moments and block it at others. There are three main kinds. Voltage-gated channels open or close in response to changes in the electrical charge across the membrane. Ligand-gated (chemically gated) channels open when a specific molecule, such as a neurotransmitter, binds to them. Mechanically gated channels open in response to physical force, such as stretch or pressure.
+
+My Socratic question: why is a gate so valuable - why not simply leave every channel open all the time?
+
+The answer is that control requires the ability to say no as well as yes. If channels were always open, ions would flow constantly and the cell could never build up or hold a gradient, nor generate the sudden, timed ion movements that produce nerve impulses and muscle contractions. The gate lets the cell open the door only at the right moment.
+
+Crucial insight: gated channels open and close in response to voltage, chemical signals, or mechanical force, giving the cell precise control over when facilitated diffusion of ions occurs. This timed, controllable ion movement is the very basis of nerve impulses and muscle contraction, so the humble gated channel is the foundation of the excitable tissues you will soon study.` },
+
+    { q: "When facilitated diffusion fails: clinical relevance.",
+      body: `Because facilitated diffusion depends on specific proteins, a fault in a single transport protein can cause disease - which makes this topic directly relevant to your future diagnostic work.
+
+My Socratic question: if a person inherited a defective glucose transport protein, what would happen, and why would only glucose handling be affected and not, say, oxygen uptake?
+
+The answer is that glucose could not be moved efficiently into or across cells, causing disease, while oxygen would be unaffected because oxygen uses simple diffusion, not a protein - so a protein defect touches only the substance that protein carries. This is the consequence of specificity: each transporter serves one cargo, so its failure is specific.
+
+Real examples exist: in some inherited disorders, defective glucose transporters in the gut or kidney impair glucose absorption or cause glucose to be lost in urine; and the failure of insulin-regulated glucose uptake underlies the high blood glucose of diabetes. All are facilitated-diffusion problems.
+
+Crucial insight: because facilitated diffusion is protein-specific, defects in transport proteins cause specific diseases affecting only their particular substance - a direct clinical consequence of the specificity you learned. Recognising that a laboratory finding, like glucose in the urine, can reflect a transport-protein problem is exactly the kind of mechanistic reasoning that makes a skilled laboratory scientist.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for facilitated diffusion, in five lines.
+
+The definition: facilitated diffusion is the passive movement of a substance down its concentration gradient through a specific membrane transport protein, needed for substances that cannot cross the lipid alone.
+
+The crucial classification: it is passive because of its direction (down the gradient, no energy), and protein-dependent because of its cargo - the protein never makes it active; only movement up the gradient does.
+
+The machinery: channel proteins (fast, water-filled pores, mainly ions) and carrier proteins (slower, shape-changing, for glucose and amino acids), both highly specific to their substance.
+
+The signature: saturation - a maximum rate set by the number of proteins - which simple diffusion lacks; together with specificity, this is how facilitated diffusion is identified.
+
+The relevance: glucose uptake by GLUT carriers, regulated by insulin, is the key example, and defects in specific transport proteins cause specific diseases - the mechanistic basis of findings like glucose in the urine.
+
+Now your final test. In an experiment, a substance crosses a membrane down its concentration gradient without any energy. As its concentration outside is increased, its rate of entry rises at first but then levels off at a fixed maximum and cannot go higher.
+
+Question one: is this simple or facilitated diffusion, and what single feature of the result proves it?
+Question two: what does the levelling-off (maximum rate) tell you about the mechanism at the molecular level?
+Question three: is energy involved, and what does that make this transport - passive or active - despite the protein being required?
+
+Work them through before reading on.
+
+My answers. One: it is facilitated diffusion, proven by the saturation - the rate levelling off at a maximum, which simple diffusion never does. Two: the maximum rate means a limited number of transport proteins are involved; once all of them are occupied and working at full speed, adding more substance cannot increase the rate, because there are no free proteins to carry it. Three: no energy is involved, because the substance moves down its gradient; this makes the transport passive, and the requirement for a protein does not change that - only movement against the gradient would make it active.
+
+If those came cleanly, you have mastered the mechanism that feeds your cells their glucose and lets ions cross - passive, specific, saturable, protein-mediated. Active transport, which moves substances the hard way, uphill, is the natural next step.` },
+  ],
+  theory: [
+    { q: "Define facilitated diffusion.", a: "Facilitated diffusion is the passive movement of a substance down its concentration gradient through a specific membrane transport protein. It moves substances that cannot cross the lipid bilayer directly (such as glucose and ions) but requires no energy, since the movement is down the gradient." },
+    { q: "Why is facilitated diffusion classified as passive despite using a protein?", a: "Because the substance moves down its concentration gradient (from high to low), which requires no energy. The presence of a protein does not make transport active; only movement up the gradient, against the natural flow, requires energy and defines active transport. Direction, not the protein, is the deciding feature." },
+    { q: "Distinguish channel proteins from carrier proteins.", a: "Channel proteins form a water-filled pore through which substances (usually ions) flow quickly when open, like an open doorway. Carrier proteins bind a substance, change shape to move it across, then release it - like a revolving door - and are slower; they move larger solutes like glucose and amino acids." },
+    { q: "Why are channel proteins generally faster than carrier proteins?", a: "Because substances simply flow through an open channel pore, whereas a carrier must physically change shape for each molecule it moves. An open doorway passes many quickly; a revolving door must turn for each passenger, so carriers are slower." },
+    { q: "Explain the specificity of transport proteins and why it matters.", a: "Each transport protein has a specific shape and binding site that fits only certain substances, like a lock and key, so it moves only its particular cargo. This specificity lets the cell precisely control which substances cross by choosing which proteins it makes and opens, turning transport into a control system rather than a leak." },
+    { q: "What is saturation in facilitated diffusion, and why does it occur?", a: "Saturation is the levelling-off of transport rate at a maximum as substance concentration rises, no matter how steep the gradient becomes. It occurs because there is a limited number of transport proteins; once all are occupied and working at full speed, adding more substance cannot increase the rate. Simple diffusion has no such limit." },
+    { q: "How does saturation distinguish facilitated diffusion from simple diffusion?", a: "In simple diffusion the rate rises steadily with the gradient without limit, because no proteins are needed. In facilitated diffusion the rate rises then reaches a maximum, because the limited transport proteins become saturated. A levelling-off at a maximum rate is evidence that proteins are involved." },
+    { q: "Describe how glucose enters cells and how insulin regulates it.", a: "Glucose enters by facilitated diffusion through GLUT carrier proteins, which bind glucose outside (where it is abundant) and release it inside (where it is scarce), moving it down its gradient with no energy. Insulin causes muscle and fat cells to insert more glucose transporters, increasing glucose uptake and lowering blood glucose - showing the cell regulates facilitated diffusion by adjusting protein numbers." },
+    { q: "Why does a defect in one transport protein affect only one substance?", a: "Because transport proteins are specific - each carries only its particular cargo. A defective glucose transporter impairs glucose handling but leaves oxygen unaffected, since oxygen uses simple diffusion rather than a protein. Specificity means each transporter's failure affects only its own substance." },
+    { q: "Compare the three passive transport mechanisms.", a: "Simple diffusion moves small non-polar substances (oxygen, carbon dioxide) directly through the lipid, with no protein and no saturation. Facilitated diffusion moves substances that cannot cross the lipid (glucose, ions) through specific proteins, showing specificity and saturation, but still down the gradient without energy. Osmosis is the movement of water toward the more concentrated solution." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Facilitated Diffusion Channels and Carriers", note: "The two protein types and how each moves its cargo.", url: "" },
+    { channel: "Physiology", title: "Simple vs Facilitated Diffusion Saturation", note: "How saturation and specificity distinguish the two.", url: "" },
+    { channel: "Physiology", title: "GLUT Glucose Transporters and Insulin", note: "The key glucose example and its regulation.", url: "" },
+  ],
+  mcqs: [
+    { q: "Facilitated diffusion moves substances:", o: ["Only in vesicles", "Down the gradient through a protein, no energy", "Directly through the lipid", "Up the gradient using ATP"], a: 1, w: "It is passive, protein-mediated, down the gradient." },
+    { q: "Facilitated diffusion is needed for substances that:", o: ["Cannot cross the lipid bilayer directly", "Dissolve in oil", "Are gases", "Are small and non-polar"], a: 0, w: "Water-soluble or charged substances need a protein pathway." },
+    { q: "Facilitated diffusion is classified as passive because it:", o: ["Moves substances down their gradient with no energy", "Moves glucose", "Uses a protein", "Is slow"], a: 0, w: "Direction down the gradient makes it passive, not the protein." },
+    { q: "A student calls facilitated diffusion 'active' because it uses a protein. This is wrong because:", o: ["Only movement against the gradient makes transport active", "It is very fast", "Proteins are never used", "It moves water"], a: 0, w: "The gradient direction, not the protein, decides active vs passive." },
+    { q: "A water-filled pore through the membrane is a:", o: ["Vesicle", "Carrier protein", "Channel protein", "Phospholipid"], a: 2, w: "Channel proteins form pores for substances to flow through." },
+    { q: "A protein that binds a substance and changes shape to move it is a:", o: ["Carrier protein", "Lipid", "Pore", "Channel protein"], a: 0, w: "Carrier proteins bind, change shape, and release the substance." },
+    { q: "Channel proteins mainly transport:", o: ["Ions", "Large proteins", "Fats", "Whole cells"], a: 0, w: "Channels are fast pores well suited to ions." },
+    { q: "Carrier proteins typically move substances such as:", o: ["Carbon dioxide", "Nothing", "Glucose and amino acids", "Oxygen"], a: 2, w: "Carriers move larger solutes like glucose and amino acids." },
+    { q: "Channel proteins are generally faster than carriers because:", o: ["They move water", "They are bigger", "They use ATP", "Substances flow through an open pore rather than needing a shape change"], a: 3, w: "An open pore is faster than a shape-changing revolving door." },
+    { q: "Transport proteins are described as specific because they:", o: ["Never bind substances", "Move only their particular substance, like a lock and key", "Are all identical", "Move anything"], a: 1, w: "Each protein's binding site fits only certain substances." },
+    { q: "Specificity of transport proteins allows the cell to:", o: ["Ignore gradients", "Control precisely which substances cross", "Leak freely", "Stop all transport"], a: 1, w: "Selecting which proteins to use controls what enters and leaves." },
+    { q: "Saturation in facilitated diffusion means the transport rate:", o: ["Rises forever", "Reaches a maximum and levels off", "Is always zero", "Never changes"], a: 1, w: "The rate levels off at a maximum as proteins become fully occupied." },
+    { q: "Saturation occurs because:", o: ["Energy runs out", "Water is used up", "The gradient disappears", "There is a limited number of transport proteins"], a: 3, w: "When all proteins are occupied, the rate cannot increase." },
+    { q: "Which shows saturation as concentration rises?", o: ["Neither", "Simple diffusion", "Both equally", "Facilitated diffusion"], a: 3, w: "Facilitated diffusion saturates; simple diffusion does not." },
+    { q: "A transport rate that keeps rising without limit indicates:", o: ["Simple diffusion", "Osmosis", "Active transport", "Facilitated diffusion"], a: 0, w: "No saturation means no limiting proteins - simple diffusion." },
+    { q: "Glucose enters most cells by:", o: ["Facilitated diffusion via GLUT carriers", "Osmosis", "Simple diffusion", "Phagocytosis"], a: 0, w: "GLUT carrier proteins move glucose down its gradient." },
+    { q: "GLUT transporters move glucose:", o: ["As a gas", "Only out of cells", "Down its gradient with no energy", "Up its gradient with ATP"], a: 2, w: "Glucose moves down its gradient - facilitated diffusion, no energy." },
+    { q: "Insulin increases glucose uptake by:", o: ["Adding ATP", "Heating the cell", "Causing cells to insert more glucose transporters", "Removing glucose"], a: 2, w: "More transporters allow more facilitated diffusion of glucose." },
+    { q: "That insulin regulates transporter numbers shows the cell:", o: ["Ignores glucose", "Cannot control facilitated diffusion", "Uses no proteins", "Regulates facilitated diffusion by adjusting protein numbers"], a: 3, w: "Protein number sets the capacity of facilitated diffusion." },
+    { q: "In diabetes, impaired insulin action causes:", o: ["No effect", "Low blood glucose", "Faster oxygen uptake", "Glucose failing to enter cells, raising blood glucose"], a: 3, w: "Poor glucose uptake by facilitated diffusion raises blood glucose." },
+    { q: "Which distinguishes facilitated from simple diffusion in an experiment?", o: ["Both need energy", "Simple diffusion uses proteins", "Facilitated diffusion moves gases", "Facilitated diffusion saturates and is specific"], a: 3, w: "Saturation and specificity mark facilitated diffusion." },
+    { q: "Oxygen is unaffected by a glucose-transporter defect because oxygen uses:", o: ["Osmosis", "Active transport", "Simple diffusion, needing no protein", "The same carrier"], a: 2, w: "Oxygen crosses by simple diffusion, so a protein defect does not affect it." },
+    { q: "A defect in a specific transport protein causes disease affecting:", o: ["All substances", "Only that protein's particular substance", "Only gases", "Nothing"], a: 1, w: "Specificity means one transporter's failure affects only its cargo." },
+    { q: "Glucose appearing in the urine can reflect:", o: ["A glucose transport-protein problem", "Fast diffusion of gases", "Too much water", "Normal oxygen transport"], a: 0, w: "Defective glucose transporters can let glucose escape into urine." },
+    { q: "Osmosis differs from facilitated diffusion in that osmosis specifically moves:", o: ["Glucose", "Oxygen", "Ions", "Water"], a: 3, w: "Osmosis is the movement of water across the membrane." },
+    { q: "All passive transport mechanisms share that they:", o: ["Use ATP", "Move substances down the gradient with no energy", "Move only water", "Need vesicles"], a: 1, w: "Passive transport is always down the gradient and energy-free." },
+    { q: "Compared with a carrier, an ion channel is:", o: ["Energy-using", "Faster, a simple open pore", "Slower", "Specific to glucose"], a: 1, w: "Channels pass ions quickly through an open pore." },
+    { q: "The cargo that facilitated diffusion is best known for moving is:", o: ["Oxygen", "Glucose", "Fats", "Carbon dioxide"], a: 1, w: "Glucose is the classic facilitated-diffusion substance." },
+    { q: "Facilitated diffusion requires which two things to occur?", o: ["ATP and a vesicle", "A duct and a gland", "A concentration gradient and a specific protein", "Heat and light"], a: 2, w: "It needs a favourable gradient and a matching transport protein." },
+    { q: "The single test for whether transport is active or passive is:", o: ["The temperature", "Whether a protein is used", "The direction relative to the concentration gradient", "The speed"], a: 2, w: "Down the gradient is passive; up the gradient is active." },
+  ],
+};
+
+/* --------------------------- phy:4 --------------------------- */
+const T_PHY_ACTIVE = {
+  courseId: "phy",
+  topicIndex: 4,
+  title: "Active Transport",
+  minutes: 16,
+  note: [
+    { q: "The transport that goes the hard way: uphill.",
+      body: `You have mastered passive transport, where substances flow downhill for free. Now we meet its opposite and its complement: active transport, the movement of substances the hard way - uphill, against their gradient - which costs the cell energy but makes precise control of the internal environment possible.
+
+My Socratic question: your cells keep sodium low inside and potassium high inside, even though sodium is high outside and potassium is low outside. Left alone, both would leak down their gradients until the differences vanished. How does the cell maintain these differences against the constant leak?
+
+The answer is active transport - the cell continuously pumps sodium out and potassium in, against their gradients, spending energy to do so. Without this constant uphill pumping, the gradients would collapse and the cell would lose the very differences that make it alive.
+
+Crucial insight: active transport is the movement of a substance against its concentration gradient - from low to high concentration - using energy, usually from ATP. It exists because homeostasis often requires holding substances at concentrations very different from the surroundings, which passive transport, always moving toward equality, can never achieve. Active transport is how the cell defies the natural drift toward sameness.` },
+
+    { q: "Why moving uphill must cost energy.",
+      body: `The defining feature of active transport is its energy requirement, and understanding why it needs energy - while passive transport does not - is the heart of the topic.
+
+My Socratic question: passive transport moves substances down their gradient using only the free energy of random motion. Why can the same random motion not move substances up their gradient too?
+
+The answer is that random motion naturally spreads substances from crowded to less crowded regions - from high to low concentration - because statistically more particles move away from a crowd than into it. Moving substances the other way, gathering them from a less crowded region into an already crowded one, is against this natural statistical flow. It does not happen by itself, just as a ball never rolls uphill on its own. To force it, the cell must supply energy, exactly as you must supply energy to push a ball uphill.
+
+Crucial insight: active transport requires energy because it moves substances against the natural direction of diffusion, up the concentration gradient, which random motion will never do unaided. The energy, usually from ATP, is the price of defying diffusion. This is the fundamental reason passive transport is free and active transport is not - direction relative to the gradient decides everything.` },
+
+    { q: "Primary active transport: ATP directly.",
+      body: `Active transport comes in two forms, distinguished by where the energy comes from. The first and most direct is primary active transport.
+
+In primary active transport, the transport protein uses energy directly from ATP - it splits ATP and uses the energy released to change its shape and move the substance against its gradient. The protein that does this is often called a pump, because it pumps substances uphill.
+
+My Socratic question: the most important pump in the body, present in every cell, moves sodium and potassium. What is it called, and what exactly does it do?
+
+The answer is the sodium-potassium pump (the Na-K-ATPase). Using the energy from one ATP, it pumps three sodium ions out of the cell and two potassium ions in - both against their gradients. It runs constantly in every cell, and a large share of your body's entire energy budget is spent keeping it running.
+
+Crucial insight: primary active transport uses ATP directly to pump substances against their gradients, the sodium-potassium pump being the supreme example - three sodium out, two potassium in, per ATP. This one pump maintains the fundamental ion gradients of every cell, powers nerve and muscle function, and, as you will see, provides the energy for a second, cleverer kind of active transport.` },
+
+    { q: "The sodium-potassium pump: the cell's master pump.",
+      body: `The sodium-potassium pump deserves deep attention, because it does more than maintain gradients - it underlies much of physiology.
+
+The pump maintains low sodium and high potassium inside the cell. This has several vital consequences. It creates the ion gradients that make nerve and muscle cells electrically excitable - able to generate impulses. It keeps the cell from swelling: by pumping out sodium, it controls the cell's water content and prevents it bursting from osmosis. And, crucially, it builds a steep sodium gradient - lots of sodium outside, little inside - that stores energy the cell can use elsewhere.
+
+My Socratic question: the pump moves three positive sodium ions out but only two positive potassium ions in, per cycle. What is the electrical consequence of that unequal exchange?
+
+The answer is that each cycle removes a net of one positive charge from the cell, making the inside slightly more negative than the outside. The pump is therefore electrogenic - it directly contributes to the electrical charge difference across the membrane, which is the basis of the resting membrane potential you will study next.
+
+Crucial insight: the sodium-potassium pump maintains ion gradients, controls cell volume, and is electrogenic, contributing to the membrane's electrical charge - and it stores energy in the sodium gradient. It is not just one pump among many; it is the foundation of excitability, volume control, and secondary active transport. Understanding it deeply unlocks much of physiology.` },
+
+    { q: "Secondary active transport: spending the stored energy.",
+      body: `The second form of active transport is more subtle and elegant - it does not use ATP directly, but rides on the energy the sodium pump already stored. This is secondary active transport.
+
+Recall that the sodium-potassium pump builds a steep sodium gradient, with much more sodium outside than inside. Sodium therefore constantly tends to rush back in, down its gradient. Secondary active transport harnesses that inward rush: as sodium flows back in down its gradient, it drags another substance along with it, even pushing that substance up its own gradient.
+
+My Socratic question: this moves the second substance against its gradient without using ATP directly. So why is it still called active transport, and where did the energy really come from?
+
+The answer is that it is active because the second substance is moved up its gradient, which always requires energy - but the energy came indirectly from ATP, which the sodium pump used earlier to build the sodium gradient. The pump pays with ATP once; secondary active transport then spends that stored energy. So ATP is the ultimate source, just used at one remove.
+
+Crucial insight: secondary active transport moves a substance up its gradient by coupling it to sodium flowing down its gradient, using energy stored by the sodium pump rather than ATP directly. It is active because a substance still moves uphill; the energy is simply borrowed from the pump's earlier work. This clever mechanism absorbs glucose and amino acids from your gut and kidneys.` },
+
+    { q: "Symport and antiport: two directions of coupling.",
+      body: `Secondary active transport comes in two arrangements, depending on whether the coupled substance moves in the same direction as sodium or the opposite. Both are examinable.
+
+In symport (cotransport), the driving ion (sodium) and the transported substance move in the same direction - both into the cell. The classic example is the absorption of glucose from the gut: sodium rushing in drags glucose in with it, even against glucose's own gradient. In antiport (countertransport or exchange), the driving ion and the transported substance move in opposite directions - as sodium moves in, the other substance is pushed out. An example is the sodium-calcium exchanger, which uses incoming sodium to pump calcium out.
+
+My Socratic question: in the gut, glucose is absorbed into intestinal cells even when glucose is already more concentrated inside them. Which mechanism achieves this, and what powers it?
+
+The answer is sodium-glucose symport (cotransport): sodium flowing in down its steep gradient drags glucose in against glucose's gradient, powered ultimately by the sodium-potassium pump that keeps intracellular sodium low. This is how you absorb the last of the glucose from your food.
+
+Crucial insight: secondary active transport is either symport (both move the same way, like sodium-glucose cotransport in the gut) or antiport (they move oppositely, like the sodium-calcium exchanger). Both are powered by the sodium gradient. Recognising which arrangement a transporter uses, and that the sodium pump ultimately powers it, is core physiology and the basis of nutrient absorption.` },
+
+    { q: "The energy cost: why pumps dominate your metabolism.",
+      body: `An easily overlooked but striking fact about active transport is how expensive it is - it consumes a large share of the energy your whole body produces, which reveals just how vital it is.
+
+The sodium-potassium pump runs continuously in every one of your trillions of cells, each pump cycle costing one ATP. Because the pump must run constantly to counter the never-ending leak of ions down their gradients, the cumulative cost is enormous - a substantial fraction of your resting energy expenditure goes simply to keeping these pumps running.
+
+My Socratic question: why would the body spend so much of its precious energy on pumping ions that just leak back again - is this not wasteful?
+
+The answer is that it is not waste but the price of being alive and excitable. The ion gradients the pump maintains are what allow nerves to fire, muscles to contract, cells to hold their volume, and nutrients to be absorbed. A cell that stopped pumping to save energy would lose its gradients, swell, and die. The constant expenditure buys the constant readiness of every excitable and living cell.
+
+Crucial insight: active transport, especially the sodium-potassium pump, consumes a large portion of the body's energy because it must run ceaselessly against continuous ion leak - and this cost is the price of life, excitability, and absorption. It also explains why tissues that pump heavily, like the kidney and nervous system, have such high energy demands, a fact reflected in the metabolism you will study and the lab values you will interpret.` },
+
+    { q: "Comparing active and passive transport side by side.",
+      body: `To consolidate, let us contrast active and passive transport directly across every feature, since telling them apart is the single most tested skill.
+
+Passive transport moves substances down their gradient, requires no energy, and includes simple diffusion, facilitated diffusion, and osmosis. Active transport moves substances up their gradient, requires energy, and includes primary active transport (ATP directly, the sodium-potassium pump), secondary active transport (sodium-coupled, symport and antiport), and bulk transport.
+
+My Socratic question: you observe a substance being moved from a region where it is scarce to a region where it is already abundant, and you find that blocking ATP production stops the movement. What two things does this tell you?
+
+The answer is that the movement is active transport - proven both by its direction (up the gradient, low to high) and by its dependence on ATP, since blocking energy production stops it. Passive transport would continue regardless of ATP because it needs none.
+
+Crucial insight: active and passive transport are distinguished by direction (up versus down the gradient) and energy (required versus not) - and blocking ATP stops active transport while leaving passive transport unaffected. This experimental test, stopping energy production and seeing what stops, is exactly how physiologists and examiners probe which mechanism is at work.` },
+
+    { q: "Why active transport matters throughout the body.",
+      body: `Active transport is not an isolated cellular curiosity - it underlies whole-body functions and much of clinical medicine, connecting directly to your future work.
+
+Consider its reach. In the kidneys, active transport reabsorbs glucose, ions and nutrients from the urine back into the blood, preventing their loss. In the gut, it absorbs glucose and amino acids from digested food. In nerves and muscles, the ion gradients it maintains make electrical signalling and contraction possible. In every cell, it controls volume and composition.
+
+My Socratic question: the heart drug digoxin works by partially blocking the sodium-potassium pump in heart muscle. Given what the pump does, why might blocking it affect the heart's function?
+
+The answer is that blocking the pump changes the sodium gradient, which in turn alters the sodium-calcium exchanger (an antiport), raising calcium inside heart muscle cells and strengthening the heartbeat. A drug acting on one pump ripples through the coupled transport systems - a direct clinical application of exactly what you have learned.
+
+Crucial insight: active transport underlies kidney reabsorption, nutrient absorption, nerve and muscle function, and cell volume control, and it is a target of real medicines like digoxin. The mechanisms you are learning are not abstract - they explain how the body works and how drugs act, and they generate the laboratory values (electrolytes, glucose) you will one day measure and interpret.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for active transport, in five lines.
+
+The definition: active transport moves a substance against its concentration gradient, from low to high, using energy - it defies diffusion, which passive transport never does.
+
+Why it costs energy: moving up the gradient is against the natural statistical flow of random motion, so energy (usually ATP) must be supplied, exactly as pushing a ball uphill requires effort.
+
+Primary active transport: uses ATP directly; the sodium-potassium pump is supreme - three sodium out, two potassium in per ATP - maintaining gradients, controlling volume, and being electrogenic.
+
+Secondary active transport: uses energy stored in the sodium gradient rather than ATP directly, coupling a substance to sodium flowing in - as symport (same direction, like sodium-glucose cotransport) or antiport (opposite directions, like sodium-calcium exchange).
+
+The distinction and relevance: active transport goes up the gradient and needs energy (blocking ATP stops it); passive goes down and does not - and active transport underlies kidney reabsorption, gut absorption, excitability, and drug action.
+
+Now your final test. In the intestine, glucose is absorbed into a cell even though glucose is already more concentrated inside that cell than in the gut. This absorption stops if the sodium-potassium pump is poisoned, even though the poison does not directly touch the glucose transporter.
+
+Question one: is glucose being moved by passive or active transport here, and how do you know from the direction?
+Question two: name the specific mechanism and arrangement moving the glucose, and state what directly powers it.
+Question three: explain why poisoning the sodium-potassium pump stops glucose absorption, even though the pump does not directly move glucose - and identify the true source of the energy.
+
+Work them through before reading on.
+
+My answers. One: glucose is being moved by active transport, because it is going up its gradient - from lower concentration in the gut to higher concentration inside the cell - and movement against the gradient always requires energy and defines active transport. Two: the mechanism is secondary active transport by sodium-glucose symport (cotransport), in which sodium flowing into the cell down its gradient drags glucose in alongside it; it is directly powered by the inward sodium gradient. Three: poisoning the sodium-potassium pump stops it maintaining the low intracellular sodium, so the steep sodium gradient collapses; without that gradient, sodium no longer rushes in to drag glucose with it, and absorption stops - revealing that the true energy source is the ATP the pump uses to build the sodium gradient in the first place.
+
+If those came cleanly, you understand how cells move substances uphill to defy diffusion and maintain life against the drift toward sameness - the pumps and coupled transporters behind excitability, absorption, and much of medicine. The resting membrane potential, built directly on these gradients, is the natural next step.` },
+  ],
+  theory: [
+    { q: "Define active transport.", a: "Active transport is the movement of a substance against its concentration gradient - from low to high concentration - using energy, usually from ATP. It allows the cell to hold substances at concentrations very different from the surroundings, which passive transport can never achieve." },
+    { q: "Why does active transport require energy while passive transport does not?", a: "Because active transport moves substances up their gradient, against the natural statistical flow of random motion, which never happens unaided - like pushing a ball uphill. Passive transport moves substances down their gradient, which random motion drives for free. Direction relative to the gradient determines whether energy is needed." },
+    { q: "Describe primary active transport and its key example.", a: "In primary active transport, the transport protein uses energy directly from ATP, splitting it to change shape and pump a substance against its gradient. The key example is the sodium-potassium pump (Na-K-ATPase), which uses one ATP to pump three sodium ions out of the cell and two potassium ions in, both against their gradients." },
+    { q: "State three functions of the sodium-potassium pump.", a: "It maintains the ion gradients (low sodium, high potassium inside) that make nerve and muscle cells electrically excitable; it controls cell volume and prevents osmotic bursting by pumping out sodium; and it builds a steep sodium gradient that stores energy for secondary active transport. It is also electrogenic, contributing to the membrane potential." },
+    { q: "Why is the sodium-potassium pump described as electrogenic?", a: "Because it pumps out three positive sodium ions but brings in only two positive potassium ions per cycle, removing a net of one positive charge from the cell each cycle. This makes the inside slightly more negative than the outside, directly contributing to the electrical charge difference across the membrane (the resting membrane potential)." },
+    { q: "Explain secondary active transport.", a: "Secondary active transport moves a substance up its gradient without using ATP directly. Instead it couples that substance to sodium flowing back into the cell down the steep gradient built by the sodium-potassium pump; the inward rush of sodium drags the substance along, even uphill. It is active because the substance moves against its gradient, but the energy comes indirectly from the ATP the pump used earlier." },
+    { q: "Distinguish symport from antiport.", a: "In symport (cotransport), the driving ion (sodium) and the transported substance move in the same direction, both into the cell - for example sodium-glucose cotransport in the gut. In antiport (countertransport), they move in opposite directions - as sodium moves in, the other substance is pushed out - for example the sodium-calcium exchanger." },
+    { q: "How is glucose absorbed from the gut against its gradient?", a: "By secondary active transport using sodium-glucose symport (cotransport): sodium flowing into the intestinal cell down its steep gradient drags glucose in with it, even against glucose's own gradient. This is powered ultimately by the sodium-potassium pump, which keeps intracellular sodium low and so maintains the sodium gradient." },
+    { q: "What experimental test distinguishes active from passive transport?", a: "Blocking ATP (energy) production stops active transport but leaves passive transport unaffected, since passive transport needs no energy. Combined with observing direction - active transport moves substances up the gradient (low to high), passive moves them down - this identifies which mechanism is at work." },
+    { q: "Give two body-wide roles of active transport and one clinical example.", a: "Active transport reabsorbs glucose, ions and nutrients in the kidneys and absorbs glucose and amino acids in the gut; it maintains the ion gradients needed for nerve and muscle function and controls cell volume. Clinically, the drug digoxin partially blocks the sodium-potassium pump in heart muscle, altering the sodium-calcium exchanger to raise intracellular calcium and strengthen the heartbeat." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Active Transport and the Sodium Potassium Pump", note: "Primary active transport and the master pump in detail.", url: "" },
+    { channel: "Physiology", title: "Secondary Active Transport Symport Antiport", note: "How the sodium gradient powers uphill transport of glucose.", url: "" },
+    { channel: "Physiology", title: "Sodium Glucose Cotransport in the Gut", note: "The key example of secondary active transport in absorption.", url: "" },
+  ],
+  mcqs: [
+    { q: "Active transport moves substances:", o: ["Only water", "Only gases", "Up the gradient, using energy", "Down the gradient, no energy"], a: 2, w: "Active transport moves substances against the gradient using energy." },
+    { q: "Active transport is needed when the cell must:", o: ["Hold substances at concentrations different from the surroundings", "Let substances reach equality", "Stop all transport", "Move only oxygen"], a: 0, w: "Maintaining differences against diffusion requires active transport." },
+    { q: "Active transport requires energy because it:", o: ["Is slow", "Moves substances against the natural direction of diffusion", "Moves water", "Uses proteins"], a: 1, w: "Going up the gradient defies random motion and needs energy." },
+    { q: "The usual energy source for active transport is:", o: ["ATP", "Heat", "Sound", "Light"], a: 0, w: "ATP provides the energy for active transport." },
+    { q: "In primary active transport, energy comes:", o: ["From the sodium gradient", "From osmosis", "From diffusion", "Directly from ATP"], a: 3, w: "Primary active transport uses ATP directly." },
+    { q: "The most important pump in every cell is the:", o: ["Proton pump only", "Sodium-potassium pump", "Calcium pump", "Glucose pump"], a: 1, w: "The sodium-potassium pump maintains fundamental ion gradients." },
+    { q: "Per ATP, the sodium-potassium pump moves:", o: ["1 sodium out, 1 potassium in", "2 sodium out, 3 potassium in", "3 potassium out, 2 sodium in", "3 sodium out, 2 potassium in"], a: 3, w: "Three sodium out and two potassium in, both against their gradients." },
+    { q: "The sodium-potassium pump keeps the cell interior:", o: ["High in both", "Low in both", "Low sodium, high potassium", "High sodium, low potassium"], a: 2, w: "It maintains low intracellular sodium and high potassium." },
+    { q: "By pumping out sodium, the pump helps prevent the cell from:", o: ["Swelling and bursting from osmosis", "Dividing", "Making ATP", "Shrinking only"], a: 0, w: "Controlling sodium controls water and prevents osmotic bursting." },
+    { q: "The pump is electrogenic because it:", o: ["Moves a net of one positive charge out per cycle", "Adds charge inside", "Uses no charge", "Moves only neutral particles"], a: 0, w: "Three positive out, two positive in leaves the inside more negative." },
+    { q: "The unequal charge movement by the pump contributes to the:", o: ["Resting membrane potential", "Blood pressure", "Body temperature", "pH only"], a: 0, w: "The net charge removal helps create the membrane potential." },
+    { q: "Secondary active transport gets its energy from:", o: ["ATP directly", "The sodium gradient built by the pump", "Osmosis", "Light"], a: 1, w: "It uses energy stored in the sodium gradient, not ATP directly." },
+    { q: "Secondary active transport moves a substance up its gradient by coupling it to:", o: ["Water", "ATP breaking directly", "Oxygen leaving", "Sodium flowing down its gradient"], a: 3, w: "Sodium rushing in drags the substance along, even uphill." },
+    { q: "Secondary active transport is still 'active' because:", o: ["A substance is moved up its gradient", "It uses a protein", "It is fast", "It moves sodium"], a: 0, w: "Moving a substance against its gradient defines active transport." },
+    { q: "The ultimate energy source for secondary active transport is:", o: ["Random motion", "Light", "Heat", "ATP (used earlier by the sodium pump)"], a: 3, w: "The pump used ATP to build the gradient that now powers it." },
+    { q: "In symport (cotransport), the driving ion and substance move:", o: ["In opposite directions", "Not at all", "In the same direction", "Randomly"], a: 2, w: "Symport moves both in the same direction, into the cell." },
+    { q: "In antiport (countertransport), the driving ion and substance move:", o: ["Both stop", "In the same direction", "In opposite directions", "Both outward only"], a: 2, w: "Antiport moves them oppositely - one in, one out." },
+    { q: "Glucose absorption from the gut against its gradient uses:", o: ["Osmosis", "Simple diffusion", "Sodium-glucose symport", "The potassium pump"], a: 2, w: "Sodium-glucose cotransport drags glucose in with sodium." },
+    { q: "The sodium-calcium exchanger, moving sodium in and calcium out, is an example of:", o: ["Simple diffusion", "Symport", "Osmosis", "Antiport"], a: 3, w: "Opposite directions make it antiport (countertransport)." },
+    { q: "Sodium-glucose cotransport is ultimately powered by the:", o: ["Sodium-potassium pump", "Glucose gradient", "Water gradient", "Calcium pump"], a: 0, w: "The pump maintains the sodium gradient that drives cotransport." },
+    { q: "Passive transport differs from active transport in that passive:", o: ["Goes up the gradient", "Needs no energy and goes down the gradient", "Needs ATP", "Uses pumps"], a: 1, w: "Passive transport is free and moves down the gradient." },
+    { q: "Blocking ATP production will stop:", o: ["Osmosis", "Active transport", "Simple diffusion", "All transport equally"], a: 1, w: "Active transport depends on ATP; passive does not." },
+    { q: "A substance moving from scarce to abundant, stopped by blocking ATP, is using:", o: ["Osmosis", "Simple diffusion", "Facilitated diffusion", "Active transport"], a: 3, w: "Up-gradient movement stopped by ATP block is active transport." },
+    { q: "In the kidney, active transport is used to:", o: ["Lose all glucose", "Reabsorb glucose, ions and nutrients into the blood", "Make urine acidic only", "Add toxins"], a: 1, w: "Active transport reclaims valuable substances from the urine." },
+    { q: "The ion gradients maintained by active transport make possible:", o: ["Digestion only", "Nerve impulses and muscle contraction", "Bone growth only", "Hair growth"], a: 1, w: "Excitable tissues depend on the pump-maintained gradients." },
+    { q: "The drug digoxin acts by:", o: ["Removing calcium", "Partially blocking the sodium-potassium pump in the heart", "Adding ATP", "Speeding diffusion"], a: 1, w: "Digoxin inhibits the pump, altering calcium and strengthening the heartbeat." },
+    { q: "Digoxin strengthens the heartbeat because blocking the pump raises intracellular:", o: ["Oxygen", "Water", "Calcium, via the altered sodium-calcium exchanger", "Sodium only, with no effect"], a: 2, w: "A changed sodium gradient alters the exchanger, raising calcium." },
+    { q: "Which is an example of primary active transport?", o: ["The sodium-potassium pump", "Osmosis", "Sodium-glucose cotransport", "Simple diffusion of oxygen"], a: 0, w: "The sodium-potassium pump uses ATP directly - primary active transport." },
+    { q: "Which is an example of secondary active transport?", o: ["Diffusion of carbon dioxide", "The sodium-potassium pump", "Sodium-glucose cotransport", "Osmosis of water"], a: 2, w: "Sodium-glucose cotransport uses the sodium gradient - secondary." },
+    { q: "Active transport allows the cell to:", o: ["Avoid using energy", "Stop all movement", "Drift toward sameness", "Defy diffusion and maintain differences from its surroundings"], a: 3, w: "Active transport maintains gradients against the natural drift to equality." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -2825,6 +3361,9 @@ const CONTENT = {
   "com:0": T_COM_PROCESS,
   "lab:1": T_MLS_SAFETY,
   "phy:1": T_PHY_HOMEO,
+  "phy:2": T_PHY_TRANSPORT,
+  "phy:3": T_PHY_FACIL,
+  "phy:4": T_PHY_ACTIVE,
   "lab:2": T_LAB_ELECTRICAL,
 };
 
