@@ -1538,6 +1538,374 @@ If those three came cleanly, you understand why biochemistry begins with water a
   ],
 };
 
+/* --------------------------- bio:0 --------------------------- */
+const T_BIO_AMINO = {
+  courseId: "bio",
+  topicIndex: 0,
+  title: "Amino Acids",
+  minutes: 20,
+  note: [
+    { q: "You learned water and pH. Why do amino acids come next?",
+      body: `In your biochemistry foundation you mastered water, ionisation and pH. Now we meet the first great family of biological molecules whose behaviour depends entirely on that pH understanding: the amino acids, the building blocks of proteins.
+
+My Socratic question: proteins do almost all the work in the body - enzymes, antibodies, transporters, structure. What are proteins actually made of, and why must a lab scientist understand these units before the proteins themselves?
+
+The answer is that proteins are long chains of amino acids, and a protein's entire three-dimensional shape and function are dictated by the sequence and properties of the amino acids in it. You cannot understand why an enzyme works, why it denatures with heat or pH change, or why a single genetic mutation causes sickle cell disease, without first understanding the twenty amino acids and their individual personalities.
+
+Crucial insight: there are only about twenty standard amino acids, yet they combine to build every one of the tens of thousands of different proteins in your body - the way twenty-six letters build every word in a language. Master these twenty units and their chemistry, and the whole of protein science opens up. This is why biochemistry courses turn here immediately after the water and pH foundation.` },
+
+    { q: "The universal blueprint: what every amino acid shares.",
+      body: `Every one of the twenty standard amino acids is built on the same central plan. Learn this one template and you have learned the skeleton of all twenty.
+
+At the centre sits a single carbon atom called the alpha carbon. Bonded to that one carbon are four things: an amino group, which is basic; a carboxyl group, which is acidic; a hydrogen atom; and a variable side chain, called the R group.
+
+My Socratic question: three of those four attachments are identical in every amino acid. So what single part makes glycine different from tryptophan, or makes one amino acid water-loving and another water-fearing?
+
+The answer is the R group, the side chain. The amino group, carboxyl group and hydrogen are the same in all twenty; only the R group changes. That side chain is the amino acid's fingerprint - it determines its size, its charge, its chemistry, whether it loves or fears water, and ultimately how it behaves inside a protein.
+
+Crucial insight: this is the key that unlocks the entire topic. Since only the R group varies, classifying and understanding amino acids means classifying and understanding their side chains. Everything that follows - the classes, the charges, the behaviour - is really about the R group. Focus your learning there.` },
+
+    { q: "Chirality: why the body builds with only left-handed units.",
+      body: `Look again at the alpha carbon with its four different attachments. That arrangement has a subtle but important consequence.
+
+Because the alpha carbon is bonded to four different groups, it is a chiral centre - meaning the molecule can exist in two mirror-image forms that cannot be superimposed, like your left and right hands. These two forms are called the L-form and the D-form.
+
+My Socratic question: both forms exist in nature, so which does the body use to build its proteins - and does it use both?
+
+The answer is that proteins are built almost exclusively from L-amino acids. The body's protein-making machinery is stereospecific: it recognises and uses only the L-form. There is one exception to the whole chirality rule worth noting - glycine, whose R group is just a single hydrogen atom. Because glycine's alpha carbon then has two identical hydrogens, it is not chiral at all; it has no L or D form.
+
+Crucial insight: this handedness is not a technicality - it is fundamental to life. Enzymes, which are themselves made of L-amino acids, have precisely shaped active sites that fit only correctly-shaped molecules. The exclusive use of one handedness is part of why biological molecules are so specific, and why glycine, the one non-chiral amino acid, is also the smallest and most flexible.` },
+
+    { q: "Amino acids as acids and bases: the zwitterion.",
+      body: `Here is where your pH knowledge pays off directly. Every amino acid carries both an acidic group and a basic group on the same molecule, which gives it remarkable behaviour in water.
+
+The carboxyl group is acidic - it tends to lose a hydrogen ion and become negatively charged. The amino group is basic - it tends to gain a hydrogen ion and become positively charged.
+
+My Socratic question: at the near-neutral pH of the body, both of these happen at once on the same molecule. What is the overall charge of an amino acid then?
+
+The answer is zero, but not because it is uncharged - because it carries both a positive and a negative charge simultaneously that cancel out. This double-charged but net-neutral form is called a zwitterion, from the German for hybrid ion. At physiological pH the carboxyl group is deprotonated and negative, while the amino group is protonated and positive.
+
+Because an amino acid has both an acid and a base group, it can act as either - it is amphoteric - and this lets amino acids act as buffers, resisting pH change, exactly the buffer behaviour you learned with the bicarbonate system.
+
+Crucial insight: the zwitterion is the form amino acids actually take in your blood and cells. This dual-charge nature is why amino acids are so soluble in water, why they buffer body fluids, and why their behaviour shifts with pH - a direct, living application of the acid-base chemistry you have already learned.` },
+
+    { q: "The isoelectric point: the pH of zero net charge.",
+      body: `Since an amino acid's charge depends on pH, there must be one specific pH at which it is exactly balanced. This idea is a favourite of examiners and a key laboratory tool.
+
+My Socratic question: at very low pH, an amino acid is fully protonated and carries a net positive charge; at very high pH it is fully deprotonated and net negative. Somewhere in between there must be a crossover. What is that pH called?
+
+The answer is the isoelectric point, written pI. It is the specific pH at which the amino acid carries no net charge - existing purely as the zwitterion, with positive and negative exactly balanced.
+
+Above the pI, the amino acid is net negative; below the pI, it is net positive. For a simple amino acid, the pI is simply the average of the two pKa values, the one for the carboxyl group and the one for the amino group.
+
+Crucial insight: the isoelectric point is not just theory - it is the basis of real laboratory techniques you will use, such as electrophoresis, where proteins and amino acids are separated by placing them in an electric field. At a given pH, a molecule below its pI carries positive charge and moves one way; one above its pI carries negative charge and moves the other. The pI predicts which way each will travel, which is how the lab separates them.` },
+
+    { q: "Classifying the twenty: it all comes down to the R group.",
+      body: `With twenty amino acids to know, you need a system - and since only the R group varies, the R group is what we classify by. Following Dr Amoah's scheme, the twenty are sorted into four groups based on the nature of their side chains.
+
+The first group is the non-polar amino acids. Their R groups are hydrophobic - water-fearing, made largely of carbon and hydrogen with no charge. In a folded protein these tuck away from water into the protein's oily core.
+
+The second group is the polar, uncharged amino acids. Their R groups are hydrophilic - water-loving - but carry no full charge; they contain groups that can form hydrogen bonds with water and sit comfortably on a protein's watery surface.
+
+The third group is the acidic amino acids. Their R groups carry a negative charge at body pH, because the side chain itself contains an extra carboxyl group.
+
+The fourth group is the basic amino acids. Their R groups carry a positive charge at body pH, because the side chain contains an extra amino or nitrogen-containing group.
+
+Crucial insight: do not try to memorise twenty structures cold. Instead learn the four categories and what each does, then place each amino acid into its group. The behaviour follows the group: non-polar hides from water, polar and charged face the water. This is the mechanism-first way to hold all twenty in your head - by personality, not by rote.` },
+
+    { q: "Why the classes matter: R groups fold the protein.",
+      body: `The four classes are not just tidy bookkeeping - they are the reason a protein folds into its precise working shape, which connects straight back to the hydrophobic effect you learned with water.
+
+My Socratic question: when a long chain of amino acids folds up into a compact protein in the watery cell, which side chains will end up buried inside, and which will end up on the surface?
+
+The answer follows directly from water's behaviour. The non-polar, hydrophobic side chains are driven away from water and bury themselves in the protein's interior core. The polar and charged side chains are drawn to water and arrange themselves on the protein's outer surface. The protein folds itself, driven largely by the amino acids sorting themselves according to their relationship with water.
+
+Charged side chains do more: an acidic (negative) side chain can form a strong attraction with a basic (positive) side chain elsewhere in the chain, forming a salt bridge that locks the fold in place.
+
+Crucial insight: this is the whole point of learning the classes. A protein's final shape - and therefore its function - is determined by how its amino acid side chains interact with water and with each other. Change one amino acid from hydrophobic to charged, and the protein may fold wrongly and fail. That single idea is the bridge from amino acids to protein structure, disease, and diagnosis.` },
+
+    { q: "Joining amino acids: the peptide bond.",
+      body: `To build a protein, amino acids must link together, and they do so through one specific, important type of bond.
+
+The carboxyl group of one amino acid reacts with the amino group of the next. As they join, a molecule of water is removed - this is a condensation or dehydration reaction - and the link formed between them is called a peptide bond.
+
+Two joined amino acids make a dipeptide; a few make an oligopeptide; many make a polypeptide, which folds into a protein. A chain always has an amino end, the N-terminus, and a carboxyl end, the C-terminus, and by convention sequences are written and read from N to C.
+
+My Socratic question: the peptide bond has one unusual physical property that shapes every protein - it does not rotate freely, but is rigid and flat. Why should that matter?
+
+The answer is that the peptide bond has partial double-bond character from resonance, which locks the six atoms around it into a single rigid plane. Because the backbone is a series of rigid planes joined at the alpha carbons, the protein can only fold in certain ways - which is exactly what makes consistent, predictable folding into helices and sheets possible.
+
+Crucial insight: the peptide bond is the seam that turns a set of individual amino acids into a protein, and its rigid, planar nature is the structural constraint that makes protein folding orderly rather than random. Remember too that forming it releases water, and breaking it - digestion of protein in the gut - consumes water.` },
+
+    { q: "Why this matters clinically: one amino acid can change everything.",
+      body: `Let us make the stakes concrete with the disease that proves why every single amino acid counts.
+
+My Socratic question: sickle cell disease is caused by a change to just one amino acid out of the roughly 146 in one haemoglobin chain. How can changing one unit out of nearly 150 cause a serious, sometimes fatal disease?
+
+The answer lies in what the change is. In sickle cell disease, a single amino acid, glutamate - which is acidic, charged and water-loving - is replaced by valine, which is non-polar and hydrophobic, water-fearing. A charged, surface-loving residue is swapped for an oily, water-avoiding one, at a spot on the outside of the molecule.
+
+That one wrong side chain creates a sticky hydrophobic patch on the haemoglobin surface. Under low-oxygen conditions, these patches make haemoglobin molecules clump and stack into long fibres, which distort the red cell into the rigid sickle shape that blocks blood vessels.
+
+Crucial insight: this single example justifies the whole topic. A protein's function depends on the exact identity of each amino acid, because each side chain's chemistry - hydrophobic or hydrophilic, charged or neutral - determines how the protein folds and behaves. Swap one for another of the wrong class and you can destroy the protein and cause disease. When you identify sickle cells down a microscope, you are seeing the consequence of one amino acid in the wrong place.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for amino acids, in five lines.
+
+The universal structure: an alpha carbon bonded to an amino group, a carboxyl group, a hydrogen, and a variable R group side chain - and only the R group differs between the twenty.
+
+The handedness: the alpha carbon is chiral, and proteins use only L-amino acids; glycine, with an R group of just hydrogen, is the non-chiral exception.
+
+The acid-base nature: with both an acidic carboxyl and a basic amino group, an amino acid is a zwitterion at body pH - net neutral but doubly charged - amphoteric, and able to buffer; its isoelectric point (pI) is the pH of zero net charge.
+
+The four classes, all defined by the R group: non-polar (hydrophobic), polar uncharged (hydrophilic), acidic (negative), and basic (positive) - and these drive protein folding, hydrophobic side chains burying inside, charged ones facing the water.
+
+The linkage: amino acids join by peptide bonds, formed by removing water, rigid and planar, running from N-terminus to C-terminus.
+
+Now your final test. A student is studying a mutation in which a hydrophobic, non-polar amino acid buried deep in the water-fearing core of an enzyme is replaced by a basic, positively charged amino acid.
+
+Question one: based on the two amino acids' classes, why is placing a charged residue in the protein's core a problem?
+Question two: what is likely to happen to the enzyme's folded shape and its function?
+Question three: name the general principle this illustrates about the relationship between an amino acid's side chain and a protein's structure.
+
+Work them through before reading on.
+
+My answers. One: the core of a folded protein is hydrophobic, built from non-polar side chains hiding from water; a basic, charged, water-loving residue does not belong there - it is strongly attracted to water and repelled by the oily interior, so it cannot sit stably in the core. Two: the misplaced charged residue destabilises the fold, likely pulling that part of the chain out toward the surface or preventing correct folding altogether, so the enzyme misfolds and loses its precise active-site shape and therefore its function. Three: the principle that a protein's structure, and hence its function, is determined by the chemical nature of its amino acid side chains and their correct relationship with water - the same principle that makes the single glutamate-to-valine swap cause sickle cell disease.
+
+If those came cleanly, you understand amino acids as the foundation of all protein science - structure, function, and disease. Proteins and their folding are the natural next step.` },
+  ],
+  theory: [
+    { q: "Draw in words the general structure common to all amino acids.", a: "A central alpha carbon bonded to four groups: an amino group (-NH2, basic), a carboxyl group (-COOH, acidic), a hydrogen atom, and a variable side chain called the R group. Only the R group differs between the twenty standard amino acids." },
+    { q: "Why is the R group the most important part of an amino acid?", a: "Because the amino group, carboxyl group and hydrogen are identical in all twenty amino acids, only the R group varies. It therefore determines each amino acid's size, charge, chemistry, and whether it is hydrophobic or hydrophilic - in short, its identity and behaviour." },
+    { q: "What is chirality in an amino acid, and which form do proteins use?", a: "The alpha carbon is bonded to four different groups, making it a chiral centre that exists as two non-superimposable mirror images, the L-form and the D-form. Proteins are built almost exclusively from L-amino acids." },
+    { q: "Why is glycine not chiral?", a: "Glycine's R group is a single hydrogen atom, so its alpha carbon is bonded to two identical hydrogens rather than four different groups. It therefore has no mirror-image forms and is the one non-chiral standard amino acid." },
+    { q: "Define a zwitterion and describe the state of an amino acid at physiological pH.", a: "A zwitterion is a molecule carrying both a positive and a negative charge simultaneously, with a net charge of zero. At physiological pH an amino acid's carboxyl group is deprotonated and negative while its amino group is protonated and positive, so it exists as a net-neutral zwitterion." },
+    { q: "What does it mean that amino acids are amphoteric, and what useful property follows?", a: "Amphoteric means they can act as both an acid and a base, because they possess both an acidic carboxyl group and a basic amino group. This allows amino acids to act as buffers, resisting changes in pH." },
+    { q: "Define the isoelectric point (pI).", a: "The isoelectric point is the specific pH at which an amino acid carries no net charge, existing purely as the zwitterion. Below the pI it is net positive; above the pI it is net negative. For a simple amino acid, pI is the average of its two pKa values." },
+    { q: "State the four classes of amino acids based on their R groups.", a: "Non-polar (hydrophobic side chains), polar uncharged (hydrophilic but no full charge), acidic (negatively charged side chains at body pH), and basic (positively charged side chains at body pH)." },
+    { q: "How do the amino acid classes drive protein folding?", a: "Non-polar, hydrophobic side chains are driven away from water and bury themselves in the protein's interior core, while polar and charged side chains are drawn to water and sit on the surface. Charged side chains can also form salt bridges. Thus the side chains sort themselves relative to water, folding the protein into its functional shape." },
+    { q: "Describe the peptide bond and one key physical property.", a: "A peptide bond links the carboxyl group of one amino acid to the amino group of the next, formed by a condensation reaction that removes a water molecule. It has partial double-bond character from resonance, making it rigid and planar, which constrains and orders protein folding. Chains run from the N-terminus to the C-terminus." },
+  ],
+  videos: [
+    { channel: "Ninja Nerd", title: "Amino Acids: Structure and Classification", note: "Thorough walk-through of the general structure, the R-group classes and their properties.", url: "https://www.youtube.com/watch?v=8qpEwjJvNfM" },
+    { channel: "AK Lectures", title: "Amino Acids and Zwitterions", note: "Focuses on the acid-base behaviour, zwitterion and isoelectric point - the pH-linked core of this topic.", url: "https://www.youtube.com/watch?v=rp2brZFcCUk" },
+    { channel: "Osmosis", title: "Amino Acids and Protein Structure", note: "Clear animation linking amino acid classes to how proteins fold, with clinical relevance.", url: "https://www.youtube.com/watch?v=2Sp9UFHYaBE" },
+  ],
+  mcqs: [
+    { q: "The central carbon of an amino acid, bonded to four groups, is called the:", o: ["Chiral hydrogen", "Carboxyl carbon", "Beta carbon", "Alpha carbon"], a: 3, w: "The alpha carbon bears the amino group, carboxyl group, hydrogen and R group." },
+    { q: "Which part of an amino acid varies between the twenty standard types?", o: ["The amino group", "The R group (side chain)", "The carboxyl group", "The alpha hydrogen"], a: 1, w: "Only the R group differs; the other three attachments are identical." },
+    { q: "The R group of an amino acid determines all of the following EXCEPT:", o: ["Its charge", "Its hydrophobicity", "Its chemical behaviour", "The presence of the carboxyl group"], a: 3, w: "The carboxyl group is part of the common backbone, not the variable R group." },
+    { q: "The amino group of an amino acid is:", o: ["Basic", "Neutral", "Acidic", "Non-polar"], a: 0, w: "The amino group is basic and tends to gain a hydrogen ion." },
+    { q: "The carboxyl group of an amino acid is:", o: ["Neutral", "Hydrophobic", "Acidic", "Basic"], a: 2, w: "The carboxyl group is acidic and tends to lose a hydrogen ion." },
+    { q: "An amino acid's alpha carbon is a chiral centre because it is bonded to:", o: ["A double bond", "Four different groups", "Only carbon atoms", "Two identical groups"], a: 1, w: "Four different attachments make it chiral, giving L and D forms." },
+    { q: "Proteins are built almost exclusively from:", o: ["L-amino acids", "Non-chiral amino acids", "Both equally", "D-amino acids"], a: 0, w: "The body's machinery is stereospecific for the L-form." },
+    { q: "The one standard amino acid that is NOT chiral is:", o: ["Alanine", "Valine", "Glycine", "Leucine"], a: 2, w: "Glycine's R group is a single hydrogen, so its alpha carbon is not chiral." },
+    { q: "A molecule carrying both a positive and negative charge with a net charge of zero is a:", o: ["Cation", "Zwitterion", "Anion", "Radical"], a: 1, w: "The zwitterion is doubly charged but net neutral." },
+    { q: "At physiological pH, the amino group of an amino acid is:", o: ["Uncharged", "Protonated and positive", "Absent", "Deprotonated and negative"], a: 1, w: "The amino group gains a hydrogen ion, becoming positively charged." },
+    { q: "At physiological pH, the carboxyl group of an amino acid is:", o: ["Protonated and positive", "Uncharged", "Deprotonated and negative", "Doubly bonded"], a: 2, w: "The carboxyl group loses a hydrogen ion, becoming negatively charged." },
+    { q: "That an amino acid can act as both an acid and a base means it is:", o: ["Chiral", "Non-polar", "Hydrophobic", "Amphoteric"], a: 3, w: "Amphoteric substances act as both acid and base." },
+    { q: "Because they are amphoteric, amino acids can act as:", o: ["Lipids", "Enzymes", "Nucleotides", "Buffers"], a: 3, w: "They resist pH change, acting as buffers." },
+    { q: "The isoelectric point (pI) is the pH at which an amino acid:", o: ["Carries no net charge", "Is fully positive", "Cannot dissolve", "Is fully negative"], a: 0, w: "At the pI the amino acid is a net-neutral zwitterion." },
+    { q: "Below its isoelectric point, an amino acid carries a net charge that is:", o: ["Negative", "Positive", "Zero", "Undefined"], a: 1, w: "At low pH it is protonated and net positive." },
+    { q: "For a simple amino acid, the pI is calculated as:", o: ["The lower pKa value", "The higher pKa value", "The sum of the two pKa values", "The average of the two pKa values"], a: 3, w: "pI is the average of the carboxyl and amino pKa values." },
+    { q: "Non-polar amino acids have side chains that are:", o: ["Hydrophobic", "Positively charged", "Hydrophilic", "Negatively charged"], a: 0, w: "Non-polar R groups are water-fearing." },
+    { q: "Acidic amino acids have side chains that at body pH are:", o: ["Positively charged", "Non-polar", "Uncharged", "Negatively charged"], a: 3, w: "Their side chains carry an extra carboxyl group, negative at body pH." },
+    { q: "Basic amino acids have side chains that at body pH are:", o: ["Negatively charged", "Positively charged", "Hydrophobic", "Uncharged"], a: 1, w: "Their nitrogen-containing side chains are positively charged." },
+    { q: "In a folded protein in water, hydrophobic side chains tend to be:", o: ["Buried in the interior core", "Removed", "On the surface", "Bonded to water"], a: 0, w: "Non-polar side chains hide from water in the protein's core." },
+    { q: "In a folded protein, polar and charged side chains tend to be:", o: ["On the water-facing surface", "Non-existent", "Buried in the core", "Always hidden"], a: 0, w: "Hydrophilic side chains face the surrounding water." },
+    { q: "A strong attraction between an acidic and a basic side chain within a protein is a:", o: ["Salt bridge", "Disulfide only", "Peptide bond", "Hydrophobic core"], a: 0, w: "Opposite charges attract, forming a stabilising salt bridge." },
+    { q: "The bond linking two amino acids together is the:", o: ["Peptide bond", "Hydrogen bond", "Glycosidic bond", "Ionic bond"], a: 0, w: "The peptide bond joins the carboxyl of one to the amino of the next." },
+    { q: "Forming a peptide bond involves:", o: ["Breaking the alpha carbon", "Adding a water molecule", "Removing a water molecule", "Adding oxygen"], a: 2, w: "It is a condensation reaction that removes water." },
+    { q: "The peptide bond is rigid and planar because it has:", o: ["A hydrogen bond", "No electrons", "Partial double-bond character from resonance", "A full negative charge"], a: 2, w: "Resonance gives partial double-bond character, preventing rotation." },
+    { q: "By convention, a peptide sequence is written from the:", o: ["Middle outward", "Longest side chain first", "N-terminus to C-terminus", "C-terminus to N-terminus"], a: 2, w: "Sequences run from the amino (N) end to the carboxyl (C) end." },
+    { q: "In sickle cell disease, glutamate is replaced by valine, meaning a residue changes from:", o: ["Chiral to non-chiral", "Acidic and charged to non-polar and hydrophobic", "Non-polar to polar", "Basic to acidic"], a: 1, w: "A charged, water-loving residue becomes an oily, water-fearing one." },
+    { q: "The number of standard amino acids that build human proteins is about:", o: ["Ten", "Twenty", "Fifty", "One hundred"], a: 1, w: "Around twenty standard amino acids build all proteins." },
+    { q: "The single most useful question for classifying an amino acid is:", o: ["How heavy is it", "What colour is it", "What is the nature of its R group", "How old is the sample"], a: 2, w: "Classification and behaviour follow entirely from the R group." },
+    { q: "The chain of two amino acids joined by a peptide bond is called a:", o: ["Triglyceride", "Protein", "Polypeptide", "Dipeptide"], a: 3, w: "Two joined amino acids form a dipeptide." },
+  ],
+};
+
+/* --------------------------- psy:0 --------------------------- */
+const T_PSY_OVERVIEW = {
+  courseId: "psy",
+  topicIndex: 0,
+  title: "Overview of Medical Psychology",
+  minutes: 18,
+  note: [
+    { q: "Why does a laboratory scientist study psychology at all?",
+      body: `You might reasonably ask why a medical laboratory science student, who will spend a career with samples and instruments, needs psychology. The answer reframes what medicine actually is.
+
+My Socratic question: a patient is more than the tube of blood you receive. When a frightened patient comes for a test, or a diagnosis of a serious illness is delivered, what is being treated - a disease, or a person?
+
+The answer is a person, and that distinction is the whole reason medical psychology exists. Medicine does not treat diseases floating in isolation; it treats people who have thoughts, fears, families, jobs and beliefs, all of which shape whether they fall ill, how they experience illness, whether they follow treatment, and whether they recover. Even in the laboratory, understanding the anxious patient, the reason someone delays a test, or how a result will land on a human being makes you a better professional.
+
+Crucial insight: medical psychology is the scientific study of how psychological and behavioural factors affect health, illness and healthcare. It exists because the purely biological view of medicine - bodies as broken machines to be fixed - is incomplete. People are not machines, and treating them as such produces worse care and worse outcomes. This is the foundation on which the whole course is built.` },
+
+    { q: "What exactly is psychology?",
+      body: `Before medical psychology, we need the parent discipline clearly defined.
+
+Psychology is the scientific study of behaviour and mental processes. Unpack that definition, because each part matters. Scientific means it relies on systematic observation and evidence, not opinion or intuition - psychology is a science, not common sense. Behaviour means anything a person does that can be observed, from speaking to a facial expression to avoiding a hospital. Mental processes means the internal events that cannot be directly seen - thoughts, emotions, memories, perceptions, motivations.
+
+My Socratic question: if mental processes like thoughts and feelings cannot be directly observed, how can psychology claim to study them scientifically?
+
+The answer is that psychology studies them indirectly, through their observable effects - what people say, how they behave, how their bodies respond. A racing heart and sweating palms are measurable signs of the unseen emotion of fear. This is how psychology remains a science while studying the invisible inner world.
+
+Crucial insight: hold onto the two halves - observable behaviour and unobservable mental processes - because much of psychology is the effort to understand the hidden mental processes by carefully studying the visible behaviour they produce. In medicine, reading a patient's behaviour to understand their inner state is a daily clinical skill.` },
+
+    { q: "The biomedical model and its limits.",
+      body: `For most of modern medical history, one view dominated: the biomedical model. Understanding it, and its limitations, is the key to the whole topic.
+
+The biomedical model holds that illness is caused purely by biological factors - a pathogen, a genetic fault, a biochemical imbalance, a damaged organ. Treatment therefore targets only the body: the drug, the surgery, the corrected chemistry. On this view, the patient's mind, emotions and social world are irrelevant to their disease.
+
+My Socratic question: this model gave us antibiotics, vaccines and surgery, saving countless lives. So what is wrong with it?
+
+The answer is that it is incomplete, not wrong. It cannot explain why two people with the same infection have very different outcomes, why stress makes people physically ill, why poverty predicts disease, or why some patients recover better with support. It reduces a person to a broken machine and ignores everything about them that is not biological - yet those non-biological factors demonstrably shape health.
+
+Crucial insight: the biomedical model is powerful but partial. It answers what is physically wrong but not why this person, at this time, in this life, became ill and how they will cope. Medicine needed a fuller picture - which is exactly what the next model provides, and it is the single most important idea in this course.` },
+
+    { q: "The biopsychosocial model: the heart of medical psychology.",
+      body: `In 1977 the psychiatrist George Engel proposed a model that has since become the foundation of modern, humane medicine: the biopsychosocial model. If you remember one thing from this course, remember this.
+
+My Socratic question: the name itself is three words fused together. What three kinds of factors does it insist we consider in every patient?
+
+The answer is biological, psychological and social. The biopsychosocial model states that health and illness result from the dynamic interaction of all three. Biological factors are the body - genes, pathogens, biochemistry, organ function. Psychological factors are the mind - thoughts, emotions, beliefs, stress, coping style, behaviour. Social factors are the world around the person - family, relationships, culture, work, poverty, access to care.
+
+None of these acts alone; they constantly influence one another. Stress (psychological) raises blood pressure (biological). Poverty (social) increases stress (psychological) and limits nutrition (biological). A supportive family (social) improves recovery (biological).
+
+Crucial insight: the biopsychosocial model does not reject biology - it surrounds it with the psychological and social context that biology alone ignores. It is the difference between asking what disease the patient has and asking what is happening to this whole person. Every serious idea in medical psychology is an application of this one model, so make it automatic.` },
+
+    { q: "Seeing the model in action: a worked example.",
+      body: `An abstract model becomes powerful only when you can apply it. Let us run one patient through all three lenses.
+
+Consider a man newly diagnosed with type 2 diabetes whose blood sugar remains poorly controlled despite medication. The biomedical model asks only: is he taking the right drug at the right dose? But the biopsychosocial model asks far more.
+
+Biologically: his genetics, his pancreatic function, his weight, the medication itself. Psychologically: does he understand the disease, does he believe the treatment will help, is he depressed, does the fear of complications make him avoid thinking about it, has he the motivation to change his diet? Socially: can he afford healthy food and his medication, does his work allow regular meals, does his family support the changes, do his cultural food traditions clash with the diet?
+
+My Socratic question: if his sugar stays high because he cannot afford both his medication and healthy food, will simply increasing the drug dose fix him?
+
+The answer is no - and that is the lesson. A purely biological response misses the real cause, which is social and psychological. Effective care must address all three.
+
+Crucial insight: the biopsychosocial model is not just theory to recite - it is a practical clinical tool that changes what questions you ask and what solutions you find. A poor lab result may have a psychological or social explanation, and understanding that makes every health worker, including you, more effective.` },
+
+    { q: "The major perspectives in psychology.",
+      body: `Psychology is not one single theory but several perspectives, each a different lens on why people think, feel and behave as they do. A brief map helps, because they recur throughout the course.
+
+The biological perspective explains behaviour through the brain, nervous system, hormones and genes. The behavioural perspective focuses on how behaviour is learned through rewards and punishments from the environment. The cognitive perspective examines internal mental processes - how we perceive, think, remember and solve problems. The psychodynamic perspective, originating with Freud, emphasises unconscious drives and early experiences. The humanistic perspective stresses personal growth, free will and each person's drive to fulfil their potential. The sociocultural perspective looks at how society, culture and other people shape the individual.
+
+My Socratic question: with so many competing perspectives, which one is correct?
+
+The answer is that they are not rivals to be chosen between but complementary lenses - each captures part of a complex truth. This is exactly why the biopsychosocial model is so valuable: it deliberately combines the biological, psychological and social perspectives rather than forcing a choice.
+
+Crucial insight: no single perspective explains everything about a person. Mature understanding, in psychology and in medicine, means holding several lenses at once. A patient's behaviour might be shaped by their brain chemistry, their learning history, their beliefs, and their culture all together.` },
+
+    { q: "How psychology stays a science: its methods.",
+      body: `Psychology insists on being scientific, which means it cannot rely on opinion or anecdote. It uses systematic research methods, and knowing them protects you from believing false claims about the mind.
+
+The main methods include: experiments, which manipulate one factor and measure its effect while controlling others, allowing conclusions about cause and effect; observational studies, which watch and record behaviour without interfering; surveys and questionnaires, which gather self-reported data from many people; and case studies, which examine one individual in great depth.
+
+My Socratic question: why does psychology insist on formal methods when we all feel we understand people already through common sense?
+
+The answer is that common sense is unreliable and often contradictory - it tells us both that opposites attract and that birds of a feather flock together. Intuition is riddled with bias. Only systematic, evidence-based study can distinguish what is actually true about human behaviour from what merely feels true.
+
+Crucial insight: this scientific commitment is what separates psychology from folk wisdom, astrology or opinion. As a laboratory scientist you already respect evidence over intuition; psychology applies that same standard to behaviour and the mind. When you evaluate a claim about patients or health behaviour, ask what the evidence is, just as you would for any lab result.` },
+
+    { q: "Stress: where mind and body meet.",
+      body: `One theme sits at the very centre of medical psychology because it visibly links the psychological and the biological: stress. It is the clearest proof that the mind affects the body.
+
+Stress is the response that arises when the demands on a person exceed their perceived ability to cope. Note the word perceived - it is not the situation alone but the person's appraisal of it that matters, which is why the same event stresses one person and not another.
+
+My Socratic question: how can a purely psychological experience - feeling overwhelmed - produce real, measurable physical disease?
+
+The answer lies in the body's stress response. Perceived threat triggers the release of stress hormones like cortisol and adrenaline, raising heart rate and blood pressure and mobilising energy - useful in short bursts. But when stress is chronic, this same response damages the body: it raises blood pressure, suppresses the immune system, worsens conditions from heart disease to diabetes, and impairs healing. A psychological state produces biological harm.
+
+Crucial insight: stress is the living demonstration of the biopsychosocial model. A social pressure or psychological worry becomes, through the stress response, a biological effect measurable in the very samples you will analyse - raised cortisol, altered immune markers, higher glucose. Mind and body are not separate; stress is where you see them meet.` },
+
+    { q: "Why this matters for you, the laboratory scientist.",
+      body: `It is fair to ask how this applies specifically to a career at the bench, away from the bedside. The connections are real and practical.
+
+First, patient interaction: you will sometimes draw samples, and an anxious patient handled with understanding gives a better sample and a better experience - fear of needles, or of a bad result, is psychology you can ease. Second, health behaviour: understanding why people delay tests, avoid screening or ignore results helps you appreciate the human story behind a specimen. Third, your own wellbeing: laboratory and healthcare work is demanding, and understanding stress, burnout and coping protects your own mental health across a career. Fourth, teamwork and communication: healthcare is collaborative, and psychology underpins working well with colleagues and communicating results clearly.
+
+My Socratic question: a sample arrives late because the patient was too frightened to come in for weeks. Is that a biological problem or a psychological one, and does it affect your work?
+
+The answer is that it is psychological, and it absolutely affects your work - the delayed sample, the advanced disease it may reveal, the anxious patient behind it, are all consequences of psychology, and understanding them makes you a more complete professional.
+
+Crucial insight: even the most technical, bench-based role in medicine sits inside a human system. Every sample comes from a person, goes to a person, and affects a person. Medical psychology is what keeps that human reality in view, and it makes you better at your job and kinder in it.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the overview of medical psychology, in five lines.
+
+What it is: medical psychology is the scientific study of how psychological and behavioural factors affect health, illness and healthcare; psychology itself is the scientific study of behaviour and mental processes.
+
+The old view: the biomedical model, which explains illness purely by biological causes - powerful but incomplete, treating the person as a broken machine.
+
+The central idea: the biopsychosocial model (Engel, 1977), in which health and illness arise from the dynamic interaction of biological, psychological and social factors - the foundation of modern, humane medicine.
+
+The lenses: several psychological perspectives - biological, behavioural, cognitive, psychodynamic, humanistic, sociocultural - are complementary, not rivals, and psychology remains a science through systematic research methods.
+
+The key theme: stress, where a psychological appraisal of threat produces real biological harm through stress hormones - the clearest proof that mind and body interact.
+
+Now your final test. A young woman avoids going to the hospital for a breast lump for several months. When she finally attends, she is highly anxious, and it emerges she could not easily take time off her market job, feared what the result might mean, and had heard frightening stories in her community about the disease.
+
+Question one: identify the biological, psychological and social factors at play in this single case.
+Question two: how would a purely biomedical approach fall short in understanding why she delayed?
+Question three: name the model that best captures her situation and explain why understanding it matters even for the laboratory scientist who will test her sample.
+
+Work them through before reading on.
+
+My answers. One: biological - the lump itself and whatever underlying disease it represents; psychological - her anxiety, her fear of the result, her avoidance as a coping response; social - her inability to leave her market job, and the frightening community beliefs about the disease. Two: a purely biomedical approach would focus only on the lump and its pathology, missing entirely why she delayed for months - and that delay, driven by psychological and social factors, may be the single most important thing affecting her outcome. Three: the biopsychosocial model, because it alone captures all three dimensions of her situation; it matters to the laboratory scientist because the sample you receive carries a human story - the delay, the anxiety, the advanced disease it may now reveal - and understanding that makes you a more thoughtful and effective part of her care.
+
+If those came cleanly, you understand what medical psychology is and why it belongs in your training. The specific topics - stress, health behaviour, communication, coping - all build on this foundation.` },
+  ],
+  theory: [
+    { q: "Define medical psychology.", a: "Medical psychology is the scientific study of how psychological and behavioural factors affect health, illness and healthcare. It exists because the purely biological view of medicine is incomplete; people's thoughts, emotions and social circumstances shape their health and recovery." },
+    { q: "Define psychology and explain each part of the definition.", a: "Psychology is the scientific study of behaviour and mental processes. 'Scientific' means it relies on systematic evidence rather than opinion; 'behaviour' means observable actions; 'mental processes' means internal, unobservable events such as thoughts, emotions and memories, studied indirectly through their observable effects." },
+    { q: "Describe the biomedical model and its main limitation.", a: "The biomedical model holds that illness is caused purely by biological factors (pathogens, genes, biochemical faults) and treats only the body. Its limitation is that it is incomplete: it ignores the psychological and social factors that demonstrably influence who becomes ill, how they cope and whether they recover, reducing the person to a broken machine." },
+    { q: "State the biopsychosocial model and who proposed it.", a: "Proposed by George Engel in 1977, the biopsychosocial model states that health and illness result from the dynamic interaction of biological, psychological and social factors, rather than biological factors alone. It is the foundation of modern, humane, patient-centred medicine." },
+    { q: "Give one example of how biological, psychological and social factors interact.", a: "For example, poverty (social) increases stress (psychological), which raises blood pressure and suppresses immunity (biological); or a supportive family (social) reduces stress (psychological) and improves recovery (biological). The three domains constantly influence one another." },
+    { q: "Name four major perspectives in psychology and what each emphasises.", a: "The biological perspective (brain, hormones, genes), the behavioural perspective (learning through reward and punishment), the cognitive perspective (internal mental processes like thinking and memory), and the psychodynamic perspective (unconscious drives and early experience). Others include the humanistic and sociocultural perspectives. They are complementary lenses, not rivals." },
+    { q: "Why does psychology use systematic research methods rather than common sense?", a: "Because common sense and intuition are unreliable, biased and often contradictory. Only systematic, evidence-based methods such as experiments, observation, surveys and case studies can distinguish what is actually true about behaviour from what merely feels true." },
+    { q: "Define stress and explain the importance of the word 'perceived' in its definition.", a: "Stress is the response that arises when the demands on a person exceed their perceived ability to cope. 'Perceived' is crucial because it is the person's appraisal of the situation, not the situation itself, that determines the stress response - which is why the same event stresses one person but not another." },
+    { q: "Explain how a psychological state such as stress can cause physical illness.", a: "Perceived threat triggers release of stress hormones like cortisol and adrenaline, raising heart rate and blood pressure and mobilising energy. When stress becomes chronic, this response damages the body: raising blood pressure, suppressing immunity, worsening conditions like heart disease and diabetes, and impairing healing." },
+    { q: "Give two reasons medical psychology is relevant to a laboratory scientist.", a: "First, understanding anxious patients during sample collection gives better samples and experiences; second, understanding health behaviour explains why people delay tests or ignore results. It also protects the scientist's own wellbeing against stress and burnout, and improves teamwork and communication of results." },
+  ],
+  videos: [
+    { channel: "CrashCourse", title: "Intro to Psychology", note: "Lively introduction to what psychology is and how it became a science.", url: "https://www.youtube.com/watch?v=vo4pMVb0R6M" },
+    { channel: "Osmosis", title: "The Biopsychosocial Model", note: "Clear medical explanation of the biological, psychological and social framework.", url: "https://www.youtube.com/watch?v=FKtWr2xvRpQ" },
+    { channel: "CrashCourse", title: "The Perspectives of Psychology", note: "Walks through the major perspectives - biological, cognitive, behavioural and more.", url: "https://www.youtube.com/watch?v=eYK_29Oj3Fg" },
+  ],
+  mcqs: [
+    { q: "Medical psychology is best defined as the study of how:", o: ["Drugs cure disease", "Samples are analysed", "Organs fail", "Psychological and behavioural factors affect health and illness"], a: 3, w: "It studies how psychological and behavioural factors affect health, illness and care." },
+    { q: "Psychology is the scientific study of:", o: ["The brain only", "Behaviour and mental processes", "Diseases", "Society only"], a: 1, w: "Psychology studies both observable behaviour and internal mental processes." },
+    { q: "In the definition of psychology, 'mental processes' refers to:", o: ["Internal events like thoughts and emotions", "Social class", "Blood tests", "Observable actions"], a: 0, w: "Mental processes are the unobservable inner events studied indirectly." },
+    { q: "Psychology studies unobservable mental processes by:", o: ["Examining their observable effects on behaviour and the body", "Reading minds", "Guessing", "Ignoring them"], a: 0, w: "It infers inner states from measurable behaviour and physical responses." },
+    { q: "The biomedical model explains illness as caused by:", o: ["Purely biological factors", "Bad luck", "Psychological factors only", "Social factors only"], a: 0, w: "The biomedical model attributes illness solely to biological causes." },
+    { q: "The main limitation of the biomedical model is that it:", o: ["Is always wrong", "Is too new", "Cannot treat infection", "Ignores psychological and social factors"], a: 3, w: "It is incomplete, omitting the psychological and social dimensions of health." },
+    { q: "The biopsychosocial model was proposed by:", o: ["Ivan Pavlov", "George Engel", "B.F. Skinner", "Sigmund Freud"], a: 1, w: "George Engel proposed the biopsychosocial model in 1977." },
+    { q: "The biopsychosocial model states that health results from the interaction of:", o: ["Diet and exercise", "Biological, psychological and social factors", "Genes and drugs", "Biological factors only"], a: 1, w: "It integrates all three domains as dynamically interacting." },
+    { q: "In the biopsychosocial model, a person's beliefs and emotions are which kind of factor?", o: ["Biological", "Social", "Psychological", "Chemical"], a: 2, w: "Thoughts, emotions and beliefs are psychological factors." },
+    { q: "In the biopsychosocial model, poverty and family support are which kind of factor?", o: ["Genetic", "Social", "Psychological", "Biological"], a: 1, w: "Family, culture, work and poverty are social factors." },
+    { q: "A patient's blood sugar stays high because he cannot afford both medication and healthy food. This is primarily a:", o: ["Problem of drug dose only", "Purely biological problem", "Social and psychological problem", "Non-problem"], a: 2, w: "The cause is social and psychological, missed by a biological-only view." },
+    { q: "The perspective that explains behaviour through the brain, hormones and genes is the:", o: ["Humanistic perspective", "Biological perspective", "Sociocultural perspective", "Behavioural perspective"], a: 1, w: "The biological perspective focuses on physical bases of behaviour." },
+    { q: "The perspective focusing on learning through rewards and punishments is the:", o: ["Behavioural perspective", "Psychodynamic perspective", "Biological perspective", "Cognitive perspective"], a: 0, w: "The behavioural perspective studies learned behaviour." },
+    { q: "The perspective examining internal processes like thinking and memory is the:", o: ["Biological perspective", "Humanistic perspective", "Cognitive perspective", "Behavioural perspective"], a: 2, w: "The cognitive perspective studies mental processing." },
+    { q: "The psychodynamic perspective, originating with Freud, emphasises:", o: ["Rewards and punishments", "Free will and growth", "Brain chemistry", "Unconscious drives and early experience"], a: 3, w: "Psychodynamic theory stresses unconscious forces and early life." },
+    { q: "The major perspectives in psychology are best regarded as:", o: ["Complementary lenses on a complex truth", "Identical", "Rivals, only one correct", "Outdated"], a: 0, w: "Each captures part of the truth; together they give a fuller picture." },
+    { q: "Psychology insists on systematic research methods because:", o: ["It dislikes evidence", "Intuition is biased and often contradictory", "Methods are traditional", "Common sense is reliable"], a: 1, w: "Only systematic evidence separates what is true from what merely feels true." },
+    { q: "A research method that manipulates one factor to establish cause and effect is a(n):", o: ["Observation", "Experiment", "Survey", "Case study"], a: 1, w: "Experiments manipulate variables under control to show causation." },
+    { q: "Examining a single individual in great depth is a(n):", o: ["Case study", "Survey", "Observation", "Experiment"], a: 0, w: "A case study is an in-depth study of one individual." },
+    { q: "Stress is defined as the response when demands:", o: ["Are always physical", "Are pleasant", "Exceed a person's perceived ability to cope", "Come from genes"], a: 2, w: "Stress arises when demands exceed perceived coping ability." },
+    { q: "The word 'perceived' in the definition of stress matters because:", o: ["Stress is imaginary", "Only doctors feel stress", "Perception is irrelevant", "It is the appraisal, not the event alone, that produces stress"], a: 3, w: "The same event stresses one person and not another due to appraisal." },
+    { q: "Chronic stress harms the body mainly through prolonged release of:", o: ["Digestive enzymes", "Stress hormones like cortisol and adrenaline", "Insulin", "Antibodies"], a: 1, w: "Sustained cortisol and adrenaline damage the body over time." },
+    { q: "Which is a documented physical effect of chronic stress?", o: ["Suppressed immune system and raised blood pressure", "Lower glucose", "Stronger immunity", "Faster healing"], a: 0, w: "Chronic stress suppresses immunity and raises blood pressure." },
+    { q: "Stress is often used to illustrate the biopsychosocial model because it shows:", o: ["Biology is irrelevant", "Society does not matter", "The mind and body are separate", "A psychological state producing biological effects"], a: 3, w: "Stress demonstrates mind-body interaction directly." },
+    { q: "For a laboratory scientist, understanding an anxious patient during sample collection leads to:", o: ["Slower results only", "A worse sample", "A better sample and experience", "No difference"], a: 2, w: "Easing fear improves both the sample and the patient's experience." },
+    { q: "A patient delaying a test for weeks out of fear is primarily an example of a:", o: ["Psychological factor affecting health behaviour", "Social class only", "Biological factor", "Instrument error"], a: 0, w: "Fear-driven delay is a psychological factor shaping health behaviour." },
+    { q: "The biopsychosocial model differs from the biomedical model chiefly by:", o: ["Rejecting biology entirely", "Ignoring disease", "Adding psychological and social context to biology", "Using no evidence"], a: 2, w: "It surrounds biology with psychological and social context, not rejecting it." },
+    { q: "Which question reflects biopsychosocial rather than purely biomedical thinking?", o: ["What is the cell count", "What is the drug dose", "What is happening to this whole person", "What pathogen is present"], a: 2, w: "Considering the whole person is the biopsychosocial approach." },
+    { q: "Medical psychology exists fundamentally because:", o: ["Tests are unreliable", "Biology is unimportant", "People are machines", "The purely biological view of medicine is incomplete"], a: 3, w: "It addresses the human factors the biomedical model omits." },
+    { q: "The best summary of the biopsychosocial model is that health arises from:", o: ["Medication only", "Genes alone", "Luck", "The dynamic interaction of body, mind and social world"], a: 3, w: "Health emerges from interacting biological, psychological and social factors." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -1546,6 +1914,8 @@ const CONTENT = {
   "ana:3": T_ANA_EPI_MEMB,
   "phy:0": T_PHY_GENERAL,
   "bch:0": T_BCH_INTRO,
+  "bio:0": T_BIO_AMINO,
+  "psy:0": T_PSY_OVERVIEW,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
