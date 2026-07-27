@@ -2578,7 +2578,7 @@ If those came cleanly, you understand what medical psychology is and why it belo
 };
 
 /* --------------------------- com:0 --------------------------- */
-const T_COM_PROCESS = {
+const T_COM_OVERVIEW = {
   courseId: "com",
   topicIndex: 0,
   title: "Communication",
@@ -2762,6 +2762,622 @@ If those came cleanly, you understand communication as a process you can analyse
     { q: "For a laboratory scientist, a brilliant result that is poorly communicated is:", o: ["Effectively useless", "Better than none", "Still fully useful", "Automatically understood"], a: 0, w: "If the information does not reach and inform correctly, the result is wasted." },
     { q: "The complete communication process, in order, is:", o: ["Channel, feedback, encode, decode", "Feedback, noise, encode, decode", "Encode, channel, decode, feedback", "Decode, channel, encode, feedback"], a: 2, w: "The sender encodes, the channel carries, the receiver decodes, then gives feedback." },
     { q: "Every element of the communication process ultimately serves to achieve:", o: ["More noise", "A longer report", "A louder message", "Shared understanding"], a: 3, w: "Shared understanding is the goal the whole process serves." },
+  ],
+};
+
+// ==================== COMMUNICATION SKILLS TOPIC 02: WRITING AS A PROCESS ====================
+const T_COM_WRITING_PROCESS = {
+  courseId: "com",
+  topicIndex: 1,
+  title: "Writing as a Process",
+  minutes: 22,
+  note: [
+    { q: "Why does writing need a process at all?",
+      body: `You have learned the communication process — how messages are encoded, sent, received, and decoded. Now we apply that framework to one of the most important forms of communication in academic and professional life: writing. But writing is not a single act; it is a process with distinct stages.
+
+My Socratic question: a student sits down to write an essay, starts at the first sentence, and struggles through to the end in one sitting. Another student plans, drafts, revises, and edits. Which student produces better work, and why?
+
+The answer is the second student, because writing is not a single event but a recursive process. The writing process model, widely used in composition studies, identifies distinct stages: prewriting (planning and generating ideas), drafting (putting ideas into sentences and paragraphs), revising (reorganising and improving content), editing (correcting grammar and mechanics), and publishing or submitting. These stages are not always linear — writers often move back and forth between them — but understanding the process makes writing more effective and less stressful.
+
+Writing is not something you are born knowing how to do well; it is a skill that improves with practice and process. Professional writers, scientists, and healthcare professionals all use the writing process to produce clear, effective documents. Understanding the process is essential for academic success, professional communication, and effective patient documentation.
+
+Crucial insight: writing is a process, not a single act. The writing process model — prewriting, drafting, revising, editing, and publishing — provides a framework for producing clear, effective written communication. Understanding this process transforms writing from a daunting task into a manageable, systematic activity.` },
+
+    { q: "Stage 1: Prewriting — the most important stage.",
+      body: `Prewriting is everything you do before you write the first draft. It is the planning stage, and it is often the most neglected — and most important — stage of the writing process.
+
+My Socratic question: why does a builder never start constructing a house without a blueprint? Because without a plan, the building would collapse. The same is true of writing. What does prewriting involve, and why is it essential?
+
+Prewriting includes several activities. Brainstorming generates ideas without judging them — writing down everything that comes to mind about the topic. Freewriting involves writing continuously for a set time without stopping, to get ideas flowing. Clustering or mind mapping visually organises ideas around a central topic. Outlining structures ideas into a logical order, creating a framework for the draft. Researching gathers information and evidence. Considering audience and purpose asks who will read this and why.
+
+The most important prewriting activity is analysing your audience and purpose. In healthcare writing, you must always ask: who is reading this, what do they need to know, and what action should they take? A lab report for a consultant differs from a discharge summary for a GP, which differs from a patient information leaflet. Understanding your audience and purpose determines everything about your writing.
+
+Crucial insight: prewriting is the foundation of good writing. Taking time to plan — to generate ideas, organise them, and consider your audience and purpose — saves time in the long run and produces better, clearer, more effective documents. Never skip the planning stage.` },
+
+    { q: "Stage 2: Drafting — getting the words down.",
+      body: `Drafting is the stage where you transform your plan into prose. It is where you actually write the sentences and paragraphs that will become your document.
+
+My Socratic question: why do many students get stuck at the drafting stage, staring at a blank page? The answer is perfectionism — they try to write perfectly the first time. What is the secret to effective drafting, and why does perfectionism get in the way?
+
+The secret to drafting is to write freely and get your ideas down without worrying about perfection. The first draft is not the final product; it is a rough version that will be improved in later stages. Professional writers often produce multiple drafts before they are satisfied. In drafting, you focus on getting content down, not on grammar and style. You can fix those later.
+
+Several strategies help with drafting. Start with the easiest section first, not necessarily the introduction. Use your outline as a roadmap. Write in paragraphs, with each paragraph expressing one main idea. Do not stop to edit — if you cannot find the perfect word, put a placeholder and move on. Keep moving forward. The goal of drafting is to produce a complete draft, no matter how rough.
+
+In healthcare writing, drafting might involve writing a draft of a patient note, a lab report, or a research article. The draft is where you work out what you want to say. It is private — no one needs to see it until you are ready to share it. This freedom to write imperfectly is what makes drafting possible.
+
+Crucial insight: drafting is about getting words on the page. Do not aim for perfection in the first draft — aim for completion. Give yourself permission to write badly, because you can always improve it later. A rough draft is infinitely better than a blank page.` },
+
+    { q: "Stage 3: Revising — improving what you have written.",
+      body: `Revising is often confused with editing, but they are different. Revising is about improving the content and organisation of your writing; editing is about correcting the grammar and mechanics.
+
+My Socratic question: a student finishes a draft and immediately submits it. Another student reads their draft, moves a paragraph, adds a new point, and deletes a redundant section. Which student has revised, and why does it improve their writing?
+
+The answer is the second student has revised. Revising means to re-see — to look at your writing with fresh eyes and make changes to improve it. Revision focuses on the big picture: is the purpose clear? Is the organisation logical? Is the argument convincing? Are there sections that need more development? Are there sections that are irrelevant?
+
+Revision is the stage where most of the learning happens. When you revise, you think critically about your own writing, which deepens your understanding of your topic and your communication skills. Strategies for revision include: read your draft aloud (you will hear awkward phrasing), get feedback from others (peer review), check that each paragraph has a clear topic sentence, ensure that your conclusion follows from your argument, and check that your writing fulfils its purpose for its audience.
+
+In healthcare writing, revision is essential. A patient note that is unclear could lead to medical errors. A lab report that is disorganised could be misinterpreted. Taking time to revise — to ensure that your writing says what you mean and means what it says — is a professional responsibility.
+
+Crucial insight: revision is about improving your writing's content, organisation, and clarity. It is the stage where good writing becomes excellent. Revision is not a punishment — it is an essential part of the writing process that transforms a rough draft into a polished document.` },
+
+    { q: "Stage 4: Editing and proofreading — the final polish.",
+      body: `Editing and proofreading are the final stages of the writing process, where you correct the surface errors that distract readers and undermine your credibility.
+
+My Socratic question: a well-argued proposal with spelling mistakes and grammatical errors reaches a supervisor. Why does the supervisor judge it more harshly than the content alone would warrant?
+
+The answer is that surface errors signal carelessness. If you cannot be bothered to correct your errors, the reader assumes you cannot be bothered with the content either. Editing and proofreading are essential for credibility.
+
+Editing focuses on sentence-level issues: grammar, punctuation, spelling, word choice, and sentence structure. Editing asks: is each sentence clear and correct? Is the tone appropriate? Are there unnecessary words to cut? Proofreading is the final check for typos, formatting errors, and inconsistencies. It is the last read-through before submission.
+
+Strategies for effective editing and proofreading include: read your work backwards (sentence by sentence, to focus on surface errors rather than meaning), read aloud (you will hear errors you miss when reading silently), use spell-check but do not rely on it, take a break before editing (distance helps you see errors), and ask someone else to read your work.
+
+In healthcare writing, editing is particularly important. A medication dosage written incorrectly could be lethal. A lab result transcribed wrongly could lead to misdiagnosis. While you may have others checking your work, your writing must be accurate and clear at the point of handover. Editing is not optional — it is a professional duty.
+
+Crucial insight: editing and proofreading correct surface errors and ensure clarity. They are the final polish that gives your writing professional credibility. Never submit any document without editing and proofreading it first — in healthcare, the stakes are too high.` },
+
+    { q: "The writing process is recursive, not linear.",
+      body: `The writing process is often presented as a series of steps, but experienced writers know it is not that simple. You may plan, write, revise, and then realise you need to plan more. You may edit and then see a whole section that needs revision.
+
+My Socratic question: if the writing process is not a straight line, how can it be taught or learned? What does it mean to say writing is recursive?
+
+To say writing is recursive means that writers move back and forth between stages. You do not always finish prewriting before drafting, or finish drafting before revising. You might draft an introduction, revise it, draft the body, go back to revise the introduction again, and then edit the whole thing. Recursion is not failure — it is part of the process.
+
+Understanding recursion helps writers be patient with themselves. If you find yourself going back to plan more, you are not doing it wrong — you are doing it right. Writing is a process of discovery; you often do not know exactly what you want to say until you have said it. Recursion allows for this discovery.
+
+In healthcare writing, recursion is especially relevant. A patient note may be drafted, reviewed, revised, and reviewed again. A research paper may go through many cycles of drafting and revision. Understanding that this is normal reduces stress and improves the final product.
+
+Crucial insight: the writing process is recursive, not linear. Writers move back and forth between stages as they discover and refine their ideas. This recursion is not a sign of failure but a natural part of producing good writing.` },
+
+    { q: "Audience and purpose: the foundation of all writing.",
+      body: `Every piece of writing is written for someone (the audience) and for some reason (the purpose). Understanding both is the foundation of effective writing.
+
+My Socratic question: a lab report and a patient information leaflet both describe the same medical condition. Why are they written so differently? The answer is audience and purpose — the lab report is for healthcare professionals, the leaflet for patients. Understanding this difference is the key to effective writing.
+
+Audience analysis involves asking: who is reading this? What do they already know? What do they need to know? What is their attitude toward the topic? What do they expect from this document? The answers determine everything — the level of detail, the vocabulary, the tone, and the organisation.
+
+Purpose analysis involves asking: why am I writing this? What do I want the reader to know, feel, or do after reading? Common purposes include to inform, to persuade, to explain, to instruct, to request, to record, and to document. Your purpose determines what content to include and how to structure it.
+
+In healthcare writing, audience and purpose are paramount. A discharge summary must be clear and complete for the next clinician. A patient education handout must be clear and accessible for the patient. A referral letter must be persuasive to ensure the referral is accepted. Every healthcare document has an audience and a purpose, and effective writing addresses both.
+
+Crucial insight: audience and purpose are the foundation of all writing. Before you write a single word, ask: who is my audience, and what is my purpose? The answers will guide every decision you make as a writer.` },
+
+    { q: "Common mistakes students make with the writing process.",
+      body: `Students often make several common mistakes when learning the writing process. Understanding these mistakes is essential for becoming an effective writer.
+
+The first mistake is skipping prewriting. Students who start writing without planning often produce disorganised, unfocused work. They waste time struggling with organisation that could have been solved with a simple outline.
+
+The second mistake is trying to write perfectly the first time. Students who edit as they draft often get stuck and frustrated. They lose the flow of ideas because they keep stopping to fix things. Effective drafting requires separating creation from correction.
+
+The third mistake is confusing revision with editing. Students who think revising means checking spelling and grammar miss the most important stage — improving content and organisation. Real revision requires re-seeing the work, not just polishing it.
+
+The fourth mistake is failing to get feedback. Students who write in isolation miss the opportunity to learn from others. Peer feedback is one of the most valuable tools for improving writing.
+
+The fifth mistake is underestimating the time needed. Writing takes time — often more than students expect. Starting early and allowing time for all stages of the process produces much better results.
+
+Crucial insight: common mistakes in the writing process include skipping prewriting, trying to write perfectly the first time, confusing revision with editing, failing to get feedback, and underestimating the time needed. Avoiding these mistakes dramatically improves writing quality.` },
+
+    { q: "Why writing matters in the healthcare professions.",
+      body: `You may wonder why a future laboratory scientist needs to study writing. The answer is that writing is one of the most important skills in healthcare, and poor writing can literally cost lives.
+
+My Socratic question: a lab technician misinterprets a poorly written request and performs the wrong test. A doctor misreads a badly written discharge summary and prescribes the wrong medication. In both cases, what failed, and what were the consequences?
+
+The answer is communication failed — specifically, the writing failed — and the consequences could be serious harm to the patient. In healthcare, writing is not just about getting a good grade; it is about ensuring safe, effective care.
+
+Healthcare professionals write constantly: patient notes, lab reports, referral letters, discharge summaries, research papers, policies, and guidelines. Each of these documents must be clear, accurate, and complete. A poorly written document can lead to misunderstandings, errors, and poor patient outcomes.
+
+Understanding the writing process helps healthcare professionals produce better documents. Prewriting ensures you have the right information. Drafting gets it down. Revising ensures it is clear and complete. Editing ensures it is correct. Each stage contributes to the quality of the final document.
+
+Crucial insight: writing is a critical skill in healthcare. Poor writing can cause errors, miscommunication, and harm to patients. Understanding the writing process helps healthcare professionals produce clear, accurate, and effective documents that improve patient care.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for Writing as a Process.
+
+The writing process: a recursive sequence of stages for producing effective writing.
+
+Prewriting: planning — brainstorming, freewriting, clustering, outlining, researching, analysing audience and purpose. The foundation of good writing.
+
+Drafting: getting words on the page. Focus on content, not perfection. Write freely, follow your outline, keep moving forward.
+
+Revising: improving content and organisation. Re-see your work. Check purpose, audience, organisation, clarity, development. Get feedback.
+
+Editing and proofreading: correcting surface errors. Grammar, punctuation, spelling, word choice, sentence structure. The final polish for professional credibility.
+
+Recursive, not linear: writers move back and forth between stages. This is normal and productive.
+
+Audience and purpose: the foundation of all writing. Every document has an audience and a purpose, and both must be addressed.
+
+Common mistakes: skipping prewriting, trying to write perfectly the first time, confusing revision with editing, failing to get feedback, underestimating the time needed.
+
+Healthcare relevance: writing is a critical skill in healthcare. Clear, accurate writing improves patient safety and care.
+
+Now your final test. A student is writing a lab report for a course. They start writing immediately, without planning. They write a draft, correct the spelling and grammar, and submit it. They get a poor grade for organisation and clarity.
+
+Question one: which stage of the writing process did the student skip, and why did it lead to poor organisation?
+Question two: what stage did the student confuse with revision, and what did they fail to do as a result?
+Question three: what specific prewriting activities would have helped the student produce a better report?
+
+Work them through before reading on.
+
+My answers. One: the student skipped prewriting — the planning stage. Without prewriting, they had no clear structure or organisation, so their report was disorganised. Two: the student confused editing (correcting grammar and spelling) with revision (improving content and organisation). They failed to revise, so the content and structure remained poor even though the surface errors were fixed. Three: the student could have brainstormed to generate ideas, outlined to organise them, and analysed the audience and purpose to ensure the report was appropriate for its intended readers and purpose. These prewriting activities would have provided a clear structure and focus for the report.` }
+  ],
+  theory: [
+    { q: "What is the writing process model and what are its stages?", a: "The writing process model identifies distinct stages: prewriting (planning and generating ideas), drafting (putting ideas into sentences and paragraphs), revising (reorganising and improving content), editing (correcting grammar and mechanics), and publishing or submitting. The stages are recursive, meaning writers move back and forth between them." },
+    { q: "What is prewriting and why is it important?", a: "Prewriting is everything done before the first draft — brainstorming, freewriting, clustering, outlining, researching, and analysing audience and purpose. It is the most important stage because it establishes a clear plan and direction, saving time and improving the final product." },
+    { q: "What is drafting and what is the key to effective drafting?", a: "Drafting is writing the first version of the document. The key is to focus on getting content down without worrying about perfection — write freely, follow your outline, and keep moving forward. Perfectionism is the enemy of drafting." },
+    { q: "What is the difference between revising and editing?", a: "Revising focuses on improving content and organisation — the big picture of what the document says and how it is structured. Editing focuses on correcting surface errors — grammar, punctuation, spelling, word choice, and sentence structure." },
+    { q: "What is editing and proofreading and why are they important?", a: "Editing corrects grammar, punctuation, spelling, word choice, and sentence structure. Proofreading is the final check for typos and inconsistencies. They are important because surface errors undermine credibility and can cause confusion or errors in healthcare." },
+    { q: "What does it mean to say the writing process is recursive?", a: "It means writers move back and forth between stages rather than following a strict linear sequence. You might draft, revise, go back to plan more, draft again, and then edit. Recursion is a normal and productive part of the writing process." },
+    { q: "Why are audience and purpose the foundation of all writing?", a: "Audience determines what content to include, what vocabulary to use, and what tone to adopt. Purpose determines what you want the reader to know, feel, or do. Every writing decision should be guided by audience and purpose." },
+    { q: "What are the common mistakes students make with the writing process?", a: "Skipping prewriting, trying to write perfectly the first time, confusing revision with editing, failing to get feedback, and underestimating the time needed. Avoiding these mistakes dramatically improves writing quality." },
+    { q: "Why is writing a critical skill in healthcare?", a: "Healthcare professionals write constantly — patient notes, lab reports, referrals, discharge summaries, research papers. Poor writing can cause errors, miscommunication, and harm to patients. Clear, accurate writing improves patient safety and care." },
+    { q: "How can healthcare professionals use the writing process to improve their writing?", a: "By following the writing process: prewriting to plan, drafting to get ideas down, revising to improve content and organisation, and editing to correct surface errors. Each stage contributes to the quality of the final document." },
+  ],
+  videos: [
+    { channel: "Osmosis", title: "The Writing Process in Healthcare", note: "How the writing process applies to clinical documentation and patient care.", url: "" },
+    { channel: "Communication Coach", title: "The Writing Process: Prewriting to Editing", note: "Step-by-step guide through all stages of the writing process.", url: "" },
+    { channel: "Writing Skills", title: "Audience and Purpose in Professional Writing", note: "How understanding who you are writing for transforms your writing.", url: "" },
+  ],
+  mcqs: [
+    { q: "The writing process model includes all of the following stages EXCEPT:", o: ["Prewriting", "Drafting", "Revising", "Publishing", "Punctuating"], a: 4, w: "Punctuating is part of editing, not a separate stage. The stages are prewriting, drafting, revising, editing, and publishing." },
+    { q: "The most important stage of the writing process is:", o: ["Editing", "Drafting", "Prewriting", "Publishing"], a: 2, w: "Prewriting is the most important stage because it establishes the plan and direction for the entire document." },
+    { q: "Brainstorming, freewriting, and outlining are all activities in which stage?", o: ["Prewriting", "Drafting", "Revising", "Editing"], a: 0, w: "These are prewriting activities — planning and generating ideas before drafting begins." },
+    { q: "Analysing audience and purpose is part of:", o: ["Drafting", "Prewriting", "Editing", "Revising"], a: 1, w: "Audience and purpose analysis is a crucial prewriting activity that guides all other writing decisions." },
+    { q: "The key to effective drafting is:", o: ["Writing perfectly the first time", "Getting words on the page without worrying about perfection", "Editing as you go", "Skipping the outline"], a: 1, w: "Effective drafting focuses on getting content down, not on perfection. Perfectionism hinders drafting." },
+    { q: "Revising focuses on:", o: ["Correcting spelling errors", "Improving content and organisation", "Adding footnotes", "Formatting the document"], a: 1, w: "Revising focuses on the big picture — content, organisation, and clarity." },
+    { q: "Editing focuses on:", o: ["Improving content and organisation", "Reorganising paragraphs", "Correcting grammar, punctuation, and spelling", "Adding new sections"], a: 2, w: "Editing corrects surface errors like grammar, punctuation, and spelling." },
+    { q: "Which of the following is a revision strategy?", o: ["Using spell-check", "Reading aloud to hear awkward phrasing", "Checking comma placement", "Formatting margins"], a: 1, w: "Reading aloud helps you hear awkward phrasing and identify areas needing revision." },
+    { q: "Proofreading is the stage of:", o: ["Checking for typos and inconsistencies in the final version", "Developing the outline", "Generating ideas", "Writing the first draft"], a: 0, w: "Proofreading is the final check for typos and formatting errors." },
+    { q: "The writing process is described as recursive because:", o: ["It has no beginning or end", "Writers move back and forth between stages", "It is impossible to finish", "It is always the same"], a: 1, w: "Recursive means writers move back and forth between stages, not following a strict linear sequence." },
+    { q: "Which question should a writer ask during audience analysis?", o: ["What do I want to say?", "What grade do I want?", "What does the reader already know and need to know?", "How many pages should I write?"], a: 2, w: "Understanding what the reader already knows and needs to know is essential for effective audience analysis." },
+    { q: "Which question should a writer ask during purpose analysis?", o: ["What do I want the reader to know, feel, or do?", "How long should the document be?", "What font should I use?", "When is the deadline?"], a: 0, w: "Purpose analysis asks what you want the reader to know, feel, or do as a result of your writing." },
+    { q: "A lab report for healthcare professionals and a patient information leaflet differ primarily because of:", o: ["Page count", "Colour", "Audience and purpose", "Paper type"], a: 2, w: "The audience (healthcare professionals vs patients) and purpose differ, so the writing differs." },
+    { q: "A common mistake students make is:", o: ["Revising too much", "Getting feedback", "Skipping prewriting", "Using outlines"], a: 2, w: "Skipping prewriting is a common mistake that leads to disorganised writing." },
+    { q: "Another common mistake is:", o: ["Writing multiple drafts", "Confusing revision with editing", "Planning before writing", "Using peer review"], a: 1, w: "Confusing revision (content/organisation) with editing (surface errors) is a common mistake." },
+    { q: "Trying to write perfectly the first time is a mistake because:", o: ["It produces better writing", "It slows down drafting and blocks the flow of ideas", "It is the professional way to write", "It saves time"], a: 1, w: "Perfectionism in drafting blocks the flow of ideas and slows down the process." },
+    { q: "Which of the following is NOT a prewriting activity?", o: ["Brainstorming", "Outlining", "Proofreading", "Freewriting"], a: 2, w: "Proofreading is part of the editing stage, not prewriting." },
+    { q: "Peer feedback is valuable during the writing process because:", o: ["It replaces editing", "It provides a fresh perspective on the work", "It is always correct", "It saves time"], a: 1, w: "Peer feedback provides a fresh perspective, helping writers see issues they missed." },
+    { q: "In healthcare, poor writing can lead to:", o: ["Better patient outcomes", "Miscommunication and medical errors", "Improved documentation", "Faster discharge"], a: 1, w: "Poor writing can cause miscommunication and medical errors, harming patients." },
+    { q: "A discharge summary is an example of healthcare writing that must be:", o: ["Creative and engaging", "Clear and complete for the next clinician", "Brief and vague", "Written in poetry"], a: 1, w: "Discharge summaries must be clear and complete to ensure continuity of care." },
+    { q: "The recursive nature of writing means that:", o: ["You should never revise", "You may need to prewrite again after drafting", "Editing is optional", "Planning is unnecessary"], a: 1, w: "Recursion means you may need to go back to earlier stages, including prewriting, as you develop your work." },
+    { q: "A referral letter that is unclear may result in:", o: ["Better patient care", "The referral being accepted without question", "The referral being rejected or delayed", "Improved communication"], a: 2, w: "An unclear referral letter may be rejected or delayed, harming the patient." },
+    { q: "The goal of drafting is to:", o: ["Create a perfect final version", "Produce a complete draft that can be improved later", "Edit as you write", "Avoid making mistakes"], a: 1, w: "The goal of drafting is to produce a complete draft that can be revised and edited later." },
+    { q: "Which of the following is a revision activity?", o: ["Checking spelling", "Moving a paragraph to improve organisation", "Adding a comma", "Changing the font"], a: 1, w: "Moving a paragraph to improve organisation is revision — improving content and structure." },
+    { q: "Which of the following is an editing activity?", o: ["Reorganising paragraphs", "Adding new arguments", "Correcting grammar mistakes", "Changing the thesis"], a: 2, w: "Correcting grammar mistakes is editing — fixing surface errors." },
+    { q: "The purpose of a lab report is primarily to:", o: ["Entertain the reader", "Document and communicate findings accurately", "Show off vocabulary", "Fill time"], a: 1, w: "The purpose of a lab report is to document and communicate findings accurately." },
+    { q: "A patient information leaflet must be written in:", o: ["Technical medical jargon", "Plain language the patient can understand", "Legal language", "Poetic form"], a: 1, w: "Patient information must be in plain language to ensure understanding." },
+    { q: "Underestimating the time needed for writing is a common mistake because:", o: ["Writing is always fast", "Writing takes more time than students expect", "Writing is effortless", "Planning is optional"], a: 1, w: "Writing takes time — often more than students expect. Starting early is essential." },
+    { q: "The final stage of the writing process before submission is:", o: ["Prewriting", "Drafting", "Revising", "Editing and proofreading"], a: 3, w: "Editing and proofreading are the final stages before submission." },
+    { q: "Good writing in healthcare is ultimately about:", o: ["Impressiveness", "Complexity", "Clear, accurate communication that improves patient care", "Long sentences"], a: 2, w: "Healthcare writing is about clear, accurate communication that supports safe, effective patient care." },
+  ],
+};
+
+// ==================== COMMUNICATION SKILLS TOPIC 03: ORGANISATIONAL COMMUNICATION ====================
+const T_COM_ORGANISATIONAL = {
+  courseId: "com",
+  topicIndex: 2,
+  title: "Organisational Communication",
+  minutes: 22,
+  note: [
+    { q: "What is organisational communication and why does it matter?",
+      body: `You have learned the basics of communication — the process, the writing process, and the importance of audience and purpose. Now we look at communication in the context of organisations, where messages flow in complex networks, power dynamics shape what is said and heard, and effective communication is essential for achieving organisational goals.
+
+My Socratic question: a hospital is a complex organisation with doctors, nurses, laboratory scientists, administrators, and support staff. How does information travel from a lab result to a treatment decision, and what happens when that communication fails?
+
+The answer is that information travels through formal and informal communication channels. Formal communication follows official organisational structures — reports, meetings, memos, policies. Informal communication follows personal networks — conversations, gossip, relationships. Both are essential, and both can fail. Organisational communication is the study of how communication functions within organisations, and it is essential for understanding how healthcare systems actually work.
+
+Understanding organisational communication helps healthcare professionals navigate their workplace, communicate effectively with colleagues, and contribute to a safe and efficient healthcare environment. Poor communication is a leading cause of medical errors, and understanding organisational communication is essential for preventing them.
+
+Crucial insight: organisational communication is the study of how communication functions within organisations. In healthcare, effective organisational communication is essential for patient safety, staff wellbeing, and organisational efficiency. Understanding how communication flows in organisations helps healthcare professionals work effectively and prevent errors.` },
+
+    { q: "Formal and informal communication networks.",
+      body: `Organisations have both formal and informal communication networks, and understanding both is essential for effective communication.
+
+My Socratic question: a lab result is reported through the official reporting system. A staff member hears about a policy change through a conversation in the breakroom. Which is formal and which is informal, and why do both matter?
+
+Formal communication follows official channels and structures. It is planned, documented, and often hierarchical. Examples include official reports, meetings, memos, policies, procedures, and email announcements. Formal communication is essential for official business and provides a record of what was communicated.
+
+Informal communication follows personal networks and relationships. It is spontaneous, unplanned, and often undocumented. Examples include conversations, gossip, social media, and informal discussions. Informal communication is essential for social bonding, sharing tacit knowledge, and getting work done that official channels cannot accomplish.
+
+In healthcare, both formal and informal communication are essential. Formal channels ensure that critical information is documented and accessible. Informal channels help staff coordinate in real-time, share practical knowledge, and build the relationships that make teams work. Effective organisations balance both.
+
+Crucial insight: formal communication follows official channels and is documented; informal communication follows personal networks and is spontaneous. Both are essential in healthcare — formal for documentation and accountability, informal for coordination and teamwork.` },
+
+    { q: "Downward, upward, and horizontal communication.",
+      body: `Communication in organisations flows in different directions, and each direction serves different purposes and faces different challenges.
+
+My Socratic question: a hospital director announces a new policy. A nurse reports a safety concern to a supervisor. A lab scientist discusses a test result with a colleague. What are these three directions of communication called, and why are they all important?
+
+Downward communication flows from higher to lower levels in the hierarchy — from managers to staff. It includes instructions, policies, feedback, and announcements. Challenges include messages being filtered, misunderstood, or ignored. Effective downward communication is clear, timely, and consistent.
+
+Upward communication flows from lower to higher levels — from staff to managers. It includes reports, feedback, concerns, and suggestions. Challenges include fear of reprisal, filtering of bad news, and messages being ignored. Effective upward communication requires psychological safety — staff must feel safe speaking up.
+
+Horizontal communication flows between people at the same level — between colleagues. It includes coordination, collaboration, and social interaction. Challenges include silos, competition, and poor relationships. Effective horizontal communication builds teamwork and efficiency.
+
+In healthcare, all three directions are essential. Downward communication ensures staff know what to do. Upward communication ensures managers know what is happening on the ground. Horizontal communication ensures teams coordinate effectively. Failures in any direction can harm patients.
+
+Crucial insight: communication flows downward (manager to staff), upward (staff to manager), and horizontally (between colleagues). Each direction serves different purposes and faces different challenges. Effective healthcare organisations support communication in all three directions.` },
+
+    { q: "Communication channels and media richness.",
+      body: `Not all communication channels are equally effective. The concept of media richness helps explain why some channels work better for some messages than others.
+
+My Socratic question: why would you use a phone call for an urgent lab result but an email for a routine policy update? The answer lies in the richness of the communication medium.
+
+Media richness refers to the amount of information a communication medium can convey. Rich media (face-to-face conversation, phone calls) convey multiple cues (tone, body language, immediate feedback) and can handle complex, ambiguous messages. Lean media (emails, memos, reports) convey fewer cues and are better for simple, clear messages.
+
+Face-to-face communication is the richest medium — it conveys tone, body language, immediate feedback, and personal presence. Phone calls are next — they convey tone and immediate feedback but lack body language. Video calls are similar to face-to-face. Written communication (emails, reports, memos) is leaner — it lacks tone and body language and has delayed feedback.
+
+In healthcare, matching the medium to the message is essential. Critical, urgent, or complex messages require rich media (phone call or face-to-face). Routine, simple messages can use lean media (email or memo). Mismatching the medium to the message can cause miscommunication and errors.
+
+Crucial insight: media richness describes how much information a communication channel can convey. Rich media (face-to-face, phone) are best for complex, urgent, or ambiguous messages. Lean media (email, memos) are best for simple, routine messages. Matching the medium to the message is essential for effective communication.` },
+
+    { q: "Barriers to effective organisational communication.",
+      body: `Despite the best intentions, communication in organisations often fails. Understanding the barriers to effective communication is the first step to overcoming them.
+
+My Socratic question: a manager announces a policy change, but staff do not follow it. Why? The answer is likely one or more communication barriers at work. What are these barriers, and how can they be overcome?
+
+Common barriers include: hierarchy and power differences (staff may not feel safe speaking up, or may filter bad news), jargon and technical language (messages may not be understood), physical distance (remote staff may be out of the loop), information overload (too many messages to process), noise and distractions, emotional barriers (stress, fear, anxiety), cultural differences, and lack of trust.
+
+In healthcare, these barriers are especially dangerous. Hierarchy can prevent junior staff from raising concerns. Jargon can cause misunderstandings between professions. Information overload can lead to missed critical messages. Stress can impair communication. Cultural differences can cause misinterpretation.
+
+Overcoming barriers requires conscious effort: creating psychological safety, using plain language, ensuring regular communication, managing information load, reducing distractions, building trust, and providing communication training. Organisations that address communication barriers have better safety records, higher staff satisfaction, and better patient outcomes.
+
+Crucial insight: barriers to organisational communication include hierarchy, jargon, distance, overload, noise, emotion, culture, and lack of trust. In healthcare, these barriers can cause errors and harm. Overcoming them requires conscious, systematic effort.` },
+
+    { q: "Team communication and interdisciplinary collaboration.",
+      body: `Healthcare is delivered by teams, and team communication is the foundation of effective, safe patient care. Understanding how teams communicate is essential for any healthcare professional.
+
+My Socratic question: a patient's care involves doctors, nurses, laboratory scientists, pharmacists, and therapists. How do they communicate effectively to ensure coordinated, safe care? The answer is through structured team communication practices.
+
+Effective team communication is characterised by: shared goals, clear roles and responsibilities, mutual trust, psychological safety (members feel safe speaking up), closed-loop communication (confirming understanding), and structured handoffs (clear transfer of information).
+
+Structured communication tools are widely used in healthcare. SBAR (Situation, Background, Assessment, Recommendation) provides a standardised format for communicating critical information. Call-outs and check-backs ensure information is confirmed. Briefings and debriefings help teams plan and learn.
+
+In healthcare, team communication failures are a leading cause of medical errors. Handoffs (transferring patient care between shifts or teams) are particularly high-risk. Poor handoff communication leads to missed information, delays, and errors. Structured handoff tools improve patient safety.
+
+Crucial insight: healthcare is delivered by teams, and team communication is essential for patient safety. Structured communication tools like SBAR, briefings, and handoff protocols improve communication and reduce errors. Every healthcare professional must be an effective team communicator.` },
+
+    { q: "Conflict and communication in organisations.",
+      body: `Conflict is inevitable in organisations, and how it is handled through communication determines whether it is destructive or productive. Understanding conflict communication is essential for healthcare professionals.
+
+My Socratic question: two healthcare professionals disagree about a patient's treatment. One approach leads to productive discussion and better care. Another leads to resentment and poor collaboration. What makes the difference? The answer is how they communicate about the conflict.
+
+Conflict can be destructive when it involves personal attacks, defensiveness, stonewalling, or avoidance. Destructive conflict damages relationships, reduces collaboration, and harms patient care. Conflict can be constructive when it focuses on issues rather than personalities, uses collaborative problem-solving, and maintains respect. Constructive conflict can lead to better decisions and stronger relationships.
+
+Effective conflict communication involves: focusing on the issue, not the person; using "I" statements rather than "you" accusations; listening actively to understand the other perspective; seeking common ground; and working toward a solution that addresses both parties' concerns.
+
+In healthcare, unmanaged conflict is common and costly. It leads to staff turnover, poor teamwork, and medical errors. Healthcare professionals who can communicate effectively through conflict are more effective team members and provide better patient care.
+
+Crucial insight: conflict is inevitable in organisations. Destructive conflict damages relationships and harms patient care. Constructive conflict, handled through effective communication, can lead to better decisions and stronger teams. Healthcare professionals must develop conflict communication skills.` },
+
+    { q: "Organisational culture and communication.",
+      body: `Every organisation has a culture — the shared values, beliefs, and norms that shape how people behave. Culture profoundly affects communication, and understanding organisational culture is essential for effective healthcare communication.
+
+My Socratic question: in some hospitals, junior staff feel comfortable speaking up about safety concerns. In others, they do not. What explains this difference? The answer is organisational culture — specifically, a culture of psychological safety versus a culture of hierarchy and fear.
+
+Organisational culture includes: values (what is important), norms (how things are done), assumptions (what is taken for granted), and artifacts (visible symbols and practices). Culture shapes what is said, who is heard, and how messages are interpreted.
+
+A positive communication culture is characterised by: psychological safety (people feel safe speaking up), open communication (information flows freely), respect (people are treated with dignity), transparency (decisions and reasoning are shared), and learning from mistakes (errors are opportunities for improvement).
+
+A negative communication culture is characterised by: fear (people are afraid to speak up), secrecy (information is hoarded), disrespect (people are treated poorly), blame (mistakes are punished), and hierarchy (only certain voices are heard).
+
+In healthcare, culture is a matter of life and death. A culture that silences concerns leads to errors that are not reported and corrected. A culture that encourages speaking up catches errors before they reach patients. Healthcare professionals can influence culture through their own communication behaviour.
+
+Crucial insight: organisational culture shapes communication. A positive culture with psychological safety, openness, respect, and transparency supports effective communication and patient safety. A negative culture with fear, secrecy, and blame undermines communication and patient safety. Culture can be changed through conscious communication practices.` },
+
+    { q: "Common mistakes in organisational communication.",
+      body: `Healthcare professionals often make common mistakes in organisational communication. Understanding these mistakes is essential for improving communication and patient safety.
+
+The first mistake is assuming that sending a message means it was received and understood. Communication is not complete until the receiver has understood the message — and you have confirmed that understanding. This is particularly dangerous in healthcare handoffs.
+
+The second mistake is using the wrong channel for the message. Urgent or complex messages require rich media (phone, face-to-face). Routine messages can use lean media (email). Using a lean channel for an urgent message can cause delays and errors.
+
+The third mistake is failing to consider hierarchy and power. Junior staff may not feel safe speaking up to senior staff. Senior staff may not listen to junior staff. Creating psychological safety and encouraging speaking up is essential.
+
+The fourth mistake is failing to provide feedback. Without feedback, communicators do not know whether their message was understood or whether it had the intended effect. Feedback closes the communication loop and enables improvement.
+
+The fifth mistake is ignoring informal communication. Informal networks are essential for coordination and teamwork. Ignoring them can leave you out of the loop and reduce your effectiveness.
+
+Crucial insight: common mistakes in organisational communication include assuming sending equals receiving, using the wrong channel, ignoring hierarchy, failing to provide feedback, and ignoring informal communication. Avoiding these mistakes improves communication and patient safety.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for Organisational Communication.
+
+Formal vs informal communication: formal follows official channels and is documented; informal follows personal networks and is spontaneous. Both are essential.
+
+Directions of communication: downward (manager to staff — instructions, policies), upward (staff to manager — reports, concerns), horizontal (colleagues — coordination, collaboration). All three are essential.
+
+Media richness: rich media (face-to-face, phone) convey multiple cues and are best for complex, urgent messages; lean media (email, memos) convey fewer cues and are best for routine messages. Match the medium to the message.
+
+Barriers: hierarchy, jargon, distance, overload, noise, emotion, culture, lack of trust. Overcome through psychological safety, plain language, regular communication, and training.
+
+Team communication: structured tools like SBAR, briefings, handoffs, call-outs. Essential for patient safety.
+
+Conflict communication: destructive conflict attacks people and damages relationships; constructive conflict focuses on issues and leads to better decisions. Effective conflict communication is essential.
+
+Organisational culture: shapes what is said, who is heard, and how messages are interpreted. Psychological safety, openness, and respect support effective communication.
+
+Common mistakes: assuming sending equals receiving, using the wrong channel, ignoring hierarchy, failing to provide feedback, ignoring informal communication.
+
+Now your final test. A junior staff member notices a potential safety issue but does not raise it with their supervisor. The issue later causes a minor error. The supervisor learns about the issue after the fact and is frustrated that the staff member did not speak up.
+
+Question one: which direction of communication failed, and what barriers likely contributed to the failure?
+Question two: what could the supervisor have done to encourage the staff member to speak up?
+Question three: what structured communication tool might have prevented this error?
+
+Work them through before reading on.
+
+My answers. One: upward communication failed. Barriers likely included hierarchy (the junior staff member felt intimidated by the supervisor's position), fear (of being blamed or dismissed), and lack of psychological safety (not feeling safe to speak up). Two: the supervisor could have created psychological safety by explicitly inviting concerns, thanking staff for speaking up, responding constructively rather than punitively, and modelling openness to feedback. Three: a structured tool like SBAR (Situation, Background, Assessment, Recommendation) could have helped the staff member communicate the concern clearly and effectively, making it easier to raise and easier for the supervisor to understand.` }
+  ],
+  theory: [
+    { q: "What is organisational communication and why is it important?", a: "Organisational communication is the study of how communication functions within organisations. In healthcare, effective organisational communication is essential for patient safety, staff wellbeing, and organisational efficiency. It helps coordinate care, prevent errors, and build effective teams." },
+    { q: "What is the difference between formal and informal communication?", a: "Formal communication follows official channels and is documented (reports, meetings, memos, policies). Informal communication follows personal networks and is spontaneous (conversations, gossip, social media). Both are essential in healthcare — formal for documentation, informal for coordination." },
+    { q: "What are the three directions of communication in organisations?", a: "Downward (manager to staff — instructions, policies), upward (staff to manager — reports, concerns), and horizontal (colleagues — coordination, collaboration). Each serves different purposes and faces different challenges." },
+    { q: "What is media richness and why does it matter?", a: "Media richness refers to how much information a communication channel can convey. Rich media (face-to-face, phone) convey multiple cues and are best for complex, urgent messages. Lean media (email, memos) convey fewer cues and are best for routine messages. Matching the medium to the message is essential." },
+    { q: "What are common barriers to effective organisational communication?", a: "Hierarchy and power differences, jargon and technical language, physical distance, information overload, noise and distractions, emotional barriers, cultural differences, and lack of trust. Overcoming these barriers requires conscious effort." },
+    { q: "What is SBAR and why is it used in healthcare?", a: "SBAR (Situation, Background, Assessment, Recommendation) is a structured communication tool for communicating critical information. It provides a standardised format that ensures clear, complete communication and reduces errors, especially during handoffs and urgent communications." },
+    { q: "How does conflict affect communication in organisations?", a: "Destructive conflict attacks people and damages relationships, leading to poor teamwork and errors. Constructive conflict focuses on issues and leads to better decisions. Effective conflict communication involves focusing on issues, listening actively, and seeking solutions." },
+    { q: "What is organisational culture and how does it affect communication?", a: "Organisational culture is the shared values, beliefs, and norms that shape behaviour. A positive culture with psychological safety, openness, respect, and transparency supports effective communication. A negative culture with fear, secrecy, and blame undermines communication." },
+    { q: "What is psychological safety and why is it important?", a: "Psychological safety is the belief that one can speak up without fear of punishment or humiliation. It is essential for effective communication because it enables staff to raise concerns, ask questions, and share ideas without fear." },
+    { q: "What are common mistakes in organisational communication?", a: "Assuming sending equals receiving, using the wrong channel, ignoring hierarchy and power, failing to provide feedback, and ignoring informal communication. Avoiding these mistakes improves communication and patient safety." },
+  ],
+  videos: [
+    { channel: "Organisational Behaviour", title: "Organisational Communication Networks", note: "Formal and informal communication in organisations.", url: "" },
+    { channel: "Healthcare Communication", title: "SBAR Communication in Healthcare", note: "How structured communication tools improve patient safety.", url: "" },
+    { channel: "Leadership", title: "Psychological Safety in Teams", note: "Creating a culture where people feel safe to speak up.", url: "" },
+  ],
+  mcqs: [
+    { q: "Organisational communication is the study of:", o: ["How individuals communicate in private", "How communication functions within organisations", "How to write poetry", "How to give speeches"], a: 1, w: "Organisational communication studies communication within organisations." },
+    { q: "Formal communication follows:", o: ["Personal relationships", "Official organisational channels", "Social media", "Gossip networks"], a: 1, w: "Formal communication follows official channels and is documented." },
+    { q: "Informal communication is characterised by:", o: ["Documentation and records", "Official approval", "Spontaneity and personal networks", "Hierarchical structure"], a: 2, w: "Informal communication is spontaneous and follows personal networks." },
+    { q: "Downward communication flows:", o: ["From staff to managers", "Between colleagues", "From managers to staff", "Outside the organisation"], a: 2, w: "Downward communication flows from higher to lower levels in the hierarchy." },
+    { q: "Upward communication flows:", o: ["From managers to staff", "Between colleagues", "From staff to managers", "Outside the organisation"], a: 2, w: "Upward communication flows from lower to higher levels in the hierarchy." },
+    { q: "Horizontal communication flows:", o: ["Between superiors and subordinates", "Between colleagues at the same level", "Outside the organisation", "Up the hierarchy"], a: 1, w: "Horizontal communication flows between people at the same level." },
+    { q: "Media richness refers to:", o: ["How expensive the channel is", "How much information a channel can convey", "How fast the channel is", "How popular the channel is"], a: 1, w: "Media richness is about how much information a channel can convey." },
+    { q: "Face-to-face communication is considered:", o: ["A lean medium", "A rich medium", "A slow medium", "An outdated medium"], a: 1, w: "Face-to-face is the richest medium — it conveys multiple cues and immediate feedback." },
+    { q: "Email is considered:", o: ["A rich medium", "A lean medium", "A personal medium", "An urgent medium"], a: 1, w: "Email is a lean medium — it conveys fewer cues and lacks immediate feedback." },
+    { q: "Which medium is best for urgent, complex messages?", o: ["Email", "Memo", "Phone call or face-to-face", "Text message"], a: 2, w: "Urgent, complex messages require rich media like phone calls or face-to-face." },
+    { q: "Which is a barrier to effective organisational communication?", o: ["Open communication", "Psychological safety", "Jargon and hierarchy", "Feedback"], a: 2, w: "Jargon and hierarchy are barriers that can prevent effective communication." },
+    { q: "Psychological safety means:", o: ["No one ever disagrees", "People feel safe to speak up without fear", "Everyone agrees with management", "There is no conflict"], a: 1, w: "Psychological safety is the belief that one can speak up without fear of punishment or humiliation." },
+    { q: "SBAR stands for:", o: ["Situation, Background, Assessment, Recommendation", "Status, Briefing, Action, Response", "Summary, Basis, Analysis, Result", "Symptom, Behaviour, Aetiology, Response"], a: 0, w: "SBAR is Situation, Background, Assessment, Recommendation." },
+    { q: "SBAR is used in healthcare to:", o: ["Write poetry", "Structure communication of critical information", "Order supplies", "Schedule shifts"], a: 1, w: "SBAR is a structured tool for communicating critical information, especially during handoffs." },
+    { q: "Which of the following is a characteristic of effective team communication?", o: ["Hierarchy", "Psychological safety", "Fear of speaking up", "Unclear roles"], a: 1, w: "Psychological safety is essential for effective team communication." },
+    { q: "Destructive conflict in healthcare can lead to:", o: ["Better teamwork", "Improved patient safety", "Poor collaboration and errors", "Stronger relationships"], a: 2, w: "Destructive conflict damages relationships and can lead to errors." },
+    { q: "Constructive conflict focuses on:", o: ["Personal attacks", "Issues and solutions", "Blame", "Winning"], a: 1, w: "Constructive conflict focuses on issues and finding solutions." },
+    { q: "A culture of blame in healthcare is dangerous because:", o: ["It encourages reporting of errors", "It discourages reporting of errors, so errors are not corrected", "It improves morale", "It reduces errors"], a: 1, w: "A blame culture discourages error reporting, so errors are not identified and corrected." },
+    { q: "A positive organisational culture for communication is characterised by:", o: ["Fear and secrecy", "Psychological safety and openness", "Hierarchy and silence", "Blame and punishment"], a: 1, w: "A positive culture has psychological safety, openness, respect, and transparency." },
+    { q: "Ignoring informal communication can lead to:", o: ["Better documentation", "Being out of the loop and reduced effectiveness", "Improved formal communication", "Better decision-making"], a: 1, w: "Ignoring informal communication can leave you out of the loop." },
+    { q: "A common mistake in organisational communication is:", o: ["Providing feedback", "Assuming sending equals receiving", "Using SBAR", "Encouraging speaking up"], a: 1, w: "Assuming that sending a message means it was received and understood is a common mistake." },
+    { q: "Another common mistake is:", o: ["Using rich media for urgent messages", "Using the wrong channel for the message", "Providing feedback", "Using SBAR"], a: 1, w: "Using the wrong channel (e.g., email for an urgent message) is a common mistake." },
+    { q: "Failure to provide feedback in communication means:", o: ["Communication is complete", "The sender does not know if the message was understood", "The message was perfect", "No further action is needed"], a: 1, w: "Without feedback, senders do not know whether their message was understood." },
+    { q: "In healthcare handoffs, poor communication can lead to:", o: ["Continuity of care", "Missed information and errors", "Improved teamwork", "Better documentation"], a: 1, w: "Poor handoff communication leads to missed information and errors." },
+    { q: "Which direction of communication is most likely to be affected by fear of reprisal?", o: ["Downward", "Horizontal", "Upward", "External"], a: 2, w: "Upward communication is most affected by fear of reprisal — staff may not feel safe sharing concerns." },
+    { q: "Which type of communication is essential for social bonding and sharing tacit knowledge?", o: ["Formal", "Informal", "Written", "Official"], a: 1, w: "Informal communication is essential for social bonding and sharing practical knowledge." },
+    { q: "A referral letter that is unclear may result in:", o: ["Better patient care", "The referral being rejected or delayed", "Improved communication", "Stronger relationships"], a: 1, w: "An unclear referral may be rejected or delayed, harming the patient." },
+    { q: "Which of the following is a structured communication tool used in healthcare?", o: ["Email", "SBAR", "Social media", "Gossip"], a: 1, w: "SBAR is a structured communication tool for critical information." },
+    { q: "The concept of media richness suggests that:", o: ["All media are equally effective", "Different media are better for different messages", "Only face-to-face communication works", "Email is always best"], a: 1, w: "Different media are better for different messages based on their richness." },
+    { q: "Effective organisational communication in healthcare ultimately improves:", o: ["Paperwork", "Patient safety and care quality", "Administrative burden", "Documentation volume"], a: 1, w: "Effective communication improves patient safety and the quality of care." },
+  ],
+};
+
+// ==================== COMMUNICATION SKILLS TOPIC 04: FORMAL LETTERS ====================
+const T_COM_LETTERS = {
+  courseId: "com",
+  topicIndex: 3,
+  title: "Formal Letters",
+  minutes: 22,
+  note: [
+    { q: "Why do formal letters still matter in the digital age?",
+      body: `In an age of emails, texts, and instant messaging, the formal letter might seem outdated. But formal letters remain essential in professional communication, including healthcare, because they provide a permanent, authoritative, and formal record of important communications.
+
+My Socratic question: a doctor writes a referral letter to a specialist. A laboratory scientist writes a report of a critical finding. A hospital administrator writes a letter of appointment. What do these have in common, and why is the formal letter format still the best choice?
+
+The answer is that these are all formal, official communications that need to be clear, complete, authoritative, and permanent. A formal letter provides a standardised format that ensures important information is included and easily located. It creates a permanent record that can be filed and referred to later. It signals professionalism and respect. In healthcare, where clear communication can literally save lives, the formal letter remains an essential tool.
+
+Understanding how to write formal letters is essential for healthcare professionals. You will write referral letters, reports, applications, letters of appointment, and other formal communications. Writing them correctly enhances your professionalism and ensures your message is effective.
+
+Crucial insight: formal letters remain essential in professional communication because they provide a permanent, authoritative, and standardised format for important communications. In healthcare, formal letters are used for referrals, reports, appointments, and other official communications. Mastering the formal letter format is an essential professional skill.` },
+
+    { q: "The structure of a formal letter: the essential components.",
+      body: `Formal letters follow a standard structure that makes them easy to read and ensures all essential information is included. Understanding this structure is essential for writing effective letters.
+
+My Socratic question: a referral letter arrives without a date, or without the patient's details, or without the sender's contact information. What is the problem, and how does the standard letter structure prevent it?
+
+The standard formal letter includes: sender's address (or letterhead), date, recipient's address, salutation (Dear ...), subject line (optional but useful), body (introduction, details, action), closing (Yours sincerely/faithfully), signature, and sender's name and title. Enclosures and copies may also be noted.
+
+Each component serves a purpose. The sender's address and date identify who wrote the letter and when. The recipient's address ensures it reaches the right person. The salutation establishes the relationship. The body conveys the message clearly and completely. The closing signals the end and maintains formality. The signature authenticates the letter.
+
+In healthcare, missing information in a letter can cause delays, errors, or harm. A referral letter without a patient's date of birth or NHS number may not be processed. A report without a date may cause confusion about when a test was done. Following the standard structure prevents these problems.
+
+Crucial insight: formal letters follow a standard structure: sender's address, date, recipient's address, salutation, body, closing, signature, and sender's details. This structure ensures all essential information is included and easily located. In healthcare, missing information can cause errors, so following the structure is essential.` },
+
+    { q: "Salutation and closing: matching the level of formality.",
+      body: `The salutation (how you address the recipient) and closing (how you end the letter) signal the level of formality and the nature of the relationship between sender and recipient. Getting this right is essential for professionalism.
+
+My Socratic question: why does a letter to a consultant begin "Dear Dr. Smith" and end "Yours sincerely," while a letter to "The Admissions Office" might begin "Dear Sir/Madam" and end "Yours faithfully"? What determines the choice?
+
+The rule is simple: if you know the recipient's name, use "Dear [Title] [Surname]" and close with "Yours sincerely." If you do not know the recipient's name, use "Dear Sir/Madam" or "To Whom It May Concern" and close with "Yours faithfully." The level of formality should also match the relationship and context.
+
+In healthcare, using the correct salutation and closing is a mark of professionalism. A referral letter to a consultant should use their correct title and surname. A letter to an unknown department should use the formal "Dear Sir/Madam." Getting this wrong can undermine your credibility and damage professional relationships.
+
+Crucial insight: the salutation and closing signal the level of formality and the relationship with the recipient. Use "Dear [Title] [Surname]" and "Yours sincerely" when you know the recipient's name. Use "Dear Sir/Madam" and "Yours faithfully" when you do not. Getting this right is essential for professionalism.` },
+
+    { q: "The body of the letter: clear, concise, and complete.",
+      body: `The body of the letter is where you convey your message. It must be clear, concise, and complete — everything the recipient needs to know, and nothing they do not.
+
+My Socratic question: a referral letter is too long, rambling, and buried in irrelevant details. Another is too brief, missing essential information. Which is worse, and what makes the body of a formal letter effective?
+
+The body of a formal letter should follow a clear structure. The introduction states the purpose of the letter clearly and immediately. The main body provides the necessary information in a logical order, using paragraphs for each main point. The conclusion states what action is needed or what the recipient should do next.
+
+In healthcare writing, the body of the letter must be: clear (the message is immediately understood), concise (every word serves a purpose), complete (all essential information is included), and correct (the information is accurate). A referral letter that is unclear or incomplete can lead to errors or delays in patient care.
+
+The body should use plain language wherever possible, avoiding unnecessary jargon. It should be organised logically, with the most important information first. It should be concise, but not at the expense of completeness. Every essential detail must be included.
+
+Crucial insight: the body of a formal letter must be clear, concise, and complete. It should state the purpose immediately, provide essential information in a logical order, and state any required action. In healthcare, unclear or incomplete letters can cause errors and harm patients.` },
+
+    { q: "Common types of formal letters in healthcare.",
+      body: `Healthcare professionals write several types of formal letters. Understanding the specific requirements of each type is essential.
+
+My Socratic question: a referral letter to a consultant, a report of a critical lab finding, and a complaint response from a hospital — these are all formal letters, but they serve very different purposes. How do they differ in content and structure?
+
+Referral letters are written by one healthcare professional to another, requesting consultation or transfer of care. They must include: patient identification (name, date of birth, NHS number), reason for referral, relevant history and findings, current status, and what is requested (advice, assessment, or transfer). They must be clear and complete to ensure continuity of care.
+
+Report letters convey findings or results — such as a lab report, a radiology report, or a discharge summary. They must include: patient identification, date of test/procedure, results, interpretation, and recommendations. They must be accurate and clear.
+
+Complaint response letters address patient or family concerns. They must: acknowledge the complaint, state what is being done to investigate, provide a timeline, and offer a response. They must be empathetic and professional.
+
+Application letters are used for jobs, courses, or funding. They must: introduce the applicant, summarise qualifications and experience, express interest in the position, and request consideration. They must be persuasive and professional.
+
+Crucial insight: healthcare professionals write several types of formal letters — referral letters, reports, complaint responses, and applications. Each has a specific purpose and requires specific content. Understanding the requirements of each type is essential for effective professional communication.` },
+
+    { q: "Writing a referral letter: a worked example.",
+      body: `The referral letter is one of the most important formal letters in healthcare. Let us work through an example to understand what makes it effective.
+
+My Socratic question: a GP writes to a consultant requesting an opinion on a patient with suspected heart disease. What must the letter include to ensure the consultant can provide the best care?
+
+The referral letter should follow the standard formal letter structure. The salutation addresses the consultant by name (if known) or "Dear Sir/Madam" if not. The body should: introduce the patient (name, date of birth, NHS number), state the reason for referral, provide relevant history (symptoms, duration, relevant past medical history), summarise findings (examination, tests), state current status and treatment, and make a clear request (assessment, advice, or transfer).
+
+The body should be clear and concise. It should include all relevant information but avoid irrelevant details. It should use medical terminology appropriately but avoid unnecessary jargon that might confuse. It should be organised logically, with the most important information first. The closing should be "Yours sincerely" (if the consultant is named) or "Yours faithfully" (if not), followed by the sender's name, title, and contact details.
+
+Crucial insight: a referral letter must clearly identify the patient, state the reason for referral, provide relevant history and findings, and make a clear request. It must be clear, complete, and professional. A good referral letter ensures continuity of care and effective collaboration between healthcare professionals.` },
+
+    { q: "Tone and professionalism in formal letters.",
+      body: `The tone of a formal letter — the attitude it conveys — is as important as its content. The right tone builds trust and professionalism; the wrong tone damages relationships and undermines your message.
+
+My Socratic question: a complaint response that is defensive and dismissive versus one that is empathetic and constructive. Which is more effective, and what does the tone tell the patient about the organisation?
+
+The tone of a formal letter should be professional, respectful, and courteous. It should convey competence and confidence without arrogance. It should be empathetic when appropriate, especially in letters to patients or families. It should be objective and factual in reports. It should be persuasive in applications.
+
+In healthcare, tone is particularly important because patients and families are often anxious or upset. A letter that is cold, dismissive, or defensive can damage trust and escalate conflict. A letter that is empathetic, respectful, and clear can build trust and resolve concerns.
+
+To achieve the right tone, use clear, plain language; avoid overly complex or technical language when writing to patients; use "I" and "we" appropriately; avoid defensive language; acknowledge concerns; and show respect for the recipient. The tone should match the purpose and audience of the letter.
+
+Crucial insight: the tone of a formal letter conveys professionalism, respect, and attitude. In healthcare, an empathetic, respectful, and clear tone builds trust and effective communication. A cold, defensive, or dismissive tone damages relationships and undermines care.` },
+
+    { q: "Common mistakes in formal letter writing.",
+      body: `Students and professionals often make common mistakes when writing formal letters. Understanding these mistakes is essential for avoiding them.
+
+The first mistake is missing essential information. In healthcare, this is the most dangerous mistake — forgetting patient identification details, omitting key history, or failing to state the reason for referral. Always use a checklist to ensure all essential information is included.
+
+The second mistake is using an inappropriate tone — being too formal or not formal enough, being too cold or too familiar, being defensive or dismissive. The tone should match the purpose and audience.
+
+The third mistake is poor organisation — rambling, jumping between topics, or burying the main point. Use clear paragraphs, each with a single main idea, and put the most important information first.
+
+The fourth mistake is poor grammar, spelling, or punctuation. These errors undermine credibility and can cause misunderstandings. Always proofread your letters.
+
+The fifth mistake is using inappropriate salutation or closing. Use the correct salutation and closing for the recipient and the level of formality.
+
+Crucial insight: common mistakes in formal letters include missing essential information, inappropriate tone, poor organisation, grammatical errors, and incorrect salutation/closing. Avoiding these mistakes is essential for effective professional communication.` },
+
+    { q: "The importance of proofreading and checking.",
+      body: `A formal letter is a reflection of your professionalism. Errors in spelling, grammar, or content undermine your credibility and can have serious consequences in healthcare.
+
+My Socratic question: a referral letter contains a patient's name misspelled and the wrong date of birth. What is the likely consequence, and how could it have been prevented?
+
+The consequence is that the referral may be delayed or rejected. The wrong patient may be seen, or the right patient may not be seen at all. A misspelled name can cause confusion and errors in patient identification. These errors could have been prevented by careful checking and proofreading.
+
+Proofreading involves checking the letter for errors in spelling, grammar, punctuation, and content. It also involves checking that all essential information is included and accurate. Checking involves verifying patient details, ensuring dates are correct, and confirming that the letter says what you intend.
+
+Strategies for effective proofreading and checking: read the letter aloud (you will hear errors), use spell-check but do not rely on it, check patient details against the record, have someone else check the letter if possible, and always read the letter one final time before sending.
+
+Crucial insight: proofreading and checking are essential for professional letter writing. Errors in patient details can cause delays or harm. Errors in spelling and grammar undermine credibility. Always proofread and check every letter before sending.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for Formal Letters.
+
+Purpose: formal letters provide a permanent, authoritative, and standardised format for important professional communications. They remain essential in healthcare.
+
+Structure: sender's address, date, recipient's address, salutation, subject line (optional), body (introduction, details, action), closing, signature, sender's details.
+
+Salutation and closing: use "Dear [Title] [Surname]" and "Yours sincerely" when you know the recipient's name; use "Dear Sir/Madam" and "Yours faithfully" when you do not.
+
+Body: clear, concise, and complete. State purpose immediately, provide essential information logically, state required action.
+
+Common types: referral letters, reports, complaint responses, applications. Each has specific content requirements.
+
+Tone: professional, respectful, courteous. Empathetic when appropriate. Match tone to purpose and audience.
+
+Common mistakes: missing essential information, inappropriate tone, poor organisation, grammatical errors, incorrect salutation/closing.
+
+Proofreading: essential for professionalism and patient safety. Check spelling, grammar, content, and patient details.
+
+Now your final test. A healthcare professional is writing a referral letter to a consultant. The letter has: "Dear Sir/Madam," a body that describes the patient's symptoms and history, and a closing of "Yours faithfully." The professional does not proofread before sending.
+
+Question one: based on the structure and content described, what type of letter is this, and is the salutation and closing correct? Explain why.
+Question two: what essential element of the referral letter is not mentioned in the description, and why is it essential?
+Question three: why is proofreading particularly important for this type of letter, and what could happen if an error is missed?
+
+Work them through before reading on.
+
+My answers. One: this is a referral letter. The salutation "Dear Sir/Madam" and closing "Yours faithfully" are correct because the writer does not know the consultant's name. Two: patient identification (name, date of birth, NHS number) is not mentioned, but it is essential because the consultant needs to know which patient the referral concerns. Without it, the referral cannot be processed. Three: proofreading is particularly important because errors in patient details can cause the wrong patient to be seen, or the referral to be delayed or rejected. Errors in medical information could lead to incorrect treatment. Proofreading prevents these errors.` }
+  ],
+  theory: [
+    { q: "Why do formal letters remain important in professional communication?", a: "Formal letters remain important because they provide a permanent, authoritative, and standardised format for important communications. In healthcare, they are used for referrals, reports, complaints, and applications. They ensure clarity, completeness, and professionalism." },
+    { q: "What is the standard structure of a formal letter?", a: "Sender's address (or letterhead), date, recipient's address, salutation (Dear ...), subject line (optional but useful), body (introduction, details, action), closing (Yours sincerely/faithfully), signature, and sender's name and title. Enclosures and copies may also be noted." },
+    { q: "What determines whether to use 'Yours sincerely' or 'Yours faithfully'?", a: "If you know the recipient's name, use 'Yours sincerely.' If you do not know the recipient's name (e.g., 'Dear Sir/Madam'), use 'Yours faithfully.' This rule applies to formal letters in British English." },
+    { q: "What are the key qualities of an effective letter body?", a: "Clear (the message is immediately understood), concise (every word serves a purpose), complete (all essential information is included), and correct (the information is accurate). It should state the purpose immediately, provide essential information logically, and state any required action." },
+    { q: "What are the common types of formal letters in healthcare?", a: "Referral letters (requesting consultation or transfer of care), report letters (conveying findings or results), complaint response letters (addressing patient or family concerns), and application letters (for jobs, courses, or funding)." },
+    { q: "What must a referral letter include?", a: "Patient identification (name, date of birth, NHS number), reason for referral, relevant history and findings, current status and treatment, and a clear request (advice, assessment, or transfer). It must be clear and complete to ensure continuity of care." },
+    { q: "Why is tone important in formal letters?", a: "Tone conveys professionalism, respect, and attitude. The right tone builds trust and effective communication; the wrong tone damages relationships and undermines your message. In healthcare, an empathetic, respectful tone is particularly important." },
+    { q: "What are common mistakes in formal letter writing?", a: "Missing essential information, inappropriate tone, poor organisation, grammatical errors, and incorrect salutation or closing. Avoiding these mistakes is essential for effective professional communication." },
+    { q: "Why is proofreading essential for formal letters?", a: "Proofreading catches errors in spelling, grammar, and content. In healthcare, errors in patient details can cause delays or harm. Errors in spelling and grammar undermine credibility. Proofreading ensures the letter is accurate and professional." },
+    { q: "What is the importance of patient identification in a referral letter?", a: "Patient identification (name, date of birth, NHS number) ensures that the referral is about the correct patient. Without it, the referral cannot be processed, and the wrong patient could be seen. It is essential for patient safety." },
+  ],
+  videos: [
+    { channel: "Business Writing", title: "How to Write a Formal Letter", note: "Step-by-step guide to structure and style.", url: "" },
+    { channel: "Healthcare Communication", title: "Writing Referral Letters in Healthcare", note: "Best practices for effective referral letters.", url: "" },
+    { channel: "Writing Skills", title: "Common Mistakes in Formal Letter Writing", note: "What to avoid in professional correspondence.", url: "" },
+  ],
+  mcqs: [
+    { q: "Formal letters remain important in professional communication because they:", o: ["Are faster than email", "Provide a permanent, authoritative, and standardised record", "Are cheaper than other methods", "Are less formal"], a: 1, w: "Formal letters provide a permanent, authoritative, and standardised format for important communications." },
+    { q: "The standard structure of a formal letter includes all of the following EXCEPT:", o: ["Sender's address", "Recipient's address", "Salutation", "Emoji"], a: 3, w: "Emojis are not part of formal letter structure. Formal letters include address, salutation, body, closing, signature." },
+    { q: "Which salutation is used when you DO NOT know the recipient's name?", o: ["Dear Dr. Smith", "Dear Mr. Jones", "Dear Sir/Madam", "Hello"], a: 2, w: "Use 'Dear Sir/Madam' or 'To Whom It May Concern' when you do not know the recipient's name." },
+    { q: "Which closing is used when you DO NOT know the recipient's name?", o: ["Yours sincerely", "Yours faithfully", "Yours truly", "Best regards"], a: 1, w: "Use 'Yours faithfully' when you do not know the recipient's name." },
+    { q: "Which closing is used when you KNOW the recipient's name?", o: ["Yours faithfully", "Yours sincerely", "Yours truly", "Cheers"], a: 1, w: "Use 'Yours sincerely' when you know the recipient's name." },
+    { q: "The body of a formal letter should be:", o: ["Long and rambling", "Clear, concise, and complete", "Full of jargon", "Personal and informal"], a: 1, w: "The body must be clear, concise, and complete — all essential information included, nothing unnecessary." },
+    { q: "A referral letter must include:", o: ["Only the patient's name", "Patient identification, reason for referral, history, and a clear request", "A personal story", "Medical jargon only"], a: 1, w: "A referral letter must include patient identification, reason for referral, relevant history, and a clear request." },
+    { q: "Patient identification in a referral letter should include:", o: ["Name only", "Name and favourite colour", "Name, date of birth, and NHS number", "Name and diagnosis only"], a: 2, w: "Patient identification should include name, date of birth, and NHS number or other identifier." },
+    { q: "A complaint response letter should be:", o: ["Defensive and dismissive", "Empathetic, professional, and constructive", "Brief and vague", "Accusatory"], a: 1, w: "A complaint response should be empathetic, professional, and constructive." },
+    { q: "Which of the following is a common mistake in formal letter writing?", o: ["Using a checklist", "Proofreading", "Missing essential information", "Using the correct salutation"], a: 2, w: "Missing essential information is a common mistake that can cause delays or errors." },
+    { q: "Another common mistake in formal letter writing is:", o: ["Using clear paragraphs", "Inappropriate tone", "Correct spelling", "Proper structure"], a: 1, w: "Inappropriate tone — being too formal, too informal, or dismissive — is a common mistake." },
+    { q: "Proofreading is important because:", o: ["It saves time", "It catches errors that undermine credibility and can cause harm", "It is required by law", "It is a personal preference"], a: 1, w: "Proofreading catches errors that undermine credibility and, in healthcare, can cause harm." },
+    { q: "In a referral letter, what should the request be?", o: ["Vague and general", "Clear and specific about what is needed (advice, assessment, or transfer)", "Unspoken", "Impossible to fulfil"], a: 1, w: "The request should be clear and specific — whether you need advice, assessment, or transfer." },
+    { q: "The tone of a formal letter should be:", o: ["Casual and friendly", "Professional, respectful, and courteous", "Aggressive and demanding", "Indifferent"], a: 1, w: "The tone should be professional, respectful, and courteous." },
+    { q: "Which of the following is NOT an essential component of a formal letter?", o: ["Date", "Sender's signature", "Sender's favourite colour", "Recipient's address"], a: 2, w: "Sender's favourite colour is not part of a formal letter. Date, signature, and address are essential." },
+    { q: "The introduction of a formal letter should:", o: ["Be long and descriptive", "State the purpose of the letter immediately", "Be hidden in the middle", "Be unnecessary"], a: 1, w: "The introduction should state the purpose of the letter immediately and clearly." },
+    { q: "A report letter should include:", o: ["Patient identification, results, interpretation, and recommendations", "Only the results", "A personal opinion", "No patient details"], a: 0, w: "A report letter should include patient identification, results, interpretation, and recommendations." },
+    { q: "In a referral letter, the relevant history should include:", o: ["Irrelevant personal details", "Symptoms, duration, and relevant past medical history", "Only the current diagnosis", "The patient's favourite food"], a: 1, w: "Relevant history includes symptoms, duration, and relevant past medical history." },
+    { q: "What is the consequence of missing patient identification in a referral letter?", o: ["The letter will be processed faster", "The referral may be delayed or rejected", "No consequence", "The patient will be seen sooner"], a: 1, w: "Missing patient identification can delay or reject the referral, potentially harming the patient." },
+    { q: "The closing 'Yours sincerely' is used when:", o: ["You do not know the recipient's name", "You know the recipient's name", "You are writing to a friend", "You are writing to a company"], a: 1, w: "Use 'Yours sincerely' when you know the recipient's name." },
+    { q: "The closing 'Yours faithfully' is used when:", o: ["You know the recipient's name", "You do not know the recipient's name", "You are writing to a friend", "You are writing to a family member"], a: 1, w: "Use 'Yours faithfully' when you do not know the recipient's name." },
+    { q: "Which of the following should be avoided in the body of a formal letter?", o: ["Clear paragraphs", "Unnecessary jargon and vague language", "Essential information", "A clear request"], a: 1, w: "Avoid unnecessary jargon, vague language, and irrelevant details in the body." },
+    { q: "An application letter must be:", o: ["Casual and informal", "Persuasive and professional", "Defensive and dismissive", "Brief and vague"], a: 1, w: "An application letter must be persuasive (it should convince the reader) and professional." },
+    { q: "In healthcare, poor letter writing can lead to:", o: ["Better communication", "Delays, errors, and harm to patients", "Improved efficiency", "Stronger relationships"], a: 1, w: "Poor letter writing can cause delays, errors, and harm to patients." },
+    { q: "The best way to check that a letter contains all essential information is:", o: ["Memorise the requirements", "Use a checklist", "Guess", "Write without checking"], a: 1, w: "Using a checklist ensures you do not miss essential information." },
+    { q: "Which of the following is true about formal letters in healthcare?", o: ["They are always read immediately", "They are rarely used", "They provide a permanent record of important communications", "They are always brief"], a: 2, w: "Formal letters provide a permanent record of important communications in healthcare." },
+    { q: "A referral letter that is unclear or incomplete may result in:", o: ["Better patient care", "The referral being rejected or delayed", "Stronger relationships", "Faster processing"], a: 1, w: "An unclear referral may be rejected or delayed, harming the patient." },
+    { q: "The body of a referral letter should be organised:", o: ["Randomly", "Logically with most important information first", "Alphabetically", "By date of symptom onset only"], a: 1, w: "The body should be organised logically, with the most important information first." },
+    { q: "Which of the following is a sign of professionalism in formal letter writing?", o: ["Spelling errors", "Correct use of salutation and closing", "Missing contact details", "Vague requests"], a: 1, w: "Correct use of salutation and closing is a sign of professionalism." },
+    { q: "The ultimate purpose of formal letters in healthcare is to:", o: ["Create paperwork", "Ensure clear, accurate communication that supports patient care", "Impress the reader", "Comply with regulations"], a: 1, w: "The ultimate purpose is to ensure clear, accurate communication that supports patient care." },
   ],
 };
 
@@ -5539,7 +6155,10 @@ const CONTENT = {
   "psy:2": T_PSY_BIOFOUND,
   "psy:3": T_PSY_INTRO,
   "psy:4": T_PSY_LEARNING,
-  "com:0": T_COM_PROCESS,
+  "com:0": T_COM_OVERVIEW,   
+  "com:1": T_COM_WRITING_PROCESS,
+  "com:2": T_COM_ORGANISATIONAL, 
+  "com:3": T_COM_LETTERS,   
   "lab:1": T_MLS_SAFETY,
   "phy:1": T_PHY_HOMEO,
   "phy:2": T_PHY_TRANSPORT,
