@@ -6908,6 +6908,367 @@ My answers. One: I would apply multiple learning principles — cognitive learni
   ],
 };
 
+/* --------------------------- ana:5 --------------------------- */
+const T_ANA_CONNECTIVE = {
+  courseId: "ana",
+  topicIndex: 5,
+  title: "Connective Tissue",
+  minutes: 20,
+  note: [
+    { q: "From epithelium to the tissue that binds the body together.",
+      body: `You have studied epithelium - the tissue that covers, lines and secretes. Now we meet the second of the four basic tissue types, and the most diverse: connective tissue. Where epithelium sits in sheets on surfaces, connective tissue lies beneath and between everything, holding the body together.
+
+My Socratic question: bone, fat, blood, tendon, cartilage and the loose packing under your skin look nothing alike - yet they are all one tissue type. What could possibly unite such different structures?
+
+The answer is their shared basic plan: unlike epithelium, connective tissue consists of cells that are spread out and separated by a large amount of extracellular matrix - non-living material the cells produce, made of protein fibres and a ground substance. It is this matrix, not the cells, that gives each connective tissue its character. In bone the matrix is hard, in blood it is liquid, in tendon it is packed with fibres - but the plan (cells plus abundant matrix) is the same.
+
+Crucial insight: connective tissue is defined by cells separated by an abundant extracellular matrix of fibres and ground substance - the reverse of epithelium, where cells are packed tightly with little between them. Because the matrix varies from liquid (blood) to solid (bone), one tissue type can take astonishingly different forms, all serving to connect, support, and protect the body.` },
+
+    { q: "The three components: cells, fibres, and ground substance.",
+      body: `Every connective tissue is built from the same three components, and knowing them lets you understand any type you meet.
+
+First, the cells - which produce and maintain the matrix. Many connective tissue cells have names ending in "-blast" (an immature, building cell) or "-cyte" (a mature, maintaining cell); for example, fibroblasts build fibrous tissue. Second, the fibres, protein threads within the matrix; there are three kinds: collagen fibres (strong, provide tensile strength), elastic fibres (stretchy, allow recoil), and reticular fibres (fine, form supporting networks). Third, the ground substance - the material filling the space between cells and fibres, ranging from fluid to gel to solid.
+
+My Socratic question: fibres and ground substance together make up the matrix. Which of the three components is living, and which is non-living, and why does that distinction matter?
+
+The answer is that the cells are living, while the fibres and ground substance (the matrix) are non-living material the cells secrete. This matters because the properties of a connective tissue come mostly from its non-living matrix - so by changing the matrix (more collagen, hard mineral, or fluid), the same basic tissue becomes tendon, bone or blood.
+
+Crucial insight: connective tissue has three components - cells (living, producing the matrix), fibres (collagen for strength, elastic for stretch, reticular for support), and ground substance (filling the space, from fluid to solid). The fibres and ground substance form the non-living matrix, and it is the matrix that gives each connective tissue its distinctive properties.` },
+
+    { q: "The three fibre types and their jobs.",
+      body: `Because the fibres do so much to define a connective tissue, they deserve close attention - and there are exactly three types to know.
+
+Collagen fibres are the most abundant; made of the protein collagen, they are strong and resist pulling (tensile strength), like tough ropes - found richly in tendons and ligaments. Elastic fibres, made of the protein elastin, can stretch and recoil like rubber bands, giving tissues flexibility - found in skin, lung, and artery walls. Reticular fibres are fine, delicate collagen fibres that branch to form a supporting mesh or scaffold - found in soft organs like the liver, spleen and lymph nodes, where they support the cells.
+
+My Socratic question: a tendon must not tear when a muscle pulls hard on a bone, while the wall of a large artery must stretch with each heartbeat and spring back. Which fibre dominates each, and why?
+
+The answer is that collagen fibres dominate the tendon, giving it the tensile strength to resist the muscle's pull without tearing; elastic fibres are prominent in the artery wall, letting it stretch with the surge of blood and recoil afterward. The fibre type is matched to the tissue's mechanical job.
+
+Crucial insight: the three fibre types are collagen (strong, resists pulling - tendons, ligaments), elastic (stretchy, recoils - skin, lung, arteries), and reticular (fine, forms supporting networks - liver, spleen, lymph nodes). Each fibre suits a mechanical need, so identifying the dominant fibre tells you what the tissue is built to do.` },
+
+    { q: "Classifying connective tissue: the big picture.",
+      body: `Connective tissue is so varied that a classification is essential to keep it organised - and a clear map makes the whole topic manageable.
+
+Connective tissue is broadly divided into: connective tissue proper (the general "packing and binding" tissues, subdivided into loose and dense types); and specialised connective tissues - cartilage, bone, and blood - which have special structures and functions. Some classifications also include adipose (fat) and reticular tissue within the loose category.
+
+My Socratic question: bone and blood are both called connective tissue, yet one is the hardest tissue in the body and the other is liquid. Why are both placed in the "specialised" group rather than "connective tissue proper"?
+
+The answer is that connective tissue proper refers to the ordinary binding and packing tissues with a typical soft matrix, while cartilage, bone and blood are specialised because their matrix is unusual - firm gel in cartilage, hard mineral in bone, liquid plasma in blood - giving them special roles (support, protection, transport). Their extreme matrices set them apart.
+
+Crucial insight: connective tissue divides into connective tissue proper (loose and dense binding/packing tissues) and specialised connective tissues (cartilage, bone, blood) with unusual matrices and special functions. This classification organises a bewildering variety into a clear map, and every connective tissue you meet fits somewhere within it.` },
+
+    { q: "Loose connective tissue: the body's packing material.",
+      body: `Within connective tissue proper, the loose types are the body's all-purpose packing and support - abundant, and worth knowing well.
+
+Loose connective tissue has relatively few fibres, loosely arranged, with more ground substance and cells - making it soft and flexible. The main type, areolar tissue, is the widespread "packing" tissue found beneath epithelia and around organs, blood vessels and nerves; it holds structures in place, cushions them, and is a site of immune defence. Adipose tissue (fat) is a loose connective tissue packed with fat-storing cells (adipocytes); it stores energy, insulates against heat loss, and cushions organs.
+
+My Socratic question: why is it useful that areolar tissue lies just beneath the epithelium lining your gut and airways, and is rich in immune cells?
+
+The answer is that this location places immune defences right beneath the surfaces where microbes try to enter; if a pathogen breaches the epithelium, it immediately meets the immune cells waiting in the areolar tissue below. The loose packing tissue is thus also a first line of defence.
+
+Crucial insight: loose connective tissue is soft, flexible packing with few fibres and much ground substance - areolar tissue binds, cushions and defends beneath epithelia and around structures, while adipose tissue stores energy, insulates and cushions. These loose tissues are the body's versatile support and padding, and areolar tissue's immune role links structure to defence.` },
+
+    { q: "Dense connective tissue: strength and attachment.",
+      body: `The other half of connective tissue proper is dense tissue - built for strength, wherever the body must resist strong forces.
+
+Dense connective tissue is packed with many collagen fibres, giving great strength, with fewer cells and less ground substance than loose tissue. There are two main forms. Dense regular connective tissue has its collagen fibres arranged in parallel, all pulling in one direction - this is the tissue of tendons (muscle to bone) and ligaments (bone to bone), which must resist pull along a single line. Dense irregular connective tissue has collagen fibres arranged in many directions, resisting force from all sides - found in the deep layer of the skin (dermis) and in capsules around organs.
+
+My Socratic question: why is a tendon's collagen arranged in parallel, while the skin's dermis has collagen running in all directions?
+
+The answer is that a tendon is pulled in one direction (along its length, by the muscle), so parallel fibres give maximum strength in exactly that line; the skin, by contrast, is stretched and pulled from many directions, so collagen running every which way lets it resist force from all sides. Fibre arrangement matches the direction of stress.
+
+Crucial insight: dense connective tissue is strong and collagen-rich - dense regular (parallel fibres) forms tendons and ligaments resisting pull in one direction, while dense irregular (fibres in all directions) forms the dermis and organ capsules resisting force from all sides. The arrangement of collagen is beautifully matched to the direction of the forces the tissue must withstand.` },
+
+    { q: "Cartilage: firm but flexible support.",
+      body: `Moving to the specialised connective tissues, we meet cartilage - firmer than the tissues so far, yet still flexible, and important in the skeleton and joints.
+
+Cartilage has a firm but flexible matrix (a rubbery gel rich in a special ground substance and fibres), with its cells - called chondrocytes - sitting in small spaces called lacunae. It has no blood vessels, so it heals slowly. There are three types: hyaline cartilage (the most common, glassy and smooth, covering the ends of bones at joints and forming the nose, trachea and rib ends); elastic cartilage (rich in elastic fibres, very flexible, in the external ear and epiglottis); and fibrocartilage (very tough, packed with collagen, in the intervertebral discs of the spine and the knee menisci).
+
+My Socratic question: hyaline cartilage caps the ends of bones where they meet at joints. Given its smooth, firm nature, why is it ideal there?
+
+The answer is that its smooth surface lets bones glide over one another with very little friction, and its firm-but-flexible nature cushions the joint against shock - both essential for pain-free, durable movement. Its properties suit the demands of a joint surface precisely.
+
+Crucial insight: cartilage is firm, flexible, avascular tissue with chondrocytes in lacunae - hyaline (smooth, at joints and in nose/trachea), elastic (very flexible, in ear and epiglottis), and fibrocartilage (tough, in intervertebral discs and knee). It provides low-friction joint surfaces, flexible support, and shock absorption, and its lack of blood vessels explains why cartilage injuries heal slowly.` },
+
+    { q: "Bone and blood: the hardest and the most fluid.",
+      body: `The two remaining specialised connective tissues sit at opposite extremes of the matrix spectrum - bone, the hardest, and blood, the most fluid - yet both fit the connective tissue plan.
+
+Bone (osseous tissue) has a matrix hardened by mineral (calcium salts) laid down around collagen fibres, giving it great hardness and strength; its cells (osteocytes) sit in lacunae, and it is well supplied with blood, so it heals better than cartilage. Bone supports the body, protects organs, and stores minerals. Blood is a connective tissue with a liquid matrix called plasma, in which cells (red cells, white cells) and platelets are suspended; it transports oxygen, nutrients, wastes and more throughout the body. It fits the connective tissue plan because it has cells separated by an abundant (here, liquid) matrix.
+
+My Socratic question: students are often surprised that blood is a connective tissue. Using the definition of connective tissue, justify why it qualifies.
+
+The answer is that connective tissue is defined as cells separated by an abundant extracellular matrix; blood consists of cells (and platelets) suspended in a large amount of extracellular matrix - the liquid plasma - so it fits the definition exactly, even though its matrix is fluid rather than solid.
+
+Crucial insight: bone has a mineral-hardened matrix (osteocytes in lacunae) for support, protection and mineral storage, while blood has a liquid matrix (plasma) carrying cells for transport. Both are connective tissues because both are cells in an abundant matrix - showing how the single connective tissue plan stretches from the hardest to the most fluid tissue in the body.` },
+
+    { q: "Why connective tissue matters in medicine and the laboratory.",
+      body: `Connective tissue is central to health, disease and laboratory work, making this topic directly relevant to your training.
+
+My Socratic question: given how widespread connective tissue is, why would disorders of it, or the study of it, matter so much to a health worker?
+
+The answer is that connective tissue is everywhere, so its disorders are widespread and serious: weak collagen causes fragile skin and vessels; bone disorders like osteoporosis weaken the skeleton; cartilage breakdown causes arthritis; and because blood is a connective tissue, its disorders (anaemia, leukaemia) are among the most important in medicine. In the laboratory specifically, blood - a connective tissue - is the single most analysed sample you will handle, and histology relies on recognising connective tissues under the microscope.
+
+Understanding connective tissue structure underpins recognising these tissues on slides, understanding their diseases, and appreciating why blood tests reveal so much.
+
+Crucial insight: connective tissue matters in medicine because it is everywhere and its disorders are common and serious - from osteoporosis and arthritis to the blood diseases (anaemia, leukaemia) that dominate laboratory work. Since blood is itself a connective tissue and the most analysed laboratory sample, and since histology depends on identifying connective tissues, this topic sits at the heart of your future practice.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for connective tissue, in five lines.
+
+The defining plan: connective tissue is cells separated by an abundant extracellular matrix of fibres and ground substance - the opposite of epithelium's tightly packed cells; the matrix gives each type its character.
+
+The three components: cells (living, produce the matrix, e.g. fibroblasts), fibres (collagen for strength, elastic for stretch, reticular for support), and ground substance (fluid to solid, filling the space).
+
+The classification: connective tissue proper - loose (areolar packing and defence; adipose for fat storage) and dense (regular = parallel collagen in tendons/ligaments; irregular = multidirectional collagen in dermis/capsules); and specialised - cartilage, bone, blood.
+
+The specialised tissues: cartilage (firm, flexible, avascular, chondrocytes in lacunae; hyaline, elastic, fibrocartilage), bone (mineral-hardened matrix, osteocytes, support and mineral storage), and blood (liquid plasma matrix carrying cells, for transport).
+
+The relevance: connective tissue is everywhere, its disorders common and serious (osteoporosis, arthritis, anaemia, leukaemia), and blood - a connective tissue - is the laboratory's most analysed sample.
+
+Now your final test. Under the microscope you see a tissue with relatively few cells and a huge amount of extracellular material. The extracellular material is packed almost entirely with strong collagen fibres, all running parallel to one another in the same direction. There is very little ground substance and no mineral hardening.
+
+Question one: is this connective tissue proper or a specialised connective tissue, and loose or dense?
+Question two: are the fibres arranged in a regular or irregular pattern, and what specific tissue does this parallel arrangement indicate?
+Question three: name a location in the body where you would find this exact tissue, and explain why the parallel fibre arrangement suits its function there.
+
+Work them through before reading on.
+
+My answers. One: it is connective tissue proper (its matrix is soft collagen, not mineralised like bone or a firm gel like cartilage), and it is dense, because it has many packed fibres with few cells and little ground substance (loose tissue would have more ground substance and fewer fibres). Two: the fibres are arranged in a regular pattern - all parallel in one direction - which indicates dense regular connective tissue. Three: you would find this in a tendon (connecting muscle to bone) or a ligament (connecting bone to bone); the parallel collagen arrangement suits its function because the tissue is pulled strongly in one direction, and fibres aligned in that same direction give maximum tensile strength to resist the pull without tearing.
+
+If those came cleanly, you understand the body's great connecting tissue - from loose packing to tendon, cartilage, bone and blood - all built on one plan of cells in an abundant matrix. Muscle tissue, the tissue of movement, is the natural next step.` },
+  ],
+  theory: [
+    { q: "Define connective tissue and state how it differs from epithelium.", a: "Connective tissue consists of cells separated by an abundant extracellular matrix of fibres and ground substance. It differs from epithelium, where cells are packed tightly together with very little material between them; in connective tissue the cells are spread out and the abundant matrix - not the cells - gives the tissue its properties." },
+    { q: "Name the three components of connective tissue and identify which are living.", a: "The three components are cells (living, which produce and maintain the matrix), fibres (non-living protein threads), and ground substance (non-living material filling the space). The fibres and ground substance together form the non-living matrix; only the cells are living." },
+    { q: "Name the three fibre types and a property and location of each.", a: "Collagen fibres (strong, resist pulling; in tendons and ligaments); elastic fibres (stretch and recoil; in skin, lung, artery walls); and reticular fibres (fine, form supporting networks; in liver, spleen, lymph nodes). Each fibre type suits a particular mechanical need." },
+    { q: "How is connective tissue broadly classified?", a: "Into connective tissue proper - the general binding and packing tissues, subdivided into loose (e.g. areolar, adipose) and dense (regular and irregular) types - and specialised connective tissues, namely cartilage, bone, and blood, which have unusual matrices and special functions." },
+    { q: "Describe loose connective tissue, naming two types and their roles.", a: "Loose connective tissue is soft and flexible, with few, loosely arranged fibres and much ground substance. Areolar tissue is widespread packing beneath epithelia and around structures, providing support, cushioning and immune defence. Adipose tissue (fat) stores energy, insulates against heat loss, and cushions organs." },
+    { q: "Distinguish dense regular from dense irregular connective tissue.", a: "Dense regular tissue has collagen fibres arranged in parallel, resisting pull in one direction - it forms tendons (muscle to bone) and ligaments (bone to bone). Dense irregular tissue has collagen fibres running in many directions, resisting force from all sides - it forms the dermis of skin and capsules around organs." },
+    { q: "Describe cartilage, its cells, and its three types.", a: "Cartilage has a firm but flexible matrix and no blood vessels (so it heals slowly); its cells, chondrocytes, sit in spaces called lacunae. The three types are hyaline (smooth, at joints and in nose/trachea), elastic (very flexible, in the ear and epiglottis), and fibrocartilage (tough, in intervertebral discs and knee menisci)." },
+    { q: "Explain why bone and blood are both classified as connective tissue.", a: "Both fit the definition of connective tissue - cells separated by an abundant extracellular matrix. Bone has a solid matrix hardened by mineral around collagen, with osteocytes in lacunae. Blood has a liquid matrix (plasma) in which cells and platelets are suspended. Despite opposite matrices (hard vs fluid), both are cells in an abundant matrix." },
+    { q: "Why does cartilage heal slowly while bone heals better?", a: "Cartilage has no blood vessels (it is avascular), so nutrients and repair cells reach it poorly and it heals slowly. Bone, by contrast, is well supplied with blood vessels, so nutrients and repair cells reach injured bone more readily, allowing it to heal better." },
+    { q: "Give three reasons connective tissue is important in medicine and the laboratory.", a: "Its disorders are widespread and serious (e.g. osteoporosis weakening bone, arthritis from cartilage breakdown, fragile tissues from weak collagen); blood - itself a connective tissue - is the most analysed laboratory sample and its diseases (anaemia, leukaemia) are central to medicine; and histology relies on recognising connective tissues under the microscope." },
+  ],
+  videos: [
+    { channel: "Anatomy and Histology", title: "Connective Tissue Overview and Components", note: "Cells, fibres and ground substance - the connective tissue plan.", url: "" },
+    { channel: "Anatomy and Histology", title: "Loose vs Dense Connective Tissue", note: "Areolar, adipose, and the dense regular/irregular tissues.", url: "" },
+    { channel: "Anatomy and Histology", title: "Cartilage Bone and Blood as Connective Tissues", note: "The specialised connective tissues and their matrices.", url: "" },
+  ],
+  mcqs: [
+    { q: "Connective tissue is defined by cells separated by:", o: ["An abundant extracellular matrix", "No matrix", "A basement membrane only", "Tightly packed cells"], a: 0, w: "Connective tissue has cells in an abundant extracellular matrix." },
+    { q: "Compared with epithelium, connective tissue has:", o: ["Tightly packed cells", "Cells spread out with much matrix between them", "No cells", "Only fibres"], a: 1, w: "Its cells are spread out, separated by abundant matrix." },
+    { q: "The matrix of connective tissue is made of:", o: ["Cells only", "Water only", "Fibres and ground substance", "Mineral only"], a: 2, w: "The matrix is fibres plus ground substance." },
+    { q: "Which component of connective tissue is living?", o: ["The cells", "The matrix", "The fibres", "The ground substance"], a: 0, w: "Only the cells are living; the matrix is non-living." },
+    { q: "A cell that builds fibrous connective tissue is a:", o: ["Adipocyte", "Osteocyte", "Chondrocyte", "Fibroblast"], a: 3, w: "Fibroblasts build fibrous connective tissue." },
+    { q: "The strong fibres that resist pulling are:", o: ["Reticular fibres", "Muscle fibres", "Collagen fibres", "Elastic fibres"], a: 2, w: "Collagen fibres provide tensile strength." },
+    { q: "The stretchy fibres that recoil are:", o: ["Nerve fibres", "Elastic fibres", "Reticular fibres", "Collagen fibres"], a: 1, w: "Elastic fibres stretch and recoil." },
+    { q: "Fine fibres forming a supporting mesh in soft organs are:", o: ["Elastic fibres", "Reticular fibres", "Muscle fibres", "Collagen fibres"], a: 1, w: "Reticular fibres form supporting networks." },
+    { q: "Which fibre dominates a tendon?", o: ["None", "Collagen", "Reticular", "Elastic"], a: 1, w: "Collagen gives tendons strength to resist muscle pull." },
+    { q: "Which fibre is prominent in artery walls?", o: ["Reticular", "None", "Elastic", "Collagen"], a: 2, w: "Elastic fibres let arteries stretch and recoil." },
+    { q: "Connective tissue proper is subdivided into:", o: ["Hyaline and elastic", "Loose and dense", "Bone and blood", "Cells and fibres"], a: 1, w: "Connective tissue proper is loose and dense types." },
+    { q: "Which is a SPECIALISED connective tissue?", o: ["Cartilage", "Dense regular tissue", "Areolar tissue", "Adipose tissue"], a: 0, w: "Cartilage, bone and blood are specialised." },
+    { q: "The widespread packing tissue beneath epithelia is:", o: ["Bone", "Cartilage", "Adipose tissue", "Areolar tissue"], a: 3, w: "Areolar tissue is the widespread packing tissue." },
+    { q: "Adipose tissue mainly:", o: ["Forms tendons", "Stores energy, insulates and cushions", "Carries oxygen", "Covers surfaces"], a: 1, w: "Adipose (fat) stores energy, insulates and cushions." },
+    { q: "Areolar tissue beneath epithelia also serves in:", o: ["Immune defence", "Nerve conduction", "Oxygen transport", "Bone formation"], a: 0, w: "It is rich in immune cells - a first line of defence." },
+    { q: "Dense connective tissue is characterised by:", o: ["Many collagen fibres, few cells", "A mineral matrix", "Few fibres, much ground substance", "A liquid matrix"], a: 0, w: "Dense tissue is packed with collagen, with few cells." },
+    { q: "Tendons and ligaments are made of dense ______ connective tissue.", o: ["Regular", "Elastic", "Loose", "Irregular"], a: 0, w: "Dense regular tissue (parallel fibres) forms tendons/ligaments." },
+    { q: "Dense regular tissue has collagen arranged:", o: ["In a liquid", "In all directions", "In parallel, one direction", "Randomly"], a: 2, w: "Parallel fibres resist pull in one direction." },
+    { q: "The dermis of the skin is made of dense ______ connective tissue.", o: ["Irregular", "Regular", "Reticular", "Loose"], a: 0, w: "Dense irregular tissue (multidirectional) forms the dermis." },
+    { q: "Cartilage cells are called:", o: ["Adipocytes", "Osteocytes", "Chondrocytes", "Fibroblasts"], a: 2, w: "Chondrocytes are the cells of cartilage." },
+    { q: "The small spaces housing cartilage and bone cells are:", o: ["Vacuoles", "Pores", "Vesicles", "Lacunae"], a: 3, w: "Chondrocytes and osteocytes sit in lacunae." },
+    { q: "Cartilage heals slowly because it:", o: ["Has too many cells", "Has no matrix", "Is too hard", "Has no blood vessels (is avascular)"], a: 3, w: "Being avascular, cartilage heals slowly." },
+    { q: "The cartilage covering the ends of bones at joints is:", o: ["Fibrocartilage", "Elastic cartilage", "Hyaline cartilage", "Bone"], a: 2, w: "Hyaline cartilage forms smooth joint surfaces." },
+    { q: "The very flexible cartilage in the external ear is:", o: ["Hyaline", "Fibrocartilage", "Bone", "Elastic"], a: 3, w: "Elastic cartilage is in the ear and epiglottis." },
+    { q: "The tough cartilage in intervertebral discs is:", o: ["Fibrocartilage", "Elastic", "Hyaline", "Reticular"], a: 0, w: "Fibrocartilage is tough, in discs and knee menisci." },
+    { q: "Bone matrix is hardened by:", o: ["Plasma", "Mineral (calcium salts)", "Ground substance only", "Elastic fibres"], a: 1, w: "Mineral (calcium salts) hardens bone matrix." },
+    { q: "Bone cells are called:", o: ["Fibroblasts", "Osteocytes", "Adipocytes", "Chondrocytes"], a: 1, w: "Osteocytes are the mature cells of bone." },
+    { q: "The liquid matrix of blood is called:", o: ["Ground substance", "Serum only", "Lymph", "Plasma"], a: 3, w: "Plasma is the liquid matrix of blood." },
+    { q: "Blood qualifies as connective tissue because it has:", o: ["No cells", "Tightly packed cells", "Cells suspended in an abundant (liquid) matrix", "Only fibres"], a: 2, w: "Cells in an abundant matrix fits the definition." },
+    { q: "Which connective tissue disorder is a major concern in the laboratory?", o: ["Only joint pain", "Only skin conditions", "No connective tissue disorders matter", "Blood disorders like anaemia and leukaemia"], a: 3, w: "Blood is a connective tissue; its disorders dominate lab work." },
+  ],
+};
+
+
+/* --------------------------- ana:6 --------------------------- */
+const T_ANA_MUSCLE = {
+  courseId: "ana",
+  topicIndex: 6,
+  title: "Muscle Tissue",
+  minutes: 20,
+  note: [
+    { q: "The tissue of movement.",
+      body: `You have studied epithelium (covering and lining) and connective tissue (binding and support). Now we meet the third basic tissue type, defined by a single remarkable ability: muscle tissue, the tissue of movement.
+
+My Socratic question: your heartbeat, the movement of food through your gut, and the lifting of your arm are all produced by the same class of tissue. What single property must this tissue possess to do all of these?
+
+The answer is the ability to contract - to shorten forcefully and generate movement. Muscle tissue is specialised for contraction; its cells contain special protein filaments (actin and myosin) that slide past one another to shorten the cell, producing force. Whether moving the skeleton, pumping blood, or squeezing the gut, muscle works by this same contraction.
+
+Crucial insight: muscle tissue is the tissue specialised for contraction - the forceful shortening that produces movement - using the sliding of actin and myosin protein filaments within its cells. This one property, contraction, underlies all body movement, from the beating heart to the lifting of a limb, making muscle the engine of the body.` },
+
+    { q: "The properties of muscle tissue.",
+      body: `Beyond contraction, muscle tissue has a set of defining properties, and knowing them explains how muscle does its job.
+
+Muscle tissue has four key properties. Excitability (or irritability) is the ability to respond to a stimulus, such as a nerve signal. Contractility is the ability to shorten forcefully - the defining muscle property. Extensibility is the ability to be stretched without damage. Elasticity is the ability to return to its original length after stretching or contracting.
+
+My Socratic question: why must a muscle possess both extensibility (the ability to stretch) and elasticity (the ability to recoil), in addition to contractility?
+
+The answer is that muscles work in coordinated ways - when one muscle contracts and shortens, an opposing muscle must stretch (extensibility), and after contraction muscles must return to their resting length (elasticity) to be ready to work again. Contraction alone would be useless without the ability to stretch and recover.
+
+Crucial insight: muscle tissue has four properties - excitability (responds to stimuli), contractility (shortens forcefully), extensibility (can be stretched), and elasticity (returns to original length). Together these allow muscle not just to contract, but to respond, stretch, and recover - the full cycle needed for smooth, repeatable movement.` },
+
+    { q: "How muscle contracts: the sliding filaments.",
+      body: `Before meeting the three types, it helps to understand briefly how the contraction itself happens - because this same mechanism operates in all muscle, and it explains the striations you will see.
+
+Inside a muscle cell, the two protein filaments - thin actin filaments and thick myosin filaments - lie arranged in overlapping rows. When the muscle is stimulated, the myosin filaments grab the actin filaments and pull them, so the filaments slide past one another. This sliding pulls the ends of the unit closer together, shortening the whole cell - this is contraction. The filaments themselves do not shorten; they slide, which is why this is called the sliding filament idea.
+
+My Socratic question: since contraction requires myosin to actively pull actin, muscle needs a constant energy supply. What does this tell you about why muscle cells are rich in mitochondria and require fuel?
+
+The answer is that the pulling action of myosin uses energy (ATP), so muscle cells must continually produce ATP to contract - which is why they are rich in mitochondria (the ATP producers) and depend on a steady supply of oxygen and glucose. Contraction is an active, energy-hungry process.
+
+Crucial insight: muscle contracts by the sliding filament mechanism - myosin filaments pull actin filaments so they slide past each other, shortening the cell, powered by ATP. The filaments slide rather than shorten, and because this needs energy, muscle depends on ATP, mitochondria and fuel. This mechanism operates in all three muscle types and produces the striations seen in skeletal and cardiac muscle.` },
+
+    { q: "The three types of muscle tissue.",
+      body: `There are exactly three types of muscle tissue, and distinguishing them is the heart of this topic - each suited to a different job.
+
+Skeletal muscle attaches to bones and moves the skeleton; it is under voluntary (conscious) control. Cardiac muscle forms the wall of the heart and pumps blood; it is involuntary (works automatically). Smooth muscle lines the walls of hollow organs - the gut, blood vessels, bladder, airways - and moves their contents; it too is involuntary.
+
+My Socratic question: two of these three muscle types are involuntary, working without conscious thought. Why is it essential that the heart and the gut muscles are involuntary rather than voluntary?
+
+The answer is that vital functions like the heartbeat and digestion must continue automatically and reliably, day and night, without our having to think about them - if they depended on conscious effort, we could not sleep, and any lapse of attention could be fatal. Involuntary control ensures these life-sustaining movements never stop.
+
+Crucial insight: the three muscle types are skeletal (moves bones, voluntary), cardiac (pumps the heart, involuntary), and smooth (moves contents of hollow organs, involuntary). The division into voluntary and involuntary matches control to need - we consciously control our movements, while vital automatic functions run reliably without our attention.` },
+
+    { q: "Skeletal muscle: voluntary movement.",
+      body: `Let us examine each type in turn, beginning with skeletal muscle - the muscle you consciously command to move your body.
+
+Skeletal muscle cells (called muscle fibres) are long, cylindrical, and striated - meaning they show visible stripes (striations) under the microscope, produced by the orderly arrangement of actin and myosin. Each fibre has many nuclei (it is multinucleated), pushed to the edge of the cell. Skeletal muscle is voluntary, controlled consciously through nerves, and it contracts quickly and powerfully but tires relatively quickly.
+
+My Socratic question: skeletal muscle fibres are striated and multinucleated. What do these two features tell you when you see such a cell under the microscope?
+
+The answer is that the striations reveal the highly organised actin-myosin arrangement built for strong contraction, and the multiple nuclei reflect that each large fibre formed by the fusion of many cells during development - so seeing long, striped, multinucleated cells identifies the tissue as skeletal muscle.
+
+Crucial insight: skeletal muscle consists of long, cylindrical, striated, multinucleated fibres under voluntary (conscious) nervous control; it contracts quickly and powerfully but fatigues. Its striations and multiple peripheral nuclei make it recognisable under the microscope, and its voluntary control is what lets you deliberately move your body.` },
+
+    { q: "Cardiac muscle: the tireless pump.",
+      body: `The second type, cardiac muscle, is found in only one place - the heart - and its special features suit its unique, unceasing job.
+
+Cardiac muscle cells are striated like skeletal muscle (they too have organised actin and myosin), but they are shorter, branched, and usually have just one central nucleus. Their most distinctive feature is the intercalated discs - special junctions where cardiac cells join end to end, which hold the cells together and let electrical signals pass rapidly between them, so the heart contracts as a coordinated unit. Cardiac muscle is involuntary and does not fatigue - it must beat continuously for a lifetime.
+
+My Socratic question: why is it essential that intercalated discs let electrical signals spread rapidly from cell to cell throughout the heart?
+
+The answer is that the heart must contract in a coordinated wave - the cells acting together as one - to pump blood effectively; the intercalated discs let the signal spread quickly so all the cells contract in a synchronised sequence rather than randomly. This coordination is what makes the heartbeat an effective pump.
+
+Crucial insight: cardiac muscle is striated, branched, usually single-nucleated, and joined by intercalated discs that synchronise contraction; it is involuntary and does not fatigue. The intercalated discs are its signature feature, enabling the coordinated, tireless beating that pumps blood throughout life - a beautiful match of structure to a vital function.` },
+
+    { q: "Smooth muscle: the involuntary worker.",
+      body: `The third type, smooth muscle, does the quiet, continuous work of moving substances through the body's hollow organs.
+
+Smooth muscle cells are spindle-shaped (tapered at both ends), have a single central nucleus, and are NOT striated - they lack the visible stripes, because their actin and myosin are not arranged in the same orderly rows (hence "smooth"). Smooth muscle is involuntary and lines the walls of hollow organs - the digestive tract, blood vessels, bladder, uterus and airways. It contracts slowly and can sustain contraction for long periods without tiring.
+
+My Socratic question: smooth muscle in the gut wall contracts in slow waves to push food along (peristalsis), and smooth muscle in blood vessel walls adjusts their diameter. Why is slow, sustained, involuntary contraction ideal for these jobs?
+
+The answer is that these tasks - moving food gradually through the gut, or maintaining the tone of blood vessels - require steady, prolonged contraction rather than quick bursts, and must happen automatically without conscious effort. Smooth muscle's slow, tireless, involuntary contraction suits these ongoing background jobs perfectly.
+
+Crucial insight: smooth muscle is spindle-shaped, single-nucleated, non-striated, and involuntary, lining hollow organs and contracting slowly and tirelessly; it drives processes like peristalsis and controls vessel diameter. Its lack of striations distinguishes it under the microscope, and its slow, sustained action suits the continuous background work of the body's hollow organs.` },
+
+    { q: "Comparing the three muscle types.",
+      body: `To consolidate, it helps to compare the three muscle types side by side on the features that distinguish them - because this comparison is exactly what identification and exams demand.
+
+Consider striations: skeletal and cardiac muscle are striated; smooth muscle is not. Consider control: skeletal is voluntary; cardiac and smooth are involuntary. Consider shape: skeletal fibres are long and cylindrical; cardiac cells are branched; smooth cells are spindle-shaped. Consider nuclei: skeletal is multinucleated; cardiac and smooth each usually have one central nucleus. Consider location: skeletal on bones; cardiac only in the heart; smooth in the walls of hollow organs. And a unique feature: only cardiac muscle has intercalated discs.
+
+My Socratic question: you see a striated muscle cell that is branched and has intercalated discs. Which type is it, and how did each clue help?
+
+The answer is that it is cardiac muscle: the striations rule out smooth muscle, the branching distinguishes it from the long unbranched fibres of skeletal muscle, and the intercalated discs are unique to cardiac muscle - together these clues identify it with certainty.
+
+Crucial insight: the three muscle types differ in striations (skeletal and cardiac yes, smooth no), control (skeletal voluntary, others involuntary), shape (cylindrical, branched, spindle), nuclei (many vs one), and location - with intercalated discs unique to cardiac muscle. Mastering this comparison lets you identify any muscle type from its features, a core skill in histology.` },
+
+    { q: "Why muscle tissue matters in medicine and the laboratory.",
+      body: `Muscle tissue is central to health and disease, and to laboratory work, making this topic directly relevant to your training.
+
+My Socratic question: how might muscle tissue and its damage show up in a medical laboratory that you will one day work in?
+
+The answer is in several important ways. When muscle is damaged, it releases specific enzymes and proteins into the blood, which laboratories measure to detect injury - for example, cardiac muscle damage in a heart attack releases markers like troponin and certain enzymes, whose measurement is crucial for diagnosis. Skeletal muscle damage releases enzymes like creatine kinase. Muscle diseases (the muscular dystrophies, and heart muscle disease) are important conditions. And recognising muscle types under the microscope is part of histology.
+
+Understanding muscle structure underpins interpreting these blood markers, understanding muscle diseases, and identifying muscle tissue on slides.
+
+Crucial insight: muscle tissue matters in the laboratory because damaged muscle releases measurable markers into the blood - troponin and enzymes for heart attack, creatine kinase for skeletal muscle injury - that are central to diagnosis, and because muscle diseases and muscle histology are important. The muscle you study here directly connects to blood tests you will one day perform to detect heart attacks and muscle injury.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for muscle tissue, in five lines.
+
+The defining property: muscle tissue is specialised for contraction - the forceful shortening that produces movement - using sliding actin and myosin filaments; its four properties are excitability, contractility, extensibility and elasticity.
+
+The three types: skeletal (moves bones, voluntary), cardiac (pumps the heart, involuntary), and smooth (moves contents of hollow organs, involuntary).
+
+Skeletal muscle: long, cylindrical, striated, multinucleated fibres; voluntary; quick, powerful, but fatigues.
+
+Cardiac muscle: striated, branched, single central nucleus, joined by intercalated discs (unique to it) that synchronise contraction; involuntary; tireless.
+
+Smooth muscle: spindle-shaped, single central nucleus, non-striated; involuntary; slow and sustained; in the walls of hollow organs (peristalsis, vessel tone). Relevance: damaged muscle releases markers (troponin, creatine kinase) measured in the laboratory to diagnose heart attack and muscle injury.
+
+Now your final test. Under the microscope you examine a muscle tissue. The cells are NOT striated - they show no stripes. Each cell is spindle-shaped, tapering at both ends, with a single nucleus in the centre. You are told the tissue was taken from the wall of the intestine, and that it contracts slowly and automatically, without conscious control.
+
+Question one: which of the three muscle types is this, and which single microscopic feature most quickly rules out the other two?
+Question two: is this muscle voluntary or involuntary, and why is that appropriate for its location?
+Question three: name the specific movement this muscle produces in the intestine, and explain why slow, sustained contraction suits that task.
+
+Work them through before reading on.
+
+My answers. One: this is smooth muscle; the absence of striations most quickly rules out skeletal and cardiac muscle, which are both striated - and the spindle shape with a single central nucleus confirms smooth muscle. Two: it is involuntary, working automatically without conscious control, which is appropriate because moving food through the intestine must happen continuously and reliably without our having to think about it, day and night. Three: it produces peristalsis - the slow waves of contraction that push food along the digestive tract; slow, sustained contraction suits this because food must be moved gradually and steadily through the gut over time, not in quick bursts, and the muscle must work tirelessly for this ongoing task.
+
+If those came cleanly, you understand the tissue of movement - its property of contraction, its three types, and how to tell them apart - completing the muscle among the four basic tissues, and connecting directly to the blood tests that detect muscle and heart damage.` },
+  ],
+  theory: [
+    { q: "What defines muscle tissue, and what filaments produce contraction?", a: "Muscle tissue is specialised for contraction - forceful shortening that produces movement. Contraction is produced by special protein filaments, actin and myosin, which slide past one another to shorten the muscle cell and generate force." },
+    { q: "State and define the four properties of muscle tissue.", a: "Excitability (ability to respond to a stimulus, such as a nerve signal); contractility (ability to shorten forcefully - the defining property); extensibility (ability to be stretched without damage); and elasticity (ability to return to original length after stretching or contracting)." },
+    { q: "Name the three types of muscle tissue with their function and control.", a: "Skeletal muscle moves the skeleton and is voluntary (consciously controlled). Cardiac muscle forms the heart wall and pumps blood, and is involuntary. Smooth muscle lines hollow organs and moves their contents, and is also involuntary." },
+    { q: "Describe the microscopic features of skeletal muscle.", a: "Skeletal muscle fibres are long, cylindrical, and striated (showing visible stripes from organised actin and myosin), and multinucleated (many nuclei pushed to the edge of the cell). It is voluntary, and contracts quickly and powerfully but fatigues relatively quickly." },
+    { q: "Describe cardiac muscle and its distinctive feature.", a: "Cardiac muscle cells are striated, shorter, branched, and usually have a single central nucleus. Their distinctive feature is the intercalated discs - junctions joining cells end to end that hold them together and let electrical signals pass rapidly, synchronising contraction. It is involuntary and does not fatigue." },
+    { q: "Describe smooth muscle and its locations.", a: "Smooth muscle cells are spindle-shaped (tapered at both ends), have a single central nucleus, and are non-striated (no visible stripes). It is involuntary, contracts slowly and can sustain contraction without tiring, and lines the walls of hollow organs - the digestive tract, blood vessels, bladder, uterus and airways." },
+    { q: "Why is it essential that cardiac and smooth muscle are involuntary?", a: "Vital functions like the heartbeat (cardiac) and digestion (smooth) must continue automatically and reliably, day and night, without conscious effort. If they depended on conscious control, we could not sleep and any lapse of attention could be dangerous or fatal, so involuntary control ensures they never stop." },
+    { q: "How can you distinguish the three muscle types under the microscope?", a: "By striations (skeletal and cardiac are striated, smooth is not), shape (skeletal is long/cylindrical, cardiac is branched, smooth is spindle-shaped), nuclei (skeletal is multinucleated, cardiac and smooth usually have one central nucleus), and unique features (only cardiac muscle has intercalated discs)." },
+    { q: "What is the function of intercalated discs in cardiac muscle?", a: "Intercalated discs are junctions where cardiac cells join end to end. They hold the cells firmly together and allow electrical signals to pass rapidly between them, so the signal spreads quickly and all the cells contract in a coordinated wave - making the heart an effective, synchronised pump." },
+    { q: "How does muscle tissue relate to laboratory diagnosis?", a: "When muscle is damaged it releases specific markers into the blood that laboratories measure to detect injury. Cardiac muscle damage in a heart attack releases markers like troponin and certain enzymes; skeletal muscle damage releases enzymes like creatine kinase. Measuring these is central to diagnosing heart attacks and muscle injury." },
+  ],
+  videos: [
+    { channel: "Anatomy and Histology", title: "Introduction to Muscle Tissue", note: "Contraction, the four properties, and the three muscle types.", url: "" },
+    { channel: "Anatomy and Histology", title: "Skeletal Cardiac and Smooth Muscle Compared", note: "How to tell the three muscle types apart under the microscope.", url: "" },
+    { channel: "Anatomy and Histology", title: "Cardiac Muscle and Intercalated Discs", note: "The heart muscle's structure and coordinated contraction.", url: "" },
+  ],
+  mcqs: [
+    { q: "Muscle tissue is specialised for:", o: ["Covering surfaces", "Transmitting light", "Storing fat", "Contraction"], a: 3, w: "Muscle is specialised for contraction - forceful shortening." },
+    { q: "Contraction is produced by the sliding of:", o: ["Actin and myosin", "Bone and cartilage", "Sodium and potassium", "Collagen and elastin"], a: 0, w: "Actin and myosin filaments slide to shorten the cell." },
+    { q: "The ability of muscle to respond to a stimulus is:", o: ["Extensibility", "Elasticity", "Excitability", "Contractility"], a: 2, w: "Excitability is responding to a stimulus." },
+    { q: "The ability of muscle to shorten forcefully is:", o: ["Extensibility", "Contractility", "Elasticity", "Excitability"], a: 1, w: "Contractility is forceful shortening - the defining property." },
+    { q: "The ability of muscle to return to its original length is:", o: ["Contractility", "Rigidity", "Elasticity", "Excitability"], a: 2, w: "Elasticity is returning to original length." },
+    { q: "The ability of muscle to be stretched without damage is:", o: ["Contractility", "Rigidity", "Excitability", "Extensibility"], a: 3, w: "Extensibility is the ability to be stretched." },
+    { q: "How many types of muscle tissue are there?", o: ["Four", "Two", "Five", "Three"], a: 3, w: "There are three: skeletal, cardiac, and smooth." },
+    { q: "The muscle that moves the skeleton is:", o: ["Smooth", "Skeletal", "Cardiac", "Reticular"], a: 1, w: "Skeletal muscle moves the bones." },
+    { q: "The muscle found only in the heart is:", o: ["Cardiac", "Smooth", "Skeletal", "Elastic"], a: 0, w: "Cardiac muscle forms the heart wall." },
+    { q: "The muscle lining the walls of hollow organs is:", o: ["Striated", "Smooth", "Cardiac", "Skeletal"], a: 1, w: "Smooth muscle lines hollow organs." },
+    { q: "Skeletal muscle is under ______ control.", o: ["Hormonal only", "Involuntary", "Voluntary", "No"], a: 2, w: "Skeletal muscle is voluntary (conscious) control." },
+    { q: "Cardiac and smooth muscle are under ______ control.", o: ["Involuntary", "No", "Voluntary", "Conscious"], a: 0, w: "Both are involuntary (automatic)." },
+    { q: "Which muscle types are striated?", o: ["Skeletal and cardiac", "Only smooth", "All three", "Only skeletal"], a: 0, w: "Skeletal and cardiac are striated; smooth is not." },
+    { q: "Skeletal muscle fibres are:", o: ["Round", "Spindle-shaped, single-nucleus", "Long, cylindrical, multinucleated", "Branched"], a: 2, w: "Skeletal fibres are long, cylindrical, multinucleated." },
+    { q: "The striations in skeletal muscle come from:", o: ["The orderly arrangement of actin and myosin", "Fat droplets", "Random protein", "Mineral deposits"], a: 0, w: "Organised actin and myosin create the stripes." },
+    { q: "Skeletal muscle contracts:", o: ["Only once", "Slowly, never tiring", "Involuntarily", "Quickly and powerfully but tires"], a: 3, w: "Skeletal muscle is quick and powerful but fatigues." },
+    { q: "Cardiac muscle cells are:", o: ["Striated, branched, single central nucleus", "Long and unbranched", "Non-striated and spindle-shaped", "Multinucleated and huge"], a: 0, w: "Cardiac cells are striated, branched, single-nucleus." },
+    { q: "The junctions unique to cardiac muscle are:", o: ["Lacunae", "Synapses", "Basement membranes", "Intercalated discs"], a: 3, w: "Intercalated discs are unique to cardiac muscle." },
+    { q: "Intercalated discs allow the heart to:", o: ["Store fat", "Filter blood", "Contract as a coordinated unit", "Grow bones"], a: 2, w: "They synchronise contraction across cells." },
+    { q: "Cardiac muscle is described as:", o: ["Involuntary and tireless", "Spindle-shaped", "Non-contractile", "Voluntary and tiring"], a: 0, w: "Cardiac muscle is involuntary and does not fatigue." },
+    { q: "Smooth muscle cells are:", o: ["Branched with discs", "Striated and long", "Multinucleated", "Spindle-shaped, single central nucleus, non-striated"], a: 3, w: "Smooth cells are spindle-shaped, single-nucleus, non-striated." },
+    { q: "Smooth muscle lacks striations because its actin and myosin are:", o: ["Made of bone", "Absent", "Not arranged in orderly rows", "Frozen"], a: 2, w: "Its filaments are not in orderly rows - hence 'smooth'." },
+    { q: "Smooth muscle contracts:", o: ["Quickly and tires fast", "Slowly and can sustain contraction", "Only once", "Voluntarily"], a: 1, w: "Smooth muscle is slow and sustained, tireless." },
+    { q: "The slow waves that push food through the gut are called:", o: ["Diffusion", "Peristalsis", "Osmosis", "Filtration"], a: 1, w: "Peristalsis moves food along by smooth muscle waves." },
+    { q: "A striated, branched cell with intercalated discs is:", o: ["Skeletal muscle", "Cardiac muscle", "Connective tissue", "Smooth muscle"], a: 1, w: "Branching plus intercalated discs identifies cardiac muscle." },
+    { q: "A non-striated, spindle-shaped cell from the gut wall is:", o: ["Skeletal", "Cardiac", "Smooth muscle", "Bone"], a: 2, w: "Non-striated and spindle-shaped is smooth muscle." },
+    { q: "Multiple nuclei at the edge of a long striated fibre indicate:", o: ["Cartilage", "Smooth muscle", "Cardiac muscle", "Skeletal muscle"], a: 3, w: "Multinucleated striated fibres are skeletal muscle." },
+    { q: "Cardiac muscle damage in a heart attack releases the marker:", o: ["Collagen", "Troponin", "Insulin", "Glucose"], a: 1, w: "Troponin is released by damaged heart muscle." },
+    { q: "Skeletal muscle damage releases the enzyme:", o: ["Creatine kinase", "Amylase", "Lactase", "Pepsin"], a: 0, w: "Creatine kinase rises with skeletal muscle injury." },
+    { q: "Muscle tissue matters in the laboratory because damaged muscle:", o: ["Changes skin colour only", "Releases measurable markers into the blood", "Turns into bone", "Cannot be detected"], a: 1, w: "Damaged muscle releases blood markers used in diagnosis." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -6915,6 +7276,8 @@ const CONTENT = {
   "ana:2": T_ANA_EPI_OVERVIEW,
   "ana:3": T_ANA_EPI_MEMB,
   "ana:4": T_ANA_GLAND,
+  "ana:5": T_ANA_CONNECTIVE,
+  "ana:6": T_ANA_MUSCLE,
   "bch:0": T_BCH_INTRO,
   "bch:1": T_BCH_ENZYMES,
   "bch:2": T_BCH_INHIBITION,
