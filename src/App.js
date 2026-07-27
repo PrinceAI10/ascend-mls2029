@@ -4420,6 +4420,9 @@ function TopicView({ app }) {
     <div className="view">
       <button className="back" onClick={() => app.go("course", { courseId: t.courseId })}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> {c.name}</button>
       <div className="eyebrow">{c.code} · Topic {String(t.topicIndex + 1).padStart(2, "0")}</div>
+      <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }} className="mono">
+  Updated {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,30px)", margin: "8px 0 6px" }}>{t.title}</h1>
       <div style={{ display: "flex", gap: 10, alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}>
         <div style={{ display: "flex", gap: 10, alignItems: "center", color: "var(--text-3)", fontSize: 13 }} className="mono">
@@ -4606,6 +4609,9 @@ function CoursesView({ app }) {
               </div>
               <h3 style={{ fontSize: 16.5, margin: "0 0 3px" }}>{c.name}</h3>
               <div className="ct-code">{c.code} · {count} topics</div>
+              <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 4 }}>
+  {live > 0 ? `${live * 18} min read` : "Coming soon"}
+</div>
               <div style={{ marginTop: 12, fontSize: 12.5, color: live ? "var(--good)" : "var(--text-3)", fontWeight: 600 }} className="mono">{live ? `${live} TOPIC${live > 1 ? "S" : ""} LIVE` : "LESSONS ARRIVE WEEKLY"}</div>
             </button>
           );
@@ -5306,6 +5312,22 @@ function HomeView({ app }) {
     }}>Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
   </div>
 </div>
+      {app.lastTopic && (() => {
+        const t = contentFor(app.lastTopic.courseId, app.lastTopic.topicId);
+        if (!t) return null;
+        return (
+          <button className="card hover" style={{ width: "100%", textAlign: "left", marginTop: 16 }} onClick={() => app.go("topic", app.lastTopic)}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div>
+                <div className="eyebrow" style={{ color: "var(--amber)" }}>Continue reading</div>
+                <div style={{ fontWeight: 650, fontSize: 16 }}>{t.title}</div>
+                <div style={{ color: "var(--text-3)", fontSize: 13 }}>{courseById(app.lastTopic.courseId)?.name}</div>
+              </div>
+              <Ic.chevR p={22} />
+            </div>
+          </button>
+        );
+      })()}
 
       {(() => {
         // Exam countdown - end-of-semester exams begin 17 August 2026.
@@ -6065,6 +6087,7 @@ export default function App() {
   const [rateStars, setRateStars] = useState(0);
   const [rateDismissed, setRateDismissed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [lastTopic, setLastTopic] = useState(null);
   const [showTop, setShowTop] = useState(false);
 
   useEffect(() => {
@@ -6197,8 +6220,20 @@ export default function App() {
     }
   };
   const go = (view, extra = {}) => {
-    const next = { view, ...extra };
-    setRoute(next);
+  const next = { view, ...extra };
+  setRoute(next);
+  
+  // Save last viewed topic for "Continue reading"
+  if (view === "topic" && extra.courseId !== undefined && extra.topicId !== undefined) {
+    setLastTopic({ courseId: extra.courseId, topicId: extra.topicId });
+  }
+  
+  setMenuOpen(false);
+  if (typeof window !== "undefined") {
+    try { window.history.pushState({ ascendRoute: next }, ""); } catch {}
+    window.scrollTo?.(0, 0);
+  }
+};
     setMenuOpen(false);
     if (typeof window !== "undefined") {
       // Push this navigation into the browser history so the iPhone edge-swipe
@@ -6365,6 +6400,10 @@ export default function App() {
                 <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
                 <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
                 <span className="chip"><span className="val" style={{ color: r.c }}>{progress.xp}</span> XP</span>
+                <span className="chip streakchip" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+  <Ic.flame p={15} />
+  <span className="val">{progress.streak}</span>
+</span>
                 <button className="avatar" onClick={setName} title="Tap to change your username">{progress.name[0]?.toUpperCase()}</button>
               </div>
             </div>
@@ -6478,4 +6517,4 @@ export default function App() {
       )}
     </div>
   );
-}
+
