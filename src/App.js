@@ -4751,6 +4751,367 @@ If those came cleanly, you understand the workhorses of the body - how amino aci
   ],
 };
 
+/* --------------------------- psy:1 --------------------------- */
+const T_PSY_PARADIGMS = {
+  courseId: "psy",
+  topicIndex: 1,
+  title: "Theoretical Paradigms",
+  minutes: 20,
+  note: [
+    { q: "Why psychology needs several perspectives, not one.",
+      body: `In your overview of psychology, you learned that psychology is the scientific study of behaviour and mental processes. Now we meet the great theoretical paradigms - the major schools of thought, each a different lens for understanding why people behave as they do.
+
+My Socratic question: imagine a patient who is intensely anxious. One thinker says it comes from unconscious childhood conflict; another says it is a learned response to past events; another says it reflects faulty thinking patterns; another points to brain chemistry. Who is right?
+
+The answer is that each may capture part of the truth. A paradigm is a broad framework of assumptions and methods for understanding behaviour, and psychology has several because human behaviour is so complex that no single perspective explains all of it. Rather than competing to be the only truth, the paradigms are complementary lenses, each illuminating different aspects.
+
+Crucial insight: the theoretical paradigms of psychology are the major frameworks - psychodynamic, behaviourist, cognitive, humanistic, and biological - each offering a distinct explanation of behaviour. They exist because human behaviour is too complex for one perspective, and understanding them gives you multiple tools for understanding patients, which is exactly why they matter in medicine. This topic surveys each in turn.` },
+
+    { q: "The psychodynamic paradigm: the unconscious mind.",
+      body: `The first great paradigm, founded by Sigmund Freud, looks beneath the surface of the mind to hidden forces: the psychodynamic perspective.
+
+The psychodynamic paradigm holds that behaviour is driven largely by unconscious forces - thoughts, memories and desires outside our awareness - and shaped by early childhood experiences. Freud proposed that the mind has three parts: the id (primitive drives seeking pleasure), the superego (the moral conscience), and the ego (the realistic mediator between them). Inner conflict between these, often unconscious, shapes behaviour and can cause distress.
+
+My Socratic question: Freud suggested we use defence mechanisms - like repression (pushing painful thoughts out of awareness) - to manage anxiety. Why would this perspective be important for a health worker to understand?
+
+The answer is that patients may behave in ways driven by feelings they are not consciously aware of - denial of illness, unexplained anxiety, or emotional reactions rooted in past experiences. Understanding that unconscious forces influence behaviour helps a health worker respond with insight rather than confusion.
+
+Crucial insight: the psychodynamic paradigm, from Freud, explains behaviour through unconscious forces and early experiences, with the mind's id, ego and superego in conflict, managed by defence mechanisms. Though some specifics are debated today, its core insight - that much of the mind operates outside awareness - remains influential and clinically useful.` },
+
+    { q: "The behaviourist paradigm: behaviour is learned.",
+      body: `The second paradigm rejected the focus on the hidden mind and insisted psychology study only what can be observed: the behaviourist perspective.
+
+Behaviourism holds that behaviour is learned from the environment through conditioning, and that psychology should study observable behaviour, not unobservable mental states. Its pioneers - Pavlov, Watson and Skinner - showed that behaviour is shaped by associations and consequences. In classical conditioning (Pavlov), a neutral stimulus becomes associated with a response. In operant conditioning (Skinner), behaviour is shaped by its consequences - reinforcement increases a behaviour, punishment decreases it.
+
+My Socratic question: a child who receives praise (reinforcement) for taking medicine willingly is more likely to cooperate next time. Which type of conditioning is this, and why is it useful in healthcare?
+
+The answer is operant conditioning - the behaviour (cooperating) is strengthened by its consequence (praise). It is useful because health workers can encourage helpful behaviours (taking medication, attending appointments) through reinforcement, a practical tool grounded in behaviourist principles.
+
+Crucial insight: the behaviourist paradigm holds that behaviour is learned through conditioning - classical (association) and operant (consequences: reinforcement and punishment) - and focuses only on observable behaviour. It gives health workers practical tools to shape and encourage healthy behaviours, and underlies many therapies for changing unwanted behaviour.` },
+
+    { q: "The cognitive paradigm: the mind as information processor.",
+      body: `The third paradigm brought the mind back into psychology, but studied scientifically: the cognitive perspective.
+
+The cognitive paradigm focuses on internal mental processes - how people perceive, think, remember, learn, and solve problems. It views the mind somewhat like an information-processing system, taking in information, processing it, storing it, and using it to guide behaviour. Unlike behaviourism, it insists these internal processes are real and can be studied scientifically; unlike psychodynamics, it focuses on conscious, rational processes rather than unconscious drives.
+
+My Socratic question: two patients receive the same diagnosis; one thinks "I can manage this with help," the other thinks "this is hopeless." They then cope very differently. What does this show about the cognitive perspective?
+
+The answer is that it is not just events but how we think about and interpret them that shapes our feelings and behaviour. The cognitive perspective explains why the same situation affects people differently depending on their thoughts and beliefs - and it underlies cognitive therapies that help people change unhelpful thinking patterns.
+
+Crucial insight: the cognitive paradigm studies internal mental processes - perception, thinking, memory, problem-solving - viewing the mind as an information processor and emphasising that how we interpret events shapes our behaviour. It is central to modern psychology and to therapies like cognitive behavioural therapy, showing why changing thoughts can change feelings and actions.` },
+
+    { q: "The humanistic paradigm: growth and the whole person.",
+      body: `The fourth paradigm arose as a reaction against both the pessimism of psychodynamics and the mechanistic view of behaviourism, emphasising human potential: the humanistic perspective.
+
+Humanistic psychology, associated with Carl Rogers and Abraham Maslow, emphasises free will, personal growth, and the drive to fulfil one's potential (self-actualisation). It sees people as basically good and striving to grow, and stresses treating the whole person with empathy and unconditional positive regard - genuine acceptance. Maslow's hierarchy of needs describes how basic needs (food, safety) must be met before higher needs (belonging, esteem, self-actualisation) can be pursued.
+
+My Socratic question: the humanistic emphasis on empathy, respect, and treating patients as whole people, not just diseases, has deeply influenced healthcare. Why is this so valuable in a clinical setting?
+
+The answer is that patients are people with feelings, dignity, and needs beyond their illness; treating them with genuine empathy and respect improves their experience, trust, and often their outcomes. The humanistic view underpins patient-centred care - a cornerstone of modern medicine.
+
+Crucial insight: the humanistic paradigm emphasises free will, personal growth, self-actualisation, and treating the whole person with empathy and unconditional positive regard, with Maslow's hierarchy of needs a key idea. It shaped patient-centred, compassionate care, reminding health workers to see the person, not just the patient.` },
+
+    { q: "The biological paradigm: behaviour and the body.",
+      body: `The fifth paradigm grounds behaviour in the physical body - the brain, nervous system, genes and chemistry: the biological perspective.
+
+The biological paradigm explains behaviour and mental processes in terms of physical causes - brain structures, neurotransmitters (chemical messengers in the brain), hormones, and genes. It holds that every thought, feeling and behaviour has a biological basis, and that mental disorders often involve biological factors, such as imbalances in brain chemistry.
+
+My Socratic question: depression is often treated with medications that alter brain neurotransmitter levels, and it can run in families. What does this suggest, and how does it fit the biological paradigm?
+
+The answer is that it suggests depression has biological causes - involving brain chemistry and genetic predisposition - which the biological paradigm emphasises. This is why many mental disorders are treated medically, with drugs that act on the brain, and why family history matters in assessing risk.
+
+Crucial insight: the biological paradigm explains behaviour through physical causes - brain, neurotransmitters, hormones and genes - and sees mental processes and disorders as having a biological basis. It underlies medical treatments for psychological conditions and connects psychology directly to the anatomy, physiology and biochemistry you study, making it especially relevant to medical laboratory science.` },
+
+    { q: "Comparing the paradigms: different lenses on one behaviour.",
+      body: `To consolidate, it helps to see how the paradigms would each explain the same behaviour differently - because that contrast is exactly what exams test and what makes the paradigms useful.
+
+Take a person with a phobia of dogs. The psychodynamic view might see it as a symbol of a deeper unconscious conflict. The behaviourist view would say it was learned - perhaps a frightening encounter created a conditioned fear response. The cognitive view would focus on distorted thoughts - exaggerated beliefs about danger. The humanistic view would consider how the fear blocks the person's growth and wellbeing. The biological view would look at an overactive fear response in the brain and possible genetic predisposition.
+
+My Socratic question: since each paradigm offers a different explanation, how should a thoughtful health worker use them?
+
+The answer is not to pick just one, but to draw on whichever perspectives are useful - recognising that behaviour usually has multiple causes. Modern psychology often takes an eclectic or integrative approach, combining insights from several paradigms, much like the biopsychosocial model you met in the overview.
+
+Crucial insight: each paradigm explains the same behaviour differently - psychodynamic (unconscious conflict), behaviourist (learned response), cognitive (distorted thinking), humanistic (blocked growth), biological (brain and genes). A skilled practitioner draws on several rather than one, since behaviour has multiple causes - the integrative approach that defines modern psychology and medicine.` },
+
+    { q: "Why the paradigms matter in healthcare.",
+      body: `These paradigms are not just academic history - they directly shape how health workers understand and help patients, which is why they belong in your medical psychology course.
+
+My Socratic question: how might understanding all five paradigms make you a better health worker when facing a distressed or difficult patient?
+
+The answer is that each paradigm gives you a different tool. If a patient's behaviour seems driven by hidden feelings, the psychodynamic lens helps. If you want to encourage a healthy habit, behaviourist reinforcement works. If a patient is trapped in negative thinking, the cognitive approach applies. If a patient needs to feel heard and respected, the humanistic approach guides you. If the problem has a physical basis, the biological approach points to medical treatment. Together, they let you understand patients more fully and respond more wisely.
+
+Different therapies also grow from different paradigms: psychoanalysis from psychodynamics, behaviour therapy from behaviourism, cognitive behavioural therapy from the cognitive (and behaviourist) view, person-centred therapy from humanism, and drug treatment from the biological view.
+
+Crucial insight: the paradigms matter in healthcare because each provides practical tools for understanding and helping patients, and each has given rise to real therapies. Knowing them all makes a health worker more insightful and flexible - able to see a patient from several angles rather than one, which is the foundation of good, humane clinical care.` },
+
+    { q: "The integrative view: bringing the paradigms together.",
+      body: `Modern psychology rarely insists that one paradigm is the whole truth. Instead, it increasingly combines them - and understanding why completes your grasp of this topic.
+
+Because human behaviour arises from many interacting causes - biological, psychological, and social - the most complete understanding comes from combining paradigms rather than choosing one. This is the spirit of the biopsychosocial model you met earlier: biological factors (the biological paradigm), psychological factors (psychodynamic, behaviourist, cognitive, humanistic), and social factors all interact to shape health and behaviour.
+
+My Socratic question: why is an integrative, multi-paradigm approach especially suited to medicine and healthcare?
+
+The answer is that patients are whole human beings whose health involves body, mind, and circumstances at once; no single lens captures all of this. A doctor treating depression might combine medication (biological), therapy to change thinking (cognitive), empathetic support (humanistic), and attention to the patient's social situation - all together. Medicine naturally demands the integrative approach.
+
+Crucial insight: the integrative view combines the paradigms because behaviour has multiple interacting causes, echoing the biopsychosocial model - biological, psychological and social factors together. This is the mature stance of modern psychology and the natural approach in healthcare, where treating the whole person means drawing on every useful perspective at once.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the theoretical paradigms, in five lines.
+
+Why several: a paradigm is a broad framework for understanding behaviour, and psychology has several because human behaviour is too complex for one - they are complementary lenses.
+
+The five paradigms: psychodynamic (Freud - unconscious forces, early experience, id/ego/superego, defence mechanisms); behaviourist (Pavlov/Skinner - behaviour learned through classical and operant conditioning, only observable behaviour); cognitive (internal mental processes - perception, thinking, memory; mind as information processor; interpretation shapes behaviour); humanistic (Rogers/Maslow - free will, growth, self-actualisation, empathy, whole person, hierarchy of needs); biological (physical causes - brain, neurotransmitters, hormones, genes).
+
+Different explanations: each explains the same behaviour differently, as with a phobia - unconscious conflict, learned response, distorted thinking, blocked growth, or brain and genes.
+
+Different therapies: psychoanalysis, behaviour therapy, cognitive behavioural therapy, person-centred therapy, and drug treatment grow from the five paradigms.
+
+The mature view: modern psychology is integrative, combining paradigms - the biopsychosocial approach - because behaviour has many interacting causes, which suits medicine perfectly.
+
+Now your final test. A patient repeatedly fails to take prescribed medication. Consider how different paradigms might explain and address this.
+
+Question one: how would the behaviourist paradigm explain the non-adherence and suggest improving it?
+Question two: how might the cognitive paradigm explain it differently, and what would it target?
+Question three: state the overall lesson about using the paradigms that a good health worker should take from being able to answer questions one and two.
+
+Work them through before reading on.
+
+My answers. One: the behaviourist paradigm would see taking medication as a behaviour shaped by its consequences; non-adherence might persist because taking the medicine brings no immediate reward (or brings unpleasant side effects), so the behaviourist approach would introduce reinforcement - praise, reminders, or rewards for taking it - to strengthen the behaviour. Two: the cognitive paradigm would look at the patient's thoughts and beliefs - perhaps they believe the medicine will not help, or misunderstand why it matters - and would target these by correcting misunderstandings and changing unhelpful beliefs, so the patient thinks differently about the medication. Three: the overall lesson is that the same behaviour can be understood and addressed through different paradigms, each offering a distinct and useful tool; a good health worker draws on several perspectives rather than one, because behaviour has multiple causes and the fullest help comes from combining lenses.
+
+If those came cleanly, you understand the great frameworks of psychology - the different lenses through which behaviour can be understood - and how to use them together in caring for patients. The biological foundations of behaviour, grounding these ideas in the brain and body, are the natural next step.` },
+  ],
+  theory: [
+    { q: "What is a theoretical paradigm in psychology, and why does psychology have several?", a: "A paradigm is a broad framework of assumptions and methods for understanding behaviour. Psychology has several - psychodynamic, behaviourist, cognitive, humanistic, biological - because human behaviour is too complex for any single perspective to explain fully; they act as complementary lenses, each illuminating different aspects." },
+    { q: "Describe the psychodynamic paradigm.", a: "Founded by Freud, it holds that behaviour is driven largely by unconscious forces and shaped by early childhood experiences. The mind has three parts - the id (primitive drives), superego (moral conscience), and ego (realistic mediator) - whose often-unconscious conflicts shape behaviour, managed by defence mechanisms like repression." },
+    { q: "Describe the behaviourist paradigm and its two types of conditioning.", a: "Behaviourism holds that behaviour is learned from the environment through conditioning and that psychology should study only observable behaviour. Classical conditioning (Pavlov) is learning by association between stimuli; operant conditioning (Skinner) is learning through consequences - reinforcement increases a behaviour, punishment decreases it." },
+    { q: "Describe the cognitive paradigm.", a: "The cognitive paradigm focuses on internal mental processes - perception, thinking, memory, learning, and problem-solving - viewing the mind as an information-processing system. It emphasises that how people interpret events, not just the events themselves, shapes their feelings and behaviour, and underlies cognitive therapies." },
+    { q: "Describe the humanistic paradigm.", a: "Associated with Rogers and Maslow, it emphasises free will, personal growth, and self-actualisation (fulfilling one's potential), seeing people as basically good. It stresses treating the whole person with empathy and unconditional positive regard. Maslow's hierarchy of needs describes basic needs being met before higher ones. It shaped patient-centred care." },
+    { q: "Describe the biological paradigm.", a: "The biological paradigm explains behaviour and mental processes through physical causes - brain structures, neurotransmitters, hormones, and genes. It holds that every thought, feeling and behaviour has a biological basis, and that mental disorders often involve biological factors like brain-chemistry imbalances. It underlies medical treatments for psychological conditions." },
+    { q: "How would the behaviourist and cognitive paradigms each explain a dog phobia?", a: "The behaviourist view says it was learned - a frightening encounter created a conditioned fear response. The cognitive view focuses on distorted thoughts - exaggerated beliefs about the danger dogs pose. Each locates the problem differently (learned association vs faulty thinking) and would treat it accordingly." },
+    { q: "Name a therapy arising from each of the five paradigms.", a: "Psychodynamic - psychoanalysis; behaviourist - behaviour therapy; cognitive - cognitive behavioural therapy (with behaviourist elements); humanistic - person-centred therapy; biological - drug (medication) treatment. Each therapy grows from its paradigm's view of what causes and changes behaviour." },
+    { q: "What is the integrative approach, and why does it suit medicine?", a: "The integrative approach combines insights from several paradigms rather than relying on one, recognising that behaviour has multiple interacting causes - biological, psychological and social (the biopsychosocial model). It suits medicine because patients are whole human beings whose health involves body, mind and circumstances at once, so no single lens is enough." },
+    { q: "Why is understanding the paradigms valuable for a health worker?", a: "Each paradigm provides a different practical tool: the psychodynamic lens for hidden feelings, behaviourist reinforcement for encouraging healthy habits, the cognitive approach for changing unhelpful thinking, the humanistic approach for empathy and respect, and the biological approach for medical treatment. Knowing all five lets a health worker understand and help patients more fully and flexibly." },
+  ],
+  videos: [
+    { channel: "Medical Psychology", title: "The Major Paradigms of Psychology", note: "An overview of the five great perspectives and what each claims.", url: "" },
+    { channel: "Medical Psychology", title: "Behaviourism Classical and Operant Conditioning", note: "How behaviour is learned through association and consequences.", url: "" },
+    { channel: "Medical Psychology", title: "Humanistic Psychology Maslow and Rogers", note: "Free will, self-actualisation, and patient-centred care.", url: "" },
+  ],
+  mcqs: [
+    { q: "A theoretical paradigm in psychology is:", o: ["A single proven law", "A type of brain cell", "A broad framework for understanding behaviour", "A laboratory test"], a: 2, w: "A paradigm is a broad framework of assumptions and methods." },
+    { q: "Psychology has several paradigms because:", o: ["Only one is correct", "They are all identical", "Psychologists disagree pointlessly", "Human behaviour is too complex for one perspective"], a: 3, w: "Behaviour's complexity needs several complementary lenses." },
+    { q: "The psychodynamic paradigm was founded by:", o: ["Maslow", "Freud", "Pavlov", "Skinner"], a: 1, w: "Freud founded the psychodynamic perspective." },
+    { q: "The psychodynamic paradigm emphasises:", o: ["Only observable behaviour", "Unconscious forces and early experience", "Free will only", "Brain chemistry only"], a: 1, w: "It stresses unconscious forces and childhood experience." },
+    { q: "In Freud's model, the primitive pleasure-seeking part of the mind is the:", o: ["Superego", "Ego", "Cortex", "Id"], a: 3, w: "The id holds primitive drives seeking pleasure." },
+    { q: "In Freud's model, the moral conscience is the:", o: ["Superego", "Id", "Ego", "Reflex"], a: 0, w: "The superego is the moral conscience." },
+    { q: "Pushing painful thoughts out of awareness is the defence mechanism of:", o: ["Self-actualisation", "Repression", "Reinforcement", "Conditioning"], a: 1, w: "Repression pushes painful thoughts out of awareness." },
+    { q: "Behaviourism holds that behaviour is:", o: ["Learned from the environment through conditioning", "Purely unconscious", "Caused only by genes", "Innate and fixed"], a: 0, w: "Behaviourism says behaviour is learned through conditioning." },
+    { q: "Behaviourism argues psychology should study:", o: ["Genes only", "Observable behaviour", "Dreams only", "The unconscious"], a: 1, w: "Behaviourism focuses on observable behaviour." },
+    { q: "Learning by association between stimuli is:", o: ["Operant conditioning", "Self-actualisation", "Repression", "Classical conditioning"], a: 3, w: "Classical conditioning (Pavlov) is learning by association." },
+    { q: "Learning shaped by consequences (reinforcement and punishment) is:", o: ["Operant conditioning", "Regression", "Classical conditioning", "Cognition"], a: 0, w: "Operant conditioning (Skinner) works through consequences." },
+    { q: "Praising a child for taking medicine, making it more likely next time, is:", o: ["Repression", "Reinforcement", "Punishment", "Denial"], a: 1, w: "Reinforcement increases the likelihood of a behaviour." },
+    { q: "The cognitive paradigm focuses on:", o: ["Internal mental processes like thinking and memory", "Brain chemistry only", "Unconscious drives", "Only observable behaviour"], a: 0, w: "The cognitive paradigm studies internal mental processes." },
+    { q: "The cognitive paradigm often views the mind as a(n):", o: ["Information-processing system", "Bundle of drives", "Set of reflexes", "Blank slate"], a: 0, w: "It views the mind as processing information." },
+    { q: "That two people react differently to the same event because they think about it differently illustrates the:", o: ["Behaviourist paradigm", "Psychodynamic paradigm", "Cognitive paradigm", "Biological paradigm"], a: 2, w: "The cognitive view stresses interpretation shaping behaviour." },
+    { q: "The humanistic paradigm is associated with:", o: ["Pavlov and Watson", "Skinner and Thorndike", "Rogers and Maslow", "Freud and Jung"], a: 2, w: "Rogers and Maslow are the humanistic figures." },
+    { q: "The humanistic paradigm emphasises:", o: ["Only brain chemistry", "Unconscious conflict", "Free will, growth and self-actualisation", "Only conditioning"], a: 2, w: "Humanism stresses growth and fulfilling potential." },
+    { q: "Fulfilling one's full potential is called:", o: ["Reinforcement", "Repression", "Conditioning", "Self-actualisation"], a: 3, w: "Self-actualisation is fulfilling one's potential." },
+    { q: "Maslow is known for the:", o: ["Theory of conditioning", "Id, ego and superego", "Hierarchy of needs", "Information-processing model"], a: 0, w: "Maslow's hierarchy of needs orders human needs." },
+    { q: "Treating patients with genuine acceptance is Rogers's idea of:", o: ["Unconditional positive regard", "Punishment", "Repression", "Reinforcement"], a: 0, w: "Unconditional positive regard is genuine acceptance." },
+    { q: "The biological paradigm explains behaviour through:", o: ["Unconscious drives", "Free will only", "Learned associations only", "Physical causes like brain, neurotransmitters and genes"], a: 3, w: "The biological paradigm stresses physical/bodily causes." },
+    { q: "Chemical messengers in the brain are called:", o: ["Neurotransmitters", "Reflexes", "Hormones only", "Genes"], a: 0, w: "Neurotransmitters are the brain's chemical messengers." },
+    { q: "That depression can run in families and respond to medication supports the:", o: ["Humanistic paradigm", "Psychodynamic paradigm", "Biological paradigm", "Behaviourist paradigm"], a: 2, w: "Genetic and chemical factors fit the biological paradigm." },
+    { q: "Psychoanalysis as a therapy grows from the ______ paradigm.", o: ["Behaviourist", "Biological", "Cognitive", "Psychodynamic"], a: 3, w: "Psychoanalysis comes from the psychodynamic paradigm." },
+    { q: "Cognitive behavioural therapy mainly targets:", o: ["Unconscious conflict", "Unhelpful thinking patterns", "Brain surgery", "Genes"], a: 1, w: "CBT changes unhelpful thoughts (with behavioural elements)." },
+    { q: "Drug (medication) treatment for mental disorders grows from the ______ paradigm.", o: ["Cognitive", "Humanistic", "Behaviourist", "Biological"], a: 3, w: "Medical/drug treatment reflects the biological paradigm." },
+    { q: "The humanistic paradigm most directly shaped:", o: ["Reinforcement schedules", "Patient-centred, empathetic care", "Genetic testing", "Brain surgery"], a: 1, w: "Humanism underlies patient-centred, compassionate care." },
+    { q: "Combining several paradigms to understand behaviour is called a(n):", o: ["Rejection of psychology", "Purely biological approach", "Integrative (eclectic) approach", "Single-lens approach"], a: 2, w: "The integrative approach combines paradigms." },
+    { q: "The integrative approach reflects which model from your overview?", o: ["The disease model only", "The biopsychosocial model", "The medical model only", "No model"], a: 1, w: "It echoes the biopsychosocial model of interacting causes." },
+    { q: "The best reason a health worker learns all five paradigms is that:", o: ["They replace medicine", "Only one is ever useful", "Each gives a different tool for understanding and helping patients", "They are required trivia"], a: 2, w: "Each paradigm offers a distinct, practical clinical tool." },
+  ],
+};
+
+
+/* --------------------------- psy:2 --------------------------- */
+const T_PSY_BIOFOUND = {
+  courseId: "psy",
+  topicIndex: 2,
+  title: "Biological Foundations of Behaviour",
+  minutes: 20,
+  note: [
+    { q: "Why behaviour begins in the body.",
+      body: `You met the biological paradigm as one lens on behaviour. Now we explore it in depth, because for a medical laboratory scientist this is the paradigm that connects psychology directly to the anatomy, physiology and biochemistry you already study.
+
+My Socratic question: every thought you think, every emotion you feel, every movement you make - where does it physically happen, and what does that mean for understanding behaviour?
+
+The answer is that all behaviour and mental experience arise from the activity of the nervous system, especially the brain. The biological foundations of behaviour are the physical structures and processes - the brain, the nervous system, neurons, neurotransmitters, hormones and genes - that underlie everything we think, feel and do. Behaviour is not separate from the body; it is produced by it.
+
+Crucial insight: the biological foundations of behaviour are the bodily structures and processes - brain, nervous system, neurons, neurotransmitters, hormones, genes - that give rise to all thought, feeling and action. Understanding them shows how psychological experience is rooted in biology, and connects medical psychology directly to the body sciences at the heart of your training.` },
+
+    { q: "The neuron: the basic unit of the nervous system.",
+      body: `Behaviour ultimately rests on the working of individual nerve cells, so we begin there: the neuron.
+
+A neuron is a nerve cell - the basic building block of the nervous system, specialised to receive, process and transmit information as electrical and chemical signals. A typical neuron has three main parts: the dendrites (branch-like extensions that receive signals from other neurons), the cell body (which contains the nucleus and integrates incoming signals), and the axon (a long fibre that carries the signal away to other cells).
+
+My Socratic question: your nervous system contains billions of neurons, each connecting to many others. What does this vast interconnection make possible?
+
+The answer is that the enormous number of neurons and their connections allows the immense complexity of human thought, memory, emotion and behaviour - all built from countless simple signals passing between cells. Complexity emerges from the network.
+
+Crucial insight: the neuron is the basic unit of the nervous system - with dendrites (receiving), cell body (integrating), and axon (transmitting) - and behaviour arises from billions of these cells signalling to one another. Recall this from your physiology of the nervous system: the neuron's structure is built entirely for communication, which is the foundation of all behaviour.` },
+
+    { q: "The synapse and neurotransmitters: how neurons communicate.",
+      body: `Neurons do not physically touch; they communicate across tiny gaps using chemicals, and this chemical communication is central to understanding behaviour and its disorders.
+
+The synapse is the tiny gap between one neuron and the next. When a signal reaches the end of a neuron's axon, it triggers the release of chemical messengers called neurotransmitters, which cross the synapse and bind to the next neuron, passing the signal on. Different neurotransmitters have different effects - some excite the next neuron, some inhibit it.
+
+My Socratic question: many psychiatric medications work by changing neurotransmitter levels at the synapse. Why does this make the synapse so important in medical psychology?
+
+The answer is that because neurotransmitters carry the signals underlying mood, thought and behaviour, altering them changes mental states - which is exactly how many treatments work. For example, some antidepressants increase the neurotransmitter serotonin at synapses, improving mood. The synapse is where much of behaviour, and its medical treatment, actually happens.
+
+Crucial insight: neurons communicate across the synapse using neurotransmitters - chemical messengers that excite or inhibit the next neuron - and these chemicals underlie mood, thought and behaviour. This is why altering neurotransmitters with medication can treat psychological disorders, making the synapse a central meeting point of psychology, biochemistry and medicine.` },
+
+    { q: "Key neurotransmitters and their roles.",
+      body: `Several neurotransmitters are especially important for behaviour and appear repeatedly in medicine, so knowing the main ones and their roles is valuable.
+
+Dopamine is involved in reward, motivation, movement and pleasure - too little is linked to Parkinson's disease, disturbances are linked to schizophrenia and addiction. Serotonin influences mood, sleep and appetite - low levels are linked to depression, and many antidepressants raise it. Noradrenaline (norepinephrine) is involved in arousal, alertness and the stress response. Acetylcholine is involved in muscle movement, learning and memory - it is affected in Alzheimer's disease. GABA is the main inhibitory neurotransmitter, calming neural activity; many anti-anxiety drugs enhance it.
+
+My Socratic question: why is it useful for a health worker to know that specific neurotransmitters are linked to specific conditions and treatments?
+
+The answer is that it explains why certain drugs treat certain conditions - antidepressants raising serotonin, anti-anxiety drugs enhancing GABA - and helps the health worker understand the biological basis of a patient's disorder and its treatment.
+
+Crucial insight: key neurotransmitters have distinct roles - dopamine (reward, movement; Parkinson's, schizophrenia), serotonin (mood, sleep; depression), noradrenaline (arousal, stress), acetylcholine (memory, movement; Alzheimer's), and GABA (inhibition, calming; anxiety). Linking each to its behaviours and disorders explains how many psychiatric medications work, connecting neurochemistry to real clinical practice.` },
+
+    { q: "The central and peripheral nervous systems.",
+      body: `The nervous system that produces behaviour is organised into two great divisions, and knowing them frames everything else - this builds directly on your physiology.
+
+The central nervous system (CNS) consists of the brain and spinal cord - the control centre that processes information and coordinates responses. The peripheral nervous system (PNS) consists of all the nerves outside the CNS, connecting it to the rest of the body - carrying sensory information in and motor commands out.
+
+My Socratic question: the peripheral nervous system includes the autonomic nervous system, which controls involuntary functions. Within it, the sympathetic branch prepares the body for "fight or flight" and the parasympathetic branch calms it for "rest and digest." Why is this relevant to behaviour and emotion?
+
+The answer is that emotions like fear and stress are accompanied by bodily changes driven by the sympathetic nervous system - racing heart, rapid breathing, sweating - preparing the body to respond to threat; afterward the parasympathetic system restores calm. Our emotional experiences are deeply tied to these physical, autonomic responses.
+
+Crucial insight: the nervous system divides into the central nervous system (brain and spinal cord - control centre) and the peripheral nervous system (nerves connecting to the body), which includes the autonomic system with its sympathetic (fight or flight) and parasympathetic (rest and digest) branches. These physical systems produce the bodily side of emotion and behaviour, tying psychology to the physiology you have studied.` },
+
+    { q: "The brain: regions and their roles in behaviour.",
+      body: `The brain is the organ of behaviour above all, and different regions serve different functions - knowing the main ones illuminates how behaviour is produced.
+
+The cerebrum, the large outer brain, is divided into lobes with different roles: the frontal lobe handles reasoning, planning, decision-making and personality; the parietal lobe processes touch and spatial awareness; the temporal lobe handles hearing and memory; the occipital lobe processes vision. Deeper structures matter too: the limbic system (including the amygdala and hippocampus) governs emotion and memory - the amygdala is central to fear, the hippocampus to forming memories. The cerebellum coordinates movement and balance, and the brainstem controls vital automatic functions like breathing and heartbeat.
+
+My Socratic question: damage to the frontal lobe can change a person's personality and judgement, while damage to the hippocampus can impair the forming of new memories. What does this tell us about behaviour?
+
+The answer is that specific behaviours and mental functions depend on specific brain regions, so damage to a region impairs its particular function. This localisation of function shows how directly behaviour is tied to brain structure.
+
+Crucial insight: the brain's regions have distinct roles - frontal lobe (reasoning, personality), parietal (touch), temporal (hearing, memory), occipital (vision), limbic system with amygdala (fear) and hippocampus (memory), cerebellum (movement), brainstem (vital functions). Because functions are localised, brain damage produces specific changes in behaviour, powerfully demonstrating the biological basis of the mind.` },
+
+    { q: "Hormones and the endocrine system in behaviour.",
+      body: `Besides the fast signalling of neurons, the body has a slower chemical control system that also shapes behaviour: the endocrine system and its hormones.
+
+The endocrine system is a network of glands that release hormones - chemical messengers - into the blood, which carry them throughout the body to influence many functions, including behaviour and emotion. Recall this from your physiology. Hormones act more slowly than neurotransmitters but have widespread, lasting effects.
+
+My Socratic question: the hormone cortisol is released during stress, and adrenaline during fear or excitement. How do these connect hormones to behaviour and emotion?
+
+The answer is that these hormones produce the bodily and emotional states we experience - adrenaline drives the racing heart and heightened alertness of fear or excitement, and cortisol sustains the body's stress response. Hormones like these directly shape how we feel and behave, especially in emotion and stress. Other hormones, such as sex hormones and thyroid hormones, also affect mood and behaviour.
+
+Crucial insight: the endocrine system influences behaviour through hormones - slow, blood-borne chemical messengers - with cortisol and adrenaline central to stress and fear, and other hormones affecting mood. Together with the nervous system, the endocrine system forms the body's two great communication networks, both shaping behaviour, and both familiar from your physiology.` },
+
+    { q: "Genes and behaviour: nature and nurture.",
+      body: `The deepest biological foundation of behaviour lies in our genes, but understanding their role requires care, because behaviour is never purely genetic.
+
+Genes, inherited from our parents, provide the biological instructions that influence the development of the brain and body, and thereby affect behaviour, temperament, and vulnerability to certain mental disorders. Many psychological traits and conditions - intelligence, personality tendencies, risk of depression or schizophrenia - have a partly genetic basis, shown by their tendency to run in families.
+
+My Socratic question: if a condition like depression has a genetic component, does that mean a person with the genes will definitely develop it?
+
+The answer is no - genes usually create a predisposition or vulnerability, not a certainty. Whether a trait or disorder actually appears depends on the interaction of genes with the environment and life experiences. This is the nature-and-nurture interaction: behaviour arises from genes and environment together, not one alone. Two people with similar genetic risk may differ greatly depending on their experiences.
+
+Crucial insight: genes influence behaviour by shaping brain and body development and creating predispositions - including vulnerability to mental disorders - but they act in interaction with the environment, not alone. Behaviour is the product of nature and nurture together, a balanced view that avoids both genetic and environmental extremes and reflects how biology and experience jointly shape who we are.` },
+
+    { q: "Why the biological foundations matter in healthcare.",
+      body: `Understanding the biological basis of behaviour is not abstract for a health worker - it directly shapes how psychological conditions are understood, diagnosed and treated, and it is where your laboratory work connects to the mind.
+
+My Socratic question: why is the biological understanding of behaviour especially relevant to you as a future medical laboratory scientist?
+
+The answer is that many psychological and neurological conditions have measurable biological aspects that laboratories help assess - hormone levels (like thyroid and cortisol) that affect mood, drug levels in patients on psychiatric medication, and biochemical markers relevant to brain function. Understanding that behaviour has biological foundations helps you appreciate how laboratory results connect to a patient's mental state and treatment.
+
+More broadly, the biological view explains why mental disorders can be treated medically - with drugs acting on neurotransmitters - and why physical conditions (a thyroid disorder, a brain injury, a hormone imbalance) can cause psychological symptoms. Body and mind are deeply linked.
+
+Crucial insight: the biological foundations of behaviour matter in healthcare because psychological states have measurable biological aspects - hormones, neurotransmitters, drug levels - that laboratories assess, and because physical conditions can cause psychological symptoms and vice versa. For a laboratory scientist, this is where the mind meets your daily work, showing that understanding behaviour biologically is genuinely part of medicine.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the biological foundations of behaviour, in five lines.
+
+The foundation: all behaviour and mental experience arise from the body - the brain, nervous system, neurons, neurotransmitters, hormones and genes.
+
+The cells and signals: the neuron (dendrites receive, cell body integrates, axon transmits) is the basic unit; neurons communicate across the synapse using neurotransmitters - key ones being dopamine (reward, movement), serotonin (mood), noradrenaline (arousal), acetylcholine (memory), and GABA (inhibition).
+
+The systems: the central nervous system (brain and spinal cord) and peripheral nervous system (including the autonomic system's sympathetic "fight or flight" and parasympathetic "rest and digest" branches); the brain's regions are specialised - frontal (reasoning, personality), limbic system with amygdala (fear) and hippocampus (memory), and others.
+
+The chemical control: the endocrine system influences behaviour through hormones - cortisol and adrenaline central to stress and fear - acting slowly but widely.
+
+Genes and relevance: genes create predispositions that interact with environment (nature and nurture together); and the biological view underpins medical treatment of mental disorders and links psychology to laboratory work.
+
+Now your final test. A patient becomes intensely frightened. Their heart races, they breathe rapidly, they sweat, and they feel a surge of alertness. Afterwards, when safe, they gradually calm down. This patient is also being treated for depression with a medication that raises a certain neurotransmitter.
+
+Question one: which division of the nervous system produced the racing heart, rapid breathing and sweating during fear, and which restored calm afterwards?
+Question two: name a hormone likely released during the fright, and its effect.
+Question three: name the neurotransmitter most likely raised by the depression medication, and explain how this illustrates the biological foundations of behaviour.
+
+Work them through before reading on.
+
+My answers. One: the sympathetic branch of the autonomic nervous system produced the fight-or-flight response - racing heart, rapid breathing, sweating and heightened alertness - preparing the body to face the threat; afterward the parasympathetic branch restored calm ("rest and digest"). Two: adrenaline is likely released during the fright, driving the racing heart, rapid breathing and heightened alertness of the fear response (cortisol would also be released to sustain the stress response). Three: the neurotransmitter most likely raised is serotonin, since many antidepressants increase serotonin at synapses to improve mood; this illustrates the biological foundations of behaviour because it shows that a mental state (mood in depression) can be changed by altering brain chemistry, demonstrating that behaviour and emotion have a physical, biochemical basis.
+
+If those came cleanly, you understand how behaviour is rooted in the brain, nervous system, neurotransmitters, hormones and genes - the biological foundations that connect medical psychology directly to the body sciences of your training, and to the laboratory work you will one day do.` },
+  ],
+  theory: [
+    { q: "What are the biological foundations of behaviour?", a: "They are the physical structures and processes that underlie all thought, feeling and action - the brain, nervous system, neurons, neurotransmitters, hormones, and genes. Behaviour is not separate from the body but is produced by the activity of the nervous system, especially the brain." },
+    { q: "Describe the neuron and its three main parts.", a: "A neuron is a nerve cell, the basic unit of the nervous system, specialised to receive, process and transmit information. Its three main parts are the dendrites (which receive signals from other neurons), the cell body (which contains the nucleus and integrates signals), and the axon (which carries the signal away to other cells)." },
+    { q: "What is the synapse, and how do neurons communicate across it?", a: "The synapse is the tiny gap between one neuron and the next. When a signal reaches the axon's end, it triggers release of neurotransmitters - chemical messengers - that cross the synapse and bind to the next neuron, passing the signal on. Some neurotransmitters excite the next neuron, some inhibit it." },
+    { q: "Name three key neurotransmitters and a role or disorder linked to each.", a: "Dopamine (reward, motivation, movement; linked to Parkinson's disease and schizophrenia); serotonin (mood, sleep, appetite; low levels linked to depression); and GABA (the main inhibitory neurotransmitter, calming activity; enhanced by many anti-anxiety drugs). Others include noradrenaline (arousal, stress) and acetylcholine (memory, movement; affected in Alzheimer's)." },
+    { q: "Distinguish the central and peripheral nervous systems.", a: "The central nervous system (CNS) is the brain and spinal cord - the control centre that processes information and coordinates responses. The peripheral nervous system (PNS) is all the nerves outside the CNS, connecting it to the body, carrying sensory information in and motor commands out." },
+    { q: "Describe the sympathetic and parasympathetic branches and their link to emotion.", a: "They are branches of the autonomic nervous system. The sympathetic branch produces the 'fight or flight' response - racing heart, rapid breathing, sweating - preparing the body for threat, and underlies the bodily side of fear and stress. The parasympathetic branch produces 'rest and digest', restoring calm afterward." },
+    { q: "Name four brain regions and their roles in behaviour.", a: "The frontal lobe (reasoning, planning, decision-making, personality); the temporal lobe (hearing and memory); the occipital lobe (vision); and the limbic system, including the amygdala (central to fear) and hippocampus (forming memories). The cerebellum coordinates movement and the brainstem controls vital functions." },
+    { q: "How does the endocrine system influence behaviour?", a: "The endocrine system is a network of glands releasing hormones - chemical messengers - into the blood to influence functions including behaviour and emotion. Hormones act slowly but have widespread, lasting effects; for example, adrenaline drives the racing heart and alertness of fear, and cortisol sustains the stress response." },
+    { q: "Explain the role of genes in behaviour and the nature-nurture interaction.", a: "Genes provide biological instructions influencing brain and body development, affecting behaviour, temperament, and vulnerability to certain mental disorders (shown by their running in families). However, genes usually create a predisposition, not a certainty; whether a trait appears depends on the interaction of genes with environment and experience - behaviour arises from nature and nurture together." },
+    { q: "Why are the biological foundations of behaviour relevant to a medical laboratory scientist?", a: "Because many psychological and neurological conditions have measurable biological aspects that laboratories assess - hormone levels (thyroid, cortisol) affecting mood, drug levels in patients on psychiatric medication, and biochemical markers of brain function. Also, physical conditions can cause psychological symptoms, so understanding behaviour biologically links laboratory results to a patient's mental state and treatment." },
+  ],
+  videos: [
+    { channel: "Medical Psychology", title: "The Neuron and How It Works", note: "Structure of the neuron and how signals travel.", url: "" },
+    { channel: "Medical Psychology", title: "Neurotransmitters and Behaviour", note: "Key neurotransmitters and their links to mood and disorders.", url: "" },
+    { channel: "Medical Psychology", title: "The Brain Regions and Their Functions", note: "How different brain areas produce different behaviours.", url: "" },
+  ],
+  mcqs: [
+    { q: "The biological foundations of behaviour refer to:", o: ["Learned habits only", "Physical structures and processes underlying behaviour", "Unconscious wishes", "Social rules"], a: 1, w: "They are the bodily structures and processes behind behaviour." },
+    { q: "All behaviour and mental experience arise mainly from the activity of the:", o: ["Nervous system, especially the brain", "Skin", "Liver", "Muscles"], a: 0, w: "The nervous system, especially the brain, produces behaviour." },
+    { q: "The basic building block of the nervous system is the:", o: ["Gene", "Neuron", "Gland", "Hormone"], a: 1, w: "The neuron is the basic unit of the nervous system." },
+    { q: "The part of the neuron that receives signals from other neurons is the:", o: ["Dendrites", "Synapse", "Cell body", "Axon"], a: 0, w: "Dendrites receive incoming signals." },
+    { q: "The long fibre carrying a neuron's signal away to other cells is the:", o: ["Axon", "Synapse", "Dendrite", "Nucleus"], a: 0, w: "The axon transmits the signal away from the neuron." },
+    { q: "The tiny gap between one neuron and the next is the:", o: ["Dendrite", "Cortex", "Synapse", "Axon"], a: 2, w: "The synapse is the gap between neurons." },
+    { q: "Chemical messengers that carry signals across the synapse are:", o: ["Genes", "Hormones", "Neurotransmitters", "Enzymes"], a: 2, w: "Neurotransmitters carry signals across the synapse." },
+    { q: "Some antidepressants improve mood by increasing the neurotransmitter:", o: ["GABA", "Dopamine", "Serotonin", "Acetylcholine"], a: 2, w: "Many antidepressants raise serotonin, linked to mood." },
+    { q: "Dopamine is especially involved in:", o: ["Reward, motivation and movement", "Bone growth", "Digestion", "Vision only"], a: 0, w: "Dopamine is involved in reward, motivation and movement." },
+    { q: "Low levels of which neurotransmitter are linked to depression?", o: ["Serotonin", "GABA", "Acetylcholine", "Noradrenaline"], a: 0, w: "Low serotonin is linked to depression." },
+    { q: "The main inhibitory neurotransmitter, which calms neural activity, is:", o: ["Adrenaline", "Serotonin", "Dopamine", "GABA"], a: 3, w: "GABA is the main inhibitory (calming) neurotransmitter." },
+    { q: "Acetylcholine is especially involved in:", o: ["Fear only", "Bone growth", "Muscle movement, learning and memory", "Vision only"], a: 2, w: "Acetylcholine affects movement, learning and memory." },
+    { q: "The central nervous system consists of the:", o: ["Heart and lungs", "Skin and muscles", "Brain and spinal cord", "Nerves in the limbs"], a: 2, w: "The CNS is the brain and spinal cord." },
+    { q: "The peripheral nervous system consists of:", o: ["The brain only", "The spinal cord only", "The glands only", "The nerves outside the CNS connecting it to the body"], a: 3, w: "The PNS is the nerves outside the brain and spinal cord." },
+    { q: "The 'fight or flight' response is produced by the:", o: ["Sympathetic branch", "Cerebellum", "Hippocampus", "Parasympathetic branch"], a: 0, w: "The sympathetic branch drives fight or flight." },
+    { q: "The 'rest and digest' state is produced by the:", o: ["Axon", "Parasympathetic branch", "Sympathetic branch", "Amygdala"], a: 1, w: "The parasympathetic branch restores calm." },
+    { q: "The brain lobe handling reasoning, planning and personality is the:", o: ["Parietal lobe", "Temporal lobe", "Occipital lobe", "Frontal lobe"], a: 3, w: "The frontal lobe handles reasoning and personality." },
+    { q: "The occipital lobe mainly processes:", o: ["Smell", "Vision", "Hearing", "Touch"], a: 1, w: "The occipital lobe processes vision." },
+    { q: "The brain structure central to fear is the:", o: ["Hippocampus", "Amygdala", "Occipital lobe", "Cerebellum"], a: 1, w: "The amygdala is central to fear." },
+    { q: "The brain structure central to forming new memories is the:", o: ["Cerebellum", "Amygdala", "Brainstem", "Hippocampus"], a: 3, w: "The hippocampus is central to forming memories." },
+    { q: "The cerebellum mainly coordinates:", o: ["Vision", "Movement and balance", "Hearing", "Emotion"], a: 1, w: "The cerebellum coordinates movement and balance." },
+    { q: "That frontal lobe damage can change personality shows:", o: ["Only genes matter", "Behaviour is unrelated to the brain", "The brain has no role", "Specific functions depend on specific brain regions"], a: 3, w: "Localisation of function ties behaviour to brain regions." },
+    { q: "The endocrine system influences behaviour through:", o: ["Reflexes", "Bones", "Neurotransmitters", "Hormones released into the blood"], a: 3, w: "The endocrine system uses blood-borne hormones." },
+    { q: "Compared with neurotransmitters, hormones act:", o: ["Only on the brain", "Not at all", "More slowly but with widespread, lasting effects", "Faster and briefly"], a: 2, w: "Hormones act slowly but widely and lastingly." },
+    { q: "The hormone released during fear or excitement, driving a racing heart, is:", o: ["Insulin", "Adrenaline", "GABA", "Serotonin"], a: 1, w: "Adrenaline drives the fear/excitement bodily response." },
+    { q: "The hormone that sustains the body's stress response is:", o: ["GABA", "Dopamine", "Acetylcholine", "Cortisol"], a: 3, w: "Cortisol sustains the stress response." },
+    { q: "Genes influence behaviour mainly by:", o: ["Creating predispositions that interact with the environment", "Acting alone with no environment", "Guaranteeing specific behaviours", "Replacing the brain"], a: 0, w: "Genes create predispositions, interacting with environment." },
+    { q: "That a person with genetic risk for depression may or may not develop it shows:", o: ["Genes act alone", "Genes never matter", "Behaviour arises from nature and nurture together", "Environment is irrelevant"], a: 2, w: "Nature and nurture interact to shape behaviour." },
+    { q: "A thyroid hormone disorder causing low mood illustrates that:", o: ["Hormones never affect mood", "Physical conditions can cause psychological symptoms", "Only thoughts cause mood", "Mind and body are unrelated"], a: 1, w: "Physical/hormonal conditions can cause psychological symptoms." },
+    { q: "For a laboratory scientist, the biological view of behaviour is relevant because labs can measure:", o: ["Hormone and drug levels linked to mental states", "Free will", "Thoughts directly", "Dreams"], a: 0, w: "Labs measure hormones and drug levels tied to mental states." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -4770,6 +5131,8 @@ const CONTENT = {
   "bio:3": T_BIO_AMINO,
   "bio:4": T_BIO_PROTEINS,
   "psy:0": T_PSY_OVERVIEW,
+  "psy:1": T_PSY_PARADIGMS,
+  "psy:2": T_PSY_BIOFOUND,
   "com:0": T_COM_PROCESS,
   "lab:1": T_MLS_SAFETY,
   "phy:1": T_PHY_HOMEO,
@@ -6084,12 +6447,25 @@ const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical labora
 const SOCRATIC_TASK = "Break this study material into a focused Socratic lesson of 4 to 6 steps. For each step: state the question, explain the answer in one or two clear paragraphs, then give the crucial insight in one line. End with three short self-test questions and their answers. Be economical so the whole lesson is complete and never cut off.";
 
 function ResourcesView() {
-  const [text, setText] = useState("");
+  // Persist pasted text and result so switching apps/tabs (which can reload the
+  // page on mobile) does not wipe the student's work.
+  const [text, setText] = useState(() => {
+    try { return window.sessionStorage.getItem("ascend_res_text") || ""; } catch { return ""; }
+  });
   const [file, setFile] = useState(null);
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState(() => {
+    try { return window.sessionStorage.getItem("ascend_res_result") || ""; } catch { return ""; }
+  });
   const [busy, setBusy] = useState(false);
   const [stage, setStage] = useState("");
   const [err, setErr] = useState("");
+
+  useEffect(() => {
+    try { window.sessionStorage.setItem("ascend_res_text", text); } catch {}
+  }, [text]);
+  useEffect(() => {
+    try { window.sessionStorage.setItem("ascend_res_result", result); } catch {}
+  }, [result]);
 
   const run = async () => {
     setErr(""); setResult("");

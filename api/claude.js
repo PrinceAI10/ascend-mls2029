@@ -32,9 +32,28 @@ export default async function handler(req, res) {
   const contents = [];
   if (Array.isArray(messages)) {
     for (const m of messages) {
-      let text = m.content;
-      if (Array.isArray(text)) text = text.map((b) => (typeof b === "string" ? b : b.text || "")).join("\n");
-      contents.push({ role: m.role === "assistant" ? "model" : "user", parts: [{ text: String(text || "") }] });
+      const role = m.role === "assistant" ? "model" : "user";
+      const parts = [];
+      if (Array.isArray(m.content)) {
+        // A content array may mix text blocks and document/image blocks. Convert
+        // each to the matching Gemini "part" so PDFs and images are actually sent
+        // to the model (not silently dropped, which made uploads give junk output).
+        for (const b of m.content) {
+          if (typeof b === "string") {
+            parts.push({ text: b });
+          } else if (b.type === "text" && b.text) {
+            parts.push({ text: b.text });
+          } else if ((b.type === "document" || b.type === "image") && b.source && b.source.type === "base64") {
+            parts.push({ inlineData: { mimeType: b.source.media_type || "application/pdf", data: b.source.data } });
+          } else if (b.text) {
+            parts.push({ text: b.text });
+          }
+        }
+      } else {
+        parts.push({ text: String(m.content || "") });
+      }
+      if (parts.length === 0) parts.push({ text: "" });
+      contents.push({ role, parts });
     }
   }
 
