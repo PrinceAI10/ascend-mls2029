@@ -4278,28 +4278,43 @@ Understanding hemiacetal formation is essential for understanding this diagnosti
 
 Crucial insight: hemiacetal and hemiketal formation is not just a chemistry concept — it is the basis for diagnosing diabetes and understanding carbohydrate metabolism. Understanding these reactions makes you a better scientist and clinician.` },
 
+    { q: "What are the most common mistakes students make with hemiacetals and acetals?",
+      body: `Students often confuse hemiacetals with acetals, and this confusion leads to errors in exams and in understanding carbohydrate structure. Let me clear up the three most common mistakes.
+
+The first mistake is thinking that the term "hemiacetal" refers to a cyclic structure. A hemiacetal is not defined by being cyclic — it is defined by having both an alcohol and an ether group on the same carbon. The cyclic form is just one type of hemiacetal; linear hemiacetals also exist.
+
+The second mistake is confusing hemiacetals with acetals. A hemiacetal has a hydroxyl group (-OH) on the same carbon as the ether group. An acetal does not — it has two ether groups. The difference is one hydroxyl group, and it determines whether the molecule can open and close or is locked in a stable form.
+
+The third mistake is thinking that a glycosidic bond is a hemiacetal. It is not. A glycosidic bond is an acetal linkage because the anomeric hydroxyl has been replaced by another sugar. The glycosidic bond is stable; a hemiacetal is reactive.
+
+Crucial insight: the difference between a hemiacetal and an acetal is the presence of a hydroxyl group. This single difference determines whether a sugar can cyclise and open, or whether it is locked in a stable glycosidic bond.` },
+
     { q: "Consolidation and your final test.",
       body: `Your cognitive map for hemiacetals, hemiketals, acetals, and ketals.
 
-Hemiacetal: formed when an alcohol reacts with an aldehyde. Hemiketal: formed when an alcohol reacts with a ketone.
+Hemiacetal: formed when an alcohol reacts with an aldehyde. Has both an alcohol and an ether group on the same carbon. Reversible. Basis of sugar cyclisation.
 
-Acetal: formed when a hemiacetal reacts with another alcohol. Ketal: formed when a hemiketal reacts with another alcohol.
+Hemiketal: formed when an alcohol reacts with a ketone. Same structure as a hemiacetal but from a ketone. Reversible.
 
-Glycosidic bonds: acetals or ketals that link sugars together. Anomeric carbon: the carbonyl carbon that becomes chiral upon cyclisation.
+Acetal: formed when a hemiacetal reacts with another alcohol. No hydroxyl group on the anomeric carbon. Stable. Basis of glycosidic bonds.
+
+Ketal: formed when a hemiketal reacts with another alcohol. No hydroxyl group on the anomeric carbon. Stable.
+
+Anomeric carbon: the carbonyl carbon that becomes chiral upon cyclisation. Determines alpha or beta configuration.
 
 Mutarotation: the interconversion of alpha and beta anomers through the open-chain form.
 
-Clinical relevance: HbA1c formation begins with hemiacetal formation, making this reaction essential for diagnosing diabetes.
+Clinical relevance: HbA1c formation begins with hemiacetal formation, making this reaction essential for diagnosing diabetes. Understanding the difference between hemiacetals and acetals is essential for understanding carbohydrate structure and metabolism.
 
-Now your final test. A glucose molecule is in solution and has cyclised to form a six-membered ring. The hydroxyl group on the anomeric carbon is on the opposite side of the ring from the CH2OH group.
+Now your final test. A biochemist is studying the structure of a disaccharide. She finds that the bond between the two sugars is stable and does not open in water. When she treats it with acid, the bond breaks.
 
-Question one: what is this form of glucose called, and is it an alpha or beta anomer?
-Question two: what type of bond would form if this glucose molecule joined with another glucose molecule?
-Question three: what is the process called when the alpha and beta forms interconvert, and why does this matter for diabetes testing?
+Question one: is the bond a hemiacetal or an acetal? Explain your reasoning.
+Question two: what does the stability in water tell you about the type of bond?
+Question three: why does acid break the bond, and what does this tell you about the mechanism of glycosidic bond hydrolysis?
 
 Work them through before reading on.
 
-My answers. One: this is the alpha anomer of glucose, where the anomeric hydroxyl is on the opposite side from the CH2OH group. Two: a glycosidic bond, which is an acetal linkage. Three: mutarotation — the interconversion of alpha and beta anomers. This matters for diabetes testing because glucose attaches to haemoglobin through a reaction that begins with hemiacetal formation, which is the basis of the HbA1c test.` }
+My answers. One: it is an acetal, because acetals are stable in water and do not open spontaneously, whereas hemiacetals are in equilibrium with the open-chain form. Two: the stability in water confirms it is an acetal, which has no hydroxyl group on the anomeric carbon and cannot open to the free aldehyde or ketone. Three: acid breaks the bond by protonating the oxygen, making it a good leaving group, and water attacks to hydrolyse the bond — this is the mechanism of glycosidic bond cleavage in digestion and in the laboratory.` }
   ],
   theory: [
     { q: "What is a hemiacetal and how is it formed?", a: "A hemiacetal is formed when an alcohol reacts with an aldehyde, creating a new carbon-oxygen bond and a hydroxyl group. This is the basis for sugar cyclisation." },
@@ -4339,6 +4354,16 @@ My answers. One: this is the alpha anomer of glucose, where the anomeric hydroxy
     { q: "A solution of pure alpha-glucose will over time:", o: ["Remain pure alpha", "Convert entirely to beta", "Reach a mixture of alpha and beta", "Convert to fructose"], a: 2, w: "Through mutarotation, a solution of pure alpha-glucose will reach a mixture of alpha and beta." },
     { q: "The stability of glycosidic bonds is due to:", o: ["They are hemiacetals", "They are acetals", "They are ketals", "They are esters"], a: 1, w: "Acetals are more stable than hemiacetals, so glycosidic bonds are stable." },
     { q: "The difference between a hemiacetal and an acetal is:", o: ["One has a hydroxyl group, the other does not", "One is cyclic, the other is not", "One is formed from ketones, the other from aldehydes", "One is chiral, the other is not"], a: 0, w: "A hemiacetal has a hydroxyl group; an acetal does not." },
+    { q: "A hemiacetal has which functional groups on the same carbon?", o: ["Alcohol and ether", "Two ethers", "Alcohol and aldehyde", "Two alcohols"], a: 0, w: "A hemiacetal has both an alcohol (-OH) and an ether (-OR) group on the same carbon." },
+    { q: "An acetal has which functional groups on the same carbon?", o: ["Alcohol and ether", "Two ethers", "Alcohol and aldehyde", "Two alcohols"], a: 1, w: "An acetal has two ether groups (-OR) on the same carbon." },
+    { q: "The conversion of a hemiacetal to an acetal involves:", o: ["Loss of water", "Addition of water", "Reduction", "Oxidation"], a: 0, w: "An acetal is formed by the loss of water when a hemiacetal reacts with another alcohol." },
+    { q: "The conversion of an acetal to a hemiacetal involves:", o: ["Loss of water", "Addition of water", "Reduction", "Oxidation"], a: 1, w: "Acetal hydrolysis requires addition of water." },
+    { q: "Which of the following is more stable in water?", o: ["Hemiacetal", "Acetal", "Hemiketal", "Ketone"], a: 1, w: "Acetals are stable in water because they cannot open to a carbonyl form; hemiacetals are in equilibrium with the open-chain form." },
+    { q: "The anomeric carbon of a sugar is the carbon that:", o: ["Is at the end of the chain", "Becomes chiral upon cyclisation", "Has no hydrogens", "Is the most oxidised"], a: 1, w: "The anomeric carbon is the carbonyl carbon that becomes chiral when the sugar cyclises." },
+    { q: "The alpha anomer of glucose has the anomeric OH on the:", o: ["Same side as the CH2OH", "Opposite side from the CH2OH", "Inside the ring", "At the top of the ring"], a: 1, w: "Alpha has the anomeric OH opposite to the CH2OH group." },
+    { q: "The beta anomer of glucose has the anomeric OH on the:", o: ["Same side as the CH2OH", "Opposite side from the CH2OH", "Inside the ring", "At the top of the ring"], a: 0, w: "Beta has the anomeric OH on the same side as the CH2OH group." },
+    { q: "Glycosidic bonds are important because they:", o: ["Link sugars together into polymers", "Break down proteins", "Store genetic information", "Catalyse reactions"], a: 0, w: "Glycosidic bonds link monosaccharides into disaccharides, oligosaccharides, and polysaccharides." },
+    { q: "A pyranose ring is a sugar ring containing:", o: ["Five atoms", "Six atoms", "Seven atoms", "Four atoms"], a: 1, w: "A pyranose ring has six atoms (five carbons and one oxygen)." },
   ],
 };
 
@@ -6199,6 +6224,7 @@ function AuthScreen({ onAuthed }) {
 }
 
 const ANNOUNCEMENTS = [
+  { id: "a3", tag: "Deadline", title: "AI 150 Course Completion", body: "All students are reminded to complete the AI 150: Fundamentals of Responsible AI for ALL course on or before Saturday, 15th August, 2026. This is a mandatory requirement for all students. Please ensure you have finished all modules and assessments before the deadline." },
   { id: "a2", tag: "Feature", title: "CWA planner, themes and resources", body: "Plan your target CWA under the CWA tab, switch light and dark with the toggle up top, and turn your own notes into lessons under Resources." },
   { id: "a1", tag: "Welcome", title: "Welcome to ASCEND", body: "The climb to First Class, together, built by Prince, Ansah, Jeffery and Dacosta. Do the daily question every day to build your streak and rise through the ranks." }
 ];
