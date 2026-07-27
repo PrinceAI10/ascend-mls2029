@@ -4838,9 +4838,8 @@ function HomeView({ app }) {
                   {wk.map((d) => (
                     <div key={d.key} title={d.key} style={{
                       aspectRatio: "1", borderRadius: 3, width: "100%",
-                      background: d.future ? "transparent" : d.active ? "var(--amber)" : "var(--bg-3)",
-                      border: d.today ? "2px solid var(--amber-2)" : d.future ? "1px dashed var(--line)" : "1px solid var(--line)",
-                      opacity: d.future ? 0.35 : d.active ? 1 : 0.55,
+                      background: d.active ? "var(--amber)" : "#1E3A6E",
+                      border: d.today ? "2px solid var(--amber-2)" : "1px solid rgba(255,255,255,0.06)",
                     }} />
                   ))}
                 </div>
@@ -4850,7 +4849,7 @@ function HomeView({ app }) {
               <span className="mono" style={{ fontSize: 9.5, color: "var(--text-3)" }}>{new Date(start).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}</span>
               <span className="mono" style={{ fontSize: 9.5, color: "var(--text-3)" }}>END SEP</span>
             </div>
-            <p className="note-hint" style={{ marginTop: 8 }}>Each square is a day up to the end of September. Gold means you studied. Light one up every day and watch your consistency grow.</p>
+            <p className="note-hint" style={{ marginTop: 8 }}>Every day up to the end of September is a blue square. Study that day and it turns gold. Fill the whole board.</p>
           </div>
         );
       })()}
