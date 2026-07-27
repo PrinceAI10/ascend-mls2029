@@ -1655,10 +1655,10 @@ Crucial insight: enzymes are both the workhorses of metabolism and the markers o
     { q: "How are enzymes used in clinical diagnosis?", a: "Enzyme levels in blood indicate tissue damage or disease. Elevated cardiac enzymes (creatine kinase, troponin) indicate heart muscle damage; elevated liver enzymes indicate liver cell injury. Measuring these markers helps diagnose and monitor disease." },
   ],
   videos: [
-    { channel: "Amoeba Sisters", title: "Enzymes: The Biological Catalysts", note: "Animated explanation of activation energy, active sites, and enzyme function.", url: "https://www.youtube.com/results?search_query=Enzymes+biological+catalysts+explained" },
-    { channel: "Ninja Nerd", title: "Enzymes: Structure, Function and Regulation", note: "Detailed medical-level lecture covering enzyme kinetics and regulation.", url: "https://www.youtube.com/results?search_query=Enzymes+structure+function+regulation+Ninja+Nerd" },
-    { channel: "Khan Academy", title: "Enzymes and the Active Site", note: "Clear explanation of lock-and-key and induced-fit models.", url: "https://www.youtube.com/results?search_query=Khan+Academy+enzymes+active+site" },
-  ],
+  { channel: "Amoeba Sisters", title: "Enzymes: The Biological Catalysts", note: "Animated explanation of activation energy, active sites, and enzyme function.", url: "https://www.youtube.com/results?search_query=Enzymes+biological+catalysts+explained" },
+  { channel: "Ninja Nerd", title: "Enzymes: Structure, Function and Regulation", note: "Detailed medical-level lecture covering enzyme kinetics and regulation.", url: "https://www.youtube.com/results?search_query=Enzymes+structure+function+regulation+Ninja+Nerd" },
+  { channel: "Khan Academy", title: "Enzymes and the Active Site", note: "Clear explanation of lock-and-key and induced-fit models.", url: "https://www.youtube.com/results?search_query=Khan+Academy+enzymes+active+site" },
+],
   mcqs: [
     { q: "Enzymes are biological catalysts that primarily function to:", o: ["Change the equilibrium of a reaction", "Increase the activation energy of a reaction", "Lower the activation energy of a reaction", "Consume energy from a reaction"], a: 2, w: "Enzymes speed reactions by lowering activation energy, without changing the equilibrium." },
     { q: "Activation energy is best described as:", o: ["The total energy released by a reaction", "The energy barrier that must be overcome for a reaction to proceed", "The energy produced by an enzyme", "The energy required to denature an enzyme"], a: 1, w: "Activation energy is the initial energy input needed to start a reaction, which enzymes lower." },
@@ -1803,10 +1803,10 @@ Crucial insight: the principles of inhibition are the same in drug design - you 
     { q: "Define IC50 and its significance in drug development.", a: "IC50 is the concentration of inhibitor that inhibits 50% of the enzyme's activity. It is a measure of drug potency; a lower IC50 indicates a more potent inhibitor." },
   ],
   videos: [
-    { channel: "Ninja Nerd", title: "Enzyme Inhibition: Competitive, Non-competitive, Uncompetitive", note: "Detailed breakdown of inhibition types and their kinetics.", url: "https://www.youtube.com/results?search_query=Enzyme+inhibition+competitive+noncompetitive+Ninja+Nerd" },
-    { channel: "Khan Academy", title: "Enzyme Inhibition and Clinical Applications", note: "How inhibitors work in the body and in drug therapy.", url: "https://www.youtube.com/results?search_query=Khan+Academy+enzyme+inhibition" },
-    { channel: "Osmosis", title: "Enzyme Inhibition Pharmacology", note: "Clinical examples of enzyme inhibition in medicine.", url: "https://www.youtube.com/results?search_query=Osmosis+enzyme+inhibition+pharmacology" },
-  ],
+  { channel: "Ninja Nerd", title: "Enzyme Inhibition: Competitive, Non-competitive, Uncompetitive", note: "Detailed breakdown of inhibition types and their kinetics.", url: "https://www.youtube.com/results?search_query=Enzyme+inhibition+competitive+noncompetitive+Ninja+Nerd" },
+  { channel: "Khan Academy", title: "Enzyme Inhibition and Clinical Applications", note: "How inhibitors work in the body and in drug therapy.", url: "https://www.youtube.com/results?search_query=Khan+Academy+enzyme+inhibition" },
+  { channel: "Osmosis", title: "Enzyme Inhibition Pharmacology", note: "Clinical examples of enzyme inhibition in medicine.", url: "https://www.youtube.com/results?search_query=Osmosis+enzyme+inhibition+pharmacology" },
+],
   mcqs: [
     { q: "Most drugs work by:", o: ["Increasing enzyme synthesis", "Inhibiting specific enzymes", "Activating all enzymes", "Destroying all proteins"], a: 1, w: "Most modern medicines are enzyme inhibitors, blocking specific targets." },
     { q: "A competitive inhibitor binds to the:", o: ["Allosteric site", "Active site", "Coenzyme", "Substrate"], a: 1, w: "Competitive inhibitors compete with substrate for the active site." },
@@ -1963,10 +1963,10 @@ Crucial insight: glycolysis is the universal pathway of energy metabolism - it r
     { q: "Write the balanced overall equation for glycolysis.", a: "Glucose + 2 NAD+ + 2 ADP + 2 Pi -> 2 Pyruvate + 2 NADH + 2 H+ + 2 ATP + 2 H2O." },
   ],
   videos: [
-    { channel: "Ninja Nerd", title: "Glycolysis Pathway Explained", note: "Detailed step-by-step walkthrough of all 10 steps with structures and regulation.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+glycolysis+pathway" },
-    { channel: "Khan Academy", title: "Glycolysis Overview and Steps", note: "Clear explanation of the investment and harvest phases with energy accounting.", url: "https://www.youtube.com/results?search_query=Khan+Academy+glycolysis+steps" },
-    { channel: "Amoeba Sisters", title: "Glycolysis Cellular Respiration", note: "Animated overview of the pathway and its role in energy production.", url: "https://www.youtube.com/results?search_query=Amoeba+Sisters+glycolysis" },
-  ],
+  { channel: "Ninja Nerd", title: "Glycolysis Pathway Explained", note: "Detailed step-by-step walkthrough of all 10 steps with structures and regulation.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+glycolysis+pathway" },
+  { channel: "Khan Academy", title: "Glycolysis Overview and Steps", note: "Clear explanation of the investment and harvest phases with energy accounting.", url: "https://www.youtube.com/results?search_query=Khan+Academy+glycolysis+steps" },
+  { channel: "Amoeba Sisters", title: "Glycolysis Cellular Respiration", note: "Animated overview of the pathway and its role in energy production.", url: "https://www.youtube.com/results?search_query=Amoeba+Sisters+glycolysis" },
+],
   mcqs: [
     { q: "Glycolysis takes place in which cellular compartment?", o: ["Mitochondria", "Cytosol", "Nucleus", "Endoplasmic reticulum"], a: 1, w: "Glycolysis occurs in the cytosol of the cell." },
     { q: "The net ATP yield from glycolysis per glucose is:", o: ["4 ATP", "2 ATP", "36 ATP", "0 ATP"], a: 1, w: "Glycolysis produces a net of 2 ATP per glucose molecule." },
@@ -2000,8 +2000,6 @@ Crucial insight: glycolysis is the universal pathway of energy metabolism - it r
     { q: "Without glycolysis, red blood cells would:", o: ["Produce more ATP", "Use oxygen", "Be unable to survive", "Divide rapidly"], a: 2, w: "Red blood cells depend entirely on glycolysis and would die without it." },
   ],
 };
-
-
 
 /* --------------------------- bio:0 --------------------------- */
 const T_BIO_AMINO = {
