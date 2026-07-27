@@ -21,7 +21,7 @@ const CSS = `
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--bg)}
 .ascend-root{min-height:100vh;min-height:100dvh;width:100%;margin:0;padding:0}
-.ascend-root.light{
+{
   --bg:#F4F6FA; --bg-2:#FFFFFF; --bg-3:#EDF1F7; --raised:#FFFFFF;
   --line:#E2E7F0; --line-2:#CED7E4;
   --text:#131922; --text-2:#4B5A70; --text-3:#7C8798;
