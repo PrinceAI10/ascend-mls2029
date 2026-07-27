@@ -1,5 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
 import { supabase } from "./supabaseClient";
+// ============================================================
+// FIX: Suppress browser extension errors (Grammarly, etc.)
+// ============================================================
+if (typeof window !== 'undefined') {
+  // Catch and suppress extension communication errors
+  window.addEventListener('error', (e) => {
+    if (e.message && e.message.includes('message channel closed')) {
+      e.preventDefault();
+      e.stopPropagation();
+      return true;
+    }
+  });
+  
+  // Catch unhandled promise rejections from extensions
+  window.addEventListener('unhandledrejection', (e) => {
+    if (e.reason && e.reason.message && e.reason.message.includes('message channel closed')) {
+      e.preventDefault();
+      e.stopPropagation();
+      return true;
+    }
+  });
+}
 
 /* =========================================================================
    ASCEND  -  MLS 2029 (KNUST) study platform
