@@ -4792,34 +4792,65 @@ function HomeView({ app }) {
       })()}
 
       {(() => {
-        // Streak calendar - a grid of the last 5 weeks, highlighting days the
-        // student was active, so momentum feels visible and rewarding.
+        // GitHub-style contribution calendar: 7 rows (days of week) x week-columns,
+        // spanning from a few weeks back through the end of September 2026, so it
+        // covers the whole study-and-exam period and fills the full width.
         const done = app.progress.dailyDone || {};
-        const days = [];
-        for (let i = 34; i >= 0; i--) {
-          const d = new Date();
-          d.setDate(d.getDate() - i);
-          const key = d.toISOString().slice(0, 10);
-          days.push({ key, active: !!done[key], today: i === 0 });
+        const todayStr = new Date().toISOString().slice(0, 10);
+        // start: the Sunday on/before 6 weeks ago; end: last day of September 2026
+        const start = new Date();
+        start.setDate(start.getDate() - 42);
+        start.setDate(start.getDate() - start.getDay()); // back up to Sunday
+        const end = new Date("2026-09-30T00:00:00");
+        // build weeks: each week is an array of 7 day-cells (Sun..Sat)
+        const weeks = [];
+        let cur = new Date(start);
+        while (cur <= end) {
+          const week = [];
+          for (let dow = 0; dow < 7; dow++) {
+            const key = cur.toISOString().slice(0, 10);
+            week.push({
+              key,
+              active: !!done[key],
+              today: key === todayStr,
+              future: key > todayStr,
+            });
+            cur.setDate(cur.getDate() + 1);
+          }
+          weeks.push(week);
         }
-        const activeCount = days.filter((d) => d.active).length;
+        const activeCount = Object.keys(done).length;
+        const monthLabel = (wk) => {
+          // label a week-column with the month name if it contains the 1st of a month
+          const first = wk.find((d) => d.key.slice(8, 10) === "01");
+          if (!first) return "";
+          return new Date(first.key).toLocaleDateString("en-GB", { month: "short" });
+        };
         return (
-          <div className="card" style={{ marginTop: 16 }}>
+          <div className="card" style={{ marginTop: 16, overflowX: "auto" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
-              <div className="eyebrow">Your last 5 weeks</div>
-              <div className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>{activeCount} ACTIVE DAYS</div>
+              <div className="eyebrow">Your study calendar</div>
+              <div className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>{activeCount} ACTIVE DAY{activeCount === 1 ? "" : "S"}</div>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 5, maxWidth: 280 }}>
-              {days.map((d) => (
-                <div key={d.key} title={d.key} style={{
-                  aspectRatio: "1", borderRadius: 5,
-                  background: d.active ? "var(--amber)" : "var(--bg-3)",
-                  border: d.today ? "2px solid var(--amber-2)" : "1px solid var(--line)",
-                  opacity: d.active ? 1 : 0.5
-                }} />
+            <div style={{ display: "flex", gap: 3, width: "100%" }}>
+              {weeks.map((wk, wi) => (
+                <div key={wi} style={{ display: "flex", flexDirection: "column", gap: 3, flex: 1, minWidth: 0 }}>
+                  {wk.map((d) => (
+                    <div key={d.key} title={d.key} style={{
+                      aspectRatio: "1", borderRadius: 3, width: "100%",
+                      background: d.future ? "transparent" : d.active ? "var(--amber)" : "var(--bg-3)",
+                      border: d.today ? "2px solid var(--amber-2)" : d.future ? "1px dashed var(--line)" : "1px solid var(--line)",
+                      opacity: d.future ? 0.35 : d.active ? 1 : 0.55,
+                    }} />
+                  ))}
+                </div>
               ))}
             </div>
-            <p className="note-hint" style={{ marginTop: 10 }}>Each square is a day. Gold means you studied. Keep the squares lighting up to build your streak.</p>
+            <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8 }}>
+              <span className="mono" style={{ fontSize: 9.5, color: "var(--text-3)" }}>{new Date(start).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}</span>
+              <span className="mono" style={{ fontSize: 9.5, color: "var(--text-3)" }}>END SEP</span>
+            </div>
+            <p className="note-hint" style={{ marginTop: 8 }}>Each square is a day up to the end of September. Gold means you studied. Light one up every day and watch your consistency grow.</p>
           </div>
         );
       })()}
