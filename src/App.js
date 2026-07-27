@@ -4009,6 +4009,302 @@ If those came cleanly, you understand how cells move substances uphill to defy d
   ],
 };
 
+// ==================== BIOLOGICAL CHEMISTRY TOPIC 1: ISOMERISM ====================
+const T_BIO_ISOMERISM = {
+  courseId: "bio",
+  topicIndex: 0,
+  title: "Isomerism",
+  minutes: 24,
+  note: [
+    { q: "What is isomerism and why does it matter in biochemistry?",
+      body: `You have learned that molecules are made of atoms bonded together in specific arrangements. But here is the problem: molecules with the exact same molecular formula can have completely different structures, properties, and biological effects. This is isomerism — the existence of different compounds with the same molecular formula.
+
+My Socratic question: glucose and fructose both have the same formula — C6H12O6. Yet glucose is the primary fuel of the body, and fructose is metabolised differently. Why does the same formula produce different molecules?
+
+The answer is that the arrangement of atoms matters. Isomers are compounds that have the same molecular formula but different structural arrangements. These differences change how the molecule interacts with enzymes, receptors, and other molecules in the body, which is why isomers often have dramatically different biological effects.
+
+Consider this: a single atom can be moved from one position to another, and the entire function of the molecule changes. This is why isomerism is not just a theoretical concept — it is the reason that drugs, sugars, and hormones have specific effects. The shape of a molecule determines its function, and isomerism is the study of how that shape can vary.
+
+Crucial insight: isomerism is the reason that the same chemical formula can produce different molecules with different functions. Understanding isomerism is essential for understanding why some drugs work, why some sugars are metabolised differently, and why the body is so specific in its biochemical reactions.` },
+
+    { q: "Constitutional (structural) isomers: different connections, different properties.",
+      body: `The first type of isomerism is constitutional isomerism, also called structural isomerism. In constitutional isomers, the atoms are connected in different orders. The connections are different, so the molecules are different compounds.
+
+My Socratic question: pentane and isopentane both have the formula C5H12. One is a straight chain; the other is branched. How does this difference affect their physical properties, and why does this matter?
+
+The answer is that the branching changes the shape of the molecule and the strength of intermolecular forces. Branched isomers have lower boiling points than straight-chain isomers because they are more compact and have less surface area for intermolecular interactions. In biochemistry, the arrangement of atoms determines how a molecule fits into an active site.
+
+This is why enzymes are so specific. An enzyme that recognises a straight-chain molecule may not recognise its branched isomer. This specificity is the basis of metabolic control and drug action.
+
+Crucial insight: structural isomers are different compounds with different properties. In the body, enzymes recognise specific arrangements of atoms, so even subtle changes in structure can dramatically affect biological activity. A single atom moved to a different position can turn a nutrient into a toxin.` },
+
+    { q: "Stereoisomers: the same connections, different 3D shape.",
+      body: `Stereoisomers are more subtle than structural isomers. They have the same connections between atoms, but the atoms are arranged differently in three-dimensional space. This is the kind of isomerism that is most important in biochemistry, and it is the kind that students often find most difficult.
+
+My Socratic question: your right hand and left hand are mirror images — they look the same, but they cannot be superimposed. How does this concept apply to molecules, and why does it matter in medicine?
+
+The answer is that some molecules are chiral — they exist as mirror-image forms called enantiomers. Enantiomers have identical chemical and physical properties in most ways. They have the same boiling point, same melting point, same solubility. But they interact differently with other chiral molecules, including enzymes and receptors.
+
+This is why one enantiomer of a drug can be active while the other is inactive or even harmful. The active enantiomer fits into the enzyme's active site like a key in a lock. The inactive enantiomer does not fit, or it fits into a different site, causing side effects.
+
+Crucial insight: chirality is fundamental to life. The amino acids in proteins are all L-amino acids, and the sugars in DNA are all D-sugars. Life is chiral, and stereoisomerism is the reason that biological molecules have such specific interactions. Without chirality, life as we know it would not exist.` },
+
+    { q: "Enantiomers: the mirror-image isomers that changed medicine.",
+      body: `Enantiomers are stereoisomers that are non-superimposable mirror images of each other. They are like your left hand and your right hand — identical in structure but not identical in space. They are chiral, and they rotate plane-polarised light in opposite directions.
+
+My Socratic question: the drug thalidomide was sold as a mixture of two enantiomers. One enantiomer relieved morning sickness; the other caused severe birth defects. How is this possible if they have the same formula and the same physical properties?
+
+The answer is that enzymes and receptors are chiral, and they recognise only one enantiomer. The active enantiomer of thalidomide bound to the receptor and had the desired effect. The inactive enantiomer did not bind to that receptor, but it did bind to another target, causing the damage. This is why modern drugs are often sold as single enantiomers, not racemic mixtures.
+
+The thalidomide tragedy is a powerful reminder that chirality is not just an academic concept. It has real consequences for human health. Today, drug companies are required to study the effects of each enantiomer separately before a drug can be approved.
+
+Crucial insight: enantiomers can have dramatically different biological effects. The study of enantiomers is essential in pharmacology, where the wrong enantiomer can be ineffective or dangerous. The thalidomide tragedy changed drug regulation forever.` },
+
+    { q: "Diastereomers: the other stereoisomers.",
+      body: `Diastereomers are stereoisomers that are not mirror images. They are more common than enantiomers and can be separated by physical methods like chromatography because they have different physical properties.
+
+My Socratic question: if enantiomers are mirror images, what are stereoisomers that are not mirror images called, and why do they matter in biochemistry?
+
+The answer is that diastereomers have different physical and chemical properties, unlike enantiomers, which are identical except in chiral environments. Diastereomers can have different melting points, boiling points, and solubilities, which makes them easier to separate. In biochemistry, the distinction between enantiomers and diastereomers is important for understanding carbohydrate and protein structure.
+
+Carbohydrates are a perfect example. Glucose and galactose are diastereomers. They have the same formula, the same connections, but the arrangement of atoms around one carbon is different. This difference means that glucose and galactose are metabolised by different pathways, and galactose must be converted by the Leloir pathway before it can be used.
+
+Crucial insight: diastereomers are the stereoisomers that can be separated and studied more easily. They are also the type of stereoisomerism that gives carbohydrates their complexity. Understanding diastereomers is essential for understanding sugar metabolism.` },
+
+    { q: "Optical activity: how we detect chirality.",
+      body: `Chiral molecules rotate plane-polarised light. This property, called optical activity, is how chemists detect and study chirality.
+
+My Socratic question: a solution of pure glucose rotates plane-polarised light to the right. A solution of pure fructose also rotates plane-polarised light. Why does this happen, and what does it tell us about the molecules?
+
+The answer is that chiral molecules have a property called optical activity. When plane-polarised light passes through a solution of a chiral compound, the plane of polarisation is rotated. The direction and amount of rotation depend on the structure of the molecule and its concentration.
+
+Enantiomers rotate light in opposite directions by the same amount. A mixture of equal amounts of both enantiomers — a racemic mixture — does not rotate light at all because the rotations cancel out. This is why racemic mixtures are optically inactive.
+
+Crucial insight: optical activity is a powerful tool for studying chirality. It allows chemists to determine the purity of enantiomeric mixtures and to study the properties of chiral molecules. It is also the reason that sugar solutions rotate light, which is used in polarimetry to measure sugar concentration.` },
+
+    { q: "Chirality in drugs: why one enantiomer is enough.",
+      body: `The importance of chirality in drug development cannot be overstated. Approximately half of all drugs are chiral, and in many cases, only one enantiomer is therapeutically active.
+
+My Socratic question: ibuprofen is a chiral drug sold as a mixture of two enantiomers. One enantiomer is active; the other is inactive but harmless. Why is this acceptable, but thalidomide was not?
+
+The answer is that the inactive enantiomer of ibuprofen is safe — it does not cause harm, and it can be converted to the active form in the body. The inactive enantiomer of thalidomide was toxic, causing irreversible damage. The difference is not in the chirality itself, but in the biological activity of the inactive enantiomer.
+
+Today, drug companies strive to develop single-enantiomer drugs whenever possible. This approach, called chiral switching, can improve efficacy, reduce side effects, and simplify dosing.
+
+Crucial insight: chirality is a practical consideration in drug design, safety, and efficacy. Understanding chirality is essential for understanding how drugs work and why some drugs have side effects. The future of pharmacology is chiral.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for isomerism.
+
+Constitutional (structural) isomers: different connections between atoms. Different physical and chemical properties.
+
+Stereoisomers: same connections, different 3D arrangement. Enantiomers are mirror images; diastereomers are not.
+
+Chirality: the property of having non-superimposable mirror images. Biological molecules are chiral, and enzymes recognise specific enantiomers.
+
+Optical activity: the rotation of plane-polarised light by chiral molecules. Used to detect and study chirality.
+
+Clinical relevance: enantiomers can have different biological effects, making chirality essential in pharmacology. The thalidomide tragedy changed drug regulation.
+
+Now your final test. A new drug is synthesised as a 50:50 mixture of two enantiomers. One enantiomer is the active therapeutic agent; the other causes significant side effects.
+
+Question one: what type of isomers are these, and what term describes the mixture?
+Question two: what would be the best strategy to develop a safer version of this drug?
+Question three: why do the two enantiomers have different biological effects, and why is this important in medicine?
+
+Work them through before reading on.
+
+My answers. One: they are enantiomers, and the mixture is called a racemic mixture. Two: the best strategy would be to synthesise the active enantiomer separately and market it as a single enantiomer, eliminating the side effects. This is called chiral switching. Three: enzymes and receptors are chiral and recognise only one enantiomer, so the inactive enantiomer either does not bind effectively or binds to a different target causing side effects. This is important because it determines the safety and efficacy of drugs.` }
+  ],
+  theory: [
+    { q: "What is isomerism and why is it important in biochemistry?", a: "Isomerism is the existence of different compounds with the same molecular formula. It is important because different isomers have different structures and properties, and they interact differently with biological molecules such as enzymes and receptors. This determines the function of drugs, sugars, and hormones." },
+    { q: "What are constitutional (structural) isomers?", a: "Constitutional isomers have the same molecular formula but different connections between atoms. They have different physical properties and can have different chemical reactivities. Examples include pentane and isopentane." },
+    { q: "What are stereoisomers?", a: "Stereoisomers have the same connections between atoms but different arrangements in three-dimensional space. They include enantiomers (mirror images) and diastereomers (non-mirror-image stereoisomers)." },
+    { q: "What are enantiomers and why are they important?", a: "Enantiomers are stereoisomers that are non-superimposable mirror images of each other. They are chiral and have identical physical and chemical properties except in chiral environments. They are important because they can have different biological effects, as seen in the thalidomide tragedy." },
+    { q: "What is chirality and why does it matter in biology?", a: "Chirality is the property of having non-superimposable mirror images. It matters because biological molecules such as enzymes and receptors are chiral, so they recognise only one enantiomer of a chiral molecule. This determines the specificity of biochemical reactions." },
+    { q: "What is a racemic mixture and what are its properties?", a: "A racemic mixture is a 50:50 mixture of two enantiomers. It is optically inactive because the rotation of light by one enantiomer cancels out the rotation by the other. Racemic mixtures may have different biological effects than pure enantiomers." },
+    { q: "What are diastereomers and how do they differ from enantiomers?", a: "Diastereomers are stereoisomers that are not mirror images. Unlike enantiomers, they have different physical properties and can be separated by methods such as chromatography. Glucose and galactose are diastereomers." },
+    { q: "What is optical activity and how is it measured?", a: "Optical activity is the ability of a chiral molecule to rotate plane-polarised light. It is measured using a polarimeter. Enantiomers rotate light in opposite directions; racemic mixtures do not rotate light." },
+    { q: "What is the difference between D and L isomers?", a: "D and L isomers are enantiomers defined by the orientation of the hydroxyl group on the chiral carbon furthest from the carbonyl group. D-sugars and L-amino acids are the natural forms in living organisms." },
+    { q: "Why is the study of isomerism essential for understanding carbohydrates and drugs?", a: "Carbohydrates are highly stereoisomeric. Each chiral carbon doubles the number of possible isomers. Understanding isomerism is essential for understanding sugar structure, metabolism, and drug action, where the wrong enantiomer can be ineffective or harmful." },
+  ],
+  videos: [
+    { channel: "Ninja Nerd", title: "Isomerism and Stereochemistry", note: "Comprehensive overview of structural and stereoisomerism.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+isomerism+stereochemistry" },
+    { channel: "AK Lectures", title: "Enantiomers and Diastereomers", note: "Clear explanation of the different types of stereoisomers.", url: "https://www.youtube.com/results?search_query=AK+Lectures+enantiomers+diastereomers" },
+    { channel: "Osmosis", title: "Chirality and Drug Development", note: "Clinical applications of chirality in pharmacology.", url: "https://www.youtube.com/results?search_query=Osmosis+chirality+drug+development" },
+  ],
+  mcqs: [
+    { q: "Isomerism is the existence of different compounds with the same:", o: ["Molecular formula", "Structural arrangement", "3D shape", "Molecular weight"], a: 0, w: "Isomers have the same molecular formula but different arrangements or shapes." },
+    { q: "Constitutional isomers have the same molecular formula but different:", o: ["3D shape", "Connections between atoms", "Number of atoms", "Molecular weight"], a: 1, w: "Constitutional isomers differ in the connectivity of atoms." },
+    { q: "Stereoisomers have the same connections between atoms but different:", o: ["Molecular formula", "3D arrangements", "Functional groups", "Number of atoms"], a: 1, w: "Stereoisomers differ only in their three-dimensional arrangement." },
+    { q: "Enantiomers are non-superimposable mirror images of each other. This property is called:", o: ["Isomerism", "Chirality", "Racemisation", "Optical activity"], a: 1, w: "Chirality is the property of having non-superimposable mirror images." },
+    { q: "A 50:50 mixture of two enantiomers is called a:", o: ["Constitutional mixture", "Diastereomeric mixture", "Racemic mixture", "Chiral mixture"], a: 2, w: "A racemic mixture contains equal amounts of both enantiomers." },
+    { q: "Enantiomers have identical properties in all of the following EXCEPT:", o: ["Boiling point", "Chiral environments", "Melting point", "Solubility in water"], a: 1, w: "Enantiomers behave differently only in chiral environments, such as when interacting with enzymes or polarised light." },
+    { q: "Which of the following is true about diastereomers?", o: ["They are mirror images", "They have identical physical properties", "They are not mirror images", "They are always optically active"], a: 2, w: "Diastereomers are stereoisomers that are not mirror images of each other." },
+    { q: "The drug thalidomide was sold as a racemic mixture. The problem was that:", o: ["One enantiomer was toxic", "Both enantiomers were toxic", "Neither enantiomer was active", "The mixture was unstable"], a: 0, w: "One enantiomer relieved morning sickness, while the other caused birth defects." },
+    { q: "In living organisms, sugars are typically found as:", o: ["L-isomers", "D-isomers", "Racemic mixtures", "Diastereomers"], a: 1, w: "Natural sugars are typically D-isomers, while natural amino acids are L-isomers." },
+    { q: "The property of rotating plane-polarised light is called:", o: ["Optical activity", "Chirality", "Isomerism", "Racemisation"], a: 0, w: "Optical activity is the ability of a chiral molecule to rotate plane-polarised light." },
+    { q: "Which type of isomers have different connections between atoms?", o: ["Constitutional isomers", "Enantiomers", "Diastereomers", "Stereoisomers"], a: 0, w: "Constitutional isomers have different connectivity, while stereoisomers have the same connectivity but different 3D arrangement." },
+    { q: "A molecule that is not superimposable on its mirror image is called:", o: ["Achiral", "Chiral", "Racemic", "Constitutional"], a: 1, w: "A chiral molecule is not superimposable on its mirror image." },
+    { q: "What is the relationship between glucose and galactose?", o: ["They are enantiomers", "They are diastereomers", "They are constitutional isomers", "They are identical"], a: 1, w: "Glucose and galactose are diastereomers — they differ in the arrangement around one carbon." },
+    { q: "What is the relationship between D-glucose and L-glucose?", o: ["They are enantiomers", "They are diastereomers", "They are constitutional isomers", "They are identical"], a: 0, w: "D-glucose and L-glucose are enantiomers — they are mirror images of each other." },
+    { q: "A racemic mixture is optically inactive because:", o: ["It contains only one enantiomer", "The enantiomers rotate light in opposite directions, cancelling out", "It is not chiral", "It is a mixture of diastereomers"], a: 1, w: "The rotations of the two enantiomers cancel out, making the mixture optically inactive." },
+    { q: "The active site of an enzyme is chiral, which means:", o: ["It recognises only one enantiomer of a substrate", "It recognises both enantiomers equally", "It is not specific", "It only works with achiral molecules"], a: 0, w: "Because enzymes are chiral, they are stereospecific and recognise only one enantiomer." },
+    { q: "The thalidomide tragedy demonstrated that:", o: ["All drugs are safe", "Enantiomers can have different biological effects", "Racemic mixtures are always safe", "Chirality does not matter"], a: 1, w: "The thalidomide tragedy showed that enantiomers can have dramatically different biological effects." },
+    { q: "Chiral switching in drug development refers to:", o: ["Selling a drug as a racemic mixture", "Developing a single-enantiomer version of a drug", "Switching from liquid to pill form", "Changing the drug's colour"], a: 1, w: "Chiral switching means developing a drug as a single enantiomer to improve safety and efficacy." },
+    { q: "A polarimeter is used to measure:", o: ["Molecular weight", "Optical activity", "Boiling point", "Solubility"], a: 1, w: "A polarimeter measures the rotation of plane-polarised light by chiral molecules." },
+    { q: "Which statement about enantiomers is TRUE?", o: ["They have different physical properties", "They interact differently with chiral molecules", "They have different molecular formulae", "They are constitutional isomers"], a: 1, w: "Enantiomers interact differently with other chiral molecules, including enzymes and receptors." },
+  ],
+};
+
+// ==================== BIOLOGICAL CHEMISTRY TOPIC 2: HEMIACETALS, HEMIKETALS, ACETALS, KETALS ====================
+const T_BIO_HEMIACETALS = {
+  courseId: "bio",
+  topicIndex: 1,
+  title: "Hemiacetals, Hemiketals, Acetals, Ketals",
+  minutes: 22,
+  note: [
+    { q: "Why do sugars cyclise? Understanding the fundamental reaction.",
+      body: `You have learned that sugars are the primary source of energy for the body. But sugars do not exist as simple straight chains in solution. They cyclise into rings, and these rings are the forms that actually circulate in your blood and are recognised by enzymes.
+
+My Socratic question: glucose has an aldehyde group and multiple hydroxyl groups. These groups can react with each other. What is the product of this reaction, and why is it important for life?
+
+The answer is a cyclic hemiacetal. The aldehyde group at C1 reacts with the hydroxyl group at C5 (in a six-membered ring) or C4 (in a five-membered ring), forming a ring. This ring structure is more stable than the open chain, and it is the form of glucose that circulates in the blood and is recognised by enzymes.
+
+The formation of a hemiacetal is the key step in carbohydrate cyclisation. It is a reversible reaction, and it is the basis for the ring structures of all sugars. Without this reaction, sugars could not form the complex structures needed for energy storage and structural support.
+
+Crucial insight: the cyclisation of sugars is not a side reaction — it is the fundamental structure of sugars in solution. Understanding hemiacetal and hemiketal formation is essential for understanding carbohydrate chemistry, metabolism, and the structure of DNA.` },
+
+    { q: "What is a hemiacetal and how is it formed?",
+      body: `A hemiacetal is formed when an alcohol reacts with an aldehyde. The reaction adds the alcohol across the carbonyl group, creating a new carbon-oxygen bond and forming a hydroxyl group. The product has both an alcohol and an ether group on the same carbon — this is the hemiacetal.
+
+My Socratic question: glucose exists as a cyclic hemiacetal. Which functional groups react to form this ring, and what is the product called?
+
+The answer is that the aldehyde group at C1 reacts with the hydroxyl group at C5 (in a six-membered ring) or C4 (in a five-membered ring). The product is a cyclic hemiacetal, which is the ring form of glucose. The ring can be a six-membered pyranose ring or a five-membered furanose ring.
+
+The reaction is reversible, which means that the ring can open back up to the straight-chain form. This equilibrium between open-chain and cyclic forms is essential for sugar chemistry and metabolism.
+
+Crucial insight: the hemiacetal is the key intermediate in sugar chemistry. It is formed reversibly, and it is the form of the sugar that exists in equilibrium with the open chain. This equilibrium is essential for the biological activity of sugars.` },
+
+    { q: "What is a hemiketal and how is it different from a hemiacetal?",
+      body: `A hemiketal is formed when an alcohol reacts with a ketone, rather than an aldehyde. The reaction is the same in principle, but the product is called a hemiketal because the starting compound is a ketone.
+
+My Socratic question: fructose is a ketose, not an aldose. How does fructose form a cyclic structure, and what is the product called?
+
+The answer is that fructose forms a cyclic hemiketal. The ketone group at C2 reacts with a hydroxyl group on the same molecule, forming a ring. Fructose forms a five-membered furanose ring because the ketone at C2 reacts with the hydroxyl at C5.
+
+The difference between hemiacetal and hemiketal is whether the starting compound is an aldehyde or a ketone. Both are essential for understanding carbohydrate structure, and both form cyclic structures that are important in metabolism.
+
+Crucial insight: the difference between hemiacetal and hemiketal is whether the starting compound is an aldehyde or a ketone. Both are essential for understanding carbohydrate structure, and both are the basis for the ring forms of sugars.` },
+
+    { q: "Acetals and ketals: the stable forms of sugars.",
+      body: `A hemiacetal can react further with another alcohol to form an acetal. In an acetal, the hydroxyl group of the hemiacetal is replaced by another alkoxy group. This is a more stable structure than the hemiacetal.
+
+My Socratic question: sugars form glycosidic bonds when they join together. What is the chemical nature of a glycosidic bond, and how is it formed?
+
+The answer is that a glycosidic bond is an acetal linkage. When the hemiacetal of one sugar reacts with the hydroxyl group of another sugar, an acetal is formed, with a bond connecting the two sugars. This is how disaccharides (like sucrose and lactose) and polysaccharides (like starch and cellulose) are built.
+
+Acetals and ketals are more stable than hemiacetals and hemiketals, which is why glycosidic bonds are stable and can form the structural backbone of carbohydrates.
+
+Crucial insight: acetals and ketals are the stable forms of sugars that link them together. Glycosidic bonds are acetal or ketal linkages, and they are the basis of carbohydrate polymers. Without these bonds, carbohydrates could not store energy or provide structural support.` },
+
+    { q: "The anomeric carbon: the stereochemical centre of cyclisation.",
+      body: `When a sugar cyclises, the carbonyl carbon becomes chiral. This new chiral centre is called the anomeric carbon, and it gives rise to two stereoisomers: alpha and beta.
+
+My Socratic question: glucose in solution exists as a mixture of alpha and beta forms. What is the anomeric carbon, and why do these two forms exist?
+
+The answer is that the anomeric carbon is the carbonyl carbon (C1 in glucose) that becomes chiral upon cyclisation. The alpha form has the hydroxyl group on the opposite side of the ring from the CH2OH group; the beta form has it on the same side. These two forms interconvert through a process called mutarotation.
+
+The alpha and beta forms have different properties and are recognised differently by enzymes. For example, the enzyme that breaks down starch recognises only the alpha form of glucose.
+
+Crucial insight: the anomeric carbon is the key to understanding carbohydrate stereochemistry. The alpha and beta forms have different properties and are recognised differently by enzymes. Understanding the anomeric carbon is essential for understanding carbohydrate function.` },
+
+    { q: "Mutarotation: the interconversion of alpha and beta forms.",
+      body: `The alpha and beta forms of a sugar interconvert in solution through a process called mutarotation. This happens because the ring opens to the straight-chain form and then closes again, either in the alpha or beta configuration.
+
+My Socratic question: a freshly prepared solution of pure alpha-glucose has a specific optical rotation. Over time, the rotation changes until it reaches a constant value. Why does this happen?
+
+The answer is that the alpha-glucose converts to a mixture of alpha and beta forms through mutarotation. The optical rotation changes as the composition of the solution changes. When equilibrium is reached, the rotation is constant.
+
+Mutarotation is important because it means that the alpha and beta forms of a sugar are always present in solution, interconverting. This is essential for the biological activity of sugars.
+
+Crucial insight: mutarotation is the interconversion of alpha and beta anomers through the open-chain form. It is the reason that the properties of sugar solutions change over time and why the alpha and beta forms are always in equilibrium.` },
+
+    { q: "Clinical relevance: why understanding these reactions matters.",
+      body: `The reactions you have learned — hemiacetal and hemiketal formation, acetal and ketal formation — are not just academic. They are the basis of carbohydrate metabolism and the structure of important biomolecules.
+
+My Socratic question: why do patients with diabetes have elevated HbA1c, and what does this have to do with hemiacetal formation?
+
+The answer is that glucose attaches to haemoglobin through a reaction that begins with the formation of a hemiacetal. The glucose reacts with the amino group of haemoglobin, forming a Schiff base, which then rearranges to form a stable product. The amount of HbA1c reflects the average blood glucose over the previous 2-3 months.
+
+Understanding hemiacetal formation is essential for understanding this diagnostic test. It is also essential for understanding how drugs work and how carbohydrates are metabolised.
+
+Crucial insight: hemiacetal and hemiketal formation is not just a chemistry concept — it is the basis for diagnosing diabetes and understanding carbohydrate metabolism. Understanding these reactions makes you a better scientist and clinician.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for hemiacetals, hemiketals, acetals, and ketals.
+
+Hemiacetal: formed when an alcohol reacts with an aldehyde. Hemiketal: formed when an alcohol reacts with a ketone.
+
+Acetal: formed when a hemiacetal reacts with another alcohol. Ketal: formed when a hemiketal reacts with another alcohol.
+
+Glycosidic bonds: acetals or ketals that link sugars together. Anomeric carbon: the carbonyl carbon that becomes chiral upon cyclisation.
+
+Mutarotation: the interconversion of alpha and beta anomers through the open-chain form.
+
+Clinical relevance: HbA1c formation begins with hemiacetal formation, making this reaction essential for diagnosing diabetes.
+
+Now your final test. A glucose molecule is in solution and has cyclised to form a six-membered ring. The hydroxyl group on the anomeric carbon is on the opposite side of the ring from the CH2OH group.
+
+Question one: what is this form of glucose called, and is it an alpha or beta anomer?
+Question two: what type of bond would form if this glucose molecule joined with another glucose molecule?
+Question three: what is the process called when the alpha and beta forms interconvert, and why does this matter for diabetes testing?
+
+Work them through before reading on.
+
+My answers. One: this is the alpha anomer of glucose, where the anomeric hydroxyl is on the opposite side from the CH2OH group. Two: a glycosidic bond, which is an acetal linkage. Three: mutarotation — the interconversion of alpha and beta anomers. This matters for diabetes testing because glucose attaches to haemoglobin through a reaction that begins with hemiacetal formation, which is the basis of the HbA1c test.` }
+  ],
+  theory: [
+    { q: "What is a hemiacetal and how is it formed?", a: "A hemiacetal is formed when an alcohol reacts with an aldehyde, creating a new carbon-oxygen bond and a hydroxyl group. This is the basis for sugar cyclisation." },
+    { q: "What is a hemiketal and how is it different from a hemiacetal?", a: "A hemiketal is formed when an alcohol reacts with a ketone. The difference is the starting carbonyl: aldehydes form hemiacetals, ketones form hemiketals." },
+    { q: "What is an acetal and how is it formed?", a: "An acetal is formed when a hemiacetal reacts with another alcohol, replacing the hydroxyl group with an alkoxy group. This is the basis of glycosidic bonds." },
+    { q: "What is a ketal and how is it formed?", a: "A ketal is formed when a hemiketal reacts with another alcohol, replacing the hydroxyl group with an alkoxy group." },
+    { q: "What is the anomeric carbon and why is it important?", a: "The anomeric carbon is the carbonyl carbon that becomes chiral upon cyclisation. It determines whether the sugar is in the alpha or beta form." },
+    { q: "What is the difference between an alpha and beta anomer?", a: "In the alpha anomer, the anomeric hydroxyl is on the opposite side of the ring from the CH2OH group. In the beta anomer, they are on the same side." },
+    { q: "What is a glycosidic bond?", a: "A glycosidic bond is an acetal linkage formed between the anomeric carbon of one sugar and a hydroxyl group of another sugar. It is the bond that links monosaccharides into disaccharides and polysaccharides." },
+    { q: "What is mutarotation?", a: "Mutarotation is the process by which alpha and beta anomers of a sugar interconvert in solution. It occurs through the open-chain form of the sugar." },
+    { q: "Why do sugars exist in cyclic form rather than as open chains?", a: "The cyclic hemiacetal and hemiketal forms are more stable than the open-chain forms. In solution, sugars exist predominantly in their cyclic forms." },
+    { q: "What is the clinical relevance of hemiacetal formation?", a: "Hemiacetal formation is the first step in the formation of HbA1c, the glycosylated haemoglobin used to monitor diabetes. Glucose attaches to haemoglobin through a reaction that begins with hemiacetal formation." },
+  ],
+  videos: [
+    { channel: "Ninja Nerd", title: "Hemiacetals, Hemiketals, Acetals, Ketals", note: "Detailed explanation of the formation and importance of these functional groups.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+hemiacetals+acetals" },
+    { channel: "AK Lectures", title: "Cyclisation of Sugars", note: "How sugars form rings and the difference between alpha and beta anomers.", url: "https://www.youtube.com/results?search_query=AK+Lectures+sugar+cyclisation" },
+    { channel: "Khan Academy", title: "Glycosidic Bond Formation", note: "How acetals link sugars together into polymers.", url: "https://www.youtube.com/results?search_query=Khan+Academy+glycosidic+bond" },
+  ],
+  mcqs: [
+    { q: "A hemiacetal is formed when an alcohol reacts with:", o: ["An aldehyde", "A ketone", "An ester", "A carboxylic acid"], a: 0, w: "Hemiacetals are formed from aldehydes and alcohols." },
+    { q: "A hemiketal is formed when an alcohol reacts with:", o: ["An aldehyde", "A ketone", "An ester", "A carboxylic acid"], a: 1, w: "Hemiketals are formed from ketones and alcohols." },
+    { q: "An acetal is formed when a hemiacetal reacts with:", o: ["Water", "Another alcohol", "An aldehyde", "A ketone"], a: 1, w: "Acetals are formed when a hemiacetal reacts with another alcohol." },
+    { q: "A ketal is formed when a hemiketal reacts with:", o: ["Water", "Another alcohol", "An aldehyde", "A ketone"], a: 1, w: "Ketals are formed when a hemiketal reacts with another alcohol." },
+    { q: "The anomeric carbon is the carbon that:", o: ["Is the most oxidised", "Becomes chiral upon cyclisation", "Has the highest molecular weight", "Is at the end of the chain"], a: 1, w: "The anomeric carbon is the carbonyl carbon that becomes chiral upon cyclisation." },
+    { q: "In the alpha anomer of glucose, the anomeric hydroxyl is:", o: ["On the same side as the CH2OH group", "On the opposite side from the CH2OH group", "Not present", "In the middle of the ring"], a: 1, w: "The alpha anomer has the anomeric hydroxyl on the opposite side from the CH2OH group." },
+    { q: "In the beta anomer of glucose, the anomeric hydroxyl is:", o: ["On the same side as the CH2OH group", "On the opposite side from the CH2OH group", "Not present", "In the middle of the ring"], a: 0, w: "The beta anomer has the anomeric hydroxyl on the same side as the CH2OH group." },
+    { q: "A glycosidic bond is an example of a(n):", o: ["Hemiacetal", "Acetal", "Ester", "Ether"], a: 1, w: "Glycosidic bonds are acetal linkages formed between sugars." },
+    { q: "Mutarotation is the process of:", o: ["Breaking a glycosidic bond", "Interconversion of alpha and beta anomers", "Formation of a hemiacetal", "Polymerisation of sugars"], a: 1, w: "Mutarotation is the interconversion of alpha and beta anomers through the open-chain form." },
+    { q: "A six-membered sugar ring is called a:", o: ["Furanose", "Pyranose", "Hexose", "Pentose"], a: 1, w: "A pyranose ring is a six-membered ring. A furanose ring is five-membered." },
+    { q: "The formation of HbA1c begins with:", o: ["Ester formation", "Hemiacetal formation", "Acetal formation", "Ketal formation"], a: 1, w: "Glucose attaches to haemoglobin through a reaction that begins with hemiacetal formation." },
+    { q: "The open-chain form of glucose exists in equilibrium with:", o: ["The cyclic hemiacetal form", "The acetal form", "The ketal form", "The ester form"], a: 0, w: "The open-chain form is in equilibrium with the cyclic hemiacetal form." },
+    { q: "Fructose forms a cyclic structure through:", o: ["Hemiacetal formation", "Hemiketal formation", "Acetal formation", "Ketal formation"], a: 1, w: "Fructose is a ketose, so it forms a hemiketal." },
+    { q: "The anomeric carbon in glucose is:", o: ["C6", "C5", "C1", "C2"], a: 2, w: "In glucose, the anomeric carbon is C1." },
+    { q: "The anomeric carbon in fructose is:", o: ["C1", "C6", "C5", "C2"], a: 3, w: "In fructose, the anomeric carbon is C2." },
+    { q: "A glycosidic bond is formed between:", o: ["Two hydroxyl groups", "The anomeric carbon and a hydroxyl group", "Two anomeric carbons", "A hydroxyl group and a carboxyl group"], a: 1, w: "A glycosidic bond links the anomeric carbon of one sugar to a hydroxyl group of another sugar." },
+    { q: "The alpha and beta forms of a sugar are:", o: ["Constitutional isomers", "Enantiomers", "Anomers", "Diastereomers"], a: 2, w: "The alpha and beta forms are anomers — they differ at the anomeric carbon." },
+    { q: "A solution of pure alpha-glucose will over time:", o: ["Remain pure alpha", "Convert entirely to beta", "Reach a mixture of alpha and beta", "Convert to fructose"], a: 2, w: "Through mutarotation, a solution of pure alpha-glucose will reach a mixture of alpha and beta." },
+    { q: "The stability of glycosidic bonds is due to:", o: ["They are hemiacetals", "They are acetals", "They are ketals", "They are esters"], a: 1, w: "Acetals are more stable than hemiacetals, so glycosidic bonds are stable." },
+    { q: "The difference between a hemiacetal and an acetal is:", o: ["One has a hydroxyl group, the other does not", "One is cyclic, the other is not", "One is formed from ketones, the other from aldehydes", "One is chiral, the other is not"], a: 0, w: "A hemiacetal has a hydroxyl group; an acetal does not." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -4022,6 +4318,8 @@ const CONTENT = {
   "bch:2": T_BCH_INHIBITION,
   "bch:3": T_BCH_GLYCOLYSIS,
   "bch:4": T_BCH_FRUCTOSE,
+  "bio:0": T_BIO_ISOMERISM,
+  "bio:1": T_BIO_HEMIACETALS,
   "bio:3": T_BIO_AMINO,
   "psy:0": T_PSY_OVERVIEW,
   "com:0": T_COM_PROCESS,
