@@ -5,7 +5,6 @@ import { supabase } from "./supabaseClient";
    ASCEND  -  MLS 2029 (KNUST) study platform
    Framework complete. Content objects get registered in CONTENT below.
    ========================================================================= */
-
 const CSS = `
 :root, .ascend-root{
   --bg:#0A0F1A; --bg-2:#0E1524; --bg-3:#121C2E; --raised:#16213A;
@@ -51,8 +50,6 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
 .ascend-root.light .navi.on{background:rgba(231,162,31,.14);color:#B4790A}
 .ascend-root.light .mobile-sidebar{background:var(--bg-2)}
 .shell{display:flex;min-height:100vh;max-width:1440px;margin:0 auto;width:100%}
-/* The permanent sidebar is retired in favour of the tap-to-open menu at every
-   screen size, so the layout is consistent between laptop and phone. */
 .side{display:none}
 .main{flex:1;min-width:0;display:flex;flex-direction:column;max-width:100%;overflow-x:hidden}
 .topbar{position:sticky;top:0;z-index:20;background:rgba(10,15,26,.82);
@@ -60,7 +57,6 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
 .topbar-inner{max-width:1080px;margin:0 auto;width:100%;
   padding:13px 30px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .content{padding:26px 30px 60px;max-width:100%;overflow-x:hidden}
-/* keep long-form reading comfortable while the app still fills the window */
 .content>.view{max-width:1080px;margin:0 auto;width:100%}
 .view{animation:fadeUp .32s cubic-bezier(.2,.7,.3,1) both;max-width:100%;overflow-x:hidden}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -73,14 +69,11 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
 .mobile-sidebar .navi:hover{background:var(--bg-3);color:var(--text)}
 .mobile-sidebar .navi.on{background:var(--amber-dim);color:var(--amber-2)}
 .mobile-sidebar .navi.on svg{color:var(--amber)}
-/* the menu button and wordmark now show at every size */
 .onlymobile{display:flex}
-/* comfortable reading width on large screens */
 @media (min-width:1280px){
   .content{padding:30px 44px 70px}
   .topbar-inner{padding:14px 44px}
 }
-/* tighter padding on phones */
 @media (max-width:900px){
   .content{padding:16px 14px 50px}
   .content>.view{max-width:100%}
@@ -100,8 +93,6 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
   .headline{font-size:28px}
   .crs-line{gap:4px;padding:8px 0}
   .qbox{width:46px}
-  /* on small phones the streak and XP chips crowd the topbar; they are shown
-     prominently on the home screen, so hide them here to keep the bar clean */
   .topbar-inner .chip{display:none}
   .topbar-inner .iconbtn{width:34px;height:34px}
   .topbar-inner .avatar{width:30px;height:30px}
@@ -263,7 +254,6 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .qbox{width:58px;background:var(--bg-3);border:1px solid var(--line);border-radius:8px;
   padding:7px 8px;color:var(--text);font-size:13px;font-family:var(--mono);text-align:center}
 `;
-
 /* ------------------------------- icons ---------------------------------- */
 const I = ({ d, s = 20, fill = "none", w = 1.9, style }) => (
   <svg width={s} height={s} viewBox="0 0 24 24" fill={fill} stroke="currentColor"
@@ -737,9 +727,9 @@ If those came cleanly, you are ready to stop seeing slides as random splashes of
     { q: "Why is pseudostratified epithelium described as false-layered, and where is it typically found?", a: "Its nuclei lie at different heights, giving the appearance of several layers, but every cell contacts the basement membrane, so it is genuinely a single layer. It lines the trachea and upper airways, usually ciliated and containing goblet cells." },
   ],
   videos: [
-    { channel: "The Noted Anatomist", title: "Histology Fundamentals: The Complete Overview", note: "Thorough 38-minute walk-through covering H and E staining, then all four tissues in order.", url: "https://www.youtube.com/watch?v=0U5J_unEM-Q" },
-    { channel: "Corporis", title: "Intro to Histology: The Four Tissue Types", note: "Short and clear - ideal for separating the four tissues when they first look identical.", url: "https://www.youtube.com/watch?v=S59JwFCjNhc" },
-    { channel: "Histology Video Course", title: "Four Basic Tissue Types of Histology (Epithelium 1 of 7)", note: "Opening lecture of a structured series that continues into epithelium in detail.", url: "https://www.youtube.com/watch?v=H28sK9E6hGY" },
+    { channel: "The Noted Anatomist", title: "Histology Fundamentals: The Complete Overview", note: "Thorough 38-minute walk-through covering H and E staining, then all four tissues in order.", url: "https://www.youtube.com/results?search_query=Histology+fundamentals+H+and+E+staining+The+Noted+Anatomist" },
+    { channel: "Corporis", title: "Intro to Histology: The Four Tissue Types", note: "Short and clear - ideal for separating the four tissues when they first look identical.", url: "https://www.youtube.com/results?search_query=Intro+to+Histology+the+four+tissue+types+Corporis" },
+    { channel: "Histology Video Course", title: "Four Basic Tissue Types of Histology (Epithelium 1 of 7)", note: "Opening lecture of a structured series that continues into epithelium in detail.", url: "https://www.youtube.com/results?search_query=Four+basic+tissue+types+of+histology+epithelium" },
   ],
   mcqs: [
     { q: "Histology is best defined as the study of:", o: ["Body cavities", "Organs by dissection", "Disease processes", "Tissues under the microscope"], a: 3, w: "Histology is the microscopic study of tissues." },
@@ -1129,9 +1119,9 @@ If those came cleanly, you now understand epithelium as a system, not a list. Th
     { q: "Why is the basement membrane the critical structure in distinguishing in situ from invasive carcinoma?", a: "Carcinoma in situ remains above an intact basement membrane, so it has not reached the blood or lymphatic vessels that lie below and cannot metastasise; it is curable by local removal. Once the cells breach the basement membrane and invade the underlying connective tissue, the cancer becomes invasive and can spread." },
   ],
   videos: [
-    { channel: "Kenhub", title: "Types of Simple Epithelia", note: "Clear, labelled walk-through of each simple epithelium with its location and function.", url: "https://www.youtube.com/watch?v=-koWOLMd904" },
-    { channel: "Dr. G Bhanu Prakash", title: "Epithelial Tissue: Simple, Stratified, Pseudostratified, Transitional", note: "Complete classification in one animated lecture - good for the whole system at once.", url: "https://www.youtube.com/watch?v=chl91a2Cm-Y" },
-    { channel: "AnimatedBiology With Arpan", title: "Epithelial Tissue: Classification, Functions and Clinical Significance", note: "Adds the clinical angle, including junctions and the basement membrane.", url: "https://www.youtube.com/watch?v=_pw5wbEL07c" },
+    { channel: "Kenhub", title: "Types of Simple Epithelia", note: "Clear, labelled walk-through of each simple epithelium with its location and function.", url: "https://www.youtube.com/results?search_query=Types+of+simple+epithelia+Kenhub" },
+    { channel: "Dr. G Bhanu Prakash", title: "Epithelial Tissue: Simple, Stratified, Pseudostratified, Transitional", note: "Complete classification in one animated lecture - good for the whole system at once.", url: "https://www.youtube.com/results?search_query=Epithelial+tissue+simple+stratified+pseudostratified+transitional" },
+    { channel: "AnimatedBiology With Arpan", title: "Epithelial Tissue: Classification, Functions and Clinical Significance", note: "Adds the clinical angle, including junctions and the basement membrane.", url: "https://www.youtube.com/results?search_query=Epithelial+tissue+classification+functions+clinical+significance" },
   ],
   mcqs: [
     { q: "The feature that most distinguishes epithelium from connective tissue is:", o: ["Scattered cells", "High cellularity with little matrix", "Abundant matrix", "Presence of blood vessels"], a: 1, w: "Epithelium is cell-dense with minimal matrix; connective tissue is the opposite." },
@@ -1319,9 +1309,9 @@ If those three came cleanly, you can now read the body's covering and lining epi
     { q: "Define metaplasia and give one example, noting its clinical significance.", a: "Metaplasia is the reversible replacement of one mature epithelium by another, usually in response to chronic stress. For example, a smoker's ciliated pseudostratified airway epithelium is replaced by stratified squamous, losing the mucociliary escalator; in Barrett oesophagus, acid reflux replaces oesophageal stratified squamous with columnar epithelium, carrying a risk of progression to cancer." },
   ],
   videos: [
-    { channel: "Kenhub", title: "Types of Simple Epithelia", note: "Labelled tour of simple squamous, cuboidal, columnar and pseudostratified with locations.", url: "https://www.youtube.com/watch?v=-koWOLMd904" },
-    { channel: "Dr. G Bhanu Prakash", title: "Epithelial Tissue: Simple, Stratified, Pseudostratified, Transitional", note: "Covers the full set including transitional and stratified in one animated pass.", url: "https://www.youtube.com/watch?v=chl91a2Cm-Y" },
-    { channel: "Histology Guide", title: "Pseudostratified Columnar Epithelium of the Trachea", note: "Real trachea slide - see the scattered nuclei, cilia and goblet cells for yourself.", url: "https://histologyguide.com/slideview/MHS-222-trachea/02-slide-1.html" },
+    { channel: "Kenhub", title: "Types of Simple Epithelia", note: "Labelled tour of simple squamous, cuboidal, columnar and pseudostratified with locations.", url: "https://www.youtube.com/results?search_query=Types+of+simple+epithelia+locations+Kenhub" },
+    { channel: "Dr. G Bhanu Prakash", title: "Epithelial Tissue: Simple, Stratified, Pseudostratified, Transitional", note: "Covers the full set including transitional and stratified in one animated pass.", url: "https://www.youtube.com/results?search_query=Epithelial+tissue+simple+stratified+pseudostratified+transitional+Dr+Bhanu" },
+    { channel: "Histology Guide", title: "Pseudostratified Columnar Epithelium of the Trachea", note: "Real trachea slide - see the scattered nuclei, cilia and goblet cells for yourself.", url: "https://www.youtube.com/results?search_query=Pseudostratified+columnar+epithelium+trachea+histology" },
   ],
   mcqs: [
     { q: "Membranous epithelium refers to epithelium that:", o: ["Secretes hormones", "Covers surfaces and lines cavities and tubes", "Forms glands only", "Is always stratified"], a: 1, w: "Membranous means the covering and lining epithelia, as opposed to glandular." },
@@ -1546,101 +1536,122 @@ If those three came cleanly, you understand why biochemistry begins with water a
 };
 
 // ==================== BIOCHEMISTRY TOPIC 1: ENZYMES ====================
+// ==================== BIOCHEMISTRY TOPIC 1: ENZYMES ====================
 const T_BCH_ENZYMES = {
   courseId: "bch",
   topicIndex: 1,
   title: "Enzymes",
-  minutes: 22,
+  minutes: 25,
   note: [
-    { q: "What are enzymes, and why can't life run without them?",
-      body: `You have learned that metabolism is a vast network of chemical reactions, each one breaking or building molecules. Without enzymes, every one of those reactions would take hours, days, or years to happen on their own - far too slow to sustain life.
+    { q: "Why does a biochemist begin with enzymes, and what problem do they solve?",
+      body: `You have learned the foundations — water, pH, buffers, amino acids. You know that life's chemistry runs in water, that proteins are chains of amino acids, and that the body fights to keep pH stable. But there is a silent problem lying underneath all of this: chemical reactions in a test tube are extraordinarily slow.
 
-My Socratic question: a reaction that should take weeks in a test tube happens in milliseconds inside a cell. What is the agent that makes this possible, and how does it work?
+My Socratic question: a piece of glucose left in a glass of water will sit there for years, yet your cells burn through a molecule of glucose in milliseconds. What is the difference between a glass of water and a cell?
 
-The answer is enzymes - biological catalysts that accelerate chemical reactions by lowering the activation energy required for them to proceed. A catalyst is a substance that speeds up a reaction without being consumed by it, and enzymes are proteins that do exactly this for biological reactions.
+The answer is enzymes. Enzymes are biological catalysts — proteins that accelerate chemical reactions by lowering the activation energy required for them to proceed. A catalyst speeds up a reaction without being consumed by it. Without enzymes, every reaction in your body would take hours, days, or years. You would starve before your cells could unlock the energy in glucose. You would suffocate because carbon dioxide could not be converted fast enough. You would die from the simple accumulation of metabolic waste.
 
-Crucial insight: enzymes do not change what reactions are possible - they change how fast they occur, making the sluggish chemistry of the test tube into the swift chemistry of life.` },
+Enzymes are the reason life can exist at all. They turn the sluggish, impossible chemistry of the test tube into the swift, controlled chemistry of the living cell.
 
-    { q: "How do enzymes lower activation energy?",
-      body: `Every chemical reaction has an energy barrier called activation energy - the initial push needed to get the reactants into a state where they can react. Enzymes lower this barrier, so more molecules have enough energy to react at body temperature.
+Crucial insight: enzymes do not change the direction of a reaction — they only change how fast it reaches equilibrium. A reaction that is thermodynamically impossible remains impossible; a reaction that is thermodynamically possible becomes practical, and that is the difference between a dead test tube and a living cell.` },
 
-My Socratic question: imagine pushing a boulder over a hill to start it rolling downhill. The boulder is the reaction; the hill is the activation energy. What would an enzyme do to the hill?
+    { q: "What is activation energy, and how does an enzyme overcome it?",
+      body: `Every chemical reaction, even the ones that release energy, must first climb a hill before it can roll down the other side. That hill is the activation energy — the initial energy barrier that must be overcome for the reaction to proceed.
 
-The answer is that it would carve a tunnel through the hill - the boulder still needs some push, but much less than going over the top. The starting and ending points (the reactants and products) are unchanged, but the path is easier, so the reaction runs much faster.
+My Socratic question: imagine a boulder sitting at the top of a hill. It wants to roll down, but it cannot because there is a small lip holding it in place. You must push it over that lip before it can roll freely. What is the lip, and what would a catalyst do to it?
 
-Crucial insight: enzymes lower activation energy without changing the overall energy balance of the reaction - they make the journey easier, not the destination different.` },
+The answer is that the lip is the activation energy. In a test tube, molecules must collide with enough energy to overcome this barrier, which is why reactions are slow — most molecules do not have enough energy at room temperature. An enzyme lowers that barrier. It does not give the molecules more energy; it changes the path they must take. Instead of climbing over a high wall, the enzyme carves a tunnel through it. The boulder still ends up at the bottom, but the journey is easier and faster.
 
-    { q: "The active site: where the chemistry happens.",
-      body: `An enzyme is a protein folded into a specific three-dimensional shape. Within that shape is a pocket or cleft called the active site - the exact region where the reaction takes place.
+Enzymes achieve this by bringing reactants together in the correct orientation and by stabilising the transition state — the high-energy intermediate that forms as bonds break and form. The enzyme does not change the final energy of the products; it only changes the path and the speed.
 
-My Socratic question: a key fits a lock perfectly and only that key turns it. How does an enzyme recognise its specific substrate and no other?
+Crucial insight: a catalyst does not alter equilibrium. It lowers the activation energy in both directions, speeding up both the forward and the reverse reaction equally. The enzyme decides nothing about where the reaction ends; it only decides how quickly it gets there.` },
 
-The answer is the lock-and-key model: the substrate molecule has a shape that matches the active site, like a key matching a lock. The enzyme is specific to its substrate because only that substrate fits properly into the active site and undergoes the chemical transformation the enzyme catalyzes.
+    { q: "The active site: how does an enzyme recognise its substrate?",
+      body: `An enzyme is a protein folded into a specific three-dimensional shape. Within that shape is a pocket or cleft called the active site — the exact region where the substrate binds and the chemical reaction occurs.
 
-Crucial insight: the active site is three-dimensional, not flat. A single amino acid change can disrupt the active site and destroy enzyme function - which is exactly what happens in many genetic diseases.` },
+My Socratic question: a key fits a lock perfectly, and only that key will turn it. How does an enzyme recognise its specific substrate and no other?
 
-    { q: "The induced fit model: a refined understanding.",
-      body: `The lock-and-key model is useful, but it is too rigid. The active site is not a fixed shape - it changes slightly as the substrate binds, adjusting to hold the substrate more tightly.
+The answer is the lock-and-key model: the substrate molecule has a shape that matches the active site exactly. The enzyme is specific to its substrate because only that substrate fits properly into the active site and undergoes the chemical transformation the enzyme catalyses. If a molecule is even slightly the wrong shape, it will not bind, and the reaction will not occur.
+
+This is the basis of enzyme specificity. Glucose, for example, exists in two mirror-image forms — D-glucose and L-glucose. Human enzymes recognise only D-glucose. The other form fits the active site about as well as a left shoe fits a right foot. The enzyme simply ignores it.
+
+Crucial insight: the active site is three-dimensional, not flat. A single amino acid change can alter the shape of the active site and destroy enzyme function. This is exactly what happens in many genetic diseases — a single mutation changes one amino acid in the active site, and the enzyme can no longer bind its substrate.` },
+
+    { q: "The induced fit model: why the lock-and-key model is too simple.",
+      body: `The lock-and-key model is useful, but it is too rigid. It suggests that the active site is a fixed shape, like a lock waiting for its key. In reality, enzymes are flexible.
 
 My Socratic question: why would a flexible active site be better than a rigid one for catalysis?
 
-The answer is that the induced fit allows the active site to wrap around the substrate, forming a better binding surface and bringing the catalytic groups into exactly the right position to perform the reaction. It is like a hand closing around a ball rather than a rigid claw holding it.
+The answer is the induced fit model. When the substrate binds, the active site changes shape slightly, adjusting to hold the substrate more tightly and positioning the catalytic groups exactly where they need to be. The enzyme wraps around the substrate, like a hand closing around a ball, rather than a rigid claw holding it.
 
-Crucial insight: induced fit explains why enzymes are so efficient - the binding itself helps orient the substrate exactly for the reaction to happen, and the energy of binding contributes to lowering the activation energy.` },
+This flexibility accomplishes two things. First, it allows the enzyme to bind its substrate more tightly and more precisely. Second, it brings the amino acid side chains in the active site into perfect alignment for catalysis. The binding itself contributes to the reaction, and the energy released from that binding helps lower the activation energy further.
 
-    { q: "Cofactors and coenzymes: the helpers.",
-      body: `Many enzymes cannot function alone. They require non-protein helpers called cofactors. Without them, the enzyme is inactive.
+Crucial insight: the induced fit model explains why enzymes are so efficient. The enzyme does not just wait for the reaction to happen — the binding itself stresses the substrate, distorts bonds, and makes the reaction more favourable. The enzyme participates actively in the catalysis, not passively.` },
 
-My Socratic question: a car engine needs both the engine block (the protein) and fuel and spark (the cofactors). Which part of an enzyme is the engine block, and which are the helpers?
+    { q: "Cofactors and coenzymes: why some enzymes need helpers.",
+      body: `Not all enzymes work alone. Many require non-protein helpers called cofactors. Without them, the enzyme is inactive.
 
-The answer is that the protein part is the apoenzyme, and it needs a cofactor to become a complete, active holoenzyme. Cofactors can be inorganic ions, such as zinc, magnesium or iron, or organic molecules called coenzymes, such as NADH and FADH2 - the same coenzymes that carry electrons in metabolism.
+My Socratic question: a car engine needs both the engine block and the spark plugs and fuel to run. Which part of an enzyme is the engine block, and which are the helpers?
 
-Crucial insight: cofactors are essential for activity - a deficiency of zinc or magnesium can impair enzyme function, and many vitamins are precursors to coenzymes, explaining why vitamin deficiencies cause disease.` },
+The answer is that the protein portion is the apoenzyme — the inactive protein part. It needs a cofactor to become a complete, active holoenzyme. Cofactors come in two forms. Inorganic ions, such as zinc, magnesium, iron, or calcium, are metal-ion cofactors. They often help stabilise the transition state or hold the substrate in place. Organic molecules called coenzymes are larger helpers, often derived from vitamins. NADH and FADH2 carry electrons; Coenzyme A carries acetyl groups; ATP carries phosphate. Without these coenzymes, the enzymes that depend on them cannot function.
 
-    { q: "Enzyme specificity: why one enzyme does one job.",
-      body: `Each enzyme is specific to a particular reaction or a set of related reactions. This specificity is the key to metabolic control.
+The vitamin deficiency diseases you have heard of are, at their core, coenzyme deficiencies. A lack of niacin means no NADH; a lack of riboflavin means no FADH2. The enzymes are present, but they cannot work.
+
+Crucial insight: a deficiency of a mineral or vitamin is often a deficiency of a cofactor. This is why zinc supplements are given for wound healing — zinc is a cofactor for collagenase — and why vitamin deficiencies cause such widespread metabolic failure.` },
+
+    { q: "Enzyme specificity: what makes an enzyme choose its substrate?",
+      body: `Each enzyme is specific to a particular reaction or a set of closely related reactions. This specificity is the key to metabolic control.
 
 My Socratic question: the body has thousands of reactions happening simultaneously. How does each reaction find its correct enzyme among all the others?
 
-The answer is that enzymes are selective: a kinase phosphorylates a specific substrate; a protease cleaves a specific peptide bond. The specificity comes from the active site's shape and chemistry, which fit only the correct substrate. A single enzyme rarely works on more than one substrate, or it works on a single class of closely related substrates.
+The answer is that the active site is a unique three-dimensional shape with a unique arrangement of chemical groups. Only its specific substrate can fit into that shape and interact with those groups. A kinase phosphorylates a specific substrate — it does not phosphorylate everything it touches. A protease cleaves a specific peptide bond — it does not randomly shred proteins.
 
-Crucial insight: specificity is why we can target enzymes with drugs. A drug that inhibits a bacterial enzyme without affecting the equivalent human enzyme is a selective antibiotic, and this selectivity comes from differences in the active sites.` },
+This specificity is absolute enough that an enzyme can distinguish between very similar molecules. Hexokinase, for example, phosphorylates glucose but not mannose, even though the two sugars differ only by the orientation of a single hydroxyl group.
 
-    { q: "Enzyme kinetics: how fast enzymes work.",
-      body: `The rate of an enzyme-catalysed reaction increases as substrate concentration increases, but only up to a limit. Beyond a certain point, all active sites are occupied, and the enzyme is saturated - adding more substrate does not increase the rate.
+Crucial insight: specificity is why drugs can be designed to target specific enzymes. An antibiotic that inhibits a bacterial enzyme without affecting the equivalent human enzyme is a selective antibiotic. The difference in the active site is the difference between killing the bacteria and killing the patient.` },
 
-My Socratic question: if adding more substrate always makes a reaction go faster, why does it eventually stop getting faster?
+    { q: "Enzyme kinetics: how fast do enzymes work?",
+      body: `The rate of an enzyme-catalysed reaction increases as substrate concentration increases — but only up to a point. Beyond a certain concentration, all active sites are occupied, and the enzyme is saturated. Adding more substrate does not increase the rate.
 
-The answer is that the enzyme has a finite number of active sites. When all active sites are occupied, the enzyme is working at its maximum speed. This maximum velocity is called Vmax, and the substrate concentration at which the reaction runs at half of Vmax is called Km, a measure of the enzyme's affinity for its substrate.
+My Socratic question: if adding more substrate makes a reaction go faster, why does it eventually stop getting faster?
 
-Crucial insight: Km and Vmax are fundamental properties of enzymes that can be measured in the laboratory - which is exactly what you will do in practical biochemistry.` },
+The answer is that the enzyme has a finite number of active sites. When all of them are occupied, the enzyme is working at its maximum speed. This maximum velocity is called Vmax. The substrate concentration at which the reaction runs at half of Vmax is called Km, a measure of the enzyme's affinity for its substrate. A low Km means the enzyme binds its substrate tightly; a high Km means it binds weakly.
 
-    { q: "The role of pH and temperature.",
-      body: `Enzymes are sensitive to their environment. They work best at specific pH and temperature ranges, and outside those ranges they lose activity.
+These two parameters — Km and Vmax — are the fundamental properties of an enzyme. They can be measured in the laboratory, and they tell you everything about how the enzyme behaves in the cell. A drug that increases Km is a competitive inhibitor; a drug that decreases Vmax is a non-competitive inhibitor.
+
+Crucial insight: Km and Vmax are not just numbers — they are the signature of the enzyme. Every enzyme has its own characteristic values. Knowing them allows you to predict how the enzyme will behave under different conditions, how it will respond to drugs, and whether a mutation has affected its function.` },
+
+    { q: "The role of pH and temperature: why enzymes are fragile.",
+      body: `Enzymes are sensitive to their environment. They work best at specific pH and temperature ranges, and outside those ranges they lose activity — often permanently.
 
 My Socratic question: why does a fever over about 41 degrees become life-threatening even when it is the body's own defence?
 
-The answer is that enzymes are proteins, and proteins denature at high temperatures. Above a certain temperature, the enzyme's three-dimensional structure unfolds, the active site is destroyed, and the enzyme stops working. This is why hyperthermia is lethal - metabolism shuts down as enzymes denature.
+The answer is that enzymes are proteins, and proteins denature at high temperatures. Above a certain temperature, the enzyme's three-dimensional structure unfolds, the active site is destroyed, and the enzyme stops working. This is why hyperthermia is lethal — metabolism shuts down as enzymes denature.
 
-Crucial insight: pH sensitivity explains the specialised pH of different body compartments - the stomach has acid-active proteases, the intestine has neutral-active ones, and blood has enzymes that work at pH 7.4.` },
+pH sensitivity is equally important. Each enzyme has an optimal pH at which its charged groups are in the correct state for catalysis. The stomach's proteases work at pH 2, where they are fully protonated and active; the intestine's proteases work at pH 8, where they are deprotonated and active. A shift of even one pH unit can alter the charges on the active site and destroy function.
 
-    { q: "Regulation of enzyme activity.",
-      body: `Cells control metabolism by controlling enzymes. Several mechanisms do this.
+Crucial insight: pH and temperature sensitivity are not academic — they are the basis of febrile seizures, hyperthermia, acid-base disorders, and the reason you cannot store biological samples at room temperature. The enzyme's fragility is the source of both its control and its vulnerability.` },
+
+    { q: "Regulation of enzyme activity: how the cell controls its own chemistry.",
+      body: `Cells do not simply let enzymes run at full speed all the time. If they did, they would waste energy and produce unnecessary products. Enzyme activity is tightly regulated.
 
 My Socratic question: if an enzyme is producing too much of a product, what signal would tell it to slow down, and how would it receive that signal?
 
-The answer is feedback inhibition: the product of a pathway inhibits the first enzyme of the pathway. When product accumulates, it binds to the enzyme and slows its activity, preventing overproduction. This is a type of allosteric regulation - the inhibitor binds somewhere other than the active site, changing the enzyme's shape and slowing it down.
+The answer is feedback inhibition. The end product of a pathway inhibits the first enzyme of that pathway. When product accumulates, it binds to the enzyme and slows its activity, preventing overproduction. This is allosteric regulation — the inhibitor binds somewhere other than the active site, changing the enzyme's shape and slowing it down.
 
-Crucial insight: feedback inhibition is economical - it ensures the cell only makes what it needs, not more. This is also why many toxins and drugs work by inhibiting enzymes - they mimic the natural regulatory signals.` },
+There are other mechanisms as well. Allosteric activators bind to regulatory sites and increase activity. Covalent modification, such as phosphorylation, can turn enzymes on or off. Proteolytic cleavage can activate inactive zymogens. Gene expression controls how much enzyme is made. Each pathway has its own specific regulatory mechanisms, but the principle is the same: the cell controls its enzymes tightly.
 
-    { q: "Clinical relevance: enzymes in diagnosis.",
-      body: `Your knowledge of enzymes has direct clinical applications that you will see in the laboratory.
+Crucial insight: feedback inhibition is economical. It ensures the cell only makes what it needs, not more. It is also why many toxins and drugs work by inhibiting enzymes — they mimic the natural regulatory signals and shut down the pathway.` },
+
+    { q: "Clinical relevance: enzymes as diagnostic tools.",
+      body: `Your knowledge of enzymes has direct clinical applications that you will see in the laboratory every day.
 
 My Socratic question: when a patient has a heart attack, what biochemical clue appears in their blood that can confirm the diagnosis?
 
-The answer is cardiac enzymes. When heart muscle cells die, their contents spill into the blood, and enzymes such as creatine kinase and troponin can be measured. Elevated levels indicate muscle damage, and the pattern of elevation helps diagnose the type of injury.
+The answer is cardiac enzymes. When heart muscle cells die, their contents spill into the blood. Enzymes such as creatine kinase and troponin can be measured. Elevated levels indicate muscle damage, and the pattern of elevation helps diagnose the type of injury. The rise of troponin is now the gold standard for diagnosing a heart attack.
 
-Crucial insight: enzymes are both the workhorses of metabolism and the markers of disease. Measuring enzyme levels in blood is one of the most common laboratory tests you will perform and interpret.` }
+Enzyme levels are used to diagnose disease throughout the body. Elevated liver enzymes — ALT and AST — indicate liver cell injury. Elevated amylase and lipase indicate pancreatitis. Elevated alkaline phosphatase indicates bone or liver disease. In each case, the enzyme is not the disease itself — it is the marker of the damage.
+
+Crucial insight: enzymes are both the workhorses of metabolism and the markers of disease. Measuring enzyme levels in blood is one of the most common laboratory tests you will perform and interpret. The test you run in the lab is a test of enzyme activity, and the result is a window into tissue damage.` }
   ],
   theory: [
     { q: "Define an enzyme and explain its role in metabolism.", a: "An enzyme is a biological catalyst, typically a protein, that accelerates chemical reactions by lowering activation energy without being consumed. It enables the reactions of metabolism to proceed at rates fast enough to sustain life." },
@@ -1648,16 +1659,16 @@ Crucial insight: enzymes are both the workhorses of metabolism and the markers o
     { q: "Distinguish the lock-and-key model from the induced-fit model.", a: "Lock-and-key proposes a rigid active site matching the substrate exactly, like a key in a lock. Induced-fit proposes that the active site changes shape slightly upon substrate binding, adjusting to fit and orient the substrate more effectively for catalysis, explaining enzyme efficiency and flexibility." },
     { q: "What is the active site of an enzyme?", a: "The active site is the specific region on an enzyme where the substrate binds and the chemical reaction occurs. It is typically a pocket or cleft formed by the folded protein structure, with amino acid side chains positioned to catalyze the reaction." },
     { q: "Define apoenzyme, cofactor, and holoenzyme.", a: "The apoenzyme is the inactive protein portion of an enzyme. A cofactor is a non-protein helper (inorganic ion or organic coenzyme) required for activity. The complete active enzyme is the holoenzyme, apoenzyme plus cofactor." },
-    { q: "Explain enzyme specificity and why it matters clinically.", a: "Enzymes are specific to their substrates because the active site's shape and chemistry fit only certain substrates. This specificity allows drugs that target a specific bacterial enzyme without affecting human enzymes - giving selective antibiotics and precision therapeutics." },
-    { q: "What are Km and Vmax in enzyme kinetics?", a: "Vmax is the maximum reaction rate when all active sites are saturated with substrate. Km is the substrate concentration at which the reaction rate is half of Vmax, reflecting the enzyme's affinity for its substrate - a lower Km means higher affinity." },
+    { q: "Explain enzyme specificity and why it matters clinically.", a: "Enzymes are specific to their substrates because the active site's shape and chemistry fit only certain substrates. This specificity allows drugs that target a specific bacterial enzyme without affecting human enzymes — giving selective antibiotics and precision therapeutics." },
+    { q: "What are Km and Vmax in enzyme kinetics?", a: "Vmax is the maximum reaction rate when all active sites are saturated with substrate. Km is the substrate concentration at which the reaction rate is half of Vmax, reflecting the enzyme's affinity for its substrate — a lower Km means higher affinity." },
     { q: "Why are enzymes sensitive to pH and temperature?", a: "Enzymes are proteins and their three-dimensional structure depends on non-covalent interactions that are disrupted by extreme pH and temperature. Changing pH alters charge on amino acid side chains; high temperature denatures the protein, destroying the active site." },
     { q: "Explain feedback inhibition and how it contributes to metabolic control.", a: "In feedback inhibition, the end product of a metabolic pathway inhibits the first enzyme of the pathway. This prevents overproduction of the product, conserving resources and maintaining balance. It is an example of allosteric regulation, with the inhibitor binding outside the active site." },
     { q: "How are enzymes used in clinical diagnosis?", a: "Enzyme levels in blood indicate tissue damage or disease. Elevated cardiac enzymes (creatine kinase, troponin) indicate heart muscle damage; elevated liver enzymes indicate liver cell injury. Measuring these markers helps diagnose and monitor disease." },
   ],
   videos: [
-    { channel: "Amoeba Sisters", title: "Enzymes: The Biological Catalysts", note: "Animated explanation of activation energy, active sites, and enzyme function.", url: "https://www.youtube.com/results?search_query=Enzymes+biological+catalysts+explained" },
-    { channel: "Ninja Nerd", title: "Enzymes: Structure, Function and Regulation", note: "Detailed medical-level lecture covering enzyme kinetics and regulation.", url: "https://www.youtube.com/results?search_query=Enzymes+structure+function+regulation+Ninja+Nerd" },
-    { channel: "Khan Academy", title: "Enzymes and the Active Site", note: "Clear explanation of lock-and-key and induced-fit models.", url: "https://www.youtube.com/results?search_query=Khan+Academy+enzymes+active+site" },
+    { channel: "Ninja Nerd", title: "Enzymes: Structure, Function and Regulation", note: "Detailed medical-level lecture covering enzyme kinetics and regulation.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+enzymes+structure+function" },
+    { channel: "AK Lectures", title: "Enzymes: Catalysis and Active Sites", note: "Explains activation energy, active site, and the transition state with clear diagrams.", url: "https://www.youtube.com/results?search_query=AK+Lectures+enzymes+catalysis" },
+    { channel: "Osmosis", title: "Enzymes: The Catalysts of Life", note: "Clinical examples of enzyme function and dysfunction in disease.", url: "https://www.youtube.com/results?search_query=Osmosis+enzymes+clinical" },
   ],
   mcqs: [
     { q: "Enzymes are biological catalysts that primarily function to:", o: ["Change the equilibrium of a reaction", "Increase the activation energy of a reaction", "Lower the activation energy of a reaction", "Consume energy from a reaction"], a: 2, w: "Enzymes speed reactions by lowering activation energy, without changing the equilibrium." },
@@ -1686,73 +1697,84 @@ Crucial insight: enzymes are both the workhorses of metabolism and the markers o
     { q: "Enzyme activity can be regulated by all of the following EXCEPT:", o: ["pH", "Temperature", "Genetic mutation", "Substrate colour"], a: 3, w: "pH, temperature, and genetic changes can affect enzyme activity; substrate colour is irrelevant." },
     { q: "A competitive inhibitor reduces enzyme activity by:", o: ["Changing the Vmax", "Changing the Km and competing for the active site", "Denaturing the enzyme", "Destroying the cofactor"], a: 1, w: "Competitive inhibition increases Km (reduces apparent affinity) without changing Vmax." },
     { q: "The substrate concentration that gives half of Vmax is called:", o: ["Vmax/2", "Km", "kcat", "Hill coefficient"], a: 1, w: "Km is the concentration giving half maximal velocity." },
-    { q: "Which statement about enzymes is FALSE?", o: ["They are consumed in the reaction", "They are specific to their substrate", "They lower activation energy", "They are proteins in most cases"], a: 0, w: "Enzymes are catalysts - they are not consumed in the reaction." },
+    { q: "Which statement about enzymes is FALSE?", o: ["They are consumed in the reaction", "They are specific to their substrate", "They lower activation energy", "They are proteins in most cases"], a: 0, w: "Enzymes are catalysts — they are not consumed in the reaction." },
     { q: "Enzyme kinetics is the study of:", o: ["The structure of enzymes", "The rate of enzyme-catalysed reactions", "The amino acid sequence of enzymes", "The cofactor binding"], a: 1, w: "Kinetics studies reaction rates and factors affecting them." },
-    { q: "In the body, enzymes work best at:", o: ["Extreme pH", "Body temperature and physiological pH", "Room temperature and neutral pH", "High temperatures and acidic pH"], a: 1, w: "Enzymes are optimised for body conditions - pH 7.4 and 37°C in most tissues." },
+    { q: "In the body, enzymes work best at:", o: ["Extreme pH", "Body temperature and physiological pH", "Room temperature and neutral pH", "High temperatures and acidic pH"], a: 1, w: "Enzymes are optimised for body conditions — pH 7.4 and 37°C in most tissues." },
     { q: "The clinical measurement of enzyme levels in blood is used to:", o: ["Identify genetic disorders only", "Diagnose and monitor tissue damage and disease", "Measure drug levels", "Check blood type"], a: 1, w: "Enzyme levels rise when tissues are damaged, so measuring them helps diagnose diseases." },
   ],
 };
 
 // ==================== BIOCHEMISTRY TOPIC 2: ENZYME INHIBITION ====================
+// ==================== BIOCHEMISTRY TOPIC 2: ENZYME INHIBITION ====================
 const T_BCH_INHIBITION = {
   courseId: "bch",
   topicIndex: 2,
   title: "Enzyme Inhibition",
-  minutes: 18,
+  minutes: 22,
   note: [
-    { q: "Why study enzyme inhibition at all?",
-      body: `You have learned how enzymes work - now we study how they can be stopped. Enzyme inhibition is not just a biochemistry topic; it is the basis of most modern medicine.
+    { q: "Why does the body need to stop its own enzymes?",
+      body: `You have learned how enzymes work — now we study how they can be stopped. Enzyme inhibition is not just a biochemistry topic; it is the basis of most modern medicine, and it is how the body controls its own chemistry.
 
-My Socratic question: an antibiotic kills bacteria by blocking an enzyme that only the bacteria have. What is this called, and why does it not harm human cells?
+My Socratic question: the body's enzymes are constantly running, breaking down and building molecules. If an enzyme is producing too much of a product, or if a reaction is happening when it should not, how does the body stop it?
 
-The answer is selective toxicity - the drug inhibits a bacterial enzyme that has no human equivalent. By blocking that essential bacterial enzyme, the bacteria die while human cells are unaffected because they do not have that enzyme or pathway.
+The answer is that the body uses natural inhibitors to regulate enzyme activity. These inhibitors are molecules that bind to enzymes and decrease their activity. The cell uses them to control metabolism, to prevent wasteful overproduction, and to respond to changing conditions. Without inhibition, the cell would run out of control, consuming energy and producing useless products.
 
-Crucial insight: most modern medicines are enzyme inhibitors. Understanding inhibition is key to understanding pharmacology - from antibiotics to statins to cancer drugs.` },
+Crucial insight: enzyme inhibition is the body's brake pedal. It is not a failure of the enzyme — it is a deliberate, controlled mechanism. The same principles that the body uses to regulate its own enzymes are the principles that drug designers use to create medicines. Understanding inhibition is understanding pharmacology.` },
 
     { q: "Competitive inhibition: fighting for the active site.",
-      body: `A competitive inhibitor resembles the substrate and competes for the same active site. The inhibitor and substrate both try to bind to the active site, so increasing substrate concentration can overcome the inhibition.
+      body: `The first and simplest type of inhibition is competitive inhibition, where an inhibitor competes with the substrate for the same active site. The inhibitor resembles the substrate — it is a molecular mimic — and it occupies the active site, blocking the substrate from binding.
 
 My Socratic question: imagine a lock that two different keys try to fit. One key is the correct substrate; the other is the inhibitor. What determines which one opens the lock?
 
-The answer is concentration and affinity - if there is more substrate than inhibitor, the substrate is more likely to bind and the reaction proceeds; if inhibitor concentration is high, it occupies the active site and blocks the substrate. The inhibitor does not change the enzyme's structure - it just blocks the site temporarily.
+The answer is concentration and affinity. If there is more substrate than inhibitor, the substrate is more likely to bind and the reaction proceeds. If the inhibitor concentration is high, it occupies the active site and blocks the substrate. The inhibitor does not change the enzyme's structure — it just sits in the active site temporarily.
 
-Crucial insight: competitive inhibition is reversible and can be overcome by high substrate concentration. This is a major exam point: it increases Km (apparent lower affinity) but does not change Vmax.` },
+Because the inhibitor competes with the substrate, increasing substrate concentration can overcome the inhibition. If you flood the system with substrate, the substrate will outcompete the inhibitor, and the reaction will proceed at its normal rate. This is the defining feature of competitive inhibition: it is reversible.
+
+Crucial insight: competitive inhibition increases Km, the apparent affinity of the enzyme for its substrate, because the inhibitor makes it harder for the substrate to bind. But Vmax is unchanged, because high substrate concentration can still saturate the enzyme. This is the classic exam signature of competitive inhibition.` },
 
     { q: "Non-competitive inhibition: the lock in the wrong shape.",
       body: `A non-competitive inhibitor does not bind at the active site. Instead, it binds elsewhere on the enzyme, changing the enzyme's shape so that the active site no longer works properly.
 
-My Socratic question: a lock has been damaged so that even the correct key cannot turn. What kind of inhibitor does this represent, and can adding more substrate fix it?
+My Socratic question: a lock has been damaged so that even the correct key cannot turn it. The key still fits, but the lock is broken. What kind of inhibitor does this represent, and can adding more substrate fix it?
 
-The answer is non-competitive inhibition - adding more substrate cannot overcome it because the active site is distorted. The inhibitor changes the enzyme's conformation permanently in the sense that the enzyme is no longer catalytically active, and only removing the inhibitor can restore function.
+The answer is non-competitive inhibition. Adding more substrate cannot overcome it because the active site is distorted. The inhibitor has changed the enzyme's conformation, so the enzyme is no longer catalytically active even when the substrate is bound. The only way to restore activity is to remove the inhibitor.
 
-Crucial insight: non-competitive inhibition decreases Vmax (the enzyme cannot work as fast even when saturated) but does not change Km (the affinity for substrate is unchanged). This is the key difference tested in exams.` },
+Because the inhibitor binds away from the active site, it does not compete with the substrate. It can bind whether the substrate is present or not. This means that adding more substrate does not help — the enzyme is simply less efficient.
+
+Crucial insight: non-competitive inhibition decreases Vmax because the enzyme cannot work as fast even when saturated with substrate. But Km is unchanged because the affinity for the substrate is not affected. This is the key difference from competitive inhibition: in competitive inhibition, Km increases; in non-competitive inhibition, Vmax decreases.` },
 
     { q: "Uncompetitive inhibition: the hidden third type.",
       body: `A third, less common type is uncompetitive inhibition. Here, the inhibitor binds only to the enzyme-substrate complex, not to the free enzyme.
 
 My Socratic question: if an inhibitor only binds after the substrate has already attached, what effect would it have on the enzyme's apparent affinity and maximum velocity?
 
-The answer is that it decreases both Km and Vmax. The inhibitor traps the enzyme-substrate complex, making the enzyme appear to have higher affinity for the substrate (lower Km) because the complex cannot dissociate, but it also slows the reaction (lower Vmax) because the complex is locked.
+The answer is that it decreases both Km and Vmax. The inhibitor traps the enzyme-substrate complex, making the enzyme appear to have higher affinity for the substrate because the complex cannot dissociate. But it also slows the reaction because the complex is locked and cannot proceed to product.
 
-Crucial insight: uncompetitive inhibition is rare in physiology but important in drug design. Its kinetics are distinctive - both Km and Vmax decrease, unlike competitive (Km increases) or non-competitive (Vmax decreases only).` },
+Uncompetitive inhibition is rare in physiology but important in drug design. Its kinetics are distinctive — both Km and Vmax decrease, unlike competitive (Km increases) or non-competitive (Vmax decreases only). This distinctive signature makes it easy to identify in kinetic experiments.
+
+Crucial insight: the three types of reversible inhibition are distinguished by their effects on Km and Vmax. Competitive: Km increases, Vmax unchanged. Non-competitive: Km unchanged, Vmax decreases. Uncompetitive: both Km and Vmax decrease. This is a classic exam question, so hold these differences firmly.` },
 
     { q: "Irreversible inhibition: permanent damage.",
-      body: `Some inhibitors bind so tightly or form covalent bonds with the enzyme that the inhibition is permanent - the enzyme is destroyed, and new enzyme must be made to restore activity.
+      body: `Some inhibitors bind so tightly or form covalent bonds with the enzyme that the inhibition is permanent. The enzyme is destroyed, and new enzyme must be synthesised to restore activity.
 
 My Socratic question: aspirin irreversibly inhibits a cyclooxygenase enzyme. Why do the effects of aspirin last for days even though the drug has been cleared from the body?
 
-The answer is that aspirin covalently modifies the enzyme, permanently inactivating it. The body must synthesise new enzyme molecules, which takes time, so the effect persists long after the drug is gone. This is why aspirin is taken once daily, not multiple times - the enzyme stays inhibited.
+The answer is that aspirin covalently modifies the enzyme, permanently inactivating it. The body must synthesise new enzyme molecules, which takes time. The effect persists long after the drug is gone. This is why aspirin is taken once daily, not multiple times — the enzyme stays inhibited.
 
-Crucial insight: irreversible inhibitors are often toxins or drugs designed to have a prolonged effect. They form covalent bonds and permanently destroy enzyme activity until new enzyme is synthesised.` },
+Irreversible inhibitors are often toxins or drugs designed to have a prolonged effect. They form covalent bonds and permanently destroy enzyme activity until new enzyme is synthesised. This makes them powerful but also potentially dangerous.
+
+Crucial insight: irreversible inhibition is a covalent modification. The inhibitor does not simply block the active site — it chemically alters the enzyme. This is why the effect lasts so long and why new enzyme must be made to recover activity.` },
 
     { q: "Allosteric regulation: the body's natural inhibition.",
-      body: `Inhibition is not only from drugs - it is a natural regulatory mechanism. Allosteric effectors bind to regulatory sites on enzymes and change their activity.
+      body: `Inhibition is not only from drugs — it is a natural regulatory mechanism. Allosteric effectors bind to regulatory sites on enzymes and change their activity.
 
-My Socratic question: the end product of a pathway inhibits the first enzyme in that pathway - what does this prevent and why is it economical?
+My Socratic question: the end product of a pathway inhibits the first enzyme in that pathway. What does this prevent, and why is it economical?
 
-The answer is that it prevents overproduction - if the cell already has enough of a product, it shuts down the pathway, saving energy and resources. This is feedback inhibition, an allosteric regulation common in metabolism. The end product binds to an allosteric site on the first enzyme, changing its shape and slowing its activity.
+The answer is that it prevents overproduction. If the cell already has enough of a product, it shuts down the pathway, saving energy and resources. This is feedback inhibition, an allosteric regulation common in metabolism. The end product binds to an allosteric site on the first enzyme, changing its shape and slowing its activity.
 
-Crucial insight: allosteric regulation is how the cell controls its own metabolism, and it is a classic example of negative feedback - the system self-regulates to maintain balance.` },
+Allosteric regulation is how the cell controls its own metabolism, and it is a classic example of negative feedback — the system self-regulates to maintain balance. It is also why allosteric sites are such important drug targets.
+
+Crucial insight: allosteric regulation is the body's built-in control system. It is fast, reversible, and economical. Understanding it is understanding how the cell decides what to make and when to stop making it.` },
 
     { q: "Clinical applications: drugs that inhibit enzymes.",
       body: `Enzyme inhibitors are among the most important drugs in medicine, and understanding their mechanism is part of understanding therapy.
@@ -1761,7 +1783,9 @@ My Socratic question: the statin drugs lower cholesterol by inhibiting HMG-CoA r
 
 The answer is a competitive inhibitor that mimics the natural substrate for the enzyme. By blocking the enzyme, the liver produces less cholesterol, lowering blood levels. This is a classic example of competitive inhibition in therapy.
 
-Crucial insight: enzyme inhibitors treat disease across every organ system - from antibiotics (penicillin inhibits bacterial cell-wall enzymes) to antivirals (protease inhibitors block viral replication) to cancer therapy (kinase inhibitors block growth signals).` },
+Enzyme inhibitors treat disease across every organ system. Antibiotics such as penicillin inhibit bacterial cell-wall enzymes. Antivirals such as protease inhibitors block viral replication. Cancer therapies such as kinase inhibitors block growth signals. All are enzyme inhibitors.
+
+Crucial insight: enzyme inhibition is the mechanism behind most modern therapeutics. Understanding the type of inhibition — competitive, non-competitive, or irreversible — explains why the drug works, how it is dosed, and what side effects it might have.` },
 
     { q: "Penicillin: an irreversible inhibitor that changed medicine.",
       body: `Penicillin is one of the most important drugs in history, and it works by irreversible enzyme inhibition.
@@ -1770,29 +1794,35 @@ My Socratic question: penicillin inhibits an enzyme called transpeptidase, which
 
 The answer is that human cells do not have cell walls. The enzyme is unique to bacteria, so penicillin is selectively toxic. The inhibition is irreversible because penicillin covalently binds to the active site of transpeptidase, permanently inactivating it. The bacteria cannot build their cell walls and burst.
 
-Crucial insight: selective toxicity is the basis of antibiotic therapy - exploiting differences between bacterial and human cells to kill the pathogen without harming the patient.` },
+This is the basis of antibiotic therapy — exploiting differences between bacterial and human cells to kill the pathogen without harming the patient.
+
+Crucial insight: selective toxicity is the holy grail of drug design. If you can find a target that the pathogen needs but the patient does not, you can inhibit it without side effects. Penicillin is the classic example.` },
 
     { q: "Diagnosing diseases with enzyme inhibition.",
-      body: `Enzyme inhibition is not only for treatment - it is also used in diagnosis, and this matters to you as a future laboratory scientist.
+      body: `Enzyme inhibition is not only for treatment — it is also used in diagnosis, and this matters to you as a future laboratory scientist.
 
 My Socratic question: some patients lack the enzyme that breaks down lactose. They cannot digest milk. How is this condition diagnosed, and what is the mechanism?
 
-The answer is lactose intolerance, diagnosed by a lactose tolerance test that measures blood glucose after a lactose load. The mechanism is simple - if lactose cannot be broken down to glucose and galactose, glucose levels do not rise, confirming the deficiency. The enzyme is present but not functional.
+The answer is lactose intolerance, diagnosed by a lactose tolerance test that measures blood glucose after a lactose load. The mechanism is simple — if lactose cannot be broken down to glucose and galactose, glucose levels do not rise, confirming the deficiency.
 
-Crucial insight: many diseases are due to enzyme deficiency or inhibition, and laboratory tests often measure enzyme activity to diagnose these conditions.` },
+Many diseases are due to enzyme deficiency or inhibition, and laboratory tests often measure enzyme activity to diagnose these conditions. The test you run in the lab is a test of enzyme function, and the result tells you whether the enzyme is working or not.
+
+Crucial insight: enzyme inhibition and deficiency are the basis of many diseases. The laboratory is where these defects are detected. Understanding the enzyme is understanding the test.` },
 
     { q: "Why inhibition matters for drug development.",
       body: `In drug development, understanding inhibition is central to designing drugs that target specific enzymes.
 
 My Socratic question: to design a drug that inhibits an enzyme, what must the drug molecule be able to do, and how is this tested?
 
-The answer is that the drug must fit the enzyme's active site or another regulatory site. This is tested through screening compounds and measuring the kinetics of inhibition - determining the IC50 (concentration that inhibits 50% of activity) and the mechanism of inhibition (competitive, non-competitive, or mixed).
+The answer is that the drug must fit the enzyme's active site or another regulatory site. This is tested through screening compounds and measuring the kinetics of inhibition — determining the IC50, the concentration that inhibits 50% of activity, and the mechanism of inhibition, competitive, non-competitive, or mixed.
 
-Crucial insight: the principles of inhibition are the same in drug design - you are trying to create a molecule that will block a specific enzyme target, and the tools you use are kinetics and understanding the active site.` }
+The principles of inhibition are the same in drug design as they are in biochemistry. You are trying to create a molecule that will block a specific enzyme target, and the tools you use are kinetics and an understanding of the active site. Every drug on the market started with this same approach.
+
+Crucial insight: drug discovery is enzyme inhibition at scale. The same kinetics you study in biochemistry are the kinetics used in drug screening. Understanding inhibition is understanding how medicines are made.` }
   ],
   theory: [
     { q: "What is enzyme inhibition and why is it clinically important?", a: "Enzyme inhibition is the process of decreasing or stopping enzyme activity. It is clinically important because most drugs work by inhibiting specific enzymes, such as antibiotics inhibiting bacterial enzymes and statins inhibiting cholesterol synthesis." },
-    { q: "Define competitive inhibition and its effect on Km and Vmax.", a: "Competitive inhibition occurs when an inhibitor competes with the substrate for binding at the active site. It increases Km (apparent lower affinity) but does not change Vmax - the maximum rate can still be reached if substrate is high enough." },
+    { q: "Define competitive inhibition and its effect on Km and Vmax.", a: "Competitive inhibition occurs when an inhibitor competes with the substrate for binding at the active site. It increases Km (apparent lower affinity) but does not change Vmax — the maximum rate can still be reached if substrate is high enough." },
     { q: "Define non-competitive inhibition and its effect on Km and Vmax.", a: "Non-competitive inhibition occurs when an inhibitor binds away from the active site, changing the enzyme's shape. It decreases Vmax (the enzyme cannot work as fast) but does not change Km (affinity for substrate is unchanged)." },
     { q: "Define uncompetitive inhibition and its effect on Km and Vmax.", a: "Uncompetitive inhibition occurs when an inhibitor binds only to the enzyme-substrate complex, not the free enzyme. It decreases both Km (apparent higher affinity) and Vmax (slower reaction), because the complex is trapped." },
     { q: "How does irreversible inhibition differ from reversible inhibition?", a: "Irreversible inhibitors form covalent bonds with the enzyme or bind so tightly that activity is permanently lost until new enzyme is synthesised. Reversible inhibitors bind non-covalently and can be removed, allowing activity to recover." },
@@ -1803,8 +1833,8 @@ Crucial insight: the principles of inhibition are the same in drug design - you 
     { q: "Define IC50 and its significance in drug development.", a: "IC50 is the concentration of inhibitor that inhibits 50% of the enzyme's activity. It is a measure of drug potency; a lower IC50 indicates a more potent inhibitor." },
   ],
   videos: [
-    { channel: "Ninja Nerd", title: "Enzyme Inhibition: Competitive, Non-competitive, Uncompetitive", note: "Detailed breakdown of inhibition types and their kinetics.", url: "https://www.youtube.com/results?search_query=Enzyme+inhibition+competitive+noncompetitive+Ninja+Nerd" },
-    { channel: "Khan Academy", title: "Enzyme Inhibition and Clinical Applications", note: "How inhibitors work in the body and in drug therapy.", url: "https://www.youtube.com/results?search_query=Khan+Academy+enzyme+inhibition" },
+    { channel: "Ninja Nerd", title: "Enzyme Inhibition: Competitive, Non-competitive, Uncompetitive", note: "Detailed breakdown of inhibition types and their kinetics.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+enzyme+inhibition+competitive+noncompetitive" },
+    { channel: "AK Lectures", title: "Enzyme Inhibitors and Drug Design", note: "How inhibitors are used in medicine and drug development.", url: "https://www.youtube.com/results?search_query=AK+Lectures+enzyme+inhibitors+drug+design" },
     { channel: "Osmosis", title: "Enzyme Inhibition Pharmacology", note: "Clinical examples of enzyme inhibition in medicine.", url: "https://www.youtube.com/results?search_query=Osmosis+enzyme+inhibition+pharmacology" },
   ],
   mcqs: [
@@ -1821,7 +1851,7 @@ Crucial insight: the principles of inhibition are the same in drug design - you 
     { q: "Irreversible inhibitors bind to enzymes by:", o: ["Hydrogen bonds", "Ionic bonds", "Covalent bonds", "Hydrophobic interactions"], a: 2, w: "Irreversible inhibitors form covalent bonds, permanently inactivating the enzyme." },
     { q: "Allosteric regulation involves binding at:", o: ["The active site", "A regulatory site away from the active site", "The substrate binding site only", "The cofactor"], a: 1, w: "Allosteric effectors bind at a site other than the active site, changing enzyme shape." },
     { q: "Feedback inhibition is a type of:", o: ["Competitive inhibition", "Irreversible inhibition", "Allosteric regulation", "Covalent modification"], a: 2, w: "Feedback inhibition typically involves allosteric binding of the end product." },
-    { q: "The IC50 is a measure of:", o: ["Enzyme affinity", "Drug potency - lower means more potent", "Substrate binding", "Vmax"], a: 1, w: "A lower IC50 means less inhibitor is needed to reduce activity by half, so the drug is more potent." },
+    { q: "The IC50 is a measure of:", o: ["Enzyme affinity", "Drug potency — lower means more potent", "Substrate binding", "Vmax"], a: 1, w: "A lower IC50 means less inhibitor is needed to reduce activity by half, so the drug is more potent." },
     { q: "Statins lower cholesterol by inhibiting:", o: ["HMG-CoA reductase", "Lipase", "Amylase", "Kinase"], a: 0, w: "Statins competitively inhibit HMG-CoA reductase, the rate-limiting step in cholesterol synthesis." },
     { q: "Penicillin inhibits the bacterial enzyme:", o: ["Lipase", "Transpeptidase", "Protease", "Kinase"], a: 1, w: "Penicillin irreversibly inhibits transpeptidase, blocking bacterial cell wall synthesis." },
     { q: "Human cells are unaffected by penicillin because they:", o: ["Produce more enzyme", "Lack cell walls", "Have a different version of the enzyme", "Destroy penicillin"], a: 1, w: "Human cells do not have cell walls, so the target enzyme is absent." },
@@ -1836,7 +1866,7 @@ Crucial insight: the principles of inhibition are the same in drug design - you 
     { q: "The therapeutic effect of statins is due to:", o: ["Increasing cholesterol absorption", "Competitively inhibiting HMG-CoA reductase", "Activating cholesterol synthesis", "Destroying HDL"], a: 1, w: "Statins block cholesterol synthesis by inhibiting HMG-CoA reductase." },
     { q: "A drug with a lower IC50 is:", o: ["Less potent", "More potent", "Equally potent", "Not related to potency"], a: 1, w: "Lower IC50 means less drug is needed to inhibit 50% of activity, so it is more potent." },
     { q: "Allosteric inhibitors change enzyme activity by:", o: ["Competing for the active site", "Binding at a regulatory site and changing shape", "Destroying the enzyme", "Removing the cofactor"], a: 1, w: "Allosteric inhibitors bind away from the active site and change the enzyme's shape." },
-    { q: "Feedback inhibition is an example of:", o: ["Positive feedback", "Negative feedback regulation", "Uncompetitive inhibition", "Irreversible inhibition"], a: 1, w: "Feedback inhibition is negative feedback - the product inhibits the first enzyme to prevent overproduction." },
+    { q: "Feedback inhibition is an example of:", o: ["Positive feedback", "Negative feedback regulation", "Uncompetitive inhibition", "Irreversible inhibition"], a: 1, w: "Feedback inhibition is negative feedback — the product inhibits the first enzyme to prevent overproduction." },
     { q: "The most important clinical application of enzyme inhibition is:", o: ["Increasing metabolic rate", "Drug therapy targeting specific enzymes", "Preventing all enzyme activity", "Destroying all proteins"], a: 1, w: "Enzyme inhibitors are the basis of most drug therapy." },
   ],
 };
@@ -1846,47 +1876,49 @@ const T_BCH_GLYCOLYSIS = {
   courseId: "bch",
   topicIndex: 3,
   title: "Glycolysis",
-  minutes: 22,
+  minutes: 25,
   note: [
     { q: "What is glycolysis and why does every cell need it?",
-      body: `You have learned about enzymes and how they can be inhibited. Now we apply that knowledge to the most fundamental energy-producing pathway in the body: glycolysis.
+      body: `You have learned about enzymes and how they can be inhibited. Now we apply that knowledge to the most fundamental energy-producing pathway in the body: glycolysis. This is the pathway that every cell in your body uses, every moment of every day, to extract energy from glucose.
 
 My Socratic question: every cell in your body needs energy to survive, but not every cell has mitochondria. How does a red blood cell, which has no mitochondria, produce the ATP it needs to keep working?
 
-The answer is glycolysis - a pathway that breaks down glucose into two molecules of pyruvate, producing a small but crucial amount of ATP in the process. It operates in the cytosol of every cell, requires no oxygen, and is the foundation upon which all other energy metabolism is built.
+The answer is glycolysis — a pathway that breaks down glucose into two molecules of pyruvate, producing a small but crucial amount of ATP in the process. It operates in the cytosol of every cell, requires no oxygen, and is the foundation upon which all other energy metabolism is built. Even cells with mitochondria rely on glycolysis as the first step of glucose oxidation. Without glycolysis, life would be impossible.
 
-Crucial insight: glycolysis is the universal energy pathway - it works in every cell, with or without oxygen, and it is the starting point for both aerobic respiration and fermentation. Understanding glycolysis is understanding how your cells survive when oxygen is scarce.` },
+Crucial insight: glycolysis is the universal energy pathway. It works in every cell, with or without oxygen, and it is the starting point for both aerobic respiration and fermentation. Understanding glycolysis is understanding how your cells survive when oxygen is scarce, how red blood cells generate energy, and how cancer cells fuel their rapid growth.` },
 
     { q: "Where does glycolysis happen and what does it cost?",
-      body: `Glycolysis takes place in the cytosol - the fluid part of the cell outside the organelles. It is a sequence of ten enzyme-catalysed reactions that convert one molecule of glucose (six carbons) into two molecules of pyruvate (three carbons each).
+      body: `Glycolysis takes place in the cytosol — the fluid part of the cell outside the organelles. It is a sequence of ten enzyme-catalysed reactions that convert one molecule of glucose (six carbons) into two molecules of pyruvate (three carbons each).
 
 My Socratic question: if glycolysis produces ATP, why does it first consume ATP? Doesn't that seem wasteful?
 
-The answer is that the initial ATP investment is necessary to make the glucose molecule reactive enough to be split. Think of it like pushing a car to start it - you put energy in first, and later you get more energy back. The first phase of glycolysis uses two ATP molecules to phosphorylate glucose and its product, making them unstable and ready to be cleaved.
+The answer is that the initial ATP investment is necessary to make the glucose molecule reactive enough to be split. Think of it like pushing a car to start it — you put energy in first, and later you get more energy back. The first phase of glycolysis uses two ATP molecules to phosphorylate glucose and its product, making them unstable and ready to be cleaved.
 
-Crucial insight: glycolysis has two phases - an energy-investment phase that costs 2 ATP, and an energy-harvest phase that produces 4 ATP, for a net gain of 2 ATP per glucose. The investment is not waste; it is the price of making the reaction go.` },
+Glycolysis has two phases: the energy-investment phase, which costs 2 ATP, and the energy-harvest phase, which produces 4 ATP, for a net gain of 2 ATP per glucose. The investment is not waste; it is the price of making the reaction go. Without it, glucose would be too stable to break down.
+
+Crucial insight: glycolysis is an energy-yielding pathway, but it has an energy cost. The net gain of 2 ATP may seem small, but it is the difference between life and death for cells without mitochondria, and it is the foundation of all further energy production.` },
 
     { q: "The energy-investment phase: steps 1 to 5.",
-      body: `The first half of glycolysis uses two ATP molecules to prepare glucose for splitting.
+      body: `The first half of glycolysis uses two ATP molecules to prepare glucose for splitting. This phase is sometimes called the preparatory phase because it makes glucose chemically reactive.
 
-Step 1: Hexokinase phosphorylates glucose to glucose-6-phosphate, trapping it inside the cell. Step 2: Phosphoglucose isomerase rearranges it to fructose-6-phosphate. Step 3: Phosphofructokinase-1 (PFK-1) adds another phosphate, using ATP, to form fructose-1,6-bisphosphate - this is the committed step and the main regulatory point of glycolysis. Step 4: Aldolase splits the six-carbon sugar into two three-carbon molecules: dihydroxyacetone phosphate (DHAP) and glyceraldehyde-3-phosphate (G3P). Step 5: Triose phosphate isomerase converts DHAP into G3P, giving two molecules of G3P.
+Step 1: Hexokinase phosphorylates glucose to glucose-6-phosphate, trapping it inside the cell. The phosphate group prevents glucose from leaving, and the phosphorylation destabilises the molecule. Step 2: Phosphoglucose isomerase rearranges glucose-6-phosphate to fructose-6-phosphate. Step 3: Phosphofructokinase-1 (PFK-1) adds another phosphate, using ATP, to form fructose-1,6-bisphosphate. This is the committed step and the main regulatory point of glycolysis. Once this step occurs, the molecule is committed to being broken down. Step 4: Aldolase splits the six-carbon sugar into two three-carbon molecules: dihydroxyacetone phosphate (DHAP) and glyceraldehyde-3-phosphate (G3P). Step 5: Triose phosphate isomerase converts DHAP into G3P, giving two molecules of G3P.
 
 My Socratic question: of all the enzymes in glycolysis, PFK-1 is the most important control point. Why would the cell want to regulate this specific step so tightly?
 
-The answer is that PFK-1 catalyses the committed step - the first irreversible reaction unique to glycolysis. Once glucose passes this point, it is committed to being broken down for energy. Regulating PFK-1 allows the cell to control the entire pathway's speed based on energy needs.
+The answer is that PFK-1 catalyses the committed step — the first irreversible reaction unique to glycolysis. Once glucose passes this point, it is committed to being broken down for energy. Regulating PFK-1 allows the cell to control the entire pathway's speed based on energy needs. If the cell has plenty of ATP, PFK-1 is inhibited; if it needs energy, PFK-1 is activated.
 
-Crucial insight: the investment phase costs 2 ATP and produces two molecules of G3P. The control point is PFK-1, which is inhibited by ATP and activated by AMP - the cell's energy sensor.` },
+Crucial insight: the investment phase costs 2 ATP and produces two molecules of G3P. The control point is PFK-1, which is inhibited by ATP and activated by AMP — the cell's energy sensor. This is the cell's way of saying "slow down" when energy is abundant and "speed up" when energy is needed.` },
 
     { q: "The energy-harvest phase: steps 6 to 10.",
-      body: `The second half of glycolysis harvests the energy stored in the G3P molecules, producing ATP and NADH.
+      body: `The second half of glycolysis harvests the energy stored in the G3P molecules, producing ATP and NADH. This is where the cell gets its return on the ATP investment.
 
-Step 6: Glyceraldehyde-3-phosphate dehydrogenase oxidises G3P, reducing NAD+ to NADH and adding a phosphate to form 1,3-bisphosphoglycerate. Step 7: Phosphoglycerate kinase transfers that phosphate to ADP, producing ATP - this is substrate-level phosphorylation, the first ATP production of the pathway. Step 8: Phosphoglycerate mutase rearranges 3-phosphoglycerate to 2-phosphoglycerate. Step 9: Enolase removes water to form phosphoenolpyruvate (PEP), a high-energy compound. Step 10: Pyruvate kinase transfers the phosphate from PEP to ADP, producing the second ATP and forming pyruvate.
+Step 6: Glyceraldehyde-3-phosphate dehydrogenase oxidises G3P, reducing NAD+ to NADH and adding a phosphate to form 1,3-bisphosphoglycerate. This is the first oxidation step, and it produces the NADH that will carry electrons to the electron transport chain if oxygen is present. Step 7: Phosphoglycerate kinase transfers that phosphate to ADP, producing ATP. This is substrate-level phosphorylation — making ATP directly from a high-energy phosphate, without the electron transport chain. This is the first ATP production of the pathway. Step 8: Phosphoglycerate mutase rearranges 3-phosphoglycerate to 2-phosphoglycerate. Step 9: Enolase removes water to form phosphoenolpyruvate (PEP), a high-energy compound. Step 10: Pyruvate kinase transfers the phosphate from PEP to ADP, producing the second ATP and forming pyruvate.
 
 My Socratic question: since steps 6 and 7 happen twice (for each G3P molecule), how many ATP and NADH are produced in the harvest phase?
 
 The answer is that each G3P produces 2 ATP (one in step 7 and one in step 10) and 1 NADH. With two G3P molecules from one glucose, the harvest phase yields 4 ATP and 2 NADH. Subtract the 2 ATP invested, and the net gain is 2 ATP and 2 NADH per glucose.
 
-Crucial insight: substrate-level phosphorylation - making ATP directly from a high-energy phosphate - is how glycolysis produces energy. The NADH produced carries electrons to the electron transport chain if oxygen is present, linking glycolysis to aerobic respiration.` },
+Crucial insight: substrate-level phosphorylation — making ATP directly from a high-energy phosphate — is how glycolysis produces energy. The NADH produced carries electrons to the electron transport chain if oxygen is present, linking glycolysis to aerobic respiration.` },
 
     { q: "The net reaction and energy balance.",
       body: `Let us put the entire pathway together into one balanced equation.
@@ -1897,7 +1929,9 @@ My Socratic question: two ATP net is not very much energy compared to the 36 ATP
 
 The answer is that glycolysis is fast, requires no oxygen, and works in every cell. It provides immediate energy when oxygen is scarce (during exercise) or when the cell has no mitochondria (red blood cells). The 2 ATP per glucose may seem small, but when glucose is plentiful and the pathway runs rapidly, it can supply enough energy to keep the cell alive until oxygen becomes available.
 
-Crucial insight: glycolysis trades efficiency for speed and versatility. It is the body's emergency energy system and its universal baseline - the pathway that runs when nothing else can.` },
+Glycolysis is also the gateway to further energy production. The pyruvate it produces can enter the mitochondria and be fully oxidised to carbon dioxide and water, producing far more ATP. The NADH it produces can feed the electron transport chain. Glycolysis is not the end of glucose metabolism — it is the beginning.
+
+Crucial insight: glycolysis trades efficiency for speed and versatility. It is the body's emergency energy system and its universal baseline — the pathway that runs when nothing else can. But it is also the entry point for the high-yield aerobic pathways that produce the bulk of the body's ATP.` },
 
     { q: "Regulation of glycolysis: the cell's energy sensor.",
       body: `Glycolysis is tightly regulated to match the cell's energy needs, and the control points are exactly where you would predict.
@@ -1906,36 +1940,40 @@ The most important regulatory enzyme is phosphofructokinase-1 (PFK-1), which cat
 
 My Socratic question: imagine a cell that is already full of ATP. Why would it want to slow down glycolysis, and how does PFK-1 achieve this?
 
-The answer is that slowing glycolysis when energy is abundant prevents wasteful glucose breakdown and saves glucose for other uses, like building glycogen. PFK-1 achieves this by sensing the ATP/AMP ratio - when ATP is high, it binds to PFK-1's allosteric site and changes its shape, reducing its activity.
+The answer is that slowing glycolysis when energy is abundant prevents wasteful glucose breakdown and saves glucose for other uses, like building glycogen. PFK-1 achieves this by sensing the ATP/AMP ratio — when ATP is high, it binds to PFK-1's allosteric site and changes its shape, reducing its activity. When ATP is low and AMP is high, PFK-1 is activated, speeding up glycolysis to produce more ATP.
 
-Crucial insight: glycolysis is regulated at three key enzymes - hexokinase, PFK-1, and pyruvate kinase - with PFK-1 being the master regulator. The control is allosteric, responding to the cell's energy status in real time.` },
+Crucial insight: glycolysis is regulated at three key enzymes — hexokinase, PFK-1, and pyruvate kinase — with PFK-1 being the master regulator. The control is allosteric, responding to the cell's energy status in real time. This is the cell's way of balancing energy supply and demand.` },
 
     { q: "The fate of pyruvate: aerobic versus anaerobic.",
       body: `The end product of glycolysis is pyruvate, and what happens next depends entirely on whether oxygen is available.
 
 My Socratic question: when you sprint, your muscles run out of oxygen and start burning. What happens to the pyruvate produced by glycolysis in this oxygen-poor state, and why does this matter?
 
-The answer is that pyruvate is converted to lactate (lactic acid) by lactate dehydrogenase, regenerating NAD+ so glycolysis can continue. This is anaerobic glycolysis - it produces only 2 ATP per glucose but can run very fast, allowing short bursts of intense activity. When oxygen is available, pyruvate enters the mitochondria and is completely oxidised to carbon dioxide and water, producing far more ATP.
+The answer is that pyruvate is converted to lactate (lactic acid) by lactate dehydrogenase, regenerating NAD+ so glycolysis can continue. This is anaerobic glycolysis — it produces only 2 ATP per glucose but can run very fast, allowing short bursts of intense activity.
 
-Crucial insight: the fate of pyruvate decides whether the cell is running in aerobic or anaerobic mode. In aerobic conditions, pyruvate enters the TCA cycle; in anaerobic conditions, it becomes lactate. The choice is made by oxygen availability and the need for rapid ATP production.` },
+When oxygen is available, pyruvate enters the mitochondria and is converted to acetyl-CoA, which enters the TCA cycle. The TCA cycle produces NADH and FADH2, which feed the electron transport chain, producing far more ATP — about 36 ATP per glucose instead of 2.
+
+Crucial insight: the fate of pyruvate decides whether the cell is running in aerobic or anaerobic mode. In aerobic conditions, pyruvate enters the TCA cycle and the cell gets maximum energy. In anaerobic conditions, it becomes lactate, allowing glycolysis to continue at the cost of incomplete oxidation. The choice is made by oxygen availability and the need for rapid ATP production.` },
 
     { q: "Glycolysis in red blood cells and cancer.",
       body: `Two special cases show how important glycolysis is: red blood cells, which have no mitochondria, and cancer cells, which prefer glycolysis even when oxygen is available.
 
-Red blood cells rely entirely on glycolysis for ATP because they have no mitochondria. Without glycolysis, they could not maintain their membrane pumps or survive their 120-day lifespan.
+Red blood cells rely entirely on glycolysis for ATP because they have no mitochondria. Without glycolysis, they could not maintain their membrane pumps or survive their 120-day lifespan. The ATP produced by glycolysis is the only energy they have.
 
-My Socratic question: cancer cells often switch to glycolysis even when oxygen is present - a phenomenon called the Warburg effect. Why would a cancer cell choose a less efficient pathway when oxygen is available?
+My Socratic question: cancer cells often switch to glycolysis even when oxygen is present — a phenomenon called the Warburg effect. Why would a cancer cell choose a less efficient pathway when oxygen is available?
 
-The answer is that glycolysis provides not just ATP but also building blocks for new cell growth - the intermediates of glycolysis are precursors for amino acids, nucleotides, and lipids. Cancer cells use glycolysis to fuel rapid growth, even though it is less efficient in ATP terms.
+The answer is that glycolysis provides not just ATP but also building blocks for new cell growth. The intermediates of glycolysis are precursors for amino acids, nucleotides, and lipids. Cancer cells use glycolysis to fuel rapid growth, even though it is less efficient in ATP terms. The Warburg effect is a hallmark of cancer metabolism.
 
-Crucial insight: glycolysis is not just an energy pathway - it is a source of biosynthetic precursors. This is why it is so central to metabolism and why it is upregulated in rapidly dividing cells, including cancer.` },
+Crucial insight: glycolysis is not just an energy pathway — it is a source of biosynthetic precursors. This is why it is so central to metabolism and why it is upregulated in rapidly dividing cells, including cancer. Targeting glycolysis is a promising strategy in cancer therapy.` },
 
     { q: "Clinical relevance: glycolysis in diagnosis and disease.",
       body: `Your understanding of glycolysis has direct clinical applications that you will see in the laboratory.
 
 My Socratic question: a patient with poorly controlled diabetes has high blood glucose. How does this affect glycolysis, and what can you measure to assess it?
 
-The answer is that high glucose drives glycolysis in tissues that do not require insulin, such as the brain and red blood cells. In diabetes, the classic laboratory finding is elevated HbA1c - glycosylated haemoglobin - which reflects average blood glucose over the previous 2-3 months. The glucose that enters red blood cells (via glycolysis) attaches to haemoglobin, and the amount of attachment reflects the glucose concentration.
+The answer is that high glucose drives glycolysis in tissues that do not require insulin, such as the brain and red blood cells. In diabetes, the classic laboratory finding is elevated HbA1c — glycosylated haemoglobin — which reflects average blood glucose over the previous 2-3 months. The glucose that enters red blood cells (via glycolysis) attaches to haemoglobin, and the amount of attachment reflects the glucose concentration.
+
+Glycolysis is also involved in other diseases. Deficiencies in glycolytic enzymes cause rare but serious genetic disorders. Cancer cells show increased glycolysis, which can be detected with PET scans. The pathway you are learning is the pathway behind some of the most common laboratory tests.
 
 Crucial insight: glycolysis is the pathway that processes glucose in red blood cells, and it is the source of the HbA1c measurement used to monitor diabetes. Understanding the pathway helps you understand the test.` },
 
@@ -1948,7 +1986,7 @@ My Socratic question: if glycolysis produces only 2 ATP per glucose, why is it c
 
 The answer is that it connects to everything. Glycolysis is the entry point for all carbohydrates into metabolism. It produces pyruvate, which feeds the TCA cycle. It produces NADH, which feeds the electron transport chain. It produces intermediates that build amino acids, lipids, and nucleotides. And it runs in every cell, with or without oxygen. Everything else is built on this pathway.
 
-Crucial insight: glycolysis is the universal pathway of energy metabolism - it runs in every cell, connects to every other pathway, and is the starting point for understanding how the body processes nutrients. Master glycolysis, and you have the foundation for understanding the rest of metabolism.` }
+Crucial insight: glycolysis is the universal pathway of energy metabolism. It runs in every cell, connects to every other pathway, and is the starting point for understanding how the body processes nutrients. Master glycolysis, and you have the foundation for understanding the rest of metabolism.` }
   ],
   theory: [
     { q: "Define glycolysis and state its location in the cell.", a: "Glycolysis is the metabolic pathway that converts glucose (a six-carbon sugar) into two molecules of pyruvate (three-carbon molecules), producing a net of 2 ATP and 2 NADH. It takes place in the cytosol of all cells and does not require oxygen." },
@@ -1963,9 +2001,9 @@ Crucial insight: glycolysis is the universal pathway of energy metabolism - it r
     { q: "Write the balanced overall equation for glycolysis.", a: "Glucose + 2 NAD+ + 2 ADP + 2 Pi -> 2 Pyruvate + 2 NADH + 2 H+ + 2 ATP + 2 H2O." },
   ],
   videos: [
-    { channel: "Ninja Nerd", title: "Glycolysis Pathway Explained", note: "Detailed step-by-step walkthrough of all 10 steps with structures and regulation.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+glycolysis+pathway" },
-    { channel: "Khan Academy", title: "Glycolysis Overview and Steps", note: "Clear explanation of the investment and harvest phases with energy accounting.", url: "https://www.youtube.com/results?search_query=Khan+Academy+glycolysis+steps" },
-    { channel: "Amoeba Sisters", title: "Glycolysis Cellular Respiration", note: "Animated overview of the pathway and its role in energy production.", url: "https://www.youtube.com/results?search_query=Amoeba+Sisters+glycolysis" },
+    { channel: "Ninja Nerd", title: "Glycolysis Pathway Explained", note: "Detailed step-by-step walkthrough of all 10 steps with structures and regulation.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+glycolysis+pathway+explained" },
+    { channel: "AK Lectures", title: "Glycolysis: Energy Investment and Harvest", note: "Clear explanation of the investment and harvest phases with energy accounting.", url: "https://www.youtube.com/results?search_query=AK+Lectures+glycolysis+investment+harvest" },
+    { channel: "Osmosis", title: "Glycolysis and Cellular Respiration", note: "Clinical relevance of glycolysis in disease and diagnosis.", url: "https://www.youtube.com/results?search_query=Osmosis+glycolysis+clinical" },
   ],
   mcqs: [
     { q: "Glycolysis takes place in which cellular compartment?", o: ["Mitochondria", "Cytosol", "Nucleus", "Endoplasmic reticulum"], a: 1, w: "Glycolysis occurs in the cytosol of the cell." },
@@ -1998,6 +2036,166 @@ Crucial insight: glycolysis is the universal pathway of energy metabolism - it r
     { q: "Glycolysis is considered the foundation of metabolism because:", o: ["It produces the most ATP", "It only works in the liver", "It connects to all other metabolic pathways and runs in every cell", "It requires oxygen"], a: 2, w: "Glycolysis connects to all pathways and runs in every cell." },
     { q: "The NADH produced in glycolysis is used in:", o: ["The TCA cycle", "The electron transport chain (with oxygen present)", "Fermentation only", "Gluconeogenesis"], a: 1, w: "NADH carries electrons to the electron transport chain when oxygen is present." },
     { q: "Without glycolysis, red blood cells would:", o: ["Produce more ATP", "Use oxygen", "Be unable to survive", "Divide rapidly"], a: 2, w: "Red blood cells depend entirely on glycolysis and would die without it." },
+  ],
+};
+
+// ==================== BIOCHEMISTRY TOPIC 4: FRUCTOSE AND GALACTOSE METABOLISM ====================
+const T_BCH_FRUCTOSE = {
+  courseId: "bch",
+  topicIndex: 4,
+  title: "Fructose and Galactose Metabolism",
+  minutes: 22,
+  note: [
+    { q: "Why does the body need separate pathways for fructose and galactose?",
+      body: `You have learned glycolysis — the universal pathway that breaks down glucose to extract energy. But your diet contains more than just glucose. Fruits, honey, and vegetables provide fructose. Milk and dairy products provide galactose. These sugars are structurally different from glucose, and they cannot simply enter glycolysis as they are.
+
+My Socratic question: glycolysis is a carefully controlled pathway with specific enzymes that recognise glucose. If fructose or galactose were forced into glycolysis without modification, what would happen?
+
+The answer is that they would not be recognised by the enzymes of glycolysis. The first enzyme of glycolysis, hexokinase, specifically phosphorylates glucose. It does not work on fructose or galactose. So the body must first convert these sugars into forms that can enter glycolysis. This is why separate pathways exist — they are adaptations that allow the body to extract energy from all dietary sugars.
+
+Crucial insight: fructose and galactose metabolism is not about creating new pathways — it is about converting these sugars into intermediates that glycolysis can use. Both pathways converge on glycolysis, demonstrating that glucose metabolism is the central hub of carbohydrate breakdown.` },
+
+    { q: "What is fructose, and where does it come from?",
+      body: `Fructose is a simple sugar, a monosaccharide, with the same chemical formula as glucose — C6H12O6 — but a different structure. It is found naturally in fruits, honey, root vegetables, and sugar cane. It is also added to many processed foods and beverages in the form of high-fructose corn syrup (HFCS), which is a mixture of fructose and glucose.
+
+My Socratic question: glucose and fructose have the same molecular formula but different structures. How does this structural difference affect their metabolism?
+
+The answer is that the structural difference determines how each sugar is processed. Glucose exists in a six-membered ring (pyranose), while fructose exists in a five-membered ring (furanose). This difference means that the enzymes that act on glucose cannot act on fructose. Fructose must be metabolised by its own set of enzymes, beginning with fructokinase instead of hexokinase.
+
+Crucial insight: the structural difference between fructose and glucose is not just a chemical curiosity. It dictates the entire metabolic pathway and explains why fructose is processed differently in the body, with important health implications.` },
+
+    { q: "What is galactose, and where does it come from?",
+      body: `Galactose is another monosaccharide, with the same formula as glucose. It is not found free in nature to any significant extent; instead, it is bound to glucose to form lactose, the disaccharide found in milk and dairy products.
+
+My Socratic question: lactose is a disaccharide made of glucose and galactose. When you drink milk, lactose is broken down by lactase into glucose and galactose. How does the body then process the galactose?
+
+The answer is that galactose must be converted to glucose-6-phosphate before it can enter glycolysis. This conversion occurs through a series of four reactions called the Leloir pathway. The Leloir pathway ensures that the galactose from milk can be used for energy, just like glucose.
+
+Crucial insight: the Leloir pathway is essential for utilising the galactose from dairy products. A deficiency in any of its enzymes causes galactosemia, a serious genetic disorder that requires a galactose-free diet from birth.` },
+
+    { q: "The fructose pathway: step by step.",
+      body: `Fructose metabolism occurs primarily in the liver, where the enzyme fructokinase is most active. The pathway has three main steps, and each is essential for converting fructose into a form that can enter glycolysis.
+
+Step 1: Fructose is phosphorylated by fructokinase to form fructose-1-phosphate. This step uses ATP and traps fructose inside the cell. Unlike hexokinase, which is inhibited by its product glucose-6-phosphate, fructokinase is not inhibited, so fructose phosphorylation is unregulated.
+
+Step 2: Fructose-1-phosphate is cleaved by aldolase B into two three-carbon molecules: dihydroxyacetone phosphate (DHAP) and glyceraldehyde. Aldolase B is the key enzyme of fructose metabolism, and its deficiency causes hereditary fructose intolerance.
+
+Step 3: Glyceraldehyde is phosphorylated by triose kinase to form glyceraldehyde-3-phosphate (G3P). Both DHAP and G3P then enter glycolysis at the level of G3P, bypassing the PFK-1 step.
+
+Crucial insight: the conversion of fructose to G3P bypasses the main regulatory enzyme of glycolysis, PFK-1. This means fructose is metabolised without the normal energy-sensing controls, which has important health consequences when fructose is consumed in large amounts.` },
+
+    { q: "Why fructose bypasses PFK-1 and what that means for health.",
+      body: `The most important difference between fructose and glucose metabolism is where each enters glycolysis. Glucose enters at the top, through hexokinase, and is regulated by PFK-1. Fructose enters downstream of PFK-1, at the level of G3P and DHAP.
+
+My Socratic question: PFK-1 is the cell's energy sensor, inhibited by ATP and activated by AMP. Why would bypassing this sensor be a problem for the cell?
+
+The answer is that PFK-1 normally slows down glycolysis when ATP is high, preventing unnecessary glucose breakdown and conserving resources. Fructose bypasses this control, so it continues to be metabolised even when energy is abundant. The result is that fructose is rapidly converted to fat — a process called de novo lipogenesis — which contributes to fatty liver disease and metabolic syndrome.
+
+Crucial insight: the bypass of PFK-1 explains why fructose is more harmful than glucose when consumed in excess. The liver cannot slow down fructose metabolism, so it is rapidly converted to fat, contributing to insulin resistance, obesity, and cardiovascular disease.` },
+
+    { q: "The Leloir pathway: step by step.",
+      body: `The Leloir pathway is the series of reactions that convert galactose into glucose-6-phosphate. It consists of four enzymes and is essential for utilising galactose from dairy products.
+
+Step 1: Galactose is phosphorylated by galactokinase to form galactose-1-phosphate. This step uses ATP and traps galactose inside the cell. Galactokinase deficiency causes a mild form of galactosemia.
+
+Step 2: Galactose-1-phosphate is converted to glucose-1-phosphate by galactose-1-phosphate uridyltransferase, using UDP-glucose as a cofactor. This is the key step of the Leloir pathway. The enzyme transfers the galactose group from galactose-1-phosphate to UDP-glucose, forming glucose-1-phosphate and UDP-galactose.
+
+Step 3: UDP-galactose is converted back to UDP-glucose by UDP-galactose 4-epimerase. This recycles the UDP-glucose cofactor, allowing the pathway to continue.
+
+Step 4: Glucose-1-phosphate is converted to glucose-6-phosphate by phosphoglucomutase. Glucose-6-phosphate then enters glycolysis normally.
+
+Crucial insight: the Leloir pathway is essential for life. A deficiency in galactose-1-phosphate uridyltransferase causes classic galactosemia, a serious condition that requires a galactose-free diet from birth to prevent liver failure, cataracts, and intellectual disability.` },
+
+    { q: "Clinical relevance: hereditary fructose intolerance.",
+      body: `Hereditary fructose intolerance (HFI) is a genetic disorder caused by a deficiency of aldolase B, the enzyme that cleaves fructose-1-phosphate. It is an autosomal recessive condition, meaning both parents must carry the defective gene.
+
+My Socratic question: a child with undiagnosed HFI is given fruit juice and becomes severely ill, with vomiting, hypoglycemia, and liver failure. What is happening at the biochemical level?
+
+The answer is that fructose is phosphorylated to fructose-1-phosphate by fructokinase, but cannot be cleaved by aldolase B. Fructose-1-phosphate accumulates inside liver cells, trapping phosphate and depleting ATP. The liver cannot produce glucose, leading to severe hypoglycemia. The accumulated fructose-1-phosphate also damages the liver, causing hepatomegaly and, over time, cirrhosis.
+
+Crucial insight: HFI is a serious condition that can be fatal if not diagnosed. Treatment is a strict fructose-free diet, avoiding fruits, honey, and foods containing HFCS. Diagnosis is confirmed by a liver biopsy or genetic testing.` },
+
+    { q: "Clinical relevance: galactosemia.",
+      body: `Galactosemia is a genetic disorder caused by a deficiency of galactose-1-phosphate uridyltransferase, the key enzyme of the Leloir pathway. It is autosomal recessive and is one of the most common genetic disorders screened for at birth.
+
+My Socratic question: a newborn is given a standard milk-based formula and develops vomiting, jaundice, and lethargy within days. What is the diagnosis, and why is early detection so important?
+
+The answer is classic galactosemia. Galactose-1-phosphate accumulates because it cannot be converted to glucose-1-phosphate. This accumulation causes damage to the liver, kidneys, brain, and eyes. Cataracts develop as galactose is converted to galactitol, which accumulates in the lens of the eye. The liver damage can progress to cirrhosis and liver failure.
+
+Crucial insight: newborn screening for galactosemia is routine in many countries because early diagnosis and dietary intervention can prevent the severe complications of the disease. Treatment is a strict galactose-free diet, avoiding all milk and dairy products for life.` },
+
+    { q: "Fructose and metabolic syndrome: the bigger picture.",
+      body: `The unique properties of fructose metabolism have made it a major focus of nutrition research. The widespread use of high-fructose corn syrup (HFCS) in processed foods and beverages has led to a dramatic increase in fructose consumption over the past several decades.
+
+My Socratic question: the body can metabolise fructose, so why has its increased consumption been linked to obesity, diabetes, and fatty liver disease?
+
+The answer is that fructose bypasses the normal regulatory controls of glycolysis. It does not stimulate insulin release, so it does not promote satiety. It does not suppress ghrelin, the hunger hormone, so it does not reduce appetite. And because it bypasses PFK-1, it is rapidly converted to fat in the liver. Over time, this leads to hepatic steatosis (fatty liver), insulin resistance, and the metabolic syndrome.
+
+Crucial insight: the metabolic effects of fructose are not due to its caloric content alone — they are due to its unique biochemistry. Fructose is not inherently toxic, but in the amounts consumed in the modern diet, it contributes significantly to metabolic disease.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for fructose and galactose metabolism, in five lines.
+
+Fructose: phosphorylated by fructokinase, split by aldolase B into DHAP and glyceraldehyde, and enters glycolysis at G3P, bypassing PFK-1 regulation. Its unregulated metabolism promotes lipogenesis.
+
+Galactose: converted by the Leloir pathway to glucose-6-phosphate and enters glycolysis normally. The key enzyme is galactose-1-phosphate uridyltransferase.
+
+Clinical relevance: hereditary fructose intolerance (aldolase B deficiency) causes severe hypoglycemia and liver damage after fructose ingestion. Galactosemia (transferase deficiency) causes liver failure, cataracts, and intellectual disability if untreated.
+
+Treatment: both conditions require dietary modification — fructose-free for HFI, galactose-free for galactosemia.
+
+The bigger picture: fructose bypasses glycolysis regulation, contributing to metabolic disease when consumed in excess.
+
+Now your final test. A 6-month-old infant is brought to the emergency department with vomiting, lethargy, and jaundice. The parents report that the baby has been breastfed and was recently started on a fruit-based baby food.
+
+Question one: what is the most likely diagnosis, and which enzyme is deficient?
+Question two: what biochemical process explains the hypoglycemia?
+Question three: what is the treatment, and what foods must be avoided?
+
+Work them through before reading on.
+
+My answers. One: hereditary fructose intolerance, caused by a deficiency of aldolase B, the enzyme that cleaves fructose-1-phosphate into DHAP and glyceraldehyde. Two: fructose-1-phosphate accumulates in the liver, trapping phosphate and depleting ATP. The liver cannot produce glucose, leading to severe hypoglycemia. Three: treatment is a strict fructose-free diet, avoiding all fruits, honey, table sugar, and foods containing high-fructose corn syrup.
+
+If those came cleanly, you understand the metabolism of fructose and galactose, the genetic disorders that affect their pathways, and the health implications of fructose in the modern diet.` }
+  ],
+  theory: [
+    { q: "Why must fructose and galactose be metabolised differently from glucose?", a: "They have different structures and cannot enter glycolysis directly. They must be converted into intermediates of glycolysis through specific pathways: fructose through the fructokinase-aldolase B pathway, and galactose through the Leloir pathway." },
+    { q: "What is the first step of fructose metabolism and which enzyme catalyses it?", a: "Fructose is phosphorylated by fructokinase to form fructose-1-phosphate, using ATP. This traps fructose inside the cell and prepares it for cleavage by aldolase B." },
+    { q: "How does fructose enter glycolysis and why is this significant?", a: "Fructose-1-phosphate is cleaved by aldolase B into DHAP and glyceraldehyde. Glyceraldehyde is phosphorylated to G3P, and both DHAP and G3P enter glycolysis downstream of PFK-1. This bypasses the main regulatory step, meaning fructose is metabolised without energy-sensing controls." },
+    { q: "What is the Leloir pathway and why is it important?", a: "The Leloir pathway is a series of four reactions that convert galactose into glucose-6-phosphate. It involves galactokinase, galactose-1-phosphate uridyltransferase, UDP-galactose 4-epimerase, and phosphoglucomutase. It is essential for utilising galactose from dairy products." },
+    { q: "What is the key enzyme of the Leloir pathway and what happens when it is deficient?", a: "The key enzyme is galactose-1-phosphate uridyltransferase. Its deficiency causes classic galactosemia, a serious condition in which galactose-1-phosphate accumulates, causing liver damage, cataracts, and intellectual disability if untreated." },
+    { q: "What is hereditary fructose intolerance and what enzyme is deficient?", a: "Hereditary fructose intolerance is a genetic disorder caused by a deficiency of aldolase B, the enzyme that cleaves fructose-1-phosphate. Consuming fructose leads to severe hypoglycemia, liver damage, and can be fatal if not treated." },
+    { q: "What is the difference between essential fructosuria and hereditary fructose intolerance?", a: "Essential fructosuria is a benign condition caused by fructokinase deficiency; fructose appears in urine but causes no symptoms. Hereditary fructose intolerance is a serious condition caused by aldolase B deficiency, leading to severe metabolic disturbances." },
+    { q: "Why is high-fructose corn syrup linked to metabolic disease?", a: "Fructose bypasses PFK-1 regulation and is rapidly converted to fat in the liver (lipogenesis). It does not stimulate insulin or suppress ghrelin, leading to increased calorie intake and metabolic dysfunction." },
+    { q: "What is the treatment for galactosemia?", a: "A strict galactose-free and lactose-free diet must be maintained for life, avoiding all milk and dairy products. Early diagnosis through newborn screening prevents severe complications." },
+    { q: "Why does fructose consumption contribute to fatty liver disease?", a: "Fructose bypasses the regulatory controls of glycolysis and is rapidly converted to fat through de novo lipogenesis in the liver. This leads to accumulation of triglycerides and hepatic steatosis." },
+  ],
+  videos: [
+    { channel: "Ninja Nerd", title: "Fructose and Galactose Metabolism", note: "Detailed walkthrough of both pathways with regulation and clinical correlates.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+fructose+galactose+metabolism" },
+    { channel: "AK Lectures", title: "Fructose Metabolism and Regulation", note: "Focus on how fructose bypasses glycolysis regulation and its clinical implications.", url: "https://www.youtube.com/results?search_query=AK+Lectures+fructose+metabolism" },
+    { channel: "Osmosis", title: "Galactosemia and Fructose Intolerance", note: "Clinical aspects of galactose and fructose metabolism disorders.", url: "https://www.youtube.com/results?search_query=Osmosis+galactosemia+fructose+intolerance" },
+  ],
+  mcqs: [
+    { q: "Fructose is primarily metabolised in which organ?", o: ["Kidney", "Liver", "Brain", "Muscle"], a: 1, w: "The liver is the primary site of fructose metabolism, where it is converted to fructose-1-phosphate by fructokinase." },
+    { q: "The enzyme that phosphorylates fructose to fructose-1-phosphate is:", o: ["Hexokinase", "Glucokinase", "Fructokinase", "Phosphofructokinase"], a: 2, w: "Fructokinase specifically phosphorylates fructose to fructose-1-phosphate." },
+    { q: "Fructose-1-phosphate is cleaved by which enzyme?", o: ["Aldolase A", "Aldolase B", "Aldolase C", "Fructokinase"], a: 1, w: "Aldolase B, which is found primarily in the liver, cleaves fructose-1-phosphate into DHAP and glyceraldehyde." },
+    { q: "Hereditary fructose intolerance is caused by a deficiency of:", o: ["Fructokinase", "Aldolase B", "Hexokinase", "Phosphofructokinase"], a: 1, w: "Hereditary fructose intolerance is caused by aldolase B deficiency, leading to severe symptoms after fructose consumption." },
+    { q: "Fructose metabolism bypasses which key regulatory enzyme of glycolysis?", o: ["Hexokinase", "Pyruvate kinase", "Aldolase", "Phosphofructokinase-1 (PFK-1)"], a: 3, w: "Fructose enters glycolysis at G3P, bypassing PFK-1, the main regulatory step of glycolysis." },
+    { q: "The Leloir pathway converts galactose into:", o: ["Fructose-6-phosphate", "Glucose-6-phosphate", "Glyceraldehyde-3-phosphate", "Pyruvate"], a: 1, w: "The Leloir pathway converts galactose into glucose-6-phosphate, which then enters glycolysis." },
+    { q: "The key enzyme of the Leloir pathway is:", o: ["Galactokinase", "Galactose-1-phosphate uridyltransferase", "UDP-galactose 4-epimerase", "Phosphoglucomutase"], a: 1, w: "Galactose-1-phosphate uridyltransferase is the key enzyme; its deficiency causes classic galactosemia." },
+    { q: "Galactosemia is caused by a deficiency of:", o: ["Lactase", "Galactokinase", "Galactose-1-phosphate uridyltransferase", "Phosphoglucomutase"], a: 2, w: "Classic galactosemia is caused by a deficiency of galactose-1-phosphate uridyltransferase." },
+    { q: "A patient with galactosemia must avoid:", o: ["Glucose", "Fructose", "Lactose and galactose", "Sucrose"], a: 2, w: "Galactosemia requires a strict galactose-free and lactose-free diet for life." },
+    { q: "Newborn screening for galactosemia is performed because:", o: ["It is easy to test", "Early treatment prevents severe complications", "It is required by law", "All newborns are at risk"], a: 1, w: "Early diagnosis and dietary treatment can prevent severe complications including liver failure, cataracts, and intellectual disability." },
+    { q: "Essential fructosuria is caused by a deficiency of:", o: ["Aldolase B", "Fructokinase", "Galactokinase", "Lactase"], a: 1, w: "Essential fructosuria is caused by fructokinase deficiency and is a benign condition with no symptoms." },
+    { q: "Unlike glucose, fructose does not stimulate the release of:", o: ["Glucagon", "Insulin", "Cortisol", "Growth hormone"], a: 1, w: "Fructose does not stimulate insulin release, which means it does not promote satiety." },
+    { q: "Excess fructose in the liver is rapidly converted to:", o: ["Glycogen", "Fat (lipogenesis)", "Glucose", "Ketones"], a: 1, w: "Fructose bypasses glycolysis regulation and is converted to fat through de novo lipogenesis." },
+    { q: "The accumulation of galactose-1-phosphate in galactosemia causes damage to:", o: ["Muscle", "Brain, liver, and eyes (cataracts)", "Bone", "Pancreas"], a: 1, w: "Galactose-1-phosphate accumulation damages the liver, brain, and causes cataracts." },
+    { q: "Fructose is converted to fat more readily than glucose because:", o: ["It enters glycolysis at a controlled point", "It bypasses PFK-1 regulation", "It is less soluble", "It is metabolised in muscles"], a: 1, w: "Bypassing PFK-1 allows fructose to be metabolised rapidly without energy-sensing controls, leading to increased fat synthesis." },
+    { q: "The enzyme that converts UDP-galactose back to UDP-glucose is:", o: ["Galactose-1-phosphate uridyltransferase", "UDP-galactose 4-epimerase", "Phosphoglucomutase", "Galactokinase"], a: 1, w: "UDP-galactose 4-epimerase converts UDP-galactose back to UDP-glucose, recycling the cofactor." },
+    { q: "Which of the following is NOT a feature of fructose metabolism?", o: ["Bypasses PFK-1", "Uses fructokinase", "Uses aldolase B", "Requires insulin for entry into cells"], a: 3, w: "Fructose does not require insulin for entry into cells; it is taken up independently of insulin." },
+    { q: "The enzyme that converts glucose-1-phosphate to glucose-6-phosphate is:", o: ["Phosphoglucomutase", "Galactose-1-phosphate uridyltransferase", "UDP-galactose 4-epimerase", "Hexokinase"], a: 0, w: "Phosphoglucomutase converts glucose-1-phosphate to glucose-6-phosphate, which enters glycolysis." },
+    { q: "A patient with hereditary fructose intolerance who consumes fructose will develop:", o: ["Hyperglycaemia", "Hypoglycaemia and liver damage", "Lactic acidosis", "Ketoacidosis"], a: 1, w: "Fructose-1-phosphate accumulates, trapping phosphate and depleting ATP, leading to hypoglycaemia and liver damage." },
+    { q: "The primary treatment for galactosemia is:", o: ["Insulin therapy", "A galactose-free diet", "Fructose restriction", "Enzyme replacement"], a: 1, w: "Galactosemia is treated with a strict galactose-free and lactose-free diet for life." },
   ],
 };
 
@@ -3811,6 +4009,364 @@ If those came cleanly, you understand how cells move substances uphill to defy d
   ],
 };
 
+// ==================== BIOLOGICAL CHEMISTRY TOPIC 1: ISOMERISM ====================
+// ==================== BIOLOGICAL CHEMISTRY TOPIC 1: ISOMERISM ====================
+const T_BIO_ISOMERISM = {
+  courseId: "bio",
+  topicIndex: 0,
+  title: "Isomerism",
+  minutes: 22,
+  note: [
+    { q: "Why does a biochemist need to understand isomerism at all?",
+      body: `You have learned the structures of molecules — how atoms bond to form the building blocks of life. But there is a hidden problem: the same set of atoms can arrange themselves in different ways, producing molecules with entirely different properties. This is isomerism, and it is one of the most important concepts in biochemistry.
+
+My Socratic question: glucose and fructose have the exact same chemical formula — C6H12O6. Yet glucose is the primary fuel of every cell, and fructose is metabolised by a different pathway. How can two molecules with the same formula behave so differently?
+
+The answer is that the arrangement of atoms matters as much as the atoms themselves. Isomers are compounds that have the same molecular formula but different structural arrangements. These differences change how the molecule interacts with enzymes, receptors, and other molecules in the body. A single atom moved to a different position can turn a nutrient into a toxin, or a drug into a poison.
+
+Consider this: the drug thalidomide was sold as a mixture of two isomers. One relieved morning sickness; the other caused severe birth defects. Same formula, same atoms, different arrangement — and the difference between a treatment and a tragedy.
+
+Crucial insight: isomerism is the reason that the same chemical formula can produce different molecules with different functions. Understanding isomerism is essential for understanding why some drugs work, why some sugars are metabolised differently, and why the body is so specific in its biochemical reactions.` },
+
+    { q: "What is the first major division of isomerism?",
+      body: `All isomers fall into two great categories, and the distinction is fundamental to understanding the entire topic. The first category is constitutional isomerism, also called structural isomerism. The second is stereoisomerism.
+
+My Socratic question: imagine two houses built from the same set of bricks. One has the rooms arranged in a straight line; the other has them arranged in a circle. Both houses have the same materials, but the arrangement is different. What is the biochemical equivalent of this?
+
+The answer is constitutional isomerism. In constitutional isomers, the atoms are connected in different orders. The connections are different, so the molecules are different compounds. They have different physical properties — different boiling points, different melting points, different solubilities. And they can have different biological activities.
+
+Stereoisomers, by contrast, have the same connections between atoms — the same order of bonds — but the atoms are arranged differently in three-dimensional space. This is a more subtle form of isomerism, but it is the one that is most important in biochemistry because it explains how enzymes recognise specific molecules.
+
+Crucial insight: the first question to ask about any pair of isomers is whether they have different connections (constitutional) or the same connections but different 3D arrangements (stereoisomers). This distinction organises the entire topic.` },
+
+    { q: "What are constitutional isomers, and why do they matter in medicine?",
+      body: `Constitutional isomers, also called structural isomers, have the same molecular formula but different connections between atoms. They are different compounds with different properties, and this has real clinical consequences.
+
+My Socratic question: pentane and isopentane both have the formula C5H12. One is a straight chain; the other is branched. How does this difference affect their physical properties, and why does this matter in biochemistry?
+
+The answer is that the branching changes the shape of the molecule and the strength of intermolecular forces. Branched isomers have lower boiling points than straight-chain isomers because they are more compact and have less surface area for intermolecular interactions. In biochemistry, the arrangement of atoms determines how a molecule fits into an active site.
+
+This is why enzymes are so specific. An enzyme that recognises a straight-chain molecule may not recognise its branched isomer. This specificity is the basis of metabolic control and drug action. A single atom moved to a different position can turn a nutrient into a toxin, which is why drug design must consider all possible isomers.
+
+Crucial insight: structural isomers are different compounds with different properties. In the body, enzymes recognise specific arrangements of atoms, so even subtle changes in structure can dramatically affect biological activity.` },
+
+    { q: "What are stereoisomers, and why are they more subtle than structural isomers?",
+      body: `Stereoisomers are more subtle than structural isomers. They have the same connections between atoms, but the atoms are arranged differently in three-dimensional space. This is the kind of isomerism that is most important in biochemistry, and it is the kind that students often find most difficult.
+
+My Socratic question: your right hand and left hand are mirror images — they look the same, but they cannot be superimposed. How does this concept apply to molecules, and why does it matter in medicine?
+
+The answer is that some molecules are chiral — they exist as mirror-image forms called enantiomers. Enantiomers have identical chemical and physical properties in most ways. They have the same boiling point, same melting point, same solubility. But they interact differently with other chiral molecules, including enzymes and receptors.
+
+This is why one enantiomer of a drug can be active while the other is inactive or even harmful. The active enantiomer fits into the enzyme's active site like a key in a lock. The inactive enantiomer does not fit, or it fits into a different site, causing side effects. This is the basis of stereospecificity in biochemistry.
+
+Crucial insight: chirality is fundamental to life. The amino acids in proteins are all L-amino acids, and the sugars in DNA are all D-sugars. Life is chiral, and stereoisomerism is the reason that biological molecules have such specific interactions. Without chirality, life as we know it would not exist.` },
+
+    { q: "What are enantiomers, and how did they change medicine forever?",
+      body: `Enantiomers are stereoisomers that are non-superimposable mirror images of each other. They are like your left hand and your right hand — identical in structure but not identical in space. They are chiral, and they rotate plane-polarised light in opposite directions.
+
+My Socratic question: the drug thalidomide was sold as a mixture of two enantiomers. One enantiomer relieved morning sickness; the other caused severe birth defects. How is this possible if they have the same formula and the same physical properties?
+
+The answer is that enzymes and receptors are chiral, and they recognise only one enantiomer. The active enantiomer of thalidomide bound to the receptor and had the desired effect. The inactive enantiomer did not bind to that receptor, but it did bind to another target, causing the damage. This is why modern drugs are often sold as single enantiomers, not racemic mixtures.
+
+The thalidomide tragedy is a powerful reminder that chirality is not just an academic concept. It has real consequences for human health. Today, drug companies are required to study the effects of each enantiomer separately before a drug can be approved, and the development of single-enantiomer drugs has become a standard practice.
+
+Crucial insight: enantiomers can have dramatically different biological effects. The study of enantiomers is essential in pharmacology, where the wrong enantiomer can be ineffective or dangerous. The thalidomide tragedy changed drug regulation forever.` },
+
+    { q: "What are diastereomers, and how do they differ from enantiomers?",
+      body: `Diastereomers are stereoisomers that are not mirror images. They are more common than enantiomers and can be separated by physical methods like chromatography because they have different physical properties.
+
+My Socratic question: if enantiomers are mirror images, what are stereoisomers that are not mirror images called, and why do they matter in biochemistry?
+
+The answer is that diastereomers have different physical and chemical properties, unlike enantiomers, which are identical except in chiral environments. Diastereomers can have different melting points, boiling points, and solubilities, which makes them easier to separate. In biochemistry, the distinction between enantiomers and diastereomers is important for understanding carbohydrate and protein structure.
+
+Carbohydrates are a perfect example. Glucose and galactose are diastereomers. They have the same formula, the same connections, but the arrangement of atoms around one carbon is different. This difference means that glucose and galactose are metabolised by different pathways, and galactose must be converted by the Leloir pathway before it can be used. This is a direct clinical consequence of diastereomerism.
+
+Crucial insight: diastereomers are the stereoisomers that can be separated and studied more easily. They are also the type of stereoisomerism that gives carbohydrates their complexity. Understanding diastereomers is essential for understanding sugar metabolism and the structure of complex carbohydrates.` },
+
+    { q: "What is optical activity, and how do we detect chirality?",
+      body: `Chiral molecules rotate plane-polarised light. This property, called optical activity, is how chemists detect and study chirality in the laboratory.
+
+My Socratic question: a solution of pure glucose rotates plane-polarised light to the right. A solution of pure fructose also rotates plane-polarised light. Why does this happen, and what does it tell us about the molecules?
+
+The answer is that chiral molecules have a property called optical activity. When plane-polarised light passes through a solution of a chiral compound, the plane of polarisation is rotated. The direction and amount of rotation depend on the structure of the molecule and its concentration. This happens because chiral molecules interact differently with the left- and right-handed components of plane-polarised light.
+
+Enantiomers rotate light in opposite directions by the same amount. A mixture of equal amounts of both enantiomers — a racemic mixture — does not rotate light at all because the rotations cancel out. This is why racemic mixtures are optically inactive. The measurement of optical activity is a powerful tool for determining the purity and concentration of chiral compounds.
+
+Crucial insight: optical activity is a powerful tool for studying chirality. It allows chemists to determine the purity of enantiomeric mixtures and to study the properties of chiral molecules. It is also the reason that sugar solutions rotate light, which is used in polarimetry to measure sugar concentration in clinical and industrial settings.` },
+
+    { q: "What is the D and L system, and why is it essential for understanding biological molecules?",
+      body: `The D and L system is a way of describing the stereochemistry of chiral molecules, particularly sugars and amino acids. It is based on the orientation of the hydroxyl group on the chiral carbon furthest from the carbonyl group.
+
+My Socratic question: why are all natural sugars D-sugars and all natural amino acids L-amino acids? What would happen if the wrong isomer were used?
+
+The answer is that enzymes are stereospecific — they recognise only one isomer. D-glucose is metabolised by glycolysis; L-glucose cannot be metabolised because it does not fit the enzymes. Similarly, L-amino acids are used to build proteins; D-amino acids are not recognised by the protein synthesis machinery.
+
+This stereospecificity is essential for life. If the wrong isomer were incorporated into biological molecules, proteins would not fold correctly, enzymes would not work, and the organism would not survive. This is why life is homochiral — it uses only one enantiomer of each chiral molecule. This is one of the most fundamental properties of life.
+
+Crucial insight: the D and L system is essential for understanding the stereochemistry of biological molecules. Natural sugars are D; natural amino acids are L. This stereospecificity is the basis of life's biochemistry and is essential for the function of enzymes and receptors.` },
+
+    { q: "What is racemisation, and why does it matter in medicine and biology?",
+      body: `Racemisation is the process by which a pure enantiomer is converted into a racemic mixture. It can occur spontaneously or be catalysed by enzymes, and it has important implications for drug stability and protein aging.
+
+My Socratic question: amino acids are chiral, and proteins are built from L-amino acids. Over time, L-amino acids can undergo racemisation to D-amino acids. Why does this matter in biology and medicine?
+
+The answer is that racemisation changes the structure of proteins over time. In living organisms, enzymes maintain the correct stereochemistry. But in non-living tissues, such as the lens of the eye or archaeological samples, racemisation can be used as a dating tool. In medicine, racemisation can affect the efficacy and safety of chiral drugs.
+
+For example, the drug thalidomide underwent racemisation in the body, converting the safe enantiomer into the toxic one. This was one of the factors that contributed to the thalidomide tragedy. Understanding racemisation is essential for understanding drug stability and safety, and for developing stable chiral drugs.
+
+Crucial insight: racemisation is the loss of chirality. It is important in drug stability, protein aging, and dating biological samples. Understanding racemisation is essential for understanding chirality in biological systems and for developing stable chiral drugs.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for isomerism, in five lines.
+
+Constitutional (structural) isomers: different connections between atoms. Different physical and chemical properties. Examples include pentane and isopentane.
+
+Stereoisomers: same connections, different 3D arrangement. Enantiomers are mirror images; diastereomers are not.
+
+Chirality: the property of having non-superimposable mirror images. Biological molecules are chiral, and enzymes recognise specific enantiomers.
+
+Optical activity: the rotation of plane-polarised light by chiral molecules. Used to detect and study chirality.
+
+D and L system: D-sugars and L-amino acids are the natural forms in living organisms.
+
+Racemisation: the conversion of a pure enantiomer into a racemic mixture.
+
+Clinical relevance: enantiomers can have different biological effects, making chirality essential in pharmacology. The thalidomide tragedy changed drug regulation.
+
+Now your final test. A new drug is synthesised as a 50:50 mixture of two enantiomers. One enantiomer is the active therapeutic agent; the other causes significant side effects.
+
+Question one: what type of isomers are these, and what term describes the mixture?
+Question two: what would be the best strategy to develop a safer version of this drug?
+Question three: why do the two enantiomers have different biological effects, and why is this important in medicine?
+
+Work them through before reading on.
+
+My answers. One: they are enantiomers, and the mixture is called a racemic mixture. Two: the best strategy would be to synthesise the active enantiomer separately and market it as a single enantiomer, eliminating the side effects. This is called chiral switching. Three: enzymes and receptors are chiral and recognise only one enantiomer, so the inactive enantiomer either does not bind effectively or binds to a different target causing side effects. This is important because it determines the safety and efficacy of drugs.` }
+  ],
+  theory: [
+    { q: "What is isomerism and why is it important in biochemistry?", a: "Isomerism is the existence of different compounds with the same molecular formula. It is important because different isomers have different structures and properties, and they interact differently with biological molecules such as enzymes and receptors. This determines the function of drugs, sugars, and hormones." },
+    { q: "What are constitutional (structural) isomers?", a: "Constitutional isomers have the same molecular formula but different connections between atoms. They have different physical properties and can have different chemical reactivities. Examples include pentane and isopentane." },
+    { q: "What are stereoisomers?", a: "Stereoisomers have the same connections between atoms but different arrangements in three-dimensional space. They include enantiomers (mirror images) and diastereomers (non-mirror-image stereoisomers)." },
+    { q: "What are enantiomers and why are they important?", a: "Enantiomers are stereoisomers that are non-superimposable mirror images of each other. They are chiral and have identical physical and chemical properties except in chiral environments. They are important because they can have different biological effects, as seen in the thalidomide tragedy." },
+    { q: "What is chirality and why does it matter in biology?", a: "Chirality is the property of having non-superimposable mirror images. It matters because biological molecules such as enzymes and receptors are chiral, so they recognise only one enantiomer of a chiral molecule. This determines the specificity of biochemical reactions." },
+    { q: "What is a racemic mixture and what are its properties?", a: "A racemic mixture is a 50:50 mixture of two enantiomers. It is optically inactive because the rotation of light by one enantiomer cancels out the rotation by the other. Racemic mixtures may have different biological effects than pure enantiomers." },
+    { q: "What are diastereomers and how do they differ from enantiomers?", a: "Diastereomers are stereoisomers that are not mirror images. Unlike enantiomers, they have different physical properties and can be separated by methods such as chromatography. Glucose and galactose are diastereomers." },
+    { q: "What is optical activity and how is it measured?", a: "Optical activity is the ability of a chiral molecule to rotate plane-polarised light. It is measured using a polarimeter. Enantiomers rotate light in opposite directions; racemic mixtures do not rotate light." },
+    { q: "What is the difference between D and L isomers?", a: "D and L isomers are enantiomers defined by the orientation of the hydroxyl group on the chiral carbon furthest from the carbonyl group. D-sugars and L-amino acids are the natural forms in living organisms." },
+    { q: "Why is the study of isomerism essential for understanding carbohydrates and drugs?", a: "Carbohydrates are highly stereoisomeric. Each chiral carbon doubles the number of possible isomers. Understanding isomerism is essential for understanding sugar structure, metabolism, and drug action, where the wrong enantiomer can be ineffective or harmful." },
+  ],
+  videos: [
+    { channel: "Ninja Nerd", title: "Isomerism and Stereochemistry", note: "Comprehensive overview of structural and stereoisomerism.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+isomerism+stereochemistry" },
+    { channel: "AK Lectures", title: "Enantiomers and Diastereomers", note: "Clear explanation of the different types of stereoisomers.", url: "https://www.youtube.com/results?search_query=AK+Lectures+enantiomers+diastereomers" },
+    { channel: "Osmosis", title: "Chirality and Drug Development", note: "Clinical applications of chirality in pharmacology.", url: "https://www.youtube.com/results?search_query=Osmosis+chirality+drug+development" },
+  ],
+  mcqs: [
+    { q: "Isomerism is the existence of different compounds with the same:", o: ["Molecular formula", "Structural arrangement", "3D shape", "Molecular weight"], a: 0, w: "Isomers have the same molecular formula but different arrangements or shapes." },
+    { q: "Constitutional isomers have the same molecular formula but different:", o: ["3D shape", "Connections between atoms", "Number of atoms", "Molecular weight"], a: 1, w: "Constitutional isomers differ in the connectivity of atoms." },
+    { q: "Stereoisomers have the same connections between atoms but different:", o: ["Molecular formula", "3D arrangements", "Functional groups", "Number of atoms"], a: 1, w: "Stereoisomers differ only in their three-dimensional arrangement." },
+    { q: "Enantiomers are non-superimposable mirror images of each other. This property is called:", o: ["Isomerism", "Chirality", "Racemisation", "Optical activity"], a: 1, w: "Chirality is the property of having non-superimposable mirror images." },
+    { q: "A 50:50 mixture of two enantiomers is called a:", o: ["Constitutional mixture", "Diastereomeric mixture", "Racemic mixture", "Chiral mixture"], a: 2, w: "A racemic mixture contains equal amounts of both enantiomers." },
+    { q: "Enantiomers have identical properties in all of the following EXCEPT:", o: ["Boiling point", "Chiral environments", "Melting point", "Solubility in water"], a: 1, w: "Enantiomers behave differently only in chiral environments, such as when interacting with enzymes or polarised light." },
+    { q: "Which of the following is true about diastereomers?", o: ["They are mirror images", "They have identical physical properties", "They are not mirror images", "They are always optically active"], a: 2, w: "Diastereomers are stereoisomers that are not mirror images of each other." },
+    { q: "The drug thalidomide was sold as a racemic mixture. The problem was that:", o: ["One enantiomer was toxic", "Both enantiomers were toxic", "Neither enantiomer was active", "The mixture was unstable"], a: 0, w: "One enantiomer relieved morning sickness, while the other caused birth defects." },
+    { q: "In living organisms, sugars are typically found as:", o: ["L-isomers", "D-isomers", "Racemic mixtures", "Diastereomers"], a: 1, w: "Natural sugars are typically D-isomers, while natural amino acids are L-isomers." },
+    { q: "The property of rotating plane-polarised light is called:", o: ["Optical activity", "Chirality", "Isomerism", "Racemisation"], a: 0, w: "Optical activity is the ability of a chiral molecule to rotate plane-polarised light." },
+    { q: "Which type of isomers have different connections between atoms?", o: ["Constitutional isomers", "Enantiomers", "Diastereomers", "Stereoisomers"], a: 0, w: "Constitutional isomers have different connectivity, while stereoisomers have the same connectivity but different 3D arrangement." },
+    { q: "A molecule that is not superimposable on its mirror image is called:", o: ["Achiral", "Chiral", "Racemic", "Constitutional"], a: 1, w: "A chiral molecule is not superimposable on its mirror image." },
+    { q: "What is the relationship between glucose and galactose?", o: ["They are enantiomers", "They are diastereomers", "They are constitutional isomers", "They are identical"], a: 1, w: "Glucose and galactose are diastereomers — they differ in the arrangement around one carbon." },
+    { q: "What is the relationship between D-glucose and L-glucose?", o: ["They are enantiomers", "They are diastereomers", "They are constitutional isomers", "They are identical"], a: 0, w: "D-glucose and L-glucose are enantiomers — they are mirror images of each other." },
+    { q: "A racemic mixture is optically inactive because:", o: ["It contains only one enantiomer", "The enantiomers rotate light in opposite directions, cancelling out", "It is not chiral", "It is a mixture of diastereomers"], a: 1, w: "The rotations of the two enantiomers cancel out, making the mixture optically inactive." },
+    { q: "The active site of an enzyme is chiral, which means:", o: ["It recognises only one enantiomer of a substrate", "It recognises both enantiomers equally", "It is not specific", "It only works with achiral molecules"], a: 0, w: "Because enzymes are chiral, they are stereospecific and recognise only one enantiomer." },
+    { q: "The thalidomide tragedy demonstrated that:", o: ["All drugs are safe", "Enantiomers can have different biological effects", "Racemic mixtures are always safe", "Chirality does not matter"], a: 1, w: "The thalidomide tragedy showed that enantiomers can have dramatically different biological effects." },
+    { q: "Chiral switching in drug development refers to:", o: ["Selling a drug as a racemic mixture", "Developing a single-enantiomer version of a drug", "Switching from liquid to pill form", "Changing the drug's colour"], a: 1, w: "Chiral switching means developing a drug as a single enantiomer to improve safety and efficacy." },
+    { q: "A polarimeter is used to measure:", o: ["Molecular weight", "Optical activity", "Boiling point", "Solubility"], a: 1, w: "A polarimeter measures the rotation of plane-polarised light by chiral molecules." },
+    { q: "Which statement about enantiomers is TRUE?", o: ["They have different physical properties", "They interact differently with chiral molecules", "They have different molecular formulae", "They are constitutional isomers"], a: 1, w: "Enantiomers interact differently with other chiral molecules, including enzymes and receptors." },
+    { q: "Natural amino acids found in proteins are:", o: ["D-amino acids", "L-amino acids", "Racemic mixtures", "Diastereomers"], a: 1, w: "Proteins are built from L-amino acids exclusively." },
+    { q: "Natural sugars found in DNA and RNA are:", o: ["L-sugars", "D-sugars", "Racemic mixtures", "Diastereomers"], a: 1, w: "Natural sugars in nucleic acids are D-sugars." },
+    { q: "A compound with two chiral carbons has how many possible stereoisomers?", o: ["2", "3", "4", "8"], a: 2, w: "Each chiral carbon doubles the number: 2 to the power of n, so 2 to the power of 2 = 4." },
+    { q: "A compound that has chiral centres but is optically inactive due to internal compensation is a:", o: ["Racemic mixture", "Meso compound", "Enantiomer", "Diastereomer"], a: 1, w: "A meso compound has internal symmetry, making it optically inactive." },
+    { q: "What type of isomerism is shown by D-glucose and L-glucose?", o: ["Constitutional", "Enantiomerism", "Diastereomerism", "Positional"], a: 1, w: "D-glucose and L-glucose are enantiomers — mirror images." },
+    { q: "What type of isomerism is shown by D-glucose and D-galactose?", o: ["Enantiomerism", "Diastereomerism", "Constitutional", "Positional"], a: 1, w: "They are diastereomers — not mirror images but different at one carbon." },
+    { q: "The conversion of a pure enantiomer into a racemic mixture is called:", o: ["Racemisation", "Resolution", "Chiral switching", "Optical activity"], a: 0, w: "Racemisation is the process of converting a pure enantiomer into a 50:50 mixture." },
+    { q: "The process of separating two enantiomers from a racemic mixture is called:", o: ["Racemisation", "Chiral separation", "Resolution", "Isomerisation"], a: 2, w: "Resolution is the separation of enantiomers from a racemic mixture." },
+    { q: "Which of the following is NOT a type of isomerism?", o: ["Constitutional", "Stereoisomerism", "Enantiomerism", "Oxidation"], a: 3, w: "Oxidation is a chemical reaction, not a type of isomerism." },
+    { q: "The study of the three-dimensional arrangement of atoms in molecules is called:", o: ["Stereochemistry", "Isomerism", "Constitutional chemistry", "Optical physics"], a: 0, w: "Stereochemistry is the study of the 3D arrangement of atoms and its effects on properties." },
+  ],
+};
+
+// ==================== BIOLOGICAL CHEMISTRY TOPIC 2: HEMIACETALS, HEMIKETALS, ACETALS, KETALS ====================
+const T_BIO_HEMIACETALS = {
+  courseId: "bio",
+  topicIndex: 1,
+  title: "Hemiacetals, Hemiketals, Acetals, Ketals",
+  minutes: 22,
+  note: [
+    { q: "Why do sugars cyclise? Understanding the fundamental reaction.",
+      body: `You have learned that sugars are the primary source of energy for the body. But sugars do not exist as simple straight chains in solution. They cyclise into rings, and these rings are the forms that actually circulate in your blood and are recognised by enzymes.
+
+My Socratic question: glucose has an aldehyde group and multiple hydroxyl groups. These groups can react with each other. What is the product of this reaction, and why is it important for life?
+
+The answer is a cyclic hemiacetal. The aldehyde group at C1 reacts with the hydroxyl group at C5 (in a six-membered ring) or C4 (in a five-membered ring), forming a ring. This ring structure is more stable than the open chain, and it is the form of glucose that circulates in the blood and is recognised by enzymes.
+
+The formation of a hemiacetal is the key step in carbohydrate cyclisation. It is a reversible reaction, and it is the basis for the ring structures of all sugars. Without this reaction, sugars could not form the complex structures needed for energy storage and structural support.
+
+Crucial insight: the cyclisation of sugars is not a side reaction — it is the fundamental structure of sugars in solution. Understanding hemiacetal and hemiketal formation is essential for understanding carbohydrate chemistry, metabolism, and the structure of DNA.` },
+
+    { q: "What is a hemiacetal and how is it formed?",
+      body: `A hemiacetal is formed when an alcohol reacts with an aldehyde. The reaction adds the alcohol across the carbonyl group, creating a new carbon-oxygen bond and forming a hydroxyl group. The product has both an alcohol and an ether group on the same carbon — this is the hemiacetal.
+
+My Socratic question: glucose exists as a cyclic hemiacetal. Which functional groups react to form this ring, and what is the product called?
+
+The answer is that the aldehyde group at C1 reacts with the hydroxyl group at C5 (in a six-membered ring) or C4 (in a five-membered ring). The product is a cyclic hemiacetal, which is the ring form of glucose. The ring can be a six-membered pyranose ring or a five-membered furanose ring.
+
+The reaction is reversible, which means that the ring can open back up to the straight-chain form. This equilibrium between open-chain and cyclic forms is essential for sugar chemistry and metabolism.
+
+Crucial insight: the hemiacetal is the key intermediate in sugar chemistry. It is formed reversibly, and it is the form of the sugar that exists in equilibrium with the open chain. This equilibrium is essential for the biological activity of sugars.` },
+
+    { q: "What is a hemiketal and how is it different from a hemiacetal?",
+      body: `A hemiketal is formed when an alcohol reacts with a ketone, rather than an aldehyde. The reaction is the same in principle, but the product is called a hemiketal because the starting compound is a ketone.
+
+My Socratic question: fructose is a ketose, not an aldose. How does fructose form a cyclic structure, and what is the product called?
+
+The answer is that fructose forms a cyclic hemiketal. The ketone group at C2 reacts with a hydroxyl group on the same molecule, forming a ring. Fructose forms a five-membered furanose ring because the ketone at C2 reacts with the hydroxyl at C5.
+
+The difference between hemiacetal and hemiketal is whether the starting compound is an aldehyde or a ketone. Both are essential for understanding carbohydrate structure, and both form cyclic structures that are important in metabolism.
+
+Crucial insight: the difference between hemiacetal and hemiketal is whether the starting compound is an aldehyde or a ketone. Both are essential for understanding carbohydrate structure, and both are the basis for the ring forms of sugars.` },
+
+    { q: "Acetals and ketals: the stable forms of sugars.",
+      body: `A hemiacetal can react further with another alcohol to form an acetal. In an acetal, the hydroxyl group of the hemiacetal is replaced by another alkoxy group. This is a more stable structure than the hemiacetal.
+
+My Socratic question: sugars form glycosidic bonds when they join together. What is the chemical nature of a glycosidic bond, and how is it formed?
+
+The answer is that a glycosidic bond is an acetal linkage. When the hemiacetal of one sugar reacts with the hydroxyl group of another sugar, an acetal is formed, with a bond connecting the two sugars. This is how disaccharides (like sucrose and lactose) and polysaccharides (like starch and cellulose) are built.
+
+Acetals and ketals are more stable than hemiacetals and hemiketals, which is why glycosidic bonds are stable and can form the structural backbone of carbohydrates.
+
+Crucial insight: acetals and ketals are the stable forms of sugars that link them together. Glycosidic bonds are acetal or ketal linkages, and they are the basis of carbohydrate polymers. Without these bonds, carbohydrates could not store energy or provide structural support.` },
+
+    { q: "The anomeric carbon: the stereochemical centre of cyclisation.",
+      body: `When a sugar cyclises, the carbonyl carbon becomes chiral. This new chiral centre is called the anomeric carbon, and it gives rise to two stereoisomers: alpha and beta.
+
+My Socratic question: glucose in solution exists as a mixture of alpha and beta forms. What is the anomeric carbon, and why do these two forms exist?
+
+The answer is that the anomeric carbon is the carbonyl carbon (C1 in glucose) that becomes chiral upon cyclisation. The alpha form has the hydroxyl group on the opposite side of the ring from the CH2OH group; the beta form has it on the same side. These two forms interconvert through a process called mutarotation.
+
+The alpha and beta forms have different properties and are recognised differently by enzymes. For example, the enzyme that breaks down starch recognises only the alpha form of glucose.
+
+Crucial insight: the anomeric carbon is the key to understanding carbohydrate stereochemistry. The alpha and beta forms have different properties and are recognised differently by enzymes. Understanding the anomeric carbon is essential for understanding carbohydrate function.` },
+
+    { q: "Mutarotation: the interconversion of alpha and beta forms.",
+      body: `The alpha and beta forms of a sugar interconvert in solution through a process called mutarotation. This happens because the ring opens to the straight-chain form and then closes again, either in the alpha or beta configuration.
+
+My Socratic question: a freshly prepared solution of pure alpha-glucose has a specific optical rotation. Over time, the rotation changes until it reaches a constant value. Why does this happen?
+
+The answer is that the alpha-glucose converts to a mixture of alpha and beta forms through mutarotation. The optical rotation changes as the composition of the solution changes. When equilibrium is reached, the rotation is constant.
+
+Mutarotation is important because it means that the alpha and beta forms of a sugar are always present in solution, interconverting. This is essential for the biological activity of sugars.
+
+Crucial insight: mutarotation is the interconversion of alpha and beta anomers through the open-chain form. It is the reason that the properties of sugar solutions change over time and why the alpha and beta forms are always in equilibrium.` },
+
+    { q: "Clinical relevance: why understanding these reactions matters.",
+      body: `The reactions you have learned — hemiacetal and hemiketal formation, acetal and ketal formation — are not just academic. They are the basis of carbohydrate metabolism and the structure of important biomolecules.
+
+My Socratic question: why do patients with diabetes have elevated HbA1c, and what does this have to do with hemiacetal formation?
+
+The answer is that glucose attaches to haemoglobin through a reaction that begins with the formation of a hemiacetal. The glucose reacts with the amino group of haemoglobin, forming a Schiff base, which then rearranges to form a stable product. The amount of HbA1c reflects the average blood glucose over the previous 2-3 months.
+
+Understanding hemiacetal formation is essential for understanding this diagnostic test. It is also essential for understanding how drugs work and how carbohydrates are metabolised.
+
+Crucial insight: hemiacetal and hemiketal formation is not just a chemistry concept — it is the basis for diagnosing diabetes and understanding carbohydrate metabolism. Understanding these reactions makes you a better scientist and clinician.` },
+
+    { q: "What are the most common mistakes students make with hemiacetals and acetals?",
+      body: `Students often confuse hemiacetals with acetals, and this confusion leads to errors in exams and in understanding carbohydrate structure. Let me clear up the three most common mistakes.
+
+The first mistake is thinking that the term "hemiacetal" refers to a cyclic structure. A hemiacetal is not defined by being cyclic — it is defined by having both an alcohol and an ether group on the same carbon. The cyclic form is just one type of hemiacetal; linear hemiacetals also exist.
+
+The second mistake is confusing hemiacetals with acetals. A hemiacetal has a hydroxyl group (-OH) on the same carbon as the ether group. An acetal does not — it has two ether groups. The difference is one hydroxyl group, and it determines whether the molecule can open and close or is locked in a stable form.
+
+The third mistake is thinking that a glycosidic bond is a hemiacetal. It is not. A glycosidic bond is an acetal linkage because the anomeric hydroxyl has been replaced by another sugar. The glycosidic bond is stable; a hemiacetal is reactive.
+
+Crucial insight: the difference between a hemiacetal and an acetal is the presence of a hydroxyl group. This single difference determines whether a sugar can cyclise and open, or whether it is locked in a stable glycosidic bond.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for hemiacetals, hemiketals, acetals, and ketals.
+
+Hemiacetal: formed when an alcohol reacts with an aldehyde. Has both an alcohol and an ether group on the same carbon. Reversible. Basis of sugar cyclisation.
+
+Hemiketal: formed when an alcohol reacts with a ketone. Same structure as a hemiacetal but from a ketone. Reversible.
+
+Acetal: formed when a hemiacetal reacts with another alcohol. No hydroxyl group on the anomeric carbon. Stable. Basis of glycosidic bonds.
+
+Ketal: formed when a hemiketal reacts with another alcohol. No hydroxyl group on the anomeric carbon. Stable.
+
+Anomeric carbon: the carbonyl carbon that becomes chiral upon cyclisation. Determines alpha or beta configuration.
+
+Mutarotation: the interconversion of alpha and beta anomers through the open-chain form.
+
+Clinical relevance: HbA1c formation begins with hemiacetal formation, making this reaction essential for diagnosing diabetes. Understanding the difference between hemiacetals and acetals is essential for understanding carbohydrate structure and metabolism.
+
+Now your final test. A biochemist is studying the structure of a disaccharide. She finds that the bond between the two sugars is stable and does not open in water. When she treats it with acid, the bond breaks.
+
+Question one: is the bond a hemiacetal or an acetal? Explain your reasoning.
+Question two: what does the stability in water tell you about the type of bond?
+Question three: why does acid break the bond, and what does this tell you about the mechanism of glycosidic bond hydrolysis?
+
+Work them through before reading on.
+
+My answers. One: it is an acetal, because acetals are stable in water and do not open spontaneously, whereas hemiacetals are in equilibrium with the open-chain form. Two: the stability in water confirms it is an acetal, which has no hydroxyl group on the anomeric carbon and cannot open to the free aldehyde or ketone. Three: acid breaks the bond by protonating the oxygen, making it a good leaving group, and water attacks to hydrolyse the bond — this is the mechanism of glycosidic bond cleavage in digestion and in the laboratory.` }
+  ],
+  theory: [
+    { q: "What is a hemiacetal and how is it formed?", a: "A hemiacetal is formed when an alcohol reacts with an aldehyde, creating a new carbon-oxygen bond and a hydroxyl group. This is the basis for sugar cyclisation." },
+    { q: "What is a hemiketal and how is it different from a hemiacetal?", a: "A hemiketal is formed when an alcohol reacts with a ketone. The difference is the starting carbonyl: aldehydes form hemiacetals, ketones form hemiketals." },
+    { q: "What is an acetal and how is it formed?", a: "An acetal is formed when a hemiacetal reacts with another alcohol, replacing the hydroxyl group with an alkoxy group. This is the basis of glycosidic bonds." },
+    { q: "What is a ketal and how is it formed?", a: "A ketal is formed when a hemiketal reacts with another alcohol, replacing the hydroxyl group with an alkoxy group." },
+    { q: "What is the anomeric carbon and why is it important?", a: "The anomeric carbon is the carbonyl carbon that becomes chiral upon cyclisation. It determines whether the sugar is in the alpha or beta form." },
+    { q: "What is the difference between an alpha and beta anomer?", a: "In the alpha anomer, the anomeric hydroxyl is on the opposite side of the ring from the CH2OH group. In the beta anomer, they are on the same side." },
+    { q: "What is a glycosidic bond?", a: "A glycosidic bond is an acetal linkage formed between the anomeric carbon of one sugar and a hydroxyl group of another sugar. It is the bond that links monosaccharides into disaccharides and polysaccharides." },
+    { q: "What is mutarotation?", a: "Mutarotation is the process by which alpha and beta anomers of a sugar interconvert in solution. It occurs through the open-chain form of the sugar." },
+    { q: "Why do sugars exist in cyclic form rather than as open chains?", a: "The cyclic hemiacetal and hemiketal forms are more stable than the open-chain forms. In solution, sugars exist predominantly in their cyclic forms." },
+    { q: "What is the clinical relevance of hemiacetal formation?", a: "Hemiacetal formation is the first step in the formation of HbA1c, the glycosylated haemoglobin used to monitor diabetes. Glucose attaches to haemoglobin through a reaction that begins with hemiacetal formation." },
+  ],
+  videos: [
+    { channel: "Ninja Nerd", title: "Hemiacetals, Hemiketals, Acetals, Ketals", note: "Detailed explanation of the formation and importance of these functional groups.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+hemiacetals+acetals" },
+    { channel: "AK Lectures", title: "Cyclisation of Sugars", note: "How sugars form rings and the difference between alpha and beta anomers.", url: "https://www.youtube.com/results?search_query=AK+Lectures+sugar+cyclisation" },
+    { channel: "Khan Academy", title: "Glycosidic Bond Formation", note: "How acetals link sugars together into polymers.", url: "https://www.youtube.com/results?search_query=Khan+Academy+glycosidic+bond" },
+  ],
+  mcqs: [
+    { q: "A hemiacetal is formed when an alcohol reacts with:", o: ["An aldehyde", "A ketone", "An ester", "A carboxylic acid"], a: 0, w: "Hemiacetals are formed from aldehydes and alcohols." },
+    { q: "A hemiketal is formed when an alcohol reacts with:", o: ["An aldehyde", "A ketone", "An ester", "A carboxylic acid"], a: 1, w: "Hemiketals are formed from ketones and alcohols." },
+    { q: "An acetal is formed when a hemiacetal reacts with:", o: ["Water", "Another alcohol", "An aldehyde", "A ketone"], a: 1, w: "Acetals are formed when a hemiacetal reacts with another alcohol." },
+    { q: "A ketal is formed when a hemiketal reacts with:", o: ["Water", "Another alcohol", "An aldehyde", "A ketone"], a: 1, w: "Ketals are formed when a hemiketal reacts with another alcohol." },
+    { q: "The anomeric carbon is the carbon that:", o: ["Is the most oxidised", "Becomes chiral upon cyclisation", "Has the highest molecular weight", "Is at the end of the chain"], a: 1, w: "The anomeric carbon is the carbonyl carbon that becomes chiral upon cyclisation." },
+    { q: "In the alpha anomer of glucose, the anomeric hydroxyl is:", o: ["On the same side as the CH2OH group", "On the opposite side from the CH2OH group", "Not present", "In the middle of the ring"], a: 1, w: "The alpha anomer has the anomeric hydroxyl on the opposite side from the CH2OH group." },
+    { q: "In the beta anomer of glucose, the anomeric hydroxyl is:", o: ["On the same side as the CH2OH group", "On the opposite side from the CH2OH group", "Not present", "In the middle of the ring"], a: 0, w: "The beta anomer has the anomeric hydroxyl on the same side as the CH2OH group." },
+    { q: "A glycosidic bond is an example of a(n):", o: ["Hemiacetal", "Acetal", "Ester", "Ether"], a: 1, w: "Glycosidic bonds are acetal linkages formed between sugars." },
+    { q: "Mutarotation is the process of:", o: ["Breaking a glycosidic bond", "Interconversion of alpha and beta anomers", "Formation of a hemiacetal", "Polymerisation of sugars"], a: 1, w: "Mutarotation is the interconversion of alpha and beta anomers through the open-chain form." },
+    { q: "A six-membered sugar ring is called a:", o: ["Furanose", "Pyranose", "Hexose", "Pentose"], a: 1, w: "A pyranose ring is a six-membered ring. A furanose ring is five-membered." },
+    { q: "The formation of HbA1c begins with:", o: ["Ester formation", "Hemiacetal formation", "Acetal formation", "Ketal formation"], a: 1, w: "Glucose attaches to haemoglobin through a reaction that begins with hemiacetal formation." },
+    { q: "The open-chain form of glucose exists in equilibrium with:", o: ["The cyclic hemiacetal form", "The acetal form", "The ketal form", "The ester form"], a: 0, w: "The open-chain form is in equilibrium with the cyclic hemiacetal form." },
+    { q: "Fructose forms a cyclic structure through:", o: ["Hemiacetal formation", "Hemiketal formation", "Acetal formation", "Ketal formation"], a: 1, w: "Fructose is a ketose, so it forms a hemiketal." },
+    { q: "The anomeric carbon in glucose is:", o: ["C6", "C5", "C1", "C2"], a: 2, w: "In glucose, the anomeric carbon is C1." },
+    { q: "The anomeric carbon in fructose is:", o: ["C1", "C6", "C5", "C2"], a: 3, w: "In fructose, the anomeric carbon is C2." },
+    { q: "A glycosidic bond is formed between:", o: ["Two hydroxyl groups", "The anomeric carbon and a hydroxyl group", "Two anomeric carbons", "A hydroxyl group and a carboxyl group"], a: 1, w: "A glycosidic bond links the anomeric carbon of one sugar to a hydroxyl group of another sugar." },
+    { q: "The alpha and beta forms of a sugar are:", o: ["Constitutional isomers", "Enantiomers", "Anomers", "Diastereomers"], a: 2, w: "The alpha and beta forms are anomers — they differ at the anomeric carbon." },
+    { q: "A solution of pure alpha-glucose will over time:", o: ["Remain pure alpha", "Convert entirely to beta", "Reach a mixture of alpha and beta", "Convert to fructose"], a: 2, w: "Through mutarotation, a solution of pure alpha-glucose will reach a mixture of alpha and beta." },
+    { q: "The stability of glycosidic bonds is due to:", o: ["They are hemiacetals", "They are acetals", "They are ketals", "They are esters"], a: 1, w: "Acetals are more stable than hemiacetals, so glycosidic bonds are stable." },
+    { q: "The difference between a hemiacetal and an acetal is:", o: ["One has a hydroxyl group, the other does not", "One is cyclic, the other is not", "One is formed from ketones, the other from aldehydes", "One is chiral, the other is not"], a: 0, w: "A hemiacetal has a hydroxyl group; an acetal does not." },
+    { q: "A hemiacetal has which functional groups on the same carbon?", o: ["Alcohol and ether", "Two ethers", "Alcohol and aldehyde", "Two alcohols"], a: 0, w: "A hemiacetal has both an alcohol (-OH) and an ether (-OR) group on the same carbon." },
+    { q: "An acetal has which functional groups on the same carbon?", o: ["Alcohol and ether", "Two ethers", "Alcohol and aldehyde", "Two alcohols"], a: 1, w: "An acetal has two ether groups (-OR) on the same carbon." },
+    { q: "The conversion of a hemiacetal to an acetal involves:", o: ["Loss of water", "Addition of water", "Reduction", "Oxidation"], a: 0, w: "An acetal is formed by the loss of water when a hemiacetal reacts with another alcohol." },
+    { q: "The conversion of an acetal to a hemiacetal involves:", o: ["Loss of water", "Addition of water", "Reduction", "Oxidation"], a: 1, w: "Acetal hydrolysis requires addition of water." },
+    { q: "Which of the following is more stable in water?", o: ["Hemiacetal", "Acetal", "Hemiketal", "Ketone"], a: 1, w: "Acetals are stable in water because they cannot open to a carbonyl form; hemiacetals are in equilibrium with the open-chain form." },
+    { q: "The anomeric carbon of a sugar is the carbon that:", o: ["Is at the end of the chain", "Becomes chiral upon cyclisation", "Has no hydrogens", "Is the most oxidised"], a: 1, w: "The anomeric carbon is the carbonyl carbon that becomes chiral when the sugar cyclises." },
+    { q: "The alpha anomer of glucose has the anomeric OH on the:", o: ["Same side as the CH2OH", "Opposite side from the CH2OH", "Inside the ring", "At the top of the ring"], a: 1, w: "Alpha has the anomeric OH opposite to the CH2OH group." },
+    { q: "The beta anomer of glucose has the anomeric OH on the:", o: ["Same side as the CH2OH", "Opposite side from the CH2OH", "Inside the ring", "At the top of the ring"], a: 0, w: "Beta has the anomeric OH on the same side as the CH2OH group." },
+    { q: "Glycosidic bonds are important because they:", o: ["Link sugars together into polymers", "Break down proteins", "Store genetic information", "Catalyse reactions"], a: 0, w: "Glycosidic bonds link monosaccharides into disaccharides, oligosaccharides, and polysaccharides." },
+    { q: "A pyranose ring is a sugar ring containing:", o: ["Five atoms", "Six atoms", "Seven atoms", "Four atoms"], a: 1, w: "A pyranose ring has six atoms (five carbons and one oxygen)." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -3823,6 +4379,9 @@ const CONTENT = {
   "bch:1": T_BCH_ENZYMES,
   "bch:2": T_BCH_INHIBITION,
   "bch:3": T_BCH_GLYCOLYSIS,
+  "bch:4": T_BCH_FRUCTOSE,
+  "bio:0": T_BIO_ISOMERISM,
+  "bio:1": T_BIO_HEMIACETALS,
   "bio:3": T_BIO_AMINO,
   "psy:0": T_PSY_OVERVIEW,
   "com:0": T_COM_PROCESS,
@@ -4371,6 +4930,9 @@ function TopicView({ app }) {
     <div className="view">
       <button className="back" onClick={() => app.go("course", { courseId: t.courseId })}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> {c.name}</button>
       <div className="eyebrow">{c.code} · Topic {String(t.topicIndex + 1).padStart(2, "0")}</div>
+      <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }} className="mono">
+  Updated {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,30px)", margin: "8px 0 6px" }}>{t.title}</h1>
       <div style={{ display: "flex", gap: 10, alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}>
         <div style={{ display: "flex", gap: 10, alignItems: "center", color: "var(--text-3)", fontSize: 13 }} className="mono">
@@ -4557,6 +5119,9 @@ function CoursesView({ app }) {
               </div>
               <h3 style={{ fontSize: 16.5, margin: "0 0 3px" }}>{c.name}</h3>
               <div className="ct-code">{c.code} · {count} topics</div>
+              <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 4 }}>
+  {live > 0 ? `${live * 18} min read` : "Coming soon"}
+</div>
               <div style={{ marginTop: 12, fontSize: 12.5, color: live ? "var(--good)" : "var(--text-3)", fontWeight: 600 }} className="mono">{live ? `${live} TOPIC${live > 1 ? "S" : ""} LIVE` : "LESSONS ARRIVE WEEKLY"}</div>
             </button>
           );
@@ -5208,20 +5773,79 @@ function HomeView({ app }) {
   const ntCourse = nt ? courseById(nt.courseId) : null;
   return (
     <div className="view">
-      <div className="hero">
-        <svg className="ridge" viewBox="0 0 600 220" preserveAspectRatio="none" aria-hidden>
-          <defs><radialGradient id="glow" cx="82%" cy="12%" r="45%"><stop offset="0%" stopColor="rgba(245,185,63,.28)" /><stop offset="100%" stopColor="rgba(245,185,63,0)" /></radialGradient>
-            <linearGradient id="rl" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="rgba(157,175,201,.15)" /><stop offset="100%" stopColor="rgba(245,185,63,.55)" /></linearGradient></defs>
-          <rect width="600" height="220" fill="url(#glow)" />
-          <polyline points="0,210 90,180 170,190 260,140 340,150 420,95 500,60 600,20" fill="none" stroke="url(#rl)" strokeWidth="2.2" />
-          <circle cx="600" cy="20" r="4" fill="var(--amber)" />
-        </svg>
-        <div style={{ position: "relative" }}>
-          <div className="eyebrow" style={{ color: "var(--amber)" }}>ASCEND</div>
-          <h1 className="hero-h">Understand the <span className="hl">mechanism</span>, and recall takes care of itself.</h1>
-          <p className="hero-p">Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
-        </div>
-      </div>
+      <div className="hero" style={{ 
+  position: "relative", 
+  overflow: "hidden", 
+  border: "1px solid var(--line)", 
+  borderRadius: "clamp(14px, 2vw, 20px)", 
+  padding: "clamp(24px, 4vw, 34px) clamp(20px, 3vw, 30px)",
+  minHeight: "clamp(150px, 25vh, 220px)"
+}}>
+  <svg className="ridge" viewBox="0 0 600 220" preserveAspectRatio="none" aria-hidden style={{ 
+    position: "absolute", 
+    inset: 0, 
+    width: "100%", 
+    height: "100%", 
+    pointerEvents: "none", 
+    opacity: "clamp(0.3, 0.6, 0.8)"
+  }}>
+    <defs>
+      <radialGradient id="glow" cx="82%" cy="12%" r="55%">
+        <stop offset="0%" stopColor="rgba(245,185,63,.20)" />
+        <stop offset="100%" stopColor="rgba(245,185,63,0)" />
+      </radialGradient>
+      <linearGradient id="rl" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stopColor="rgba(157,175,201,.12)" />
+        <stop offset="100%" stopColor="rgba(245,185,63,.5)" />
+      </linearGradient>
+    </defs>
+    <rect width="600" height="220" fill="url(#glow)" />
+    <polyline points="0,210 80,185 150,195 230,150 310,160 380,105 460,75 600,25" fill="none" stroke="url(#rl)" strokeWidth="clamp(1.8, 2.5, 3)" />
+    <circle cx="600" cy="25" r="clamp(3, 4.5, 6)" fill="var(--amber)" />
+  </svg>
+  <div style={{ position: "relative", zIndex: 1 }}>
+    <div className="eyebrow" style={{ 
+      color: "var(--amber)", 
+      fontSize: "clamp(9px, 1.2vw, 11px)",
+      letterSpacing: "0.2em",
+      fontWeight: 600,
+      textTransform: "uppercase"
+    }}>ASCEND</div>
+    <h1 className="hero-h" style={{ 
+      fontSize: "clamp(22px, 4.6vw, 38px)", 
+      maxWidth: "clamp(12ch, 16ch, 20ch)", 
+      fontWeight: 800, 
+      letterSpacing: "-0.03em",
+      margin: "clamp(4px, 1vh, 10px) 0",
+      color: "var(--text)",
+      lineHeight: 1.1
+    }}>Understand the <span className="hl" style={{ color: "var(--amber)" }}>mechanism</span>, and recall takes care of itself.</h1>
+    <p className="hero-p" style={{ 
+      color: "var(--text-2)", 
+      maxWidth: "clamp(35ch, 52ch, 60ch)", 
+      marginTop: "clamp(6px, 1.5vh, 14px)", 
+      fontSize: "clamp(13.5px, 1.3vw, 16px)", 
+      lineHeight: 1.6,
+      fontWeight: 400
+    }}>Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
+  </div>
+</div>
+      {app.lastTopic && (() => {
+        const t = contentFor(app.lastTopic.courseId, app.lastTopic.topicId);
+        if (!t) return null;
+        return (
+          <button className="card hover" style={{ width: "100%", textAlign: "left", marginTop: 16 }} onClick={() => app.go("topic", app.lastTopic)}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div>
+                <div className="eyebrow" style={{ color: "var(--amber)" }}>Continue reading</div>
+                <div style={{ fontWeight: 650, fontSize: 16 }}>{t.title}</div>
+                <div style={{ color: "var(--text-3)", fontSize: 13 }}>{courseById(app.lastTopic.courseId)?.name}</div>
+              </div>
+              <Ic.chevR p={22} />
+            </div>
+          </button>
+        );
+      })()}
 
       {(() => {
         // Exam countdown - end-of-semester exams begin 17 August 2026.
@@ -5291,15 +5915,14 @@ function HomeView({ app }) {
               <div className="eyebrow">Your study calendar</div>
               <div className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>{activeCount} ACTIVE DAY{activeCount === 1 ? "" : "S"}</div>
             </div>
-            <div style={{ display: "flex", gap: 3, flexWrap: "nowrap", overflowX: "auto", paddingBottom: 4 }}>
+            <div style={{ display: "flex", gap: 3, width: "100%" }}>
               {weeks.map((wk, wi) => (
-                <div key={wi} style={{ display: "flex", flexDirection: "column", gap: 3, flexShrink: 0 }}>
+                <div key={wi} style={{ display: "flex", flexDirection: "column", gap: 3, flex: 1, minWidth: 0 }}>
                   {wk.map((d) => (
                     <div key={d.key} title={d.key} style={{
-                      width: 13, height: 13, borderRadius: 3,
-                      background: d.active ? "var(--amber)" : "#24406E",
-                      border: d.today ? "2px solid var(--amber-2)" : "1px solid rgba(255,255,255,0.05)",
-                      boxSizing: "border-box",
+                      aspectRatio: "1", borderRadius: 3, width: "100%",
+                      background: d.active ? "var(--amber)" : "#1E3A6E",
+                      border: d.today ? "2px solid var(--amber-2)" : "1px solid rgba(255,255,255,0.06)",
                     }} />
                   ))}
                 </div>
@@ -5601,6 +6224,7 @@ function AuthScreen({ onAuthed }) {
 }
 
 const ANNOUNCEMENTS = [
+  { id: "a3", tag: "Deadline", title: "AI 150 Course Completion", body: "All students are reminded to complete the AI 150: Fundamentals of Responsible AI for ALL course on or before Saturday, 15th August, 2026. This is a mandatory requirement for all students. Please ensure you have finished all modules and assessments before the deadline." },
   { id: "a2", tag: "Feature", title: "CWA planner, themes and resources", body: "Plan your target CWA under the CWA tab, switch light and dark with the toggle up top, and turn your own notes into lessons under Resources." },
   { id: "a1", tag: "Welcome", title: "Welcome to ASCEND", body: "The climb to First Class, together, built by Prince, Ansah, Jeffery and Dacosta. Do the daily question every day to build your streak and rise through the ranks." }
 ];
@@ -5950,12 +6574,8 @@ export default function App() {
   const [route, setRoute] = useState({ view: "home" });
 
   // Make the iPhone edge-swipe and the browser/hardware back button work:
-  // when the user goes back, restore the route we saved in history rather than
-  // leaving the app. If there is no saved route (they are at the first screen),
-  // send them to home instead of off the site.
   useEffect(() => {
     if (typeof window === "undefined") return;
-    // seed the first history entry so the very first back press has somewhere to land
     try { window.history.replaceState({ ascendRoute: { view: "home" } }, ""); } catch {}
     const onPop = (e) => {
       const saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : { view: "home" };
@@ -5966,15 +6586,26 @@ export default function App() {
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowTop(window.scrollY > 400);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const [progress, setProgress] = useState(DEFAULT_PROGRESS);
   const [auth, setAuth] = useState(null);
-  const [supaUid, setSupaUid] = useState(null); // set when signed in via Supabase (Google)
+  const [supaUid, setSupaUid] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [theme, setTheme] = useState("dark");
   const [notifOpen, setNotifOpen] = useState(false);
   const [rateStars, setRateStars] = useState(0);
   const [rateDismissed, setRateDismissed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [lastTopic, setLastTopic] = useState(null);
+  const [showTop, setShowTop] = useState(false);
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -5982,9 +6613,6 @@ export default function App() {
     link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap";
     document.head.appendChild(link);
 
-    // PWA icon and manifest are declared in public/index.html (real files), which
-    // is the reliable way for phones - especially iPhone - to show the home-screen
-    // icon. We only ensure the apple-touch-icon is present as a safety net here.
     const icon = "/ascend-icon.png";
     if (!document.querySelector('link[rel="apple-touch-icon"]')) {
       const aLink = document.createElement("link");
@@ -5994,8 +6622,6 @@ export default function App() {
     let meta = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
     if (!meta) { meta = document.createElement("meta"); meta.name = "apple-mobile-web-app-capable"; meta.content = "yes"; document.head.appendChild(meta); }
 
-    // Register the service worker so ASCEND works offline and loads instantly,
-    // saving students' mobile data. Fails silently where unsupported.
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("/sw.js").catch(() => {});
@@ -6006,7 +6632,6 @@ export default function App() {
       const t = await store.get("ascend_theme");
       if (t === "light" || t === "dark") setTheme(t);
 
-      // 1. Supabase session first (Google or email-via-Supabase). If present, it wins.
       try {
         const { data } = await supabase.auth.getSession();
         const sUser = data && data.session ? data.session.user : null;
@@ -6017,7 +6642,6 @@ export default function App() {
         }
       } catch {}
 
-      // 2. Otherwise fall back to a local username/password session.
       const session = await store.get("ascend_session");
       if (session) {
         const accounts = (await store.get("ascend_accounts")) || {};
@@ -6031,7 +6655,6 @@ export default function App() {
       setLoaded(true);
     })();
 
-    // Listen for Google sign-in / sign-out happening after load (OAuth redirect).
     let sub;
     try {
       const res = supabase.auth.onAuthStateChange((event, session) => {
@@ -6050,8 +6673,6 @@ export default function App() {
     return () => { try { document.head.removeChild(link); } catch {} try { sub && sub.unsubscribe(); } catch {} };
   }, []);
 
-  // Bring a Supabase-authenticated user into the app: set auth, load their
-  // progress from the cloud (creating a fresh record if this is their first time).
   const adoptSupabaseUser = async (sUser) => {
     const uid = sUser.id;
     const displayName =
@@ -6063,9 +6684,6 @@ export default function App() {
     const base = freshProgress(displayName);
     const merged = cloud ? { ...base, ...cloud, name: cloud.name || displayName } : { ...base, name: displayName };
     setProgress(merged);
-    // Ensure this user appears on the class leaderboard from the moment they log
-    // in - create/refresh their profile row directly, so nobody is missing even
-    // if the signup trigger did not fire or they have not earned XP yet.
     try {
       await supabase.from("profiles").upsert({
         id: uid,
@@ -6085,34 +6703,36 @@ export default function App() {
     setProgress(p ? { ...freshProgress(acct.username), ...p, name: acct.username } : freshProgress(acct.username));
     setRoute({ view: "home" });
   };
+
   const logout = async () => {
     if (supaUid) { try { await supabase.auth.signOut(); } catch {} setSupaUid(null); }
     await store.set("ascend_session", "");
     setAuth(null); setMenuOpen(false); setRoute({ view: "home" });
   };
+
   const toggleTheme = () => { const t = theme === "light" ? "dark" : "light"; setTheme(t); store.set("ascend_theme", t); };
 
   const persist = (p) => {
     setProgress(p);
     if (supaUid) {
-      // signed in via Supabase: save to the cloud (cross-device + class leaderboard)
       db.saveProgress(supaUid, p);
     } else if (auth) {
-      // local username/password account: save on this device AND publish to the
-      // cloud leaderboard everyone reads, so this user is visible to the class.
       store.set(progKey(auth.username), p);
       store.setShared("ascend_board:" + p.name.toLowerCase().replace(/[^a-z0-9]/g, ""), { name: p.name, xp: p.xp, streak: p.streak });
       db.publishLocalUser(p.name, p.xp, p.streak);
     }
   };
+
   const go = (view, extra = {}) => {
     const next = { view, ...extra };
     setRoute(next);
+
+    if (view === "topic" && extra.courseId !== undefined && extra.topicId !== undefined) {
+      setLastTopic({ courseId: extra.courseId, topicId: extra.topicId });
+    }
+
     setMenuOpen(false);
     if (typeof window !== "undefined") {
-      // Push this navigation into the browser history so the iPhone edge-swipe
-      // and the browser/hardware back button move back through the app instead
-      // of leaving the site.
       try { window.history.pushState({ ascendRoute: next }, ""); } catch {}
       window.scrollTo?.(0, 0);
     }
@@ -6124,38 +6744,34 @@ export default function App() {
     const streak = progress.lastActive === shift(-1) ? progress.streak + 1 : (progress.lastActive === tk ? progress.streak : 1);
     persist({ ...progress, xp: progress.xp + (correct ? 20 : 5), streak, lastActive: tk, dailyDone: { ...progress.dailyDone, [tk]: true } });
   };
+
   const finishQuiz = (cid, tid, correct, missed = [], total = 0) => {
     const tkey = `${cid}:${tid}`;
     const firstTime = !progress.completed?.[tkey];
-    // XP is only awarded the first time a topic is completed, so the leaderboard
-    // rewards coverage, not grinding the same quiz over and over.
     const gained = firstTime ? correct * 10 : 0;
-    // Build the review deck: keep previously-missed questions, add newly-missed
-    // ones (de-duplicated by question text), so students can drill their weak spots.
     const prevReview = Array.isArray(progress.review) ? progress.review : [];
     const seen = new Set(prevReview.map((m) => m.q));
     const merged = [...prevReview];
     for (const m of missed) { if (!seen.has(m.q)) { merged.push(m); seen.add(m.q); } }
-    // Record the best score percent for this topic, so the weak-spots dashboard
-    // can show which topics the student is strongest and weakest on.
     const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
     const prevScores = progress.scores || {};
     const bestPrev = prevScores[tkey] || 0;
     const scores = { ...prevScores, [tkey]: Math.max(bestPrev, pct) };
     persist({ ...progress, xp: progress.xp + gained, completed: { ...progress.completed, [tkey]: true }, review: merged, scores });
   };
-  // Remove a question from the review deck once the student answers it correctly there.
+
   const clearReviewItem = (questionText) => {
     const prev = Array.isArray(progress.review) ? progress.review : [];
     persist({ ...progress, review: prev.filter((m) => m.q !== questionText) });
   };
-  // Toggle a topic bookmark so students can save topics to revisit fast.
+
   const toggleBookmark = (cid, tid) => {
     const key = `${cid}:${tid}`;
     const prev = Array.isArray(progress.bookmarks) ? progress.bookmarks : [];
     const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
     persist({ ...progress, bookmarks: next });
   };
+
   const setName = async () => {
     if (typeof window === "undefined") return;
     const raw = window.prompt("Change your username (this is your name on the leaderboard)", progress.name);
@@ -6164,12 +6780,10 @@ export default function App() {
     if (newName.length < 2 || newName === progress.name) return;
 
     if (supaUid) {
-      // Supabase user: update the profile name in the cloud
       await db.setUsername(supaUid, newName);
       persist({ ...progress, name: newName });
       return;
     }
-    // local account: remove old shared-board entry to avoid a duplicate, then sync
     if (progress.name) {
       const oldBoardKey = "ascend_board:" + String(progress.name).toLowerCase().replace(/[^a-z0-9]/g, "");
       try { if (hasWS()) { await window.storage.delete?.(oldBoardKey, true); } else { localStorage.removeItem(oldBoardKey); } } catch {}
@@ -6183,6 +6797,7 @@ export default function App() {
   };
 
   const app = { progress, go, recordDaily, finishQuiz, clearReviewItem, toggleBookmark, supaUid, courseId: route.courseId, topicId: route.topicId };
+
   const render = () => {
     switch (route.view) {
       case "home": return <HomeView app={app} />;
@@ -6202,6 +6817,7 @@ export default function App() {
       default: return <HomeView app={app} />;
     }
   };
+
   const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
   const r = rankOf(progress.xp);
   const rootCls = "ascend-root" + (theme === "light" ? " light" : "");
@@ -6211,7 +6827,42 @@ export default function App() {
   const openNotif = () => { setNotifOpen(true); if (unreadAnn) persist({ ...progress, seenAnn: ANNOUNCEMENTS.length }); };
   const showRate = !!auth && progress.xp >= 30 && !progress.rated && !progress.ratePromptSeen && !rateDismissed && route.view !== "feedback";
 
-  if (!loaded) return <div className={rootCls}><style>{CSS}</style><div style={{ padding: 40, color: "var(--text-3)" }} className="mono">Loading ASCEND...</div></div>;
+  if (!loaded) return (
+    <div className={rootCls}>
+      <style>{CSS}</style>
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        gap: "20px",
+        background: "var(--bg)"
+      }}>
+        <div style={{
+          width: 48,
+          height: 48,
+          border: "3px solid var(--bg-3)",
+          borderTop: "3px solid var(--amber)",
+          borderRadius: "50%",
+          animation: "spin 1s linear infinite"
+        }} />
+        <div style={{
+          color: "var(--text-3)",
+          fontSize: 14,
+          fontFamily: "var(--mono)",
+          letterSpacing: "0.1em"
+        }}>ASCEND</div>
+      </div>
+    </div>
+  );
+
   if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
 
   const navButtons = (onNav) => NAV.map((n) => {
@@ -6242,11 +6893,51 @@ export default function App() {
                 <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
                 <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
                 <span className="chip"><span className="val" style={{ color: r.c }}>{progress.xp}</span> XP</span>
+                <span className="chip streakchip" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <Ic.flame p={15} />
+                  <span className="val">{progress.streak}</span>
+                </span>
                 <button className="avatar" onClick={setName} title="Tap to change your username">{progress.name[0]?.toUpperCase()}</button>
               </div>
             </div>
           </header>
           <div className="content">{render()}</div>
+          {showTop && (
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              style={{
+                position: "fixed",
+                bottom: "clamp(70px, 10vh, 100px)",
+                right: "clamp(16px, 3vw, 30px)",
+                width: "48px",
+                height: "48px",
+                borderRadius: "50%",
+                background: "var(--amber)",
+                color: "#1B1405",
+                border: "none",
+                fontSize: "22px",
+                fontWeight: 700,
+                cursor: "pointer",
+                boxShadow: "0 4px 16px rgba(245,185,63,0.3)",
+                zIndex: 50,
+                transition: "all 0.3s ease",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: "var(--mono)"
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = "scale(1.1)";
+                e.target.style.boxShadow = "0 6px 24px rgba(245,185,63,0.5)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = "scale(1)";
+                e.target.style.boxShadow = "0 4px 16px rgba(245,185,63,0.3)";
+              }}
+            >
+              ↑
+            </button>
+          )}
         </div>
       </div>
 
