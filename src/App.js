@@ -4010,99 +4010,126 @@ If those came cleanly, you understand how cells move substances uphill to defy d
 };
 
 // ==================== BIOLOGICAL CHEMISTRY TOPIC 1: ISOMERISM ====================
+// ==================== BIOLOGICAL CHEMISTRY TOPIC 1: ISOMERISM ====================
 const T_BIO_ISOMERISM = {
   courseId: "bio",
   topicIndex: 0,
   title: "Isomerism",
-  minutes: 24,
+  minutes: 22,
   note: [
-    { q: "What is isomerism and why does it matter in biochemistry?",
-      body: `You have learned that molecules are made of atoms bonded together in specific arrangements. But here is the problem: molecules with the exact same molecular formula can have completely different structures, properties, and biological effects. This is isomerism — the existence of different compounds with the same molecular formula.
+    { q: "Why does a biochemist need to understand isomerism at all?",
+      body: `You have learned the structures of molecules — how atoms bond to form the building blocks of life. But there is a hidden problem: the same set of atoms can arrange themselves in different ways, producing molecules with entirely different properties. This is isomerism, and it is one of the most important concepts in biochemistry.
 
-My Socratic question: glucose and fructose both have the same formula — C6H12O6. Yet glucose is the primary fuel of the body, and fructose is metabolised differently. Why does the same formula produce different molecules?
+My Socratic question: glucose and fructose have the exact same chemical formula — C6H12O6. Yet glucose is the primary fuel of every cell, and fructose is metabolised by a different pathway. How can two molecules with the same formula behave so differently?
 
-The answer is that the arrangement of atoms matters. Isomers are compounds that have the same molecular formula but different structural arrangements. These differences change how the molecule interacts with enzymes, receptors, and other molecules in the body, which is why isomers often have dramatically different biological effects.
+The answer is that the arrangement of atoms matters as much as the atoms themselves. Isomers are compounds that have the same molecular formula but different structural arrangements. These differences change how the molecule interacts with enzymes, receptors, and other molecules in the body. A single atom moved to a different position can turn a nutrient into a toxin, or a drug into a poison.
 
-Consider this: a single atom can be moved from one position to another, and the entire function of the molecule changes. This is why isomerism is not just a theoretical concept — it is the reason that drugs, sugars, and hormones have specific effects. The shape of a molecule determines its function, and isomerism is the study of how that shape can vary.
+Consider this: the drug thalidomide was sold as a mixture of two isomers. One relieved morning sickness; the other caused severe birth defects. Same formula, same atoms, different arrangement — and the difference between a treatment and a tragedy.
 
 Crucial insight: isomerism is the reason that the same chemical formula can produce different molecules with different functions. Understanding isomerism is essential for understanding why some drugs work, why some sugars are metabolised differently, and why the body is so specific in its biochemical reactions.` },
 
-    { q: "Constitutional (structural) isomers: different connections, different properties.",
-      body: `The first type of isomerism is constitutional isomerism, also called structural isomerism. In constitutional isomers, the atoms are connected in different orders. The connections are different, so the molecules are different compounds.
+    { q: "What is the first major division of isomerism?",
+      body: `All isomers fall into two great categories, and the distinction is fundamental to understanding the entire topic. The first category is constitutional isomerism, also called structural isomerism. The second is stereoisomerism.
 
-My Socratic question: pentane and isopentane both have the formula C5H12. One is a straight chain; the other is branched. How does this difference affect their physical properties, and why does this matter?
+My Socratic question: imagine two houses built from the same set of bricks. One has the rooms arranged in a straight line; the other has them arranged in a circle. Both houses have the same materials, but the arrangement is different. What is the biochemical equivalent of this?
+
+The answer is constitutional isomerism. In constitutional isomers, the atoms are connected in different orders. The connections are different, so the molecules are different compounds. They have different physical properties — different boiling points, different melting points, different solubilities. And they can have different biological activities.
+
+Stereoisomers, by contrast, have the same connections between atoms — the same order of bonds — but the atoms are arranged differently in three-dimensional space. This is a more subtle form of isomerism, but it is the one that is most important in biochemistry because it explains how enzymes recognise specific molecules.
+
+Crucial insight: the first question to ask about any pair of isomers is whether they have different connections (constitutional) or the same connections but different 3D arrangements (stereoisomers). This distinction organises the entire topic.` },
+
+    { q: "What are constitutional isomers, and why do they matter in medicine?",
+      body: `Constitutional isomers, also called structural isomers, have the same molecular formula but different connections between atoms. They are different compounds with different properties, and this has real clinical consequences.
+
+My Socratic question: pentane and isopentane both have the formula C5H12. One is a straight chain; the other is branched. How does this difference affect their physical properties, and why does this matter in biochemistry?
 
 The answer is that the branching changes the shape of the molecule and the strength of intermolecular forces. Branched isomers have lower boiling points than straight-chain isomers because they are more compact and have less surface area for intermolecular interactions. In biochemistry, the arrangement of atoms determines how a molecule fits into an active site.
 
-This is why enzymes are so specific. An enzyme that recognises a straight-chain molecule may not recognise its branched isomer. This specificity is the basis of metabolic control and drug action.
+This is why enzymes are so specific. An enzyme that recognises a straight-chain molecule may not recognise its branched isomer. This specificity is the basis of metabolic control and drug action. A single atom moved to a different position can turn a nutrient into a toxin, which is why drug design must consider all possible isomers.
 
-Crucial insight: structural isomers are different compounds with different properties. In the body, enzymes recognise specific arrangements of atoms, so even subtle changes in structure can dramatically affect biological activity. A single atom moved to a different position can turn a nutrient into a toxin.` },
+Crucial insight: structural isomers are different compounds with different properties. In the body, enzymes recognise specific arrangements of atoms, so even subtle changes in structure can dramatically affect biological activity.` },
 
-    { q: "Stereoisomers: the same connections, different 3D shape.",
+    { q: "What are stereoisomers, and why are they more subtle than structural isomers?",
       body: `Stereoisomers are more subtle than structural isomers. They have the same connections between atoms, but the atoms are arranged differently in three-dimensional space. This is the kind of isomerism that is most important in biochemistry, and it is the kind that students often find most difficult.
 
 My Socratic question: your right hand and left hand are mirror images — they look the same, but they cannot be superimposed. How does this concept apply to molecules, and why does it matter in medicine?
 
 The answer is that some molecules are chiral — they exist as mirror-image forms called enantiomers. Enantiomers have identical chemical and physical properties in most ways. They have the same boiling point, same melting point, same solubility. But they interact differently with other chiral molecules, including enzymes and receptors.
 
-This is why one enantiomer of a drug can be active while the other is inactive or even harmful. The active enantiomer fits into the enzyme's active site like a key in a lock. The inactive enantiomer does not fit, or it fits into a different site, causing side effects.
+This is why one enantiomer of a drug can be active while the other is inactive or even harmful. The active enantiomer fits into the enzyme's active site like a key in a lock. The inactive enantiomer does not fit, or it fits into a different site, causing side effects. This is the basis of stereospecificity in biochemistry.
 
 Crucial insight: chirality is fundamental to life. The amino acids in proteins are all L-amino acids, and the sugars in DNA are all D-sugars. Life is chiral, and stereoisomerism is the reason that biological molecules have such specific interactions. Without chirality, life as we know it would not exist.` },
 
-    { q: "Enantiomers: the mirror-image isomers that changed medicine.",
+    { q: "What are enantiomers, and how did they change medicine forever?",
       body: `Enantiomers are stereoisomers that are non-superimposable mirror images of each other. They are like your left hand and your right hand — identical in structure but not identical in space. They are chiral, and they rotate plane-polarised light in opposite directions.
 
 My Socratic question: the drug thalidomide was sold as a mixture of two enantiomers. One enantiomer relieved morning sickness; the other caused severe birth defects. How is this possible if they have the same formula and the same physical properties?
 
 The answer is that enzymes and receptors are chiral, and they recognise only one enantiomer. The active enantiomer of thalidomide bound to the receptor and had the desired effect. The inactive enantiomer did not bind to that receptor, but it did bind to another target, causing the damage. This is why modern drugs are often sold as single enantiomers, not racemic mixtures.
 
-The thalidomide tragedy is a powerful reminder that chirality is not just an academic concept. It has real consequences for human health. Today, drug companies are required to study the effects of each enantiomer separately before a drug can be approved.
+The thalidomide tragedy is a powerful reminder that chirality is not just an academic concept. It has real consequences for human health. Today, drug companies are required to study the effects of each enantiomer separately before a drug can be approved, and the development of single-enantiomer drugs has become a standard practice.
 
 Crucial insight: enantiomers can have dramatically different biological effects. The study of enantiomers is essential in pharmacology, where the wrong enantiomer can be ineffective or dangerous. The thalidomide tragedy changed drug regulation forever.` },
 
-    { q: "Diastereomers: the other stereoisomers.",
+    { q: "What are diastereomers, and how do they differ from enantiomers?",
       body: `Diastereomers are stereoisomers that are not mirror images. They are more common than enantiomers and can be separated by physical methods like chromatography because they have different physical properties.
 
 My Socratic question: if enantiomers are mirror images, what are stereoisomers that are not mirror images called, and why do they matter in biochemistry?
 
 The answer is that diastereomers have different physical and chemical properties, unlike enantiomers, which are identical except in chiral environments. Diastereomers can have different melting points, boiling points, and solubilities, which makes them easier to separate. In biochemistry, the distinction between enantiomers and diastereomers is important for understanding carbohydrate and protein structure.
 
-Carbohydrates are a perfect example. Glucose and galactose are diastereomers. They have the same formula, the same connections, but the arrangement of atoms around one carbon is different. This difference means that glucose and galactose are metabolised by different pathways, and galactose must be converted by the Leloir pathway before it can be used.
+Carbohydrates are a perfect example. Glucose and galactose are diastereomers. They have the same formula, the same connections, but the arrangement of atoms around one carbon is different. This difference means that glucose and galactose are metabolised by different pathways, and galactose must be converted by the Leloir pathway before it can be used. This is a direct clinical consequence of diastereomerism.
 
-Crucial insight: diastereomers are the stereoisomers that can be separated and studied more easily. They are also the type of stereoisomerism that gives carbohydrates their complexity. Understanding diastereomers is essential for understanding sugar metabolism.` },
+Crucial insight: diastereomers are the stereoisomers that can be separated and studied more easily. They are also the type of stereoisomerism that gives carbohydrates their complexity. Understanding diastereomers is essential for understanding sugar metabolism and the structure of complex carbohydrates.` },
 
-    { q: "Optical activity: how we detect chirality.",
-      body: `Chiral molecules rotate plane-polarised light. This property, called optical activity, is how chemists detect and study chirality.
+    { q: "What is optical activity, and how do we detect chirality?",
+      body: `Chiral molecules rotate plane-polarised light. This property, called optical activity, is how chemists detect and study chirality in the laboratory.
 
 My Socratic question: a solution of pure glucose rotates plane-polarised light to the right. A solution of pure fructose also rotates plane-polarised light. Why does this happen, and what does it tell us about the molecules?
 
-The answer is that chiral molecules have a property called optical activity. When plane-polarised light passes through a solution of a chiral compound, the plane of polarisation is rotated. The direction and amount of rotation depend on the structure of the molecule and its concentration.
+The answer is that chiral molecules have a property called optical activity. When plane-polarised light passes through a solution of a chiral compound, the plane of polarisation is rotated. The direction and amount of rotation depend on the structure of the molecule and its concentration. This happens because chiral molecules interact differently with the left- and right-handed components of plane-polarised light.
 
-Enantiomers rotate light in opposite directions by the same amount. A mixture of equal amounts of both enantiomers — a racemic mixture — does not rotate light at all because the rotations cancel out. This is why racemic mixtures are optically inactive.
+Enantiomers rotate light in opposite directions by the same amount. A mixture of equal amounts of both enantiomers — a racemic mixture — does not rotate light at all because the rotations cancel out. This is why racemic mixtures are optically inactive. The measurement of optical activity is a powerful tool for determining the purity and concentration of chiral compounds.
 
-Crucial insight: optical activity is a powerful tool for studying chirality. It allows chemists to determine the purity of enantiomeric mixtures and to study the properties of chiral molecules. It is also the reason that sugar solutions rotate light, which is used in polarimetry to measure sugar concentration.` },
+Crucial insight: optical activity is a powerful tool for studying chirality. It allows chemists to determine the purity of enantiomeric mixtures and to study the properties of chiral molecules. It is also the reason that sugar solutions rotate light, which is used in polarimetry to measure sugar concentration in clinical and industrial settings.` },
 
-    { q: "Chirality in drugs: why one enantiomer is enough.",
-      body: `The importance of chirality in drug development cannot be overstated. Approximately half of all drugs are chiral, and in many cases, only one enantiomer is therapeutically active.
+    { q: "What is the D and L system, and why is it essential for understanding biological molecules?",
+      body: `The D and L system is a way of describing the stereochemistry of chiral molecules, particularly sugars and amino acids. It is based on the orientation of the hydroxyl group on the chiral carbon furthest from the carbonyl group.
 
-My Socratic question: ibuprofen is a chiral drug sold as a mixture of two enantiomers. One enantiomer is active; the other is inactive but harmless. Why is this acceptable, but thalidomide was not?
+My Socratic question: why are all natural sugars D-sugars and all natural amino acids L-amino acids? What would happen if the wrong isomer were used?
 
-The answer is that the inactive enantiomer of ibuprofen is safe — it does not cause harm, and it can be converted to the active form in the body. The inactive enantiomer of thalidomide was toxic, causing irreversible damage. The difference is not in the chirality itself, but in the biological activity of the inactive enantiomer.
+The answer is that enzymes are stereospecific — they recognise only one isomer. D-glucose is metabolised by glycolysis; L-glucose cannot be metabolised because it does not fit the enzymes. Similarly, L-amino acids are used to build proteins; D-amino acids are not recognised by the protein synthesis machinery.
 
-Today, drug companies strive to develop single-enantiomer drugs whenever possible. This approach, called chiral switching, can improve efficacy, reduce side effects, and simplify dosing.
+This stereospecificity is essential for life. If the wrong isomer were incorporated into biological molecules, proteins would not fold correctly, enzymes would not work, and the organism would not survive. This is why life is homochiral — it uses only one enantiomer of each chiral molecule. This is one of the most fundamental properties of life.
 
-Crucial insight: chirality is a practical consideration in drug design, safety, and efficacy. Understanding chirality is essential for understanding how drugs work and why some drugs have side effects. The future of pharmacology is chiral.` },
+Crucial insight: the D and L system is essential for understanding the stereochemistry of biological molecules. Natural sugars are D; natural amino acids are L. This stereospecificity is the basis of life's biochemistry and is essential for the function of enzymes and receptors.` },
+
+    { q: "What is racemisation, and why does it matter in medicine and biology?",
+      body: `Racemisation is the process by which a pure enantiomer is converted into a racemic mixture. It can occur spontaneously or be catalysed by enzymes, and it has important implications for drug stability and protein aging.
+
+My Socratic question: amino acids are chiral, and proteins are built from L-amino acids. Over time, L-amino acids can undergo racemisation to D-amino acids. Why does this matter in biology and medicine?
+
+The answer is that racemisation changes the structure of proteins over time. In living organisms, enzymes maintain the correct stereochemistry. But in non-living tissues, such as the lens of the eye or archaeological samples, racemisation can be used as a dating tool. In medicine, racemisation can affect the efficacy and safety of chiral drugs.
+
+For example, the drug thalidomide underwent racemisation in the body, converting the safe enantiomer into the toxic one. This was one of the factors that contributed to the thalidomide tragedy. Understanding racemisation is essential for understanding drug stability and safety, and for developing stable chiral drugs.
+
+Crucial insight: racemisation is the loss of chirality. It is important in drug stability, protein aging, and dating biological samples. Understanding racemisation is essential for understanding chirality in biological systems and for developing stable chiral drugs.` },
 
     { q: "Consolidation and your final test.",
-      body: `Your cognitive map for isomerism.
+      body: `Your cognitive map for isomerism, in five lines.
 
-Constitutional (structural) isomers: different connections between atoms. Different physical and chemical properties.
+Constitutional (structural) isomers: different connections between atoms. Different physical and chemical properties. Examples include pentane and isopentane.
 
 Stereoisomers: same connections, different 3D arrangement. Enantiomers are mirror images; diastereomers are not.
 
 Chirality: the property of having non-superimposable mirror images. Biological molecules are chiral, and enzymes recognise specific enantiomers.
 
 Optical activity: the rotation of plane-polarised light by chiral molecules. Used to detect and study chirality.
+
+D and L system: D-sugars and L-amino acids are the natural forms in living organisms.
+
+Racemisation: the conversion of a pure enantiomer into a racemic mixture.
 
 Clinical relevance: enantiomers can have different biological effects, making chirality essential in pharmacology. The thalidomide tragedy changed drug regulation.
 
@@ -4154,6 +4181,16 @@ My answers. One: they are enantiomers, and the mixture is called a racemic mixtu
     { q: "Chiral switching in drug development refers to:", o: ["Selling a drug as a racemic mixture", "Developing a single-enantiomer version of a drug", "Switching from liquid to pill form", "Changing the drug's colour"], a: 1, w: "Chiral switching means developing a drug as a single enantiomer to improve safety and efficacy." },
     { q: "A polarimeter is used to measure:", o: ["Molecular weight", "Optical activity", "Boiling point", "Solubility"], a: 1, w: "A polarimeter measures the rotation of plane-polarised light by chiral molecules." },
     { q: "Which statement about enantiomers is TRUE?", o: ["They have different physical properties", "They interact differently with chiral molecules", "They have different molecular formulae", "They are constitutional isomers"], a: 1, w: "Enantiomers interact differently with other chiral molecules, including enzymes and receptors." },
+    { q: "Natural amino acids found in proteins are:", o: ["D-amino acids", "L-amino acids", "Racemic mixtures", "Diastereomers"], a: 1, w: "Proteins are built from L-amino acids exclusively." },
+    { q: "Natural sugars found in DNA and RNA are:", o: ["L-sugars", "D-sugars", "Racemic mixtures", "Diastereomers"], a: 1, w: "Natural sugars in nucleic acids are D-sugars." },
+    { q: "A compound with two chiral carbons has how many possible stereoisomers?", o: ["2", "3", "4", "8"], a: 2, w: "Each chiral carbon doubles the number: 2 to the power of n, so 2 to the power of 2 = 4." },
+    { q: "A compound that has chiral centres but is optically inactive due to internal compensation is a:", o: ["Racemic mixture", "Meso compound", "Enantiomer", "Diastereomer"], a: 1, w: "A meso compound has internal symmetry, making it optically inactive." },
+    { q: "What type of isomerism is shown by D-glucose and L-glucose?", o: ["Constitutional", "Enantiomerism", "Diastereomerism", "Positional"], a: 1, w: "D-glucose and L-glucose are enantiomers — mirror images." },
+    { q: "What type of isomerism is shown by D-glucose and D-galactose?", o: ["Enantiomerism", "Diastereomerism", "Constitutional", "Positional"], a: 1, w: "They are diastereomers — not mirror images but different at one carbon." },
+    { q: "The conversion of a pure enantiomer into a racemic mixture is called:", o: ["Racemisation", "Resolution", "Chiral switching", "Optical activity"], a: 0, w: "Racemisation is the process of converting a pure enantiomer into a 50:50 mixture." },
+    { q: "The process of separating two enantiomers from a racemic mixture is called:", o: ["Racemisation", "Chiral separation", "Resolution", "Isomerisation"], a: 2, w: "Resolution is the separation of enantiomers from a racemic mixture." },
+    { q: "Which of the following is NOT a type of isomerism?", o: ["Constitutional", "Stereoisomerism", "Enantiomerism", "Oxidation"], a: 3, w: "Oxidation is a chemical reaction, not a type of isomerism." },
+    { q: "The study of the three-dimensional arrangement of atoms in molecules is called:", o: ["Stereochemistry", "Isomerism", "Constitutional chemistry", "Optical physics"], a: 0, w: "Stereochemistry is the study of the 3D arrangement of atoms and its effects on properties." },
   ],
 };
 
