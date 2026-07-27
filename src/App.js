@@ -7269,6 +7269,546 @@ If those came cleanly, you understand the tissue of movement - its property of c
   ],
 };
 
+/* --------------------------- phy:5 --------------------------- */
+const T_PHY_RMP = {
+  courseId: "phy",
+  topicIndex: 5,
+  title: "Resting Membrane Potential",
+  minutes: 20,
+  note: [
+    { q: "The electrical charge across every living cell.",
+      body: `You have studied how substances cross the cell membrane by diffusion, facilitated diffusion and active transport. Now we use that knowledge to understand one of the most important facts about living cells: every cell carries an electrical voltage across its membrane, called the resting membrane potential. This is the foundation of all nerve and muscle activity.
+
+My Socratic question: if you could place one tiny electrode just inside a resting cell and another just outside, you would measure a voltage difference between them - the inside is negative relative to the outside. Where could an electrical charge inside a living cell possibly come from?
+
+The answer is that it comes from an unequal distribution of charged particles - ions - across the membrane. Because there are different concentrations of positively and negatively charged ions inside versus outside the cell, and because the membrane controls which ions can cross, a separation of charge builds up, making the inside of the cell negative compared with the outside. This charge separation is the resting membrane potential.
+
+Crucial insight: the resting membrane potential is the electrical voltage across the membrane of a resting cell, with the inside negative relative to the outside, caused by an unequal distribution of ions. It exists in every living cell and is the basis of all electrical signalling in nerves and muscles - so understanding it unlocks how the nervous system and muscles actually work.` },
+
+    { q: "What potential and resting actually mean.",
+      body: `The two words in "resting membrane potential" each carry precise meaning, and defining them sharpens the whole concept.
+
+A membrane potential is a difference in electrical charge (voltage) across the cell membrane - a "potential" in the electrical sense, like the voltage of a battery. It is measured in millivolts (mV). The word resting means the cell is not currently being stimulated or sending a signal - it is at rest, in its baseline state. So the resting membrane potential is the steady baseline voltage of a cell that is not active. In a typical nerve cell it is about -70 mV, the minus sign showing the inside is negative relative to the outside.
+
+My Socratic question: why is the resting membrane potential given a negative value, such as -70 mV, rather than a positive one?
+
+The answer is that by convention the voltage is measured as the inside relative to the outside, and since the inside of a resting cell is negative compared with the outside, the value is negative. The -70 mV means the inside is 70 millivolts more negative than the outside.
+
+Crucial insight: a membrane potential is a voltage (charge difference) across the membrane, measured in millivolts; "resting" means the cell is at its unstimulated baseline; and the typical resting value of about -70 mV (inside negative) reflects the inside being 70 mV more negative than the outside. This steady voltage is the charged, ready state from which all electrical signals begin.` },
+
+    { q: "The unequal distribution of ions.",
+      body: `The resting membrane potential arises from ions being unequally distributed across the membrane, so we must know which ions sit where - this is the factual core of the topic.
+
+The key ions are sodium (Na+, positive), potassium (K+, positive), chloride (Cl-, negative), and large negatively charged proteins inside the cell. In a resting cell: sodium (Na+) is much more concentrated outside the cell; potassium (K+) is much more concentrated inside the cell; and large negatively charged proteins are trapped inside the cell (they are too big to leave). This arrangement - Na+ high outside, K+ high inside - is the starting point for the membrane potential.
+
+My Socratic question: the large negatively charged proteins are trapped inside the cell and cannot cross the membrane. How does their presence contribute to the inside being negative?
+
+The answer is that because these big negative proteins are stuck inside and cannot leave, they add a fixed store of negative charge to the interior; combined with the movement of the small ions, this helps keep the inside of the cell negative relative to the outside. Trapped negative charge is part of why the interior is negative.
+
+Crucial insight: at rest, sodium (Na+) is concentrated outside the cell, potassium (K+) is concentrated inside, and large negative proteins are trapped inside. This unequal distribution of charged ions - especially the high internal K+ and the trapped internal negative proteins - sets up the conditions for the negative resting membrane potential.` },
+
+    { q: "The role of potassium and membrane permeability.",
+      body: `The single most important factor in setting the resting membrane potential is the membrane's permeability to potassium - understanding this is the key insight of the topic.
+
+At rest, the membrane is much more permeable to potassium (K+) than to sodium (Na+) - there are more open potassium leak channels. Because K+ is concentrated inside and the membrane lets it through, K+ tends to diffuse OUT of the cell, down its concentration gradient. As positive K+ leaves, it carries positive charge out, leaving the inside more negative. Potassium keeps leaving until the growing internal negativity (which attracts the positive K+ back) balances the concentration gradient pushing it out.
+
+My Socratic question: if potassium is positive and keeps leaving the cell, why does it not all leak out until the concentrations are equal?
+
+The answer is that as positive K+ leaves, the inside becomes increasingly negative, and this negative charge pulls the positive K+ back in. A balance is reached where the concentration gradient pushing K+ out is exactly opposed by the electrical attraction pulling it back - and at that balance point, the membrane potential is set. So potassium's outward leak, checked by the negativity it creates, largely determines the resting potential.
+
+Crucial insight: the resting membrane potential is set mainly by potassium, because the resting membrane is far more permeable to K+ than Na+; K+ leaks out down its gradient, making the inside negative, until the electrical pull back balances the outward push. This is why the resting potential is close to potassium's own equilibrium - potassium permeability is the dominant factor.` },
+
+    { q: "The sodium-potassium pump: maintaining the gradients.",
+      body: `The ion gradients that create the resting potential would eventually run down without an active process to maintain them - and that process is the sodium-potassium pump, which you met in active transport.
+
+The sodium-potassium pump (Na+/K+ ATPase) is a membrane protein that uses energy (ATP) to pump 3 sodium ions OUT of the cell and 2 potassium ions IN, against their concentration gradients. This continually maintains the high sodium outside and high potassium inside, replacing the small amounts that leak across. Because it moves 3 positive charges out for every 2 brought in, it also directly removes a little positive charge from the cell, adding slightly to the negativity.
+
+My Socratic question: the pump uses ATP (energy) constantly. Why is it worth the cell spending so much energy just to maintain these ion gradients?
+
+The answer is that the ion gradients are essential - they create the resting membrane potential and store the potential energy that nerves and muscles use to generate electrical signals. Without the pump, the gradients would gradually dissipate, the resting potential would collapse, and nerve and muscle signalling would fail. The energy maintains the charged, ready state on which the whole nervous system depends.
+
+Crucial insight: the sodium-potassium pump uses ATP to move 3 Na+ out and 2 K+ in, maintaining the ion gradients (Na+ high outside, K+ high inside) that underlie the resting potential, and adding slightly to the internal negativity. It is the active engine that keeps the cell charged and ready, which is why cells spend so much energy running it continuously.` },
+
+    { q: "How the resting potential is established: putting it together.",
+      body: `We can now assemble the pieces into a clear account of how the resting membrane potential comes about - a synthesis that makes the whole topic click.
+
+Three factors work together. First, the unequal ion distribution (Na+ high outside, K+ high inside, negative proteins trapped inside) sets the stage. Second, the membrane's high permeability to K+ lets potassium leak out down its gradient, carrying positive charge out and making the inside negative - this is the main determinant. Third, the sodium-potassium pump maintains the gradients over time and contributes slightly to the negativity. Together these produce the steady resting potential of about -70 mV, inside negative.
+
+My Socratic question: which of these three factors is the MAIN one directly responsible for the value of the resting membrane potential, and which mainly plays a supporting, maintaining role?
+
+The answer is that the high membrane permeability to potassium (letting K+ leak out) is the main factor directly setting the resting potential; the sodium-potassium pump plays a supporting role, maintaining the gradients over time (with a small direct contribution). The potassium leak sets the voltage; the pump keeps the system running.
+
+Crucial insight: the resting membrane potential results from unequal ion distribution, dominant potassium permeability (K+ leaking out to make the inside negative - the main determinant), and the sodium-potassium pump maintaining the gradients. Understanding these three together explains both what sets the -70 mV and what keeps it stable - the complete picture of the resting cell's charge.` },
+
+    { q: "Why the resting potential matters: the basis of signalling.",
+      body: `The resting membrane potential is not just a curiosity - it is the essential starting point for all electrical signalling in the body, which is why physiology gives it such attention.
+
+My Socratic question: nerves and muscles work by rapidly changing their membrane potential to send signals. Why must there first be a resting potential for this to be possible?
+
+The answer is that the resting potential is the charged, ready baseline - like a loaded spring or a charged battery. Electrical signals (such as nerve impulses) are produced when the membrane potential suddenly changes from this resting baseline, as ions rush across the membrane. Without a resting potential established first, there would be no baseline to change from and no stored energy to drive the signal. The resting potential is the essential precondition for every nerve impulse and muscle contraction.
+
+The gradients maintained at rest store the energy that is suddenly released when a nerve fires or a muscle is stimulated - the signal is a rapid, controlled movement of ions down the gradients that the resting state prepared.
+
+Crucial insight: the resting membrane potential matters because it is the charged baseline from which all electrical signals arise - nerve impulses and muscle contractions are rapid changes from this resting state, driven by ion movements down the gradients maintained at rest. Every heartbeat, thought and movement begins from the resting potential, making it the foundation of nerve and muscle physiology.` },
+
+    { q: "Why the resting potential matters in the laboratory and medicine.",
+      body: `The resting membrane potential and the ions behind it are directly relevant to medicine and laboratory work, connecting this physiology to real clinical practice.
+
+My Socratic question: the resting potential depends heavily on ion concentrations, especially potassium. What might happen if a patient's blood potassium level became abnormal, and why would a laboratory measure it?
+
+The answer is that because potassium is the main ion setting the resting potential, abnormal blood potassium dangerously disturbs the resting potential of nerve and muscle cells - especially the heart. Too much or too little potassium can cause the heart's rhythm to fail, which can be fatal. This is precisely why laboratories measure blood potassium (and other electrolytes like sodium) so carefully - abnormal levels are a medical emergency because of their effect on membrane potentials.
+
+Understanding the resting potential explains why electrolyte balance is monitored so closely, and why disturbances are treated urgently.
+
+Crucial insight: the resting membrane potential matters in medicine because it depends on ion concentrations, especially potassium - so abnormal blood potassium disturbs the resting potential of nerve and muscle, particularly in the heart, and can be fatal. This is why laboratories measure electrolytes carefully and why disturbances are emergencies, directly linking this physiology to the blood tests you will one day perform.` },
+
+    { q: "Depolarisation and repolarisation: a first look.",
+      body: `Finally, a brief look at how the resting potential changes during a signal prepares you for nerve and muscle physiology, and completes your understanding of the resting state's role.
+
+When a cell is stimulated, its membrane potential changes. Depolarisation is when the inside becomes less negative (moving toward zero or even positive) - often because sodium (Na+) rushes into the cell. Repolarisation is the return toward the resting negative value - often because potassium (K+) moves out. After a signal, the cell returns to its resting potential, ready for the next.
+
+My Socratic question: during depolarisation, sodium rushes into the cell. Why does sodium rush in so readily when the opportunity arises, given what you know about its distribution?
+
+The answer is that sodium is highly concentrated outside the cell and the inside is negative - so both the concentration gradient and the electrical attraction drive sodium inward powerfully. When channels open to let it through, sodium floods in, rapidly making the inside less negative (depolarisation). The resting state had stored exactly this driving force.
+
+Crucial insight: from the resting potential, depolarisation (inside becoming less negative, as Na+ enters) and repolarisation (return to resting, as K+ leaves) produce electrical signals, after which the cell returns to rest. Sodium rushes in because the resting state stored a strong inward driving force for it. This is the essential preview of how the resting potential is used to signal - the subject of nerve and muscle physiology.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the resting membrane potential, in five lines.
+
+What it is: the resting membrane potential is the steady electrical voltage across the membrane of a resting cell, inside negative relative to outside, typically about -70 mV, caused by unequal ion distribution.
+
+The ion distribution: at rest, sodium (Na+) is high outside, potassium (K+) is high inside, and large negative proteins are trapped inside.
+
+The main determinant: the resting membrane is far more permeable to K+ than Na+, so K+ leaks out down its gradient, making the inside negative until the electrical pull back balances the outward push - potassium permeability mainly sets the potential.
+
+The maintainer: the sodium-potassium pump uses ATP to move 3 Na+ out and 2 K+ in, maintaining the gradients and adding slightly to the negativity.
+
+Its importance: the resting potential is the charged baseline for all electrical signalling - depolarisation (Na+ in) and repolarisation (K+ out) produce nerve and muscle signals; and because it depends on potassium, abnormal blood potassium is a medical emergency, which is why laboratories measure electrolytes.
+
+Now your final test. A cell sits at its resting membrane potential of -70 mV. You are told the membrane at rest is much more permeable to potassium than to sodium, that potassium is concentrated inside the cell, and that a pump is using ATP in the membrane.
+
+Question one: in which direction does potassium tend to move at rest, and how does this movement make the inside of the cell negative?
+Question two: what is the pump doing, and why is it important for maintaining the resting potential over time?
+Question three: if this cell were now stimulated and sodium channels opened, which way would sodium move and what would happen to the membrane potential (name the process)?
+
+Work them through before reading on.
+
+My answers. One: at rest, potassium tends to move OUT of the cell, because it is concentrated inside and the membrane is permeable to it, so it diffuses down its concentration gradient out of the cell; as each positive potassium ion leaves, it carries positive charge out, leaving the inside increasingly negative - this outward leak of positive potassium is what makes the inside negative. Two: the pump is the sodium-potassium pump, using ATP to move 3 sodium ions out and 2 potassium ions in, against their gradients; it is important because it continually maintains the ion gradients (sodium high outside, potassium high inside) that the resting potential depends on, replacing the ions that leak across, so without it the gradients and the resting potential would gradually run down. Three: if sodium channels opened, sodium would rush INTO the cell (it is concentrated outside and the inside is negative, so both gradients drive it in), and the membrane potential would become less negative, moving toward zero and beyond - this process is depolarisation.
+
+If those came cleanly, you understand the electrical foundation of every living cell - the charged, ready state from which all nerve impulses and muscle contractions arise, and the ion balance whose disturbance is a medical emergency.` },
+  ],
+  theory: [
+    { q: "Define the resting membrane potential.", a: "The resting membrane potential is the steady electrical voltage (charge difference) across the membrane of a resting, unstimulated cell, with the inside negative relative to the outside - typically about -70 mV in a nerve cell. It is caused by an unequal distribution of ions across the membrane." },
+    { q: "Why is the resting membrane potential expressed as a negative value like -70 mV?", a: "By convention, the voltage is measured as the inside relative to the outside. Since the inside of a resting cell is negative compared with the outside, the value is negative; -70 mV means the inside is 70 millivolts more negative than the outside." },
+    { q: "Describe the distribution of the key ions across a resting cell membrane.", a: "Sodium (Na+) is much more concentrated outside the cell; potassium (K+) is much more concentrated inside; chloride (Cl-) is more concentrated outside; and large negatively charged proteins are trapped inside the cell because they are too big to cross the membrane." },
+    { q: "Explain how potassium permeability sets the resting membrane potential.", a: "At rest the membrane is far more permeable to K+ than Na+, so K+ leaks out down its concentration gradient. As positive K+ leaves, it carries positive charge out, making the inside negative. K+ keeps leaving until the internal negativity (attracting K+ back) balances the outward concentration gradient - this balance sets the resting potential." },
+    { q: "Why does potassium not simply keep leaking out until concentrations equalise?", a: "As positive potassium leaves, the inside of the cell becomes increasingly negative, and this negative charge attracts the positive potassium back in. A balance is reached where the concentration gradient pushing K+ out is exactly opposed by the electrical attraction pulling it back, so net movement stops and the potential is set." },
+    { q: "Describe the sodium-potassium pump and its role in the resting potential.", a: "The sodium-potassium pump (Na+/K+ ATPase) uses ATP to pump 3 sodium ions out of the cell and 2 potassium ions in, against their gradients. It maintains the high sodium outside and high potassium inside, replacing ions that leak across, and by moving 3 positive charges out for 2 in, it adds slightly to the internal negativity." },
+    { q: "What are the three factors that together establish the resting membrane potential?", a: "First, the unequal ion distribution (Na+ high outside, K+ high inside, negative proteins trapped inside). Second, the membrane's high permeability to K+, letting it leak out to make the inside negative - the main determinant. Third, the sodium-potassium pump, which maintains the gradients over time and adds slightly to the negativity." },
+    { q: "Why is the resting membrane potential essential for nerve and muscle signalling?", a: "It is the charged, ready baseline - like a charged battery - from which electrical signals arise. Nerve impulses and muscle contractions are produced by rapid changes from this resting potential as ions move across the membrane. Without a resting potential first, there would be no baseline to change from and no stored energy to drive the signal." },
+    { q: "Define depolarisation and repolarisation.", a: "Depolarisation is when the membrane potential becomes less negative (moving toward zero or positive), often because sodium (Na+) rushes into the cell. Repolarisation is the return toward the resting negative value, often because potassium (K+) moves out of the cell. After a signal, the cell returns to its resting potential." },
+    { q: "Why is blood potassium measured carefully in medicine?", a: "Because potassium is the main ion setting the resting membrane potential, abnormal blood potassium disturbs the resting potential of nerve and muscle cells, especially in the heart. Too much or too little potassium can cause the heart's rhythm to fail, which can be fatal - so laboratories monitor it closely and disturbances are treated as emergencies." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "The Resting Membrane Potential Explained", note: "What the resting potential is and how ions create it.", url: "" },
+    { channel: "Physiology", title: "Potassium and the Sodium-Potassium Pump", note: "How K+ permeability sets the potential and the pump maintains it.", url: "" },
+    { channel: "Physiology", title: "Depolarisation and Repolarisation Basics", note: "How the resting potential changes to produce signals.", url: "" },
+  ],
+  mcqs: [
+    { q: "The resting membrane potential is a difference in ______ across the membrane.", o: ["Temperature", "Pressure", "Colour", "Electrical charge (voltage)"], a: 3, w: "It is a voltage (charge difference) across the membrane." },
+    { q: "In a resting cell, the inside is ______ relative to the outside.", o: ["Positive", "The same", "Neutral", "Negative"], a: 3, w: "The inside is negative relative to the outside." },
+    { q: "The typical resting membrane potential of a nerve cell is about:", o: ["0 mV", "+70 mV", "-700 mV", "-70 mV"], a: 3, w: "About -70 mV, inside negative." },
+    { q: "Membrane potential is measured in:", o: ["Degrees", "Millivolts (mV)", "Grams", "Litres"], a: 1, w: "Membrane potential is measured in millivolts." },
+    { q: "The word 'resting' means the cell is:", o: ["Dividing", "Dead", "Not being stimulated (at baseline)", "Contracting"], a: 2, w: "Resting means unstimulated, at baseline." },
+    { q: "At rest, sodium (Na+) is more concentrated:", o: ["Outside the cell", "Inside the cell", "In the nucleus", "Equally distributed"], a: 0, w: "Sodium is concentrated outside the cell." },
+    { q: "At rest, potassium (K+) is more concentrated:", o: ["Inside the cell", "In the blood only", "Outside the cell", "Equally distributed"], a: 0, w: "Potassium is concentrated inside the cell." },
+    { q: "Large negatively charged proteins are:", o: ["Positive", "Only outside", "Free to leave the cell", "Trapped inside the cell"], a: 3, w: "Big negative proteins are trapped inside." },
+    { q: "At rest, the membrane is MOST permeable to:", o: ["Sodium", "Potassium", "Calcium", "Chloride"], a: 1, w: "The resting membrane is most permeable to potassium." },
+    { q: "At rest, potassium tends to move:", o: ["Into the nucleus", "Out of the cell", "Nowhere", "Into the cell"], a: 1, w: "K+ leaks out down its concentration gradient." },
+    { q: "As positive potassium leaves the cell, the inside becomes:", o: ["More negative", "More positive", "Neutral", "Warmer"], a: 0, w: "Losing positive charge makes the inside negative." },
+    { q: "Potassium stops net leaving when:", o: ["It all escapes", "Sodium enters", "Internal negativity balances the outward gradient", "The cell dies"], a: 2, w: "Electrical pull back balances the concentration push." },
+    { q: "The main determinant of the resting potential is permeability to:", o: ["Potassium", "Calcium", "Sodium", "Chloride"], a: 0, w: "Potassium permeability mainly sets the resting potential." },
+    { q: "The sodium-potassium pump moves:", o: ["2 Na+ out, 3 K+ in", "3 Na+ out, 2 K+ in", "1 Na+ out, 1 K+ in", "3 K+ out, 2 Na+ in"], a: 1, w: "The pump moves 3 Na+ out and 2 K+ in." },
+    { q: "The sodium-potassium pump requires:", o: ["ATP (energy)", "No energy", "Oxygen only", "Light"], a: 0, w: "The pump uses ATP - it is active transport." },
+    { q: "The pump maintains the resting potential by:", o: ["Adding water", "Destroying ions", "Maintaining the ion gradients over time", "Cooling the cell"], a: 2, w: "It maintains the Na+ and K+ gradients." },
+    { q: "By moving 3 positive out for 2 in, the pump makes the inside slightly:", o: ["More positive", "Neutral", "More negative", "Hotter"], a: 2, w: "Net removal of positive charge adds to negativity." },
+    { q: "Which factor MAINLY sets the value of the resting potential?", o: ["Sodium entering", "Potassium leaking out", "Chloride", "The pump"], a: 1, w: "Potassium leaking out is the main determinant." },
+    { q: "Which factor mainly MAINTAINS the gradients over time?", o: ["Chloride", "Trapped proteins", "Potassium leak", "The sodium-potassium pump"], a: 3, w: "The pump maintains the gradients over time." },
+    { q: "The resting potential serves as the ______ for electrical signals.", o: ["Barrier", "Waste product", "Charged baseline", "End point"], a: 2, w: "It is the charged baseline from which signals arise." },
+    { q: "An electrical signal is produced when the membrane potential:", o: ["Freezes", "Disappears", "Suddenly changes from resting", "Stays constant"], a: 2, w: "Signals are rapid changes from the resting baseline." },
+    { q: "Depolarisation is when the inside becomes:", o: ["Less negative (toward zero/positive)", "Frozen", "More negative", "Larger"], a: 0, w: "Depolarisation makes the inside less negative." },
+    { q: "Depolarisation often occurs because ______ rushes into the cell.", o: ["Water", "Potassium", "Protein", "Sodium"], a: 3, w: "Sodium rushing in causes depolarisation." },
+    { q: "Repolarisation is the return toward:", o: ["The resting negative value", "A positive value", "Body temperature", "Zero"], a: 0, w: "Repolarisation returns the cell to resting negativity." },
+    { q: "Repolarisation often occurs because ______ moves out of the cell.", o: ["Potassium", "Protein", "Chloride", "Sodium"], a: 0, w: "Potassium moving out causes repolarisation." },
+    { q: "Sodium rushes into the cell during depolarisation because:", o: ["It is trapped inside", "It has no charge", "Both its gradient and the negative inside drive it in", "It is repelled"], a: 2, w: "Concentration and electrical forces both drive Na+ in." },
+    { q: "The ion whose abnormal blood level most dangerously disturbs the resting potential is:", o: ["Zinc", "Calcium only", "Iron", "Potassium"], a: 3, w: "Potassium abnormalities most affect the resting potential." },
+    { q: "Abnormal blood potassium is dangerous mainly because it affects the:", o: ["Bones", "Heart's rhythm", "Hair", "Skin colour"], a: 1, w: "It can disturb the heart's rhythm, sometimes fatally." },
+    { q: "Laboratories measure electrolytes like potassium because:", o: ["They are fun to measure", "Abnormal levels disturb membrane potentials and can be fatal", "They are unimportant", "They colour the blood"], a: 1, w: "Electrolyte abnormalities affect membrane potentials dangerously." },
+    { q: "The resting membrane potential exists in:", o: ["Only nerve cells", "Every living cell", "Only heart cells", "Only muscle cells"], a: 1, w: "Every living cell has a resting membrane potential." },
+  ],
+};
+
+
+/* --------------------------- phy:6 --------------------------- */
+const T_PHY_STIMFREQ = {
+  courseId: "phy",
+  topicIndex: 6,
+  title: "Stimulus Frequency and Skeletal Muscle",
+  minutes: 19,
+  note: [
+    { q: "From a single twitch to smooth, forceful movement.",
+      body: `You know that skeletal muscle contracts when stimulated by a nerve. But a real movement - lifting a cup, holding a posture - is smooth and sustained, not a series of jerks. This topic explains how the frequency of stimulation transforms tiny individual contractions into the smooth, graded force of real movement.
+
+My Socratic question: a single brief nerve stimulus makes a muscle give one quick contraction and then relax. How could the body turn such brief, jerky contractions into the smooth, strong, sustained movements you actually make?
+
+The answer is by changing how often the muscle is stimulated - the stimulus frequency. When stimuli arrive rapidly, one after another, the individual contractions add together and merge into a smooth, stronger, sustained contraction. By controlling the frequency of nerve signals, the nervous system controls both the smoothness and the strength of muscle contraction.
+
+Crucial insight: the smoothness and force of real muscle movement come from the frequency of stimulation - rapid, repeated stimuli make individual contractions add together into smooth, sustained, stronger force. Understanding stimulus frequency explains how the body converts brief muscle twitches into the controlled movements of everyday life.` },
+
+    { q: "The muscle twitch: the basic unit.",
+      body: `To understand the effect of frequency, we start with the response to a single stimulus: the muscle twitch.
+
+A muscle twitch is the response of a muscle to a single brief stimulus - one quick contraction followed by relaxation. It has three phases: the latent period (a brief delay between the stimulus and the start of contraction, while the internal machinery activates), the contraction phase (the muscle shortens and develops tension), and the relaxation phase (the muscle returns to its resting length). The whole twitch is brief, lasting a fraction of a second.
+
+My Socratic question: during the latent period, the muscle has been stimulated but has not yet started to contract. What is happening inside the muscle during this short delay?
+
+The answer is that the internal events linking the stimulus to contraction are taking place - the electrical signal is spreading and triggering the release of calcium inside the muscle cell, which then allows the actin and myosin filaments to begin interacting. The latent period is the brief setup time before visible shortening begins.
+
+Crucial insight: a muscle twitch is the response to a single stimulus - a brief contraction and relaxation - with three phases: the latent period (setup delay), the contraction phase (shortening and tension), and the relaxation phase (return to rest). The twitch is the basic building block from which stronger, smoother contractions are built by repeated stimulation.` },
+
+    { q: "Summation: contractions adding together.",
+      body: `The key to producing stronger contraction is what happens when a second stimulus arrives before the muscle has fully relaxed from the first: summation.
+
+Summation (also called wave summation) occurs when a muscle is stimulated again before it has completely relaxed from the previous twitch. The new contraction adds on top of the tension still remaining, so the total tension is greater than a single twitch. If stimuli keep arriving, each new contraction builds on the residual tension of the last, and the force climbs higher and higher.
+
+My Socratic question: why must the second stimulus arrive BEFORE the muscle has fully relaxed for summation to occur?
+
+The answer is that if the second stimulus arrives after full relaxation, the muscle simply produces another separate twitch of the same size, with no adding-up. But if it arrives while some tension still remains, the new contraction stacks on top of that leftover tension, producing greater total force. Summation depends on catching the muscle before it has let go.
+
+Crucial insight: summation is the adding together of contractions when stimuli arrive before the muscle fully relaxes, so tension builds higher than a single twitch. It is the mechanism by which increasing stimulus frequency increases muscle force - each new contraction stacking on the residual tension of the last, provided the stimuli come fast enough.` },
+
+    { q: "Increasing frequency: from twitches to tetanus.",
+      body: `As stimulus frequency rises further, the muscle passes through a sequence of states, ending in a smooth maximal contraction - and knowing this sequence is the core of the topic.
+
+At a low frequency, the muscle produces separate twitches, fully relaxing between each. As frequency increases, summation begins and the twitches partly merge, producing a bumpy but stronger contraction called incomplete (unfused) tetanus - the muscle does not fully relax between stimuli, so the tension record looks wavy. At a high enough frequency, the stimuli come so fast that the muscle cannot relax at all between them, and the individual twitches fuse completely into a smooth, sustained, maximal contraction called complete (fused) tetanus.
+
+My Socratic question: what is the difference between incomplete (unfused) tetanus and complete (fused) tetanus, in terms of relaxation between stimuli?
+
+The answer is that in incomplete tetanus, the muscle partly relaxes between stimuli, so the contraction is strong but bumpy or wavy; in complete tetanus, the stimuli arrive so rapidly that there is no relaxation at all between them, so the twitches fuse into one smooth, sustained, maximal contraction. The difference is whether any relaxation occurs between stimuli.
+
+Crucial insight: as stimulus frequency rises, the muscle progresses from separate twitches, to incomplete (unfused) tetanus (partial relaxation, wavy stronger contraction), to complete (fused) tetanus (no relaxation, smooth maximal sustained contraction). This sequence shows how simply increasing the frequency of stimulation smoothly increases and steadies muscle force up to a maximum.` },
+
+    { q: "Tetanus here is not the disease.",
+      body: `A brief but important clarification prevents a common confusion: the word tetanus in this physiological sense is not the disease.
+
+In muscle physiology, tetanus means a sustained, maximal muscle contraction produced by rapid, repeated stimulation - a normal, everyday event whenever you contract a muscle strongly and steadily. The disease tetanus (caused by a bacterial infection, Clostridium tetani) is different: it causes uncontrolled, painful, sustained muscle contractions (such as "lockjaw") because the toxin makes muscles contract continuously and abnormally.
+
+My Socratic question: how are the physiological meaning and the disease meaning of "tetanus" related, even though they are different?
+
+The answer is that both involve sustained muscle contraction. Physiological tetanus is the normal, controlled, sustained contraction from rapid stimulation that you use in ordinary strong movements. The disease produces a similar sustained contraction, but abnormally and uncontrollably, because the bacterial toxin forces muscles to contract continuously. The shared idea is sustained contraction; the difference is normal and controlled versus diseased and uncontrolled.
+
+Crucial insight: physiological tetanus is the normal, sustained maximal muscle contraction produced by rapid stimulation - a routine part of movement - and must not be confused with the disease tetanus, an infection that causes abnormal, uncontrolled sustained contractions. Both involve sustained contraction, but one is normal physiology and the other is a dangerous illness.` },
+
+    { q: "Treppe: the staircase warm-up effect.",
+      body: `One more frequency-related effect completes the picture and explains why muscles perform better after a warm-up: treppe.
+
+Treppe (the "staircase" effect) occurs when a muscle that has been at rest is stimulated repeatedly at a frequency that still allows full relaxation between stimuli - yet each successive twitch is slightly stronger than the one before, for the first several contractions. The tension record climbs like a staircase. This happens because the first few contractions warm the muscle and increase the availability of calcium inside it, making each contraction a little more effective, until a plateau is reached.
+
+My Socratic question: how does treppe differ from summation, since both involve repeated stimulation producing stronger contractions?
+
+The answer is that in summation, the muscle does not fully relax between stimuli, and contractions add on top of residual tension. In treppe, the muscle DOES fully relax between each stimulus, yet each separate twitch is still slightly stronger than the last - because the muscle is warming up and calcium handling is improving, not because tension is stacking. Summation stacks tension; treppe reflects a warming, improving muscle with full relaxation between twitches.
+
+Crucial insight: treppe is the staircase effect where the first several fully-relaxing twitches of a rested muscle grow progressively stronger, due to warming and improved calcium availability - the physiological basis of "warming up." It differs from summation, which requires incomplete relaxation and stacks tension; treppe involves full relaxation between stronger and stronger twitches.` },
+
+    { q: "How the body grades muscle force overall.",
+      body: `Stimulus frequency is one of two main ways the body controls how much force a muscle produces; understanding both completes your grasp of muscle control.
+
+The first way is frequency (rate) of stimulation - the subject of this topic: higher frequency produces summation and tetanus, giving greater and smoother force. The second way is recruitment - varying the number of muscle fibres activated: to lift something heavy, the nervous system activates more muscle fibres; for something light, fewer. Together, frequency and recruitment let the nervous system finely grade muscle force from a gentle touch to a maximal effort.
+
+My Socratic question: to pick up a feather versus lifting a heavy weight, how would the nervous system use frequency and recruitment differently?
+
+The answer is that for a feather, the nervous system would activate few muscle fibres (low recruitment) at a low stimulus frequency, producing gentle force; for a heavy weight, it would activate many muscle fibres (high recruitment) at a high stimulus frequency (producing tetanus in those fibres), generating strong, smooth, sustained force. Both mechanisms are adjusted together to match the effort needed.
+
+Crucial insight: the body grades muscle force by two mechanisms - stimulus frequency (higher frequency gives summation and tetanus for greater, smoother force) and recruitment (activating more or fewer muscle fibres). Together they let the nervous system precisely match force to the task, from the lightest touch to maximal effort, with stimulus frequency being the mechanism this topic explains.` },
+
+    { q: "Why stimulus frequency matters in medicine and function.",
+      body: `Understanding stimulus frequency and muscle contraction is relevant to real function, exercise and clinical situations, connecting this physiology to practical life.
+
+My Socratic question: why does understanding tetanus and summation help explain both normal sustained movements and certain muscle problems?
+
+The answer is that virtually all useful movements - holding a posture, gripping, lifting - rely on tetanic (sustained) contractions produced by rapid stimulation, not single twitches; so this physiology underlies all real muscle function. It also helps explain clinical situations: muscle fatigue (when a muscle can no longer sustain tetanus and force declines), the effects of nerve or muscle disorders that disrupt stimulation, and even how electrical stimulation is used in therapy to make muscles contract. Understanding how frequency controls contraction underpins understanding muscle performance and its disorders.
+
+Crucial insight: stimulus frequency matters because normal sustained movements depend on tetanic contractions from rapid stimulation, and because it helps explain muscle fatigue, the effects of nerve and muscle disorders, and therapeutic electrical stimulation. This physiology connects directly to how muscles perform in exercise and how their function fails in disease - practical knowledge for a health professional.` },
+
+    { q: "Fatigue: when the muscle can no longer sustain force.",
+      body: `Finally, a note on muscle fatigue completes the picture, because it is the limit of sustained contraction and a common experience and clinical concern.
+
+Muscle fatigue is the decline in a muscle's ability to contract and generate force after prolonged or repeated activity - the muscle becomes unable to maintain the same tension, even with continued stimulation. It results from several factors during intense sustained contraction: depletion of energy supplies (ATP and glucose/glycogen), accumulation of waste products, and disturbances in the ions and calcium handling that contraction depends on.
+
+My Socratic question: if you try to hold a heavy weight for a long time, your muscle eventually gives out even though you keep trying to contract it. In terms of what you have learned, what has happened?
+
+The answer is that the muscle has fatigued: despite continued nerve stimulation, its ability to sustain the tetanic contraction has declined because its energy supplies are depleted, waste products have accumulated, and its internal calcium and ion handling are disturbed - so it can no longer maintain the force, and tension falls. The command continues but the muscle can no longer obey fully.
+
+Crucial insight: muscle fatigue is the decline in force-generating ability after prolonged or repeated contraction, caused by energy depletion, waste accumulation, and disturbed ion and calcium handling - so a muscle can no longer sustain tetanus even with continued stimulation. Fatigue is the natural limit of sustained muscle contraction, completing the story of how stimulus frequency drives, and how exhaustion limits, muscle force.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for stimulus frequency and skeletal muscle, in five lines.
+
+The twitch: a muscle twitch is the response to a single stimulus - a brief contraction and relaxation with three phases: latent period (setup delay), contraction phase, and relaxation phase.
+
+Summation: if a new stimulus arrives before the muscle fully relaxes, the new contraction adds on top of the remaining tension, so force builds higher than a single twitch.
+
+The frequency sequence: as stimulus frequency rises, the muscle goes from separate twitches, to incomplete (unfused) tetanus (partial relaxation, wavy stronger contraction), to complete (fused) tetanus (no relaxation, smooth maximal sustained contraction).
+
+Related effects: physiological tetanus (normal sustained contraction) is not the disease tetanus (a dangerous infection causing uncontrolled contraction); and treppe is the staircase warm-up effect, where fully-relaxing twitches grow stronger as the muscle warms.
+
+Grading and limits: the body grades force by frequency (summation/tetanus) and recruitment (number of fibres activated); and muscle fatigue is the decline in force after prolonged activity, from energy depletion, waste accumulation and disturbed ion/calcium handling.
+
+Now your final test. A skeletal muscle is stimulated in the laboratory. At first, single stimuli spaced well apart produce separate, identical brief contractions. The frequency is then increased so that each new stimulus arrives before the muscle has fully relaxed, and the tension rises higher and becomes wavy. Finally, the frequency is increased so much that the muscle cannot relax at all between stimuli, and it produces one smooth, sustained, maximal contraction.
+
+Question one: what is each separate brief contraction at the start called, and what are its three phases?
+Question two: what is happening when the tension rises higher and becomes wavy as stimuli arrive before full relaxation - name the mechanism and the state?
+Question three: what is the final smooth, sustained, maximal contraction called, and why does the muscle no longer show any relaxation between stimuli?
+
+Work them through before reading on.
+
+My answers. One: each separate brief contraction is a muscle twitch, and its three phases are the latent period (the brief delay after the stimulus while the internal machinery, including calcium release, activates), the contraction phase (the muscle shortens and develops tension), and the relaxation phase (the muscle returns to its resting length). Two: the tension rises higher because of summation - each new stimulus arrives before the muscle has fully relaxed, so the new contraction adds on top of the residual tension; the wavy, partially-relaxing state of strong but bumpy contraction is incomplete (unfused) tetanus. Three: the final smooth, sustained, maximal contraction is complete (fused) tetanus; the muscle shows no relaxation between stimuli because the stimuli are arriving so rapidly that there is no time for the muscle to relax at all between them, so the individual twitches fuse completely into one smooth sustained contraction.
+
+If those came cleanly, you understand how the frequency of stimulation converts individual muscle twitches into the smooth, graded, sustained contractions of real movement - the physiology behind every posture you hold and every steady effort you make.` },
+  ],
+  theory: [
+    { q: "What is a muscle twitch, and what are its three phases?", a: "A muscle twitch is the response of a muscle to a single brief stimulus - one quick contraction followed by relaxation. Its three phases are the latent period (a brief delay while the internal machinery, including calcium release, activates), the contraction phase (the muscle shortens and develops tension), and the relaxation phase (the muscle returns to its resting length)." },
+    { q: "What happens during the latent period of a twitch?", a: "During the latent period, the muscle has been stimulated but has not yet begun to shorten. The electrical signal is spreading and triggering the release of calcium inside the muscle cell, which then allows the actin and myosin filaments to begin interacting. It is the brief setup time before visible contraction begins." },
+    { q: "Define summation and state the condition required for it.", a: "Summation (wave summation) is the adding together of contractions when a muscle is stimulated again before it has fully relaxed from the previous twitch, so the new contraction stacks on the remaining tension and total force is greater than a single twitch. The condition required is that the next stimulus arrives before the muscle fully relaxes." },
+    { q: "Describe the sequence a muscle passes through as stimulus frequency increases.", a: "At low frequency, separate twitches with full relaxation between them. As frequency rises, summation causes incomplete (unfused) tetanus - partial relaxation between stimuli, giving a strong but wavy contraction. At high frequency, complete (fused) tetanus - no relaxation between stimuli, so twitches fuse into one smooth, sustained, maximal contraction." },
+    { q: "Distinguish incomplete (unfused) from complete (fused) tetanus.", a: "In incomplete (unfused) tetanus, the muscle partly relaxes between stimuli, so the contraction is strong but bumpy or wavy. In complete (fused) tetanus, stimuli arrive so rapidly that there is no relaxation at all between them, so the twitches fuse into one smooth, sustained, maximal contraction. The difference is whether any relaxation occurs between stimuli." },
+    { q: "How does physiological tetanus differ from the disease tetanus?", a: "Physiological tetanus is a normal, controlled, sustained maximal muscle contraction produced by rapid repeated stimulation, used in ordinary strong movements. The disease tetanus is a bacterial infection (Clostridium tetani) whose toxin causes abnormal, uncontrolled, sustained contractions (such as lockjaw). Both involve sustained contraction, but one is normal physiology and the other is a dangerous illness." },
+    { q: "What is treppe, and how does it differ from summation?", a: "Treppe (the staircase effect) is when the first several twitches of a rested muscle, stimulated with full relaxation between each, grow progressively stronger due to warming and improved calcium availability. It differs from summation in that treppe allows full relaxation between twitches (each separate twitch is stronger), whereas summation requires incomplete relaxation so tension stacks up." },
+    { q: "What are the two main ways the body grades muscle force?", a: "Frequency (rate) of stimulation - higher frequency produces summation and tetanus for greater, smoother force - and recruitment - varying the number of muscle fibres activated (more fibres for greater force). Together, frequency and recruitment let the nervous system finely grade force from a gentle touch to maximal effort." },
+    { q: "Why do normal useful movements depend on tetanic contractions?", a: "Because useful movements - holding a posture, gripping, lifting - must be smooth and sustained, not jerky single twitches. Rapid stimulation produces tetanic (sustained) contractions that give the steady, strong, controlled force real movement requires, so virtually all everyday muscle function relies on tetanus rather than isolated twitches." },
+    { q: "Define muscle fatigue and state its causes.", a: "Muscle fatigue is the decline in a muscle's ability to contract and generate force after prolonged or repeated activity, so it can no longer maintain the same tension even with continued stimulation. It results from depletion of energy supplies (ATP and glycogen), accumulation of waste products, and disturbances in ion and calcium handling during intense sustained contraction." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Muscle Twitch Summation and Tetanus", note: "From single twitch to smooth sustained contraction.", url: "" },
+    { channel: "Physiology", title: "How Stimulus Frequency Controls Muscle Force", note: "Incomplete vs complete tetanus and force grading.", url: "" },
+    { channel: "Physiology", title: "Treppe and Muscle Fatigue", note: "The staircase warm-up effect and why muscles tire.", url: "" },
+  ],
+  mcqs: [
+    { q: "A muscle twitch is the response to:", o: ["A single brief stimulus", "Many stimuli", "No stimulus", "A hormone"], a: 0, w: "A twitch is the response to one brief stimulus." },
+    { q: "The three phases of a twitch are latent period, contraction phase, and:", o: ["Tetanus", "Fatigue", "Summation", "Relaxation phase"], a: 3, w: "The phases are latent, contraction, and relaxation." },
+    { q: "The brief delay between stimulus and contraction is the:", o: ["Latent period", "Tetanus", "Contraction phase", "Relaxation phase"], a: 0, w: "The latent period is the setup delay." },
+    { q: "During the latent period, the muscle is:", o: ["Fatigued", "Fully contracted", "Relaxing", "Releasing calcium and setting up to contract"], a: 3, w: "Calcium is released and machinery activates during the latent period." },
+    { q: "Summation occurs when a new stimulus arrives:", o: ["During sleep", "Before the muscle fully relaxes", "Never", "After full relaxation"], a: 1, w: "Summation needs the next stimulus before full relaxation." },
+    { q: "In summation, the new contraction:", o: ["Cancels the last", "Weakens force", "Adds on top of the remaining tension", "Has no effect"], a: 2, w: "It stacks on the residual tension, raising total force." },
+    { q: "If a second stimulus arrives AFTER full relaxation, the muscle:", o: ["Fatigues instantly", "Enters tetanus", "Sums the contractions", "Produces another separate twitch"], a: 3, w: "Full relaxation means a separate twitch, no summation." },
+    { q: "At low stimulus frequency, a muscle produces:", o: ["Fused tetanus", "Separate twitches", "Treppe only", "No contraction"], a: 1, w: "Low frequency gives separate twitches." },
+    { q: "A strong but wavy contraction with partial relaxation is:", o: ["A single twitch", "Complete tetanus", "Fatigue", "Incomplete (unfused) tetanus"], a: 3, w: "Incomplete tetanus is wavy with partial relaxation." },
+    { q: "A smooth, sustained, maximal contraction with no relaxation is:", o: ["A twitch", "Incomplete tetanus", "Complete (fused) tetanus", "Treppe"], a: 2, w: "Complete (fused) tetanus is smooth and maximal." },
+    { q: "The difference between incomplete and complete tetanus is:", o: ["The colour", "Whether any relaxation occurs between stimuli", "The muscle type", "The temperature"], a: 1, w: "It is whether the muscle relaxes at all between stimuli." },
+    { q: "As stimulus frequency increases, muscle force:", o: ["Decreases", "Increases and smooths", "Disappears", "Stays the same"], a: 1, w: "Higher frequency raises and smooths force." },
+    { q: "In physiology, 'tetanus' means:", o: ["A single twitch", "A bacterial disease", "A sustained maximal contraction from rapid stimulation", "Muscle relaxation"], a: 2, w: "Physiological tetanus is sustained contraction from rapid stimuli." },
+    { q: "The DISEASE tetanus is caused by:", o: ["Warming up", "A bacterial infection (Clostridium tetani)", "Exercise", "Rapid stimulation"], a: 1, w: "The disease is a bacterial infection." },
+    { q: "Physiological and disease tetanus both involve:", o: ["Bone growth", "Sustained muscle contraction", "Nerve death", "Relaxation"], a: 1, w: "Both involve sustained contraction (normal vs abnormal)." },
+    { q: "Treppe is also called the:", o: ["Fatigue effect", "Summation effect", "Staircase effect", "Twitch effect"], a: 2, w: "Treppe is the staircase effect." },
+    { q: "In treppe, successive fully-relaxing twitches become:", o: ["Progressively stronger", "Weaker", "Absent", "Identical"], a: 0, w: "Each early twitch is slightly stronger - a staircase." },
+    { q: "Treppe occurs because the muscle is:", o: ["Relaxing fully forever", "Dying", "Warming up with improved calcium availability", "Fatiguing"], a: 2, w: "Warming and better calcium handling cause treppe." },
+    { q: "The key difference between treppe and summation is that in treppe the muscle:", o: ["Never relaxes", "Does not contract", "Is diseased", "Fully relaxes between stronger twitches"], a: 3, w: "Treppe has full relaxation; summation does not." },
+    { q: "One way the body grades muscle force is stimulus frequency; the other is:", o: ["Skin colour", "Recruitment (number of fibres activated)", "Blood type", "Bone length"], a: 1, w: "Recruitment varies how many fibres are activated." },
+    { q: "To lift a heavy weight, the nervous system uses:", o: ["No stimulation", "Low frequency and few fibres", "Only treppe", "High frequency and many fibres"], a: 3, w: "Heavy loads need high frequency and high recruitment." },
+    { q: "To pick up a feather, the nervous system uses:", o: ["Fatigue", "Low frequency, few fibres", "High frequency, many fibres", "Maximal tetanus everywhere"], a: 1, w: "Light tasks need low frequency and few fibres." },
+    { q: "Normal sustained movements depend mainly on:", o: ["Tetanic (sustained) contractions", "Single twitches", "Fatigue", "The disease tetanus"], a: 0, w: "Useful movements rely on tetanic contractions." },
+    { q: "Muscle fatigue is the decline in force after:", o: ["Warming up", "Resting", "Prolonged or repeated activity", "A single stimulus"], a: 2, w: "Fatigue follows prolonged or repeated contraction." },
+    { q: "A cause of muscle fatigue is:", o: ["Too much rest", "Cool temperature", "Depletion of energy supplies (ATP, glycogen)", "Low frequency"], a: 2, w: "Energy depletion contributes to fatigue." },
+    { q: "During fatigue, despite continued stimulation, the muscle:", o: ["Never tires", "Gets stronger", "Grows", "Cannot sustain the same force"], a: 3, w: "Fatigue means force cannot be maintained." },
+    { q: "Fatigue involves accumulation of:", o: ["Waste products", "Bone", "Fresh energy", "New fibres"], a: 0, w: "Waste product accumulation contributes to fatigue." },
+    { q: "Electrical stimulation in therapy works by:", o: ["Making muscles contract via applied stimuli", "Removing muscles", "Preventing contraction", "Cooling nerves"], a: 0, w: "Applied electrical stimuli make muscles contract." },
+    { q: "The overall lesson of this topic is that muscle force depends on:", o: ["The frequency (and pattern) of stimulation", "Blood type", "Bone density only", "Muscle colour"], a: 0, w: "Stimulus frequency largely controls muscle force." },
+    { q: "The smoothness of a strong sustained contraction comes from:", o: ["Twitches fusing at high frequency (tetanus)", "Fatigue", "Full relaxation each time", "Single twitches"], a: 0, w: "Fusion of twitches at high frequency gives smoothness." },
+  ],
+};
+
+
+/* --------------------------- phy:7 --------------------------- */
+const T_PHY_LENGTHTENSION = {
+  courseId: "phy",
+  topicIndex: 7,
+  title: "Skeletal Muscle Length-Tension Relationship",
+  minutes: 19,
+  note: [
+    { q: "Why a muscle's length affects its strength.",
+      body: `You have learned that muscle contracts by actin and myosin filaments sliding past each other, and that stimulus frequency controls force. Now we meet another key factor determining how much force a muscle can produce: the length of the muscle at the moment it contracts. This is the length-tension relationship.
+
+My Socratic question: a muscle stretched very long, or bunched up very short, produces less force than a muscle at a medium length - even with the same stimulation. Since force comes from actin and myosin pulling on each other, what might length change about their interaction?
+
+The answer is that length changes how much the actin and myosin filaments overlap. Force depends on how many myosin heads can grab actin filaments, and that depends on their overlap. At a medium (optimal) length, the overlap is ideal and the maximum number of connections can form, giving maximum force. If the muscle is too stretched or too shortened, the overlap is poor and fewer connections form, so force falls.
+
+Crucial insight: the length-tension relationship describes how the force a muscle can generate depends on its length when it contracts, because length determines the overlap between actin and myosin filaments. Maximum force occurs at an optimal (medium) length with ideal overlap; too long or too short reduces overlap and force. Understanding this explains why muscle length matters for strength.` },
+
+    { q: "The sliding filament basis of force.",
+      body: `To understand the length-tension relationship, we must recall exactly how filament overlap produces force - the mechanism underlying the whole topic.
+
+Within a muscle, force is generated when the heads of the thick myosin filaments attach to the thin actin filaments and pull them (the sliding filament mechanism). Each attachment - called a cross-bridge - contributes a small amount of force. The total force a muscle produces depends on how many cross-bridges can form, which depends on how much the actin and myosin filaments overlap: more available overlap means more possible cross-bridges and more force.
+
+My Socratic question: why does the amount of overlap between actin and myosin filaments directly determine how much force the muscle can generate?
+
+The answer is that force comes from myosin heads attaching to actin and pulling; each attachment (cross-bridge) adds force. Myosin heads can only attach where they overlap with actin, so the more the filaments overlap (up to the point where all heads have actin to grab), the more cross-bridges can form and the greater the force. Overlap sets how many force-generating attachments are possible.
+
+Crucial insight: muscle force is produced by cross-bridges - attachments of myosin heads to actin filaments - each adding a small force, so total force depends on how many cross-bridges can form. This in turn depends on filament overlap. Because muscle length changes the overlap, length directly controls the number of possible cross-bridges and therefore the force - the heart of the length-tension relationship.` },
+
+    { q: "Optimal length: maximum overlap and force.",
+      body: `At one particular length, a muscle produces its greatest force, and understanding why makes the whole relationship clear.
+
+At the optimal length (a medium, resting-like length), the actin and myosin filaments overlap ideally - positioned so that the maximum number of myosin heads can reach and attach to actin, forming the greatest number of cross-bridges. With the most cross-bridges pulling, the muscle generates its maximum force. This optimal length is close to the muscle's natural resting length in the body, which makes sense - muscles are built to work best at the lengths they normally operate at.
+
+My Socratic question: why is it sensible that a muscle's optimal length for force is close to its natural resting length in the body?
+
+The answer is that muscles evolved to do their normal jobs, so they are strongest at the lengths they usually work at. If a muscle were strongest only when extremely stretched or extremely shortened, it would be weak during ordinary movements - so it makes functional sense that peak force occurs near the normal resting length, where the muscle actually operates most of the time.
+
+Crucial insight: at the optimal (medium, resting-like) length, actin and myosin overlap ideally so the maximum number of cross-bridges form, giving maximum force; this optimal length is close to the muscle's natural resting length. Muscles are strongest at the lengths they normally work at - a sensible match of structure to function.` },
+
+    { q: "When the muscle is too stretched: too little overlap.",
+      body: `If a muscle is stretched beyond its optimal length before contracting, its force falls - and understanding why deepens the concept.
+
+When a muscle is over-stretched, the actin and myosin filaments are pulled apart so that they overlap only a little. With less overlap, fewer myosin heads can reach actin, so fewer cross-bridges can form, and the muscle produces less force. If stretched extremely far, the filaments barely overlap at all, and very little or no force can be generated - there is almost nothing for the myosin heads to grab.
+
+My Socratic question: imagine two filaments barely overlapping at their tips because the muscle is greatly stretched. Why can such a muscle generate only weak force, despite being fully stimulated?
+
+The answer is that force depends on cross-bridges, and cross-bridges can only form where myosin heads overlap with actin. If the filaments are pulled so far apart that they barely overlap, only a few myosin heads have any actin to attach to, so only a few cross-bridges can form - producing weak force - no matter how strongly the muscle is stimulated. Stimulation cannot create force where there is no overlap.
+
+Crucial insight: when a muscle is over-stretched, actin and myosin overlap too little, so few cross-bridges can form and force is weak - and at extreme stretch, with almost no overlap, almost no force is possible. This shows that stimulation alone cannot generate force without filament overlap, explaining the falling force at long muscle lengths.` },
+
+    { q: "When the muscle is too short: filaments interfere.",
+      body: `At the other extreme, if a muscle is contracted to a very short length before or during contraction, its force also falls - for a different reason worth understanding.
+
+When a muscle is very shortened, the actin filaments from opposite ends are pulled so far in that they overlap each other and get in the way, and the thick myosin filaments may bump into the boundaries of the unit. This crowding and interference reduces the ability of myosin heads to form effective cross-bridges, so the muscle produces less force. At extremely short lengths, the interference is severe and force drops substantially.
+
+My Socratic question: at a very short muscle length, the problem is not too little overlap but too much crowding. How does this crowding reduce force?
+
+The answer is that when the muscle is very short, the actin filaments overlap each other and the myosin filaments collide with the structural boundaries; this interference disrupts the orderly arrangement needed for myosin heads to attach and pull effectively, so fewer effective cross-bridges form and force falls. Excessive shortening causes the filaments to get in each other's way.
+
+Crucial insight: when a muscle is too short, the filaments crowd and interfere - actin overlapping actin, myosin hitting boundaries - disrupting effective cross-bridge formation, so force falls. Thus both extremes reduce force: too long gives too little overlap, too short causes interference. Optimal force sits in the middle, at ideal overlap.` },
+
+    { q: "The length-tension curve: the whole picture.",
+      body: `Putting the extremes and the optimum together gives the classic length-tension curve, which summarises the entire relationship in one shape.
+
+If you plot the force a muscle can generate against its length, you get a curve that rises to a peak and falls on either side - like a hill. On the far left (very short muscle), force is low because of filament crowding and interference. Rising toward the middle, force increases as overlap improves. At the peak (optimal length), force is maximal with ideal overlap. Beyond the peak (increasingly stretched muscle), force declines as overlap decreases, reaching very low force at extreme stretch. The peak in the middle is the optimal length.
+
+My Socratic question: describe in your own words the shape of the length-tension curve, and state where on it maximum force occurs.
+
+The answer is that the curve is shaped like a hill or inverted-U: force is low at very short lengths, rises to a maximum at an intermediate (optimal) length, and falls again at long (stretched) lengths. Maximum force occurs at the peak - the intermediate optimal length where actin-myosin overlap is ideal and the most cross-bridges can form.
+
+Crucial insight: the length-tension curve is hill-shaped (an inverted-U): force is low when the muscle is too short (crowding) or too long (too little overlap), and maximal at the intermediate optimal length (ideal overlap). This single curve captures the whole length-tension relationship, showing at a glance that muscle strength depends on length, peaking in the middle.` },
+
+    { q: "Active and passive tension: two contributions.",
+      body: `To complete the picture, it helps to know that the tension a muscle shows at a given length actually has two parts - and distinguishing them refines your understanding of the length-tension relationship.
+
+Active tension is the force the muscle generates by contracting - by cross-bridges pulling - and this is what the length-tension relationship (with its peak at optimal length) describes. Passive tension is different: it is the force that arises simply from stretching the muscle, like stretching an elastic band, even without any contraction. When a muscle is stretched to long lengths, its own elastic elements resist the stretch and produce passive tension that rises the more it is stretched.
+
+My Socratic question: at very long (stretched) muscle lengths, active tension is low (little overlap), yet the muscle still resists being stretched. Which type of tension accounts for this resistance?
+
+The answer is passive tension. Even though the muscle can generate little active (contractile) force at long lengths because of poor overlap, its elastic components still resist the stretch, producing passive tension - just as a stretched rubber band pulls back. So the total tension at long lengths includes this passive, elastic contribution even when active force is weak.
+
+Crucial insight: the tension in a muscle has two parts - active tension (from contraction and cross-bridges, described by the length-tension relationship, peaking at optimal length) and passive tension (from the muscle's own elasticity resisting stretch, rising at long lengths). Distinguishing them explains why a stretched muscle still resists stretch even when its contractile force is weak, completing the length-tension picture.` },
+
+    { q: "Why the length-tension relationship matters in the body.",
+      body: `The length-tension relationship is not just a laboratory curve - it shapes how muscles and joints actually work, which is why physiology emphasises it.
+
+My Socratic question: the body positions its muscles and joints so that muscles usually operate near their optimal length. Why is this arrangement important for movement?
+
+The answer is that operating near the optimal length lets muscles produce strong, effective force during normal movements. The way muscles attach to bones, and the range of motion of joints, are arranged so that muscles work near their strongest length for the tasks they perform. This is why you are strongest in the middle of a movement's range and weaker at the very extremes - for example, it is hard to lift a heavy weight when your arm is fully extended or fully bent, but easier partway, where the muscle is near optimal length.
+
+Understanding this explains everyday experiences of strength and weakness at different joint positions, and why body mechanics are arranged as they are.
+
+Crucial insight: the length-tension relationship matters because the body arranges muscles and joints so muscles usually work near their optimal length, giving strong force in normal movements - which is why you are strongest in the middle of a movement's range and weaker at the extremes. This physiology explains real experiences of strength and the design of body mechanics.` },
+
+    { q: "Relevance to the heart and to medicine.",
+      body: `The length-tension relationship applies not only to skeletal muscle but importantly to the heart, giving it real clinical significance worth knowing.
+
+My Socratic question: the heart is a muscle that fills with blood before each beat, stretching its walls. How might the length-tension relationship apply to how forcefully the heart pumps?
+
+The answer is that as the heart fills with more blood, its muscle is stretched more (toward its optimal length), which - within limits - lets it contract more forcefully and pump out more blood. This principle (that greater filling stretches the heart muscle to produce a stronger beat) is a version of the length-tension relationship applied to the heart, and it helps the heart match its output to the amount of blood returning to it. Beyond a point, however, over-stretching a failing heart reduces its force, consistent with the descending part of the length-tension curve.
+
+Understanding the length-tension relationship thus illuminates both skeletal muscle function and how the heart adjusts its pumping - genuinely important in medicine.
+
+Crucial insight: the length-tension relationship applies to the heart - greater filling stretches the heart muscle toward optimal length, producing a more forceful beat (within limits), helping the heart match output to blood returning; over-stretching a failing heart reduces force. This links the topic to cardiac function and disease, showing its broad importance in medicine beyond skeletal muscle alone.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the length-tension relationship, in five lines.
+
+The core idea: the force a muscle can generate depends on its length when it contracts, because length determines the overlap between actin and myosin filaments.
+
+The mechanism: force comes from cross-bridges (myosin heads attaching to actin and pulling); the number of cross-bridges depends on filament overlap, so overlap determines force.
+
+Optimal length: at a medium, resting-like length, overlap is ideal, the most cross-bridges form, and force is maximal; this is near the muscle's natural resting length.
+
+The two extremes: when too stretched, filaments overlap too little, few cross-bridges form, force is weak (almost none at extreme stretch); when too short, filaments crowd and interfere, disrupting cross-bridges, so force also falls.
+
+The curve and relevance: plotting force against length gives a hill-shaped (inverted-U) curve peaking at optimal length; the body arranges muscles to work near optimal length (strongest mid-range), and the heart uses the same principle - greater filling stretches its muscle toward optimal length for a stronger beat.
+
+Now your final test. In a laboratory, a skeletal muscle is set to different lengths and stimulated maximally at each, and the force it generates is recorded. At a very short length it produces weak force. At a medium length it produces its greatest force. At a very stretched length it again produces weak force.
+
+Question one: at the medium length where force is greatest, what is the state of the actin-myosin overlap and the cross-bridges?
+Question two: why does the very stretched muscle produce weak force - explain in terms of overlap and cross-bridges?
+Question three: why does the very short muscle also produce weak force, and how does its reason differ from that of the stretched muscle?
+
+Work them through before reading on.
+
+My answers. One: at the medium (optimal) length where force is greatest, the actin and myosin filaments overlap ideally, so the maximum number of myosin heads can reach and attach to actin, forming the greatest number of cross-bridges - and since each cross-bridge adds force, the most cross-bridges give the maximum force. Two: the very stretched muscle produces weak force because the filaments have been pulled so far apart that they overlap only a little, so only a few myosin heads have actin to attach to, only a few cross-bridges can form, and force is weak - stimulation cannot create force where there is too little overlap. Three: the very short muscle also produces weak force, but for a different reason: instead of too little overlap, there is too much crowding - the actin filaments overlap each other and the myosin filaments bump into the structural boundaries, and this interference disrupts effective cross-bridge formation, so force falls. The stretched muscle fails from too little overlap; the short muscle fails from crowding and interference.
+
+If those came cleanly, you understand why a muscle's length determines its strength - the length-tension relationship - completing your picture of what controls muscle force, and connecting even to how the heart adjusts its pumping.` },
+  ],
+  theory: [
+    { q: "What is the length-tension relationship?", a: "The length-tension relationship describes how the force a skeletal muscle can generate depends on its length at the moment it contracts. This is because length determines the overlap between actin and myosin filaments, which determines how many cross-bridges can form - and therefore how much force is produced. Force is maximal at an optimal (medium) length and falls when the muscle is too long or too short." },
+    { q: "What is a cross-bridge, and how does it relate to muscle force?", a: "A cross-bridge is an attachment of a myosin head to an actin filament; the myosin head pulls the actin (the sliding filament mechanism), and each cross-bridge contributes a small amount of force. The total force a muscle produces depends on how many cross-bridges can form, which depends on how much the actin and myosin filaments overlap." },
+    { q: "Why does maximum force occur at the optimal (medium) length?", a: "At the optimal, medium (resting-like) length, actin and myosin overlap ideally, so the maximum number of myosin heads can reach and attach to actin, forming the greatest number of cross-bridges. Since each cross-bridge adds force, the most cross-bridges produce the maximum force. This optimal length is close to the muscle's natural resting length." },
+    { q: "Why does an over-stretched muscle produce weak force?", a: "When a muscle is over-stretched, the actin and myosin filaments are pulled apart so they overlap only a little. With less overlap, fewer myosin heads can reach actin, so fewer cross-bridges can form and force is weak. At extreme stretch, the filaments barely overlap and almost no force can be generated, regardless of stimulation." },
+    { q: "Why does an over-shortened muscle produce weak force?", a: "When a muscle is very shortened, the actin filaments from opposite ends overlap each other and get in the way, and the myosin filaments may collide with the structural boundaries. This crowding and interference disrupts effective cross-bridge formation, so fewer effective cross-bridges form and force falls. The problem is crowding, not too little overlap." },
+    { q: "Describe the shape of the length-tension curve and where maximum force occurs.", a: "Plotting force against muscle length gives a hill-shaped (inverted-U) curve: force is low at very short lengths (crowding/interference), rises to a maximum at an intermediate optimal length (ideal overlap), and falls again at long/stretched lengths (too little overlap). Maximum force occurs at the peak - the intermediate optimal length." },
+    { q: "Why is a muscle's optimal length close to its natural resting length?", a: "Muscles evolved to perform their normal jobs, so they are strongest at the lengths they usually operate at. If a muscle were strongest only when extremely stretched or shortened, it would be weak during ordinary movements. It therefore makes functional sense that peak force occurs near the normal resting length, where the muscle actually works most of the time." },
+    { q: "How does the length-tension relationship explain strength at different joint positions?", a: "The body arranges muscles and joints so muscles usually work near their optimal length, giving strong force in the middle of a movement's range. This is why you are strongest partway through a movement and weaker at the extremes - for example, lifting a heavy weight is harder with the arm fully extended or fully bent, but easier partway, where the muscle is near its optimal length." },
+    { q: "How does the length-tension relationship apply to the heart?", a: "As the heart fills with more blood, its muscle is stretched more toward its optimal length, which - within limits - lets it contract more forcefully and pump out more blood, helping the heart match its output to the blood returning to it. Beyond a point, over-stretching a failing heart reduces force, consistent with the descending part of the length-tension curve." },
+    { q: "Summarise why both too-long and too-short muscle lengths reduce force.", a: "Too long: the actin and myosin filaments overlap too little, so few cross-bridges can form and force is weak. Too short: the filaments crowd and interfere (actin overlapping actin, myosin hitting boundaries), disrupting effective cross-bridge formation, so force also falls. Maximum force is at the intermediate optimal length, where overlap is ideal without crowding." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "The Length-Tension Relationship Explained", note: "How muscle length affects the force it can generate.", url: "" },
+    { channel: "Physiology", title: "Cross-Bridges and Filament Overlap", note: "Why overlap determines the number of cross-bridges and force.", url: "" },
+    { channel: "Physiology", title: "Length-Tension and the Heart", note: "How muscle-length principles apply to cardiac pumping.", url: "" },
+  ],
+  mcqs: [
+    { q: "The length-tension relationship describes how muscle force depends on:", o: ["Bone length", "Muscle colour", "Blood type", "Muscle length at contraction"], a: 3, w: "Force depends on the muscle's length when it contracts." },
+    { q: "Muscle length affects force by changing the ______ of the filaments.", o: ["Colour", "Overlap", "Weight", "Temperature"], a: 1, w: "Length changes actin-myosin overlap." },
+    { q: "Force in muscle is generated by attachments called:", o: ["Lacunae", "Discs", "Synapses", "Cross-bridges"], a: 3, w: "Cross-bridges (myosin-actin attachments) generate force." },
+    { q: "A cross-bridge forms when a myosin head attaches to:", o: ["Calcium only", "An actin filament", "Bone", "A nerve"], a: 1, w: "Myosin heads attach to actin filaments." },
+    { q: "The total force depends on the number of:", o: ["Bones", "Blood cells", "Nuclei", "Cross-bridges that can form"], a: 3, w: "More cross-bridges means more force." },
+    { q: "The number of possible cross-bridges depends on:", o: ["Filament overlap", "Blood flow only", "Muscle colour", "Bone density"], a: 0, w: "Overlap determines how many cross-bridges can form." },
+    { q: "Maximum force occurs at the ______ length.", o: ["Shortest", "Zero", "Optimal (medium)", "Longest"], a: 2, w: "Force peaks at the optimal medium length." },
+    { q: "At optimal length, the actin-myosin overlap is:", o: ["Ideal (maximal effective overlap)", "Minimal", "Reversed", "Absent"], a: 0, w: "Ideal overlap allows the most cross-bridges." },
+    { q: "The optimal length is close to the muscle's:", o: ["Natural resting length", "Maximum stretch", "Bone length", "Shortest possible length"], a: 0, w: "Optimal length is near the natural resting length." },
+    { q: "It makes functional sense that muscles are strongest at resting length because:", o: ["They never move", "Colour matters", "That is the length they usually work at", "They are always stretched"], a: 2, w: "Muscles are strongest at the lengths they normally use." },
+    { q: "When a muscle is over-stretched, filament overlap becomes:", o: ["Unchanged", "Ideal", "Greater", "Too little"], a: 3, w: "Over-stretching reduces overlap." },
+    { q: "An over-stretched muscle produces weak force because:", o: ["It has no nerves", "Too few cross-bridges can form", "It is cold", "Too many cross-bridges form"], a: 1, w: "Little overlap means few cross-bridges and weak force." },
+    { q: "At extreme stretch, with almost no overlap, the muscle produces:", o: ["Increasing force", "Normal force", "Maximum force", "Almost no force"], a: 3, w: "No overlap means almost no cross-bridges or force." },
+    { q: "Can strong stimulation create force in a muscle with no filament overlap?", o: ["Only in the heart", "Always", "No - without overlap, no cross-bridges form", "Yes, easily"], a: 2, w: "No overlap means no cross-bridges, whatever the stimulation." },
+    { q: "When a muscle is over-shortened, the filaments:", o: ["Crowd and interfere with each other", "Disappear", "Overlap too little", "Grow"], a: 0, w: "Over-shortening causes crowding and interference." },
+    { q: "In a very short muscle, actin filaments may:", o: ["Overlap each other and get in the way", "Turn to bone", "Stop existing", "Vanish"], a: 0, w: "Actin from opposite ends overlaps and interferes." },
+    { q: "Over-shortening reduces force because interference:", o: ["Cools the muscle", "Adds cross-bridges", "Adds overlap", "Disrupts effective cross-bridge formation"], a: 3, w: "Crowding disrupts effective cross-bridges." },
+    { q: "The reason force falls differs at the two extremes: too long is too little overlap, too short is:", o: ["No muscle", "Too much blood", "Too much overlap/crowding", "Too many nerves"], a: 2, w: "Too short causes crowding and interference." },
+    { q: "The length-tension curve is shaped like:", o: ["A straight line", "A circle", "A square", "A hill (inverted-U)"], a: 3, w: "The curve rises to a peak and falls - inverted-U." },
+    { q: "On the length-tension curve, maximum force is at the:", o: ["Peak (intermediate length)", "Far right", "Far left", "Bottom"], a: 0, w: "Maximum force is at the peak (optimal length)." },
+    { q: "At the far left of the curve (very short muscle), force is:", o: ["Low (crowding)", "Maximal", "Infinite", "Average"], a: 0, w: "Very short muscle gives low force from crowding." },
+    { q: "At the far right of the curve (very stretched muscle), force is:", o: ["Maximal", "Infinite", "Low (too little overlap)", "Average"], a: 2, w: "Very stretched muscle gives low force from little overlap." },
+    { q: "The body arranges muscles and joints so muscles usually work:", o: ["At extreme stretch", "Near their optimal length", "Never", "At zero length"], a: 1, w: "Muscles usually operate near optimal length." },
+    { q: "You are generally strongest:", o: ["Only when fully stretched", "In the middle of a movement's range", "At the extremes of a movement", "Only when fully bent"], a: 1, w: "Strength is greatest mid-range, near optimal length." },
+    { q: "Lifting a heavy weight is hardest when the arm is:", o: ["At optimal length", "Partway (mid-range)", "Fully extended or fully bent", "Relaxed"], a: 2, w: "At the extremes, the muscle is off its optimal length." },
+    { q: "The length-tension relationship also applies to the:", o: ["Skin", "Heart", "Hair", "Bones"], a: 1, w: "It applies to cardiac (heart) muscle too." },
+    { q: "As the heart fills with more blood, its muscle is stretched toward optimal length and:", o: ["Stops", "Shrinks", "Contracts more forcefully (within limits)", "Contracts more weakly"], a: 2, w: "Greater filling stretches the muscle for a stronger beat." },
+    { q: "This lets the heart match its output to:", o: ["The blood returning to it", "The weather", "Skin colour", "Bone length"], a: 0, w: "Stronger beats with more filling match output to return." },
+    { q: "Over-stretching a failing heart, per the curve, would:", o: ["Have no effect", "Reduce its force", "Add cross-bridges", "Increase force"], a: 1, w: "Beyond optimal, over-stretch reduces force." },
+    { q: "The overall lesson is that muscle strength depends on:", o: ["Colour only", "The muscle's length (filament overlap) when it contracts", "Blood group", "Bone type"], a: 1, w: "Length (via overlap) is a key determinant of force." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -7303,6 +7843,9 @@ const CONTENT = {
   "phy:2": T_PHY_TRANSPORT,
   "phy:3": T_PHY_FACIL,
   "phy:4": T_PHY_ACTIVE,
+  "phy:5": T_PHY_RMP,
+  "phy:6": T_PHY_STIMFREQ,
+  "phy:7": T_PHY_LENGTHTENSION,
   "lab:0": T_LAB_INSTRUMENTATION,
   "lab:1": T_MLS_SAFETY,
   "lab:2": T_LAB_ELECTRICAL,
