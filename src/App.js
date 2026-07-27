@@ -4832,14 +4832,15 @@ function HomeView({ app }) {
               <div className="eyebrow">Your study calendar</div>
               <div className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>{activeCount} ACTIVE DAY{activeCount === 1 ? "" : "S"}</div>
             </div>
-            <div style={{ display: "flex", gap: 3, width: "100%" }}>
+            <div style={{ display: "flex", gap: 3, flexWrap: "nowrap", overflowX: "auto", paddingBottom: 4 }}>
               {weeks.map((wk, wi) => (
-                <div key={wi} style={{ display: "flex", flexDirection: "column", gap: 3, flex: 1, minWidth: 0 }}>
+                <div key={wi} style={{ display: "flex", flexDirection: "column", gap: 3, flexShrink: 0 }}>
                   {wk.map((d) => (
                     <div key={d.key} title={d.key} style={{
-                      aspectRatio: "1", borderRadius: 3, width: "100%",
-                      background: d.active ? "var(--amber)" : "#1E3A6E",
-                      border: d.today ? "2px solid var(--amber-2)" : "1px solid rgba(255,255,255,0.06)",
+                      width: 13, height: 13, borderRadius: 3,
+                      background: d.active ? "var(--amber)" : "#24406E",
+                      border: d.today ? "2px solid var(--amber-2)" : "1px solid rgba(255,255,255,0.05)",
+                      boxSizing: "border-box",
                     }} />
                   ))}
                 </div>
