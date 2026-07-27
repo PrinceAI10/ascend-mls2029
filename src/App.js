@@ -7384,14 +7384,33 @@ export default function App() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     try { window.sessionStorage.setItem("ascend_route", JSON.stringify(route)); } catch {}
+    // Also keep the browser history entry in sync with the current route, so a
+    // popstate on tab return restores this route rather than a stale one.
+    try { window.history.replaceState({ ascendRoute: route }, ""); } catch {}
   }, [route]);
 
-  // Make the iPhone edge-swipe and the browser/hardware back button work:
+  // Belt-and-braces: the moment the tab is hidden (student switching away), save
+  // the current route synchronously, so nothing is lost even if the app is frozen
+  // or reloaded by the phone while in the background.
   useEffect(() => {
     if (typeof window === "undefined") return;
-    try { window.history.replaceState({ ascendRoute: { view: "home" } }, ""); } catch {}
+    const save = () => { try { window.sessionStorage.setItem("ascend_route", JSON.stringify(route)); } catch {} };
+    document.addEventListener("visibilitychange", save);
+    window.addEventListener("pagehide", save);
+    return () => { document.removeEventListener("visibilitychange", save); window.removeEventListener("pagehide", save); };
+  }, [route]);
+
+  // Make the iPhone edge-swipe and the browser/hardware back button work. The
+  // route<->history sync is handled by the persist effect above; here we only
+  // listen for back/pop and restore the right route (never defaulting to home
+  // unless there is genuinely nothing saved).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
     const onPop = (e) => {
-      const saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : { view: "home" };
+      let saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : null;
+      if (!saved) {
+        try { const r = window.sessionStorage.getItem("ascend_route"); saved = r ? JSON.parse(r) : { view: "home" }; } catch { saved = { view: "home" }; }
+      }
       setRoute(saved);
       setMenuOpen(false);
       window.scrollTo?.(0, 0);
