@@ -8287,6 +8287,337 @@ My answers. One: the central nervous system (brain) is most likely affected, and
   ],
 };
 
+// ==================== ANATOMY TOPIC 14: NERVOUS SYSTEM II - THE CNS & BRAIN ====================
+const T_ANA_NERVOUS2 = {
+  courseId: "ana",
+  topicIndex: 13,
+  title: "Nervous System II - The CNS & Brain",
+  minutes: 22,
+  note: [
+    { q: "What makes the brain the most complex organ in the body?",
+      body: `You have studied the structure of neurons, the types of nerves, and the organisation of the nervous system. Now we focus on the brain — the most complex organ in the body, responsible for everything you think, feel, and do.
+
+My Socratic question: the brain weighs only about 1.4 kilograms, yet it controls every thought, movement, and bodily function. How can such a small organ do so much, and what is its structure?
+
+The answer is that the brain contains approximately 86 billion neurons, each connected to thousands of others, forming trillions of synapses. This immense network allows for the complexity of human thought, emotion, memory, and behaviour. The brain is organised into regions with specialised functions, and it is protected by the skull, meninges, and cerebrospinal fluid.
+
+Crucial insight: the brain is the most complex organ in the body, containing about 86 billion neurons and trillions of synapses. It is organised into specialised regions that work together to control thought, movement, sensation, and all bodily functions.` },
+
+    { q: "Protection of the brain: meninges and cerebrospinal fluid.",
+      body: `The brain is one of the most delicate and vital organs, and it is well protected by several layers of defence. Understanding these protective structures is essential for understanding head injuries and neurological conditions.
+
+My Socratic question: the brain is soft and fragile, yet it survives the impacts of running, jumping, and even minor head trauma. How is it protected, and what structures absorb shock?
+
+The answer is that the brain is protected by three layers: bone (the skull), meninges (three protective membranes), and cerebrospinal fluid (CSF). The meninges consist of the dura mater (tough outer layer), the arachnoid mater (middle layer), and the pia mater (delicate inner layer that clings to the brain). Cerebrospinal fluid circulates around the brain and spinal cord, acting as a shock absorber, providing buoyancy, and removing waste products.
+
+The blood-brain barrier also protects the brain by limiting what substances can pass from the blood into the brain tissue. This barrier is essential for maintaining the brain's delicate chemical environment.
+
+Crucial insight: the brain is protected by the skull, meninges (dura, arachnoid, pia mater), and cerebrospinal fluid. The blood-brain barrier further protects the brain by restricting substances from entering the brain tissue.` },
+
+    { q: "The brain's major regions and their functions.",
+      body: `The brain is divided into three major regions, each with distinct functions. Understanding these regions is essential for understanding how the brain works and how damage to specific areas causes specific symptoms.
+
+My Socratic question: why does damage to the left side of the brain affect the right side of the body, and why does damage to the frontal lobe change personality while damage to the occipital lobe affects vision?
+
+The answer is that the brain has specialised regions for different functions. The cerebrum is the largest part of the brain, responsible for conscious thought, sensation, voluntary movement, and higher functions. It has two hemispheres, each controlling the opposite side of the body. The cerebellum coordinates movement, balance, and posture. The brainstem controls vital functions such as breathing, heart rate, and blood pressure.
+
+The cerebrum is divided into four lobes: frontal (movement, reasoning, personality), parietal (touch, spatial awareness), temporal (hearing, memory), and occipital (vision). The limbic system, including the amygdala and hippocampus, governs emotion and memory.
+
+Crucial insight: the brain has three major regions — cerebrum (conscious thought, voluntary movement), cerebellum (coordination, balance), and brainstem (vital functions). Each region has specialised functions, and damage to a region causes specific deficits.` },
+
+    { q: "The cerebrum: lobes and their functions.",
+      body: `The cerebrum is the largest part of the brain and is responsible for the highest functions. It is divided into four lobes, each with a specialised role. Understanding these lobes is essential for understanding how the brain processes information.
+
+My Socratic question: why does a stroke in the frontal lobe cause different symptoms than a stroke in the occipital lobe, and how can you predict which functions will be affected?
+
+The answer is that each lobe has a specific function. The frontal lobe handles voluntary movement, reasoning, planning, decision-making, and personality. Damage causes weakness or paralysis, personality changes, and problems with planning and judgment. The parietal lobe processes touch, temperature, pain, and spatial awareness. Damage causes sensory loss and difficulty with spatial relationships. The temporal lobe handles hearing and memory. Damage causes hearing loss and memory problems. The occipital lobe processes vision. Damage causes vision loss or visual disturbances.
+
+The lobes do not work in isolation; they are highly interconnected. However, understanding the primary function of each lobe helps localise the site of brain damage based on symptoms.
+
+Crucial insight: the cerebrum has four lobes — frontal (movement, reasoning, personality), parietal (touch, spatial awareness), temporal (hearing, memory), and occipital (vision). Each lobe has a specialised function, and damage produces characteristic symptoms.` },
+
+    { q: "The cerebellum: coordination and balance.",
+      body: `The cerebellum is a small but essential part of the brain that coordinates movement, maintains balance, and helps with motor learning. Understanding its function is essential for understanding movement disorders.
+
+My Socratic question: why does alcohol consumption make you unsteady and clumsy, and why do people with cerebellar damage have difficulty with fine movements?
+
+The answer is that alcohol affects the cerebellum, impairing its ability to coordinate movement. The cerebellum receives information from the sensory systems, the spinal cord, and other parts of the brain and integrates this information to fine-tune motor activity. Damage to the cerebellum causes ataxia — uncoordinated movements, difficulty with balance, and problems with fine motor tasks like writing or buttoning a shirt.
+
+The cerebellum is also involved in motor learning — learning new movements, such as riding a bike or playing an instrument. It stores memories of motor patterns and helps improve movement with practice.
+
+Crucial insight: the cerebellum coordinates movement, maintains balance, and is involved in motor learning. Damage causes ataxia (uncoordinated movement) and difficulty with fine motor tasks.` },
+
+    { q: "The brainstem: the survival centre.",
+      body: `The brainstem is the oldest and most primitive part of the brain, and it is responsible for the functions that keep you alive. Damage to the brainstem can be immediately life-threatening.
+
+My Socratic question: why is brainstem damage so much more dangerous than damage to other parts of the brain, and what functions does the brainstem control?
+
+The answer is that the brainstem controls vital automatic functions — breathing, heart rate, blood pressure, sleep-wake cycles, and consciousness. It is the connection between the brain and the spinal cord. The brainstem consists of three parts: the midbrain (involved in vision, hearing, and motor control), the pons (involved in sleep, respiration, and facial sensation), and the medulla oblongata (controls breathing, heart rate, and blood pressure).
+
+The reticular formation, a network of neurons throughout the brainstem, regulates consciousness and arousal. Damage to the brainstem can cause coma, respiratory failure, and death.
+
+Crucial insight: the brainstem controls vital functions — breathing, heart rate, blood pressure, and consciousness. It consists of the midbrain, pons, and medulla oblongata. Damage to the brainstem is life-threatening.` },
+
+    { q: "The limbic system: emotion and memory.",
+      body: `The limbic system is a group of structures deep within the brain that govern emotion, memory, and motivation. Understanding the limbic system is essential for understanding emotional disorders and memory problems.
+
+My Socratic question: why do you remember emotionally charged events more vividly than ordinary events, and why do people with damage to the hippocampus have difficulty forming new memories?
+
+The answer is that the limbic system connects emotion and memory. The amygdala, a small almond-shaped structure, is central to processing emotions, especially fear and aggression. It helps you recognise emotional expressions and respond to threats. The hippocampus is essential for forming new memories. Damage to the hippocampus causes anterograde amnesia — the inability to form new memories after the injury.
+
+The limbic system also includes the hypothalamus, which regulates drives such as hunger, thirst, and sexual behaviour, and the cingulate gyrus, which is involved in emotional processing and decision-making. The limbic system is the emotional brain.
+
+Crucial insight: the limbic system (amygdala, hippocampus, hypothalamus, cingulate gyrus) governs emotion, memory, and motivation. The amygdala processes emotion; the hippocampus forms new memories.` },
+
+    { q: "The blood-brain barrier: protecting the brain.",
+      body: `The blood-brain barrier is a specialised structure that protects the brain from harmful substances in the blood. Understanding it is essential for understanding drug delivery to the brain and neurological diseases.
+
+My Socratic question: why are some drugs effective for conditions outside the brain but useless for brain conditions, and why does the brain need this special protection?
+
+The answer is that the blood-brain barrier is a selective barrier formed by the tight junctions between endothelial cells in the brain's capillaries. It prevents most substances from passing from the blood into the brain, protecting the brain from toxins, pathogens, and fluctuations in blood composition. Only small, lipid-soluble molecules can cross the barrier easily.
+
+The blood-brain barrier is a major challenge for treating brain diseases — many drugs cannot cross it to reach the brain. Understanding the blood-brain barrier is essential for developing drugs for neurological and psychiatric conditions.
+
+Crucial insight: the blood-brain barrier protects the brain by restricting substances from entering from the blood. It is formed by tight junctions between brain capillary endothelial cells. It is a major challenge for drug delivery to the brain.` },
+
+    { q: "Clinical relevance: the brain in medicine.",
+      body: `The brain is involved in many diseases and conditions, making it central to clinical practice. Understanding brain anatomy and function is essential for diagnosing and treating neurological conditions.
+
+My Socratic question: why do neurologists test cranial nerves, reflexes, and coordination during a neurological examination, and what can these tests reveal?
+
+The answer is that a neurological examination tests different parts of the nervous system. Cranial nerve testing assesses the brainstem and the nerves that control the head and neck. Reflex testing assesses the spinal cord and peripheral nerves. Coordination testing assesses the cerebellum. The results can localise the site of a lesion.
+
+Common neurological conditions include stroke (interrupted blood supply to the brain), epilepsy (abnormal electrical activity), Parkinson's disease (degeneration of dopamine-producing neurons), multiple sclerosis (demyelination), Alzheimer's disease (progressive memory loss), brain tumours, and traumatic brain injury.
+
+Crucial insight: the brain is involved in many diseases — stroke, epilepsy, Parkinson's, MS, Alzheimer's, brain tumours, and traumatic brain injury. Neurological examination tests brain function and can localise lesions.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the brain and CNS.
+
+Protection: skull, meninges (dura, arachnoid, pia mater), cerebrospinal fluid, blood-brain barrier.
+
+Major regions: cerebrum (conscious thought, voluntary movement), cerebellum (coordination, balance), brainstem (vital functions — breathing, heart rate).
+
+Cerebral lobes: frontal (movement, reasoning, personality), parietal (touch, spatial awareness), temporal (hearing, memory), occipital (vision).
+
+Cerebellum: coordinates movement, maintains balance, motor learning. Damage causes ataxia.
+
+Brainstem: midbrain, pons, medulla oblongata — controls breathing, heart rate, consciousness. Damage is life-threatening.
+
+Limbic system: amygdala (emotion), hippocampus (memory), hypothalamus (drives), cingulate gyrus (emotional processing).
+
+Blood-brain barrier: protects brain by restricting substances from entering from blood; tight junctions between endothelial cells.
+
+Clinical relevance: stroke, epilepsy, Parkinson's, MS, Alzheimer's, brain tumours, traumatic brain injury.
+
+Now your final test. A patient presents with sudden difficulty speaking, weakness on the right side of the body, and facial drooping. A CT scan shows a blockage in the left middle cerebral artery.
+
+Question one: which lobe of the brain is most likely affected, and what functions would be impaired?
+Question two: why is the right side of the body affected rather than the left?
+Question three: what is the most likely diagnosis, and what treatment would be appropriate in the acute phase?
+
+Work them through before reading on.
+
+My answers. One: the frontal lobe and temporal lobe are most likely affected. The frontal lobe controls voluntary movement (causing right-sided weakness) and speech production (causing difficulty speaking). The temporal lobe, also supplied by the middle cerebral artery, is involved in language comprehension. Two: the left hemisphere controls the right side of the body because the motor pathways cross over in the brainstem. Three: the most likely diagnosis is an ischaemic stroke (blockage in the middle cerebral artery). Acute treatment would include thrombolysis (clot-busting medication) if within the appropriate time window and the patient has no contraindications.` }
+  ],
+  theory: [
+    { q: "What are the three major regions of the brain and their functions?", a: "The cerebrum (conscious thought, voluntary movement, higher functions), the cerebellum (coordination, balance, motor learning), and the brainstem (vital functions — breathing, heart rate, blood pressure, consciousness)." },
+    { q: "What are the meninges and what do they do?", a: "The meninges are three protective membranes around the brain and spinal cord — the dura mater (tough outer), the arachnoid mater (middle), and the pia mater (delicate inner). They protect the CNS and contain cerebrospinal fluid." },
+    { q: "What is the function of cerebrospinal fluid?", a: "Cerebrospinal fluid cushions the brain and spinal cord, acts as a shock absorber, provides buoyancy, and removes waste products. It circulates through the ventricles and around the CNS." },
+    { q: "What are the four lobes of the cerebrum and their functions?", a: "Frontal (voluntary movement, reasoning, planning, personality), parietal (touch, temperature, pain, spatial awareness), temporal (hearing, memory), and occipital (vision)." },
+    { q: "What is the function of the cerebellum?", a: "The cerebellum coordinates movement, maintains balance and posture, and is involved in motor learning. Damage causes ataxia (uncoordinated movement)." },
+    { q: "What are the parts of the brainstem and their functions?", a: "The midbrain (vision, hearing, motor control), the pons (sleep, respiration, facial sensation), and the medulla oblongata (controls breathing, heart rate, and blood pressure)." },
+    { q: "What is the limbic system and what does it do?", a: "The limbic system is a group of structures — amygdala (emotion, especially fear), hippocampus (forming new memories), hypothalamus (drives like hunger and thirst), and cingulate gyrus (emotional processing)." },
+    { q: "What is the blood-brain barrier and why is it important?", a: "The blood-brain barrier is a selective barrier formed by tight junctions between endothelial cells of brain capillaries. It protects the brain from toxins and pathogens but also restricts drug delivery to the brain." },
+    { q: "What are common neurological conditions?", a: "Stroke (interrupted blood supply), epilepsy (abnormal electrical activity), Parkinson's disease (dopamine degeneration), multiple sclerosis (demyelination), Alzheimer's disease (progressive memory loss), brain tumours, and traumatic brain injury." },
+    { q: "How does a neurological examination help diagnose brain conditions?", a: "A neurological examination tests cranial nerves (brainstem), reflexes (spinal cord), coordination (cerebellum), and mental status (cerebrum). Abnormalities help localise the site of a lesion." },
+  ],
+  videos: [
+    { channel: "Anatomy", title: "The Brain - Anatomy and Function", note: "Major regions, lobes, and structures of the brain.", url: "" },
+    { channel: "Anatomy", title: "The Limbic System and Emotion", note: "Amygdala, hippocampus, and emotional memory.", url: "" },
+    { channel: "Anatomy", title: "Stroke and Neurological Conditions", note: "Common brain disorders and their effects.", url: "" },
+  ],
+  mcqs: [
+    { q: "The brain contains approximately how many neurons?", o: ["8.6 million", "86 billion", "86 million", "8.6 billion"], a: 1, w: "The brain contains approximately 86 billion neurons." },
+    { q: "The outermost layer of the meninges is the:", o: ["Pia mater", "Arachnoid mater", "Dura mater", "Cerebrospinal fluid"], a: 2, w: "The dura mater is the tough outer layer of the meninges." },
+    { q: "The middle layer of the meninges is the:", o: ["Dura mater", "Arachnoid mater", "Pia mater", "Cerebrospinal fluid"], a: 1, w: "The arachnoid mater is the middle layer of the meninges." },
+    { q: "The innermost layer of the meninges is the:", o: ["Dura mater", "Arachnoid mater", "Pia mater", "Cerebrospinal fluid"], a: 2, w: "The pia mater is the delicate inner layer of the meninges." },
+    { q: "Cerebrospinal fluid functions to:", o: ["Cushion and protect the brain", "Transport oxygen", "Produce myelin", "Carry nutrients to the brain"], a: 0, w: "Cerebrospinal fluid cushions and protects the brain and spinal cord." },
+    { q: "The largest part of the brain is the:", o: ["Cerebellum", "Brainstem", "Cerebrum", "Hypothalamus"], a: 2, w: "The cerebrum is the largest part of the brain." },
+    { q: "The lobe responsible for voluntary movement and personality is the:", o: ["Frontal lobe", "Parietal lobe", "Temporal lobe", "Occipital lobe"], a: 0, w: "The frontal lobe controls voluntary movement, reasoning, and personality." },
+    { q: "The lobe responsible for processing touch and spatial awareness is the:", o: ["Frontal lobe", "Parietal lobe", "Temporal lobe", "Occipital lobe"], a: 1, w: "The parietal lobe processes touch, temperature, pain, and spatial awareness." },
+    { q: "The lobe responsible for hearing and memory is the:", o: ["Frontal lobe", "Parietal lobe", "Temporal lobe", "Occipital lobe"], a: 2, w: "The temporal lobe handles hearing and memory." },
+    { q: "The lobe responsible for processing vision is the:", o: ["Frontal lobe", "Parietal lobe", "Temporal lobe", "Occipital lobe"], a: 3, w: "The occipital lobe processes vision." },
+    { q: "The cerebellum is responsible for:", o: ["Conscious thought", "Coordination and balance", "Memory and emotion", "Vision"], a: 1, w: "The cerebellum coordinates movement and maintains balance." },
+    { q: "The brainstem controls all of the following EXCEPT:", o: ["Breathing", "Heart rate", "Consciousness", "Fine motor coordination"], a: 3, w: "The brainstem controls vital functions — breathing, heart rate, and consciousness. Fine motor coordination is controlled by the cerebellum." },
+    { q: "The amygdala is part of the limbic system and is responsible for:", o: ["Memory formation", "Fear and emotion", "Movement coordination", "Vision"], a: 1, w: "The amygdala is central to processing emotions, especially fear." },
+    { q: "The hippocampus is responsible for:", o: ["Fear and emotion", "Forming new memories", "Movement coordination", "Vital functions"], a: 1, w: "The hippocampus is essential for forming new memories." },
+    { q: "The blood-brain barrier is formed by:", o: ["Tight junctions between endothelial cells", "The meninges", "Cerebrospinal fluid", "Neurons"], a: 0, w: "The blood-brain barrier is formed by tight junctions between endothelial cells of brain capillaries." },
+    { q: "A stroke that causes weakness on the right side of the body is most likely in the:", o: ["Right hemisphere", "Left hemisphere", "Cerebellum", "Brainstem"], a: 1, w: "The left hemisphere controls the right side of the body, so left hemisphere damage causes right-sided weakness." },
+    { q: "Parkinson's disease is caused by degeneration of neurons producing:", o: ["Serotonin", "Dopamine", "Acetylcholine", "GABA"], a: 1, w: "Parkinson's disease is caused by degeneration of dopamine-producing neurons in the substantia nigra." },
+    { q: "Multiple sclerosis is a disease of:", o: ["Neurons", "Myelin", "Synapses", "Dendrites"], a: 1, w: "Multiple sclerosis is caused by demyelination — damage to the myelin sheath of neurons." },
+    { q: "Alzheimer's disease is primarily characterised by:", o: ["Motor problems", "Progressive memory loss", "Seizures", "Uncoordinated movement"], a: 1, w: "Alzheimer's disease is characterised by progressive memory loss and cognitive decline." },
+    { q: "A neurological examination can help:", o: ["Localise the site of a brain lesion", "Diagnose all conditions definitively", "Treat brain disorders", "Prevent stroke"], a: 0, w: "A neurological examination can help localise the site of a lesion based on the functions affected." },
+  ],
+};
+
+// ==================== ANATOMY TOPIC 15: IDENTIFICATION & CLASSIFICATION OF MICROGRAPHS ====================
+const T_ANA_MICROGRAPHS = {
+  courseId: "ana",
+  topicIndex: 14,
+  title: "Identification & Classification of Micrographs",
+  minutes: 20,
+  note: [
+    { q: "Why is microscopy the foundation of histology?",
+      body: `Throughout this course, you have studied the tissues of the body — epithelium, connective tissue, muscle, and nervous tissue. But in practice, you will encounter these tissues as micrographs — images seen through a microscope. Being able to identify tissues on a slide is one of the most important skills in histology.
+
+My Socratic question: a tissue sample looks like a collection of pink and purple blobs under the microscope. How do you identify what you are looking at, and what features should you look for?
+
+The answer is that tissue identification follows a systematic approach. First, determine whether the tissue is epithelial (cells packed together, little matrix), connective (cells scattered in abundant matrix), muscle (elongated cells, striated or not), or nervous (neurons and glial cells). Then look at specific features — cell shape, arrangement, presence of fibres, and specialised structures. With practice, you can identify any tissue from its appearance.
+
+Crucial insight: microscopy is the foundation of histology. A systematic approach — identifying the tissue type first, then specific features — allows you to identify any tissue on a slide.` },
+
+    { q: "The microscopy toolbox: how slides are made.",
+      body: `To identify tissues on a slide, you need to understand how slides are prepared and what you are actually seeing. This knowledge helps you interpret what the microscope shows.
+
+My Socratic question: why do tissues on slides look different from fresh tissue, and what do the colours tell you?
+
+The answer is that tissue samples are processed before they are viewed. The process includes: fixation (preserving the tissue), embedding (in paraffin wax), sectioning (cutting thin slices), and staining (adding colour). The most common stain is haematoxylin and eosin (H&E). Haematoxylin stains nuclei blue-purple (basophilic). Eosin stains cytoplasm and extracellular fibres pink-red (acidophilic). This is why you see blue nuclei in a pink background — this colour pattern is the key to identifying tissues.
+
+Special stains are used for specific structures: PAS stains carbohydrates magenta; silver stains reticular fibres black; Masson's trichrome stains collagen blue. Understanding stains helps you identify specific structures.
+
+Crucial insight: histology slides are prepared by fixation, embedding, sectioning, and staining. H&E is the standard stain, giving blue nuclei and pink cytoplasm. Understanding stains is essential for interpreting micrographs.` },
+
+    { q: "Identifying epithelium: the first step.",
+      body: `Epithelium is the first tissue you should identify on a slide. It covers surfaces, lines cavities, and forms glands. Its characteristic appearance — cells packed tightly together with almost no matrix — makes it easy to spot.
+
+My Socratic question: you see a slide with cells packed together, sitting on a thin line (the basement membrane). Is it epithelium, and how do you classify it?
+
+The answer is that if cells are packed tightly with little space between them, it is almost certainly epithelium. To classify it, ask two questions: how many layers (simple or stratified) and what shape are the apical cells (squamous, cuboidal, or columnar). A single layer of flat cells is simple squamous. Many layers with flat surface cells is stratified squamous. Look for specialised features: cilia (airway), microvilli (brush border, gut), keratin (skin).
+
+Crucial insight: epithelium is identified by closely packed cells with little matrix. Classification uses two questions — number of layers and cell shape — plus surface specialisations like cilia, microvilli, and keratin.` },
+
+    { q: "Identifying connective tissue: the matrix tells the story.",
+      body: `Connective tissue is the most abundant and varied tissue in the body. Its characteristic feature is the abundant extracellular matrix — cells are scattered and the matrix dominates. The matrix tells you what type of connective tissue you are looking at.
+
+My Socratic question: you see a slide with sparse cells and abundant pink fibres. Is this loose or dense connective tissue, and what type of fibres are present?
+
+The answer is that connective tissue is identified by sparse cells in an abundant matrix. Loose connective tissue has loosely arranged fibres and more ground substance. Dense connective tissue has tightly packed fibres. The fibres tell you the tissue's function: collagen fibres (pink, wavy, strong), elastic fibres (thin, dark, stretchy), or reticular fibres (fine, branching, mesh-like).
+
+Specialised connective tissues have unique features: cartilage has chondrocytes in lacunae (small spaces) and a firm matrix; bone has osteocytes in lacunae and a mineralised matrix; blood has cells suspended in liquid plasma.
+
+Crucial insight: connective tissue is identified by cells scattered in an abundant matrix. The matrix type (fibres, ground substance) tells you the specific tissue type — loose, dense, cartilage, bone, or blood.` },
+
+    { q: "Identifying muscle tissue: striated or smooth?",
+      body: `Muscle tissue is specialised for contraction. It is identified by its elongated cells and, in some types, by striations (stripes). The presence or absence of striations is the key to identifying muscle types.
+
+My Socratic question: you see elongated cells with visible stripes (striations) and multiple nuclei at the periphery. What type of muscle is this, and what are the clues?
+
+The answer is that this is skeletal muscle — the clues are striations (stripes), long cylindrical cells, and multiple peripheral nuclei. Cardiac muscle also has striations, but the cells are branched and have a single central nucleus, with intercalated discs (dark bands between cells). Smooth muscle has no striations, and the cells are spindle-shaped with a single central nucleus.
+
+Muscle identification is straightforward: striated + elongated + multiple peripheral nuclei = skeletal. Striated + branched + intercalated discs = cardiac. Non-striated + spindle-shaped = smooth.
+
+Crucial insight: muscle tissue is identified by its appearance. Skeletal: striated, long, multinucleated. Cardiac: striated, branched, intercalated discs. Smooth: non-striated, spindle-shaped.` },
+
+    { q: "Identifying nervous tissue: neurons and glia.",
+      body: `Nervous tissue is specialised for communication. It is identified by the presence of neurons (large cells with prominent nuclei and Nissl substance) and neuroglia (smaller supporting cells). The arrangement of neurons and the presence of axons and dendrites help identify nervous tissue.
+
+My Socratic question: you see large cells with a large, pale nucleus and a prominent nucleolus, surrounded by smaller cells. What type of tissue is this, and what are the clues?
+
+The answer is that this is nervous tissue. The large cells are neurons — they have a large, pale nucleus (vesicular nucleus) with a prominent nucleolus. The smaller cells are neuroglia (supporting cells). Neurons may have visible processes (dendrites and axons). Grey matter contains many neuronal cell bodies; white matter contains myelinated axons.
+
+Crucial insight: nervous tissue is identified by neurons (large cells with large, pale nuclei) and neuroglia (smaller supporting cells). The presence of neuronal cell bodies and processes distinguishes it from other tissues.` },
+
+    { q: "Common pitfalls in tissue identification.",
+      body: `Students often make common mistakes when identifying tissues on slides. Being aware of these pitfalls can help you avoid them.
+
+My Socratic question: why do students sometimes confuse simple squamous epithelium with connective tissue, and stratified squamous epithelium with transitional epithelium?
+
+The answer is that simple squamous epithelium is very thin and can be mistaken for connective tissue because both have cells that are not tightly packed. Look for a basement membrane — if there is one, it is epithelium. Stratified squamous epithelium and transitional epithelium both have multiple layers, but transitional epithelium has dome-shaped surface cells when relaxed (in the bladder), while stratified squamous has flattened surface cells.
+
+Another common mistake is confusing dense regular and dense irregular connective tissue. Dense regular has parallel collagen fibres (tendons, ligaments). Dense irregular has fibres in multiple directions (dermis of skin). Look at the arrangement of fibres.
+
+Crucial insight: common pitfalls include confusing epithelium and connective tissue (look for the basement membrane), confusing stratified squamous and transitional (look for dome-shaped cells), and confusing dense regular and irregular (look at fibre arrangement).` },
+
+    { q: "Why this skill matters in medicine.",
+      body: `Identifying tissues on micrographs is not just an academic exercise — it is a skill used in pathology, surgery, and diagnosis. Understanding tissue identification is essential for interpreting biopsy results and diagnosing diseases.
+
+My Socratic question: a patient has a suspicious skin lesion, and a biopsy is sent to pathology. How does the pathologist identify what the lesion is, and why does this matter for the patient?
+
+The answer is that the pathologist examines the tissue under a microscope, identifying the type of tissue and any abnormalities. Normal tissue has a characteristic appearance. If the tissue is abnormal — if the cells are disorganised, atypical, or invading other tissues — it may indicate cancer. The pathologist's diagnosis determines the patient's treatment and prognosis.
+
+Histology is also used in surgery — frozen sections allow surgeons to determine whether a tumour has been completely removed during an operation.
+
+Crucial insight: tissue identification is essential in pathology for diagnosing diseases like cancer. Understanding normal tissue appearance is the first step to recognising abnormal tissue.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for identifying micrographs.
+
+The approach: first identify the tissue type — epithelium (packed cells, little matrix), connective (sparse cells, abundant matrix), muscle (elongated, contractile), or nervous (neurons and glia).
+
+Epithelium: classify by layers (simple/stratified) and shape (squamous/cuboidal/columnar). Look for specialisations: cilia, microvilli, keratin, goblet cells.
+
+Connective tissue: identify by matrix — loose (few fibres), dense (many fibres — regular/irregular), cartilage (chondrocytes in lacunae), bone (osteocytes in lacunae, mineralised), blood (cells in liquid plasma).
+
+Muscle: skeletal (striated, multinucleated), cardiac (striated, branched, intercalated discs), smooth (non-striated, spindle-shaped).
+
+Nervous: neurons (large, pale nuclei) and neuroglia (smaller).
+
+Common pitfalls: epithelium vs connective tissue (look for basement membrane), stratified squamous vs transitional (dome-shaped cells), dense regular vs irregular (fibre arrangement).
+
+Clinical relevance: tissue identification is used in pathology to diagnose cancer and other diseases, and in surgery to guide tumour removal.
+
+Now your final test. A pathologist examines a biopsy from the oesophagus. The tissue shows many layers of cells, with flattened cells at the surface and no keratin layer. The basement membrane is intact.
+
+Question one: what type of epithelium is this, and how do you know?
+Question two: if the biopsy were from the skin, how would the appearance differ?
+Question three: if the basement membrane were breached, what would this indicate?
+
+Work them through before reading on.
+
+My answers. One: this is non-keratinized stratified squamous epithelium. It has many layers (stratified), flattened surface cells (squamous), and no keratin layer. The oesophagus is a wet, internal surface that takes abrasion. Two: if it were from skin, it would be keratinized stratified squamous epithelium — the surface cells would be dead, flattened, and filled with keratin (no nuclei visible). Three: if the basement membrane were breached, it would indicate that the abnormal cells have invaded the underlying tissue — this is the definition of invasive cancer (carcinoma).` }
+  ],
+  theory: [
+    { q: "What is the systematic approach to identifying tissues on a slide?", a: "First determine the tissue type — epithelium (packed cells, little matrix), connective (sparse cells, abundant matrix), muscle (elongated, contractile), or nervous (neurons and glia). Then look at specific features to classify the tissue further." },
+    { q: "What are the steps in preparing a tissue for microscopic examination?", a: "Fixation (preserving the tissue), embedding (in paraffin wax), sectioning (cutting thin slices), and staining (adding colour). H&E is the standard stain — haematoxylin stains nuclei blue; eosin stains cytoplasm and fibres pink." },
+    { q: "How do you classify epithelium on a slide?", a: "Ask two questions: how many layers (simple = one, stratified = multiple) and what is the shape of the apical cells (squamous, cuboidal, or columnar). Look for specialisations: cilia, microvilli, keratin, goblet cells." },
+    { q: "How do you identify connective tissue on a slide?", a: "Look for sparse cells in abundant extracellular matrix. The matrix type identifies the tissue — fibres and ground substance. Collagen fibres are pink and wavy; elastic fibres are thin and dark; reticular fibres form branching networks." },
+    { q: "How do you distinguish the three types of muscle on a slide?", a: "Skeletal: striated, long cylindrical cells, multiple peripheral nuclei. Cardiac: striated, branched, single central nucleus, intercalated discs. Smooth: non-striated, spindle-shaped, single central nucleus." },
+    { q: "How do you identify nervous tissue on a slide?", a: "Look for neurons — large cells with a large, pale nucleus (vesicular nucleus) and prominent nucleolus. Neuroglia are smaller supporting cells. Axons and dendrites may be visible." },
+    { q: "What are common pitfalls in tissue identification?", a: "Confusing epithelium and connective tissue (look for basement membrane), confusing stratified squamous and transitional epithelium (dome-shaped cells), confusing dense regular and dense irregular connective tissue (fibre arrangement)." },
+    { q: "Why is H&E staining the standard in histology?", a: "H&E staining provides good contrast between nuclei (blue-purple) and cytoplasm/extracellular matrix (pink-red), making it easy to distinguish different tissue components. It is simple and reliable." },
+    { q: "What special stains are used for specific structures?", a: "PAS stains carbohydrates and basement membranes magenta. Silver stains reticular fibres and nerve tissue black. Masson's trichrome stains collagen blue. Each highlights specific structures." },
+    { q: "Why is tissue identification important in clinical medicine?", a: "Tissue identification is used in pathology to diagnose cancer and other diseases by identifying abnormal tissue. It is also used in surgery (frozen sections) to guide tumour removal." },
+  ],
+  videos: [
+    { channel: "Histology", title: "How to Identify Tissues Under the Microscope", note: "Systematic approach to tissue identification.", url: "" },
+    { channel: "Histology", title: "Common Pitfalls in Tissue Identification", note: "What students often get wrong.", url: "" },
+    { channel: "Histology", title: "Clinical Histology and Pathology", note: "How tissue identification is used in diagnosis.", url: "" },
+  ],
+  mcqs: [
+    { q: "Tissue identification on a slide should begin by identifying the:", o: ["Cell shape", "Tissue type", "Stain colour", "Number of layers"], a: 1, w: "The first step is to identify the tissue type — epithelium, connective, muscle, or nervous." },
+    { q: "The standard stain used in histology is:", o: ["PAS", "Silver stain", "Haematoxylin and eosin (H&E)", "Masson's trichrome"], a: 2, w: "H&E is the standard stain in histology." },
+    { q: "Haematoxylin stains nuclei:", o: ["Pink-red", "Blue-purple", "Magenta", "Black"], a: 1, w: "Haematoxylin is a basic dye that stains nuclei blue-purple." },
+    { q: "Eosin stains cytoplasm and extracellular fibres:", o: ["Blue-purple", "Magenta", "Pink-red", "Black"], a: 2, w: "Eosin is an acidic dye that stains cytoplasm and fibres pink-red." },
+    { q: "Epithelium is characterised by:", o: ["Sparse cells in abundant matrix", "Closely packed cells with little matrix", "Elongated contractile cells", "Large cells with pale nuclei"], a: 1, w: "Epithelium is characterised by closely packed cells with little matrix." },
+    { q: "Connective tissue is characterised by:", o: ["Closely packed cells with little matrix", "Sparse cells in abundant matrix", "Elongated contractile cells", "Large cells with pale nuclei"], a: 1, w: "Connective tissue is characterised by sparse cells in abundant matrix." },
+    { q: "The two questions used to classify epithelium are:", o: ["Colour and texture", "Number of layers and cell shape", "Fibre type and arrangement", "Stain and thickness"], a: 1, w: "Epithelium is classified by number of layers and shape of apical cells." },
+    { q: "A single layer of flat cells is:", o: ["Simple squamous", "Stratified squamous", "Simple cuboidal", "Simple columnar"], a: 0, w: "Simple squamous epithelium is a single layer of flat cells." },
+    { q: "A tissue with multiple layers and flat surface cells is:", o: ["Simple squamous", "Stratified squamous", "Transitional", "Pseudostratified"], a: 1, w: "Stratified squamous epithelium has multiple layers with flat surface cells." },
+    { q: "Transitional epithelium has surface cells that are:", o: ["Flat", "Cuboidal", "Dome-shaped", "Columnar"], a: 2, w: "Transitional epithelium has dome-shaped surface cells when relaxed." },
+    { q: "Skeletal muscle is identified by:", o: ["Non-striated, spindle-shaped", "Striated, long, multinucleated", "Striated, branched, intercalated discs", "Large cells with pale nuclei"], a: 1, w: "Skeletal muscle is striated, long, cylindrical, and multinucleated." },
+    { q: "Cardiac muscle is identified by:", o: ["Non-striated, spindle-shaped", "Striated, long, multinucleated", "Striated, branched, intercalated discs", "Large cells with pale nuclei"], a: 2, w: "Cardiac muscle is striated, branched, and has intercalated discs." },
+    { q: "Smooth muscle is identified by:", o: ["Striated, long, multinucleated", "Striated, branched, intercalated discs", "Non-striated, spindle-shaped", "Large cells with pale nuclei"], a: 2, w: "Smooth muscle is non-striated and spindle-shaped." },
+    { q: "The basement membrane is characteristic of:", o: ["Connective tissue", "Epithelium", "Muscle tissue", "Nervous tissue"], a: 1, w: "Epithelium sits on a basement membrane, which anchors it to underlying connective tissue." },
+    { q: "Loose connective tissue has:", o: ["Many tightly packed fibres", "Loosely arranged fibres with more ground substance", "Parallel fibres", "Mineralised matrix"], a: 1, w: "Loose connective tissue has loosely arranged fibres and more ground substance." },
+    { q: "Dense regular connective tissue has:", o: ["Loosely arranged fibres", "Parallel fibres", "Randomly arranged fibres", "Chondrocytes in lacunae"], a: 1, w: "Dense regular connective tissue has parallel collagen fibres (tendons, ligaments)." },
+    { q: "Dense irregular connective tissue has:", o: ["Loosely arranged fibres", "Parallel fibres", "Randomly arranged fibres", "Chondrocytes in lacunae"], a: 2, w: "Dense irregular connective tissue has fibres arranged in multiple directions (dermis)." },
+    { q: "Chondrocytes in lacunae are characteristic of:", o: ["Bone", "Cartilage", "Blood", "Dense connective tissue"], a: 1, w: "Cartilage has chondrocytes in lacunae." },
+    { q: "Osteocytes in lacunae are characteristic of:", o: ["Bone", "Cartilage", "Blood", "Dense connective tissue"], a: 0, w: "Bone has osteocytes in lacunae." },
+    { q: "Why is tissue identification important in medicine?", a: "It is used in pathology to diagnose cancer and other diseases, and in surgery to guide tumour removal." },
+  ],
+};
+
 /* --------------------------- phy:5 --------------------------- */
 const T_PHY_RMP = {
   courseId: "phy",
@@ -9377,7 +9708,9 @@ const CONTENT = {
   "ana:9": T_ANA_AXIAL,
   "ana:10": T_ANA_APPENDICULAR,
   "ana:11": T_ANA_JOINTS,
-  "ana:12": T_ANA_NERVOUS1,    
+  "ana:12": T_ANA_NERVOUS1,
+  "ana:13": T_ANA_NERVOUS2,
+  "ana:14": T_ANA_MICROGRAPHS,    
   "bch:0": T_BCH_INTRO,
   "bch:1": T_BCH_ENZYMES,
   "bch:2": T_BCH_INHIBITION,
