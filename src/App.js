@@ -7469,17 +7469,14 @@ export default function App() {
     })();
 
     let sub;
-    let initialAuthDone = false;
     try {
       const res = supabase.auth.onAuthStateChange((event, session) => {
         if (event === "SIGNED_IN" && session && session.user) {
+          // Adopt the user (restore their profile/progress) but NEVER change the
+          // current route here. This event fires not only on a fresh login but also
+          // on token refresh and when returning to the tab - resetting the route
+          // here was what wrongly threw the student back to home on tab switch.
           adoptSupabaseUser(session.user);
-          // Only jump to home on a genuinely NEW sign-in (a fresh login the user
-          // just performed). On page reload the session is restored and this event
-          // also fires - in that case we must NOT reset the route, so the student
-          // stays where they were (e.g. mid-quiz) instead of being thrown to home.
-          if (initialAuthDone) setRoute({ view: "home" });
-          initialAuthDone = true;
         }
         if (event === "SIGNED_OUT") {
           setSupaUid(null);
