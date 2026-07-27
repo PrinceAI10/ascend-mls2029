@@ -1841,6 +1841,166 @@ Crucial insight: the principles of inhibition are the same in drug design - you 
   ],
 };
 
+// ==================== BIOCHEMISTRY TOPIC 3: GLYCOLYSIS ====================
+const T_BCH_GLYCOLYSIS = {
+  courseId: "bch",
+  topicIndex: 3,
+  title: "Glycolysis",
+  minutes: 22,
+  note: [
+    { q: "What is glycolysis and why does every cell need it?",
+      body: `You have learned about enzymes and how they can be inhibited. Now we apply that knowledge to the most fundamental energy-producing pathway in the body: glycolysis.
+
+My Socratic question: every cell in your body needs energy to survive, but not every cell has mitochondria. How does a red blood cell, which has no mitochondria, produce the ATP it needs to keep working?
+
+The answer is glycolysis - a pathway that breaks down glucose into two molecules of pyruvate, producing a small but crucial amount of ATP in the process. It operates in the cytosol of every cell, requires no oxygen, and is the foundation upon which all other energy metabolism is built.
+
+Crucial insight: glycolysis is the universal energy pathway - it works in every cell, with or without oxygen, and it is the starting point for both aerobic respiration and fermentation. Understanding glycolysis is understanding how your cells survive when oxygen is scarce.` },
+
+    { q: "Where does glycolysis happen and what does it cost?",
+      body: `Glycolysis takes place in the cytosol - the fluid part of the cell outside the organelles. It is a sequence of ten enzyme-catalysed reactions that convert one molecule of glucose (six carbons) into two molecules of pyruvate (three carbons each).
+
+My Socratic question: if glycolysis produces ATP, why does it first consume ATP? Doesn't that seem wasteful?
+
+The answer is that the initial ATP investment is necessary to make the glucose molecule reactive enough to be split. Think of it like pushing a car to start it - you put energy in first, and later you get more energy back. The first phase of glycolysis uses two ATP molecules to phosphorylate glucose and its product, making them unstable and ready to be cleaved.
+
+Crucial insight: glycolysis has two phases - an energy-investment phase that costs 2 ATP, and an energy-harvest phase that produces 4 ATP, for a net gain of 2 ATP per glucose. The investment is not waste; it is the price of making the reaction go.` },
+
+    { q: "The energy-investment phase: steps 1 to 5.",
+      body: `The first half of glycolysis uses two ATP molecules to prepare glucose for splitting.
+
+Step 1: Hexokinase phosphorylates glucose to glucose-6-phosphate, trapping it inside the cell. Step 2: Phosphoglucose isomerase rearranges it to fructose-6-phosphate. Step 3: Phosphofructokinase-1 (PFK-1) adds another phosphate, using ATP, to form fructose-1,6-bisphosphate - this is the committed step and the main regulatory point of glycolysis. Step 4: Aldolase splits the six-carbon sugar into two three-carbon molecules: dihydroxyacetone phosphate (DHAP) and glyceraldehyde-3-phosphate (G3P). Step 5: Triose phosphate isomerase converts DHAP into G3P, giving two molecules of G3P.
+
+My Socratic question: of all the enzymes in glycolysis, PFK-1 is the most important control point. Why would the cell want to regulate this specific step so tightly?
+
+The answer is that PFK-1 catalyses the committed step - the first irreversible reaction unique to glycolysis. Once glucose passes this point, it is committed to being broken down for energy. Regulating PFK-1 allows the cell to control the entire pathway's speed based on energy needs.
+
+Crucial insight: the investment phase costs 2 ATP and produces two molecules of G3P. The control point is PFK-1, which is inhibited by ATP and activated by AMP - the cell's energy sensor.` },
+
+    { q: "The energy-harvest phase: steps 6 to 10.",
+      body: `The second half of glycolysis harvests the energy stored in the G3P molecules, producing ATP and NADH.
+
+Step 6: Glyceraldehyde-3-phosphate dehydrogenase oxidises G3P, reducing NAD+ to NADH and adding a phosphate to form 1,3-bisphosphoglycerate. Step 7: Phosphoglycerate kinase transfers that phosphate to ADP, producing ATP - this is substrate-level phosphorylation, the first ATP production of the pathway. Step 8: Phosphoglycerate mutase rearranges 3-phosphoglycerate to 2-phosphoglycerate. Step 9: Enolase removes water to form phosphoenolpyruvate (PEP), a high-energy compound. Step 10: Pyruvate kinase transfers the phosphate from PEP to ADP, producing the second ATP and forming pyruvate.
+
+My Socratic question: since steps 6 and 7 happen twice (for each G3P molecule), how many ATP and NADH are produced in the harvest phase?
+
+The answer is that each G3P produces 2 ATP (one in step 7 and one in step 10) and 1 NADH. With two G3P molecules from one glucose, the harvest phase yields 4 ATP and 2 NADH. Subtract the 2 ATP invested, and the net gain is 2 ATP and 2 NADH per glucose.
+
+Crucial insight: substrate-level phosphorylation - making ATP directly from a high-energy phosphate - is how glycolysis produces energy. The NADH produced carries electrons to the electron transport chain if oxygen is present, linking glycolysis to aerobic respiration.` },
+
+    { q: "The net reaction and energy balance.",
+      body: `Let us put the entire pathway together into one balanced equation.
+
+The overall reaction of glycolysis is: Glucose + 2 NAD+ + 2 ADP + 2 Pi -> 2 Pyruvate + 2 NADH + 2 H+ + 2 ATP + 2 H2O
+
+My Socratic question: two ATP net is not very much energy compared to the 36 ATP produced by complete glucose oxidation. Why would the cell bother with a pathway that yields so little?
+
+The answer is that glycolysis is fast, requires no oxygen, and works in every cell. It provides immediate energy when oxygen is scarce (during exercise) or when the cell has no mitochondria (red blood cells). The 2 ATP per glucose may seem small, but when glucose is plentiful and the pathway runs rapidly, it can supply enough energy to keep the cell alive until oxygen becomes available.
+
+Crucial insight: glycolysis trades efficiency for speed and versatility. It is the body's emergency energy system and its universal baseline - the pathway that runs when nothing else can.` },
+
+    { q: "Regulation of glycolysis: the cell's energy sensor.",
+      body: `Glycolysis is tightly regulated to match the cell's energy needs, and the control points are exactly where you would predict.
+
+The most important regulatory enzyme is phosphofructokinase-1 (PFK-1), which catalyses the committed step. PFK-1 is inhibited by ATP (high energy means slow down) and citrate (enough building blocks). It is activated by AMP and ADP (low energy means speed up) and by fructose-2,6-bisphosphate (a signal that glucose is plentiful). Hexokinase is inhibited by its product glucose-6-phosphate, and pyruvate kinase is inhibited by ATP and alanine.
+
+My Socratic question: imagine a cell that is already full of ATP. Why would it want to slow down glycolysis, and how does PFK-1 achieve this?
+
+The answer is that slowing glycolysis when energy is abundant prevents wasteful glucose breakdown and saves glucose for other uses, like building glycogen. PFK-1 achieves this by sensing the ATP/AMP ratio - when ATP is high, it binds to PFK-1's allosteric site and changes its shape, reducing its activity.
+
+Crucial insight: glycolysis is regulated at three key enzymes - hexokinase, PFK-1, and pyruvate kinase - with PFK-1 being the master regulator. The control is allosteric, responding to the cell's energy status in real time.` },
+
+    { q: "The fate of pyruvate: aerobic versus anaerobic.",
+      body: `The end product of glycolysis is pyruvate, and what happens next depends entirely on whether oxygen is available.
+
+My Socratic question: when you sprint, your muscles run out of oxygen and start burning. What happens to the pyruvate produced by glycolysis in this oxygen-poor state, and why does this matter?
+
+The answer is that pyruvate is converted to lactate (lactic acid) by lactate dehydrogenase, regenerating NAD+ so glycolysis can continue. This is anaerobic glycolysis - it produces only 2 ATP per glucose but can run very fast, allowing short bursts of intense activity. When oxygen is available, pyruvate enters the mitochondria and is completely oxidised to carbon dioxide and water, producing far more ATP.
+
+Crucial insight: the fate of pyruvate decides whether the cell is running in aerobic or anaerobic mode. In aerobic conditions, pyruvate enters the TCA cycle; in anaerobic conditions, it becomes lactate. The choice is made by oxygen availability and the need for rapid ATP production.` },
+
+    { q: "Glycolysis in red blood cells and cancer.",
+      body: `Two special cases show how important glycolysis is: red blood cells, which have no mitochondria, and cancer cells, which prefer glycolysis even when oxygen is available.
+
+Red blood cells rely entirely on glycolysis for ATP because they have no mitochondria. Without glycolysis, they could not maintain their membrane pumps or survive their 120-day lifespan.
+
+My Socratic question: cancer cells often switch to glycolysis even when oxygen is present - a phenomenon called the Warburg effect. Why would a cancer cell choose a less efficient pathway when oxygen is available?
+
+The answer is that glycolysis provides not just ATP but also building blocks for new cell growth - the intermediates of glycolysis are precursors for amino acids, nucleotides, and lipids. Cancer cells use glycolysis to fuel rapid growth, even though it is less efficient in ATP terms.
+
+Crucial insight: glycolysis is not just an energy pathway - it is a source of biosynthetic precursors. This is why it is so central to metabolism and why it is upregulated in rapidly dividing cells, including cancer.` },
+
+    { q: "Clinical relevance: glycolysis in diagnosis and disease.",
+      body: `Your understanding of glycolysis has direct clinical applications that you will see in the laboratory.
+
+My Socratic question: a patient with poorly controlled diabetes has high blood glucose. How does this affect glycolysis, and what can you measure to assess it?
+
+The answer is that high glucose drives glycolysis in tissues that do not require insulin, such as the brain and red blood cells. In diabetes, the classic laboratory finding is elevated HbA1c - glycosylated haemoglobin - which reflects average blood glucose over the previous 2-3 months. The glucose that enters red blood cells (via glycolysis) attaches to haemoglobin, and the amount of attachment reflects the glucose concentration.
+
+Crucial insight: glycolysis is the pathway that processes glucose in red blood cells, and it is the source of the HbA1c measurement used to monitor diabetes. Understanding the pathway helps you understand the test.` },
+
+    { q: "Consolidation: the pathway that runs everywhere.",
+      body: `Let us bring it all together, because glycolysis is the foundation of metabolism.
+
+The pathway: glucose is converted to two pyruvate molecules in ten steps, yielding a net of 2 ATP and 2 NADH. The investment phase costs 2 ATP, and the harvest phase yields 4 ATP. The pathway is regulated at PFK-1, the committed step, which responds to the cell's energy status. Pyruvate's fate depends on oxygen: aerobic oxidation yields much more energy, while anaerobic reduction to lactate regenerates NAD+ and allows continued glycolysis.
+
+My Socratic question: if glycolysis produces only 2 ATP per glucose, why is it considered the foundation of all energy metabolism?
+
+The answer is that it connects to everything. Glycolysis is the entry point for all carbohydrates into metabolism. It produces pyruvate, which feeds the TCA cycle. It produces NADH, which feeds the electron transport chain. It produces intermediates that build amino acids, lipids, and nucleotides. And it runs in every cell, with or without oxygen. Everything else is built on this pathway.
+
+Crucial insight: glycolysis is the universal pathway of energy metabolism - it runs in every cell, connects to every other pathway, and is the starting point for understanding how the body processes nutrients. Master glycolysis, and you have the foundation for understanding the rest of metabolism.` }
+  ],
+  theory: [
+    { q: "Define glycolysis and state its location in the cell.", a: "Glycolysis is the metabolic pathway that converts glucose (a six-carbon sugar) into two molecules of pyruvate (three-carbon molecules), producing a net of 2 ATP and 2 NADH. It takes place in the cytosol of all cells and does not require oxygen." },
+    { q: "What is the net ATP yield of glycolysis and how is it calculated?", a: "The net yield is 2 ATP per glucose. The investment phase uses 2 ATP; the harvest phase produces 4 ATP (2 from each of the two triose phosphate molecules), giving a net gain of 2 ATP. Additionally, 2 NADH are produced." },
+    { q: "Name the three regulatory enzymes of glycolysis and their activators/inhibitors.", a: "Hexokinase (inhibited by glucose-6-phosphate), phosphofructokinase-1 or PFK-1 (inhibited by ATP and citrate; activated by AMP and fructose-2,6-bisphosphate), and pyruvate kinase (inhibited by ATP and alanine; activated by fructose-1,6-bisphosphate). PFK-1 is the master regulator." },
+    { q: "What is the committed step of glycolysis and why is it called that?", a: "The committed step is the reaction catalysed by phosphofructokinase-1 (PFK-1), which phosphorylates fructose-6-phosphate to fructose-1,6-bisphosphate. It is called committed because once this step occurs, the molecule is irreversibly committed to proceeding through glycolysis." },
+    { q: "What happens to pyruvate under aerobic versus anaerobic conditions?", a: "Under aerobic conditions (oxygen present), pyruvate enters the mitochondria and is converted to acetyl-CoA, which enters the TCA cycle for complete oxidation to CO2 and H2O, producing much more ATP. Under anaerobic conditions (oxygen absent), pyruvate is reduced to lactate, regenerating NAD+ to allow glycolysis to continue." },
+    { q: "Why must NAD+ be regenerated for glycolysis to continue?", a: "Glycolysis requires NAD+ as a cofactor for the glyceraldehyde-3-phosphate dehydrogenase reaction, which produces NADH. If NAD+ is not regenerated, the reaction stops. Under anaerobic conditions, lactate dehydrogenase regenerates NAD+ by converting pyruvate to lactate." },
+    { q: "What is the Warburg effect and what does it reveal about cancer metabolism?", a: "The Warburg effect is the observation that cancer cells preferentially use glycolysis even when oxygen is available, producing lactate rather than fully oxidising pyruvate. This provides not only ATP but also biosynthetic precursors for rapid cell growth, revealing that cancer metabolism is adapted for growth, not just energy." },
+    { q: "How is glycolysis linked to the measurement of HbA1c in diabetes?", a: "Glucose enters red blood cells and undergoes glycolysis. A fraction of this glucose attaches to haemoglobin to form glycosylated haemoglobin (HbA1c). The level of HbA1c reflects the average blood glucose concentration over the previous 2-3 months, making it a key test for monitoring diabetes control." },
+    { q: "Why do red blood cells depend entirely on glycolysis for ATP?", a: "Red blood cells have no mitochondria, so they cannot perform oxidative phosphorylation. They rely entirely on glycolysis and the pentose phosphate pathway for ATP production and to maintain their membrane integrity and function." },
+    { q: "Write the balanced overall equation for glycolysis.", a: "Glucose + 2 NAD+ + 2 ADP + 2 Pi -> 2 Pyruvate + 2 NADH + 2 H+ + 2 ATP + 2 H2O." },
+  ],
+  videos: [
+    { channel: "Ninja Nerd", title: "Glycolysis Pathway Explained", note: "Detailed step-by-step walkthrough of all 10 steps with structures and regulation.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+glycolysis+pathway" },
+    { channel: "Khan Academy", title: "Glycolysis Overview and Steps", note: "Clear explanation of the investment and harvest phases with energy accounting.", url: "https://www.youtube.com/results?search_query=Khan+Academy+glycolysis+steps" },
+    { channel: "Amoeba Sisters", title: "Glycolysis Cellular Respiration", note: "Animated overview of the pathway and its role in energy production.", url: "https://www.youtube.com/results?search_query=Amoeba+Sisters+glycolysis" },
+  ],
+  mcqs: [
+    { q: "Glycolysis takes place in which cellular compartment?", o: ["Mitochondria", "Cytosol", "Nucleus", "Endoplasmic reticulum"], a: 1, w: "Glycolysis occurs in the cytosol of the cell." },
+    { q: "The net ATP yield from glycolysis per glucose is:", o: ["4 ATP", "2 ATP", "36 ATP", "0 ATP"], a: 1, w: "Glycolysis produces a net of 2 ATP per glucose molecule." },
+    { q: "The first phase of glycolysis is called the:", o: ["Energy-harvest phase", "Energy-investment phase", "Oxidative phase", "Reductive phase"], a: 1, w: "The first phase consumes ATP to prepare glucose for splitting." },
+    { q: "How many ATP are consumed in the investment phase of glycolysis?", o: ["4", "1", "2", "0"], a: 2, w: "Two ATP are used in the investment phase." },
+    { q: "How many ATP are produced in the harvest phase of glycolysis?", o: ["2", "4", "1", "0"], a: 1, w: "Four ATP are produced in the harvest phase." },
+    { q: "The committed step of glycolysis is catalysed by:", o: ["Hexokinase", "Phosphofructokinase-1 (PFK-1)", "Aldolase", "Pyruvate kinase"], a: 1, w: "PFK-1 catalyses the committed step of glycolysis." },
+    { q: "PFK-1 is inhibited by:", o: ["AMP", "Fructose-2,6-bisphosphate", "ADP", "ATP"], a: 3, w: "ATP inhibits PFK-1 when energy is abundant." },
+    { q: "PFK-1 is activated by:", o: ["ATP", "Citrate", "AMP", "Glucose"], a: 2, w: "AMP activates PFK-1 when energy is low." },
+    { q: "The enzyme that converts pyruvate to lactate is:", o: ["Pyruvate dehydrogenase", "Lactate dehydrogenase", "Aldolase", "Enolase"], a: 1, w: "Lactate dehydrogenase converts pyruvate to lactate under anaerobic conditions." },
+    { q: "The conversion of pyruvate to lactate regenerates:", o: ["ATP", "NADH", "NAD+", "FADH2"], a: 2, w: "Lactate dehydrogenase regenerates NAD+ so glycolysis can continue." },
+    { q: "Under aerobic conditions, pyruvate enters the:", o: ["Cytosol", "Mitochondria", "Nucleus", "Golgi"], a: 1, w: "Pyruvate enters the mitochondria for complete oxidation." },
+    { q: "The enzyme that phosphorylates glucose to glucose-6-phosphate is:", o: ["Phosphoglucose isomerase", "Hexokinase", "Aldolase", "Pyruvate kinase"], a: 1, w: "Hexokinase catalyses the first step of glycolysis." },
+    { q: "The enzyme that splits fructose-1,6-bisphosphate into two three-carbon molecules is:", o: ["Phosphofructokinase", "Aldolase", "Isomerase", "Dehydrogenase"], a: 1, w: "Aldolase splits the six-carbon sugar into two three-carbon molecules." },
+    { q: "Which step of glycolysis produces the first ATP?", o: ["Step 6", "Step 7", "Step 9", "Step 10"], a: 1, w: "Step 7 (phosphoglycerate kinase) produces the first ATP via substrate-level phosphorylation." },
+    { q: "Which step of glycolysis produces NADH?", o: ["Step 5", "Step 6", "Step 8", "Step 9"], a: 1, w: "Step 6 (glyceraldehyde-3-phosphate dehydrogenase) produces NADH." },
+    { q: "Red blood cells rely on glycolysis because they:", o: ["Have no mitochondria", "Have too many mitochondria", "Use only fatty acids", "Do not need energy"], a: 0, w: "Red blood cells lack mitochondria, so they depend on glycolysis." },
+    { q: "HbA1c testing measures:", o: ["Blood glucose at one time", "Average glucose over 2-3 months", "Insulin levels", "Lactate levels"], a: 1, w: "HbA1c reflects average blood glucose over the previous 2-3 months." },
+    { q: "The Warburg effect describes cancer cells using:", o: ["Only oxidative phosphorylation", "Glycolysis even when oxygen is present", "Fatty acid oxidation", "No glucose"], a: 1, w: "Cancer cells prefer glycolysis even when oxygen is available." },
+    { q: "The final product of glycolysis is:", o: ["Glucose", "Lactate", "Pyruvate", "Acetyl-CoA"], a: 2, w: "Pyruvate is the end product of glycolysis." },
+    { q: "Substrate-level phosphorylation in glycolysis occurs when:", o: ["ATP is used", "NADH is produced", "A phosphate is transferred directly from a substrate to ADP", "Oxygen is consumed"], a: 2, w: "Substrate-level phosphorylation produces ATP directly from a high-energy phosphate." },
+    { q: "Hexokinase is inhibited by:", o: ["ATP", "AMP", "Glucose-6-phosphate", "Fructose-2,6-bisphosphate"], a: 2, w: "Hexokinase is inhibited by its product, glucose-6-phosphate." },
+    { q: "Pyruvate kinase is inhibited by:", o: ["AMP", "Fructose-1,6-bisphosphate", "ATP and alanine", "Glucose"], a: 2, w: "Pyruvate kinase is inhibited by ATP and alanine." },
+    { q: "The overall equation of glycolysis shows that per glucose, the net products are:", o: ["2 ATP, 2 NADH, 2 pyruvate", "4 ATP, 2 NADH, 2 pyruvate", "2 ATP, 0 NADH, 2 pyruvate", "36 ATP, 0 NADH, 0 pyruvate"], a: 0, w: "The net yield is 2 ATP, 2 NADH, and 2 pyruvate." },
+    { q: "The energy-investment phase of glycolysis uses ATP to:", o: ["Make glucose", "Phosphorylate intermediates, making them reactive", "Reduce NAD+", "Produce pyruvate"], a: 1, w: "ATP is used to phosphorylate intermediates and make them reactive." },
+    { q: "Which molecule is the main regulator of glycolysis?", o: ["Glucose", "Pyruvate", "Fructose-2,6-bisphosphate", "Lactate"], a: 2, w: "Fructose-2,6-bisphosphate is a key allosteric activator of PFK-1." },
+    { q: "In anaerobic conditions, glycolysis produces:", o: ["2 ATP, 2 NADH, 2 lactate", "36 ATP, CO2, H2O", "2 ATP, 0 NADH, 2 pyruvate", "4 ATP, 2 NADH, 2 lactate"], a: 0, w: "Under anaerobic conditions, pyruvate is converted to lactate, yielding 2 ATP and 2 NADH." },
+    { q: "The TCA cycle is entered by:", o: ["Glucose directly", "Pyruvate (as acetyl-CoA)", "Lactate", "Glyceraldehyde-3-phosphate"], a: 1, w: "Pyruvate is converted to acetyl-CoA, which enters the TCA cycle." },
+    { q: "Glycolysis is considered the foundation of metabolism because:", o: ["It produces the most ATP", "It only works in the liver", "It connects to all other metabolic pathways and runs in every cell", "It requires oxygen"], a: 2, w: "Glycolysis connects to all pathways and runs in every cell." },
+    { q: "The NADH produced in glycolysis is used in:", o: ["The TCA cycle", "The electron transport chain (with oxygen present)", "Fermentation only", "Gluconeogenesis"], a: 1, w: "NADH carries electrons to the electron transport chain when oxygen is present." },
+    { q: "Without glycolysis, red blood cells would:", o: ["Produce more ATP", "Use oxygen", "Be unable to survive", "Divide rapidly"], a: 2, w: "Red blood cells depend entirely on glycolysis and would die without it." },
+  ],
+};
+
 
 
 /* --------------------------- bio:0 --------------------------- */
