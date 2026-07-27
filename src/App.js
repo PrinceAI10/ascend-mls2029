@@ -2209,6 +2209,201 @@ If those came cleanly, you understand the metabolism of fructose and galactose, 
   ],
 };
 
+// ==================== BIOCHEMISTRY TOPIC 5: TCA CYCLE ====================
+const T_BCH_TCA = {
+  courseId: "bch",
+  topicIndex: 5,
+  title: "TCA Cycle",
+  minutes: 22,
+  note: [
+    { q: "What is the TCA cycle and why does it matter?",
+      body: `You have learned glycolysis — the pathway that breaks down glucose to pyruvate, producing a small amount of ATP and NADH. But glycolysis only captures a fraction of the energy stored in glucose. The TCA cycle, also called the Krebs cycle or citric acid cycle, is where the remaining energy is extracted.
+
+My Socratic question: glycolysis produces only 2 ATP per glucose. Where does the rest of the energy go, and how is it captured?
+
+The answer is that pyruvate from glycolysis enters the mitochondria and is converted to acetyl-CoA, which enters the TCA cycle. The TCA cycle completely oxidises the carbon skeleton of glucose to carbon dioxide, producing NADH, FADH2, and GTP — which then feed into the electron transport chain to produce the bulk of ATP. Without the TCA cycle, you would get only 2 ATP per glucose instead of about 36. The TCA cycle is the heart of aerobic metabolism.
+
+Crucial insight: the TCA cycle is the central hub of metabolism, where the carbon skeletons of carbohydrates, fats and proteins converge for complete oxidation. It produces NADH and FADH2 that power ATP production, and its intermediates are precursors for many biosynthetic pathways.` },
+
+    { q: "Where does the TCA cycle take place, and what enters it?",
+      body: `The TCA cycle takes place in the mitochondrial matrix — the fluid-filled space inside the mitochondria. This location is essential because it is near the electron transport chain, which uses the NADH and FADH2 produced by the cycle.
+
+My Socratic question: pyruvate from glycolysis cannot enter the TCA cycle directly. What must happen first, and where does this happen?
+
+The answer is that pyruvate must be converted to acetyl-CoA by the pyruvate dehydrogenase complex, a multi-enzyme complex located in the mitochondrial matrix. This reaction is irreversible and is a major control point of metabolism. Acetyl-CoA then enters the TCA cycle by combining with oxaloacetate to form citrate — the first step of the cycle.
+
+The TCA cycle is a closed loop: it starts with acetyl-CoA and ends by regenerating oxaloacetate, ready to accept another acetyl-CoA. The cycle processes the two-carbon acetyl group of acetyl-CoA into two molecules of carbon dioxide, capturing the released energy as NADH, FADH2, and GTP.
+
+Crucial insight: the TCA cycle is an eight-step closed loop in the mitochondrial matrix that oxidises acetyl-CoA to carbon dioxide, producing energy carriers (NADH, FADH2, GTP). It requires oxygen indirectly because the NADH and FADH2 it produces must be re-oxidised by the electron transport chain.` },
+
+    { q: "Step 1: Citrate formation — the entry point.",
+      body: `The first step of the TCA cycle is the entry reaction, where acetyl-CoA combines with oxaloacetate to form citrate.
+
+My Socratic question: acetyl-CoA has two carbons, and oxaloacetate has four carbons. What happens to the six-carbon product, and why is this step essentially irreversible?
+
+The answer is that citrate synthase catalyses the condensation of acetyl-CoA and oxaloacetate to form citrate, releasing CoA-SH. The reaction is highly exergonic (releases energy) and is essentially irreversible, making citrate synthase a key regulatory point. Citrate has six carbons, and the cycle will now remove two carbons as carbon dioxide, regenerating the four-carbon oxaloacetate.
+
+The reaction: Acetyl-CoA + Oxaloacetate + H2O → Citrate + CoA-SH
+
+Crucial insight: citrate formation is the committed step of the TCA cycle. It is regulated by the availability of substrates and by feedback inhibition from ATP and NADH. This step ensures that acetyl-CoA entering the cycle is processed efficiently.` },
+
+    { q: "Steps 2 and 3: Isomerisation and the first oxidative decarboxylation.",
+      body: `After citrate is formed, the cycle proceeds through a series of rearrangements and oxidations that release the first carbon dioxide and produce the first NADH.
+
+Step 2: Citrate is converted to isocitrate by aconitase. This is an isomerisation reaction — the molecule is rearranged without losing any atoms.
+
+Step 3: Isocitrate dehydrogenase catalyses the first oxidative decarboxylation. Isocitrate is oxidised to oxalosuccinate (which is short-lived), then decarboxylated to α-ketoglutarate. This produces the first NADH and releases the first carbon dioxide. This is a key regulatory step — isocitrate dehydrogenase is activated by ADP and inhibited by ATP and NADH.
+
+My Socratic question: why is it significant that the first carbon dioxide is released so early in the cycle?
+
+The answer is that this step is one of the main control points of the TCA cycle. The energy status of the cell (ATP/ADP ratio) regulates how fast the cycle runs. When energy is abundant, the cycle slows; when energy is needed, it speeds up. This ensures the cell only produces energy when it is needed.
+
+Crucial insight: steps 2 and 3 convert citrate to α-ketoglutarate, producing the first NADH and releasing the first CO2. Isocitrate dehydrogenase is a key regulatory enzyme, activated by ADP and inhibited by ATP and NADH, matching cycle activity to cellular energy needs.` },
+
+    { q: "Step 4: The second oxidative decarboxylation.",
+      body: `The fourth step of the TCA cycle is the second oxidative decarboxylation, where α-ketoglutarate is converted to succinyl-CoA.
+
+My Socratic question: the α-ketoglutarate dehydrogenase complex is structurally similar to the pyruvate dehydrogenase complex. What does this similarity tell you about the evolution and regulation of these enzymes?
+
+The answer is that these complexes share a common evolutionary origin and similar catalytic mechanisms. Both use cofactors: TPP (thiamine pyrophosphate), lipoic acid, CoA, FAD, and NAD+. Both are regulated by the energy status of the cell. The similarity reflects the fundamental importance of these reactions in energy metabolism.
+
+The reaction: α-Ketoglutarate + CoA + NAD+ → Succinyl-CoA + CO2 + NADH + H+
+
+This produces the second NADH and releases the second carbon dioxide. Like step 3, this is a major regulatory point. The α-ketoglutarate dehydrogenase complex is inhibited by ATP, NADH, and succinyl-CoA, and activated by calcium ions.
+
+Crucial insight: step 4 is the second oxidative decarboxylation, producing NADH and CO2. The α-ketoglutarate dehydrogenase complex is structurally and mechanistically similar to pyruvate dehydrogenase, reflecting the central importance of these reactions in energy metabolism.` },
+
+    { q: "Step 5: Substrate-level phosphorylation.",
+      body: `The fifth step of the TCA cycle is unique: it is the only step where ATP (or GTP) is produced directly by substrate-level phosphorylation.
+
+My Socratic question: most of the energy in the TCA cycle is captured as NADH and FADH2. Why is substrate-level phosphorylation still important, even though it produces only one GTP per cycle?
+
+The answer is that substrate-level phosphorylation provides a direct and immediate source of ATP/GTP independent of the electron transport chain. While the amount is small (one GTP per acetyl-CoA), it is produced quickly and without requiring oxygen. In tissues with high energy demand, this immediate ATP is valuable.
+
+The reaction: Succinyl-CoA + GDP + Pi → Succinate + CoA-SH + GTP
+
+This is catalysed by succinyl-CoA synthetase. In some tissues, GDP is replaced by ADP, producing ATP directly. The GTP can be converted to ATP by nucleoside diphosphate kinase.
+
+Crucial insight: step 5 is substrate-level phosphorylation, producing GTP (or ATP) directly from succinyl-CoA. This is the only direct ATP/GTP production in the TCA cycle, providing immediate energy independent of the electron transport chain.` },
+
+    { q: "Steps 6, 7, and 8: Completing the cycle.",
+      body: `The final three steps of the TCA cycle regenerate oxaloacetate, producing FADH2 and another NADH in the process.
+
+Step 6: Succinate dehydrogenase converts succinate to fumarate, producing FADH2. This is the only enzyme of the TCA cycle that is embedded in the inner mitochondrial membrane, directly linking to the electron transport chain.
+
+Step 7: Fumarase hydrates fumarate to malate, adding water across the double bond.
+
+Step 8: Malate dehydrogenase oxidises malate to oxaloacetate, producing the third NADH and regenerating the four-carbon acceptor that started the cycle.
+
+My Socratic question: why is it significant that succinate dehydrogenase is embedded in the inner mitochondrial membrane?
+
+The answer is that this allows the FADH2 produced to directly feed electrons into the electron transport chain at Complex II, without needing to be transported. This makes the TCA cycle and electron transport chain physically coupled, ensuring efficient energy capture.
+
+Crucial insight: steps 6-8 complete the cycle, producing FADH2 and NADH and regenerating oxaloacetate. Succinate dehydrogenase is unique among TCA cycle enzymes — it is membrane-bound and directly links to the electron transport chain, making the cycle and ATP production physically connected.` },
+
+    { q: "The energy yield of the TCA cycle.",
+      body: `Let us calculate the energy yield of the TCA cycle per molecule of acetyl-CoA entering the cycle.
+
+Per acetyl-CoA: 3 NADH, 1 FADH2, 1 GTP
+
+In the electron transport chain: each NADH produces about 2.5 ATP, each FADH2 produces about 1.5 ATP. So:
+
+3 NADH x 2.5 = 7.5 ATP
+1 FADH2 x 1.5 = 1.5 ATP
+1 GTP = 1 ATP
+Total = about 10 ATP per acetyl-CoA.
+
+My Socratic question: glycolysis produces only 2 ATP per glucose. How many ATP does the TCA cycle produce from the two acetyl-CoA molecules derived from one glucose?
+
+The answer is that each glucose produces two pyruvate, which yield two acetyl-CoA. The TCA cycle processes each acetyl-CoA, producing 10 ATP each, for a total of 20 ATP from the TCA cycle alone. When added to glycolysis (2 ATP) and the conversion of pyruvate to acetyl-CoA (2 NADH = 5 ATP), the total is about 32 ATP per glucose.
+
+Crucial insight: the TCA cycle produces about 10 ATP per acetyl-CoA, making it the major energy-yielding pathway of aerobic metabolism. From one glucose, the TCA cycle produces about 20 ATP, far more than the 2 ATP from glycolysis.` },
+
+    { q: "Anaplerotic reactions: replenishing the cycle.",
+      body: `The TCA cycle not only produces energy — it also provides intermediates for biosynthesis. When intermediates are removed for biosynthesis, the cycle must be replenished through anaplerotic reactions.
+
+My Socratic question: amino acids, heme, and glucose can all be synthesised from TCA cycle intermediates. What happens to the cycle when these intermediates are removed, and how is it replenished?
+
+The answer is that when intermediates are withdrawn, the cycle would stall unless they are replaced. Anaplerotic reactions replenish the cycle. The most important anaplerotic reaction is the carboxylation of pyruvate to oxaloacetate by pyruvate carboxylase, using ATP and bicarbonate.
+
+Other anaplerotic reactions include the conversion of amino acids to TCA cycle intermediates. For example, aspartate can be converted to oxaloacetate, and glutamate can be converted to α-ketoglutarate. These reactions link the TCA cycle to amino acid metabolism.
+
+Crucial insight: anaplerotic reactions replenish TCA cycle intermediates that are withdrawn for biosynthesis. Pyruvate carboxylase is the most important anaplerotic enzyme, converting pyruvate to oxaloacetate. This connects the TCA cycle to amino acid metabolism and gluconeogenesis.` },
+
+    { q: "Regulation of the TCA cycle.",
+      body: `The TCA cycle is tightly regulated to match the cell's energy needs. Three key enzymes control the flow through the cycle.
+
+Citrate synthase is inhibited by ATP and NADH, and activated by ADP. This ensures the cycle only runs when energy is needed. Isocitrate dehydrogenase is activated by ADP and inhibited by ATP and NADH — it is the major regulatory point. α-Ketoglutarate dehydrogenase is inhibited by ATP, NADH, and succinyl-CoA, and activated by calcium ions.
+
+My Socratic question: why are there three regulatory enzymes rather than just one?
+
+The answer is that multi-point regulation allows fine control over the cycle's activity. Different enzymes respond to different signals, so the cycle can be adjusted precisely to match the cell's needs. Calcium activation links the TCA cycle to muscle contraction — when muscles need energy, calcium signals speed up the cycle.
+
+Crucial insight: the TCA cycle is regulated at three key enzymes — citrate synthase, isocitrate dehydrogenase, and α-ketoglutarate dehydrogenase — responding to ATP, NADH, ADP, and calcium. This multi-point control ensures the cycle runs at the right speed for the cell's energy needs.` },
+
+    { q: "Clinical relevance: why the TCA cycle matters in medicine.",
+      body: `The TCA cycle is central to health and disease, making it relevant to your future work in the laboratory.
+
+My Socratic question: many metabolic diseases involve defects in the TCA cycle or its regulation. How might these defects be detected, and what are their consequences?
+
+The answer is that defects in TCA cycle enzymes cause rare but serious diseases. Fumarase deficiency causes neurological problems. Deficiencies in α-ketoglutarate dehydrogenase cause neurological issues. Mitochondrial diseases often affect TCA cycle enzymes and the electron transport chain, causing fatigue, muscle weakness, and organ dysfunction.
+
+The TCA cycle is also important in cancer metabolism. Cancer cells often rewire metabolism to use TCA cycle intermediates for biosynthesis rather than energy production. Measuring metabolites of the TCA cycle in blood or urine can help diagnose metabolic diseases and monitor cancer.
+
+Crucial insight: defects in TCA cycle enzymes cause serious metabolic diseases. The TCA cycle is also altered in cancer, where it supports biosynthesis rather than energy production. Understanding the TCA cycle is essential for understanding metabolic disease and its diagnosis.` }
+  ],
+  theory: [
+    { q: "What is the TCA cycle and where does it occur?", a: "The TCA cycle (Krebs cycle, citric acid cycle) is a series of eight enzyme-catalysed reactions in the mitochondrial matrix that oxidises acetyl-CoA to carbon dioxide, producing NADH, FADH2, and GTP. It is the central hub of aerobic metabolism, processing carbohydrates, fats, and proteins for energy production." },
+    { q: "What must happen to pyruvate before it enters the TCA cycle?", a: "Pyruvate must be converted to acetyl-CoA by the pyruvate dehydrogenase complex in the mitochondrial matrix. This reaction is irreversible and produces NADH and releases carbon dioxide. Acetyl-CoA then enters the TCA cycle by combining with oxaloacetate." },
+    { q: "Name the eight steps of the TCA cycle and their products.", a: "1. Citrate formation (citrate synthase) — produces citrate. 2. Isomerisation (aconitase) — produces isocitrate. 3. First oxidative decarboxylation (isocitrate dehydrogenase) — produces NADH, CO2, α-ketoglutarate. 4. Second oxidative decarboxylation (α-ketoglutarate dehydrogenase) — produces NADH, CO2, succinyl-CoA. 5. Substrate-level phosphorylation (succinyl-CoA synthetase) — produces GTP. 6. Oxidation (succinate dehydrogenase) — produces FADH2, fumarate. 7. Hydration (fumarase) — produces malate. 8. Oxidation (malate dehydrogenase) — produces NADH, oxaloacetate." },
+    { q: "What are the three regulatory enzymes of the TCA cycle?", a: "Citrate synthase (inhibited by ATP and NADH, activated by ADP), isocitrate dehydrogenase (activated by ADP, inhibited by ATP and NADH — the major control point), and α-ketoglutarate dehydrogenase (inhibited by ATP, NADH, and succinyl-CoA, activated by calcium)." },
+    { q: "What is the energy yield of the TCA cycle per acetyl-CoA?", a: "3 NADH (7.5 ATP), 1 FADH2 (1.5 ATP), and 1 GTP (1 ATP) = about 10 ATP per acetyl-CoA. Per glucose, the TCA cycle produces about 20 ATP from the two acetyl-CoA molecules derived from pyruvate." },
+    { q: "What is the role of succinate dehydrogenase in the TCA cycle?", a: "Succinate dehydrogenase catalyses the oxidation of succinate to fumarate, producing FADH2. It is the only TCA cycle enzyme embedded in the inner mitochondrial membrane, directly linking the cycle to the electron transport chain at Complex II." },
+    { q: "What are anaplerotic reactions and why are they important?", a: "Anaplerotic reactions replenish TCA cycle intermediates that are withdrawn for biosynthesis. The most important is pyruvate carboxylase, which converts pyruvate to oxaloacetate. This links the TCA cycle to gluconeogenesis and amino acid metabolism." },
+    { q: "How is the TCA cycle linked to amino acid metabolism?", a: "Amino acids can be converted to TCA cycle intermediates. For example, aspartate converts to oxaloacetate, and glutamate converts to α-ketoglutarate. This allows amino acids to enter the TCA cycle for energy production or to provide carbon skeletons for biosynthesis." },
+    { q: "Why is the TCA cycle considered the central hub of metabolism?", a: "Because it processes acetyl-CoA derived from carbohydrates, fats, and proteins, producing energy carriers (NADH, FADH2, GTP). Its intermediates are also used for biosynthesis of amino acids, nucleotides, and porphyrins." },
+    { q: "What clinical conditions are associated with TCA cycle defects?", a: "Fumarase deficiency (neurological problems), α-ketoglutarate dehydrogenase deficiency (neurological issues), mitochondrial diseases (fatigue, muscle weakness), and altered TCA cycle metabolism in cancer." }
+  ],
+  videos: [
+    { channel: "Biochemistry", title: "TCA Cycle Explained", note: "Step-by-step walkthrough of all 8 steps.", url: "" },
+    { channel: "Biochemistry", title: "Regulation of the TCA Cycle", note: "How the cycle is controlled by energy status.", url: "" },
+    { channel: "Biochemistry", title: "TCA Cycle in Health and Disease", note: "Clinical relevance of the TCA cycle.", url: "" }
+  ],
+  mcqs: [
+    { q: "The TCA cycle takes place in the:", o: ["Cytosol", "Mitochondrial matrix", "Nucleus", "Endoplasmic reticulum"], a: 1, w: "The TCA cycle occurs in the mitochondrial matrix." },
+    { q: "The entry point of the TCA cycle is the condensation of acetyl-CoA with:", o: ["Citrate", "Oxaloacetate", "Isocitrate", "α-Ketoglutarate"], a: 1, w: "Acetyl-CoA combines with oxaloacetate to form citrate." },
+    { q: "The first step of the TCA cycle is catalysed by:", o: ["Aconitase", "Isocitrate dehydrogenase", "Citrate synthase", "α-Ketoglutarate dehydrogenase"], a: 2, w: "Citrate synthase catalyses the formation of citrate from acetyl-CoA and oxaloacetate." },
+    { q: "How many NADH are produced per turn of the TCA cycle?", o: ["1", "2", "3", "4"], a: 2, w: "Three NADH are produced per acetyl-CoA (steps 3, 4, and 8)." },
+    { q: "How many FADH2 are produced per turn of the TCA cycle?", o: ["0", "1", "2", "3"], a: 1, w: "One FADH2 is produced at step 6 (succinate dehydrogenase)." },
+    { q: "How many GTP are produced per turn of the TCA cycle?", o: ["0", "1", "2", "3"], a: 1, w: "One GTP is produced at step 5 (substrate-level phosphorylation)." },
+    { q: "Which enzyme of the TCA cycle is embedded in the inner mitochondrial membrane?", o: ["Citrate synthase", "Aconitase", "Isocitrate dehydrogenase", "Succinate dehydrogenase"], a: 3, w: "Succinate dehydrogenase is membrane-bound and links to Complex II of the ETC." },
+    { q: "The TCA cycle is inhibited by high levels of:", o: ["ADP", "NADH", "Calcium", "GDP"], a: 1, w: "NADH is a potent inhibitor of the TCA cycle through feedback inhibition." },
+    { q: "Isocitrate dehydrogenase is activated by:", o: ["ATP", "NADH", "ADP", "Citrate"], a: 2, w: "ADP activates isocitrate dehydrogenase when energy is needed." },
+    { q: "The reaction catalysed by α-ketoglutarate dehydrogenase is similar to:", o: ["Glycolysis", "Pyruvate dehydrogenase", "Succinate dehydrogenase", "Citrate synthase"], a: 1, w: "α-Ketoglutarate dehydrogenase is structurally and mechanistically similar to pyruvate dehydrogenase." },
+    { q: "Anaplerotic reactions replenish TCA cycle intermediates withdrawn for:", o: ["ATP production", "Biosynthesis", "Glycolysis", "Fatty acid oxidation"], a: 1, w: "Anaplerotic reactions replenish intermediates used for biosynthesis of amino acids, nucleotides, and other molecules." },
+    { q: "The most important anaplerotic enzyme is:", o: ["Succinate dehydrogenase", "Pyruvate carboxylase", "Isocitrate dehydrogenase", "Malate dehydrogenase"], a: 1, w: "Pyruvate carboxylase converts pyruvate to oxaloacetate, the most important anaplerotic reaction." },
+    { q: "The TCA cycle produces about how many ATP per acetyl-CoA?", o: ["5", "10", "15", "20"], a: 1, w: "Each acetyl-CoA yields about 10 ATP (3 NADH, 1 FADH2, 1 GTP)." },
+    { q: "The TCA cycle is also known as the:", o: ["Krebs cycle", "Calvin cycle", "Urea cycle", "Glyoxylate cycle"], a: 0, w: "The TCA cycle is also called the Krebs cycle or citric acid cycle." },
+    { q: "Citrate synthase is inhibited by:", o: ["ADP", "ATP and NADH", "Calcium", "GDP"], a: 1, w: "Citrate synthase is inhibited by ATP and NADH when energy is abundant." },
+    { q: "The first oxidative decarboxylation of the TCA cycle produces:", o: ["Citrate", "α-Ketoglutarate, NADH, and CO2", "Succinyl-CoA and CO2", "Oxaloacetate"], a: 1, w: "Step 3 (isocitrate dehydrogenase) produces α-ketoglutarate, NADH, and CO2." },
+    { q: "The second oxidative decarboxylation of the TCA cycle produces:", o: ["Citrate", "Isocitrate", "Succinyl-CoA, NADH, and CO2", "Oxaloacetate"], a: 2, w: "Step 4 (α-ketoglutarate dehydrogenase) produces succinyl-CoA, NADH, and CO2." },
+    { q: "Substrate-level phosphorylation in the TCA cycle produces:", o: ["ATP from ADP", "GTP from GDP", "NADH from NAD+", "FADH2 from FAD"], a: 1, w: "Succinyl-CoA synthetase produces GTP (or ATP in some tissues) via substrate-level phosphorylation." },
+    { q: "Malate dehydrogenase produces:", o: ["Oxaloacetate and NADH", "Citrate", "Fumarate and FADH2", "Succinyl-CoA"], a: 0, w: "Step 8 oxidises malate to oxaloacetate, producing NADH." },
+    { q: "Which of the following is NOT a function of the TCA cycle?", o: ["ATP production", "Providing biosynthetic precursors", "Oxidation of acetyl-CoA", "Synthesis of glucose directly"], a: 3, w: "The TCA cycle does not directly synthesise glucose — that occurs via gluconeogenesis." },
+    { q: "The TCA cycle is regulated at which enzymes?", o: ["Citrate synthase, isocitrate dehydrogenase, α-ketoglutarate dehydrogenase", "Hexokinase, phosphofructokinase, pyruvate kinase", "Succinate dehydrogenase, malate dehydrogenase, fumarase", "All enzymes are unregulated"], a: 0, w: "The three key regulatory enzymes are citrate synthase, isocitrate dehydrogenase, and α-ketoglutarate dehydrogenase." },
+    { q: "α-Ketoglutarate dehydrogenase is inhibited by:", o: ["ADP", "Calcium", "ATP, NADH, and succinyl-CoA", "Citrate"], a: 2, w: "It is inhibited by ATP, NADH, and succinyl-CoA when energy is abundant." },
+    { q: "Fumarase catalyses:", o: ["Oxidation", "Reduction", "Hydration", "Decarboxylation"], a: 2, w: "Fumarase hydrates fumarate to malate (adds water across the double bond)." },
+    { q: "The TCA cycle is important in cancer because:", o: ["It stops in cancer cells", "It provides biosynthetic precursors for rapid growth", "It only works in normal cells", "It produces toxins"], a: 1, w: "Cancer cells use TCA cycle intermediates for biosynthesis to support rapid growth." },
+    { q: "A defect in the TCA cycle enzyme fumarase causes:", o: ["Diabetes", "Neurological problems", "Heart disease", "Kidney failure"], a: 1, w: "Fumarase deficiency causes neurological problems." },
+    { q: "The TCA cycle processes the two-carbon acetyl group into:", o: ["One carbon dioxide", "Two carbon dioxides", "Four carbon dioxides", "Oxygen"], a: 1, w: "The two carbons of acetyl-CoA are released as two molecules of carbon dioxide." },
+    { q: "Oxaloacetate is regenerated at the end of the TCA cycle to:", o: ["Be excreted", "Accept another acetyl-CoA", "Produce glucose", "Enter the urea cycle"], a: 1, w: "Oxaloacetate is regenerated to accept another acetyl-CoA and continue the cycle." },
+    { q: "The rate of the TCA cycle is linked to the demand for:", a: 2, w: "Calcium signals muscle contraction, activating the TCA cycle to meet increased energy demand." },
+    { q: "The TCA cycle provides intermediates for the synthesis of:", o: ["Only proteins", "Amino acids, nucleotides, and porphyrins", "Only carbohydrates", "Only lipids"], a: 1, w: "TCA cycle intermediates are precursors for amino acids, nucleotides, and porphyrins." },
+    { q: "Malate dehydrogenase produces which of the following?", o: ["Citrate", "Isocitrate", "NADH", "FADH2"], a: 2, w: "Malate dehydrogenase produces NADH (and oxaloacetate)." },
+    { q: "The TCA cycle is the central hub of metabolism because it:", o: ["Only produces ATP", "Connects carbohydrate, fat, and protein metabolism", "Only produces NADH", "Only produces FADH2"], a: 1, w: "The TCA cycle processes acetyl-CoA from carbohydrates, fats, and proteins, making it the central hub of metabolism." }
+  ]
+};
+
 /* --------------------------- bio:0 --------------------------- */
 const T_BIO_AMINO = {
   courseId: "bio",
@@ -10371,163 +10566,6 @@ My answers. One: polycystic ovary syndrome (PCOS) is the most likely diagnosis. 
   ],
 };
 
-// ==================== PHYSIOLOGY TOPIC 16: INTEGUMENTARY SYSTEM ====================
-const T_PHY_INTEGUMENTARY = {
-  courseId: "phy",
-  topicIndex: 15,
-  title: "Integumentary System",
-  minutes: 20,
-  note: [
-    { q: "What is the integumentary system and why does it matter?",
-      body: `You have studied the organ systems that regulate the internal environment. Now we turn to the organ system that separates you from the outside world and protects you from it: the integumentary system — the skin and its appendages.
-
-My Socratic question: your skin is your largest organ, yet it is often overlooked. What does the skin do that makes it essential for survival?
-
-The answer is that the skin does far more than cover the body. It provides protection against physical injury, pathogens, and UV radiation. It prevents water loss and regulates body temperature. It synthesises vitamin D, detects sensory stimuli, and stores fat. Without skin, you could not survive outside the womb.
-
-Crucial insight: the integumentary system (skin, hair, nails, glands) is the body's first line of defence, protecting against injury, infection, and water loss, while also regulating temperature and synthesising vitamin D.` },
-
-    { q: "The structure of skin: epidermis, dermis, and hypodermis.",
-      body: `The skin has three layers, each with distinct structure and function. Understanding these layers is essential for understanding skin function and disorders.
-
-My Socratic question: why does a cut that reaches the dermis bleed, but a superficial scratch that only affects the epidermis does not?
-
-The answer is that the epidermis is avascular — it has no blood vessels. The dermis contains blood vessels, nerves, and hair follicles. A superficial scratch that only affects the epidermis does not bleed. A deeper cut that reaches the dermis bleeds because it damages the blood vessels in the dermis.
-
-The epidermis is the outermost layer, composed of stratified squamous epithelium. It is avascular and is constantly renewed from the basal layer. The dermis is the middle layer, composed of dense irregular connective tissue. It contains blood vessels, nerves, hair follicles, sweat glands, and sebaceous glands. The hypodermis (subcutaneous layer) is the deepest layer, composed of adipose tissue and loose connective tissue. It insulates the body and anchors the skin to underlying structures.
-
-Crucial insight: the skin has three layers — epidermis (avascular, stratified squamous epithelium), dermis (vascular, dense irregular connective tissue), and hypodermis (adipose tissue, insulation, attachment).` },
-
-    { q: "The epidermis: the waterproof barrier.",
-      body: `The epidermis is the outermost layer of the skin, forming a waterproof barrier that protects the body from the environment. Understanding the epidermis is essential for understanding skin function and disorders.
-
-My Socratic question: why is the epidermis waterproof, and why does it constantly shed cells?
-
-The answer is that the epidermis is composed of stratified squamous epithelium with multiple layers. The deepest layer (stratum basale) contains dividing cells that produce new keratinocytes. As cells move toward the surface, they fill with keratin and die, forming the tough, waterproof stratum corneum. This layer is constantly shed and replaced, renewing the skin about every 28 days.
-
-Keratin is a tough, waterproof protein that gives skin its protective properties. Melanocytes in the epidermis produce melanin, which protects against UV radiation. Langerhans cells are immune cells that defend against pathogens.
-
-Crucial insight: the epidermis is a stratified squamous epithelium that renews itself from the basal layer. Keratin waterproofs the skin, melanin protects against UV radiation, and Langerhans cells defend against pathogens.` },
-
-    { q: "The dermis: strength and sensation.",
-      body: `The dermis is the middle layer of the skin, providing strength, elasticity, and sensation. Understanding the dermis is essential for understanding skin strength, wound healing, and ageing.
-
-My Socratic question: why does the skin have wrinkles in old age, and why do wounds heal more slowly in the elderly?
-
-The answer is that the dermis contains collagen (for strength) and elastin (for elasticity). With age, collagen production decreases and elastin fibres break down, leading to wrinkles and sagging. Wound healing slows because the regenerative capacity of dermal cells decreases and blood supply diminishes.
-
-The dermis contains blood vessels that supply the avascular epidermis, nerves that detect touch, pressure, temperature, and pain, hair follicles, sweat glands (sudoriferous glands) for temperature regulation, and sebaceous glands (oil glands) for lubrication.
-
-Crucial insight: the dermis contains collagen (strength) and elastin (elasticity). Ageing reduces collagen and elastin, causing wrinkles and slower healing. The dermis also contains blood vessels, nerves, and glands.` },
-
-    { q: "Skin appendages: hair, nails, and glands.",
-      body: `The skin has appendages — hair, nails, and glands — that serve important functions. Understanding these structures is essential for understanding skin function and disorders.
-
-My Socratic question: why do you have hair, and why do nails grow continuously?
-
-The answer is that hair provides insulation, protection, and sensory function. Hair grows from hair follicles in the dermis. The arrector pili muscles contract to make hair stand up (goosebumps) in response to cold or fear. Nails protect the tips of fingers and toes, and grow continuously from the nail matrix. Glands include sweat glands (sudoriferous) for temperature regulation and sebaceous glands (oil) for lubrication.
-
-Sweat glands are of two types: eccrine glands (widespread, secrete watery sweat for cooling) and apocrine glands (found in armpits and groin, secrete thicker sweat that produces body odour). Sebaceous glands secrete sebum, which lubricates the skin and hair.
-
-Crucial insight: skin appendages include hair (insulation, protection), nails (protection), and glands (sweat for cooling, sebum for lubrication).` },
-
-    { q: "Functions of the skin.",
-      body: `The skin performs many essential functions. Understanding these functions is essential for understanding why the skin is so important for health.
-
-My Socratic question: how does the skin protect the body, and how does it contribute to homeostasis?
-
-The answer is that the skin protects against physical injury, pathogens, and UV radiation. It prevents water loss and regulates body temperature through sweating and vasodilation/vasoconstriction. It synthesises vitamin D (with sunlight), detects sensory stimuli (touch, pressure, temperature, pain), stores fat in the hypodermis, and excretes waste through sweat.
-
-The skin's role in temperature regulation is particularly important. In response to heat, blood vessels in the dermis dilate (vasodilation) to release heat, and sweat glands produce sweat, which cools the body through evaporation. In response to cold, blood vessels constrict (vasoconstriction) to conserve heat.
-
-Crucial insight: the skin protects, prevents water loss, regulates temperature, synthesises vitamin D, detects sensations, stores fat, and excretes waste. Its role in thermoregulation is essential for maintaining homeostasis.` },
-
-    { q: "Wound healing.",
-      body: `The skin has a remarkable ability to heal after injury. Understanding wound healing is essential for understanding how the body repairs itself and why some wounds heal poorly.
-
-My Socratic question: how does the skin heal after a cut, and why do some wounds leave scars?
-
-The answer is that wound healing occurs in three overlapping phases. The inflammatory phase (immediate): blood clot forms, inflammation removes debris. The proliferative phase (days to weeks): new tissue forms, epithelial cells migrate to cover the wound. The remodelling phase (weeks to months): collagen is reorganised, strengthening the wound. Scars result from excess collagen deposition during healing.
-
-Factors that impair wound healing include infection, poor blood supply, diabetes, malnutrition, and smoking. Understanding these factors is essential for managing wounds.
-
-Crucial insight: wound healing has three phases — inflammation, proliferation, and remodelling. Scars result from excess collagen deposition. Healing is impaired by infection, poor blood supply, diabetes, malnutrition, and smoking.` },
-
-    { q: "Clinical relevance: skin disorders.",
-      body: `The skin is affected by many disorders, ranging from minor irritations to life-threatening conditions. Understanding skin physiology is essential for diagnosing and managing these conditions.
-
-My Socratic question: what are common skin disorders, and how are they diagnosed and treated?
-
-The answer is that common skin disorders include acne (inflammation of sebaceous glands), eczema (atopic dermatitis — itchy, inflamed skin), psoriasis (autoimmune skin condition with scaly plaques), skin cancers (basal cell carcinoma, squamous cell carcinoma, melanoma), burns, and infections (fungal, bacterial, viral).
-
-Diagnosis involves clinical examination, dermatoscopy, and biopsy. Treatment depends on the condition — medications (topical or systemic), lifestyle changes, and surgery for skin cancers.
-
-Crucial insight: common skin disorders include acne, eczema, psoriasis, skin cancers, burns, and infections. Diagnosis involves clinical examination and biopsy. Treatment depends on the condition.` },
-
-    { q: "Consolidation and your final test.",
-      body: `Your cognitive map for the integumentary system.
-
-Layers: epidermis (avascular, stratified squamous, keratinised), dermis (vascular, collagen, elastin, contains glands and nerves), hypodermis (adipose, insulation, attachment).
-
-Appendages: hair (insulation, protection), nails (protection), sweat glands (temperature regulation), sebaceous glands (lubrication).
-
-Functions: protection, water loss prevention, temperature regulation, vitamin D synthesis, sensation, fat storage, excretion.
-
-Wound healing: three phases — inflammation, proliferation, remodelling. Scars from excess collagen.
-
-Clinical relevance: acne, eczema, psoriasis, skin cancers, burns, infections.
-
-Now your final test. A patient presents with a skin lesion that has changed in size, colour, and shape. The lesion is irregular, asymmetric, and has a dark colour. The patient has a history of sun exposure.
-
-Question one: what is the most concerning diagnosis, and what features are suspicious?
-Question two: what is the ABCDE rule for skin cancer detection?
-Question three: how would the diagnosis be confirmed?
-
-Work them through before reading on.
-
-My answers. One: melanoma is the most concerning diagnosis. Features suspicious of melanoma are identified by the ABCDE rule: Asymmetry, Border irregularity, Colour variation, Diameter >6mm, and Evolving (changing). Two: ABCDE rule: A = Asymmetry (one half unlike the other), B = Border irregularity (irregular edges), C = Colour variation (multiple colours), D = Diameter (>6mm), E = Evolving (changing in size, shape, or colour). Three: diagnosis is confirmed by biopsy of the lesion, followed by histopathological examination.` }
-  ],
-  theory: [
-    { q: "What are the three layers of the skin and their functions?", a: "Epidermis (outer layer, stratified squamous epithelium, waterproof, avascular, renews from basal layer), dermis (middle layer, dense irregular connective tissue, vascular, contains glands and nerves, provides strength and elasticity), hypodermis (subcutaneous, adipose tissue, insulation, anchors skin)." },
-    { q: "Why is the epidermis avascular, and how is it nourished?", a: "The epidermis is avascular because it is a stratified squamous epithelium with no blood vessels. It is nourished by diffusion of nutrients from the dermis below." },
-    { q: "What is the role of keratin in the epidermis?", a: "Keratin is a tough, waterproof protein produced by keratinocytes. It gives the epidermis its protective, waterproof properties and prevents water loss and pathogen entry." },
-    { q: "What are the functions of the dermis?", a: "The dermis provides strength (collagen) and elasticity (elastin) to the skin. It contains blood vessels, nerves, hair follicles, sweat glands, and sebaceous glands." },
-    { q: "What are the functions of the skin?", a: "Protection, prevention of water loss, temperature regulation, vitamin D synthesis, sensation, fat storage, and excretion." },
-    { q: "What is the role of sweat glands in temperature regulation?", a: "Sweat glands produce sweat, which evaporates from the skin surface, cooling the body. This is a key mechanism of thermoregulation." },
-    { q: "What are the three phases of wound healing?", a: "Inflammatory phase (immediate, clot formation, inflammation), proliferative phase (days to weeks, new tissue formation), and remodelling phase (weeks to months, collagen reorganisation, scar formation)." },
-    { q: "What are the ABCDE features of melanoma?", a: "A = Asymmetry, B = Border irregularity, C = Colour variation, D = Diameter >6mm, E = Evolving (changing)." },
-    { q: "What are common skin disorders?", a: "Acne (sebaceous gland inflammation), eczema (atopic dermatitis), psoriasis (autoimmune scaly plaques), skin cancers (basal cell carcinoma, squamous cell carcinoma, melanoma), burns, and infections." },
-    { q: "How is skin cancer diagnosed?", a: "Skin cancer is diagnosed by clinical examination, dermatoscopy, and confirmed by biopsy and histopathological examination." },
-  ],
-  videos: [
-    { channel: "Physiology", title: "The Integumentary System", note: "Skin structure and functions.", url: "" },
-    { channel: "Physiology", title: "Wound Healing and Skin Repair", note: "The phases of wound healing.", url: "" },
-    { channel: "Physiology", title: "Skin Cancer and the ABCDE Rule", note: "Melanoma detection and diagnosis.", url: "" },
-  ],
-  mcqs: [
-    { q: "The integumentary system consists of the skin and its:", o: ["Muscles", "Bones", "Appendages (hair, nails, glands)", "Nerves"], a: 2, w: "The integumentary system consists of the skin and its appendages — hair, nails, and glands." },
-    { q: "The outermost layer of the skin is the:", o: ["Dermis", "Hypodermis", "Epidermis", "Subcutaneous layer"], a: 2, w: "The epidermis is the outermost layer of the skin." },
-    { q: "The epidermis is:", o: ["Vascular", "Avascular (no blood vessels)", "Made of connective tissue", "Composed of adipose tissue"], a: 1, w: "The epidermis is avascular — it has no blood vessels and is nourished by diffusion from the dermis." },
-    { q: "The protein that waterproofs the skin is:", o: ["Collagen", "Elastin", "Keratin", "Melanin"], a: 2, w: "Keratin is the tough, waterproof protein that gives the epidermis its protective properties." },
-    { q: "The middle layer of the skin is the:", o: ["Epidermis", "Dermis", "Hypodermis", "Stratum corneum"], a: 1, w: "The dermis is the middle layer of the skin." },
-    { q: "The dermis contains:", o: ["Blood vessels, nerves, and glands", "Only fat", "Only epithelial cells", "Keratin only"], a: 0, w: "The dermis contains blood vessels, nerves, hair follicles, sweat glands, and sebaceous glands." },
-    { q: "The deepest layer of the skin is the:", o: ["Epidermis", "Dermis", "Hypodermis (subcutaneous layer)", "Stratum basale"], a: 2, w: "The hypodermis (subcutaneous layer) is the deepest layer of the skin." },
-    { q: "The hypodermis is composed mainly of:", o: ["Dense connective tissue", "Adipose (fat) tissue", "Squamous epithelium", "Nervous tissue"], a: 1, w: "The hypodermis is composed mainly of adipose (fat) tissue, providing insulation and anchoring." },
-    { q: "Sweat glands are also called:", o: ["Sebaceous glands", "Sudoriferous glands", "Apocrine glands only", "Eccrine glands only"], a: 1, w: "Sweat glands are sudoriferous glands. They are of two types: eccrine (watery sweat) and apocrine (thicker sweat)." },
-    { q: "Sebaceous glands secrete:", o: ["Sweat", "Sebum (oil)", "Melanin", "Keratin"], a: 1, w: "Sebaceous glands secrete sebum (oil), which lubricates the skin and hair." },
-    { q: "One function of the skin is:", o: ["Vitamin D synthesis", "Insulin production", "Bile production", "Red blood cell production"], a: 0, w: "The skin synthesises vitamin D when exposed to sunlight." },
-    { q: "In response to heat, blood vessels in the dermis:", o: ["Constrict (vasoconstriction)", "Dilate (vasodilation)", "Remain unchanged", "Close entirely"], a: 1, w: "In response to heat, blood vessels dilate (vasodilation) to release heat." },
-    { q: "In response to cold, blood vessels in the dermis:", o: ["Dilate (vasodilation)", "Constrict (vasoconstriction)", "Remain unchanged", "Open entirely"], a: 1, w: "In response to cold, blood vessels constrict (vasoconstriction) to conserve heat." },
-    { q: "The three phases of wound healing are:", o: ["Inflammatory, proliferative, remodelling", "Inflammatory, healing, scarring", "Proliferative, remodelling, healing", "Inflammatory, proliferative, healing"], a: 0, w: "The three phases of wound healing are inflammatory, proliferative, and remodelling." },
-    { q: "Scars result from:", o: ["Loss of skin", "Excess collagen deposition during healing", "Infection", "Poor blood supply"], a: 1, w: "Scars result from excess collagen deposition during the remodelling phase of wound healing." },
-    { q: "The ABCDE rule is used to assess:", o: ["Acne", "Eczema", "Melanoma (skin cancer)", "Psoriasis"], a: 2, w: "The ABCDE rule is used to assess suspicious skin lesions for melanoma." },
-    { q: "In the ABCDE rule, 'A' stands for:", o: ["Age", "Asymmetry", "Appearance", "Area"], a: 1, w: "A stands for Asymmetry — one half of the lesion does not match the other." },
-    { q: "In the ABCDE rule, 'E' stands for:", o: ["Enlarged", "Evolution (changing)", "Erythema", "Elevated"], a: 1, w: "E stands for Evolution — the lesion is changing in size, shape, or colour." },
-    { q: "The most common type of skin cancer is:", o: ["Melanoma", "Basal cell carcinoma", "Squamous cell carcinoma", "Merkel cell carcinoma"], a: 1, w: "Basal cell carcinoma is the most common type of skin cancer, but melanoma is the most dangerous." },
-    { q: "The most dangerous type of skin cancer is:", o: ["Basal cell carcinoma", "Squamous cell carcinoma", "Melanoma", "Actinic keratosis"], a: 2, w: "Melanoma is the most dangerous type of skin cancer because of its high risk of metastasis." },
-  ],
-};
-
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -10550,6 +10588,7 @@ const CONTENT = {
   "bch:2": T_BCH_INHIBITION,
   "bch:3": T_BCH_GLYCOLYSIS,
   "bch:4": T_BCH_FRUCTOSE,
+  "bch:5": T_BCH_TCA,
   "bio:0": T_BIO_ISOMERISM,
   "bio:1": T_BIO_HEMIACETALS,
   "bio:2": T_BIO_CARBS,
