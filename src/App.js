@@ -529,9 +529,9 @@ If those came cleanly, you now hold the spatial language the rest of anatomy is 
     { q: "Describe the position of the heart using four different pairs of directional terms.", a: "The heart is superior to the diaphragm and inferior to the clavicles; posterior to the sternum and anterior to the vertebral column; medial, with the lungs lateral to it; and deep to the ribs." },
   ],
   videos: [
-    { channel: "Institute of Human Anatomy", title: "Anatomical Terms: Direction and Position", note: "Drawn and defined on real anatomy - directional terms, planes and sections in one pass.", url: "https://www.youtube.com/watch?v=qJ9krjbNgzY" },
-    { channel: "EZmed", title: "Easy Tricks for Anatomical Body Planes and Sections", note: "Memory tricks that separate sagittal, coronal and transverse for good.", url: "https://www.youtube.com/watch?v=iQB7baJA9wY" },
-    { channel: "Catalyst University", title: "Anatomical Position, Directional Terms and Body Planes", note: "Lab-style run-through, useful right before a practical.", url: "https://www.youtube.com/watch?v=u7WXfp35FWk" },
+    { channel: "Institute of Human Anatomy", title: "Anatomical Terms: Direction and Position", note: "Drawn and defined on real anatomy - directional terms, planes and sections in one pass.", url: "https://www.youtube.com/results?search_query=Anatomical+terms+direction+and+position+Institute+of+Human+Anatomy" },
+    { channel: "EZmed", title: "Easy Tricks for Anatomical Body Planes and Sections", note: "Memory tricks that separate sagittal, coronal and transverse for good.", url: "https://www.youtube.com/results?search_query=Anatomical+body+planes+and+sections+easy+tricks" },
+    { channel: "Catalyst University", title: "Anatomical Position, Directional Terms and Body Planes", note: "Lab-style run-through, useful right before a practical.", url: "https://www.youtube.com/results?search_query=Anatomical+position+directional+terms+and+body+planes" },
   ],
   mcqs: [
     { q: "In the correct anatomical position, the palms face:", o: ["Toward the thighs", "Forward (anteriorly)", "Backward (posteriorly)", "Toward each other"], a: 1, w: "The palms face anteriorly, so the thumbs point laterally." },
@@ -737,9 +737,9 @@ If those came cleanly, you are ready to stop seeing slides as random splashes of
     { q: "Why is pseudostratified epithelium described as false-layered, and where is it typically found?", a: "Its nuclei lie at different heights, giving the appearance of several layers, but every cell contacts the basement membrane, so it is genuinely a single layer. It lines the trachea and upper airways, usually ciliated and containing goblet cells." },
   ],
   videos: [
-    { channel: "The Noted Anatomist", title: "Histology Fundamentals: The Complete Overview", note: "Thorough 38-minute walk-through covering H and E staining, then all four tissues in order.", url: "https://www.youtube.com/watch?v=0U5J_unEM-Q" },
-    { channel: "Corporis", title: "Intro to Histology: The Four Tissue Types", note: "Short and clear - ideal for separating the four tissues when they first look identical.", url: "https://www.youtube.com/watch?v=S59JwFCjNhc" },
-    { channel: "Histology Video Course", title: "Four Basic Tissue Types of Histology (Epithelium 1 of 7)", note: "Opening lecture of a structured series that continues into epithelium in detail.", url: "https://www.youtube.com/watch?v=H28sK9E6hGY" },
+    { channel: "The Noted Anatomist", title: "Histology Fundamentals: The Complete Overview", note: "Thorough 38-minute walk-through covering H and E staining, then all four tissues in order.", url: "https://www.youtube.com/results?search_query=Histology+fundamentals+H+and+E+staining+The+Noted+Anatomist" },
+    { channel: "Corporis", title: "Intro to Histology: The Four Tissue Types", note: "Short and clear - ideal for separating the four tissues when they first look identical.", url: "https://www.youtube.com/results?search_query=Intro+to+Histology+the+four+tissue+types+Corporis" },
+    { channel: "Histology Video Course", title: "Four Basic Tissue Types of Histology (Epithelium 1 of 7)", note: "Opening lecture of a structured series that continues into epithelium in detail.", url: "https://www.youtube.com/results?search_query=Four+basic+tissue+types+of+histology+epithelium" },
   ],
   mcqs: [
     { q: "Histology is best defined as the study of:", o: ["Body cavities", "Organs by dissection", "Disease processes", "Tissues under the microscope"], a: 3, w: "Histology is the microscopic study of tissues." },
@@ -1129,9 +1129,9 @@ If those came cleanly, you now understand epithelium as a system, not a list. Th
     { q: "Why is the basement membrane the critical structure in distinguishing in situ from invasive carcinoma?", a: "Carcinoma in situ remains above an intact basement membrane, so it has not reached the blood or lymphatic vessels that lie below and cannot metastasise; it is curable by local removal. Once the cells breach the basement membrane and invade the underlying connective tissue, the cancer becomes invasive and can spread." },
   ],
   videos: [
-    { channel: "Kenhub", title: "Types of Simple Epithelia", note: "Clear, labelled walk-through of each simple epithelium with its location and function.", url: "https://www.youtube.com/watch?v=-koWOLMd904" },
-    { channel: "Dr. G Bhanu Prakash", title: "Epithelial Tissue: Simple, Stratified, Pseudostratified, Transitional", note: "Complete classification in one animated lecture - good for the whole system at once.", url: "https://www.youtube.com/watch?v=chl91a2Cm-Y" },
-    { channel: "AnimatedBiology With Arpan", title: "Epithelial Tissue: Classification, Functions and Clinical Significance", note: "Adds the clinical angle, including junctions and the basement membrane.", url: "https://www.youtube.com/watch?v=_pw5wbEL07c" },
+    { channel: "Kenhub", title: "Types of Simple Epithelia", note: "Clear, labelled walk-through of each simple epithelium with its location and function.", url: "https://www.youtube.com/results?search_query=Types+of+simple+epithelia+Kenhub" },
+    { channel: "Dr. G Bhanu Prakash", title: "Epithelial Tissue: Simple, Stratified, Pseudostratified, Transitional", note: "Complete classification in one animated lecture - good for the whole system at once.", url: "https://www.youtube.com/results?search_query=Epithelial+tissue+simple+stratified+pseudostratified+transitional" },
+    { channel: "AnimatedBiology With Arpan", title: "Epithelial Tissue: Classification, Functions and Clinical Significance", note: "Adds the clinical angle, including junctions and the basement membrane.", url: "https://www.youtube.com/results?search_query=Epithelial+tissue+classification+functions+clinical+significance" },
   ],
   mcqs: [
     { q: "The feature that most distinguishes epithelium from connective tissue is:", o: ["Scattered cells", "High cellularity with little matrix", "Abundant matrix", "Presence of blood vessels"], a: 1, w: "Epithelium is cell-dense with minimal matrix; connective tissue is the opposite." },
@@ -1319,9 +1319,9 @@ If those three came cleanly, you can now read the body's covering and lining epi
     { q: "Define metaplasia and give one example, noting its clinical significance.", a: "Metaplasia is the reversible replacement of one mature epithelium by another, usually in response to chronic stress. For example, a smoker's ciliated pseudostratified airway epithelium is replaced by stratified squamous, losing the mucociliary escalator; in Barrett oesophagus, acid reflux replaces oesophageal stratified squamous with columnar epithelium, carrying a risk of progression to cancer." },
   ],
   videos: [
-    { channel: "Kenhub", title: "Types of Simple Epithelia", note: "Labelled tour of simple squamous, cuboidal, columnar and pseudostratified with locations.", url: "https://www.youtube.com/watch?v=-koWOLMd904" },
-    { channel: "Dr. G Bhanu Prakash", title: "Epithelial Tissue: Simple, Stratified, Pseudostratified, Transitional", note: "Covers the full set including transitional and stratified in one animated pass.", url: "https://www.youtube.com/watch?v=chl91a2Cm-Y" },
-    { channel: "Histology Guide", title: "Pseudostratified Columnar Epithelium of the Trachea", note: "Real trachea slide - see the scattered nuclei, cilia and goblet cells for yourself.", url: "https://histologyguide.com/slideview/MHS-222-trachea/02-slide-1.html" },
+    { channel: "Kenhub", title: "Types of Simple Epithelia", note: "Labelled tour of simple squamous, cuboidal, columnar and pseudostratified with locations.", url: "https://www.youtube.com/results?search_query=Types+of+simple+epithelia+locations+Kenhub" },
+    { channel: "Dr. G Bhanu Prakash", title: "Epithelial Tissue: Simple, Stratified, Pseudostratified, Transitional", note: "Covers the full set including transitional and stratified in one animated pass.", url: "https://www.youtube.com/results?search_query=Epithelial+tissue+simple+stratified+pseudostratified+transitional+Dr+Bhanu" },
+    { channel: "Histology Guide", title: "Pseudostratified Columnar Epithelium of the Trachea", note: "Real trachea slide - see the scattered nuclei, cilia and goblet cells for yourself.", url: "https://www.youtube.com/results?search_query=Pseudostratified+columnar+epithelium+trachea+histology" },
   ],
   mcqs: [
     { q: "Membranous epithelium refers to epithelium that:", o: ["Secretes hormones", "Covers surfaces and lines cavities and tubes", "Forms glands only", "Is always stratified"], a: 1, w: "Membranous means the covering and lining epithelia, as opposed to glandular." },
@@ -6049,6 +6049,13 @@ export default function App() {
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
   }, []);
+  useEffect(() => {
+  const handleScroll = () => {
+    setShowTop(window.scrollY > 400);
+  };
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
   const [progress, setProgress] = useState(DEFAULT_PROGRESS);
   const [auth, setAuth] = useState(null);
   const [supaUid, setSupaUid] = useState(null); // set when signed in via Supabase (Google)
@@ -6058,6 +6065,7 @@ export default function App() {
   const [rateStars, setRateStars] = useState(0);
   const [rateDismissed, setRateDismissed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showTop, setShowTop] = useState(false);
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -6294,9 +6302,41 @@ export default function App() {
   const openNotif = () => { setNotifOpen(true); if (unreadAnn) persist({ ...progress, seenAnn: ANNOUNCEMENTS.length }); };
   const showRate = !!auth && progress.xp >= 30 && !progress.rated && !progress.ratePromptSeen && !rateDismissed && route.view !== "feedback";
 
-  if (!loaded) return <div className={rootCls}><style>{CSS}</style><div style={{ padding: 40, color: "var(--text-3)" }} className="mono">Loading ASCEND...</div></div>;
-  if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
-
+  if (!loaded) return (
+  <div className={rootCls}>
+    <style>{CSS}</style>
+    <style>{`
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `}</style>
+    <div style={{ 
+      display: "flex", 
+      flexDirection: "column", 
+      alignItems: "center", 
+      justifyContent: "center", 
+      minHeight: "100vh",
+      gap: "20px",
+      background: "var(--bg)"
+    }}>
+      <div style={{ 
+        width: 48, 
+        height: 48, 
+        border: "3px solid var(--bg-3)", 
+        borderTop: "3px solid var(--amber)", 
+        borderRadius: "50%", 
+        animation: "spin 1s linear infinite" 
+      }} />
+      <div style={{ 
+        color: "var(--text-3)", 
+        fontSize: 14,
+        fontFamily: "var(--mono)",
+        letterSpacing: "0.1em"
+      }}>ASCEND</div>
+    </div>
+  </div>
+);
   const navButtons = (onNav) => NAV.map((n) => {
     const Icon = Ic[n.icon];
     return <button key={n.key} className={"navi " + (activeNav === n.key ? "on" : "")} onClick={() => onNav(n.key)}><Icon p={19} />{n.label}</button>;
@@ -6330,6 +6370,42 @@ export default function App() {
             </div>
           </header>
           <div className="content">{render()}</div>
+          {showTop && (
+  <button 
+    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+    style={{
+      position: "fixed",
+      bottom: "clamp(70px, 10vh, 100px)",
+      right: "clamp(16px, 3vw, 30px)",
+      width: "48px",
+      height: "48px",
+      borderRadius: "50%",
+      background: "var(--amber)",
+      color: "#1B1405",
+      border: "none",
+      fontSize: "22px",
+      fontWeight: 700,
+      cursor: "pointer",
+      boxShadow: "0 4px 16px rgba(245,185,63,0.3)",
+      zIndex: 50,
+      transition: "all 0.3s ease",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontFamily: "var(--mono)"
+    }}
+    onMouseEnter={(e) => {
+      e.target.style.transform = "scale(1.1)";
+      e.target.style.boxShadow = "0 6px 24px rgba(245,185,63,0.5)";
+    }}
+    onMouseLeave={(e) => {
+      e.target.style.transform = "scale(1)";
+      e.target.style.boxShadow = "0 4px 16px rgba(245,185,63,0.3)";
+    }}
+  >
+    ↑
+  </button>
+)}
         </div>
       </div>
 
