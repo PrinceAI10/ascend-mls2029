@@ -8641,16 +8641,49 @@ function supSpan(exp) {
   return exp.split("").map((ch) => map[ch] || ch).join("");
 }
 function formatInline(text) {
-  // Convert caret exponents (e.g. 10^3, 10^-3, x^2) to Unicode superscripts.
-  let t = text.replace(/\^(-?\d+|n)/g, (m, e) => supSpan(e));
-  // Split on **bold** markers and render the bold parts.
+  if (!text) return text;
+  let t = String(text);
+  
+  // Step 1: Convert caret exponents (e.g. 10^3, 10^-3) to Unicode superscripts
+  t = t.replace(/\^(\d+)/g, (m, e) => {
+    const superscripts = { 
+      "0": "\u2070", "1": "\u00B9", "2": "\u00B2", "3": "\u00B3", "4": "\u2074", 
+      "5": "\u2075", "6": "\u2076", "7": "\u2077", "8": "\u2078", "9": "\u2079"
+    };
+    return e.split("").map(c => superscripts[c] || c).join("");
+  });
+  
+  // Step 2: Convert negative exponents (e.g. 10^-3)
+  t = t.replace(/\^\-(\d+)/g, (m, e) => {
+    const superscripts = { 
+      "0": "\u2070", "1": "\u00B9", "2": "\u00B2", "3": "\u00B3", "4": "\u2074", 
+      "5": "\u2075", "6": "\u2076", "7": "\u2077", "8": "\u2078", "9": "\u2079"
+    };
+    return "\u207B" + e.split("").map(c => superscripts[c] || c).join("");
+  });
+  
+  // Step 3: Handle **bold** text
   const parts = t.split(/(\*\*[^*]+\*\*)/g);
+  
   return parts.map((p, i) => {
-    if (/^\*\*[^*]+\*\*$/.test(p)) return <strong key={i}>{p.slice(2, -2)}</strong>;
-    // remove any remaining stray single asterisks used as markdown
-    return <span key={i}>{p.replace(/\*\*/g, "").replace(/(^|\s)\*(\S)/g, "$1$2").replace(/(\S)\*(\s|$)/g, "$1$2")}</span>;
+    // If this part is **bold**, render it as strong
+    if (/^\*\*[^*]+\*\*$/.test(p)) {
+      return <strong key={i}>{p.slice(2, -2)}</strong>;
+    }
+    // Clean up remaining artifacts
+    let cleaned = p
+      .replace(/\*\*/g, "")           // Remove any remaining **
+      .replace(/(\s)\*(\s)/g, "$1×$2") // Replace * with × for multiplication
+      .replace(/^\*/, "")              // Remove leading asterisks
+      .replace(/\*$/, "")              // Remove trailing asterisks
+      .replace(/\*(\w)/g, "$1")        // Remove asterisks before words
+      .replace(/(\w)\*/g, "$1")        // Remove asterisks after words
+      .replace(/(\w)\*\s/g, "$1 ")     // Remove asterisks before spaces
+      .replace(/\s\*(\w)/g, " $1");    // Remove asterisks after spaces
+    return <span key={i}>{cleaned}</span>;
   });
 }
+
 function AIText({ text, style }) {
   const raw = String(text || "");
   const lines = raw.split("\n");
@@ -8663,9 +8696,11 @@ function AIText({ text, style }) {
     }
   };
   lines.forEach((ln, i) => {
+    // Detect bullet points with standard bullet characters
     const bullet = ln.match(/^\s*[-*\u2022]\s+(.*)$/);
     if (bullet) { list.push(bullet[1]); return; }
     flush(i);
+    // Skip empty lines (add a small spacer)
     if (ln.trim() === "") { blocks.push(<div key={"sp" + i} style={{ height: 8 }} />); return; }
     blocks.push(<p key={"p" + i} style={{ margin: "0 0 8px" }}>{formatInline(ln)}</p>);
   });
@@ -8708,7 +8743,6 @@ async function callClaude(system, messages, maxTokens = 4096) {
   if (!text) throw new Error("The AI returned an empty reply.");
   return text;
 }
-
 /* ------------------------ uploaded file extraction ----------------------- */
 const fileExt = (f) => (f && f.name ? f.name.split(".").pop().toLowerCase() : "");
 
@@ -8784,7 +8818,7 @@ function AITutor({ topicTitle, context }) {
     if (!text || busy) return;
     const next = [...msgs, { role: "user", content: text }];
     setMsgs(next); setInput(""); setBusy(true);
-    const sys = `You are the ASCEND tutor for KNUST medical laboratory science students. Teach the WHY and the mechanism, step by step. Keep each answer complete but focused - finish within a few clear paragraphs rather than writing an essay, so the reply is never cut off. No emojis. Write all mathematics and numbers in plain readable text, never in LaTeX or markdown math: do not use dollar signs, backslashes, or caret notation. Write powers in words or with Unicode superscripts (for example, write "10 cubed" or "10^3" as "1000" or "ten to the power three"), write "x" for multiplication, and write fractions as "a/b" or in words. Never output symbols like $, \\\\times, \\\\frac, or ^.\\n\\nTOPIC: ${topicTitle}\\n\\nSOURCE:\\n${context}`;
+    const sys = `You are the ASCEND tutor for KNUST medical laboratory science students. Teach the WHY and the mechanism, step by step. Keep each answer complete but focused. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac.\n\nTOPIC: ${topicTitle}\n\nSOURCE:\n${context}`;
     const apiMsgs = next.slice(1);
     try {
       const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })), 4096);
@@ -9788,7 +9822,7 @@ function PapersView() {
 }
 
 /* ------------------------------- resources ------------------------------ */
-const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical laboratory science students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis. Write all mathematics and numbers in plain readable text, never in LaTeX or markdown math: do not use dollar signs, backslashes, or caret notation. Write powers in words (for example 'ten to the power three' or the value 1000), write 'x' for multiplication, and write fractions as 'a/b' or in words. Never output symbols like $, \\times, \\frac, or ^.";
+const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical laboratory science students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it to superscript). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac.";
 const SOCRATIC_TASK = "Break this study material into a focused Socratic lesson of 4 to 6 steps. For each step: state the question, explain the answer in one or two clear paragraphs, then give the crucial insight in one line. End with three short self-test questions and their answers. Be economical so the whole lesson is complete and never cut off.";
 
 function ResourcesView() {
