@@ -56,8 +56,9 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
 .side{display:none}
 .main{flex:1;min-width:0;display:flex;flex-direction:column;max-width:100%;overflow-x:hidden}
 .topbar{position:sticky;top:0;z-index:20;background:rgba(10,15,26,.82);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
-  padding:13px 26px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:0}
+.topbar-inner{max-width:1080px;margin:0 auto;width:100%;
+  padding:13px 30px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .content{padding:26px 30px 60px;max-width:100%;overflow-x:hidden}
 /* keep long-form reading comfortable while the app still fills the window */
 .content>.view{max-width:1080px;margin:0 auto;width:100%}
@@ -77,12 +78,13 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
 /* comfortable reading width on large screens */
 @media (min-width:1280px){
   .content{padding:30px 44px 70px}
+  .topbar-inner{padding:14px 44px}
 }
 /* tighter padding on phones */
 @media (max-width:900px){
   .content{padding:16px 14px 50px}
   .content>.view{max-width:100%}
-  .topbar{padding:10px 14px;gap:8px}
+  .topbar-inner{padding:10px 14px;gap:8px}
   .card{padding:14px}
   .grid{grid-template-columns:1fr;gap:12px}
   .g2,.g3{grid-template-columns:1fr}
@@ -94,9 +96,15 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
 @media(min-width:640px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}}
 @media (max-width:480px){
   .content{padding:12px 10px 40px}
+  .topbar-inner{padding:10px 12px;gap:6px}
   .headline{font-size:28px}
   .crs-line{gap:4px;padding:8px 0}
   .qbox{width:46px}
+  /* on small phones the streak and XP chips crowd the topbar; they are shown
+     prominently on the home screen, so hide them here to keep the bar clean */
+  .topbar-inner .chip{display:none}
+  .topbar-inner .iconbtn{width:34px;height:34px}
+  .topbar-inner .avatar{width:30px;height:30px}
 }
 .brand{display:flex;align-items:center;gap:9px;flex-shrink:0}
 .brand-word{font-weight:800;letter-spacing:.02em;font-size:17px}
@@ -5736,14 +5744,16 @@ export default function App() {
 
         <div className="main">
           <header className="topbar">
-            <button className="iconbtn onlymobile" onClick={() => setMenuOpen(true)} aria-label="Open menu"><Ic.menu p={18} /></button>
-            <div className="onlymobile" style={{ flex: 1 }}><Wordmark /></div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
-              <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress.streak}</span></span>
-              <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
-              <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
-              <span className="chip"><span className="val" style={{ color: r.c }}>{progress.xp}</span> XP</span>
-              <button className="avatar" onClick={setName} title="Tap to change your username">{progress.name[0]?.toUpperCase()}</button>
+            <div className="topbar-inner">
+              <button className="iconbtn onlymobile" onClick={() => setMenuOpen(true)} aria-label="Open menu"><Ic.menu p={18} /></button>
+              <div className="onlymobile" style={{ flex: 1 }}><Wordmark /></div>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
+                <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress.streak}</span></span>
+                <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
+                <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
+                <span className="chip"><span className="val" style={{ color: r.c }}>{progress.xp}</span> XP</span>
+                <button className="avatar" onClick={setName} title="Tap to change your username">{progress.name[0]?.toUpperCase()}</button>
+              </div>
             </div>
           </header>
           <div className="content">{render()}</div>
