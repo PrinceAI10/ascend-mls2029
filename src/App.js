@@ -5630,14 +5630,9 @@ function RanksView({ app }) {
   const toNext = r.next ? r.next.min - app.progress.xp : 0;
   return (
     <div className="view">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
-        <div>
-          <div className="eyebrow">Leaderboard</div>
-          <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>No one wants to be last</h1>
-          <p style={{ color: "var(--text-2)", marginTop: 0 }}>XP from daily questions and quizzes.</p>
-        </div>
-        <button className="btn btn-sm" style={{ flexShrink: 0, background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setRefreshTick((t) => t + 1)} disabled={loading}>{loading ? "..." : "Refresh"}</button>
-      </div>
+      <div className="eyebrow">Leaderboard</div>
+      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>No one wants to be last</h1>
+      <p style={{ color: "var(--text-2)", marginTop: 0 }}>XP from daily questions and quizzes.</p>
       <div className="card card-feature" style={{ marginTop: 18, display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{ position: "relative", flexShrink: 0 }}>
           <Ring value={r.next ? (app.progress.xp - r.min) / (r.next.min - r.min) : 1} size={64} stroke={6} color={r.c} />
