@@ -5258,9 +5258,8 @@ function HomeView({ app }) {
   overflow: "hidden", 
   border: "1px solid var(--line)", 
   borderRadius: "clamp(14px, 2vw, 20px)", 
-  padding: "clamp(20px, 4vw, 30px) clamp(16px, 3vw, 26px)",
-  minHeight: "clamp(140px, 25vh, 200px)",
-  background: "var(--bg-2)"
+  padding: "clamp(24px, 4vw, 34px) clamp(20px, 3vw, 30px)",
+  minHeight: "clamp(150px, 25vh, 220px)"
 }}>
   <svg className="ridge" viewBox="0 0 600 220" preserveAspectRatio="none" aria-hidden style={{ 
     position: "absolute", 
@@ -5285,21 +5284,29 @@ function HomeView({ app }) {
     <circle cx="600" cy="25" r="clamp(3, 4.5, 6)" fill="var(--amber)" />
   </svg>
   <div style={{ position: "relative", zIndex: 1 }}>
-    <div className="eyebrow" style={{ color: "var(--amber)", fontSize: "clamp(9px, 1.2vw, 11px)" }}>ASCEND</div>
+    <div className="eyebrow" style={{ 
+      color: "var(--amber)", 
+      fontSize: "clamp(9px, 1.2vw, 11px)",
+      letterSpacing: "0.2em",
+      fontWeight: 600,
+      textTransform: "uppercase"
+    }}>ASCEND</div>
     <h1 className="hero-h" style={{ 
-      fontSize: "clamp(20px, 4.6vw, 36px)", 
+      fontSize: "clamp(22px, 4.6vw, 38px)", 
       maxWidth: "clamp(12ch, 16ch, 20ch)", 
       fontWeight: 800, 
       letterSpacing: "-0.03em",
-      margin: "clamp(4px, 1vh, 8px) 0",
-      color: "var(--text)"
+      margin: "clamp(4px, 1vh, 10px) 0",
+      color: "var(--text)",
+      lineHeight: 1.1
     }}>Understand the <span className="hl" style={{ color: "var(--amber)" }}>mechanism</span>, and recall takes care of itself.</h1>
     <p className="hero-p" style={{ 
       color: "var(--text-2)", 
       maxWidth: "clamp(35ch, 52ch, 60ch)", 
-      marginTop: "clamp(6px, 1.5vh, 12px)", 
-      fontSize: "clamp(13px, 1.3vw, 15px)", 
-      lineHeight: 1.6 
+      marginTop: "clamp(6px, 1.5vh, 14px)", 
+      fontSize: "clamp(13.5px, 1.3vw, 16px)", 
+      lineHeight: 1.6,
+      fontWeight: 400
     }}>Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
   </div>
 </div>
