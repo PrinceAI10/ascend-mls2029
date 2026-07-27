@@ -3947,6 +3947,196 @@ If those came cleanly, you hold the thread that runs through the entire course. 
   ],
 };
 
+// ==================== LAB SAFETY TOPIC 01: INTRODUCTION TO LAB INSTRUMENTATION ====================
+const T_LAB_INSTRUMENTATION = {
+  courseId: "lab",
+  topicIndex: 0,
+  title: "Introduction to Lab Instrumentation",
+  minutes: 22,
+  note: [
+    { q: "Why does a laboratory scientist need to understand instrumentation?",
+      body: `You have learned laboratory safety and the importance of protecting yourself from hazards. Now we turn to the instruments that make laboratory work possible — the tools that measure, analyse, and diagnose. Without instrumentation, modern laboratory medicine would be impossible.
+
+My Socratic question: a patient's blood sample arrives at the laboratory. The clinician needs to know the white blood cell count, the haemoglobin level, the glucose concentration, and whether there is an infection. How does a laboratory scientist turn a tube of blood into these answers?
+
+The answer is through instrumentation. Instruments are the tools of the laboratory trade — they are how we measure, analyse, and generate the data that informs diagnosis and treatment. From the simplest balance to the most sophisticated analyser, instruments extend our senses, allowing us to see what is invisible, measure what is immeasurable by hand, and do so with precision and accuracy that human senses cannot achieve.
+
+Understanding laboratory instrumentation is essential for every laboratory scientist. You will use instruments every day — balances, centrifuges, spectrophotometers, microscopes, analysers. Understanding how they work, how to use them correctly, how to maintain them, and how to troubleshoot problems is the foundation of competent laboratory practice.
+
+Crucial insight: laboratory instrumentation is the foundation of modern laboratory medicine. Instruments extend our senses, enabling precise, accurate, and reproducible measurements that inform diagnosis and treatment. Understanding instrumentation is essential for every laboratory scientist.` },
+
+    { q: "The key characteristics of laboratory instruments: accuracy and precision.",
+      body: `Two concepts are fundamental to understanding any laboratory instrument: accuracy and precision. They are often confused, but they mean different things — and both are essential for reliable laboratory results.
+
+My Socratic question: a laboratory balance gives readings of 10.01g, 10.02g, 10.01g, and 10.02g for a sample that actually weighs 10.00g. Is this balance accurate, precise, both, or neither? Why?
+
+The answer is that the balance is precise (the readings are very close to each other) but not accurate (they are consistently above the true value). Accuracy is how close a measurement is to the true value. Precision is how reproducible the measurements are — how close they are to each other. An instrument can be precise but not accurate, accurate but not precise, both, or neither.
+
+In laboratory work, both accuracy and precision are essential. An inaccurate instrument gives wrong answers. An imprecise instrument gives inconsistent answers. A good instrument is both accurate and precise. Regular calibration checks whether an instrument remains accurate; quality control checks whether it remains precise.
+
+Crucial insight: accuracy is closeness to the true value; precision is reproducibility of measurements. Both are essential for reliable laboratory results. Regular calibration and quality control ensure instruments remain accurate and precise over time.` },
+
+    { q: "The importance of calibration and standardisation.",
+      body: `An instrument is only useful if it gives correct results. Calibration and standardisation are how we ensure that instruments give accurate and reliable measurements.
+
+My Socratic question: a blood glucose meter gives a reading of 8.5 mmol/L, but the patient's actual glucose is 9.2 mmol/L. What has happened, and how could it have been prevented?
+
+The answer is that the meter is likely out of calibration — it is giving readings that are consistently too low. Calibration is the process of adjusting an instrument so that its readings match known standards. Standardisation is the process of establishing a reference point against which measurements can be compared.
+
+Calibration involves comparing an instrument's readings to a known standard — a reference material with a known value. If the instrument's readings are consistently off, it is adjusted until it reads correctly. Calibration is performed regularly according to the manufacturer's instructions and laboratory protocols. In healthcare, uncalibrated instruments can cause incorrect diagnoses and harm to patients.
+
+Crucial insight: calibration ensures instruments give accurate readings by comparing them to known standards. Regular calibration is essential for reliable laboratory results. Without calibration, instruments can drift and produce incorrect results, potentially harming patients.` },
+
+    { q: "Common types of laboratory instruments: an overview.",
+      body: `Laboratory instruments fall into several categories based on what they measure and how they work. Understanding the categories helps you understand the instruments you will use.
+
+My Socratic question: a laboratory needs to weigh a sample, spin it down, measure its absorbance, look at it under a microscope, and analyse its chemical composition. What types of instruments would be used for each of these tasks?
+
+The answer is: weighing uses a balance, spinning uses a centrifuge, absorbance uses a spectrophotometer, microscopy uses a microscope, and chemical analysis might use any of several analysers. These are the major categories of laboratory instruments.
+
+Weighing instruments include balances and scales. They measure mass with varying degrees of precision. Centrifuges separate components of a liquid by density. Microscopes magnify small objects for visual examination. Spectrophotometers measure how much light a substance absorbs at different wavelengths. Analysers perform specific chemical or biological tests automatically or semi-automatically.
+
+In a typical medical laboratory, you will use all of these categories. Understanding what each type does, how it works, and what it is used for is essential for competent laboratory practice.
+
+Crucial insight: laboratory instruments fall into categories based on their function: weighing (balances), separation (centrifuges), visualisation (microscopes), measurement of light (spectrophotometers), and automated analysis (analysers). Understanding these categories provides a framework for learning any new instrument you encounter.` },
+
+    { q: "Basic principles of instrument operation.",
+      body: `While instruments differ in what they measure, they share common principles of operation. Understanding these principles helps you use instruments correctly and troubleshoot problems.
+
+My Socratic question: every instrument has a sample, a measurement principle, and a readout. What are these three components, and why does understanding them help you use any instrument?
+
+The sample is what you are measuring — the blood, the solution, the tissue. The measurement principle is how the instrument detects the property of interest — it might be weighing, absorbing light, counting cells, measuring voltage, or detecting a chemical reaction. The readout is how the result is displayed — a number on a screen, a printout, a graph, or a visual image.
+
+Understanding these three components helps you use an instrument correctly: you need to prepare the sample correctly, you need to understand the measurement principle so you know what can interfere, and you need to interpret the readout correctly. When an instrument gives unexpected results, you can work through these three components to find the problem.
+
+Crucial insight: every instrument has three components: the sample, the measurement principle, and the readout. Understanding each helps you use instruments correctly, interpret results accurately, and troubleshoot problems effectively.` },
+
+    { q: "Specimen preparation and its effect on results.",
+      body: `The quality of a laboratory result depends on the quality of the specimen and how it is prepared. An instrument can only measure what it is given.
+
+My Socratic question: a blood sample is haemolysed (red blood cells have broken open) before it is analysed. The potassium result is falsely elevated. What happened, and what does this teach about specimen preparation?
+
+The answer is that haemolysis released potassium from inside the red blood cells into the serum, elevating the potassium concentration. The instrument measured the potassium accurately — the problem was the specimen, not the instrument. This illustrates a fundamental principle: an instrument can only give correct results if the specimen is correctly collected, prepared, and handled.
+
+Specimen preparation includes: correct collection (right tube, right technique), correct storage (temperature, time), correct processing (centrifugation, separation), and correct aliquoting (avoiding contamination). Failure at any of these steps can invalidate the result, regardless of how good the instrument is.
+
+Crucial insight: an instrument can only measure what it is given. Correct specimen collection, preparation, and handling are essential for accurate results. Garbage in, garbage out — a good instrument cannot correct a bad specimen.` },
+
+    { q: "Quality control and quality assurance in instrumentation.",
+      body: `Quality control (QC) and quality assurance (QA) are essential to ensure that instruments are performing correctly and that results are reliable.
+
+My Socratic question: a laboratory runs a control sample alongside patient samples every day. The control sample has a known value. Why is this done, and what does it tell the laboratory?
+
+The answer is that the control sample tells the laboratory whether the instrument is performing correctly that day. If the control result is within the expected range, the laboratory can be confident that patient results are reliable. If the control result is outside the expected range, there is a problem — and patient results may be unreliable.
+
+Quality control involves checking instruments with known samples (controls) to ensure they are performing correctly. Quality assurance is the broader system of policies, procedures, and practices that ensure reliable results. Both are essential for patient safety.
+
+Crucial insight: quality control and quality assurance ensure that instruments perform correctly and results are reliable. Running controls with known values verifies instrument performance. A robust QA system prevents errors and protects patients.` },
+
+    { q: "Troubleshooting common instrument problems.",
+      body: `Even with careful maintenance, instruments sometimes malfunction. Knowing how to troubleshoot common problems is essential for keeping the laboratory running.
+
+My Socratic question: a spectrophotometer gives readings that are unusually high. The operator checks the wavelength, checks the cuvette, and finds nothing wrong. What might be the problem?
+
+The answer could be that the cuvette is dirty or scratched, causing light scattering that appears as higher absorbance. The operator should clean the cuvette or replace it with a new one. Troubleshooting involves systematically checking the sample, the instrument, and the technique.
+
+Common problems include: dirty or scratched cuvettes, bubbles in the sample, incorrect wavelength, incorrect calibration, expired reagents, and poor technique. A systematic approach — checking the sample, checking the instrument, checking the technique — identifies most problems.
+
+Crucial insight: troubleshooting is a systematic process of checking the sample, the instrument, and the technique. Most instrument problems can be identified and resolved through systematic checking. A calm, logical approach is more effective than guessing.` },
+
+    { q: "Maintenance and care of laboratory instruments.",
+      body: `Laboratory instruments are expensive and delicate. Proper maintenance and care extend their life and ensure they perform correctly.
+
+My Socratic question: a centrifuge that is not balanced properly vibrates and makes a noise. The operator ignores it and continues using it. What will happen, and what should they have done?
+
+The answer is that the centrifuge will eventually be damaged — the rotor, the motor, or the shaft can be damaged by the imbalance. The operator should have balanced the centrifuge properly before running it. Proper care prevents damage and extends instrument life.
+
+Maintenance includes: daily cleaning and checks, regular calibration, scheduled servicing, proper storage, and correct use. Following the manufacturer's instructions and laboratory protocols is essential. A well-maintained instrument is more accurate, more reliable, and lasts longer.
+
+Crucial insight: regular maintenance and proper care extend instrument life and ensure reliable performance. Cleaning, calibration, and correct use are essential. Neglecting maintenance leads to inaccurate results and expensive repairs.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for Introduction to Lab Instrumentation.
+
+Definition: instruments are the tools that extend our senses, enabling precise, accurate, and reproducible measurements that inform diagnosis and treatment.
+
+Accuracy vs precision: accuracy is closeness to the true value; precision is reproducibility of measurements. Both are essential.
+
+Calibration: comparing instrument readings to known standards and adjusting if needed. Essential for accuracy.
+
+Categories: balances (weighing), centrifuges (separation), microscopes (visualisation), spectrophotometers (measure light), analysers (automated testing).
+
+Operation principles: sample, measurement principle, readout. Understanding each helps with correct use and troubleshooting.
+
+Specimen preparation: correct collection, handling, and processing are essential. A good instrument cannot correct a bad specimen.
+
+Quality control: running controls with known values verifies instrument performance. Essential for reliable results.
+
+Troubleshooting: systematically check sample, instrument, and technique.
+
+Maintenance: regular cleaning, calibration, and correct use extend instrument life and ensure reliability.
+
+Now your final test. A laboratory receives a new spectrophotometer. The operator runs a calibration check and finds that the readings are consistently 5% higher than the expected values for the calibration standards.
+
+Question one: is this instrument accurate, precise, both, or neither? Explain your answer.
+Question two: what should the operator do to correct this problem?
+Question three: why is it important that this problem is corrected before patient samples are run?
+
+Work them through before reading on.
+
+My answers. One: the instrument is precise (the readings are consistently off by the same amount) but not accurate (the readings are not close to the true value). It is giving consistently wrong results, which is a calibration problem. Two: the operator should calibrate the instrument — adjust it so that its readings match the known standards. If the instrument cannot be calibrated, the manufacturer should be contacted. Three: if the problem is not corrected, all patient results will be 5% too high, which could lead to misdiagnosis or incorrect treatment. Accuracy is essential for patient safety.` }
+  ],
+  theory: [
+    { q: "What is laboratory instrumentation and why is it important?", a: "Laboratory instrumentation refers to the tools and equipment used to measure, analyse, and generate diagnostic data. It is essential because it extends human senses, enabling precise, accurate, and reproducible measurements that inform diagnosis and treatment." },
+    { q: "What is the difference between accuracy and precision?", a: "Accuracy is how close a measurement is to the true value. Precision is how reproducible the measurements are — how close they are to each other. An instrument can be precise but not accurate, accurate but not precise, both, or neither." },
+    { q: "What is calibration and why is it important?", a: "Calibration is the process of adjusting an instrument so that its readings match known standards. It is important because instruments can drift over time, and uncalibrated instruments give inaccurate results that can harm patients." },
+    { q: "Name the major categories of laboratory instruments and their functions.", a: "Balances (weighing), centrifuges (separation by density), microscopes (visualisation), spectrophotometers (measurement of light absorbance), and analysers (automated chemical or biological testing)." },
+    { q: "What are the three components of any instrument's operation?", a: "The sample (what is being measured), the measurement principle (how the instrument detects the property), and the readout (how the result is displayed). Understanding all three helps with correct use and troubleshooting." },
+    { q: "Why is specimen preparation important for accurate results?", a: "An instrument can only measure what it is given. Incorrect collection, preparation, or handling can invalidate results regardless of how good the instrument is. Garbage in, garbage out." },
+    { q: "What is quality control in the laboratory?", a: "Quality control involves running samples with known values (controls) alongside patient samples to verify that instruments are performing correctly. If controls are within range, patient results are reliable." },
+    { q: "What is the first step in troubleshooting an instrument problem?", a: "The first step is to systematically check the sample, the instrument, and the technique. Most problems can be identified through this systematic approach." },
+    { q: "Why is regular maintenance of laboratory instruments important?", a: "Regular maintenance extends instrument life, ensures reliable performance, and prevents costly repairs. Neglecting maintenance leads to inaccurate results and instrument failure." },
+    { q: "What is the relationship between quality control and patient safety?", a: "Quality control ensures that instruments give accurate and reliable results. Without QC, errors may go undetected, leading to misdiagnosis, incorrect treatment, and patient harm." },
+  ],
+  videos: [
+    { channel: "Lab Skills", title: "Introduction to Laboratory Instruments", note: "Overview of common laboratory instruments and their uses.", url: "" },
+    { channel: "Clinical Laboratory", title: "Accuracy, Precision, and Calibration", note: "Understanding the fundamentals of instrument performance.", url: "" },
+    { channel: "Lab Safety", title: "Quality Control in the Clinical Laboratory", note: "How QC ensures reliable patient results.", url: "" },
+  ],
+  mcqs: [
+    { q: "Laboratory instrumentation is essential because it:", o: ["Saves time", "Extends human senses for precise measurement", "Looks professional", "Is expensive"], a: 1, w: "Instruments extend human senses, enabling precise, accurate, and reproducible measurements." },
+    { q: "Accuracy is defined as:", o: ["Closeness of measurements to each other", "Closeness of a measurement to the true value", "The repeatability of a measurement", "The cost of the instrument"], a: 1, w: "Accuracy is how close a measurement is to the true value." },
+    { q: "Precision is defined as:", o: ["Closeness of a measurement to the true value", "Closeness of measurements to each other (reproducibility)", "The cost of the instrument", "The speed of the instrument"], a: 1, w: "Precision is how reproducible the measurements are — how close they are to each other." },
+    { q: "An instrument that gives readings consistently 5% above the true value is:", o: ["Accurate and precise", "Precise but not accurate", "Accurate but not precise", "Neither accurate nor precise"], a: 1, w: "It is precise (consistent readings) but not accurate (consistently wrong)." },
+    { q: "Calibration is the process of:", o: ["Cleaning the instrument", "Adjusting an instrument to match known standards", "Replacing the instrument", "Turning the instrument on"], a: 1, w: "Calibration adjusts an instrument's readings to match known standards." },
+    { q: "Regular calibration is important because:", o: ["Instruments are expensive", "Instruments can drift over time", "It is required by law", "It improves speed"], a: 1, w: "Instruments can drift over time, and calibration corrects this drift." },
+    { q: "A balance is used for:", o: ["Measuring volume", "Measuring mass (weighing)", "Measuring temperature", "Measuring pH"], a: 1, w: "Balances measure mass, also known as weighing." },
+    { q: "A centrifuge is used for:", o: ["Weighing samples", "Separating components by density", "Measuring light absorbance", "Visualising small objects"], a: 1, w: "Centrifuges separate components of a liquid by density." },
+    { q: "A spectrophotometer measures:", o: ["Mass", "Light absorbance", "Temperature", "pH"], a: 1, w: "Spectrophotometers measure how much light a substance absorbs." },
+    { q: "The three components of any instrument's operation are:", o: ["Sample, measurement principle, readout", "Cost, speed, accuracy", "Size, weight, colour", "Manufacturer, model, serial number"], a: 0, w: "Every instrument has a sample, a measurement principle, and a readout." },
+    { q: "Garbage in, garbage out means:", o: ["Instruments are unreliable", "A good instrument cannot correct a bad specimen", "Specimens are always contaminated", "Quality control is optional"], a: 1, w: "The instrument can only measure what it is given — a bad specimen gives bad results." },
+    { q: "Quality control in the laboratory involves:", o: ["Running samples with known values to verify instrument performance", "Cleaning the instruments", "Buying new instruments", "Training staff"], a: 0, w: "Quality control runs known samples (controls) to verify instrument performance." },
+    { q: "If a control sample result is outside the expected range, the laboratory should:", o: ["Ignore it", "Investigate and correct the problem before reporting patient results", "Report patient results anyway", "Buy a new instrument"], a: 1, w: "Out-of-range controls indicate a problem that must be investigated before patient results are reported." },
+    { q: "The first step in troubleshooting an instrument problem is:", o: ["Call a technician", "Check the sample, instrument, and technique systematically", "Replace the instrument", "Guess"], a: 1, w: "Systematically checking the sample, instrument, and technique identifies most problems." },
+    { q: "Regular maintenance of laboratory instruments is important because:", o: ["It is expensive", "It extends instrument life and ensures reliable performance", "It is required by law only", "It improves speed"], a: 1, w: "Regular maintenance extends instrument life and ensures reliable performance." },
+    { q: "A dirty cuvette in a spectrophotometer can cause:", o: ["No effect", "Inaccurate absorbance readings", "The instrument to turn off", "The sample to evaporate"], a: 1, w: "A dirty or scratched cuvette scatters light, causing inaccurate readings." },
+    { q: "An unbalanced centrifuge can:", o: ["Improve separation", "Damage the centrifuge", "Speed up the process", "Improve accuracy"], a: 1, w: "An unbalanced centrifuge can damage the rotor, motor, or shaft." },
+    { q: "The purpose of standardisation is:", o: ["To establish a reference point for measurements", "To clean the instrument", "To turn on the instrument", "To dispose of samples"], a: 0, w: "Standardisation establishes a reference point against which measurements can be compared." },
+    { q: "Which of the following is NOT a category of laboratory instrument?", o: ["Balance", "Centrifuge", "Spectrophotometer", "Thermometer", "Analyser"], a: 3, w: "Thermometers are not typically considered major laboratory instruments in the same category as balances, centrifuges, spectrophotometers, and analysers." },
+    { q: "Patient results are only as reliable as:", o: ["The manufacturer", "The instrument's calibration and QC", "The price of the instrument", "The age of the instrument"], a: 1, w: "Results are only reliable if the instrument is properly calibrated and QC is within range." },
+    { q: "A quality assurance system includes:", o: ["Only calibration", "Policies, procedures, and practices that ensure reliable results", "Only maintenance", "Only staff training"], a: 1, w: "Quality assurance is the broader system of policies, procedures, and practices that ensure reliable results." },
+    { q: "The measurement principle of a spectrophotometer is based on:", o: ["Mass", "Light absorption", "Density separation", "Magnification"], a: 1, w: "Spectrophotometers measure light absorption at specific wavelengths." },
+    { q: "A balance that gives readings of 10.0g, 10.1g, 10.0g, 10.1g for a 10.0g sample is:", o: ["Accurate and precise", "Precise but not accurate", "Accurate but not precise", "Neither"], a: 0, w: "It is accurate (close to the true value) and precise (consistent readings)." },
+    { q: "Specimen haemolysis can falsely elevate the result for:", o: ["Glucose", "Potassium", "Sodium", "Chloride"], a: 1, w: "Haemolysis releases potassium from red blood cells, falsely elevating potassium." },
+    { q: "A control sample is a sample with:", o: ["Unknown value", "Known value", "High value only", "Low value only"], a: 1, w: "Control samples have known values used to verify instrument performance." },
+    { q: "An instrument that is out of calibration will produce:", o: ["Accurate results", "Inaccurate results", "No results", "Faster results"], a: 1, w: "An out-of-calibration instrument gives inaccurate results." },
+    { q: "The readout of an instrument is:", o: ["The sample being measured", "How the result is displayed", "The measurement principle", "The calibration standard"], a: 1, w: "The readout is how the result is displayed — a number, printout, graph, or image." },
+    { q: "A well-maintained instrument is more likely to be:", o: ["Accurate and reliable", "Expensive", "Slow", "Difficult to use"], a: 0, w: "Regular maintenance ensures accurate and reliable performance." },
+    { q: "In healthcare, inaccurate laboratory results can cause:", o: ["Better patient care", "Misdiagnosis and patient harm", "Faster treatment", "Lower costs"], a: 1, w: "Inaccurate results can cause misdiagnosis and patient harm." },
+    { q: "The ultimate purpose of laboratory instrumentation is:", o: ["To look impressive", "To generate reliable data that supports patient care", "To be expensive", "To replace staff"], a: 1, w: "The purpose is to generate reliable data that supports diagnosis, treatment, and patient care." },
+  ],
+};
+
 /* --------------------------- lab:1 --------------------------- */
 const T_LAB_ELECTRICAL = {
   courseId: "lab",
@@ -4126,6 +4316,386 @@ If those came cleanly, you understand electrical safety not as a list of rules b
     { q: "Fuses and circuit breakers mainly protect:", o: ["Nothing", "The lighting only", "The person from small leakage", "Equipment and against fire by cutting large currents"], a: 3, w: "They cut large currents; the RCD is what protects the person." },
     { q: "Faulty electrical equipment in the laboratory should be:", o: ["Taken out of service, labelled and reported", "Kept in use", "Used only at night", "Hidden"], a: 0, w: "Remove faulty equipment from use and report it immediately." },
     { q: "Overall, laboratory electrical safety is best described as:", o: ["Only the electrician's concern", "A one-time check", "A chain of built-in safeguards, daily discipline and correct emergency response", "An optional extra"], a: 2, w: "It combines safeguards, everyday care and a life-saving response." },
+  ],
+};
+
+// ==================== LAB SAFETY TOPIC 04: METRICS AND MEASUREMENTS ====================
+const T_LAB_METRICS = {
+  courseId: "lab",
+  topicIndex: 3,
+  title: "Metrics and Measurements",
+  minutes: 22,
+  note: [
+    { q: "Why do scientists need a standard system of measurement?",
+      body: `In everyday life, we measure things in many ways — inches, feet, miles, pounds, gallons. But in science and medicine, using a standard system is essential. The International System of Units, or SI, is the universal language of measurement in science.
+
+My Socratic question: a doctor in Ghana prescribes 5 mg of a drug. A pharmacist in Nigeria receives the prescription. A laboratory in South Africa measures the drug concentration. How do they all understand the same measurement without confusion?
+
+The answer is the SI system — a standardised system of measurement used universally in science and medicine. The SI system ensures that a measurement made in one country is understood exactly the same in another. It eliminates confusion, errors, and the potential for patient harm that would come from inconsistent units.
+
+Understanding the SI system and metric measurements is fundamental to laboratory work. You will measure volumes, masses, concentrations, temperatures, and many other quantities. Using the correct units, converting between units, and understanding the prefixes that indicate magnitude are essential skills.
+
+Crucial insight: the SI system is the universal language of measurement in science and medicine. It ensures consistency, eliminates confusion, and is essential for accurate communication of measurements. Mastering metric measurements and conversions is a fundamental laboratory skill.` },
+
+    { q: "The base units of the SI system.",
+      body: `The SI system is built on seven base units, each measuring a fundamental property. In the laboratory, you will use several of these regularly.
+
+My Socratic question: a laboratory needs to measure length, mass, time, temperature, and the amount of a substance. What are the SI units for each of these, and why do they matter?
+
+The seven SI base units are: metre (m) for length, kilogram (kg) for mass, second (s) for time, ampere (A) for electric current, kelvin (K) for temperature, mole (mol) for amount of substance, and candela (cd) for luminous intensity.
+
+In the laboratory, you will most commonly use: metre (for length, though millimetres and centimetres are more common in the lab), kilogram (for mass, though grams and milligrams are more common), second (for time), kelvin (for temperature, though Celsius is more common in many settings), and mole (for amount of substance — essential for concentration calculations).
+
+Crucial insight: the SI base units are the foundation of all measurement. In the laboratory, the most important base units are the metre (length), kilogram (mass), second (time), kelvin (temperature), and mole (amount of substance). Understanding these units is essential for all laboratory measurements.` },
+
+    { q: "Metric prefixes: scaling up and down.",
+      body: `The SI system uses prefixes to indicate multiples and fractions of base units. Understanding these prefixes is essential because laboratory measurements span many orders of magnitude.
+
+My Socratic question: a laboratory measures a volume of 0.000001 litres and another volume of 1000 litres. Writing these numbers with all their zeros is impractical. How does the SI system solve this problem?
+
+The answer is metric prefixes. Prefixes are added to base units to indicate multiplication or division by powers of ten. The most common prefixes in the laboratory are: kilo- (k, 1000), milli- (m, 0.001), micro- (μ, 0.000001), nano- (n, 0.000000001), and pico- (p, 0.000000000001).
+
+For example: 1 kilogram = 1000 grams; 1 millilitre = 0.001 litres; 1 micrometre = 0.000001 metres; 1 nanogram = 0.000000001 grams. These prefixes make it easy to express very large and very small measurements without writing long strings of zeros.
+
+Crucial insight: metric prefixes indicate powers of ten. The most common laboratory prefixes are kilo-, milli-, micro-, nano-, and pico-. Understanding prefixes allows you to convert between units and express measurements at the appropriate scale.` },
+
+    { q: "Length measurements in the laboratory.",
+      body: `While you may not measure length as often as mass or volume, length measurements are still important in the laboratory — for measuring dimensions, distances, and sizes.
+
+My Socratic question: a laboratory needs to measure the diameter of a red blood cell, the length of a microscope slide, and the distance between marks on a pipette. What units would be used for each?
+
+Red blood cells are about 7 micrometres in diameter — micrometres (μm) are used for microscopic measurements. A microscope slide is 75 millimetres long — millimetres (mm) are used for small objects. Pipette markings might be measured in centimetres (cm) or millimetres (mm).
+
+The metre is the base unit, but in the laboratory, millimetres (mm), micrometres (μm), and nanometres (nm) are more commonly used. 1 mm = 0.001 m; 1 μm = 0.000001 m; 1 nm = 0.000000001 m.
+
+Crucial insight: length in the laboratory is measured in metres and its subdivisions. The most common laboratory units are millimetres (mm), micrometres (μm), and nanometres (nm). Choosing the right unit depends on the size of what you are measuring.` },
+
+    { q: "Mass measurements in the laboratory.",
+      body: `Mass measurement is one of the most common tasks in the laboratory. Understanding mass units is essential for preparing reagents, weighing samples, and calculating concentrations.
+
+My Socratic question: a laboratory needs to weigh 0.0000005 grams of a substance for a sensitive assay and 500 grams of a reagent for a bulk preparation. What units would be used for each?
+
+A very small amount (0.0000005 g) would be expressed in micrograms (μg) — 0.5 μg. A large amount (500 g) is expressed in grams, or perhaps kilograms (0.5 kg). The kilogram is the base unit, but in the laboratory, grams (g), milligrams (mg), micrograms (μg), and nanograms (ng) are more common.
+
+1 g = 0.001 kg; 1 mg = 0.001 g; 1 μg = 0.000001 g; 1 ng = 0.000000001 g. Understanding these relationships is essential for weighing samples and preparing solutions correctly.
+
+Crucial insight: mass is measured in kilograms and its subdivisions. The most common laboratory units are grams (g), milligrams (mg), micrograms (μg), and nanograms (ng). Correct mass measurement is essential for accurate reagent preparation and sample analysis.` },
+
+    { q: "Volume measurements in the laboratory.",
+      body: `Volume measurement is perhaps the most common task in the laboratory — measuring liquids for reagents, samples, and solutions. Understanding volume units is essential.
+
+My Socratic question: a laboratory needs to measure 0.000001 litres of sample for a test and 5 litres of distilled water for a wash. What units would be used for each?
+
+A very small volume (0.000001 L) would be expressed in microlitres (μL) — 1 μL. A larger volume (5 L) would be expressed in litres (L) or millilitres (mL) — 5000 mL. The litre is not an SI base unit but is widely used in the laboratory.
+
+1 L = 1000 mL; 1 mL = 1000 μL; 1 μL = 0.001 mL. In the laboratory, litres (L), millilitres (mL), and microlitres (μL) are the most common volume units.
+
+Crucial insight: volume is measured in litres and its subdivisions. The most common laboratory units are litres (L), millilitres (mL), and microlitres (μL). Accurate volume measurement is essential for preparing solutions and performing tests.` },
+
+    { q: "Temperature measurements in the laboratory.",
+      body: `Temperature measurement is critical in the laboratory — for incubations, reactions, storage, and many other processes. Understanding temperature scales is essential.
+
+My Socratic question: a laboratory needs to incubate a sample at 37 degrees, store a reagent at -20 degrees, and measure a reaction temperature of 100 degrees. What are the correct units and scales for these?
+
+In most laboratories, temperature is measured in degrees Celsius (°C). 37°C is body temperature, used for incubations. -20°C is a common freezer temperature. 100°C is the boiling point of water. The Kelvin scale (K) is the SI unit, but Celsius is more common in practice.
+
+To convert between Celsius and Kelvin: K = °C + 273.15. To convert between Celsius and Fahrenheit: °F = (°C × 9/5) + 32. In the laboratory, Celsius is the standard scale.
+
+Crucial insight: temperature in the laboratory is most commonly measured in degrees Celsius (°C). The Kelvin scale is the SI unit but is less commonly used in routine laboratory work. Accurate temperature control is essential for many laboratory processes.` },
+
+    { q: "Concentration measurements: moles and molarity.",
+      body: `Concentration is one of the most important measurements in the laboratory, especially in biochemistry and clinical chemistry. Understanding concentration units is essential for preparing solutions and interpreting results.
+
+My Socratic question: a solution contains 0.1 moles of glucose in 1 litre of solution. What is the concentration, and what does it mean?
+
+The concentration is 0.1 moles per litre, written as 0.1 mol/L or 0.1 M (molar). Molarity (M) is moles of solute per litre of solution. A 1 M solution contains 1 mole of solute in 1 litre of solution.
+
+The mole (mol) is the SI unit for amount of substance. One mole contains 6.022 × 10^23 particles (Avogadro's number). The molar mass of a substance is the mass of one mole of that substance in grams.
+
+Crucial insight: concentration is commonly expressed as molarity (M) — moles per litre. Understanding moles and molarity is essential for preparing solutions, calculating dosages, and interpreting laboratory results.` },
+
+    { q: "Conversions: a practical skill for the laboratory.",
+      body: `Converting between units is a fundamental laboratory skill. Whether you are converting between mass units, volume units, or concentration units, you need to be able to do it accurately.
+
+My Socratic question: a protocol requires 500 μL of a reagent, but your pipette measures in mL. How do you convert between these units, and why is this skill important?
+
+500 μL = 0.5 mL (because 1 mL = 1000 μL). This conversion is simple, but if you get it wrong, you could add 500 mL instead of 500 μL — a thousandfold error that would ruin the experiment.
+
+Steps for conversion: identify the starting unit and the target unit, know the conversion factor, multiply or divide as needed. For example: to convert mg to g, divide by 1000 (because 1 g = 1000 mg). To convert L to mL, multiply by 1000 (because 1 L = 1000 mL).
+
+Crucial insight: conversion between units is a fundamental laboratory skill. Getting conversions wrong can cause serious errors. Always check your conversions carefully, and use the correct conversion factors.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for Metrics and Measurements.
+
+SI system: the universal language of measurement in science and medicine. Seven base units including metre, kilogram, second, kelvin, and mole.
+
+Metric prefixes: indicate powers of ten. Common prefixes: kilo- (1000), milli- (0.001), micro- (0.000001), nano- (0.000000001), pico- (0.000000000001).
+
+Length: metre (m) base unit. Laboratory units: millimetres (mm), micrometres (μm), nanometres (nm).
+
+Mass: kilogram (kg) base unit. Laboratory units: grams (g), milligrams (mg), micrograms (μg), nanograms (ng).
+
+Volume: litre (L) widely used. Laboratory units: litres (L), millilitres (mL), microlitres (μL).
+
+Temperature: Celsius (°C) most common in laboratories. Kelvin (K) is SI unit.
+
+Concentration: molarity (M) = moles per litre. One mole = 6.022 × 10^23 particles.
+
+Conversions: identify units, use correct conversion factors, multiply or divide. Essential laboratory skill.
+
+Now your final test. A laboratory technician needs to prepare a 0.5 M solution of sodium chloride. The technician weighs out 29.2 grams of NaCl (molar mass = 58.44 g/mol) and dissolves it in 1 litre of water.
+
+Question one: how many moles of NaCl are in 29.2 grams? Show your calculation.
+Question two: what is the molarity of the resulting solution?
+Question three: if the technician had accidentally used 292 grams instead of 29.2 grams, what would the molarity have been, and what would be the consequence?
+
+Work them through before reading on.
+
+My answers. One: moles = mass / molar mass = 29.2 g / 58.44 g/mol = 0.5 moles. Two: molarity = moles / litres = 0.5 mol / 1 L = 0.5 M. Three: 292 g / 58.44 g/mol = 5 moles; molarity = 5 M. The solution would be ten times too concentrated, which could be dangerous for the patient or ruin the experiment. This demonstrates why accurate weighing and calculation are essential.` }
+  ],
+  theory: [
+    { q: "What is the SI system and why is it important?", a: "The SI system (International System of Units) is the universal language of measurement in science and medicine. It ensures consistency, eliminates confusion, and is essential for accurate communication of measurements." },
+    { q: "Name the seven SI base units.", a: "Metre (m) for length, kilogram (kg) for mass, second (s) for time, ampere (A) for electric current, kelvin (K) for temperature, mole (mol) for amount of substance, and candela (cd) for luminous intensity." },
+    { q: "List the common metric prefixes and their values.", a: "kilo- (1000), milli- (0.001), micro- (0.000001), nano- (0.000000001), and pico- (0.000000000001). These indicate multiplication or division by powers of ten." },
+    { q: "What are the common units for length in the laboratory?", a: "Millimetres (mm), micrometres (μm), and nanometres (nm). 1 mm = 0.001 m; 1 μm = 0.000001 m; 1 nm = 0.000000001 m." },
+    { q: "What are the common units for mass in the laboratory?", a: "Grams (g), milligrams (mg), micrograms (μg), and nanograms (ng). 1 g = 0.001 kg; 1 mg = 0.001 g; 1 μg = 0.000001 g." },
+    { q: "What are the common units for volume in the laboratory?", a: "Litres (L), millilitres (mL), and microlitres (μL). 1 L = 1000 mL; 1 mL = 1000 μL; 1 μL = 0.001 mL." },
+    { q: "What is the most common temperature scale in the laboratory?", a: "Degrees Celsius (°C) is the most common temperature scale in the laboratory. Kelvin (K) is the SI unit but is less commonly used in routine work." },
+    { q: "What is molarity and how is it calculated?", a: "Molarity (M) is moles of solute per litre of solution. It is calculated as moles of solute divided by litres of solution: M = mol/L." },
+    { q: "What is the importance of converting between units?", a: "Converting between units is a fundamental laboratory skill. It ensures that measurements are consistent and that calculations are accurate. Errors in conversion can cause serious errors in experiments and patient care." },
+    { q: "How do you convert grams to milligrams?", a: "Multiply by 1000. 1 g = 1000 mg. For example, 0.5 g × 1000 = 500 mg." },
+  ],
+  videos: [
+    { channel: "Lab Skills", title: "The SI System and Metric Units", note: "Understanding the system of measurement used in laboratories.", url: "" },
+    { channel: "Chemistry", title: "Metric Conversions Made Easy", note: "How to convert between metric units quickly and accurately.", url: "" },
+    { channel: "Clinical Chemistry", title: "Concentration Units: Molarity Explained", note: "Understanding moles and molarity in the laboratory.", url: "" },
+  ],
+  mcqs: [
+    { q: "The SI system is important because it:", o: ["Is used only in Europe", "Ensures consistency and eliminates confusion in measurement", "Is more accurate than other systems", "Is the oldest system"], a: 1, w: "The SI system ensures consistency and eliminates confusion in measurements." },
+    { q: "The SI base unit for mass is the:", o: ["Gram", "Kilogram", "Pound", "Ounce"], a: 1, w: "The kilogram is the SI base unit for mass." },
+    { q: "The SI base unit for length is the:", o: ["Metre", "Centimetre", "Kilometre", "Millimetre"], a: 0, w: "The metre is the SI base unit for length." },
+    { q: "The SI base unit for temperature is the:", o: ["Celsius", "Fahrenheit", "Kelvin", "Rankine"], a: 2, w: "The kelvin is the SI base unit for temperature." },
+    { q: "The SI base unit for amount of substance is the:", o: ["Gram", "Mole", "Kilogram", "Litre"], a: 1, w: "The mole is the SI base unit for amount of substance." },
+    { q: "The prefix 'milli-' means:", o: ["1000", "0.001", "0.000001", "0.000000001"], a: 1, w: "Milli- means one thousandth (0.001)." },
+    { q: "The prefix 'micro-' means:", o: ["1000", "0.001", "0.000001", "0.000000001"], a: 2, w: "Micro- means one millionth (0.000001)." },
+    { q: "The prefix 'nano-' means:", o: ["1000", "0.001", "0.000001", "0.000000001"], a: 3, w: "Nano- means one billionth (0.000000001)." },
+    { q: "How many millimetres are in one metre?", o: ["10", "100", "1000", "10000"], a: 2, w: "1 m = 1000 mm." },
+    { q: "How many micrometres are in one millimetre?", o: ["10", "100", "1000", "10000"], a: 2, w: "1 mm = 1000 μm." },
+    { q: "How many grams are in one kilogram?", o: ["10", "100", "1000", "10000"], a: 2, w: "1 kg = 1000 g." },
+    { q: "How many milligrams are in one gram?", o: ["10", "100", "1000", "10000"], a: 2, w: "1 g = 1000 mg." },
+    { q: "How many microlitres are in one millilitre?", o: ["10", "100", "1000", "10000"], a: 2, w: "1 mL = 1000 μL." },
+    { q: "How many millilitres are in one litre?", o: ["10", "100", "1000", "10000"], a: 2, w: "1 L = 1000 mL." },
+    { q: "The most common temperature scale in the laboratory is:", o: ["Fahrenheit", "Celsius", "Kelvin", "Rankine"], a: 1, w: "Celsius is the most common laboratory temperature scale." },
+    { q: "Molarity is defined as:", o: ["Moles per kilogram", "Moles per litre", "Grams per litre", "Grams per mole"], a: 1, w: "Molarity is moles of solute per litre of solution." },
+    { q: "One mole contains approximately how many particles?", o: ["6 × 10^23", "6 × 10^24", "6 × 10^22", "6 × 10^21"], a: 0, w: "One mole contains approximately 6.022 × 10^23 particles (Avogadro's number)." },
+    { q: "To convert grams to milligrams, you:", o: ["Multiply by 1000", "Divide by 1000", "Multiply by 100", "Divide by 100"], a: 0, w: "1 g = 1000 mg, so multiply grams by 1000 to get milligrams." },
+    { q: "To convert millilitres to litres, you:", o: ["Multiply by 1000", "Divide by 1000", "Multiply by 100", "Divide by 100"], a: 1, w: "1 L = 1000 mL, so divide millilitres by 1000 to get litres." },
+    { q: "A concentration of 0.5 M means:", o: ["0.5 moles per litre", "0.5 grams per litre", "0.5 grams per mole", "0.5 litres per mole"], a: 0, w: "0.5 M = 0.5 moles per litre." },
+    { q: "If you have 0.25 moles of a substance in 0.5 litres, the molarity is:", o: ["0.125 M", "0.25 M", "0.5 M", "1 M"], a: 2, w: "M = 0.25 mol / 0.5 L = 0.5 M." },
+    { q: "The volume of a red blood cell is typically measured in:", o: ["Millilitres", "Microlitres", "Litres", "Nanolitres"], a: 1, w: "Red blood cell volumes are in the range of 90-100 fL (femtolitres), but microlitres is a common laboratory unit for small volumes." },
+    { q: "A micrometre is:", o: ["10^-3 metres", "10^-6 metres", "10^-9 metres", "10^-12 metres"], a: 1, w: "1 μm = 10^-6 metres." },
+    { q: "A nanogram is:", o: ["10^-3 grams", "10^-6 grams", "10^-9 grams", "10^-12 grams"], a: 2, w: "1 ng = 10^-9 grams." },
+    { q: "A solution that is 2 M contains:", o: ["2 moles per litre", "2 grams per litre", "2 litres per mole", "2 kilograms per litre"], a: 0, w: "2 M = 2 moles per litre." },
+    { q: "To prepare 1 L of a 1 M solution of a substance with molar mass 58.44 g/mol, you need:", o: ["58.44 g", "29.22 g", "116.88 g", "5.844 g"], a: 0, w: "You need 58.44 g (1 mole) in 1 litre." },
+    { q: "If you accidentally use 10 times the correct amount of reagent, the solution will be:", o: ["10 times too dilute", "10 times too concentrated", "The correct concentration", "Unusable"], a: 1, w: "Using 10 times the correct amount makes the solution 10 times too concentrated." },
+    { q: "The conversion factor for grams to kilograms is:", o: ["0.001", "0.01", "0.1", "1"], a: 0, w: "1 g = 0.001 kg, so multiply by 0.001." },
+    { q: "The SI system is based on:", o: ["Powers of 2", "Powers of 10", "Powers of 12", "Powers of 16"], a: 1, w: "The SI system is based on powers of 10." },
+    { q: "Accurate measurement is essential in the laboratory because:", o: ["It looks professional", "Errors can lead to incorrect patient results and harm", "It is required by law", "It saves time"], a: 1, w: "Errors in measurement can lead to incorrect results and patient harm." },
+  ],
+};
+
+// ==================== LAB SAFETY TOPIC 05: TAKING MASS MEASUREMENTS WITH AN ELECTRONIC BALANCE ====================
+const T_LAB_BALANCE = {
+  courseId: "lab",
+  topicIndex: 4,
+  title: "Taking Mass Measurements with an Electronic Balance",
+  minutes: 20,
+  note: [
+    { q: "Why is the electronic balance the most important instrument in the laboratory?",
+      body: `You have learned about metrics and measurements. Now we focus on the instrument that is at the heart of almost every laboratory procedure: the electronic balance. It is arguably the most frequently used instrument in any laboratory, and its correct use is essential for accurate results.
+
+My Socratic question: a laboratory needs to weigh a reagent for a solution, a sample for analysis, and a standard for calibration. In all these cases, what determines the accuracy of the final result? The answer is the accuracy of the weighing.
+
+The electronic balance measures mass with high precision and accuracy. It is used to weigh solids, liquids, and sometimes even live animals. From preparing reagents to analysing samples, almost every procedure in the laboratory starts with a weighing. If the weighing is wrong, everything that follows is wrong.
+
+Understanding how to use an electronic balance correctly — how to set it up, how to weigh accurately, and how to maintain it — is a fundamental laboratory skill. A balance is only as good as the person using it.
+
+Crucial insight: the electronic balance is one of the most important instruments in the laboratory. Accurate weighing is the foundation of accurate results. Mastering the use of the balance is an essential skill for every laboratory scientist.` },
+
+    { q: "The types of electronic balances: analytical vs top-loading.",
+      body: `Not all balances are the same. Different balances have different capacities and sensitivities, and choosing the right balance for the task is essential.
+
+My Socratic question: a laboratory needs to weigh 5.0000 g of a reagent and 0.0025 g of a standard. Can the same balance be used for both? Why or why not?
+
+The answer is that different balances are needed for different tasks. An analytical balance is highly sensitive, reading to 0.0001 g (0.1 mg). It is used for accurate weighing of small amounts, typically up to a few hundred grams. A top-loading balance is less sensitive, reading to 0.01 g or 0.001 g, but has a larger capacity, typically up to several kilograms.
+
+Analytical balances are used when high precision is needed — for preparing standards, calibrating instruments, or weighing small samples. Top-loading balances are used for routine weighing of larger amounts — weighing reagents for solutions or bulk materials. Using the wrong balance can compromise accuracy or damage the instrument.
+
+Crucial insight: analytical balances are highly sensitive (0.0001 g) for small, accurate weighings; top-loading balances have larger capacity but lower precision. Using the right balance for the task is essential for accurate results and instrument safety.` },
+
+    { q: "Setting up the balance: level, zero, and calibration.",
+      body: `Before using a balance, it must be properly set up. Three steps are essential: levelling, taring (zeroing), and calibration.
+
+My Socratic question: a balance that is not level gives inconsistent readings. A balance that has not been tared gives readings that include the container's weight. A balance that has not been calibrated gives inaccurate readings. What are the correct procedures for each of these?
+
+Levelling: the balance must be perfectly level to give accurate readings. Most balances have a built-in spirit level and adjustable feet. The bubble must be in the centre of the level before weighing.
+
+Taring (zeroing): the balance must read zero before any sample is weighed. With an empty container on the pan, press the tare button. This subtracts the container's weight, so the balance reads only the sample weight.
+
+Calibration: the balance must be periodically checked against known weights to ensure accuracy. Many electronic balances have a built-in calibration function using an internal or external calibration weight.
+
+Crucial insight: proper setup is essential for accurate weighing. Level the balance, tare it before each weighing, and calibrate it regularly. Skipping these steps leads to inaccurate results.` },
+
+    { q: "Weighing techniques: direct weighing and weighing by difference.",
+      body: `There are two main techniques for weighing samples on an electronic balance: direct weighing and weighing by difference. Each has its uses and advantages.
+
+My Socratic question: a laboratory needs to weigh 5.0000 g of NaCl for a solution. What is the best technique for this? If the sample is a powder that could absorb moisture from the air, what technique should be used?
+
+Direct weighing is placing the sample directly on the balance pan (or in a container) and reading the mass. It is simple and fast, but the sample is exposed to the environment and may absorb moisture.
+
+Weighing by difference is weighing a container with the sample, removing some sample, and re-weighing. The difference is the mass of sample removed. This technique is more accurate for air-sensitive or hygroscopic (moisture-absorbing) samples because the sample is not exposed to the air for as long. It also eliminates errors from sample sticking to the container.
+
+Crucial insight: direct weighing is simple and fast; weighing by difference is more accurate for sensitive samples. Choose the technique based on the sample's properties and the required accuracy.` },
+
+    { q: "The importance of taring (zeroing).",
+      body: `Taring, or zeroing, is one of the most important steps in weighing. It ensures that the balance reads only the weight of the sample, not the container.
+
+My Socratic question: a laboratory technician places a weighing boat on the balance and the reading is 2.3456 g. The technician then adds the sample and the reading is 7.8901 g. What is the correct weight of the sample, and what mistake has been made?
+
+The correct weight of the sample is 5.5445 g (7.8901 g - 2.3456 g). The technician has not tared the balance. If the technician had tared the balance with the weighing boat on it, the balance would have read 0.0000 g, and the sample reading would have been 5.5445 g directly. Taring saves time and reduces errors.
+
+To tare: place the empty container on the balance pan, wait for the reading to stabilise, and press the tare button. The balance will read zero. Then add the sample and read the weight directly.
+
+Crucial insight: taring subtracts the container's weight so the balance reads only the sample weight. Always tare the balance before weighing a sample. This saves time and prevents calculation errors.` },
+
+    { q: "Sources of error in weighing.",
+      body: `Even with a properly calibrated balance and correct technique, several factors can cause weighing errors. Understanding these sources of error helps you avoid them.
+
+My Socratic question: a laboratory technician weighs a sample and gets readings that are consistently 5 mg too high. The sample is a powder that absorbs moisture from the air. What is the likely cause, and how can it be corrected?
+
+The likely cause is that the sample is absorbing moisture (water vapour) from the air, increasing its weight. This is called hygroscopy. To correct it, weigh the sample quickly in a sealed container, or dry the sample before weighing.
+
+Other sources of error include: air currents (which can cause the balance reading to fluctuate), vibrations (from the bench or nearby equipment), static electricity (which can attract dust or cause the balance to give unstable readings), temperature changes (which affect the balance's sensitivity), and poor technique (such as spilling samples on the pan).
+
+Crucial insight: common sources of weighing error include moisture absorption, air currents, vibrations, static electricity, temperature changes, and poor technique. Identifying and controlling these factors is essential for accurate weighing.` },
+
+    { q: "Maintenance and care of the electronic balance.",
+      body: `Electronic balances are sensitive instruments that require regular maintenance. Proper care ensures accuracy and extends the life of the balance.
+
+My Socratic question: a balance is left with powder on the pan, the door is left open, and the balance is never cleaned. What will happen to the balance over time, and what should be done instead?
+
+Powder on the pan can corrode the pan or affect readings. An open door allows dust to enter the balance mechanism. A dirty balance gives inaccurate readings and may need expensive repairs. Instead, the balance should be cleaned after each use, the doors kept closed when not in use, and the balance covered to protect it from dust.
+
+Daily maintenance: clean the pan and the surrounding area with a soft brush or lint-free cloth. Weekly maintenance: clean the entire balance compartment. Regular maintenance: have the balance serviced by a qualified technician at least annually.
+
+Crucial insight: regular maintenance extends the life of the balance and ensures accurate readings. Clean the balance after each use, keep doors closed, and have it serviced regularly. A well-maintained balance gives reliable results for many years.` },
+
+    { q: "Weighing hazardous and volatile substances.",
+      body: `Some substances are hazardous or volatile and require special handling during weighing. Safety and accuracy are both important.
+
+My Socratic question: a laboratory needs to weigh a toxic powder and a volatile liquid. What precautions should be taken, and why?
+
+A toxic powder should be weighed in a fume cupboard or biosafety cabinet to prevent inhalation. The balance should be set up inside the cabinet, or the sample should be weighed in a sealed container. A volatile liquid should be weighed in a sealed container to prevent evaporation, which would change the mass during weighing.
+
+General precautions: use appropriate PPE (gloves, lab coat, eye protection), weigh hazardous substances in a fume cupboard, use sealed containers for volatile substances, minimise the time the sample is open to the air, and clean up spills immediately.
+
+Crucial insight: hazardous and volatile substances require special handling during weighing. Use appropriate safety equipment, weigh in fume cupboards when needed, and use sealed containers for volatile substances. Safety and accuracy go together.` },
+
+    { q: "Common mistakes in balance use and weighing.",
+      body: `Students and laboratory professionals often make common mistakes when using electronic balances. Understanding these mistakes is essential for accurate weighing.
+
+The first mistake is not taring the balance before weighing. This adds the container's weight to the sample weight, giving a falsely high reading.
+
+The second mistake is not cleaning the balance. Powder or spills on the pan or in the balance chamber can cause inaccurate readings.
+
+The third mistake is not closing the doors. Air currents from an open door cause the reading to fluctuate. Always close the doors before taking a reading.
+
+The fourth mistake is weighing hot samples. Hot samples create air currents inside the balance chamber, causing inaccurate readings. Allow samples to cool to room temperature before weighing.
+
+The fifth mistake is overloading the balance. Exceeding the balance's capacity can damage the instrument.
+
+The sixth mistake is not using the correct balance for the task. Using a top-loading balance when an analytical balance is needed gives insufficient precision.
+
+Crucial insight: common mistakes in balance use include not taring, not cleaning, not closing doors, weighing hot samples, overloading, and using the wrong balance. Avoiding these mistakes ensures accurate weighing.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for Taking Mass Measurements with an Electronic Balance.
+
+Types: analytical (sensitive, 0.0001 g, for small accurate weighings), top-loading (larger capacity, lower precision, for routine weighings).
+
+Setup: level the balance (bubble in centre), tare (zero the balance with container), calibrate (check against known weights).
+
+Techniques: direct weighing (sample directly on pan or in container), weighing by difference (weigh container with sample, remove sample, re-weigh — more accurate for sensitive samples).
+
+Taring: subtracts the container's weight. Always tare before weighing.
+
+Sources of error: moisture absorption, air currents, vibrations, static, temperature, poor technique.
+
+Maintenance: clean after each use, keep doors closed, service regularly.
+
+Hazardous substances: use fume cupboard, sealed containers, PPE.
+
+Common mistakes: not taring, not cleaning, doors open, hot samples, overloading, wrong balance.
+
+Now your final test. A laboratory technician needs to weigh 25.0000 mg of a hygroscopic (moisture-absorbing) substance for an accurate assay.
+
+Question one: which type of balance should the technician use, and why?
+Question two: what weighing technique should be used, and why is it preferred for this sample?
+Question three: what precautions should the technician take to prevent moisture absorption during weighing?
+
+Work them through before reading on.
+
+My answers. One: the technician should use an analytical balance because it reads to 0.0001 g (0.1 mg), which provides the required precision (25.0000 mg = 0.025000 g). A top-loading balance would not be precise enough. Two: weighing by difference should be used because it minimises the time the sample is exposed to air, reducing moisture absorption. The technician weighs the container with the sample, removes the required amount, and re-weighs — the difference is the mass removed. Three: the technician should: work quickly to minimise exposure, use a sealed weighing vessel (like a weighing bottle), work in a dry environment if possible, and close the container immediately after taking the sample.` }
+  ],
+  theory: [
+    { q: "What is an electronic balance and why is it important?", a: "An electronic balance is an instrument that measures mass with high precision and accuracy. It is one of the most important instruments in the laboratory because accurate weighing is the foundation of accurate results." },
+    { q: "What is the difference between an analytical balance and a top-loading balance?", a: "An analytical balance is highly sensitive, reading to 0.0001 g (0.1 mg), and is used for accurate weighing of small amounts. A top-loading balance has a larger capacity but lower precision (0.01 g or 0.001 g) and is used for routine weighing of larger amounts." },
+    { q: "What are the three steps to set up a balance before use?", a: "Level the balance (ensure it is perfectly level using the spirit level and adjustable feet), tare the balance (zero it with the container on the pan), and calibrate the balance (check against known weights regularly)." },
+    { q: "What is taring and why is it important?", a: "Taring is zeroing the balance with an empty container on the pan. It subtracts the container's weight so the balance reads only the sample weight. Taring saves time and prevents calculation errors." },
+    { q: "What is the difference between direct weighing and weighing by difference?", a: "Direct weighing is placing the sample directly on the pan (or in a container) and reading the mass. Weighing by difference involves weighing a container with sample, removing some sample, and re-weighing — the difference is the sample mass. Weighing by difference is more accurate for sensitive samples." },
+    { q: "What are common sources of error in weighing?", a: "Moisture absorption (hygroscopy), air currents, vibrations, static electricity, temperature changes, and poor technique (spilling, not taring, not closing doors)." },
+    { q: "How should a balance be maintained?", a: "Clean the pan and area after each use, keep doors closed when not in use, cover the balance to protect from dust, and have it serviced by a qualified technician at least annually." },
+    { q: "What precautions are needed when weighing hazardous or volatile substances?", a: "Use appropriate PPE (gloves, lab coat, eye protection), weigh in a fume cupboard if needed, use sealed containers for volatile substances, minimise exposure time, and clean up spills immediately." },
+    { q: "What are common mistakes in balance use?", a: "Not taring, not cleaning, not closing doors, weighing hot samples, overloading the balance, and using the wrong type of balance for the task." },
+    { q: "Why is weighing by difference preferred for hygroscopic samples?", a: "Weighing by difference minimises the time the sample is exposed to air, reducing moisture absorption that would change the sample's mass." },
+  ],
+  videos: [
+    { channel: "Lab Skills", title: "How to Use an Analytical Balance", note: "Step-by-step guide to accurate weighing.", url: "" },
+    { channel: "Chemistry", title: "Weighing Techniques: Direct vs Difference", note: "Which technique to use and when.", url: "" },
+    { channel: "Lab Safety", title: "Balances and Maintenance", note: "Keeping your balance accurate and reliable.", url: "" },
+  ],
+  mcqs: [
+    { q: "The electronic balance is important because:", o: ["It is expensive", "Accurate weighing is the foundation of accurate results", "It is easy to use", "It is required by law"], a: 1, w: "Accurate weighing is essential for accurate results, making the balance one of the most important instruments." },
+    { q: "An analytical balance reads to:", o: ["0.01 g", "0.001 g", "0.0001 g", "0.00001 g"], a: 2, w: "Analytical balances read to 0.0001 g (0.1 mg)." },
+    { q: "A top-loading balance has:", o: ["High sensitivity", "Large capacity but lower precision", "No capacity limit", "Higher precision than analytical"], a: 1, w: "Top-loading balances have larger capacity but lower precision than analytical balances." },
+    { q: "The first step in setting up a balance is:", o: ["Taring", "Calibrating", "Levelling", "Weighing"], a: 2, w: "The balance must be levelled first to ensure accurate readings." },
+    { q: "Taring a balance means:", o: ["Levelling the balance", "Zeroing the balance with the container on the pan", "Calibrating the balance", "Cleaning the balance"], a: 1, w: "Taring subtracts the container's weight so the balance reads only the sample weight." },
+    { q: "Direct weighing is:", o: ["Weighing a sample in a sealed container", "Placing the sample directly on the pan and reading the mass", "Weighing by difference", "Using a top-loading balance"], a: 1, w: "Direct weighing places the sample directly on the pan." },
+    { q: "Weighing by difference involves:", o: ["Weighing the sample directly", "Weighing a container with sample, removing some, and re-weighing", "Weighing only the sample", "Weighing the sample without a container"], a: 1, w: "Weighing by difference involves weighing the container with sample, removing some sample, and re-weighing." },
+    { q: "Weighing by difference is preferred for hygroscopic samples because:", o: ["It is faster", "It minimises air exposure and moisture absorption", "It is more precise", "It requires less skill"], a: 1, w: "Weighing by difference minimises air exposure, reducing moisture absorption." },
+    { q: "A sample that absorbs moisture from the air is called:", o: ["Hygroscopic", "Volatile", "Deliquescent", "Efflorescent"], a: 0, w: "A hygroscopic sample absorbs moisture from the air." },
+    { q: "Which of the following can cause weighing errors?", o: ["Air currents", "Vibrations", "Static electricity", "All of the above"], a: 3, w: "Air currents, vibrations, and static electricity can all cause weighing errors." },
+    { q: "To prevent air currents from affecting the balance reading:", o: ["Turn on a fan", "Close the balance doors", "Open the windows", "Move the balance"], a: 1, w: "Closing the balance doors prevents air currents from affecting the reading." },
+    { q: "Hot samples should be weighed because:", o: ["They weigh less when hot", "They create air currents that affect readings", "They are more accurate", "They are easier to weigh"], a: 1, w: "Hot samples create air currents inside the balance chamber, causing inaccurate readings." },
+    { q: "A balance should be cleaned:", o: ["Once a year", "After each use", "Never", "Only when it looks dirty"], a: 1, w: "The balance should be cleaned after each use to maintain accuracy." },
+    { q: "Overloading a balance can:", o: ["Improve accuracy", "Damage the balance", "Speed up weighing", "Reduce errors"], a: 1, w: "Overloading can damage the balance." },
+    { q: "Toxic powders should be weighed:", o: ["On the open bench", "In a fume cupboard", "With bare hands", "Without PPE"], a: 1, w: "Toxic powders should be weighed in a fume cupboard to prevent inhalation." },
+    { q: "Volatile liquids should be weighed:", o: ["In an open container", "In a sealed container to prevent evaporation", "On the open bench", "Without a container"], a: 1, w: "Volatile liquids should be weighed in a sealed container to prevent evaporation." },
+    { q: "Common mistakes in balance use include all of the following EXCEPT:", o: ["Not taring", "Cleaning after each use", "Not closing doors", "Weighing hot samples"], a: 1, w: "Cleaning after each use is correct practice, not a mistake." },
+    { q: "A balance that is not level will give:", o: ["Accurate readings", "Inconsistent readings", "No readings", "Faster readings"], a: 1, w: "A balance that is not level gives inconsistent readings." },
+    { q: "The tare button is used to:", o: ["Turn on the balance", "Zero the balance with the container on the pan", "Calibrate the balance", "Clean the balance"], a: 1, w: "The tare button zeroes the balance with the container on the pan." },
+    { q: "Calibration of a balance involves:", o: ["Cleaning the balance", "Checking accuracy against known weights", "Turning on the balance", "Taring the balance"], a: 1, w: "Calibration checks the balance's accuracy against known weights." },
+    { q: "A balance should be covered when not in use to:", o: ["Keep it warm", "Protect it from dust", "Prevent theft", "Save space"], a: 1, w: "Covering the balance protects it from dust." },
+    { q: "The correct weight of a sample is determined by:", o: ["The mass reading directly", "The mass reading minus the container weight if not tared", "The mass reading times the container weight", "The mass reading divided by the container weight"], a: 1, w: "If not tared, the sample weight is the total reading minus the container weight." },
+    { q: "Moisture absorption during weighing can cause:", o: ["The sample to weigh less than it should", "The sample to weigh more than it should", "No effect on weight", "The sample to dissolve"], a: 1, w: "Moisture absorption adds weight to the sample, making it weigh more than it should." },
+    { q: "The spirit level on a balance is used to:", o: ["Measure temperature", "Check if the balance is level", "Calibrate the balance", "Tare the balance"], a: 1, w: "The spirit level checks if the balance is level." },
+    { q: "For routine weighing of large amounts, which balance is best?", o: ["Analytical balance", "Top-loading balance", "Microbalance", "Spring balance"], a: 1, w: "A top-loading balance is best for routine weighing of large amounts." },
+    { q: "For precise weighing of small amounts, which balance is best?", o: ["Analytical balance", "Top-loading balance", "Spring balance", "Kitchen scale"], a: 0, w: "An analytical balance is best for precise weighing of small amounts." },
+    { q: "The balance door should be closed during weighing to:", o: ["Keep the sample warm", "Prevent air currents", "Save time", "Make it look professional"], a: 1, w: "Closing the door prevents air currents from affecting the reading." },
+    { q: "A spill on the balance pan should be:", o: ["Ignored", "Cleaned immediately", "Left for later", "Wiped with bare hands"], a: 1, w: "Spills should be cleaned immediately to maintain accuracy." },
+    { q: "Weighing a sample directly on the pan is called:", o: ["Weighing by difference", "Direct weighing", "Taring", "Calibrating"], a: 1, w: "Direct weighing is weighing the sample directly on the pan." },
+    { q: "The purpose of regular balance maintenance is:", o: ["To make it look new", "To ensure accuracy and extend instrument life", "To increase speed", "To reduce costs"], a: 1, w: "Regular maintenance ensures accuracy and extends the instrument's life." },
   ],
 };
 
@@ -6345,7 +6915,6 @@ const CONTENT = {
   "ana:2": T_ANA_EPI_OVERVIEW,
   "ana:3": T_ANA_EPI_MEMB,
   "ana:4": T_ANA_GLAND,
-  "phy:0": T_PHY_GENERAL,
   "bch:0": T_BCH_INTRO,
   "bch:1": T_BCH_ENZYMES,
   "bch:2": T_BCH_INHIBITION,
@@ -6366,12 +6935,16 @@ const CONTENT = {
   "com:2": T_COM_ORGANISATIONAL, 
   "com:3": T_COM_LETTERS,
   "com:4": T_COM_MEMO,     
-  "lab:1": T_MLS_SAFETY,
+  "phy:0": T_PHY_GENERAL,
   "phy:1": T_PHY_HOMEO,
   "phy:2": T_PHY_TRANSPORT,
   "phy:3": T_PHY_FACIL,
   "phy:4": T_PHY_ACTIVE,
+  "lab:0": T_LAB_INSTRUMENTATION,
+  "lab:1": T_MLS_SAFETY,
   "lab:2": T_LAB_ELECTRICAL,
+  "lab:3": T_LAB_METRICS,
+  "lab:4": T_LAB_BALANCE, 
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
