@@ -1545,6 +1545,462 @@ If those three came cleanly, you understand why biochemistry begins with water a
   ],
 };
 
+// ==================== BIOCHEMISTRY TOPIC 1: ENZYMES ====================
+const T_BCH_ENZYMES = {
+  courseId: "bch",
+  topicIndex: 1,
+  title: "Enzymes",
+  minutes: 22,
+  note: [
+    { q: "What are enzymes, and why can't life run without them?",
+      body: `You have learned that metabolism is a vast network of chemical reactions, each one breaking or building molecules. Without enzymes, every one of those reactions would take hours, days, or years to happen on their own - far too slow to sustain life.
+
+My Socratic question: a reaction that should take weeks in a test tube happens in milliseconds inside a cell. What is the agent that makes this possible, and how does it work?
+
+The answer is enzymes - biological catalysts that accelerate chemical reactions by lowering the activation energy required for them to proceed. A catalyst is a substance that speeds up a reaction without being consumed by it, and enzymes are proteins that do exactly this for biological reactions.
+
+Crucial insight: enzymes do not change what reactions are possible - they change how fast they occur, making the sluggish chemistry of the test tube into the swift chemistry of life.` },
+
+    { q: "How do enzymes lower activation energy?",
+      body: `Every chemical reaction has an energy barrier called activation energy - the initial push needed to get the reactants into a state where they can react. Enzymes lower this barrier, so more molecules have enough energy to react at body temperature.
+
+My Socratic question: imagine pushing a boulder over a hill to start it rolling downhill. The boulder is the reaction; the hill is the activation energy. What would an enzyme do to the hill?
+
+The answer is that it would carve a tunnel through the hill - the boulder still needs some push, but much less than going over the top. The starting and ending points (the reactants and products) are unchanged, but the path is easier, so the reaction runs much faster.
+
+Crucial insight: enzymes lower activation energy without changing the overall energy balance of the reaction - they make the journey easier, not the destination different.` },
+
+    { q: "The active site: where the chemistry happens.",
+      body: `An enzyme is a protein folded into a specific three-dimensional shape. Within that shape is a pocket or cleft called the active site - the exact region where the reaction takes place.
+
+My Socratic question: a key fits a lock perfectly and only that key turns it. How does an enzyme recognise its specific substrate and no other?
+
+The answer is the lock-and-key model: the substrate molecule has a shape that matches the active site, like a key matching a lock. The enzyme is specific to its substrate because only that substrate fits properly into the active site and undergoes the chemical transformation the enzyme catalyzes.
+
+Crucial insight: the active site is three-dimensional, not flat. A single amino acid change can disrupt the active site and destroy enzyme function - which is exactly what happens in many genetic diseases.` },
+
+    { q: "The induced fit model: a refined understanding.",
+      body: `The lock-and-key model is useful, but it is too rigid. The active site is not a fixed shape - it changes slightly as the substrate binds, adjusting to hold the substrate more tightly.
+
+My Socratic question: why would a flexible active site be better than a rigid one for catalysis?
+
+The answer is that the induced fit allows the active site to wrap around the substrate, forming a better binding surface and bringing the catalytic groups into exactly the right position to perform the reaction. It is like a hand closing around a ball rather than a rigid claw holding it.
+
+Crucial insight: induced fit explains why enzymes are so efficient - the binding itself helps orient the substrate exactly for the reaction to happen, and the energy of binding contributes to lowering the activation energy.` },
+
+    { q: "Cofactors and coenzymes: the helpers.",
+      body: `Many enzymes cannot function alone. They require non-protein helpers called cofactors. Without them, the enzyme is inactive.
+
+My Socratic question: a car engine needs both the engine block (the protein) and fuel and spark (the cofactors). Which part of an enzyme is the engine block, and which are the helpers?
+
+The answer is that the protein part is the apoenzyme, and it needs a cofactor to become a complete, active holoenzyme. Cofactors can be inorganic ions, such as zinc, magnesium or iron, or organic molecules called coenzymes, such as NADH and FADH2 - the same coenzymes that carry electrons in metabolism.
+
+Crucial insight: cofactors are essential for activity - a deficiency of zinc or magnesium can impair enzyme function, and many vitamins are precursors to coenzymes, explaining why vitamin deficiencies cause disease.` },
+
+    { q: "Enzyme specificity: why one enzyme does one job.",
+      body: `Each enzyme is specific to a particular reaction or a set of related reactions. This specificity is the key to metabolic control.
+
+My Socratic question: the body has thousands of reactions happening simultaneously. How does each reaction find its correct enzyme among all the others?
+
+The answer is that enzymes are selective: a kinase phosphorylates a specific substrate; a protease cleaves a specific peptide bond. The specificity comes from the active site's shape and chemistry, which fit only the correct substrate. A single enzyme rarely works on more than one substrate, or it works on a single class of closely related substrates.
+
+Crucial insight: specificity is why we can target enzymes with drugs. A drug that inhibits a bacterial enzyme without affecting the equivalent human enzyme is a selective antibiotic, and this selectivity comes from differences in the active sites.` },
+
+    { q: "Enzyme kinetics: how fast enzymes work.",
+      body: `The rate of an enzyme-catalysed reaction increases as substrate concentration increases, but only up to a limit. Beyond a certain point, all active sites are occupied, and the enzyme is saturated - adding more substrate does not increase the rate.
+
+My Socratic question: if adding more substrate always makes a reaction go faster, why does it eventually stop getting faster?
+
+The answer is that the enzyme has a finite number of active sites. When all active sites are occupied, the enzyme is working at its maximum speed. This maximum velocity is called Vmax, and the substrate concentration at which the reaction runs at half of Vmax is called Km, a measure of the enzyme's affinity for its substrate.
+
+Crucial insight: Km and Vmax are fundamental properties of enzymes that can be measured in the laboratory - which is exactly what you will do in practical biochemistry.` },
+
+    { q: "The role of pH and temperature.",
+      body: `Enzymes are sensitive to their environment. They work best at specific pH and temperature ranges, and outside those ranges they lose activity.
+
+My Socratic question: why does a fever over about 41 degrees become life-threatening even when it is the body's own defence?
+
+The answer is that enzymes are proteins, and proteins denature at high temperatures. Above a certain temperature, the enzyme's three-dimensional structure unfolds, the active site is destroyed, and the enzyme stops working. This is why hyperthermia is lethal - metabolism shuts down as enzymes denature.
+
+Crucial insight: pH sensitivity explains the specialised pH of different body compartments - the stomach has acid-active proteases, the intestine has neutral-active ones, and blood has enzymes that work at pH 7.4.` },
+
+    { q: "Regulation of enzyme activity.",
+      body: `Cells control metabolism by controlling enzymes. Several mechanisms do this.
+
+My Socratic question: if an enzyme is producing too much of a product, what signal would tell it to slow down, and how would it receive that signal?
+
+The answer is feedback inhibition: the product of a pathway inhibits the first enzyme of the pathway. When product accumulates, it binds to the enzyme and slows its activity, preventing overproduction. This is a type of allosteric regulation - the inhibitor binds somewhere other than the active site, changing the enzyme's shape and slowing it down.
+
+Crucial insight: feedback inhibition is economical - it ensures the cell only makes what it needs, not more. This is also why many toxins and drugs work by inhibiting enzymes - they mimic the natural regulatory signals.` },
+
+    { q: "Clinical relevance: enzymes in diagnosis.",
+      body: `Your knowledge of enzymes has direct clinical applications that you will see in the laboratory.
+
+My Socratic question: when a patient has a heart attack, what biochemical clue appears in their blood that can confirm the diagnosis?
+
+The answer is cardiac enzymes. When heart muscle cells die, their contents spill into the blood, and enzymes such as creatine kinase and troponin can be measured. Elevated levels indicate muscle damage, and the pattern of elevation helps diagnose the type of injury.
+
+Crucial insight: enzymes are both the workhorses of metabolism and the markers of disease. Measuring enzyme levels in blood is one of the most common laboratory tests you will perform and interpret.` }
+  ],
+  theory: [
+    { q: "Define an enzyme and explain its role in metabolism.", a: "An enzyme is a biological catalyst, typically a protein, that accelerates chemical reactions by lowering activation energy without being consumed. It enables the reactions of metabolism to proceed at rates fast enough to sustain life." },
+    { q: "What is activation energy, and how do enzymes affect it?", a: "Activation energy is the initial energy barrier that must be overcome for a reaction to proceed. Enzymes lower activation energy, increasing the proportion of molecules with enough energy to react at body temperature, thereby speeding the reaction without changing the overall energy balance." },
+    { q: "Distinguish the lock-and-key model from the induced-fit model.", a: "Lock-and-key proposes a rigid active site matching the substrate exactly, like a key in a lock. Induced-fit proposes that the active site changes shape slightly upon substrate binding, adjusting to fit and orient the substrate more effectively for catalysis, explaining enzyme efficiency and flexibility." },
+    { q: "What is the active site of an enzyme?", a: "The active site is the specific region on an enzyme where the substrate binds and the chemical reaction occurs. It is typically a pocket or cleft formed by the folded protein structure, with amino acid side chains positioned to catalyze the reaction." },
+    { q: "Define apoenzyme, cofactor, and holoenzyme.", a: "The apoenzyme is the inactive protein portion of an enzyme. A cofactor is a non-protein helper (inorganic ion or organic coenzyme) required for activity. The complete active enzyme is the holoenzyme, apoenzyme plus cofactor." },
+    { q: "Explain enzyme specificity and why it matters clinically.", a: "Enzymes are specific to their substrates because the active site's shape and chemistry fit only certain substrates. This specificity allows drugs that target a specific bacterial enzyme without affecting human enzymes - giving selective antibiotics and precision therapeutics." },
+    { q: "What are Km and Vmax in enzyme kinetics?", a: "Vmax is the maximum reaction rate when all active sites are saturated with substrate. Km is the substrate concentration at which the reaction rate is half of Vmax, reflecting the enzyme's affinity for its substrate - a lower Km means higher affinity." },
+    { q: "Why are enzymes sensitive to pH and temperature?", a: "Enzymes are proteins and their three-dimensional structure depends on non-covalent interactions that are disrupted by extreme pH and temperature. Changing pH alters charge on amino acid side chains; high temperature denatures the protein, destroying the active site." },
+    { q: "Explain feedback inhibition and how it contributes to metabolic control.", a: "In feedback inhibition, the end product of a metabolic pathway inhibits the first enzyme of the pathway. This prevents overproduction of the product, conserving resources and maintaining balance. It is an example of allosteric regulation, with the inhibitor binding outside the active site." },
+    { q: "How are enzymes used in clinical diagnosis?", a: "Enzyme levels in blood indicate tissue damage or disease. Elevated cardiac enzymes (creatine kinase, troponin) indicate heart muscle damage; elevated liver enzymes indicate liver cell injury. Measuring these markers helps diagnose and monitor disease." },
+  ],
+  videos: [
+    { channel: "Amoeba Sisters", title: "Enzymes: The Biological Catalysts", note: "Animated explanation of activation energy, active sites, and enzyme function.", url: "https://www.youtube.com/results?search_query=Enzymes+biological+catalysts+explained" },
+    { channel: "Ninja Nerd", title: "Enzymes: Structure, Function and Regulation", note: "Detailed medical-level lecture covering enzyme kinetics and regulation.", url: "https://www.youtube.com/results?search_query=Enzymes+structure+function+regulation+Ninja+Nerd" },
+    { channel: "Khan Academy", title: "Enzymes and the Active Site", note: "Clear explanation of lock-and-key and induced-fit models.", url: "https://www.youtube.com/results?search_query=Khan+Academy+enzymes+active+site" },
+  ],
+  mcqs: [
+    { q: "Enzymes are biological catalysts that primarily function to:", o: ["Change the equilibrium of a reaction", "Increase the activation energy of a reaction", "Lower the activation energy of a reaction", "Consume energy from a reaction"], a: 2, w: "Enzymes speed reactions by lowering activation energy, without changing the equilibrium." },
+    { q: "Activation energy is best described as:", o: ["The total energy released by a reaction", "The energy barrier that must be overcome for a reaction to proceed", "The energy produced by an enzyme", "The energy required to denature an enzyme"], a: 1, w: "Activation energy is the initial energy input needed to start a reaction, which enzymes lower." },
+    { q: "The specific region of an enzyme where the substrate binds is the:", o: ["Allosteric site", "Active site", "Cofactor binding site", "Regulatory domain"], a: 1, w: "The active site is where the substrate binds and catalysis occurs." },
+    { q: "In the lock-and-key model, the relationship between enzyme and substrate is:", o: ["The enzyme changes shape to fit the substrate", "The substrate changes shape to fit the enzyme", "The enzyme and substrate have complementary rigid shapes", "The enzyme and substrate are identical"], a: 2, w: "Lock-and-key suggests rigid complementary shapes, like a key in a lock." },
+    { q: "The induced-fit model differs from lock-and-key in that:", o: ["It proposes a rigid active site", "It requires no substrate binding", "The active site changes shape upon substrate binding", "It applies only to non-protein enzymes"], a: 2, w: "Induced-fit proposes that the active site adjusts its shape to fit the substrate." },
+    { q: "The inactive protein portion of an enzyme is called the:", o: ["Holoenzyme", "Apoenzyme", "Coenzyme", "Prosthetic group"], a: 1, w: "The apoenzyme is the protein part; it requires a cofactor to become active." },
+    { q: "A non-protein helper required for enzyme activity is a:", o: ["Substrate", "Cofactor", "Inhibitor", "Product"], a: 1, w: "Cofactors are helpers, such as metal ions or coenzymes." },
+    { q: "The complete, active enzyme is called the:", o: ["Apoenzyme", "Substrate complex", "Proenzyme", "Holoenzyme"], a: 3, w: "The holoenzyme is the active enzyme with its cofactor." },
+    { q: "Vmax represents:", o: ["The rate at which enzyme is destroyed", "The maximum reaction rate when all active sites are occupied", "The substrate concentration at half maximal velocity", "The rate of cofactor binding"], a: 1, w: "Vmax is the maximum rate when the enzyme is fully saturated with substrate." },
+    { q: "Km is defined as the substrate concentration at which:", o: ["The reaction rate is maximal", "The enzyme is half saturated", "The reaction rate is half of Vmax", "The enzyme is fully inhibited"], a: 2, w: "Km is the substrate concentration that gives half of Vmax." },
+    { q: "A lower Km value indicates:", o: ["A slower reaction rate", "A higher affinity for the substrate", "A lower Vmax", "More inhibitor needed"], a: 1, w: "A lower Km means the enzyme reaches half Vmax at a lower substrate concentration, indicating higher substrate affinity." },
+    { q: "Enzymes are sensitive to temperature because:", o: ["They are fluids", "They are proteins that can denature at extremes", "They require heat to work", "They are unaffected by temperature"], a: 1, w: "As proteins, enzymes denature and lose function at high temperatures." },
+    { q: "The pH at which an enzyme works best is its:", o: ["Isoelectric point", "Optimal pH", "Acid dissociation constant", "Buffering range"], a: 1, w: "Enzymes have an optimal pH range where they are most active." },
+    { q: "In feedback inhibition, the end product of a pathway:", o: ["Accelerates the first enzyme", "Inhibits the first enzyme", "Is rapidly removed", "Activates a different pathway"], a: 1, w: "Feedback inhibition uses the product to inhibit the first enzyme, preventing overproduction." },
+    { q: "Feedback inhibition is an example of:", o: ["Allosteric regulation", "Competitive inhibition", "Irreversible inhibition", "Substrate-level phosphorylation"], a: 0, w: "Feedback inhibition typically involves allosteric binding of the inhibitor away from the active site." },
+    { q: "Allosteric regulation refers to:", o: ["Binding at the active site", "Binding at a site other than the active site changing enzyme shape", "Irreversible inhibition", "Covalent modification"], a: 1, w: "Allosteric regulation occurs when a molecule binds outside the active site, changing the enzyme's shape and activity." },
+    { q: "If an enzyme is denatured, which of the following is true?", o: ["It is more active", "It can still bind substrate", "It has lost its three-dimensional structure and function", "It is unaffected"], a: 2, w: "Denaturation unfolds the protein, destroying the active site and function." },
+    { q: "Cardiac enzymes such as troponin are measured to:", o: ["Check liver function", "Diagnose heart muscle damage", "Measure kidney function", "Screen for diabetes"], a: 1, w: "Elevated cardiac enzymes indicate damage to heart muscle, as in a heart attack." },
+    { q: "Elevated liver enzymes in blood indicate:", o: ["Heart attack", "Liver cell injury", "Kidney failure", "Pancreatic disease"], a: 1, w: "Liver enzymes like ALT and AST rise when liver cells are damaged." },
+    { q: "The specificity of an enzyme is determined by:", o: ["Its concentration", "The shape and chemistry of its active site", "The temperature of the environment", "The cofactor present"], a: 1, w: "Specificity comes from the active site's three-dimensional shape and chemical properties fitting only certain substrates." },
+    { q: "Coenzymes are organic cofactors that often:", o: ["Are destroyed in the reaction", "Are derived from vitamins", "Permanently alter the enzyme", "Are not required for activity"], a: 1, w: "Many coenzymes are derived from vitamins, explaining why vitamin deficiencies can impair enzyme function." },
+    { q: "The holoenzyme is composed of:", o: ["Two substrates only", "An apoenzyme and a cofactor", "Only a cofactor", "Multiple active sites"], a: 1, w: "The holoenzyme is the active form, apoenzyme plus cofactor." },
+    { q: "An enzyme inhibitor that binds at the active site is a:", o: ["Allosteric inhibitor", "Competitive inhibitor", "Feedback inhibitor", "Non-competitive inhibitor"], a: 1, w: "A competitive inhibitor binds at the active site, competing with substrate." },
+    { q: "Enzyme activity can be regulated by all of the following EXCEPT:", o: ["pH", "Temperature", "Genetic mutation", "Substrate colour"], a: 3, w: "pH, temperature, and genetic changes can affect enzyme activity; substrate colour is irrelevant." },
+    { q: "A competitive inhibitor reduces enzyme activity by:", o: ["Changing the Vmax", "Changing the Km and competing for the active site", "Denaturing the enzyme", "Destroying the cofactor"], a: 1, w: "Competitive inhibition increases Km (reduces apparent affinity) without changing Vmax." },
+    { q: "The substrate concentration that gives half of Vmax is called:", o: ["Vmax/2", "Km", "kcat", "Hill coefficient"], a: 1, w: "Km is the concentration giving half maximal velocity." },
+    { q: "Which statement about enzymes is FALSE?", o: ["They are consumed in the reaction", "They are specific to their substrate", "They lower activation energy", "They are proteins in most cases"], a: 0, w: "Enzymes are catalysts - they are not consumed in the reaction." },
+    { q: "Enzyme kinetics is the study of:", o: ["The structure of enzymes", "The rate of enzyme-catalysed reactions", "The amino acid sequence of enzymes", "The cofactor binding"], a: 1, w: "Kinetics studies reaction rates and factors affecting them." },
+    { q: "In the body, enzymes work best at:", o: ["Extreme pH", "Body temperature and physiological pH", "Room temperature and neutral pH", "High temperatures and acidic pH"], a: 1, w: "Enzymes are optimised for body conditions - pH 7.4 and 37°C in most tissues." },
+    { q: "The clinical measurement of enzyme levels in blood is used to:", o: ["Identify genetic disorders only", "Diagnose and monitor tissue damage and disease", "Measure drug levels", "Check blood type"], a: 1, w: "Enzyme levels rise when tissues are damaged, so measuring them helps diagnose diseases." },
+  ],
+};
+
+// ==================== BIOCHEMISTRY TOPIC 2: ENZYME INHIBITION ====================
+const T_BCH_INHIBITION = {
+  courseId: "bch",
+  topicIndex: 2,
+  title: "Enzyme Inhibition",
+  minutes: 18,
+  note: [
+    { q: "Why study enzyme inhibition at all?",
+      body: `You have learned how enzymes work - now we study how they can be stopped. Enzyme inhibition is not just a biochemistry topic; it is the basis of most modern medicine.
+
+My Socratic question: an antibiotic kills bacteria by blocking an enzyme that only the bacteria have. What is this called, and why does it not harm human cells?
+
+The answer is selective toxicity - the drug inhibits a bacterial enzyme that has no human equivalent. By blocking that essential bacterial enzyme, the bacteria die while human cells are unaffected because they do not have that enzyme or pathway.
+
+Crucial insight: most modern medicines are enzyme inhibitors. Understanding inhibition is key to understanding pharmacology - from antibiotics to statins to cancer drugs.` },
+
+    { q: "Competitive inhibition: fighting for the active site.",
+      body: `A competitive inhibitor resembles the substrate and competes for the same active site. The inhibitor and substrate both try to bind to the active site, so increasing substrate concentration can overcome the inhibition.
+
+My Socratic question: imagine a lock that two different keys try to fit. One key is the correct substrate; the other is the inhibitor. What determines which one opens the lock?
+
+The answer is concentration and affinity - if there is more substrate than inhibitor, the substrate is more likely to bind and the reaction proceeds; if inhibitor concentration is high, it occupies the active site and blocks the substrate. The inhibitor does not change the enzyme's structure - it just blocks the site temporarily.
+
+Crucial insight: competitive inhibition is reversible and can be overcome by high substrate concentration. This is a major exam point: it increases Km (apparent lower affinity) but does not change Vmax.` },
+
+    { q: "Non-competitive inhibition: the lock in the wrong shape.",
+      body: `A non-competitive inhibitor does not bind at the active site. Instead, it binds elsewhere on the enzyme, changing the enzyme's shape so that the active site no longer works properly.
+
+My Socratic question: a lock has been damaged so that even the correct key cannot turn. What kind of inhibitor does this represent, and can adding more substrate fix it?
+
+The answer is non-competitive inhibition - adding more substrate cannot overcome it because the active site is distorted. The inhibitor changes the enzyme's conformation permanently in the sense that the enzyme is no longer catalytically active, and only removing the inhibitor can restore function.
+
+Crucial insight: non-competitive inhibition decreases Vmax (the enzyme cannot work as fast even when saturated) but does not change Km (the affinity for substrate is unchanged). This is the key difference tested in exams.` },
+
+    { q: "Uncompetitive inhibition: the hidden third type.",
+      body: `A third, less common type is uncompetitive inhibition. Here, the inhibitor binds only to the enzyme-substrate complex, not to the free enzyme.
+
+My Socratic question: if an inhibitor only binds after the substrate has already attached, what effect would it have on the enzyme's apparent affinity and maximum velocity?
+
+The answer is that it decreases both Km and Vmax. The inhibitor traps the enzyme-substrate complex, making the enzyme appear to have higher affinity for the substrate (lower Km) because the complex cannot dissociate, but it also slows the reaction (lower Vmax) because the complex is locked.
+
+Crucial insight: uncompetitive inhibition is rare in physiology but important in drug design. Its kinetics are distinctive - both Km and Vmax decrease, unlike competitive (Km increases) or non-competitive (Vmax decreases only).` },
+
+    { q: "Irreversible inhibition: permanent damage.",
+      body: `Some inhibitors bind so tightly or form covalent bonds with the enzyme that the inhibition is permanent - the enzyme is destroyed, and new enzyme must be made to restore activity.
+
+My Socratic question: aspirin irreversibly inhibits a cyclooxygenase enzyme. Why do the effects of aspirin last for days even though the drug has been cleared from the body?
+
+The answer is that aspirin covalently modifies the enzyme, permanently inactivating it. The body must synthesise new enzyme molecules, which takes time, so the effect persists long after the drug is gone. This is why aspirin is taken once daily, not multiple times - the enzyme stays inhibited.
+
+Crucial insight: irreversible inhibitors are often toxins or drugs designed to have a prolonged effect. They form covalent bonds and permanently destroy enzyme activity until new enzyme is synthesised.` },
+
+    { q: "Allosteric regulation: the body's natural inhibition.",
+      body: `Inhibition is not only from drugs - it is a natural regulatory mechanism. Allosteric effectors bind to regulatory sites on enzymes and change their activity.
+
+My Socratic question: the end product of a pathway inhibits the first enzyme in that pathway - what does this prevent and why is it economical?
+
+The answer is that it prevents overproduction - if the cell already has enough of a product, it shuts down the pathway, saving energy and resources. This is feedback inhibition, an allosteric regulation common in metabolism. The end product binds to an allosteric site on the first enzyme, changing its shape and slowing its activity.
+
+Crucial insight: allosteric regulation is how the cell controls its own metabolism, and it is a classic example of negative feedback - the system self-regulates to maintain balance.` },
+
+    { q: "Clinical applications: drugs that inhibit enzymes.",
+      body: `Enzyme inhibitors are among the most important drugs in medicine, and understanding their mechanism is part of understanding therapy.
+
+My Socratic question: the statin drugs lower cholesterol by inhibiting HMG-CoA reductase, the rate-limiting enzyme of cholesterol synthesis. What type of inhibitor is this, and why does it reduce cholesterol?
+
+The answer is a competitive inhibitor that mimics the natural substrate for the enzyme. By blocking the enzyme, the liver produces less cholesterol, lowering blood levels. This is a classic example of competitive inhibition in therapy.
+
+Crucial insight: enzyme inhibitors treat disease across every organ system - from antibiotics (penicillin inhibits bacterial cell-wall enzymes) to antivirals (protease inhibitors block viral replication) to cancer therapy (kinase inhibitors block growth signals).` },
+
+    { q: "Penicillin: an irreversible inhibitor that changed medicine.",
+      body: `Penicillin is one of the most important drugs in history, and it works by irreversible enzyme inhibition.
+
+My Socratic question: penicillin inhibits an enzyme called transpeptidase, which builds bacterial cell walls. Why does blocking this enzyme kill bacteria but not human cells?
+
+The answer is that human cells do not have cell walls. The enzyme is unique to bacteria, so penicillin is selectively toxic. The inhibition is irreversible because penicillin covalently binds to the active site of transpeptidase, permanently inactivating it. The bacteria cannot build their cell walls and burst.
+
+Crucial insight: selective toxicity is the basis of antibiotic therapy - exploiting differences between bacterial and human cells to kill the pathogen without harming the patient.` },
+
+    { q: "Diagnosing diseases with enzyme inhibition.",
+      body: `Enzyme inhibition is not only for treatment - it is also used in diagnosis, and this matters to you as a future laboratory scientist.
+
+My Socratic question: some patients lack the enzyme that breaks down lactose. They cannot digest milk. How is this condition diagnosed, and what is the mechanism?
+
+The answer is lactose intolerance, diagnosed by a lactose tolerance test that measures blood glucose after a lactose load. The mechanism is simple - if lactose cannot be broken down to glucose and galactose, glucose levels do not rise, confirming the deficiency. The enzyme is present but not functional.
+
+Crucial insight: many diseases are due to enzyme deficiency or inhibition, and laboratory tests often measure enzyme activity to diagnose these conditions.` },
+
+    { q: "Why inhibition matters for drug development.",
+      body: `In drug development, understanding inhibition is central to designing drugs that target specific enzymes.
+
+My Socratic question: to design a drug that inhibits an enzyme, what must the drug molecule be able to do, and how is this tested?
+
+The answer is that the drug must fit the enzyme's active site or another regulatory site. This is tested through screening compounds and measuring the kinetics of inhibition - determining the IC50 (concentration that inhibits 50% of activity) and the mechanism of inhibition (competitive, non-competitive, or mixed).
+
+Crucial insight: the principles of inhibition are the same in drug design - you are trying to create a molecule that will block a specific enzyme target, and the tools you use are kinetics and understanding the active site.` }
+  ],
+  theory: [
+    { q: "What is enzyme inhibition and why is it clinically important?", a: "Enzyme inhibition is the process of decreasing or stopping enzyme activity. It is clinically important because most drugs work by inhibiting specific enzymes, such as antibiotics inhibiting bacterial enzymes and statins inhibiting cholesterol synthesis." },
+    { q: "Define competitive inhibition and its effect on Km and Vmax.", a: "Competitive inhibition occurs when an inhibitor competes with the substrate for binding at the active site. It increases Km (apparent lower affinity) but does not change Vmax - the maximum rate can still be reached if substrate is high enough." },
+    { q: "Define non-competitive inhibition and its effect on Km and Vmax.", a: "Non-competitive inhibition occurs when an inhibitor binds away from the active site, changing the enzyme's shape. It decreases Vmax (the enzyme cannot work as fast) but does not change Km (affinity for substrate is unchanged)." },
+    { q: "Define uncompetitive inhibition and its effect on Km and Vmax.", a: "Uncompetitive inhibition occurs when an inhibitor binds only to the enzyme-substrate complex, not the free enzyme. It decreases both Km (apparent higher affinity) and Vmax (slower reaction), because the complex is trapped." },
+    { q: "How does irreversible inhibition differ from reversible inhibition?", a: "Irreversible inhibitors form covalent bonds with the enzyme or bind so tightly that activity is permanently lost until new enzyme is synthesised. Reversible inhibitors bind non-covalently and can be removed, allowing activity to recover." },
+    { q: "Explain allosteric regulation and its role in metabolism.", a: "Allosteric regulation occurs when a molecule binds to a site other than the active site, changing the enzyme's conformation and activity. It is how cells control metabolism, often through feedback inhibition where the end product of a pathway inhibits the first enzyme." },
+    { q: "Give an example of a competitive inhibitor used in medicine.", a: "Statins such as atorvastatin competitively inhibit HMG-CoA reductase, the rate-limiting enzyme in cholesterol synthesis, lowering cholesterol production." },
+    { q: "How does penicillin work as an enzyme inhibitor?", a: "Penicillin irreversibly inhibits transpeptidase, an enzyme bacteria use to build their cell walls. Because human cells lack cell walls, penicillin is selectively toxic." },
+    { q: "Why is selective toxicity important in antibiotic development?", a: "Selective toxicity means the drug targets a bacterial enzyme without affecting human enzymes. This allows killing of the pathogen while the patient remains safe." },
+    { q: "Define IC50 and its significance in drug development.", a: "IC50 is the concentration of inhibitor that inhibits 50% of the enzyme's activity. It is a measure of drug potency; a lower IC50 indicates a more potent inhibitor." },
+  ],
+  videos: [
+    { channel: "Ninja Nerd", title: "Enzyme Inhibition: Competitive, Non-competitive, Uncompetitive", note: "Detailed breakdown of inhibition types and their kinetics.", url: "https://www.youtube.com/results?search_query=Enzyme+inhibition+competitive+noncompetitive+Ninja+Nerd" },
+    { channel: "Khan Academy", title: "Enzyme Inhibition and Clinical Applications", note: "How inhibitors work in the body and in drug therapy.", url: "https://www.youtube.com/results?search_query=Khan+Academy+enzyme+inhibition" },
+    { channel: "Osmosis", title: "Enzyme Inhibition Pharmacology", note: "Clinical examples of enzyme inhibition in medicine.", url: "https://www.youtube.com/results?search_query=Osmosis+enzyme+inhibition+pharmacology" },
+  ],
+  mcqs: [
+    { q: "Most drugs work by:", o: ["Increasing enzyme synthesis", "Inhibiting specific enzymes", "Activating all enzymes", "Destroying all proteins"], a: 1, w: "Most modern medicines are enzyme inhibitors, blocking specific targets." },
+    { q: "A competitive inhibitor binds to the:", o: ["Allosteric site", "Active site", "Coenzyme", "Substrate"], a: 1, w: "Competitive inhibitors compete with substrate for the active site." },
+    { q: "Competitive inhibition can be overcome by:", o: ["Adding more inhibitor", "Increasing substrate concentration", "Decreasing temperature", "Adding a cofactor"], a: 1, w: "High substrate concentration outcompetes the inhibitor, restoring activity." },
+    { q: "In competitive inhibition, Vmax:", o: ["Decreases", "Increases", "Is unchanged", "Is zero"], a: 2, w: "Vmax is unchanged because high substrate can still saturate the enzyme." },
+    { q: "In competitive inhibition, Km:", o: ["Is unchanged", "Decreases", "Increases", "Is zero"], a: 2, w: "Km increases because the apparent affinity for substrate is reduced." },
+    { q: "A non-competitive inhibitor binds at:", o: ["The active site only", "A site other than the active site", "The substrate", "The cofactor"], a: 1, w: "Non-competitive inhibitors bind away from the active site, altering shape." },
+    { q: "In non-competitive inhibition, Vmax:", o: ["Is unchanged", "Increases", "Decreases", "Is infinite"], a: 2, w: "Vmax decreases because the enzyme is less efficient even when saturated." },
+    { q: "In non-competitive inhibition, Km:", o: ["Decreases", "Increases", "Is unchanged", "Is zero"], a: 2, w: "Km is unchanged because substrate affinity is unaffected." },
+    { q: "Uncompetitive inhibition binds to:", o: ["Free enzyme only", "Enzyme-substrate complex only", "Both free enzyme and complex", "Neither"], a: 1, w: "Uncompetitive inhibitors bind only to the enzyme-substrate complex." },
+    { q: "In uncompetitive inhibition, both Km and Vmax:", o: ["Increase", "Decrease", "Are unchanged", "Opposite each other"], a: 1, w: "Both Km and Vmax decrease in uncompetitive inhibition." },
+    { q: "Irreversible inhibitors bind to enzymes by:", o: ["Hydrogen bonds", "Ionic bonds", "Covalent bonds", "Hydrophobic interactions"], a: 2, w: "Irreversible inhibitors form covalent bonds, permanently inactivating the enzyme." },
+    { q: "Allosteric regulation involves binding at:", o: ["The active site", "A regulatory site away from the active site", "The substrate binding site only", "The cofactor"], a: 1, w: "Allosteric effectors bind at a site other than the active site, changing enzyme shape." },
+    { q: "Feedback inhibition is a type of:", o: ["Competitive inhibition", "Irreversible inhibition", "Allosteric regulation", "Covalent modification"], a: 2, w: "Feedback inhibition typically involves allosteric binding of the end product." },
+    { q: "The IC50 is a measure of:", o: ["Enzyme affinity", "Drug potency - lower means more potent", "Substrate binding", "Vmax"], a: 1, w: "A lower IC50 means less inhibitor is needed to reduce activity by half, so the drug is more potent." },
+    { q: "Statins lower cholesterol by inhibiting:", o: ["HMG-CoA reductase", "Lipase", "Amylase", "Kinase"], a: 0, w: "Statins competitively inhibit HMG-CoA reductase, the rate-limiting step in cholesterol synthesis." },
+    { q: "Penicillin inhibits the bacterial enzyme:", o: ["Lipase", "Transpeptidase", "Protease", "Kinase"], a: 1, w: "Penicillin irreversibly inhibits transpeptidase, blocking bacterial cell wall synthesis." },
+    { q: "Human cells are unaffected by penicillin because they:", o: ["Produce more enzyme", "Lack cell walls", "Have a different version of the enzyme", "Destroy penicillin"], a: 1, w: "Human cells do not have cell walls, so the target enzyme is absent." },
+    { q: "Lactose intolerance is due to deficiency of the enzyme:", o: ["Amylase", "Lipase", "Lactase", "Protease"], a: 2, w: "Lactase is needed to break down lactose into glucose and galactose." },
+    { q: "A competitive inhibitor's effect on an enzyme can be described as:", o: ["Permanent destruction", "Reversible blocking of the active site", "Changing the enzyme's shape permanently", "Destroying the cofactor"], a: 1, w: "Competitive inhibitors reversibly block the active site, and can be overcome by more substrate." },
+    { q: "Which type of inhibitor decreases Vmax without changing Km?", o: ["Competitive", "Non-competitive", "Uncompetitive", "Irreversible"], a: 1, w: "Non-competitive inhibition decreases Vmax but leaves Km unchanged." },
+    { q: "Which type of inhibitor increases Km without changing Vmax?", o: ["Competitive", "Non-competitive", "Uncompetitive", "Irreversible"], a: 0, w: "Competitive inhibition increases Km but leaves Vmax unchanged." },
+    { q: "Which type of inhibitor decreases both Km and Vmax?", o: ["Competitive", "Non-competitive", "Uncompetitive", "Irreversible"], a: 2, w: "Uncompetitive inhibition decreases both Km and Vmax." },
+    { q: "The specificity of an enzyme inhibitor is determined by:", o: ["The inhibitor's colour", "The inhibitor's ability to fit the enzyme's active site or binding site", "The inhibitor's molecular weight", "The temperature of the reaction"], a: 1, w: "Inhibitors must fit the enzyme's active site or allosteric site to be effective." },
+    { q: "Aspirin inhibits cyclooxygenase by:", o: ["Competitive inhibition", "Non-competitive inhibition", "Irreversible covalent modification", "Allosteric activation"], a: 2, w: "Aspirin irreversibly acetylates cyclooxygenase, permanently inhibiting it." },
+    { q: "The effects of aspirin last for days because:", o: ["It is slowly metabolised", "It permanently inhibits the enzyme until new enzyme is synthesised", "It accumulates in the body", "It is not cleared from the blood"], a: 1, w: "Aspirin irreversibly inhibits the enzyme, so activity only returns when new enzyme is made." },
+    { q: "The therapeutic effect of statins is due to:", o: ["Increasing cholesterol absorption", "Competitively inhibiting HMG-CoA reductase", "Activating cholesterol synthesis", "Destroying HDL"], a: 1, w: "Statins block cholesterol synthesis by inhibiting HMG-CoA reductase." },
+    { q: "A drug with a lower IC50 is:", o: ["Less potent", "More potent", "Equally potent", "Not related to potency"], a: 1, w: "Lower IC50 means less drug is needed to inhibit 50% of activity, so it is more potent." },
+    { q: "Allosteric inhibitors change enzyme activity by:", o: ["Competing for the active site", "Binding at a regulatory site and changing shape", "Destroying the enzyme", "Removing the cofactor"], a: 1, w: "Allosteric inhibitors bind away from the active site and change the enzyme's shape." },
+    { q: "Feedback inhibition is an example of:", o: ["Positive feedback", "Negative feedback regulation", "Uncompetitive inhibition", "Irreversible inhibition"], a: 1, w: "Feedback inhibition is negative feedback - the product inhibits the first enzyme to prevent overproduction." },
+    { q: "The most important clinical application of enzyme inhibition is:", o: ["Increasing metabolic rate", "Drug therapy targeting specific enzymes", "Preventing all enzyme activity", "Destroying all proteins"], a: 1, w: "Enzyme inhibitors are the basis of most drug therapy." },
+  ],
+};
+
+// ==================== BIOCHEMISTRY TOPIC 3: GLYCOLYSIS ====================
+const T_BCH_GLYCOLYSIS = {
+  courseId: "bch",
+  topicIndex: 3,
+  title: "Glycolysis",
+  minutes: 22,
+  note: [
+    { q: "What is glycolysis and why does every cell need it?",
+      body: `You have learned about enzymes and how they can be inhibited. Now we apply that knowledge to the most fundamental energy-producing pathway in the body: glycolysis.
+
+My Socratic question: every cell in your body needs energy to survive, but not every cell has mitochondria. How does a red blood cell, which has no mitochondria, produce the ATP it needs to keep working?
+
+The answer is glycolysis - a pathway that breaks down glucose into two molecules of pyruvate, producing a small but crucial amount of ATP in the process. It operates in the cytosol of every cell, requires no oxygen, and is the foundation upon which all other energy metabolism is built.
+
+Crucial insight: glycolysis is the universal energy pathway - it works in every cell, with or without oxygen, and it is the starting point for both aerobic respiration and fermentation. Understanding glycolysis is understanding how your cells survive when oxygen is scarce.` },
+
+    { q: "Where does glycolysis happen and what does it cost?",
+      body: `Glycolysis takes place in the cytosol - the fluid part of the cell outside the organelles. It is a sequence of ten enzyme-catalysed reactions that convert one molecule of glucose (six carbons) into two molecules of pyruvate (three carbons each).
+
+My Socratic question: if glycolysis produces ATP, why does it first consume ATP? Doesn't that seem wasteful?
+
+The answer is that the initial ATP investment is necessary to make the glucose molecule reactive enough to be split. Think of it like pushing a car to start it - you put energy in first, and later you get more energy back. The first phase of glycolysis uses two ATP molecules to phosphorylate glucose and its product, making them unstable and ready to be cleaved.
+
+Crucial insight: glycolysis has two phases - an energy-investment phase that costs 2 ATP, and an energy-harvest phase that produces 4 ATP, for a net gain of 2 ATP per glucose. The investment is not waste; it is the price of making the reaction go.` },
+
+    { q: "The energy-investment phase: steps 1 to 5.",
+      body: `The first half of glycolysis uses two ATP molecules to prepare glucose for splitting.
+
+Step 1: Hexokinase phosphorylates glucose to glucose-6-phosphate, trapping it inside the cell. Step 2: Phosphoglucose isomerase rearranges it to fructose-6-phosphate. Step 3: Phosphofructokinase-1 (PFK-1) adds another phosphate, using ATP, to form fructose-1,6-bisphosphate - this is the committed step and the main regulatory point of glycolysis. Step 4: Aldolase splits the six-carbon sugar into two three-carbon molecules: dihydroxyacetone phosphate (DHAP) and glyceraldehyde-3-phosphate (G3P). Step 5: Triose phosphate isomerase converts DHAP into G3P, giving two molecules of G3P.
+
+My Socratic question: of all the enzymes in glycolysis, PFK-1 is the most important control point. Why would the cell want to regulate this specific step so tightly?
+
+The answer is that PFK-1 catalyses the committed step - the first irreversible reaction unique to glycolysis. Once glucose passes this point, it is committed to being broken down for energy. Regulating PFK-1 allows the cell to control the entire pathway's speed based on energy needs.
+
+Crucial insight: the investment phase costs 2 ATP and produces two molecules of G3P. The control point is PFK-1, which is inhibited by ATP and activated by AMP - the cell's energy sensor.` },
+
+    { q: "The energy-harvest phase: steps 6 to 10.",
+      body: `The second half of glycolysis harvests the energy stored in the G3P molecules, producing ATP and NADH.
+
+Step 6: Glyceraldehyde-3-phosphate dehydrogenase oxidises G3P, reducing NAD+ to NADH and adding a phosphate to form 1,3-bisphosphoglycerate. Step 7: Phosphoglycerate kinase transfers that phosphate to ADP, producing ATP - this is substrate-level phosphorylation, the first ATP production of the pathway. Step 8: Phosphoglycerate mutase rearranges 3-phosphoglycerate to 2-phosphoglycerate. Step 9: Enolase removes water to form phosphoenolpyruvate (PEP), a high-energy compound. Step 10: Pyruvate kinase transfers the phosphate from PEP to ADP, producing the second ATP and forming pyruvate.
+
+My Socratic question: since steps 6 and 7 happen twice (for each G3P molecule), how many ATP and NADH are produced in the harvest phase?
+
+The answer is that each G3P produces 2 ATP (one in step 7 and one in step 10) and 1 NADH. With two G3P molecules from one glucose, the harvest phase yields 4 ATP and 2 NADH. Subtract the 2 ATP invested, and the net gain is 2 ATP and 2 NADH per glucose.
+
+Crucial insight: substrate-level phosphorylation - making ATP directly from a high-energy phosphate - is how glycolysis produces energy. The NADH produced carries electrons to the electron transport chain if oxygen is present, linking glycolysis to aerobic respiration.` },
+
+    { q: "The net reaction and energy balance.",
+      body: `Let us put the entire pathway together into one balanced equation.
+
+The overall reaction of glycolysis is: Glucose + 2 NAD+ + 2 ADP + 2 Pi -> 2 Pyruvate + 2 NADH + 2 H+ + 2 ATP + 2 H2O
+
+My Socratic question: two ATP net is not very much energy compared to the 36 ATP produced by complete glucose oxidation. Why would the cell bother with a pathway that yields so little?
+
+The answer is that glycolysis is fast, requires no oxygen, and works in every cell. It provides immediate energy when oxygen is scarce (during exercise) or when the cell has no mitochondria (red blood cells). The 2 ATP per glucose may seem small, but when glucose is plentiful and the pathway runs rapidly, it can supply enough energy to keep the cell alive until oxygen becomes available.
+
+Crucial insight: glycolysis trades efficiency for speed and versatility. It is the body's emergency energy system and its universal baseline - the pathway that runs when nothing else can.` },
+
+    { q: "Regulation of glycolysis: the cell's energy sensor.",
+      body: `Glycolysis is tightly regulated to match the cell's energy needs, and the control points are exactly where you would predict.
+
+The most important regulatory enzyme is phosphofructokinase-1 (PFK-1), which catalyses the committed step. PFK-1 is inhibited by ATP (high energy means slow down) and citrate (enough building blocks). It is activated by AMP and ADP (low energy means speed up) and by fructose-2,6-bisphosphate (a signal that glucose is plentiful). Hexokinase is inhibited by its product glucose-6-phosphate, and pyruvate kinase is inhibited by ATP and alanine.
+
+My Socratic question: imagine a cell that is already full of ATP. Why would it want to slow down glycolysis, and how does PFK-1 achieve this?
+
+The answer is that slowing glycolysis when energy is abundant prevents wasteful glucose breakdown and saves glucose for other uses, like building glycogen. PFK-1 achieves this by sensing the ATP/AMP ratio - when ATP is high, it binds to PFK-1's allosteric site and changes its shape, reducing its activity.
+
+Crucial insight: glycolysis is regulated at three key enzymes - hexokinase, PFK-1, and pyruvate kinase - with PFK-1 being the master regulator. The control is allosteric, responding to the cell's energy status in real time.` },
+
+    { q: "The fate of pyruvate: aerobic versus anaerobic.",
+      body: `The end product of glycolysis is pyruvate, and what happens next depends entirely on whether oxygen is available.
+
+My Socratic question: when you sprint, your muscles run out of oxygen and start burning. What happens to the pyruvate produced by glycolysis in this oxygen-poor state, and why does this matter?
+
+The answer is that pyruvate is converted to lactate (lactic acid) by lactate dehydrogenase, regenerating NAD+ so glycolysis can continue. This is anaerobic glycolysis - it produces only 2 ATP per glucose but can run very fast, allowing short bursts of intense activity. When oxygen is available, pyruvate enters the mitochondria and is completely oxidised to carbon dioxide and water, producing far more ATP.
+
+Crucial insight: the fate of pyruvate decides whether the cell is running in aerobic or anaerobic mode. In aerobic conditions, pyruvate enters the TCA cycle; in anaerobic conditions, it becomes lactate. The choice is made by oxygen availability and the need for rapid ATP production.` },
+
+    { q: "Glycolysis in red blood cells and cancer.",
+      body: `Two special cases show how important glycolysis is: red blood cells, which have no mitochondria, and cancer cells, which prefer glycolysis even when oxygen is available.
+
+Red blood cells rely entirely on glycolysis for ATP because they have no mitochondria. Without glycolysis, they could not maintain their membrane pumps or survive their 120-day lifespan.
+
+My Socratic question: cancer cells often switch to glycolysis even when oxygen is present - a phenomenon called the Warburg effect. Why would a cancer cell choose a less efficient pathway when oxygen is available?
+
+The answer is that glycolysis provides not just ATP but also building blocks for new cell growth - the intermediates of glycolysis are precursors for amino acids, nucleotides, and lipids. Cancer cells use glycolysis to fuel rapid growth, even though it is less efficient in ATP terms.
+
+Crucial insight: glycolysis is not just an energy pathway - it is a source of biosynthetic precursors. This is why it is so central to metabolism and why it is upregulated in rapidly dividing cells, including cancer.` },
+
+    { q: "Clinical relevance: glycolysis in diagnosis and disease.",
+      body: `Your understanding of glycolysis has direct clinical applications that you will see in the laboratory.
+
+My Socratic question: a patient with poorly controlled diabetes has high blood glucose. How does this affect glycolysis, and what can you measure to assess it?
+
+The answer is that high glucose drives glycolysis in tissues that do not require insulin, such as the brain and red blood cells. In diabetes, the classic laboratory finding is elevated HbA1c - glycosylated haemoglobin - which reflects average blood glucose over the previous 2-3 months. The glucose that enters red blood cells (via glycolysis) attaches to haemoglobin, and the amount of attachment reflects the glucose concentration.
+
+Crucial insight: glycolysis is the pathway that processes glucose in red blood cells, and it is the source of the HbA1c measurement used to monitor diabetes. Understanding the pathway helps you understand the test.` },
+
+    { q: "Consolidation: the pathway that runs everywhere.",
+      body: `Let us bring it all together, because glycolysis is the foundation of metabolism.
+
+The pathway: glucose is converted to two pyruvate molecules in ten steps, yielding a net of 2 ATP and 2 NADH. The investment phase costs 2 ATP, and the harvest phase yields 4 ATP. The pathway is regulated at PFK-1, the committed step, which responds to the cell's energy status. Pyruvate's fate depends on oxygen: aerobic oxidation yields much more energy, while anaerobic reduction to lactate regenerates NAD+ and allows continued glycolysis.
+
+My Socratic question: if glycolysis produces only 2 ATP per glucose, why is it considered the foundation of all energy metabolism?
+
+The answer is that it connects to everything. Glycolysis is the entry point for all carbohydrates into metabolism. It produces pyruvate, which feeds the TCA cycle. It produces NADH, which feeds the electron transport chain. It produces intermediates that build amino acids, lipids, and nucleotides. And it runs in every cell, with or without oxygen. Everything else is built on this pathway.
+
+Crucial insight: glycolysis is the universal pathway of energy metabolism - it runs in every cell, connects to every other pathway, and is the starting point for understanding how the body processes nutrients. Master glycolysis, and you have the foundation for understanding the rest of metabolism.` }
+  ],
+  theory: [
+    { q: "Define glycolysis and state its location in the cell.", a: "Glycolysis is the metabolic pathway that converts glucose (a six-carbon sugar) into two molecules of pyruvate (three-carbon molecules), producing a net of 2 ATP and 2 NADH. It takes place in the cytosol of all cells and does not require oxygen." },
+    { q: "What is the net ATP yield of glycolysis and how is it calculated?", a: "The net yield is 2 ATP per glucose. The investment phase uses 2 ATP; the harvest phase produces 4 ATP (2 from each of the two triose phosphate molecules), giving a net gain of 2 ATP. Additionally, 2 NADH are produced." },
+    { q: "Name the three regulatory enzymes of glycolysis and their activators/inhibitors.", a: "Hexokinase (inhibited by glucose-6-phosphate), phosphofructokinase-1 or PFK-1 (inhibited by ATP and citrate; activated by AMP and fructose-2,6-bisphosphate), and pyruvate kinase (inhibited by ATP and alanine; activated by fructose-1,6-bisphosphate). PFK-1 is the master regulator." },
+    { q: "What is the committed step of glycolysis and why is it called that?", a: "The committed step is the reaction catalysed by phosphofructokinase-1 (PFK-1), which phosphorylates fructose-6-phosphate to fructose-1,6-bisphosphate. It is called committed because once this step occurs, the molecule is irreversibly committed to proceeding through glycolysis." },
+    { q: "What happens to pyruvate under aerobic versus anaerobic conditions?", a: "Under aerobic conditions (oxygen present), pyruvate enters the mitochondria and is converted to acetyl-CoA, which enters the TCA cycle for complete oxidation to CO2 and H2O, producing much more ATP. Under anaerobic conditions (oxygen absent), pyruvate is reduced to lactate, regenerating NAD+ to allow glycolysis to continue." },
+    { q: "Why must NAD+ be regenerated for glycolysis to continue?", a: "Glycolysis requires NAD+ as a cofactor for the glyceraldehyde-3-phosphate dehydrogenase reaction, which produces NADH. If NAD+ is not regenerated, the reaction stops. Under anaerobic conditions, lactate dehydrogenase regenerates NAD+ by converting pyruvate to lactate." },
+    { q: "What is the Warburg effect and what does it reveal about cancer metabolism?", a: "The Warburg effect is the observation that cancer cells preferentially use glycolysis even when oxygen is available, producing lactate rather than fully oxidising pyruvate. This provides not only ATP but also biosynthetic precursors for rapid cell growth, revealing that cancer metabolism is adapted for growth, not just energy." },
+    { q: "How is glycolysis linked to the measurement of HbA1c in diabetes?", a: "Glucose enters red blood cells and undergoes glycolysis. A fraction of this glucose attaches to haemoglobin to form glycosylated haemoglobin (HbA1c). The level of HbA1c reflects the average blood glucose concentration over the previous 2-3 months, making it a key test for monitoring diabetes control." },
+    { q: "Why do red blood cells depend entirely on glycolysis for ATP?", a: "Red blood cells have no mitochondria, so they cannot perform oxidative phosphorylation. They rely entirely on glycolysis and the pentose phosphate pathway for ATP production and to maintain their membrane integrity and function." },
+    { q: "Write the balanced overall equation for glycolysis.", a: "Glucose + 2 NAD+ + 2 ADP + 2 Pi -> 2 Pyruvate + 2 NADH + 2 H+ + 2 ATP + 2 H2O." },
+  ],
+  videos: [
+    { channel: "Ninja Nerd", title: "Glycolysis Pathway Explained", note: "Detailed step-by-step walkthrough of all 10 steps with structures and regulation.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+glycolysis+pathway" },
+    { channel: "Khan Academy", title: "Glycolysis Overview and Steps", note: "Clear explanation of the investment and harvest phases with energy accounting.", url: "https://www.youtube.com/results?search_query=Khan+Academy+glycolysis+steps" },
+    { channel: "Amoeba Sisters", title: "Glycolysis Cellular Respiration", note: "Animated overview of the pathway and its role in energy production.", url: "https://www.youtube.com/results?search_query=Amoeba+Sisters+glycolysis" },
+  ],
+  mcqs: [
+    { q: "Glycolysis takes place in which cellular compartment?", o: ["Mitochondria", "Cytosol", "Nucleus", "Endoplasmic reticulum"], a: 1, w: "Glycolysis occurs in the cytosol of the cell." },
+    { q: "The net ATP yield from glycolysis per glucose is:", o: ["4 ATP", "2 ATP", "36 ATP", "0 ATP"], a: 1, w: "Glycolysis produces a net of 2 ATP per glucose molecule." },
+    { q: "The first phase of glycolysis is called the:", o: ["Energy-harvest phase", "Energy-investment phase", "Oxidative phase", "Reductive phase"], a: 1, w: "The first phase consumes ATP to prepare glucose for splitting." },
+    { q: "How many ATP are consumed in the investment phase of glycolysis?", o: ["4", "1", "2", "0"], a: 2, w: "Two ATP are used in the investment phase." },
+    { q: "How many ATP are produced in the harvest phase of glycolysis?", o: ["2", "4", "1", "0"], a: 1, w: "Four ATP are produced in the harvest phase." },
+    { q: "The committed step of glycolysis is catalysed by:", o: ["Hexokinase", "Phosphofructokinase-1 (PFK-1)", "Aldolase", "Pyruvate kinase"], a: 1, w: "PFK-1 catalyses the committed step of glycolysis." },
+    { q: "PFK-1 is inhibited by:", o: ["AMP", "Fructose-2,6-bisphosphate", "ADP", "ATP"], a: 3, w: "ATP inhibits PFK-1 when energy is abundant." },
+    { q: "PFK-1 is activated by:", o: ["ATP", "Citrate", "AMP", "Glucose"], a: 2, w: "AMP activates PFK-1 when energy is low." },
+    { q: "The enzyme that converts pyruvate to lactate is:", o: ["Pyruvate dehydrogenase", "Lactate dehydrogenase", "Aldolase", "Enolase"], a: 1, w: "Lactate dehydrogenase converts pyruvate to lactate under anaerobic conditions." },
+    { q: "The conversion of pyruvate to lactate regenerates:", o: ["ATP", "NADH", "NAD+", "FADH2"], a: 2, w: "Lactate dehydrogenase regenerates NAD+ so glycolysis can continue." },
+    { q: "Under aerobic conditions, pyruvate enters the:", o: ["Cytosol", "Mitochondria", "Nucleus", "Golgi"], a: 1, w: "Pyruvate enters the mitochondria for complete oxidation." },
+    { q: "The enzyme that phosphorylates glucose to glucose-6-phosphate is:", o: ["Phosphoglucose isomerase", "Hexokinase", "Aldolase", "Pyruvate kinase"], a: 1, w: "Hexokinase catalyses the first step of glycolysis." },
+    { q: "The enzyme that splits fructose-1,6-bisphosphate into two three-carbon molecules is:", o: ["Phosphofructokinase", "Aldolase", "Isomerase", "Dehydrogenase"], a: 1, w: "Aldolase splits the six-carbon sugar into two three-carbon molecules." },
+    { q: "Which step of glycolysis produces the first ATP?", o: ["Step 6", "Step 7", "Step 9", "Step 10"], a: 1, w: "Step 7 (phosphoglycerate kinase) produces the first ATP via substrate-level phosphorylation." },
+    { q: "Which step of glycolysis produces NADH?", o: ["Step 5", "Step 6", "Step 8", "Step 9"], a: 1, w: "Step 6 (glyceraldehyde-3-phosphate dehydrogenase) produces NADH." },
+    { q: "Red blood cells rely on glycolysis because they:", o: ["Have no mitochondria", "Have too many mitochondria", "Use only fatty acids", "Do not need energy"], a: 0, w: "Red blood cells lack mitochondria, so they depend on glycolysis." },
+    { q: "HbA1c testing measures:", o: ["Blood glucose at one time", "Average glucose over 2-3 months", "Insulin levels", "Lactate levels"], a: 1, w: "HbA1c reflects average blood glucose over the previous 2-3 months." },
+    { q: "The Warburg effect describes cancer cells using:", o: ["Only oxidative phosphorylation", "Glycolysis even when oxygen is present", "Fatty acid oxidation", "No glucose"], a: 1, w: "Cancer cells prefer glycolysis even when oxygen is available." },
+    { q: "The final product of glycolysis is:", o: ["Glucose", "Lactate", "Pyruvate", "Acetyl-CoA"], a: 2, w: "Pyruvate is the end product of glycolysis." },
+    { q: "Substrate-level phosphorylation in glycolysis occurs when:", o: ["ATP is used", "NADH is produced", "A phosphate is transferred directly from a substrate to ADP", "Oxygen is consumed"], a: 2, w: "Substrate-level phosphorylation produces ATP directly from a high-energy phosphate." },
+    { q: "Hexokinase is inhibited by:", o: ["ATP", "AMP", "Glucose-6-phosphate", "Fructose-2,6-bisphosphate"], a: 2, w: "Hexokinase is inhibited by its product, glucose-6-phosphate." },
+    { q: "Pyruvate kinase is inhibited by:", o: ["AMP", "Fructose-1,6-bisphosphate", "ATP and alanine", "Glucose"], a: 2, w: "Pyruvate kinase is inhibited by ATP and alanine." },
+    { q: "The overall equation of glycolysis shows that per glucose, the net products are:", o: ["2 ATP, 2 NADH, 2 pyruvate", "4 ATP, 2 NADH, 2 pyruvate", "2 ATP, 0 NADH, 2 pyruvate", "36 ATP, 0 NADH, 0 pyruvate"], a: 0, w: "The net yield is 2 ATP, 2 NADH, and 2 pyruvate." },
+    { q: "The energy-investment phase of glycolysis uses ATP to:", o: ["Make glucose", "Phosphorylate intermediates, making them reactive", "Reduce NAD+", "Produce pyruvate"], a: 1, w: "ATP is used to phosphorylate intermediates and make them reactive." },
+    { q: "Which molecule is the main regulator of glycolysis?", o: ["Glucose", "Pyruvate", "Fructose-2,6-bisphosphate", "Lactate"], a: 2, w: "Fructose-2,6-bisphosphate is a key allosteric activator of PFK-1." },
+    { q: "In anaerobic conditions, glycolysis produces:", o: ["2 ATP, 2 NADH, 2 lactate", "36 ATP, CO2, H2O", "2 ATP, 0 NADH, 2 pyruvate", "4 ATP, 2 NADH, 2 lactate"], a: 0, w: "Under anaerobic conditions, pyruvate is converted to lactate, yielding 2 ATP and 2 NADH." },
+    { q: "The TCA cycle is entered by:", o: ["Glucose directly", "Pyruvate (as acetyl-CoA)", "Lactate", "Glyceraldehyde-3-phosphate"], a: 1, w: "Pyruvate is converted to acetyl-CoA, which enters the TCA cycle." },
+    { q: "Glycolysis is considered the foundation of metabolism because:", o: ["It produces the most ATP", "It only works in the liver", "It connects to all other metabolic pathways and runs in every cell", "It requires oxygen"], a: 2, w: "Glycolysis connects to all pathways and runs in every cell." },
+    { q: "The NADH produced in glycolysis is used in:", o: ["The TCA cycle", "The electron transport chain (with oxygen present)", "Fermentation only", "Gluconeogenesis"], a: 1, w: "NADH carries electrons to the electron transport chain when oxygen is present." },
+    { q: "Without glycolysis, red blood cells would:", o: ["Produce more ATP", "Use oxygen", "Be unable to survive", "Divide rapidly"], a: 2, w: "Red blood cells depend entirely on glycolysis and would die without it." },
+  ],
+};
+
 /* --------------------------- bio:0 --------------------------- */
 const T_BIO_AMINO = {
   courseId: "bio",
@@ -3364,6 +3820,9 @@ const CONTENT = {
   "ana:4": T_ANA_GLAND,
   "phy:0": T_PHY_GENERAL,
   "bch:0": T_BCH_INTRO,
+  "bch:1": T_BCH_ENZYMES,
+  "bch:2": T_BCH_INHIBITION,
+  "bch:3": T_BCH_GLYCOLYSIS,
   "bio:3": T_BIO_AMINO,
   "psy:0": T_PSY_OVERVIEW,
   "com:0": T_COM_PROCESS,
