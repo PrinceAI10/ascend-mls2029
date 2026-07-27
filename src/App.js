@@ -3905,8 +3905,19 @@ function TopicView({ app }) {
       <button className="back" onClick={() => app.go("course", { courseId: t.courseId })}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> {c.name}</button>
       <div className="eyebrow">{c.code} · Topic {String(t.topicIndex + 1).padStart(2, "0")}</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,30px)", margin: "8px 0 6px" }}>{t.title}</h1>
-      <div style={{ display: "flex", gap: 10, alignItems: "center", color: "var(--text-3)", fontSize: 13 }} className="mono">
-        <span>{t.minutes || 15} MIN READ</span><span>·</span><span>{(t.theory || []).length} THEORY Q</span><span>·</span><span>{(t.mcqs || []).length} MCQ</span>
+      <div style={{ display: "flex", gap: 10, alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 10, alignItems: "center", color: "var(--text-3)", fontSize: 13 }} className="mono">
+          <span>{t.minutes || 15} MIN READ</span><span>·</span><span>{(t.theory || []).length} THEORY Q</span><span>·</span><span>{(t.mcqs || []).length} MCQ</span>
+        </div>
+        {(() => {
+          const key = `${t.courseId}:${t.topicIndex}`;
+          const saved = (app.progress.bookmarks || []).includes(key);
+          return (
+            <button className="btn btn-sm" style={{ background: saved ? "var(--amber)" : "var(--bg-3)", color: saved ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6 }} onClick={() => app.toggleBookmark(t.courseId, t.topicIndex)}>
+              <Ic.star p={14} /> {saved ? "Saved" : "Save"}
+            </button>
+          );
+        })()}
       </div>
       <div className="divider" />
       <div className="eyebrow" style={{ marginBottom: 14 }}>The lesson</div>
@@ -4000,10 +4011,59 @@ function CourseView({ app }) {
 
 /* ------------------------------- courses -------------------------------- */
 function CoursesView({ app }) {
+  const [query, setQuery] = useState("");
+  // Build a searchable index of every LIVE topic across all courses.
+  const allLive = [];
+  Object.keys(CONTENT).forEach((k) => {
+    const [cid, tid] = k.split(":");
+    const t = CONTENT[k];
+    allLive.push({ cid, tid: parseInt(tid, 10), title: t.title, course: courseById(cid) });
+  });
+  const q = query.trim().toLowerCase();
+  const results = q ? allLive.filter((x) => x.title.toLowerCase().includes(q) || (x.course && x.course.name.toLowerCase().includes(q)) || (x.course && x.course.code.toLowerCase().includes(q))) : [];
+  const bookmarks = (app.progress.bookmarks || []).map((k) => {
+    const [cid, tid] = k.split(":");
+    const t = contentFor(cid, parseInt(tid, 10));
+    return t ? { cid, tid: parseInt(tid, 10), title: t.title, course: courseById(cid) } : null;
+  }).filter(Boolean);
+
   return (
     <div className="view">
       <div className="eyebrow">This semester</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Seven courses, one climb</h1>
+
+      <input className="auth-input" style={{ marginTop: 14 }} value={query} placeholder="Search any topic - e.g. homeostasis, amino acids..." onChange={(e) => setQuery(e.target.value)} />
+      {q && (
+        <div className="card" style={{ marginTop: 10 }}>
+          {results.length === 0 ? (
+            <p style={{ color: "var(--text-2)", fontSize: 14, margin: 0 }}>No live topics match "{query}" yet. More arrive as they are built.</p>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {results.map((x) => (
+                <button key={x.cid + ":" + x.tid} className="card hover" style={{ textAlign: "left", padding: 12, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }} onClick={() => app.go("topic", { courseId: x.cid, topicId: x.tid })}>
+                  <span style={{ fontWeight: 650, fontSize: 14.5 }}>{x.title}</span>
+                  <span className="mono" style={{ fontSize: 11, color: "var(--text-3)", flexShrink: 0 }}>{x.course ? x.course.code : ""}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {!q && bookmarks.length > 0 && (
+        <div className="card" style={{ marginTop: 14 }}>
+          <div className="eyebrow" style={{ marginBottom: 10 }}>Saved topics</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {bookmarks.map((x) => (
+              <button key={x.cid + ":" + x.tid} className="card hover" style={{ textAlign: "left", padding: 12, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }} onClick={() => app.go("topic", { courseId: x.cid, topicId: x.tid })}>
+                <span style={{ fontWeight: 650, fontSize: 14.5, display: "flex", alignItems: "center", gap: 8 }}><Ic.star p={14} /> {x.title}</span>
+                <span className="mono" style={{ fontSize: 11, color: "var(--text-3)", flexShrink: 0 }}>{x.course ? x.course.code : ""}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="card" style={{ marginTop: 16, marginBottom: 18 }}>
         <div style={{ fontWeight: 650, fontSize: 14.5, marginBottom: 10 }}>Course code key</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 8 }}>
@@ -4723,6 +4783,39 @@ function HomeView({ app }) {
         );
       })()}
 
+      {(() => {
+        // Streak calendar - a grid of the last 5 weeks, highlighting days the
+        // student was active, so momentum feels visible and rewarding.
+        const done = app.progress.dailyDone || {};
+        const days = [];
+        for (let i = 34; i >= 0; i--) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          const key = d.toISOString().slice(0, 10);
+          days.push({ key, active: !!done[key], today: i === 0 });
+        }
+        const activeCount = days.filter((d) => d.active).length;
+        return (
+          <div className="card" style={{ marginTop: 16 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
+              <div className="eyebrow">Your last 5 weeks</div>
+              <div className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>{activeCount} ACTIVE DAYS</div>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 5, maxWidth: 280 }}>
+              {days.map((d) => (
+                <div key={d.key} title={d.key} style={{
+                  aspectRatio: "1", borderRadius: 5,
+                  background: d.active ? "var(--amber)" : "var(--bg-3)",
+                  border: d.today ? "2px solid var(--amber-2)" : "1px solid var(--line)",
+                  opacity: d.active ? 1 : 0.5
+                }} />
+              ))}
+            </div>
+            <p className="note-hint" style={{ marginTop: 10 }}>Each square is a day. Gold means you studied. Keep the squares lighting up to build your streak.</p>
+          </div>
+        );
+      })()}
+
       <div className="grid g3" style={{ marginTop: 16 }}>
         <div className="card">
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -4804,7 +4897,7 @@ function HomeView({ app }) {
 
 /* ------------------------------- auth ----------------------------------- */
 const encodePw = (s) => { try { return btoa(unescape(encodeURIComponent(s))); } catch { return s; } };
-const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {} });
+const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [] });
 const progKey = (u) => "ascend_progress:" + String(u).toLowerCase();
 function AuthScreen({ onAuthed }) {
   const [tab, setTab] = useState("login");        // login | signup | forgot
@@ -5352,7 +5445,7 @@ const NAV = [
   { key: "feedback", label: "Feedback", icon: "star" }
 ];
 
-const DEFAULT_PROGRESS = { name: "Prince", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {} };
+const DEFAULT_PROGRESS = { name: "Prince", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [] };
 
 /* ------------------------------- app ------------------------------------ */
 export default function App() {
@@ -5558,6 +5651,13 @@ export default function App() {
     const prev = Array.isArray(progress.review) ? progress.review : [];
     persist({ ...progress, review: prev.filter((m) => m.q !== questionText) });
   };
+  // Toggle a topic bookmark so students can save topics to revisit fast.
+  const toggleBookmark = (cid, tid) => {
+    const key = `${cid}:${tid}`;
+    const prev = Array.isArray(progress.bookmarks) ? progress.bookmarks : [];
+    const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
+    persist({ ...progress, bookmarks: next });
+  };
   const setName = async () => {
     if (typeof window === "undefined") return;
     const raw = window.prompt("Change your username (this is your name on the leaderboard)", progress.name);
@@ -5584,7 +5684,7 @@ export default function App() {
     persist({ ...progress, name: newName });
   };
 
-  const app = { progress, go, recordDaily, finishQuiz, clearReviewItem, supaUid, courseId: route.courseId, topicId: route.topicId };
+  const app = { progress, go, recordDaily, finishQuiz, clearReviewItem, toggleBookmark, supaUid, courseId: route.courseId, topicId: route.topicId };
   const render = () => {
     switch (route.view) {
       case "home": return <HomeView app={app} />;
