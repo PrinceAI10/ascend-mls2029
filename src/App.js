@@ -5,7 +5,6 @@ import { supabase } from "./supabaseClient";
    ASCEND  -  MLS 2029 (KNUST) study platform
    Framework complete. Content objects get registered in CONTENT below.
    ========================================================================= */
-
 const CSS = `
 :root, .ascend-root{
   --bg:#0A0F1A; --bg-2:#0E1524; --bg-3:#121C2E; --raised:#16213A;
@@ -21,7 +20,7 @@ const CSS = `
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--bg)}
 .ascend-root{min-height:100vh;min-height:100dvh;width:100%;margin:0;padding:0}
-{
+.ascend-root.light{
   --bg:#F4F6FA; --bg-2:#FFFFFF; --bg-3:#EDF1F7; --raised:#FFFFFF;
   --line:#E2E7F0; --line-2:#CED7E4;
   --text:#131922; --text-2:#4B5A70; --text-3:#7C8798;
@@ -47,12 +46,10 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
 .ascend-root.light .auth-card{background:var(--bg-2)}
 .ascend-root.light .seg{background:var(--bg-3)}
 .ascend-root.light .avatar{background:linear-gradient(150deg,#D5DDE8,#B8C4D4);color:#1B1405}
-
+.ascend-root.light .navi{color:#4B5A70}
 .ascend-root.light .navi.on{background:rgba(231,162,31,.14);color:#B4790A}
 .ascend-root.light .mobile-sidebar{background:var(--bg-2)}
 .shell{display:flex;min-height:100vh;max-width:1440px;margin:0 auto;width:100%}
-/* The permanent sidebar is retired in favour of the tap-to-open menu at every
-   screen size, so the layout is consistent between laptop and phone. */
 .side{display:none}
 .main{flex:1;min-width:0;display:flex;flex-direction:column;max-width:100%;overflow-x:hidden}
 .topbar{position:sticky;top:0;z-index:20;background:rgba(10,15,26,.82);
@@ -60,7 +57,6 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
 .topbar-inner{max-width:1080px;margin:0 auto;width:100%;
   padding:13px 30px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .content{padding:26px 30px 60px;max-width:100%;overflow-x:hidden}
-/* keep long-form reading comfortable while the app still fills the window */
 .content>.view{max-width:1080px;margin:0 auto;width:100%}
 .view{animation:fadeUp .32s cubic-bezier(.2,.7,.3,1) both;max-width:100%;overflow-x:hidden}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -73,14 +69,11 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
 .mobile-sidebar .navi:hover{background:var(--bg-3);color:var(--text)}
 .mobile-sidebar .navi.on{background:var(--amber-dim);color:var(--amber-2)}
 .mobile-sidebar .navi.on svg{color:var(--amber)}
-/* the menu button and wordmark now show at every size */
 .onlymobile{display:flex}
-/* comfortable reading width on large screens */
 @media (min-width:1280px){
   .content{padding:30px 44px 70px}
   .topbar-inner{padding:14px 44px}
 }
-/* tighter padding on phones */
 @media (max-width:900px){
   .content{padding:16px 14px 50px}
   .content>.view{max-width:100%}
@@ -100,8 +93,6 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
   .headline{font-size:28px}
   .crs-line{gap:4px;padding:8px 0}
   .qbox{width:46px}
-  /* on small phones the streak and XP chips crowd the topbar; they are shown
-     prominently on the home screen, so hide them here to keep the bar clean */
   .topbar-inner .chip{display:none}
   .topbar-inner .iconbtn{width:34px;height:34px}
   .topbar-inner .avatar{width:30px;height:30px}
@@ -261,7 +252,7 @@ textarea.pastebox:focus{border-color:var(--amber)}
   padding:12px 0;border-top:1px solid var(--line)}
 .crs-line:first-child{border-top:none}
 .qbox{width:58px;background:var(--bg-3);border:1px solid var(--line);border-radius:8px;
-    padding:7px 8px;color:var(--text);font-size:13px;font-family:var(--mono);text-align:center}
+  padding:7px 8px;color:var(--text);font-size:13px;font-family:var(--mono);text-align:center}
 `;
 /* ------------------------------- icons ---------------------------------- */
 const I = ({ d, s = 20, fill = "none", w = 1.9, style }) => (
