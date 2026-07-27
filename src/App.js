@@ -7767,8 +7767,6 @@ My answers. One: likely scoliosis — a lateral curvature of the spine. It is mo
   ]
 };
 
-
-
 /* --------------------------- phy:5 --------------------------- */
 const T_PHY_RMP = {
   courseId: "phy",
