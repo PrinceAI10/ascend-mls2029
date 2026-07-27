@@ -7809,6 +7809,542 @@ If those came cleanly, you understand why a muscle's length determines its stren
   ],
 };
 
+/* --------------------------- phy:8 --------------------------- */
+const T_PHY_MUSCULAR = {
+  courseId: "phy",
+  topicIndex: 8,
+  title: "Muscular System",
+  minutes: 20,
+  note: [
+    { q: "From muscle tissue to the muscular system.",
+      body: `In anatomy you met muscle as a tissue; in physiology we now study the muscular system - how muscles actually work to produce the movement, posture and heat your body depends on. This builds directly on the muscle tissue you already know.
+
+My Socratic question: the muscular system does far more than let you move your limbs. Beyond obvious movement, what other essential jobs does it perform every moment, even when you are still?
+
+The answer is several. The muscular system produces movement (of the body and of substances within it), but it also maintains posture (constantly making small adjustments so you stay upright), stabilises joints, and generates most of the body's heat - the shivering you do when cold is muscle producing warmth. Even at rest, muscles are quietly at work holding you up and keeping you warm.
+
+Crucial insight: the muscular system produces movement, maintains posture, stabilises joints, and generates body heat - functions that continue even when you appear still. Built from the muscle tissue you studied, the muscular system is not just for obvious movement but for the constant, often unnoticed work of holding the body together and keeping it warm.` },
+
+    { q: "The functions of the muscular system in detail.",
+      body: `Let us examine the muscular system's functions more fully, because appreciating them shows why muscle is so vital to life.
+
+Movement is the most obvious: skeletal muscles pull on bones to move the body, and (through cardiac and smooth muscle) the system moves blood, food and other substances internally. Posture and position: muscles make continuous tiny contractions to keep us upright against gravity and to hold body parts in place. Joint stabilisation: muscle tension across joints holds them steady. Heat production (thermogenesis): muscle contraction produces heat as a by-product, and most body heat comes from muscle - shivering is rapid muscle contraction to generate warmth when cold. Some also include protection of internal organs by the muscular abdominal wall.
+
+My Socratic question: why is it significant that most of the body's heat is produced by muscle, and how does the body exploit this when cold?
+
+The answer is that because muscle contraction generates heat, the body can raise its temperature by increasing muscle activity - which is exactly what shivering does: rapid, involuntary muscle contractions produce heat to warm the body when it is cold. Muscle is thus central to maintaining body temperature, a key part of homeostasis.
+
+Crucial insight: the muscular system's functions are movement (external and internal), posture, joint stabilisation, and heat production - with muscle being the body's main heat source, exploited through shivering. These functions connect the muscular system directly to homeostasis, especially temperature regulation, showing muscle's role well beyond simple movement.` },
+
+    { q: "Muscle attachments: origin and insertion.",
+      body: `To move bones, skeletal muscles must attach to them, and understanding how they attach - and the terms for it - is fundamental to how movement is produced.
+
+Most skeletal muscles attach to bones (usually across a joint) by tendons - the dense regular connective tissue you met in anatomy. A muscle has two attachment points: the origin, the attachment to the bone that stays relatively fixed (usually the more central or proximal bone), and the insertion, the attachment to the bone that moves when the muscle contracts (usually the more distal bone). When the muscle contracts, it pulls the insertion toward the origin.
+
+My Socratic question: when you bend your elbow using your biceps muscle, your forearm moves toward your upper arm, not the reverse. Using origin and insertion, explain why.
+
+The answer is that the biceps has its origin on the shoulder/upper arm region (the fixed part) and its insertion on the forearm (the moving part); when it contracts, it pulls the insertion (forearm) toward the origin (upper arm), so the forearm moves up. The fixed origin and moving insertion determine which bone moves.
+
+Crucial insight: skeletal muscles attach via tendons at an origin (the fixed bone) and an insertion (the moving bone), and contraction pulls the insertion toward the origin. This origin-insertion arrangement determines which bone moves when a muscle contracts, and is the basic mechanical principle behind every skeletal movement.` },
+
+    { q: "How muscles work together: agonists, antagonists, synergists.",
+      body: `Muscles rarely act alone; they work in coordinated groups, and knowing the roles muscles play together explains how smooth, controlled movement is possible.
+
+For any given movement, the agonist (or prime mover) is the muscle mainly responsible for producing it. The antagonist is the muscle that opposes it - it produces the opposite movement, and must relax (and can control the movement) as the agonist contracts. Synergists are muscles that assist the agonist, helping the movement or steadying the joint. A key point: because muscles can only pull (not push), they must work in opposing pairs to move a joint back and forth.
+
+My Socratic question: when you bend your elbow, the biceps is the agonist. What is the triceps (on the back of the arm) doing, and why is this arrangement necessary?
+
+The answer is that the triceps is the antagonist - it relaxes to allow the elbow to bend, and it produces the opposite movement (straightening the elbow) when it contracts. This arrangement is necessary because muscles can only pull, not push, so bending and straightening the elbow require two opposing muscles - one to pull it each way.
+
+Crucial insight: muscles work in groups - the agonist (prime mover) produces a movement, the antagonist opposes and controls it, and synergists assist. Because muscles can only pull, opposing (agonist-antagonist) pairs are essential to move a joint both ways. This teamwork is what makes controlled, reversible movement possible.` },
+
+    { q: "The motor unit: how nerves command muscle.",
+      body: `Muscles do not contract on their own - they are commanded by the nervous system, and the link between nerve and muscle, the motor unit, is central to muscle physiology.
+
+A motor unit is a single motor neuron (nerve cell) together with all the muscle fibres it controls. When the motor neuron fires, all the muscle fibres in its unit contract together. The point where the motor neuron meets a muscle fibre is the neuromuscular junction, where the neuron releases the neurotransmitter acetylcholine to trigger the muscle fibre to contract.
+
+My Socratic question: muscles that make fine, precise movements (like those moving the eye or fingers) have motor units with very few muscle fibres each, while powerful muscles (like those in the thigh) have motor units with many fibres each. Why does this difference make sense?
+
+The answer is that fine control requires the ability to activate very small amounts of muscle at a time, so few fibres per motor unit give precise, delicate control; powerful movements need large amounts of muscle activated together, so many fibres per motor unit give strength. The size of the motor unit matches the muscle's need for precision versus power.
+
+Crucial insight: a motor unit is one motor neuron plus all the muscle fibres it controls, and the neuromuscular junction (using acetylcholine) is where the nerve triggers the muscle. Small motor units allow fine control; large ones allow powerful contraction - so the nervous system commands muscle with a precision matched to each muscle's job.` },
+
+    { q: "Muscle contraction and energy: ATP and fatigue.",
+      body: `Contraction requires energy, and understanding muscle's energy supply explains both how muscles keep working and why they eventually tire.
+
+Muscle contraction is powered by ATP (the energy currency), which the sliding filaments need to pull. Muscles get ATP from several sources: stored ATP and creatine phosphate for immediate, short bursts; aerobic respiration (using oxygen) for sustained activity, producing lots of ATP efficiently; and anaerobic respiration (without enough oxygen) for intense activity, producing ATP quickly but also producing lactic acid and less ATP. Muscle fatigue is the decline in a muscle's ability to contract after prolonged use, linked to using up energy stores and the build-up of by-products.
+
+My Socratic question: during very intense exercise, when oxygen cannot be supplied fast enough, muscles rely on anaerobic respiration and lactic acid builds up. How does this connect to the burning feeling and tiring during hard exercise?
+
+The answer is that when oxygen runs short, muscles switch to anaerobic respiration to keep producing ATP quickly, but this produces lactic acid, which contributes to the burning sensation and to fatigue; combined with the depletion of energy stores, this is why intense exercise cannot be sustained and muscles tire. The energy system's limits explain fatigue.
+
+Crucial insight: muscle contraction is powered by ATP, supplied by stored ATP/creatine phosphate (short bursts), aerobic respiration (sustained, efficient), and anaerobic respiration (intense, quick but producing lactic acid); fatigue results from depleted energy stores and by-product build-up. This links muscle physiology to the energy metabolism you study in biochemistry, and explains the experience of tiring during exercise.` },
+
+    { q: "Muscle tone and types of contraction.",
+      body: `Muscles are never completely switched off, and they can contract in different ways - understanding muscle tone and the types of contraction completes the picture of how muscles behave.
+
+Muscle tone is the continuous, partial contraction present in muscles even at rest, keeping them firm and ready and helping maintain posture; it does not produce movement. Types of contraction include: isotonic contraction, where the muscle changes length to produce movement (lifting an object); and isometric contraction, where the muscle generates tension but does not change length (holding a heavy object still, or maintaining posture). Isotonic contractions can be concentric (muscle shortens) or eccentric (muscle lengthens under tension).
+
+My Socratic question: holding a heavy bag steady at your side without moving it still tires your arm, even though nothing is moving. What kind of contraction is this, and why does it tire you despite no movement?
+
+The answer is that this is an isometric contraction - the muscle generates tension to hold the weight but does not change length, so no movement occurs; it still tires you because the muscle is actively contracting and using energy (ATP) to maintain the tension, even without visible movement. Effort and energy use do not require movement.
+
+Crucial insight: muscle tone is the constant partial contraction that keeps muscles firm and maintains posture without movement; contractions are isotonic (length changes, movement occurs) or isometric (tension without length change, as in holding a weight or posture). Muscles work and use energy even without visible movement, which is why holding a position still tires you.` },
+
+    { q: "Why the muscular system matters in medicine and the laboratory.",
+      body: `The muscular system is important in health, disease and laboratory work, connecting this physiology directly to your future practice.
+
+My Socratic question: how might the muscular system and its disorders appear in the work of a medical laboratory scientist?
+
+The answer is in several ways. Muscle damage releases enzymes and proteins into the blood that laboratories measure - creatine kinase rises with muscle injury, and troponin with heart muscle damage (a heart attack), both crucial diagnostic tests. Disorders of the neuromuscular junction (like myasthenia gravis, where acetylcholine signalling fails) and muscle diseases (the muscular dystrophies) are important conditions. Electrolytes like calcium, sodium and potassium - measured in the laboratory - are essential for muscle contraction, so their imbalance causes muscle problems. Understanding muscle physiology underpins all of these.
+
+Crucial insight: the muscular system matters in the laboratory because muscle damage releases measurable markers (creatine kinase, troponin) central to diagnosis, because neuromuscular and muscle diseases are important, and because electrolytes essential for contraction are routinely measured. The muscle physiology you learn here directly informs the blood tests and electrolyte measurements you will one day perform.` },
+
+    { q: "Common misconceptions and key clarifications.",
+      body: `Before consolidating, clearing up a few common muscle misconceptions sharpens your understanding.
+
+One misconception is that muscles can push - they cannot; muscles only pull (contract), which is why opposing pairs are needed to move a joint both ways. Another is that a muscle either contracts fully or not at all - in fact, the strength of a whole muscle's contraction is graded by recruiting more or fewer motor units. Another is that no movement means no effort - but isometric contractions use energy and tire muscles without any movement. Another is that muscle only matters for exercise - but it also maintains posture, stabilises joints, and produces most body heat.
+
+My Socratic question: if a muscle can only pull, how can your arm both bend and straighten at the elbow?
+
+The answer is that two opposing muscles are needed: the biceps pulls to bend the elbow, and the triceps pulls to straighten it. Since neither can push, the joint can only be moved both ways by having a muscle that pulls in each direction - the agonist-antagonist pair.
+
+Crucial insight: muscles only pull (never push), so opposing pairs move joints both ways; whole-muscle strength is graded by recruiting motor units; isometric effort tires muscles without movement; and muscle serves posture, stability and heat, not just exercise. Clearing these misconceptions gives an accurate picture of how the muscular system truly works.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the muscular system, in five lines.
+
+The functions: movement (external and internal), posture, joint stabilisation, and heat production - with muscle being the body's main heat source (shivering), even at rest.
+
+Attachments and teamwork: muscles attach via tendons at an origin (fixed bone) and insertion (moving bone), pulling insertion toward origin; and they work in groups - agonist (prime mover), antagonist (opposes, since muscles only pull), and synergists (assist).
+
+Nervous control: a motor unit is one motor neuron plus the fibres it controls, triggered at the neuromuscular junction by acetylcholine; small units give fine control, large units give power.
+
+Energy and fatigue: contraction is powered by ATP from stored ATP/creatine phosphate (bursts), aerobic respiration (sustained), and anaerobic respiration (intense, making lactic acid); fatigue comes from depleted energy and by-products.
+
+Tone and contraction types, and relevance: muscle tone is constant partial contraction maintaining posture; contractions are isotonic (movement) or isometric (tension without movement); and muscle damage releases markers (creatine kinase, troponin) measured in the laboratory, while electrolytes essential for contraction are routinely tested.
+
+Now your final test. A person holds a heavy shopping bag completely still at their side for two minutes. Their arm muscles tire, and afterward the muscles feel warm. The movement of holding the bag steady required the biceps to work while the triceps stayed relaxed.
+
+Question one: what type of contraction (isotonic or isometric) is holding the bag still, and why does it tire the muscle despite no movement?
+Question two: in this action, which muscle is the agonist and which is the antagonist, and why can the arm not be held up by a single muscle that "pushes"?
+Question three: explain why the muscles felt warm afterward, connecting this to one of the functions of the muscular system.
+
+Work them through before reading on.
+
+My answers. One: holding the bag still is an isometric contraction - the muscle generates tension to support the weight but does not change length, so no movement occurs; it still tires the muscle because the muscle is actively contracting and using ATP (energy) to maintain the tension, and effort and energy use do not require visible movement. Two: the biceps is the agonist (the prime mover doing the work of supporting the arm) and the triceps is the antagonist (relaxed, opposing muscle); the arm cannot be held by a single "pushing" muscle because muscles can only pull, not push, so tension must be actively generated by a pulling muscle. Three: the muscles felt warm because muscle contraction produces heat as a by-product - one of the functions of the muscular system is heat production (thermogenesis), and the sustained contraction of holding the bag generated heat, warming the muscles; this is the same principle by which shivering warms the body.
+
+If those came cleanly, you understand the muscular system - its functions, how muscles attach and work in teams, how nerves command them, how they are powered and tire, and how they matter to the laboratory - completing your move from muscle as a tissue to muscle as a working system. The nervous system that commands it is the natural next step.` },
+  ],
+  theory: [
+    { q: "State four functions of the muscular system.", a: "Movement (of the body and of substances within it); maintenance of posture and body position (continuous small contractions against gravity); stabilisation of joints (muscle tension holding them steady); and heat production (thermogenesis) - muscle is the body's main heat source, as in shivering. Some also include protection of internal organs." },
+    { q: "Why is muscle important for body temperature regulation?", a: "Muscle contraction produces heat as a by-product, and most of the body's heat comes from muscle. When cold, the body increases muscle activity to generate warmth - shivering is rapid, involuntary muscle contraction that produces heat - making muscle central to maintaining body temperature, a key part of homeostasis." },
+    { q: "Define origin and insertion, and state which moves when a muscle contracts.", a: "The origin is a muscle's attachment to the bone that stays relatively fixed (usually more proximal); the insertion is its attachment to the bone that moves (usually more distal). When the muscle contracts, it pulls the insertion toward the origin, so the bone at the insertion moves." },
+    { q: "Define agonist, antagonist and synergist, and explain why opposing pairs are needed.", a: "The agonist (prime mover) is the muscle mainly producing a movement; the antagonist opposes it, relaxing as the agonist contracts and producing the opposite movement; synergists assist the agonist. Opposing pairs are needed because muscles can only pull, not push, so moving a joint both ways requires a muscle pulling in each direction." },
+    { q: "What is a motor unit, and what happens at the neuromuscular junction?", a: "A motor unit is a single motor neuron together with all the muscle fibres it controls; when the neuron fires, all its fibres contract together. The neuromuscular junction is the point where the motor neuron meets a muscle fibre; there the neuron releases the neurotransmitter acetylcholine, which triggers the muscle fibre to contract." },
+    { q: "Why do fine-control muscles have small motor units and powerful muscles large ones?", a: "Fine, precise movements require activating very small amounts of muscle at a time, so few fibres per motor unit give delicate control (e.g. eye or finger muscles). Powerful movements need large amounts of muscle activated together, so many fibres per motor unit give strength (e.g. thigh muscles). Motor unit size matches the need for precision versus power." },
+    { q: "Name the energy sources for muscle contraction and the cause of fatigue.", a: "Contraction is powered by ATP, supplied by stored ATP and creatine phosphate (immediate short bursts), aerobic respiration (sustained activity, efficient), and anaerobic respiration (intense activity, quick but producing lactic acid and less ATP). Fatigue - the decline in ability to contract - results from depleted energy stores and the build-up of by-products like lactic acid." },
+    { q: "Distinguish isotonic and isometric contraction.", a: "In an isotonic contraction the muscle changes length to produce movement (e.g. lifting an object); it may be concentric (shortening) or eccentric (lengthening under tension). In an isometric contraction the muscle generates tension but does not change length, so no movement occurs (e.g. holding a heavy object still or maintaining posture)." },
+    { q: "What is muscle tone?", a: "Muscle tone is the continuous, partial contraction present in muscles even at rest. It keeps muscles firm and ready and helps maintain posture, but does not produce movement. It reflects the ongoing low-level activation of some motor units at all times." },
+    { q: "How does the muscular system relate to laboratory diagnosis?", a: "Muscle damage releases markers into the blood that laboratories measure - creatine kinase rises with muscle injury and troponin with heart muscle damage (heart attack), both crucial diagnostic tests. Also, electrolytes essential for contraction (calcium, sodium, potassium) are routinely measured, and their imbalance causes muscle problems. Neuromuscular and muscle diseases are important conditions." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Functions of the Muscular System", note: "Movement, posture, joint stability and heat production.", url: "" },
+    { channel: "Physiology", title: "Agonists Antagonists and the Motor Unit", note: "How muscles work in teams and how nerves command them.", url: "" },
+    { channel: "Physiology", title: "Muscle Energy Fatigue and Contraction Types", note: "ATP sources, fatigue, and isotonic vs isometric contraction.", url: "" },
+  ],
+  mcqs: [
+    { q: "Which is a function of the muscular system?", o: ["Producing urine", "Filtering blood", "Making hormones only", "Movement and posture"], a: 3, w: "The muscular system produces movement and maintains posture." },
+    { q: "Most of the body's heat is produced by:", o: ["The liver only", "Bone", "The skin", "Muscle"], a: 3, w: "Muscle is the body's main heat source." },
+    { q: "Shivering warms the body by:", o: ["Sweating", "Slowing the heart", "Dilating vessels", "Rapid muscle contraction producing heat"], a: 3, w: "Shivering is rapid muscle contraction generating heat." },
+    { q: "Skeletal muscles usually attach to bones by:", o: ["Skin", "Tendons", "Cartilage", "Ligaments"], a: 1, w: "Tendons attach skeletal muscle to bone." },
+    { q: "The muscle attachment to the bone that stays fixed is the:", o: ["Belly", "Insertion", "Origin", "Tendon"], a: 2, w: "The origin is the fixed attachment." },
+    { q: "The muscle attachment to the bone that moves is the:", o: ["Insertion", "Origin", "Head", "Base"], a: 0, w: "The insertion is on the moving bone." },
+    { q: "When a muscle contracts, it pulls the:", o: ["Insertion toward the origin", "Bone apart", "Origin toward the insertion", "Tendon off"], a: 0, w: "Contraction pulls the insertion toward the origin." },
+    { q: "The muscle mainly responsible for a movement is the:", o: ["Fixator only", "Synergist", "Antagonist", "Agonist (prime mover)"], a: 3, w: "The agonist (prime mover) produces the movement." },
+    { q: "The muscle that opposes a movement is the:", o: ["Agonist", "Antagonist", "Synergist", "Prime mover"], a: 1, w: "The antagonist opposes and controls the movement." },
+    { q: "Muscles must work in opposing pairs because muscles can only:", o: ["Bend bones", "Pull", "Twist", "Push"], a: 1, w: "Muscles only pull, so pairs are needed to move both ways." },
+    { q: "When bending the elbow (biceps as agonist), the triceps is the:", o: ["Antagonist", "Agonist", "Synergist", "Origin"], a: 0, w: "The triceps opposes elbow bending - the antagonist." },
+    { q: "A motor unit is:", o: ["One muscle only", "A tendon", "One motor neuron and all the fibres it controls", "Two bones"], a: 2, w: "A motor unit is a neuron plus its muscle fibres." },
+    { q: "The point where a motor neuron meets a muscle fibre is the:", o: ["Neuromuscular junction", "Lacuna", "Origin", "Insertion"], a: 0, w: "The neuromuscular junction links nerve and muscle." },
+    { q: "The neurotransmitter released to trigger muscle contraction is:", o: ["Dopamine", "Acetylcholine", "Serotonin", "Adrenaline"], a: 1, w: "Acetylcholine triggers the muscle fibre to contract." },
+    { q: "Muscles for fine, precise movements have motor units with:", o: ["Few fibres each", "Many fibres each", "No neurons", "No fibres"], a: 0, w: "Few fibres per unit allow precise, delicate control." },
+    { q: "Muscle contraction is directly powered by:", o: ["Oxygen only", "Glucose only", "ATP", "Lactic acid"], a: 2, w: "ATP powers the sliding filaments." },
+    { q: "For immediate, short bursts, muscle uses stored ATP and:", o: ["Lactic acid", "Collagen", "Creatine phosphate", "Insulin"], a: 2, w: "Creatine phosphate supplies quick, short-term energy." },
+    { q: "Sustained muscle activity relies mainly on:", o: ["No energy", "Aerobic respiration", "Shivering", "Anaerobic respiration"], a: 1, w: "Aerobic respiration efficiently supplies sustained ATP." },
+    { q: "Intense activity without enough oxygen produces:", o: ["Bone", "Collagen", "Only water", "Lactic acid"], a: 3, w: "Anaerobic respiration produces lactic acid." },
+    { q: "Muscle fatigue is linked to:", o: ["Cold weather only", "More oxygen", "Depleted energy and by-product build-up", "Too much rest"], a: 2, w: "Fatigue comes from using up energy and building up by-products." },
+    { q: "The continuous partial contraction of resting muscle is:", o: ["Paralysis", "Isotonic contraction", "Muscle tone", "Fatigue"], a: 2, w: "Muscle tone is constant partial contraction at rest." },
+    { q: "A contraction where the muscle changes length to move something is:", o: ["Isotonic", "Tone", "Isometric", "Tetanus"], a: 0, w: "Isotonic contraction changes length and produces movement." },
+    { q: "A contraction where the muscle generates tension but does not change length is:", o: ["Eccentric", "Isotonic", "Concentric", "Isometric"], a: 3, w: "Isometric contraction is tension without length change." },
+    { q: "Holding a heavy object still is an example of ______ contraction.", o: ["Isometric", "Concentric", "Eccentric", "Isotonic"], a: 0, w: "Holding still without movement is isometric." },
+    { q: "An isotonic contraction where the muscle shortens is:", o: ["Concentric", "Isometric", "Tone", "Eccentric"], a: 0, w: "Concentric contraction is shortening." },
+    { q: "Holding a bag still tires the muscle because it:", o: ["Does no work", "Stops needing ATP", "Uses energy to maintain tension", "Turns to bone"], a: 2, w: "Isometric contraction uses ATP despite no movement." },
+    { q: "Muscle injury raises the blood enzyme:", o: ["Pepsin", "Lactase", "Amylase", "Creatine kinase"], a: 3, w: "Creatine kinase rises with muscle damage." },
+    { q: "Heart muscle damage (heart attack) is detected by raised:", o: ["Collagen", "Troponin", "Albumin", "Glucose"], a: 1, w: "Troponin rises with cardiac muscle damage." },
+    { q: "Which electrolyte, measured in the lab, is essential for muscle contraction?", o: ["Helium", "Calcium", "Nitrogen", "Carbon"], a: 1, w: "Calcium is essential for muscle contraction." },
+    { q: "A key clarification about muscles is that they:", o: ["Can push and pull", "Can only pull, never push", "Never use energy", "Work only in exercise"], a: 1, w: "Muscles only pull, which is why opposing pairs exist." },
+  ],
+};
+
+
+/* --------------------------- phy:9 --------------------------- */
+const T_PHY_NERVOUS1 = {
+  courseId: "phy",
+  topicIndex: 9,
+  title: "Nervous System 1 - Neurons, Neuroglia, CNS/PNS",
+  minutes: 20,
+  note: [
+    { q: "The body's rapid control system.",
+      body: `You have studied how muscles move and how the body maintains homeostasis. Coordinating all of this is the nervous system - the body's fast communication and control network. This first nervous system topic covers its cells and its basic organisation.
+
+My Socratic question: the body has two great control systems - the endocrine system (using hormones) and the nervous system. What is the key difference in how they work, and what does the nervous system's speed make possible?
+
+The answer is that the endocrine system sends slow, long-lasting chemical signals (hormones) through the blood, while the nervous system sends rapid electrical signals along nerve cells, giving near-instant communication. This speed allows the nervous system to detect changes, process information, and produce responses almost immediately - letting you react to the world in real time, from pulling your hand from a hot surface to coordinating complex thought.
+
+Crucial insight: the nervous system is the body's rapid control and communication network, using fast electrical signals along nerve cells - in contrast to the slower, hormonal endocrine system. Its speed enables immediate detection, processing and response, coordinating the body moment to moment. Together with the endocrine system, it maintains homeostasis and governs all behaviour.` },
+
+    { q: "The three basic functions of the nervous system.",
+      body: `The nervous system performs three fundamental functions in sequence, and understanding them frames everything it does.
+
+First, sensory input: the nervous system detects changes (stimuli) inside and outside the body, through sensory receptors - gathering information. Second, integration: it processes and interprets this sensory information, and decides what response is needed - this is done mainly by the brain and spinal cord. Third, motor output: it sends signals to muscles or glands (the effectors) to produce a response - a movement or a secretion.
+
+My Socratic question: when you touch something hot and quickly pull your hand away, trace how all three functions occur in order.
+
+The answer is that sensory receptors in the skin detect the heat (sensory input); this information travels to the spinal cord/brain, which recognises danger and decides to act (integration); and signals then travel to the arm muscles, which contract to pull the hand away (motor output). The three functions occur in rapid sequence to produce the protective response.
+
+Crucial insight: the nervous system's three basic functions are sensory input (detecting stimuli), integration (processing information and deciding a response), and motor output (signalling effectors to respond). This input-integration-output sequence underlies every nervous system action, from a reflex to a complex decision, and organises how the whole system works.` },
+
+    { q: "The neuron: the functional unit.",
+      body: `The nervous system is built from specialised cells, chief among them the neuron - the cell that actually carries the signals, which you met in medical psychology and now study in more physiological depth.
+
+A neuron (nerve cell) is specialised to receive, process and transmit information as electrical signals. Its main parts are: dendrites (branch-like extensions that receive signals and carry them toward the cell body); the cell body (soma, containing the nucleus, which integrates incoming signals and maintains the cell); and the axon (a single long fibre that carries the signal away from the cell body to other cells). Many axons are wrapped in a myelin sheath, a fatty insulating layer that speeds signal conduction.
+
+My Socratic question: the myelin sheath around an axon acts like insulation on an electrical wire. Why would insulating the axon speed up the nerve signal?
+
+The answer is that the myelin sheath insulates the axon and lets the electrical signal jump rapidly along it (from gap to gap) rather than travelling slowly along the whole membrane, greatly speeding conduction. This is why myelinated nerves carry signals much faster - crucial for quick reactions - and why loss of myelin (as in multiple sclerosis) slows or blocks signals.
+
+Crucial insight: the neuron is the nervous system's functional unit, with dendrites (receiving), cell body (integrating), and axon (transmitting), and its axon may be wrapped in a speed-boosting myelin sheath. Its whole structure is built for rapid communication, and understanding it - including myelin's role - explains both fast nerve conduction and the effects of diseases that damage myelin.` },
+
+    { q: "Types of neurons by function.",
+      body: `Neurons come in different functional types, matching the three basic functions of the nervous system, and knowing them clarifies how signals flow through the system.
+
+There are three functional types. Sensory (afferent) neurons carry information from sensory receptors toward the central nervous system (the brain and spinal cord) - carrying input in. Motor (efferent) neurons carry commands from the central nervous system out to the effectors (muscles and glands) - carrying output out. Interneurons (association neurons) lie within the central nervous system, connecting sensory and motor neurons and doing the integrating - they are the most numerous.
+
+My Socratic question: which type of neuron would be involved in each step of pulling your hand from a hot surface, and where would the interneurons be?
+
+The answer is that sensory neurons carry the heat signal from the skin to the spinal cord; interneurons within the spinal cord process it and connect to the motor pathway; and motor neurons carry the command out to the arm muscles. The interneurons sit within the central nervous system, doing the integrating between input and output.
+
+Crucial insight: neurons are classified by function as sensory (afferent - input toward the CNS), motor (efferent - output to effectors), and interneurons (within the CNS, integrating, most numerous). These three types map onto sensory input, integration, and motor output, so a signal typically flows sensory neuron to interneuron to motor neuron - the basic wiring of nervous system action.` },
+
+    { q: "Neuroglia: the supporting cells.",
+      body: `Neurons could not function alone; they are supported by a second, even more numerous group of cells - the neuroglia - which are essential to the nervous system's working.
+
+Neuroglia (or glial cells) are the supporting cells of the nervous system; they do not transmit nerve impulses themselves, but support, protect, nourish and insulate neurons. They are far more numerous than neurons. Different types have different jobs - some produce the myelin sheath (that speeds conduction), some protect neurons and defend against microbes, some support and nourish neurons, and some line cavities and help circulate the fluid around the brain and spinal cord.
+
+My Socratic question: since neuroglia do not carry nerve signals themselves, why are they nonetheless essential - what would happen to neurons without them?
+
+The answer is that neurons depend on neuroglia for support, nourishment, protection, and insulation (myelin) - without them, neurons could not be properly nourished, defended, or insulated, and could not conduct signals rapidly or survive well. The glia create the environment in which neurons can function, so they are indispensable despite not signalling themselves.
+
+Crucial insight: neuroglia are the numerous supporting cells that nourish, protect, insulate (producing myelin) and support neurons, without transmitting impulses themselves. They are essential because neurons depend on them to survive and function - so the nervous system needs both its signalling cells (neurons) and its supporting cells (glia) working together.` },
+
+    { q: "The nerve impulse: how neurons signal.",
+      body: `Neurons communicate using an electrical signal called the nerve impulse, and a basic grasp of how it works explains the whole system's speed and function - building on the resting membrane potential you studied.
+
+A resting neuron has a membrane potential - a small electrical charge difference across its membrane, with the inside negative relative to the outside, maintained by ion pumps and channels. When a neuron is stimulated strongly enough, this reverses briefly in a rapid electrical event called an action potential (the nerve impulse), which travels along the axon. At the axon's end, the signal is passed to the next cell across the synapse using chemical neurotransmitters - as you learned earlier.
+
+My Socratic question: a nerve impulse only fires if the stimulus is strong enough to reach a threshold; below that, nothing happens, but at or above it, a full impulse fires. This is called the all-or-none principle. Why might such a threshold be useful?
+
+The answer is that the threshold prevents the neuron from firing in response to tiny, meaningless stimuli, so only significant stimuli trigger a signal; and because the impulse is all-or-none (full size every time), the signal travels reliably without weakening. The threshold filters out noise, and the all-or-none impulse ensures dependable transmission.
+
+Crucial insight: neurons signal via the nerve impulse (action potential) - a rapid electrical event that travels along the axon when a stimulus reaches threshold (the all-or-none principle), then passes to the next cell at the synapse via neurotransmitters. This builds on the resting membrane potential, and the threshold plus all-or-none firing make nerve signals both selective and reliable.` },
+
+    { q: "The central and peripheral nervous systems.",
+      body: `The nervous system is organised into two great divisions, and understanding this organisation frames how the whole system is arranged - building on what you met in medical psychology.
+
+The central nervous system (CNS) consists of the brain and spinal cord; it is the control centre, receiving sensory information, integrating it, and issuing commands. The peripheral nervous system (PNS) consists of all the nervous tissue outside the CNS - mainly the nerves that connect the CNS to the rest of the body. The PNS is further divided: the sensory (afferent) division carries information to the CNS, and the motor (efferent) division carries commands from the CNS, which itself divides into the somatic nervous system (voluntary control of skeletal muscle) and the autonomic nervous system (involuntary control of internal organs, with sympathetic "fight or flight" and parasympathetic "rest and digest" branches).
+
+My Socratic question: which division of the nervous system lets you voluntarily raise your arm, and which controls your heartbeat automatically?
+
+The answer is that the somatic nervous system (part of the PNS motor division) provides voluntary control of skeletal muscle, letting you raise your arm; the autonomic nervous system (also PNS motor division) provides involuntary control of internal organs, including the heartbeat. Voluntary movement is somatic; automatic internal control is autonomic.
+
+Crucial insight: the nervous system divides into the central nervous system (brain and spinal cord - the control centre) and the peripheral nervous system (nerves connecting to the body), and the PNS motor division splits into somatic (voluntary, skeletal muscle) and autonomic (involuntary, internal organs, with sympathetic and parasympathetic branches). This organisation maps the whole nervous system, showing how voluntary and automatic control are arranged.` },
+
+    { q: "The reflex arc: the simplest nervous pathway.",
+      body: `The simplest complete nervous pathway is the reflex arc, and understanding it ties together the neurons and divisions you have learned into a working circuit.
+
+A reflex is a rapid, automatic, involuntary response to a stimulus, and the reflex arc is the neural pathway that produces it. A typical reflex arc has: a receptor (detects the stimulus), a sensory neuron (carries the signal to the CNS), an integration centre (often just the spinal cord, where interneurons process the signal), a motor neuron (carries the command out), and an effector (muscle or gland that responds). Because many reflexes are processed in the spinal cord without waiting for the brain, they are very fast and protective.
+
+My Socratic question: when you touch something sharp, your hand withdraws before you consciously feel the pain. Using the reflex arc, explain why the withdrawal happens before conscious awareness.
+
+The answer is that the withdrawal reflex is processed in the spinal cord: the sensory neuron carries the signal to the spinal cord, where interneurons immediately route it to a motor neuron that withdraws the hand - all without waiting for the signal to reach the brain and produce conscious pain. Because the spinal cord acts before the brain, the protective withdrawal happens first, and conscious pain follows a moment later.
+
+Crucial insight: a reflex is a rapid, automatic response, produced by the reflex arc - receptor, sensory neuron, integration centre (often the spinal cord), motor neuron, and effector. Because many reflexes are handled by the spinal cord without waiting for the brain, they are fast and protective, and the reflex arc neatly demonstrates how sensory input, integration and motor output work together in the simplest complete circuit.` },
+
+    { q: "Why the nervous system matters in medicine and the laboratory.",
+      body: `The nervous system is central to health and disease, and connects to laboratory work, making this topic important for your training.
+
+My Socratic question: how might the nervous system and its disorders be relevant to a medical laboratory scientist?
+
+The answer is in several ways. Many important diseases affect the nervous system - multiple sclerosis (damage to myelin), stroke, epilepsy, Parkinson's and Alzheimer's diseases - and laboratories help investigate them. The fluid around the brain and spinal cord (cerebrospinal fluid) is sometimes sampled and analysed in the laboratory to detect infection (meningitis) or bleeding. Neurotransmitter and electrolyte balance (sodium, potassium, calcium) - measured in the laboratory - is essential for nerve function, so imbalances cause neurological problems. And understanding the nervous system helps you care for patients, many of whom have neurological conditions.
+
+Crucial insight: the nervous system matters in the laboratory because its diseases (multiple sclerosis, stroke, epilepsy, dementias) are important, because cerebrospinal fluid is analysed to detect infection or bleeding, and because electrolytes essential for nerve function are routinely measured. The nervous system physiology you learn here connects directly to laboratory tests and to caring for patients with neurological conditions.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the nervous system (part 1), in five lines.
+
+The role and functions: the nervous system is the body's rapid electrical control network (versus the slow hormonal endocrine system), with three functions - sensory input (detecting stimuli), integration (processing and deciding), and motor output (signalling effectors).
+
+The neuron: the functional unit - dendrites receive, cell body integrates, axon transmits - often wrapped in a speed-boosting myelin sheath; functional types are sensory (afferent, input in), motor (efferent, output out), and interneurons (within the CNS, integrating).
+
+The supporting cells: neuroglia are the numerous supporting cells that nourish, protect, insulate (myelin) and support neurons without signalling themselves.
+
+The signal: neurons fire the nerve impulse (action potential) when a stimulus reaches threshold (all-or-none), passing to the next cell at the synapse via neurotransmitters, built on the resting membrane potential.
+
+The organisation and reflexes: the CNS (brain and spinal cord) integrates, the PNS (nerves) connects to the body, with somatic (voluntary) and autonomic (involuntary, sympathetic/parasympathetic) motor divisions; and the reflex arc (receptor, sensory neuron, integration centre, motor neuron, effector) produces fast, protective automatic responses. Relevance: nervous diseases, CSF analysis, and electrolytes for nerve function connect to the laboratory.
+
+Now your final test. A person steps barefoot on a sharp stone. Their foot lifts away almost instantly, before they consciously feel pain. The signal was processed in the spinal cord.
+
+Question one: name the type of response this is, and list the five parts of the pathway that produced it in order.
+Question two: which functional types of neuron (sensory, motor, interneuron) were involved, and where was the integration done?
+Question three: explain why the foot lifted before the person consciously felt pain, connecting this to why such responses are protective.
+
+Work them through before reading on.
+
+My answers. One: this is a reflex (a rapid, automatic, involuntary response), produced by the reflex arc, whose five parts in order are: the receptor (detects the sharp stone in the skin), the sensory neuron (carries the signal to the spinal cord), the integration centre (the spinal cord, where interneurons process it), the motor neuron (carries the command out), and the effector (the leg muscle that lifts the foot). Two: sensory neurons carried the input to the spinal cord, interneurons within the spinal cord did the integration, and motor neurons carried the output to the muscle - so all three types were involved, with integration done in the spinal cord. Three: the foot lifted before conscious pain because the reflex was processed in the spinal cord without waiting for the signal to reach the brain and produce conscious awareness; because the spinal cord acts immediately, the protective withdrawal happens first and conscious pain follows a moment later - this speed is exactly what makes reflexes protective, removing the body from danger as fast as possible.
+
+If those came cleanly, you understand the nervous system's cells, signals, organisation, and simplest circuits - the foundation for studying the brain and central nervous system in depth, which is the natural next step.` },
+  ],
+  theory: [
+    { q: "How does the nervous system differ from the endocrine system, and what does its speed allow?", a: "The endocrine system sends slow, long-lasting chemical signals (hormones) through the blood, while the nervous system sends rapid electrical signals along nerve cells, giving near-instant communication. This speed lets the nervous system detect changes, process information, and produce responses almost immediately, coordinating the body in real time." },
+    { q: "State the three basic functions of the nervous system.", a: "Sensory input (detecting changes/stimuli inside and outside the body through receptors); integration (processing and interpreting the information and deciding a response, mainly in the brain and spinal cord); and motor output (sending signals to effectors - muscles or glands - to produce a response). They occur in sequence." },
+    { q: "Describe the neuron and the function of the myelin sheath.", a: "A neuron is a nerve cell specialised to receive, process and transmit electrical signals, with dendrites (receive signals), a cell body (integrates and maintains the cell), and an axon (transmits the signal away). The myelin sheath is a fatty insulating layer around many axons that lets the signal jump rapidly along the axon, greatly speeding conduction." },
+    { q: "Name and describe the three functional types of neuron.", a: "Sensory (afferent) neurons carry information from sensory receptors toward the central nervous system. Motor (efferent) neurons carry commands from the CNS out to effectors (muscles and glands). Interneurons (association neurons) lie within the CNS, connecting sensory and motor neurons and doing the integrating; they are the most numerous." },
+    { q: "What are neuroglia, and why are they essential?", a: "Neuroglia (glial cells) are the numerous supporting cells of the nervous system; they do not transmit nerve impulses but support, protect, nourish and insulate neurons (some produce myelin). They are essential because neurons depend on them for nourishment, protection, and insulation - without them neurons could not function or survive well." },
+    { q: "Describe the nerve impulse and the all-or-none principle.", a: "A resting neuron has a membrane potential (inside negative). When stimulated to threshold, this reverses briefly in an action potential (nerve impulse) that travels along the axon, then passes to the next cell at the synapse via neurotransmitters. The all-or-none principle means a stimulus at or above threshold fires a full impulse, while below threshold nothing fires - filtering noise and ensuring reliable signals." },
+    { q: "Distinguish the central and peripheral nervous systems and the somatic vs autonomic divisions.", a: "The central nervous system (CNS) is the brain and spinal cord - the control centre. The peripheral nervous system (PNS) is the nerves connecting the CNS to the body. The PNS motor division splits into the somatic nervous system (voluntary control of skeletal muscle) and the autonomic nervous system (involuntary control of internal organs, with sympathetic 'fight or flight' and parasympathetic 'rest and digest' branches)." },
+    { q: "What is a reflex, and list the parts of a reflex arc in order.", a: "A reflex is a rapid, automatic, involuntary response to a stimulus. The reflex arc that produces it has, in order: a receptor (detects the stimulus), a sensory neuron (carries signal to the CNS), an integration centre (often the spinal cord, with interneurons), a motor neuron (carries command out), and an effector (muscle or gland that responds)." },
+    { q: "Why does a withdrawal reflex occur before conscious pain is felt?", a: "The withdrawal reflex is processed in the spinal cord: the sensory neuron carries the signal to the cord, where interneurons immediately route it to a motor neuron that produces withdrawal - without waiting for the signal to reach the brain and produce conscious pain. Because the spinal cord acts before the brain, the protective withdrawal happens first, and conscious pain follows." },
+    { q: "How is the nervous system relevant to laboratory science?", a: "Its diseases (multiple sclerosis, stroke, epilepsy, Parkinson's, Alzheimer's) are important and investigated with laboratory help; cerebrospinal fluid is sampled and analysed to detect infection (meningitis) or bleeding; and electrolytes essential for nerve function (sodium, potassium, calcium) are routinely measured, since imbalances cause neurological problems." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Introduction to the Nervous System", note: "Its role, three functions, and CNS/PNS organisation.", url: "" },
+    { channel: "Physiology", title: "Neurons and Neuroglia", note: "The neuron's structure, neuron types, and the supporting glial cells.", url: "" },
+    { channel: "Physiology", title: "The Reflex Arc Explained", note: "The simplest nervous pathway and why reflexes are fast.", url: "" },
+  ],
+  mcqs: [
+    { q: "Compared with the endocrine system, the nervous system sends signals that are:", o: ["Rapid and electrical", "Slow and hormonal", "Chemical and long-lasting", "Not real signals"], a: 0, w: "The nervous system uses rapid electrical signals." },
+    { q: "Which is NOT one of the three basic functions of the nervous system?", o: ["Sensory input", "Motor output", "Integration", "Blood filtration"], a: 3, w: "The three functions are sensory input, integration, motor output." },
+    { q: "Detecting a stimulus is the nervous system function of:", o: ["Sensory input", "Secretion", "Motor output", "Integration"], a: 0, w: "Sensory input is detecting stimuli." },
+    { q: "Processing information and deciding a response is:", o: ["Reception", "Sensory input", "Motor output", "Integration"], a: 3, w: "Integration processes information and decides a response." },
+    { q: "Sending a signal to a muscle to respond is:", o: ["Integration", "Motor output", "Detection", "Sensory input"], a: 1, w: "Motor output signals effectors to respond." },
+    { q: "The part of the neuron that receives signals is the:", o: ["Axon", "Synapse", "Dendrites", "Myelin"], a: 2, w: "Dendrites receive signals toward the cell body." },
+    { q: "The part of the neuron that transmits signals away is the:", o: ["Nucleus", "Cell body", "Dendrites", "Axon"], a: 3, w: "The axon carries the signal away from the cell body." },
+    { q: "The fatty insulating layer that speeds nerve conduction is the:", o: ["Cell body", "Myelin sheath", "Dendrite", "Synapse"], a: 1, w: "The myelin sheath insulates and speeds conduction." },
+    { q: "Loss of myelin (as in multiple sclerosis) would:", o: ["Have no effect", "Speed up signals", "Create new neurons", "Slow or block nerve signals"], a: 3, w: "Losing myelin slows or blocks nerve signals." },
+    { q: "Neurons carrying information toward the CNS are:", o: ["Interneurons", "Motor neurons", "Sensory (afferent) neurons", "Glia"], a: 2, w: "Sensory (afferent) neurons carry input toward the CNS." },
+    { q: "Neurons carrying commands from the CNS to effectors are:", o: ["Glia", "Motor (efferent) neurons", "Sensory neurons", "Interneurons"], a: 1, w: "Motor (efferent) neurons carry output to effectors." },
+    { q: "Neurons within the CNS that connect others and integrate are:", o: ["Sensory neurons", "Interneurons", "Neuroglia", "Motor neurons"], a: 1, w: "Interneurons integrate within the CNS." },
+    { q: "The most numerous functional type of neuron is the:", o: ["Glial cell", "Sensory neuron", "Interneuron", "Motor neuron"], a: 2, w: "Interneurons are the most numerous neurons." },
+    { q: "Neuroglia are best described as cells that:", o: ["Store fat", "Support, protect and nourish neurons", "Pump blood", "Carry nerve impulses"], a: 1, w: "Neuroglia support, protect and nourish neurons." },
+    { q: "Do neuroglia transmit nerve impulses?", o: ["Only sometimes", "No; they support neurons instead", "Yes, faster than neurons", "Yes, like neurons"], a: 1, w: "Neuroglia support neurons but do not transmit impulses." },
+    { q: "Compared with neurons, neuroglia are:", o: ["Equal in number", "Absent", "More numerous", "Fewer"], a: 2, w: "Neuroglia are more numerous than neurons." },
+    { q: "The nerve impulse that travels along the axon is the:", o: ["Action potential", "Resting potential", "Reflex", "Synapse"], a: 0, w: "The action potential is the nerve impulse." },
+    { q: "A resting neuron's inside is electrically ______ relative to outside.", o: ["Absent", "Neutral", "Negative", "Positive"], a: 2, w: "The resting neuron is negative inside relative to outside." },
+    { q: "The all-or-none principle means an impulse:", o: ["Varies in size", "Never fires", "Fires continuously", "Fires fully at or above threshold, not at all below"], a: 3, w: "At/above threshold a full impulse fires; below, none." },
+    { q: "At the axon's end, the signal passes to the next cell using:", o: ["Myelin", "Neurotransmitters at the synapse", "Blood", "Bone"], a: 1, w: "Neurotransmitters carry the signal across the synapse." },
+    { q: "The central nervous system consists of the:", o: ["Heart and lungs", "Nerves in the limbs", "Skin", "Brain and spinal cord"], a: 3, w: "The CNS is the brain and spinal cord." },
+    { q: "The peripheral nervous system consists mainly of:", o: ["Glands only", "The nerves connecting the CNS to the body", "The brain", "The spinal cord"], a: 1, w: "The PNS is the nerves outside the CNS." },
+    { q: "Voluntary control of skeletal muscle is by the ______ nervous system.", o: ["Somatic", "Autonomic", "Central", "Sympathetic"], a: 0, w: "The somatic nervous system gives voluntary muscle control." },
+    { q: "Involuntary control of internal organs is by the ______ nervous system.", o: ["Sensory", "Central", "Autonomic", "Somatic"], a: 2, w: "The autonomic nervous system controls internal organs." },
+    { q: "The 'fight or flight' branch of the autonomic system is the:", o: ["Parasympathetic", "Sensory", "Sympathetic", "Somatic"], a: 2, w: "The sympathetic branch drives fight or flight." },
+    { q: "A rapid, automatic, involuntary response to a stimulus is a:", o: ["Thought", "Decision", "Memory", "Reflex"], a: 3, w: "A reflex is a rapid automatic involuntary response." },
+    { q: "Which is the correct order in a reflex arc?", o: ["Receptor, sensory neuron, integration, motor neuron, effector", "Synapse, axon, dendrite", "Effector, motor neuron, receptor", "Motor neuron, receptor, effector"], a: 0, w: "Receptor to sensory neuron to integration to motor neuron to effector." },
+    { q: "Many reflexes are fast because they are processed in the:", o: ["Spinal cord, without waiting for the brain", "Muscles", "Brain only", "Skin"], a: 0, w: "Spinal-cord processing lets reflexes act before the brain." },
+    { q: "The fluid around the brain and spinal cord, analysed in the lab, is:", o: ["Cerebrospinal fluid", "Lymph only", "Bile", "Plasma"], a: 0, w: "Cerebrospinal fluid is analysed for infection or bleeding." },
+    { q: "Which electrolyte, measured in the lab, is essential for nerve function?", o: ["Sodium", "Nitrogen", "Helium", "Carbon"], a: 0, w: "Sodium (with potassium, calcium) is essential for nerve function." },
+  ],
+};
+
+
+/* --------------------------- phy:10 --------------------------- */
+const T_PHY_NERVOUS2 = {
+  courseId: "phy",
+  topicIndex: 10,
+  title: "Nervous System 2 - CNS In Depth",
+  minutes: 20,
+  note: [
+    { q: "Into the control centre: the central nervous system.",
+      body: `Having studied the nervous system's cells, signals and organisation, we now go deeper into its command centre: the central nervous system - the brain and spinal cord - where information is integrated and the body is governed.
+
+My Socratic question: the central nervous system does the integration - the processing and deciding - between sensory input and motor output. Given how vital and delicate it is, what does the body do to protect it?
+
+The answer is that the CNS is heavily protected: by bone (the skull around the brain, the vertebral column around the spinal cord), by protective membranes called the meninges, and by cerebrospinal fluid, which cushions and bathes it. This layered protection reflects how essential and vulnerable the CNS is - damage to it is often serious and hard to repair.
+
+Crucial insight: the central nervous system - the brain and spinal cord - is the body's control centre, where sensory information is integrated and commands are issued. Because it is so vital and delicate, it is heavily protected by bone (skull and vertebrae), the meninges, and cerebrospinal fluid. Studying the CNS in depth reveals how the body's most important control organ is built and safeguarded.` },
+
+    { q: "Protection of the CNS: meninges and cerebrospinal fluid.",
+      body: `Before the CNS's structures, we should understand its protective coverings and fluid, because these are clinically important and often examined.
+
+The meninges are three protective membranes surrounding the brain and spinal cord: the tough outer dura mater, the middle arachnoid mater, and the delicate inner pia mater that hugs the surface. Cerebrospinal fluid (CSF) is a clear fluid that circulates around the brain and spinal cord (and in cavities within the brain called ventricles); it cushions the CNS against shock, supports its weight, and helps remove wastes.
+
+My Socratic question: meningitis is a dangerous inflammation of the meninges, often caused by infection, and is investigated by sampling cerebrospinal fluid. Why would examining the CSF help diagnose it?
+
+The answer is that because CSF bathes the meninges and CNS, an infection of the meninges changes the CSF - altering its appearance, cell content, and chemistry - so analysing a CSF sample (taken by lumbar puncture) reveals signs of infection, helping diagnose meningitis. The fluid carries evidence of what is happening around the CNS.
+
+Crucial insight: the CNS is protected by the meninges (dura, arachnoid, pia mater) and cerebrospinal fluid, which cushions, supports and cleans it. These are clinically vital: meningitis inflames the meninges, and analysing cerebrospinal fluid - a laboratory task - helps diagnose it. The protective coverings are not just anatomy but a key route to detecting CNS disease.` },
+
+    { q: "The brain: major regions overview.",
+      body: `The brain is the most complex organ in the body, but it can be understood in terms of a few major regions, each with broad roles - building on what you met in medical psychology.
+
+The brain has three broad parts. The cerebrum is the large upper brain, responsible for conscious thought, sensation, voluntary movement, and higher functions; its surface is the cerebral cortex. The cerebellum, at the back beneath the cerebrum, coordinates movement, balance and posture. The brainstem, connecting the brain to the spinal cord, controls vital automatic functions - breathing, heart rate, blood pressure. Between the cerebrum and brainstem lie important structures like the thalamus (a relay station for sensory information) and hypothalamus (controlling homeostasis, hormones and drives).
+
+My Socratic question: the brainstem controls breathing and heartbeat. Why is damage to the brainstem so much more immediately life-threatening than damage to some other brain regions?
+
+The answer is that the brainstem controls the vital automatic functions that keep us alive from moment to moment - breathing, heartbeat, blood pressure - so damage there can immediately stop these essential functions, whereas damage to other regions, though serious, may impair specific abilities without immediately ending life. The brainstem governs survival itself.
+
+Crucial insight: the brain's major regions are the cerebrum (thought, sensation, voluntary movement), the cerebellum (movement coordination, balance), and the brainstem (vital automatic functions - breathing, heart rate), with the thalamus (sensory relay) and hypothalamus (homeostasis, hormones) between. Because the brainstem controls survival functions, damage there is immediately life-threatening - showing how function is localised in the brain.` },
+
+    { q: "The cerebrum and its lobes.",
+      body: `The cerebrum, the seat of our highest functions, is divided into lobes with specialised roles, and knowing them shows how different abilities map onto different areas - as you began to see in psychology.
+
+The cerebrum's cortex is divided into four lobes on each side. The frontal lobe handles voluntary movement, reasoning, planning, decision-making and personality. The parietal lobe processes touch, temperature, pain and spatial awareness. The temporal lobe handles hearing and memory. The occipital lobe processes vision. The cerebrum also has two hemispheres (left and right), connected by a band of fibres, each controlling the opposite side of the body.
+
+My Socratic question: a stroke damaging the left frontal lobe's movement area can paralyse the right side of the body. Why the opposite side?
+
+The answer is that each cerebral hemisphere controls the opposite (contralateral) side of the body - the left hemisphere controls the right side and vice versa - because the motor pathways cross over as they descend. So damage to the left side of the brain affects the right side of the body. This crossed control is a key principle.
+
+Crucial insight: the cerebrum has four lobes - frontal (movement, reasoning, personality), parietal (touch, spatial sense), temporal (hearing, memory), and occipital (vision) - and two hemispheres, each controlling the opposite side of the body. Because functions are localised and control is crossed, brain damage produces specific effects on specific functions and on the opposite side of the body, which is central to understanding neurological disease.` },
+
+    { q: "The spinal cord: pathway and reflex centre.",
+      body: `The other half of the CNS, the spinal cord, is both a communication highway and a processing centre in its own right, tying together much of what you have learned.
+
+The spinal cord is a long column of nervous tissue running down the vertebral column from the brainstem. It has two main roles. First, it is a two-way communication pathway: sensory information travels up it to the brain, and motor commands travel down it from the brain to the body. Second, it is a reflex centre: as you learned, many reflexes are processed in the spinal cord itself, allowing fast, automatic responses without involving the brain. Inside, it has grey matter (mainly cell bodies, where integration occurs) and white matter (mainly myelinated axons, the ascending and descending pathways).
+
+My Socratic question: an injury that severs the spinal cord high up can cause loss of sensation and movement below the injury. Using the spinal cord's role as a pathway, explain why.
+
+The answer is that because the spinal cord carries sensory information up to the brain and motor commands down from it, cutting the cord breaks these pathways - so sensory signals from below the injury cannot reach the brain (loss of sensation) and motor commands cannot reach the muscles below (loss of movement/paralysis). The break in the communication highway isolates the body below it.
+
+Crucial insight: the spinal cord is both a two-way communication pathway (sensory up, motor down) and a reflex centre (processing many reflexes itself), with grey matter (cell bodies, integration) and white matter (myelinated pathways). Because it is the communication highway between brain and body, spinal cord injury causes loss of sensation and movement below the injury - a vivid demonstration of its role.` },
+
+    { q: "The autonomic nervous system in depth.",
+      body: `The autonomic nervous system - the involuntary controller of internal organs you met earlier - deserves closer study, because it governs so much of the body's automatic functioning and homeostasis.
+
+The autonomic nervous system controls involuntary functions - heart rate, digestion, breathing rate, blood pressure, glandular secretion - through two branches that usually oppose each other. The sympathetic branch prepares the body for action ("fight or flight"): it speeds the heart, dilates airways, releases stored energy, and diverts blood to muscles, readying the body for emergencies. The parasympathetic branch promotes "rest and digest": it slows the heart, stimulates digestion, and conserves energy, dominating in calm conditions.
+
+My Socratic question: when you are frightened, your heart races, your pupils widen, and digestion slows; when you relax after a meal, your heart slows and digestion is active. How do the two autonomic branches explain this shift?
+
+The answer is that fright activates the sympathetic branch, producing the racing heart, widened pupils, and slowed digestion of the fight-or-flight state; relaxing after a meal shifts dominance to the parasympathetic branch, slowing the heart and promoting digestion in the rest-and-digest state. The two opposing branches balance the body's internal state according to circumstances.
+
+Crucial insight: the autonomic nervous system controls involuntary functions through two opposing branches - the sympathetic ('fight or flight', preparing for action) and the parasympathetic ('rest and digest', conserving and restoring). Their balance adjusts the body's internal functioning to the situation, making the autonomic nervous system central to homeostasis and to the bodily side of emotion and stress.` },
+
+    { q: "The brain and homeostasis: the hypothalamus.",
+      body: `A special part of the brain deserves highlighting because it links the nervous system to homeostasis and hormones so directly: the hypothalamus.
+
+The hypothalamus is a small but vital region beneath the thalamus that acts as a major control centre for homeostasis. It regulates body temperature, hunger and thirst, sleep, and many drives; and it links the nervous system to the endocrine system by controlling the pituitary gland, thereby influencing many hormones. It is where nervous and hormonal control meet.
+
+My Socratic question: the hypothalamus helps regulate body temperature - and you learned that muscle (through shivering) produces heat. How might the hypothalamus use the rest of the body to correct a fall in temperature?
+
+The answer is that when it detects a fall in body temperature, the hypothalamus triggers responses to generate and conserve heat - such as shivering (muscle contraction producing heat) and narrowing skin blood vessels to reduce heat loss - restoring normal temperature. The hypothalamus acts as the control centre that detects the change and coordinates the corrective responses, exactly as in the homeostasis you studied.
+
+Crucial insight: the hypothalamus is a key control centre for homeostasis, regulating temperature, hunger, thirst and sleep, and linking the nervous system to the endocrine system via the pituitary gland. It shows how the brain directly maintains the body's internal balance - coordinating responses like shivering to correct temperature - uniting the nervous system with homeostasis and hormonal control.` },
+
+    { q: "Why the CNS matters in medicine and the laboratory.",
+      body: `The central nervous system is central to many serious diseases and to laboratory work, making this topic directly relevant to your future practice.
+
+My Socratic question: how might the central nervous system and its disorders appear in the work of a medical laboratory scientist?
+
+The answer is in several important ways. Cerebrospinal fluid is sampled (by lumbar puncture) and analysed in the laboratory to diagnose meningitis (infection), bleeding around the brain, and other conditions - a key laboratory investigation. Strokes (interrupted blood supply to the brain) are major emergencies. Many important diseases affect the CNS - epilepsy, Parkinson's and Alzheimer's diseases, brain tumours - and laboratory tests support their investigation. And because the hypothalamus links to hormones, and electrolytes are essential for nerve function, laboratory measurements of hormones and electrolytes relate to CNS function.
+
+Crucial insight: the central nervous system matters in the laboratory especially through cerebrospinal fluid analysis (diagnosing meningitis and bleeding), and through the investigation of strokes, epilepsy, dementias and tumours, plus hormone and electrolyte measurements tied to CNS function. The CNS physiology you learn here connects directly to one of the important fluids you will analyse and to caring for patients with neurological disease.` },
+
+    { q: "Common misconceptions and key clarifications.",
+      body: `Before consolidating, clearing up a few misconceptions about the CNS sharpens your understanding.
+
+One misconception is that we "only use 10 percent of our brain" - this is false; virtually all of the brain has functions and is used. Another is that the left brain controls the left body - in fact each hemisphere controls the opposite side. Another is that the spinal cord is just a passive cable - but it also processes many reflexes itself. Another is that the brain can easily repair itself like skin - in fact CNS tissue has very limited ability to regenerate, which is why brain and spinal cord injuries are often permanent.
+
+My Socratic question: given that CNS tissue regenerates poorly, why is protecting the brain and spinal cord (by helmets, safe practices, and their bony/membrane coverings) so important?
+
+The answer is that because the CNS cannot readily repair itself, damage to it is often permanent and disabling - so preventing injury in the first place is critical, which is why the body protects the CNS with bone, meninges and fluid, and why external protection (like helmets) matters so much. Prevention is vital when repair is not possible.
+
+Crucial insight: contrary to common myths, we use virtually all of our brain, each hemisphere controls the opposite side of the body, the spinal cord actively processes reflexes, and CNS tissue regenerates poorly - making injuries often permanent. This last point is why the CNS is so heavily protected and why preventing CNS injury is so important, an accurate picture that matters for both understanding and care.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the central nervous system in depth, in five lines.
+
+Protection: the CNS (brain and spinal cord) is the control centre, protected by bone (skull, vertebrae), the meninges (dura, arachnoid, pia mater), and cerebrospinal fluid (which cushions, supports and cleans, and is analysed to diagnose meningitis).
+
+The brain's regions: cerebrum (thought, sensation, voluntary movement; four lobes - frontal, parietal, temporal, occipital; two hemispheres each controlling the opposite side), cerebellum (movement coordination, balance), brainstem (vital automatic functions - breathing, heartbeat), with thalamus (sensory relay) and hypothalamus (homeostasis, hormones).
+
+The spinal cord: a two-way pathway (sensory up, motor down) and a reflex centre, with grey matter (integration) and white matter (pathways); injury causes loss of sensation and movement below it.
+
+The autonomic system: controls involuntary functions through opposing sympathetic ('fight or flight') and parasympathetic ('rest and digest') branches, central to homeostasis.
+
+Homeostasis and relevance: the hypothalamus regulates temperature, hunger, thirst and links to hormones; and the CNS matters in the laboratory through cerebrospinal fluid analysis and the investigation of stroke, epilepsy, dementias and tumours, with CNS tissue regenerating poorly so injuries are often permanent.
+
+Now your final test. A patient suffers a stroke - an interrupted blood supply damaging part of the brain. Afterward, they have weakness on the right side of the body, and difficulty with reasoning, planning and personality has changed. The damage was on one side of the cerebrum, in one particular lobe.
+
+Question one: on which side of the cerebrum (left or right) was the damage, and what principle of brain organisation tells you this?
+Question two: which lobe was most affected, and what clues in the patient's symptoms point to it?
+Question three: explain, using the poor regenerative ability of CNS tissue, why the patient's deficits may be long-lasting.
+
+Work them through before reading on.
+
+My answers. One: the damage was on the left side of the cerebrum, because each cerebral hemisphere controls the opposite (contralateral) side of the body - right-sided weakness points to left-brain damage, since the motor pathways cross over. Two: the frontal lobe was most affected, because the symptoms - difficulty with reasoning, planning, and a change in personality, together with control of voluntary movement (the right-sided weakness) - are all functions of the frontal lobe, which handles movement, reasoning, planning, decision-making and personality. Three: the deficits may be long-lasting because central nervous system tissue has very limited ability to regenerate; unlike skin, damaged brain tissue does not readily repair or replace itself, so the functions lost when that brain area was damaged may not fully recover, making stroke deficits often permanent or only partially recoverable.
+
+If those came cleanly, you understand the central nervous system in depth - its protection, the brain's regions and lobes, the spinal cord, the autonomic system, and the hypothalamus's role in homeostasis - completing your study of the nervous system and connecting it firmly to disease and the laboratory.` },
+  ],
+  theory: [
+    { q: "How is the central nervous system protected?", a: "The CNS (brain and spinal cord) is protected by bone (the skull around the brain and the vertebral column around the spinal cord), by three protective membranes called the meninges (dura, arachnoid, and pia mater), and by cerebrospinal fluid, which cushions it against shock, supports its weight, and helps remove wastes." },
+    { q: "Name the three meninges and describe cerebrospinal fluid's roles.", a: "The meninges are the tough outer dura mater, the middle arachnoid mater, and the delicate inner pia mater. Cerebrospinal fluid is a clear fluid circulating around the brain and spinal cord (and in the brain's ventricles) that cushions the CNS against shock, supports its weight, and helps remove wastes." },
+    { q: "Name the three broad parts of the brain and their main roles.", a: "The cerebrum (conscious thought, sensation, voluntary movement, higher functions), the cerebellum (coordinates movement, balance and posture), and the brainstem (controls vital automatic functions - breathing, heart rate, blood pressure). The thalamus (sensory relay) and hypothalamus (homeostasis, hormones) lie between the cerebrum and brainstem." },
+    { q: "Name the four lobes of the cerebrum and a function of each.", a: "The frontal lobe (voluntary movement, reasoning, planning, decision-making, personality); the parietal lobe (touch, temperature, pain, spatial awareness); the temporal lobe (hearing and memory); and the occipital lobe (vision). Each hemisphere has all four lobes." },
+    { q: "Why does left-brain damage affect the right side of the body?", a: "Because each cerebral hemisphere controls the opposite (contralateral) side of the body - the left hemisphere controls the right side and vice versa - since the motor pathways cross over as they descend. So damage to the left side of the brain produces effects on the right side of the body." },
+    { q: "Describe the two main roles of the spinal cord.", a: "First, it is a two-way communication pathway: sensory information travels up it to the brain and motor commands travel down it from the brain to the body. Second, it is a reflex centre: many reflexes are processed in the spinal cord itself, allowing fast, automatic responses without involving the brain." },
+    { q: "Why does severing the spinal cord cause loss of sensation and movement below the injury?", a: "Because the spinal cord carries sensory information up to the brain and motor commands down from it, cutting it breaks these pathways - sensory signals from below cannot reach the brain (loss of sensation) and motor commands cannot reach the muscles below (paralysis). The break isolates the body below the injury." },
+    { q: "Describe the two branches of the autonomic nervous system.", a: "The sympathetic branch prepares the body for action ('fight or flight') - speeding the heart, dilating airways, releasing energy, diverting blood to muscles. The parasympathetic branch promotes 'rest and digest' - slowing the heart, stimulating digestion, conserving energy. The two usually oppose each other, balancing the body's internal state." },
+    { q: "What is the role of the hypothalamus?", a: "The hypothalamus is a major control centre for homeostasis. It regulates body temperature, hunger, thirst, sleep and many drives, and links the nervous system to the endocrine system by controlling the pituitary gland (thereby influencing many hormones). It detects internal changes and coordinates corrective responses, like shivering to correct temperature." },
+    { q: "Why are central nervous system injuries often permanent?", a: "Because CNS tissue (brain and spinal cord) has very limited ability to regenerate; unlike skin, damaged brain or spinal cord tissue does not readily repair or replace itself. So functions lost when CNS tissue is damaged may not fully recover, making brain and spinal cord injuries often permanent - which is why the CNS is so heavily protected." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "The Brain Regions and Lobes", note: "Cerebrum, cerebellum, brainstem and the four cerebral lobes.", url: "" },
+    { channel: "Physiology", title: "The Spinal Cord and CNS Protection", note: "The spinal cord's roles, meninges and cerebrospinal fluid.", url: "" },
+    { channel: "Physiology", title: "The Autonomic Nervous System", note: "Sympathetic and parasympathetic control of internal organs.", url: "" },
+  ],
+  mcqs: [
+    { q: "The central nervous system consists of the:", o: ["Muscles and bones", "Nerves and glands", "Heart and lungs", "Brain and spinal cord"], a: 3, w: "The CNS is the brain and spinal cord." },
+    { q: "The protective membranes around the CNS are the:", o: ["Tendons", "Meninges", "Ligaments", "Fascia"], a: 1, w: "The meninges are the CNS's protective membranes." },
+    { q: "The three meninges, from outer to inner, are:", o: ["Arachnoid, dura, pia", "Dura, pia, arachnoid", "Pia, arachnoid, dura", "Dura, arachnoid, pia"], a: 3, w: "Outer dura, middle arachnoid, inner pia mater." },
+    { q: "The fluid that cushions the brain and spinal cord is:", o: ["Lymph", "Cerebrospinal fluid", "Plasma", "Bile"], a: 1, w: "Cerebrospinal fluid cushions and bathes the CNS." },
+    { q: "Meningitis is diagnosed partly by analysing:", o: ["Urine", "Saliva", "Sweat", "Cerebrospinal fluid"], a: 3, w: "CSF analysis helps diagnose meningitis." },
+    { q: "The large upper brain responsible for thought and voluntary movement is the:", o: ["Cerebrum", "Spinal cord", "Cerebellum", "Brainstem"], a: 0, w: "The cerebrum handles thought and voluntary movement." },
+    { q: "The brain part coordinating movement and balance is the:", o: ["Brainstem", "Thalamus", "Cerebellum", "Cerebrum"], a: 2, w: "The cerebellum coordinates movement and balance." },
+    { q: "Vital functions like breathing and heartbeat are controlled by the:", o: ["Brainstem", "Cerebrum", "Occipital lobe", "Cerebellum"], a: 0, w: "The brainstem controls vital automatic functions." },
+    { q: "Why is brainstem damage especially life-threatening?", o: ["It controls vital functions like breathing and heartbeat", "It controls vision", "It has no function", "It stores memory"], a: 0, w: "The brainstem governs survival functions." },
+    { q: "The sensory relay station of the brain is the:", o: ["Hypothalamus", "Occipital lobe", "Thalamus", "Cerebellum"], a: 2, w: "The thalamus relays sensory information." },
+    { q: "The lobe handling reasoning, planning and personality is the:", o: ["Parietal", "Temporal", "Occipital", "Frontal"], a: 3, w: "The frontal lobe handles reasoning and personality." },
+    { q: "The occipital lobe processes:", o: ["Touch", "Vision", "Smell", "Hearing"], a: 1, w: "The occipital lobe processes vision." },
+    { q: "The temporal lobe handles hearing and:", o: ["Breathing", "Balance", "Vision", "Memory"], a: 3, w: "The temporal lobe handles hearing and memory." },
+    { q: "The parietal lobe mainly processes:", o: ["Personality", "Hearing", "Touch and spatial awareness", "Vision"], a: 2, w: "The parietal lobe processes touch and spatial sense." },
+    { q: "Each cerebral hemisphere controls:", o: ["The opposite side of the body", "Only the head", "The same side of the body", "No body part"], a: 0, w: "Each hemisphere controls the opposite (contralateral) side." },
+    { q: "Right-sided body weakness after a stroke suggests damage to the:", o: ["Left hemisphere", "Cerebellum", "Spinal cord base", "Right hemisphere"], a: 0, w: "Left-brain damage affects the right side of the body." },
+    { q: "One main role of the spinal cord is as a:", o: ["Blood filter", "Hormone gland", "Bone", "Two-way communication pathway"], a: 3, w: "The spinal cord carries signals up and down." },
+    { q: "The spinal cord is also a:", o: ["Digestive organ", "Heat producer", "Reflex centre", "Blood pump"], a: 2, w: "The spinal cord processes many reflexes itself." },
+    { q: "Grey matter of the spinal cord contains mainly:", o: ["Myelinated axons", "Blood", "Bone", "Cell bodies (integration)"], a: 3, w: "Grey matter is mainly cell bodies where integration occurs." },
+    { q: "Severing the spinal cord causes loss of sensation and movement:", o: ["Below the injury", "In the face only", "Above the injury", "Nowhere"], a: 0, w: "The break isolates the body below the injury." },
+    { q: "The autonomic nervous system controls:", o: ["Involuntary functions of internal organs", "Voluntary muscle only", "Skin colour only", "Bones"], a: 0, w: "The autonomic system controls involuntary internal functions." },
+    { q: "The 'fight or flight' branch is the:", o: ["Parasympathetic", "Sensory", "Sympathetic", "Somatic"], a: 2, w: "The sympathetic branch prepares for action." },
+    { q: "The 'rest and digest' branch is the:", o: ["Sympathetic", "Parasympathetic", "Central", "Somatic"], a: 1, w: "The parasympathetic branch conserves and restores." },
+    { q: "During fright, the sympathetic branch causes the heart to:", o: ["Stop", "Speed up", "Slow down", "Stay unchanged"], a: 1, w: "The sympathetic branch speeds the heart in fright." },
+    { q: "The brain region that is a major control centre for homeostasis is the:", o: ["Cerebellum", "Occipital lobe", "Hypothalamus", "Spinal cord"], a: 2, w: "The hypothalamus is a key homeostasis control centre." },
+    { q: "The hypothalamus links the nervous system to the endocrine system via the:", o: ["Liver", "Pituitary gland", "Kidney", "Heart"], a: 1, w: "It controls the pituitary, linking to hormones." },
+    { q: "The hypothalamus helps regulate:", o: ["Bone growth only", "Blood type", "Body temperature, hunger and thirst", "Only vision"], a: 2, w: "It regulates temperature, hunger, thirst and more." },
+    { q: "A key laboratory investigation of the CNS is analysis of:", o: ["Cerebrospinal fluid", "Bile", "Sweat", "Tears"], a: 0, w: "CSF analysis diagnoses meningitis, bleeding and more." },
+    { q: "CNS tissue is described as having:", o: ["No cells", "Very limited ability to regenerate", "The same repair as skin", "Excellent regeneration"], a: 1, w: "CNS tissue regenerates poorly, so injuries often persist." },
+    { q: "Because the CNS regenerates poorly, its injuries are often:", o: ["Quickly healed", "Permanent or only partly recoverable", "Reversible in days", "Harmless"], a: 1, w: "Poor regeneration makes CNS injuries often permanent." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -7846,6 +8382,9 @@ const CONTENT = {
   "phy:5": T_PHY_RMP,
   "phy:6": T_PHY_STIMFREQ,
   "phy:7": T_PHY_LENGTHTENSION,
+  "phy:8": T_PHY_MUSCULAR,
+  "phy:9": T_PHY_NERVOUS1,
+  "phy:10": T_PHY_NERVOUS2,
   "lab:0": T_LAB_INSTRUMENTATION,
   "lab:1": T_MLS_SAFETY,
   "lab:2": T_LAB_ELECTRICAL,
@@ -8092,6 +8631,48 @@ function loadMermaid() {
   return _mermaidPromise;
 }
 
+/* Formats AI text output for clean display: converts markdown bold, removes stray
+   asterisks, turns caret exponents like 10^3 into real superscripts (10 with a
+   small raised 3), and renders bullet lines and paragraphs neatly. This is why AI
+   answers read cleanly instead of showing raw ** and ^ symbols. */
+function supSpan(exp) {
+  // map digits and a few signs to Unicode superscript characters
+  const map = { "0": "\u2070", "1": "\u00B9", "2": "\u00B2", "3": "\u00B3", "4": "\u2074", "5": "\u2075", "6": "\u2076", "7": "\u2077", "8": "\u2078", "9": "\u2079", "+": "\u207A", "-": "\u207B", "n": "\u207F" };
+  return exp.split("").map((ch) => map[ch] || ch).join("");
+}
+function formatInline(text) {
+  // Convert caret exponents (e.g. 10^3, 10^-3, x^2) to Unicode superscripts.
+  let t = text.replace(/\^(-?\d+|n)/g, (m, e) => supSpan(e));
+  // Split on **bold** markers and render the bold parts.
+  const parts = t.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((p, i) => {
+    if (/^\*\*[^*]+\*\*$/.test(p)) return <strong key={i}>{p.slice(2, -2)}</strong>;
+    // remove any remaining stray single asterisks used as markdown
+    return <span key={i}>{p.replace(/\*\*/g, "").replace(/(^|\s)\*(\S)/g, "$1$2").replace(/(\S)\*(\s|$)/g, "$1$2")}</span>;
+  });
+}
+function AIText({ text, style }) {
+  const raw = String(text || "");
+  const lines = raw.split("\n");
+  const blocks = [];
+  let list = [];
+  const flush = (key) => {
+    if (list.length) {
+      blocks.push(<ul key={"ul" + key} style={{ margin: "6px 0 6px 18px", padding: 0 }}>{list.map((li, j) => <li key={j} style={{ marginBottom: 4 }}>{formatInline(li)}</li>)}</ul>);
+      list = [];
+    }
+  };
+  lines.forEach((ln, i) => {
+    const bullet = ln.match(/^\s*[-*\u2022]\s+(.*)$/);
+    if (bullet) { list.push(bullet[1]); return; }
+    flush(i);
+    if (ln.trim() === "") { blocks.push(<div key={"sp" + i} style={{ height: 8 }} />); return; }
+    blocks.push(<p key={"p" + i} style={{ margin: "0 0 8px" }}>{formatInline(ln)}</p>);
+  });
+  flush("end");
+  return <div style={style}>{blocks}</div>;
+}
+
 async function callClaude(system, messages, maxTokens = 4096) {
   const body = JSON.stringify({ max_tokens: maxTokens, system, messages });
   let res;
@@ -8203,7 +8784,7 @@ function AITutor({ topicTitle, context }) {
     if (!text || busy) return;
     const next = [...msgs, { role: "user", content: text }];
     setMsgs(next); setInput(""); setBusy(true);
-    const sys = `You are the ASCEND tutor for KNUST medical laboratory science students. Teach the WHY and the mechanism, step by step. Keep each answer complete but focused - finish within a few clear paragraphs rather than writing an essay, so the reply is never cut off. No emojis.\n\nTOPIC: ${topicTitle}\n\nSOURCE:\n${context}`;
+    const sys = `You are the ASCEND tutor for KNUST medical laboratory science students. Teach the WHY and the mechanism, step by step. Keep each answer complete but focused - finish within a few clear paragraphs rather than writing an essay, so the reply is never cut off. No emojis. Write all mathematics and numbers in plain readable text, never in LaTeX or markdown math: do not use dollar signs, backslashes, or caret notation. Write powers in words or with Unicode superscripts (for example, write "10 cubed" or "10^3" as "1000" or "ten to the power three"), write "x" for multiplication, and write fractions as "a/b" or in words. Never output symbols like $, \\\\times, \\\\frac, or ^.\\n\\nTOPIC: ${topicTitle}\\n\\nSOURCE:\\n${context}`;
     const apiMsgs = next.slice(1);
     try {
       const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })), 4096);
@@ -8217,7 +8798,7 @@ function AITutor({ topicTitle, context }) {
   return (
     <div className="chat">
       <div className="chat-body" ref={bodyRef}>
-        {msgs.map((m, i) => <div key={i} className={"msg " + (m.role === "user" ? "u" : "a")}>{m.content}</div>)}
+        {msgs.map((m, i) => <div key={i} className={"msg " + (m.role === "user" ? "u" : "a")}>{m.role === "user" ? m.content : <AIText text={m.content} />}</div>)}
         {busy && <div className="msg a dots"><span /><span /><span /></div>}
       </div>
       <div className="chat-in">
@@ -8681,6 +9262,7 @@ function RanksView({ app }) {
   const [others, setOthers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshTick, setRefreshTick] = useState(0);
+  const [search, setSearch] = useState("");
   const loadBoard = async () => {
     setLoading(true);
     // Always read the class-wide leaderboard from Supabase, no matter how the
@@ -8718,7 +9300,12 @@ function RanksView({ app }) {
     return () => document.removeEventListener("visibilitychange", onVis);
   }, [meKey, app.progress.xp, app.supaUid, refreshTick]);
   const me = { name: app.progress.name, xp: app.progress.xp, streak: app.progress.streak, me: true };
-  const board = [...others, me].sort((a, b) => b.xp - a.xp);
+  // Full ranked board with each person's TRUE position (rank 1, 2, 3...), computed
+  // before any search filter so positions stay correct when searching.
+  const fullBoard = [...others, me].sort((a, b) => b.xp - a.xp).map((p, i) => ({ ...p, pos: i + 1 }));
+  // Apply the search filter (by name) for display only; positions are preserved.
+  const q = search.trim().toLowerCase();
+  const board = q ? fullBoard.filter((p) => String(p.name || "").toLowerCase().includes(q)) : fullBoard;
   const r = rankOf(app.progress.xp);
   const toNext = r.next ? r.next.min - app.progress.xp : 0;
   return (
@@ -8736,10 +9323,24 @@ function RanksView({ app }) {
           <div className="mono" style={{ color: "var(--text-2)", fontSize: 13 }}>{app.progress.xp} XP{r.next ? ` · ${toNext} to ${r.next.name}` : " · top tier"}</div>
         </div>
       </div>
-      <div style={{ marginTop: 18 }}>
-        {board.map((p, idx) => (
-          <div key={idx} className="card" style={{ marginBottom: 8, padding: "12px 15px", display: "flex", alignItems: "center", gap: 13, border: p.me ? "1px solid var(--amber)" : "1px solid var(--line)", background: p.me ? "var(--amber-dim)" : "var(--bg-2)" }}>
-            <div className="mono" style={{ width: 24, textAlign: "center", fontWeight: 700, color: idx < 3 ? "var(--amber)" : "var(--text-3)", fontSize: 15 }}>{idx + 1}</div>
+      <div style={{ marginTop: 18, marginBottom: 4 }}>
+        <input
+          className="auth-input"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search for a classmate by name"
+          autoCapitalize="none"
+          autoCorrect="off"
+          style={{ width: "100%" }}
+        />
+        {q && <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 6 }}>{board.length} match{board.length === 1 ? "" : "es"} for "{search.trim()}"{loading ? " (still loading...)" : ""}</div>}
+      </div>
+      <div style={{ marginTop: 10 }}>
+        {loading && fullBoard.length <= 1 && <div style={{ padding: "20px", textAlign: "center", color: "var(--text-3)", fontSize: 13 }}>Loading the class leaderboard...</div>}
+        {!loading && q && board.length === 0 && <div style={{ padding: "20px", textAlign: "center", color: "var(--text-3)", fontSize: 13 }}>No classmate found matching "{search.trim()}".</div>}
+        {board.map((p) => (
+          <div key={p.pos + "-" + p.name} className="card" style={{ marginBottom: 8, padding: "12px 15px", display: "flex", alignItems: "center", gap: 13, border: p.me ? "1px solid var(--amber)" : "1px solid var(--line)", background: p.me ? "var(--amber-dim)" : "var(--bg-2)" }}>
+            <div className="mono" style={{ width: 24, textAlign: "center", fontWeight: 700, color: p.pos <= 3 ? "var(--amber)" : "var(--text-3)", fontSize: 15 }}>{p.pos}</div>
             <div style={{ width: 34, height: 34, borderRadius: "50%", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 13, color: "var(--text-2)", flexShrink: 0 }}>{p.name[0]}</div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontWeight: 650, fontSize: 14.5, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.name}{p.me && <span style={{ color: "var(--amber)", fontSize: 12 }}> · you</span>}</div>
@@ -8755,16 +9356,16 @@ function RanksView({ app }) {
       <div className="divider" />
       <div className="grid g2">
         <div className="card">
-          <div className="eyebrow">Weekly top scorer</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: "var(--amber)", marginTop: 6 }}>{board[0]?.name || "No data yet"}</div>
-          <div style={{ color: "var(--text-2)", fontSize: 13 }}>{board[0] ? board[0].xp + " XP this week" : "Do quizzes to appear here"}</div>
+          <div className="eyebrow">Top scorer</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: "var(--amber)", marginTop: 6 }}>{fullBoard[0]?.name || "No data yet"}</div>
+          <div style={{ color: "var(--text-2)", fontSize: 13 }}>{fullBoard[0] ? fullBoard[0].xp + " XP" : "Do quizzes to appear here"}</div>
         </div>
         <div className="card">
-          <div className="eyebrow">Demotion zone</div>
-          <p style={{ color: "var(--text-2)", fontSize: 13, marginTop: 6, lineHeight: 1.6 }}>Practice at least once every seven days to hold your rank. Let your streak hit zero and you drift down the board.</p>
+          <div className="eyebrow">Class size</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: "var(--text)", marginTop: 6 }}>{fullBoard.length} on the board</div>
+          <p style={{ color: "var(--text-2)", fontSize: 13, marginTop: 4, lineHeight: 1.6 }}>Everyone who signs up appears here. Do quizzes and daily questions to climb.</p>
         </div>
       </div>
-      <p className="note-hint" style={{ marginTop: 14, lineHeight: 1.6 }}>The class-wide leaderboard turns on with the cloud backend. For now this shows your own standing.</p>
     </div>
   );
 }
@@ -9120,23 +9721,31 @@ function PapersView() {
   const [busy, setBusy] = useState(false);
   const [items, setItems] = useState(null);
   const [err, setErr] = useState("");
+  const [count, setCount] = useState(10); // how many questions the student wants
   const RULES = `Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which position is correct. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {"q": string, "o": [4 strings], "a": integer index, "w": one short explanation}.`;
+  // Shuffle each question's four options so the correct answer is not always in the
+  // position the AI happened to place it, and update the answer index to match.
+  const shuffleOptions = (arr) => arr.map((item) => {
+    const opts = item.o.map((text, i) => ({ text, correct: i === item.a }));
+    for (let i = opts.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [opts[i], opts[j]] = [opts[j], opts[i]]; }
+    return { ...item, o: opts.map((x) => x.text), a: opts.findIndex((x) => x.correct) };
+  });
   const genSet = async (usr) => {
     if (busy) return;
     setBusy(true); setErr(""); setItems(null);
     try {
-      let text = await callClaude(`You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid, compact, complete JSON array, no prose, no markdown, no trailing commas. Keep each question and option short.`, [{ role: "user", content: usr }], 6000);
+      let text = await callClaude(`You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid, compact, complete JSON array, no prose, no markdown, no trailing commas. Keep each question and option short.`, [{ role: "user", content: usr }], 8000);
       const arr = parseAIJson(text);
       const clean = (Array.isArray(arr) ? arr : []).filter((x) => x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number");
       if (!clean.length) throw new Error("No usable questions came back - try again.");
-      setItems(clean);
+      setItems(shuffleOptions(clean));
     } catch (e) {
       setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again in a moment.");
     }
     setBusy(false);
   };
-  const startSolve = () => genSet(`Generate 8 past-paper-style exam MCQs for a KNUST first-year student in ${courseById(courseId).name} (${courseById(courseId).code}). ${RULES}`);
-  const startSimilar = () => genSet(`Here is a past exam question:\n\n${sample}\n\nGenerate 5 fresh MCQs testing the same concept and matching its style, for ${courseById(courseId).name}. ${RULES}`);
+  const startSolve = () => genSet(`Generate exactly ${count} past-paper-style exam MCQs for a KNUST first-year student in ${courseById(courseId).name} (${courseById(courseId).code}). ${RULES}`);
+  const startSimilar = () => genSet(`Here is a past exam question:\n\n${sample}\n\nGenerate exactly ${count} fresh MCQs testing the same concept and matching its style, for ${courseById(courseId).name}. ${RULES}`);
   return (
     <div className="view">
       <div className="eyebrow">Past papers</div>
@@ -9159,10 +9768,16 @@ function PapersView() {
             <textarea className="pastebox" value={sample} placeholder={"e.g.\n\nThe plane dividing the body into left and right is the\nA. coronal  B. sagittal  C. transverse  D. oblique"} onChange={(e) => setSample(e.target.value)} />
           </>
         )}
-        <div style={{ marginTop: 14 }}>
+        <label className="eyebrow" style={{ display: "block", margin: "16px 0 8px" }}>How many questions?</label>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {[5, 10, 15, 20].map((n) => (
+            <button key={n} className="btn btn-sm" style={{ background: count === n ? "var(--amber)" : "var(--bg-3)", color: count === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={() => setCount(n)}>{n}</button>
+          ))}
+        </div>
+        <div style={{ marginTop: 16 }}>
           {tab === "solve"
-            ? <button className="btn btn-a" onClick={startSolve} disabled={busy}>{busy ? "Building your set..." : "Start a practice set"} <Ic.ai p={16} /></button>
-            : <button className="btn btn-a" onClick={startSimilar} disabled={busy || !sample.trim()}>{busy ? "Generating..." : "Generate similar questions"} <Ic.ai p={16} /></button>}
+            ? <button className="btn btn-a" onClick={startSolve} disabled={busy}>{busy ? "Building your set..." : `Start a set of ${count}`} <Ic.ai p={16} /></button>
+            : <button className="btn btn-a" onClick={startSimilar} disabled={busy || !sample.trim()}>{busy ? "Generating..." : `Generate ${count} similar`} <Ic.ai p={16} /></button>}
         </div>
       </div>
       {err && <div className="card" style={{ marginTop: 14, borderColor: "var(--line-2)", color: "var(--text-2)", fontSize: 14 }}>{err}</div>}
@@ -9173,7 +9788,7 @@ function PapersView() {
 }
 
 /* ------------------------------- resources ------------------------------ */
-const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical laboratory science students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis.";
+const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical laboratory science students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis. Write all mathematics and numbers in plain readable text, never in LaTeX or markdown math: do not use dollar signs, backslashes, or caret notation. Write powers in words (for example 'ten to the power three' or the value 1000), write 'x' for multiplication, and write fractions as 'a/b' or in words. Never output symbols like $, \\times, \\frac, or ^.";
 const SOCRATIC_TASK = "Break this study material into a focused Socratic lesson of 4 to 6 steps. For each step: state the question, explain the answer in one or two clear paragraphs, then give the crucial insight in one line. End with three short self-test questions and their answers. Be economical so the whole lesson is complete and never cut off.";
 
 function ResourcesView() {
@@ -9261,7 +9876,7 @@ function ResourcesView() {
       {result && (
         <div className="card" style={{ marginTop: 14 }}>
           <div className="eyebrow" style={{ marginBottom: 10 }}>ASCEND breakdown</div>
-          <div style={{ whiteSpace: "pre-wrap", lineHeight: 1.8, fontSize: 15 }}>{result}</div>
+          <AIText text={result} style={{ lineHeight: 1.8, fontSize: 15 }} />
         </div>
       )}
     </div>
