@@ -7767,6 +7767,526 @@ My answers. One: likely scoliosis — a lateral curvature of the spine. It is mo
   ]
 };
 
+// ==================== ANATOMY TOPIC 11: THE APPENDICULAR SKELETON ====================
+const T_ANA_APPENDICULAR = {
+  courseId: "ana",
+  topicIndex: 10,
+  title: "The Appendicular Skeleton",
+  minutes: 22,
+  note: [
+    { q: "What is the appendicular skeleton and why does it matter?",
+      body: `You have studied the axial skeleton — the central axis that protects your vital organs. Now we turn to the appendicular skeleton, the part of the skeleton that allows you to interact with the world. Without it, you could not walk, reach, grasp, or manipulate your environment.
+
+My Socratic question: the appendicular skeleton has 126 bones — more than the axial skeleton's 80. Why do your limbs and their attachments contain more bones than your skull, spine, and ribcage combined?
+
+The answer is that the appendicular skeleton is designed for mobility and manipulation. Every bone in your limbs serves a mechanical purpose — acting as levers, providing attachment points for muscles, or allowing fine motor control. The shoulder girdle lets you reach in many directions, the pelvic girdle supports your weight and transmits force to your legs, and your hands and feet have many small bones that allow precise movements and balance. The appendicular skeleton is the part of the skeleton that connects you to the world.
+
+Crucial insight: the appendicular skeleton (126 bones) consists of the limbs and the girdles that attach them to the axial skeleton. It is designed for movement and manipulation, allowing you to walk, reach, grasp, and interact with your environment.` },
+
+    { q: "The shoulder girdle: the clavicle and scapula.",
+      body: `The shoulder girdle, or pectoral girdle, consists of two bones on each side: the clavicle (collarbone) and the scapula (shoulder blade). Together, they attach the upper limbs to the axial skeleton and provide a wide range of motion for the arms.
+
+My Socratic question: why is the shoulder the most mobile joint in the body, and how does the structure of the shoulder girdle allow this remarkable mobility?
+
+The answer is that the shoulder girdle is not rigidly attached to the axial skeleton — the clavicle is the only bone that directly connects the upper limb to the axial skeleton (at the sternum). The scapula floats on the back of the ribcage, held in place by muscles rather than joints. This allows the scapula to move freely over the ribcage, and the shoulder joint (glenohumeral joint) to have the greatest range of motion of any joint in the body. The clavicle acts as a strut, keeping the shoulder away from the trunk to allow full arm movement.
+
+The clavicle is a long bone that articulates medially with the sternum (sternoclavicular joint) and laterally with the scapula (acromioclavicular joint). The scapula is a flat, triangular bone with a shallow socket (glenoid cavity) that receives the head of the humerus.
+
+Crucial insight: the shoulder girdle consists of the clavicle and scapula. It provides the greatest mobility of any joint in the body because the scapula is not rigidly attached to the axial skeleton, allowing free movement over the ribcage.` },
+
+    { q: "The upper limb: humerus, radius, and ulna.",
+      body: `The upper limb consists of three long bones: the humerus in the arm, and the radius and ulna in the forearm. Each bone is shaped for its specific mechanical role, and together they provide the leverage and dexterity for reaching, lifting, and grasping.
+
+My Socratic question: why does the forearm have two bones (radius and ulna) while the arm has only one (humerus)? What does this difference tell you about the functions of each segment?
+
+The answer is that the humerus must transmit force from the shoulder to the elbow and must be strong enough to bear weight and withstand leverage forces — a single thick bone is ideal for this. The forearm, however, requires rotation (pronation and supination) — the ability to turn the palm up or down — which requires two bones that can rotate around each other. The radius and ulna allow this rotation, which is essential for tasks like turning a doorknob or using a screwdriver.
+
+The humerus is the long bone of the arm, with a rounded head that fits into the glenoid cavity of the scapula. The radius is the lateral forearm bone (thumb side), and the ulna is the medial forearm bone (little finger side). The radius and ulna articulate with each other at both ends, allowing rotation.
+
+Crucial insight: the upper limb consists of the humerus (arm) and the radius and ulna (forearm). The two bones of the forearm allow rotation (pronation and supination), while the single humerus provides strength for leverage.` },
+
+    { q: "The hand: carpals, metacarpals, and phalanges.",
+      body: `The hand is one of the most complex and specialised parts of the appendicular skeleton, containing 27 bones arranged in three groups: the carpals (wrist), metacarpals (hand), and phalanges (fingers). The hand's structure allows both powerful grip and fine manipulation.
+
+My Socratic question: why does the hand have so many small bones, and what do they allow you to do that you could not do with fewer, larger bones?
+
+The answer is that the many small bones of the hand provide flexibility and fine control. The carpals (8 bones arranged in two rows) form a flexible wrist that can bend, extend, and move side to side. The metacarpals (5 bones) form the palm and provide a stable base for the fingers. The phalanges (14 bones — 3 in each finger, 2 in the thumb) allow the fingers to bend and grip with precision. The thumb is especially important — it is opposable, meaning it can touch the tips of the other fingers, allowing the precision grip that is characteristic of humans.
+
+The carpals include the scaphoid, lunate, triquetrum, pisiform, trapezium, trapezoid, capitate, and hamate. The metacarpals are numbered 1-5 from thumb to little finger. The phalanges are proximal, middle, and distal (except the thumb, which has only proximal and distal).
+
+Crucial insight: the hand has 27 bones — 8 carpals (wrist), 5 metacarpals (hand), and 14 phalanges (fingers). The opposable thumb allows precision grip, and the many small bones provide the flexibility and fine control that make human hands unique.` },
+
+    { q: "The pelvic girdle: support and stability.",
+      body: `The pelvic girdle, or pelvis, is the structure that attaches the lower limbs to the axial skeleton. Unlike the shoulder girdle, which is designed for mobility, the pelvic girdle is designed for stability and weight-bearing.
+
+My Socratic question: why is the pelvic girdle so different from the shoulder girdle — why is it heavy, rigid, and firmly attached to the axial skeleton?
+
+The answer is that the pelvis must support the weight of the upper body and transmit it to the legs during standing, walking, and running. It must also protect the organs of the lower abdomen and pelvis (including the bladder, reproductive organs, and part of the large intestine). The pelvis is therefore built for strength and stability, not mobility. The pelvic girdle consists of two hip bones (os coxae), which are formed by the fusion of three bones each: the ilium, ischium, and pubis. The hip bones articulate with each other at the pubic symphysis and with the sacrum at the sacroiliac joints.
+
+The pelvis also has significant differences between males and females. The female pelvis is wider and shallower, with a larger pelvic inlet and outlet, adapted for childbirth.
+
+Crucial insight: the pelvic girdle consists of two hip bones (ilium, ischium, pubis) that attach the lower limbs to the axial skeleton. It is designed for stability and weight-bearing, not mobility, and the female pelvis is adapted for childbirth.` },
+
+    { q: "The lower limb: femur, tibia, and fibula.",
+      body: `The lower limb consists of three long bones: the femur in the thigh, and the tibia and fibula in the leg. These bones are among the largest and strongest in the body, designed to support weight and transmit force during walking, running, and jumping.
+
+My Socratic question: the femur is the longest and strongest bone in the body. Why does the thigh need such a massive bone, while the arm has a smaller humerus?
+
+The answer is that the femur must support the entire weight of the body and transmit forces from the hip to the knee during weight-bearing activities. The forces on the femur during walking can be several times body weight, and during running or jumping, even higher. The femur's strength is essential for mobility and stability.
+
+The femur is the longest bone in the body, with a rounded head that fits into the acetabulum of the pelvis. The tibia is the shinbone, the weight-bearing bone of the leg. The fibula is the thin bone lateral to the tibia, which does not bear weight but provides attachment points for muscles and helps stabilise the ankle. The knee joint is the largest and most complex joint in the body, formed by the articulation of the femur and tibia.
+
+Crucial insight: the lower limb consists of the femur (thigh), tibia (shinbone, weight-bearing), and fibula (lateral, non-weight-bearing). The femur is the longest and strongest bone in the body, designed to support weight and transmit force during locomotion.` },
+
+    { q: "The foot: tarsals, metatarsals, and phalanges.",
+      body: `The foot is the foundation of the lower limb, supporting the body's weight and providing propulsion during walking and running. Like the hand, it consists of 26 bones arranged in three groups: tarsals (ankle and heel), metatarsals (foot), and phalanges (toes).
+
+My Socratic question: why are the bones of the foot arranged in an arch, and what would happen if this arch collapsed?
+
+The answer is that the arches of the foot (the medial longitudinal arch, lateral longitudinal arch, and transverse arch) act as shock absorbers and provide springiness during walking and running. They distribute body weight across the foot and allow the foot to adapt to uneven surfaces. If the arches collapse (as in flat feet or fallen arches), weight distribution is altered, leading to pain in the feet, knees, hips, and back. The arches are maintained by the shape of the bones and the ligaments and tendons that support them.
+
+The tarsals include the calcaneus (heel bone), talus, navicular, cuboid, and three cuneiform bones. The metatarsals are the five long bones of the foot, numbered 1-5 from the big toe. The phalanges are the toe bones, with three in each toe except the big toe, which has two.
+
+Crucial insight: the foot has 26 bones — 7 tarsals, 5 metatarsals, and 14 phalanges. The arches of the foot (medial longitudinal, lateral longitudinal, transverse) act as shock absorbers and distribute weight during standing and walking.` },
+
+    { q: "Joints of the appendicular skeleton.",
+      body: `The appendicular skeleton contains several important joints that allow movement and stability. Understanding these joints is essential for understanding how the limbs function.
+
+My Socratic question: why is the shoulder joint more mobile but less stable than the hip joint, and how does the structure of each joint reflect its function?
+
+The answer is that the shoulder joint (glenohumeral joint) has a shallow socket (glenoid cavity) that allows a wide range of motion but provides little stability — the joint depends on muscles and ligaments for stability. This is ideal for reaching and manipulating objects. The hip joint (acetabulofemoral joint), in contrast, has a deep socket (acetabulum) that provides great stability but limits range of motion. This is ideal for weight-bearing and locomotion. The structure of each joint reflects its function: mobility for the shoulder, stability for the hip.
+
+Other important joints include the elbow (humeroulnar and humeroradial joints), the wrist (radiocarpal joint), the knee (tibiofemoral joint — the largest joint in the body), and the ankle (talocrural joint). Each joint has its own unique structure and range of motion.
+
+Crucial insight: the appendicular skeleton contains many joints, including the shoulder (mobile but unstable), hip (stable but less mobile), elbow, wrist, knee (largest joint), and ankle. Joint structure reflects function — mobility versus stability.` },
+
+    { q: "Clinical relevance: the appendicular skeleton in medicine.",
+      body: `The appendicular skeleton is involved in many common injuries and conditions, making it central to clinical practice. Understanding its anatomy is essential for diagnosis and treatment.
+
+My Socratic question: why are fractures of the radius (Colles fracture) and the femur so common, and what does this tell you about the mechanical demands on these bones?
+
+The answer is that fractures occur when forces exceed the bone's strength. The radius is commonly fractured when people fall on an outstretched hand (FOOSH injury), which is a common mechanism of injury. The femur is commonly fractured in the elderly due to osteoporosis and in younger people due to high-energy trauma like motor vehicle accidents. The distribution of fractures reflects the forces bones must withstand and the conditions that weaken them (like osteoporosis).
+
+Common injuries of the appendicular skeleton include: Colles fracture (distal radius), hip fracture (femoral neck), shoulder dislocation (glenohumeral joint), ACL tear (knee), and ankle sprain. Understanding these injuries is essential for diagnosis and treatment.
+
+Crucial insight: the appendicular skeleton is involved in many common injuries — fractures of the radius, hip, and ankle, dislocations of the shoulder, and ligament injuries of the knee. Understanding appendicular anatomy is essential for managing trauma and orthopaedic conditions.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the appendicular skeleton.
+
+Definition: the appendicular skeleton (126 bones) consists of the limbs and the girdles that attach them to the axial skeleton.
+
+Shoulder girdle: clavicle and scapula — provides mobility for the arm; clavicle articulates with sternum and scapula; scapula has a shallow socket (glenoid cavity).
+
+Upper limb: humerus (arm), radius and ulna (forearm) — two forearm bones allow rotation (pronation and supination).
+
+Hand: 27 bones — 8 carpals (wrist), 5 metacarpals, 14 phalanges (fingers). Opposable thumb allows precision grip.
+
+Pelvic girdle: two hip bones (ilium, ischium, pubis) — designed for stability and weight-bearing; female pelvis adapted for childbirth.
+
+Lower limb: femur (thigh, longest and strongest bone), tibia (shinbone, weight-bearing), fibula (lateral, non-weight-bearing).
+
+Foot: 26 bones — 7 tarsals, 5 metatarsals, 14 phalanges; arches provide shock absorption and weight distribution.
+
+Joints: shoulder (mobile, shallow socket), hip (stable, deep socket), elbow, wrist, knee (largest joint), ankle.
+
+Clinical relevance: common injuries include Colles fracture (radius), hip fracture (femoral neck), shoulder dislocation, ACL tear, and ankle sprain.
+
+Now your final test. A patient falls on an outstretched hand and presents with wrist pain, swelling, and deformity. The X-ray shows a fracture of the distal radius.
+
+Question one: what is this fracture called, and which bone is affected?
+Question two: what is the mechanism of injury, and why is the radius more commonly fractured than the ulna in this type of injury?
+Question three: if the injury had occurred at the hip instead of the wrist, which bone would be affected, and why are hip fractures more common in elderly patients?
+
+Work them through before reading on.
+
+My answers. One: this is a Colles fracture — a fracture of the distal radius. The radius is the lateral forearm bone (thumb side). Two: the mechanism is a fall on an outstretched hand (FOOSH injury). The radius is more commonly fractured because it bears most of the force when the hand is extended, transmitting the impact up through the wrist. Three: the hip fracture would affect the femur (specifically the femoral neck). Hip fractures are more common in elderly patients because of osteoporosis (weakened bone density) and the increased risk of falls with age.` }
+  ],
+  theory: [
+    { q: "What is the appendicular skeleton and how many bones does it contain?", a: "The appendicular skeleton consists of the limbs and the girdles that attach them to the axial skeleton. It contains 126 bones — 64 in the upper limbs and shoulder girdle, and 62 in the lower limbs and pelvic girdle." },
+    { q: "What are the bones of the shoulder girdle?", a: "The shoulder girdle consists of the clavicle (collarbone) and the scapula (shoulder blade) on each side. The clavicle articulates with the sternum and the scapula; the scapula has a shallow socket (glenoid cavity) for the humerus." },
+    { q: "What are the bones of the upper limb?", a: "The humerus (arm), the radius (lateral forearm bone, thumb side), and the ulna (medial forearm bone, little finger side)." },
+    { q: "How many bones are in the hand and how are they arranged?", a: "The hand has 27 bones: 8 carpals (wrist), 5 metacarpals (hand), and 14 phalanges (fingers). The thumb has 2 phalanges; each finger has 3." },
+    { q: "What is the pelvic girdle and what are its main bones?", a: "The pelvic girdle consists of two hip bones (os coxae), each formed by the fusion of the ilium, ischium, and pubis. It attaches the lower limbs to the axial skeleton and is designed for stability and weight-bearing." },
+    { q: "What are the bones of the lower limb?", a: "The femur (thigh, longest and strongest bone), the tibia (shinbone, weight-bearing), and the fibula (lateral, non-weight-bearing bone). The patella (kneecap) is a sesamoid bone in the knee." },
+    { q: "How many bones are in the foot and what are their groups?", a: "The foot has 26 bones: 7 tarsals (ankle and heel), 5 metatarsals (foot), and 14 phalanges (toes)." },
+    { q: "Why does the forearm have two bones while the arm has one?", a: "The two bones of the forearm (radius and ulna) allow rotation (pronation and supination). The single humerus provides strength for leverage and force transmission." },
+    { q: "What is the difference between the shoulder and hip joints in terms of mobility and stability?", a: "The shoulder joint has a shallow socket (glenoid) providing greater mobility but less stability. The hip joint has a deep socket (acetabulum) providing greater stability but less mobility. This reflects their functions — mobility for the shoulder, weight-bearing for the hip." },
+    { q: "What are common injuries of the appendicular skeleton?", a: "Colles fracture (distal radius), hip fracture (femoral neck), shoulder dislocation, ACL tear (knee), ankle sprain, and carpal tunnel syndrome (wrist)." },
+  ],
+  videos: [
+    { channel: "Anatomy", title: "The Appendicular Skeleton Overview", note: "Shoulder girdle, upper limb, pelvic girdle, and lower limb.", url: "" },
+    { channel: "Anatomy", title: "Bones of the Hand and Foot", note: "Carpals, metacarpals, phalanges, tarsals, metatarsals.", url: "" },
+    { channel: "Anatomy", title: "The Shoulder and Hip Joints", note: "Mobility vs stability in the appendicular skeleton.", url: "" },
+  ],
+  mcqs: [
+    { q: "The appendicular skeleton contains approximately how many bones?", o: ["80", "126", "206", "100"], a: 1, w: "The appendicular skeleton has 126 bones." },
+    { q: "The shoulder girdle consists of the:", o: ["Clavicle and scapula", "Clavicle and sternum", "Scapula and humerus", "Humerus and radius"], a: 0, w: "The shoulder girdle is the clavicle and scapula." },
+    { q: "The clavicle articulates medially with the:", o: ["Scapula", "Humerus", "Sternum", "Ribs"], a: 2, w: "The clavicle articulates with the sternum at the sternoclavicular joint." },
+    { q: "The scapula has a shallow socket called the:", o: ["Acetabulum", "Glenoid cavity", "Fovea", "Foramen"], a: 1, w: "The glenoid cavity of the scapula receives the head of the humerus." },
+    { q: "The long bone of the arm is the:", o: ["Radius", "Ulna", "Humerus", "Femur"], a: 2, w: "The humerus is the long bone of the arm." },
+    { q: "The lateral bone of the forearm is the:", o: ["Ulna", "Radius", "Humerus", "Carpal"], a: 1, w: "The radius is the lateral forearm bone (thumb side)." },
+    { q: "The medial bone of the forearm is the:", o: ["Radius", "Ulna", "Humerus", "Carpal"], a: 1, w: "The ulna is the medial forearm bone (little finger side)." },
+    { q: "How many carpals are in the wrist?", o: ["5", "8", "14", "7"], a: 1, w: "There are 8 carpal bones in the wrist." },
+    { q: "How many metacarpals are in the hand?", o: ["5", "8", "14", "7"], a: 0, w: "There are 5 metacarpal bones in the hand." },
+    { q: "How many phalanges are in the hand?", o: ["8", "14", "27", "5"], a: 1, w: "There are 14 phalanges (finger bones) in the hand." },
+    { q: "The thumb has how many phalanges?", o: ["1", "2", "3", "4"], a: 1, w: "The thumb has 2 phalanges (proximal and distal)." },
+    { q: "The pelvic girdle is formed by:", o: ["Two hip bones (ilium, ischium, pubis)", "The sacrum and coccyx", "The femur and tibia", "The ilium and ischium"], a: 0, w: "The pelvic girdle consists of two hip bones, each formed by the ilium, ischium, and pubis." },
+    { q: "The longest and strongest bone in the body is the:", o: ["Tibia", "Humerus", "Femur", "Fibula"], a: 2, w: "The femur is the longest and strongest bone in the body." },
+    { q: "The weight-bearing bone of the leg is the:", o: ["Fibula", "Tibia", "Femur", "Patella"], a: 1, w: "The tibia is the weight-bearing bone of the leg (shinbone)." },
+    { q: "The non-weight-bearing bone of the leg is the:", o: ["Tibia", "Fibula", "Femur", "Patella"], a: 1, w: "The fibula is the non-weight-bearing bone of the leg." },
+    { q: "The knee joint is the articulation of the femur and the:", o: ["Fibula", "Patella", "Tibia", "Pelvis"], a: 2, w: "The knee joint is the articulation of the femur and tibia." },
+    { q: "How many tarsals are in the ankle?", o: ["5", "7", "8", "14"], a: 1, w: "There are 7 tarsal bones in the ankle." },
+    { q: "How many metatarsals are in the foot?", o: ["5", "7", "8", "14"], a: 0, w: "There are 5 metatarsal bones in the foot." },
+    { q: "How many phalanges are in the foot?", o: ["8", "14", "26", "5"], a: 1, w: "There are 14 phalanges (toe bones) in the foot." },
+    { q: "The arches of the foot function to:", o: ["Provide shock absorption and weight distribution", "Increase foot length", "Stabilise the ankle", "Allow rotation"], a: 0, w: "The arches of the foot act as shock absorbers and help distribute body weight." },
+  ],
+};
+
+// ==================== ANATOMY TOPIC 12: JOINTS OF THE BODY ====================
+const T_ANA_JOINTS = {
+  courseId: "ana",
+  topicIndex: 11,
+  title: "Joints of the Body",
+  minutes: 22,
+  note: [
+    { q: "What is a joint and why does it matter?",
+      body: `You have studied the bones of the skeleton — both axial and appendicular. But bones alone do not move; they must connect to each other. The points where bones meet are called joints (articulations), and they are essential for movement, stability, and the transmission of forces throughout the body.
+
+My Socratic question: the bones of your skull are fused together and do not move, while the bones of your knee move freely and allow walking. Why are these two types of joints so different, and what does this tell you about the function of each?
+
+The answer is that joints are classified by how much movement they allow and by the material that connects the bones. The skull's sutures are immovable because the brain needs protection, not movement. The knee is freely movable because walking and running require a wide range of motion. The structure of a joint is directly related to its function.
+
+Crucial insight: a joint is the point where two or more bones meet. Joints are classified by their function (how much movement they allow) and their structure (the material connecting the bones). The structure of a joint reflects its function — immovable for protection, freely movable for mobility.` },
+
+    { q: "Functional classification of joints.",
+      body: `Joints are classified functionally by the amount of movement they allow. This classification is simple and intuitive: immovable, slightly movable, or freely movable.
+
+My Socratic question: why are some joints completely immovable while others allow a full range of motion? What determines how much movement a joint allows?
+
+The answer is the structure of the joint and the demands of its location. Synarthroses are immovable joints. They are found where bones must be firmly united, such as the sutures of the skull, where movement would be dangerous. Amphiarthroses are slightly movable joints. They provide stability with a small amount of flexibility, such as the intervertebral discs of the spine, which allow slight movement while protecting the spinal cord. Diarthroses are freely movable joints. They allow a wide range of motion and are found in the limbs, where movement is essential.
+
+Crucial insight: joints are classified functionally as synarthroses (immovable), amphiarthroses (slightly movable), and diarthroses (freely movable). The amount of movement reflects the joint's function — protection, stability, or mobility.` },
+
+    { q: "Structural classification of joints.",
+      body: `Joints are also classified structurally by the material that connects the bones. This classification gives you the anatomical basis for understanding how joints work.
+
+My Socratic question: the joints of the skull are connected by fibrous tissue, the joints of the spine are connected by cartilage, and the knee joint has a fluid-filled cavity. What do these differences mean for the function of each joint?
+
+The answer is that the connecting material determines the joint's properties. Fibrous joints are connected by dense fibrous tissue (collagen). They are typically immovable (synarthroses) and are found where strong, stable connections are needed, such as the sutures of the skull. Cartilaginous joints are connected by cartilage. They are typically slightly movable (amphiarthroses) and are found where stability with some flexibility is needed, such as the intervertebral discs. Synovial joints have a cavity filled with synovial fluid, which lubricates the joint and allows smooth movement. They are freely movable (diarthroses) and are the most common and most complex joints in the body.
+
+Crucial insight: joints are classified structurally as fibrous (immovable, connected by fibrous tissue), cartilaginous (slightly movable, connected by cartilage), and synovial (freely movable, with a synovial cavity). The structure determines the function.` },
+
+    { q: "Synovial joints: the most common and complex.",
+      body: `Synovial joints are the most common and most complex joints in the body. They allow a wide range of motion and are found in the limbs, where mobility is essential.
+
+My Socratic question: why does a synovial joint need a cavity filled with fluid, and what would happen if that fluid were not present?
+
+The answer is that the synovial fluid lubricates the joint, reducing friction between the articulating bones and allowing smooth, pain-free movement. Without synovial fluid, the bones would rub against each other, causing pain, inflammation, and damage to the articular cartilage. Synovial fluid also nourishes the articular cartilage, which has no blood supply.
+
+Synovial joints have several characteristic features: articular cartilage (hyaline cartilage covering the ends of bones), a joint cavity (the space between the bones), a synovial membrane (lining the cavity and producing synovial fluid), an articular capsule (fibrous tissue surrounding the joint), and ligaments (reinforcing the capsule and providing stability).
+
+Crucial insight: synovial joints are freely movable joints with a fluid-filled cavity that lubricates the joint and reduces friction. They are the most complex joints in the body and are found in the limbs, where mobility is essential.` },
+
+    { q: "Types of synovial joints.",
+      body: `Synovial joints are further classified by the shape of the articulating surfaces and the type of movement they allow. There are six types, and understanding them helps you understand the range of motion at different joints.
+
+My Socratic question: why can your shoulder move in almost any direction, while your elbow can only bend and straighten? The answer lies in the type of synovial joint.
+
+The six types are: plane (gliding) joints — flat surfaces that allow sliding movements (carpals of the wrist, tarsals of the ankle). Hinge joints — allow bending and straightening in one plane (elbow, knee, ankle). Pivot joints — allow rotation around a single axis (the joint between the atlas and axis in the neck, allowing head rotation). Condyloid (ellipsoid) joints — allow movement in two planes but no rotation (wrist, metacarpophalangeal joints). Saddle joints — allow movement in two planes and some rotation (thumb — the only saddle joint in the body). Ball-and-socket joints — allow movement in all directions and rotation (shoulder, hip).
+
+Crucial insight: synovial joints are classified into six types — plane, hinge, pivot, condyloid, saddle, and ball-and-socket — each with a different shape and range of motion. The type of joint determines the movements possible.` },
+
+    { q: "Movements at synovial joints.",
+      body: `Synovial joints allow several types of movement, and knowing the terminology is essential for describing movement and understanding joint function.
+
+My Socratic question: what is the difference between flexion and extension, abduction and adduction, and why do you need to know these terms?
+
+The answer is that these terms allow precise description of movement. Flexion is bending a joint (decreasing the angle), and extension is straightening (increasing the angle). Abduction is movement away from the midline of the body, and adduction is movement toward the midline. Rotation is movement around the longitudinal axis. Circumduction is a circular movement that combines flexion, extension, abduction, and adduction. Pronation and supination are rotation of the forearm (turning the palm down or up). Dorsiflexion and plantarflexion are movement of the foot at the ankle (pointing toes up or down).
+
+Other movements include inversion and eversion of the foot, protraction and retraction, elevation and depression. Understanding these terms is essential for describing joint function and diagnosing injuries.
+
+Crucial insight: synovial joints allow many movements — flexion, extension, abduction, adduction, rotation, circumduction, pronation, supination, dorsiflexion, plantarflexion, inversion, eversion, protraction, retraction, elevation, and depression. These terms allow precise description of movement.` },
+
+    { q: "Ligaments and their role in joints.",
+      body: `Ligaments are bands of dense fibrous connective tissue that connect bones to each other, stabilising joints and limiting excessive movement. Understanding ligaments is essential for understanding joint stability and injury.
+
+My Socratic question: why do some joints, like the knee, have many ligaments, while others, like the wrist, have fewer? What do ligaments do, and why are they so important?
+
+The answer is that ligaments provide stability to joints by holding the bones together and preventing excessive or abnormal movement. The knee, which bears weight and undergoes complex movements, has many ligaments (cruciate and collateral ligaments) to provide stability. The wrist, which is more mobile but bears less weight, has fewer ligaments. Ligaments are strong but can be sprained (stretched or torn) when forces exceed their strength.
+
+Ligaments are composed of dense regular connective tissue, primarily collagen fibres, which give them tensile strength. They are poorly vascularised, so they heal slowly when injured.
+
+Crucial insight: ligaments connect bone to bone and provide stability to joints. They limit excessive movement and prevent injury. Ligament injuries (sprains) are common and heal slowly due to poor blood supply.` },
+
+    { q: "Common joint injuries and conditions.",
+      body: `Joints are susceptible to injury and disease, making them a common focus of clinical practice. Understanding common joint conditions is essential for diagnosis and treatment.
+
+My Socratic question: why is the knee the most commonly injured joint, and what does this tell you about the demands placed on it?
+
+The answer is that the knee is a weight-bearing joint that undergoes complex movements (flexion, extension, and rotation) during walking, running, and jumping. It is stabilised by ligaments (ACL, PCL, MCL, LCL) and menisci, which are vulnerable to injury. The knee is the most commonly injured joint because of the high forces it must withstand.
+
+Common joint conditions include: osteoarthritis (wear-and-tear degeneration of articular cartilage), rheumatoid arthritis (autoimmune inflammation of the synovial membrane), sprains (ligament injuries), dislocations (bones forced out of alignment), and bursitis (inflammation of the bursa). Understanding joint anatomy is essential for diagnosing and treating these conditions.
+
+Crucial insight: joints are susceptible to injury and disease — osteoarthritis, rheumatoid arthritis, sprains, dislocations, and bursitis. The knee is the most commonly injured joint due to the high forces it must withstand.` },
+
+    { q: "Clinical relevance: joints in medicine.",
+      body: `Joints are central to many medical conditions and diagnostic procedures. Understanding joint anatomy is essential for interpreting imaging, diagnosing conditions, and managing patients.
+
+My Socratic question: why are X-rays and MRI scans so commonly used for joint problems, and what do they reveal about joint health?
+
+The answer is that imaging allows clinicians to see the structures of the joint without invasive procedures. X-rays show bone alignment and joint space (which decreases in osteoarthritis), and can reveal fractures, dislocations, and bone spurs. MRI provides detailed images of soft tissues, including ligaments, tendons, cartilage, and the menisci, and is essential for diagnosing injuries like ACL tears and meniscus tears.
+
+Joint problems are also investigated through joint aspiration (arthrocentesis), which samples synovial fluid to diagnose infection or gout. Understanding joint anatomy is essential for interpreting these investigations.
+
+Crucial insight: joints are investigated using X-rays (bone alignment, joint space), MRI (ligaments, cartilage, menisci), and joint aspiration (synovial fluid analysis). Understanding joint anatomy is essential for interpreting these investigations and diagnosing joint conditions.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for joints of the body.
+
+Definition: a joint is the point where two or more bones meet. Joints allow movement and provide stability.
+
+Functional classification: synarthroses (immovable — skull sutures), amphiarthroses (slightly movable — intervertebral discs), diarthroses (freely movable — knee, shoulder).
+
+Structural classification: fibrous (sutures of the skull), cartilaginous (intervertebral discs), synovial (knee, shoulder — most common and complex).
+
+Synovial joints: have a fluid-filled cavity, articular cartilage, synovial membrane, articular capsule, and ligaments. They are freely movable.
+
+Types of synovial joints: plane (gliding), hinge (elbow, knee), pivot (neck), condyloid (wrist), saddle (thumb), ball-and-socket (shoulder, hip).
+
+Movements: flexion, extension, abduction, adduction, rotation, circumduction, pronation, supination, dorsiflexion, plantarflexion.
+
+Ligaments: connect bone to bone, provide stability, limit excessive movement. Poor blood supply → slow healing.
+
+Common conditions: osteoarthritis (wear-and-tear), rheumatoid arthritis (autoimmune), sprains (ligament injury), dislocations, bursitis.
+
+Investigations: X-ray (bone alignment), MRI (soft tissues), joint aspiration (synovial fluid analysis).
+
+Now your final test. A patient presents with knee pain after a sudden twisting injury during football. The knee is swollen and unstable. The patient cannot bear weight on the leg.
+
+Question one: which joint in the body is affected, and what type of joint is it structurally and functionally?
+Question two: what structures in the knee are most likely injured, and why is the knee particularly vulnerable to this type of injury?
+Question three: what imaging investigation would be most appropriate to diagnose the injury, and why?
+
+Work them through before reading on.
+
+My answers. One: the knee joint is affected. It is a synovial joint structurally (it has a fluid-filled cavity) and a diarthrosis functionally (freely movable). It is a hinge joint but also allows some rotation. Two: the anterior cruciate ligament (ACL) and menisci are most likely injured. The knee is vulnerable because it is a weight-bearing joint that undergoes complex movements and is stabilised by ligaments that can be torn by sudden twisting forces. Three: MRI would be most appropriate because it provides detailed images of soft tissues, including ligaments and menisci, which are the structures most likely injured in this type of injury. X-ray would show bone injuries but not soft tissue damage.` }
+  ],
+  theory: [
+    { q: "What is a joint and what are its functions?", a: "A joint is the point where two or more bones meet. Joints allow movement, provide stability, and transmit forces between bones. They are essential for locomotion and protection." },
+    { q: "What are the three functional classes of joints?", a: "Synarthroses (immovable joints — skull sutures), amphiarthroses (slightly movable joints — intervertebral discs), and diarthroses (freely movable joints — knee, shoulder)." },
+    { q: "What are the three structural classes of joints?", a: "Fibrous joints (connected by fibrous tissue — skull sutures), cartilaginous joints (connected by cartilage — intervertebral discs), and synovial joints (with a synovial cavity — knee, shoulder)." },
+    { q: "What are the characteristic features of a synovial joint?", a: "Articular cartilage (hyaline cartilage covering the ends of bones), a joint cavity (space between bones), a synovial membrane (produces synovial fluid), an articular capsule (fibrous tissue surrounding the joint), and ligaments (reinforce the capsule and provide stability)." },
+    { q: "What are the six types of synovial joints?", a: "Plane (gliding), hinge, pivot, condyloid (ellipsoid), saddle, and ball-and-socket. Each has a different shape and range of motion." },
+    { q: "What movements occur at synovial joints?", a: "Flexion, extension, abduction, adduction, rotation, circumduction, pronation, supination, dorsiflexion, plantarflexion, inversion, eversion, protraction, retraction, elevation, and depression." },
+    { q: "What is the function of ligaments?", a: "Ligaments connect bone to bone, stabilise joints, and limit excessive movement. They are composed of dense regular connective tissue (collagen) and are poorly vascularised, so they heal slowly." },
+    { q: "What are common joint conditions?", a: "Osteoarthritis (wear-and-tear degeneration of articular cartilage), rheumatoid arthritis (autoimmune inflammation of the synovial membrane), sprains (ligament injuries), dislocations, and bursitis (inflammation of the bursa)." },
+    { q: "What imaging modalities are used to investigate joints?", a: "X-ray (shows bone alignment and joint space), MRI (provides detailed images of soft tissues — ligaments, cartilage, menisci), and joint aspiration (arthrocentesis — samples synovial fluid for analysis)." },
+    { q: "Why is the knee the most commonly injured joint?", a: "The knee is a weight-bearing joint that undergoes complex movements (flexion, extension, and rotation) during walking, running, and jumping. It is stabilised by ligaments and menisci that are vulnerable to injury from high forces." },
+  ],
+  videos: [
+    { channel: "Anatomy", title: "Joints of the Body Overview", note: "Functional and structural classification of joints.", url: "" },
+    { channel: "Anatomy", title: "Synovial Joints and Their Types", note: "The six types of synovial joints and their movements.", url: "" },
+    { channel: "Anatomy", title: "Common Joint Injuries", note: "Knee injuries, sprains, and arthritis.", url: "" },
+  ],
+  mcqs: [
+    { q: "A joint is defined as the point where:", o: ["Two bones meet", "Muscle attaches to bone", "Ligament attaches to bone", "Tendon attaches to bone"], a: 0, w: "A joint is where two or more bones meet." },
+    { q: "Synarthroses are joints that are:", o: ["Immovable", "Slightly movable", "Freely movable", "Cartilaginous"], a: 0, w: "Synarthroses are immovable joints, such as the sutures of the skull." },
+    { q: "Amphiarthroses are joints that are:", o: ["Immovable", "Slightly movable", "Freely movable", "Synovial"], a: 1, w: "Amphiarthroses are slightly movable joints, such as the intervertebral discs." },
+    { q: "Diarthroses are joints that are:", o: ["Immovable", "Slightly movable", "Freely movable", "Fibrous"], a: 2, w: "Diarthroses are freely movable joints, such as the knee and shoulder." },
+    { q: "Fibrous joints are connected by:", o: ["Cartilage", "Synovial fluid", "Fibrous tissue", "Ligaments"], a: 2, w: "Fibrous joints are connected by dense fibrous tissue (collagen)." },
+    { q: "Cartilaginous joints are connected by:", o: ["Fibrous tissue", "Cartilage", "Synovial fluid", "Ligaments"], a: 1, w: "Cartilaginous joints are connected by cartilage." },
+    { q: "Synovial joints have a cavity filled with:", o: ["Blood", "Lymph", "Synovial fluid", "Air"], a: 2, w: "Synovial joints have a cavity filled with synovial fluid, which lubricates the joint." },
+    { q: "The elbow joint is an example of a:", o: ["Hinge joint", "Pivot joint", "Ball-and-socket joint", "Saddle joint"], a: 0, w: "The elbow is a hinge joint, allowing flexion and extension in one plane." },
+    { q: "The shoulder joint is an example of a:", o: ["Hinge joint", "Pivot joint", "Ball-and-socket joint", "Saddle joint"], a: 2, w: "The shoulder is a ball-and-socket joint, allowing movement in all directions." },
+    { q: "The thumb joint is an example of a:", o: ["Hinge joint", "Pivot joint", "Condyloid joint", "Saddle joint"], a: 3, w: "The thumb is the only saddle joint in the body, allowing opposition." },
+    { q: "Movement away from the midline of the body is:", o: ["Adduction", "Abduction", "Flexion", "Extension"], a: 1, w: "Abduction is movement away from the midline." },
+    { q: "Movement toward the midline of the body is:", o: ["Adduction", "Abduction", "Flexion", "Extension"], a: 0, w: "Adduction is movement toward the midline." },
+    { q: "Bending a joint decreasing the angle is:", o: ["Extension", "Flexion", "Abduction", "Adduction"], a: 1, w: "Flexion is bending a joint, decreasing the angle." },
+    { q: "Straightening a joint increasing the angle is:", o: ["Flexion", "Extension", "Abduction", "Adduction"], a: 1, w: "Extension is straightening a joint, increasing the angle." },
+    { q: "Rotation of the forearm with the palm facing up is:", o: ["Pronation", "Supination", "Rotation", "Circumduction"], a: 1, w: "Supination is rotation of the forearm with the palm facing up." },
+    { q: "Rotation of the forearm with the palm facing down is:", o: ["Pronation", "Supination", "Rotation", "Circumduction"], a: 0, w: "Pronation is rotation of the forearm with the palm facing down." },
+    { q: "Ligaments connect bone to:", o: ["Bone", "Muscle", "Cartilage", "Tendon"], a: 0, w: "Ligaments connect bone to bone." },
+    { q: "The most commonly injured joint in the body is the:", o: ["Shoulder", "Hip", "Knee", "Ankle"], a: 2, w: "The knee is the most commonly injured joint." },
+    { q: "Osteoarthritis is a condition of:", o: ["Cartilage degeneration", "Ligament injury", "Muscle strain", "Bone fracture"], a: 0, w: "Osteoarthritis is wear-and-tear degeneration of articular cartilage." },
+    { q: "The best imaging modality for soft tissue injuries of joints is:", o: ["X-ray", "MRI", "CT scan", "Ultrasound"], a: 1, w: "MRI provides the best images of soft tissues, including ligaments, cartilage, and menisci." },
+  ],
+};
+
+// ==================== ANATOMY TOPIC 13: NERVOUS SYSTEM I - NEURONS, NERVES & CNS/PNS ====================
+const T_ANA_NERVOUS1 = {
+  courseId: "ana",
+  topicIndex: 12,
+  title: "Nervous System I - Neurons, Nerves & CNS/PNS",
+  minutes: 22,
+  note: [
+    { q: "What is the nervous system and why does it matter?",
+      body: `You have studied the tissues and organs that form the body's structure. Now we turn to the system that controls and coordinates everything: the nervous system. It is the body's rapid communication network, detecting changes in the environment, processing information, and directing responses.
+
+My Socratic question: you pull your hand away from a hot surface before you consciously feel the pain. How is this possible, and what does it tell you about the organisation of the nervous system?
+
+The answer is that the nervous system is organised to provide rapid, automatic responses that protect the body. The reflex arc allows signals to be processed in the spinal cord without waiting for the brain, providing a fast response. The nervous system is also responsible for conscious thought, memory, emotion, and all voluntary movement. It is the system that makes you who you are.
+
+Crucial insight: the nervous system is the body's rapid communication and control network. It detects changes, processes information, and directs responses. It is organised into the central nervous system (brain and spinal cord) and the peripheral nervous system (nerves connecting to the body).` },
+
+    { q: "The neuron: the functional unit of the nervous system.",
+      body: `The neuron is the basic building block of the nervous system, specialised to receive, process, and transmit information. Understanding the neuron is essential for understanding how the nervous system works.
+
+My Socratic question: how does a single cell receive information from thousands of other cells and transmit a signal over long distances without losing strength?
+
+The answer is the structure of the neuron. Dendrites are branched extensions that receive signals from other neurons. The cell body (soma) integrates these signals. The axon is a long fibre that transmits the signal away from the cell body to other neurons, muscles, or glands. Many axons are wrapped in a myelin sheath, a fatty insulating layer that speeds signal conduction.
+
+Neurons communicate with each other at synapses, where neurotransmitters are released to pass the signal to the next cell. This allows signals to travel rapidly through the nervous system.
+
+Crucial insight: the neuron is the functional unit of the nervous system, with dendrites (receive signals), a cell body (integrate signals), and an axon (transmit signals). Myelin sheaths speed conduction, and synapses allow communication between neurons.` },
+
+    { q: "Types of neurons: sensory, motor, and interneurons.",
+      body: `Neurons are classified by their function into three types, each playing a specific role in the nervous system. Understanding these types is essential for understanding how information flows through the nervous system.
+
+My Socratic question: how does a signal travel from a sensory receptor in your finger to a muscle in your arm, and what types of neurons are involved in this pathway?
+
+The answer is that sensory (afferent) neurons carry information from sensory receptors toward the central nervous system. They are responsible for detecting stimuli such as touch, temperature, and pain. Motor (efferent) neurons carry commands from the central nervous system to effectors (muscles and glands). They are responsible for movement and secretion. Interneurons (association neurons) are found entirely within the central nervous system. They connect sensory and motor neurons and are involved in integration and processing.
+
+The signal typically flows: sensory neuron → interneuron → motor neuron. This pathway is the basis of the reflex arc and of all voluntary and involuntary movements.
+
+Crucial insight: neurons are classified by function as sensory (afferent — toward CNS), motor (efferent — to effectors), and interneurons (within CNS, integrating). The typical pathway is sensory → interneuron → motor neuron.` },
+
+    { q: "Neuroglia: the supporting cells.",
+      body: `Neurons do not function alone; they are supported by neuroglia (glial cells), which are more numerous than neurons. These supporting cells are essential for the health and function of the nervous system.
+
+My Socratic question: if neurons are the cells that carry signals, why do they need so many supporting cells, and what do these supporting cells do?
+
+The answer is that neuroglia provide essential support functions that neurons cannot perform themselves. They include: astrocytes (support and nourish neurons, maintain the blood-brain barrier), oligodendrocytes (produce myelin in the central nervous system), Schwann cells (produce myelin in the peripheral nervous system), microglia (act as immune cells, protecting the nervous system from infection), and ependymal cells (line the ventricles of the brain and help circulate cerebrospinal fluid).
+
+Neuroglia are essential for neuron survival, and diseases that affect glial cells (such as multiple sclerosis, which affects myelin) can be devastating.
+
+Crucial insight: neuroglia are the supporting cells of the nervous system, providing nutrition, protection, insulation (myelin), and structural support. They are more numerous than neurons and are essential for nervous system function.` },
+
+    { q: "The nerve impulse: how neurons signal.",
+      body: `Neurons communicate using electrical signals called nerve impulses (action potentials). Understanding how these signals are generated and propagated is essential for understanding nervous system function.
+
+My Socratic question: how does a neuron generate an electrical signal, and how does that signal travel along the axon without losing strength?
+
+The answer is that the nerve impulse is based on ion movement across the neuron's membrane. At rest, the inside of the neuron is negatively charged relative to the outside (resting membrane potential). When a stimulus reaches threshold, voltage-gated ion channels open, allowing sodium ions to rush into the cell, making the inside positive (depolarisation). This triggers a wave of depolarisation that travels along the axon (the action potential). The signal is regenerated at each point along the axon, so it does not lose strength.
+
+After the impulse passes, potassium ions leave the cell, restoring the negative resting potential (repolarisation). The sodium-potassium pump then restores the ion gradients. The myelin sheath speeds conduction by allowing the signal to jump between gaps (nodes of Ranvier).
+
+Crucial insight: the nerve impulse (action potential) is a rapid change in membrane potential caused by ion movement. Sodium influx causes depolarisation, potassium efflux causes repolarisation. Myelin speeds conduction.` },
+
+    { q: "The synapse: communication between neurons.",
+      body: `Neurons do not touch each other; they communicate across a tiny gap called the synapse. Understanding the synapse is essential for understanding how signals are transmitted between neurons and how drugs and diseases affect nervous system function.
+
+My Socratic question: how does an electrical signal in one neuron cause the next neuron to fire if there is a physical gap between them?
+
+The answer is that the signal is converted from electrical to chemical at the synapse. When the action potential reaches the end of the axon (the presynaptic terminal), it triggers the release of neurotransmitters — chemical messengers — into the synaptic cleft. These neurotransmitters bind to receptors on the postsynaptic neuron, causing ion channels to open and generating a new electrical signal in the postsynaptic neuron.
+
+Neurotransmitters include acetylcholine, dopamine, serotonin, norepinephrine, and GABA, each with specific functions. Many drugs and diseases affect neurotransmitter activity.
+
+Crucial insight: at the synapse, the electrical signal is converted to a chemical signal using neurotransmitters. This allows communication between neurons and is the site of action for many drugs and toxins.` },
+
+    { q: "The central nervous system: brain and spinal cord.",
+      body: `The central nervous system (CNS) consists of the brain and spinal cord. It is the control centre of the body, receiving sensory information, integrating it, and issuing commands.
+
+My Socratic question: why is the brain and spinal cord so well protected, and what structures provide this protection?
+
+The answer is that the CNS is vital and delicate. It is protected by bone (the skull and vertebral column), meninges (three protective membranes — dura mater, arachnoid mater, pia mater), and cerebrospinal fluid (which cushions and bathes the CNS). The blood-brain barrier also protects the brain from harmful substances in the blood.
+
+The brain is the most complex organ in the body, responsible for consciousness, thought, memory, emotion, and voluntary movement. The spinal cord is a two-way communication pathway and a reflex centre, processing many reflexes without involving the brain.
+
+Crucial insight: the central nervous system (brain and spinal cord) is the control centre of the body. It is protected by bone, meninges, and cerebrospinal fluid. The brain is responsible for higher functions; the spinal cord is a communication pathway and reflex centre.` },
+
+    { q: "The peripheral nervous system: connecting to the body.",
+      body: `The peripheral nervous system (PNS) consists of all the nervous tissue outside the CNS — the nerves that connect the brain and spinal cord to the rest of the body. It is divided into sensory and motor divisions.
+
+My Socratic question: how does information from your skin reach your brain, and how do commands from your brain reach your muscles? The answer is the peripheral nervous system.
+
+The PNS has two divisions. The sensory (afferent) division carries information from sensory receptors to the CNS. The motor (efferent) division carries commands from the CNS to effectors (muscles and glands). The motor division is further divided into the somatic nervous system (voluntary control of skeletal muscles) and the autonomic nervous system (involuntary control of internal organs, with sympathetic and parasympathetic branches).
+
+The PNS also includes the cranial nerves (12 pairs) and spinal nerves (31 pairs), which connect the CNS to the head, neck, trunk, and limbs.
+
+Crucial insight: the peripheral nervous system connects the CNS to the rest of the body. The sensory division carries input to the CNS; the motor division carries output to effectors. The motor division includes the somatic (voluntary) and autonomic (involuntary) systems.` },
+
+    { q: "Clinical relevance: the nervous system in medicine.",
+      body: `The nervous system is involved in many diseases and conditions, making it central to clinical practice. Understanding its anatomy and function is essential for diagnosing and treating neurological conditions.
+
+My Socratic question: why do neurologists perform a neurological examination, and what can it reveal about the nervous system?
+
+The answer is that a neurological examination tests the function of different parts of the nervous system. It includes assessment of mental status (cognition), cranial nerves, motor function, sensation, reflexes, coordination, and gait. Abnormalities can localise the site of a lesion — for example, a stroke affecting the left side of the brain causes right-sided weakness.
+
+Common neurological conditions include: stroke, epilepsy, Parkinson's disease, multiple sclerosis, Alzheimer's disease, peripheral neuropathy, and spinal cord injury. Understanding nervous system anatomy is essential for understanding these conditions.
+
+Crucial insight: the nervous system is involved in many diseases. Neurological examination tests different parts of the nervous system and can localise lesions. Common conditions include stroke, epilepsy, Parkinson's, MS, Alzheimer's, and spinal cord injury.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the nervous system (part 1).
+
+Definition: the nervous system is the body's rapid communication and control network.
+
+Neuron: the functional unit — dendrites (receive), cell body (integrate), axon (transmit). Myelin speeds conduction; synapses allow communication between neurons.
+
+Neuroglia: supporting cells — astrocytes, oligodendrocytes, Schwann cells, microglia, ependymal cells. More numerous than neurons.
+
+Nerve impulse: action potential — sodium influx causes depolarisation; potassium efflux causes repolarisation. Myelin speeds conduction.
+
+Synapse: gap between neurons; neurotransmitters carry the signal across.
+
+CNS: brain and spinal cord — control centre. Protected by bone, meninges, CSF.
+
+PNS: nerves outside the CNS — sensory (to CNS) and motor (from CNS). Motor division: somatic (voluntary) and autonomic (involuntary).
+
+Clinical relevance: neurological examination tests function; common conditions include stroke, epilepsy, Parkinson's, MS, Alzheimer's.
+
+Now your final test. A patient presents with sudden weakness on the right side of the body, difficulty speaking, and facial drooping.
+
+Question one: which part of the nervous system is most likely affected, and what is the most likely diagnosis?
+Question two: how does the structure of the nervous system explain why the right side of the body is affected?
+Question three: what investigation would be most appropriate to confirm the diagnosis?
+
+Work them through before reading on.
+
+My answers. One: the central nervous system (brain) is most likely affected, and the most likely diagnosis is a stroke (cerebrovascular accident). Two: the motor pathways cross over in the brainstem, so damage to the left hemisphere of the brain causes weakness on the right side of the body. Three: a CT scan of the head would be most appropriate to distinguish between an ischaemic stroke (blockage) and a haemorrhagic stroke (bleeding), which determines treatment.` }
+  ],
+  theory: [
+    { q: "What is the nervous system and what are its main functions?", a: "The nervous system is the body's rapid communication and control network. Its main functions are sensory input (detecting stimuli), integration (processing information), and motor output (directing responses)." },
+    { q: "What is a neuron and what are its main parts?", a: "A neuron is the functional unit of the nervous system. Its main parts are dendrites (receive signals), the cell body (integrates signals), and the axon (transmits signals)." },
+    { q: "What are the three functional types of neurons?", a: "Sensory (afferent) neurons carry information toward the CNS. Motor (efferent) neurons carry commands from the CNS to effectors. Interneurons lie within the CNS and connect sensory and motor neurons." },
+    { q: "What are neuroglia and what do they do?", a: "Neuroglia are the supporting cells of the nervous system. They include astrocytes (support and nourish), oligodendrocytes and Schwann cells (myelin production), microglia (immune defence), and ependymal cells (CSF circulation)." },
+    { q: "What is a nerve impulse and how is it generated?", a: "A nerve impulse (action potential) is a rapid change in membrane potential caused by ion movement. Sodium influx causes depolarisation; potassium efflux causes repolarisation. Myelin speeds conduction." },
+    { q: "What is a synapse and how does it work?", a: "A synapse is the gap between neurons where communication occurs. Neurotransmitters are released from the presynaptic neuron and bind to receptors on the postsynaptic neuron, generating a new signal." },
+    { q: "What is the central nervous system and what does it include?", a: "The central nervous system (CNS) consists of the brain and spinal cord. It is the control centre, receiving sensory information, integrating it, and issuing commands." },
+    { q: "What is the peripheral nervous system and what does it include?", a: "The peripheral nervous system (PNS) consists of all the nervous tissue outside the CNS — the nerves connecting the CNS to the body. It includes sensory and motor divisions." },
+    { q: "What is the difference between the somatic and autonomic nervous systems?", a: "The somatic nervous system controls voluntary movement of skeletal muscles. The autonomic nervous system controls involuntary functions of internal organs and has sympathetic (fight or flight) and parasympathetic (rest and digest) branches." },
+    { q: "What are common neurological conditions?", a: "Common neurological conditions include stroke, epilepsy, Parkinson's disease, multiple sclerosis, Alzheimer's disease, peripheral neuropathy, and spinal cord injury." },
+  ],
+  videos: [
+    { channel: "Anatomy", title: "The Nervous System Overview", note: "Neurons, neuroglia, CNS, and PNS.", url: "" },
+    { channel: "Anatomy", title: "The Neuron and Nerve Impulse", note: "How neurons generate and transmit signals.", url: "" },
+    { channel: "Anatomy", title: "The Brain and Spinal Cord", note: "Structure and function of the CNS.", url: "" },
+  ],
+  mcqs: [
+    { q: "The nervous system is the body's:", o: ["Slow chemical control system", "Rapid communication and control network", "Blood transport system", "Digestive system"], a: 1, w: "The nervous system is the body's rapid communication and control network." },
+    { q: "The functional unit of the nervous system is the:", o: ["Neuroglia", "Neuron", "Axon", "Synapse"], a: 1, w: "The neuron is the functional unit of the nervous system." },
+    { q: "Dendrites are responsible for:", o: ["Transmitting signals away from the cell", "Receiving signals from other neurons", "Producing myelin", "Insulating the axon"], a: 1, w: "Dendrites receive signals from other neurons." },
+    { q: "The axon is responsible for:", o: ["Receiving signals", "Integrating signals", "Transmitting signals away from the cell", "Producing neurotransmitters"], a: 2, w: "The axon transmits signals away from the cell body." },
+    { q: "Sensory neurons carry information:", o: ["From the CNS to effectors", "From sensory receptors to the CNS", "Within the CNS only", "Between motor neurons"], a: 1, w: "Sensory neurons carry information from sensory receptors toward the CNS." },
+    { q: "Motor neurons carry information:", o: ["From sensory receptors to the CNS", "Within the CNS only", "From the CNS to effectors", "Between interneurons"], a: 2, w: "Motor neurons carry commands from the CNS to effectors (muscles and glands)." },
+    { q: "Interneurons are found:", o: ["Only in the PNS", "Only in sensory ganglia", "Within the CNS", "In muscles"], a: 2, w: "Interneurons are found entirely within the central nervous system." },
+    { q: "The cells that produce myelin in the CNS are:", o: ["Schwann cells", "Oligodendrocytes", "Astrocytes", "Microglia"], a: 1, w: "Oligodendrocytes produce myelin in the central nervous system." },
+    { q: "The cells that produce myelin in the PNS are:", o: ["Oligodendrocytes", "Astrocytes", "Schwann cells", "Microglia"], a: 2, w: "Schwann cells produce myelin in the peripheral nervous system." },
+    { q: "The resting membrane potential is due to:", o: ["Sodium influx", "Potassium efflux", "Calcium influx", "Chloride efflux"], a: 1, w: "The resting membrane potential is primarily due to potassium efflux, making the inside negative." },
+    { q: "Depolarisation is caused by:", o: ["Potassium efflux", "Sodium influx", "Chloride influx", "Calcium efflux"], a: 1, w: "Depolarisation is caused by sodium influx, making the inside positive." },
+    { q: "Repolarisation is caused by:", o: ["Sodium influx", "Potassium efflux", "Chloride influx", "Calcium efflux"], a: 1, w: "Repolarisation is caused by potassium efflux, restoring the negative resting potential." },
+    { q: "The synapse is the gap:", o: ["Between neurons", "Between muscle and bone", "Between nerve and blood vessel", "Within the axon"], a: 0, w: "The synapse is the gap between neurons where communication occurs." },
+    { q: "Neurotransmitters are released from the:", o: ["Dendrites", "Axon terminal (presynaptic)", "Cell body", "Myelin sheath"], a: 1, w: "Neurotransmitters are released from the axon terminal (presynaptic neuron)." },
+    { q: "The central nervous system consists of:", o: ["Brain and spinal cord", "Brain and cranial nerves", "Spinal cord and peripheral nerves", "Brain and peripheral nerves"], a: 0, w: "The central nervous system consists of the brain and spinal cord." },
+    { q: "The peripheral nervous system consists of:", o: ["Brain and spinal cord", "Only cranial nerves", "Nerves outside the CNS", "Only spinal nerves"], a: 2, w: "The peripheral nervous system consists of all the nerves outside the CNS." },
+    { q: "The somatic nervous system controls:", o: ["Involuntary functions", "Voluntary movement of skeletal muscles", "Digestion", "Heart rate"], a: 1, w: "The somatic nervous system controls voluntary movement of skeletal muscles." },
+    { q: "The autonomic nervous system controls:", o: ["Voluntary movement of skeletal muscles", "Involuntary functions of internal organs", "Sensory perception", "Balance"], a: 1, w: "The autonomic nervous system controls involuntary functions of internal organs." },
+    { q: "The 'fight or flight' response is mediated by the:", o: ["Parasympathetic nervous system", "Sympathetic nervous system", "Somatic nervous system", "Sensory nervous system"], a: 1, w: "The sympathetic nervous system mediates the fight or flight response." },
+    { q: "The most appropriate investigation for a suspected stroke is:", o: ["MRI", "CT scan of the head", "EEG", "Lumbar puncture"], a: 1, w: "A CT scan of the head is the most appropriate initial investigation for a suspected stroke to distinguish between ischaemic and haemorrhagic stroke." },
+  ],
+};
+
 /* --------------------------- phy:5 --------------------------- */
 const T_PHY_RMP = {
   courseId: "phy",
@@ -8854,7 +9374,10 @@ const CONTENT = {
   "ana:6": T_ANA_MUSCLE,
   "ana:7": T_ANA_SKELETAL_INTRO,
   "ana:8": T_ANA_OSTEOLOGY, 
-  "ana:9": T_ANA_AXIAL,    
+  "ana:9": T_ANA_AXIAL,
+  "ana:10": T_ANA_APPENDICULAR,
+  "ana:11": T_ANA_JOINTS,
+  "ana:12": T_ANA_NERVOUS1,    
   "bch:0": T_BCH_INTRO,
   "bch:1": T_BCH_ENZYMES,
   "bch:2": T_BCH_INHIBITION,
