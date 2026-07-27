@@ -5381,7 +5381,7 @@ function loadMermaid() {
   return _mermaidPromise;
 }
 
-async function callClaude(system, messages, maxTokens = 2048) {
+async function callClaude(system, messages, maxTokens = 4096) {
   const body = JSON.stringify({ max_tokens: maxTokens, system, messages });
   let res;
   // Retry on rate limits (429) and transient overload (529/503). The free AI tier
@@ -5495,7 +5495,7 @@ function AITutor({ topicTitle, context }) {
     const sys = `You are the ASCEND tutor for KNUST medical laboratory science students. Teach the WHY and the mechanism, step by step. Keep each answer complete but focused - finish within a few clear paragraphs rather than writing an essay, so the reply is never cut off. No emojis.\n\nTOPIC: ${topicTitle}\n\nSOURCE:\n${context}`;
     const apiMsgs = next.slice(1);
     try {
-      const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })), 3000);
+      const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })), 4096);
       // tutor answers capped at 3000 tokens so they stay complete but focused
       setMsgs([...next, { role: "assistant", content: reply }]);
     } catch (e) {
@@ -5528,16 +5528,34 @@ function gradeOf(pct) {
 function QuizView({ app }) {
   const t = contentFor(app.courseId, app.topicId);
   const mcqs = t ? (t.mcqs || []) : [];
-  const [q, setQ] = useState(() => shuffleBank(mcqs));
-  const [mode, setMode] = useState(null);
-  const [i, setI] = useState(0);
-  const [answers, setAnswers] = useState({});
+  // Key the saved quiz session to this specific topic, so restoring only applies
+  // to the quiz the student was actually taking.
+  const sessKey = "ascend_quiz_" + app.courseId + "_" + app.topicId;
+  const saved = (() => {
+    try { const raw = window.sessionStorage.getItem(sessKey); return raw ? JSON.parse(raw) : null; } catch { return null; }
+  })();
+  const [q, setQ] = useState(() => (saved && saved.q ? saved.q : shuffleBank(mcqs)));
+  const [mode, setMode] = useState(saved ? saved.mode : null);
+  const [i, setI] = useState(saved ? saved.i || 0 : 0);
+  const [answers, setAnswers] = useState(saved ? saved.answers || {} : {});
   const [reveal, setReveal] = useState(false);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(saved ? !!saved.done : false);
   const [earnedXp, setEarnedXp] = useState(true);
   const bankLen = q.length;
-  const [left, setLeft] = useState(bankLen * 45);
-  const [elapsed, setElapsed] = useState(0); // count-up timer for practice mode
+  const [left, setLeft] = useState(saved && typeof saved.left === "number" ? saved.left : bankLen * 45);
+  const [elapsed, setElapsed] = useState(saved && typeof saved.elapsed === "number" ? saved.elapsed : 0);
+
+  // Save the quiz session on every meaningful change, so a reload (e.g. phone
+  // browser refreshing when the student switches apps) restores their exact place -
+  // question number, answers so far, mode and timer - instead of starting over.
+  useEffect(() => {
+    if (mode === null) return; // nothing to save until a quiz has started
+    try { window.sessionStorage.setItem(sessKey, JSON.stringify({ q, mode, i, answers, left, elapsed, done })); } catch {}
+  }, [q, mode, i, answers, left, elapsed, done, sessKey]);
+
+  // When the quiz is finished/left, clear the saved session so it does not restore
+  // an old completed quiz next time.
+  const clearSession = () => { try { window.sessionStorage.removeItem(sessKey); } catch {} };
 
   const finish = () => {
     const correct = q.reduce((n, item, idx) => n + (answers[idx] === item.a ? 1 : 0), 0);
@@ -5550,6 +5568,7 @@ function QuizView({ app }) {
       app.finishQuiz(t.courseId, t.topicIndex, correct, missed, bankLen);
     }
     setDone(true);
+    clearSession();
   };
   useEffect(() => {
     if (mode !== "exam" || done || bankLen === 0) return;
@@ -5612,7 +5631,7 @@ function QuizView({ app }) {
             <span style={{ color: g.letter ? "var(--text)" : "var(--text-2)", fontWeight: 600, textAlign: "left", fontSize: 14.5 }}>{g.remark}</span>
           </div>
           <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 18, flexWrap: "wrap" }}>
-            <button className="btn btn-a" onClick={() => { setQ(shuffleBank(mcqs)); setMode(null); setI(0); setAnswers({}); setReveal(false); setDone(false); setLeft(bankLen * 45); setElapsed(0); }}>Try again</button>
+            <button className="btn btn-a" onClick={() => { clearSession(); setQ(shuffleBank(mcqs)); setMode(null); setI(0); setAnswers({}); setReveal(false); setDone(false); setLeft(bankLen * 45); setElapsed(0); }}>Try again</button>
             <button className="btn btn-g" onClick={() => app.go("topic", { courseId: t.courseId, topicId: t.topicIndex })}>Back to topic</button>
           </div>
         </div>
@@ -6395,7 +6414,7 @@ function PapersView() {
     if (busy) return;
     setBusy(true); setErr(""); setItems(null);
     try {
-      let text = await callClaude(`You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid, compact, complete JSON array, no prose, no markdown, no trailing commas. Keep each question and option short.`, [{ role: "user", content: usr }], 3500);
+      let text = await callClaude(`You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid, compact, complete JSON array, no prose, no markdown, no trailing commas. Keep each question and option short.`, [{ role: "user", content: usr }], 6000);
       const arr = parseAIJson(text);
       const clean = (Array.isArray(arr) ? arr : []).filter((x) => x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number");
       if (!clean.length) throw new Error("No usable questions came back - try again.");
@@ -6482,7 +6501,7 @@ function ResourcesView() {
           { type: "document", source: { type: "base64", media_type: "application/pdf", data: b64 } },
           { type: "text", text: SOCRATIC_TASK + (typed ? "\n\nFocus especially on: " + typed : "") }
         ];
-        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content }], 4000));
+        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content }], 8000));
       } else {
         let material = typed;
         if (file && !material) {
@@ -6492,7 +6511,7 @@ function ResourcesView() {
         }
         if (!material) throw new Error("That file had no readable text.");
         setStage("Building your lesson...");
-        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 4000));
+        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 8000));
       }
     } catch (e) {
       setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again in a moment.");
@@ -7172,7 +7191,7 @@ Return ONLY compact JSON, no markdown, no trailing commas, all strings short: {"
     let lastErr = "";
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
-        const res = await callClaude("You are LAMLA, an exam-cram assistant for KNUST medical laboratory science students. You give precise, memorisable facts - definitions, values, classifications, steps - never vague study advice. Return ONLY valid, compact, complete JSON. No emojis.", [{ role: "user", content: prompt }], 4000);
+        const res = await callClaude("You are LAMLA, an exam-cram assistant for KNUST medical laboratory science students. You give precise, memorisable facts - definitions, values, classifications, steps - never vague study advice. Return ONLY valid, compact, complete JSON. No emojis.", [{ role: "user", content: prompt }], 6000);
         const data = parseAIJson(res);
         if (!data || !Array.isArray(data.topics) || !data.topics.length) throw new Error("unexpected shape from AI");
         setPlan(data); setOffline(false); setStep("plan"); setBusy(false);
@@ -7450,11 +7469,17 @@ export default function App() {
     })();
 
     let sub;
+    let initialAuthDone = false;
     try {
       const res = supabase.auth.onAuthStateChange((event, session) => {
         if (event === "SIGNED_IN" && session && session.user) {
           adoptSupabaseUser(session.user);
-          setRoute({ view: "home" });
+          // Only jump to home on a genuinely NEW sign-in (a fresh login the user
+          // just performed). On page reload the session is restored and this event
+          // also fires - in that case we must NOT reset the route, so the student
+          // stays where they were (e.g. mid-quiz) instead of being thrown to home.
+          if (initialAuthDone) setRoute({ view: "home" });
+          initialAuthDone = true;
         }
         if (event === "SIGNED_OUT") {
           setSupaUid(null);
