@@ -2404,6 +2404,201 @@ Crucial insight: defects in TCA cycle enzymes cause serious metabolic diseases. 
   ]
 };
 
+// ==================== BIOCHEMISTRY TOPIC 6: ELECTRON TRANSPORT CHAIN ====================
+const T_BCH_ETC = {
+  courseId: "bch",
+  topicIndex: 6,
+  title: "Electron Transport Chain",
+  minutes: 22,
+  note: [
+    { q: "What is the electron transport chain and why does it matter?",
+      body: `You have learned the TCA cycle, which produces NADH and FADH2. But these electron carriers are only useful if their electrons are passed to oxygen to produce ATP. The electron transport chain (ETC) is where this happens — it is the final common pathway of aerobic metabolism, where most of the ATP is actually produced.
+
+My Socratic question: glycolysis produces 2 ATP per glucose, and the TCA cycle produces another 2 ATP directly. But the total ATP yield from glucose is about 32. Where do the other 28 ATP come from?
+
+The answer is the electron transport chain. The NADH and FADH2 produced by glycolysis and the TCA cycle donate electrons to the ETC, where they are passed through a series of carriers. The energy released by this electron transfer is used to pump protons across the inner mitochondrial membrane, creating a proton gradient that drives ATP synthesis. Without the ETC, you would get only 4 ATP per glucose instead of about 32.
+
+Crucial insight: the electron transport chain is the final common pathway of aerobic metabolism, where NADH and FADH2 are oxidised and the energy released is used to generate ATP. It produces the vast majority of ATP in aerobic organisms and requires oxygen as the final electron acceptor.` },
+
+    { q: "Where does the electron transport chain take place?",
+      body: `The electron transport chain is located in the inner mitochondrial membrane. This location is essential because it allows the ETC to create a proton gradient across the membrane, which drives ATP synthesis.
+
+My Socratic question: why is it important that the ETC is located in a membrane rather than in the aqueous matrix?
+
+The answer is that the ETC pumps protons (H+) from the mitochondrial matrix to the intermembrane space, creating a concentration gradient and an electrical gradient (proton motive force). This gradient stores energy that is used to drive ATP synthesis. A membrane is essential for maintaining this gradient — without it, protons would simply diffuse back, and no ATP would be produced.
+
+The inner mitochondrial membrane has a high protein-to-lipid ratio, with about 80% of its mass being proteins — many of which are components of the ETC. The membrane is folded into cristae to increase surface area for more ETC complexes and ATP synthase.
+
+Crucial insight: the ETC is located in the inner mitochondrial membrane, where it pumps protons to create a gradient that drives ATP synthesis. The membrane location is essential for maintaining the proton gradient and for generating the vast majority of ATP.` },
+
+    { q: "The four complexes of the electron transport chain.",
+      body: `The electron transport chain consists of four protein complexes (Complexes I-IV) embedded in the inner mitochondrial membrane, plus mobile electron carriers (ubiquinone and cytochrome c). Understanding each complex is essential for understanding how electrons flow and how the proton gradient is generated.
+
+My Socratic question: electrons from NADH and FADH2 enter the ETC at different points. Why is this important, and how does it affect ATP yield?
+
+The answer is that NADH donates electrons to Complex I, while FADH2 donates electrons to Complex II. Complex I pumps more protons than Complex II, so NADH yields more ATP than FADH2 — about 2.5 ATP per NADH versus 1.5 ATP per FADH2. Understanding this difference explains why the total ATP yield from glucose is about 32 rather than 30.
+
+Complex I (NADH dehydrogenase) receives electrons from NADH, pumps 4 protons across the membrane, and passes electrons to ubiquinone. Complex II (succinate dehydrogenase) receives electrons from FADH2, does NOT pump protons, and passes electrons to ubiquinone. Complex III (cytochrome bc1) receives electrons from ubiquinol, pumps 4 protons, and passes electrons to cytochrome c. Complex IV (cytochrome c oxidase) receives electrons from cytochrome c, pumps 2 protons, and reduces oxygen to water.
+
+Crucial insight: the ETC has four complexes — Complex I (NADH → ubiquinone, pumps 4 H+), Complex II (FADH2 → ubiquinone, pumps 0 H+), Complex III (ubiquinol → cytochrome c, pumps 4 H+), and Complex IV (cytochrome c → O2, pumps 2 H+). NADH yields more ATP because it enters at Complex I and pumps more protons.` },
+
+    { q: "Complex I: the entry point for NADH.",
+      body: `Complex I (NADH:ubiquinone oxidoreductase) is the first and largest complex of the electron transport chain. It receives electrons from NADH and passes them to ubiquinone, pumping protons across the membrane in the process.
+
+My Socratic question: why does NADH yield more ATP than FADH2, and what is the role of Complex I in this difference?
+
+The answer is that NADH enters the ETC at Complex I, which pumps 4 protons per pair of electrons. FADH2 enters at Complex II, which does not pump any protons. Because Complex I contributes 4 protons to the gradient, NADH generates more ATP. This is why the total ATP yield from NADH is about 2.5 ATP, while FADH2 yields about 1.5 ATP.
+
+The reaction: NADH + Q + 5H+ (matrix) → NAD+ + QH2 + 4H+ (intermembrane space)
+
+Complex I contains FMN (flavin mononucleotide) and iron-sulfur clusters as electron carriers. It is a major site of regulation and is inhibited by several toxins, including rotenone, a common insecticide.
+
+Crucial insight: Complex I accepts electrons from NADH, pumps 4 protons, and passes electrons to ubiquinone. This is why NADH yields more ATP than FADH2 — Complex I contributes to the proton gradient, while Complex II does not.` },
+
+    { q: "Complex II: the entry point for FADH2.",
+      body: `Complex II (succinate dehydrogenase) is the only complex that is also part of the TCA cycle. It oxidises succinate to fumarate, producing FADH2, and passes electrons to ubiquinone. Unlike Complex I, it does not pump protons.
+
+My Socratic question: Complex II is the same enzyme as succinate dehydrogenase in the TCA cycle. Why is it advantageous for the same enzyme to be part of both pathways?
+
+The answer is that linking the TCA cycle and the ETC directly allows for efficient energy capture. When succinate is oxidised in the TCA cycle, the FADH2 produced is immediately available to the ETC without needing to be transported. This physical coupling makes energy production more efficient.
+
+Complex II does not pump protons, so FADH2 yields less ATP than NADH. However, it is still an important source of electrons for the ETC. The reaction: Succinate + Q → Fumarate + QH2
+
+Crucial insight: Complex II is unique because it is part of both the TCA cycle and the ETC. It accepts electrons from FADH2 and passes them to ubiquinone but does not pump protons, so FADH2 yields less ATP than NADH.` },
+
+    { q: "Complex III: the Q cycle.",
+      body: `Complex III (cytochrome bc1 complex) transfers electrons from ubiquinol (QH2) to cytochrome c. It pumps protons across the membrane through a mechanism called the Q cycle, which is a classic example of how the ETC works.
+
+My Socratic question: why does Complex III need a complex mechanism like the Q cycle to transfer electrons, rather than simply passing them directly?
+
+The answer is that the Q cycle allows Complex III to pump more protons than would otherwise be possible. It is a clever mechanism that uses two electrons from ubiquinol to reduce two molecules of cytochrome c, while pumping 4 protons across the membrane. Without the Q cycle, less energy would be captured from each electron.
+
+The Q cycle involves two binding sites for ubiquinone: the Qo site (near the intermembrane space) and the Qi site (near the matrix). At the Qo site, ubiquinol donates one electron to cytochrome c and one electron to ubiquinone at the Qi site, forming ubisemiquinone. The second ubiquinol repeats the process, reducing cytochrome c and fully reducing the ubiquinone at the Qi site to ubiquinol.
+
+Crucial insight: Complex III uses the Q cycle to transfer electrons from ubiquinol to cytochrome c while pumping 4 protons. The Q cycle is an elegant mechanism that maximises proton pumping and energy capture.` },
+
+    { q: "Complex IV: the final electron acceptor.",
+      body: `Complex IV (cytochrome c oxidase) is the final complex of the electron transport chain. It accepts electrons from cytochrome c and transfers them to oxygen, reducing oxygen to water. This is where oxygen is consumed in aerobic metabolism.
+
+My Socratic question: why is oxygen essential for aerobic life? What would happen if oxygen were not available as the final electron acceptor?
+
+The answer is that oxygen is the final electron acceptor in the ETC. It has a very high affinity for electrons, making it an ideal terminal acceptor. When electrons reach Complex IV, they are passed to oxygen, which combines with protons to form water. If oxygen is not available, electrons cannot be passed through the chain, and the ETC stalls. NADH and FADH2 accumulate, and ATP production stops. This is why we cannot survive without oxygen.
+
+The reaction: 4 cytochrome c (Fe2+) + O2 + 8H+ (matrix) → 4 cytochrome c (Fe3+) + 2H2O + 4H+ (intermembrane space)
+
+Complex IV contains copper ions and heme groups that facilitate electron transfer. It is inhibited by cyanide, azide, and carbon monoxide — which is why these substances are lethal.
+
+Crucial insight: Complex IV transfers electrons from cytochrome c to oxygen, reducing oxygen to water. Oxygen is the final electron acceptor because it has a high affinity for electrons. Without oxygen, the ETC stops and ATP production ceases.` },
+
+    { q: "Ubiquinone and cytochrome c: the mobile carriers.",
+      body: `The four complexes of the ETC are connected by mobile electron carriers — ubiquinone (also called coenzyme Q) and cytochrome c. These carriers shuttle electrons between the complexes, allowing the ETC to function efficiently.
+
+My Socratic question: ubiquinone and cytochrome c are mobile carriers that move within the membrane. Why is mobility important for electron transfer?
+
+The answer is that the complexes are large and embedded in the membrane; they cannot move to find each other. Mobile carriers like ubiquinone (which diffuses in the lipid bilayer) and cytochrome c (which moves along the surface of the membrane) transport electrons between the fixed complexes. This allows the ETC to be organised with the complexes spaced out, which is necessary for efficient proton pumping.
+
+Ubiquinone accepts electrons from Complexes I and II and delivers them to Complex III. Cytochrome c accepts electrons from Complex III and delivers them to Complex IV. Both carriers are essential for electron flow through the ETC.
+
+Crucial insight: ubiquinone and cytochrome c are mobile electron carriers that shuttle electrons between the fixed membrane complexes. Ubiquinone moves electrons from Complexes I/II to Complex III; cytochrome c moves electrons from Complex III to Complex IV.` },
+
+    { q: "ATP synthase: the proton-driven motor.",
+      body: `ATP synthase (also called Complex V) is the enzyme that produces ATP using the proton gradient created by the ETC. It is a remarkable molecular motor that harnesses the flow of protons back into the matrix to drive ATP synthesis.
+
+My Socratic question: the ETC pumps protons across the membrane, creating a gradient. How does the flow of protons back across the membrane drive ATP synthesis?
+
+The answer is that ATP synthase has two main parts: the F0 portion (embedded in the membrane, forming a channel for protons) and the F1 portion (in the matrix, where ATP is synthesised). As protons flow through F0 back into the matrix, they drive rotation of a central stalk (the rotor). This rotation causes conformational changes in the F1 portion that synthesise ATP from ADP and inorganic phosphate.
+
+This is called chemiosmosis — the coupling of a proton gradient to ATP synthesis. The proton motive force (the combined concentration and electrical gradient) drives the rotation of ATP synthase, producing ATP.
+
+Crucial insight: ATP synthase uses the proton gradient created by the ETC to drive ATP synthesis. Protons flowing back into the matrix cause rotation of the enzyme, which synthesises ATP from ADP and Pi. This is the mechanism of oxidative phosphorylation.` },
+
+    { q: "Inhibitors of the electron transport chain.",
+      body: `The electron transport chain is the target of several important inhibitors, some of which are toxins and some of which are used therapeutically. Understanding these inhibitors is essential for understanding how the ETC can be blocked.
+
+My Socratic question: cyanide is a rapid poison that causes death within minutes. How does cyanide kill, and why is it so fast?
+
+The answer is that cyanide inhibits Complex IV (cytochrome c oxidase), blocking the transfer of electrons to oxygen. The ETC stops, the proton gradient dissipates, and ATP production ceases. Cells that require a lot of ATP, like heart and brain cells, are affected first, leading to cardiac arrest and respiratory failure. Cyanide is fast-acting because these cells cannot survive without ATP.
+
+Other inhibitors include: rotenone (inhibits Complex I, used as an insecticide), antimycin A (inhibits Complex III, used in research), and oligomycin (inhibits ATP synthase, blocking ATP production). These inhibitors have been used to study the ETC and understand its function.
+
+Crucial insight: the ETC is inhibited by several toxins — rotenone (Complex I), antimycin A (Complex III), cyanide (Complex IV), and oligomycin (ATP synthase). These inhibitors block electron flow and ATP production, demonstrating the essential role of the ETC in cellular energy metabolism.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the electron transport chain.
+
+Location: inner mitochondrial membrane.
+
+Complexes: Complex I (NADH → ubiquinone, pumps 4 H+), Complex II (FADH2 → ubiquinone, pumps 0 H+), Complex III (ubiquinol → cytochrome c, pumps 4 H+), Complex IV (cytochrome c → O2, pumps 2 H+), ATP synthase (uses proton gradient to make ATP).
+
+Mobile carriers: ubiquinone (Q, between Complex I/II and III) and cytochrome c (between Complex III and IV).
+
+Proton gradient: created by pumping protons from matrix to intermembrane space. Protons flow back through ATP synthase, driving ATP synthesis.
+
+ATP yield: NADH → 2.5 ATP; FADH2 → 1.5 ATP. Total from glucose: about 32 ATP.
+
+Inhibitors: rotenone (Complex I), antimycin A (Complex III), cyanide (Complex IV), oligomycin (ATP synthase).
+
+Now your final test. A patient is exposed to cyanide gas. Within minutes, they lose consciousness and stop breathing.
+
+Question one: which complex of the electron transport chain does cyanide inhibit, and what is its normal function?
+Question two: why does cyanide cause such rapid loss of consciousness and respiratory failure?
+Question three: what would be the effect on the levels of NADH and oxygen consumption after cyanide exposure?
+
+Work them through before reading on.
+
+My answers. One: cyanide inhibits Complex IV (cytochrome c oxidase), which normally transfers electrons from cytochrome c to oxygen, reducing oxygen to water. Two: cyanide causes rapid loss of consciousness because it stops ATP production in the brain. The brain requires a constant supply of ATP to function, and without it, consciousness is lost within seconds. Respiratory failure occurs because the respiratory muscles and the brainstem respiratory centre also require ATP. Three: NADH would accumulate because it cannot donate electrons to the ETC (the chain is blocked at Complex IV). Oxygen consumption would cease because oxygen is no longer being reduced to water at Complex IV.` }
+  ],
+  theory: [
+    { q: "What is the electron transport chain and where does it occur?", a: "The electron transport chain is a series of protein complexes in the inner mitochondrial membrane that transfers electrons from NADH and FADH2 to oxygen, pumping protons across the membrane to generate a proton gradient that drives ATP synthesis." },
+    { q: "What are the four complexes of the ETC and what does each do?", a: "Complex I (NADH → ubiquinone, pumps 4 H+), Complex II (FADH2 → ubiquinone, pumps 0 H+), Complex III (ubiquinol → cytochrome c, pumps 4 H+), Complex IV (cytochrome c → O2, pumps 2 H+)." },
+    { q: "Why does NADH yield more ATP than FADH2?", a: "NADH enters the ETC at Complex I, which pumps 4 protons. FADH2 enters at Complex II, which pumps 0 protons. The additional protons pumped by Complex I generate more ATP. NADH yields about 2.5 ATP; FADH2 yields about 1.5 ATP." },
+    { q: "What is the role of ubiquinone (coenzyme Q) in the ETC?", a: "Ubiquinone is a mobile electron carrier that accepts electrons from Complexes I and II and delivers them to Complex III. It diffuses freely in the inner mitochondrial membrane." },
+    { q: "What is the role of cytochrome c in the ETC?", a: "Cytochrome c is a mobile electron carrier that accepts electrons from Complex III and delivers them to Complex IV. It moves along the surface of the inner mitochondrial membrane." },
+    { q: "What is the Q cycle and where does it occur?", a: "The Q cycle is a mechanism used by Complex III to transfer electrons from ubiquinol (QH2) to cytochrome c while pumping 4 protons. It involves two ubiquinone binding sites (Qo and Qi) and maximises proton pumping." },
+    { q: "What is the final electron acceptor in the ETC and what is produced?", a: "Oxygen is the final electron acceptor. It is reduced to water at Complex IV: O2 + 4H+ + 4e- → 2H2O." },
+    { q: "What is ATP synthase and how does it work?", a: "ATP synthase (Complex V) uses the proton gradient created by the ETC to synthesise ATP. Protons flowing through the F0 portion cause rotation of the rotor, which drives conformational changes in the F1 portion that produce ATP from ADP and Pi." },
+    { q: "What is chemiosmosis?", a: "Chemiosmosis is the coupling of the proton gradient (proton motive force) to ATP synthesis. The energy stored in the proton gradient drives ATP synthase to produce ATP." },
+    { q: "Name three inhibitors of the ETC and what they inhibit.", a: "Rotenone (Complex I), antimycin A (Complex III), cyanide (Complex IV), and oligomycin (ATP synthase)." }
+  ],
+  videos: [
+    { channel: "Biochemistry", title: "Electron Transport Chain", note: "How electrons flow through the four complexes.", url: "" },
+    { channel: "Biochemistry", title: "ATP Synthase and Chemiosmosis", note: "How the proton gradient drives ATP production.", url: "" },
+    { channel: "Biochemistry", title: "ETC Inhibitors", note: "How toxins like cyanide and rotenone block the ETC.", url: "" }
+  ],
+  mcqs: [
+    { q: "The electron transport chain is located in the:", o: ["Cytosol", "Outer mitochondrial membrane", "Inner mitochondrial membrane", "Nucleus"], a: 2, w: "The ETC is located in the inner mitochondrial membrane." },
+    { q: "Which complex of the ETC accepts electrons from NADH?", o: ["Complex I", "Complex II", "Complex III", "Complex IV"], a: 0, w: "Complex I (NADH dehydrogenase) accepts electrons from NADH." },
+    { q: "Which complex of the ETC accepts electrons from FADH2?", o: ["Complex I", "Complex II", "Complex III", "Complex IV"], a: 1, w: "Complex II (succinate dehydrogenase) accepts electrons from FADH2." },
+    { q: "Which complex of the ETC reduces oxygen to water?", o: ["Complex I", "Complex II", "Complex III", "Complex IV"], a: 3, w: "Complex IV (cytochrome c oxidase) reduces oxygen to water." },
+    { q: "How many protons does Complex I pump per pair of electrons?", o: ["0", "2", "4", "6"], a: 2, w: "Complex I pumps 4 protons from the matrix to the intermembrane space." },
+    { q: "How many protons does Complex III pump per pair of electrons?", o: ["0", "2", "4", "6"], a: 2, w: "Complex III pumps 4 protons via the Q cycle." },
+    { q: "How many protons does Complex IV pump per pair of electrons?", o: ["0", "2", "4", "6"], a: 1, w: "Complex IV pumps 2 protons." },
+    { q: "Which complex of the ETC does NOT pump protons?", o: ["Complex I", "Complex II", "Complex III", "Complex IV"], a: 1, w: "Complex II does not pump protons." },
+    { q: "Complex II is also part of which metabolic pathway?", o: ["Glycolysis", "TCA cycle", "Pentose phosphate pathway", "Gluconeogenesis"], a: 1, w: "Complex II is the same enzyme as succinate dehydrogenase in the TCA cycle." },
+    { q: "NADH yields approximately how many ATP?", o: ["1.5", "2.5", "3.5", "4.5"], a: 1, w: "NADH yields about 2.5 ATP." },
+    { q: "FADH2 yields approximately how many ATP?", o: ["1.5", "2.5", "3.5", "4.5"], a: 0, w: "FADH2 yields about 1.5 ATP." },
+    { q: "Why does NADH yield more ATP than FADH2?", o: ["NADH has more electrons", "FADH2 enters at Complex II, which doesn't pump protons", "NADH is larger", "FADH2 is produced in the cytosol"], a: 1, w: "NADH enters at Complex I (pumps 4 H+), while FADH2 enters at Complex II (pumps 0 H+)." },
+    { q: "Ubiquinone accepts electrons from:", o: ["Complexes I and II", "Complex III only", "Complex IV only", "ATP synthase"], a: 0, w: "Ubiquinone accepts electrons from Complexes I and II." },
+    { q: "Cytochrome c accepts electrons from:", o: ["Complex I", "Complex II", "Complex III", "Complex IV"], a: 2, w: "Cytochrome c accepts electrons from Complex III." },
+    { q: "The final electron acceptor in the ETC is:", o: ["NAD+", "FAD", "Oxygen", "Ubiquinone"], a: 2, w: "Oxygen is the final electron acceptor, reduced to water." },
+    { q: "ATP synthase is also known as:", o: ["Complex I", "Complex III", "Complex IV", "Complex V"], a: 3, w: "ATP synthase is Complex V." },
+    { q: "The Q cycle occurs in:", o: ["Complex I", "Complex II", "Complex III", "Complex IV"], a: 2, w: "The Q cycle is the mechanism of proton pumping in Complex III." },
+    { q: "The proton gradient created by the ETC is also called the:", o: ["ATP gradient", "Proton motive force", "Electron gradient", "Chemical gradient"], a: 1, w: "The proton motive force is the combined concentration and electrical gradient of protons." },
+    { q: "Cyanide inhibits:", o: ["Complex I", "Complex II", "Complex III", "Complex IV"], a: 3, w: "Cyanide inhibits Complex IV (cytochrome c oxidase)." },
+    { q: "Rotenone inhibits:", o: ["Complex I", "Complex II", "Complex III", "Complex IV"], a: 0, w: "Rotenone inhibits Complex I." },
+    { q: "Oligomycin inhibits:", o: ["Complex I", "Complex III", "Complex IV", "ATP synthase"], a: 3, w: "Oligomycin inhibits ATP synthase." },
+    { q: "The total ATP yield from one glucose molecule in aerobic respiration is about:", o: ["2", "4", "32", "100"], a: 2, w: "Aerobic respiration yields about 32 ATP per glucose." },
+    { q: "The ETC and ATP synthesis are coupled by:", o: ["A direct chemical bond", "The proton gradient", "Electron transfer directly to ADP", "Substrate-level phosphorylation"], a: 1, w: "The proton gradient couples electron transport to ATP synthesis." },
+    { q: "ATP synthase uses the proton gradient to:", o: ["Reduce oxygen", "Oxidise NADH", "Drive conformational changes that synthesise ATP", "Pump more protons"], a: 2, w: "The proton flow drives conformational changes in ATP synthase that synthesise ATP." },
+    { q: "The ETC is essential for aerobic life because it:", o: ["Produces oxygen", "Produces the vast majority of ATP", "Only produces NADH", "Only produces FADH2"], a: 1, w: "The ETC produces the vast majority of ATP in aerobic organisms." },
+    { q: "Electron transport is blocked when:", o: ["Oxygen is abundant", "NADH is low", "Oxygen is absent", "ATP is low"], a: 2, w: "Without oxygen as the final electron acceptor, the ETC stops." },
+    { q: "The Q cycle in Complex III involves:", o: ["Two ubiquinone binding sites (Qo and Qi)", "Only one electron transfer", "No proton pumping", "Direct transfer to oxygen"], a: 0, w: "The Q cycle involves two ubiquinone binding sites (Qo and Qi) and pumps 4 protons." },
+    { q: "The reduced form of ubiquinone is called:", o: ["Ubiquinol", "Ubiquinone", "Cytochrome c", "NADH"], a: 0, w: "Ubiquinol (QH2) is the reduced form of ubiquinone." },
+    { q: "Cytochrome c transfers electrons to:", o: ["Complex I", "Complex II", "Complex III", "Complex IV"], a: 3, w: "Cytochrome c transfers electrons to Complex IV." },
+    { q: "The ETC is a major site of:", o: ["ATP production via oxidative phosphorylation", "ATP production via substrate-level phosphorylation", "NAD+ production", "Oxygen production"], a: 0, w: "The ETC is the site of oxidative phosphorylation, producing the majority of ATP." }
+  ]
+};
+
 /* --------------------------- bio:0 --------------------------- */
 const T_BIO_AMINO = {
   courseId: "bio",
@@ -10589,6 +10784,7 @@ const CONTENT = {
   "bch:3": T_BCH_GLYCOLYSIS,
   "bch:4": T_BCH_FRUCTOSE,
   "bch:5": T_BCH_TCA,
+  "bch:6": T_BCH_ETC,
   "bio:0": T_BIO_ISOMERISM,
   "bio:1": T_BIO_HEMIACETALS,
   "bio:2": T_BIO_CARBS,
