@@ -9694,6 +9694,840 @@ If those came cleanly, you understand the central nervous system in depth - its 
   ],
 };
 
+// ==================== PHYSIOLOGY TOPIC 12: SENSORY PHYSIOLOGY ====================
+const T_PHY_SENSORY = {
+  courseId: "phy",
+  topicIndex: 11,
+  title: "Sensory Physiology",
+  minutes: 22,
+  note: [
+    { q: "How do we perceive the world around us?",
+      body: `You have studied the nervous system — how neurons generate and transmit signals. Now we apply that knowledge to the sensory systems that allow you to see, hear, feel, taste, and smell the world. Sensory physiology is the study of how the body detects and processes sensory information.
+
+My Socratic question: you touch a hot surface, hear a sound, see a colour, and smell food cooking — all within seconds. How does your body detect these different types of stimuli and turn them into perception?
+
+The answer is that specialised sensory receptors detect specific types of stimuli and convert them into electrical signals (transduction). These signals travel along sensory pathways to the brain, where they are processed and perceived. Different receptors are specialised for different stimuli: mechanoreceptors detect pressure and touch, thermoreceptors detect temperature, nociceptors detect pain, chemoreceptors detect chemicals (taste and smell), and photoreceptors detect light.
+
+Crucial insight: sensory physiology is the study of how the body detects and processes sensory information. Specialised receptors transduce stimuli into electrical signals, which are transmitted to the brain for perception.` },
+
+    { q: "Sensory receptors: the gateway to perception.",
+      body: `Sensory receptors are specialised cells or nerve endings that detect specific types of stimuli and convert them into electrical signals. Understanding the types of receptors and how they work is essential for understanding sensation.
+
+My Socratic question: why can you feel a feather touch your skin but not feel individual air molecules? Why can you see colours but not hear colours?
+
+The answer is that different receptors are specialised for different stimuli. Mechanoreceptors detect mechanical deformation — pressure, touch, vibration. Thermoreceptors detect changes in temperature. Nociceptors detect tissue damage (pain). Chemoreceptors detect chemical stimuli (taste and smell). Photoreceptors detect light.
+
+Each receptor has a specific threshold — the minimum stimulus required to generate a response. The receptor potential is the graded electrical change produced by the stimulus. If the receptor potential reaches threshold, it triggers an action potential in the sensory neuron.
+
+Crucial insight: sensory receptors are specialised for specific stimuli — mechanoreceptors (touch, pressure), thermoreceptors (temperature), nociceptors (pain), chemoreceptors (taste, smell), and photoreceptors (light). Each receptor has a specific threshold and produces a receptor potential.` },
+
+    { q: "Sensory pathways: how signals reach the brain.",
+      body: `Once a sensory receptor generates a signal, that signal must travel to the brain for processing. Sensory pathways are the routes that sensory information takes from the receptor to the brain.
+
+My Socratic question: why does touching something hot cause a reflex withdrawal before you consciously feel the pain? How does the brain receive sensory information from all over the body?
+
+The answer is that sensory information travels along specific pathways. Sensory neurons carry signals from receptors to the spinal cord or brainstem. In the spinal cord, the signal may be processed by interneurons to produce a reflex response (like withdrawing from a hot surface) before it reaches the brain. The signal continues to the thalamus (the sensory relay station) and then to the appropriate area of the cerebral cortex for conscious perception.
+
+Different sensory modalities travel on different pathways. For example, touch and proprioception (body position) travel in the dorsal column-medial lemniscal pathway, while pain and temperature travel in the spinothalamic pathway.
+
+Crucial insight: sensory pathways carry signals from receptors to the brain via the spinal cord and thalamus. Reflexes can occur at the spinal cord level before conscious perception. Different pathways carry different types of sensory information.` },
+
+    { q: "Vision: the eye and photoreception.",
+      body: `Vision is the dominant sense in humans. It relies on the eye, which focuses light onto the retina, where photoreceptors convert light into electrical signals. Understanding vision is essential for understanding how we perceive the world.
+
+My Socratic question: why can you see in dim light but not in complete darkness? Why do you have a blind spot in each eye?
+
+The answer is that the retina contains two types of photoreceptors: rods (sensitive to low light, responsible for black and white vision in dim light) and cones (responsible for colour vision and high acuity in bright light). Rods are more sensitive to light, which is why you can see in dim light. Cones require more light but provide colour vision and sharp detail.
+
+The blind spot is the area where the optic nerve leaves the retina — there are no photoreceptors there. You do not notice it because your brain fills in the missing information.
+
+Crucial insight: vision relies on photoreceptors in the retina — rods (dim light, black and white) and cones (bright light, colour, detail). The blind spot is where the optic nerve leaves the retina.` },
+
+    { q: "Hearing: the ear and sound perception.",
+      body: `Hearing allows you to detect sound waves and convert them into meaningful sounds. The ear is a remarkable organ that transduces sound waves into electrical signals that the brain interprets.
+
+My Socratic question: why does the ear have three sections (outer, middle, inner), and what does each section do?
+
+The answer is that each section of the ear has a specific function. The outer ear collects sound waves and funnels them to the tympanic membrane (eardrum). The middle ear amplifies the vibrations through three small bones (the malleus, incus, and stapes) and transmits them to the inner ear. The inner ear contains the cochlea, where sound vibrations are converted into electrical signals by hair cells.
+
+The organ of Corti, within the cochlea, contains hair cells that transduce sound vibrations into nerve impulses. Different frequencies of sound activate different hair cells, allowing you to perceive pitch. Loudness is encoded by the intensity of the signal.
+
+Crucial insight: hearing involves three parts of the ear — outer (collecting sound), middle (amplifying vibrations), and inner (transducing vibrations into electrical signals in the cochlea). Hair cells in the organ of Corti transduce sound.` },
+
+    { q: "Balance and equilibrium: the vestibular system.",
+      body: `The vestibular system is responsible for maintaining balance and spatial orientation. It detects head position and movement, allowing you to stay upright and coordinate movements.
+
+My Socratic question: why does spinning around make you dizzy, and why do you lose your balance when the vestibular system is damaged?
+
+The answer is that the vestibular system consists of three semicircular canals (which detect rotational movements of the head) and the otolith organs (utricle and saccule), which detect linear acceleration and head position relative to gravity. Hair cells in these structures detect movement of fluid or otoliths and generate signals that are sent to the brain.
+
+When you spin around, the fluid in your semicircular canals continues to move after you stop, creating a false sense of movement — this is what causes dizziness. Damage to the vestibular system causes vertigo, nystagmus, and loss of balance.
+
+Crucial insight: the vestibular system (semicircular canals and otolith organs) detects head movement and position, maintaining balance and spatial orientation.` },
+
+    { q: "Touch and pain: somatosensation.",
+      body: `The somatosensory system allows you to feel touch, pressure, temperature, and pain. It is essential for interacting with the environment and for protecting the body from injury.
+
+My Socratic question: why do you feel pain when you are injured, and why is pain important for survival?
+
+The answer is that pain (nociception) is a protective mechanism. Nociceptors detect tissue damage and send signals to the brain that are perceived as pain. Pain motivates you to withdraw from the source of injury and protect the injured area while it heals. Without pain, you could not protect yourself from injury.
+
+Different types of receptors detect different stimuli: Meissner's corpuscles detect light touch; Pacinian corpuscles detect deep pressure and vibration; Ruffini endings detect skin stretch; Merkel cells detect sustained pressure; free nerve endings detect pain and temperature.
+
+Crucial insight: the somatosensory system detects touch, pressure, temperature, and pain. Pain (nociception) is a protective mechanism that signals tissue damage and motivates protective behaviour.` },
+
+    { q: "Taste and smell: chemical senses.",
+      body: `Taste and smell are chemical senses that detect molecules in food and the environment. They are closely linked and essential for nutrition, safety, and enjoyment of food.
+
+My Socratic question: why does food taste bland when you have a cold, and why are there five basic tastes?
+
+The answer is that taste and smell work together. Taste receptors on the tongue detect five basic tastes: sweet, sour, salty, bitter, and umami (savoury). Smell receptors in the nose detect thousands of different odours. When you have a cold, your sense of smell is impaired because nasal congestion prevents odorants from reaching the olfactory epithelium, making food taste bland.
+
+Taste buds are located on the tongue, soft palate, and epiglottis. Each taste bud contains taste receptor cells that respond to specific chemicals. Olfactory receptors are located in the olfactory epithelium in the nose and project directly to the olfactory bulb in the brain.
+
+Crucial insight: taste (five basic tastes) and smell (thousands of odours) are chemical senses that work together. Smell contributes significantly to the perception of flavour.` },
+
+    { q: "Clinical relevance: sensory disorders.",
+      body: `Sensory disorders are common and can significantly affect quality of life. Understanding sensory physiology is essential for diagnosing and managing these conditions.
+
+My Socratic question: why do people develop hearing loss, and why does vision decline with age?
+
+The answer is that sensory function can be affected by a range of factors — genetics, disease, injury, and ageing. Presbycusis (age-related hearing loss) results from degeneration of hair cells in the cochlea. Presbyopia (age-related loss of near vision) results from stiffening of the lens. Cataracts cloud the lens of the eye, causing vision loss. Glaucoma damages the optic nerve, causing peripheral vision loss. Diabetic retinopathy damages the retina, causing vision loss.
+
+Sensory disorders can also be caused by neurological conditions: stroke can cause sensory loss on one side of the body; multiple sclerosis can affect sensory pathways; peripheral neuropathy can cause numbness and pain in the extremities.
+
+Crucial insight: sensory disorders are common and can be caused by ageing, disease, injury, and neurological conditions. Understanding sensory physiology is essential for diagnosing and managing sensory loss.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for sensory physiology.
+
+Sensory receptors: mechanoreceptors (touch, pressure), thermoreceptors (temperature), nociceptors (pain), chemoreceptors (taste, smell), photoreceptors (light). Each transduces stimuli into electrical signals.
+
+Sensory pathways: signals travel from receptors to the spinal cord → thalamus → cerebral cortex. Reflexes can occur at the spinal cord level.
+
+Vision: rods (dim light, black/white), cones (bright light, colour). Light focused by cornea and lens onto retina.
+
+Hearing: outer ear (collects sound), middle ear (amplifies), inner ear (cochlea transduces sound). Hair cells in organ of Corti.
+
+Balance: semicircular canals (rotation) and otolith organs (linear acceleration, gravity). Damage causes vertigo.
+
+Touch and pain: mechanoreceptors for touch; nociceptors for pain (protective mechanism).
+
+Taste and smell: chemical senses. Five basic tastes; thousands of odours. Work together for flavour.
+
+Clinical relevance: sensory loss from ageing, disease, injury, and neurological conditions.
+
+Now your final test. A patient presents with gradual hearing loss, tinnitus, and difficulty understanding speech in noisy environments. The patient is 70 years old.
+
+Question one: what is the most likely diagnosis, and what structures of the ear are affected?
+Question two: how does age affect the cochlea, and why does this cause hearing loss?
+Question three: what hearing test would be used to confirm the diagnosis?
+
+Work them through before reading on.
+
+My answers. One: presbycusis (age-related hearing loss) is the most likely diagnosis. It affects the cochlea (hair cells) and the auditory nerve. Two: age causes degeneration of hair cells in the cochlea, particularly those that detect high frequencies. This leads to loss of high-frequency hearing, which makes speech difficult to understand, especially in noisy environments. Three: audiometry (pure tone audiometry) would be used to assess hearing thresholds at different frequencies and confirm the diagnosis.` }
+  ],
+  theory: [
+    { q: "What are the types of sensory receptors and what do they detect?", a: "Mechanoreceptors (touch, pressure, vibration), thermoreceptors (temperature), nociceptors (pain), chemoreceptors (taste, smell), and photoreceptors (light)." },
+    { q: "What is transduction in sensory physiology?", a: "Transduction is the process by which a sensory receptor converts a stimulus into an electrical signal (receptor potential)." },
+    { q: "What is the pathway for sensory information from the body to the brain?", a: "Sensory receptors → sensory neurons → spinal cord → thalamus (relay station) → cerebral cortex for conscious perception." },
+    { q: "What are the two types of photoreceptors in the retina and what do they do?", a: "Rods — sensitive to dim light, responsible for black and white vision. Cones — require bright light, responsible for colour vision and high acuity." },
+    { q: "What are the three parts of the ear and their functions?", a: "Outer ear — collects sound waves. Middle ear — amplifies vibrations via ossicles. Inner ear — cochlea transduces sound into electrical signals." },
+    { q: "What is the organ of Corti and what does it do?", a: "The organ of Corti is the sensory organ within the cochlea. It contains hair cells that transduce sound vibrations into nerve impulses." },
+    { q: "What are the components of the vestibular system and what do they detect?", a: "Semicircular canals — detect rotational movements of the head. Otolith organs (utricle and saccule) — detect linear acceleration and head position relative to gravity." },
+    { q: "What is the difference between rods and cones?", a: "Rods are more sensitive to light (dim vision, black and white). Cones require more light but provide colour vision and sharp detail. Cones are concentrated in the fovea." },
+    { q: "What are the five basic tastes?", a: "Sweet, sour, salty, bitter, and umami (savoury)." },
+    { q: "What is presbycusis?", a: "Age-related hearing loss caused by degeneration of hair cells in the cochlea, particularly affecting high-frequency hearing." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Sensory Receptors and Transduction", note: "How stimuli become signals.", url: "" },
+    { channel: "Physiology", title: "Vision and the Eye", note: "Photoreception and visual pathways.", url: "" },
+    { channel: "Physiology", title: "Hearing and Balance", note: "The ear and vestibular system.", url: "" },
+  ],
+  mcqs: [
+    { q: "The process by which a stimulus is converted into an electrical signal is called:", o: ["Transmission", "Transduction", "Translation", "Transcription"], a: 1, w: "Transduction is the conversion of a stimulus into an electrical signal." },
+    { q: "Mechanoreceptors detect:", o: ["Light", "Chemical stimuli", "Mechanical deformation", "Temperature"], a: 2, w: "Mechanoreceptors detect mechanical deformation — touch, pressure, and vibration." },
+    { q: "Nociceptors detect:", o: ["Light", "Chemical stimuli", "Pressure", "Pain"], a: 3, w: "Nociceptors detect pain (tissue damage)." },
+    { q: "Rods are responsible for:", o: ["Colour vision", "Dim light vision", "Bright light vision", "High acuity"], a: 1, w: "Rods are sensitive to dim light and provide black and white vision." },
+    { q: "Cones are responsible for:", o: ["Dim light vision", "Colour vision and high acuity", "Black and white vision", "Peripheral vision"], a: 1, w: "Cones provide colour vision and high acuity in bright light." },
+    { q: "The three ossicles of the middle ear are:", o: ["Malleus, incus, stapes", "Hammer, anvil, stirrup", "Both A and B", "Cochlea, vestibule, semicircular canals"], a: 2, w: "The three ossicles are the malleus, incus, and stapes (hammer, anvil, and stirrup)." },
+    { q: "The organ of Corti is located in the:", o: ["Outer ear", "Middle ear", "Cochlea", "Semicircular canals"], a: 2, w: "The organ of Corti is in the cochlea of the inner ear." },
+    { q: "Hair cells in the organ of Corti transduce:", o: ["Light", "Sound vibrations", "Head movement", "Chemical stimuli"], a: 1, w: "Hair cells in the organ of Corti transduce sound vibrations into electrical signals." },
+    { q: "The semicircular canals detect:", o: ["Linear acceleration", "Rotational head movement", "Sound", "Light"], a: 1, w: "The semicircular canals detect rotational movements of the head." },
+    { q: "The utricle and saccule detect:", o: ["Rotational head movement", "Linear acceleration and head position", "Sound", "Light"], a: 1, w: "The otolith organs (utricle and saccule) detect linear acceleration and head position." },
+    { q: "The five basic tastes are:", o: ["Sweet, sour, salty, bitter, umami", "Sweet, sour, salty, bitter, spicy", "Sweet, sour, salty, bitter, savoury", "Sweet, sour, salty, bitter, fatty"], a: 0, w: "The five basic tastes are sweet, sour, salty, bitter, and umami." },
+    { q: "Age-related hearing loss is called:", o: ["Presbyopia", "Presbycusis", "Cataracts", "Glaucoma"], a: 1, w: "Presbycusis is age-related hearing loss." },
+    { q: "The pathway for pain and temperature from the body is the:", o: ["Dorsal column-medial lemniscal pathway", "Spinothalamic pathway", "Corticospinal pathway", "Pyramidal pathway"], a: 1, w: "Pain and temperature travel in the spinothalamic pathway." },
+    { q: "The pathway for touch and proprioception is the:", o: ["Spinothalamic pathway", "Dorsal column-medial lemniscal pathway", "Corticospinal pathway", "Pyramidal pathway"], a: 1, w: "Touch and proprioception travel in the dorsal column-medial lemniscal pathway." },
+    { q: "The thalamus functions as a:", o: ["Motor control centre", "Sensory relay station", "Memory centre", "Vision centre"], a: 1, w: "The thalamus is the sensory relay station, directing sensory information to the appropriate areas of the cerebral cortex." },
+    { q: "The outer ear collects sound waves and funnels them to the:", o: ["Cochlea", "Tympanic membrane (eardrum)", "Ossicles", "Organ of Corti"], a: 1, w: "The outer ear funnels sound waves to the tympanic membrane (eardrum)." },
+    { q: "Cataracts affect which structure of the eye?", o: ["Retina", "Cornea", "Lens", "Optic nerve"], a: 2, w: "Cataracts are clouding of the lens of the eye." },
+    { q: "Glaucoma damages the:", o: ["Lens", "Retina", "Optic nerve", "Cornea"], a: 2, w: "Glaucoma damages the optic nerve, causing peripheral vision loss." },
+    { q: "The blind spot is where the:", o: ["Lens focuses light", "Optic nerve leaves the retina", "Fovea is located", "Retina ends"], a: 1, w: "The blind spot is where the optic nerve leaves the retina — there are no photoreceptors there." },
+    { q: "What hearing test is used to assess hearing thresholds?", o: ["Audiometry", "Otoscopy", "Tympanometry", "Vestibular testing"], a: 0, w: "Audiometry (pure tone audiometry) assesses hearing thresholds at different frequencies." },
+  ],
+};
+
+// ==================== PHYSIOLOGY TOPIC 13: ENDOCRINE SYSTEM ====================
+const T_PHY_ENDOCRINE = {
+  courseId: "phy",
+  topicIndex: 12,
+  title: "Endocrine System",
+  minutes: 22,
+  note: [
+    { q: "What is the endocrine system and why does it matter?",
+      body: `You have studied the nervous system — the body's rapid communication network. Now we meet the other great communication system: the endocrine system. While the nervous system acts quickly and briefly, the endocrine system acts slowly and has long-lasting effects, regulating growth, metabolism, reproduction, and homeostasis.
+
+My Socratic question: how does your body grow from childhood to adulthood, regulate your metabolism, and respond to stress over hours or days rather than milliseconds?
+
+The answer is the endocrine system — a network of glands that release hormones into the blood. Hormones travel through the blood to target cells, where they bind to specific receptors and trigger responses. The endocrine system works alongside the nervous system to maintain homeostasis, with the nervous system providing fast responses and the endocrine system providing slow, sustained regulation.
+
+Crucial insight: the endocrine system is the body's slow, sustained communication network, using hormones to regulate growth, metabolism, reproduction, and homeostasis. It works alongside the nervous system to maintain balance.` },
+
+    { q: "Hormones: the chemical messengers.",
+      body: `Hormones are chemical messengers released by endocrine glands into the blood. They travel to target cells, where they bind to specific receptors and produce a response. Understanding hormones is essential for understanding how the endocrine system works.
+
+My Socratic question: how can a small amount of a hormone produce a large effect, and why do hormones affect only certain cells?
+
+The answer is that hormones bind to specific receptors on target cells. The receptor determines which cells respond to the hormone — cells without the receptor do not respond. Hormones are effective in very small concentrations because of amplification — one hormone molecule can activate many intracellular signalling molecules, producing a large response.
+
+Hormones can be classified by their chemical structure: peptide hormones (made of amino acids, water-soluble), steroid hormones (derived from cholesterol, lipid-soluble), and amino acid derivatives (like thyroxine, derived from tyrosine).
+
+Crucial insight: hormones are chemical messengers that bind to specific receptors on target cells, triggering responses. They act in very small concentrations and are classified as peptides, steroids, or amino acid derivatives.` },
+
+    { q: "The major endocrine glands.",
+      body: `The endocrine system consists of several glands distributed throughout the body, each producing specific hormones. Understanding the major glands and their hormones is essential for understanding endocrine physiology.
+
+My Socratic question: why are the pituitary, thyroid, adrenal, and pancreas considered major endocrine glands, and what does each contribute?
+
+The answer is that each gland produces hormones essential for specific functions. The pituitary gland is the master gland, controlling other endocrine glands. It produces growth hormone, thyroid-stimulating hormone, and others. The thyroid gland produces thyroxine (T4) and triiodothyronine (T3), which regulate metabolism. The adrenal glands produce cortisol (stress response), aldosterone (salt balance), and adrenaline (fight or flight). The pancreas produces insulin and glucagon, which regulate blood glucose.
+
+Other glands include the parathyroid glands (calcium regulation), the pineal gland (melatonin), the ovaries and testes (sex hormones), and the thymus (immune development).
+
+Crucial insight: major endocrine glands include the pituitary (master gland), thyroid (metabolism), adrenal (stress, salt balance), pancreas (blood glucose), parathyroid (calcium), and gonads (reproduction).` },
+
+    { q: "The pituitary: the master gland.",
+      body: `The pituitary gland, located at the base of the brain, is often called the master gland because it controls many other endocrine glands. Understanding its structure and hormones is essential for understanding endocrine regulation.
+
+My Socratic question: why is the pituitary called the master gland, and how does it control other glands?
+
+The answer is that the pituitary produces hormones that stimulate or inhibit other endocrine glands. The anterior pituitary produces growth hormone, thyroid-stimulating hormone (TSH), adrenocorticotropic hormone (ACTH), prolactin, follicle-stimulating hormone (FSH), and luteinising hormone (LH). The posterior pituitary stores and releases oxytocin and antidiuretic hormone (ADH), which are produced in the hypothalamus.
+
+The hypothalamus controls the pituitary through releasing and inhibiting hormones, linking the nervous and endocrine systems.
+
+Crucial insight: the pituitary gland, controlled by the hypothalamus, is the master gland. It produces hormones that regulate other endocrine glands, including TSH, ACTH, GH, FSH, LH, and prolactin.` },
+
+    { q: "The thyroid: metabolism and growth.",
+      body: `The thyroid gland produces hormones that regulate metabolism, growth, and development. Understanding thyroid function is essential for understanding metabolic disorders.
+
+My Socratic question: why do patients with hyperthyroidism lose weight and have a rapid heartbeat, while patients with hypothyroidism gain weight and feel sluggish?
+
+The answer is that thyroid hormones (T4 and T3) regulate the body's metabolic rate. Hyperthyroidism (too much thyroid hormone) increases metabolism, causing weight loss, rapid heartbeat, and heat intolerance. Hypothyroidism (too little thyroid hormone) decreases metabolism, causing weight gain, fatigue, and cold intolerance.
+
+Thyroid hormones also play a critical role in growth and development, particularly of the brain and nervous system. Iodine is essential for thyroid hormone production, which is why iodine deficiency causes goitre (enlarged thyroid).
+
+Crucial insight: thyroid hormones (T4 and T3) regulate metabolism, growth, and development. Hyperthyroidism increases metabolism; hypothyroidism decreases it. Iodine is essential for thyroid hormone production.` },
+
+    { q: "The adrenal glands: stress and salt balance.",
+      body: `The adrenal glands sit on top of the kidneys and produce hormones essential for the stress response and salt balance. Understanding adrenal function is essential for understanding the body's response to stress and fluid balance.
+
+My Socratic question: why does a stressful situation make your heart race, and why does a lack of aldosterone cause low blood pressure?
+
+The answer is that the adrenal medulla produces adrenaline (epinephrine) and noradrenaline (norepinephrine), which mediate the fight or flight response — increasing heart rate, blood pressure, and alertness. The adrenal cortex produces cortisol (stress response, inflammation, metabolism) and aldosterone (salt and water balance).
+
+Cortisol mobilises energy during stress, increases blood glucose, and suppresses inflammation. Aldosterone acts on the kidneys to increase sodium reabsorption and potassium excretion, maintaining blood pressure and fluid balance.
+
+Crucial insight: the adrenal glands produce adrenaline (fight or flight), cortisol (stress response), and aldosterone (salt and water balance). These hormones are essential for responding to stress and maintaining fluid balance.` },
+
+    { q: "The pancreas: blood glucose regulation.",
+      body: `The pancreas is both an exocrine gland (digestive enzymes) and an endocrine gland (hormones regulating blood glucose). Understanding pancreatic endocrine function is essential for understanding diabetes.
+
+My Socratic question: why do patients with diabetes have high blood glucose, and how do insulin and glucagon regulate blood glucose?
+
+The answer is that the pancreas contains islets of Langerhans, which contain beta cells (produce insulin) and alpha cells (produce glucagon). Insulin lowers blood glucose by promoting glucose uptake into cells and storage as glycogen. Glucagon raises blood glucose by promoting glycogen breakdown and glucose production.
+
+In diabetes, insulin production is insufficient (type 1) or cells are resistant to its effects (type 2), leading to elevated blood glucose (hyperglycaemia). Chronic hyperglycaemia causes damage to blood vessels, nerves, kidneys, and eyes.
+
+Crucial insight: the pancreas regulates blood glucose through insulin (lowers glucose) and glucagon (raises glucose). Diabetes results from insufficient insulin or insulin resistance, causing hyperglycaemia and long-term complications.` },
+
+    { q: "Hormone regulation: feedback loops.",
+      body: `Hormone secretion is tightly regulated by feedback loops, primarily negative feedback. Understanding feedback regulation is essential for understanding how the endocrine system maintains homeostasis.
+
+My Socratic question: why does the pituitary stop producing TSH when thyroid hormone levels are high, and why does it increase TSH production when thyroid hormone levels are low?
+
+The answer is negative feedback. When thyroid hormone levels rise, they inhibit the release of TSH from the pituitary and TRH from the hypothalamus, reducing further thyroid hormone production. When thyroid hormone levels fall, the inhibition is removed, and TSH production increases, stimulating the thyroid to produce more hormone.
+
+This negative feedback loop maintains hormone levels within a narrow range. Positive feedback occurs in some situations, such as during childbirth, where oxytocin stimulates stronger contractions, which stimulate more oxytocin release, amplifying the response until delivery.
+
+Crucial insight: hormone secretion is primarily regulated by negative feedback loops, where the hormone inhibits its own production. Positive feedback occurs in specific situations, such as childbirth.` },
+
+    { q: "Clinical relevance: endocrine disorders.",
+      body: `Endocrine disorders are common and can have widespread effects on the body. Understanding endocrine physiology is essential for diagnosing and managing these conditions.
+
+My Socratic question: why do endocrine disorders cause such varied symptoms, and why is diagnosis often challenging?
+
+The answer is that hormones affect multiple systems, so endocrine disorders produce diverse symptoms. Diabetes affects blood glucose, which affects every organ system. Thyroid disorders affect metabolism, heart rate, temperature regulation, and mood. Adrenal disorders affect salt balance, blood pressure, and stress response.
+
+Diagnosis involves measuring hormone levels in the blood, imaging to visualise glands, and functional tests to assess endocrine responses. Treatment may involve hormone replacement (for deficiency), drugs to block hormone action (for excess), or surgery to remove tumours.
+
+Crucial insight: endocrine disorders are common and affect multiple systems. Diagnosis involves hormone measurements, imaging, and functional tests. Treatment may involve hormone replacement, blocking drugs, or surgery.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the endocrine system.
+
+Definition: the endocrine system is the slow, sustained communication network using hormones to regulate growth, metabolism, reproduction, and homeostasis.
+
+Hormones: chemical messengers that bind to specific receptors on target cells. Classified as peptides, steroids, or amino acid derivatives.
+
+Major glands: pituitary (master gland — controls other glands), thyroid (metabolism — T3, T4), adrenal (stress — adrenaline, cortisol; salt balance — aldosterone), pancreas (blood glucose — insulin, glucagon), parathyroid (calcium), gonads (sex hormones).
+
+Feedback loops: negative feedback is the primary mechanism, where the hormone inhibits its own production. Positive feedback occurs in specific situations.
+
+Clinical relevance: diabetes, thyroid disorders, adrenal insufficiency, Cushing's syndrome.
+
+Now your final test. A patient presents with weight gain, fatigue, cold intolerance, and a goitre. Blood tests show high TSH and low T4.
+
+Question one: what is the most likely diagnosis, and which gland is affected?
+Question two: what is the feedback mechanism that explains the high TSH level?
+Question three: what is the treatment for this condition?
+
+Work them through before reading on.
+
+My answers. One: hypothyroidism is the most likely diagnosis, and the thyroid gland is affected. Two: low T4 removes the negative feedback inhibition on the pituitary, so TSH production increases in an attempt to stimulate the thyroid to produce more T4. Three: treatment is thyroid hormone replacement (levothyroxine) to restore normal T4 levels, which will reduce TSH through negative feedback.` }
+  ],
+  theory: [
+    { q: "What is the endocrine system and what is its role?", a: "The endocrine system is the body's slow, sustained communication network, using hormones to regulate growth, metabolism, reproduction, and homeostasis. It works alongside the nervous system." },
+    { q: "What are hormones and how do they work?", a: "Hormones are chemical messengers released into the blood that bind to specific receptors on target cells, triggering responses. They act in very small concentrations and are classified as peptides, steroids, or amino acid derivatives." },
+    { q: "What is the pituitary gland and why is it called the master gland?", a: "The pituitary gland is called the master gland because it produces hormones that regulate other endocrine glands. It is controlled by the hypothalamus." },
+    { q: "What hormones does the anterior pituitary produce?", a: "Growth hormone (GH), thyroid-stimulating hormone (TSH), adrenocorticotropic hormone (ACTH), prolactin, follicle-stimulating hormone (FSH), and luteinising hormone (LH)." },
+    { q: "What is the function of thyroid hormones?", a: "Thyroid hormones (T4 and T3) regulate metabolism, growth, and development. They increase metabolic rate, heat production, and oxygen consumption." },
+    { q: "What are the effects of hyperthyroidism?", a: "Weight loss, rapid heartbeat, heat intolerance, anxiety, and increased appetite. Caused by excessive thyroid hormone." },
+    { q: "What are the effects of hypothyroidism?", a: "Weight gain, fatigue, cold intolerance, depression, and slowed heart rate. Caused by insufficient thyroid hormone." },
+    { q: "What hormones are produced by the adrenal glands?", a: "Adrenaline (epinephrine) and noradrenaline (fight or flight), cortisol (stress response), and aldosterone (salt and water balance)." },
+    { q: "What is the role of insulin and glucagon?", a: "Insulin lowers blood glucose by promoting uptake into cells and storage. Glucagon raises blood glucose by promoting glycogen breakdown and glucose production." },
+    { q: "What is negative feedback in the endocrine system?", a: "Negative feedback is a regulatory mechanism where the hormone inhibits its own production. For example, high thyroid hormone reduces TSH production." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Endocrine System Overview", note: "The major glands and their hormones.", url: "" },
+    { channel: "Physiology", title: "Thyroid and Adrenal Glands", note: "Thyroid and adrenal hormones and disorders.", url: "" },
+    { channel: "Physiology", title: "Diabetes and Blood Glucose Regulation", note: "How insulin and glucagon regulate blood glucose.", url: "" },
+  ],
+  mcqs: [
+    { q: "The endocrine system communicates using:", o: ["Nerve impulses", "Hormones in the blood", "Neurotransmitters at synapses", "Direct contact between cells"], a: 1, w: "The endocrine system communicates using hormones released into the blood." },
+    { q: "Hormones bind to specific receptors on:", o: ["All cells", "Target cells with the correct receptor", "Only cells in the same organ", "Only blood cells"], a: 1, w: "Hormones bind to specific receptors on target cells that have the appropriate receptor." },
+    { q: "The pituitary gland is located at the base of the:", o: ["Kidney", "Brain", "Thyroid", "Pancreas"], a: 1, w: "The pituitary gland is located at the base of the brain." },
+    { q: "Thyroid-stimulating hormone (TSH) is produced by the:", o: ["Thyroid", "Anterior pituitary", "Hypothalamus", "Adrenal"], a: 1, w: "TSH is produced by the anterior pituitary gland." },
+    { q: "Thyroid hormones (T4 and T3) regulate:", o: ["Blood glucose", "Metabolism and growth", "Salt balance", "Stress response"], a: 1, w: "Thyroid hormones regulate metabolism, growth, and development." },
+    { q: "Hyperthyroidism causes:", o: ["Weight gain and fatigue", "Weight loss and rapid heartbeat", "Cold intolerance", "Low blood pressure"], a: 1, w: "Hyperthyroidism causes weight loss, rapid heartbeat, and heat intolerance." },
+    { q: "Hypothyroidism causes:", o: ["Weight loss and rapid heartbeat", "Weight gain and fatigue", "Heat intolerance", "High blood pressure"], a: 1, w: "Hypothyroidism causes weight gain, fatigue, and cold intolerance." },
+    { q: "The adrenal glands are located:", o: ["In the neck", "Above the kidneys", "In the pancreas", "In the brain"], a: 1, w: "The adrenal glands are located above the kidneys." },
+    { q: "Cortisol is produced by the:", o: ["Adrenal medulla", "Adrenal cortex", "Anterior pituitary", "Thyroid"], a: 1, w: "Cortisol is produced by the adrenal cortex." },
+    { q: "Aldosterone is produced by the:", o: ["Adrenal medulla", "Adrenal cortex", "Anterior pituitary", "Thyroid"], a: 1, w: "Aldosterone is produced by the adrenal cortex." },
+    { q: "Adrenaline is produced by the:", o: ["Adrenal cortex", "Adrenal medulla", "Anterior pituitary", "Thyroid"], a: 1, w: "Adrenaline is produced by the adrenal medulla." },
+    { q: "Insulin is produced by the:", o: ["Liver", "Pancreas", "Adrenal", "Thyroid"], a: 1, w: "Insulin is produced by the beta cells of the pancreas." },
+    { q: "Glucagon is produced by the:", o: ["Liver", "Pancreas", "Adrenal", "Thyroid"], a: 1, w: "Glucagon is produced by the alpha cells of the pancreas." },
+    { q: "Diabetes mellitus is caused by:", o: ["Too much insulin", "Insufficient insulin or insulin resistance", "Excessive thyroid hormone", "Too much adrenaline"], a: 1, w: "Diabetes results from insufficient insulin production or insulin resistance." },
+    { q: "The hypothalamus links the nervous system to the:", o: ["Muscular system", "Endocrine system", "Skeletal system", "Respiratory system"], a: 1, w: "The hypothalamus links the nervous system to the endocrine system via the pituitary." },
+    { q: "Negative feedback in the endocrine system means:", o: ["The hormone stimulates its own production", "The hormone inhibits its own production", "The hormone has no effect on its own production", "The hormone acts only on distant targets"], a: 1, w: "Negative feedback means the hormone inhibits its own production, maintaining homeostasis." },
+    { q: "A goitre is an enlargement of the:", o: ["Pancreas", "Thyroid", "Adrenal", "Pituitary"], a: 1, w: "A goitre is an enlargement of the thyroid gland, often due to iodine deficiency." },
+    { q: "Treatment for hypothyroidism typically involves:", o: ["Insulin injections", "Thyroid hormone replacement (levothyroxine)", "Adrenal hormone replacement", "Growth hormone"], a: 1, w: "Hypothyroidism is treated with thyroid hormone replacement (levothyroxine)." },
+    { q: "Cushing's syndrome is caused by:", o: ["Too little cortisol", "Excessive cortisol", "Too little thyroid hormone", "Excessive thyroid hormone"], a: 1, w: "Cushing's syndrome is caused by excessive cortisol." },
+    { q: "Addison's disease is caused by:", o: ["Excessive cortisol", "Insufficient cortisol and aldosterone", "Excessive thyroid hormone", "Insufficient insulin"], a: 1, w: "Addison's disease is caused by insufficient cortisol and aldosterone production from the adrenal cortex." },
+  ],
+};
+
+// ==================== PHYSIOLOGY TOPIC 14: METABOLISM AND THYROID HORMONE ====================
+const T_PHY_METABOLISM = {
+  courseId: "phy",
+  topicIndex: 13,
+  title: "Metabolism and Thyroid Hormone",
+  minutes: 22,
+  note: [
+    { q: "What is metabolism and how is it regulated?",
+      body: `You have studied the endocrine system, including the thyroid gland and its hormones. Now we explore how thyroid hormones regulate metabolism — the sum of all chemical reactions in the body. Understanding this connection is essential for understanding how the body uses energy and responds to changes in demand.
+
+My Socratic question: why does the thyroid gland control metabolism, and what happens when its function is abnormal?
+
+The answer is that the thyroid gland produces thyroxine (T4) and triiodothyronine (T3), which increase the basal metabolic rate (BMR). They stimulate oxygen consumption and heat production (calorigenic effect). They also promote carbohydrate and lipid metabolism, protein synthesis, and growth and development. Hyperthyroidism increases BMR, while hypothyroidism decreases it, producing characteristic symptoms.
+
+Crucial insight: metabolism is the sum of all chemical reactions in the body. Thyroid hormones (T4 and T3) are the primary regulators of metabolic rate, increasing oxygen consumption and heat production.` },
+
+    { q: "Basal metabolic rate and its measurement.",
+      body: `The basal metabolic rate (BMR) is the amount of energy the body consumes at rest, maintaining essential functions such as breathing, circulation, and temperature regulation. Understanding BMR is essential for understanding energy balance and thyroid function.
+
+My Socratic question: why do some people have a high BMR and others a low BMR, and what factors influence it?
+
+The answer is that BMR varies between individuals and is influenced by age, sex, body composition, and thyroid hormone levels. BMR is higher in younger people, in males (due to greater muscle mass), and in individuals with higher muscle mass. Thyroid hormones are the primary regulators of BMR — hypothyroidism decreases BMR, while hyperthyroidism increases it.
+
+BMR is measured under standardised conditions: at rest, in a thermoneutral environment, after an overnight fast, and without recent exercise. Calorimetry measures heat production or oxygen consumption to estimate metabolic rate.
+
+Crucial insight: BMR is the energy expenditure at rest, influenced by age, sex, body composition, and thyroid hormones. Thyroid hormones increase BMR; hypothyroidism decreases it.` },
+
+    { q: "Thyroid hormone synthesis and secretion.",
+      body: `The thyroid gland synthesises and secretes thyroid hormones (T4 and T3) through a complex pathway that requires iodine. Understanding this process is essential for understanding thyroid function and disorders.
+
+My Socratic question: why is iodine essential for thyroid function, and how does the thyroid produce its hormones?
+
+The answer is that the thyroid gland actively transports iodide from the blood into the follicular cells. The iodide is oxidised to iodine, which is incorporated into tyrosine residues on thyroglobulin, forming monoiodotyrosine (MIT) and diiodotyrosine (DIT). Coupling of MIT and DIT produces T3 and T4, which are stored within the thyroid follicles. When needed, T3 and T4 are released into the blood.
+
+T4 (thyroxine) is the major hormone secreted, but T3 (triiodothyronine) is the more active form. Most T3 is produced by conversion of T4 in peripheral tissues (liver, kidney). The conversion of T4 to T3 is regulated by the body's needs.
+
+Crucial insight: thyroid hormone synthesis requires iodine, which is concentrated in the thyroid gland. T4 is the main secreted hormone, but T3 is the more active form, produced by peripheral conversion of T4.` },
+
+    { q: "Regulation of thyroid hormone secretion.",
+      body: `Thyroid hormone secretion is regulated by the hypothalamic-pituitary-thyroid (HPT) axis, a classic negative feedback loop. Understanding this regulation is essential for understanding thyroid disorders.
+
+My Socratic question: why does TSH increase when T4 levels are low, and why does TSH decrease when T4 levels are high?
+
+The answer is negative feedback. The hypothalamus produces thyrotropin-releasing hormone (TRH), which stimulates the anterior pituitary to release thyroid-stimulating hormone (TSH). TSH stimulates the thyroid gland to produce and release T4 and T3. When thyroid hormone levels rise, they inhibit the release of TRH and TSH, reducing further thyroid hormone production. This maintains hormone levels within a narrow range.
+
+Other factors that affect thyroid function include: iodine availability, cold exposure (increases TSH), stress (reduces thyroid function), and autoimmune conditions (Graves' disease stimulates the thyroid; Hashimoto's destroys it).
+
+Crucial insight: thyroid hormone secretion is regulated by the HPT axis through negative feedback — high T4 inhibits TSH and TRH, while low T4 stimulates their release.` },
+
+    { q: "Effects of thyroid hormones on metabolism.",
+      body: `Thyroid hormones have profound effects on metabolism, affecting nearly every tissue in the body. Understanding these effects is essential for understanding the clinical features of thyroid disorders.
+
+My Socratic question: why does a patient with hyperthyroidism lose weight despite eating more, and why does a patient with hypothyroidism gain weight despite eating less?
+
+The answer is that thyroid hormones increase metabolic rate. In hyperthyroidism, increased BMR causes rapid consumption of energy stores, leading to weight loss, increased appetite, and heat intolerance. In hypothyroidism, decreased BMR causes energy to be stored as fat, leading to weight gain, reduced appetite, and cold intolerance.
+
+Other effects of thyroid hormones include: increased oxygen consumption and heat production (calorigenic effect), stimulation of carbohydrate and lipid metabolism, increased protein synthesis (at normal levels), increased heart rate and cardiac output, stimulation of growth and development, especially of the brain and nervous system, and increased bone turnover.
+
+Crucial insight: thyroid hormones increase metabolism — oxygen consumption, heat production, and nutrient utilisation. Hyperthyroidism increases metabolism (weight loss, heat intolerance); hypothyroidism decreases it (weight gain, cold intolerance).` },
+
+    { q: "Hyperthyroidism: causes and effects.",
+      body: `Hyperthyroidism is the condition of excessive thyroid hormone production. It has several causes and characteristic clinical features. Understanding hyperthyroidism is essential for recognising and managing this common condition.
+
+My Socratic question: why does a patient with hyperthyroidism have a rapid heartbeat, weight loss, and protruding eyes?
+
+The answer is that excessive thyroid hormones increase the metabolic rate. The rapid heartbeat (tachycardia) results from increased cardiovascular activity. Weight loss results from increased energy consumption. Protruding eyes (exophthalmos) is a specific feature of Graves' disease, an autoimmune cause of hyperthyroidism.
+
+Graves' disease is the most common cause of hyperthyroidism. It is an autoimmune condition where antibodies stimulate the TSH receptor, causing excessive thyroid hormone production. Other causes include toxic multinodular goitre and thyroiditis. Treatment includes antithyroid drugs, radioactive iodine, or surgery.
+
+Crucial insight: hyperthyroidism is excessive thyroid hormone production, causing increased metabolism, tachycardia, weight loss, and heat intolerance. Graves' disease is the most common cause.` },
+
+    { q: "Hypothyroidism: causes and effects.",
+      body: `Hypothyroidism is the condition of insufficient thyroid hormone production. It has several causes and characteristic clinical features. Understanding hypothyroidism is essential for recognising and managing this common condition.
+
+My Socratic question: why does a patient with hypothyroidism have fatigue, weight gain, and cold intolerance?
+
+The answer is that insufficient thyroid hormones decrease the metabolic rate. Fatigue results from reduced energy production. Weight gain results from decreased energy consumption. Cold intolerance results from reduced heat production.
+
+Hashimoto's thyroiditis is the most common cause of hypothyroidism in iodine-sufficient areas. It is an autoimmune condition where antibodies destroy the thyroid gland. Other causes include iodine deficiency, thyroidectomy, and drug-induced hypothyroidism. Treatment is thyroid hormone replacement (levothyroxine).
+
+Crucial insight: hypothyroidism is insufficient thyroid hormone production, causing decreased metabolism, fatigue, weight gain, and cold intolerance. Hashimoto's thyroiditis is the most common cause.` },
+
+    { q: "Thyroid hormones and growth and development.",
+      body: `Thyroid hormones are essential for normal growth and development, particularly of the brain and nervous system. Understanding this role is essential for understanding the importance of thyroid function in children and the consequences of deficiency.
+
+My Socratic question: why is thyroid hormone deficiency in children so serious, and what are the consequences?
+
+The answer is that thyroid hormones are essential for brain development, especially during the first few years of life. Congenital hypothyroidism (present at birth) causes cretinism, characterised by severe intellectual disability, short stature, and developmental delay. This is why newborn screening for hypothyroidism is standard in many countries — early treatment prevents irreversible brain damage.
+
+In adults, thyroid hormones are less critical for brain function but are still important for cognitive function, mood, and mental alertness. Hypothyroidism in adults causes mental slowing, depression, and memory problems.
+
+Crucial insight: thyroid hormones are essential for brain development in children. Congenital hypothyroidism causes cretinism (intellectual disability, short stature). Newborn screening and early treatment prevent irreversible damage.` },
+
+    { q: "Clinical relevance: diagnosing thyroid disorders.",
+      body: `Thyroid disorders are common and diagnosed through blood tests, imaging, and clinical examination. Understanding the diagnostic approach is essential for identifying and managing thyroid conditions.
+
+My Socratic question: what blood tests are used to diagnose thyroid disorders, and what do they tell you?
+
+The answer is that the primary tests are TSH, free T4, and free T3. TSH is the most sensitive test — it is elevated in hypothyroidism and suppressed in hyperthyroidism. Free T4 and T3 are measured to confirm the diagnosis and assess severity.
+
+Additional tests include thyroid antibodies (to diagnose autoimmune conditions), thyroid ultrasound (to visualise the gland and detect nodules), and radioiodine uptake (to assess thyroid function in hyperthyroidism). Treatment monitoring involves regular TSH measurements to ensure the dose is appropriate.
+
+Crucial insight: thyroid disorders are diagnosed with TSH, free T4, and free T3. TSH is the most sensitive test. Autoimmune conditions are diagnosed with thyroid antibodies.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for metabolism and thyroid hormone.
+
+Metabolism: the sum of all chemical reactions in the body, including catabolism (breakdown) and anabolism (synthesis).
+
+Basal metabolic rate (BMR): energy expenditure at rest. Influenced by age, sex, body composition, and thyroid hormones.
+
+Thyroid hormone synthesis: requires iodine. T4 is the main secreted hormone; T3 is the active form (produced by peripheral conversion).
+
+Regulation: HPT axis — hypothalamus (TRH) → pituitary (TSH) → thyroid (T4/T3). Negative feedback.
+
+Effects: increase metabolism, oxygen consumption, heat production, heart rate, growth and development.
+
+Hyperthyroidism: excessive thyroid hormone — weight loss, tachycardia, heat intolerance, exophthalmos (Graves' disease).
+
+Hypothyroidism: insufficient thyroid hormone — weight gain, fatigue, cold intolerance, mental slowing.
+
+Diagnosis: TSH, free T4, free T3, thyroid antibodies, ultrasound, radioiodine uptake.
+
+Now your final test. A patient presents with weight loss, rapid heartbeat, heat intolerance, and protruding eyes. Blood tests show low TSH and high free T4.
+
+Question one: what is the most likely diagnosis, and what is the cause of the protruding eyes?
+Question two: why is TSH low despite high T4?
+Question three: what treatment options are available for this condition?
+
+Work them through before reading on.
+
+My answers. One: Graves' disease (hyperthyroidism). The protruding eyes (exophthalmos) are caused by autoimmune inflammation of the orbital tissues, which pushes the eyes forward. Two: TSH is low because the high T4 provides negative feedback on the pituitary, suppressing TSH production. Three: treatment options include antithyroid drugs (carbimazole, propylthiouracil), radioactive iodine to destroy the thyroid tissue, or surgical removal (thyroidectomy).` }
+  ],
+  theory: [
+    { q: "What is metabolism and what are its two main components?", a: "Metabolism is the sum of all chemical reactions in the body. It has two main components: catabolism (breakdown of molecules to release energy) and anabolism (synthesis of molecules, requiring energy)." },
+    { q: "What is the basal metabolic rate (BMR)?", a: "BMR is the amount of energy the body consumes at rest, maintaining essential functions. It is influenced by age, sex, body composition, and thyroid hormones." },
+    { q: "What is the role of thyroid hormones in metabolism?", a: "Thyroid hormones (T4 and T3) increase the basal metabolic rate, oxygen consumption, and heat production. They regulate carbohydrate and lipid metabolism and are essential for growth and development." },
+    { q: "What is the hypothalamic-pituitary-thyroid (HPT) axis?", a: "The HPT axis is the regulatory system for thyroid hormones: hypothalamus → TRH → pituitary → TSH → thyroid → T4/T3. Negative feedback regulates hormone levels." },
+    { q: "What is hyperthyroidism and what are its symptoms?", a: "Hyperthyroidism is excessive thyroid hormone production. Symptoms include weight loss, rapid heartbeat, heat intolerance, anxiety, and increased appetite. Graves' disease is the most common cause." },
+    { q: "What is hypothyroidism and what are its symptoms?", a: "Hypothyroidism is insufficient thyroid hormone production. Symptoms include weight gain, fatigue, cold intolerance, depression, and slowed heart rate. Hashimoto's thyroiditis is the most common cause." },
+    { q: "What is Graves' disease?", a: "Graves' disease is an autoimmune condition causing hyperthyroidism. Antibodies stimulate the TSH receptor, causing excessive thyroid hormone production and often exophthalmos (protruding eyes)." },
+    { q: "What is Hashimoto's thyroiditis?", a: "Hashimoto's thyroiditis is an autoimmune condition causing hypothyroidism. Antibodies destroy the thyroid gland, leading to insufficient hormone production." },
+    { q: "What blood tests are used to diagnose thyroid disorders?", a: "TSH (most sensitive), free T4, and free T3. Antibodies to thyroid peroxidase and thyroglobulin are used to diagnose autoimmune conditions." },
+    { q: "Why is newborn screening for hypothyroidism important?", a: "Congenital hypothyroidism causes cretinism — severe intellectual disability, short stature, and developmental delay. Early treatment with thyroid hormone prevents irreversible brain damage." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Metabolism and Thyroid Hormones", note: "How thyroid hormones regulate metabolism.", url: "" },
+    { channel: "Physiology", title: "Hyperthyroidism and Hypothyroidism", note: "Causes, symptoms, and treatments.", url: "" },
+    { channel: "Physiology", title: "Thyroid Hormone Synthesis and Regulation", note: "The HPT axis and feedback loops.", url: "" },
+  ],
+  mcqs: [
+    { q: "Metabolism is the sum of:", o: ["Energy production only", "All chemical reactions in the body", "Digestion only", "Excretion only"], a: 1, w: "Metabolism is the sum of all chemical reactions in the body." },
+    { q: "Catabolism is:", o: ["Synthesis of molecules", "Breakdown of molecules to release energy", "Storage of energy", "Transport of nutrients"], a: 1, w: "Catabolism is the breakdown of molecules to release energy." },
+    { q: "Anabolism is:", o: ["Breakdown of molecules", "Synthesis of molecules requiring energy", "Release of energy", "Transport of nutrients"], a: 1, w: "Anabolism is the synthesis of molecules, requiring energy." },
+    { q: "Basal metabolic rate (BMR) is influenced by:", o: ["Age only", "Sex, age, body composition, and thyroid hormones", "Diet only", "Exercise only"], a: 1, w: "BMR is influenced by age, sex, body composition, and thyroid hormones." },
+    { q: "Thyroid hormones increase:", o: ["Metabolic rate, oxygen consumption, and heat production", "Blood glucose only", "Body weight", "Sleep"], a: 0, w: "Thyroid hormones increase metabolic rate, oxygen consumption, and heat production." },
+    { q: "The HPT axis refers to:", o: ["Heart-pancreas-thyroid", "Hypothalamus-pituitary-thyroid", "Hormone-protein-thyroid", "Hepatic-pancreatic-thyroid"], a: 1, w: "The HPT axis is the Hypothalamus-Pituitary-Thyroid axis." },
+    { q: "TRH is produced by the:", o: ["Thyroid", "Pituitary", "Hypothalamus", "Adrenal"], a: 2, w: "TRH (thyrotropin-releasing hormone) is produced by the hypothalamus." },
+    { q: "TSH is produced by the:", o: ["Thyroid", "Anterior pituitary", "Hypothalamus", "Adrenal"], a: 1, w: "TSH (thyroid-stimulating hormone) is produced by the anterior pituitary." },
+    { q: "Hyperthyroidism causes:", o: ["Weight gain and fatigue", "Weight loss and tachycardia", "Cold intolerance", "Mental slowing"], a: 1, w: "Hyperthyroidism causes weight loss, tachycardia (rapid heartbeat), and heat intolerance." },
+    { q: "Hypothyroidism causes:", o: ["Weight loss and tachycardia", "Weight gain and fatigue", "Heat intolerance", "Exophthalmos"], a: 1, w: "Hypothyroidism causes weight gain, fatigue, and cold intolerance." },
+    { q: "Graves' disease is caused by:", o: ["Autoantibodies stimulating the TSH receptor", "Destruction of the thyroid gland", "Iodine deficiency", "Pituitary tumour"], a: 0, w: "Graves' disease is caused by autoantibodies that stimulate the TSH receptor, causing hyperthyroidism." },
+    { q: "Hashimoto's thyroiditis is caused by:", o: ["Autoantibodies destroying the thyroid gland", "Autoantibodies stimulating the TSH receptor", "Iodine deficiency", "Pituitary tumour"], a: 0, w: "Hashimoto's thyroiditis is caused by autoantibodies that destroy the thyroid gland, causing hypothyroidism." },
+    { q: "Exophthalmos is a feature of:", o: ["Hypothyroidism", "Graves' disease", "Hashimoto's thyroiditis", "Myxoedema"], a: 1, w: "Exophthalmos (protruding eyes) is a feature of Graves' disease." },
+    { q: "The most sensitive test for thyroid function is:", o: ["Free T4", "Free T3", "TSH", "Thyroid ultrasound"], a: 2, w: "TSH is the most sensitive test for thyroid function." },
+    { q: "Hypothyroidism is diagnosed with:", o: ["Low TSH, high T4", "High TSH, low T4", "Low TSH, low T4", "High TSH, high T4"], a: 1, w: "Hypothyroidism is diagnosed with high TSH and low T4." },
+    { q: "Hyperthyroidism is diagnosed with:", o: ["High TSH, low T4", "Low TSH, high T4", "Low TSH, low T4", "High TSH, high T4"], a: 1, w: "Hyperthyroidism is diagnosed with low TSH and high T4." },
+    { q: "Treatment for hypothyroidism is:", o: ["Antithyroid drugs", "Radioactive iodine", "Thyroid hormone replacement (levothyroxine)", "Surgery"], a: 2, w: "Hypothyroidism is treated with thyroid hormone replacement (levothyroxine)." },
+    { q: "Treatment for hyperthyroidism may include:", o: ["Thyroid hormone replacement", "Antithyroid drugs, radioactive iodine, or surgery", "Insulin", "Glucagon"], a: 1, w: "Hyperthyroidism may be treated with antithyroid drugs, radioactive iodine, or surgery." },
+    { q: "Congenital hypothyroidism causes:", o: ["Cretinism (intellectual disability and short stature)", "Graves' disease", "Exophthalmos", "Thyroid cancer"], a: 0, w: "Congenital hypothyroidism causes cretinism — severe intellectual disability and short stature." },
+    { q: "Newborn screening for hypothyroidism is important because:", o: ["All babies have thyroid problems", "Early treatment prevents irreversible brain damage", "It is required by law", "It prevents goitre"], a: 1, w: "Newborn screening is important because early treatment with thyroid hormone prevents irreversible brain damage and developmental delay." },
+  ],
+};
+
+// ==================== PHYSIOLOGY TOPIC 15: REPRODUCTIVE SYSTEM ====================
+const T_PHY_REPRODUCTIVE = {
+  courseId: "phy",
+  topicIndex: 14,
+  title: "Reproductive System (Male and Female)",
+  minutes: 22,
+  note: [
+    { q: "What is the reproductive system and why does it matter?",
+      body: `You have studied the organ systems that maintain homeostasis — the cardiovascular, respiratory, renal, and endocrine systems. Now we turn to the reproductive system, which does not maintain homeostasis but is essential for the survival of the species — reproduction.
+
+My Socratic question: the reproductive system is the only organ system not essential for individual survival. Why is it so important, and how does it work?
+
+The answer is that the reproductive system is essential for the continuation of the species. It produces gametes (sperm and eggs), facilitates fertilisation, and supports the development of offspring. In males, the reproductive system produces sperm and delivers them to the female reproductive tract. In females, the reproductive system produces eggs, provides a site for fertilisation, and supports the developing foetus.
+
+Crucial insight: the reproductive system is essential for the continuation of the species. It produces gametes, facilitates fertilisation, and supports offspring development. Male and female systems have different but complementary functions.` },
+
+    { q: "The male reproductive system: anatomy and function.",
+      body: `The male reproductive system consists of internal and external structures that produce, store, and deliver sperm. Understanding its anatomy is essential for understanding male reproductive function.
+
+My Socratic question: what are the structures of the male reproductive system, and what does each contribute to reproduction?
+
+The answer is that the testes produce sperm and testosterone. The epididymis stores and matures sperm. The vas deferens transports sperm from the epididymis to the urethra. The seminal vesicles and prostate gland produce seminal fluid, which together with sperm forms semen. The penis delivers semen to the female reproductive tract.
+
+Spermatogenesis is the process of sperm production in the testes, which requires testosterone. Testosterone is produced by Leydig cells in the testes and is essential for spermatogenesis, male secondary sex characteristics, and libido.
+
+Crucial insight: the male reproductive system includes the testes (sperm and testosterone production), epididymis (storage and maturation), vas deferens (transport), accessory glands (seminal fluid), and penis (delivery).` },
+
+    { q: "The female reproductive system: anatomy and function.",
+      body: `The female reproductive system consists of internal and external structures that produce eggs, support fertilisation, and sustain pregnancy. Understanding its anatomy is essential for understanding female reproductive function.
+
+My Socratic question: what are the structures of the female reproductive system, and what does each contribute to reproduction?
+
+The answer is that the ovaries produce eggs and hormones (oestrogen and progesterone). The fallopian tubes transport eggs from the ovaries to the uterus and are the site of fertilisation. The uterus supports the developing foetus during pregnancy. The cervix is the lower part of the uterus that opens into the vagina. The vagina receives sperm during intercourse and serves as the birth canal.
+
+Oogenesis is the process of egg production in the ovaries. Oestrogen and progesterone regulate the menstrual cycle, prepare the uterus for pregnancy, and maintain pregnancy.
+
+Crucial insight: the female reproductive system includes the ovaries (eggs and hormones), fallopian tubes (fertilisation), uterus (pregnancy), cervix, and vagina. Oestrogen and progesterone regulate the reproductive cycle.` },
+
+    { q: "Hormonal regulation of reproduction.",
+      body: `Reproduction is regulated by a complex system of hormones involving the hypothalamus, pituitary, and gonads. Understanding this regulation is essential for understanding reproductive cycles and fertility.
+
+My Socratic question: how does the hypothalamus-pituitary-gonadal axis regulate reproduction, and what hormones are involved?
+
+The answer is that the hypothalamus produces gonadotropin-releasing hormone (GnRH), which stimulates the anterior pituitary to release follicle-stimulating hormone (FSH) and luteinising hormone (LH). In males, FSH stimulates spermatogenesis and LH stimulates testosterone production. In females, FSH stimulates ovarian follicle development and LH triggers ovulation and stimulates oestrogen and progesterone production.
+
+Negative feedback regulates hormone levels. High testosterone inhibits GnRH, FSH, and LH in males. High oestrogen and progesterone inhibit GnRH, FSH, and LH in females, except at mid-cycle when oestrogen triggers a positive feedback surge of LH, causing ovulation.
+
+Crucial insight: reproduction is regulated by the hypothalamic-pituitary-gonadal axis: GnRH → FSH/LH → gonadal hormones (testosterone, oestrogen, progesterone). Negative and positive feedback regulate hormone levels.` },
+
+    { q: "The menstrual cycle.",
+      body: `The menstrual cycle is the monthly cycle of changes in the female reproductive system, preparing the uterus for pregnancy. Understanding the menstrual cycle is essential for understanding female reproductive function and fertility.
+
+My Socratic question: why does the menstrual cycle occur, and what are its phases?
+
+The answer is that the menstrual cycle prepares the uterus for pregnancy each month. The cycle has three phases. The follicular phase (days 1-14): FSH stimulates ovarian follicle development, oestrogen rises, and the endometrium thickens. Ovulation (day 14): LH surge triggers release of an egg from the ovary. The luteal phase (days 14-28): the corpus luteum produces progesterone, maintaining the endometrium. If fertilisation does not occur, progesterone drops, the endometrium sheds (menstruation), and the cycle begins again.
+
+The average cycle is 28 days, with ovulation on day 14. Menstruation marks the beginning of the cycle.
+
+Crucial insight: the menstrual cycle has three phases — follicular (follicle development, oestrogen), ovulation (LH surge, egg release), and luteal (progesterone, endometrial preparation). Menstruation occurs if fertilisation does not happen.` },
+
+    { q: "Fertilisation and implantation.",
+      body: `Fertilisation is the union of sperm and egg, forming a zygote. Implantation is the attachment of the zygote to the uterine wall. Understanding these processes is essential for understanding early pregnancy.
+
+My Socratic question: how does a sperm reach and fertilise an egg, and what happens after fertilisation?
+
+The answer is that sperm are deposited in the vagina during intercourse. They travel through the cervix and uterus to the fallopian tubes, where fertilisation typically occurs. A single sperm penetrates the egg, forming a zygote. The zygote undergoes cell division as it travels down the fallopian tube to the uterus. About 6-7 days after fertilisation, the embryo implants into the endometrium.
+
+Implantation triggers the secretion of human chorionic gonadotropin (hCG), which maintains the corpus luteum and prevents menstruation, ensuring the pregnancy continues.
+
+Crucial insight: fertilisation occurs in the fallopian tube when a sperm fertilises an egg, forming a zygote. The zygote implants in the uterus about 6-7 days later. hCG maintains the pregnancy.` },
+
+    { q: "Pregnancy and parturition.",
+      body: `Pregnancy is the period of foetal development within the uterus. Parturition is the process of childbirth. Understanding these processes is essential for understanding reproductive health.
+
+My Socratic question: how does the foetus develop, what maintains the pregnancy, and what triggers labour?
+
+The answer is that pregnancy lasts approximately 40 weeks from the last menstrual period. The embryo develops into a foetus, supported by the placenta, which provides oxygen and nutrients and removes waste. Hormones maintain the pregnancy — progesterone and oestrogen from the corpus luteum initially, then from the placenta.
+
+Labour is triggered by a combination of factors: increased oestrogen, prostaglandins, and oxytocin. Oxytocin causes uterine contractions, which push the baby through the birth canal. Positive feedback amplifies the contractions until delivery.
+
+Crucial insight: pregnancy lasts about 40 weeks. The placenta supports foetal development. Labour is triggered by hormonal changes and positive feedback involving oxytocin.` },
+
+    { q: "Clinical relevance: reproductive disorders.",
+      body: `Reproductive disorders are common and can affect fertility, health, and quality of life. Understanding reproductive physiology is essential for diagnosing and managing these conditions.
+
+My Socratic question: what are common reproductive disorders, and how are they diagnosed and treated?
+
+The answer is that reproductive disorders include infertility (failure to conceive), polycystic ovary syndrome (PCOS), endometriosis, erectile dysfunction, and sexually transmitted infections. Infertility can be due to problems in either partner — low sperm count, blocked fallopian tubes, or ovulatory disorders. PCOS is characterised by high androgens, irregular periods, and polycystic ovaries. Endometriosis is the growth of endometrial tissue outside the uterus.
+
+Diagnosis involves history, examination, hormone measurements (FSH, LH, oestrogen, testosterone, progesterone), imaging (ultrasound), and specialised tests (semen analysis, hysterosalpingogram). Treatment includes medication, surgery, and assisted reproductive technologies (IVF).
+
+Crucial insight: reproductive disorders include infertility, PCOS, endometriosis, and erectile dysfunction. Diagnosis involves hormone tests, imaging, and specialised investigations.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the reproductive system.
+
+Male reproductive system: testes (sperm, testosterone), epididymis (storage, maturation), vas deferens (transport), accessory glands (seminal fluid), penis (delivery).
+
+Female reproductive system: ovaries (eggs, oestrogen, progesterone), fallopian tubes (fertilisation), uterus (pregnancy), cervix, vagina.
+
+Hormonal regulation: HPG axis — GnRH → FSH/LH → gonadal hormones (testosterone, oestrogen, progesterone). Negative feedback; positive feedback (LH surge).
+
+Menstrual cycle: follicular phase (oestrogen, endometrial growth), ovulation (LH surge), luteal phase (progesterone, endometrial preparation), menstruation (shedding).
+
+Fertilisation: in fallopian tube; zygote implants in uterus about 6-7 days later; hCG maintains pregnancy.
+
+Pregnancy: 40 weeks; placenta supports foetal development; labour triggered by oxytocin.
+
+Clinical relevance: infertility, PCOS, endometriosis, erectile dysfunction.
+
+Now your final test. A 28-year-old woman presents with irregular periods, weight gain, and facial hair growth. Ultrasound shows polycystic ovaries.
+
+Question one: what is the most likely diagnosis, and what hormonal abnormality is associated with it?
+Question two: what is the relationship between insulin resistance and this condition?
+Question three: what are the treatment options for this condition?
+
+Work them through before reading on.
+
+My answers. One: polycystic ovary syndrome (PCOS) is the most likely diagnosis. It is associated with high androgens (testosterone) and elevated LH, causing irregular ovulation. Two: insulin resistance is common in PCOS, leading to high insulin levels, which stimulate the ovaries to produce more androgens. This worsens the symptoms. Three: treatment options include lifestyle changes (weight loss, exercise), oral contraceptives (to regulate cycles and reduce androgens), metformin (to improve insulin sensitivity), and fertility medications (clomiphene) if pregnancy is desired.` }
+  ],
+  theory: [
+    { q: "What is the function of the male reproductive system?", a: "The male reproductive system produces sperm, stores and transports them, and delivers them to the female reproductive tract for fertilisation. The testes also produce testosterone." },
+    { q: "What is the function of the female reproductive system?", a: "The female reproductive system produces eggs, provides a site for fertilisation, supports the developing foetus during pregnancy, and gives birth. The ovaries also produce oestrogen and progesterone." },
+    { q: "What is the hypothalamic-pituitary-gonadal (HPG) axis?", a: "The HPG axis is the regulatory system for reproduction: hypothalamus → GnRH → pituitary → FSH/LH → gonads → sex hormones (testosterone, oestrogen, progesterone). Negative feedback regulates hormone levels." },
+    { q: "What are the three phases of the menstrual cycle?", a: "Follicular phase (days 1-14): FSH stimulates follicle development, oestrogen rises. Ovulation (day 14): LH surge triggers egg release. Luteal phase (days 14-28): corpus luteum produces progesterone, preparing the uterus." },
+    { q: "When does fertilisation occur, and where?", a: "Fertilisation occurs when a sperm penetrates an egg, forming a zygote. This typically occurs in the fallopian tube within 24 hours of ovulation." },
+    { q: "What is the role of hCG in pregnancy?", a: "hCG (human chorionic gonadotropin) is produced by the embryo after implantation. It maintains the corpus luteum, which produces progesterone and oestrogen, preventing menstruation and supporting the pregnancy." },
+    { q: "What is PCOS and what are its features?", a: "Polycystic ovary syndrome (PCOS) is a condition of high androgens and irregular ovulation. Features include irregular periods, weight gain, facial hair growth, acne, and polycystic ovaries on ultrasound." },
+    { q: "What are the common causes of infertility?", a: "Infertility can be due to problems in either partner — low sperm count, poor sperm motility, blocked fallopian tubes, ovulatory disorders, endometriosis, or advanced age." },
+    { q: "What is the role of testosterone in males?", a: "Testosterone is essential for spermatogenesis, development of male secondary sex characteristics (deep voice, facial hair, muscle mass), libido, and erectile function." },
+    { q: "What are the roles of oestrogen and progesterone in females?", a: "Oestrogen promotes the development of female secondary sex characteristics, regulates the menstrual cycle, and maintains the endometrium. Progesterone prepares the uterus for pregnancy and maintains early pregnancy." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Male Reproductive System", note: "Anatomy and function of the male reproductive system.", url: "" },
+    { channel: "Physiology", title: "Female Reproductive System and Menstrual Cycle", note: "Anatomy, hormonal regulation, and the menstrual cycle.", url: "" },
+    { channel: "Physiology", title: "Fertilisation, Pregnancy, and Labour", note: "From fertilisation to childbirth.", url: "" },
+  ],
+  mcqs: [
+    { q: "The male reproductive system produces:", o: ["Eggs and oestrogen", "Sperm and testosterone", "Sperm and progesterone", "Eggs and testosterone"], a: 1, w: "The male reproductive system produces sperm and testosterone." },
+    { q: "The female reproductive system produces:", o: ["Sperm and testosterone", "Eggs, oestrogen, and progesterone", "Eggs and testosterone", "Sperm and progesterone"], a: 1, w: "The female reproductive system produces eggs, oestrogen, and progesterone." },
+    { q: "Spermatogenesis occurs in the:", o: ["Epididymis", "Testes", "Vas deferens", "Prostate"], a: 1, w: "Spermatogenesis (sperm production) occurs in the testes." },
+    { q: "The site of sperm storage and maturation is the:", o: ["Testes", "Vas deferens", "Epididymis", "Prostate"], a: 2, w: "Sperm are stored and mature in the epididymis." },
+    { q: "The accessory glands that produce seminal fluid are the:", o: ["Testes and epididymis", "Seminal vesicles, prostate, and bulbourethral glands", "Vas deferens and urethra", "Epididymis and vas deferens"], a: 1, w: "The seminal vesicles, prostate, and bulbourethral glands produce seminal fluid." },
+    { q: "Oogenesis occurs in the:", o: ["Uterus", "Fallopian tubes", "Ovaries", "Vagina"], a: 2, w: "Oogenesis (egg production) occurs in the ovaries." },
+    { q: "The site of fertilisation is the:", o: ["Uterus", "Fallopian tube", "Ovary", "Vagina"], a: 1, w: "Fertilisation typically occurs in the fallopian tube." },
+    { q: "The organ where the foetus develops is the:", o: ["Fallopian tube", "Ovary", "Uterus", "Vagina"], a: 2, w: "The uterus supports the developing foetus during pregnancy." },
+    { q: "GnRH is produced by the:", o: ["Pituitary", "Hypothalamus", "Ovaries", "Testes"], a: 1, w: "GnRH (gonadotropin-releasing hormone) is produced by the hypothalamus." },
+    { q: "FSH and LH are produced by the:", o: ["Hypothalamus", "Anterior pituitary", "Ovaries", "Testes"], a: 1, w: "FSH and LH are produced by the anterior pituitary." },
+    { q: "Ovulation is triggered by a surge of:", o: ["Oestrogen", "Progesterone", "LH", "FSH"], a: 2, w: "Ovulation is triggered by an LH surge." },
+    { q: "The follicular phase of the menstrual cycle is characterised by:", o: ["High progesterone", "High oestrogen, follicle development", "Menstruation", "Corpus luteum formation"], a: 1, w: "The follicular phase is characterised by rising oestrogen and follicle development." },
+    { q: "The luteal phase is characterised by:", o: ["High oestrogen", "High progesterone from the corpus luteum", "Ovulation", "Menstruation"], a: 1, w: "The luteal phase is characterised by high progesterone from the corpus luteum." },
+    { q: "Menstruation occurs when:", o: ["Oestrogen levels rise", "Progesterone levels drop", "LH surges", "FSH rises"], a: 1, w: "Menstruation occurs when progesterone levels drop, causing the endometrium to shed." },
+    { q: "hCG is produced by:", o: ["The pituitary", "The ovary", "The embryo/placenta", "The hypothalamus"], a: 2, w: "hCG is produced by the embryo after implantation and later by the placenta." },
+    { q: "Pregnancy lasts approximately:", o: ["28 weeks", "32 weeks", "40 weeks", "42 weeks"], a: 2, w: "Pregnancy lasts approximately 40 weeks from the last menstrual period." },
+    { q: "The hormone that stimulates uterine contractions during labour is:", o: ["Oestrogen", "Progesterone", "Oxytocin", "hCG"], a: 2, w: "Oxytocin stimulates uterine contractions during labour." },
+    { q: "PCOS is characterised by:", o: ["Low androgens and regular periods", "High androgens, irregular periods, and polycystic ovaries", "High oestrogen and regular periods", "Low progesterone and regular periods"], a: 1, w: "PCOS is characterised by high androgens, irregular periods, and polycystic ovaries." },
+    { q: "Infertility is defined as:", o: ["Failure to conceive after 6 months of trying", "Failure to conceive after 12 months of trying", "Failure to conceive after 3 months of trying", "Failure to conceive after 24 months of trying"], a: 1, w: "Infertility is generally defined as failure to conceive after 12 months of regular unprotected intercourse." },
+    { q: "Treatment for infertility may include:", o: ["Lifestyle changes only", "Fertility medications, surgery, or IVF", "Antibiotics only", "Hormone replacement only"], a: 1, w: "Treatment for infertility may include fertility medications, surgery, or assisted reproductive technologies such as IVF." },
+  ],
+};
+
+// ==================== PHYSIOLOGY TOPIC 16: INTEGUMENTARY SYSTEM ====================
+const T_PHY_INTEGUMENTARY = {
+  courseId: "phy",
+  topicIndex: 15,
+  title: "Integumentary System",
+  minutes: 20,
+  note: [
+    { q: "What is the integumentary system and why does it matter?",
+      body: `You have studied the organ systems that regulate the internal environment. Now we turn to the organ system that separates you from the outside world and protects you from it: the integumentary system — the skin and its appendages.
+
+My Socratic question: your skin is your largest organ, yet it is often overlooked. What does the skin do that makes it essential for survival?
+
+The answer is that the skin does far more than cover the body. It provides protection against physical injury, pathogens, and UV radiation. It prevents water loss and regulates body temperature. It synthesises vitamin D, detects sensory stimuli, and stores fat. Without skin, you could not survive outside the womb.
+
+Crucial insight: the integumentary system (skin, hair, nails, glands) is the body's first line of defence, protecting against injury, infection, and water loss, while also regulating temperature and synthesising vitamin D.` },
+
+    { q: "The structure of skin: epidermis, dermis, and hypodermis.",
+      body: `The skin has three layers, each with distinct structure and function. Understanding these layers is essential for understanding skin function and disorders.
+
+My Socratic question: why does a cut that reaches the dermis bleed, but a superficial scratch that only affects the epidermis does not?
+
+The answer is that the epidermis is avascular — it has no blood vessels. The dermis contains blood vessels, nerves, and hair follicles. A superficial scratch that only affects the epidermis does not bleed. A deeper cut that reaches the dermis bleeds because it damages the blood vessels in the dermis.
+
+The epidermis is the outermost layer, composed of stratified squamous epithelium. It is avascular and is constantly renewed from the basal layer. The dermis is the middle layer, composed of dense irregular connective tissue. It contains blood vessels, nerves, hair follicles, sweat glands, and sebaceous glands. The hypodermis (subcutaneous layer) is the deepest layer, composed of adipose tissue and loose connective tissue. It insulates the body and anchors the skin to underlying structures.
+
+Crucial insight: the skin has three layers — epidermis (avascular, stratified squamous epithelium), dermis (vascular, dense irregular connective tissue), and hypodermis (adipose tissue, insulation, attachment).` },
+
+    { q: "The epidermis: the waterproof barrier.",
+      body: `The epidermis is the outermost layer of the skin, forming a waterproof barrier that protects the body from the environment. Understanding the epidermis is essential for understanding skin function and disorders.
+
+My Socratic question: why is the epidermis waterproof, and why does it constantly shed cells?
+
+The answer is that the epidermis is composed of stratified squamous epithelium with multiple layers. The deepest layer (stratum basale) contains dividing cells that produce new keratinocytes. As cells move toward the surface, they fill with keratin and die, forming the tough, waterproof stratum corneum. This layer is constantly shed and replaced, renewing the skin about every 28 days.
+
+Keratin is a tough, waterproof protein that gives skin its protective properties. Melanocytes in the epidermis produce melanin, which protects against UV radiation. Langerhans cells are immune cells that defend against pathogens.
+
+Crucial insight: the epidermis is a stratified squamous epithelium that renews itself from the basal layer. Keratin waterproofs the skin, melanin protects against UV radiation, and Langerhans cells defend against pathogens.` },
+
+    { q: "The dermis: strength and sensation.",
+      body: `The dermis is the middle layer of the skin, providing strength, elasticity, and sensation. Understanding the dermis is essential for understanding skin strength, wound healing, and ageing.
+
+My Socratic question: why does the skin have wrinkles in old age, and why do wounds heal more slowly in the elderly?
+
+The answer is that the dermis contains collagen (for strength) and elastin (for elasticity). With age, collagen production decreases and elastin fibres break down, leading to wrinkles and sagging. Wound healing slows because the regenerative capacity of dermal cells decreases and blood supply diminishes.
+
+The dermis contains blood vessels that supply the avascular epidermis, nerves that detect touch, pressure, temperature, and pain, hair follicles, sweat glands (sudoriferous glands) for temperature regulation, and sebaceous glands (oil glands) for lubrication.
+
+Crucial insight: the dermis contains collagen (strength) and elastin (elasticity). Ageing reduces collagen and elastin, causing wrinkles and slower healing. The dermis also contains blood vessels, nerves, and glands.` },
+
+    { q: "Skin appendages: hair, nails, and glands.",
+      body: `The skin has appendages — hair, nails, and glands — that serve important functions. Understanding these structures is essential for understanding skin function and disorders.
+
+My Socratic question: why do you have hair, and why do nails grow continuously?
+
+The answer is that hair provides insulation, protection, and sensory function. Hair grows from hair follicles in the dermis. The arrector pili muscles contract to make hair stand up (goosebumps) in response to cold or fear. Nails protect the tips of fingers and toes, and grow continuously from the nail matrix. Glands include sweat glands (sudoriferous) for temperature regulation and sebaceous glands (oil) for lubrication.
+
+Sweat glands are of two types: eccrine glands (widespread, secrete watery sweat for cooling) and apocrine glands (found in armpits and groin, secrete thicker sweat that produces body odour). Sebaceous glands secrete sebum, which lubricates the skin and hair.
+
+Crucial insight: skin appendages include hair (insulation, protection), nails (protection), and glands (sweat for cooling, sebum for lubrication).` },
+
+    { q: "Functions of the skin.",
+      body: `The skin performs many essential functions. Understanding these functions is essential for understanding why the skin is so important for health.
+
+My Socratic question: how does the skin protect the body, and how does it contribute to homeostasis?
+
+The answer is that the skin protects against physical injury, pathogens, and UV radiation. It prevents water loss and regulates body temperature through sweating and vasodilation/vasoconstriction. It synthesises vitamin D (with sunlight), detects sensory stimuli (touch, pressure, temperature, pain), stores fat in the hypodermis, and excretes waste through sweat.
+
+The skin's role in temperature regulation is particularly important. In response to heat, blood vessels in the dermis dilate (vasodilation) to release heat, and sweat glands produce sweat, which cools the body through evaporation. In response to cold, blood vessels constrict (vasoconstriction) to conserve heat.
+
+Crucial insight: the skin protects, prevents water loss, regulates temperature, synthesises vitamin D, detects sensations, stores fat, and excretes waste. Its role in thermoregulation is essential for maintaining homeostasis.` },
+
+    { q: "Wound healing.",
+      body: `The skin has a remarkable ability to heal after injury. Understanding wound healing is essential for understanding how the body repairs itself and why some wounds heal poorly.
+
+My Socratic question: how does the skin heal after a cut, and why do some wounds leave scars?
+
+The answer is that wound healing occurs in three overlapping phases. The inflammatory phase (immediate): blood clot forms, inflammation removes debris. The proliferative phase (days to weeks): new tissue forms, epithelial cells migrate to cover the wound. The remodelling phase (weeks to months): collagen is reorganised, strengthening the wound. Scars result from excess collagen deposition during healing.
+
+Factors that impair wound healing include infection, poor blood supply, diabetes, malnutrition, and smoking. Understanding these factors is essential for managing wounds.
+
+Crucial insight: wound healing has three phases — inflammation, proliferation, and remodelling. Scars result from excess collagen deposition. Healing is impaired by infection, poor blood supply, diabetes, malnutrition, and smoking.` },
+
+    { q: "Clinical relevance: skin disorders.",
+      body: `The skin is affected by many disorders, ranging from minor irritations to life-threatening conditions. Understanding skin physiology is essential for diagnosing and managing these conditions.
+
+My Socratic question: what are common skin disorders, and how are they diagnosed and treated?
+
+The answer is that common skin disorders include acne (inflammation of sebaceous glands), eczema (atopic dermatitis — itchy, inflamed skin), psoriasis (autoimmune skin condition with scaly plaques), skin cancers (basal cell carcinoma, squamous cell carcinoma, melanoma), burns, and infections (fungal, bacterial, viral).
+
+Diagnosis involves clinical examination, dermatoscopy, and biopsy. Treatment depends on the condition — medications (topical or systemic), lifestyle changes, and surgery for skin cancers.
+
+Crucial insight: common skin disorders include acne, eczema, psoriasis, skin cancers, burns, and infections. Diagnosis involves clinical examination and biopsy. Treatment depends on the condition.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the integumentary system.
+
+Layers: epidermis (avascular, stratified squamous, keratinised), dermis (vascular, collagen, elastin, contains glands and nerves), hypodermis (adipose, insulation, attachment).
+
+Appendages: hair (insulation, protection), nails (protection), sweat glands (temperature regulation), sebaceous glands (lubrication).
+
+Functions: protection, water loss prevention, temperature regulation, vitamin D synthesis, sensation, fat storage, excretion.
+
+Wound healing: three phases — inflammation, proliferation, remodelling. Scars from excess collagen.
+
+Clinical relevance: acne, eczema, psoriasis, skin cancers, burns, infections.
+
+Now your final test. A patient presents with a skin lesion that has changed in size, colour, and shape. The lesion is irregular, asymmetric, and has a dark colour. The patient has a history of sun exposure.
+
+Question one: what is the most concerning diagnosis, and what features are suspicious?
+Question two: what is the ABCDE rule for skin cancer detection?
+Question three: how would the diagnosis be confirmed?
+
+Work them through before reading on.
+
+My answers. One: melanoma is the most concerning diagnosis. Features suspicious of melanoma are identified by the ABCDE rule: Asymmetry, Border irregularity, Colour variation, Diameter >6mm, and Evolving (changing). Two: ABCDE rule: A = Asymmetry (one half unlike the other), B = Border irregularity (irregular edges), C = Colour variation (multiple colours), D = Diameter (>6mm), E = Evolving (changing in size, shape, or colour). Three: diagnosis is confirmed by biopsy of the lesion, followed by histopathological examination.` }
+  ],
+  theory: [
+    { q: "What are the three layers of the skin and their functions?", a: "Epidermis (outer layer, stratified squamous epithelium, waterproof, avascular, renews from basal layer), dermis (middle layer, dense irregular connective tissue, vascular, contains glands and nerves, provides strength and elasticity), hypodermis (subcutaneous, adipose tissue, insulation, anchors skin)." },
+    { q: "Why is the epidermis avascular, and how is it nourished?", a: "The epidermis is avascular because it is a stratified squamous epithelium with no blood vessels. It is nourished by diffusion of nutrients from the dermis below." },
+    { q: "What is the role of keratin in the epidermis?", a: "Keratin is a tough, waterproof protein produced by keratinocytes. It gives the epidermis its protective, waterproof properties and prevents water loss and pathogen entry." },
+    { q: "What are the functions of the dermis?", a: "The dermis provides strength (collagen) and elasticity (elastin) to the skin. It contains blood vessels, nerves, hair follicles, sweat glands, and sebaceous glands." },
+    { q: "What are the functions of the skin?", a: "Protection, prevention of water loss, temperature regulation, vitamin D synthesis, sensation, fat storage, and excretion." },
+    { q: "What is the role of sweat glands in temperature regulation?", a: "Sweat glands produce sweat, which evaporates from the skin surface, cooling the body. This is a key mechanism of thermoregulation." },
+    { q: "What are the three phases of wound healing?", a: "Inflammatory phase (immediate, clot formation, inflammation), proliferative phase (days to weeks, new tissue formation), and remodelling phase (weeks to months, collagen reorganisation, scar formation)." },
+    { q: "What are the ABCDE features of melanoma?", a: "A = Asymmetry, B = Border irregularity, C = Colour variation, D = Diameter >6mm, E = Evolving (changing)." },
+    { q: "What are common skin disorders?", a: "Acne (sebaceous gland inflammation), eczema (atopic dermatitis), psoriasis (autoimmune scaly plaques), skin cancers (basal cell carcinoma, squamous cell carcinoma, melanoma), burns, and infections." },
+    { q: "How is skin cancer diagnosed?", a: "Skin cancer is diagnosed by clinical examination, dermatoscopy, and confirmed by biopsy and histopathological examination." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "The Integumentary System", note: "Skin structure and functions.", url: "" },
+    { channel: "Physiology", title: "Wound Healing and Skin Repair", note: "The phases of wound healing.", url: "" },
+    { channel: "Physiology", title: "Skin Cancer and the ABCDE Rule", note: "Melanoma detection and diagnosis.", url: "" },
+  ],
+  mcqs: [
+    { q: "The integumentary system consists of the skin and its:", o: ["Muscles", "Bones", "Appendages (hair, nails, glands)", "Nerves"], a: 2, w: "The integumentary system consists of the skin and its appendages — hair, nails, and glands." },
+    { q: "The outermost layer of the skin is the:", o: ["Dermis", "Hypodermis", "Epidermis", "Subcutaneous layer"], a: 2, w: "The epidermis is the outermost layer of the skin." },
+    { q: "The epidermis is:", o: ["Vascular", "Avascular (no blood vessels)", "Made of connective tissue", "Composed of adipose tissue"], a: 1, w: "The epidermis is avascular — it has no blood vessels and is nourished by diffusion from the dermis." },
+    { q: "The protein that waterproofs the skin is:", o: ["Collagen", "Elastin", "Keratin", "Melanin"], a: 2, w: "Keratin is the tough, waterproof protein that gives the epidermis its protective properties." },
+    { q: "The middle layer of the skin is the:", o: ["Epidermis", "Dermis", "Hypodermis", "Stratum corneum"], a: 1, w: "The dermis is the middle layer of the skin." },
+    { q: "The dermis contains:", o: ["Blood vessels, nerves, and glands", "Only fat", "Only epithelial cells", "Keratin only"], a: 0, w: "The dermis contains blood vessels, nerves, hair follicles, sweat glands, and sebaceous glands." },
+    { q: "The deepest layer of the skin is the:", o: ["Epidermis", "Dermis", "Hypodermis (subcutaneous layer)", "Stratum basale"], a: 2, w: "The hypodermis (subcutaneous layer) is the deepest layer of the skin." },
+    { q: "The hypodermis is composed mainly of:", o: ["Dense connective tissue", "Adipose (fat) tissue", "Squamous epithelium", "Nervous tissue"], a: 1, w: "The hypodermis is composed mainly of adipose (fat) tissue, providing insulation and anchoring." },
+    { q: "Sweat glands are also called:", o: ["Sebaceous glands", "Sudoriferous glands", "Apocrine glands only", "Eccrine glands only"], a: 1, w: "Sweat glands are sudoriferous glands. They are of two types: eccrine (watery sweat) and apocrine (thicker sweat)." },
+    { q: "Sebaceous glands secrete:", o: ["Sweat", "Sebum (oil)", "Melanin", "Keratin"], a: 1, w: "Sebaceous glands secrete sebum (oil), which lubricates the skin and hair." },
+    { q: "One function of the skin is:", o: ["Vitamin D synthesis", "Insulin production", "Bile production", "Red blood cell production"], a: 0, w: "The skin synthesises vitamin D when exposed to sunlight." },
+    { q: "In response to heat, blood vessels in the dermis:", o: ["Constrict (vasoconstriction)", "Dilate (vasodilation)", "Remain unchanged", "Close entirely"], a: 1, w: "In response to heat, blood vessels dilate (vasodilation) to release heat." },
+    { q: "In response to cold, blood vessels in the dermis:", o: ["Dilate (vasodilation)", "Constrict (vasoconstriction)", "Remain unchanged", "Open entirely"], a: 1, w: "In response to cold, blood vessels constrict (vasoconstriction) to conserve heat." },
+    { q: "The three phases of wound healing are:", o: ["Inflammatory, proliferative, remodelling", "Inflammatory, healing, scarring", "Proliferative, remodelling, healing", "Inflammatory, proliferative, healing"], a: 0, w: "The three phases of wound healing are inflammatory, proliferative, and remodelling." },
+    { q: "Scars result from:", o: ["Loss of skin", "Excess collagen deposition during healing", "Infection", "Poor blood supply"], a: 1, w: "Scars result from excess collagen deposition during the remodelling phase of wound healing." },
+    { q: "The ABCDE rule is used to assess:", o: ["Acne", "Eczema", "Melanoma (skin cancer)", "Psoriasis"], a: 2, w: "The ABCDE rule is used to assess suspicious skin lesions for melanoma." },
+    { q: "In the ABCDE rule, 'A' stands for:", o: ["Age", "Asymmetry", "Appearance", "Area"], a: 1, w: "A stands for Asymmetry — one half of the lesion does not match the other." },
+    { q: "In the ABCDE rule, 'E' stands for:", o: ["Enlarged", "Evolution (changing)", "Erythema", "Elevated"], a: 1, w: "E stands for Evolution — the lesion is changing in size, shape, or colour." },
+    { q: "The most common type of skin cancer is:", o: ["Melanoma", "Basal cell carcinoma", "Squamous cell carcinoma", "Merkel cell carcinoma"], a: 1, w: "Basal cell carcinoma is the most common type of skin cancer, but melanoma is the most dangerous." },
+    { q: "The most dangerous type of skin cancer is:", o: ["Basal cell carcinoma", "Squamous cell carcinoma", "Melanoma", "Actinic keratosis"], a: 2, w: "Melanoma is the most dangerous type of skin cancer because of its high risk of metastasis." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -9742,6 +10576,11 @@ const CONTENT = {
   "phy:8": T_PHY_MUSCULAR,
   "phy:9": T_PHY_NERVOUS1,
   "phy:10": T_PHY_NERVOUS2,
+  "phy:11": T_PHY_SENSORY,
+  "phy:12": T_PHY_ENDOCRINE,
+  "phy:13": T_PHY_METABOLISM,
+  "phy:14": T_PHY_REPRODUCTIVE,
+  "phy:15": T_PHY_INTEGUMENTARY,
   "lab:0": T_LAB_INSTRUMENTATION,
   "lab:1": T_MLS_SAFETY,
   "lab:2": T_LAB_ELECTRICAL,
