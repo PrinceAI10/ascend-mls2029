@@ -1872,7 +1872,6 @@ Crucial insight: drug discovery is enzyme inhibition at scale. The same kinetics
 };
 
 // ==================== BIOCHEMISTRY TOPIC 3: GLYCOLYSIS ====================
-// ==================== BIOCHEMISTRY TOPIC 3: GLYCOLYSIS ====================
 const T_BCH_GLYCOLYSIS = {
   courseId: "bch",
   topicIndex: 3,
@@ -2037,6 +2036,308 @@ Crucial insight: glycolysis is the universal pathway of energy metabolism. It ru
     { q: "Glycolysis is considered the foundation of metabolism because:", o: ["It produces the most ATP", "It only works in the liver", "It connects to all other metabolic pathways and runs in every cell", "It requires oxygen"], a: 2, w: "Glycolysis connects to all pathways and runs in every cell." },
     { q: "The NADH produced in glycolysis is used in:", o: ["The TCA cycle", "The electron transport chain (with oxygen present)", "Fermentation only", "Gluconeogenesis"], a: 1, w: "NADH carries electrons to the electron transport chain when oxygen is present." },
     { q: "Without glycolysis, red blood cells would:", o: ["Produce more ATP", "Use oxygen", "Be unable to survive", "Divide rapidly"], a: 2, w: "Red blood cells depend entirely on glycolysis and would die without it." },
+  ],
+};
+
+// ==================== BIOCHEMISTRY TOPIC 4: FRUCTOSE AND GALACTOSE METABOLISM ====================
+const T_BCH_FRUCTOSE = {
+  courseId: "bch",
+  topicIndex: 4,
+  title: "Fructose and Galactose Metabolism",
+  minutes: 20,
+  note: [
+    { q: "Why does the body need to metabolize fructose and galactose separately from glucose?",
+      body: `You have learned glycolysis — the universal pathway for glucose breakdown. But glucose is not the only sugar your body uses. Fructose from fruits and honey, and galactose from milk, must also be processed and converted into energy.
+
+My Socratic question: if glycolysis only handles glucose, how does the body deal with other sugars that are structurally different but still need to be broken down for energy?
+
+The answer is that fructose and galactose are converted into intermediates of glycolysis. They do not enter glycolysis directly; instead, they are transformed into molecules that can feed into the pathway at specific points. This allows the body to extract energy from all dietary sugars, not just glucose.
+
+Crucial insight: the metabolism of fructose and galactose is an adaptation that allows the body to use a variety of sugars. Both pathways converge on glycolysis, demonstrating the central role of glucose metabolism.` },
+
+    { q: "Fructose: the sugar from fruits, honey, and processed foods.",
+      body: `Fructose is a simple sugar found naturally in fruits and honey, and it is also added to many processed foods as high-fructose corn syrup. It has the same chemical formula as glucose (C6H12O6) but a different structure.
+
+My Socratic question: fructose and glucose have the same molecular formula but different structures. Why does this difference matter for metabolism?
+
+The answer is that the structural difference means fructose is metabolized by a different pathway. Unlike glucose, which enters glycolysis directly, fructose must first be converted to fructose-1-phosphate, which is then split into two three-carbon molecules that enter glycolysis at the level of glyceraldehyde-3-phosphate.
+
+Crucial insight: fructose metabolism bypasses the main regulatory step of glycolysis (PFK-1). This means fructose can be metabolized more rapidly than glucose and can lead to increased fat production when consumed in excess.` },
+
+    { q: "The fructose pathway: step by step.",
+      body: `Fructose metabolism begins in the liver, where most fructose is processed. The pathway has three main steps.
+
+Step 1: Fructose is phosphorylated by fructokinase to form fructose-1-phosphate. This step uses ATP and traps fructose inside the cell. Step 2: Fructose-1-phosphate is cleaved by aldolase B into two three-carbon molecules: dihydroxyacetone phosphate (DHAP) and glyceraldehyde. Step 3: Glyceraldehyde is phosphorylated by triose kinase to form glyceraldehyde-3-phosphate (G3P). Both DHAP and G3P then enter glycolysis.
+
+Crucial insight: the conversion of fructose to G3P bypasses PFK-1, the main regulatory enzyme of glycolysis. This means fructose is metabolized without the normal energy-sensing controls, which can lead to rapid ATP depletion and increased fat synthesis.` },
+
+    { q: "Why fructose is different: bypassing the control point.",
+      body: `The key difference between fructose and glucose metabolism is where each enters glycolysis.
+
+Glucose enters glycolysis at the top, where it is phosphorylated to glucose-6-phosphate and then regulated by PFK-1. Fructose enters glycolysis downstream of PFK-1, at the level of G3P and DHAP. This means fructose metabolism is not subject to the same energy-dependent regulation.
+
+My Socratic question: why does bypassing PFK-1 matter for health, especially when fructose is consumed in large amounts?
+
+The answer is that PFK-1 is the cell's energy sensor. When ATP is high, PFK-1 slows down glucose breakdown. Fructose bypasses this control, so it continues to be metabolized even when energy is abundant. The result is that fructose is rapidly converted to fat — a process called de novo lipogenesis — which contributes to fatty liver and metabolic disease.
+
+Crucial insight: the uncontrolled metabolism of fructose is a major contributor to obesity and metabolic syndrome. Understanding this pathway explains why high-fructose corn syrup is linked to fatty liver disease.` },
+
+    { q: "Galactose: the sugar from milk.",
+      body: `Galactose is a simple sugar that is released when lactose (milk sugar) is broken down by the enzyme lactase. Like fructose, galactose must be converted before it can enter glycolysis.
+
+My Socratic question: lactose is a disaccharide made of glucose and galactose. How does the body process the galactose portion after lactose is broken down?
+
+The answer is that galactose is converted to glucose-6-phosphate through a series of four reactions, known as the Leloir pathway. This pathway converts galactose into glucose-6-phosphate, which then enters glycolysis normally.
+
+Crucial insight: the Leloir pathway ensures that the galactose from milk can be used for energy. In people with galactosemia, a genetic deficiency in one of these enzymes, galactose accumulates and causes serious damage, especially to the liver and brain.` },
+
+    { q: "The Leloir pathway: converting galactose to glucose.",
+      body: `The Leloir pathway consists of four enzymes that convert galactose into glucose-6-phosphate.
+
+Step 1: Galactose is phosphorylated by galactokinase to form galactose-1-phosphate, using ATP. Step 2: Galactose-1-phosphate is converted to glucose-1-phosphate by galactose-1-phosphate uridyltransferase, using UDP-glucose as a cofactor. This is the key step. Step 3: UDP-galactose is converted back to UDP-glucose by UDP-galactose 4-epimerase, recycling the cofactor. Step 4: Glucose-1-phosphate is converted to glucose-6-phosphate by phosphoglucomutase, which then enters glycolysis.
+
+Crucial insight: the Leloir pathway is essential for galactose metabolism. A deficiency in any of its enzymes causes galactosemia, a serious genetic disorder that requires a galactose-free diet.` },
+
+    { q: "Clinical relevance: fructose intolerance and galactosemia.",
+      body: `Both fructose and galactose metabolism have important clinical implications.
+
+Essential fructosuria is a benign condition caused by a deficiency of fructokinase. Fructose is not metabolized and appears in the urine, but it causes no symptoms. Hereditary fructose intolerance is a more serious condition caused by a deficiency of aldolase B. Consuming fructose leads to severe hypoglycemia, liver damage, and can be fatal if not treated.
+
+Galactosemia is caused by a deficiency of galactose-1-phosphate uridyltransferase, the key enzyme in the Leloir pathway. Galactose-1-phosphate accumulates, causing liver damage, cataracts, and intellectual disability if not treated. Newborns are screened for galactosemia, and treatment is a galactose-free diet.
+
+Crucial insight: understanding these pathways is essential for diagnosis. Newborn screening for galactosemia is routine, and dietary management can prevent severe complications.` },
+
+    { q: "High-fructose corn syrup and metabolic disease.",
+      body: `The metabolism of fructose has become a major health concern due to the widespread use of high-fructose corn syrup (HFCS) in processed foods and beverages.
+
+My Socratic question: why is fructose, which is a natural sugar, considered a major contributor to obesity and metabolic disease?
+
+The answer is that fructose bypasses the normal regulation of glycolysis. It is rapidly metabolized in the liver, leading to the production of fat (lipogenesis). Unlike glucose, which triggers insulin release and promotes satiety, fructose does not stimulate insulin and does not suppress ghrelin (the hunger hormone). This means fructose consumption leads to increased calorie intake, fat storage, and metabolic dysfunction.
+
+Crucial insight: the difference in metabolism explains why fructose is more harmful than glucose when consumed in excess. The liver converts fructose to fat more readily, contributing to fatty liver disease, insulin resistance, and cardiovascular disease.` },
+
+    { q: "Integration: all sugars lead to glycolysis.",
+      body: `Fructose and galactose metabolism are adaptations that allow the body to extract energy from all dietary sugars. Both pathways converge on glycolysis, demonstrating the central role of glucose metabolism.
+
+Fructose enters at the level of G3P and DHAP, bypassing PFK-1. Galactose is converted to glucose-6-phosphate and enters glycolysis at the top. Both pathways ultimately produce pyruvate, ATP, and NADH.
+
+Crucial insight: despite the differences in their metabolism, fructose and galactose ultimately feed into glycolysis. The body is designed to handle a variety of sugars, but the unique properties of fructose metabolism explain why it is particularly problematic in large amounts.` },
+
+    { q: "Consolidation and final test.",
+      body: `Your cognitive map for fructose and galactose metabolism.
+
+Fructose: phosphorylated by fructokinase, split by aldolase B, and enters glycolysis at G3P, bypassing PFK-1 regulation.
+
+Galactose: converted by the Leloir pathway to glucose-6-phosphate and enters glycolysis normally.
+
+Clinical relevance: hereditary fructose intolerance (aldolase B deficiency) and galactosemia (transferase deficiency) are serious genetic disorders. High-fructose corn syrup contributes to metabolic disease due to unregulated lipogenesis.
+
+Now your final test. A patient presents with severe symptoms after drinking a glass of milk, including vomiting, liver dysfunction, and lethargy.
+
+Question one: what is the most likely diagnosis, and which enzyme is deficient?
+Question two: what dietary modification is required?
+Question three: what test would confirm the diagnosis?
+
+My answers. One: galactosemia, caused by deficiency of galactose-1-phosphate uridyltransferase, the key enzyme of the Leloir pathway. Two: a strict galactose-free and lactose-free diet must be maintained for life. Three: newborn screening or a red blood cell enzyme assay would confirm the diagnosis.` }
+  ],
+  theory: [
+    { q: "Why must fructose and galactose be metabolized differently from glucose?", a: "They have different structures and cannot enter glycolysis directly. They must be converted into intermediates of glycolysis through specific pathways: fructose through the fructokinase-aldolase B pathway, and galactose through the Leloir pathway." },
+    { q: "What is the first step of fructose metabolism?", a: "Fructose is phosphorylated by fructokinase to form fructose-1-phosphate, using ATP. This traps fructose inside the cell and prepares it for cleavage." },
+    { q: "How does fructose enter glycolysis?", a: "Fructose-1-phosphate is cleaved by aldolase B into DHAP and glyceraldehyde. Glyceraldehyde is phosphorylated to G3P, and both DHAP and G3P enter glycolysis downstream of PFK-1." },
+    { q: "Why does fructose metabolism bypass the main regulatory step of glycolysis?", a: "Fructose enters glycolysis at the level of G3P and DHAP, which is after PFK-1, the enzyme that controls the rate of glycolysis. This means fructose is metabolized without the normal energy-sensing control." },
+    { q: "What is the Leloir pathway?", a: "The Leloir pathway is a series of four reactions that convert galactose into glucose-6-phosphate. It involves galactokinase, galactose-1-phosphate uridyltransferase, UDP-galactose 4-epimerase, and phosphoglucomutase." },
+    { q: "What is the key enzyme of the Leloir pathway?", a: "Galactose-1-phosphate uridyltransferase, which converts galactose-1-phosphate to glucose-1-phosphate using UDP-glucose as a cofactor." },
+    { q: "What is galactosemia and what causes it?", a: "Galactosemia is a genetic disorder caused by a deficiency of galactose-1-phosphate uridyltransferase. Galactose-1-phosphate accumulates, causing liver damage, cataracts, and intellectual disability." },
+    { q: "What is hereditary fructose intolerance and what enzyme is deficient?", a: "Hereditary fructose intolerance is a genetic disorder caused by deficiency of aldolase B. Consuming fructose leads to severe hypoglycemia, liver damage, and can be fatal." },
+    { q: "Why is high-fructose corn syrup linked to metabolic disease?", a: "Fructose bypasses PFK-1 regulation and is rapidly converted to fat in the liver (lipogenesis). It also does not stimulate insulin or suppress hunger, leading to increased calorie intake." },
+    { q: "What is the difference between essential fructosuria and hereditary fructose intolerance?", a: "Essential fructosuria is a benign condition caused by fructokinase deficiency; fructose appears in urine but causes no symptoms. Hereditary fructose intolerance is a serious condition caused by aldolase B deficiency, leading to severe metabolic disturbances." },
+  ],
+  videos: [
+    { channel: "Ninja Nerd", title: "Fructose and Galactose Metabolism", note: "Detailed walkthrough of both pathways with regulation and clinical correlates.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+fructose+galactose+metabolism" },
+    { channel: "AK Lectures", title: "Fructose Metabolism and Regulation", note: "Focus on how fructose bypasses glycolysis regulation and its clinical implications.", url: "https://www.youtube.com/results?search_query=AK+Lectures+fructose+metabolism" },
+    { channel: "Osmosis", title: "Galactosemia and Fructose Intolerance", note: "Clinical aspects of galactose and fructose metabolism disorders.", url: "https://www.youtube.com/results?search_query=Osmosis+galactosemia+fructose+intolerance" },
+  ],
+  mcqs: [
+    { q: "Fructose is primarily metabolized in which organ?", o: ["Kidney", "Liver", "Brain", "Muscle"], a: 1, w: "The liver is the primary site of fructose metabolism, where it is converted to fructose-1-phosphate." },
+    { q: "The enzyme that phosphorylates fructose to fructose-1-phosphate is:", o: ["Hexokinase", "Glucokinase", "Fructokinase", "Phosphofructokinase"], a: 2, w: "Fructokinase specifically phosphorylates fructose to fructose-1-phosphate." },
+    { q: "Fructose-1-phosphate is cleaved by which enzyme?", o: ["Aldolase A", "Aldolase B", "Aldolase C", "Fructokinase"], a: 1, w: "Aldolase B, which is found primarily in the liver, cleaves fructose-1-phosphate into DHAP and glyceraldehyde." },
+    { q: "The end product of the fructose pathway that enters glycolysis is:", o: ["Glucose-6-phosphate", "Fructose-6-phosphate", "Glyceraldehyde-3-phosphate and DHAP", "Pyruvate"], a: 2, w: "Fructose is converted to G3P and DHAP, which enter glycolysis downstream of PFK-1." },
+    { q: "Fructose metabolism bypasses which key regulatory enzyme of glycolysis?", o: ["Hexokinase", "Pyruvate kinase", "Aldolase", "Phosphofructokinase-1 (PFK-1)"], a: 3, w: "Fructose enters glycolysis at G3P, bypassing PFK-1, the main regulatory step." },
+    { q: "The Leloir pathway converts galactose into:", o: ["Fructose-6-phosphate", "Glucose-6-phosphate", "Glyceraldehyde-3-phosphate", "Pyruvate"], a: 1, w: "The Leloir pathway converts galactose into glucose-6-phosphate, which enters glycolysis." },
+    { q: "The first step of the Leloir pathway is catalysed by:", o: ["Galactokinase", "Hexokinase", "Fructokinase", "Aldolase B"], a: 0, w: "Galactokinase phosphorylates galactose to galactose-1-phosphate." },
+    { q: "The key enzyme of the Leloir pathway is:", o: ["Galactokinase", "Galactose-1-phosphate uridyltransferase", "UDP-galactose 4-epimerase", "Phosphoglucomutase"], a: 1, w: "Galactose-1-phosphate uridyltransferase is the key enzyme; its deficiency causes galactosemia." },
+    { q: "Galactosemia is caused by a deficiency of:", o: ["Lactase", "Galactokinase", "Galactose-1-phosphate uridyltransferase", "Phosphoglucomutase"], a: 2, w: "Galactosemia is caused by a deficiency of galactose-1-phosphate uridyltransferase." },
+    { q: "Hereditary fructose intolerance is caused by a deficiency of:", o: ["Fructokinase", "Aldolase B", "Hexokinase", "Phosphofructokinase"], a: 1, w: "Hereditary fructose intolerance is caused by aldolase B deficiency, leading to severe symptoms after fructose consumption." },
+    { q: "Essential fructosuria is caused by a deficiency of:", o: ["Aldolase B", "Fructokinase", "Galactokinase", "Lactase"], a: 1, w: "Essential fructosuria is caused by fructokinase deficiency and is a benign condition." },
+    { q: "Unlike glucose, fructose does not stimulate the release of:", o: ["Glucagon", "Insulin", "Cortisol", "Growth hormone"], a: 1, w: "Fructose does not stimulate insulin release, which means it does not promote satiety." },
+    { q: "Excess fructose in the liver is rapidly converted to:", o: ["Glycogen", "Fat (lipogenesis)", "Glucose", "Ketones"], a: 1, w: "Fructose bypasses glycolysis regulation and is converted to fat through de novo lipogenesis." },
+    { q: "A patient with galactosemia must avoid:", o: ["Glucose", "Fructose", "Lactose and galactose", "Sucrose"], a: 2, w: "Galactosemia requires a strict galactose-free and lactose-free diet for life." },
+    { q: "Newborn screening for galactosemia is performed because:", a: "Prompt diagnosis and dietary treatment can prevent severe complications including liver failure, cataracts, and intellectual disability.", w: "Early diagnosis allows for dietary intervention that prevents the harmful accumulation of galactose-1-phosphate." },
+    { q: "The enzyme that converts glucose-1-phosphate to glucose-6-phosphate is:", o: ["Phosphoglucomutase", "Galactose-1-phosphate uridyltransferase", "UDP-galactose 4-epimerase", "Hexokinase"], a: 0, w: "Phosphoglucomutase converts glucose-1-phosphate to glucose-6-phosphate, which enters glycolysis." },
+    { q: "Which of the following is NOT a feature of fructose metabolism?", o: ["Bypasses PFK-1", "Uses fructokinase", "Uses aldolase B", "Requires insulin for entry into cells"], a: 3, w: "Fructose does not require insulin for entry into cells; it is taken up independently." },
+    { q: "The accumulation of galactose-1-phosphate in galactosemia causes damage to:", o: ["Muscle", "Brain, liver, and eyes (cataracts)", "Bone", "Pancreas"], a: 1, w: "Galactose-1-phosphate accumulation damages the liver, brain, and causes cataracts." },
+    { q: "Fructose is converted to fat more readily than glucose because:", o: ["It enters glycolysis at a controlled point", "It bypasses PFK-1 regulation", "It is less soluble", "It is metabolized in muscles"], a: 1, w: "Bypassing PFK-1 allows fructose to be metabolized rapidly without energy-sensing controls, leading to increased fat synthesis." },
+    { q: "The enzyme that recycles UDP-glucose from UDP-galactose is:", o: ["Galactose-1-phosphate uridyltransferase", "UDP-galactose 4-epimerase", "Phosphoglucomutase", "Galactokinase"], a: 1, w: "UDP-galactose 4-epimerase converts UDP-galactose back to UDP-glucose." },
+  ],
+};
+
+// ==================== BIOCHEMISTRY TOPIC 4: FRUCTOSE AND GALACTOSE METABOLISM ====================
+const T_BCH_FRUCTOSE = {
+  courseId: "bch",
+  topicIndex: 4,
+  title: "Fructose and Galactose Metabolism",
+  minutes: 22,
+  note: [
+    { q: "Why does the body need separate pathways for fructose and galactose?",
+      body: `You have learned glycolysis — the universal pathway that breaks down glucose to extract energy. But your diet contains more than just glucose. Fruits, honey, and vegetables provide fructose. Milk and dairy products provide galactose. These sugars are structurally different from glucose, and they cannot simply enter glycolysis as they are.
+
+My Socratic question: glycolysis is a carefully controlled pathway with specific enzymes that recognise glucose. If fructose or galactose were forced into glycolysis without modification, what would happen?
+
+The answer is that they would not be recognised by the enzymes of glycolysis. The first enzyme of glycolysis, hexokinase, specifically phosphorylates glucose. It does not work on fructose or galactose. So the body must first convert these sugars into forms that can enter glycolysis. This is why separate pathways exist — they are adaptations that allow the body to extract energy from all dietary sugars.
+
+Crucial insight: fructose and galactose metabolism is not about creating new pathways — it is about converting these sugars into intermediates that glycolysis can use. Both pathways converge on glycolysis, demonstrating that glucose metabolism is the central hub of carbohydrate breakdown.` },
+
+    { q: "What is fructose, and where does it come from?",
+      body: `Fructose is a simple sugar, a monosaccharide, with the same chemical formula as glucose — C6H12O6 — but a different structure. It is found naturally in fruits, honey, root vegetables, and sugar cane. It is also added to many processed foods and beverages in the form of high-fructose corn syrup (HFCS), which is a mixture of fructose and glucose.
+
+My Socratic question: glucose and fructose have the same molecular formula but different structures. How does this structural difference affect their metabolism?
+
+The answer is that the structural difference determines how each sugar is processed. Glucose exists in a six-membered ring (pyranose), while fructose exists in a five-membered ring (furanose). This difference means that the enzymes that act on glucose cannot act on fructose. Fructose must be metabolised by its own set of enzymes, beginning with fructokinase instead of hexokinase.
+
+Crucial insight: the structural difference between fructose and glucose is not just a chemical curiosity. It dictates the entire metabolic pathway and explains why fructose is processed differently in the body, with important health implications.` },
+
+    { q: "What is galactose, and where does it come from?",
+      body: `Galactose is another monosaccharide, with the same formula as glucose. It is not found free in nature to any significant extent; instead, it is bound to glucose to form lactose, the disaccharide found in milk and dairy products.
+
+My Socratic question: lactose is a disaccharide made of glucose and galactose. When you drink milk, lactose is broken down by lactase into glucose and galactose. How does the body then process the galactose?
+
+The answer is that galactose must be converted to glucose-6-phosphate before it can enter glycolysis. This conversion occurs through a series of four reactions called the Leloir pathway. The Leloir pathway ensures that the galactose from milk can be used for energy, just like glucose.
+
+Crucial insight: the Leloir pathway is essential for utilising the galactose from dairy products. A deficiency in any of its enzymes causes galactosemia, a serious genetic disorder that requires a galactose-free diet from birth.` },
+
+    { q: "The fructose pathway: step by step.",
+      body: `Fructose metabolism occurs primarily in the liver, where the enzyme fructokinase is most active. The pathway has three main steps, and each is essential for converting fructose into a form that can enter glycolysis.
+
+Step 1: Fructose is phosphorylated by fructokinase to form fructose-1-phosphate. This step uses ATP and traps fructose inside the cell. Unlike hexokinase, which is inhibited by its product glucose-6-phosphate, fructokinase is not inhibited, so fructose phosphorylation is unregulated.
+
+Step 2: Fructose-1-phosphate is cleaved by aldolase B into two three-carbon molecules: dihydroxyacetone phosphate (DHAP) and glyceraldehyde. Aldolase B is the key enzyme of fructose metabolism, and its deficiency causes hereditary fructose intolerance.
+
+Step 3: Glyceraldehyde is phosphorylated by triose kinase to form glyceraldehyde-3-phosphate (G3P). Both DHAP and G3P then enter glycolysis at the level of G3P, bypassing the PFK-1 step.
+
+Crucial insight: the conversion of fructose to G3P bypasses the main regulatory enzyme of glycolysis, PFK-1. This means fructose is metabolised without the normal energy-sensing controls, which has important health consequences when fructose is consumed in large amounts.` },
+
+    { q: "Why fructose bypasses PFK-1 and what that means for health.",
+      body: `The most important difference between fructose and glucose metabolism is where each enters glycolysis. Glucose enters at the top, through hexokinase, and is regulated by PFK-1. Fructose enters downstream of PFK-1, at the level of G3P and DHAP.
+
+My Socratic question: PFK-1 is the cell's energy sensor, inhibited by ATP and activated by AMP. Why would bypassing this sensor be a problem for the cell?
+
+The answer is that PFK-1 normally slows down glycolysis when ATP is high, preventing unnecessary glucose breakdown and conserving resources. Fructose bypasses this control, so it continues to be metabolised even when energy is abundant. The result is that fructose is rapidly converted to fat — a process called de novo lipogenesis — which contributes to fatty liver disease and metabolic syndrome.
+
+Crucial insight: the bypass of PFK-1 explains why fructose is more harmful than glucose when consumed in excess. The liver cannot slow down fructose metabolism, so it is rapidly converted to fat, contributing to insulin resistance, obesity, and cardiovascular disease.` },
+
+    { q: "The Leloir pathway: step by step.",
+      body: `The Leloir pathway is the series of reactions that convert galactose into glucose-6-phosphate. It consists of four enzymes and is essential for utilising galactose from dairy products.
+
+Step 1: Galactose is phosphorylated by galactokinase to form galactose-1-phosphate. This step uses ATP and traps galactose inside the cell. Galactokinase deficiency causes a mild form of galactosemia.
+
+Step 2: Galactose-1-phosphate is converted to glucose-1-phosphate by galactose-1-phosphate uridyltransferase, using UDP-glucose as a cofactor. This is the key step of the Leloir pathway. The enzyme transfers the galactose group from galactose-1-phosphate to UDP-glucose, forming glucose-1-phosphate and UDP-galactose.
+
+Step 3: UDP-galactose is converted back to UDP-glucose by UDP-galactose 4-epimerase. This recycles the UDP-glucose cofactor, allowing the pathway to continue.
+
+Step 4: Glucose-1-phosphate is converted to glucose-6-phosphate by phosphoglucomutase. Glucose-6-phosphate then enters glycolysis normally.
+
+Crucial insight: the Leloir pathway is essential for life. A deficiency in galactose-1-phosphate uridyltransferase causes classic galactosemia, a serious condition that requires a galactose-free diet from birth to prevent liver failure, cataracts, and intellectual disability.` },
+
+    { q: "Clinical relevance: hereditary fructose intolerance.",
+      body: `Hereditary fructose intolerance (HFI) is a genetic disorder caused by a deficiency of aldolase B, the enzyme that cleaves fructose-1-phosphate. It is an autosomal recessive condition, meaning both parents must carry the defective gene.
+
+My Socratic question: a child with undiagnosed HFI is given fruit juice and becomes severely ill, with vomiting, hypoglycemia, and liver failure. What is happening at the biochemical level?
+
+The answer is that fructose is phosphorylated to fructose-1-phosphate by fructokinase, but cannot be cleaved by aldolase B. Fructose-1-phosphate accumulates inside liver cells, trapping phosphate and depleting ATP. The liver cannot produce glucose, leading to severe hypoglycemia. The accumulated fructose-1-phosphate also damages the liver, causing hepatomegaly and, over time, cirrhosis.
+
+Crucial insight: HFI is a serious condition that can be fatal if not diagnosed. Treatment is a strict fructose-free diet, avoiding fruits, honey, and foods containing HFCS. Diagnosis is confirmed by a liver biopsy or genetic testing.` },
+
+    { q: "Clinical relevance: galactosemia.",
+      body: `Galactosemia is a genetic disorder caused by a deficiency of galactose-1-phosphate uridyltransferase, the key enzyme of the Leloir pathway. It is autosomal recessive and is one of the most common genetic disorders screened for at birth.
+
+My Socratic question: a newborn is given a standard milk-based formula and develops vomiting, jaundice, and lethargy within days. What is the diagnosis, and why is early detection so important?
+
+The answer is classic galactosemia. Galactose-1-phosphate accumulates because it cannot be converted to glucose-1-phosphate. This accumulation causes damage to the liver, kidneys, brain, and eyes. Cataracts develop as galactose is converted to galactitol, which accumulates in the lens of the eye. The liver damage can progress to cirrhosis and liver failure.
+
+Crucial insight: newborn screening for galactosemia is routine in many countries because early diagnosis and dietary intervention can prevent the severe complications of the disease. Treatment is a strict galactose-free diet, avoiding all milk and dairy products for life.` },
+
+    { q: "Fructose and metabolic syndrome: the bigger picture.",
+      body: `The unique properties of fructose metabolism have made it a major focus of nutrition research. The widespread use of high-fructose corn syrup (HFCS) in processed foods and beverages has led to a dramatic increase in fructose consumption over the past several decades.
+
+My Socratic question: the body can metabolise fructose, so why has its increased consumption been linked to obesity, diabetes, and fatty liver disease?
+
+The answer is that fructose bypasses the normal regulatory controls of glycolysis. It does not stimulate insulin release, so it does not promote satiety. It does not suppress ghrelin, the hunger hormone, so it does not reduce appetite. And because it bypasses PFK-1, it is rapidly converted to fat in the liver. Over time, this leads to hepatic steatosis (fatty liver), insulin resistance, and the metabolic syndrome.
+
+Crucial insight: the metabolic effects of fructose are not due to its caloric content alone — they are due to its unique biochemistry. Fructose is not inherently toxic, but in the amounts consumed in the modern diet, it contributes significantly to metabolic disease.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for fructose and galactose metabolism, in five lines.
+
+Fructose: phosphorylated by fructokinase, split by aldolase B into DHAP and glyceraldehyde, and enters glycolysis at G3P, bypassing PFK-1 regulation. Its unregulated metabolism promotes lipogenesis.
+
+Galactose: converted by the Leloir pathway to glucose-6-phosphate and enters glycolysis normally. The key enzyme is galactose-1-phosphate uridyltransferase.
+
+Clinical relevance: hereditary fructose intolerance (aldolase B deficiency) causes severe hypoglycemia and liver damage after fructose ingestion. Galactosemia (transferase deficiency) causes liver failure, cataracts, and intellectual disability if untreated.
+
+Treatment: both conditions require dietary modification — fructose-free for HFI, galactose-free for galactosemia.
+
+The bigger picture: fructose bypasses glycolysis regulation, contributing to metabolic disease when consumed in excess.
+
+Now your final test. A 6-month-old infant is brought to the emergency department with vomiting, lethargy, and jaundice. The parents report that the baby has been breastfed and was recently started on a fruit-based baby food.
+
+Question one: what is the most likely diagnosis, and which enzyme is deficient?
+Question two: what biochemical process explains the hypoglycemia?
+Question three: what is the treatment, and what foods must be avoided?
+
+Work them through before reading on.
+
+My answers. One: hereditary fructose intolerance, caused by a deficiency of aldolase B, the enzyme that cleaves fructose-1-phosphate into DHAP and glyceraldehyde. Two: fructose-1-phosphate accumulates in the liver, trapping phosphate and depleting ATP. The liver cannot produce glucose, leading to severe hypoglycemia. Three: treatment is a strict fructose-free diet, avoiding all fruits, honey, table sugar, and foods containing high-fructose corn syrup.
+
+If those came cleanly, you understand the metabolism of fructose and galactose, the genetic disorders that affect their pathways, and the health implications of fructose in the modern diet.` }
+  ],
+  theory: [
+    { q: "Why must fructose and galactose be metabolised differently from glucose?", a: "They have different structures and cannot enter glycolysis directly. They must be converted into intermediates of glycolysis through specific pathways: fructose through the fructokinase-aldolase B pathway, and galactose through the Leloir pathway." },
+    { q: "What is the first step of fructose metabolism and which enzyme catalyses it?", a: "Fructose is phosphorylated by fructokinase to form fructose-1-phosphate, using ATP. This traps fructose inside the cell and prepares it for cleavage by aldolase B." },
+    { q: "How does fructose enter glycolysis and why is this significant?", a: "Fructose-1-phosphate is cleaved by aldolase B into DHAP and glyceraldehyde. Glyceraldehyde is phosphorylated to G3P, and both DHAP and G3P enter glycolysis downstream of PFK-1. This bypasses the main regulatory step, meaning fructose is metabolised without energy-sensing controls." },
+    { q: "What is the Leloir pathway and why is it important?", a: "The Leloir pathway is a series of four reactions that convert galactose into glucose-6-phosphate. It involves galactokinase, galactose-1-phosphate uridyltransferase, UDP-galactose 4-epimerase, and phosphoglucomutase. It is essential for utilising galactose from dairy products." },
+    { q: "What is the key enzyme of the Leloir pathway and what happens when it is deficient?", a: "The key enzyme is galactose-1-phosphate uridyltransferase. Its deficiency causes classic galactosemia, a serious condition in which galactose-1-phosphate accumulates, causing liver damage, cataracts, and intellectual disability if untreated." },
+    { q: "What is hereditary fructose intolerance and what enzyme is deficient?", a: "Hereditary fructose intolerance is a genetic disorder caused by a deficiency of aldolase B, the enzyme that cleaves fructose-1-phosphate. Consuming fructose leads to severe hypoglycemia, liver damage, and can be fatal if not treated." },
+    { q: "What is the difference between essential fructosuria and hereditary fructose intolerance?", a: "Essential fructosuria is a benign condition caused by fructokinase deficiency; fructose appears in urine but causes no symptoms. Hereditary fructose intolerance is a serious condition caused by aldolase B deficiency, leading to severe metabolic disturbances." },
+    { q: "Why is high-fructose corn syrup linked to metabolic disease?", a: "Fructose bypasses PFK-1 regulation and is rapidly converted to fat in the liver (lipogenesis). It does not stimulate insulin or suppress ghrelin, leading to increased calorie intake and metabolic dysfunction." },
+    { q: "What is the treatment for galactosemia?", a: "A strict galactose-free and lactose-free diet must be maintained for life, avoiding all milk and dairy products. Early diagnosis through newborn screening prevents severe complications." },
+    { q: "Why does fructose consumption contribute to fatty liver disease?", a: "Fructose bypasses the regulatory controls of glycolysis and is rapidly converted to fat through de novo lipogenesis in the liver. This leads to accumulation of triglycerides and hepatic steatosis." },
+  ],
+  videos: [
+    { channel: "Ninja Nerd", title: "Fructose and Galactose Metabolism", note: "Detailed walkthrough of both pathways with regulation and clinical correlates.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+fructose+galactose+metabolism" },
+    { channel: "AK Lectures", title: "Fructose Metabolism and Regulation", note: "Focus on how fructose bypasses glycolysis regulation and its clinical implications.", url: "https://www.youtube.com/results?search_query=AK+Lectures+fructose+metabolism" },
+    { channel: "Osmosis", title: "Galactosemia and Fructose Intolerance", note: "Clinical aspects of galactose and fructose metabolism disorders.", url: "https://www.youtube.com/results?search_query=Osmosis+galactosemia+fructose+intolerance" },
+  ],
+  mcqs: [
+    { q: "Fructose is primarily metabolised in which organ?", o: ["Kidney", "Liver", "Brain", "Muscle"], a: 1, w: "The liver is the primary site of fructose metabolism, where it is converted to fructose-1-phosphate by fructokinase." },
+    { q: "The enzyme that phosphorylates fructose to fructose-1-phosphate is:", o: ["Hexokinase", "Glucokinase", "Fructokinase", "Phosphofructokinase"], a: 2, w: "Fructokinase specifically phosphorylates fructose to fructose-1-phosphate." },
+    { q: "Fructose-1-phosphate is cleaved by which enzyme?", o: ["Aldolase A", "Aldolase B", "Aldolase C", "Fructokinase"], a: 1, w: "Aldolase B, which is found primarily in the liver, cleaves fructose-1-phosphate into DHAP and glyceraldehyde." },
+    { q: "Hereditary fructose intolerance is caused by a deficiency of:", o: ["Fructokinase", "Aldolase B", "Hexokinase", "Phosphofructokinase"], a: 1, w: "Hereditary fructose intolerance is caused by aldolase B deficiency, leading to severe symptoms after fructose consumption." },
+    { q: "Fructose metabolism bypasses which key regulatory enzyme of glycolysis?", o: ["Hexokinase", "Pyruvate kinase", "Aldolase", "Phosphofructokinase-1 (PFK-1)"], a: 3, w: "Fructose enters glycolysis at G3P, bypassing PFK-1, the main regulatory step of glycolysis." },
+    { q: "The Leloir pathway converts galactose into:", o: ["Fructose-6-phosphate", "Glucose-6-phosphate", "Glyceraldehyde-3-phosphate", "Pyruvate"], a: 1, w: "The Leloir pathway converts galactose into glucose-6-phosphate, which then enters glycolysis." },
+    { q: "The key enzyme of the Leloir pathway is:", o: ["Galactokinase", "Galactose-1-phosphate uridyltransferase", "UDP-galactose 4-epimerase", "Phosphoglucomutase"], a: 1, w: "Galactose-1-phosphate uridyltransferase is the key enzyme; its deficiency causes classic galactosemia." },
+    { q: "Galactosemia is caused by a deficiency of:", o: ["Lactase", "Galactokinase", "Galactose-1-phosphate uridyltransferase", "Phosphoglucomutase"], a: 2, w: "Classic galactosemia is caused by a deficiency of galactose-1-phosphate uridyltransferase." },
+    { q: "A patient with galactosemia must avoid:", o: ["Glucose", "Fructose", "Lactose and galactose", "Sucrose"], a: 2, w: "Galactosemia requires a strict galactose-free and lactose-free diet for life." },
+    { q: "Newborn screening for galactosemia is performed because:", o: ["It is easy to test", "Early treatment prevents severe complications", "It is required by law", "All newborns are at risk"], a: 1, w: "Early diagnosis and dietary treatment can prevent severe complications including liver failure, cataracts, and intellectual disability." },
+    { q: "Essential fructosuria is caused by a deficiency of:", o: ["Aldolase B", "Fructokinase", "Galactokinase", "Lactase"], a: 1, w: "Essential fructosuria is caused by fructokinase deficiency and is a benign condition with no symptoms." },
+    { q: "Unlike glucose, fructose does not stimulate the release of:", o: ["Glucagon", "Insulin", "Cortisol", "Growth hormone"], a: 1, w: "Fructose does not stimulate insulin release, which means it does not promote satiety." },
+    { q: "Excess fructose in the liver is rapidly converted to:", o: ["Glycogen", "Fat (lipogenesis)", "Glucose", "Ketones"], a: 1, w: "Fructose bypasses glycolysis regulation and is converted to fat through de novo lipogenesis." },
+    { q: "The accumulation of galactose-1-phosphate in galactosemia causes damage to:", o: ["Muscle", "Brain, liver, and eyes (cataracts)", "Bone", "Pancreas"], a: 1, w: "Galactose-1-phosphate accumulation damages the liver, brain, and causes cataracts." },
+    { q: "Fructose is converted to fat more readily than glucose because:", o: ["It enters glycolysis at a controlled point", "It bypasses PFK-1 regulation", "It is less soluble", "It is metabolised in muscles"], a: 1, w: "Bypassing PFK-1 allows fructose to be metabolised rapidly without energy-sensing controls, leading to increased fat synthesis." },
+    { q: "The enzyme that converts UDP-galactose back to UDP-glucose is:", o: ["Galactose-1-phosphate uridyltransferase", "UDP-galactose 4-epimerase", "Phosphoglucomutase", "Galactokinase"], a: 1, w: "UDP-galactose 4-epimerase converts UDP-galactose back to UDP-glucose, recycling the cofactor." },
+    { q: "Which of the following is NOT a feature of fructose metabolism?", o: ["Bypasses PFK-1", "Uses fructokinase", "Uses aldolase B", "Requires insulin for entry into cells"], a: 3, w: "Fructose does not require insulin for entry into cells; it is taken up independently of insulin." },
+    { q: "The enzyme that converts glucose-1-phosphate to glucose-6-phosphate is:", o: ["Phosphoglucomutase", "Galactose-1-phosphate uridyltransferase", "UDP-galactose 4-epimerase", "Hexokinase"], a: 0, w: "Phosphoglucomutase converts glucose-1-phosphate to glucose-6-phosphate, which enters glycolysis." },
+    { q: "A patient with hereditary fructose intolerance who consumes fructose will develop:", o: ["Hyperglycaemia", "Hypoglycaemia and liver damage", "Lactic acidosis", "Ketoacidosis"], a: 1, w: "Fructose-1-phosphate accumulates, trapping phosphate and depleting ATP, leading to hypoglycaemia and liver damage." },
+    { q: "The primary treatment for galactosemia is:", o: ["Insulin therapy", "A galactose-free diet", "Fructose restriction", "Enzyme replacement"], a: 1, w: "Galactosemia is treated with a strict galactose-free and lactose-free diet for life." },
   ],
 };
 
