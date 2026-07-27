@@ -10761,6 +10761,139 @@ My answers. One: polycystic ovary syndrome (PCOS) is the most likely diagnosis. 
   ],
 };
 
+// ==================== PHYSIOLOGY TOPIC 16: INTEGUMENTARY SYSTEM ====================
+const T_PHY_INTEGUMENTARY = {
+  courseId: "phy",
+  topicIndex: 15,
+  title: "Integumentary System",
+  minutes: 20,
+  note: [
+    { q: "What is the integumentary system and why does it matter?",
+      body: `The integumentary system is the body's largest organ system, consisting of the skin, hair, nails, and glands. It serves as the first line of defence against the external environment.
+
+My Socratic question: your skin is your largest organ, yet it is often overlooked. What does the skin do that makes it essential for survival?
+
+The answer is that the skin provides protection against physical injury, pathogens, and UV radiation. It prevents water loss and regulates body temperature. It synthesises vitamin D, detects sensory stimuli, and stores fat. Without skin, you could not survive outside the womb.
+
+Crucial insight: the integumentary system (skin, hair, nails, glands) is the body's first line of defence, protecting against injury, infection, and water loss, while also regulating temperature and synthesising vitamin D.` },
+    { q: "The structure of skin: epidermis, dermis, and hypodermis.",
+      body: `The skin has three layers, each with distinct structure and function.
+
+My Socratic question: why does a cut that reaches the dermis bleed, but a superficial scratch that only affects the epidermis does not?
+
+The answer is that the epidermis is avascular — it has no blood vessels. The dermis contains blood vessels, nerves, and hair follicles. A superficial scratch that only affects the epidermis does not bleed. A deeper cut that reaches the dermis bleeds because it damages the blood vessels in the dermis.
+
+Crucial insight: the skin has three layers — epidermis (avascular, stratified squamous epithelium), dermis (vascular, dense irregular connective tissue), and hypodermis (adipose tissue, insulation, attachment).` },
+    { q: "The epidermis: the waterproof barrier.",
+      body: `The epidermis is the outermost layer of the skin, forming a waterproof barrier that protects the body from the environment.
+
+My Socratic question: why is the epidermis waterproof, and why does it constantly shed cells?
+
+The answer is that the epidermis is composed of stratified squamous epithelium with multiple layers. The deepest layer (stratum basale) contains dividing cells that produce new keratinocytes. As cells move toward the surface, they fill with keratin and die, forming the tough, waterproof stratum corneum.
+
+Crucial insight: the epidermis is a stratified squamous epithelium that renews itself from the basal layer. Keratin waterproofs the skin, melanin protects against UV radiation, and Langerhans cells defend against pathogens.` },
+    { q: "The dermis: strength and sensation.",
+      body: `The dermis is the middle layer of the skin, providing strength, elasticity, and sensation.
+
+My Socratic question: why does the skin have wrinkles in old age, and why do wounds heal more slowly in the elderly?
+
+The answer is that the dermis contains collagen (for strength) and elastin (for elasticity). With age, collagen production decreases and elastin fibres break down, leading to wrinkles and sagging.
+
+Crucial insight: the dermis contains collagen (strength) and elastin (elasticity). Ageing reduces collagen and elastin, causing wrinkles and slower healing.` },
+    { q: "Skin appendages: hair, nails, and glands.",
+      body: `The skin has appendages — hair, nails, and glands — that serve important functions.
+
+My Socratic question: why do you have hair, and why do nails grow continuously?
+
+The answer is that hair provides insulation, protection, and sensory function. Nails protect the tips of fingers and toes. Glands include sweat glands (sudoriferous) for temperature regulation and sebaceous glands (oil) for lubrication.
+
+Crucial insight: skin appendages include hair (insulation, protection), nails (protection), and glands (sweat for cooling, sebum for lubrication).` },
+    { q: "Functions of the skin.",
+      body: `The skin performs many essential functions that are vital for homeostasis.
+
+My Socratic question: how does the skin protect the body, and how does it contribute to homeostasis?
+
+The answer is that the skin protects against physical injury, pathogens, and UV radiation. It prevents water loss and regulates body temperature through sweating and vasodilation/vasoconstriction. It synthesises vitamin D, detects sensory stimuli, stores fat, and excretes waste through sweat.
+
+Crucial insight: the skin protects, prevents water loss, regulates temperature, synthesises vitamin D, detects sensations, stores fat, and excretes waste.` },
+    { q: "Wound healing.",
+      body: `The skin has a remarkable ability to heal after injury.
+
+My Socratic question: how does the skin heal after a cut, and why do some wounds leave scars?
+
+The answer is that wound healing occurs in three overlapping phases: inflammation (immediate, clot formation), proliferation (new tissue formation), and remodelling (collagen reorganisation). Scars result from excess collagen deposition during healing.
+
+Crucial insight: wound healing has three phases — inflammation, proliferation, and remodelling. Scars result from excess collagen deposition.` },
+    { q: "Clinical relevance: skin disorders.",
+      body: `The skin is affected by many disorders, ranging from minor irritations to life-threatening conditions.
+
+My Socratic question: what are common skin disorders, and how are they diagnosed?
+
+The answer is that common skin disorders include acne, eczema, psoriasis, skin cancers (basal cell carcinoma, squamous cell carcinoma, melanoma), burns, and infections. Diagnosis involves clinical examination, dermatoscopy, and biopsy.
+
+Crucial insight: common skin disorders include acne, eczema, psoriasis, skin cancers, burns, and infections.` },
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the integumentary system.
+
+Layers: epidermis (avascular, stratified squamous, keratinised), dermis (vascular, collagen, elastin), hypodermis (adipose, insulation).
+
+Appendages: hair, nails, sweat glands, sebaceous glands.
+
+Functions: protection, water loss prevention, temperature regulation, vitamin D synthesis, sensation, fat storage, excretion.
+
+Wound healing: inflammation, proliferation, remodelling.
+
+Clinical relevance: acne, eczema, psoriasis, skin cancers, burns, infections.
+
+Now your final test. A patient presents with a skin lesion that has changed in size, colour, and shape. The lesion is irregular, asymmetric, and has a dark colour.
+
+Question one: what is the most concerning diagnosis, and what features are suspicious?
+Question two: what is the ABCDE rule for skin cancer detection?
+Question three: how would the diagnosis be confirmed?
+
+My answers. One: melanoma is the most concerning diagnosis. Features suspicious of melanoma are identified by the ABCDE rule. Two: A = Asymmetry, B = Border irregularity, C = Colour variation, D = Diameter >6mm, E = Evolving. Three: diagnosis is confirmed by biopsy of the lesion.` }
+  ],
+  theory: [
+    { q: "What are the three layers of the skin and their functions?", a: "Epidermis (outer, waterproof, avascular), dermis (middle, vascular, collagen, elastin), hypodermis (subcutaneous, adipose, insulation)." },
+    { q: "Why is the epidermis avascular?", a: "The epidermis is avascular because it has no blood vessels. It is nourished by diffusion from the dermis below." },
+    { q: "What is the role of keratin in the epidermis?", a: "Keratin is a tough, waterproof protein that gives the epidermis its protective, waterproof properties." },
+    { q: "What are the functions of the dermis?", a: "The dermis provides strength (collagen) and elasticity (elastin) to the skin. It contains blood vessels, nerves, hair follicles, sweat glands, and sebaceous glands." },
+    { q: "What are the functions of the skin?", a: "Protection, prevention of water loss, temperature regulation, vitamin D synthesis, sensation, fat storage, and excretion." },
+    { q: "What is the role of sweat glands in temperature regulation?", a: "Sweat glands produce sweat, which evaporates from the skin surface, cooling the body." },
+    { q: "What are the three phases of wound healing?", a: "Inflammatory phase, proliferative phase, and remodelling phase." },
+    { q: "What are the ABCDE features of melanoma?", a: "A = Asymmetry, B = Border irregularity, C = Colour variation, D = Diameter >6mm, E = Evolving." },
+    { q: "What are common skin disorders?", a: "Acne, eczema, psoriasis, skin cancers (basal cell carcinoma, squamous cell carcinoma, melanoma), burns, and infections." },
+    { q: "How is skin cancer diagnosed?", a: "Skin cancer is diagnosed by clinical examination, dermatoscopy, and confirmed by biopsy." }
+  ],
+  videos: [
+    { channel: "Physiology", title: "The Integumentary System", note: "Skin structure and functions.", url: "" },
+    { channel: "Physiology", title: "Wound Healing and Skin Repair", note: "The phases of wound healing.", url: "" },
+    { channel: "Physiology", title: "Skin Cancer and the ABCDE Rule", note: "Melanoma detection and diagnosis.", url: "" }
+  ],
+  mcqs: [
+    { q: "The integumentary system consists of the skin and its:", o: ["Muscles", "Bones", "Appendages (hair, nails, glands)", "Nerves"], a: 2, w: "The integumentary system consists of the skin and its appendages." },
+    { q: "The outermost layer of the skin is the:", o: ["Dermis", "Hypodermis", "Epidermis", "Subcutaneous layer"], a: 2, w: "The epidermis is the outermost layer." },
+    { q: "The epidermis is:", o: ["Vascular", "Avascular (no blood vessels)", "Made of connective tissue", "Composed of adipose tissue"], a: 1, w: "The epidermis is avascular." },
+    { q: "The protein that waterproofs the skin is:", o: ["Collagen", "Elastin", "Keratin", "Melanin"], a: 2, w: "Keratin waterproofs the skin." },
+    { q: "The middle layer of the skin is the:", o: ["Epidermis", "Dermis", "Hypodermis", "Stratum corneum"], a: 1, w: "The dermis is the middle layer." },
+    { q: "The dermis contains:", o: ["Blood vessels, nerves, and glands", "Only fat", "Only epithelial cells", "Keratin only"], a: 0, w: "The dermis contains blood vessels, nerves, and glands." },
+    { q: "The deepest layer of the skin is the:", o: ["Epidermis", "Dermis", "Hypodermis (subcutaneous layer)", "Stratum basale"], a: 2, w: "The hypodermis is the deepest layer." },
+    { q: "Sweat glands are also called:", o: ["Sebaceous glands", "Sudoriferous glands", "Apocrine glands only", "Eccrine glands only"], a: 1, w: "Sweat glands are sudoriferous glands." },
+    { q: "Sebaceous glands secrete:", o: ["Sweat", "Sebum (oil)", "Melanin", "Keratin"], a: 1, w: "Sebaceous glands secrete sebum (oil)." },
+    { q: "One function of the skin is:", o: ["Vitamin D synthesis", "Insulin production", "Bile production", "Red blood cell production"], a: 0, w: "The skin synthesises vitamin D." },
+    { q: "In response to heat, blood vessels in the dermis:", o: ["Constrict", "Dilate", "Remain unchanged", "Close entirely"], a: 1, w: "Blood vessels dilate to release heat." },
+    { q: "In response to cold, blood vessels in the dermis:", o: ["Dilate", "Constrict", "Remain unchanged", "Open entirely"], a: 1, w: "Blood vessels constrict to conserve heat." },
+    { q: "The three phases of wound healing are:", o: ["Inflammatory, proliferative, remodelling", "Inflammatory, healing, scarring", "Proliferative, remodelling, healing", "Inflammatory, proliferative, healing"], a: 0, w: "The three phases are inflammatory, proliferative, and remodelling." },
+    { q: "Scars result from:", o: ["Loss of skin", "Excess collagen deposition during healing", "Infection", "Poor blood supply"], a: 1, w: "Scars result from excess collagen deposition." },
+    { q: "The ABCDE rule is used to assess:", o: ["Acne", "Eczema", "Melanoma (skin cancer)", "Psoriasis"], a: 2, w: "The ABCDE rule is used to assess skin lesions for melanoma." },
+    { q: "In the ABCDE rule, 'A' stands for:", o: ["Age", "Asymmetry", "Appearance", "Area"], a: 1, w: "A stands for Asymmetry." },
+    { q: "In the ABCDE rule, 'E' stands for:", o: ["Enlarged", "Evolution (changing)", "Erythema", "Elevated"], a: 1, w: "E stands for Evolution." },
+    { q: "The most common type of skin cancer is:", o: ["Melanoma", "Basal cell carcinoma", "Squamous cell carcinoma", "Merkel cell carcinoma"], a: 1, w: "Basal cell carcinoma is the most common." },
+    { q: "The most dangerous type of skin cancer is:", o: ["Basal cell carcinoma", "Squamous cell carcinoma", "Melanoma", "Actinic keratosis"], a: 2, w: "Melanoma is the most dangerous." },
+    { q: "The hypodermis is composed mainly of:", o: ["Dense connective tissue", "Adipose (fat) tissue", "Squamous epithelium", "Nervous tissue"], a: 1, w: "The hypodermis is composed mainly of adipose tissue." }
+  ]
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
