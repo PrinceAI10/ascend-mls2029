@@ -47,7 +47,7 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
 .ascend-root.light .auth-card{background:var(--bg-2)}
 .ascend-root.light .seg{background:var(--bg-3)}
 .ascend-root.light .avatar{background:linear-gradient(150deg,#D5DDE8,#B8C4D4);color:#1B1405}
-.ascend-root.light .navi{color:#4B5A70}
+
 .ascend-root.light .navi.on{background:rgba(231,162,31,.14);color:#B4790A}
 .ascend-root.light .mobile-sidebar{background:var(--bg-2)}
 .shell{display:flex;min-height:100vh;max-width:1440px;margin:0 auto;width:100%}
@@ -261,9 +261,8 @@ textarea.pastebox:focus{border-color:var(--amber)}
   padding:12px 0;border-top:1px solid var(--line)}
 .crs-line:first-child{border-top:none}
 .qbox{width:58px;background:var(--bg-3);border:1px solid var(--line);border-radius:8px;
-  padding:7px 8px;color:var(--text);font-size:13px;font-family:var(--mono);text-align:center}
+    padding:7px 8px;color:var(--text);font-size:13px;font-family:var(--mono);text-align:center}
 `;
-
 /* ------------------------------- icons ---------------------------------- */
 const I = ({ d, s = 20, fill = "none", w = 1.9, style }) => (
   <svg width={s} height={s} viewBox="0 0 24 24" fill={fill} stroke="currentColor"
@@ -6055,12 +6054,8 @@ export default function App() {
   const [route, setRoute] = useState({ view: "home" });
 
   // Make the iPhone edge-swipe and the browser/hardware back button work:
-  // when the user goes back, restore the route we saved in history rather than
-  // leaving the app. If there is no saved route (they are at the first screen),
-  // send them to home instead of off the site.
   useEffect(() => {
     if (typeof window === "undefined") return;
-    // seed the first history entry so the very first back press has somewhere to land
     try { window.history.replaceState({ ascendRoute: { view: "home" } }, ""); } catch {}
     const onPop = (e) => {
       const saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : { view: "home" };
@@ -6071,16 +6066,18 @@ export default function App() {
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
   }, []);
+
   useEffect(() => {
-  const handleScroll = () => {
-    setShowTop(window.scrollY > 400);
-  };
-  window.addEventListener("scroll", handleScroll);
-  return () => window.removeEventListener("scroll", handleScroll);
-}, []);
+    const handleScroll = () => {
+      setShowTop(window.scrollY > 400);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const [progress, setProgress] = useState(DEFAULT_PROGRESS);
   const [auth, setAuth] = useState(null);
-  const [supaUid, setSupaUid] = useState(null); // set when signed in via Supabase (Google)
+  const [supaUid, setSupaUid] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [theme, setTheme] = useState("dark");
   const [notifOpen, setNotifOpen] = useState(false);
@@ -6096,9 +6093,6 @@ export default function App() {
     link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap";
     document.head.appendChild(link);
 
-    // PWA icon and manifest are declared in public/index.html (real files), which
-    // is the reliable way for phones - especially iPhone - to show the home-screen
-    // icon. We only ensure the apple-touch-icon is present as a safety net here.
     const icon = "/ascend-icon.png";
     if (!document.querySelector('link[rel="apple-touch-icon"]')) {
       const aLink = document.createElement("link");
@@ -6108,8 +6102,6 @@ export default function App() {
     let meta = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
     if (!meta) { meta = document.createElement("meta"); meta.name = "apple-mobile-web-app-capable"; meta.content = "yes"; document.head.appendChild(meta); }
 
-    // Register the service worker so ASCEND works offline and loads instantly,
-    // saving students' mobile data. Fails silently where unsupported.
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("/sw.js").catch(() => {});
@@ -6120,7 +6112,6 @@ export default function App() {
       const t = await store.get("ascend_theme");
       if (t === "light" || t === "dark") setTheme(t);
 
-      // 1. Supabase session first (Google or email-via-Supabase). If present, it wins.
       try {
         const { data } = await supabase.auth.getSession();
         const sUser = data && data.session ? data.session.user : null;
@@ -6131,7 +6122,6 @@ export default function App() {
         }
       } catch {}
 
-      // 2. Otherwise fall back to a local username/password session.
       const session = await store.get("ascend_session");
       if (session) {
         const accounts = (await store.get("ascend_accounts")) || {};
@@ -6145,7 +6135,6 @@ export default function App() {
       setLoaded(true);
     })();
 
-    // Listen for Google sign-in / sign-out happening after load (OAuth redirect).
     let sub;
     try {
       const res = supabase.auth.onAuthStateChange((event, session) => {
@@ -6164,8 +6153,6 @@ export default function App() {
     return () => { try { document.head.removeChild(link); } catch {} try { sub && sub.unsubscribe(); } catch {} };
   }, []);
 
-  // Bring a Supabase-authenticated user into the app: set auth, load their
-  // progress from the cloud (creating a fresh record if this is their first time).
   const adoptSupabaseUser = async (sUser) => {
     const uid = sUser.id;
     const displayName =
@@ -6177,9 +6164,6 @@ export default function App() {
     const base = freshProgress(displayName);
     const merged = cloud ? { ...base, ...cloud, name: cloud.name || displayName } : { ...base, name: displayName };
     setProgress(merged);
-    // Ensure this user appears on the class leaderboard from the moment they log
-    // in - create/refresh their profile row directly, so nobody is missing even
-    // if the signup trigger did not fire or they have not earned XP yet.
     try {
       await supabase.from("profiles").upsert({
         id: uid,
@@ -6199,46 +6183,36 @@ export default function App() {
     setProgress(p ? { ...freshProgress(acct.username), ...p, name: acct.username } : freshProgress(acct.username));
     setRoute({ view: "home" });
   };
+
   const logout = async () => {
     if (supaUid) { try { await supabase.auth.signOut(); } catch {} setSupaUid(null); }
     await store.set("ascend_session", "");
     setAuth(null); setMenuOpen(false); setRoute({ view: "home" });
   };
+
   const toggleTheme = () => { const t = theme === "light" ? "dark" : "light"; setTheme(t); store.set("ascend_theme", t); };
 
   const persist = (p) => {
     setProgress(p);
     if (supaUid) {
-      // signed in via Supabase: save to the cloud (cross-device + class leaderboard)
       db.saveProgress(supaUid, p);
     } else if (auth) {
-      // local username/password account: save on this device AND publish to the
-      // cloud leaderboard everyone reads, so this user is visible to the class.
       store.set(progKey(auth.username), p);
       store.setShared("ascend_board:" + p.name.toLowerCase().replace(/[^a-z0-9]/g, ""), { name: p.name, xp: p.xp, streak: p.streak });
       db.publishLocalUser(p.name, p.xp, p.streak);
     }
   };
+
   const go = (view, extra = {}) => {
-  const next = { view, ...extra };
-  setRoute(next);
-  
-  // Save last viewed topic for "Continue reading"
-  if (view === "topic" && extra.courseId !== undefined && extra.topicId !== undefined) {
-    setLastTopic({ courseId: extra.courseId, topicId: extra.topicId });
-  }
-  
-  setMenuOpen(false);
-  if (typeof window !== "undefined") {
-    try { window.history.pushState({ ascendRoute: next }, ""); } catch {}
-    window.scrollTo?.(0, 0);
-  }
-};
+    const next = { view, ...extra };
+    setRoute(next);
+
+    if (view === "topic" && extra.courseId !== undefined && extra.topicId !== undefined) {
+      setLastTopic({ courseId: extra.courseId, topicId: extra.topicId });
+    }
+
     setMenuOpen(false);
     if (typeof window !== "undefined") {
-      // Push this navigation into the browser history so the iPhone edge-swipe
-      // and the browser/hardware back button move back through the app instead
-      // of leaving the site.
       try { window.history.pushState({ ascendRoute: next }, ""); } catch {}
       window.scrollTo?.(0, 0);
     }
@@ -6250,38 +6224,34 @@ export default function App() {
     const streak = progress.lastActive === shift(-1) ? progress.streak + 1 : (progress.lastActive === tk ? progress.streak : 1);
     persist({ ...progress, xp: progress.xp + (correct ? 20 : 5), streak, lastActive: tk, dailyDone: { ...progress.dailyDone, [tk]: true } });
   };
+
   const finishQuiz = (cid, tid, correct, missed = [], total = 0) => {
     const tkey = `${cid}:${tid}`;
     const firstTime = !progress.completed?.[tkey];
-    // XP is only awarded the first time a topic is completed, so the leaderboard
-    // rewards coverage, not grinding the same quiz over and over.
     const gained = firstTime ? correct * 10 : 0;
-    // Build the review deck: keep previously-missed questions, add newly-missed
-    // ones (de-duplicated by question text), so students can drill their weak spots.
     const prevReview = Array.isArray(progress.review) ? progress.review : [];
     const seen = new Set(prevReview.map((m) => m.q));
     const merged = [...prevReview];
     for (const m of missed) { if (!seen.has(m.q)) { merged.push(m); seen.add(m.q); } }
-    // Record the best score percent for this topic, so the weak-spots dashboard
-    // can show which topics the student is strongest and weakest on.
     const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
     const prevScores = progress.scores || {};
     const bestPrev = prevScores[tkey] || 0;
     const scores = { ...prevScores, [tkey]: Math.max(bestPrev, pct) };
     persist({ ...progress, xp: progress.xp + gained, completed: { ...progress.completed, [tkey]: true }, review: merged, scores });
   };
-  // Remove a question from the review deck once the student answers it correctly there.
+
   const clearReviewItem = (questionText) => {
     const prev = Array.isArray(progress.review) ? progress.review : [];
     persist({ ...progress, review: prev.filter((m) => m.q !== questionText) });
   };
-  // Toggle a topic bookmark so students can save topics to revisit fast.
+
   const toggleBookmark = (cid, tid) => {
     const key = `${cid}:${tid}`;
     const prev = Array.isArray(progress.bookmarks) ? progress.bookmarks : [];
     const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
     persist({ ...progress, bookmarks: next });
   };
+
   const setName = async () => {
     if (typeof window === "undefined") return;
     const raw = window.prompt("Change your username (this is your name on the leaderboard)", progress.name);
@@ -6290,12 +6260,10 @@ export default function App() {
     if (newName.length < 2 || newName === progress.name) return;
 
     if (supaUid) {
-      // Supabase user: update the profile name in the cloud
       await db.setUsername(supaUid, newName);
       persist({ ...progress, name: newName });
       return;
     }
-    // local account: remove old shared-board entry to avoid a duplicate, then sync
     if (progress.name) {
       const oldBoardKey = "ascend_board:" + String(progress.name).toLowerCase().replace(/[^a-z0-9]/g, "");
       try { if (hasWS()) { await window.storage.delete?.(oldBoardKey, true); } else { localStorage.removeItem(oldBoardKey); } } catch {}
@@ -6309,6 +6277,7 @@ export default function App() {
   };
 
   const app = { progress, go, recordDaily, finishQuiz, clearReviewItem, toggleBookmark, supaUid, courseId: route.courseId, topicId: route.topicId };
+
   const render = () => {
     switch (route.view) {
       case "home": return <HomeView app={app} />;
@@ -6328,6 +6297,7 @@ export default function App() {
       default: return <HomeView app={app} />;
     }
   };
+
   const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
   const r = rankOf(progress.xp);
   const rootCls = "ascend-root" + (theme === "light" ? " light" : "");
@@ -6338,40 +6308,43 @@ export default function App() {
   const showRate = !!auth && progress.xp >= 30 && !progress.rated && !progress.ratePromptSeen && !rateDismissed && route.view !== "feedback";
 
   if (!loaded) return (
-  <div className={rootCls}>
-    <style>{CSS}</style>
-    <style>{`
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-    `}</style>
-    <div style={{ 
-      display: "flex", 
-      flexDirection: "column", 
-      alignItems: "center", 
-      justifyContent: "center", 
-      minHeight: "100vh",
-      gap: "20px",
-      background: "var(--bg)"
-    }}>
-      <div style={{ 
-        width: 48, 
-        height: 48, 
-        border: "3px solid var(--bg-3)", 
-        borderTop: "3px solid var(--amber)", 
-        borderRadius: "50%", 
-        animation: "spin 1s linear infinite" 
-      }} />
-      <div style={{ 
-        color: "var(--text-3)", 
-        fontSize: 14,
-        fontFamily: "var(--mono)",
-        letterSpacing: "0.1em"
-      }}>ASCEND</div>
+    <div className={rootCls}>
+      <style>{CSS}</style>
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        gap: "20px",
+        background: "var(--bg)"
+      }}>
+        <div style={{
+          width: 48,
+          height: 48,
+          border: "3px solid var(--bg-3)",
+          borderTop: "3px solid var(--amber)",
+          borderRadius: "50%",
+          animation: "spin 1s linear infinite"
+        }} />
+        <div style={{
+          color: "var(--text-3)",
+          fontSize: 14,
+          fontFamily: "var(--mono)",
+          letterSpacing: "0.1em"
+        }}>ASCEND</div>
+      </div>
     </div>
-  </div>
-);
+  );
+
+  if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
+
   const navButtons = (onNav) => NAV.map((n) => {
     const Icon = Ic[n.icon];
     return <button key={n.key} className={"navi " + (activeNav === n.key ? "on" : "")} onClick={() => onNav(n.key)}><Icon p={19} />{n.label}</button>;
@@ -6401,50 +6374,50 @@ export default function App() {
                 <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
                 <span className="chip"><span className="val" style={{ color: r.c }}>{progress.xp}</span> XP</span>
                 <span className="chip streakchip" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-  <Ic.flame p={15} />
-  <span className="val">{progress.streak}</span>
-</span>
+                  <Ic.flame p={15} />
+                  <span className="val">{progress.streak}</span>
+                </span>
                 <button className="avatar" onClick={setName} title="Tap to change your username">{progress.name[0]?.toUpperCase()}</button>
               </div>
             </div>
           </header>
           <div className="content">{render()}</div>
           {showTop && (
-  <button 
-    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-    style={{
-      position: "fixed",
-      bottom: "clamp(70px, 10vh, 100px)",
-      right: "clamp(16px, 3vw, 30px)",
-      width: "48px",
-      height: "48px",
-      borderRadius: "50%",
-      background: "var(--amber)",
-      color: "#1B1405",
-      border: "none",
-      fontSize: "22px",
-      fontWeight: 700,
-      cursor: "pointer",
-      boxShadow: "0 4px 16px rgba(245,185,63,0.3)",
-      zIndex: 50,
-      transition: "all 0.3s ease",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontFamily: "var(--mono)"
-    }}
-    onMouseEnter={(e) => {
-      e.target.style.transform = "scale(1.1)";
-      e.target.style.boxShadow = "0 6px 24px rgba(245,185,63,0.5)";
-    }}
-    onMouseLeave={(e) => {
-      e.target.style.transform = "scale(1)";
-      e.target.style.boxShadow = "0 4px 16px rgba(245,185,63,0.3)";
-    }}
-  >
-    ↑
-  </button>
-)}
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              style={{
+                position: "fixed",
+                bottom: "clamp(70px, 10vh, 100px)",
+                right: "clamp(16px, 3vw, 30px)",
+                width: "48px",
+                height: "48px",
+                borderRadius: "50%",
+                background: "var(--amber)",
+                color: "#1B1405",
+                border: "none",
+                fontSize: "22px",
+                fontWeight: 700,
+                cursor: "pointer",
+                boxShadow: "0 4px 16px rgba(245,185,63,0.3)",
+                zIndex: 50,
+                transition: "all 0.3s ease",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: "var(--mono)"
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = "scale(1.1)";
+                e.target.style.boxShadow = "0 6px 24px rgba(245,185,63,0.5)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = "scale(1)";
+                e.target.style.boxShadow = "0 4px 16px rgba(245,185,63,0.3)";
+              }}
+            >
+              ↑
+            </button>
+          )}
         </div>
       </div>
 
@@ -6517,4 +6490,4 @@ export default function App() {
       )}
     </div>
   );
-
+}
