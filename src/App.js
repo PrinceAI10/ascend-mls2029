@@ -5257,20 +5257,55 @@ function HomeView({ app }) {
   const ntCourse = nt ? courseById(nt.courseId) : null;
   return (
     <div className="view">
-      <div className="hero">
-        <svg className="ridge" viewBox="0 0 600 220" preserveAspectRatio="none" aria-hidden>
-          <defs><radialGradient id="glow" cx="82%" cy="12%" r="45%"><stop offset="0%" stopColor="rgba(245,185,63,.28)" /><stop offset="100%" stopColor="rgba(245,185,63,0)" /></radialGradient>
-            <linearGradient id="rl" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="rgba(157,175,201,.15)" /><stop offset="100%" stopColor="rgba(245,185,63,.55)" /></linearGradient></defs>
-          <rect width="600" height="220" fill="url(#glow)" />
-          <polyline points="0,210 90,180 170,190 260,140 340,150 420,95 500,60 600,20" fill="none" stroke="url(#rl)" strokeWidth="2.2" />
-          <circle cx="600" cy="20" r="4" fill="var(--amber)" />
-        </svg>
-        <div style={{ position: "relative" }}>
-          <div className="eyebrow" style={{ color: "var(--amber)" }}>ASCEND</div>
-          <h1 className="hero-h">Understand the <span className="hl">mechanism</span>, and recall takes care of itself.</h1>
-          <p className="hero-p">Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
-        </div>
-      </div>
+      <div className="hero" style={{ 
+  position: "relative", 
+  overflow: "hidden", 
+  border: "1px solid var(--line)", 
+  borderRadius: "clamp(14px, 2vw, 20px)", 
+  background: "linear-gradient(160deg,#0E1728 0%,#0B1120 60%)", 
+  padding: "clamp(20px, 4vw, 30px) clamp(16px, 3vw, 26px)",
+  minHeight: "clamp(140px, 25vh, 200px)"
+}}>
+  <svg className="ridge" viewBox="0 0 600 220" preserveAspectRatio="none" aria-hidden style={{ 
+    position: "absolute", 
+    inset: 0, 
+    width: "100%", 
+    height: "100%", 
+    pointerEvents: "none", 
+    opacity: "clamp(0.5, 0.8, 1)"
+  }}>
+    <defs>
+      <radialGradient id="glow" cx="82%" cy="12%" r="55%">
+        <stop offset="0%" stopColor="rgba(245,185,63,.20)" />
+        <stop offset="100%" stopColor="rgba(245,185,63,0)" />
+      </radialGradient>
+      <linearGradient id="rl" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stopColor="rgba(157,175,201,.12)" />
+        <stop offset="100%" stopColor="rgba(245,185,63,.5)" />
+      </linearGradient>
+    </defs>
+    <rect width="600" height="220" fill="url(#glow)" />
+    <polyline points="0,210 80,185 150,195 230,150 310,160 380,105 460,75 600,25" fill="none" stroke="url(#rl)" strokeWidth="clamp(1.8, 2.5, 3)" />
+    <circle cx="600" cy="25" r="clamp(3, 4.5, 6)" fill="var(--amber)" />
+  </svg>
+  <div style={{ position: "relative", zIndex: 1 }}>
+    <div className="eyebrow" style={{ color: "var(--amber)", fontSize: "clamp(9px, 1.2vw, 11px)" }}>ASCEND</div>
+    <h1 className="hero-h" style={{ 
+      fontSize: "clamp(20px, 4.6vw, 36px)", 
+      maxWidth: "clamp(12ch, 16ch, 20ch)", 
+      fontWeight: 800, 
+      letterSpacing: "-0.03em",
+      margin: "clamp(4px, 1vh, 8px) 0"
+    }}>Understand the <span className="hl" style={{ color: "var(--amber)" }}>mechanism</span>, and recall takes care of itself.</h1>
+    <p className="hero-p" style={{ 
+      color: "var(--text-2)", 
+      maxWidth: "clamp(35ch, 52ch, 60ch)", 
+      marginTop: "clamp(6px, 1.5vh, 12px)", 
+      fontSize: "clamp(13px, 1.3vw, 15px)", 
+      lineHeight: 1.6 
+    }}>Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
+  </div>
+</div>
 
       {(() => {
         // Exam countdown - end-of-semester exams begin 17 August 2026.
