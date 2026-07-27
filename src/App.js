@@ -4163,6 +4163,7 @@ const CONTENT = {
   "bch:1": T_BCH_ENZYMES,
   "bch:2": T_BCH_INHIBITION,
   "bch:3": T_BCH_GLYCOLYSIS,
+  "bch:4": T_BCH_FRUCTOSE,
   "bio:3": T_BIO_AMINO,
   "psy:0": T_PSY_OVERVIEW,
   "com:0": T_COM_PROCESS,
