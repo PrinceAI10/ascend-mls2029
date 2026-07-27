@@ -5112,6 +5112,410 @@ If those came cleanly, you understand how behaviour is rooted in the brain, nerv
   ],
 };
 
+// ==================== MEDICAL PSYCHOLOGY TOPIC 04: INTRODUCTION TO PSYCHOLOGY ====================
+const T_PSY_INTRO = {
+  courseId: "psy",
+  topicIndex: 3,
+  title: "Introduction to Psychology",
+  minutes: 22,
+  note: [
+    { q: "What is psychology and why does it matter in healthcare?",
+      body: `Psychology is the scientific study of behaviour and mental processes. This definition, while accurate, misses something crucial for healthcare: psychology is about understanding what it means to be human — why we think, feel, and act the way we do, and how these processes affect health and illness.
+
+My Socratic question: you wake up feeling anxious about an exam, you remember your first clinical placement, you decide whether to take a medication or skip it. What do all these experiences have in common, and how can we study them scientifically to improve patient care?
+
+The answer is that they are all mental processes — thoughts, emotions, memories, decisions — and they all produce behaviour. Psychology seeks to understand the connection between the mind and behaviour using the scientific method. In healthcare, this understanding is essential. A patient who fears needles (a psychological factor) may avoid blood tests (a behavioural factor), affecting their diagnosis (a biological factor). Understanding the psychology of the patient is understanding why they do what they do, and that knowledge can save lives.
+
+The importance of psychology in medicine cannot be overstated. It helps us understand why patients adhere to or avoid treatment. It helps us design better health communications. It helps us manage our own stress as healthcare professionals. It helps us understand the patient's experience of illness. Psychology is everywhere in healthcare because humans are everywhere in healthcare.
+
+Crucial insight: psychology is the science of human experience. In healthcare, it provides the framework for understanding the patient behind the disease, and it is essential for effective, humane, and evidence-based care.` },
+
+    { q: "The history of psychology: from philosophy to a health science.",
+      body: `Psychology as we know it is less than 150 years old. Before that, questions about the mind were the domain of philosophy. But in 1879, Wilhelm Wundt established the first psychology laboratory in Leipzig, Germany, marking psychology's transition from philosophy to science.
+
+My Socratic question: if you wanted to understand why a patient is anxious, would you ask them to describe their inner experience, or would you measure their behaviour and physiology? This question divided early psychologists and still shapes how we approach psychological issues in healthcare.
+
+Structuralism, associated with Wundt and Edward Titchener, aimed to break down the mind into basic elements through introspection — asking people to describe their sensory experiences. This approach, while limited, established that psychological phenomena could be studied systematically. Functionalism, associated with William James, focused on how the mind helps us adapt to our environment. James was influenced by Darwin and asked not "what is the structure of the mind?" but "what does the mind do for us?" This question was revolutionary for healthcare — it shifted thinking from describing mental states to understanding their purpose.
+
+The history of psychology is a story of different approaches, each building on the last. In healthcare, this history matters because different approaches lead to different treatments. Psychoanalysis (Freud) led to talk therapy. Behaviourism (Watson, Skinner) led to behaviour modification. Humanism (Rogers, Maslow) led to patient-centred care. Cognitive psychology led to cognitive-behavioural therapy. The biopsychosocial model, dominant today, integrates all of these approaches.
+
+Crucial insight: psychology's history is the story of how we came to understand the mind scientifically. Each school contributed something important, and all of them influence how we understand and treat patients today.` },
+
+    { q: "The major schools of thought in psychology and their healthcare applications.",
+      body: `Psychology is not one thing — it is a collection of different approaches, each with its own assumptions, methods, and areas of focus. In healthcare, each school provides a different lens for understanding patient behaviour.
+
+My Socratic question: if you were studying why a patient refuses to take their medication, would you look at their unconscious fears, their learned behaviours, their thought patterns, their biological brain chemistry, or their social environment? The answer depends on which school of psychology you follow — and the best answer is all of them.
+
+Psychoanalysis, founded by Sigmund Freud, focuses on the unconscious mind and early childhood experiences. It argues that behaviour is driven by unconscious desires and conflicts. In healthcare, this explains why some patients have unexplained reactions to illness — a patient may unconsciously avoid treatment because it symbolises something threatening.
+
+Behaviourism, founded by John Watson and B.F. Skinner, focuses on observable behaviour and how it is shaped by environmental consequences. It argues that behaviour is learned through reinforcement and punishment. In healthcare, this is the basis for behaviour change interventions — rewarding patients for adherence, using token economies in psychiatric settings.
+
+Humanistic psychology, associated with Carl Rogers and Abraham Maslow, focuses on human potential and self-actualisation. It argues that people are basically good and that psychological problems arise when this natural tendency is blocked. In healthcare, this underpins patient-centred care, empathy, and treating the whole person.
+
+Cognitive psychology focuses on mental processes — thinking, memory, problem-solving, interpretation. It argues that to understand behaviour, we must understand how the mind processes information. In healthcare, this is the basis for cognitive-behavioural therapy (CBT), which helps patients change unhelpful thought patterns.
+
+Biopsychology (neuroscience) focuses on the biological basis of behaviour — the brain, nervous system, neurotransmitters, and genetics. In healthcare, this explains the biological underpinnings of mental disorders and the mechanisms of psychotropic medications.
+
+Crucial insight: the schools of psychology are not just historical curiosities — they represent different ways of understanding human behaviour. A complete understanding in healthcare requires integrating insights from all of them, which is exactly what the biopsychosocial model does.` },
+
+    { q: "The biopsychosocial model: the foundation of modern healthcare psychology.",
+      body: `The biopsychosocial model, proposed by George Engel in 1977, is the dominant approach in healthcare psychology today. It recognises that health and illness are influenced by biological, psychological, and social factors — and that these factors interact in complex ways.
+
+My Socratic question: why does one person develop depression after a stressful life event while another does not? A biological explanation might point to genetic vulnerability or neurotransmitter imbalance. A psychological explanation might point to negative thinking patterns or coping styles. A social explanation might point to lack of social support or financial stress. All are part of the answer, and all interact.
+
+The biological level includes brain structure and function, genetics, neurotransmitters, hormones, and physical health. A patient's genetics may predispose them to certain conditions, and their biological state influences their mental state and behaviour. The psychological level includes thoughts, emotions, beliefs, personality, learning history, and coping strategies. How a patient thinks about their illness — as a challenge or a catastrophe — shapes their emotional response and behaviour. The social level includes family, culture, socioeconomic status, social support, work environment, and access to care. Social isolation is a powerful risk factor for both mental and physical illness.
+
+The biopsychosocial model recognises that these levels are not separate but constantly interact. Genetic vulnerability (biological) might be triggered by negative thinking patterns (psychological) in the context of a stressful job (social). Effective healthcare addresses all three levels.
+
+Crucial insight: the biopsychosocial model recognises that there is no single cause of health or illness. Understanding and treating patients requires understanding the interaction of biological, psychological, and social factors. This is the foundation of modern, humane healthcare.` },
+
+    { q: "The scientific method in psychology: how we know what we know.",
+      body: `Psychology is a science, which means it uses the scientific method to answer questions about behaviour and mental processes. But psychology faces unique challenges because its subject matter — human behaviour — is complex, variable, and influenced by many factors.
+
+My Socratic question: how can we be sure that a psychological intervention actually works? What makes a study valid, and how do we distinguish evidence from opinion?
+
+The scientific method in psychology follows the same steps as any other science: formulate a research question, develop a testable hypothesis, design a study, collect data, analyse the results, and draw conclusions. But psychology has additional challenges. Ethical considerations restrict what we can do to participants. The complexity of human behaviour makes it difficult to isolate variables. People may change their behaviour when they know they are being studied (the Hawthorne effect).
+
+Good psychological research uses controls to rule out alternative explanations, large and representative samples to generalise findings, and replication to ensure that findings are reliable. Different research methods serve different purposes: experiments establish cause and effect; correlational studies identify relationships; and case studies and observational studies provide in-depth understanding of specific phenomena.
+
+In healthcare, this scientific rigour is essential. We must know that interventions actually work before we apply them to patients. Evidence-based practice — using treatments that have been scientifically validated — is the standard in modern healthcare.
+
+Crucial insight: the scientific method is the foundation of psychology as a discipline and of evidence-based healthcare. Understanding how psychological research is conducted is essential for evaluating the claims made about treatments and for providing effective, scientifically validated care.` },
+
+    { q: "Research methods in psychology: how we study the mind in health and illness.",
+      body: `Psychologists use a variety of research methods to study behaviour and mental processes. Each method has strengths and weaknesses, and the choice of method depends on the research question.
+
+My Socratic question: if you wanted to know whether a new therapy reduces depression, how would you study this? What method would you use, and why?
+
+The best method would be a randomised controlled trial (RCT) — a type of experiment. In an experiment, researchers manipulate one variable (the independent variable, such as the therapy) and measure its effect on another variable (the dependent variable, such as depression scores). They use random assignment to ensure that the groups are equivalent, and they control for confounding variables. This is the best way to establish cause and effect.
+
+But experiments are not always possible or ethical. Correlational studies examine the relationship between two variables without manipulating either. They can tell us that two things are related, but not whether one causes the other. For example, a correlational study might find a relationship between stress and illness, but it cannot tell us whether stress causes illness or whether illness causes stress (or whether a third factor causes both).
+
+Other methods include case studies (in-depth study of a single individual, valuable for rare conditions), surveys (gathering self-reported data from many people, useful for large-scale patterns), naturalistic observation (watching behaviour in natural settings), and longitudinal studies (following participants over time, essential for understanding development and progression).
+
+Crucial insight: the research method determines what we can conclude. Experiments can establish cause and effect; correlational studies can establish relationships but not causation. Understanding research methods is essential for evaluating the evidence base for healthcare interventions and for conducting your own research.` },
+
+    { q: "Ethics in psychological and healthcare research.",
+      body: `Psychologists and healthcare researchers study human behaviour, which means they must navigate complex ethical issues. The history of psychology includes troubling studies — like the Milgram obedience experiments and the Stanford prison experiment — that raised serious ethical questions and led to important safeguards.
+
+My Socratic question: is it ever acceptable to deceive participants in a study? If so, under what conditions, and what must happen afterward?
+
+The answer is that deception is sometimes used in psychological research, but it must be justified by the importance of the research and must not cause harm. Participants must be debriefed afterward — fully informed about the study's purpose and any deception — and they must be given the opportunity to withdraw their data.
+
+Ethical guidelines in psychological research are designed to protect participants. They include: informed consent (participants must know what they are agreeing to in order to decide freely), confidentiality (participants' data must be protected), the right to withdraw (participants can leave the study at any time), protection from harm (participants must not be exposed to risks beyond minimal), and debriefing (participants must be fully informed after the study).
+
+In healthcare research, these principles are even more critical because patients are vulnerable and interventions can have real consequences. Institutional Review Boards (IRBs) or Research Ethics Committees review research proposals to ensure that they meet ethical standards before any research is conducted.
+
+Crucial insight: ethics is not an afterthought in research — it is a fundamental part of the research process. Ethical guidelines exist to protect participants, and researchers have a responsibility to conduct their work ethically. This is essential for maintaining trust in healthcare and the integrity of research.` },
+
+    { q: "Common misconceptions about psychology in healthcare.",
+      body: `Psychology is one of the most misunderstood fields. Students and healthcare professionals come with many misconceptions that get in the way of understanding the science and applying it to patient care.
+
+My Socratic question: do you believe that "opposites attract"? That "you only use 10% of your brain"? That "depression is just being sad, and people should just snap out of it"? If so, you have been influenced by misconceptions about psychology that can harm patients.
+
+One common misconception is that psychology is not a science. Many people believe that psychologists just "talk to people" and that psychology is just common sense. This is wrong — psychology uses rigorous scientific methods, and its findings are often counterintuitive. Understanding this is essential for healthcare professionals who need to evaluate psychological evidence.
+
+Another misconception is that psychiatric diagnoses are just labels that don't mean anything. In fact, diagnoses like depression, schizophrenia, and anxiety disorder have real biological and psychological correlates, they predict treatment response, and they guide effective treatment.
+
+Another misconception is that psychological research doesn't apply to real-life healthcare. In fact, psychological research has led to effective treatments for mental illness, better patient communication strategies, improved adherence interventions, and better understanding of the patient experience.
+
+Another misconception is that mental health problems are simply a matter of willpower and that patients should just "try harder" or "snap out of it." Mental health problems are real medical conditions with biological, psychological, and social causes, and they require proper treatment.
+
+Crucial insight: common sense is often wrong about psychology. In healthcare, relying on misconceptions can harm patients. The only way to understand human behaviour and provide effective care is through rigorous scientific understanding.` },
+
+    { q: "What are the most common mistakes students make in introductory psychology?",
+      body: `Students and healthcare professionals make several common mistakes when first encountering psychology. Understanding these mistakes can help you avoid them and apply psychology more effectively in your practice.
+
+The first mistake is confusing correlation with causation. Just because two things are related does not mean one causes the other. This is the most common error in psychological reasoning, and it leads to all kinds of bad conclusions in healthcare. For example, if stress is correlated with heart disease, it does not prove that stress causes heart disease — there may be other factors involved.
+
+The second mistake is over-generalising from small or unrepresentative samples. If a study uses only college students or only one cultural group, the findings may not apply to other populations. In healthcare, this is critical — treatments that work in one group may not work in another, and we must be careful about whom our evidence applies to.
+
+The third mistake is thinking that psychology is just common sense. Many psychological findings are counterintuitive — they go against what we would expect. That is why we need science, not intuition, to guide healthcare decisions.
+
+The fourth mistake is believing that psychological problems are all in the mind and that people should just "snap out of it." Mental health problems are real medical conditions with biological, psychological, and social causes, and they require proper treatment. Telling someone with depression to just be happy is like telling someone with diabetes to just regulate their blood sugar — it is not helpful, and it is not accurate.
+
+Crucial insight: psychology is a science, not just common sense. Understanding its methods and findings requires careful thinking and a willingness to question your assumptions. In healthcare, this careful thinking can save lives.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for Introduction to Psychology.
+
+Psychology: the scientific study of behaviour and mental processes. In healthcare, it provides the framework for understanding patients, improving communication, and designing effective interventions.
+
+History: Wundt (structuralism) → James (functionalism) → Freud (psychoanalysis) → Watson/Skinner (behaviourism) → Rogers/Maslow (humanism) → cognitive revolution → biopsychosocial model.
+
+Schools: psychoanalysis (unconscious drives, childhood experience), behaviourism (observable behaviour, learning through consequences), humanism (potential, self-actualisation, empathy), cognitive (mental processes, thinking, interpretation), biopsychology (brain, neurotransmitters, genes).
+
+Biopsychosocial model: biological, psychological, and social factors interact to shape health and illness. The foundation of modern healthcare.
+
+Research methods: experiments (cause and effect, with random assignment), correlational studies (relationships, not causation), case studies, surveys, observations.
+
+Ethics: informed consent, confidentiality, right to withdraw, protection from harm, debriefing.
+
+Common mistakes: confusing correlation with causation, over-generalising, thinking psychology is just common sense, believing mental health problems are just a matter of willpower.
+
+Now your final test. A researcher wants to know whether a new patient education intervention improves medication adherence. She designs a study with a treatment group and a control group, but she does not use random assignment. She finds that the treatment group shows better adherence.
+
+Question one: can she conclude that the intervention causes the improvement in adherence? Why or why not?
+Question two: what is the most likely alternative explanation for her finding?
+Question three: how should she modify her study design to establish cause and effect, and why does this matter for patient care?
+
+Work them through before reading on.
+
+My answers. One: no, she cannot conclude causation because without random assignment, the groups may differ in other ways that explain the difference. Two: the treatment group may have been more motivated to begin with, or they may have had more social support, or they may have been more educated. Any of these could explain the better adherence. Three: she should use random assignment to ensure that the groups are equivalent at the start, and she should control for confounding variables like motivation, education, and support. This matters because we need to know that the intervention actually works before we spend resources on it and recommend it to patients — giving patients interventions that do not work wastes resources and may harm them.` }
+  ],
+  theory: [
+    { q: "What is psychology and how is it defined in healthcare?", a: "Psychology is the scientific study of behaviour and mental processes. In healthcare, it provides the framework for understanding the patient behind the disease, explaining why patients think, feel, and act the way they do, and designing effective interventions." },
+    { q: "Who founded the first psychology laboratory and when?", a: "Wilhelm Wundt founded the first psychology laboratory in Leipzig, Germany, in 1879, marking psychology's transition from philosophy to science." },
+    { q: "What was structuralism and who was associated with it?", a: "Structuralism, associated with Wundt and Edward Titchener, aimed to break down the mind into basic elements through introspection. It established that psychological phenomena could be studied systematically." },
+    { q: "What was functionalism and who was associated with it?", a: "Functionalism, associated with William James, focused on the functions of the mind and how it helps us adapt to our environment. It asked not 'what is the mind?' but 'what does the mind do?'" },
+    { q: "What are the major schools of thought in psychology and how do they apply to healthcare?", a: "Psychoanalysis (unconscious drives, childhood experience), behaviourism (observable behaviour, learning through consequences), humanism (potential, empathy, patient-centred care), cognitive (mental processes, thinking patterns, CBT), biopsychology (brain, neurotransmitters, genetics), and the biopsychosocial model (integration of all). Each provides a different lens for understanding patient behaviour." },
+    { q: "What is the biopsychosocial model and why is it important in healthcare?", a: "The biopsychosocial model, proposed by George Engel, recognises that health and illness are influenced by biological, psychological, and social factors that interact. It is the foundation of modern, humane, patient-centred healthcare." },
+    { q: "What is the difference between an experiment and a correlational study?", a: "An experiment manipulates a variable to establish cause and effect; a correlational study examines relationships between variables without manipulation. Only experiments can establish causation." },
+    { q: "What are the key ethical principles in psychological and healthcare research?", a: "Informed consent (participants must know what they are agreeing to), confidentiality (data must be protected), right to withdraw (participants can leave at any time), protection from harm (no unnecessary risk), and debriefing (participants must be fully informed after the study)." },
+    { q: "Why is random assignment important in experiments?", a: "Random assignment ensures that groups are equivalent at the start, so that any differences between groups can be attributed to the independent variable. It is essential for establishing cause and effect." },
+    { q: "What is the most common mistake students make in reasoning about psychology?", a: "Confusing correlation with causation — assuming that if two things are related, one causes the other. This leads to incorrect conclusions and ineffective interventions." },
+  ],
+  videos: [
+    { channel: "CrashCourse", title: "Intro to Psychology", note: "What is psychology and how did it start? Essential for understanding the foundations.", url: "https://www.youtube.com/results?search_query=CrashCourse+intro+to+psychology" },
+    { channel: "Khan Academy", title: "Introduction to Psychology", note: "The scientific study of behaviour and mental processes, applied to health.", url: "https://www.youtube.com/results?search_query=Khan+Academy+intro+to+psychology" },
+    { channel: "Simply Psychology", title: "The Biopsychosocial Model", note: "The modern approach to understanding health and illness in psychology.", url: "https://www.youtube.com/results?search_query=Simply+Psychology+biopsychosocial+model" },
+  ],
+  mcqs: [
+    { q: "Psychology is the scientific study of:", o: ["Behaviour and mental processes", "Brain anatomy only", "Mental illness only", "Social relationships only"], a: 0, w: "Psychology studies both observable behaviour and internal mental processes." },
+    { q: "Who established the first psychology laboratory?", o: ["Sigmund Freud", "Wilhelm Wundt", "William James", "B.F. Skinner"], a: 1, w: "Wundt established the first psychology laboratory in Leipzig in 1879." },
+    { q: "Structuralism focused on:", o: ["The functions of the mind", "Breaking down the mind into basic elements", "Observable behaviour", "The unconscious mind"], a: 1, w: "Structuralism aimed to break down the mind into basic elements through introspection." },
+    { q: "Functionalism was influenced by:", o: ["Darwin's theory of evolution", "Freud's psychoanalysis", "Skinner's behaviourism", "Rogers' humanism"], a: 0, w: "James's functionalism was influenced by Darwin and focused on how the mind helps us adapt." },
+    { q: "Which school of psychology focuses on the unconscious mind?", o: ["Behaviourism", "Psychoanalysis", "Humanism", "Cognitive psychology"], a: 1, w: "Psychoanalysis, founded by Freud, focuses on the unconscious mind." },
+    { q: "Which school of psychology focuses on observable behaviour?", o: ["Psychoanalysis", "Cognitive psychology", "Behaviourism", "Humanism"], a: 2, w: "Behaviourism focuses on observable behaviour and its environmental determinants." },
+    { q: "Which school of psychology focuses on human potential and self-actualisation?", o: ["Psychoanalysis", "Behaviourism", "Cognitive psychology", "Humanistic psychology"], a: 3, w: "Humanistic psychology focuses on human potential and self-actualisation." },
+    { q: "Which school of psychology focuses on mental processes like thinking and memory?", o: ["Behaviourism", "Psychoanalysis", "Cognitive psychology", "Humanism"], a: 2, w: "Cognitive psychology focuses on mental processes like thinking, memory, and problem-solving." },
+    { q: "The biopsychosocial model emphasises:", o: ["Only biological factors", "Only psychological factors", "Biological, psychological, and social factors", "Only social factors"], a: 2, w: "The biopsychosocial model integrates biological, psychological, and social factors." },
+    { q: "Which research method is best for establishing cause and effect?", o: ["Correlational study", "Case study", "Experiment", "Survey"], a: 2, w: "Experiments are the best method for establishing cause and effect." },
+    { q: "Correlational studies can tell us:", o: ["That one variable causes another", "That two variables are related", "The cause of a behaviour", "The function of a behaviour"], a: 1, w: "Correlational studies show relationships between variables, not causation." },
+    { q: "Random assignment is important because:", o: ["It ensures large sample sizes", "It ensures groups are equivalent", "It makes the study easier", "It is required by ethics committees"], a: 1, w: "Random assignment ensures groups are equivalent so differences can be attributed to the independent variable." },
+    { q: "Informed consent means:", o: ["Participants must be paid", "Participants must know what they are agreeing to", "Participants must be told the results", "Participants must be debriefed"], a: 1, w: "Informed consent means participants know what they are agreeing to." },
+    { q: "Debriefing occurs:", o: ["Before the study", "During the study", "After the study", "Instead of informed consent"], a: 2, w: "Debriefing happens after the study, especially if deception was used." },
+    { q: "The Hawthorne effect refers to:", o: ["People behaving differently when they know they are being studied", "The effect of genetics on behaviour", "The effect of the environment on behaviour", "The effect of unconscious processes"], a: 0, w: "The Hawthorne effect is the change in behaviour when people know they are being observed." },
+    { q: "A researcher finds that ice cream sales and drowning deaths are correlated. This means:", o: ["Ice cream causes drowning", "Drowning causes ice cream sales", "The two are related but causation cannot be concluded", "There is no relationship"], a: 2, w: "Correlation does not equal causation — the relationship may be due to a third variable like temperature." },
+    { q: "Which of the following is a misconception about psychology?", o: ["Psychology is a science", "Psychological research uses the scientific method", "Psychology is just common sense", "Psychology has ethical guidelines"], a: 2, w: "Psychology is not just common sense — it is a rigorous science with findings that are often counterintuitive." },
+    { q: "Psychoanalysis was founded by:", o: ["William James", "B.F. Skinner", "Sigmund Freud", "Carl Rogers"], a: 2, w: "Sigmund Freud founded psychoanalysis." },
+    { q: "Behaviourism was founded by:", o: ["John Watson and B.F. Skinner", "Sigmund Freud and Carl Jung", "William James and John Dewey", "Carl Rogers and Abraham Maslow"], a: 0, w: "Behaviourism was founded by Watson and later developed by Skinner." },
+    { q: "Humanistic psychology was associated with:", o: ["Freud and Jung", "Watson and Skinner", "Rogers and Maslow", "Wundt and Titchener"], a: 2, w: "Humanistic psychology was associated with Carl Rogers and Abraham Maslow." },
+    { q: "The cognitive revolution in psychology emphasised:", o: ["Observable behaviour", "The unconscious mind", "Mental processes", "Human potential"], a: 2, w: "The cognitive revolution shifted focus back to mental processes like thinking and memory." },
+    { q: "Which level is NOT part of the biopsychosocial model?", o: ["Biological", "Psychological", "Social", "Spiritual"], a: 3, w: "The biopsychosocial model includes biological, psychological, and social levels." },
+    { q: "A case study involves:", o: ["Studying a large sample", "In-depth study of a single individual", "Manipulating a variable", "Measuring two variables"], a: 1, w: "A case study is an in-depth examination of a single individual or small group." },
+    { q: "Naturalistic observation involves:", o: ["Observing behaviour in a controlled setting", "Observing behaviour in a natural setting", "Asking people about their behaviour", "Manipulating a variable"], a: 1, w: "Naturalistic observation involves observing behaviour in natural settings." },
+    { q: "A survey is an example of:", o: ["An experimental method", "A correlational method", "A qualitative method", "A descriptive method"], a: 3, w: "Surveys are descriptive methods that gather data through questionnaires." },
+    { q: "The IRB reviews research to ensure:", o: ["The study is interesting", "The study has a large sample", "The study meets ethical standards", "The study will be published"], a: 2, w: "Institutional Review Boards (IRBs) review research to ensure ethical standards are met." },
+    { q: "Which statement is true about psychological research?", o: ["Psychological research is not scientific", "Psychological research has no practical applications", "Psychological research uses the scientific method", "Psychological research is only about mental illness"], a: 2, w: "Psychological research is scientific and has many practical applications." },
+    { q: "The belief that 'opposites attract' is:", o: ["A well-supported finding in psychology", "A common misconception", "A theory in social psychology", "A research method"], a: 1, w: "Opposites attract is a common misconception — research shows that similarity is more predictive of attraction." },
+    { q: "What is the difference between a hypothesis and a theory?", o: ["A hypothesis is more general", "A theory is more specific", "A hypothesis is a testable prediction; a theory is a well-supported explanation", "There is no difference"], a: 2, w: "A hypothesis is a specific, testable prediction; a theory is a broad, well-supported explanation." },
+    { q: "The most important ethical principle in psychology is:", o: ["Making money from research", "Publishing results quickly", "Protecting the welfare of participants", "Using large sample sizes"], a: 2, w: "Protecting the welfare of participants is the most important ethical principle." },
+  ],
+};
+
+// ==================== MEDICAL PSYCHOLOGY TOPIC 05: LEARNING THEORIES ====================
+const T_PSY_LEARNING = {
+  courseId: "psy",
+  topicIndex: 4,
+  title: "Learning Theories",
+  minutes: 22,
+  note: [
+    { q: "What is learning and why does it matter in healthcare?",
+      body: `Learning is a relatively permanent change in behaviour, knowledge, or capability that results from experience. It is the process by which we adapt to our environment, acquire new skills, and change our behaviour — and it is fundamental to everything we do in healthcare.
+
+My Socratic question: how did you learn to take a blood pressure reading? How did a patient learn to fear needles? How does a person learn to manage their diabetes? These are all examples of learning, but they involve different processes. How can we explain them, and how can we use this understanding to improve patient care?
+
+Learning is not just about school or studying — it is how we acquire new behaviours, skills, and knowledge throughout life. Every time you learn something new, your brain changes. This is called neuroplasticity, and it is the biological basis of learning. In healthcare, learning is everywhere: patients learn to manage chronic conditions, medical students learn diagnostic skills, healthcare providers learn to communicate effectively, and all of us learn health behaviours that either promote or undermine our wellbeing.
+
+Understanding how learning works is essential for effective healthcare delivery. If we understand how learning happens, we can design better patient education, more effective behaviour change interventions, and better training for healthcare professionals. Learning theories provide the framework for understanding how behaviour is acquired, maintained, and changed — and this is the foundation of much of healthcare practice.
+
+Crucial insight: learning is the process by which experience changes the brain and behaviour. It is the foundation of all behaviour change in healthcare, from patient education to professional training. Understanding learning theories is essential for effective healthcare delivery.` },
+
+    { q: "Classical conditioning: learning by association in healthcare.",
+      body: `Classical conditioning is a form of learning in which a neutral stimulus comes to elicit a response after being paired with a stimulus that naturally elicits that response. It was discovered by Ivan Pavlov, a Russian physiologist who was studying digestion in dogs.
+
+My Socratic question: why do many patients feel anxious when they walk into a hospital or a doctor's office, even before they have received any treatment? Why does the placebo effect work? These phenomena are explained by classical conditioning — patients learn to associate the healthcare setting with pain or relief, and the conditioned responses persist even when the unconditioned stimulus is absent.
+
+Pavlov's famous experiment: he rang a bell (neutral stimulus) before giving food (unconditioned stimulus) to dogs. The food naturally caused salivation (unconditioned response). After repeated pairings, the bell alone caused salivation (conditioned response). The dogs had learned to associate the bell with food.
+
+In healthcare, classical conditioning explains many important phenomena. Conditioned nausea and vomiting in chemotherapy patients occurs because the hospital environment becomes associated with the nausea caused by chemotherapy drugs. The placebo effect occurs when a neutral stimulus (a sugar pill) becomes associated with the active treatment and produces a similar response. Conditioned fear of medical procedures, white coat hypertension (elevated blood pressure in medical settings), and conditioned immune responses are all examples of classical conditioning in healthcare.
+
+Classical conditioning can also be used therapeutically. Systematic desensitisation is used to treat phobias by gradually exposing patients to feared stimuli while they are relaxed, creating new associations between the feared stimulus and relaxation. Counterconditioning can be used to replace maladaptive associations with adaptive ones.
+
+Crucial insight: classical conditioning is learning by association. It explains many health-related behaviours, including phobias, placebo effects, and conditioned responses to medical procedures. Understanding these principles allows healthcare providers to develop more effective interventions and reduce patient anxiety.` },
+
+    { q: "Operant conditioning: learning by consequences in healthcare.",
+      body: `Operant conditioning is a form of learning in which behaviour is influenced by its consequences. Behaviours that are reinforced are more likely to be repeated; behaviours that are punished are less likely to be repeated. This was studied by B.F. Skinner and is one of the most important principles for understanding health behaviour.
+
+My Socratic question: why do you keep going to work? Because you are paid — that is a reinforcement. Why do you avoid touching a hot stove? Because you get burned — that is a punishment. In healthcare, why do some patients adhere to their medication regimen while others do not? The answer often lies in the consequences of their behaviour.
+
+Skinner used a device called the Skinner box to study operant conditioning. A rat in the box would press a lever and receive a food pellet. The food was a reinforcement, and the rat learned to press the lever more often. Skinner showed that behaviour is shaped by its consequences.
+
+Reinforcement increases the likelihood of a behaviour. It can be positive (adding something pleasant, like praise for taking medication) or negative (removing something unpleasant, like taking a painkiller to relieve pain). Punishment decreases the likelihood of a behaviour. It can also be positive (adding something unpleasant, like a time-out) or negative (removing something pleasant, like losing a privilege).
+
+Operant conditioning explains how we learn new behaviours, how habits form, and how behaviour can be changed. In healthcare, it is the basis for behaviour modification, contingency management, token economies in psychiatric settings, and many parenting and teaching strategies. Understanding reinforcement and punishment is essential for encouraging healthy behaviours and discouraging unhealthy ones.
+
+Crucial insight: operant conditioning is learning by consequences. It explains how health behaviours are acquired and maintained through reinforcement and punishment. Understanding these principles is essential for designing effective behaviour change interventions and improving patient adherence.` },
+
+    { q: "Observational learning: learning by watching others in healthcare.",
+      body: `Observational learning, also called social learning or modelling, is learning that occurs through watching others and imitating their behaviour. It was studied by Albert Bandura in his famous Bobo doll experiments.
+
+My Socratic question: how did you learn to use a smartphone or a medical instrument? You probably watched someone else do it. In healthcare, how do patients learn health behaviours from family members, peers, and media? How do medical students learn clinical skills from experienced clinicians? This is observational learning in action.
+
+Bandura's Bobo doll experiment: children watched an adult behave aggressively toward a Bobo doll. When the children were later given the opportunity to play with the doll, they imitated the aggressive behaviour they had observed. This showed that learning can occur without direct reinforcement.
+
+Observational learning involves four processes: attention (we must pay attention to the model), retention (we must remember what we observed), reproduction (we must be able to reproduce the behaviour), and motivation (we must have a reason to perform the behaviour).
+
+Observational learning explains many health-related phenomena. Children of smokers are more likely to become smokers themselves because they observe and imitate the behaviour. Patients who see others successfully managing a chronic condition are more likely to successfully manage their own condition. Medical students who observe effective communication skills develop those skills themselves through modelling.
+
+Observational learning has many applications in healthcare. Patient education materials often use modelling to demonstrate health behaviours. Support groups and peer mentoring use observational learning to promote healthy behaviours. Video modelling is effective for teaching patients new skills, such as diabetes self-management or medication administration. Healthcare providers can use modelling to demonstrate effective communication and coping strategies.
+
+Crucial insight: observational learning is a powerful mechanism for transmitting health behaviours and skills. Healthcare providers can harness observational learning through modelling, peer support, and demonstration to promote healthy behaviours and improve clinical skills.` },
+
+    { q: "Reinforcement schedules: the timing of rewards in health behaviour maintenance.",
+      body: `Reinforcement schedules — the timing and pattern of reinforcement — have a profound effect on how quickly behaviours are learned and how resistant they are to extinction. This is particularly important in healthcare, where the goal is often to establish behaviours that are maintained over long periods, such as medication adherence, regular exercise, or dietary changes.
+
+My Socratic question: why are slot machines so addictive? The answer lies in the reinforcement schedule — they use a variable ratio schedule, which is the most resistant to extinction. Why do some patients maintain health behaviours for months or years while others relapse shortly after starting? The answer often lies in the reinforcement schedule.
+
+There are four basic reinforcement schedules: fixed ratio (reinforcement after a fixed number of responses), variable ratio (reinforcement after a variable number of responses), fixed interval (reinforcement after a fixed amount of time), and variable interval (reinforcement after a variable amount of time). Variable ratio schedules produce the highest response rates and are the most resistant to extinction. This is why gambling is so addictive — the unpredictable rewards keep people playing.
+
+In healthcare, variable ratio schedules are the most effective for maintaining health behaviours because they produce the highest response rates and the greatest resistance to extinction. Intermittent reinforcement — where behaviours are reinforced unpredictably — leads to more persistent behaviour than continuous reinforcement.
+
+Reinforcement schedules can be applied to health behaviour change in several ways. Self-monitoring and feedback can serve as reinforcers when they are delivered on a variable schedule. Gamification techniques, such as variable rewards, can maintain engagement in health apps. Understanding reinforcement schedules allows healthcare providers to design interventions that promote long-term behaviour maintenance.
+
+Crucial insight: the timing of reinforcement affects how quickly behaviour is learned and how resistant it is to extinction. Variable ratio schedules are the most powerful and are the basis of gambling addiction. In healthcare, they are also the most effective for maintaining health behaviours over time.` },
+
+    { q: "Cognitive learning: thinking, understanding, and insight in healthcare.",
+      body: `Cognitive learning involves mental processes — thinking, understanding, reasoning, problem-solving, and insight. It goes beyond simple conditioning and recognises that learning is an active, thoughtful process. In healthcare, cognitive learning is essential for patient understanding, clinical reasoning, and health literacy.
+
+My Socratic question: why does providing patients with information alone often fail to change behaviour? The answer is that information alone is cognitive learning, but behaviour change also requires motivation and skills. Patients need to understand why a behaviour is important, but they also need to believe they can do it and have the skills to perform it. Cognitive learning is necessary but not sufficient for behaviour change.
+
+Edward Tolman studied cognitive learning in rats. He found that rats could learn the layout of a maze even without reinforcement — they formed a cognitive map, a mental representation of the maze. When reinforcement was introduced, the rats used their cognitive map to find the food quickly. This shows that learning involves more than just conditioning — it involves mental representations and understanding.
+
+Cognitive learning in healthcare includes understanding health information (health literacy), developing insight into one's own health behaviours, learning to solve health-related problems, and acquiring clinical reasoning skills. Cognitive learning is facilitated by active engagement, personal relevance, and the opportunity to apply new knowledge to real-world situations.
+
+Health literacy — the ability to understand and use health information — is a critical component of cognitive learning in healthcare. Patients with low health literacy are less likely to adhere to treatment, have worse health outcomes, and are more likely to be hospitalised. Interventions that improve health literacy, such as teach-back methods, plain language materials, and patient education, can significantly improve outcomes.
+
+Crucial insight: cognitive learning involves active mental processing and is essential for health literacy, patient understanding, and clinical reasoning. Effective healthcare requires facilitating cognitive learning through clear communication, patient education, and opportunities for insight and understanding.` },
+
+    { q: "Applications of learning theory in healthcare interventions.",
+      body: `Behavioural learning principles — including classical conditioning, operant conditioning, observational learning, and cognitive learning — form the foundation of many healthcare interventions. From cognitive-behavioural therapy to health coaching to patient education, the application of learning principles is essential for changing health behaviours and improving clinical outcomes.
+
+My Socratic question: how do we help a patient who wants to quit smoking but has been unable to do so? The answer involves applying multiple learning principles: identify triggers (classical conditioning), reinforce smoke-free days (operant conditioning), model successful quitters (observational learning), and provide education about the benefits of quitting (cognitive learning). An effective intervention addresses all of these levels.
+
+Behavioural learning principles can be applied in many healthcare contexts. Contingency management uses positive reinforcement to encourage treatment adherence, with tangible rewards provided for meeting treatment goals. Token economies, used in psychiatric and rehabilitation settings, use tokens as conditioned reinforcers that can be exchanged for privileges or rewards. Motivational interviewing helps patients resolve ambivalence about behaviour change by exploring the consequences of current behaviour and the benefits of change.
+
+In patient education, learning principles guide the design of effective materials and interventions. Information should be presented at the appropriate level, with active engagement (such as teach-back and practice) to promote cognitive learning. Modelling and demonstration (observational learning) show patients how to perform behaviours. Reinforcement, praise, and feedback (operant conditioning) maintain behaviour change. Understanding and addressing the conditioned responses that interfere with health behaviours (classical conditioning) is also essential.
+
+Crucial insight: behavioural learning principles form the foundation of many healthcare interventions. Effective intervention design requires applying multiple learning principles — classical conditioning, operant conditioning, observational learning, and cognitive learning — to address the complexity of health behaviour change.` },
+
+    { q: "Learning and memory in health behaviour change.",
+      body: `Learning and memory are intimately connected — learning is the acquisition of new knowledge or skills, and memory is the retention of what has been learned. In healthcare, both learning and memory are essential for health behaviour change. Patients must learn new health behaviours and remember to perform them; healthcare providers must learn clinical knowledge and remember it for patient care.
+
+My Socratic question: why do patients often forget to take their medication, even when they understand why it is important? The answer involves memory — patients may not have encoded the information effectively, may not have consolidated the memory through practice, or may not have effective retrieval cues to remind them to take the medication. Effective behaviour change requires not just learning but also remembering to perform the behaviour.
+
+Memory involves three processes: encoding (getting information in), storage (maintaining information over time), and retrieval (accessing information when needed). In healthcare, each of these processes can be optimised to improve learning and behaviour change. Encoding is enhanced by active engagement, personal relevance, and multiple modalities (visual, verbal, tactile). Storage is enhanced by repetition, practice, and sleep. Retrieval is enhanced by cues, reminders, and context.
+
+Memory strategies in healthcare include medication reminders (alarms, pill boxes, smartphone apps), teach-back (asking patients to repeat information to ensure encoding), spaced repetition (repeating information over time to enhance consolidation), and cue-based retrieval (associating behaviours with daily routines). These strategies can significantly improve treatment adherence and health outcomes.
+
+Crucial insight: learning and memory are essential for health behaviour change. Healthcare interventions should incorporate memory strategies — encoding enhancement, repetition, consolidation, and retrieval cues — to improve patient adherence and outcomes.` },
+
+    { q: "Common mistakes students make with learning psychology in healthcare.",
+      body: `Students often make several common mistakes when applying learning psychology to healthcare. These mistakes can lead to ineffective patient education, poor adherence interventions, and missed opportunities for behaviour change. Understanding these mistakes is essential for developing effective healthcare interventions.
+
+The first mistake is thinking that providing information is sufficient to change behaviour. Information is necessary but not sufficient — patients need motivation, skills, and support to change behaviour. Education must be combined with behavioural strategies to be effective.
+
+The second mistake is confusing classical and operant conditioning. Classical conditioning involves learning associations between stimuli; operant conditioning involves learning associations between behaviour and consequences. In healthcare, this confusion can lead to using the wrong intervention for the wrong problem.
+
+The third mistake is underestimating the importance of reinforcement schedules. Many healthcare interventions use continuous reinforcement (rewarding every instance of a behaviour), which is less effective for long-term maintenance than intermittent reinforcement. Variable ratio schedules, which are most resistant to extinction, are often underutilised.
+
+The fourth mistake is ignoring observational learning. Patients learn health behaviours from family, peers, and media, and these social influences are often more powerful than education. Healthcare interventions should address social influences and use modelling to promote healthy behaviours.
+
+Crucial insight: effective healthcare interventions apply multiple learning principles and avoid common mistakes such as relying solely on information, confusing conditioning types, underestimating reinforcement schedules, and ignoring observational learning.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for Learning Theories in Healthcare.
+
+Learning: relatively permanent change in behaviour, knowledge, or capability from experience. Foundation of all behaviour change in healthcare.
+
+Classical conditioning (Pavlov): learning by association. Neutral stimulus paired with unconditioned stimulus → conditioned response. Explains phobias, placebo effect, conditioned nausea, white coat hypertension.
+
+Operant conditioning (Skinner): learning by consequences. Reinforcement (positive/negative) increases behaviour; punishment (positive/negative) decreases behaviour. Explains health behaviour acquisition and maintenance.
+
+Observational learning (Bandura): learning by watching others. Attention, retention, reproduction, motivation. Explains how health behaviours are transmitted through families and social networks.
+
+Reinforcement schedules: fixed ratio, variable ratio, fixed interval, variable interval. Variable ratio is most resistant to extinction — critical for long-term behaviour maintenance.
+
+Cognitive learning: active mental processing — thinking, understanding, reasoning, problem-solving, insight. Essential for health literacy, patient understanding, clinical reasoning.
+
+Learning and memory: encoding, storage, retrieval. Memory strategies improve health behaviour adherence and recall of medical information.
+
+Applications: patient education, behaviour change interventions, cognitive-behavioural therapy, medication adherence, rehabilitation, health promotion.
+
+Common mistakes: relying only on information, confusing conditioning types, underestimating reinforcement schedules, ignoring social learning.
+
+Now your final test. A patient with diabetes has been told to test their blood glucose daily and take insulin as prescribed. The patient understands why this is important but frequently forgets to test and often misses insulin doses.
+
+Question one: which learning principles would you apply to help this patient, and why?
+Question two: what memory strategies would you recommend to help the patient remember to test and take insulin?
+Question three: what reinforcement schedule would be most effective for maintaining this behaviour over time?
+
+Work them through before reading on.
+
+My answers. One: I would apply multiple learning principles — cognitive learning (ensuring understanding of why testing and insulin are important), operant conditioning (reinforcing adherence through self-monitoring and positive feedback), and observational learning (modelling successful adherence through peer support or videos). Classical conditioning principles would be used to reduce any conditioned fear of needles. Two: memory strategies include linking testing and insulin to daily routines (cue-based retrieval), using medication reminders and alarms (retrieval cues), and using teach-back to ensure information was properly encoded. Spaced repetition (practicing the routine over time) would enhance consolidation. Three: a variable ratio schedule would be most effective for maintaining the behaviour over time — intermittent reinforcement, such as unpredictable positive feedback or rewards, leads to more persistent behaviour than continuous reinforcement.` }
+  ],
+  theory: [
+    { q: "What is learning and why is it important in healthcare?", a: "Learning is a relatively permanent change in behaviour, knowledge, or capability from experience. It is essential in healthcare for patient education, treatment adherence, health promotion, and professional development." },
+    { q: "What is classical conditioning and how does it apply to healthcare?", a: "Classical conditioning is learning by association. It applies to healthcare through phobias, placebo effect, conditioned nausea, white coat hypertension, and other conditioned responses to healthcare stimuli." },
+    { q: "What is operant conditioning and how does it apply to healthcare?", a: "Operant conditioning is learning by consequences — reinforcement increases behaviour, punishment decreases behaviour. It applies to health behaviour acquisition, maintenance, and change." },
+    { q: "What is the difference between positive and negative reinforcement?", a: "Positive reinforcement adds something pleasant to increase behaviour; negative reinforcement removes something unpleasant to increase behaviour. Both increase the likelihood of behaviour." },
+    { q: "What is observational learning and how does it apply to healthcare?", a: "Observational learning is learning by watching others and imitating. It applies to healthcare through modelling health behaviours, peer support, and the transmission of health behaviours through families and social networks." },
+    { q: "What are reinforcement schedules and why do they matter in healthcare?", a: "Reinforcement schedules are the timing and pattern of reinforcement. They matter because they determine how quickly behaviours are learned and how resistant they are to extinction, which is critical for behaviour maintenance." },
+    { q: "What are the four reinforcement schedules?", a: "Fixed ratio (reinforcement after fixed number of responses), variable ratio (after variable number), fixed interval (after fixed time), and variable interval (after variable time). Variable ratio is most resistant to extinction." },
+    { q: "What is cognitive learning and how does it apply to healthcare?", a: "Cognitive learning involves mental processes — thinking, understanding, reasoning, problem-solving. It applies to healthcare through health literacy, patient understanding, clinical reasoning, and insight." },
+    { q: "What is the relationship between learning and memory in healthcare?", a: "Learning is acquisition of new knowledge or skills; memory is retention. Both are essential for health behaviour change — patients must learn and remember to perform health behaviours." },
+    { q: "What are common mistakes in applying learning psychology to healthcare?", a: "Relying solely on information to change behaviour, confusing classical and operant conditioning, underestimating reinforcement schedules, and ignoring observational learning." },
+  ],
+  videos: [
+    { channel: "CrashCourse", title: "Classical and Operant Conditioning", note: "How we learn through association and consequences — essential for understanding health behaviour.", url: "https://www.youtube.com/results?search_query=CrashCourse+conditioning" },
+    { channel: "Khan Academy", title: "Learning in Healthcare", note: "Applying learning principles to patient behaviour change.", url: "https://www.youtube.com/results?search_query=Khan+Academy+learning+healthcare" },
+    { channel: "Simply Psychology", title: "Observational Learning", note: "Bandura's social learning theory and its applications in healthcare.", url: "https://www.youtube.com/results?search_query=Simply+Psychology+observational+learning" },
+  ],
+  mcqs: [
+    { q: "Learning is defined as:", o: ["A temporary change in behaviour", "A relatively permanent change in behaviour from experience", "A change in genetics", "A change in personality"], a: 1, w: "Learning is a relatively permanent change in behaviour, knowledge, or capability resulting from experience." },
+    { q: "Classical conditioning was discovered by:", o: ["B.F. Skinner", "Albert Bandura", "Ivan Pavlov", "Edward Tolman"], a: 2, w: "Pavlov discovered classical conditioning through his experiments with dogs." },
+    { q: "In classical conditioning, a neutral stimulus paired with an unconditioned stimulus becomes:", o: ["A conditioned stimulus", "An unconditioned response", "A conditioned response", "An unconditioned stimulus"], a: 0, w: "The neutral stimulus becomes a conditioned stimulus after being paired with an unconditioned stimulus." },
+    { q: "The placebo effect is an example of:", o: ["Classical conditioning", "Operant conditioning", "Observational learning", "Cognitive learning"], a: 0, w: "The placebo effect is a form of classical conditioning — the placebo becomes associated with the active treatment." },
+    { q: "Operant conditioning was studied by:", o: ["Ivan Pavlov", "B.F. Skinner", "Albert Bandura", "Edward Tolman"], a: 1, w: "Skinner studied operant conditioning using the Skinner box." },
+    { q: "Reinforcement is defined as:", o: ["Decreasing the likelihood of a behaviour", "Increasing the likelihood of a behaviour", "Decreasing a response", "Increasing a stimulus"], a: 1, w: "Reinforcement increases the likelihood of a behaviour." },
+    { q: "Punishment is defined as:", o: ["Increasing the likelihood of a behaviour", "Decreasing the likelihood of a behaviour", "Increasing a response", "Decreasing a stimulus"], a: 1, w: "Punishment decreases the likelihood of a behaviour." },
+    { q: "Positive reinforcement involves:", o: ["Adding something pleasant to increase behaviour", "Removing something unpleasant to increase behaviour", "Adding something unpleasant to decrease behaviour", "Removing something pleasant to decrease behaviour"], a: 0, w: "Positive reinforcement adds something pleasant to increase behaviour." },
+    { q: "Negative reinforcement involves:", o: ["Adding something pleasant to increase behaviour", "Removing something unpleasant to increase behaviour", "Adding something unpleasant to decrease behaviour", "Removing something pleasant to decrease behaviour"], a: 1, w: "Negative reinforcement removes something unpleasant to increase behaviour." },
+    { q: "Observational learning was studied by:", o: ["Ivan Pavlov", "B.F. Skinner", "Albert Bandura", "Edward Tolman"], a: 2, w: "Bandura studied observational learning in his Bobo doll experiments." },
+    { q: "Which reinforcement schedule is most resistant to extinction?", o: ["Fixed ratio", "Variable ratio", "Fixed interval", "Variable interval"], a: 1, w: "Variable ratio schedules are the most resistant to extinction." },
+    { q: "Gambling addiction is explained by:", o: ["Fixed ratio schedules", "Variable ratio schedules", "Fixed interval schedules", "Variable interval schedules"], a: 1, w: "Gambling uses variable ratio schedules, which are highly addictive." },
+    { q: "Cognitive learning involves:", o: ["Observable behaviour only", "Mental processes like thinking and understanding", "Associations between stimuli", "Consequences of behaviour"], a: 1, w: "Cognitive learning involves active mental processes like thinking, understanding, and reasoning." },
+    { q: "Health literacy is an example of:", o: ["Classical conditioning", "Operant conditioning", "Cognitive learning", "Observational learning"], a: 2, w: "Health literacy involves understanding health information, which is a form of cognitive learning." },
+    { q: "Which memory strategy is used when patients link medication to daily routines?", o: ["Encoding enhancement", "Storage consolidation", "Retrieval cues", "Spaced repetition"], a: 2, w: "Linking medication to daily routines provides retrieval cues that help patients remember." },
+    { q: "Teach-back is a method to:", o: ["Reinforce behaviour", "Model behaviour", "Ensure information was encoded correctly", "Provide a reward"], a: 2, w: "Teach-back ensures that information was properly encoded by having patients repeat it back." },
+    { q: "White coat hypertension is an example of:", o: ["Classical conditioning", "Operant conditioning", "Observational learning", "Cognitive learning"], a: 0, w: "White coat hypertension is a conditioned response where the medical setting becomes associated with elevated blood pressure." },
+    { q: "Conditioned nausea in chemotherapy patients is an example of:", o: ["Classical conditioning", "Operant conditioning", "Observational learning", "Cognitive learning"], a: 0, w: "Conditioned nausea occurs when the hospital environment becomes associated with the nausea from chemotherapy." },
+    { q: "Contingency management uses:", o: ["Classical conditioning", "Operant conditioning", "Observational learning", "Cognitive learning"], a: 1, w: "Contingency management uses operant conditioning — positive reinforcement for meeting treatment goals." },
+    { q: "Token economies are based on:", o: ["Classical conditioning", "Operant conditioning", "Observational learning", "Cognitive learning"], a: 1, w: "Token economies use operant conditioning — tokens are conditioned reinforcers exchanged for rewards." },
+    { q: "Systematic desensitisation is based on:", o: ["Classical conditioning", "Operant conditioning", "Observational learning", "Cognitive learning"], a: 0, w: "Systematic desensitisation is based on classical conditioning — pairing relaxation with feared stimuli." },
+    { q: "The four processes of observational learning are:", o: ["Attention, retention, reproduction, motivation", "Association, consequence, observation, imitation", "Conditioning, reinforcement, punishment, extinction", "Awareness, memory, action, desire"], a: 0, w: "The four processes are attention, retention, reproduction, and motivation." },
+    { q: "Extinction in operant conditioning occurs when:", o: ["Reinforcement is continued", "Reinforcement is removed", "Punishment is applied", "A new behaviour is learned"], a: 1, w: "Extinction occurs when reinforcement is removed and the behaviour decreases." },
+    { q: "Which of the following is a common mistake in applying learning to healthcare?", o: ["Using multiple learning principles", "Providing information and skills", "Relying only on information to change behaviour", "Considering social influences"], a: 2, w: "Relying only on information is a common mistake — information is necessary but not sufficient for behaviour change." },
+    { q: "Which of the following best describes the relationship between learning and memory?", o: ["They are the same process", "Learning is acquisition, memory is retention", "Memory is acquisition, learning is retention", "They are unrelated"], a: 1, w: "Learning is the acquisition of new knowledge or skills; memory is the retention of what has been learned." },
+    { q: "The most effective schedule for maintaining health behaviours is:", o: ["Continuous reinforcement", "Fixed ratio", "Variable ratio", "Fixed interval"], a: 2, w: "Variable ratio schedules produce the most persistent behaviour and greatest resistance to extinction." },
+    { q: "Which of the following is an example of positive reinforcement in healthcare?", o: ["Praising a patient for taking medication", "Removing a patient's restriction for good behaviour", "Giving a patient a time-out", "Taking away a patient's phone privilege"], a: 0, w: "Praising a patient is positive reinforcement — adding something pleasant to increase the behaviour." },
+    { q: "Which of the following is an example of negative reinforcement in healthcare?", o: ["Praising a patient for taking medication", "Removing a patient's restriction for good behaviour", "Giving a patient a time-out", "Taking away a patient's phone privilege"], a: 1, w: "Removing a restriction is negative reinforcement — removing something unpleasant to increase the behaviour." },
+    { q: "Which of the following is an example of positive punishment in healthcare?", o: ["Praising a patient for taking medication", "Removing a patient's restriction for good behaviour", "Giving a patient a time-out", "Taking away a patient's phone privilege"], a: 2, w: "Giving a time-out is positive punishment — adding something unpleasant to decrease the behaviour." },
+    { q: "Which of the following is an example of negative punishment in healthcare?", o: ["Praising a patient for taking medication", "Removing a patient's restriction for good behaviour", "Giving a patient a time-out", "Taking away a patient's phone privilege"], a: 3, w: "Taking away phone privilege is negative punishment — removing something pleasant to decrease the behaviour." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -5133,6 +5537,8 @@ const CONTENT = {
   "psy:0": T_PSY_OVERVIEW,
   "psy:1": T_PSY_PARADIGMS,
   "psy:2": T_PSY_BIOFOUND,
+  "psy:3": T_PSY_INTRO,
+  "psy:4": T_PSY_LEARNING,
   "com:0": T_COM_PROCESS,
   "lab:1": T_MLS_SAFETY,
   "phy:1": T_PHY_HOMEO,
