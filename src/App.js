@@ -1671,36 +1671,36 @@ Crucial insight: enzymes are both the workhorses of metabolism and the markers o
     { channel: "Osmosis", title: "Enzymes: The Catalysts of Life", note: "Clinical examples of enzyme function and dysfunction in disease.", url: "https://www.youtube.com/results?search_query=Osmosis+enzymes+clinical" },
   ],
   mcqs: [
-    { q: "Enzymes are biological catalysts that primarily function to:", o: ["Change the equilibrium of a reaction", "Increase the activation energy of a reaction", "Lower the activation energy of a reaction", "Consume energy from a reaction"], a: 2, w: "Enzymes speed reactions by lowering activation energy, without changing the equilibrium." },
-    { q: "Activation energy is best described as:", o: ["The total energy released by a reaction", "The energy barrier that must be overcome for a reaction to proceed", "The energy produced by an enzyme", "The energy required to denature an enzyme"], a: 1, w: "Activation energy is the initial energy input needed to start a reaction, which enzymes lower." },
-    { q: "The specific region of an enzyme where the substrate binds is the:", o: ["Allosteric site", "Active site", "Cofactor binding site", "Regulatory domain"], a: 1, w: "The active site is where the substrate binds and catalysis occurs." },
-    { q: "In the lock-and-key model, the relationship between enzyme and substrate is:", o: ["The enzyme changes shape to fit the substrate", "The substrate changes shape to fit the enzyme", "The enzyme and substrate have complementary rigid shapes", "The enzyme and substrate are identical"], a: 2, w: "Lock-and-key suggests rigid complementary shapes, like a key in a lock." },
-    { q: "The induced-fit model differs from lock-and-key in that:", o: ["It proposes a rigid active site", "It requires no substrate binding", "The active site changes shape upon substrate binding", "It applies only to non-protein enzymes"], a: 2, w: "Induced-fit proposes that the active site adjusts its shape to fit the substrate." },
-    { q: "The inactive protein portion of an enzyme is called the:", o: ["Holoenzyme", "Apoenzyme", "Coenzyme", "Prosthetic group"], a: 1, w: "The apoenzyme is the protein part; it requires a cofactor to become active." },
-    { q: "A non-protein helper required for enzyme activity is a:", o: ["Substrate", "Cofactor", "Inhibitor", "Product"], a: 1, w: "Cofactors are helpers, such as metal ions or coenzymes." },
-    { q: "The complete, active enzyme is called the:", o: ["Apoenzyme", "Substrate complex", "Proenzyme", "Holoenzyme"], a: 3, w: "The holoenzyme is the active enzyme with its cofactor." },
-    { q: "Vmax represents:", o: ["The rate at which enzyme is destroyed", "The maximum reaction rate when all active sites are occupied", "The substrate concentration at half maximal velocity", "The rate of cofactor binding"], a: 1, w: "Vmax is the maximum rate when the enzyme is fully saturated with substrate." },
-    { q: "Km is defined as the substrate concentration at which:", o: ["The reaction rate is maximal", "The enzyme is half saturated", "The reaction rate is half of Vmax", "The enzyme is fully inhibited"], a: 2, w: "Km is the substrate concentration that gives half of Vmax." },
+    { q: "Enzymes are biological catalysts that primarily function to:", o: ["Change the equilibrium of a reaction", "Increase the activation energy of a reaction", "Consume energy from a reaction", "Lower the activation energy of a reaction"], a: 3, w: "Enzymes speed reactions by lowering activation energy, without changing the equilibrium." },
+    { q: "Activation energy is best described as:", o: ["The total energy released by a reaction", "The energy produced by an enzyme", "The energy barrier that must be overcome for a reaction to proceed", "The energy required to denature an enzyme"], a: 2, w: "Activation energy is the initial energy input needed to start a reaction, which enzymes lower." },
+    { q: "The specific region of an enzyme where the substrate binds is the:", o: ["Active site", "Cofactor binding site", "Regulatory domain", "Allosteric site"], a: 0, w: "The active site is where the substrate binds and catalysis occurs." },
+    { q: "In the lock-and-key model, the relationship between enzyme and substrate is:", o: ["The enzyme and substrate have complementary rigid shapes", "The substrate changes shape to fit the enzyme", "The enzyme and substrate are identical", "The enzyme changes shape to fit the substrate"], a: 0, w: "Lock-and-key suggests rigid complementary shapes, like a key in a lock." },
+    { q: "The induced-fit model differs from lock-and-key in that:", o: ["The active site changes shape upon substrate binding", "It proposes a rigid active site", "It applies only to non-protein enzymes", "It requires no substrate binding"], a: 0, w: "Induced-fit proposes that the active site adjusts its shape to fit the substrate." },
+    { q: "The inactive protein portion of an enzyme is called the:", o: ["Coenzyme", "Prosthetic group", "Holoenzyme", "Apoenzyme"], a: 3, w: "The apoenzyme is the protein part; it requires a cofactor to become active." },
+    { q: "A non-protein helper required for enzyme activity is a:", o: ["Product", "Inhibitor", "Cofactor", "Substrate"], a: 2, w: "Cofactors are helpers, such as metal ions or coenzymes." },
+    { q: "The complete, active enzyme is called the:", o: ["Proenzyme", "Apoenzyme", "Holoenzyme", "Substrate complex"], a: 2, w: "The holoenzyme is the active enzyme with its cofactor." },
+    { q: "Vmax represents:", o: ["The maximum reaction rate when all active sites are occupied", "The rate at which enzyme is destroyed", "The substrate concentration at half maximal velocity", "The rate of cofactor binding"], a: 0, w: "Vmax is the maximum rate when the enzyme is fully saturated with substrate." },
+    { q: "Km is defined as the substrate concentration at which:", o: ["The enzyme is half saturated", "The reaction rate is half of Vmax", "The reaction rate is maximal", "The enzyme is fully inhibited"], a: 1, w: "Km is the substrate concentration that gives half of Vmax." },
     { q: "A lower Km value indicates:", o: ["A slower reaction rate", "A higher affinity for the substrate", "A lower Vmax", "More inhibitor needed"], a: 1, w: "A lower Km means the enzyme reaches half Vmax at a lower substrate concentration, indicating higher substrate affinity." },
-    { q: "Enzymes are sensitive to temperature because:", o: ["They are fluids", "They are proteins that can denature at extremes", "They require heat to work", "They are unaffected by temperature"], a: 1, w: "As proteins, enzymes denature and lose function at high temperatures." },
-    { q: "The pH at which an enzyme works best is its:", o: ["Isoelectric point", "Optimal pH", "Acid dissociation constant", "Buffering range"], a: 1, w: "Enzymes have an optimal pH range where they are most active." },
-    { q: "In feedback inhibition, the end product of a pathway:", o: ["Accelerates the first enzyme", "Inhibits the first enzyme", "Is rapidly removed", "Activates a different pathway"], a: 1, w: "Feedback inhibition uses the product to inhibit the first enzyme, preventing overproduction." },
-    { q: "Feedback inhibition is an example of:", o: ["Allosteric regulation", "Competitive inhibition", "Irreversible inhibition", "Substrate-level phosphorylation"], a: 0, w: "Feedback inhibition typically involves allosteric binding of the inhibitor away from the active site." },
-    { q: "Allosteric regulation refers to:", o: ["Binding at the active site", "Binding at a site other than the active site changing enzyme shape", "Irreversible inhibition", "Covalent modification"], a: 1, w: "Allosteric regulation occurs when a molecule binds outside the active site, changing the enzyme's shape and activity." },
+    { q: "Enzymes are sensitive to temperature because:", o: ["They are unaffected by temperature", "They are proteins that can denature at extremes", "They require heat to work", "They are fluids"], a: 1, w: "As proteins, enzymes denature and lose function at high temperatures." },
+    { q: "The pH at which an enzyme works best is its:", o: ["Buffering range", "Acid dissociation constant", "Optimal pH", "Isoelectric point"], a: 2, w: "Enzymes have an optimal pH range where they are most active." },
+    { q: "In feedback inhibition, the end product of a pathway:", o: ["Activates a different pathway", "Inhibits the first enzyme", "Is rapidly removed", "Accelerates the first enzyme"], a: 1, w: "Feedback inhibition uses the product to inhibit the first enzyme, preventing overproduction." },
+    { q: "Feedback inhibition is an example of:", o: ["Allosteric regulation", "Competitive inhibition", "Substrate-level phosphorylation", "Irreversible inhibition"], a: 0, w: "Feedback inhibition typically involves allosteric binding of the inhibitor away from the active site." },
+    { q: "Allosteric regulation refers to:", o: ["Covalent modification", "Irreversible inhibition", "Binding at a site other than the active site changing enzyme shape", "Binding at the active site"], a: 2, w: "Allosteric regulation occurs when a molecule binds outside the active site, changing the enzyme's shape and activity." },
     { q: "If an enzyme is denatured, which of the following is true?", o: ["It is more active", "It can still bind substrate", "It has lost its three-dimensional structure and function", "It is unaffected"], a: 2, w: "Denaturation unfolds the protein, destroying the active site and function." },
-    { q: "Cardiac enzymes such as troponin are measured to:", o: ["Check liver function", "Diagnose heart muscle damage", "Measure kidney function", "Screen for diabetes"], a: 1, w: "Elevated cardiac enzymes indicate damage to heart muscle, as in a heart attack." },
-    { q: "Elevated liver enzymes in blood indicate:", o: ["Heart attack", "Liver cell injury", "Kidney failure", "Pancreatic disease"], a: 1, w: "Liver enzymes like ALT and AST rise when liver cells are damaged." },
+    { q: "Cardiac enzymes such as troponin are measured to:", o: ["Measure kidney function", "Screen for diabetes", "Check liver function", "Diagnose heart muscle damage"], a: 3, w: "Elevated cardiac enzymes indicate damage to heart muscle, as in a heart attack." },
+    { q: "Elevated liver enzymes in blood indicate:", o: ["Pancreatic disease", "Liver cell injury", "Kidney failure", "Heart attack"], a: 1, w: "Liver enzymes like ALT and AST rise when liver cells are damaged." },
     { q: "The specificity of an enzyme is determined by:", o: ["Its concentration", "The shape and chemistry of its active site", "The temperature of the environment", "The cofactor present"], a: 1, w: "Specificity comes from the active site's three-dimensional shape and chemical properties fitting only certain substrates." },
-    { q: "Coenzymes are organic cofactors that often:", o: ["Are destroyed in the reaction", "Are derived from vitamins", "Permanently alter the enzyme", "Are not required for activity"], a: 1, w: "Many coenzymes are derived from vitamins, explaining why vitamin deficiencies can impair enzyme function." },
-    { q: "The holoenzyme is composed of:", o: ["Two substrates only", "An apoenzyme and a cofactor", "Only a cofactor", "Multiple active sites"], a: 1, w: "The holoenzyme is the active form, apoenzyme plus cofactor." },
-    { q: "An enzyme inhibitor that binds at the active site is a:", o: ["Allosteric inhibitor", "Competitive inhibitor", "Feedback inhibitor", "Non-competitive inhibitor"], a: 1, w: "A competitive inhibitor binds at the active site, competing with substrate." },
-    { q: "Enzyme activity can be regulated by all of the following EXCEPT:", o: ["pH", "Temperature", "Genetic mutation", "Substrate colour"], a: 3, w: "pH, temperature, and genetic changes can affect enzyme activity; substrate colour is irrelevant." },
-    { q: "A competitive inhibitor reduces enzyme activity by:", o: ["Changing the Vmax", "Changing the Km and competing for the active site", "Denaturing the enzyme", "Destroying the cofactor"], a: 1, w: "Competitive inhibition increases Km (reduces apparent affinity) without changing Vmax." },
-    { q: "The substrate concentration that gives half of Vmax is called:", o: ["Vmax/2", "Km", "kcat", "Hill coefficient"], a: 1, w: "Km is the concentration giving half maximal velocity." },
-    { q: "Which statement about enzymes is FALSE?", o: ["They are consumed in the reaction", "They are specific to their substrate", "They lower activation energy", "They are proteins in most cases"], a: 0, w: "Enzymes are catalysts — they are not consumed in the reaction." },
-    { q: "Enzyme kinetics is the study of:", o: ["The structure of enzymes", "The rate of enzyme-catalysed reactions", "The amino acid sequence of enzymes", "The cofactor binding"], a: 1, w: "Kinetics studies reaction rates and factors affecting them." },
-    { q: "In the body, enzymes work best at:", o: ["Extreme pH", "Body temperature and physiological pH", "Room temperature and neutral pH", "High temperatures and acidic pH"], a: 1, w: "Enzymes are optimised for body conditions — pH 7.4 and 37°C in most tissues." },
-    { q: "The clinical measurement of enzyme levels in blood is used to:", o: ["Identify genetic disorders only", "Diagnose and monitor tissue damage and disease", "Measure drug levels", "Check blood type"], a: 1, w: "Enzyme levels rise when tissues are damaged, so measuring them helps diagnose diseases." },
+    { q: "Coenzymes are organic cofactors that often:", o: ["Permanently alter the enzyme", "Are derived from vitamins", "Are destroyed in the reaction", "Are not required for activity"], a: 1, w: "Many coenzymes are derived from vitamins, explaining why vitamin deficiencies can impair enzyme function." },
+    { q: "The holoenzyme is composed of:", o: ["Only a cofactor", "Two substrates only", "An apoenzyme and a cofactor", "Multiple active sites"], a: 2, w: "The holoenzyme is the active form, apoenzyme plus cofactor." },
+    { q: "An enzyme inhibitor that binds at the active site is a:", o: ["Allosteric inhibitor", "Competitive inhibitor", "Non-competitive inhibitor", "Feedback inhibitor"], a: 1, w: "A competitive inhibitor binds at the active site, competing with substrate." },
+    { q: "Enzyme activity can be regulated by all of the following EXCEPT:", o: ["Substrate colour", "Temperature", "Genetic mutation", "pH"], a: 0, w: "pH, temperature, and genetic changes can affect enzyme activity; substrate colour is irrelevant." },
+    { q: "A competitive inhibitor reduces enzyme activity by:", o: ["Destroying the cofactor", "Changing the Vmax", "Denaturing the enzyme", "Changing the Km and competing for the active site"], a: 3, w: "Competitive inhibition increases Km (reduces apparent affinity) without changing Vmax." },
+    { q: "The substrate concentration that gives half of Vmax is called:", o: ["kcat", "Hill coefficient", "Vmax/2", "Km"], a: 3, w: "Km is the concentration giving half maximal velocity." },
+    { q: "Which statement about enzymes is FALSE?", o: ["They are consumed in the reaction", "They are proteins in most cases", "They are specific to their substrate", "They lower activation energy"], a: 0, w: "Enzymes are catalysts — they are not consumed in the reaction." },
+    { q: "Enzyme kinetics is the study of:", o: ["The rate of enzyme-catalysed reactions", "The structure of enzymes", "The amino acid sequence of enzymes", "The cofactor binding"], a: 0, w: "Kinetics studies reaction rates and factors affecting them." },
+    { q: "In the body, enzymes work best at:", o: ["Extreme pH", "Room temperature and neutral pH", "High temperatures and acidic pH", "Body temperature and physiological pH"], a: 3, w: "Enzymes are optimised for body conditions — pH 7.4 and 37°C in most tissues." },
+    { q: "The clinical measurement of enzyme levels in blood is used to:", o: ["Measure drug levels", "Identify genetic disorders only", "Check blood type", "Diagnose and monitor tissue damage and disease"], a: 3, w: "Enzyme levels rise when tissues are damaged, so measuring them helps diagnose diseases." },
   ],
 };
 
@@ -1838,36 +1838,36 @@ Crucial insight: drug discovery is enzyme inhibition at scale. The same kinetics
     { channel: "Osmosis", title: "Enzyme Inhibition Pharmacology", note: "Clinical examples of enzyme inhibition in medicine.", url: "https://www.youtube.com/results?search_query=Osmosis+enzyme+inhibition+pharmacology" },
   ],
   mcqs: [
-    { q: "Most drugs work by:", o: ["Increasing enzyme synthesis", "Inhibiting specific enzymes", "Activating all enzymes", "Destroying all proteins"], a: 1, w: "Most modern medicines are enzyme inhibitors, blocking specific targets." },
-    { q: "A competitive inhibitor binds to the:", o: ["Allosteric site", "Active site", "Coenzyme", "Substrate"], a: 1, w: "Competitive inhibitors compete with substrate for the active site." },
-    { q: "Competitive inhibition can be overcome by:", o: ["Adding more inhibitor", "Increasing substrate concentration", "Decreasing temperature", "Adding a cofactor"], a: 1, w: "High substrate concentration outcompetes the inhibitor, restoring activity." },
-    { q: "In competitive inhibition, Vmax:", o: ["Decreases", "Increases", "Is unchanged", "Is zero"], a: 2, w: "Vmax is unchanged because high substrate can still saturate the enzyme." },
-    { q: "In competitive inhibition, Km:", o: ["Is unchanged", "Decreases", "Increases", "Is zero"], a: 2, w: "Km increases because the apparent affinity for substrate is reduced." },
+    { q: "Most drugs work by:", o: ["Activating all enzymes", "Inhibiting specific enzymes", "Destroying all proteins", "Increasing enzyme synthesis"], a: 1, w: "Most modern medicines are enzyme inhibitors, blocking specific targets." },
+    { q: "A competitive inhibitor binds to the:", o: ["Active site", "Substrate", "Coenzyme", "Allosteric site"], a: 0, w: "Competitive inhibitors compete with substrate for the active site." },
+    { q: "Competitive inhibition can be overcome by:", o: ["Adding a cofactor", "Adding more inhibitor", "Decreasing temperature", "Increasing substrate concentration"], a: 3, w: "High substrate concentration outcompetes the inhibitor, restoring activity." },
+    { q: "In competitive inhibition, Vmax:", o: ["Is zero", "Decreases", "Is unchanged", "Increases"], a: 2, w: "Vmax is unchanged because high substrate can still saturate the enzyme." },
+    { q: "In competitive inhibition, Km:", o: ["Decreases", "Is unchanged", "Increases", "Is zero"], a: 2, w: "Km increases because the apparent affinity for substrate is reduced." },
     { q: "A non-competitive inhibitor binds at:", o: ["The active site only", "A site other than the active site", "The substrate", "The cofactor"], a: 1, w: "Non-competitive inhibitors bind away from the active site, altering shape." },
-    { q: "In non-competitive inhibition, Vmax:", o: ["Is unchanged", "Increases", "Decreases", "Is infinite"], a: 2, w: "Vmax decreases because the enzyme is less efficient even when saturated." },
-    { q: "In non-competitive inhibition, Km:", o: ["Decreases", "Increases", "Is unchanged", "Is zero"], a: 2, w: "Km is unchanged because substrate affinity is unaffected." },
-    { q: "Uncompetitive inhibition binds to:", o: ["Free enzyme only", "Enzyme-substrate complex only", "Both free enzyme and complex", "Neither"], a: 1, w: "Uncompetitive inhibitors bind only to the enzyme-substrate complex." },
-    { q: "In uncompetitive inhibition, both Km and Vmax:", o: ["Increase", "Decrease", "Are unchanged", "Opposite each other"], a: 1, w: "Both Km and Vmax decrease in uncompetitive inhibition." },
+    { q: "In non-competitive inhibition, Vmax:", o: ["Increases", "Decreases", "Is infinite", "Is unchanged"], a: 1, w: "Vmax decreases because the enzyme is less efficient even when saturated." },
+    { q: "In non-competitive inhibition, Km:", o: ["Is zero", "Decreases", "Is unchanged", "Increases"], a: 2, w: "Km is unchanged because substrate affinity is unaffected." },
+    { q: "Uncompetitive inhibition binds to:", o: ["Enzyme-substrate complex only", "Neither", "Free enzyme only", "Both free enzyme and complex"], a: 0, w: "Uncompetitive inhibitors bind only to the enzyme-substrate complex." },
+    { q: "In uncompetitive inhibition, both Km and Vmax:", o: ["Opposite each other", "Are unchanged", "Decrease", "Increase"], a: 2, w: "Both Km and Vmax decrease in uncompetitive inhibition." },
     { q: "Irreversible inhibitors bind to enzymes by:", o: ["Hydrogen bonds", "Ionic bonds", "Covalent bonds", "Hydrophobic interactions"], a: 2, w: "Irreversible inhibitors form covalent bonds, permanently inactivating the enzyme." },
-    { q: "Allosteric regulation involves binding at:", o: ["The active site", "A regulatory site away from the active site", "The substrate binding site only", "The cofactor"], a: 1, w: "Allosteric effectors bind at a site other than the active site, changing enzyme shape." },
-    { q: "Feedback inhibition is a type of:", o: ["Competitive inhibition", "Irreversible inhibition", "Allosteric regulation", "Covalent modification"], a: 2, w: "Feedback inhibition typically involves allosteric binding of the end product." },
-    { q: "The IC50 is a measure of:", o: ["Enzyme affinity", "Drug potency — lower means more potent", "Substrate binding", "Vmax"], a: 1, w: "A lower IC50 means less inhibitor is needed to reduce activity by half, so the drug is more potent." },
-    { q: "Statins lower cholesterol by inhibiting:", o: ["HMG-CoA reductase", "Lipase", "Amylase", "Kinase"], a: 0, w: "Statins competitively inhibit HMG-CoA reductase, the rate-limiting step in cholesterol synthesis." },
-    { q: "Penicillin inhibits the bacterial enzyme:", o: ["Lipase", "Transpeptidase", "Protease", "Kinase"], a: 1, w: "Penicillin irreversibly inhibits transpeptidase, blocking bacterial cell wall synthesis." },
-    { q: "Human cells are unaffected by penicillin because they:", o: ["Produce more enzyme", "Lack cell walls", "Have a different version of the enzyme", "Destroy penicillin"], a: 1, w: "Human cells do not have cell walls, so the target enzyme is absent." },
-    { q: "Lactose intolerance is due to deficiency of the enzyme:", o: ["Amylase", "Lipase", "Lactase", "Protease"], a: 2, w: "Lactase is needed to break down lactose into glucose and galactose." },
-    { q: "A competitive inhibitor's effect on an enzyme can be described as:", o: ["Permanent destruction", "Reversible blocking of the active site", "Changing the enzyme's shape permanently", "Destroying the cofactor"], a: 1, w: "Competitive inhibitors reversibly block the active site, and can be overcome by more substrate." },
-    { q: "Which type of inhibitor decreases Vmax without changing Km?", o: ["Competitive", "Non-competitive", "Uncompetitive", "Irreversible"], a: 1, w: "Non-competitive inhibition decreases Vmax but leaves Km unchanged." },
-    { q: "Which type of inhibitor increases Km without changing Vmax?", o: ["Competitive", "Non-competitive", "Uncompetitive", "Irreversible"], a: 0, w: "Competitive inhibition increases Km but leaves Vmax unchanged." },
-    { q: "Which type of inhibitor decreases both Km and Vmax?", o: ["Competitive", "Non-competitive", "Uncompetitive", "Irreversible"], a: 2, w: "Uncompetitive inhibition decreases both Km and Vmax." },
-    { q: "The specificity of an enzyme inhibitor is determined by:", o: ["The inhibitor's colour", "The inhibitor's ability to fit the enzyme's active site or binding site", "The inhibitor's molecular weight", "The temperature of the reaction"], a: 1, w: "Inhibitors must fit the enzyme's active site or allosteric site to be effective." },
-    { q: "Aspirin inhibits cyclooxygenase by:", o: ["Competitive inhibition", "Non-competitive inhibition", "Irreversible covalent modification", "Allosteric activation"], a: 2, w: "Aspirin irreversibly acetylates cyclooxygenase, permanently inhibiting it." },
-    { q: "The effects of aspirin last for days because:", o: ["It is slowly metabolised", "It permanently inhibits the enzyme until new enzyme is synthesised", "It accumulates in the body", "It is not cleared from the blood"], a: 1, w: "Aspirin irreversibly inhibits the enzyme, so activity only returns when new enzyme is made." },
-    { q: "The therapeutic effect of statins is due to:", o: ["Increasing cholesterol absorption", "Competitively inhibiting HMG-CoA reductase", "Activating cholesterol synthesis", "Destroying HDL"], a: 1, w: "Statins block cholesterol synthesis by inhibiting HMG-CoA reductase." },
-    { q: "A drug with a lower IC50 is:", o: ["Less potent", "More potent", "Equally potent", "Not related to potency"], a: 1, w: "Lower IC50 means less drug is needed to inhibit 50% of activity, so it is more potent." },
-    { q: "Allosteric inhibitors change enzyme activity by:", o: ["Competing for the active site", "Binding at a regulatory site and changing shape", "Destroying the enzyme", "Removing the cofactor"], a: 1, w: "Allosteric inhibitors bind away from the active site and change the enzyme's shape." },
-    { q: "Feedback inhibition is an example of:", o: ["Positive feedback", "Negative feedback regulation", "Uncompetitive inhibition", "Irreversible inhibition"], a: 1, w: "Feedback inhibition is negative feedback — the product inhibits the first enzyme to prevent overproduction." },
-    { q: "The most important clinical application of enzyme inhibition is:", o: ["Increasing metabolic rate", "Drug therapy targeting specific enzymes", "Preventing all enzyme activity", "Destroying all proteins"], a: 1, w: "Enzyme inhibitors are the basis of most drug therapy." },
+    { q: "Allosteric regulation involves binding at:", o: ["The cofactor", "The active site", "The substrate binding site only", "A regulatory site away from the active site"], a: 3, w: "Allosteric effectors bind at a site other than the active site, changing enzyme shape." },
+    { q: "Feedback inhibition is a type of:", o: ["Irreversible inhibition", "Competitive inhibition", "Covalent modification", "Allosteric regulation"], a: 3, w: "Feedback inhibition typically involves allosteric binding of the end product." },
+    { q: "The IC50 is a measure of:", o: ["Substrate binding", "Drug potency — lower means more potent", "Enzyme affinity", "Vmax"], a: 1, w: "A lower IC50 means less inhibitor is needed to reduce activity by half, so the drug is more potent." },
+    { q: "Statins lower cholesterol by inhibiting:", o: ["Lipase", "HMG-CoA reductase", "Kinase", "Amylase"], a: 1, w: "Statins competitively inhibit HMG-CoA reductase, the rate-limiting step in cholesterol synthesis." },
+    { q: "Penicillin inhibits the bacterial enzyme:", o: ["Transpeptidase", "Kinase", "Protease", "Lipase"], a: 0, w: "Penicillin irreversibly inhibits transpeptidase, blocking bacterial cell wall synthesis." },
+    { q: "Human cells are unaffected by penicillin because they:", o: ["Lack cell walls", "Have a different version of the enzyme", "Produce more enzyme", "Destroy penicillin"], a: 0, w: "Human cells do not have cell walls, so the target enzyme is absent." },
+    { q: "Lactose intolerance is due to deficiency of the enzyme:", o: ["Amylase", "Protease", "Lactase", "Lipase"], a: 2, w: "Lactase is needed to break down lactose into glucose and galactose." },
+    { q: "A competitive inhibitor's effect on an enzyme can be described as:", o: ["Destroying the cofactor", "Permanent destruction", "Changing the enzyme's shape permanently", "Reversible blocking of the active site"], a: 3, w: "Competitive inhibitors reversibly block the active site, and can be overcome by more substrate." },
+    { q: "Which type of inhibitor decreases Vmax without changing Km?", o: ["Non-competitive", "Uncompetitive", "Competitive", "Irreversible"], a: 0, w: "Non-competitive inhibition decreases Vmax but leaves Km unchanged." },
+    { q: "Which type of inhibitor increases Km without changing Vmax?", o: ["Non-competitive", "Irreversible", "Uncompetitive", "Competitive"], a: 3, w: "Competitive inhibition increases Km but leaves Vmax unchanged." },
+    { q: "Which type of inhibitor decreases both Km and Vmax?", o: ["Non-competitive", "Uncompetitive", "Irreversible", "Competitive"], a: 1, w: "Uncompetitive inhibition decreases both Km and Vmax." },
+    { q: "The specificity of an enzyme inhibitor is determined by:", o: ["The temperature of the reaction", "The inhibitor's colour", "The inhibitor's molecular weight", "The inhibitor's ability to fit the enzyme's active site or binding site"], a: 3, w: "Inhibitors must fit the enzyme's active site or allosteric site to be effective." },
+    { q: "Aspirin inhibits cyclooxygenase by:", o: ["Irreversible covalent modification", "Non-competitive inhibition", "Allosteric activation", "Competitive inhibition"], a: 0, w: "Aspirin irreversibly acetylates cyclooxygenase, permanently inhibiting it." },
+    { q: "The effects of aspirin last for days because:", o: ["It is not cleared from the blood", "It accumulates in the body", "It permanently inhibits the enzyme until new enzyme is synthesised", "It is slowly metabolised"], a: 2, w: "Aspirin irreversibly inhibits the enzyme, so activity only returns when new enzyme is made." },
+    { q: "The therapeutic effect of statins is due to:", o: ["Increasing cholesterol absorption", "Competitively inhibiting HMG-CoA reductase", "Destroying HDL", "Activating cholesterol synthesis"], a: 1, w: "Statins block cholesterol synthesis by inhibiting HMG-CoA reductase." },
+    { q: "A drug with a lower IC50 is:", o: ["Less potent", "Equally potent", "Not related to potency", "More potent"], a: 3, w: "Lower IC50 means less drug is needed to inhibit 50% of activity, so it is more potent." },
+    { q: "Allosteric inhibitors change enzyme activity by:", o: ["Removing the cofactor", "Binding at a regulatory site and changing shape", "Destroying the enzyme", "Competing for the active site"], a: 1, w: "Allosteric inhibitors bind away from the active site and change the enzyme's shape." },
+    { q: "Feedback inhibition is an example of:", o: ["Negative feedback regulation", "Positive feedback", "Uncompetitive inhibition", "Irreversible inhibition"], a: 0, w: "Feedback inhibition is negative feedback — the product inhibits the first enzyme to prevent overproduction." },
+    { q: "The most important clinical application of enzyme inhibition is:", o: ["Drug therapy targeting specific enzymes", "Destroying all proteins", "Increasing metabolic rate", "Preventing all enzyme activity"], a: 0, w: "Enzyme inhibitors are the basis of most drug therapy." },
   ],
 };
 
@@ -2006,36 +2006,36 @@ Crucial insight: glycolysis is the universal pathway of energy metabolism. It ru
     { channel: "Osmosis", title: "Glycolysis and Cellular Respiration", note: "Clinical relevance of glycolysis in disease and diagnosis.", url: "https://www.youtube.com/results?search_query=Osmosis+glycolysis+clinical" },
   ],
   mcqs: [
-    { q: "Glycolysis takes place in which cellular compartment?", o: ["Mitochondria", "Cytosol", "Nucleus", "Endoplasmic reticulum"], a: 1, w: "Glycolysis occurs in the cytosol of the cell." },
-    { q: "The net ATP yield from glycolysis per glucose is:", o: ["4 ATP", "2 ATP", "36 ATP", "0 ATP"], a: 1, w: "Glycolysis produces a net of 2 ATP per glucose molecule." },
-    { q: "The first phase of glycolysis is called the:", o: ["Energy-harvest phase", "Energy-investment phase", "Oxidative phase", "Reductive phase"], a: 1, w: "The first phase consumes ATP to prepare glucose for splitting." },
-    { q: "How many ATP are consumed in the investment phase of glycolysis?", o: ["4", "1", "2", "0"], a: 2, w: "Two ATP are used in the investment phase." },
-    { q: "How many ATP are produced in the harvest phase of glycolysis?", o: ["2", "4", "1", "0"], a: 1, w: "Four ATP are produced in the harvest phase." },
-    { q: "The committed step of glycolysis is catalysed by:", o: ["Hexokinase", "Phosphofructokinase-1 (PFK-1)", "Aldolase", "Pyruvate kinase"], a: 1, w: "PFK-1 catalyses the committed step of glycolysis." },
-    { q: "PFK-1 is inhibited by:", o: ["AMP", "Fructose-2,6-bisphosphate", "ADP", "ATP"], a: 3, w: "ATP inhibits PFK-1 when energy is abundant." },
-    { q: "PFK-1 is activated by:", o: ["ATP", "Citrate", "AMP", "Glucose"], a: 2, w: "AMP activates PFK-1 when energy is low." },
-    { q: "The enzyme that converts pyruvate to lactate is:", o: ["Pyruvate dehydrogenase", "Lactate dehydrogenase", "Aldolase", "Enolase"], a: 1, w: "Lactate dehydrogenase converts pyruvate to lactate under anaerobic conditions." },
-    { q: "The conversion of pyruvate to lactate regenerates:", o: ["ATP", "NADH", "NAD+", "FADH2"], a: 2, w: "Lactate dehydrogenase regenerates NAD+ so glycolysis can continue." },
-    { q: "Under aerobic conditions, pyruvate enters the:", o: ["Cytosol", "Mitochondria", "Nucleus", "Golgi"], a: 1, w: "Pyruvate enters the mitochondria for complete oxidation." },
-    { q: "The enzyme that phosphorylates glucose to glucose-6-phosphate is:", o: ["Phosphoglucose isomerase", "Hexokinase", "Aldolase", "Pyruvate kinase"], a: 1, w: "Hexokinase catalyses the first step of glycolysis." },
-    { q: "The enzyme that splits fructose-1,6-bisphosphate into two three-carbon molecules is:", o: ["Phosphofructokinase", "Aldolase", "Isomerase", "Dehydrogenase"], a: 1, w: "Aldolase splits the six-carbon sugar into two three-carbon molecules." },
-    { q: "Which step of glycolysis produces the first ATP?", o: ["Step 6", "Step 7", "Step 9", "Step 10"], a: 1, w: "Step 7 (phosphoglycerate kinase) produces the first ATP via substrate-level phosphorylation." },
-    { q: "Which step of glycolysis produces NADH?", o: ["Step 5", "Step 6", "Step 8", "Step 9"], a: 1, w: "Step 6 (glyceraldehyde-3-phosphate dehydrogenase) produces NADH." },
-    { q: "Red blood cells rely on glycolysis because they:", o: ["Have no mitochondria", "Have too many mitochondria", "Use only fatty acids", "Do not need energy"], a: 0, w: "Red blood cells lack mitochondria, so they depend on glycolysis." },
-    { q: "HbA1c testing measures:", o: ["Blood glucose at one time", "Average glucose over 2-3 months", "Insulin levels", "Lactate levels"], a: 1, w: "HbA1c reflects average blood glucose over the previous 2-3 months." },
-    { q: "The Warburg effect describes cancer cells using:", o: ["Only oxidative phosphorylation", "Glycolysis even when oxygen is present", "Fatty acid oxidation", "No glucose"], a: 1, w: "Cancer cells prefer glycolysis even when oxygen is available." },
-    { q: "The final product of glycolysis is:", o: ["Glucose", "Lactate", "Pyruvate", "Acetyl-CoA"], a: 2, w: "Pyruvate is the end product of glycolysis." },
-    { q: "Substrate-level phosphorylation in glycolysis occurs when:", o: ["ATP is used", "NADH is produced", "A phosphate is transferred directly from a substrate to ADP", "Oxygen is consumed"], a: 2, w: "Substrate-level phosphorylation produces ATP directly from a high-energy phosphate." },
-    { q: "Hexokinase is inhibited by:", o: ["ATP", "AMP", "Glucose-6-phosphate", "Fructose-2,6-bisphosphate"], a: 2, w: "Hexokinase is inhibited by its product, glucose-6-phosphate." },
-    { q: "Pyruvate kinase is inhibited by:", o: ["AMP", "Fructose-1,6-bisphosphate", "ATP and alanine", "Glucose"], a: 2, w: "Pyruvate kinase is inhibited by ATP and alanine." },
-    { q: "The overall equation of glycolysis shows that per glucose, the net products are:", o: ["2 ATP, 2 NADH, 2 pyruvate", "4 ATP, 2 NADH, 2 pyruvate", "2 ATP, 0 NADH, 2 pyruvate", "36 ATP, 0 NADH, 0 pyruvate"], a: 0, w: "The net yield is 2 ATP, 2 NADH, and 2 pyruvate." },
-    { q: "The energy-investment phase of glycolysis uses ATP to:", o: ["Make glucose", "Phosphorylate intermediates, making them reactive", "Reduce NAD+", "Produce pyruvate"], a: 1, w: "ATP is used to phosphorylate intermediates and make them reactive." },
-    { q: "Which molecule is the main regulator of glycolysis?", o: ["Glucose", "Pyruvate", "Fructose-2,6-bisphosphate", "Lactate"], a: 2, w: "Fructose-2,6-bisphosphate is a key allosteric activator of PFK-1." },
-    { q: "In anaerobic conditions, glycolysis produces:", o: ["2 ATP, 2 NADH, 2 lactate", "36 ATP, CO2, H2O", "2 ATP, 0 NADH, 2 pyruvate", "4 ATP, 2 NADH, 2 lactate"], a: 0, w: "Under anaerobic conditions, pyruvate is converted to lactate, yielding 2 ATP and 2 NADH." },
-    { q: "The TCA cycle is entered by:", o: ["Glucose directly", "Pyruvate (as acetyl-CoA)", "Lactate", "Glyceraldehyde-3-phosphate"], a: 1, w: "Pyruvate is converted to acetyl-CoA, which enters the TCA cycle." },
-    { q: "Glycolysis is considered the foundation of metabolism because:", o: ["It produces the most ATP", "It only works in the liver", "It connects to all other metabolic pathways and runs in every cell", "It requires oxygen"], a: 2, w: "Glycolysis connects to all pathways and runs in every cell." },
-    { q: "The NADH produced in glycolysis is used in:", o: ["The TCA cycle", "The electron transport chain (with oxygen present)", "Fermentation only", "Gluconeogenesis"], a: 1, w: "NADH carries electrons to the electron transport chain when oxygen is present." },
-    { q: "Without glycolysis, red blood cells would:", o: ["Produce more ATP", "Use oxygen", "Be unable to survive", "Divide rapidly"], a: 2, w: "Red blood cells depend entirely on glycolysis and would die without it." },
+    { q: "Glycolysis takes place in which cellular compartment?", o: ["Mitochondria", "Endoplasmic reticulum", "Nucleus", "Cytosol"], a: 3, w: "Glycolysis occurs in the cytosol of the cell." },
+    { q: "The net ATP yield from glycolysis per glucose is:", o: ["4 ATP", "2 ATP", "0 ATP", "36 ATP"], a: 1, w: "Glycolysis produces a net of 2 ATP per glucose molecule." },
+    { q: "The first phase of glycolysis is called the:", o: ["Oxidative phase", "Energy-harvest phase", "Energy-investment phase", "Reductive phase"], a: 2, w: "The first phase consumes ATP to prepare glucose for splitting." },
+    { q: "How many ATP are consumed in the investment phase of glycolysis?", o: ["1", "0", "2", "4"], a: 2, w: "Two ATP are used in the investment phase." },
+    { q: "How many ATP are produced in the harvest phase of glycolysis?", o: ["0", "2", "1", "4"], a: 3, w: "Four ATP are produced in the harvest phase." },
+    { q: "The committed step of glycolysis is catalysed by:", o: ["Phosphofructokinase-1 (PFK-1)", "Hexokinase", "Pyruvate kinase", "Aldolase"], a: 0, w: "PFK-1 catalyses the committed step of glycolysis." },
+    { q: "PFK-1 is inhibited by:", o: ["ADP", "ATP", "Fructose-2,6-bisphosphate", "AMP"], a: 1, w: "ATP inhibits PFK-1 when energy is abundant." },
+    { q: "PFK-1 is activated by:", o: ["ATP", "Citrate", "Glucose", "AMP"], a: 3, w: "AMP activates PFK-1 when energy is low." },
+    { q: "The enzyme that converts pyruvate to lactate is:", o: ["Aldolase", "Pyruvate dehydrogenase", "Lactate dehydrogenase", "Enolase"], a: 2, w: "Lactate dehydrogenase converts pyruvate to lactate under anaerobic conditions." },
+    { q: "The conversion of pyruvate to lactate regenerates:", o: ["NAD+", "NADH", "FADH2", "ATP"], a: 0, w: "Lactate dehydrogenase regenerates NAD+ so glycolysis can continue." },
+    { q: "Under aerobic conditions, pyruvate enters the:", o: ["Nucleus", "Mitochondria", "Golgi", "Cytosol"], a: 1, w: "Pyruvate enters the mitochondria for complete oxidation." },
+    { q: "The enzyme that phosphorylates glucose to glucose-6-phosphate is:", o: ["Hexokinase", "Pyruvate kinase", "Aldolase", "Phosphoglucose isomerase"], a: 0, w: "Hexokinase catalyses the first step of glycolysis." },
+    { q: "The enzyme that splits fructose-1,6-bisphosphate into two three-carbon molecules is:", o: ["Aldolase", "Dehydrogenase", "Phosphofructokinase", "Isomerase"], a: 0, w: "Aldolase splits the six-carbon sugar into two three-carbon molecules." },
+    { q: "Which step of glycolysis produces the first ATP?", o: ["Step 6", "Step 9", "Step 7", "Step 10"], a: 2, w: "Step 7 (phosphoglycerate kinase) produces the first ATP via substrate-level phosphorylation." },
+    { q: "Which step of glycolysis produces NADH?", o: ["Step 9", "Step 8", "Step 6", "Step 5"], a: 2, w: "Step 6 (glyceraldehyde-3-phosphate dehydrogenase) produces NADH." },
+    { q: "Red blood cells rely on glycolysis because they:", o: ["Do not need energy", "Use only fatty acids", "Have too many mitochondria", "Have no mitochondria"], a: 3, w: "Red blood cells lack mitochondria, so they depend on glycolysis." },
+    { q: "HbA1c testing measures:", o: ["Insulin levels", "Lactate levels", "Average glucose over 2-3 months", "Blood glucose at one time"], a: 2, w: "HbA1c reflects average blood glucose over the previous 2-3 months." },
+    { q: "The Warburg effect describes cancer cells using:", o: ["Glycolysis even when oxygen is present", "No glucose", "Fatty acid oxidation", "Only oxidative phosphorylation"], a: 0, w: "Cancer cells prefer glycolysis even when oxygen is available." },
+    { q: "The final product of glycolysis is:", o: ["Pyruvate", "Lactate", "Acetyl-CoA", "Glucose"], a: 0, w: "Pyruvate is the end product of glycolysis." },
+    { q: "Substrate-level phosphorylation in glycolysis occurs when:", o: ["NADH is produced", "ATP is used", "Oxygen is consumed", "A phosphate is transferred directly from a substrate to ADP"], a: 3, w: "Substrate-level phosphorylation produces ATP directly from a high-energy phosphate." },
+    { q: "Hexokinase is inhibited by:", o: ["Fructose-2,6-bisphosphate", "Glucose-6-phosphate", "ATP", "AMP"], a: 1, w: "Hexokinase is inhibited by its product, glucose-6-phosphate." },
+    { q: "Pyruvate kinase is inhibited by:", o: ["ATP and alanine", "Glucose", "AMP", "Fructose-1,6-bisphosphate"], a: 0, w: "Pyruvate kinase is inhibited by ATP and alanine." },
+    { q: "The overall equation of glycolysis shows that per glucose, the net products are:", o: ["36 ATP, 0 NADH, 0 pyruvate", "2 ATP, 2 NADH, 2 pyruvate", "2 ATP, 0 NADH, 2 pyruvate", "4 ATP, 2 NADH, 2 pyruvate"], a: 1, w: "The net yield is 2 ATP, 2 NADH, and 2 pyruvate." },
+    { q: "The energy-investment phase of glycolysis uses ATP to:", o: ["Produce pyruvate", "Reduce NAD+", "Phosphorylate intermediates, making them reactive", "Make glucose"], a: 2, w: "ATP is used to phosphorylate intermediates and make them reactive." },
+    { q: "Which molecule is the main regulator of glycolysis?", o: ["Glucose", "Lactate", "Pyruvate", "Fructose-2,6-bisphosphate"], a: 3, w: "Fructose-2,6-bisphosphate is a key allosteric activator of PFK-1." },
+    { q: "In anaerobic conditions, glycolysis produces:", o: ["4 ATP, 2 NADH, 2 lactate", "2 ATP, 2 NADH, 2 lactate", "2 ATP, 0 NADH, 2 pyruvate", "36 ATP, CO2, H2O"], a: 1, w: "Under anaerobic conditions, pyruvate is converted to lactate, yielding 2 ATP and 2 NADH." },
+    { q: "The TCA cycle is entered by:", o: ["Pyruvate (as acetyl-CoA)", "Glucose directly", "Lactate", "Glyceraldehyde-3-phosphate"], a: 0, w: "Pyruvate is converted to acetyl-CoA, which enters the TCA cycle." },
+    { q: "Glycolysis is considered the foundation of metabolism because:", o: ["It produces the most ATP", "It requires oxygen", "It only works in the liver", "It connects to all other metabolic pathways and runs in every cell"], a: 3, w: "Glycolysis connects to all pathways and runs in every cell." },
+    { q: "The NADH produced in glycolysis is used in:", o: ["Fermentation only", "The electron transport chain (with oxygen present)", "Gluconeogenesis", "The TCA cycle"], a: 1, w: "NADH carries electrons to the electron transport chain when oxygen is present." },
+    { q: "Without glycolysis, red blood cells would:", o: ["Produce more ATP", "Be unable to survive", "Divide rapidly", "Use oxygen"], a: 1, w: "Red blood cells depend entirely on glycolysis and would die without it." },
   ],
 };
 
@@ -2176,26 +2176,36 @@ If those came cleanly, you understand the metabolism of fructose and galactose, 
     { channel: "Osmosis", title: "Galactosemia and Fructose Intolerance", note: "Clinical aspects of galactose and fructose metabolism disorders.", url: "https://www.youtube.com/results?search_query=Osmosis+galactosemia+fructose+intolerance" },
   ],
   mcqs: [
-    { q: "Fructose is primarily metabolised in which organ?", o: ["Kidney", "Liver", "Brain", "Muscle"], a: 1, w: "The liver is the primary site of fructose metabolism, where it is converted to fructose-1-phosphate by fructokinase." },
-    { q: "The enzyme that phosphorylates fructose to fructose-1-phosphate is:", o: ["Hexokinase", "Glucokinase", "Fructokinase", "Phosphofructokinase"], a: 2, w: "Fructokinase specifically phosphorylates fructose to fructose-1-phosphate." },
-    { q: "Fructose-1-phosphate is cleaved by which enzyme?", o: ["Aldolase A", "Aldolase B", "Aldolase C", "Fructokinase"], a: 1, w: "Aldolase B, which is found primarily in the liver, cleaves fructose-1-phosphate into DHAP and glyceraldehyde." },
-    { q: "Hereditary fructose intolerance is caused by a deficiency of:", o: ["Fructokinase", "Aldolase B", "Hexokinase", "Phosphofructokinase"], a: 1, w: "Hereditary fructose intolerance is caused by aldolase B deficiency, leading to severe symptoms after fructose consumption." },
-    { q: "Fructose metabolism bypasses which key regulatory enzyme of glycolysis?", o: ["Hexokinase", "Pyruvate kinase", "Aldolase", "Phosphofructokinase-1 (PFK-1)"], a: 3, w: "Fructose enters glycolysis at G3P, bypassing PFK-1, the main regulatory step of glycolysis." },
-    { q: "The Leloir pathway converts galactose into:", o: ["Fructose-6-phosphate", "Glucose-6-phosphate", "Glyceraldehyde-3-phosphate", "Pyruvate"], a: 1, w: "The Leloir pathway converts galactose into glucose-6-phosphate, which then enters glycolysis." },
-    { q: "The key enzyme of the Leloir pathway is:", o: ["Galactokinase", "Galactose-1-phosphate uridyltransferase", "UDP-galactose 4-epimerase", "Phosphoglucomutase"], a: 1, w: "Galactose-1-phosphate uridyltransferase is the key enzyme; its deficiency causes classic galactosemia." },
-    { q: "Galactosemia is caused by a deficiency of:", o: ["Lactase", "Galactokinase", "Galactose-1-phosphate uridyltransferase", "Phosphoglucomutase"], a: 2, w: "Classic galactosemia is caused by a deficiency of galactose-1-phosphate uridyltransferase." },
-    { q: "A patient with galactosemia must avoid:", o: ["Glucose", "Fructose", "Lactose and galactose", "Sucrose"], a: 2, w: "Galactosemia requires a strict galactose-free and lactose-free diet for life." },
-    { q: "Newborn screening for galactosemia is performed because:", o: ["It is easy to test", "Early treatment prevents severe complications", "It is required by law", "All newborns are at risk"], a: 1, w: "Early diagnosis and dietary treatment can prevent severe complications including liver failure, cataracts, and intellectual disability." },
-    { q: "Essential fructosuria is caused by a deficiency of:", o: ["Aldolase B", "Fructokinase", "Galactokinase", "Lactase"], a: 1, w: "Essential fructosuria is caused by fructokinase deficiency and is a benign condition with no symptoms." },
-    { q: "Unlike glucose, fructose does not stimulate the release of:", o: ["Glucagon", "Insulin", "Cortisol", "Growth hormone"], a: 1, w: "Fructose does not stimulate insulin release, which means it does not promote satiety." },
-    { q: "Excess fructose in the liver is rapidly converted to:", o: ["Glycogen", "Fat (lipogenesis)", "Glucose", "Ketones"], a: 1, w: "Fructose bypasses glycolysis regulation and is converted to fat through de novo lipogenesis." },
-    { q: "The accumulation of galactose-1-phosphate in galactosemia causes damage to:", o: ["Muscle", "Brain, liver, and eyes (cataracts)", "Bone", "Pancreas"], a: 1, w: "Galactose-1-phosphate accumulation damages the liver, brain, and causes cataracts." },
-    { q: "Fructose is converted to fat more readily than glucose because:", o: ["It enters glycolysis at a controlled point", "It bypasses PFK-1 regulation", "It is less soluble", "It is metabolised in muscles"], a: 1, w: "Bypassing PFK-1 allows fructose to be metabolised rapidly without energy-sensing controls, leading to increased fat synthesis." },
-    { q: "The enzyme that converts UDP-galactose back to UDP-glucose is:", o: ["Galactose-1-phosphate uridyltransferase", "UDP-galactose 4-epimerase", "Phosphoglucomutase", "Galactokinase"], a: 1, w: "UDP-galactose 4-epimerase converts UDP-galactose back to UDP-glucose, recycling the cofactor." },
-    { q: "Which of the following is NOT a feature of fructose metabolism?", o: ["Bypasses PFK-1", "Uses fructokinase", "Uses aldolase B", "Requires insulin for entry into cells"], a: 3, w: "Fructose does not require insulin for entry into cells; it is taken up independently of insulin." },
-    { q: "The enzyme that converts glucose-1-phosphate to glucose-6-phosphate is:", o: ["Phosphoglucomutase", "Galactose-1-phosphate uridyltransferase", "UDP-galactose 4-epimerase", "Hexokinase"], a: 0, w: "Phosphoglucomutase converts glucose-1-phosphate to glucose-6-phosphate, which enters glycolysis." },
-    { q: "A patient with hereditary fructose intolerance who consumes fructose will develop:", o: ["Hyperglycaemia", "Hypoglycaemia and liver damage", "Lactic acidosis", "Ketoacidosis"], a: 1, w: "Fructose-1-phosphate accumulates, trapping phosphate and depleting ATP, leading to hypoglycaemia and liver damage." },
-    { q: "The primary treatment for galactosemia is:", o: ["Insulin therapy", "A galactose-free diet", "Fructose restriction", "Enzyme replacement"], a: 1, w: "Galactosemia is treated with a strict galactose-free and lactose-free diet for life." },
+    { q: "Fructose is primarily metabolised in which organ?", o: ["Brain", "Liver", "Muscle", "Kidney"], a: 1, w: "The liver is the primary site of fructose metabolism, where it is converted to fructose-1-phosphate by fructokinase." },
+    { q: "The enzyme that phosphorylates fructose to fructose-1-phosphate is:", o: ["Phosphofructokinase", "Hexokinase", "Glucokinase", "Fructokinase"], a: 3, w: "Fructokinase specifically phosphorylates fructose to fructose-1-phosphate." },
+    { q: "Fructose-1-phosphate is cleaved by which enzyme?", o: ["Aldolase B", "Aldolase C", "Aldolase A", "Fructokinase"], a: 0, w: "Aldolase B, which is found primarily in the liver, cleaves fructose-1-phosphate into DHAP and glyceraldehyde." },
+    { q: "Hereditary fructose intolerance is caused by a deficiency of:", o: ["Phosphofructokinase", "Fructokinase", "Hexokinase", "Aldolase B"], a: 3, w: "Hereditary fructose intolerance is caused by aldolase B deficiency, leading to severe symptoms after fructose consumption." },
+    { q: "Fructose metabolism bypasses which key regulatory enzyme of glycolysis?", o: ["Pyruvate kinase", "Phosphofructokinase-1 (PFK-1)", "Aldolase", "Hexokinase"], a: 1, w: "Fructose enters glycolysis at G3P, bypassing PFK-1, the main regulatory step of glycolysis." },
+    { q: "The Leloir pathway converts galactose into:", o: ["Glucose-6-phosphate", "Glyceraldehyde-3-phosphate", "Pyruvate", "Fructose-6-phosphate"], a: 0, w: "The Leloir pathway converts galactose into glucose-6-phosphate, which then enters glycolysis." },
+    { q: "The key enzyme of the Leloir pathway is:", o: ["Galactose-1-phosphate uridyltransferase", "Phosphoglucomutase", "UDP-galactose 4-epimerase", "Galactokinase"], a: 0, w: "Galactose-1-phosphate uridyltransferase is the key enzyme; its deficiency causes classic galactosemia." },
+    { q: "Galactosemia is caused by a deficiency of:", o: ["Galactose-1-phosphate uridyltransferase", "Phosphoglucomutase", "Galactokinase", "Lactase"], a: 0, w: "Classic galactosemia is caused by a deficiency of galactose-1-phosphate uridyltransferase." },
+    { q: "A patient with galactosemia must avoid:", o: ["Lactose and galactose", "Glucose", "Sucrose", "Fructose"], a: 0, w: "Galactosemia requires a strict galactose-free and lactose-free diet for life." },
+    { q: "Newborn screening for galactosemia is performed because:", o: ["All newborns are at risk", "It is easy to test", "It is required by law", "Early treatment prevents severe complications"], a: 3, w: "Early diagnosis and dietary treatment can prevent severe complications including liver failure, cataracts, and intellectual disability." },
+    { q: "Essential fructosuria is caused by a deficiency of:", o: ["Fructokinase", "Galactokinase", "Lactase", "Aldolase B"], a: 0, w: "Essential fructosuria is caused by fructokinase deficiency and is a benign condition with no symptoms." },
+    { q: "Unlike glucose, fructose does not stimulate the release of:", o: ["Glucagon", "Growth hormone", "Cortisol", "Insulin"], a: 3, w: "Fructose does not stimulate insulin release, which means it does not promote satiety." },
+    { q: "Excess fructose in the liver is rapidly converted to:", o: ["Glycogen", "Glucose", "Fat (lipogenesis)", "Ketones"], a: 2, w: "Fructose bypasses glycolysis regulation and is converted to fat through de novo lipogenesis." },
+    { q: "The accumulation of galactose-1-phosphate in galactosemia causes damage to:", o: ["Muscle", "Bone", "Pancreas", "Brain, liver, and eyes (cataracts)"], a: 3, w: "Galactose-1-phosphate accumulation damages the liver, brain, and causes cataracts." },
+    { q: "Fructose is converted to fat more readily than glucose because:", o: ["It enters glycolysis at a controlled point", "It is less soluble", "It bypasses PFK-1 regulation", "It is metabolised in muscles"], a: 2, w: "Bypassing PFK-1 allows fructose to be metabolised rapidly without energy-sensing controls, leading to increased fat synthesis." },
+    { q: "The enzyme that converts UDP-galactose back to UDP-glucose is:", o: ["Phosphoglucomutase", "Galactose-1-phosphate uridyltransferase", "UDP-galactose 4-epimerase", "Galactokinase"], a: 2, w: "UDP-galactose 4-epimerase converts UDP-galactose back to UDP-glucose, recycling the cofactor." },
+    { q: "Which of the following is NOT a feature of fructose metabolism?", o: ["Bypasses PFK-1", "Uses aldolase B", "Requires insulin for entry into cells", "Uses fructokinase"], a: 2, w: "Fructose does not require insulin for entry into cells; it is taken up independently of insulin." },
+    { q: "The enzyme that converts glucose-1-phosphate to glucose-6-phosphate is:", o: ["Galactose-1-phosphate uridyltransferase", "Phosphoglucomutase", "UDP-galactose 4-epimerase", "Hexokinase"], a: 1, w: "Phosphoglucomutase converts glucose-1-phosphate to glucose-6-phosphate, which enters glycolysis." },
+    { q: "A patient with hereditary fructose intolerance who consumes fructose will develop:", o: ["Ketoacidosis", "Lactic acidosis", "Hyperglycaemia", "Hypoglycaemia and liver damage"], a: 3, w: "Fructose-1-phosphate accumulates, trapping phosphate and depleting ATP, leading to hypoglycaemia and liver damage." },
+    { q: "The primary treatment for galactosemia is:", o: ["A galactose-free diet", "Enzyme replacement", "Fructose restriction", "Insulin therapy"], a: 0, w: "Galactosemia is treated with a strict galactose-free and lactose-free diet for life." },
+    { q: "The main dietary source of galactose is:", o: ["Fruit", "Lactose in milk and dairy", "Table sugar", "Honey"], a: 1, w: "Galactose comes chiefly from lactose (milk sugar), which is glucose plus galactose." },
+    { q: "A major dietary source of fructose is:", o: ["Butter", "Fruits and sucrose (table sugar)", "Egg white", "Meat"], a: 1, w: "Fructose comes from fruit, honey, and sucrose, which is glucose plus fructose." },
+    { q: "Fructose enters glycolysis in the liver mainly as:", o: ["Galactose", "Lactate only", "Dihydroxyacetone phosphate and glyceraldehyde", "Glucose directly"], a: 2, w: "Fructose-1-phosphate is split into these triose intermediates that feed glycolysis." },
+    { q: "Because fructose bypasses PFK-1, its metabolism is:", o: ["Tightly regulated", "Slower than glucose", "Blocked completely", "Largely unregulated, proceeding rapidly"], a: 3, w: "PFK-1 is the main control point; bypassing it lets fructose flood the pathway unchecked." },
+    { q: "The first enzyme of the Leloir pathway phosphorylates galactose using:", o: ["Fructokinase", "Aldolase B", "Galactokinase", "Hexokinase only"], a: 2, w: "Galactokinase phosphorylates galactose to galactose-1-phosphate." },
+    { q: "Sucrose is composed of:", o: ["Two fructose units", "Glucose and galactose", "Glucose and fructose", "Glucose and glucose"], a: 2, w: "Sucrose (table sugar) is glucose linked to fructose." },
+    { q: "Lactose is composed of:", o: ["Glucose and fructose", "Glucose and galactose", "Two glucose units", "Fructose and galactose"], a: 1, w: "Lactose (milk sugar) is glucose linked to galactose." },
+    { q: "In galactosemia, the toxic accumulating metabolite is largely:", o: ["Galactose-1-phosphate", "Fructose-1-phosphate", "Glucose-6-phosphate", "Lactate"], a: 0, w: "Blocked conversion causes galactose-1-phosphate to build up and damage tissues." },
+    { q: "Fructose consumption contributes to fatty liver because excess fructose is:", o: ["Excreted unchanged", "Readily converted to fat (lipogenesis) in the liver", "Turned into galactose", "Stored as protein"], a: 1, w: "Unregulated hepatic fructose metabolism drives fat synthesis." },
+    { q: "Compared with glucose, fructose has a much smaller effect on:", o: ["Liver metabolism", "Blood insulin and satiety signalling", "Fruit taste", "Its own phosphorylation"], a: 1, w: "Fructose poorly stimulates insulin and satiety, a reason excess intake promotes overconsumption." },
   ],
 };
 
@@ -4161,36 +4171,36 @@ My answers. One: they are enantiomers, and the mixture is called a racemic mixtu
     { channel: "Osmosis", title: "Chirality and Drug Development", note: "Clinical applications of chirality in pharmacology.", url: "https://www.youtube.com/results?search_query=Osmosis+chirality+drug+development" },
   ],
   mcqs: [
-    { q: "Isomerism is the existence of different compounds with the same:", o: ["Molecular formula", "Structural arrangement", "3D shape", "Molecular weight"], a: 0, w: "Isomers have the same molecular formula but different arrangements or shapes." },
-    { q: "Constitutional isomers have the same molecular formula but different:", o: ["3D shape", "Connections between atoms", "Number of atoms", "Molecular weight"], a: 1, w: "Constitutional isomers differ in the connectivity of atoms." },
-    { q: "Stereoisomers have the same connections between atoms but different:", o: ["Molecular formula", "3D arrangements", "Functional groups", "Number of atoms"], a: 1, w: "Stereoisomers differ only in their three-dimensional arrangement." },
-    { q: "Enantiomers are non-superimposable mirror images of each other. This property is called:", o: ["Isomerism", "Chirality", "Racemisation", "Optical activity"], a: 1, w: "Chirality is the property of having non-superimposable mirror images." },
-    { q: "A 50:50 mixture of two enantiomers is called a:", o: ["Constitutional mixture", "Diastereomeric mixture", "Racemic mixture", "Chiral mixture"], a: 2, w: "A racemic mixture contains equal amounts of both enantiomers." },
-    { q: "Enantiomers have identical properties in all of the following EXCEPT:", o: ["Boiling point", "Chiral environments", "Melting point", "Solubility in water"], a: 1, w: "Enantiomers behave differently only in chiral environments, such as when interacting with enzymes or polarised light." },
-    { q: "Which of the following is true about diastereomers?", o: ["They are mirror images", "They have identical physical properties", "They are not mirror images", "They are always optically active"], a: 2, w: "Diastereomers are stereoisomers that are not mirror images of each other." },
-    { q: "The drug thalidomide was sold as a racemic mixture. The problem was that:", o: ["One enantiomer was toxic", "Both enantiomers were toxic", "Neither enantiomer was active", "The mixture was unstable"], a: 0, w: "One enantiomer relieved morning sickness, while the other caused birth defects." },
-    { q: "In living organisms, sugars are typically found as:", o: ["L-isomers", "D-isomers", "Racemic mixtures", "Diastereomers"], a: 1, w: "Natural sugars are typically D-isomers, while natural amino acids are L-isomers." },
-    { q: "The property of rotating plane-polarised light is called:", o: ["Optical activity", "Chirality", "Isomerism", "Racemisation"], a: 0, w: "Optical activity is the ability of a chiral molecule to rotate plane-polarised light." },
-    { q: "Which type of isomers have different connections between atoms?", o: ["Constitutional isomers", "Enantiomers", "Diastereomers", "Stereoisomers"], a: 0, w: "Constitutional isomers have different connectivity, while stereoisomers have the same connectivity but different 3D arrangement." },
-    { q: "A molecule that is not superimposable on its mirror image is called:", o: ["Achiral", "Chiral", "Racemic", "Constitutional"], a: 1, w: "A chiral molecule is not superimposable on its mirror image." },
-    { q: "What is the relationship between glucose and galactose?", o: ["They are enantiomers", "They are diastereomers", "They are constitutional isomers", "They are identical"], a: 1, w: "Glucose and galactose are diastereomers — they differ in the arrangement around one carbon." },
-    { q: "What is the relationship between D-glucose and L-glucose?", o: ["They are enantiomers", "They are diastereomers", "They are constitutional isomers", "They are identical"], a: 0, w: "D-glucose and L-glucose are enantiomers — they are mirror images of each other." },
-    { q: "A racemic mixture is optically inactive because:", o: ["It contains only one enantiomer", "The enantiomers rotate light in opposite directions, cancelling out", "It is not chiral", "It is a mixture of diastereomers"], a: 1, w: "The rotations of the two enantiomers cancel out, making the mixture optically inactive." },
-    { q: "The active site of an enzyme is chiral, which means:", o: ["It recognises only one enantiomer of a substrate", "It recognises both enantiomers equally", "It is not specific", "It only works with achiral molecules"], a: 0, w: "Because enzymes are chiral, they are stereospecific and recognise only one enantiomer." },
-    { q: "The thalidomide tragedy demonstrated that:", o: ["All drugs are safe", "Enantiomers can have different biological effects", "Racemic mixtures are always safe", "Chirality does not matter"], a: 1, w: "The thalidomide tragedy showed that enantiomers can have dramatically different biological effects." },
-    { q: "Chiral switching in drug development refers to:", o: ["Selling a drug as a racemic mixture", "Developing a single-enantiomer version of a drug", "Switching from liquid to pill form", "Changing the drug's colour"], a: 1, w: "Chiral switching means developing a drug as a single enantiomer to improve safety and efficacy." },
-    { q: "A polarimeter is used to measure:", o: ["Molecular weight", "Optical activity", "Boiling point", "Solubility"], a: 1, w: "A polarimeter measures the rotation of plane-polarised light by chiral molecules." },
-    { q: "Which statement about enantiomers is TRUE?", o: ["They have different physical properties", "They interact differently with chiral molecules", "They have different molecular formulae", "They are constitutional isomers"], a: 1, w: "Enantiomers interact differently with other chiral molecules, including enzymes and receptors." },
-    { q: "Natural amino acids found in proteins are:", o: ["D-amino acids", "L-amino acids", "Racemic mixtures", "Diastereomers"], a: 1, w: "Proteins are built from L-amino acids exclusively." },
-    { q: "Natural sugars found in DNA and RNA are:", o: ["L-sugars", "D-sugars", "Racemic mixtures", "Diastereomers"], a: 1, w: "Natural sugars in nucleic acids are D-sugars." },
-    { q: "A compound with two chiral carbons has how many possible stereoisomers?", o: ["2", "3", "4", "8"], a: 2, w: "Each chiral carbon doubles the number: 2 to the power of n, so 2 to the power of 2 = 4." },
-    { q: "A compound that has chiral centres but is optically inactive due to internal compensation is a:", o: ["Racemic mixture", "Meso compound", "Enantiomer", "Diastereomer"], a: 1, w: "A meso compound has internal symmetry, making it optically inactive." },
-    { q: "What type of isomerism is shown by D-glucose and L-glucose?", o: ["Constitutional", "Enantiomerism", "Diastereomerism", "Positional"], a: 1, w: "D-glucose and L-glucose are enantiomers — mirror images." },
-    { q: "What type of isomerism is shown by D-glucose and D-galactose?", o: ["Enantiomerism", "Diastereomerism", "Constitutional", "Positional"], a: 1, w: "They are diastereomers — not mirror images but different at one carbon." },
-    { q: "The conversion of a pure enantiomer into a racemic mixture is called:", o: ["Racemisation", "Resolution", "Chiral switching", "Optical activity"], a: 0, w: "Racemisation is the process of converting a pure enantiomer into a 50:50 mixture." },
-    { q: "The process of separating two enantiomers from a racemic mixture is called:", o: ["Racemisation", "Chiral separation", "Resolution", "Isomerisation"], a: 2, w: "Resolution is the separation of enantiomers from a racemic mixture." },
-    { q: "Which of the following is NOT a type of isomerism?", o: ["Constitutional", "Stereoisomerism", "Enantiomerism", "Oxidation"], a: 3, w: "Oxidation is a chemical reaction, not a type of isomerism." },
-    { q: "The study of the three-dimensional arrangement of atoms in molecules is called:", o: ["Stereochemistry", "Isomerism", "Constitutional chemistry", "Optical physics"], a: 0, w: "Stereochemistry is the study of the 3D arrangement of atoms and its effects on properties." },
+    { q: "Isomerism is the existence of different compounds with the same:", o: ["Molecular weight", "Molecular formula", "Structural arrangement", "3D shape"], a: 1, w: "Isomers have the same molecular formula but different arrangements or shapes." },
+    { q: "Constitutional isomers have the same molecular formula but different:", o: ["Connections between atoms", "Number of atoms", "Molecular weight", "3D shape"], a: 0, w: "Constitutional isomers differ in the connectivity of atoms." },
+    { q: "Stereoisomers have the same connections between atoms but different:", o: ["Number of atoms", "Molecular formula", "3D arrangements", "Functional groups"], a: 2, w: "Stereoisomers differ only in their three-dimensional arrangement." },
+    { q: "Enantiomers are non-superimposable mirror images of each other. This property is called:", o: ["Racemisation", "Optical activity", "Isomerism", "Chirality"], a: 3, w: "Chirality is the property of having non-superimposable mirror images." },
+    { q: "A 50:50 mixture of two enantiomers is called a:", o: ["Racemic mixture", "Constitutional mixture", "Diastereomeric mixture", "Chiral mixture"], a: 0, w: "A racemic mixture contains equal amounts of both enantiomers." },
+    { q: "Enantiomers have identical properties in all of the following EXCEPT:", o: ["Melting point", "Solubility in water", "Boiling point", "Chiral environments"], a: 3, w: "Enantiomers behave differently only in chiral environments, such as when interacting with enzymes or polarised light." },
+    { q: "Which of the following is true about diastereomers?", o: ["They are mirror images", "They have identical physical properties", "They are always optically active", "They are not mirror images"], a: 3, w: "Diastereomers are stereoisomers that are not mirror images of each other." },
+    { q: "The drug thalidomide was sold as a racemic mixture. The problem was that:", o: ["Neither enantiomer was active", "Both enantiomers were toxic", "One enantiomer was toxic", "The mixture was unstable"], a: 2, w: "One enantiomer relieved morning sickness, while the other caused birth defects." },
+    { q: "In living organisms, sugars are typically found as:", o: ["Racemic mixtures", "D-isomers", "L-isomers", "Diastereomers"], a: 1, w: "Natural sugars are typically D-isomers, while natural amino acids are L-isomers." },
+    { q: "The property of rotating plane-polarised light is called:", o: ["Chirality", "Optical activity", "Racemisation", "Isomerism"], a: 1, w: "Optical activity is the ability of a chiral molecule to rotate plane-polarised light." },
+    { q: "Which type of isomers have different connections between atoms?", o: ["Constitutional isomers", "Diastereomers", "Enantiomers", "Stereoisomers"], a: 0, w: "Constitutional isomers have different connectivity, while stereoisomers have the same connectivity but different 3D arrangement." },
+    { q: "A molecule that is not superimposable on its mirror image is called:", o: ["Achiral", "Racemic", "Chiral", "Constitutional"], a: 2, w: "A chiral molecule is not superimposable on its mirror image." },
+    { q: "What is the relationship between glucose and galactose?", o: ["They are identical", "They are diastereomers", "They are constitutional isomers", "They are enantiomers"], a: 1, w: "Glucose and galactose are diastereomers — they differ in the arrangement around one carbon." },
+    { q: "What is the relationship between D-glucose and L-glucose?", o: ["They are identical", "They are constitutional isomers", "They are enantiomers", "They are diastereomers"], a: 2, w: "D-glucose and L-glucose are enantiomers — they are mirror images of each other." },
+    { q: "A racemic mixture is optically inactive because:", o: ["The enantiomers rotate light in opposite directions, cancelling out", "It is not chiral", "It contains only one enantiomer", "It is a mixture of diastereomers"], a: 0, w: "The rotations of the two enantiomers cancel out, making the mixture optically inactive." },
+    { q: "The active site of an enzyme is chiral, which means:", o: ["It is not specific", "It recognises only one enantiomer of a substrate", "It only works with achiral molecules", "It recognises both enantiomers equally"], a: 1, w: "Because enzymes are chiral, they are stereospecific and recognise only one enantiomer." },
+    { q: "The thalidomide tragedy demonstrated that:", o: ["Chirality does not matter", "All drugs are safe", "Racemic mixtures are always safe", "Enantiomers can have different biological effects"], a: 3, w: "The thalidomide tragedy showed that enantiomers can have dramatically different biological effects." },
+    { q: "Chiral switching in drug development refers to:", o: ["Changing the drug's colour", "Developing a single-enantiomer version of a drug", "Switching from liquid to pill form", "Selling a drug as a racemic mixture"], a: 1, w: "Chiral switching means developing a drug as a single enantiomer to improve safety and efficacy." },
+    { q: "A polarimeter is used to measure:", o: ["Solubility", "Optical activity", "Boiling point", "Molecular weight"], a: 1, w: "A polarimeter measures the rotation of plane-polarised light by chiral molecules." },
+    { q: "Which statement about enantiomers is TRUE?", o: ["They interact differently with chiral molecules", "They have different molecular formulae", "They have different physical properties", "They are constitutional isomers"], a: 0, w: "Enantiomers interact differently with other chiral molecules, including enzymes and receptors." },
+    { q: "Natural amino acids found in proteins are:", o: ["L-amino acids", "Racemic mixtures", "Diastereomers", "D-amino acids"], a: 0, w: "Proteins are built from L-amino acids exclusively." },
+    { q: "Natural sugars found in DNA and RNA are:", o: ["D-sugars", "L-sugars", "Racemic mixtures", "Diastereomers"], a: 0, w: "Natural sugars in nucleic acids are D-sugars." },
+    { q: "A compound with two chiral carbons has how many possible stereoisomers?", o: ["4", "3", "8", "2"], a: 0, w: "Each chiral carbon doubles the number: 2 to the power of n, so 2 to the power of 2 = 4." },
+    { q: "A compound that has chiral centres but is optically inactive due to internal compensation is a:", o: ["Diastereomer", "Racemic mixture", "Enantiomer", "Meso compound"], a: 3, w: "A meso compound has internal symmetry, making it optically inactive." },
+    { q: "What type of isomerism is shown by D-glucose and L-glucose?", o: ["Positional", "Diastereomerism", "Enantiomerism", "Constitutional"], a: 2, w: "D-glucose and L-glucose are enantiomers — mirror images." },
+    { q: "What type of isomerism is shown by D-glucose and D-galactose?", o: ["Constitutional", "Positional", "Diastereomerism", "Enantiomerism"], a: 2, w: "They are diastereomers — not mirror images but different at one carbon." },
+    { q: "The conversion of a pure enantiomer into a racemic mixture is called:", o: ["Chiral switching", "Resolution", "Racemisation", "Optical activity"], a: 2, w: "Racemisation is the process of converting a pure enantiomer into a 50:50 mixture." },
+    { q: "The process of separating two enantiomers from a racemic mixture is called:", o: ["Isomerisation", "Racemisation", "Chiral separation", "Resolution"], a: 3, w: "Resolution is the separation of enantiomers from a racemic mixture." },
+    { q: "Which of the following is NOT a type of isomerism?", o: ["Enantiomerism", "Stereoisomerism", "Constitutional", "Oxidation"], a: 3, w: "Oxidation is a chemical reaction, not a type of isomerism." },
+    { q: "The study of the three-dimensional arrangement of atoms in molecules is called:", o: ["Constitutional chemistry", "Stereochemistry", "Optical physics", "Isomerism"], a: 1, w: "Stereochemistry is the study of the 3D arrangement of atoms and its effects on properties." },
   ],
 };
 
@@ -4289,6 +4299,17 @@ The third mistake is thinking that a glycosidic bond is a hemiacetal. It is not.
 
 Crucial insight: the difference between a hemiacetal and an acetal is the presence of a hydroxyl group. This single difference determines whether a sugar can cyclise and open, or whether it is locked in a stable glycosidic bond.` },
 
+    { q: "From acetals to glycosidic bonds: how sugars join.",
+      body: `Everything you have learned about acetals now pays off in the single most important reaction in carbohydrate chemistry: the joining of sugars. This note connects the mechanism directly to the carbohydrates you study next.
+
+Recall that when a hemiacetal reacts with a second alcohol, it forms a stable acetal. In sugars, this exact reaction is how two monosaccharides link together. The anomeric hydroxyl of one sugar (its hemiacetal group) reacts with a hydroxyl group of another sugar, forming an acetal linkage - and in carbohydrate chemistry this specific acetal bond is called a glycosidic bond.
+
+My Socratic question: maltose is two glucose units joined together. Given what you know about acetals, what kind of bond joins them, and why is this bond stable rather than constantly opening and closing?
+
+The answer is that they are joined by a glycosidic bond - an acetal formed from the anomeric carbon of one glucose reacting with a hydroxyl of the other. It is stable because, as you learned, acetals are locked and stable (unlike the freely-opening hemiacetal); once the anomeric carbon is committed to a glycosidic bond, it can no longer open to the straight-chain form or mutarotate.
+
+Crucial insight: a glycosidic bond is the acetal linkage that joins sugars together, formed from the anomeric (hemiacetal) carbon of one sugar and a hydroxyl of another. This is the bond in every disaccharide and polysaccharide - maltose, lactose, sucrose, starch, glycogen and cellulose all exist because of it. The hemiacetal and acetal chemistry you have learned is precisely the chemistry that builds all carbohydrates, which is exactly where we go next.` },
+
     { q: "Consolidation and your final test.",
       body: `Your cognitive map for hemiacetals, hemiketals, acetals, and ketals.
 
@@ -4334,36 +4355,399 @@ My answers. One: it is an acetal, because acetals are stable in water and do not
     { channel: "Khan Academy", title: "Glycosidic Bond Formation", note: "How acetals link sugars together into polymers.", url: "https://www.youtube.com/results?search_query=Khan+Academy+glycosidic+bond" },
   ],
   mcqs: [
-    { q: "A hemiacetal is formed when an alcohol reacts with:", o: ["An aldehyde", "A ketone", "An ester", "A carboxylic acid"], a: 0, w: "Hemiacetals are formed from aldehydes and alcohols." },
-    { q: "A hemiketal is formed when an alcohol reacts with:", o: ["An aldehyde", "A ketone", "An ester", "A carboxylic acid"], a: 1, w: "Hemiketals are formed from ketones and alcohols." },
-    { q: "An acetal is formed when a hemiacetal reacts with:", o: ["Water", "Another alcohol", "An aldehyde", "A ketone"], a: 1, w: "Acetals are formed when a hemiacetal reacts with another alcohol." },
-    { q: "A ketal is formed when a hemiketal reacts with:", o: ["Water", "Another alcohol", "An aldehyde", "A ketone"], a: 1, w: "Ketals are formed when a hemiketal reacts with another alcohol." },
-    { q: "The anomeric carbon is the carbon that:", o: ["Is the most oxidised", "Becomes chiral upon cyclisation", "Has the highest molecular weight", "Is at the end of the chain"], a: 1, w: "The anomeric carbon is the carbonyl carbon that becomes chiral upon cyclisation." },
-    { q: "In the alpha anomer of glucose, the anomeric hydroxyl is:", o: ["On the same side as the CH2OH group", "On the opposite side from the CH2OH group", "Not present", "In the middle of the ring"], a: 1, w: "The alpha anomer has the anomeric hydroxyl on the opposite side from the CH2OH group." },
-    { q: "In the beta anomer of glucose, the anomeric hydroxyl is:", o: ["On the same side as the CH2OH group", "On the opposite side from the CH2OH group", "Not present", "In the middle of the ring"], a: 0, w: "The beta anomer has the anomeric hydroxyl on the same side as the CH2OH group." },
-    { q: "A glycosidic bond is an example of a(n):", o: ["Hemiacetal", "Acetal", "Ester", "Ether"], a: 1, w: "Glycosidic bonds are acetal linkages formed between sugars." },
-    { q: "Mutarotation is the process of:", o: ["Breaking a glycosidic bond", "Interconversion of alpha and beta anomers", "Formation of a hemiacetal", "Polymerisation of sugars"], a: 1, w: "Mutarotation is the interconversion of alpha and beta anomers through the open-chain form." },
-    { q: "A six-membered sugar ring is called a:", o: ["Furanose", "Pyranose", "Hexose", "Pentose"], a: 1, w: "A pyranose ring is a six-membered ring. A furanose ring is five-membered." },
+    { q: "A hemiacetal is formed when an alcohol reacts with:", o: ["A ketone", "An ester", "An aldehyde", "A carboxylic acid"], a: 2, w: "Hemiacetals are formed from aldehydes and alcohols." },
+    { q: "A hemiketal is formed when an alcohol reacts with:", o: ["A carboxylic acid", "An ester", "An aldehyde", "A ketone"], a: 3, w: "Hemiketals are formed from ketones and alcohols." },
+    { q: "An acetal is formed when a hemiacetal reacts with:", o: ["Another alcohol", "Water", "A ketone", "An aldehyde"], a: 0, w: "Acetals are formed when a hemiacetal reacts with another alcohol." },
+    { q: "A ketal is formed when a hemiketal reacts with:", o: ["Another alcohol", "Water", "An aldehyde", "A ketone"], a: 0, w: "Ketals are formed when a hemiketal reacts with another alcohol." },
+    { q: "The anomeric carbon is the carbon that:", o: ["Is at the end of the chain", "Becomes chiral upon cyclisation", "Has the highest molecular weight", "Is the most oxidised"], a: 1, w: "The anomeric carbon is the carbonyl carbon that becomes chiral upon cyclisation." },
+    { q: "In the alpha anomer of glucose, the anomeric hydroxyl is:", o: ["In the middle of the ring", "Not present", "On the same side as the CH2OH group", "On the opposite side from the CH2OH group"], a: 3, w: "The alpha anomer has the anomeric hydroxyl on the opposite side from the CH2OH group." },
+    { q: "In the beta anomer of glucose, the anomeric hydroxyl is:", o: ["Not present", "In the middle of the ring", "On the same side as the CH2OH group", "On the opposite side from the CH2OH group"], a: 2, w: "The beta anomer has the anomeric hydroxyl on the same side as the CH2OH group." },
+    { q: "A glycosidic bond is an example of a(n):", o: ["Ether", "Hemiacetal", "Ester", "Acetal"], a: 3, w: "Glycosidic bonds are acetal linkages formed between sugars." },
+    { q: "Mutarotation is the process of:", o: ["Breaking a glycosidic bond", "Polymerisation of sugars", "Formation of a hemiacetal", "Interconversion of alpha and beta anomers"], a: 3, w: "Mutarotation is the interconversion of alpha and beta anomers through the open-chain form." },
+    { q: "A six-membered sugar ring is called a:", o: ["Pyranose", "Furanose", "Pentose", "Hexose"], a: 0, w: "A pyranose ring is a six-membered ring. A furanose ring is five-membered." },
     { q: "The formation of HbA1c begins with:", o: ["Ester formation", "Hemiacetal formation", "Acetal formation", "Ketal formation"], a: 1, w: "Glucose attaches to haemoglobin through a reaction that begins with hemiacetal formation." },
-    { q: "The open-chain form of glucose exists in equilibrium with:", o: ["The cyclic hemiacetal form", "The acetal form", "The ketal form", "The ester form"], a: 0, w: "The open-chain form is in equilibrium with the cyclic hemiacetal form." },
-    { q: "Fructose forms a cyclic structure through:", o: ["Hemiacetal formation", "Hemiketal formation", "Acetal formation", "Ketal formation"], a: 1, w: "Fructose is a ketose, so it forms a hemiketal." },
-    { q: "The anomeric carbon in glucose is:", o: ["C6", "C5", "C1", "C2"], a: 2, w: "In glucose, the anomeric carbon is C1." },
-    { q: "The anomeric carbon in fructose is:", o: ["C1", "C6", "C5", "C2"], a: 3, w: "In fructose, the anomeric carbon is C2." },
-    { q: "A glycosidic bond is formed between:", o: ["Two hydroxyl groups", "The anomeric carbon and a hydroxyl group", "Two anomeric carbons", "A hydroxyl group and a carboxyl group"], a: 1, w: "A glycosidic bond links the anomeric carbon of one sugar to a hydroxyl group of another sugar." },
-    { q: "The alpha and beta forms of a sugar are:", o: ["Constitutional isomers", "Enantiomers", "Anomers", "Diastereomers"], a: 2, w: "The alpha and beta forms are anomers — they differ at the anomeric carbon." },
-    { q: "A solution of pure alpha-glucose will over time:", o: ["Remain pure alpha", "Convert entirely to beta", "Reach a mixture of alpha and beta", "Convert to fructose"], a: 2, w: "Through mutarotation, a solution of pure alpha-glucose will reach a mixture of alpha and beta." },
-    { q: "The stability of glycosidic bonds is due to:", o: ["They are hemiacetals", "They are acetals", "They are ketals", "They are esters"], a: 1, w: "Acetals are more stable than hemiacetals, so glycosidic bonds are stable." },
-    { q: "The difference between a hemiacetal and an acetal is:", o: ["One has a hydroxyl group, the other does not", "One is cyclic, the other is not", "One is formed from ketones, the other from aldehydes", "One is chiral, the other is not"], a: 0, w: "A hemiacetal has a hydroxyl group; an acetal does not." },
-    { q: "A hemiacetal has which functional groups on the same carbon?", o: ["Alcohol and ether", "Two ethers", "Alcohol and aldehyde", "Two alcohols"], a: 0, w: "A hemiacetal has both an alcohol (-OH) and an ether (-OR) group on the same carbon." },
-    { q: "An acetal has which functional groups on the same carbon?", o: ["Alcohol and ether", "Two ethers", "Alcohol and aldehyde", "Two alcohols"], a: 1, w: "An acetal has two ether groups (-OR) on the same carbon." },
-    { q: "The conversion of a hemiacetal to an acetal involves:", o: ["Loss of water", "Addition of water", "Reduction", "Oxidation"], a: 0, w: "An acetal is formed by the loss of water when a hemiacetal reacts with another alcohol." },
-    { q: "The conversion of an acetal to a hemiacetal involves:", o: ["Loss of water", "Addition of water", "Reduction", "Oxidation"], a: 1, w: "Acetal hydrolysis requires addition of water." },
-    { q: "Which of the following is more stable in water?", o: ["Hemiacetal", "Acetal", "Hemiketal", "Ketone"], a: 1, w: "Acetals are stable in water because they cannot open to a carbonyl form; hemiacetals are in equilibrium with the open-chain form." },
-    { q: "The anomeric carbon of a sugar is the carbon that:", o: ["Is at the end of the chain", "Becomes chiral upon cyclisation", "Has no hydrogens", "Is the most oxidised"], a: 1, w: "The anomeric carbon is the carbonyl carbon that becomes chiral when the sugar cyclises." },
-    { q: "The alpha anomer of glucose has the anomeric OH on the:", o: ["Same side as the CH2OH", "Opposite side from the CH2OH", "Inside the ring", "At the top of the ring"], a: 1, w: "Alpha has the anomeric OH opposite to the CH2OH group." },
-    { q: "The beta anomer of glucose has the anomeric OH on the:", o: ["Same side as the CH2OH", "Opposite side from the CH2OH", "Inside the ring", "At the top of the ring"], a: 0, w: "Beta has the anomeric OH on the same side as the CH2OH group." },
-    { q: "Glycosidic bonds are important because they:", o: ["Link sugars together into polymers", "Break down proteins", "Store genetic information", "Catalyse reactions"], a: 0, w: "Glycosidic bonds link monosaccharides into disaccharides, oligosaccharides, and polysaccharides." },
-    { q: "A pyranose ring is a sugar ring containing:", o: ["Five atoms", "Six atoms", "Seven atoms", "Four atoms"], a: 1, w: "A pyranose ring has six atoms (five carbons and one oxygen)." },
+    { q: "The open-chain form of glucose exists in equilibrium with:", o: ["The acetal form", "The cyclic hemiacetal form", "The ester form", "The ketal form"], a: 1, w: "The open-chain form is in equilibrium with the cyclic hemiacetal form." },
+    { q: "Fructose forms a cyclic structure through:", o: ["Acetal formation", "Hemiketal formation", "Hemiacetal formation", "Ketal formation"], a: 1, w: "Fructose is a ketose, so it forms a hemiketal." },
+    { q: "The anomeric carbon in glucose is:", o: ["C1", "C6", "C5", "C2"], a: 0, w: "In glucose, the anomeric carbon is C1." },
+    { q: "The anomeric carbon in fructose is:", o: ["C6", "C5", "C1", "C2"], a: 3, w: "In fructose, the anomeric carbon is C2." },
+    { q: "A glycosidic bond is formed between:", o: ["Two hydroxyl groups", "Two anomeric carbons", "The anomeric carbon and a hydroxyl group", "A hydroxyl group and a carboxyl group"], a: 2, w: "A glycosidic bond links the anomeric carbon of one sugar to a hydroxyl group of another sugar." },
+    { q: "The alpha and beta forms of a sugar are:", o: ["Anomers", "Diastereomers", "Enantiomers", "Constitutional isomers"], a: 0, w: "The alpha and beta forms are anomers — they differ at the anomeric carbon." },
+    { q: "A solution of pure alpha-glucose will over time:", o: ["Reach a mixture of alpha and beta", "Remain pure alpha", "Convert entirely to beta", "Convert to fructose"], a: 0, w: "Through mutarotation, a solution of pure alpha-glucose will reach a mixture of alpha and beta." },
+    { q: "The stability of glycosidic bonds is due to:", o: ["They are ketals", "They are hemiacetals", "They are acetals", "They are esters"], a: 2, w: "Acetals are more stable than hemiacetals, so glycosidic bonds are stable." },
+    { q: "The difference between a hemiacetal and an acetal is:", o: ["One is formed from ketones, the other from aldehydes", "One has a hydroxyl group, the other does not", "One is cyclic, the other is not", "One is chiral, the other is not"], a: 1, w: "A hemiacetal has a hydroxyl group; an acetal does not." },
+    { q: "A hemiacetal has which functional groups on the same carbon?", o: ["Two ethers", "Alcohol and ether", "Alcohol and aldehyde", "Two alcohols"], a: 1, w: "A hemiacetal has both an alcohol (-OH) and an ether (-OR) group on the same carbon." },
+    { q: "An acetal has which functional groups on the same carbon?", o: ["Two alcohols", "Alcohol and ether", "Two ethers", "Alcohol and aldehyde"], a: 2, w: "An acetal has two ether groups (-OR) on the same carbon." },
+    { q: "The conversion of a hemiacetal to an acetal involves:", o: ["Reduction", "Loss of water", "Addition of water", "Oxidation"], a: 1, w: "An acetal is formed by the loss of water when a hemiacetal reacts with another alcohol." },
+    { q: "The conversion of an acetal to a hemiacetal involves:", o: ["Addition of water", "Oxidation", "Loss of water", "Reduction"], a: 0, w: "Acetal hydrolysis requires addition of water." },
+    { q: "Which of the following is more stable in water?", o: ["Hemiketal", "Hemiacetal", "Acetal", "Ketone"], a: 2, w: "Acetals are stable in water because they cannot open to a carbonyl form; hemiacetals are in equilibrium with the open-chain form." },
+    { q: "The anomeric carbon of a sugar is the carbon that:", o: ["Becomes chiral upon cyclisation", "Has no hydrogens", "Is the most oxidised", "Is at the end of the chain"], a: 0, w: "The anomeric carbon is the carbonyl carbon that becomes chiral when the sugar cyclises." },
+    { q: "The alpha anomer of glucose has the anomeric OH on the:", o: ["Same side as the CH2OH", "At the top of the ring", "Opposite side from the CH2OH", "Inside the ring"], a: 2, w: "Alpha has the anomeric OH opposite to the CH2OH group." },
+    { q: "The beta anomer of glucose has the anomeric OH on the:", o: ["Opposite side from the CH2OH", "Same side as the CH2OH", "Inside the ring", "At the top of the ring"], a: 1, w: "Beta has the anomeric OH on the same side as the CH2OH group." },
+    { q: "Glycosidic bonds are important because they:", o: ["Break down proteins", "Store genetic information", "Catalyse reactions", "Link sugars together into polymers"], a: 3, w: "Glycosidic bonds link monosaccharides into disaccharides, oligosaccharides, and polysaccharides." },
+    { q: "A pyranose ring is a sugar ring containing:", o: ["Seven atoms", "Four atoms", "Five atoms", "Six atoms"], a: 3, w: "A pyranose ring has six atoms (five carbons and one oxygen)." },
+  ],
+};
+
+/* --------------------------- bio:2 --------------------------- */
+const T_BIO_CARBS = {
+  courseId: "bio",
+  topicIndex: 2,
+  title: "Carbohydrates",
+  minutes: 20,
+  note: [
+    { q: "From single sugars to the molecules of life: why carbohydrates matter.",
+      body: `You have learned how sugars cyclise and how the acetal reaction joins them through glycosidic bonds. Now we assemble that knowledge into a full understanding of carbohydrates - the body's primary fuel and one of its key structural materials.
+
+My Socratic question: carbohydrates include the glucose that powers your brain, the glycogen stored in your liver, the fibre in your food, and the sugar in your blood that a laboratory measures every day. What single chemical definition unites such different molecules?
+
+The answer is that carbohydrates are compounds of carbon, hydrogen and oxygen, usually with hydrogen and oxygen in the ratio of water (2:1) - hence the name carbo-hydrate, meaning "watered carbon." Their general formula is often written (CH2O)n. Chemically, they are defined as polyhydroxy aldehydes or ketones, or substances that yield these on hydrolysis - that is, molecules with many hydroxyl groups and either an aldehyde or a ketone group.
+
+Crucial insight: carbohydrates are polyhydroxy aldehydes or ketones (or yield them on hydrolysis), built from carbon, hydrogen and oxygen. This single definition unites blood glucose, stored glycogen, and dietary fibre. Understanding carbohydrates is understanding the body's main energy currency and a substance central to laboratory measurement, from blood sugar to diabetes diagnosis.` },
+
+    { q: "The three classes: mono-, di-, and polysaccharides.",
+      body: `Carbohydrates are classified by how many sugar units they contain, giving three main classes - a simple, essential framework.
+
+Monosaccharides are single sugar units - the simplest carbohydrates, which cannot be broken down into smaller sugars. Glucose, fructose and galactose are the key examples. Disaccharides are two monosaccharides joined by a glycosidic bond - the acetal linkage you have studied. Maltose, lactose and sucrose are the important ones. Polysaccharides are many monosaccharides (often hundreds or thousands) joined into long chains - starch, glycogen and cellulose.
+
+My Socratic question: an oligosaccharide contains a few sugar units (roughly three to ten). Where does it fit, and why is the mono-di-poly framework still the essential one?
+
+The answer is that oligosaccharides sit between disaccharides and polysaccharides, but the mono-di-poly framework remains essential because it captures the functional reality - single fuel units, transportable pairs, and large storage or structural chains. Most of biology and diagnosis works at these three levels.
+
+Crucial insight: carbohydrates are classified as monosaccharides (single units: glucose, fructose, galactose), disaccharides (two units: maltose, lactose, sucrose), and polysaccharides (many units: starch, glycogen, cellulose). This three-level classification is the backbone of the whole topic, and every carbohydrate you meet fits into it.` },
+
+    { q: "Monosaccharides: naming by carbons and by carbonyl group.",
+      body: `Monosaccharides, the single sugars, are themselves classified two ways, and knowing both lets you name any simple sugar precisely.
+
+First, by the number of carbon atoms: a triose has three carbons, a pentose has five, and a hexose has six. Glucose, fructose and galactose are all hexoses (six carbons); ribose, found in RNA, is a pentose.
+
+Second, by which carbonyl group they carry: an aldose has an aldehyde group (at the end of the chain), while a ketose has a ketone group (within the chain). Glucose is an aldose (an aldohexose); fructose is a ketose (a ketohexose).
+
+My Socratic question: glucose and fructose have the same molecular formula but glucose is an aldose and fructose is a ketose. What kind of isomers does that make them, recalling your isomerism topic?
+
+The answer is that they are constitutional (structural) isomers - same molecular formula, different arrangement of atoms, specifically a different position and type of carbonyl group. Your earlier isomerism work explains exactly how these sugars relate.
+
+Crucial insight: monosaccharides are named by carbon number (triose, pentose, hexose) and by carbonyl type (aldose for aldehyde, ketose for ketone) - so glucose is an aldohexose and fructose a ketohexose. This dual naming is precise and examinable, and it connects directly to the isomerism you already understand.` },
+
+    { q: "Glucose: the central sugar of life.",
+      body: `Among all monosaccharides, one stands above the rest in importance, and it deserves focused attention: glucose.
+
+Glucose is the body's primary energy source - the sugar your cells preferentially break down for ATP, and the only fuel the brain normally uses. It is the sugar measured as "blood sugar," kept within a tight range by hormones, and its dysregulation defines diabetes. It is an aldohexose - a six-carbon aldose - and, as you learned, it exists mostly in a cyclic ring form in solution, with alpha and beta anomers interconverting by mutarotation.
+
+My Socratic question: why is it significant that the body maintains blood glucose within a narrow range, neither too high nor too low?
+
+The answer is that too little glucose (hypoglycaemia) starves the brain, causing confusion, unconsciousness and death; too much (hyperglycaemia), as in diabetes, damages blood vessels, nerves, kidneys and eyes over time. Both extremes are dangerous, which is why glucose is so tightly regulated and so important to measure.
+
+Crucial insight: glucose is the central sugar of life - the preferred cellular fuel, the brain's essential fuel, and the "blood sugar" whose regulation defines health and diabetes. It is an aldohexose existing in cyclic anomeric forms. Because its level must stay within narrow limits, glucose is the single most measured molecule in clinical chemistry - the heart of your future daily work.` },
+
+    { q: "Disaccharides: the important three.",
+      body: `Disaccharides - two monosaccharides joined by a glycosidic bond - include three you must know thoroughly, because they appear constantly in nutrition and in disease.
+
+Maltose is glucose joined to glucose, produced when starch is digested. Lactose is glucose joined to galactose - the sugar of milk, which is why it matters in infant nutrition and in lactose intolerance. Sucrose is glucose joined to fructose - ordinary table sugar, the main dietary disaccharide.
+
+My Socratic question: lactose intolerance results from a lack of the enzyme lactase. Using what you know about disaccharides and glycosidic bonds, explain why this causes symptoms.
+
+The answer is that lactase is the enzyme that breaks the glycosidic bond in lactose, splitting it into glucose and galactose for absorption. Without enough lactase, lactose cannot be broken down and absorbed; it passes into the large intestine where bacteria ferment it, causing gas, bloating and diarrhoea. The disaccharide must be split before its sugars can be used.
+
+Crucial insight: the three key disaccharides are maltose (glucose + glucose), lactose (glucose + galactose, milk sugar), and sucrose (glucose + fructose, table sugar), each joined by a glycosidic bond that a specific enzyme must break for absorption. Lactose intolerance shows what happens when that enzyme is missing - a direct, testable link between carbohydrate chemistry and real disease.` },
+
+    { q: "Polysaccharides: storage and structure.",
+      body: `Polysaccharides - long chains of many monosaccharides - serve two great purposes in living things: storing energy and providing structure. Three are essential to know.
+
+Starch is the energy-storage polysaccharide of plants - a chain of glucose units, and the main carbohydrate in our diet (in rice, bread, cassava, yam). Glycogen is the energy-storage polysaccharide of animals, including us - a highly branched chain of glucose stored in the liver and muscles, ready to release glucose when needed. Cellulose is the structural polysaccharide of plants - also a chain of glucose, forming plant cell walls and the fibre in our diet.
+
+My Socratic question: starch, glycogen and cellulose are all chains of glucose, yet we can digest starch and glycogen but not cellulose. How can the same building block give such different molecules?
+
+The answer is that the difference lies in the type of glycosidic bond linking the glucose units. Starch and glycogen use alpha-glycosidic bonds, which our digestive enzymes can break; cellulose uses beta-glycosidic bonds, which we cannot break - so cellulose passes through as dietary fibre. The bond type, alpha versus beta, determines everything.
+
+Crucial insight: the key polysaccharides are starch (plant energy store), glycogen (animal energy store, branched, in liver and muscle), and cellulose (plant structure, our dietary fibre) - all glucose chains differing in their glycosidic bonds. That alpha bonds are digestible and beta bonds are not explains why starch feeds us and cellulose passes through, a beautiful demonstration that bond type dictates biological function.` },
+
+    { q: "Reducing and non-reducing sugars: a classic laboratory test.",
+      body: `A property of certain sugars underlies one of the oldest and most instructive laboratory tests, connecting carbohydrate chemistry directly to the bench.
+
+A reducing sugar is one with a free aldehyde or ketone group (a free anomeric carbon) that can act as a reducing agent - it can donate electrons, reducing another substance. All monosaccharides are reducing sugars, and so are most disaccharides like maltose and lactose. Sucrose, however, is a non-reducing sugar, because both its anomeric carbons are locked in the glycosidic bond, leaving no free reactive group.
+
+My Socratic question: Benedict's test uses a blue copper solution that turns brick-red when a reducing sugar is present. Why would this test detect glucose but not sucrose?
+
+The answer is that glucose has a free anomeric carbon (a free aldehyde group) that reduces the blue copper to red, giving a positive result; sucrose has no free reducing group - both anomeric carbons are tied up in its glycosidic bond - so it cannot reduce the copper and gives a negative result. The test detects the free reactive group.
+
+Crucial insight: reducing sugars have a free aldehyde or ketone group and give a positive result in tests like Benedict's, turning blue copper solution brick-red; sucrose is non-reducing because its anomeric carbons are locked in the glycosidic bond. This classic test - historically used to detect glucose in urine - is a direct application of carbohydrate chemistry to diagnosis, and exactly the kind of practical work you will do.` },
+
+    { q: "Carbohydrate metabolism in brief: fuel for the body.",
+      body: `Carbohydrates matter most because they fuel the body, so a brief overview of their metabolism connects this structural topic to the energy pathways you study in biochemistry.
+
+When you eat carbohydrates, digestive enzymes break polysaccharides and disaccharides down into monosaccharides, chiefly glucose, which is absorbed into the blood. Cells take up glucose and break it down through glycolysis and further pathways to produce ATP, the energy currency. Excess glucose is stored: first as glycogen in liver and muscle, and when those stores are full, converted to fat.
+
+My Socratic question: between meals, when blood glucose starts to fall, how does the body keep supplying glucose to the brain?
+
+The answer is that the liver breaks down its stored glycogen back into glucose and releases it into the blood, maintaining blood glucose between meals; if fasting continues, the liver can also make new glucose. This is why the liver's glycogen store is so important - it is the body's short-term glucose reserve for the brain.
+
+Crucial insight: carbohydrate metabolism runs from digestion (polysaccharides to glucose) to energy production (glycolysis making ATP) to storage (glycogen, then fat), with the liver's glycogen buffering blood glucose between meals. This overview links the carbohydrate structures you have learned to the metabolic pathways of biochemistry, showing why the body's whole energy economy rests on these molecules.` },
+
+    { q: "Why carbohydrates are central to the laboratory.",
+      body: `Carbohydrates, and glucose above all, are among the most important substances a medical laboratory measures, making this topic core to your career.
+
+My Socratic question: diabetes mellitus is diagnosed and monitored largely through carbohydrate measurements. What might a laboratory measure, and what does each tell you?
+
+The answer is several things: blood glucose (fasting or random) shows the current sugar level; the glucose tolerance test shows how the body handles a sugar load; and glycated haemoglobin (HbA1c) - glucose permanently attached to haemoglobin - reflects the average blood glucose over the previous months. Each is a carbohydrate measurement that reveals a different aspect of glucose control. Historically, reducing-sugar tests detected glucose spilling into the urine when blood levels were very high.
+
+Understanding carbohydrate chemistry underpins all of these: why glucose is measured, how it behaves, and what the results mean.
+
+Crucial insight: carbohydrate measurements - blood glucose, glucose tolerance tests, and HbA1c - are cornerstones of diagnosing and monitoring diabetes, the most common metabolic disease. The chemistry of carbohydrates you have learned is exactly what makes these tests possible and interpretable, placing this topic at the very centre of clinical laboratory practice.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for carbohydrates, in five lines.
+
+What they are: carbohydrates are polyhydroxy aldehydes or ketones (or yield them on hydrolysis), made of carbon, hydrogen and oxygen, general formula (CH2O)n.
+
+The three classes: monosaccharides (single units - glucose, fructose, galactose), disaccharides (two units by glycosidic bond - maltose = glucose+glucose, lactose = glucose+galactose, sucrose = glucose+fructose), and polysaccharides (many units - starch, glycogen, cellulose).
+
+Naming single sugars: by carbons (triose, pentose, hexose) and by carbonyl (aldose = aldehyde, ketose = ketone), so glucose is an aldohexose and fructose a ketohexose; glucose is the central fuel of life.
+
+Structure dictates function: starch, glycogen and cellulose are all glucose chains, but alpha bonds (starch, glycogen) are digestible while beta bonds (cellulose) are not, making cellulose dietary fibre.
+
+Laboratory relevance: reducing sugars (free aldehyde/ketone) give positive tests like Benedict's, sucrose does not; and glucose measurements (blood glucose, tolerance test, HbA1c) are cornerstones of diabetes diagnosis.
+
+Now your final test. A laboratory receives a sugar and finds: it has the formula C12H22O11, it gives a NEGATIVE Benedict's test, and on treatment with acid it breaks into two different monosaccharides, one an aldohexose and one a ketohexose.
+
+Question one: is this sugar a monosaccharide, disaccharide or polysaccharide, and how do you know from the formula and the acid hydrolysis?
+Question two: which specific disaccharide is it most likely to be, and what are its two monosaccharides?
+Question three: explain why it gave a negative Benedict's test, using the idea of the glycosidic bond and reducing sugars.
+
+Work them through before reading on.
+
+My answers. One: it is a disaccharide - the acid hydrolysis breaking it into two monosaccharides proves it is made of two units, and the formula C12H22O11 (roughly two hexoses joined with loss of water) fits a disaccharide. Two: it is most likely sucrose, because it yields one aldohexose (glucose) and one ketohexose (fructose) - sucrose is glucose joined to fructose. Three: it gave a negative Benedict's test because it is a non-reducing sugar - in sucrose, both anomeric carbons are locked in the glycosidic bond, leaving no free aldehyde or ketone group to reduce the copper, so no colour change occurs.
+
+If those came cleanly, you understand the body's primary fuel and structural sugars from single molecules to storage chains, and the tests that measure them. Proteins - built from the amino acids you already know - are the natural next step.` },
+  ],
+  theory: [
+    { q: "Define carbohydrates chemically.", a: "Carbohydrates are polyhydroxy aldehydes or ketones, or substances that yield these on hydrolysis - molecules with many hydroxyl groups and either an aldehyde or ketone group. They are made of carbon, hydrogen and oxygen, usually with H and O in the 2:1 ratio of water, general formula (CH2O)n." },
+    { q: "Name and define the three main classes of carbohydrates with examples.", a: "Monosaccharides are single sugar units that cannot be broken down further (glucose, fructose, galactose). Disaccharides are two monosaccharides joined by a glycosidic bond (maltose, lactose, sucrose). Polysaccharides are many monosaccharides joined into long chains (starch, glycogen, cellulose)." },
+    { q: "How are monosaccharides classified by carbon number and by carbonyl group?", a: "By carbon number: triose (3 carbons), pentose (5), hexose (6). By carbonyl group: an aldose has an aldehyde group (end of chain), a ketose has a ketone group (within the chain). So glucose is an aldohexose and fructose is a ketohexose." },
+    { q: "Why is glucose the central sugar of life?", a: "It is the body's primary energy source, the sugar cells preferentially break down for ATP, and the only fuel the brain normally uses. It is the 'blood sugar' kept within a tight range; too little starves the brain (hypoglycaemia) and too much damages organs over time (hyperglycaemia/diabetes), so it is the most measured molecule in clinical chemistry." },
+    { q: "State the composition of maltose, lactose and sucrose.", a: "Maltose is glucose + glucose (from starch digestion); lactose is glucose + galactose (milk sugar); sucrose is glucose + fructose (table sugar). Each is two monosaccharides joined by a glycosidic bond." },
+    { q: "Explain lactose intolerance in terms of carbohydrate chemistry.", a: "Lactose intolerance results from a lack of lactase, the enzyme that breaks the glycosidic bond in lactose into glucose and galactose for absorption. Without enough lactase, lactose is not broken down or absorbed; it passes to the large intestine where bacteria ferment it, causing gas, bloating and diarrhoea." },
+    { q: "Name the three key polysaccharides and their roles.", a: "Starch is the energy-storage polysaccharide of plants and our main dietary carbohydrate. Glycogen is the energy-storage polysaccharide of animals, highly branched, stored in liver and muscle. Cellulose is the structural polysaccharide of plants, forming cell walls and our dietary fibre. All are chains of glucose." },
+    { q: "Why can we digest starch and glycogen but not cellulose?", a: "Because of the type of glycosidic bond. Starch and glycogen use alpha-glycosidic bonds, which our digestive enzymes can break, releasing glucose. Cellulose uses beta-glycosidic bonds, which our enzymes cannot break, so cellulose passes through undigested as dietary fibre. Bond type (alpha vs beta) determines digestibility." },
+    { q: "What is a reducing sugar, and why is sucrose non-reducing?", a: "A reducing sugar has a free aldehyde or ketone group (free anomeric carbon) that can donate electrons and reduce another substance, giving a positive result in tests like Benedict's. All monosaccharides and most disaccharides (maltose, lactose) are reducing. Sucrose is non-reducing because both its anomeric carbons are locked in the glycosidic bond, leaving no free reactive group." },
+    { q: "Name three carbohydrate measurements used in diabetes and what each shows.", a: "Blood glucose (fasting or random) shows the current sugar level; the glucose tolerance test shows how the body handles a sugar load; and glycated haemoglobin (HbA1c), glucose attached to haemoglobin, reflects average blood glucose over the previous months. Each is a carbohydrate measurement revealing a different aspect of glucose control." },
+  ],
+  videos: [
+    { channel: "Biological Chemistry", title: "Carbohydrates Classification Mono Di Polysaccharides", note: "The three classes and their key examples.", url: "" },
+    { channel: "Biological Chemistry", title: "Starch Glycogen Cellulose Alpha vs Beta Bonds", note: "Why the same glucose gives digestible and indigestible chains.", url: "" },
+    { channel: "Biological Chemistry", title: "Reducing Sugars and Benedict's Test", note: "The classic test and the chemistry behind it.", url: "" },
+  ],
+  mcqs: [
+    { q: "Carbohydrates are chemically defined as polyhydroxy:", o: ["Acids or bases", "Aldehydes or ketones", "Amines", "Alcohols only"], a: 1, w: "Carbohydrates are polyhydroxy aldehydes or ketones." },
+    { q: "The elements in carbohydrates are:", o: ["Carbon, hydrogen, oxygen", "Nitrogen, oxygen, phosphorus", "Carbon, hydrogen, nitrogen", "Carbon, oxygen, sulfur"], a: 0, w: "Carbohydrates contain C, H and O." },
+    { q: "In carbohydrates, hydrogen and oxygen are usually in the ratio:", o: ["2:1 (as in water)", "3:1", "1:2", "1:1"], a: 0, w: "H and O occur in the 2:1 ratio of water - hence carbo-hydrate." },
+    { q: "A single sugar unit that cannot be broken down further is a:", o: ["Monosaccharide", "Polysaccharide", "Glycoside", "Disaccharide"], a: 0, w: "Monosaccharides are the single, simplest sugars." },
+    { q: "Two monosaccharides joined by a glycosidic bond form a:", o: ["Triose", "Disaccharide", "Polysaccharide", "Monosaccharide"], a: 1, w: "A disaccharide is two units joined by a glycosidic bond." },
+    { q: "Many monosaccharides joined into long chains form a:", o: ["Hexose", "Disaccharide", "Polysaccharide", "Monosaccharide"], a: 2, w: "Polysaccharides are long chains of many sugar units." },
+    { q: "Which is a monosaccharide?", o: ["Starch", "Sucrose", "Glucose", "Lactose"], a: 2, w: "Glucose is a single sugar - a monosaccharide." },
+    { q: "A six-carbon sugar is a:", o: ["Hexose", "Pentose", "Heptose", "Triose"], a: 0, w: "Hexose means six carbons." },
+    { q: "A sugar with an aldehyde group is an:", o: ["Ketose", "Hexose", "Aldose", "Pentose"], a: 2, w: "An aldose carries an aldehyde group." },
+    { q: "A sugar with a ketone group is a:", o: ["Hexose", "Aldose", "Triose", "Ketose"], a: 3, w: "A ketose carries a ketone group." },
+    { q: "Glucose is classified as an:", o: ["Ketohexose", "Aldohexose", "Ketopentose", "Aldopentose"], a: 1, w: "Glucose is a six-carbon aldose - an aldohexose." },
+    { q: "Fructose is classified as a:", o: ["Aldopentose", "Aldohexose", "Ketotriose", "Ketohexose"], a: 3, w: "Fructose is a six-carbon ketose - a ketohexose." },
+    { q: "Glucose and fructose, same formula but different structure, are:", o: ["Identical", "Constitutional (structural) isomers", "Enantiomers", "Polymers"], a: 1, w: "Same formula, different atom arrangement - constitutional isomers." },
+    { q: "The only fuel the brain normally uses is:", o: ["Fat", "Protein", "Cellulose", "Glucose"], a: 3, w: "The brain relies on glucose as its normal fuel." },
+    { q: "Dangerously low blood glucose is called:", o: ["Hypoglycaemia", "Glycosuria", "Ketosis", "Hyperglycaemia"], a: 0, w: "Hypoglycaemia is low blood glucose, which starves the brain." },
+    { q: "Maltose is composed of:", o: ["Glucose + galactose", "Glucose + glucose", "Two fructose units", "Glucose + fructose"], a: 1, w: "Maltose is glucose joined to glucose." },
+    { q: "Lactose (milk sugar) is composed of:", o: ["Glucose + fructose", "Fructose + galactose", "Glucose + galactose", "Glucose + glucose"], a: 2, w: "Lactose is glucose joined to galactose." },
+    { q: "Sucrose (table sugar) is composed of:", o: ["Glucose + fructose", "Glucose + glucose", "Two galactose units", "Glucose + galactose"], a: 0, w: "Sucrose is glucose joined to fructose." },
+    { q: "Lactose intolerance is caused by a lack of the enzyme:", o: ["Amylase", "Sucrase", "Lactase", "Maltase"], a: 2, w: "Lactase breaks lactose; without it, lactose is not absorbed." },
+    { q: "The energy-storage polysaccharide of animals is:", o: ["Sucrose", "Glycogen", "Starch", "Cellulose"], a: 1, w: "Glycogen stores glucose in animal liver and muscle." },
+    { q: "The energy-storage polysaccharide of plants is:", o: ["Glycogen", "Lactose", "Starch", "Cellulose"], a: 2, w: "Starch is the plant energy store and our main dietary carbohydrate." },
+    { q: "The structural polysaccharide forming plant cell walls is:", o: ["Cellulose", "Starch", "Maltose", "Glycogen"], a: 0, w: "Cellulose gives plant structure and is our dietary fibre." },
+    { q: "We cannot digest cellulose because it has:", o: ["Too much glucose", "Alpha-glycosidic bonds", "No bonds", "Beta-glycosidic bonds we cannot break"], a: 3, w: "Beta bonds resist our enzymes, so cellulose is fibre." },
+    { q: "Starch and glycogen are digestible because they have:", o: ["No glucose", "Peptide bonds", "Alpha-glycosidic bonds our enzymes can break", "Beta-glycosidic bonds"], a: 2, w: "Alpha bonds are broken by our digestive enzymes." },
+    { q: "A reducing sugar has a free:", o: ["Hydroxyl only", "Phosphate", "Amino group", "Aldehyde or ketone group"], a: 3, w: "A free aldehyde or ketone lets it act as a reducing agent." },
+    { q: "Which is a non-reducing sugar?", o: ["Maltose", "Lactose", "Glucose", "Sucrose"], a: 3, w: "Sucrose's anomeric carbons are locked, so it is non-reducing." },
+    { q: "Benedict's test turns from blue to brick-red in the presence of a:", o: ["Lipid", "Non-reducing sugar", "Protein", "Reducing sugar"], a: 3, w: "Reducing sugars reduce blue copper to brick-red." },
+    { q: "Sucrose gives a negative Benedict's test because:", o: ["It has no carbon", "Its anomeric carbons are locked in the glycosidic bond", "It is a protein", "It is too small"], a: 1, w: "No free reducing group means no colour change." },
+    { q: "Between meals, the liver maintains blood glucose by:", o: ["Absorbing protein", "Breaking down stored glycogen to glucose", "Storing more fat only", "Making cellulose"], a: 1, w: "Liver glycogen is broken down to release glucose between meals." },
+    { q: "HbA1c (glycated haemoglobin) reflects:", o: ["Average blood glucose over recent months", "Blood type", "Cholesterol", "Current glucose only"], a: 0, w: "HbA1c shows longer-term average glucose control." },
+  ],
+};
+
+
+/* --------------------------- bio:4 --------------------------- */
+const T_BIO_PROTEINS = {
+  courseId: "bio",
+  topicIndex: 4,
+  title: "Proteins",
+  minutes: 20,
+  note: [
+    { q: "From amino acids to the workhorses of life.",
+      body: `You have studied amino acids - the twenty building blocks with their amino group, carboxyl group, and distinctive side chains. Now we assemble them into proteins, the most versatile and abundant working molecules in your body.
+
+My Socratic question: enzymes that catalyse reactions, antibodies that fight infection, haemoglobin that carries oxygen, collagen that holds your body together, and many hormones - all of these are the same class of molecule. What are they, and what makes one so different from another?
+
+The answer is that all of these are proteins - long chains of amino acids folded into specific shapes. What makes each protein different is its particular sequence of amino acids, which determines the shape it folds into, and shape determines function. A protein is essentially a chain of amino acids that has folded into a working three-dimensional structure.
+
+Crucial insight: proteins are polymers of amino acids that fold into specific three-dimensional shapes, and they perform an enormous range of functions - catalysis, transport, defence, structure, signalling. They are built from the amino acids you already know, joined and folded. Understanding proteins is understanding how the body actually does its work at the molecular level, and why so many diseases and laboratory tests involve proteins.` },
+
+    { q: "The peptide bond: how amino acids join.",
+      body: `Just as sugars join through glycosidic bonds, amino acids join through a specific linkage you must understand: the peptide bond.
+
+A peptide bond forms when the carboxyl group of one amino acid reacts with the amino group of the next, releasing a molecule of water. This is a condensation (dehydration) reaction - the same water-releasing joining you saw in carbohydrates. The bond formed, linking the carbon of one amino acid to the nitrogen of the next, is the peptide bond.
+
+My Socratic question: two amino acids joined form a dipeptide; a few form an oligopeptide; many form a polypeptide. At what point does a polypeptide become a protein?
+
+The answer is that a protein is a polypeptide (or several) that has folded into its functional three-dimensional shape. The terms overlap, but "peptide" usually means shorter chains, while "protein" implies a longer chain folded into a working structure. The chain of amino acids linked by peptide bonds is called the polypeptide backbone.
+
+Crucial insight: amino acids join by peptide bonds - formed by condensation, releasing water, linking one amino acid's carboxyl to the next's amino group - building a polypeptide chain. This is the single bond that builds all proteins, exactly parallel to the glycosidic bond of carbohydrates, and breaking it (hydrolysis, adding water back) is how proteins are digested.` },
+
+    { q: "Primary structure: the sequence that determines everything.",
+      body: `Proteins have four levels of structure, and understanding them is the heart of this topic. The first level is the primary structure.
+
+The primary structure is simply the sequence of amino acids in the polypeptide chain - the order in which the amino acids are linked, from the first to the last. It is determined by the gene that codes for the protein, and it is held together by peptide bonds.
+
+My Socratic question: why is the primary structure so important that a change in a single amino acid can cause serious disease?
+
+The answer is that the primary structure determines all the higher levels - how the chain folds into its final shape - and shape determines function. A single wrong amino acid can change the folding and cripple the protein. The classic example is sickle cell disease, where a single amino acid change in haemoglobin (glutamate replaced by valine) makes the haemoglobin clump and distort red blood cells - all from one altered building block in the sequence.
+
+Crucial insight: the primary structure is the amino acid sequence, set by the gene and joined by peptide bonds, and it determines all higher structure and therefore function. Because everything follows from the sequence, a single amino acid change - as in sickle cell disease - can have profound consequences. This is why the primary structure is the foundation of the whole protein.` },
+
+    { q: "Secondary structure: local folding patterns.",
+      body: `The second level of protein structure describes how nearby parts of the chain fold into regular, repeating local shapes: the secondary structure.
+
+Secondary structure is the folding of the polypeptide backbone into regular local patterns, held together by hydrogen bonds between parts of the backbone. There are two main types. The alpha helix is a coil, like a spiral staircase or a coiled spring. The beta pleated sheet is formed when sections of the chain lie side by side, held flat like a pleated fabric.
+
+My Socratic question: these patterns are held by hydrogen bonds. Recalling that hydrogen bonds are individually weak, how can they hold a protein's shape reliably?
+
+The answer is that although each hydrogen bond is weak, there are very many of them along the structure, and together their combined strength is substantial - like many small stitches holding a garment. This also means the structure can be disrupted by conditions that break hydrogen bonds, such as heat.
+
+Crucial insight: secondary structure is the regular local folding of the backbone - alpha helices (coils) and beta pleated sheets - held by many hydrogen bonds between backbone atoms. These repeating patterns are the first level of three-dimensional shape, building on the primary sequence, and their reliance on hydrogen bonds explains why proteins are sensitive to heat and other conditions.` },
+
+    { q: "Tertiary structure: the overall three-dimensional shape.",
+      body: `The third level describes how the entire polypeptide chain folds into its complete three-dimensional shape: the tertiary structure.
+
+Tertiary structure is the overall 3D shape of a single polypeptide, produced when the chain - including its secondary structures - folds back on itself into a compact, specific form. It is held by interactions between the amino acid side chains (the R-groups you studied): hydrogen bonds, ionic bonds, hydrophobic interactions (water-fearing side chains clustering inward, away from water), and strong covalent disulfide bridges between cysteine side chains.
+
+My Socratic question: why do hydrophobic (water-fearing) side chains tend to end up buried in the interior of a protein?
+
+The answer is that in the watery environment of the cell, water-fearing side chains are pushed away from the water and cluster together in the protein's interior, while water-loving side chains face outward toward the water. This hydrophobic effect is a major force driving the protein to fold into its correct compact shape.
+
+Crucial insight: tertiary structure is the full 3D shape of a polypeptide, held by side-chain interactions - hydrogen bonds, ionic bonds, hydrophobic clustering, and disulfide bridges. This is the level at which a protein achieves its working shape, and it flows directly from the properties of the amino acid side chains you learned. The tertiary structure is, for many proteins, the functional structure.` },
+
+    { q: "Quaternary structure: assembling multiple chains.",
+      body: `The fourth and highest level applies to proteins made of more than one polypeptide chain: the quaternary structure.
+
+Quaternary structure is the arrangement of two or more polypeptide chains (subunits) into a single functional protein. Not all proteins have it - many work as a single chain - but those that do need all their subunits assembled correctly to function.
+
+My Socratic question: haemoglobin, the oxygen carrier, is made of four polypeptide subunits. What does this tell you about its structure, and why might it matter?
+
+The answer is that haemoglobin has quaternary structure - four chains assembled together. This matters because the four subunits cooperate: when one binds oxygen, it helps the others bind too, making haemoglobin far better at picking up and releasing oxygen than a single chain would be. The assembly of subunits gives the protein abilities a single chain could not have.
+
+Crucial insight: quaternary structure is the assembly of multiple polypeptide subunits into one functional protein, as in haemoglobin's four chains - and it can give the protein cooperative abilities beyond a single chain. Together with primary, secondary and tertiary, it completes the four levels of protein structure, each building on the last from sequence to fully assembled molecule.` },
+
+    { q: "Denaturation: when proteins lose their shape.",
+      body: `Because a protein's function depends entirely on its precise folded shape, anything that disrupts that shape destroys the protein's function - a process called denaturation, which you glimpsed with enzymes.
+
+Denaturation is the loss of a protein's three-dimensional shape - its secondary, tertiary and quaternary structure - without breaking the peptide bonds of the primary structure. The chain unfolds, and the protein stops working. It is caused by anything that disrupts the weak bonds holding the shape: heat, extremes of pH, and certain chemicals.
+
+My Socratic question: when you fry an egg, the clear runny egg white turns solid and white. What has happened to its proteins, and is it reversible?
+
+The answer is that the egg-white proteins have denatured - heat has broken the bonds holding their folded shape, so they unfold and tangle together, turning solid and opaque. It is usually irreversible: you cannot un-fry an egg, because the proteins cannot refold correctly once badly disrupted.
+
+Crucial insight: denaturation is the loss of a protein's folded shape (secondary, tertiary, quaternary) - and therefore its function - caused by heat, pH extremes or chemicals, while the primary sequence stays intact. The frying egg is the everyday example. This is why the body defends its temperature and pH, why fevers are dangerous, and why laboratory samples must be handled with care - all to protect protein shape.` },
+
+    { q: "The many functions of proteins.",
+      body: `Proteins are the most functionally diverse molecules in the body, and appreciating their range shows why they matter so much in health, disease, and the laboratory.
+
+Consider the breadth. Enzymes are proteins that catalyse reactions. Antibodies are proteins that defend against infection. Transport proteins carry substances - haemoglobin carries oxygen, and membrane carriers move glucose. Structural proteins give strength - collagen in skin, bone and tendon, keratin in hair and nails. Contractile proteins - actin and myosin - produce muscle movement. Some hormones are proteins, like insulin. And proteins in the blood maintain osmotic balance and transport substances.
+
+My Socratic question: given this range, why does protein deficiency in the diet cause such widespread, severe effects on the body?
+
+The answer is that because proteins do so many essential jobs - enzymes, defence, transport, structure, fluid balance - a lack of protein impairs all of these at once, causing the widespread wasting, weakened immunity, and fluid swelling seen in severe protein malnutrition (such as kwashiorkor). Everything the body does depends on proteins.
+
+Crucial insight: proteins perform an enormous range of functions - catalysis (enzymes), defence (antibodies), transport (haemoglobin), structure (collagen, keratin), movement (actin and myosin), signalling (protein hormones), and fluid balance. This versatility is why proteins are central to life and why protein deficiency is so devastating - and why measuring specific proteins reveals so much in the laboratory.` },
+
+    { q: "Why proteins are central to the laboratory.",
+      body: `Proteins are among the most important substances a medical laboratory measures and works with, making this topic directly relevant to your future career.
+
+My Socratic question: many laboratory tests measure specific proteins or use proteins as tools. What might a laboratory measure, and what could each reveal?
+
+The answer spans much of diagnosis: total protein and albumin in blood assess nutrition, liver and kidney function; specific enzymes (which are proteins) reveal organ damage, as you learned; antibodies (proteins) are measured to detect infection or immunity; haemoglobin (a protein) is measured to detect anaemia; and abnormal proteins can signal disease, as in sickle cell haemoglobin or certain cancers. Proteins are also tools - antibodies are used in countless diagnostic tests to detect other substances with great specificity.
+
+Understanding protein structure and function underpins all of this: why proteins are measured, how they behave, and what abnormal results mean.
+
+Crucial insight: proteins are central to the laboratory - measured to assess nutrition, organ function, infection, immunity and anaemia, and used as precise tools (antibodies) in diagnostic tests. The protein chemistry you have learned is exactly what makes these measurements meaningful, placing this topic, like carbohydrates, at the heart of clinical laboratory practice.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for proteins, in five lines.
+
+What they are: proteins are polymers of amino acids, joined by peptide bonds, folded into specific 3D shapes; sequence determines shape and shape determines function.
+
+The joining: amino acids link by peptide bonds - formed by condensation (releasing water) between one amino acid's carboxyl and the next's amino group - building the polypeptide backbone.
+
+The four levels of structure: primary (the amino acid sequence, set by the gene); secondary (local backbone folding - alpha helices and beta pleated sheets, held by hydrogen bonds); tertiary (the overall 3D shape of one chain, held by side-chain interactions including disulfide bridges and hydrophobic clustering); quaternary (assembly of multiple subunits, as in haemoglobin's four chains).
+
+Denaturation: loss of folded shape (and function) from heat, pH extremes or chemicals, without breaking the primary sequence - the fried egg being the everyday example.
+
+Functions and relevance: proteins act as enzymes, antibodies, transporters, structure, movement, hormones and fluid balance - so protein deficiency is devastating - and proteins are measured and used as tools throughout the laboratory.
+
+Now your final test. A protein is exposed to high heat. Afterward, it no longer works, its chains have unfolded and tangled, but chemical analysis shows its sequence of amino acids is completely unchanged. The protein was originally made of four polypeptide chains working together.
+
+Question one: what process has occurred, and which levels of structure have been lost versus kept?
+Question two: name the level of structure represented by "four polypeptide chains working together," and give the classic example of such a protein.
+Question three: explain why the amino acid sequence remaining unchanged, yet the protein not working, proves that shape - not just sequence - determines function.
+
+Work them through before reading on.
+
+My answers. One: denaturation has occurred - the heat disrupted the weak bonds holding the folded shape, so the secondary, tertiary and quaternary structures have been lost (the chains unfolded and tangled), while the primary structure, the sequence held by peptide bonds, is kept intact and unchanged. Two: four polypeptide chains working together is the quaternary structure, and the classic example is haemoglobin, which has four subunits. Three: because the sequence (primary structure) is unchanged yet the protein no longer works, the loss of function must be due to the loss of the folded shape alone - proving that a protein's function depends on its three-dimensional shape, not merely on having the correct sequence; the correct sequence is necessary but not sufficient, the shape must also be intact.
+
+If those came cleanly, you understand the workhorses of the body - how amino acids build them, how they fold through four levels, how they lose function when unfolded, and why they are central to life and the laboratory. You have now connected amino acids, carbohydrates and proteins into a working picture of the molecules of life.` },
+  ],
+  theory: [
+    { q: "What are proteins, and what determines a protein's function?", a: "Proteins are polymers of amino acids folded into specific three-dimensional shapes. A protein's function is determined by its shape, which in turn is determined by its amino acid sequence. They perform diverse roles: catalysis, transport, defence, structure, movement, and signalling." },
+    { q: "Describe how a peptide bond forms.", a: "A peptide bond forms when the carboxyl group of one amino acid reacts with the amino group of the next, releasing a molecule of water (a condensation or dehydration reaction). It links the amino acids into a polypeptide chain, forming the backbone of the protein." },
+    { q: "What is the primary structure of a protein, and why is it so important?", a: "The primary structure is the sequence of amino acids in the polypeptide chain, set by the gene and held by peptide bonds. It is crucial because it determines all higher levels of structure - how the protein folds - and therefore its function. A single amino acid change can cripple the protein, as in sickle cell disease." },
+    { q: "Describe secondary structure and the forces holding it.", a: "Secondary structure is the regular local folding of the polypeptide backbone into patterns - the alpha helix (a coil) and the beta pleated sheet (chains lying side by side) - held together by many hydrogen bonds between backbone atoms. Though each hydrogen bond is weak, their large number gives substantial combined strength." },
+    { q: "Describe tertiary structure and the interactions that stabilise it.", a: "Tertiary structure is the overall three-dimensional shape of a single polypeptide, formed when the chain folds back on itself. It is stabilised by interactions between amino acid side chains: hydrogen bonds, ionic bonds, hydrophobic interactions (water-fearing side chains clustering inward), and covalent disulfide bridges between cysteines." },
+    { q: "What is quaternary structure? Give an example.", a: "Quaternary structure is the arrangement of two or more polypeptide chains (subunits) into a single functional protein. Not all proteins have it. The classic example is haemoglobin, made of four subunits that cooperate in binding and releasing oxygen." },
+    { q: "Define denaturation and state its causes.", a: "Denaturation is the loss of a protein's three-dimensional shape (secondary, tertiary and quaternary structure) - and therefore its function - without breaking the peptide bonds of the primary structure. It is caused by heat, extremes of pH, and certain chemicals, all of which disrupt the weak bonds holding the shape." },
+    { q: "Why is the frying of an egg an example of denaturation, and why is it irreversible?", a: "Heat breaks the weak bonds holding the egg-white proteins' folded shape, so they unfold and tangle together, turning the clear runny white solid and opaque. It is irreversible because the proteins cannot refold correctly once badly disrupted - you cannot un-fry an egg." },
+    { q: "List six functions of proteins with an example of each.", a: "Enzymes (catalyse reactions); antibodies (defend against infection); transport proteins (haemoglobin carries oxygen); structural proteins (collagen, keratin); contractile proteins (actin and myosin for movement); and hormones (insulin). Proteins also maintain fluid/osmotic balance in the blood." },
+    { q: "Why are proteins central to the medical laboratory?", a: "Proteins are measured to assess nutrition and organ function (total protein, albumin), to detect organ damage (enzymes), to detect infection or immunity (antibodies), and to detect anaemia (haemoglobin); abnormal proteins can signal disease (sickle cell haemoglobin). Proteins such as antibodies are also used as highly specific tools in many diagnostic tests." },
+  ],
+  videos: [
+    { channel: "Biological Chemistry", title: "Protein Structure Primary to Quaternary", note: "The four levels of protein structure explained clearly.", url: "" },
+    { channel: "Biological Chemistry", title: "Peptide Bond Formation", note: "How amino acids join by condensation into polypeptides.", url: "" },
+    { channel: "Biological Chemistry", title: "Protein Denaturation Explained", note: "How and why proteins lose their shape and function.", url: "" },
+  ],
+  mcqs: [
+    { q: "Proteins are polymers of:", o: ["Fatty acids", "Nucleotides", "Amino acids", "Sugars"], a: 2, w: "Proteins are chains of amino acids." },
+    { q: "A protein's function is determined mainly by its:", o: ["Weight only", "Colour", "Location only", "Three-dimensional shape"], a: 3, w: "Shape determines function, and shape comes from sequence." },
+    { q: "Amino acids are joined together by:", o: ["Ester bonds", "Peptide bonds", "Hydrogen bonds only", "Glycosidic bonds"], a: 1, w: "Peptide bonds link amino acids into proteins." },
+    { q: "A peptide bond forms with the release of:", o: ["Water", "Oxygen", "Carbon dioxide", "Ammonia"], a: 0, w: "Peptide bond formation is a condensation releasing water." },
+    { q: "A peptide bond links one amino acid's carboxyl group to the next's:", o: ["Amino group", "Phosphate", "Side chain", "Hydroxyl group"], a: 0, w: "The carboxyl of one joins the amino group of the next." },
+    { q: "The primary structure of a protein is its:", o: ["Number of subunits", "Sequence of amino acids", "Colour", "3D shape"], a: 1, w: "Primary structure is the amino acid sequence." },
+    { q: "The primary structure is determined by:", o: ["pH", "The gene coding for the protein", "Temperature", "Diet alone"], a: 1, w: "The gene specifies the amino acid sequence." },
+    { q: "Sickle cell disease results from a change in haemoglobin's:", o: ["Colour", "Size only", "Primary structure (a single amino acid)", "Quaternary structure only"], a: 2, w: "A single amino acid change in the sequence causes it." },
+    { q: "Secondary structure includes the alpha helix and the:", o: ["Beta pleated sheet", "Random coil only", "Disulfide bridge", "Triple helix only"], a: 0, w: "Alpha helices and beta pleated sheets are secondary structures." },
+    { q: "Secondary structure is held together mainly by:", o: ["Peptide bonds", "Disulfide bridges", "Hydrogen bonds between backbone atoms", "Ionic bonds only"], a: 2, w: "Hydrogen bonds along the backbone hold secondary structure." },
+    { q: "The alpha helix is best described as a:", o: ["Straight line", "Flat sheet", "Coil", "Sphere"], a: 2, w: "The alpha helix is a coiled shape." },
+    { q: "Although individually weak, hydrogen bonds hold protein shape because:", o: ["Each is very strong", "They never break", "They are covalent", "There are very many of them"], a: 3, w: "Their large number gives substantial combined strength." },
+    { q: "Tertiary structure is the:", o: ["Amino acid sequence", "Assembly of subunits", "Overall 3D shape of a single polypeptide", "Local backbone folding"], a: 2, w: "Tertiary structure is the full 3D fold of one chain." },
+    { q: "Tertiary structure is stabilised by interactions between:", o: ["Water only", "Backbone atoms only", "Peptide bonds only", "Amino acid side chains (R-groups)"], a: 3, w: "Side-chain interactions stabilise tertiary structure." },
+    { q: "The strong covalent links between cysteine side chains are:", o: ["Ionic bonds", "Disulfide bridges", "Peptide bonds", "Hydrogen bonds"], a: 1, w: "Disulfide bridges are covalent links between cysteines." },
+    { q: "Water-fearing (hydrophobic) side chains tend to be found:", o: ["In the backbone", "Outside the cell", "On the protein surface", "Buried in the protein interior"], a: 3, w: "Hydrophobic side chains cluster inward, away from water." },
+    { q: "Quaternary structure refers to:", o: ["Local folding", "A single folded chain", "The assembly of multiple polypeptide subunits", "The amino acid sequence"], a: 2, w: "Quaternary structure is multiple subunits assembled together." },
+    { q: "Haemoglobin, with four subunits, is an example of:", o: ["Secondary structure", "Quaternary structure", "A single polypeptide", "Primary structure"], a: 1, w: "Four assembled chains give haemoglobin quaternary structure." },
+    { q: "The four haemoglobin subunits cooperate to:", o: ["Bind and release oxygen more effectively", "Digest food", "Store fat", "Build DNA"], a: 0, w: "Cooperative binding improves oxygen uptake and release." },
+    { q: "Denaturation is the loss of a protein's:", o: ["Carbon atoms", "Three-dimensional shape and function", "Peptide bonds", "Amino acid sequence"], a: 1, w: "Denaturation loses shape and function, not the sequence." },
+    { q: "Denaturation does NOT break the protein's:", o: ["Quaternary structure", "Primary structure (peptide bonds/sequence)", "Hydrogen bonds", "Tertiary structure"], a: 1, w: "The primary sequence stays intact during denaturation." },
+    { q: "Which can cause denaturation?", o: ["Correct folding", "Pure water only", "Body-temperature conditions", "Heat, pH extremes, and certain chemicals"], a: 3, w: "Heat, pH extremes and chemicals disrupt protein shape." },
+    { q: "A fried egg turning solid and white is an example of:", o: ["Peptide bond formation", "Osmosis", "Protein denaturation", "Digestion"], a: 2, w: "Heat denatures egg-white proteins, turning them solid." },
+    { q: "Frying an egg is irreversible because the proteins:", o: ["Cannot refold correctly once badly disrupted", "Become sugars", "Are unchanged", "Regain their shape"], a: 0, w: "Badly disrupted proteins cannot refold - you cannot un-fry an egg." },
+    { q: "Enzymes are an example of proteins that:", o: ["Carry oxygen", "Store energy", "Form hair", "Catalyse reactions"], a: 3, w: "Enzymes are catalytic proteins." },
+    { q: "Antibodies are proteins that:", o: ["Defend against infection", "Store glucose", "Carry oxygen", "Move muscles"], a: 0, w: "Antibodies are defence proteins of the immune system." },
+    { q: "Collagen and keratin are examples of ______ proteins.", o: ["Structural", "Contractile", "Enzyme", "Transport"], a: 0, w: "Collagen and keratin give structure and strength." },
+    { q: "Actin and myosin are proteins responsible for:", o: ["Defence", "Muscle movement", "Digestion", "Oxygen transport"], a: 1, w: "Actin and myosin are contractile proteins producing movement." },
+    { q: "Severe dietary protein deficiency is devastating because proteins:", o: ["Are only structural", "Do only one job", "Are not needed", "Perform many essential jobs at once"], a: 3, w: "Losing proteins impairs enzymes, defence, transport and more together." },
+    { q: "In the laboratory, antibodies are valued as tools because they are:", o: ["Highly specific for their targets", "Very large", "Cheap only", "Colourful"], a: 0, w: "Antibody specificity makes them precise diagnostic tools." },
   ],
 };
 
@@ -4382,7 +4766,9 @@ const CONTENT = {
   "bch:4": T_BCH_FRUCTOSE,
   "bio:0": T_BIO_ISOMERISM,
   "bio:1": T_BIO_HEMIACETALS,
+  "bio:2": T_BIO_CARBS,
   "bio:3": T_BIO_AMINO,
+  "bio:4": T_BIO_PROTEINS,
   "psy:0": T_PSY_OVERVIEW,
   "com:0": T_COM_PROCESS,
   "lab:1": T_MLS_SAFETY,
@@ -4788,6 +5174,7 @@ function QuizView({ app }) {
   const [earnedXp, setEarnedXp] = useState(true);
   const bankLen = q.length;
   const [left, setLeft] = useState(bankLen * 45);
+  const [elapsed, setElapsed] = useState(0); // count-up timer for practice mode
 
   const finish = () => {
     const correct = q.reduce((n, item, idx) => n + (answers[idx] === item.a ? 1 : 0), 0);
@@ -4807,6 +5194,13 @@ function QuizView({ app }) {
     const timer = setTimeout(() => setLeft((s) => s - 1), 1000);
     return () => clearTimeout(timer);
   }, [mode, left, done, bankLen]);
+  // Practice mode: a gentle count-up timer so students can see how long they take,
+  // without the pressure of a countdown.
+  useEffect(() => {
+    if (mode !== "practice" || done) return;
+    const t = setTimeout(() => setElapsed((s) => s + 1), 1000);
+    return () => clearTimeout(t);
+  }, [mode, elapsed, done]);
 
   if (!t) return <div className="view"><button className="back" onClick={() => app.go("courses")}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Back</button><div className="card">This topic has no question bank yet.</div></div>;
 
@@ -4818,6 +5212,7 @@ function QuizView({ app }) {
   const nextQ = () => { setReveal(false); if (i + 1 < bankLen) setI(i + 1); else finish(); };
   const score = q.reduce((n, item, idx) => n + (answers[idx] === item.a ? 1 : 0), 0);
   const mm = String(Math.floor(left / 60)).padStart(2, "0"), ss = String(left % 60).padStart(2, "0");
+  const emm = String(Math.floor(elapsed / 60)).padStart(2, "0"), ess = String(elapsed % 60).padStart(2, "0");
 
   if (!mode) {
     return (
@@ -4854,7 +5249,7 @@ function QuizView({ app }) {
             <span style={{ color: g.letter ? "var(--text)" : "var(--text-2)", fontWeight: 600, textAlign: "left", fontSize: 14.5 }}>{g.remark}</span>
           </div>
           <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 18, flexWrap: "wrap" }}>
-            <button className="btn btn-a" onClick={() => { setQ(shuffleBank(mcqs)); setMode(null); setI(0); setAnswers({}); setReveal(false); setDone(false); setLeft(bankLen * 45); }}>Try again</button>
+            <button className="btn btn-a" onClick={() => { setQ(shuffleBank(mcqs)); setMode(null); setI(0); setAnswers({}); setReveal(false); setDone(false); setLeft(bankLen * 45); setElapsed(0); }}>Try again</button>
             <button className="btn btn-g" onClick={() => app.go("topic", { courseId: t.courseId, topicId: t.topicIndex })}>Back to topic</button>
           </div>
         </div>
@@ -4885,7 +5280,9 @@ function QuizView({ app }) {
     <div className="view">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
         <div className="eyebrow">{mode === "exam" ? "Exam mode" : "Practice"} · {i + 1} / {bankLen}</div>
-        {mode === "exam" && <div className="chip mono" style={{ color: left < 60 ? "var(--bad)" : "var(--text)" }}><Ic.clock p={15} /> {mm}:{ss}</div>}
+        {mode === "exam"
+          ? <div className="chip mono" style={{ color: left < 60 ? "var(--bad)" : "var(--text)" }}><Ic.clock p={15} /> {mm}:{ss}</div>
+          : <div className="chip mono" style={{ color: "var(--text-2)" }}><Ic.clock p={15} /> {emm}:{ess}</div>}
       </div>
       <div className="bar" style={{ marginBottom: 20 }}><i style={{ width: (i / bankLen) * 100 + "%" }} /></div>
       <h3 style={{ fontSize: 19, marginBottom: 16 }}>{item.q}</h3>
@@ -5190,48 +5587,57 @@ function RanksView({ app }) {
   const meKey = String(app.progress.name).toLowerCase().replace(/[^a-z0-9]/g, "");
   const [others, setOthers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshTick, setRefreshTick] = useState(0);
+  const loadBoard = async () => {
+    setLoading(true);
+    // Always read the class-wide leaderboard from Supabase, no matter how the
+    // student logged in (Google or username). Everyone who signed up has a
+    // profile row in the cloud, so everyone sees the same full leaderboard.
+    try {
+      const rows = await db.leaderboard();
+      if (Array.isArray(rows) && rows.length) {
+        const mine = app.supaUid;
+        const filtered = rows.filter((r) =>
+          mine ? r.id !== mine : String(r.name || "").toLowerCase().replace(/[^a-z0-9]/g, "") !== meKey
+        );
+        setOthers(filtered);
+        setLoading(false);
+        return;
+      }
+    } catch {}
+    try {
+      const keys = await store.listShared("ascend_board:");
+      const rows = [];
+      for (const k of keys) {
+        const v = await store.get(k, true);
+        if (v && v.name && k !== "ascend_board:" + meKey) rows.push(v);
+      }
+      setOthers(rows);
+    } catch {}
+    setLoading(false);
+  };
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-      // Always read the class-wide leaderboard from Supabase, no matter how the
-      // student logged in (Google or username). Everyone who signed up has a
-      // profile row in the cloud, so everyone sees the same full leaderboard.
-      try {
-        const rows = await db.leaderboard();
-        if (Array.isArray(rows) && rows.length) {
-          // exclude my own row (matched by id if I have one, else by name) so I am
-          // not shown twice - my own card is added separately below.
-          const mine = app.supaUid;
-          const filtered = rows.filter((r) =>
-            mine ? r.id !== mine : String(r.name || "").toLowerCase().replace(/[^a-z0-9]/g, "") !== meKey
-          );
-          setOthers(filtered);
-          setLoading(false);
-          return;
-        }
-      } catch {}
-      // Only if the cloud returned nothing at all, fall back to the local board.
-      try {
-        const keys = await store.listShared("ascend_board:");
-        const rows = [];
-        for (const k of keys) {
-          const v = await store.get(k, true);
-          if (v && v.name && k !== "ascend_board:" + meKey) rows.push(v);
-        }
-        setOthers(rows);
-      } catch {}
-      setLoading(false);
-    })();
-  }, [meKey, app.progress.xp, app.supaUid]);
+    loadBoard();
+    // Re-fetch when the student returns to the tab/app, so newly-joined classmates
+    // appear without needing a manual reload.
+    const onVis = () => { if (document.visibilityState === "visible") loadBoard(); };
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, [meKey, app.progress.xp, app.supaUid, refreshTick]);
   const me = { name: app.progress.name, xp: app.progress.xp, streak: app.progress.streak, me: true };
   const board = [...others, me].sort((a, b) => b.xp - a.xp);
   const r = rankOf(app.progress.xp);
   const toNext = r.next ? r.next.min - app.progress.xp : 0;
   return (
     <div className="view">
-      <div className="eyebrow">Leaderboard</div>
-      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>No one wants to be last</h1>
-      <p style={{ color: "var(--text-2)", marginTop: 0 }}>XP from daily questions and quizzes.</p>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+        <div>
+          <div className="eyebrow">Leaderboard</div>
+          <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>No one wants to be last</h1>
+          <p style={{ color: "var(--text-2)", marginTop: 0 }}>XP from daily questions and quizzes.</p>
+        </div>
+        <button className="btn btn-sm" style={{ flexShrink: 0, background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setRefreshTick((t) => t + 1)} disabled={loading}>{loading ? "..." : "Refresh"}</button>
+      </div>
       <div className="card card-feature" style={{ marginTop: 18, display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{ position: "relative", flexShrink: 0 }}>
           <Ring value={r.next ? (app.progress.xp - r.min) / (r.next.min - r.min) : 1} size={64} stroke={6} color={r.c} />
@@ -6571,7 +6977,24 @@ const DEFAULT_PROGRESS = { name: "Prince", xp: 0, streak: 0, lastActive: shift(-
 
 /* ------------------------------- app ------------------------------------ */
 export default function App() {
-  const [route, setRoute] = useState({ view: "home" });
+  const [route, setRoute] = useState(() => {
+    // Restore the last view if the page reloaded (e.g. a phone browser refreshed
+    // the app after the student switched away to reply to a message). This stops
+    // everything starting over on return.
+    if (typeof window !== "undefined") {
+      try {
+        const saved = window.sessionStorage.getItem("ascend_route");
+        if (saved) return JSON.parse(saved);
+      } catch {}
+    }
+    return { view: "home" };
+  });
+
+  // Persist the current route on every change so a reload can restore it.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try { window.sessionStorage.setItem("ascend_route", JSON.stringify(route)); } catch {}
+  }, [route]);
 
   // Make the iPhone edge-swipe and the browser/hardware back button work:
   useEffect(() => {
