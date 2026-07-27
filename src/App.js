@@ -5258,9 +5258,9 @@ function HomeView({ app }) {
   overflow: "hidden", 
   border: "1px solid var(--line)", 
   borderRadius: "clamp(14px, 2vw, 20px)", 
-  background: "linear-gradient(160deg,#0E1728 0%,#0B1120 60%)", 
   padding: "clamp(20px, 4vw, 30px) clamp(16px, 3vw, 26px)",
-  minHeight: "clamp(140px, 25vh, 200px)"
+  minHeight: "clamp(140px, 25vh, 200px)",
+  background: "var(--bg-2)"
 }}>
   <svg className="ridge" viewBox="0 0 600 220" preserveAspectRatio="none" aria-hidden style={{ 
     position: "absolute", 
@@ -5268,7 +5268,7 @@ function HomeView({ app }) {
     width: "100%", 
     height: "100%", 
     pointerEvents: "none", 
-    opacity: "clamp(0.5, 0.8, 1)"
+    opacity: "clamp(0.3, 0.6, 0.8)"
   }}>
     <defs>
       <radialGradient id="glow" cx="82%" cy="12%" r="55%">
@@ -5291,7 +5291,8 @@ function HomeView({ app }) {
       maxWidth: "clamp(12ch, 16ch, 20ch)", 
       fontWeight: 800, 
       letterSpacing: "-0.03em",
-      margin: "clamp(4px, 1vh, 8px) 0"
+      margin: "clamp(4px, 1vh, 8px) 0",
+      color: "var(--text)"
     }}>Understand the <span className="hl" style={{ color: "var(--amber)" }}>mechanism</span>, and recall takes care of itself.</h1>
     <p className="hero-p" style={{ 
       color: "var(--text-2)", 
