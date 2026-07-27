@@ -7269,6 +7269,506 @@ If those came cleanly, you understand the tissue of movement - its property of c
   ],
 };
 
+// ==================== ANATOMY TOPIC 8: INTRODUCTION TO THE SKELETAL SYSTEM ====================
+const T_ANA_SKELETAL_INTRO = {
+  courseId: "ana",
+  topicIndex: 7,
+  title: "Introduction to the Skeletal System",
+  minutes: 20,
+  note: [
+    { q: "Why do we need a skeleton at all?",
+      body: `You have studied the tissues of the body — epithelium covering surfaces, connective tissue binding everything together, muscle producing movement. Now we meet the organ system that provides the framework for all of these: the skeletal system.
+
+My Socratic question: a jellyfish has no bones, yet it moves and survives. A worm has no skeleton, yet it crawls through soil. So why do humans need a skeleton, and what does it do that simpler animals manage without?
+
+The answer is that the human skeleton does far more than just hold you up against gravity — though that alone would be enough. It provides a rigid framework that supports the body, protects vital organs from injury (the skull encases the brain, the ribcage shields the heart and lungs), allows movement by serving as levers for muscles to pull against, stores essential minerals (especially calcium and phosphorus) that can be released when the body needs them, and produces blood cells in the bone marrow. Without a skeleton, you would be a shapeless mass, unable to stand, move, or protect your internal organs.
+
+The skeleton is also dynamic, not static. It is constantly being remodelled — bone is broken down and rebuilt in response to mechanical stress and hormonal signals. This is why exercise strengthens bones and why astronauts lose bone mass in space. The skeleton is not dead tissue; it is a living, responsive organ system.
+
+Crucial insight: the skeletal system is the body's structural framework, serving five essential functions — support, protection, movement, mineral storage, and blood cell production. It is dynamic, constantly remodelling, and responds to the mechanical demands placed upon it.` },
+
+    { q: "What are the two divisions of the skeleton?",
+      body: `The human skeleton consists of 206 bones at adulthood, organised into two major divisions that serve different purposes. Understanding this division is fundamental to understanding the organisation of the entire skeletal system.
+
+My Socratic question: the bones of your arms and legs move freely, while the bones of your skull are fused together and do not move at all. Why are these two groups of bones treated as separate divisions of the skeleton, and what does this tell you about their different functions?
+
+The answer is that the axial skeleton forms the central axis of the body — the skull, vertebral column, ribs, and sternum. It protects the brain, spinal cord, and vital organs of the thorax (the heart and lungs). The appendicular skeleton consists of the bones of the limbs and the girdles that attach them to the axial skeleton — the shoulder girdle (clavicles and scapulae) and the pelvic girdle. The appendicular skeleton is designed for movement and manipulation of the environment.
+
+The axial skeleton has 80 bones; the appendicular skeleton has 126 bones, for a total of 206. This distribution reflects the different demands placed on each division. The axial skeleton must be stable and protective, while the appendicular skeleton must be mobile and adaptable.
+
+Crucial insight: the skeleton is divided into the axial skeleton (80 bones — skull, vertebral column, ribs, sternum) for protection and support, and the appendicular skeleton (126 bones — limbs and girdles) for movement. The appendicular skeleton is larger because it provides the leverage and mobility for interacting with the world.` },
+
+    { q: "What are the types of bones based on shape?",
+      body: `Bones come in various shapes, and each shape reflects its function. Understanding bone shapes helps you predict what a bone does just by looking at it.
+
+My Socratic question: the femur in your thigh is long and thick, while the bones of your wrist are small and cube-shaped. The bones of your skull are flat and curved, while the vertebrae in your spine have complex, irregular shapes. Why are bones shaped so differently, and what does each shape tell you about what that bone does?
+
+The answer is that bone shape follows function. Long bones are longer than they are wide, with a shaft and two ends — they function as levers for movement. Examples: femur, humerus, tibia, fibula. Short bones are roughly cube-shaped, providing stability and support with little movement — examples: carpals of the wrist, tarsals of the ankle. Flat bones are thin, flattened, and usually curved — they protect organs and provide broad surfaces for muscle attachment — examples: skull bones, ribs, sternum, scapulae. Irregular bones have complex shapes that fit their unique functions — examples: vertebrae, pelvic bones, many facial bones. Sesamoid bones are small, round bones embedded in tendons where they cross joints — they protect tendons from friction — the patella (kneecap) is the largest.
+
+The shape of a bone is not random — it is precisely adapted to its mechanical role. Long bones are built for leverage, flat bones for protection, and irregular bones for their unique roles in the body.
+
+Crucial insight: bones are classified by shape — long (levers for movement), short (stability), flat (protection and muscle attachment), irregular (unique shapes for specific functions), and sesamoid (embedded in tendons to reduce friction). Shape reflects function, and understanding this helps you understand the role of each bone in the body.` },
+
+    { q: "What is the microscopic structure of bone?",
+      body: `Bone is a dynamic, living tissue that appears solid but is actually a complex composite of organic and inorganic materials arranged in a precise microscopic structure. Understanding this structure explains how bone can be both strong and slightly flexible.
+
+My Socratic question: bone is hard enough to support your weight and resist breaking, yet it heals when fractured. How can a material so hard also be alive and capable of repair?
+
+The answer is that bone is a composite material. The organic component (about 35% of bone mass) is mainly collagen fibres, which give bone flexibility and tensile strength — the ability to resist stretching and pulling. The inorganic component (about 65%) is mineral, mainly calcium phosphate in the form of hydroxyapatite crystals, which give bone hardness and compressive strength — the ability to resist crushing. Together, the organic and inorganic components make bone both strong and slightly flexible, able to withstand forces without shattering.
+
+At the microscopic level, bone has two main types of structure. Compact (cortical) bone is dense and solid, forming the outer layer of all bones and the shafts of long bones. Spongy (cancellous) bone is porous and lattice-like, found inside the ends of long bones and in the interior of flat and irregular bones, where it is lighter and provides space for bone marrow. The organisation of bone tissue into these two types allows bones to be strong without being too heavy.
+
+Crucial insight: bone is a composite of organic collagen (for flexibility) and inorganic mineral (for hardness). Its two structural forms — compact bone (dense, outer layer) and spongy bone (porous, inner) — balance strength and weight, allowing bones to be strong without being excessively heavy.` },
+
+    { q: "What are osteocytes, osteoblasts, and osteoclasts?",
+      body: `Bone is a living tissue maintained by three types of bone cells, each with a specific job. Understanding these cells is essential for understanding how bone grows, heals, and maintains itself.
+
+My Socratic question: if bone is so hard and mineralised, how does it grow, heal, and respond to changes in the body? How can a tissue that seems so solid actually be alive?
+
+The answer is that bone is maintained by three specialised cell types. Osteoblasts are bone-building cells. They synthesise and secrete the organic matrix of bone (osteoid), which then becomes mineralised. They are found on the surface of bones where new bone is being formed. Osteocytes are mature bone cells that are trapped within the mineralised bone matrix. They sit in small spaces called lacunae and communicate with each other through tiny channels called canaliculi. They maintain the bone matrix and sense mechanical strain. Osteoclasts are bone-resorbing cells. They are large, multinucleated cells that break down bone tissue by releasing acid and enzymes, releasing calcium and phosphate into the blood.
+
+The balance between osteoblast and osteoclast activity determines bone mass. When osteoblasts are more active than osteoclasts, bone mass increases. When osteoclasts are more active, bone mass decreases. This balance is regulated by hormones (such as parathyroid hormone, calcitonin, and oestrogen) and mechanical stress.
+
+Crucial insight: bone is maintained by three cell types — osteoblasts (build bone), osteocytes (maintain bone), and osteoclasts (break down bone). Bone remodelling (building and breaking down) is a continuous process essential for calcium balance, repair, and adaptation to stress.` },
+
+    { q: "How does bone grow and develop?",
+      body: `Bone development, or osteogenesis, occurs through two main processes, and understanding them explains how the skeleton forms, grows, and heals.
+
+My Socratic question: a foetus has a skeleton made of cartilage, not bone. How does that cartilage skeleton become the hard bones of an adult, and why does bone growth stop at adulthood?
+
+The answer is that most bones develop by endochondral ossification, where a cartilage model is gradually replaced by bone. This occurs in most of the skeleton, including the long bones of the limbs. The cartilage model is invaded by blood vessels and osteoblasts, which deposit bone on the dissolving cartilage framework. The growth plate (epiphyseal plate) is a region of cartilage near the ends of long bones where growth occurs in children and adolescents. When the growth plate closes (ossifies) at adulthood, growth in length stops.
+
+The second process is intramembranous ossification, where bone forms directly from mesenchymal tissue without a cartilage precursor. This occurs in the flat bones of the skull, the mandible, and the clavicles. Understanding these processes explains why children's bones have growth plates that are visible on X-rays, and why these plates close at adulthood.
+
+Crucial insight: bone develops by two processes — endochondral ossification (cartilage model replaced by bone, most bones, growth at the epiphyseal plate) and intramembranous ossification (bone forms directly from connective tissue, flat bones of the skull). The epiphyseal plate is the site of bone growth in children and closes at adulthood.` },
+
+    { q: "What is bone remodelling and why is it important?",
+      body: `Bone is not static. It is constantly being remodelled — old bone is resorbed and new bone is deposited in a continuous cycle that maintains bone health and adapts bone to changing demands.
+
+My Socratic question: astronauts lose bone mass during spaceflight. What causes this, and why does it happen? How does the body decide when to build bone and when to break it down?
+
+The answer is that bone remodelling is regulated by mechanical stress and hormones. When bone is subjected to weight-bearing stress, osteoblasts are stimulated to build more bone. When stress is reduced (as in spaceflight or bed rest), osteoclast activity increases and bone is resorbed. This is the principle of Wolff's law — bone adapts to the loads placed upon it. Astronauts lose bone because their bones are not carrying the weight they normally do on Earth.
+
+Bone remodelling is also regulated hormonally. Parathyroid hormone (PTH) increases bone resorption to release calcium into the blood when calcium levels are low. Calcitonin inhibits bone resorption. Sex hormones (oestrogen and testosterone) promote bone formation and protect against bone loss. The balance between these factors determines whether bone is built or broken down.
+
+Crucial insight: bone is constantly remodelled in response to mechanical stress (Wolff's law) and hormonal signals. This ensures bones are strong where they need to be and can release calcium when needed. Bone loss occurs when remodelling favours resorption over formation, as in ageing, menopause, and disuse.` },
+
+    { q: "What are the major bones of the skeleton?",
+      body: `While there are 206 bones, you should know the major ones and their locations. This knowledge is essential for understanding anatomy and for precise communication in healthcare.
+
+My Socratic question: why do you need to know the names of so many bones, rather than just understanding the skeleton generally? Why can't you just say "the arm bone" instead of "the humerus"?
+
+The answer is that knowing the names allows precise communication in medicine. A clinician who says "fracture of the radius" gives a specific location, while "fracture of the forearm" is vague and unhelpful. Precision matters in diagnosis, treatment, and communication between healthcare professionals. When a patient has a wrist fracture, knowing whether it is the radius or the ulna determines the treatment approach.
+
+The axial skeleton includes the skull (22 bones, including the cranium and facial bones), the vertebral column (26 bones: 7 cervical, 12 thoracic, 5 lumbar, 1 sacrum, 1 coccyx), the sternum, and 12 pairs of ribs. The appendicular skeleton includes the clavicles and scapulae (shoulder girdle), the humerus (upper arm), radius and ulna (forearm), carpals (wrist), metacarpals (hand), phalanges (fingers), the pelvic girdle (hip bones), the femur (thigh), tibia and fibula (leg), tarsals (ankle), metatarsals (foot), and phalanges (toes).
+
+Crucial insight: the skeleton has 206 bones organised into axial (80 bones: skull, vertebral column, ribs, sternum) and appendicular (126 bones: limbs and girdles). Knowing the major bones by name is essential for precise communication in healthcare and for understanding how the body is organised.` },
+
+    { q: "What are joints and how are they classified?",
+      body: `Joints are the points where two bones meet, and they allow movement (or stability) between bones. They are classified by both structure and function, and understanding this classification helps you understand the range of motion possible at different joints.
+
+My Socratic question: the joint at your elbow moves freely, while the joints between the bones of your skull do not move at all. Why are these two types of joints so different, and how does their structure reflect their function?
+
+The answer is that joints are classified functionally by the amount of movement they allow. Synarthroses are immovable joints (sutures of the skull). Amphiarthroses are slightly movable joints (the pubic symphysis, intervertebral discs). Diarthroses are freely movable joints (the knee, shoulder, elbow). Structurally, joints are classified by the material connecting the bones. Fibrous joints are connected by dense fibrous tissue (sutures of the skull). Cartilaginous joints are connected by cartilage (intervertebral discs, pubic symphysis). Synovial joints have a cavity filled with synovial fluid, which lubricates the joint and allows smooth movement.
+
+Synovial joints are the most complex and allow the greatest range of motion. They are the joints most commonly affected by arthritis and injury. Understanding their structure helps you understand common joint disorders.
+
+Crucial insight: joints are classified by function (immovable, slightly movable, freely movable) and by structure (fibrous, cartilaginous, synovial). Synovial joints are the most common and allow the greatest range of movement, making them the focus of many joint disorders.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the introduction to the skeletal system.
+
+Functions: support, protection, movement, mineral storage, blood cell production.
+
+Divisions: axial skeleton (80 bones — skull, vertebral column, ribs, sternum) and appendicular skeleton (126 bones — limbs and girdles).
+
+Bone shapes: long (levers), short (stability), flat (protection, muscle attachment), irregular (unique functions), sesamoid (embedded in tendons).
+
+Bone structure: compact bone (dense outer layer) and spongy bone (porous inner, with marrow). Organic collagen gives flexibility; inorganic mineral gives hardness.
+
+Bone cells: osteoblasts (build), osteocytes (maintain), osteoclasts (break down).
+
+Bone development: endochondral ossification (cartilage model replaced by bone) and intramembranous ossification (direct bone formation).
+
+Bone remodelling: continuous cycle of formation and resorption, regulated by mechanical stress (Wolff's law) and hormones.
+
+Major bones: axial and appendicular skeleton — 206 bones total.
+
+Joints: classified by function (immovable, slightly movable, freely movable) and structure (fibrous, cartilaginous, synovial).
+
+Now your final test. A patient has a fracture of the femur just above the knee. The patient is an elderly woman with low bone density.
+
+Question one: classify the femur by shape and function, and state which division of the skeleton it belongs to.
+Question two: what type of cells would be most active in healing the fracture, and what do they do?
+Question three: explain why this patient's low bone density (osteoporosis) may have contributed to the fracture, and relate this to bone remodelling.
+
+Work them through before reading on.
+
+My answers. One: the femur is a long bone, shaped for leverage in movement, and it belongs to the appendicular skeleton (lower limb). Two: osteoblasts would be most active in healing the fracture — they are bone-building cells that synthesise new bone matrix and deposit mineral to repair the break. Osteoclasts would also be involved in removing damaged bone debris. Three: the patient's low bone density (osteoporosis) means her bones are weaker and more likely to fracture because bone remodelling has favoured resorption over formation. This often occurs with ageing and reduced oestrogen after menopause, leading to loss of bone mass and increased fracture risk.` }
+  ],
+  theory: [
+    { q: "What are the five functions of the skeletal system?", a: "Support (provides a rigid framework for the body), protection (protects vital organs), movement (serves as levers for muscles), mineral storage (stores calcium and phosphorus), and blood cell production (haematopoiesis in bone marrow)." },
+    { q: "What are the two divisions of the skeleton and how many bones are in each?", a: "The axial skeleton (80 bones) — skull, vertebral column, ribs, sternum. The appendicular skeleton (126 bones) — limbs and girdles. Total: 206 bones." },
+    { q: "Name the five types of bones by shape and give an example of each.", a: "Long bones (femur), short bones (carpals), flat bones (sternum), irregular bones (vertebrae), and sesamoid bones (patella)." },
+    { q: "What are the two types of bone tissue and where are they found?", a: "Compact (cortical) bone — dense, outer layer of bones, shafts of long bones. Spongy (cancellous) bone — porous, found in the ends of long bones and interior of flat and irregular bones." },
+    { q: "Name the three types of bone cells and their functions.", a: "Osteoblasts (build bone — synthesise and mineralise bone matrix), osteocytes (maintain bone — sense mechanical strain, maintain matrix), and osteoclasts (break down bone — resorb bone tissue, release minerals)." },
+    { q: "What is the difference between endochondral and intramembranous ossification?", a: "Endochondral ossification replaces a cartilage model with bone — occurs in most bones. Intramembranous ossification forms bone directly from mesenchymal tissue — occurs in flat bones of the skull, mandible, and clavicles." },
+    { q: "What is bone remodelling and why is it important?", a: "Bone remodelling is the continuous process of bone resorption and formation, replacing old bone with new bone. It is important for calcium homeostasis, repairing micro-damage, and adapting bone shape to mechanical stress." },
+    { q: "What is Wolff's law?", a: "Wolff's law states that bone adapts to the mechanical loads placed upon it — bones become stronger in areas of high stress and weaker in areas of low stress. This explains bone loss in disuse and bone gain in weight-bearing exercise." },
+    { q: "What are the three functional classes of joints?", a: "Synarthroses (immovable joints — sutures of the skull), amphiarthroses (slightly movable joints — intervertebral discs), and diarthroses (freely movable joints — knee, shoulder, elbow)." },
+    { q: "What are the three structural classes of joints?", a: "Fibrous joints (connected by fibrous tissue — skull sutures), cartilaginous joints (connected by cartilage — intervertebral discs), and synovial joints (have a synovial cavity — most joints)." },
+  ],
+  videos: [
+    { channel: "Anatomy", title: "The Skeletal System Introduction", note: "Overview of bone functions, divisions, and types.", url: "" },
+    { channel: "Anatomy", title: "Bone Structure and Cells", note: "Compact vs spongy bone, osteoblasts, osteocytes, osteoclasts.", url: "" },
+    { channel: "Anatomy", title: "Bone Growth and Development", note: "Endochondral and intramembranous ossification.", url: "" },
+  ],
+  mcqs: [
+    { q: "The skeletal system has approximately how many bones in an adult?", o: ["106", "206", "306", "406"], a: 1, w: "The adult human skeleton has 206 bones." },
+    { q: "Which is NOT a function of the skeletal system?", o: ["Support", "Protection", "Blood cell production", "Protein synthesis"], a: 3, w: "Protein synthesis is not a function of the skeletal system. The functions are support, protection, movement, mineral storage, and blood cell production." },
+    { q: "The axial skeleton includes all of the following EXCEPT:", o: ["Skull", "Vertebral column", "Ribs", "Femur"], a: 3, w: "The femur is part of the appendicular skeleton, not the axial skeleton." },
+    { q: "How many bones are in the appendicular skeleton?", o: ["80", "126", "206", "100"], a: 1, w: "The appendicular skeleton has 126 bones." },
+    { q: "A long bone is characterised by:", o: ["Being cube-shaped", "Being longer than it is wide, with a shaft and two ends", "Being flat and curved", "Having an irregular shape"], a: 1, w: "Long bones are longer than they are wide, with a shaft (diaphysis) and two ends (epiphyses)." },
+    { q: "The patella is an example of which type of bone?", o: ["Long bone", "Short bone", "Flat bone", "Sesamoid bone"], a: 3, w: "The patella is a sesamoid bone, embedded in the quadriceps tendon." },
+    { q: "Compact bone is also known as:", o: ["Spongy bone", "Cortical bone", "Cancellous bone", "Trabecular bone"], a: 1, w: "Compact bone is also called cortical bone." },
+    { q: "The cells that build bone are:", o: ["Osteoclasts", "Osteocytes", "Osteoblasts", "Chondrocytes"], a: 2, w: "Osteoblasts are bone-building cells." },
+    { q: "The cells that break down bone are:", o: ["Osteoblasts", "Osteocytes", "Osteoclasts", "Fibroblasts"], a: 2, w: "Osteoclasts are bone-resorbing cells." },
+    { q: "The cells that maintain bone are:", o: ["Osteoblasts", "Osteocytes", "Osteoclasts", "Chondrocytes"], a: 1, w: "Osteocytes maintain bone matrix." },
+    { q: "The spaces in bone that contain osteocytes are called:", o: ["Lacunae", "Canaliculi", "Lamellae", "Osteons"], a: 0, w: "Lacunae are small spaces that contain osteocytes." },
+    { q: "The tiny channels connecting lacunae are called:", o: ["Haversian canals", "Canaliculi", "Volkmann's canals", "Lamellae"], a: 1, w: "Canaliculi are tiny channels that connect lacunae." },
+    { q: "Which bone formation process replaces a cartilage model with bone?", o: ["Intramembranous ossification", "Endochondral ossification", "Appositional growth", "Remodelling"], a: 1, w: "Endochondral ossification replaces a cartilage model with bone." },
+    { q: "Flat bones of the skull form by which process?", o: ["Endochondral ossification", "Intramembranous ossification", "Appositional growth", "Epiphyseal growth"], a: 1, w: "Intramembranous ossification forms flat bones of the skull." },
+    { q: "The growth plate is also called the:", o: ["Epiphyseal plate", "Diaphysis", "Periosteum", "Articular cartilage"], a: 0, w: "The growth plate is the epiphyseal plate, where bone growth occurs in children." },
+    { q: "Bone remodelling is controlled by:", o: ["Only mechanical stress", "Only hormones", "Mechanical stress and hormones", "Diet only"], a: 2, w: "Bone remodelling is regulated by mechanical stress (Wolff's law) and hormones." },
+    { q: "Wolff's law states that bone:", o: ["Always stays the same", "Adapts to mechanical loads", "Loses mass with age", "Is static"], a: 1, w: "Wolff's law states that bone adapts to the mechanical loads placed upon it." },
+    { q: "A freely movable joint is called a(n):", o: ["Synarthrosis", "Amphiarthrosis", "Diarthrosis", "Fibrous joint"], a: 2, w: "A diarthrosis is a freely movable joint." },
+    { q: "The joint between the bones of the skull is a:", o: ["Diarthrosis", "Synarthrosis", "Amphiarthrosis", "Cartilaginous joint"], a: 1, w: "The sutures of the skull are synarthroses (immovable joints)." },
+    { q: "A joint with a cavity and synovial fluid is a:", o: ["Fibrous joint", "Cartilaginous joint", "Synovial joint", "Suture"], a: 2, w: "Synovial joints have a synovial cavity and fluid." },
+  ],
+};
+
+// ==================== ANATOMY TOPIC 9: OSTEOLOGY - BONE AS AN ORGAN ====================
+const T_ANA_OSTEOLOGY = {
+  courseId: "ana",
+  topicIndex: 8,
+  title: "Osteology - Bone as an Organ",
+  minutes: 20,
+  note: [
+    { q: "What is osteology and why does bone matter as an organ?",
+      body: `Osteology is the study of bones, and bone is not just a rigid framework — it is a living, dynamic organ with its own blood supply, nerves, and functions that extend beyond support. Understanding bone as an organ is essential for understanding how the skeleton works and how it responds to injury and disease.
+
+My Socratic question: if bone is just a hard structure, why does it bleed when broken? Why does it hurt? And why does it heal? If it were just a dead structure like a rock, none of these things would happen.
+
+The answer is that bone is a living organ. It has blood vessels, nerves, and specialised cells that maintain, repair, and remodel it. It is not a dry, dead structure — it is a dynamic tissue that responds to stress, heals fractures, and constantly renews itself. Understanding bone as an organ means understanding its structure, blood supply, innervation, and the roles it plays beyond mere support.
+
+Bone is also the body's main calcium reservoir, storing about 99% of the body's calcium. This mineral is released when needed for nerve transmission, muscle contraction, and other vital functions. Bone is therefore not just structural — it is metabolically active.
+
+Crucial insight: bone is a living organ with its own blood supply, nerves, and specialised cells. It is dynamic, constantly remodelling, and capable of healing. Osteology is the study of bones as organs, not just as dry structural elements. Bone also serves as the body's primary calcium reservoir.` },
+
+    { q: "The gross anatomy of a long bone.",
+      body: `A long bone has distinct regions that can be identified by their structure and function. Understanding these regions is essential for understanding how bones grow, how they are nourished, and how they respond to injury.
+
+My Socratic question: why is the shaft of a long bone made of compact bone while the ends contain spongy bone? What does this difference tell you about the mechanical demands on different parts of the bone?
+
+The answer is that the shaft (diaphysis) must resist bending and twisting forces, which compact bone does well with its dense, strong structure. The ends (epiphyses) must absorb shock and provide space for bone marrow, which spongy bone allows with its lattice-like structure. The combination gives the bone the best of both: strength in the shaft and shock absorption at the ends.
+
+The diaphysis is the shaft of the bone, composed mainly of compact bone and containing the medullary cavity, which houses bone marrow. The epiphyses are the ends of the bone, which are wider and contain spongy bone covered by a thin layer of compact bone. The articular cartilage covers the epiphyseal surfaces where the bone forms a joint, providing a smooth, low-friction surface. The metaphysis is the region between the diaphysis and epiphysis, which contains the growth plate (epiphyseal plate) in growing bones.
+
+Crucial insight: a long bone has a shaft (diaphysis) made of compact bone, and ends (epiphyses) made of spongy bone covered by compact bone. This arrangement balances strength (shaft) with shock absorption and marrow space (ends). The growth plate (epiphyseal plate) is located in the metaphysis.` },
+
+    { q: "Bone marrow: the production site of blood cells.",
+      body: `Bone marrow is the soft tissue inside bones that produces blood cells. It is essential for life, and understanding it is crucial for understanding haematological disorders.
+
+My Socratic question: where do red blood cells, white blood cells, and platelets come from? The answer is bone marrow — specifically, the red bone marrow found in certain bones. Why is this tissue so important, and where is it located?
+
+The answer is that red bone marrow (myeloid tissue) is the site of haematopoiesis — the production of all blood cells. In adults, red marrow is found in the spongy bone of the vertebrae, ribs, sternum, pelvis, and the ends of long bones. Yellow marrow is primarily adipose (fat) tissue. It replaces red marrow in the medullary cavities of long bones as we age, but it can convert back to red marrow if the body needs more blood cell production.
+
+Bone marrow analysis is essential for diagnosing blood disorders. Bone marrow biopsies are often taken from the iliac crest (hip bone) because it retains red marrow into adulthood and is accessible. This procedure is crucial for diagnosing leukaemia, anaemia, and other haematological conditions.
+
+Crucial insight: bone marrow is the site of blood cell production (haematopoiesis). Red marrow produces all blood cells and is found in vertebrae, ribs, sternum, pelvis, and ends of long bones. Yellow marrow is fat tissue in the shafts of long bones. Bone marrow analysis is essential for diagnosing blood disorders.` },
+
+    { q: "The periosteum and endosteum: membranes that matter.",
+      body: `Bones are covered and lined by specialised membranes that are essential for bone health, growth, and repair. Understanding these membranes is essential for understanding how bones heal and how they are nourished.
+
+My Socratic question: why do broken bones heal even when the fracture is severe, and what role do the membranes covering and lining bones play in this process? How does new bone tissue form when a bone is broken?
+
+The answer is that the periosteum and endosteum contain osteogenic (bone-forming) cells that are activated after injury. The periosteum is the fibrous membrane that covers the outer surface of bones (except at joints where articular cartilage is present). It has two layers: an outer fibrous layer and an inner cellular layer that contains osteoblasts and osteoclasts. The periosteum is essential for bone growth, repair, and nutrition, and it provides attachment points for tendons and ligaments.
+
+The endosteum is the thin membrane that lines the internal surfaces of bone, including the medullary cavity and the trabeculae of spongy bone. It also contains osteoblasts and osteoclasts and is involved in bone remodelling and repair. Together, these membranes provide the cells needed for bone healing and maintenance.
+
+Crucial insight: the periosteum (outer fibrous membrane) and endosteum (inner membrane) contain osteogenic cells essential for bone growth, repair, and remodelling. They are crucial for fracture healing and bone maintenance.` },
+
+    { q: "Blood supply of bones.",
+      body: `Bone is a living tissue that requires a rich blood supply for oxygen, nutrients, and removal of waste products. Understanding the blood supply of bone is essential for understanding bone health and the complications of interrupted blood flow.
+
+My Socratic question: how does blood reach the cells inside a hard bone, and why is this supply so important? What happens when a bone's blood supply is interrupted?
+
+The answer is that bones have a dedicated blood supply through nutrient arteries that enter the bone through small holes called nutrient foramina. The nutrient artery supplies the marrow and the inner layers of bone. Periosteal vessels supply the outer layers. In long bones, the blood supply is essential for bone growth, repair, and homeostasis. Without an adequate blood supply, bone tissue would die — which is why avascular necrosis (death of bone tissue due to interrupted blood supply) is a serious condition.
+
+The blood supply also allows bone to release minerals into the bloodstream when needed, contributing to calcium homeostasis. Understanding bone blood supply is important for understanding conditions like osteomyelitis (bone infection) and avascular necrosis.
+
+Crucial insight: bones have a rich blood supply through nutrient arteries and periosteal vessels. This supply is essential for bone health, growth, repair, and mineral homeostasis. Interruption of blood supply can cause bone death (avascular necrosis).` },
+
+    { q: "Innervation of bones.",
+      body: `Bones are innervated, meaning they have nerves that serve important functions. Understanding bone innervation helps explain why bone injuries are painful and how pain serves a protective function.
+
+My Socratic question: why does a broken bone hurt so much, and what is the purpose of that pain? Why is the periosteum so sensitive to pain?
+
+The answer is that bones are richly innervated by sensory nerves, especially in the periosteum, which is highly sensitive to pain. The pain from a fracture serves a protective function — it signals injury and forces you to immobilise the affected area, allowing healing to occur. The periosteum is the most pain-sensitive part of bone, which is why fractures are so painful.
+
+Nerves also play a role in regulating bone blood flow and may be involved in bone remodelling. Understanding bone innervation is important for managing pain in fractures and bone diseases.
+
+Crucial insight: bones are innervated, especially the periosteum, which is highly pain-sensitive. The pain from fractures serves a protective function, immobilising the injury to allow healing.` },
+
+    { q: "Bone as a calcium reservoir.",
+      body: `One of the most important functions of bone is its role as the body's calcium store. Understanding this function is essential for understanding calcium homeostasis and its disorders.
+
+My Socratic question: why does the body store calcium in bone rather than just using it from the diet? What happens when blood calcium levels fall, and how does bone respond?
+
+The answer is that calcium is essential for many physiological processes — nerve transmission, muscle contraction, blood clotting, and hormone secretion — and its concentration in the blood must be kept within a very narrow range. Bone provides a large, accessible reservoir of calcium that can be released when blood calcium falls and stored when blood calcium rises. This is regulated by hormones — parathyroid hormone (PTH) stimulates bone resorption to release calcium, while calcitonin promotes calcium storage in bone.
+
+Calcium is stored in the mineral component of bone (hydroxyapatite). When needed, osteoclasts break down bone matrix, releasing calcium and phosphate into the blood. This process is essential for maintaining blood calcium levels within the narrow range required for life.
+
+Crucial insight: bone is the body's main calcium reservoir, storing about 99% of the body's calcium. Hormones (PTH, calcitonin, and vitamin D) regulate calcium exchange between bone and blood, maintaining the narrow calcium concentration essential for life.` },
+
+    { q: "Bone disorders: when bone as an organ fails.",
+      body: `Understanding bone as an organ explains many bone disorders that you will encounter in clinical practice. Each disorder affects a different aspect of bone function.
+
+My Socratic question: osteoporosis, osteomalacia, and Paget's disease all affect bone, but they affect it in different ways. What distinguishes them, and how does understanding bone as an organ help you understand these conditions?
+
+Osteoporosis is a condition of reduced bone mass and density, making bones fragile and prone to fracture. It results from an imbalance where bone resorption exceeds bone formation, often due to hormonal changes (oestrogen deficiency in menopause) or ageing. Osteomalacia is soft bone caused by inadequate mineralisation, often due to vitamin D deficiency. Paget's disease is a disorder of excessive and disorganised bone remodelling, leading to enlarged, weak, and deformed bones.
+
+The differences reflect the different aspects of bone as an organ — osteoporosis affects bone mass, osteomalacia affects mineralisation, and Paget's disease affects remodelling. Understanding these distinctions is essential for diagnosis and treatment.
+
+Crucial insight: bone disorders reflect failures in different aspects of bone function. Osteoporosis is reduced bone mass, osteomalacia is inadequate mineralisation, and Paget's disease is disordered remodelling. Understanding bone as an organ explains these conditions and their treatments.` },
+
+    { q: "Fracture healing: bone's remarkable repair capacity.",
+      body: `Bone has a remarkable ability to heal itself, and understanding the process illustrates bone's living nature and the cells involved in repair.
+
+My Socratic question: how does a broken bone heal, and why does it take weeks or months? What are the stages of fracture healing, and what happens at each stage?
+
+The answer is that fracture healing occurs in several stages. Immediately after fracture, a haematoma (blood clot) forms at the fracture site. Inflammatory cells remove debris and stimulate healing. Within days, osteoblasts and chondrocytes form a soft callus of cartilage and fibrous tissue around the fracture. This is followed by a hard callus of spongy bone, which is gradually remodelled into compact bone. The process takes weeks to months, depending on the fracture and the individual's health.
+
+The periosteum and endosteum are essential sources of cells for fracture healing, which is why damage to these membranes can impair healing. Understanding fracture healing is essential for managing fractures and complications such as non-union (failure to heal).
+
+Crucial insight: fracture healing is a multi-stage process — haematoma formation, inflammation, soft callus, hard callus, and remodelling. The periosteum and endosteum provide the cells needed for repair, and the process demonstrates bone's remarkable regenerative capacity.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for osteology — bone as an organ.
+
+Long bone structure: diaphysis (shaft, compact bone), epiphyses (ends, spongy bone), metaphysis (growth plate region), articular cartilage, medullary cavity (contains bone marrow).
+
+Bone marrow: red marrow (haematopoiesis — blood cell production) and yellow marrow (fat). Red marrow is found in vertebrae, ribs, sternum, pelvis, and ends of long bones.
+
+Membranes: periosteum (outer, contains osteoblasts and osteoclasts, essential for growth and repair) and endosteum (inner, involved in remodelling).
+
+Blood supply: nutrient arteries and periosteal vessels; essential for bone health, growth, repair, and mineral homeostasis.
+
+Innervation: sensory nerves, especially in the periosteum; pain from fractures is protective.
+
+Calcium reservoir: bone stores 99% of body calcium, regulated by PTH, calcitonin, and vitamin D.
+
+Disorders: osteoporosis (reduced mass), osteomalacia (soft bone from poor mineralisation), Paget's disease (disordered remodelling).
+
+Fracture healing: haematoma → inflammation → soft callus → hard callus → remodelling.
+
+Now your final test. A patient has a fracture of the tibia. The fracture heals well, but the patient is later diagnosed with osteoporosis.
+
+Question one: which membrane provides the cells for bone repair during fracture healing?
+Question two: why is the patient's blood calcium likely to be normal despite having osteoporosis?
+Question three: explain why the patient with osteoporosis is at higher risk for fractures, using your understanding of bone as an organ.
+
+Work them through before reading on.
+
+My answers. One: the periosteum provides osteoblasts that form new bone during fracture healing, and the endosteum contributes to internal repair. Both membranes contain osteogenic cells essential for healing. Two: blood calcium is maintained by hormonal regulation (PTH, calcitonin, vitamin D) independent of bone mass. Even with low bone density, the body maintains blood calcium by adjusting the rate of bone resorption and formation. Three: osteoporosis reduces bone mass and density, making bones weaker and more susceptible to fracture. The balance between bone formation and resorption is shifted, so bones lose more mineral and matrix than they build, weakening their structural integrity.` }
+  ],
+  theory: [
+    { q: "What is osteology?", a: "Osteology is the study of bones — their structure, function, development, and diseases. It treats bone as a living organ, not just a dry structural element." },
+    { q: "Describe the parts of a long bone and their functions.", a: "Diaphysis (shaft, compact bone) — provides strength and leverage. Epiphyses (ends, spongy bone) — absorb shock and provide marrow space. Metaphysis (growth plate region) — site of bone growth in children. Articular cartilage — smooth joint surface. Medullary cavity — contains bone marrow." },
+    { q: "What is the difference between red and yellow bone marrow?", a: "Red marrow is the site of haematopoiesis (blood cell production). Yellow marrow is adipose tissue that replaces red marrow in the shafts of long bones with age, but can convert back to red marrow if needed." },
+    { q: "What are the periosteum and endosteum and what do they do?", a: "The periosteum is the outer fibrous membrane covering bones, containing osteoblasts and osteoclasts, essential for growth, repair, and nutrition. The endosteum lines internal bone surfaces, involved in remodelling and repair." },
+    { q: "How is blood supplied to bones?", a: "Nutrient arteries enter through nutrient foramina, supplying the marrow and inner bone. Periosteal vessels supply the outer layers. This rich supply is essential for bone health, growth, and repair." },
+    { q: "Why are bones innervated?", a: "Bones have sensory nerves, especially in the pain-sensitive periosteum. Pain from fractures serves a protective function, immobilising the injury to allow healing." },
+    { q: "What is bone's role in calcium homeostasis?", a: "Bone stores about 99% of the body's calcium. Hormones (PTH, calcitonin, vitamin D) regulate the release and storage of calcium, maintaining blood calcium within a narrow range." },
+    { q: "Describe osteoporosis, osteomalacia, and Paget's disease.", a: "Osteoporosis is reduced bone mass and density, increasing fracture risk. Osteomalacia is soft bone due to inadequate mineralisation (often vitamin D deficiency). Paget's disease is excessive, disorganised bone remodelling causing enlarged, weak, deformed bones." },
+    { q: "What are the stages of fracture healing?", a: "Haematoma formation → inflammation → soft callus formation (cartilage and fibrous tissue) → hard callus formation (spongy bone) → remodelling (compact bone). The process takes weeks to months." },
+    { q: "Why can fractures heal despite the bone being broken?", a: "The periosteum and endosteum contain osteogenic cells that are activated after injury, providing the cells needed for new bone formation. Bone has a rich blood supply that delivers nutrients and oxygen for repair." },
+  ],
+  videos: [
+    { channel: "Anatomy", title: "Osteology - Bone as an Organ", note: "The living structure of bones.", url: "" },
+    { channel: "Anatomy", title: "Bone Marrow and Haematopoiesis", note: "Blood cell production in bones.", url: "" },
+    { channel: "Anatomy", title: "Bone Healing and Fracture Repair", note: "How bones heal after injury.", url: "" },
+  ],
+  mcqs: [
+    { q: "Osteology is the study of:", o: ["Joints", "Muscles", "Bones", "Cartilage"], a: 2, w: "Osteology is the study of bones." },
+    { q: "The shaft of a long bone is called the:", o: ["Epiphysis", "Diaphysis", "Metaphysis", "Periosteum"], a: 1, w: "The diaphysis is the shaft of a long bone." },
+    { q: "The ends of a long bone are called the:", o: ["Diaphysis", "Metaphysis", "Epiphyses", "Periosteum"], a: 2, w: "The epiphyses are the ends of a long bone." },
+    { q: "The medullary cavity contains:", o: ["Bone marrow", "Osteocytes", "Periosteum", "Articular cartilage"], a: 0, w: "The medullary cavity contains bone marrow." },
+    { q: "Red bone marrow is the site of:", o: ["Fat storage", "Haematopoiesis (blood cell production)", "Mineral storage", "Cartilage formation"], a: 1, w: "Red bone marrow produces blood cells." },
+    { q: "Yellow bone marrow is primarily:", o: ["Haematopoietic tissue", "Adipose (fat) tissue", "Connective tissue", "Cartilage"], a: 1, w: "Yellow marrow is adipose tissue." },
+    { q: "The outer fibrous membrane covering bone is the:", o: ["Endosteum", "Periosteum", "Epiphyseal plate", "Articular cartilage"], a: 1, w: "The periosteum is the outer covering of bone." },
+    { q: "The inner membrane lining bone cavities is the:", o: ["Periosteum", "Endosteum", "Epiphyseal plate", "Articular cartilage"], a: 1, w: "The endosteum lines internal bone surfaces." },
+    { q: "The periosteum contains cells that are important for:", o: ["Blood cell production", "Bone growth and repair", "Fat storage", "Joint movement"], a: 1, w: "The periosteum contains osteoblasts and osteoclasts for bone growth and repair." },
+    { q: "Which is the most pain-sensitive part of bone?", o: ["The epiphysis", "The diaphysis", "The periosteum", "The bone marrow"], a: 2, w: "The periosteum is highly sensitive to pain." },
+    { q: "Approximately what percentage of the body's calcium is stored in bone?", o: ["50%", "75%", "99%", "25%"], a: 2, w: "Bone stores about 99% of the body's calcium." },
+    { q: "The hormone that increases blood calcium by stimulating bone resorption is:", o: ["Calcitonin", "Parathyroid hormone (PTH)", "Thyroid hormone", "Insulin"], a: 1, w: "PTH stimulates bone resorption, releasing calcium into the blood." },
+    { q: "Osteoporosis is a condition of:", o: ["Soft bones", "Reduced bone mass and density", "Excessive bone growth", "Disordered bone remodelling"], a: 1, w: "Osteoporosis is reduced bone mass and density." },
+    { q: "Osteomalacia is caused by:", o: ["Excessive bone resorption", "Inadequate mineralisation", "Disordered remodelling", "Reduced bone mass"], a: 1, w: "Osteomalacia is soft bone due to inadequate mineralisation, often from vitamin D deficiency." },
+    { q: "Paget's disease is characterised by:", o: ["Reduced bone mass", "Excessive, disorganised bone remodelling", "Soft bones", "Inadequate mineralisation"], a: 1, w: "Paget's disease is excessive, disorganised bone remodelling." },
+    { q: "The first stage of fracture healing is:", o: ["Soft callus formation", "Hard callus formation", "Haematoma formation", "Remodelling"], a: 2, w: "The first stage of fracture healing is haematoma (blood clot) formation." },
+    { q: "The soft callus formed during fracture healing consists of:", o: ["Compact bone", "Cartilage and fibrous tissue", "Spongy bone only", "Periosteum"], a: 1, w: "The soft callus is cartilage and fibrous tissue." },
+    { q: "The nutrient artery enters bone through a:", o: ["Nutrient foramen", "Canaliculus", "Lacuna", "Periosteum"], a: 0, w: "Nutrient arteries enter through nutrient foramina." },
+    { q: "Bone pain from a fracture serves a protective function by:", o: ["Increasing blood flow", "Immobilising the injury", "Promoting healing", "Releasing calcium"], a: 1, w: "Pain immobilises the injury, allowing healing." },
+    { q: "Bones are considered living organs because they have:", o: ["Only inorganic material", "Blood vessels, nerves, and living cells", "Only compact bone", "No blood supply"], a: 1, w: "Bones have blood vessels, nerves, and living cells, making them living organs." },
+  ],
+};
+
+// ==================== ANATOMY TOPIC 10: THE AXIAL SKELETON ====================
+const T_ANA_AXIAL = {
+  courseId: "ana",
+  topicIndex: 9,
+  title: "The Axial Skeleton",
+  minutes: 20,
+  note: [
+    {
+      q: "What is the axial skeleton and why does it matter?",
+      body: `You have learned the skeleton's two divisions — axial and appendicular. Now we focus on the axial skeleton, the central axis of the body that protects your most vital organs and provides the foundation for posture and movement.
+
+My Socratic question: the axial skeleton is smaller than the appendicular skeleton, yet it protects the brain, spinal cord, heart, and lungs. Why is its structure so different from that of the limbs, and what does this tell you about its function?
+
+The answer is that the axial skeleton is designed for protection and support, not movement. The skull forms a rigid case for the brain, the vertebral column protects the spinal cord while allowing some flexibility, and the ribcage protects the heart and lungs while allowing breathing. The axial skeleton balances protection with necessary function — it must be strong enough to protect, yet flexible enough to allow movement for breathing and posture.
+
+The axial skeleton consists of 80 bones: the skull (22 bones), the vertebral column (26 bones), and the thoracic cage (sternum and 12 pairs of ribs). Together, these structures form the central axis of the body.
+
+Crucial insight: the axial skeleton (80 bones — skull, vertebral column, ribs, sternum) protects the body's most vital organs. Its structure balances rigidity for protection with flexibility for essential functions like breathing and posture.`
+    },
+    {
+      q: "The skull: structure and function.",
+      body: `The skull is the most complex part of the axial skeleton, consisting of 22 bones that protect the brain and support the facial structures. Understanding its structure is essential for understanding head injuries and cranial anatomy.
+
+My Socratic question: the skull is often thought of as one bone, but it is actually made of many bones. Why is a skull made of multiple bones rather than one solid piece? What advantages does this provide?
+
+The answer is that multiple bones allow growth during childhood and provide shock absorption. The sutures (immovable joints between skull bones) allow the skull to expand as the brain grows. In infants, the fontanelles (soft spots) allow the skull to compress during birth and expand during rapid brain growth. The skull also consists of two parts: the cranium (8 bones that directly surround and protect the brain) and the facial bones (14 bones that support the face, nose, eyes, and jaws).
+
+The cranium includes the frontal, parietal (2), temporal (2), occipital, sphenoid, and ethmoid bones. The facial bones include the maxillae (2), mandible, zygomatic bones (2), nasal bones (2), and others. Understanding the skull's structure is essential for understanding head injuries, fractures, and surgical approaches.
+
+Crucial insight: the skull has 22 bones — 8 cranial bones protecting the brain, and 14 facial bones supporting the face. Sutures allow growth and shock absorption, and fontanelles in infants allow the skull to compress during birth.`
+    },
+    {
+      q: "The vertebral column: the spinal support.",
+      body: `The vertebral column, or spine, is the central support structure of the body, protecting the spinal cord and allowing posture and movement. Its structure is a remarkable balance of strength and flexibility.
+
+My Socratic question: the vertebral column is made of 26 bones, yet it is flexible enough to allow bending and twisting. How does a column of bones achieve this flexibility? What structures allow movement while protecting the spinal cord?
+
+The answer is the structure of the vertebrae and the intervertebral discs between them. The vertebral column has 7 cervical vertebrae (neck), 12 thoracic vertebrae (chest region, each articulating with a rib), 5 lumbar vertebrae (lower back), 1 sacrum (fused vertebrae forming the back of the pelvis), and 1 coccyx (tailbone). The intervertebral discs between vertebrae act as shock absorbers and allow movement. The curves of the spine (cervical lordosis, thoracic kyphosis, lumbar lordosis) provide balance, shock absorption, and strength.
+
+The vertebral column also protects the spinal cord, which runs through the vertebral canal formed by the vertebrae. Understanding the vertebral column is essential for understanding back pain, spinal injuries, and conditions like disc herniation.
+
+Crucial insight: the vertebral column has 26 bones — 7 cervical, 12 thoracic, 5 lumbar, 1 sacrum, 1 coccyx. Intervertebral discs provide flexibility and shock absorption, and the spinal curves provide balance and strength. The vertebral canal protects the spinal cord.`
+    },
+    {
+      q: "The thoracic cage: protecting the heart and lungs.",
+      body: `The thoracic cage (ribcage) protects the heart and lungs while allowing breathing movements. Its structure is a perfect example of form following function.
+
+My Socratic question: why are the ribs attached to the sternum at the front and the vertebrae at the back, and why do some ribs not reach the sternum? What does this arrangement tell you about the mechanical demands on the ribcage?
+
+The answer is that the ribcage must protect the organs while allowing the chest to expand and contract during breathing. True ribs (1-7) attach directly to the sternum via costal cartilage. False ribs (8-10) attach indirectly via cartilage connecting to the rib above. Floating ribs (11-12) have no anterior attachment — they end in the abdominal wall. This design allows the ribcage to expand during inspiration while remaining strong enough to protect the organs. The thoracic cage also includes the sternum (manubrium, body, xiphoid process) and the 12 pairs of ribs.
+
+Understanding the thoracic cage is essential for understanding chest injuries, breathing mechanics, and conditions like rib fractures.
+
+Crucial insight: the thoracic cage consists of the sternum and 12 pairs of ribs. True ribs (1-7) attach directly to the sternum; false ribs (8-10) attach indirectly; floating ribs (11-12) have no anterior attachment. This design protects organs while allowing breathing movements.`
+    },
+    {
+      q: "The axial skeleton and posture.",
+      body: `The axial skeleton is essential for maintaining posture — the position of the body when standing, sitting, or lying down. Understanding posture is essential for understanding back pain and spinal disorders.
+
+My Socratic question: why does the spine have its characteristic curves, and what happens when these curves are exaggerated or lost? What do kyphosis, lordosis, and scoliosis tell you about the importance of spinal curvature?
+
+The answer is that the curves of the spine are essential for balance, shock absorption, and strength. The cervical and lumbar curves are convex forward (lordosis), while the thoracic and sacral curves are convex backward (kyphosis). These curves allow the spine to distribute weight, absorb shock, and maintain balance during upright posture.
+
+Abnormal curves can cause problems. Kyphosis is an exaggerated thoracic curvature ("hunchback"), often due to osteoporosis or poor posture. Lordosis is an exaggerated lumbar curvature ("swayback"), often due to weak abdominal muscles. Scoliosis is a lateral (sideways) curvature of the spine, often developing during adolescence. These conditions can cause pain and require management.
+
+Crucial insight: the spine's curves (cervical lordosis, thoracic kyphosis, lumbar lordosis) provide balance, shock absorption, and strength. Abnormal curves — kyphosis, lordosis, and scoliosis — can cause postural problems and pain.`
+    },
+    {
+      q: "Clinical relevance: the axial skeleton in medicine.",
+      body: `The axial skeleton is central to many medical conditions and diagnostic procedures. Understanding it is essential for emergency care, imaging interpretation, and diagnosis.
+
+My Socratic question: why are X-rays of the spine and skull so common in emergency medicine? Why is the axial skeleton so important in trauma care?
+
+The answer is that the axial skeleton protects the most vital organs, so injuries to it can be life-threatening. Cervical spine injuries can cause paralysis or death if the spinal cord is damaged. Head injuries can cause brain damage. Rib fractures can puncture the lungs. The axial skeleton is also involved in many conditions: osteoporosis often causes vertebral compression fractures, disc herniation causes back pain and nerve compression, and infections like tuberculosis can affect the spine (Pott's disease).
+
+Understanding the axial skeleton is essential for interpreting medical images, managing trauma, and diagnosing conditions that affect the spine, skull, and chest. Knowledge of the axial skeleton is fundamental to emergency medicine, orthopaedics, and neurology.
+
+Crucial insight: the axial skeleton protects vital organs (brain, spinal cord, heart, lungs). Injuries to it can be life-threatening. Conditions like osteoporosis, disc herniation, and spinal deformities are common. Understanding the axial skeleton is essential for emergency care, imaging interpretation, and diagnosis.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for the axial skeleton.
+
+Skull: 22 bones — 8 cranial (protect brain) and 14 facial. Sutures allow growth; fontanelles allow birth compression.
+
+Vertebral column: 26 bones — 7 cervical, 12 thoracic, 5 lumbar, 1 sacrum, 1 coccyx. Curves: cervical lordosis, thoracic kyphosis, lumbar lordosis. Intervertebral discs provide cushioning and flexibility.
+
+Thoracic cage: sternum (manubrium, body, xiphoid process) + 12 pairs of ribs. True ribs (1-7) attach directly; false ribs (8-10) attach indirectly; floating ribs (11-12) have no anterior attachment.
+
+Abnormal curvatures: kyphosis (exaggerated thoracic, "hunchback"), lordosis (exaggerated lumbar, "swayback"), scoliosis (lateral curvature).
+
+Clinical relevance: protects vital organs; common injuries and conditions include fractures, disc herniation, osteoporosis, and spinal deformities.
+
+Now your final test. A patient presents with back pain and an X-ray shows a lateral curvature of the spine. The patient is a 14-year-old girl.
+
+Question one: what is the likely diagnosis, and which part of the axial skeleton is affected?
+Question two: how many vertebrae are in each section of the vertebral column, and why is the number important?
+Question three: the patient also has shortness of breath. How might the condition of her spine affect her breathing?
+
+Work them through before reading on.
+
+My answers. One: likely scoliosis — a lateral curvature of the spine. It is most commonly diagnosed in adolescence and affects the vertebral column (the part of the axial skeleton). Two: the vertebral column has 7 cervical, 12 thoracic, and 5 lumbar vertebrae (plus the sacrum and coccyx). The number is important because injuries, abnormalities, or procedures are often identified by vertebral level (e.g., fracture at T5). Three: severe scoliosis can reduce the space in the thoracic cavity, compressing the lungs and making it harder to breathe. This can cause shortness of breath and requires monitoring and management.`
+    }
+  ],
+  theory: [
+    { q: "What is the axial skeleton and what does it include?", a: "The axial skeleton is the central axis of the body, consisting of the skull (22 bones), the vertebral column (26 bones), and the thoracic cage (sternum and 12 pairs of ribs). It protects the brain, spinal cord, heart, and lungs." },
+    { q: "How many bones are in the skull and what are its two parts?", a: "The skull has 22 bones — 8 cranial bones (protect the brain) and 14 facial bones (support the face, nose, eyes, and jaws)." },
+    { q: "What are the sutures of the skull and why do they matter?", a: "Sutures are immovable joints between skull bones. They allow the skull to grow during childhood and provide shock absorption. In infants, fontanelles (soft spots) allow compression during birth." },
+    { q: "How many bones are in the vertebral column and how are they arranged?", a: "The vertebral column has 26 bones: 7 cervical, 12 thoracic, 5 lumbar, 1 sacrum, and 1 coccyx. The sacrum and coccyx are fused vertebrae." },
+    { q: "What are the curves of the spine and their functions?", a: "Cervical lordosis (convex forward, neck), thoracic kyphosis (convex backward, chest), lumbar lordosis (convex forward, lower back). They provide balance, shock absorption, and strength." },
+    { q: "What are the three types of abnormal spinal curvatures?", a: "Kyphosis — exaggerated thoracic curvature (hunchback). Lordosis — exaggerated lumbar curvature (swayback). Scoliosis — lateral (sideways) curvature of the spine." },
+    { q: "What is the difference between true, false, and floating ribs?", a: "True ribs (1-7) attach directly to the sternum. False ribs (8-10) attach indirectly via cartilage. Floating ribs (11-12) have no anterior attachment." },
+    { q: "Why are the intervertebral discs important?", a: "Intervertebral discs are cushions between vertebrae that absorb shock, allow flexibility, and protect the vertebrae from wear. They can herniate (slipped disc) causing pain and nerve compression." },
+    { q: "What clinical conditions affect the axial skeleton?", a: "Osteoporosis (vertebral fractures), disc herniation (back pain), scoliosis, kyphosis, lordosis, fractures, infections (Pott's disease, tuberculosis of the spine), and degenerative conditions like osteoarthritis." }
+  ],
+  videos: [
+    { channel: "Anatomy", title: "The Axial Skeleton Overview", note: "Skull, vertebral column, and thoracic cage.", url: "" },
+    { channel: "Anatomy", title: "The Skull - Bones and Sutures", note: "Cranial and facial bones, fontanelles, and sutures.", url: "" },
+    { channel: "Anatomy", title: "The Vertebral Column and Ribcage", note: "Spinal curves, vertebrae, ribs, and sternum.", url: "" }
+  ],
+  mcqs: [
+    { q: "The axial skeleton consists of approximately how many bones?", o: ["80", "126", "206", "100"], a: 0, w: "The axial skeleton has 80 bones." },
+    { q: "Which of the following is NOT part of the axial skeleton?", o: ["Skull", "Vertebral column", "Ribs", "Femur"], a: 3, w: "The femur is part of the appendicular skeleton." },
+    { q: "How many bones are in the skull?", o: ["12", "22", "32", "42"], a: 1, w: "The skull has 22 bones." },
+    { q: "The cranium consists of how many bones?", o: ["8", "14", "22", "10"], a: 0, w: "The cranium has 8 bones." },
+    { q: "The facial bones consist of how many bones?", o: ["8", "14", "22", "10"], a: 1, w: "The facial bones have 14 bones." },
+    { q: "The sutures of the skull are:", o: ["Freely movable joints", "Immovable joints", "Slightly movable joints", "Cartilaginous joints"], a: 1, w: "Sutures are immovable fibrous joints." },
+    { q: "Fontanelles are present in:", o: ["Adults", "Infants", "Elderly", "Teenagers"], a: 1, w: "Fontanelles are soft spots in the skull of infants." },
+    { q: "How many cervical vertebrae are there?", o: ["12", "7", "5", "1"], a: 1, w: "There are 7 cervical vertebrae." },
+    { q: "How many thoracic vertebrae are there?", o: ["7", "12", "5", "1"], a: 1, w: "There are 12 thoracic vertebrae." },
+    { q: "How many lumbar vertebrae are there?", o: ["7", "12", "5", "1"], a: 2, w: "There are 5 lumbar vertebrae." },
+    { q: "The sacrum is formed by the fusion of:", o: ["3-5 vertebrae", "5 vertebrae", "4 vertebrae", "6 vertebrae"], a: 1, w: "The sacrum is formed by the fusion of 5 vertebrae." },
+    { q: "The coccyx is the:", o: ["Tailbone", "Neck", "Lower back", "Chest"], a: 0, w: "The coccyx is the tailbone." },
+    { q: "The curve of the neck is called:", o: ["Thoracic kyphosis", "Cervical lordosis", "Lumbar lordosis", "Sacral kyphosis"], a: 1, w: "The cervical spine has a lordotic (forward) curve." },
+    { q: "Scoliosis is a:", o: ["Forward curve of the spine", "Lateral curve of the spine", "Backward curve of the spine", "Normal curve of the spine"], a: 1, w: "Scoliosis is a lateral (sideways) curvature of the spine." },
+    { q: "True ribs are numbered:", o: ["1-7", "8-10", "11-12", "1-12"], a: 0, w: "True ribs are ribs 1-7." },
+    { q: "Floating ribs are numbered:", o: ["1-7", "8-10", "11-12", "1-12"], a: 2, w: "Floating ribs are ribs 11-12." },
+    { q: "The sternum consists of the:", o: ["Manubrium, body, xiphoid process", "Cervical, thoracic, lumbar", "True, false, floating", "Cranial, facial, vertebral"], a: 0, w: "The sternum has three parts: manubrium, body, and xiphoid process." },
+    { q: "The xiphoid process is the:", o: ["Upper part of the sternum", "Middle part of the sternum", "Lower tip of the sternum", "Side of the sternum"], a: 2, w: "The xiphoid process is the lower tip of the sternum." },
+    { q: "Intervertebral discs are found:", o: ["Between skull bones", "Between vertebrae", "Between ribs and sternum", "In the medullary cavity"], a: 1, w: "Intervertebral discs are between vertebrae." },
+    { q: "The vertebral column protects the:", o: ["Heart", "Lungs", "Spinal cord", "Brain"], a: 2, w: "The vertebral column protects the spinal cord." }
+  ]
+};
+
+
+
 /* --------------------------- phy:5 --------------------------- */
 const T_PHY_RMP = {
   courseId: "phy",
@@ -8354,6 +8854,9 @@ const CONTENT = {
   "ana:4": T_ANA_GLAND,
   "ana:5": T_ANA_CONNECTIVE,
   "ana:6": T_ANA_MUSCLE,
+  "ana:7": T_ANA_SKELETAL_INTRO,
+  "ana:8": T_ANA_OSTEOLOGY, 
+  "ana:9": T_ANA_AXIAL,    
   "bch:0": T_BCH_INTRO,
   "bch:1": T_BCH_ENZYMES,
   "bch:2": T_BCH_INHIBITION,
@@ -8564,6 +9067,31 @@ const Wordmark = () => (
     <div><div className="brand-word">ASCEND</div><div className="brand-sub">MLS 2029</div></div>
   </div>
 );
+
+// ==================== SHUFFLE FUNCTIONS ====================
+// Shuffle a single question's options and update the correct answer index
+function shuffleQuestion(item) {
+  const order = item.o.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return {
+    ...item,
+    o: order.map((k) => item.o[k]),
+    a: order.indexOf(item.a)
+  };
+}
+
+// Shuffle an entire bank of questions
+function shuffleBank(bank) {
+  const q = bank.map(shuffleQuestion);
+  for (let i = q.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [q[i], q[j]] = [q[j], q[i]];
+  }
+  return q;
+}
 
 function shuffleQuestion(item) {
   const order = item.o.map((_, i) => i);
