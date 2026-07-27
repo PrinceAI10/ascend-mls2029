@@ -7102,11 +7102,25 @@ export default function App() {
       (sUser.user_metadata && (sUser.user_metadata.full_name || sUser.user_metadata.name)) ||
       (sUser.email ? sUser.email.split("@")[0] : "student");
     setSupaUid(uid);
-    setAuth({ username: displayName, email: sUser.email, name: displayName, supabase: true });
     const cloud = await db.loadProgress(uid);
+    // Also read the profile row (leaderboard source) so we can trust whichever XP
+    // is higher - this prevents a fresh login on a new device from ever showing 0
+    // when the cloud already holds real XP for this account.
+    let profileXp = 0, profileStreak = 0, profileName = null;
+    try {
+      const { data } = await supabase.from("profiles").select("name, xp, streak").eq("id", uid).maybeSingle();
+      if (data) { profileXp = data.xp || 0; profileStreak = data.streak || 0; profileName = data.name; }
+    } catch {}
     const base = freshProgress(displayName);
-    const merged = cloud ? { ...base, ...cloud, name: cloud.name || displayName } : { ...base, name: displayName };
+    const merged = cloud ? { ...base, ...cloud } : { ...base };
+    // trust the highest XP/streak across progress-table and profile-table
+    merged.xp = Math.max(merged.xp || 0, profileXp);
+    merged.streak = Math.max(merged.streak || 0, profileStreak);
+    // keep the user's chosen display name: prefer saved progress name, then profile name
+    merged.name = (cloud && cloud.name) || profileName || displayName;
+    setAuth({ username: merged.name, email: sUser.email, name: merged.name, supabase: true });
     setProgress(merged);
+    // write the reconciled (highest) values back so both tables agree everywhere
     try {
       await supabase.from("profiles").upsert({
         id: uid,
@@ -7203,7 +7217,15 @@ export default function App() {
     if (newName.length < 2 || newName === progress.name) return;
 
     if (supaUid) {
-      await db.setUsername(supaUid, newName);
+      // update the profile row with the new name (keeping current xp/streak) so the
+      // change shows on everyone's leaderboard, then persist locally.
+      try {
+        await supabase.from("profiles").upsert({
+          id: supaUid, name: newName, username: newName,
+          xp: progress.xp || 0, streak: progress.streak || 0,
+          updated_at: new Date().toISOString(),
+        });
+      } catch {}
       persist({ ...progress, name: newName });
       return;
     }
