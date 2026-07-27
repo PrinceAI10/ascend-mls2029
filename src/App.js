@@ -9091,17 +9091,6 @@ function shuffleBank(bank) {
   return q;
 }
 
-function shuffleQuestion(item) {
-  const order = item.o.map((_, i) => i);
-  for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
-  return { ...item, o: order.map((k) => item.o[k]), a: order.indexOf(item.a) };
-}
-function shuffleBank(bank) {
-  const q = bank.map(shuffleQuestion);
-  for (let i = q.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [q[i], q[j]] = [q[j], q[i]]; }
-  return q;
-}
-
 /* AI endpoint. On the deployed site this points at your serverless proxy, which
    holds the API key (see claude-proxy.js). A browser cannot call an AI provider
    directly - the key would be exposed and the request blocked by CORS. */
