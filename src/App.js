@@ -13671,6 +13671,23 @@ function RanksView({ app }) {
   const [search, setSearch] = useState("");
   // Set of presence keys for classmates who are online on ASCEND right now.
   const [onlineKeys, setOnlineKeys] = useState(() => new Set());
+  
+  // XP CHANGE STATE - shows ▲ +150 or ▼ -50
+  const [xpChange, setXpChange] = useState(null);
+  
+  // Load XP change on mount
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem('ascend_xp_change');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        setXpChange(parsed);
+        // Clear after reading so it only shows once
+        sessionStorage.removeItem('ascend_xp_change');
+      }
+    } catch {}
+  }, []);
+  
   const loadBoard = async () => {
     setLoading(true);
     // Always read the class-wide leaderboard from Supabase, no matter how the
@@ -13743,15 +13760,30 @@ function RanksView({ app }) {
     };
   }, [app.supaUid, app.progress.name]);
   const me = { name: app.progress.name, xp: app.progress.xp, streak: app.progress.streak, me: true, id: app.supaUid };
+  
   // Full ranked board with each person's TRUE position (rank 1, 2, 3...), computed
   // before any search filter so positions stay correct when searching. Each row is
   // tagged online if their presence key is in the live online set (self is always
   // online since they are viewing the board now).
-  const fullBoard = [...others, me].sort((a, b) => b.xp - a.xp).map((p, i) => ({
+  const fullBoard = [...others, me].sort((a, b) => {
+    // First sort by XP descending
+    if (b.xp !== a.xp) return b.xp - a.xp;
+    // Same XP: sort by who earned it first (tie-break)
+    const aId = a.id || 'local-' + String(a.name).toLowerCase().replace(/[^a-z0-9]/g, '');
+    const bId = b.id || 'local-' + String(b.name).toLowerCase().replace(/[^a-z0-9]/g, '');
+    const history = JSON.parse(localStorage.getItem('ascend_xp_history') || '{}');
+    const aEntry = (history[aId] || []).find(h => h.xp === a.xp);
+    const bEntry = (history[bId] || []).find(h => h.xp === b.xp);
+    if (aEntry && bEntry) return aEntry.time - bEntry.time;
+    if (aEntry) return -1;
+    if (bEntry) return 1;
+    return String(a.name).localeCompare(String(b.name));
+  }).map((p, i) => ({
     ...p,
     pos: i + 1,
     online: p.me ? true : onlineKeys.has(presenceKeyFor(p.id, p.name)),
   }));
+  
   // Apply the search filter (by name) for display only; positions are preserved.
   const q = search.trim().toLowerCase();
   const board = q ? fullBoard.filter((p) => String(p.name || "").toLowerCase().includes(q)) : fullBoard;
@@ -13804,7 +13836,26 @@ function RanksView({ app }) {
             </div>
             <div style={{ textAlign: "right" }}>
               <div className="mono" style={{ fontWeight: 700, fontSize: 14 }}>{p.xp}</div>
-              <div style={{ fontSize: 11, color: "var(--amber-2)", display: "flex", alignItems: "center", gap: 3, justifyContent: "flex-end" }}><Ic.flame p={12} />{p.streak}</div>
+              
+              {/* XP CHANGE INDICATOR - Green ▲ for increase, Red ▼ for decrease */}
+              {p.me && xpChange && xpChange.change !== 0 && (
+                <div style={{
+                  fontSize: 11,
+                  fontWeight: 600,
+                  color: xpChange.direction === 'up' ? '#4CAF50' : '#F44336',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'flex-end',
+                  gap: 2,
+                  marginTop: 1
+                }}>
+                  {xpChange.direction === 'up' ? '▲' : '▼'} {xpChange.display}
+                </div>
+              )}
+              
+              <div style={{ fontSize: 11, color: "var(--amber-2)", display: "flex", alignItems: "center", gap: 3, justifyContent: "flex-end" }}>
+                <Ic.flame p={12} />{p.streak}
+              </div>
             </div>
           </div>
         ))}
@@ -14396,15 +14447,15 @@ function PapersView() {
     }
     setBusy(false);
   };
-  const startSolve = () => genSet(`Generate exactly ${count} past-paper-style exam MCQs for a KNUST first-year student in ${courseById(courseId).name} (${courseById(courseId).code}). ${RULES}`);
-  const startSimilar = () => genSet(`Here is a past exam question:\n\n${sample}\n\nGenerate exactly ${count} fresh MCQs testing the same concept and matching its style, for ${courseById(courseId).name}. ${RULES}`);
+  const startSolve = () => genSet(`Generate exactly ${count} passco-style exam MCQs for a KNUST first-year student in ${courseById(courseId).name} (${courseById(courseId).code}). ${RULES}`);
+  const startSimilar = () => genSet(`Here is a passco question:\n\n${sample}\n\nGenerate exactly ${count} fresh MCQs testing the same concept and matching its style, for ${courseById(courseId).name}. ${RULES}`);
   return (
     <div className="view">
-      <div className="eyebrow">Past papers</div>
+      <div className="eyebrow">Passco</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Solve them, don't just stare at the PDF</h1>
-      <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "58ch" }}>A past-paper PDF is easy to put off. Here you actually answer, tap by tap, with instant feedback - and ASCEND can spin fresh questions off any one you show it.</p>
+      <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "58ch" }}>A passco PDF is easy to put off. Here you actually answer, tap by tap, with instant feedback - and ASCEND can spin fresh questions off any one you show it.</p>
       <div className="tabs">
-        <button className={"tab " + (tab === "passco" ? "on" : "")} onClick={() => { setTab("passco"); setItems(null); setErr(""); setActive(null); }}>Past papers</button>
+        <button className={"tab " + (tab === "passco" ? "on" : "")} onClick={() => { setTab("passco"); setItems(null); setErr(""); setActive(null); }}>Passco</button>
         <button className={"tab " + (tab === "solve" ? "on" : "")} onClick={() => { setTab("solve"); setItems(null); setErr(""); }}>Practice set (AI)</button>
         <button className={"tab " + (tab === "similar" ? "on" : "")} onClick={() => { setTab("similar"); setItems(null); setErr(""); }}>Generate similar</button>
       </div>
@@ -14424,7 +14475,7 @@ function PapersView() {
         </div>
         {tab === "similar" && (
           <>
-            <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Paste one past question</label>
+            <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Paste one passco question</label>
             <textarea className="pastebox" value={sample} placeholder={"e.g.\n\nThe plane dividing the body into left and right is the\nA. coronal  B. sagittal  C. transverse  D. oblique"} onChange={(e) => setSample(e.target.value)} />
             <label className="eyebrow" style={{ display: "block", margin: "16px 0 8px" }}>How many similar questions?</label>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[10, 20, 30, 40].map((n) => <button key={n} className="btn btn-sm" style={{ background: similarCount === n ? "var(--amber)" : "var(--bg-3)", color: similarCount === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={() => setSimilarCount(n)}>{n}</button>)}</div>
@@ -14452,11 +14503,11 @@ function PasscoPicker({ onStart, chunk }) {
   const [openPaper, setOpenPaper] = useState(null); // paper id being configured
   const [mode, setMode] = useState("practice");
   if (!PAST_PAPERS.length) {
-    return <div className="card" style={{ marginTop: 12, color: "var(--text-2)", fontSize: 14 }}>No past papers uploaded yet. They will appear here as they are added.</div>;
+    return <div className="card" style={{ marginTop: 12, color: "var(--text-2)", fontSize: 14 }}>No passco papers uploaded yet. They will appear here as they are added.</div>;
   }
   return (
     <div style={{ marginTop: 12 }}>
-      <p style={{ color: "var(--text-2)", fontSize: 14, marginTop: 0 }}>Real past papers, worked out and turned into tap-to-answer questions. Long papers are split into sets of {chunk} so you never burn out - finish one set, then the next.</p>
+      <p style={{ color: "var(--text-2)", fontSize: 14, marginTop: 0 }}>Real passco papers, worked out and turned into tap-to-answer questions. Long papers are split into sets of {chunk} so you never burn out - finish one set, then the next.</p>
       {PAST_PAPERS.map((paper) => {
         const nChunks = Math.ceil(paper.questions.length / chunk);
         const isOpen = openPaper === paper.id;
@@ -14831,7 +14882,7 @@ function HomeView({ app }) {
         </div>
       )}
 
-      <div className="card card-feature" style={{ marginTop: 26, textAlign: "center" }}>
+            <div className="card card-feature" style={{ marginTop: 26, textAlign: "center" }}>
         <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 10 }}>Built by the ASCEND team</div>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8 }}>
           {["Prince", "Ansah", "Jeffery", "Dacosta"].map((n) => (
@@ -14842,6 +14893,20 @@ function HomeView({ app }) {
           ))}
         </div>
         <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 12, lineHeight: 1.6 }}>For the MLS Class of 2029. No gatekeeping.</div>
+        
+        {/* Admin-only feedback link */}
+        <div style={{ marginTop: 10, opacity: 0.3 }}>
+          <button 
+            style={{ background: "none", border: "none", color: "var(--text-3)", fontSize: 10, cursor: "pointer", textDecoration: "underline" }}
+            onClick={() => { 
+              if (window.confirm('View student feedback? (Admin only)')) { 
+                app.go("viewfeedback"); 
+              } 
+            }}
+          >
+            view feedback
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -15384,6 +15449,148 @@ function FeedbackView() {
   );
 }
 
+function ViewFeedbackView() {
+  const [feedbacks, setFeedbacks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [authKey, setAuthKey] = useState('');
+  
+  useEffect(() => {
+    const key = localStorage.getItem('ascend_feedback_key');
+    if (key === 'ascend2026') {
+      setAuthKey(key);
+      loadFeedbacks();
+    } else {
+      const entered = window.prompt('Enter the feedback viewing key:');
+      if (entered === 'ascend2026') {
+        localStorage.setItem('ascend_feedback_key', entered);
+        setAuthKey(entered);
+        loadFeedbacks();
+      }
+      setLoading(false);
+    }
+  }, []);
+  
+  const loadFeedbacks = async () => {
+    try {
+      const keys = await store.listShared('ascend_feedback:');
+      const items = [];
+      for (const k of keys) {
+        const data = await store.get(k, true);
+        if (data) {
+          items.push({ 
+            id: k, 
+            ...data,
+            timestamp: data.timestamp || new Date(data.createdAt || Date.now()).toISOString()
+          });
+        }
+      }
+      items.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      setFeedbacks(items);
+    } catch (e) {
+      console.error('Failed to load feedback:', e);
+    }
+    setLoading(false);
+  };
+  
+  const deleteFeedback = async (id) => {
+    if (window.confirm('Delete this feedback?')) {
+      try {
+        await store.set(id, null);
+        setFeedbacks(feedbacks.filter(f => f.id !== id));
+      } catch (e) {
+        alert('Failed to delete');
+      }
+    }
+  };
+  
+  if (!authKey) {
+    return (
+      <div className="view">
+        <div className="eyebrow">Feedback</div>
+        <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Feedback Viewer</h1>
+        <div className="card">
+          <p style={{ color: "var(--text-2)", fontSize: 14, lineHeight: 1.6 }}>Access restricted. Please enter the access key to view feedback.</p>
+          <button className="btn btn-a" onClick={() => { 
+            const entered = window.prompt('Enter the feedback viewing key:');
+            if (entered === 'ascend2026') {
+              localStorage.setItem('ascend_feedback_key', entered);
+              setAuthKey(entered);
+              loadFeedbacks();
+            }
+          }}>Enter Key</button>
+        </div>
+      </div>
+    );
+  }
+  
+  const renderStars = (rating) => {
+    const maxStars = 5;
+    const filled = Math.min(rating || 0, maxStars);
+    const empty = maxStars - filled;
+    const stars = [];
+    for (let i = 0; i < filled; i++) {
+      stars.push(
+        <Ic.star key={'filled-' + i} p={16} fill="var(--amber)" style={{ color: 'var(--amber)' }} />
+      );
+    }
+    for (let i = 0; i < empty; i++) {
+      stars.push(
+        <Ic.star key={'empty-' + i} p={16} fill="none" style={{ color: 'var(--text-3)' }} />
+      );
+    }
+    return stars;
+  };
+  
+  return (
+    <div className="view">
+      <button className="back" onClick={() => window.history.back()}>
+        <Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Back
+      </button>
+      <div className="eyebrow">Feedback</div>
+      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Student Feedback ({feedbacks.length})</h1>
+      <p style={{ color: "var(--text-2)", marginTop: 0 }}>All feedback submitted by students through the Feedback page.</p>
+      
+      {loading && <div className="card"><span className="dots"><span /><span /><span /></span></div>}
+      
+      {!loading && feedbacks.length === 0 && (
+        <div className="card"><p style={{ color: "var(--text-2)", fontSize: 14 }}>No feedback submitted yet.</p></div>
+      )}
+      
+      {feedbacks.map((f, i) => (
+        <div className="card" key={f.id} style={{ marginBottom: 10 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 6, flexWrap: "wrap" }}>
+                <span style={{ display: "flex", gap: 2, alignItems: "center", fontWeight: 700, color: "var(--amber)" }}>
+                  {renderStars(f.rating || 0)}
+                </span>
+                <span className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>
+                  {new Date(f.timestamp).toLocaleDateString()} {new Date(f.timestamp).toLocaleTimeString()}
+                </span>
+                <span style={{ fontSize: 10, padding: "2px 8px", borderRadius: 4, background: "var(--bg-3)", color: "var(--text-3)" }}>
+                  #{i + 1}
+                </span>
+              </div>
+              {f.comment && <p style={{ color: "var(--text)", fontSize: 14, margin: "6px 0 0", lineHeight: 1.6 }}>{f.comment}</p>}
+              {!f.comment && <p style={{ color: "var(--text-3)", fontSize: 13, margin: "6px 0 0", fontStyle: "italic" }}>No comment provided</p>}
+            </div>
+            <button className="iconbtn" style={{ width: 30, height: 30, flexShrink: 0 }} onClick={() => deleteFeedback(f.id)} aria-label="Delete feedback">
+              <Ic.x p={13} />
+            </button>
+          </div>
+        </div>
+      ))}
+      
+      <div className="card" style={{ marginTop: 16 }}>
+        <p style={{ color: "var(--text-3)", fontSize: 12.5, lineHeight: 1.6, margin: 0 }}>
+          Access key: <span className="mono" style={{ color: "var(--amber)" }}>ascend2026</span> · 
+          Total {feedbacks.length} feedback entries
+        </p>
+      </div>
+    </div>
+  );
+}
+
 const NAV = [
   { key: "home", label: "Home", icon: "home" },
   { key: "courses", label: "Courses", icon: "book" },
@@ -15414,6 +15621,25 @@ export default function App() {
     }
     return { view: "home" };
   });
+
+  // XP TRACKING FUNCTIONS - for ▲ +150 or ▼ -50 indicator on leaderboard
+  const setXpChange = (currentXp) => {
+    if (typeof window === "undefined") return;
+    try {
+      const prevXp = parseInt(sessionStorage.getItem('ascend_prev_xp') || '0');
+      const change = currentXp - prevXp;
+      sessionStorage.setItem('ascend_prev_xp', String(currentXp));
+      if (change !== 0) {
+        sessionStorage.setItem('ascend_xp_change', JSON.stringify({
+          change: change,
+          direction: change > 0 ? 'up' : 'down',
+          display: change > 0 ? `+${change}` : `${change}`
+        }));
+      }
+    } catch (e) {
+      // Silently fail - XP tracking is a nice-to-have feature
+    }
+  };
 
   // Persist the current route on every change so a reload can restore it.
   useEffect(() => {
@@ -15566,6 +15792,8 @@ export default function App() {
     // keep the user's chosen display name: prefer saved progress name, then profile name
     merged.name = (cloud && cloud.name) || profileName || displayName;
     setAuth({ username: merged.name, email: sUser.email, name: merged.name, supabase: true });
+    // Track XP change for leaderboard indicator
+    setXpChange(merged.xp || 0);
     setProgress(merged);
     // write the reconciled (highest) values back so both tables agree everywhere
     try {
@@ -15584,7 +15812,10 @@ export default function App() {
   const handleAuthed = async (acct) => {
     setAuth(acct);
     const p = await store.get(progKey(acct.username));
-    setProgress(p ? { ...freshProgress(acct.username), ...p, name: acct.username } : freshProgress(acct.username));
+    const finalProgress = p ? { ...freshProgress(acct.username), ...p, name: acct.username } : freshProgress(acct.username);
+    // Track XP change for leaderboard indicator
+    setXpChange(finalProgress.xp || 0);
+    setProgress(finalProgress);
     setRoute({ view: "home" });
   };
 
@@ -15706,6 +15937,7 @@ export default function App() {
       case "resources": return <ResourcesView />;
       case "lamla": return <LAMLAView app={app} />;
       case "feedback": return <FeedbackView />;
+      case "viewfeedback": return <ViewFeedbackView />;
       default: return <HomeView app={app} />;
     }
   };
