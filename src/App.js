@@ -13888,6 +13888,27 @@ function DailyView({ app }) {
   const alreadyDone = app.progress.dailyDone?.[todayKey()];
   const [chosen, setChosen] = useState(null);
   const [reveal, setReveal] = useState(!!alreadyDone);
+  
+  // SAVE DAILY STATE
+  useEffect(() => {
+    try {
+      const state = { chosen, reveal };
+      sessionStorage.setItem('ascend_daily_state', JSON.stringify(state));
+    } catch {}
+  }, [chosen, reveal]);
+
+  // RESTORE DAILY STATE
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_daily_state');
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.chosen !== undefined) setChosen(state.chosen);
+        if (state.reveal !== undefined) setReveal(state.reveal);
+      }
+    } catch {}
+  }, []);
+  
   const submit = () => {
     if (chosen === null) return;
     setReveal(true);
@@ -13933,7 +13954,6 @@ function DailyView({ app }) {
     </div>
   );
 }
-
 /* ------------------------------- ranks ---------------------------------- */
 // Build a stable presence key for a person from their id (preferred) or name, so
 // the same person is matched consistently between the leaderboard rows and the
