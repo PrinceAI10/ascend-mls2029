@@ -16057,7 +16057,19 @@ export default function App() {
     persist(updated);
   };
  
-  const app = { progress, go, recordDaily, finishQuiz, clearReviewItem, toggleBookmark, supaUid, courseId: route.courseId, topicId: route.topicId, setName };
+  const app = { 
+  progress, 
+  go, 
+  recordDaily, 
+  finishQuiz, 
+  clearReviewItem, 
+  toggleBookmark, 
+  supaUid, 
+  courseId: route.courseId, 
+  topicId: route.topicId, 
+  setName,
+  setReadingXp
+};
   const render = () => {
     switch (route.view) {
       case "home": return <HomeView app={app} />;
