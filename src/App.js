@@ -15409,11 +15409,11 @@ ${RULES}`);
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Solve them, don't just stare at the PDF</h1>
       <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "58ch" }}>A passco PDF is easy to put off. Here you actually answer, tap by tap, with instant feedback - and ASCEND can spin fresh questions off any one you show it.</p>
       <div className="tabs">
-    <button className={"tab " + (tab === "passco" ? "on" : "")} onClick={() => { setTab("passco"); setItems(null); setErr(""); setActive(null); }}>Passco</button>
-    <button className={"tab " + (tab === "solve" ? "on" : "")} onClick={() => { setTab("solve"); setItems(null); setErr(""); }}>Practice set (AI)</button>
-    <button className={"tab " + (tab === "similar" ? "on" : "")} onClick={() => { setTab("similar"); setItems(null); setErr(""); }}>Generate similar</button>
-    <button className={"tab " + (tab === "youtube" ? "on" : "")} onClick={() => { setTab("youtube"); setItems(null); setErr(""); }}>YouTube Links</button>
-</div>
+        <button className={"tab " + (tab === "passco" ? "on" : "")} onClick={() => { setTab("passco"); setItems(null); setErr(""); setActive(null); }}>Passco</button>
+        <button className={"tab " + (tab === "solve" ? "on" : "")} onClick={() => { setTab("solve"); setItems(null); setErr(""); }}>Practice set (AI)</button>
+        <button className={"tab " + (tab === "similar" ? "on" : "")} onClick={() => { setTab("similar"); setItems(null); setErr(""); }}>Generate similar</button>
+        <button className={"tab " + (tab === "youtube" ? "on" : "")} onClick={() => { setTab("youtube"); setItems(null); setErr(""); }}>YouTube Links</button>
+      </div>
 
       {tab === "passco" && (active
         ? <PasscoSet paper={active.paper} chunkStart={active.chunkStart} chunkEnd={active.chunkEnd} mode={active.mode} onExit={() => setActive(null)} />
@@ -15448,12 +15448,13 @@ ${RULES}`);
         </div>
       </div>
       )}
-      {tab !== "passco" && err && <div className="card" style={{ marginTop: 14, borderColor: "var(--line-2)", color: "var(--text-2)", fontSize: 14 }}>{err}</div>}
-      {tab !== "passco" && busy && <div className="card" style={{ marginTop: 14 }}><span className="dots"><span /><span /><span /></span></div>}
-      {tab !== "passco" && items && <InteractiveSet key={items.map((x) => x.q).join("|").length + "-" + items.length} items={items} />}
+      {tab !== "passco" && tab !== "youtube" && err && <div className="card" style={{ marginTop: 14, borderColor: "var(--line-2)", color: "var(--text-2)", fontSize: 14 }}>{err}</div>}
+      {tab !== "passco" && tab !== "youtube" && busy && <div className="card" style={{ marginTop: 14 }}><span className="dots"><span /><span /><span /></span></div>}
+      {tab !== "passco" && tab !== "youtube" && items && <InteractiveSet key={items.map((x) => x.q).join("|").length + "-" + items.length} items={items} />}
     </div>
   );
 }
+
 /* PasscoPicker: lists real past papers (grouped by course), and lets the student
    pick a 50-question chunk and a mode (practice or exam). Chunking keeps sets to
    50 so a 100+ question paper never overwhelms - you solve 50, then the next 50. */
