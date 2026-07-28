@@ -17247,19 +17247,48 @@ export default function App() {
       </div>
 
       {menuOpen && (
-        <div className="mobile-sidebar-overlay" onClick={() => setMenuOpen(false)}>
-          <div className="mobile-sidebar" onClick={(e) => e.stopPropagation()}>
-            <div style={{ padding: "16px 18px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <Wordmark />
-              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setMenuOpen(false)}><Ic.x p={15} /></button>
-            </div>
-            {navButtons(go)}
-            <div style={{ marginTop: "auto", padding: "14px 18px", borderTop: "1px solid var(--line)" }}>
-              <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
-              <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
-            </div>
-          </div>
-        </div>
+        <div 
+  className="mobile-sidebar-overlay" 
+  onClick={() => setMenuOpen(false)}
+  style={{ 
+    position: "fixed",
+    inset: 0,
+    zIndex: 1000,
+    background: "rgba(0,0,0,0.5)",
+    display: "flex",
+    alignItems: "flex-start",
+    paddingTop: "env(safe-area-inset-top)"
+  }}
+>
+  <div 
+    className="mobile-sidebar" 
+    onClick={(e) => e.stopPropagation()}
+    style={{
+      width: "280px",
+      maxWidth: "80vw",
+      height: "100vh",
+      height: "100dvh",
+      background: "var(--bg-2)",
+      borderRight: "1px solid var(--line)",
+      display: "flex",
+      flexDirection: "column",
+      padding: "8px 0",
+      overflowY: "auto",
+      paddingTop: "calc(env(safe-area-inset-top) + 8px)",
+      paddingBottom: "calc(env(safe-area-inset-bottom) + 8px)"
+    }}
+  >
+    <div style={{ padding: "16px 18px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <Wordmark />
+      <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setMenuOpen(false)}><Ic.x p={15} /></button>
+    </div>
+    {navButtons(go)}
+    <div style={{ marginTop: "auto", padding: "14px 18px", borderTop: "1px solid var(--line)" }}>
+      <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
+      <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
+    </div>
+  </div>
+</div>
       )}
 
       {notifOpen && (
