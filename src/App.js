@@ -13955,6 +13955,9 @@ function RanksView({ app }) {
                     <path d="M12 3c1 3 4 4.2 4 8a4 4 0 1 1-8 0c0-1.4.6-2.4 1.2-3.2C10 9 11 7 12 3z" />
                   </svg>
                   {p.streak}
+                  {p.me && p.streak >= 7 && (
+                    <span style={{ color: "#2E9BFF", fontSize: 9, fontWeight: 600, marginLeft: 2 }}>1.5x</span>
+                  )}
                 </div>
               </div>
             </div>
