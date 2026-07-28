@@ -16993,49 +16993,6 @@ export default function App() {
   if (!loaded) return (
     <div className={rootCls}>
       <style>{CSS}</style>
-      <style>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
-      <div style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
-        gap: "20px",
-        background: "var(--bg)"
-      }}>
-        <div style={{
-          width: 48,
-          height: 48,
-          border: "3px solid var(--bg-3)",
-          borderTop: "3px solid var(--amber)",
-          borderRadius: "50%",
-          animation: "spin 1s linear infinite"
-        }} />
-        <div style={{
-          color: "var(--text-3)",
-          fontSize: 14,
-          fontFamily: "var(--mono)",
-          letterSpacing: "0.1em"
-        }}>ASCEND</div>
-      </div>
-    </div>
-  );
-
-  if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
-
-  const navButtons = (onNav) => NAV.map((n) => {
-    const Icon = Ic[n.icon];
-    return <button key={n.key} className={"navi " + (activeNav === n.key ? "on" : "")} onClick={() => onNav(n.key)}><Icon p={19} />{n.label}</button>;
-  });
-
-    return (
-    <div className={rootCls}>
-      <style>{CSS}</style>
       
       {/* RANK UP NOTIFICATION */}
       {rankUpNotif && (
@@ -17174,21 +17131,41 @@ export default function App() {
         </aside>
 
         <div className="main">
-          <header className="topbar">
-            <div className="topbar-inner">
+          <header className="topbar" style={{ 
+            position: "sticky", 
+            top: 0, 
+            zIndex: 20, 
+            background: "rgba(10,15,26,.82)",
+            backdropFilter: "blur(10px)",
+            borderBottom: "1px solid var(--line)",
+            padding: "0",
+            paddingTop: "env(safe-area-inset-top)",
+            paddingLeft: "env(safe-area-inset-left)",
+            paddingRight: "env(safe-area-inset-right)"
+          }}>
+            <div className="topbar-inner" style={{
+              maxWidth: "1080px",
+              margin: "0 auto",
+              width: "100%",
+              padding: "13px 30px",
+              display: "flex",
+              alignItems: "center",
+              gap: "14px",
+              flexWrap: "wrap"
+            }}>
               <button 
-  className="iconbtn onlymobile" 
-  onClick={() => setMenuOpen(true)} 
-  aria-label="Open menu"
-  style={{ 
-    position: "relative", 
-    zIndex: 999,
-    marginLeft: "4px",
-    flexShrink: 0
-  }}
->
-  <Ic.menu p={18} />
-</button>
+                className="iconbtn onlymobile" 
+                onClick={() => setMenuOpen(true)} 
+                aria-label="Open menu"
+                style={{ 
+                  position: "relative", 
+                  zIndex: 999,
+                  marginLeft: "4px",
+                  flexShrink: 0
+                }}
+              >
+                <Ic.menu p={18} />
+              </button>
               <div className="onlymobile" style={{ flex: 1 }}><Wordmark /></div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
                 <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress.streak}</span></span>
@@ -17248,47 +17225,47 @@ export default function App() {
 
       {menuOpen && (
         <div 
-  className="mobile-sidebar-overlay" 
-  onClick={() => setMenuOpen(false)}
-  style={{ 
-    position: "fixed",
-    inset: 0,
-    zIndex: 1000,
-    background: "rgba(0,0,0,0.5)",
-    display: "flex",
-    alignItems: "flex-start",
-    paddingTop: "env(safe-area-inset-top)"
-  }}
->
-  <div 
-    className="mobile-sidebar" 
-    onClick={(e) => e.stopPropagation()}
-    style={{
-      width: "280px",
-      maxWidth: "80vw",
-      height: "100vh",
-      height: "100dvh",
-      background: "var(--bg-2)",
-      borderRight: "1px solid var(--line)",
-      display: "flex",
-      flexDirection: "column",
-      padding: "8px 0",
-      overflowY: "auto",
-      paddingTop: "calc(env(safe-area-inset-top) + 8px)",
-      paddingBottom: "calc(env(safe-area-inset-bottom) + 8px)"
-    }}
-  >
-    <div style={{ padding: "16px 18px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <Wordmark />
-      <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setMenuOpen(false)}><Ic.x p={15} /></button>
-    </div>
-    {navButtons(go)}
-    <div style={{ marginTop: "auto", padding: "14px 18px", borderTop: "1px solid var(--line)" }}>
-      <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
-      <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
-    </div>
-  </div>
-</div>
+          className="mobile-sidebar-overlay" 
+          onClick={() => setMenuOpen(false)}
+          style={{ 
+            position: "fixed",
+            inset: 0,
+            zIndex: 1000,
+            background: "rgba(0,0,0,0.5)",
+            display: "flex",
+            alignItems: "flex-start",
+            paddingTop: "env(safe-area-inset-top)"
+          }}
+        >
+          <div 
+            className="mobile-sidebar" 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "280px",
+              maxWidth: "80vw",
+              height: "100vh",
+              height: "100dvh",
+              background: "var(--bg-2)",
+              borderRight: "1px solid var(--line)",
+              display: "flex",
+              flexDirection: "column",
+              padding: "8px 0",
+              overflowY: "auto",
+              paddingTop: "calc(env(safe-area-inset-top) + 8px)",
+              paddingBottom: "calc(env(safe-area-inset-bottom) + 8px)"
+            }}
+          >
+            <div style={{ padding: "16px 18px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <Wordmark />
+              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setMenuOpen(false)}><Ic.x p={15} /></button>
+            </div>
+            {navButtons(go)}
+            <div style={{ marginTop: "auto", padding: "14px 18px", borderTop: "1px solid var(--line)" }}>
+              <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
+              <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
+            </div>
+          </div>
+        </div>
       )}
 
       {notifOpen && (
