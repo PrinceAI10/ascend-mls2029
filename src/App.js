@@ -14901,18 +14901,19 @@ function HomeView({ app }) {
           <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 4 }}>Topics are being built one by one. Browse the full course maps under Courses.</div>
         </div>
       )}
-     {/* CHANGE USERNAME - Blends with background */}
+      {/* CHANGE USERNAME - Matches card background */}
 <div className="card" style={{ 
   marginTop: 16, 
   display: "flex", 
   justifyContent: "space-between", 
   alignItems: "center", 
   gap: 16, 
-  flexWrap: "wrap"
+  flexWrap: "wrap",
+  background: "var(--bg-2)"
 }}>
   <div>
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <span style={{ fontWeight: 600, fontSize: 15, color: "var(--text)" }}>Username: <span style={{ color: "#2E9BFF", fontWeight: 700 }}>{app.progress.name}</span></span>
+      <span style={{ fontWeight: 600, fontSize: 15, color: "var(--text)" }}>Username: <span style={{ color: "var(--text)", fontWeight: 700 }}>{app.progress.name}</span></span>
     </div>
     <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 2 }}>
       This is how others see you on the leaderboard.
