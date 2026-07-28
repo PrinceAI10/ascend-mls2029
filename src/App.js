@@ -14819,446 +14819,8 @@ const PAST_PAPERS = [
   },
 ];
 
-const YOUTUBE_VIDEOS = [
-  // ==================== BIOCHEMISTRY (MLS 158) - End of Semester Prep ====================
-  {
-    id: "bch8",
-    courseId: "bch",
-    courseCode: "MLS 158",
-    title: "Glycogenesis - Glycogen Synthesis",
-    url: "https://youtu.be/zVGbd-df7Y8",
-    channel: "Ninja Nerd",
-    duration: "~15 min",
-    notes: "How glycogen is synthesized and stored in the liver and muscles.",
-    priority: "High"
-  },
-  {
-    id: "bch9",
-    courseId: "bch",
-    courseCode: "MLS 158",
-    title: "Pentose Phosphate Pathway",
-    url: "https://youtu.be/eXXpUxg9vn4",
-    channel: "Ninja Nerd",
-    duration: "~20 min",
-    notes: "The pathway that produces NADPH and ribose-5-phosphate. Essential for understanding G6PD deficiency.",
-    priority: "High"
-  },
-  {
-    id: "bch10",
-    courseId: "bch",
-    courseCode: "MLS 158",
-    title: "Krebs Cycle - TCA / Citric Acid Cycle",
-    url: "https://youtu.be/rr7IRYLqleg",
-    channel: "Ninja Nerd",
-    duration: "~25 min",
-    notes: "Complete breakdown of the Krebs cycle - central to energy metabolism.",
-    priority: "High"
-  },
-  {
-    id: "bch11",
-    courseId: "bch",
-    courseCode: "MLS 158",
-    title: "Glycogenolysis - Glycogen Breakdown",
-    url: "https://youtu.be/YQV_ODVCzQQ",
-    channel: "Ninja Nerd",
-    duration: "~15 min",
-    notes: "How glycogen is broken down to release glucose.",
-    priority: "High"
-  },
-  {
-    id: "bch12",
-    courseId: "bch",
-    courseCode: "MLS 158",
-    title: "Gluconeogenesis - Glucose Synthesis (Part 1)",
-    url: "https://youtu.be/ORIx2WYNWqs",
-    channel: "Ninja Nerd",
-    duration: "~20 min",
-    notes: "How the body synthesizes new glucose from non-carbohydrate sources.",
-    priority: "High"
-  },
-  {
-    id: "bch13",
-    courseId: "bch",
-    courseCode: "MLS 158",
-    title: "Gluconeogenesis - Glucose Synthesis (Part 2)",
-    url: "https://youtu.be/YpV96faQOZc",
-    channel: "Ninja Nerd",
-    duration: "~20 min",
-    notes: "Continuation of gluconeogenesis - regulation and clinical significance.",
-    priority: "High"
-  },
-  {
-    id: "bch14",
-    courseId: "bch",
-    courseCode: "MLS 158",
-    title: "Fructose and Galactose Metabolism",
-    url: "https://youtu.be/y6kVNOs89D4",
-    channel: "Ninja Nerd",
-    duration: "~18 min",
-    notes: "How fructose and galactose are metabolized - essential for understanding hereditary fructose intolerance and galactosemia.",
-    priority: "High"
-  },
-  {
-    id: "bch15",
-    courseId: "bch",
-    courseCode: "MLS 158",
-    title: "Glycolysis - Glucose Breakdown (Part 1)",
-    url: "https://youtu.be/xoqyF6DJZ-Y",
-    channel: "Ninja Nerd",
-    duration: "~25 min",
-    notes: "Step-by-step breakdown of glycolysis - the foundation of energy metabolism.",
-    priority: "High"
-  },
-  {
-    id: "bch16",
-    courseId: "bch",
-    courseCode: "MLS 158",
-    title: "Glycolysis - Glucose Breakdown (Part 2)",
-    url: "https://youtu.be/gggC9vctvBQ",
-    channel: "Ninja Nerd",
-    duration: "~25 min",
-    notes: "Continuation of glycolysis - regulation and energy yield.",
-    priority: "High"
-  },
-];
-/* PasscoSet: solve one 50-question chunk of a real past paper. Two modes -
-   Practice shows the correct answer and explanation the moment you tap; Exam
-   hides everything until you submit, then reveals your score and full review
-   (like a real CBT). Supports 4 or 5 options. Flagged questions (rare specimen
-   puzzles whose intended answer depends on the lecturer) show a verify note. */
-function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit }) {
-  const slice = paper.questions.slice(chunkStart, chunkEnd);
-  const [picked, setPicked] = useState({});
-  const [submitted, setSubmitted] = useState(false);
-  const [xpAwarded, setXpAwarded] = useState(false);
-  const answered = Object.keys(picked).length;
-  const correct = slice.reduce((n, it, idx) => n + (picked[idx] === it.a ? 1 : 0), 0);
-  const pct = slice.length ? Math.round((correct / slice.length) * 100) : 0;
-  const reveal = mode === "practice" || submitted;
-  const keys = "ABCDE";
-
-  // SAVE PASSCO SET STATE
-  useEffect(() => {
-    try {
-      const state = { picked, submitted, xpAwarded };
-      sessionStorage.setItem('ascend_passcoset_' + paper.id + '_' + chunkStart, JSON.stringify(state));
-    } catch {}
-  }, [picked, submitted, xpAwarded]);
-
-  // RESTORE PASSCO SET STATE
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem('ascend_passcoset_' + paper.id + '_' + chunkStart);
-      if (saved) {
-        const state = JSON.parse(saved);
-        if (state.picked) setPicked(state.picked);
-        if (state.submitted !== undefined) setSubmitted(state.submitted);
-        if (state.xpAwarded !== undefined) setXpAwarded(state.xpAwarded);
-      }
-    } catch {}
-  }, []);
-  
-  // Calculate XP earned (5 XP per correct answer)
-  const earnedXp = correct * 5;
-  
-  return (
-    <div>
-      <div className="card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 14, marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
-        <div>
-          <div className="eyebrow" style={{ margin: 0 }}>{paper.courseCode} · {paper.year}</div>
-          <div style={{ fontSize: 13, color: "var(--text-3)" }}>Q{chunkStart + 1}-{chunkEnd} · {mode === "practice" ? "Practice (instant feedback)" : "Exam (score at the end)"}</div>
-        </div>
-        <div className="mono" style={{ fontWeight: 700, textAlign: "right" }}>
-          {reveal ? <span><span style={{ color: "var(--amber)" }}>{correct}</span> / {slice.length}</span> : <span style={{ color: "var(--text-3)" }}>{answered}/{slice.length} answered</span>}
-        </div>
-      </div>
-
-      {mode === "exam" && submitted && (
-        <div className="card" style={{ marginBottom: 12, textAlign: "center", borderColor: "var(--amber)" }}>
-          <div className="eyebrow">Your score</div>
-          <div style={{ fontSize: 34, fontWeight: 800, color: pct >= 50 ? "var(--good)" : "var(--bad)", margin: "4px 0" }}>{pct}%</div>
-          <div style={{ color: "var(--text-2)", fontSize: 14 }}>{correct} out of {slice.length} correct. Review each below.</div>
-          {!xpAwarded && (
-            <div style={{ marginTop: 8, color: "#2E9BFF", fontWeight: 600 }}>
-              +{earnedXp} XP earned for this passco
-            </div>
-          )}
-        </div>
-      )}
-
-      {slice.map((it, idx) => {
-        const chosen = picked[idx];
-        const locked = mode === "practice" ? chosen !== undefined : submitted;
-        return (
-          <div className="card" key={idx} style={{ marginBottom: 10 }}>
-            <div style={{ fontWeight: 600, marginBottom: 10 }}>
-              <span className="mono" style={{ color: "var(--text-3)" }}>{String(chunkStart + idx + 1).padStart(2, "0")}. </span>{it.q}
-              {it.flag && <span title="This is a tricky specimen question - verify the intended answer with your lecturer" style={{ marginLeft: 6, fontSize: 11, color: "var(--amber-2)", border: "1px solid var(--line-2)", borderRadius: 4, padding: "1px 5px" }}>verify</span>}
-            </div>
-            {it.o.map((opt, oi) => {
-              let cls = "opt";
-              if (reveal && locked) { if (oi === it.a) cls += " correct"; else if (oi === chosen) cls += " wrong"; }
-              else if (chosen === oi) cls += " chosen";
-              return <button className={cls} key={oi} disabled={mode === "practice" && locked} onClick={() => { if (!(mode === "practice" && locked) && !submitted) setPicked((p) => ({ ...p, [idx]: oi })); }}><span className="key">{keys[oi]}</span><span>{opt}</span></button>;
-            })}
-            {reveal && locked && chosen !== undefined && (
-              <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 8 }}>
-                <strong style={{ color: chosen === it.a ? "var(--good)" : "var(--bad)" }}>{chosen === it.a ? "Correct. " : ("Answer: " + keys[it.a] + ". ")}</strong>{it.w}
-              </div>
-            )}
-            {reveal && locked && chosen === undefined && (
-              <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 8 }}><strong style={{ color: "var(--text-3)" }}>Not answered. Answer: {keys[it.a]}. </strong>{it.w}</div>
-            )}
-          </div>
-        );
-      })}
-
-      <div style={{ display: "flex", gap: 10, marginTop: 8, flexWrap: "wrap" }}>
-        {mode === "exam" && !submitted && (
-        <button className="btn btn-a" onClick={() => { 
-  setSubmitted(true); 
-  setXpAwarded(true);
-  // Award XP for completing past paper
-  if (app.setPasscoXp) {
-    app.setPasscoXp(earnedXp);
-  }
-  try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {} 
-}} disabled={answered === 0}>Submit exam ({answered}/{slice.length})</button>
-        )}
-        <button className="btn btn-g" onClick={onExit}>Back to papers</button>
-      </div>
-    </div>
-  );
-}
-
-/* ------------------------------- papers --------------------------------- */
-/* ---------------------------- study tools ------------------------------- */
-/* Flashcards and mind maps generated by the free Gemini AI from a chosen course
-   topic or pasted material. Flashcards drill active recall; the mind map shows
-   how ideas connect - both serve deep retention, not rote reading. */
-function StudyToolsView() {
-  const [tab, setTab] = useState("cards");
-  const [courseId, setCourseId] = useState("ana");
-  const [topic, setTopic] = useState("");
-  const [material, setMaterial] = useState("");
-  const [source, setSource] = useState("topic"); // "topic" or "paste"
-  const [busy, setBusy] = useState(false);
-  const [err, setErr] = useState("");
-  const [cards, setCards] = useState(null);
-  const [flipped, setFlipped] = useState({});
-  const [map, setMap] = useState(null);
-  const [flowCode, setFlowCode] = useState("");
-  const [flowErr, setFlowErr] = useState("");
-  const flowRef = useRef(null);
-
-  // SAVE STUDY TOOLS STATE
-  useEffect(() => {
-    try {
-      const state = { tab, courseId, topic, material, source, cards, map, flowCode };
-      sessionStorage.setItem('ascend_studytools_state', JSON.stringify(state));
-    } catch {}
-  }, [tab, courseId, topic, material, source, cards, map, flowCode]);
-
-  // RESTORE STUDY TOOLS STATE
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem('ascend_studytools_state');
-      if (saved) {
-        const state = JSON.parse(saved);
-        if (state.tab) setTab(state.tab);
-        if (state.courseId) setCourseId(state.courseId);
-        if (state.topic !== undefined) setTopic(state.topic);
-        if (state.material !== undefined) setMaterial(state.material);
-        if (state.source) setSource(state.source);
-        if (state.cards) setCards(state.cards);
-        if (state.map) setMap(state.map);
-        if (state.flowCode) setFlowCode(state.flowCode);
-      }
-    } catch {}
-  }, []);
-
-  const subject = source === "paste"
-    ? `the following material:\n\n${material}`
-    : `the topic "${topic || "this subject"}" in ${courseById(courseId).name} (${courseById(courseId).code}) for a KNUST first-year medical laboratory science student`;
-
-  const genCards = async () => {
-    if (busy) return;
-    if (source === "topic" && !topic.trim()) { setErr("Type a topic first."); return; }
-    if (source === "paste" && !material.trim()) { setErr("Paste some material first."); return; }
-    setBusy(true); setErr(""); setCards(null); setFlipped({});
-    try {
-      const raw = await callClaude(
-        "You create study flashcards for KNUST medical laboratory science students. Each card has a short front (a question, term, or prompt) and a concise back (the answer or definition). Focus on the most important, testable facts. Return ONLY a valid, compact JSON array, no prose, no markdown, no trailing commas.",
-        [{ role: "user", content: `Create 10 to 14 flashcards on ${subject}. Format: [{"front":"...","back":"..."}]. Keep each side short and precise.` }],
-        3000
-      );
-      const arr = parseAIJson(raw);
-      const clean = (Array.isArray(arr) ? arr : []).filter((x) => x && x.front && x.back);
-      if (!clean.length) throw new Error("No cards came back - try again.");
-      setCards(clean);
-    } catch (e) {
-      setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again.");
-    }
-    setBusy(false);
-  };
-
-  const genMap = async () => {
-    if (busy) return;
-    if (source === "topic" && !topic.trim()) { setErr("Type a topic first."); return; }
-    if (source === "paste" && !material.trim()) { setErr("Paste some material first."); return; }
-    setBusy(true); setErr(""); setMap(null);
-    try {
-      const raw = await callClaude(
-        "You create hierarchical mind maps for KNUST medical laboratory science students. A mind map has a central topic, main branches, and sub-points under each. Return ONLY valid compact JSON, no prose, no markdown, no trailing commas.",
-        [{ role: "user", content: `Create a mind map of ${subject}. Format: {"central":"topic name","branches":[{"title":"main idea","points":["sub-point","sub-point"]}]}. Give 4 to 6 branches, each with 2 to 4 short points.` }],
-        3000
-      );
-      const data = parseAIJson(raw);
-      if (!data || !data.central || !Array.isArray(data.branches)) throw new Error("bad shape");
-      setMap(data);
-    } catch (e) {
-      setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again.");
-    }
-    setBusy(false);
-  };
-
-  const branchColors = ["var(--amber)", "#5B8DEF", "#4FB477", "#E86A6A", "#B07CE8", "#E0A32E"];
-
-  const genFlow = async () => {
-    if (busy) return;
-    if (source === "topic" && !topic.trim()) { setErr("Type a topic first."); return; }
-    if (source === "paste" && !material.trim()) { setErr("Paste some material first."); return; }
-    setBusy(true); setErr(""); setFlowErr(""); setFlowCode("");
-    try {
-      const raw = await callClaude(
-        "You write Mermaid flowchart code for KNUST medical laboratory science students. Output ONLY valid Mermaid flowchart syntax - nothing else, no explanation, no markdown fences. Start with 'graph TD' or 'graph LR'. Use short node labels in square brackets and arrows with -->. Keep node text free of parentheses, colons and special characters that break Mermaid. Show the process or pathway as a clear step-by-step flow.",
-        [{ role: "user", content: `Write a Mermaid flowchart showing the flow, pathway or process of ${subject}. Keep it to 6 to 14 nodes so it stays clear. Output only the Mermaid code.` }],
-        1500
-      );
-      // strip any stray markdown fences or prose the AI may add
-      let code = String(raw).replace(/```mermaid/gi, "").replace(/```/g, "").trim();
-      // if the AI added a sentence before the graph, cut to the graph start
-      const gi = code.search(/graph\s+(TD|LR|TB|RL)/i);
-      if (gi > 0) code = code.slice(gi);
-      if (!/graph\s+(TD|LR|TB|RL)/i.test(code)) throw new Error("The diagram could not be built - try again.");
-      setFlowCode(code);
-    } catch (e) {
-      setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again.");
-    }
-    setBusy(false);
-  };
-
-  // render the Mermaid code whenever it changes
-  useEffect(() => {
-    if (!flowCode || tab !== "flow") return;
-    let cancelled = false;
-    (async () => {
-      try {
-        const mermaid = await loadMermaid();
-        const id = "flow-" + Date.now();
-        const { svg } = await mermaid.render(id, flowCode);
-        if (!cancelled && flowRef.current) { flowRef.current.innerHTML = svg; setFlowErr(""); }
-      } catch (e) {
-        if (!cancelled) setFlowErr("This diagram did not render cleanly. Tap Build again for a fresh version.");
-      }
-    })();
-    return () => { cancelled = true; };
-  }, [flowCode, tab]);
-
-  return (
-    <div className="view">
-      <div className="eyebrow">Study tools</div>
-      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Flashcards and mind maps</h1>
-      <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "58ch" }}>Turn any topic or your own notes into flashcards for active recall, or a mind map to see how the ideas connect. Both are generated fresh by ASCEND.</p>
-
-      <div className="tabs">
-        <button className={"tab " + (tab === "cards" ? "on" : "")} onClick={() => { setTab("cards"); setErr(""); }}>Flashcards</button>
-        <button className={"tab " + (tab === "map" ? "on" : "")} onClick={() => { setTab("map"); setErr(""); }}>Mind map</button>
-        <button className={"tab " + (tab === "flow" ? "on" : "")} onClick={() => { setTab("flow"); setErr(""); }}>Flow diagram</button>
-      </div>
-
-      <div className="card" style={{ marginTop: 12 }}>
-        <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
-          <button className="btn btn-sm" style={{ background: source === "topic" ? "var(--amber)" : "var(--bg-3)", color: source === "topic" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setSource("topic")}>From a topic</button>
-          <button className="btn btn-sm" style={{ background: source === "paste" ? "var(--amber)" : "var(--bg-3)", color: source === "paste" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setSource("paste")}>From my notes</button>
-        </div>
-
-        {source === "topic" ? (
-          <>
-            <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Course</label>
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 14 }}>
-              {COURSES.map((c) => (
-                <button key={c.id} className="btn btn-sm" style={{ background: courseId === c.id ? "var(--amber)" : "var(--bg-3)", color: courseId === c.id ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setCourseId(c.id)}>{c.code}</button>
-              ))}
-            </div>
-            <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Topic</label>
-            <input className="auth-input" value={topic} placeholder="e.g. Homeostasis, or Amino acids" onChange={(e) => setTopic(e.target.value)} />
-          </>
-        ) : (
-          <>
-            <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Paste your notes or lecture material</label>
-            <textarea className="pastebox" value={material} placeholder="Paste any notes, slide text or a paragraph here..." onChange={(e) => setMaterial(e.target.value)} />
-          </>
-        )}
-
-        <div style={{ marginTop: 14 }}>
-          {tab === "cards"
-            ? <button className="btn btn-a" onClick={genCards} disabled={busy}>{busy ? "Making your flashcards..." : "Make flashcards"} <Ic.ai p={16} /></button>
-            : tab === "map"
-            ? <button className="btn btn-a" onClick={genMap} disabled={busy}>{busy ? "Building your mind map..." : "Build mind map"} <Ic.ai p={16} /></button>
-            : <button className="btn btn-a" onClick={genFlow} disabled={busy}>{busy ? "Drawing your flow diagram..." : "Build flow diagram"} <Ic.ai p={16} /></button>}
-        </div>
-      </div>
-
-      {err && <div className="card" style={{ marginTop: 14, borderColor: "var(--line-2)", color: "var(--text-2)", fontSize: 14 }}>{err}</div>}
-      {busy && <div className="card" style={{ marginTop: 14 }}><span className="dots"><span /><span /><span /></span></div>}
-
-      {tab === "cards" && cards && (
-        <>
-          <p className="note-hint" style={{ margin: "16px 0 10px" }}>Tap a card to flip it. Say the answer out loud before you flip - that is the recall that builds memory.</p>
-          <div className="grid g2">
-            {cards.map((c, k) => (
-              <button key={k} className="card hover" style={{ minHeight: 120, textAlign: "left", display: "flex", flexDirection: "column", justifyContent: "center", cursor: "pointer", border: flipped[k] ? "1px solid var(--amber)" : "1px solid var(--line)" }} onClick={() => setFlipped({ ...flipped, [k]: !flipped[k] })}>
-                <div className="mono" style={{ fontSize: 10.5, color: flipped[k] ? "var(--amber)" : "var(--text-3)", marginBottom: 8 }}>{flipped[k] ? "ANSWER" : "TAP TO FLIP"}</div>
-                <div style={{ fontWeight: flipped[k] ? 500 : 650, fontSize: 15, lineHeight: 1.5, color: flipped[k] ? "var(--text-2)" : "var(--text)" }}>{flipped[k] ? c.back : c.front}</div>
-              </button>
-            ))}
-          </div>
-        </>
-      )}
-
-      {tab === "map" && map && (
-        <div className="card" style={{ marginTop: 16 }}>
-          <div style={{ textAlign: "center", marginBottom: 18 }}>
-            <span style={{ display: "inline-block", background: "var(--amber)", color: "#1B1405", fontWeight: 750, fontSize: 16, padding: "10px 20px", borderRadius: 12 }}>{map.central}</span>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            {map.branches.map((b, k) => (
-              <div key={k} style={{ borderLeft: `3px solid ${branchColors[k % branchColors.length]}`, paddingLeft: 14 }}>
-                <div style={{ fontWeight: 700, fontSize: 15, color: branchColors[k % branchColors.length], marginBottom: 6 }}>{b.title}</div>
-                <ul style={{ margin: 0, paddingLeft: 18, color: "var(--text-2)", fontSize: 14, lineHeight: 1.7 }}>
-                  {(b.points || []).map((p, j) => <li key={j}>{p}</li>)}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-      {tab === "flow" && flowCode && (
-        <>
-          <p className="note-hint" style={{ margin: "16px 0 10px" }}>Follow the arrows to see how each step leads to the next. Rebuild for a fresh version any time.</p>
-          <div className="card" style={{ marginTop: 4, overflowX: "auto" }}>
-            <div ref={flowRef} style={{ display: "flex", justifyContent: "center", minHeight: 60 }} />
-            {flowErr && <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 10 }}>{flowErr}</div>}
-          </div>
-        </>
-      )}
-    </div>
-  );
-}
-
 // ============================================================
-// YOUTUBE VIDEOS DATA
+// YOUTUBE VIDEOS DATA - KEEP ONLY THIS ONE
 // ============================================================
 const YOUTUBE_VIDEOS = [
   {
@@ -15568,8 +15130,7 @@ function PapersView() {
   const [items, setItems] = useState(null);
   const [err, setErr] = useState("");
   const [similarCount, setSimilarCount] = useState(10);
-  // Past-paper solving state: which paper, which 50-question chunk, and mode.
-  const [active, setActive] = useState(null); // { paper, chunkStart, chunkEnd, mode }
+  const [active, setActive] = useState(null);
   const [passcoNotif, setPasscoNotif] = useState(null);
   const count = tab === "solve" ? 50 : similarCount;
   const CHUNK = 50;
@@ -15624,19 +15185,18 @@ function PapersView() {
   }, []);
   
   const RULES = `Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which position is correct. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {"q": string, "o": [4 strings], "a": integer index, "w": one short explanation}.`;
-  // Shuffle each question's four options so the correct answer is not always in the
-  // position the AI happened to place it, and update the answer index to match.
+  
   const shuffleOptions = (arr) => arr.map((item) => {
-  const opts = item.o.map((text, i) => ({ text, correct: i === item.a }));
-  // Shuffle 3 times for extra randomness
-  for (let pass = 0; pass < 3; pass++) {
-    for (let i = opts.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [opts[i], opts[j]] = [opts[j], opts[i]];
+    const opts = item.o.map((text, i) => ({ text, correct: i === item.a }));
+    for (let pass = 0; pass < 3; pass++) {
+      for (let i = opts.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [opts[i], opts[j]] = [opts[j], opts[i]];
+      }
     }
-  }
-  return { ...item, o: opts.map((x) => x.text), a: opts.findIndex((x) => x.correct) };
-});
+    return { ...item, o: opts.map((x) => x.text), a: opts.findIndex((x) => x.correct) };
+  });
+  
   const genSet = async (usr) => {
     if (busy) return;
     setBusy(true); setErr(""); setItems(null);
@@ -15763,7 +15323,7 @@ ${RULES}`);
    pick a 50-question chunk and a mode (practice or exam). Chunking keeps sets to
    50 so a 100+ question paper never overwhelms - you solve 50, then the next 50. */
 function PasscoPicker({ onStart, chunk }) {
-  const [openPaper, setOpenPaper] = useState(null); // paper id being configured
+  const [openPaper, setOpenPaper] = useState(null);
   const [mode, setMode] = useState("practice");
   if (!PAST_PAPERS.length) {
     return <div className="card" style={{ marginTop: 12, color: "var(--text-2)", fontSize: 14 }}>No passco papers uploaded yet. They will appear here as they are added.</div>;
@@ -15809,7 +15369,6 @@ function PasscoPicker({ onStart, chunk }) {
     </div>
   );
 }
-
 /* ------------------------------- resources ------------------------------ */
 const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical laboratory science students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it to superscript). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac.";
 const SOCRATIC_TASK = "Break this study material into a focused Socratic lesson of 4 to 6 steps. For each step: state the question, explain the answer in one or two clear paragraphs, then give the crucial insight in one line. End with three short self-test questions and their answers. Be economical so the whole lesson is complete and never cut off.";
