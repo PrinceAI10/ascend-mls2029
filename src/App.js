@@ -14315,16 +14315,15 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit }) {
 
       <div style={{ display: "flex", gap: 10, marginTop: 8, flexWrap: "wrap" }}>
         {mode === "exam" && !submitted && (
-          <button className="btn btn-a" onClick={() => { 
-            setSubmitted(true); 
-            setXpAwarded(true);
-            // Award XP for completing past paper
-            if (app.setPasscoXp) {
-              const newXp = app.progress.xp + earnedXp;
-              app.setPasscoXp(newXp, earnedXp);
-            }
-            try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {} 
-          }} disabled={answered === 0}>Submit exam ({answered}/{slice.length})</button>
+        <button className="btn btn-a" onClick={() => { 
+  setSubmitted(true); 
+  setXpAwarded(true);
+  // Award XP for completing past paper
+  if (app.setPasscoXp) {
+    app.setPasscoXp(earnedXp);
+  }
+  try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {} 
+}} disabled={answered === 0}>Submit exam ({answered}/{slice.length})</button>
         )}
         <button className="btn btn-g" onClick={onExit}>Back to papers</button>
       </div>
@@ -16105,6 +16104,24 @@ export default function App() {
     setProgress(updated);
     persist(updated);
   };
+
+    // PASSCO XP - Award XP for completing past papers with streak multiplier
+  const setPasscoXp = (earnedXp) => {
+    const key = `passco_${Date.now()}`;
+    const awarded = sessionStorage.getItem('ascend_passco_' + key);
+    if (awarded) return;
+    sessionStorage.setItem('ascend_passco_' + key, 'true');
+    const multiplier = getStreakMultiplier(progress.streak);
+    const gained = Math.round(earnedXp * multiplier.multiplier);
+    const updated = { ...progress, xp: progress.xp + gained };
+    setProgress(updated);
+    persist(updated);
+    // Show notification
+    sessionStorage.setItem('ascend_passco_notif', JSON.stringify({
+      earned: gained,
+      total: updated.xp
+    }));
+  };
  
   const app = { 
   progress, 
@@ -16117,7 +16134,9 @@ export default function App() {
   courseId: route.courseId, 
   topicId: route.topicId, 
   setName,
-  setReadingXp
+  setReadingXp,
+  setPasscoXp,
+  getStreakMultiplier
 };
   const render = () => {
     switch (route.view) {
