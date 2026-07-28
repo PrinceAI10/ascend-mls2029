@@ -13394,14 +13394,93 @@ function TopicView({ app }) {
       </div>
     );
   }
+  
   const noteContext = (t.note || []).map((n) => n.q + " " + n.body).join("\n\n").slice(0, 5000);
+  
+  // READING TIMER
+  const [readTime, setReadTime] = useState(0);
+  const [readingAwarded, setReadingAwarded] = useState(false);
+  const [readingNotif, setReadingNotif] = useState(false);
+  const timerRef = useRef(null);
+  
+  // READING TIMER - Start timer when topic loads
+  useEffect(() => {
+    setReadTime(0);
+    setReadingAwarded(false);
+    setReadingNotif(false);
+    
+    timerRef.current = setInterval(() => {
+      setReadTime(prev => {
+        const newTime = prev + 1;
+        if (newTime >= 300 && !readingAwarded) {
+          setReadingAwarded(true);
+          setReadingNotif(true);
+          const newXp = app.progress.xp + 15;
+          if (app.setReadingXp) {
+            app.setReadingXp(newXp);
+          }
+          setTimeout(() => setReadingNotif(false), 5000);
+        }
+        return newTime;
+      });
+    }, 1000);
+    
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [app.courseId, app.topicId]);
+  
   return (
     <div className="view">
       <button className="back" onClick={() => app.go("course", { courseId: t.courseId })}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> {c.name}</button>
       <div className="eyebrow">{c.code} · Topic {String(t.topicIndex + 1).padStart(2, "0")}</div>
       <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }} className="mono">
-  Updated {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
-</div>
+        Updated {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+      </div>
+      
+      {/* READING TIMER DISPLAY */}
+      <div style={{ 
+        display: "flex", 
+        alignItems: "center", 
+        gap: 6, 
+        color: "var(--text-3)", 
+        fontSize: 12,
+        marginTop: 4
+      }}>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 6v6l4 2" />
+        </svg>
+        <span>{Math.floor(readTime / 60)}m {readTime % 60}s read</span>
+        {readingAwarded && (
+          <span style={{ color: "#2E9BFF", fontWeight: 600, marginLeft: 6 }}>✓ +15 XP</span>
+        )}
+      </div>
+      
+      {/* READING NOTIFICATION */}
+      {readingNotif && (
+        <div className="card" style={{
+          marginTop: 12,
+          padding: "10px 16px",
+          borderColor: "#2E9BFF",
+          borderWidth: 1,
+          background: "rgba(46,155,255,0.08)",
+          display: "flex",
+          alignItems: "center",
+          gap: 10
+        }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E9BFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+            <path d="M2 17l10 5 10-5" />
+            <path d="M2 12l10 5 10-5" />
+          </svg>
+          <div>
+            <span style={{ fontWeight: 600, color: "#2E9BFF" }}>+15 XP</span>
+            <span style={{ color: "var(--text-2)", fontSize: 13.5, marginLeft: 6 }}>for reading this topic</span>
+          </div>
+        </div>
+      )}
+      
       <h1 style={{ fontSize: "clamp(22px,4vw,30px)", margin: "8px 0 6px" }}>{t.title}</h1>
       <div style={{ display: "flex", gap: 10, alignItems: "center", justifyContent: "space-between", flexWrap: "wrap" }}>
         <div style={{ display: "flex", gap: 10, alignItems: "center", color: "var(--text-3)", fontSize: 13 }} className="mono">
@@ -14901,19 +14980,18 @@ function HomeView({ app }) {
           <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 4 }}>Topics are being built one by one. Browse the full course maps under Courses.</div>
         </div>
       )}
-      {/* CHANGE USERNAME - Matches card background */}
+     {/* CHANGE USERNAME - Blends with background */}
 <div className="card" style={{ 
   marginTop: 16, 
   display: "flex", 
   justifyContent: "space-between", 
   alignItems: "center", 
   gap: 16, 
-  flexWrap: "wrap",
-  background: "var(--bg-2)"
+  flexWrap: "wrap"
 }}>
   <div>
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <span style={{ fontWeight: 600, fontSize: 15, color: "var(--text)" }}>Username: <span style={{ color: "var(--text)", fontWeight: 700 }}>{app.progress.name}</span></span>
+      <span style={{ fontWeight: 600, fontSize: 15, color: "var(--text)" }}>Username: <span style={{ color: "#2E9BFF", fontWeight: 700 }}>{app.progress.name}</span></span>
     </div>
     <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 2 }}>
       This is how others see you on the leaderboard.
