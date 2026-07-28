@@ -17176,7 +17176,19 @@ export default function App() {
         <div className="main">
           <header className="topbar">
             <div className="topbar-inner">
-              <button className="iconbtn onlymobile" onClick={() => setMenuOpen(true)} aria-label="Open menu"><Ic.menu p={18} /></button>
+              <button 
+  className="iconbtn onlymobile" 
+  onClick={() => setMenuOpen(true)} 
+  aria-label="Open menu"
+  style={{ 
+    position: "relative", 
+    zIndex: 999,
+    marginLeft: "4px",
+    flexShrink: 0
+  }}
+>
+  <Ic.menu p={18} />
+</button>
               <div className="onlymobile" style={{ flex: 1 }}><Wordmark /></div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
                 <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress.streak}</span></span>
