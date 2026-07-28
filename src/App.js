@@ -41,6 +41,25 @@ const CSS = `
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--bg)}
+/* iOS Safe Area Support */
+html, body {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.topbar {
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+.mobile-sidebar {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.onlymobile {
+  margin-left: env(safe-area-inset-left);
+}
 .ascend-root{min-height:100vh;min-height:100dvh;width:100%;margin:0;padding:0}
 .ascend-root.light{
   --bg:#F4F6FA; --bg-2:#FFFFFF; --bg-3:#EDF1F7; --raised:#FFFFFF;
