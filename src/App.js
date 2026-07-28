@@ -12721,6 +12721,111 @@ const RANKS = [
   { name: "Gold", min: 500, c: "#F5B93F" },
   { name: "Elite", min: 1000, c: "#8FE3C6" }
 ];
+  // ACHIEVEMENT DEFINITIONS - SVG Icons only
+  const ACHIEVEMENTS = [
+    { 
+      id: 'first_quiz', 
+      label: 'First Quiz', 
+      description: 'Completed your first quiz',
+      icon: (color = '#F5B93F') => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" />
+          <path d="M2 17l10 5 10-5" />
+          <path d="M2 12l10 5 10-5" />
+        </svg>
+      )
+    },
+    { 
+      id: 'quiz_master', 
+      label: 'Quiz Master', 
+      description: 'Completed 10 quizzes',
+      icon: (color = '#F5B93F') => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+          <path d="M4 22h16" />
+          <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+          <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+          <path d="M18 2H6v7a6 6 0 0 0 12 0V2z" />
+        </svg>
+      )
+    },
+    { 
+      id: 'streak_7', 
+      label: 'Week Warrior', 
+      description: '7-day streak',
+      icon: (color = '#F5B93F') => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 3c1 3 4 4.2 4 8a4 4 0 1 1-8 0c0-1.4.6-2.4 1.2-3.2C10 9 11 7 12 3z" />
+        </svg>
+      )
+    },
+    { 
+      id: 'streak_30', 
+      label: 'Monthly Legend', 
+      description: '30-day streak',
+      icon: (color = '#F5B93F') => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" />
+          <path d="M2 17l10 5 10-5" />
+          <path d="M2 12l10 5 10-5" />
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 6v6l4 2" />
+        </svg>
+      )
+    },
+    { 
+      id: 'xp_500', 
+      label: 'XP Collector', 
+      description: 'Reached 500 XP',
+      icon: (color = '#F5B93F') => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 8v8M8 12h8" />
+        </svg>
+      )
+    },
+    { 
+      id: 'xp_1000', 
+      label: 'XP Master', 
+      description: 'Reached 1000 XP',
+      icon: (color = '#F5B93F') => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" />
+          <path d="M2 17l10 5 10-5" />
+          <path d="M2 12l10 5 10-5" />
+          <circle cx="12" cy="12" r="4" />
+        </svg>
+      )
+    },
+    { 
+      id: 'passco_10', 
+      label: 'Passco Pro', 
+      description: 'Completed 10 past papers',
+      icon: (color = '#F5B93F') => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M4 6h16M4 12h16M4 18h10" />
+          <path d="M4 6h16M4 12h16M4 18h10" />
+          <path d="M18 2L2 6v14l16 4V2z" />
+        </svg>
+      )
+    },
+    { 
+      id: 'top_3', 
+      label: 'Top 3', 
+      description: 'Ranked in top 3',
+      icon: (color = '#F5B93F') => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+          <path d="M4 22h16" />
+          <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+          <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>
+      )
+    },
+  ];
 const rankOf = (xp) => {
   let r = RANKS[0];
   for (const t of RANKS) if (xp >= t.min) r = t;
@@ -13397,7 +13502,7 @@ function TopicView({ app }) {
   
   const noteContext = (t.note || []).map((n) => n.q + " " + n.body).join("\n\n").slice(0, 5000);
   
-  // READING TIMER
+    // READING TIMER
   const [readTime, setReadTime] = useState(0);
   const [readingAwarded, setReadingAwarded] = useState(false);
   const [readingNotif, setReadingNotif] = useState(false);
@@ -13415,7 +13520,11 @@ function TopicView({ app }) {
         if (newTime >= 300 && !readingAwarded) {
           setReadingAwarded(true);
           setReadingNotif(true);
-          const newXp = app.progress.xp + 15;
+          // Use streak multiplier for reading XP
+          const multiplier = app.getStreakMultiplier ? app.getStreakMultiplier(app.progress.streak) : { multiplier: 1 };
+          const baseXp = 15;
+          const gained = Math.round(baseXp * multiplier.multiplier);
+          const newXp = app.progress.xp + gained;
           if (app.setReadingXp) {
             app.setReadingXp(newXp);
           }
@@ -13428,7 +13537,7 @@ function TopicView({ app }) {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [app.courseId, app.topicId]);
+  }, [app.courseId, app.topicId]);;
   
   return (
     <div className="view">
@@ -14544,7 +14653,21 @@ function PapersView() {
   const [similarCount, setSimilarCount] = useState(10);
   // Past-paper solving state: which paper, which 50-question chunk, and mode.
   const [active, setActive] = useState(null); // { paper, chunkStart, chunkEnd, mode }
+  const [passcoNotif, setPasscoNotif] = useState(null);
   const count = tab === "solve" ? 50 : similarCount;
+    useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem('ascend_passco_notif');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        setPasscoNotif(parsed);
+        setTimeout(() => {
+          setPasscoNotif(null);
+          sessionStorage.removeItem('ascend_passco_notif');
+        }, 5000);
+      }
+    } catch {}
+  }, []);
   const CHUNK = 50;
   const RULES = `Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which position is correct. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {"q": string, "o": [4 strings], "a": integer index, "w": one short explanation}.`;
   // Shuffle each question's four options so the correct answer is not always in the
@@ -14570,8 +14693,32 @@ function PapersView() {
   };
   const startSolve = () => genSet(`Generate exactly ${count} passco-style exam MCQs for a KNUST first-year student in ${courseById(courseId).name} (${courseById(courseId).code}). ${RULES}`);
   const startSimilar = () => genSet(`Here is a passco question:\n\n${sample}\n\nGenerate exactly ${count} fresh MCQs testing the same concept and matching its style, for ${courseById(courseId).name}. ${RULES}`);
-  return (
+    return (
     <div className="view">
+      {/* PASSCO XP NOTIFICATION */}
+      {passcoNotif && (
+        <div className="card" style={{
+          marginBottom: 12,
+          padding: "10px 16px",
+          borderColor: "#2E9BFF",
+          borderWidth: 1,
+          background: "rgba(46,155,255,0.08)",
+          display: "flex",
+          alignItems: "center",
+          gap: 10
+        }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E9BFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+            <path d="M2 17l10 5 10-5" />
+            <path d="M2 12l10 5 10-5" />
+          </svg>
+          <div>
+            <span style={{ fontWeight: 600, color: "#2E9BFF" }}>+{passcoNotif.earned} XP</span>
+            <span style={{ color: "var(--text-2)", fontSize: 13.5, marginLeft: 6 }}>from past paper practice</span>
+          </div>
+        </div>
+      )}
+      
       <div className="eyebrow">Passco</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Solve them, don't just stare at the PDF</h1>
       <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "58ch" }}>A passco PDF is easy to put off. Here you actually answer, tap by tap, with instant feedback - and ASCEND can spin fresh questions off any one you show it.</p>
@@ -15810,6 +15957,67 @@ export default function App() {
       message: null
     };
   };
+    // CHECK ACHIEVEMENTS - Unlock badges based on progress
+  const checkAchievements = (p) => {
+    const unlocked = [...achievements];
+    let newAchievement = null;
+    
+    // Check each achievement
+    if (p.xp >= 500 && !unlocked.find(a => a.id === 'xp_500')) {
+      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'xp_500'), unlocked: true };
+      unlocked.push(newAchievement);
+    }
+    if (p.xp >= 1000 && !unlocked.find(a => a.id === 'xp_1000')) {
+      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'xp_1000'), unlocked: true };
+      unlocked.push(newAchievement);
+    }
+    if (p.streak >= 7 && !unlocked.find(a => a.id === 'streak_7')) {
+      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'streak_7'), unlocked: true };
+      unlocked.push(newAchievement);
+    }
+    if (p.streak >= 30 && !unlocked.find(a => a.id === 'streak_30')) {
+      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'streak_30'), unlocked: true };
+      unlocked.push(newAchievement);
+    }
+    
+    if (unlocked.length > achievements.length) {
+      setAchievements(unlocked);
+      if (newAchievement) {
+        sessionStorage.setItem('ascend_achievement_notif', JSON.stringify({
+          id: newAchievement.id,
+          label: newAchievement.label,
+          description: newAchievement.description,
+          icon: 'trophy' // Just store the id, render SVG in notification
+        }));
+      }
+    }
+  };
+
+    // RANK UP CHECK - Detect when user reaches new rank
+  const checkRankUp = (currentXp) => {
+    let newRank = RANKS[0];
+    for (const r of RANKS) {
+      if (currentXp >= r.min) newRank = r;
+    }
+    
+    // Only show notification if rank changed
+    if (rankUpNotif && rankUpNotif.newRank !== newRank.name) {
+      setRankUpNotif({
+        newRank: newRank.name,
+        color: newRank.c,
+        message: `You've reached ${newRank.name}! Keep climbing!`
+      });
+      setTimeout(() => setRankUpNotif(null), 8000);
+    } else if (!rankUpNotif) {
+      // First time - show current rank
+      setRankUpNotif({
+        newRank: newRank.name,
+        color: newRank.c,
+        message: `You are ${newRank.name}! Keep climbing!`
+      });
+      setTimeout(() => setRankUpNotif(null), 5000);
+    }
+  };
 
   // Persist the current route on every change so a reload can restore it.
   useEffect(() => {
@@ -15859,6 +16067,8 @@ export default function App() {
   }, []);
 
   const [progress, setProgress] = useState(DEFAULT_PROGRESS);
+  const [rankUpNotif, setRankUpNotif] = useState(null);
+  const [achievements, setAchievements] = useState([]);
   const [auth, setAuth] = useState(null);
   const [supaUid, setSupaUid] = useState(null);
   const [loaded, setLoaded] = useState(false);
@@ -15997,8 +16207,15 @@ export default function App() {
 
   const toggleTheme = () => { const t = theme === "light" ? "dark" : "light"; setTheme(t); store.set("ascend_theme", t); };
 
-  const persist = (p) => {
+    const persist = (p) => {
     setProgress(p);
+    
+    // Check for rank up
+    checkRankUp(p.xp);
+
+     // Check for achievements
+    checkAchievements(p);
+    
     if (supaUid) {
       db.saveProgress(supaUid, p);
     } else if (auth) {
@@ -16219,9 +16436,136 @@ export default function App() {
     return <button key={n.key} className={"navi " + (activeNav === n.key ? "on" : "")} onClick={() => onNav(n.key)}><Icon p={19} />{n.label}</button>;
   });
 
-  return (
+    return (
     <div className={rootCls}>
       <style>{CSS}</style>
+      
+      {/* RANK UP NOTIFICATION */}
+      {rankUpNotif && (
+        <div style={{
+          position: 'fixed',
+          top: '80px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 100,
+          background: 'var(--bg-2)',
+          border: '2px solid ' + rankUpNotif.color,
+          borderRadius: '12px',
+          padding: '16px 24px',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 14,
+          maxWidth: '90vw'
+        }}>
+          <div style={{
+            width: 44,
+            height: 44,
+            borderRadius: '50%',
+            background: rankUpNotif.color + '22',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={rankUpNotif.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+              <path d="M4 22h16" />
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2z" />
+            </svg>
+          </div>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 16, color: rankUpNotif.color }}>Rank Up!</div>
+            <div style={{ color: 'var(--text-2)', fontSize: 14 }}>{rankUpNotif.message}</div>
+          </div>
+          <button 
+            className="btn btn-sm" 
+            style={{ 
+              background: 'var(--bg-3)', 
+              color: 'var(--text-2)', 
+              border: '1px solid var(--line)',
+              padding: '4px 12px',
+              fontSize: 12,
+              cursor: 'pointer'
+            }}
+            onClick={() => setRankUpNotif(null)}
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
+      
+      {/* ACHIEVEMENT NOTIFICATION */}
+      {(() => {
+        try {
+          const stored = sessionStorage.getItem('ascend_achievement_notif');
+          if (stored) {
+            const achievement = JSON.parse(stored);
+            return (
+              <div style={{
+                position: 'fixed',
+                top: '140px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 100,
+                background: 'var(--bg-2)',
+                border: '2px solid #F5B93F',
+                borderRadius: '12px',
+                padding: '16px 24px',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 14,
+                maxWidth: '90vw'
+              }}>
+                <div style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: '50%',
+                  background: 'rgba(245,185,63,0.15)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5B93F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                    <path d="M4 22h16" />
+                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2z" />
+                  </svg>
+                </div>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 16, color: '#F5B93F' }}>Achievement Unlocked!</div>
+                  <div style={{ color: 'var(--text-2)', fontSize: 14 }}>{achievement.label}: {achievement.description}</div>
+                </div>
+                <button 
+                  className="btn btn-sm" 
+                  style={{ 
+                    background: 'var(--bg-3)', 
+                    color: 'var(--text-2)', 
+                    border: '1px solid var(--line)',
+                    padding: '4px 12px',
+                    fontSize: 12,
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => {
+                    sessionStorage.removeItem('ascend_achievement_notif');
+                    window.location.reload();
+                  }}
+                >
+                  Dismiss
+                </button>
+              </div>
+            );
+          }
+        } catch {}
+        return null;
+      })()}
+      
       <div className="shell">
         <aside className="side">
           <div style={{ padding: "0 6px 18px" }}><Wordmark /></div>
@@ -16246,7 +16590,10 @@ export default function App() {
                   <Ic.flame p={15} />
                   <span className="val">{progress.streak}</span>
                 </span>
-                <button className="avatar" onClick={setName} title="Tap to change your username">{progress.name[0]?.toUpperCase()}</button>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress.name}</span>
+                  <button className="avatar" onClick={setName} title="Click to change your username">{progress.name[0]?.toUpperCase()}</button>
+                </div>
               </div>
             </div>
           </header>
