@@ -16367,10 +16367,10 @@ const DEFAULT_PROGRESS = { name: "Prince", xp: 0, streak: 0, lastActive: shift(-
 
 /* ------------------------------- app ------------------------------------ */
 export default function App() {
+  // ============================================================
+  // 1. STATE DECLARATIONS FIRST (BEFORE everything else)
+  // ============================================================
   const [route, setRoute] = useState(() => {
-    // Restore the last view if the page reloaded (e.g. a phone browser refreshed
-    // the app after the student switched away to reply to a message). This stops
-    // everything starting over on return.
     if (typeof window !== "undefined") {
       try {
         const saved = window.sessionStorage.getItem("ascend_route");
@@ -16379,52 +16379,32 @@ export default function App() {
     }
     return { view: "home" };
   });
-    // ============================================================
-  // GLOBAL STATE PRESERVATION - ALL FEATURES
+
+  const [progress, setProgress] = useState(DEFAULT_PROGRESS);
+  const [rankUpNotif, setRankUpNotif] = useState(null);
+  const [achievements, setAchievements] = useState([]);
+  const [auth, setAuth] = useState(null);
+  const [supaUid, setSupaUid] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+  const [theme, setTheme] = useState("dark");
+  const [notifOpen, setNotifOpen] = useState(false);
+  const [rateStars, setRateStars] = useState(0);
+  const [rateDismissed, setRateDismissed] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [lastTopic, setLastTopic] = useState(null);
+  const [showTop, setShowTop] = useState(false);
+
+  // ============================================================
+  // 2. HELPER FUNCTIONS (BEFORE persist)
   // ============================================================
   
-  // Save global state
-  useEffect(() => {
-    try {
-      const state = {
-        route,
-        progress,
-        lastTopic,
-        theme,
-        menuOpen,
-        notifOpen,
-        rateDismissed,
-        rateStars
-      };
-      sessionStorage.setItem('ascend_global_state', JSON.stringify(state));
-    } catch {}
-  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
-
-  // Restore global state
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem('ascend_global_state');
-      if (saved) {
-        const state = JSON.parse(saved);
-        if (state.route) setRoute(state.route);
-        if (state.lastTopic) setLastTopic(state.lastTopic);
-        if (state.theme) setTheme(state.theme);
-        if (state.menuOpen !== undefined) setMenuOpen(state.menuOpen);
-        if (state.notifOpen !== undefined) setNotifOpen(state.notifOpen);
-        if (state.rateDismissed !== undefined) setRateDismissed(state.rateDismissed);
-        if (state.rateStars !== undefined) setRateStars(state.rateStars);
-      }
-    } catch {}
-  }, []);
-
-    // XP TRACKING FUNCTIONS - for ▲ +150 indicator on leaderboard (only shows increases)
+  // XP TRACKING FUNCTIONS
   const setXpChange = (currentXp) => {
     if (typeof window === "undefined") return;
     try {
       const prevXp = parseInt(sessionStorage.getItem('ascend_prev_xp') || '0');
       const change = currentXp - prevXp;
       sessionStorage.setItem('ascend_prev_xp', String(currentXp));
-      // Only store if XP increased (change > 0)
       if (change > 0) {
         sessionStorage.setItem('ascend_xp_change', JSON.stringify({
           change: change,
@@ -16432,15 +16412,12 @@ export default function App() {
           display: `+${change}`
         }));
       } else {
-        // Clear any existing XP change if no increase
         sessionStorage.removeItem('ascend_xp_change');
       }
-    } catch (e) {
-      // Silently fail - XP tracking is a nice-to-have feature
-    }
+    } catch (e) {}
   };
 
-    // STREAK MULTIPLIER - 1.5x XP for 7+ day streaks
+  // STREAK MULTIPLIER
   const getStreakMultiplier = (streak) => {
     if (streak >= 7) {
       return { 
@@ -16457,12 +16434,12 @@ export default function App() {
       message: null
     };
   };
-    // CHECK ACHIEVEMENTS - Unlock badges based on progress
+
+  // CHECK ACHIEVEMENTS
   const checkAchievements = (p) => {
     const unlocked = [...achievements];
     let newAchievement = null;
     
-    // Check each achievement
     if (p.xp >= 500 && !unlocked.find(a => a.id === 'xp_500')) {
       newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'xp_500'), unlocked: true };
       unlocked.push(newAchievement);
@@ -16487,20 +16464,19 @@ export default function App() {
           id: newAchievement.id,
           label: newAchievement.label,
           description: newAchievement.description,
-          icon: 'trophy' // Just store the id, render SVG in notification
+          icon: 'trophy'
         }));
       }
     }
   };
 
-    // RANK UP CHECK - Detect when user reaches new rank
+  // RANK UP CHECK
   const checkRankUp = (currentXp) => {
     let newRank = RANKS[0];
     for (const r of RANKS) {
       if (currentXp >= r.min) newRank = r;
     }
     
-    // Only show notification if rank changed
     if (rankUpNotif && rankUpNotif.newRank !== newRank.name) {
       setRankUpNotif({
         newRank: newRank.name,
@@ -16509,7 +16485,6 @@ export default function App() {
       });
       setTimeout(() => setRankUpNotif(null), 8000);
     } else if (!rankUpNotif) {
-      // First time - show current rank
       setRankUpNotif({
         newRank: newRank.name,
         color: newRank.c,
@@ -16519,18 +16494,71 @@ export default function App() {
     }
   };
 
-  // Persist the current route on every change so a reload can restore it.
+  // ============================================================
+  // 3. PERSIST (AFTER helper functions)
+  // ============================================================
+  const persist = (p) => {
+    setProgress(p);
+    
+    // Check for rank up
+    checkRankUp(p.xp);
+    
+    // Check for achievements
+    checkAchievements(p);
+    
+    if (supaUid) {
+      db.saveProgress(supaUid, p);
+    } else if (auth) {
+      store.set(progKey(auth.username), p);
+      store.setShared("ascend_board:" + p.name.toLowerCase().replace(/[^a-z0-9]/g, ""), { name: p.name, xp: p.xp, streak: p.streak });
+      db.publishLocalUser(p.name, p.xp, p.streak);
+    }
+  };
+
+  // ============================================================
+  // 4. GLOBAL STATE PRESERVATION (AFTER persist)
+  // ============================================================
+  useEffect(() => {
+    try {
+      const state = {
+        route,
+        progress,
+        lastTopic,
+        theme,
+        menuOpen,
+        notifOpen,
+        rateDismissed,
+        rateStars
+      };
+      sessionStorage.setItem('ascend_global_state', JSON.stringify(state));
+    } catch {}
+  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
+
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_global_state');
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.route) setRoute(state.route);
+        if (state.lastTopic) setLastTopic(state.lastTopic);
+        if (state.theme) setTheme(state.theme);
+        if (state.menuOpen !== undefined) setMenuOpen(state.menuOpen);
+        if (state.notifOpen !== undefined) setNotifOpen(state.notifOpen);
+        if (state.rateDismissed !== undefined) setRateDismissed(state.rateDismissed);
+        if (state.rateStars !== undefined) setRateStars(state.rateStars);
+      }
+    } catch {}
+  }, []);
+
+  // ============================================================
+  // 5. ROUTE PERSISTENCE useEffects
+  // ============================================================
   useEffect(() => {
     if (typeof window === "undefined") return;
     try { window.sessionStorage.setItem("ascend_route", JSON.stringify(route)); } catch {}
-    // Also keep the browser history entry in sync with the current route, so a
-    // popstate on tab return restores this route rather than a stale one.
     try { window.history.replaceState({ ascendRoute: route }, ""); } catch {}
   }, [route]);
 
-  // Belt-and-braces: the moment the tab is hidden (student switching away), save
-  // the current route synchronously, so nothing is lost even if the app is frozen
-  // or reloaded by the phone while in the background.
   useEffect(() => {
     if (typeof window === "undefined") return;
     const save = () => { try { window.sessionStorage.setItem("ascend_route", JSON.stringify(route)); } catch {} };
@@ -16539,10 +16567,6 @@ export default function App() {
     return () => { document.removeEventListener("visibilitychange", save); window.removeEventListener("pagehide", save); };
   }, [route]);
 
-  // Make the iPhone edge-swipe and the browser/hardware back button work. The
-  // route<->history sync is handled by the persist effect above; here we only
-  // listen for back/pop and restore the right route (never defaulting to home
-  // unless there is genuinely nothing saved).
   useEffect(() => {
     if (typeof window === "undefined") return;
     const onPop = (e) => {
@@ -16566,20 +16590,9 @@ export default function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const [progress, setProgress] = useState(DEFAULT_PROGRESS);
-  const [rankUpNotif, setRankUpNotif] = useState(null);
-  const [achievements, setAchievements] = useState([]);
-  const [auth, setAuth] = useState(null);
-  const [supaUid, setSupaUid] = useState(null);
-  const [loaded, setLoaded] = useState(false);
-  const [theme, setTheme] = useState("dark");
-  const [notifOpen, setNotifOpen] = useState(false);
-  const [rateStars, setRateStars] = useState(0);
-  const [rateDismissed, setRateDismissed] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [lastTopic, setLastTopic] = useState(null);
-  const [showTop, setShowTop] = useState(false);
-
+  // ============================================================
+  // 6. MAIN LOADING EFFECT
+  // ============================================================
   useEffect(() => {
     const link = document.createElement("link");
     link.rel = "stylesheet";
@@ -16632,10 +16645,6 @@ export default function App() {
     try {
       const res = supabase.auth.onAuthStateChange((event, session) => {
         if (event === "SIGNED_IN" && session && session.user) {
-          // Adopt the user (restore their profile/progress) but NEVER change the
-          // current route here. This event fires not only on a fresh login but also
-          // on token refresh and when returning to the tab - resetting the route
-          // here was what wrongly threw the student back to home on tab switch.
           adoptSupabaseUser(session.user);
         }
         if (event === "SIGNED_OUT") {
@@ -16649,6 +16658,9 @@ export default function App() {
     return () => { try { document.head.removeChild(link); } catch {} try { sub && sub.unsubscribe(); } catch {} };
   }, []);
 
+  // ============================================================
+  // 7. adoptSupabaseUser, handleAuthed, logout, toggleTheme
+  // ============================================================
   const adoptSupabaseUser = async (sUser) => {
     const uid = sUser.id;
     const displayName =
@@ -16656,9 +16668,6 @@ export default function App() {
       (sUser.email ? sUser.email.split("@")[0] : "student");
     setSupaUid(uid);
     const cloud = await db.loadProgress(uid);
-    // Also read the profile row (leaderboard source) so we can trust whichever XP
-    // is higher - this prevents a fresh login on a new device from ever showing 0
-    // when the cloud already holds real XP for this account.
     let profileXp = 0, profileStreak = 0, profileName = null;
     try {
       const { data } = await supabase.from("profiles").select("name, xp, streak").eq("id", uid).maybeSingle();
@@ -16666,16 +16675,12 @@ export default function App() {
     } catch {}
     const base = freshProgress(displayName);
     const merged = cloud ? { ...base, ...cloud } : { ...base };
-    // trust the highest XP/streak across progress-table and profile-table
     merged.xp = Math.max(merged.xp || 0, profileXp);
     merged.streak = Math.max(merged.streak || 0, profileStreak);
-    // keep the user's chosen display name: prefer saved progress name, then profile name
     merged.name = (cloud && cloud.name) || profileName || displayName;
     setAuth({ username: merged.name, email: sUser.email, name: merged.name, supabase: true });
-    // Track XP change for leaderboard indicator
     setXpChange(merged.xp || 0);
     setProgress(merged);
-    // write the reconciled (highest) values back so both tables agree everywhere
     try {
       await supabase.from("profiles").upsert({
         id: uid,
@@ -16693,7 +16698,6 @@ export default function App() {
     setAuth(acct);
     const p = await store.get(progKey(acct.username));
     const finalProgress = p ? { ...freshProgress(acct.username), ...p, name: acct.username } : freshProgress(acct.username);
-    // Track XP change for leaderboard indicator
     setXpChange(finalProgress.xp || 0);
     setProgress(finalProgress);
     setRoute({ view: "home" });
@@ -16706,24 +16710,6 @@ export default function App() {
   };
 
   const toggleTheme = () => { const t = theme === "light" ? "dark" : "light"; setTheme(t); store.set("ascend_theme", t); };
-
-    const persist = (p) => {
-    setProgress(p);
-    
-    // Check for rank up
-    checkRankUp(p.xp);
-
-     // Check for achievements
-    checkAchievements(p);
-    
-    if (supaUid) {
-      db.saveProgress(supaUid, p);
-    } else if (auth) {
-      store.set(progKey(auth.username), p);
-      store.setShared("ascend_board:" + p.name.toLowerCase().replace(/[^a-z0-9]/g, ""), { name: p.name, xp: p.xp, streak: p.streak });
-      db.publishLocalUser(p.name, p.xp, p.streak);
-    }
-  };
 
   const go = (view, extra = {}) => {
     const next = { view, ...extra };
