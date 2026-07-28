@@ -15810,8 +15810,6 @@ function PasscoPicker({ onStart, chunk }) {
   );
 }
 
-
-
 /* ------------------------------- resources ------------------------------ */
 const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical laboratory science students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it to superscript). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac.";
 const SOCRATIC_TASK = "Break this study material into a focused Socratic lesson of 4 to 6 steps. For each step: state the question, explain the answer in one or two clear paragraphs, then give the crucial insight in one line. End with three short self-test questions and their answers. Be economical so the whole lesson is complete and never cut off.";
