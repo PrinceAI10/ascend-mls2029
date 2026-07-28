@@ -16092,12 +16092,16 @@ export default function App() {
   };
 
   // READING XP - Award XP for reading topics
+    // READING XP - Award XP for reading topics with streak multiplier
   const setReadingXp = (newXp) => {
     const key = `${route.courseId}:${route.topicId}`;
     const awarded = sessionStorage.getItem('ascend_read_' + key);
     if (awarded) return;
     sessionStorage.setItem('ascend_read_' + key, 'true');
-    const updated = { ...progress, xp: newXp };
+    const multiplier = getStreakMultiplier(progress.streak);
+    const baseXp = 15;
+    const gained = Math.round(baseXp * multiplier.multiplier);
+    const updated = { ...progress, xp: progress.xp + gained };
     setProgress(updated);
     persist(updated);
   };
