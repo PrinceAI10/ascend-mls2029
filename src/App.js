@@ -7368,6 +7368,541 @@ If those came cleanly, you understand the workhorses of the body - how amino aci
   ],
 };
 
+// ==================== BIOLOGICAL CHEMISTRY TOPIC 6: ENZYMES ====================
+const T_BIO_ENZYMES = {
+  courseId: "bio",
+  topicIndex: 6,
+  title: "Enzymes - The Catalysts of Life",
+  minutes: 25,
+  note: [
+    { 
+      q: "What are enzymes and why are they essential for life?",
+      body: `You have learned about the molecules of life — carbohydrates, lipids, proteins, and nucleic acids. But these molecules do not just react spontaneously. They need help. The reactions that sustain life — breaking down glucose for energy, synthesising proteins, replicating DNA — are all catalysed by enzymes.
+
+My Socratic question: a piece of glucose left in a glass of water will sit there for years, yet your cells burn through a molecule of glucose in milliseconds. What is the difference between a glass of water and a cell?
+
+The answer is enzymes. Enzymes are biological catalysts that accelerate chemical reactions by lowering the activation energy required for them to proceed. A catalyst speeds up a reaction without being consumed by it. Without enzymes, every reaction in your body would take hours, days, or years. You would starve before your cells could unlock the energy in glucose. You would suffocate because carbon dioxide could not be converted fast enough. You would die from the simple accumulation of metabolic waste.
+
+Enzymes are the reason life can exist at all. They turn the sluggish, impossible chemistry of the test tube into the swift, controlled chemistry of the living cell.
+
+Crucial insight: enzymes are biological catalysts that lower activation energy and speed up reactions. Without enzymes, life would be impossible because metabolic reactions would be too slow to sustain life.`
+    },
+    { 
+      q: "What is activation energy and how do enzymes affect it?",
+      body: `Every chemical reaction, even the ones that release energy, must first climb a hill before it can roll down the other side. That hill is the activation energy — the initial energy barrier that must be overcome for the reaction to proceed.
+
+My Socratic question: imagine a boulder sitting at the top of a hill. It wants to roll down, but it cannot because there is a small lip holding it in place. You must push it over that lip before it can roll freely. What is the lip, and what would a catalyst do to it?
+
+The answer is that the lip is the activation energy. In a test tube, molecules must collide with enough energy to overcome this barrier, which is why reactions are slow — most molecules do not have enough energy at room temperature. An enzyme lowers that barrier. It does not give the molecules more energy; it changes the path they must take. Instead of climbing over a high wall, the enzyme carves a tunnel through it. The boulder still ends up at the bottom, but the journey is easier and faster.
+
+Enzymes achieve this by bringing reactants together in the correct orientation and by stabilising the transition state — the high-energy intermediate that forms as bonds break and form. The enzyme does not change the final energy of the products; it only changes the path and the speed.
+
+Crucial insight: enzymes lower activation energy, speeding up reactions without changing the final energy of the products. A catalyst does not alter equilibrium; it only changes how quickly equilibrium is reached.`
+    },
+    { 
+      q: "What is the active site of an enzyme?",
+      body: `An enzyme is a protein folded into a specific three-dimensional shape. Within that shape is a pocket or cleft called the active site — the exact region where the substrate binds and the chemical reaction occurs.
+
+My Socratic question: a key fits a lock perfectly, and only that key will turn it. How does an enzyme recognise its specific substrate and no other?
+
+The answer is the lock-and-key model: the substrate molecule has a shape that matches the active site exactly. The enzyme is specific to its substrate because only that substrate fits properly into the active site and undergoes the chemical transformation the enzyme catalyses. If a molecule is even slightly the wrong shape, it will not bind, and the reaction will not occur.
+
+This is the basis of enzyme specificity. Glucose, for example, exists in two mirror-image forms — D-glucose and L-glucose. Human enzymes recognise only D-glucose. The other form fits the active site about as well as a left shoe fits a right foot. The enzyme simply ignores it.
+
+Crucial insight: the active site is a three-dimensional pocket where the substrate binds. Its shape and chemistry determine the enzyme's specificity. A single amino acid change can destroy enzyme function.`
+    },
+    { 
+      q: "What is the induced fit model of enzyme action?",
+      body: `The lock-and-key model is useful, but it is too rigid. It suggests that the active site is a fixed shape, like a lock waiting for its key. In reality, enzymes are flexible.
+
+My Socratic question: why would a flexible active site be better than a rigid one for catalysis?
+
+The answer is the induced fit model. When the substrate binds, the active site changes shape slightly, adjusting to hold the substrate more tightly and positioning the catalytic groups exactly where they need to be. The enzyme wraps around the substrate, like a hand closing around a ball, rather than a rigid claw holding it.
+
+This flexibility accomplishes two things. First, it allows the enzyme to bind its substrate more tightly and more precisely. Second, it brings the amino acid side chains in the active site into perfect alignment for catalysis. The binding itself contributes to the reaction, and the energy released from that binding helps lower the activation energy further.
+
+Crucial insight: the induced fit model explains why enzymes are so efficient. The enzyme does not just wait for the reaction to happen — the binding itself stresses the substrate, distorts bonds, and makes the reaction more favourable.`
+    },
+    { 
+      q: "What are cofactors and coenzymes?",
+      body: `Not all enzymes work alone. Many require non-protein helpers called cofactors. Without them, the enzyme is inactive.
+
+My Socratic question: a car engine needs both the engine block and the spark plugs and fuel to run. Which part of an enzyme is the engine block, and which are the helpers?
+
+The answer is that the protein portion is the apoenzyme — the inactive protein part. It needs a cofactor to become a complete, active holoenzyme. Cofactors come in two forms. Inorganic ions, such as zinc, magnesium, iron, or calcium, are metal-ion cofactors. They often help stabilise the transition state or hold the substrate in place. Organic molecules called coenzymes are larger helpers, often derived from vitamins. NADH and FADH2 carry electrons; Coenzyme A carries acetyl groups; ATP carries phosphate. Without these coenzymes, the enzymes that depend on them cannot function.
+
+The vitamin deficiency diseases you have heard of are, at their core, coenzyme deficiencies. A lack of niacin means no NADH; a lack of riboflavin means no FADH2. The enzymes are present, but they cannot work.
+
+Crucial insight: cofactors are essential helpers for enzyme activity. Vitamin deficiencies are often coenzyme deficiencies. Zinc supplements are given for wound healing because zinc is a cofactor for collagenase.`
+    },
+    { 
+      q: "What is enzyme specificity?",
+      body: `Each enzyme is specific to a particular reaction or a set of closely related reactions. This specificity is the key to metabolic control.
+
+My Socratic question: the body has thousands of reactions happening simultaneously. How does each reaction find its correct enzyme among all the others?
+
+The answer is that the active site is a unique three-dimensional shape with a unique arrangement of chemical groups. Only its specific substrate can fit into that shape and interact with those groups. A kinase phosphorylates a specific substrate — it does not phosphorylate everything it touches. A protease cleaves a specific peptide bond — it does not randomly shred proteins.
+
+This specificity is absolute enough that an enzyme can distinguish between very similar molecules. Hexokinase, for example, phosphorylates glucose but not mannose, even though the two sugars differ only by the orientation of a single hydroxyl group.
+
+Crucial insight: specificity is why drugs can be designed to target specific enzymes. An antibiotic that inhibits a bacterial enzyme without affecting the equivalent human enzyme is a selective antibiotic.`
+    },
+    { 
+      q: "What are Km and Vmax in enzyme kinetics?",
+      body: `The rate of an enzyme-catalysed reaction increases as substrate concentration increases — but only up to a point. Beyond a certain concentration, all active sites are occupied, and the enzyme is saturated. Adding more substrate does not increase the rate.
+
+My Socratic question: if adding more substrate makes a reaction go faster, why does it eventually stop getting faster?
+
+The answer is that the enzyme has a finite number of active sites. When all of them are occupied, the enzyme is working at its maximum speed. This maximum velocity is called Vmax. The substrate concentration at which the reaction runs at half of Vmax is called Km, a measure of the enzyme's affinity for its substrate. A low Km means the enzyme binds its substrate tightly; a high Km means it binds weakly.
+
+These two parameters — Km and Vmax — are the fundamental properties of an enzyme. They can be measured in the laboratory, and they tell you everything about how the enzyme behaves in the cell. A drug that increases Km is a competitive inhibitor; a drug that decreases Vmax is a non-competitive inhibitor.
+
+Crucial insight: Km and Vmax are the signature of the enzyme. Knowing them allows you to predict how the enzyme will behave under different conditions and how it will respond to drugs.`
+    },
+    { 
+      q: "How do pH and temperature affect enzymes?",
+      body: `Enzymes are sensitive to their environment. They work best at specific pH and temperature ranges, and outside those ranges they lose activity — often permanently.
+
+My Socratic question: why does a fever over about 41 degrees become life-threatening even when it is the body's own defence?
+
+The answer is that enzymes are proteins, and proteins denature at high temperatures. Above a certain temperature, the enzyme's three-dimensional structure unfolds, the active site is destroyed, and the enzyme stops working. This is why hyperthermia is lethal — metabolism shuts down as enzymes denature.
+
+pH sensitivity is equally important. Each enzyme has an optimal pH at which its charged groups are in the correct state for catalysis. The stomach's proteases work at pH 2, where they are fully protonated and active; the intestine's proteases work at pH 8, where they are deprotonated and active. A shift of even one pH unit can alter the charges on the active site and destroy function.
+
+Crucial insight: pH and temperature sensitivity are not academic — they are the basis of febrile seizures, hyperthermia, acid-base disorders, and the reason you cannot store biological samples at room temperature.`
+    },
+    { 
+      q: "How is enzyme activity regulated in the cell?",
+      body: `Cells do not simply let enzymes run at full speed all the time. If they did, they would waste energy and produce unnecessary products. Enzyme activity is tightly regulated.
+
+My Socratic question: if an enzyme is producing too much of a product, what signal would tell it to slow down, and how would it receive that signal?
+
+The answer is feedback inhibition. The end product of a pathway inhibits the first enzyme of that pathway. When product accumulates, it binds to the enzyme and slows its activity, preventing overproduction. This is allosteric regulation — the inhibitor binds somewhere other than the active site, changing the enzyme's shape and slowing it down.
+
+There are other mechanisms as well. Allosteric activators bind to regulatory sites and increase activity. Covalent modification, such as phosphorylation, can turn enzymes on or off. Proteolytic cleavage can activate inactive zymogens. Gene expression controls how much enzyme is made. Each pathway has its own specific regulatory mechanisms, but the principle is the same: the cell controls its enzymes tightly.
+
+Crucial insight: feedback inhibition is economical. It ensures the cell only makes what it needs, not more. It is also why many toxins and drugs work by inhibiting enzymes.`
+    },
+    { 
+      q: "How are enzymes used in clinical diagnosis?",
+      body: `Your knowledge of enzymes has direct clinical applications that you will see in the laboratory every day.
+
+My Socratic question: when a patient has a heart attack, what biochemical clue appears in their blood that can confirm the diagnosis?
+
+The answer is cardiac enzymes. When heart muscle cells die, their contents spill into the blood. Enzymes such as creatine kinase and troponin can be measured. Elevated levels indicate muscle damage, and the pattern of elevation helps diagnose the type of injury. The rise of troponin is now the gold standard for diagnosing a heart attack.
+
+Enzyme levels are used to diagnose disease throughout the body. Elevated liver enzymes — ALT and AST — indicate liver cell injury. Elevated amylase and lipase indicate pancreatitis. Elevated alkaline phosphatase indicates bone or liver disease. In each case, the enzyme is not the disease itself — it is the marker of the damage.
+
+Crucial insight: enzymes are both the workhorses of metabolism and the markers of disease. Measuring enzyme levels in blood is one of the most common laboratory tests you will perform and interpret.`
+    }
+  ],
+  theory: [
+    { q: "What is an enzyme and what is its role in metabolism?", a: "An enzyme is a biological catalyst that accelerates chemical reactions by lowering activation energy. It enables the reactions of metabolism to proceed at rates fast enough to sustain life." },
+    { q: "What is activation energy and how do enzymes affect it?", a: "Activation energy is the initial energy barrier that must be overcome for a reaction to proceed. Enzymes lower activation energy, speeding the reaction without changing the overall energy balance." },
+    { q: "What is the active site of an enzyme?", a: "The active site is the specific region on an enzyme where the substrate binds and the chemical reaction occurs. It is a pocket or cleft formed by the folded protein structure." },
+    { q: "What is the difference between the lock-and-key and induced-fit models?", a: "Lock-and-key proposes a rigid active site matching the substrate exactly. Induced-fit proposes that the active site changes shape slightly upon substrate binding, adjusting to fit the substrate more effectively." },
+    { q: "What are apoenzyme, cofactor, and holoenzyme?", a: "The apoenzyme is the inactive protein portion. A cofactor is a non-protein helper required for activity. The complete active enzyme is the holoenzyme." },
+    { q: "What is enzyme specificity and why does it matter?", a: "Enzyme specificity means an enzyme recognises and acts on only its specific substrate. This allows precise metabolic control and selective drug targeting." },
+    { q: "What are Km and Vmax in enzyme kinetics?", a: "Vmax is the maximum reaction rate when all active sites are saturated. Km is the substrate concentration at half Vmax, reflecting the enzyme's affinity for its substrate." },
+    { q: "Why are enzymes sensitive to pH and temperature?", a: "Enzymes are proteins and their three-dimensional structure depends on non-covalent interactions. Extreme pH and temperature disrupt these interactions, denaturing the enzyme." },
+    { q: "What is feedback inhibition?", a: "Feedback inhibition is a regulatory mechanism where the end product of a pathway inhibits the first enzyme of that pathway, preventing overproduction." },
+    { q: "How are enzymes used in clinical diagnosis?", a: "Enzyme levels in blood indicate tissue damage. Elevated cardiac enzymes indicate heart attack; elevated liver enzymes indicate liver damage." }
+  ],
+  videos: [
+    { channel: "Biological Chemistry", title: "Enzymes and Catalysis", note: "How enzymes work and why they matter.", url: "" },
+    { channel: "Biological Chemistry", title: "Enzyme Kinetics", note: "Understanding Km and Vmax.", url: "" },
+    { channel: "Biological Chemistry", title: "Clinical Enzymology", note: "Enzymes in diagnosis.", url: "" }
+  ],
+  mcqs: [
+    { q: "Enzymes are biological catalysts that:", o: ["Change the equilibrium of a reaction", "Increase activation energy", "Consume energy from a reaction", "Lower activation energy"], a: 3, w: "Enzymes speed reactions by lowering activation energy." },
+    { q: "Activation energy is:", o: ["The total energy released by a reaction", "The energy produced by an enzyme", "The energy barrier that must be overcome", "The energy required to denature an enzyme"], a: 2, w: "Activation energy is the initial energy input needed to start a reaction." },
+    { q: "The specific region where substrate binds is the:", o: ["Active site", "Cofactor site", "Regulatory domain", "Allosteric site"], a: 0, w: "The active site is where the substrate binds and catalysis occurs." },
+    { q: "In the lock-and-key model:", o: ["The enzyme and substrate have complementary rigid shapes", "The substrate changes shape to fit the enzyme", "The enzyme and substrate are identical", "The enzyme changes shape to fit the substrate"], a: 0, w: "Lock-and-key suggests rigid complementary shapes." },
+    { q: "The induced-fit model proposes:", o: ["The active site changes shape upon substrate binding", "A rigid active site", "No substrate binding is required", "The substrate is unchanged"], a: 0, w: "Induced-fit proposes active site adjustment." },
+    { q: "The inactive protein portion of an enzyme is the:", o: ["Coenzyme", "Prosthetic group", "Holoenzyme", "Apoenzyme"], a: 3, w: "The apoenzyme is the protein part requiring a cofactor." },
+    { q: "A non-protein helper required for activity is a:", o: ["Product", "Inhibitor", "Cofactor", "Substrate"], a: 2, w: "Cofactors are helpers like metal ions or coenzymes." },
+    { q: "The complete active enzyme is the:", o: ["Proenzyme", "Apoenzyme", "Holoenzyme", "Substrate complex"], a: 2, w: "The holoenzyme is the active enzyme with its cofactor." },
+    { q: "Vmax represents:", o: ["The maximum reaction rate when all active sites are occupied", "The rate at which enzyme is destroyed", "The substrate concentration at half velocity", "The rate of cofactor binding"], a: 0, w: "Vmax is the maximum rate when the enzyme is fully saturated." },
+    { q: "Km is the substrate concentration at:", o: ["Half saturation of the enzyme", "Half of Vmax", "Maximum reaction rate", "Complete inhibition"], a: 1, w: "Km is the substrate concentration giving half of Vmax." },
+    { q: "A lower Km indicates:", o: ["A slower reaction rate", "Higher affinity for the substrate", "Lower Vmax", "More inhibitor needed"], a: 1, w: "Lower Km means higher affinity for the substrate." },
+    { q: "Enzymes are sensitive to temperature because:", o: ["They are unaffected by temperature", "They are proteins that can denature", "They require heat to work", "They are fluids"], a: 1, w: "Enzymes denature at high temperatures." },
+    { q: "The optimal pH of an enzyme is:", o: ["Its buffering range", "Its acid dissociation constant", "The pH of maximum activity", "Its isoelectric point"], a: 2, w: "Enzymes have an optimal pH where they are most active." },
+    { q: "In feedback inhibition, the end product:", o: ["Activates a different pathway", "Inhibits the first enzyme of the pathway", "Is rapidly removed", "Accelerates the first enzyme"], a: 1, w: "Feedback inhibition prevents overproduction." },
+    { q: "Feedback inhibition is an example of:", o: ["Allosteric regulation", "Competitive inhibition", "Substrate-level phosphorylation", "Irreversible inhibition"], a: 0, w: "Feedback inhibition involves allosteric binding." },
+    { q: "Allosteric regulation refers to:", o: ["Covalent modification", "Irreversible inhibition", "Binding at a site other than the active site", "Binding at the active site"], a: 2, w: "Allosteric regulation changes enzyme shape." },
+    { q: "When an enzyme is denatured:", o: ["It is more active", "It can still bind substrate", "It has lost its structure and function", "It is unaffected"], a: 2, w: "Denaturation unfolds the protein, destroying function." },
+    { q: "Cardiac enzymes like troponin are measured to:", o: ["Measure kidney function", "Screen for diabetes", "Check liver function", "Diagnose heart muscle damage"], a: 3, w: "Elevated cardiac enzymes indicate heart muscle damage." },
+    { q: "Elevated liver enzymes in blood indicate:", o: ["Pancreatic disease", "Liver cell injury", "Kidney failure", "Heart attack"], a: 1, w: "Liver enzymes like ALT and AST rise with liver damage." },
+    { q: "Enzyme specificity is determined by:", o: ["Its concentration", "The shape and chemistry of its active site", "The temperature", "The cofactor present"], a: 1, w: "Specificity comes from the active site's shape and chemistry." },
+    { q: "Coenzymes are organic cofactors that:", o: ["Permanently alter the enzyme", "Are derived from vitamins", "Are destroyed in the reaction", "Are not required for activity"], a: 1, w: "Many coenzymes are derived from vitamins." },
+    { q: "The holoenzyme is composed of:", o: ["Only a cofactor", "Two substrates", "An apoenzyme and a cofactor", "Multiple active sites"], a: 2, w: "The holoenzyme is apoenzyme plus cofactor." },
+    { q: "A competitive inhibitor binds at the:", o: ["Allosteric site", "Active site", "Coenzyme site", "Substrate"], a: 1, w: "Competitive inhibitors bind at the active site." },
+    { q: "A non-competitive inhibitor reduces activity by:", o: ["Destroying the cofactor", "Changing Vmax", "Denaturing the enzyme", "Changing Km"], a: 1, w: "Non-competitive inhibition decreases Vmax." },
+    { q: "Enzyme kinetics is the study of:", o: ["The rate of enzyme-catalysed reactions", "The structure of enzymes", "The amino acid sequence", "Cofactor binding"], a: 0, w: "Kinetics studies reaction rates." },
+    { q: "The clinical measurement of enzyme levels is used to:", o: ["Measure drug levels", "Identify genetic disorders", "Check blood type", "Diagnose tissue damage"], a: 3, w: "Enzyme levels rise when tissues are damaged." },
+    { q: "A competitive inhibitor increases:", o: ["Vmax only", "Km", "Vmax and Km", "Neither"], a: 1, w: "Competitive inhibition increases Km." },
+    { q: "A non-competitive inhibitor decreases:", o: ["Vmax only", "Km", "Vmax and Km", "Neither"], a: 0, w: "Non-competitive inhibition decreases Vmax." },
+    { q: "The rate of an enzyme reaction depends on:", o: ["Substrate concentration", "Enzyme concentration", "pH and temperature", "All of the above"], a: 3, w: "All factors affect enzyme reaction rate." },
+    { q: "Enzymes are proteins that:", o: ["Are consumed in the reaction", "Are not consumed in the reaction", "Change equilibrium", "Produce ATP"], a: 1, w: "Enzymes are not consumed in the reaction." }
+  ]
+};
+
+// ==================== BIOLOGICAL CHEMISTRY TOPIC 7: ENZYME INHIBITION ====================
+const T_BIO_INHIBITION = {
+  courseId: "bio",
+  topicIndex: 7,
+  title: "Enzyme Inhibition - How Enzymes Are Stopped",
+  minutes: 25,
+  note: [
+    { 
+      q: "What is enzyme inhibition and why does it matter?",
+      body: `You have learned how enzymes work — they are biological catalysts that speed up reactions by lowering activation energy. But sometimes the body needs to slow down or stop enzymes. This is called enzyme inhibition. It is not a failure of the enzyme — it is a deliberate, controlled mechanism that the body uses to regulate metabolism. It is also the basis of most modern medicine.
+
+My Socratic question: the body's enzymes are constantly running, breaking down and building molecules. If an enzyme is producing too much of a product, or if a reaction is happening when it should not, how does the body stop it?
+
+The answer is that the body uses natural inhibitors to regulate enzyme activity. These inhibitors are molecules that bind to enzymes and decrease their activity. The cell uses them to control metabolism, to prevent wasteful overproduction, and to respond to changing conditions. Without inhibition, the cell would run out of control, consuming energy and producing useless products.
+
+Crucial insight: enzyme inhibition is the body's brake pedal. It is not a failure of the enzyme — it is a deliberate, controlled mechanism. The same principles that the body uses to regulate its own enzymes are the principles that drug designers use to create medicines. Understanding inhibition is understanding pharmacology.`
+    },
+    { 
+      q: "What is competitive inhibition?",
+      body: `The first and simplest type of inhibition is competitive inhibition, where an inhibitor competes with the substrate for the same active site. The inhibitor resembles the substrate — it is a molecular mimic — and it occupies the active site, blocking the substrate from binding.
+
+My Socratic question: imagine a lock that two different keys try to fit. One key is the correct substrate; the other is the inhibitor. What determines which one opens the lock?
+
+The answer is concentration and affinity. If there is more substrate than inhibitor, the substrate is more likely to bind and the reaction proceeds. If the inhibitor concentration is high, it occupies the active site and blocks the substrate. The inhibitor does not change the enzyme's structure — it just sits in the active site temporarily.
+
+Because the inhibitor competes with the substrate, increasing substrate concentration can overcome the inhibition. If you flood the system with substrate, the substrate will outcompete the inhibitor, and the reaction will proceed at its normal rate. This is the defining feature of competitive inhibition: it is reversible.
+
+Crucial insight: competitive inhibition increases Km, the apparent affinity of the enzyme for its substrate, because the inhibitor makes it harder for the substrate to bind. But Vmax is unchanged, because high substrate concentration can still saturate the enzyme. This is the classic exam signature of competitive inhibition.`
+    },
+    { 
+      q: "What is non-competitive inhibition?",
+      body: `A non-competitive inhibitor does not bind at the active site. Instead, it binds elsewhere on the enzyme, changing the enzyme's shape so that the active site no longer works properly.
+
+My Socratic question: a lock has been damaged so that even the correct key cannot turn it. The key still fits, but the lock is broken. What kind of inhibitor does this represent, and can adding more substrate fix it?
+
+The answer is non-competitive inhibition. Adding more substrate cannot overcome it because the active site is distorted. The inhibitor has changed the enzyme's conformation, so the enzyme is no longer catalytically active even when the substrate is bound. The only way to restore activity is to remove the inhibitor.
+
+Because the inhibitor binds away from the active site, it does not compete with the substrate. It can bind whether the substrate is present or not. This means that adding more substrate does not help — the enzyme is simply less efficient.
+
+Crucial insight: non-competitive inhibition decreases Vmax because the enzyme cannot work as fast even when saturated with substrate. But Km is unchanged because the affinity for the substrate is not affected. This is the key difference from competitive inhibition: in competitive inhibition, Km increases; in non-competitive inhibition, Vmax decreases.`
+    },
+    { 
+      q: "What is uncompetitive inhibition?",
+      body: `A third, less common type is uncompetitive inhibition. Here, the inhibitor binds only to the enzyme-substrate complex, not to the free enzyme.
+
+My Socratic question: if an inhibitor only binds after the substrate has already attached, what effect would it have on the enzyme's apparent affinity and maximum velocity?
+
+The answer is that it decreases both Km and Vmax. The inhibitor traps the enzyme-substrate complex, making the enzyme appear to have higher affinity for the substrate because the complex cannot dissociate. But it also slows the reaction because the complex is locked and cannot proceed to product.
+
+Uncompetitive inhibition is rare in physiology but important in drug design. Its kinetics are distinctive — both Km and Vmax decrease, unlike competitive (Km increases) or non-competitive (Vmax decreases only). This distinctive signature makes it easy to identify in kinetic experiments.
+
+Crucial insight: the three types of reversible inhibition are distinguished by their effects on Km and Vmax. Competitive: Km increases, Vmax unchanged. Non-competitive: Km unchanged, Vmax decreases. Uncompetitive: both Km and Vmax decrease. This is a classic exam question, so hold these differences firmly.`
+    },
+    { 
+      q: "What is irreversible inhibition?",
+      body: `Some inhibitors bind so tightly or form covalent bonds with the enzyme that the inhibition is permanent. The enzyme is destroyed, and new enzyme must be synthesised to restore activity.
+
+My Socratic question: aspirin irreversibly inhibits a cyclooxygenase enzyme. Why do the effects of aspirin last for days even though the drug has been cleared from the body?
+
+The answer is that aspirin covalently modifies the enzyme, permanently inactivating it. The body must synthesise new enzyme molecules, which takes time. The effect persists long after the drug is gone. This is why aspirin is taken once daily, not multiple times — the enzyme stays inhibited.
+
+Irreversible inhibitors are often toxins or drugs designed to have a prolonged effect. They form covalent bonds and permanently destroy enzyme activity until new enzyme is synthesised. This makes them powerful but also potentially dangerous.
+
+Crucial insight: irreversible inhibition is a covalent modification. The inhibitor does not simply block the active site — it chemically alters the enzyme. This is why the effect lasts so long and why new enzyme must be made to recover activity.`
+    },
+    { 
+      q: "What is allosteric regulation?",
+      body: `Inhibition is not only from drugs — it is a natural regulatory mechanism. Allosteric effectors bind to regulatory sites on enzymes and change their activity.
+
+My Socratic question: the end product of a pathway inhibits the first enzyme in that pathway. What does this prevent, and why is it economical?
+
+The answer is that it prevents overproduction. If the cell already has enough of a product, it shuts down the pathway, saving energy and resources. This is feedback inhibition, an allosteric regulation common in metabolism. The end product binds to an allosteric site on the first enzyme, changing its shape and slowing its activity.
+
+Allosteric regulation is how the cell controls its own metabolism, and it is a classic example of negative feedback — the system self-regulates to maintain balance. It is also why allosteric sites are such important drug targets.
+
+Crucial insight: allosteric regulation is the body's built-in control system. It is fast, reversible, and economical. Understanding it is understanding how the cell decides what to make and when to stop making it.`
+    },
+    { 
+      q: "How do drugs work as enzyme inhibitors?",
+      body: `Enzyme inhibitors are among the most important drugs in medicine, and understanding their mechanism is part of understanding therapy.
+
+My Socratic question: the statin drugs lower cholesterol by inhibiting HMG-CoA reductase, the rate-limiting enzyme of cholesterol synthesis. What type of inhibitor is this, and why does it reduce cholesterol?
+
+The answer is a competitive inhibitor that mimics the natural substrate for the enzyme. By blocking the enzyme, the liver produces less cholesterol, lowering blood levels. This is a classic example of competitive inhibition in therapy.
+
+Enzyme inhibitors treat disease across every organ system. Antibiotics such as penicillin inhibit bacterial cell-wall enzymes. Antivirals such as protease inhibitors block viral replication. Cancer therapies such as kinase inhibitors block growth signals. All are enzyme inhibitors.
+
+Crucial insight: enzyme inhibition is the mechanism behind most modern therapeutics. Understanding the type of inhibition — competitive, non-competitive, or irreversible — explains why the drug works, how it is dosed, and what side effects it might have.`
+    },
+    { 
+      q: "How does penicillin work as an enzyme inhibitor?",
+      body: `Penicillin is one of the most important drugs in history, and it works by irreversible enzyme inhibition.
+
+My Socratic question: penicillin inhibits an enzyme called transpeptidase, which builds bacterial cell walls. Why does blocking this enzyme kill bacteria but not human cells?
+
+The answer is that human cells do not have cell walls. The enzyme is unique to bacteria, so penicillin is selectively toxic. The inhibition is irreversible because penicillin covalently binds to the active site of transpeptidase, permanently inactivating it. The bacteria cannot build their cell walls and burst.
+
+This is the basis of antibiotic therapy — exploiting differences between bacterial and human cells to kill the pathogen without harming the patient.
+
+Crucial insight: selective toxicity is the holy grail of drug design. If you can find a target that the pathogen needs but the patient does not, you can inhibit it without side effects. Penicillin is the classic example.`
+    },
+    { 
+      q: "How is enzyme inhibition used in diagnosis?",
+      body: `Enzyme inhibition is not only for treatment — it is also used in diagnosis, and this matters to you as a future laboratory scientist.
+
+My Socratic question: some patients lack the enzyme that breaks down lactose. They cannot digest milk. How is this condition diagnosed, and what is the mechanism?
+
+The answer is lactose intolerance, diagnosed by a lactose tolerance test that measures blood glucose after a lactose load. The mechanism is simple — if lactose cannot be broken down to glucose and galactose, glucose levels do not rise, confirming the deficiency.
+
+Many diseases are due to enzyme deficiency or inhibition, and laboratory tests often measure enzyme activity to diagnose these conditions. The test you run in the lab is a test of enzyme function, and the result tells you whether the enzyme is working or not.
+
+Crucial insight: enzyme inhibition and deficiency are the basis of many diseases. The laboratory is where these defects are detected. Understanding the enzyme is understanding the test.`
+    },
+    { 
+      q: "What is the IC50 and why does it matter in drug development?",
+      body: `In drug development, understanding inhibition is central to designing drugs that target specific enzymes.
+
+My Socratic question: to design a drug that inhibits an enzyme, what must the drug molecule be able to do, and how is this tested?
+
+The answer is that the drug must fit the enzyme's active site or another regulatory site. This is tested through screening compounds and measuring the kinetics of inhibition — determining the IC50, the concentration that inhibits 50% of activity, and the mechanism of inhibition, competitive, non-competitive, or mixed.
+
+The principles of inhibition are the same in drug design as they are in biochemistry. You are trying to create a molecule that will block a specific enzyme target, and the tools you use are kinetics and an understanding of the active site. Every drug on the market started with this same approach.
+
+Crucial insight: drug discovery is enzyme inhibition at scale. The same kinetics you study in biochemistry are the kinetics used in drug screening. Understanding inhibition is understanding how medicines are made.`
+    }
+  ],
+  theory: [
+    { q: "What is enzyme inhibition and why is it clinically important?", a: "Enzyme inhibition is the process of decreasing or stopping enzyme activity. It is clinically important because most drugs work by inhibiting specific enzymes, such as antibiotics inhibiting bacterial enzymes and statins inhibiting cholesterol synthesis." },
+    { q: "What is competitive inhibition and its effect on Km and Vmax?", a: "Competitive inhibition occurs when an inhibitor competes with the substrate for binding at the active site. It increases Km (apparent lower affinity) but does not change Vmax — the maximum rate can still be reached if substrate is high enough." },
+    { q: "What is non-competitive inhibition and its effect on Km and Vmax?", a: "Non-competitive inhibition occurs when an inhibitor binds away from the active site, changing the enzyme's shape. It decreases Vmax (the enzyme cannot work as fast) but does not change Km (affinity for substrate is unchanged)." },
+    { q: "What is uncompetitive inhibition and its effect on Km and Vmax?", a: "Uncompetitive inhibition occurs when an inhibitor binds only to the enzyme-substrate complex, not the free enzyme. It decreases both Km (apparent higher affinity) and Vmax (slower reaction), because the complex is trapped." },
+    { q: "How does irreversible inhibition differ from reversible inhibition?", a: "Irreversible inhibitors form covalent bonds with the enzyme or bind so tightly that activity is permanently lost until new enzyme is synthesised. Reversible inhibitors bind non-covalently and can be removed, allowing activity to recover." },
+    { q: "What is allosteric regulation and its role in metabolism?", a: "Allosteric regulation occurs when a molecule binds to a site other than the active site, changing the enzyme's conformation and activity. It is how cells control metabolism, often through feedback inhibition where the end product of a pathway inhibits the first enzyme." },
+    { q: "Give an example of a competitive inhibitor used in medicine.", a: "Statins such as atorvastatin competitively inhibit HMG-CoA reductase, the rate-limiting enzyme in cholesterol synthesis, lowering cholesterol production." },
+    { q: "How does penicillin work as an enzyme inhibitor?", a: "Penicillin irreversibly inhibits transpeptidase, an enzyme bacteria use to build their cell walls. Because human cells lack cell walls, penicillin is selectively toxic." },
+    { q: "What is selective toxicity and why is it important?", a: "Selective toxicity means the drug targets a bacterial enzyme without affecting human enzymes. This allows killing of the pathogen while the patient remains safe." },
+    { q: "What is IC50 and its significance in drug development?", a: "IC50 is the concentration of inhibitor that inhibits 50% of the enzyme's activity. It is a measure of drug potency; a lower IC50 indicates a more potent inhibitor." }
+  ],
+  videos: [
+    { channel: "Biological Chemistry", title: "Enzyme Inhibition", note: "Competitive, non-competitive, and uncompetitive inhibition.", url: "" },
+    { channel: "Biological Chemistry", title: "Allosteric Regulation", note: "How the body controls enzyme activity.", url: "" },
+    { channel: "Biological Chemistry", title: "Clinical Pharmacology", note: "How enzyme inhibitors are used as drugs.", url: "" }
+  ],
+  mcqs: [
+    { q: "Most drugs work by:", o: ["Activating all enzymes", "Inhibiting specific enzymes", "Destroying all proteins", "Increasing enzyme synthesis"], a: 1, w: "Most modern medicines are enzyme inhibitors, blocking specific targets." },
+    { q: "A competitive inhibitor binds to the:", o: ["Active site", "Substrate", "Coenzyme", "Allosteric site"], a: 0, w: "Competitive inhibitors compete with substrate for the active site." },
+    { q: "Competitive inhibition can be overcome by:", o: ["Adding a cofactor", "Adding more inhibitor", "Decreasing temperature", "Increasing substrate concentration"], a: 3, w: "High substrate concentration outcompetes the inhibitor, restoring activity." },
+    { q: "In competitive inhibition, Vmax:", o: ["Is zero", "Decreases", "Is unchanged", "Increases"], a: 2, w: "Vmax is unchanged because high substrate can still saturate the enzyme." },
+    { q: "In competitive inhibition, Km:", o: ["Decreases", "Is unchanged", "Increases", "Is zero"], a: 2, w: "Km increases because the apparent affinity for substrate is reduced." },
+    { q: "A non-competitive inhibitor binds at:", o: ["The active site only", "A site other than the active site", "The substrate", "The cofactor"], a: 1, w: "Non-competitive inhibitors bind away from the active site, altering shape." },
+    { q: "In non-competitive inhibition, Vmax:", o: ["Increases", "Decreases", "Is infinite", "Is unchanged"], a: 1, w: "Vmax decreases because the enzyme is less efficient even when saturated." },
+    { q: "In non-competitive inhibition, Km:", o: ["Is zero", "Decreases", "Is unchanged", "Increases"], a: 2, w: "Km is unchanged because substrate affinity is unaffected." },
+    { q: "Uncompetitive inhibition binds to:", o: ["Enzyme-substrate complex only", "Neither", "Free enzyme only", "Both free enzyme and complex"], a: 0, w: "Uncompetitive inhibitors bind only to the enzyme-substrate complex." },
+    { q: "In uncompetitive inhibition, both Km and Vmax:", o: ["Opposite each other", "Are unchanged", "Decrease", "Increase"], a: 2, w: "Both Km and Vmax decrease in uncompetitive inhibition." },
+    { q: "Irreversible inhibitors bind to enzymes by:", o: ["Hydrogen bonds", "Ionic bonds", "Covalent bonds", "Hydrophobic interactions"], a: 2, w: "Irreversible inhibitors form covalent bonds, permanently inactivating the enzyme." },
+    { q: "Allosteric regulation involves binding at:", o: ["The cofactor", "The active site", "The substrate binding site only", "A regulatory site away from the active site"], a: 3, w: "Allosteric effectors bind at a site other than the active site, changing enzyme shape." },
+    { q: "Feedback inhibition is a type of:", o: ["Irreversible inhibition", "Competitive inhibition", "Covalent modification", "Allosteric regulation"], a: 3, w: "Feedback inhibition typically involves allosteric binding of the end product." },
+    { q: "IC50 is a measure of:", o: ["Substrate binding", "Drug potency — lower means more potent", "Enzyme affinity", "Vmax"], a: 1, w: "A lower IC50 means less inhibitor is needed to reduce activity by half, so the drug is more potent." },
+    { q: "Statins lower cholesterol by inhibiting:", o: ["Lipase", "HMG-CoA reductase", "Kinase", "Amylase"], a: 1, w: "Statins competitively inhibit HMG-CoA reductase, the rate-limiting step in cholesterol synthesis." },
+    { q: "Penicillin inhibits the bacterial enzyme:", o: ["Transpeptidase", "Kinase", "Protease", "Lipase"], a: 0, w: "Penicillin irreversibly inhibits transpeptidase, blocking bacterial cell wall synthesis." },
+    { q: "Human cells are unaffected by penicillin because they:", o: ["Lack cell walls", "Have a different version of the enzyme", "Produce more enzyme", "Destroy penicillin"], a: 0, w: "Human cells do not have cell walls, so the target enzyme is absent." },
+    { q: "Lactose intolerance is due to deficiency of the enzyme:", o: ["Amylase", "Protease", "Lactase", "Lipase"], a: 2, w: "Lactase is needed to break down lactose into glucose and galactose." },
+    { q: "A competitive inhibitor's effect on an enzyme can be described as:", o: ["Destroying the cofactor", "Permanent destruction", "Changing the enzyme's shape permanently", "Reversible blocking of the active site"], a: 3, w: "Competitive inhibitors reversibly block the active site, and can be overcome by more substrate." },
+    { q: "Which type of inhibitor decreases Vmax without changing Km?", o: ["Non-competitive", "Uncompetitive", "Competitive", "Irreversible"], a: 0, w: "Non-competitive inhibition decreases Vmax but leaves Km unchanged." },
+    { q: "Which type of inhibitor increases Km without changing Vmax?", o: ["Non-competitive", "Irreversible", "Uncompetitive", "Competitive"], a: 3, w: "Competitive inhibition increases Km but leaves Vmax unchanged." },
+    { q: "Which type of inhibitor decreases both Km and Vmax?", o: ["Non-competitive", "Uncompetitive", "Irreversible", "Competitive"], a: 1, w: "Uncompetitive inhibition decreases both Km and Vmax." },
+    { q: "The specificity of an enzyme inhibitor is determined by:", o: ["The temperature of the reaction", "The inhibitor's colour", "The inhibitor's molecular weight", "The inhibitor's ability to fit the enzyme's active site or binding site"], a: 3, w: "Inhibitors must fit the enzyme's active site or allosteric site to be effective." },
+    { q: "Aspirin inhibits cyclooxygenase by:", o: ["Irreversible covalent modification", "Non-competitive inhibition", "Allosteric activation", "Competitive inhibition"], a: 0, w: "Aspirin irreversibly acetylates cyclooxygenase, permanently inhibiting it." },
+    { q: "The effects of aspirin last for days because:", o: ["It is not cleared from the blood", "It accumulates in the body", "It permanently inhibits the enzyme until new enzyme is synthesised", "It is slowly metabolised"], a: 2, w: "Aspirin irreversibly inhibits the enzyme, so activity only returns when new enzyme is made." },
+    { q: "The therapeutic effect of statins is due to:", o: ["Increasing cholesterol absorption", "Competitively inhibiting HMG-CoA reductase", "Destroying HDL", "Activating cholesterol synthesis"], a: 1, w: "Statins block cholesterol synthesis by inhibiting HMG-CoA reductase." },
+    { q: "A drug with a lower IC50 is:", o: ["Less potent", "Equally potent", "Not related to potency", "More potent"], a: 3, w: "Lower IC50 means less drug is needed to inhibit 50% of activity, so it is more potent." },
+    { q: "Allosteric inhibitors change enzyme activity by:", o: ["Removing the cofactor", "Binding at a regulatory site and changing shape", "Destroying the enzyme", "Competing for the active site"], a: 1, w: "Allosteric inhibitors bind away from the active site and change the enzyme's shape." },
+    { q: "Feedback inhibition is an example of:", o: ["Negative feedback regulation", "Positive feedback", "Uncompetitive inhibition", "Irreversible inhibition"], a: 0, w: "Feedback inhibition is negative feedback — the product inhibits the first enzyme to prevent overproduction." },
+    { q: "The most important clinical application of enzyme inhibition is:", o: ["Drug therapy targeting specific enzymes", "Destroying all proteins", "Increasing metabolic rate", "Preventing all enzyme activity"], a: 0, w: "Enzyme inhibitors are the basis of most drug therapy." }
+  ]
+};
+
+// ==================== BIOLOGICAL CHEMISTRY TOPIC 8: LIPIDS ====================
+const T_BIO_LIPIDS = {
+  courseId: "bio",
+  topicIndex: 8,
+  title: "Lipids - The Hydrophobic Molecules of Life",
+  minutes: 25,
+  note: [
+    { 
+      q: "What are lipids and why are they essential for life?",
+      body: `You have studied carbohydrates, which are hydrophilic (water-loving) molecules that provide quick energy. You have studied proteins, which perform almost every function in the body. Now we meet the third great family of biological molecules: lipids. Lipids are fundamentally different from carbohydrates and proteins because they are hydrophobic — they do not dissolve in water.
+
+My Socratic question: cooking oil and butter do not mix with water. What property do they share, and why does this matter in the body?
+
+The answer is that lipids are hydrophobic — they repel water. This property is essential for their functions. Lipids form the hydrophobic core of cell membranes, which separates the inside of the cell from the outside. They store energy more efficiently than carbohydrates (9 kcal per gram versus 4 kcal per gram). And they serve as signalling molecules like hormones.
+
+Lipids are a diverse group of molecules that are insoluble in water but soluble in organic solvents. They include fats, oils, waxes, phospholipids, and steroids. Despite their diversity, they all share one key property: they are hydrophobic.
+
+Crucial insight: lipids are hydrophobic molecules that store energy, form cell membranes, and act as signalling molecules. Their hydrophobicity is key to their function. Without lipids, cell membranes could not exist, and life as we know it would be impossible.`
+    },
+    { 
+      q: "What are the main types of lipids and their functions?",
+      body: `Lipids are classified into several main types based on their structure and function. Understanding this classification is essential for understanding lipid biology.
+
+The main types of lipids are: fatty acids (the building blocks), triglycerides (energy storage), phospholipids (membrane components), steroids (cholesterol and hormones), and waxes (protection).
+
+My Socratic question: a cell membrane must separate the watery inside from the watery outside. Which lipid type is best suited for this job, and why?
+
+The answer is phospholipids. They have a hydrophilic head that faces water and two hydrophobic tails that hide from water. This amphipathic structure allows them to form a bilayer — the fundamental structure of all cell membranes. The hydrophilic heads face the water on both sides, while the hydrophobic tails face each other in the middle, creating a barrier that water-soluble molecules cannot cross.
+
+Crucial insight: lipids are classified by structure and function. Phospholipids form membranes; triglycerides store energy; steroids are hormones; fatty acids are building blocks; waxes provide protection.`
+    },
+    { 
+      q: "What are fatty acids and how are they classified?",
+      body: `Fatty acids are the simplest lipids and the building blocks of more complex lipids. They are long hydrocarbon chains with a carboxyl group (-COOH) at one end.
+
+My Socratic question: butter is solid at room temperature, while olive oil is liquid. What structural difference explains this?
+
+The answer is saturation. Saturated fatty acids have no double bonds between carbon atoms. The hydrocarbon chain is straight, allowing the molecules to pack tightly together, making them solid at room temperature. Unsaturated fatty acids have one or more double bonds, which create kinks in the chain. These kinks prevent tight packing, making them liquid at room temperature.
+
+Fatty acids are classified by: chain length (short, medium, long), degree of saturation (saturated, monounsaturated, polyunsaturated), and the position of double bonds (omega-3, omega-6, omega-9).
+
+Crucial insight: fatty acids are the building blocks of many lipids. Saturation affects physical properties and health implications. Saturated fats are solid at room temperature; unsaturated fats are liquid.`
+    },
+    { 
+      q: "What are triglycerides and why are they important for energy storage?",
+      body: `Triglycerides are the main form of energy storage in the body. They consist of three fatty acids attached to a glycerol backbone. The three fatty acids can be the same or different.
+
+My Socratic question: why do triglycerides store more energy per gram than carbohydrates?
+
+The answer is that triglycerides are highly reduced — they have many C-H bonds. When these bonds are oxidised, they release more energy per gram than carbohydrates. Triglycerides provide about 9 kcal per gram, compared to 4 kcal per gram for carbohydrates. This is why fat is the body's primary energy reserve.
+
+Triglycerides are stored in adipose tissue (fat cells). When the body needs energy, hormones trigger the breakdown of triglycerides into fatty acids and glycerol, which are released into the blood and used for energy.
+
+Crucial insight: triglycerides are efficient energy storage molecules. They provide more than twice the energy per gram of carbohydrates. They are stored in adipose tissue and mobilised when energy is needed.`
+    },
+    { 
+      q: "What are phospholipids and why are they essential for cell membranes?",
+      body: `Phospholipids are the main components of cell membranes. They are amphipathic molecules, meaning they have both hydrophilic and hydrophobic regions.
+
+My Socratic question: if phospholipids are placed in water, how do they arrange themselves, and why?
+
+The answer is that they spontaneously form a bilayer. The hydrophilic heads face the water on both sides, while the hydrophobic tails face each other in the middle of the bilayer. This arrangement creates a barrier that separates the inside of the cell from the outside. Water-soluble molecules cannot cross the hydrophobic core of the membrane, which is why the membrane is selectively permeable.
+
+Phospholipids consist of a glycerol backbone, two fatty acid tails (hydrophobic), and a phosphate group with a polar head group (hydrophilic). The head group can be choline, ethanolamine, serine, or other polar molecules, giving different types of phospholipids.
+
+Crucial insight: phospholipids form the bilayer structure of all cell membranes. Their amphipathic nature is essential for membrane formation and function.`
+    },
+    { 
+      q: "What are steroids and what are their functions?",
+      body: `Steroids are lipids with a characteristic four-ring structure. They include cholesterol, which is a component of cell membranes, and steroid hormones like testosterone, oestrogen, and cortisol.
+
+My Socratic question: cholesterol is often viewed negatively, but it is essential for life. What does cholesterol do in the body?
+
+The answer is that cholesterol is a component of cell membranes, helping to maintain membrane fluidity and stability. It is also the precursor for all steroid hormones (testosterone, oestrogen, progesterone, cortisol, aldosterone) and for bile acids, which are essential for fat digestion.
+
+Cholesterol is synthesised in the liver and obtained from the diet. Too much cholesterol is harmful because it can deposit in arteries, causing atherosclerosis. But some cholesterol is essential.
+
+Crucial insight: steroids have a four-ring structure. Cholesterol is essential for membranes and is a precursor for steroid hormones and bile acids.`
+    },
+    { 
+      q: "What is the role of lipids in the diet?",
+      body: `Dietary lipids are essential for health. They provide energy, essential fatty acids (linoleic and linolenic acids), and fat-soluble vitamins (A, D, E, K). They also contribute to satiety and flavour.
+
+My Socratic question: why do we need to eat fat if we can make it from carbohydrates?
+
+The answer is that we cannot make essential fatty acids (linoleic and linolenic acids). These must be obtained from the diet because the body lacks the enzymes to introduce double bonds beyond carbon 9. Also, fat-soluble vitamins require dietary fat for absorption. Without dietary fat, these vitamins cannot be absorbed efficiently.
+
+Essential fatty acids are important for cell membrane function, immune function, and the production of signalling molecules called eicosanoids.
+
+Crucial insight: dietary lipids provide energy, essential fatty acids, and fat-soluble vitamins. Some fats are essential and must be obtained from food.`
+    },
+    { 
+      q: "How are lipids digested and transported in the body?",
+      body: `Lipid digestion and transport are complex because lipids are insoluble in water. The body has special mechanisms to handle hydrophobic molecules.
+
+My Socratic question: lipids are insoluble in water. How does the body transport them in the watery blood?
+
+The answer is that lipids are packaged into lipoproteins — particles with a hydrophobic core and a hydrophilic shell. The core contains triglycerides and cholesterol esters; the shell contains phospholipids, free cholesterol, and apolipoproteins (proteins that stabilise the particle and target it to tissues).
+
+Lipid digestion begins in the mouth and stomach but mainly occurs in the small intestine. Bile salts emulsify lipids, breaking them into small droplets. Pancreatic lipases break down triglycerides into fatty acids and monoglycerides, which are absorbed by intestinal cells.
+
+Crucial insight: lipids are transported in the blood as lipoproteins. Different lipoproteins (chylomicrons, VLDL, LDL, HDL) have different functions in lipid transport.`
+    },
+    { 
+      q: "What is the clinical relevance of lipids?",
+      body: `Lipids are clinically important because lipid disorders contribute to cardiovascular disease, which is the leading cause of death worldwide.
+
+My Socratic question: why do doctors measure cholesterol levels, and what do the numbers mean?
+
+The answer is that cholesterol levels predict cardiovascular risk. High LDL (low-density lipoprotein) is called "bad cholesterol" because it deposits cholesterol in arteries, causing atherosclerosis. High HDL (high-density lipoprotein) is called "good cholesterol" because it removes cholesterol from arteries. Measuring both helps assess risk and guide treatment.
+
+Lipid disorders include hyperlipidaemia (high lipids), hypercholesterolaemia (high cholesterol), and hypertriglyceridaemia (high triglycerides). These are treated with lifestyle changes (diet, exercise) and medications like statins.
+
+Crucial insight: lipid disorders cause cardiovascular disease. Understanding lipids is essential for preventing heart disease and stroke.`
+    },
+    { 
+      q: "What is the fluid mosaic model of the cell membrane and how do lipids contribute?",
+      body: `The cell membrane is described by the fluid mosaic model. This model explains how the membrane is both fluid and composed of many different molecules.
+
+My Socratic question: why is the cell membrane described as a "fluid mosaic"?
+
+The answer is that the membrane is fluid (lipids and proteins can move laterally within the membrane) and a mosaic (many different molecules are embedded in it). The phospholipid bilayer is the basic structure, with proteins embedded in or associated with it. Cholesterol modulates membrane fluidity.
+
+The fluidity of the membrane is essential for membrane function. It allows proteins to move and interact, facilitates cell signalling, and enables membrane fusion and fission (as in exocytosis and endocytosis).
+
+Crucial insight: the cell membrane is a fluid mosaic of lipids and proteins. This structure allows cells to communicate, transport molecules, and interact with their environment.`
+    }
+  ],
+  theory: [
+    { q: "What are lipids and what are their main functions?", a: "Lipids are hydrophobic molecules that store energy, form cell membranes, and act as signalling molecules. They include fats, oils, phospholipids, and steroids." },
+    { q: "What are the main types of lipids?", a: "Fatty acids (building blocks), triglycerides (energy storage), phospholipids (membranes), steroids (cholesterol and hormones), and waxes (protection)." },
+    { q: "What is the difference between saturated and unsaturated fatty acids?", a: "Saturated fatty acids have no double bonds and are solid at room temperature. Unsaturated fatty acids have double bonds and are liquid at room temperature." },
+    { q: "What are triglycerides and where are they stored?", a: "Triglycerides are three fatty acids attached to glycerol. They are stored in adipose tissue as the body's main energy reserve." },
+    { q: "What are phospholipids and what is their role?", a: "Phospholipids are amphipathic molecules with a hydrophilic head and hydrophobic tails. They form the bilayer structure of cell membranes." },
+    { q: "What are steroids and what are their functions?", a: "Steroids are lipids with a four-ring structure. They include cholesterol (membrane component) and steroid hormones (testosterone, oestrogen, cortisol)." },
+    { q: "Why are some fatty acids considered essential?", a: "Essential fatty acids (linoleic and linolenic acids) cannot be synthesised by the body and must be obtained from the diet." },
+    { q: "How are lipids transported in the blood?", a: "Lipids are transported as lipoproteins — particles with a hydrophobic core and hydrophilic shell (chylomicrons, VLDL, LDL, HDL)." },
+    { q: "What is the clinical relevance of lipid measurement?", a: "Cholesterol levels predict cardiovascular risk. High LDL and low HDL are risk factors for heart disease." },
+    { q: "What is the fluid mosaic model of the membrane?", a: "The fluid mosaic model describes the cell membrane as a fluid lipid bilayer with embedded proteins that can move laterally." }
+  ],
+  videos: [
+    { channel: "Biological Chemistry", title: "Lipids Overview", note: "Types and functions of lipids.", url: "" },
+    { channel: "Biological Chemistry", title: "Fatty Acids and Triglycerides", note: "Structure and function of storage lipids.", url: "" },
+    { channel: "Biological Chemistry", title: "Lipoproteins and Cholesterol", note: "How lipids are transported and measured.", url: "" }
+  ],
+  mcqs: [
+    { q: "Lipids are defined as molecules that are:", o: ["Water-soluble", "Hydrophobic", "Hydrophilic", "Polar"], a: 1, w: "Lipids are hydrophobic (water-fearing) molecules." },
+    { q: "The main energy storage lipid in the body is:", o: ["Phospholipid", "Triglyceride", "Cholesterol", "Steroid"], a: 1, w: "Triglycerides are the main energy storage lipid." },
+    { q: "The main component of cell membranes is:", o: ["Triglyceride", "Phospholipid", "Cholesterol", "Wax"], a: 1, w: "Phospholipids form the bilayer of cell membranes." },
+    { q: "Steroids are characterised by:", o: ["A glycerol backbone", "A phosphate group", "A four-ring structure", "Fatty acid chains"], a: 2, w: "Steroids have a characteristic four-ring structure." },
+    { q: "Saturated fatty acids have:", o: ["Double bonds", "No double bonds", "Hydrophilic heads", "Four rings"], a: 1, w: "Saturated fatty acids have no double bonds." },
+    { q: "Unsaturated fatty acids have:", o: ["No double bonds", "Double bonds", "Only hydrophilic heads", "Four rings"], a: 1, w: "Unsaturated fatty acids have one or more double bonds." },
+    { q: "Triglycerides consist of:", o: ["Glycerol and three fatty acids", "Glycerol and two fatty acids", "Glycerol and a phosphate", "Cholesterol and fatty acids"], a: 0, w: "Triglycerides are glycerol plus three fatty acids." },
+    { q: "Phospholipids are amphipathic because they have:", o: ["Only hydrophobic tails", "Only hydrophilic heads", "Both hydrophilic and hydrophobic regions", "Neither region"], a: 2, w: "Phospholipids have both hydrophilic and hydrophobic regions." },
+    { q: "Cholesterol is a:", o: ["Phospholipid", "Triglyceride", "Steroid", "Fatty acid"], a: 2, w: "Cholesterol is a steroid." },
+    { q: "Essential fatty acids must be obtained from the diet because:", o: ["They are toxic", "The body cannot synthesise them", "They are water-soluble", "They are digested slowly"], a: 1, w: "Essential fatty acids cannot be synthesised by the body." },
+    { q: "Lipids are transported in the blood as:", o: ["Free fatty acids only", "Lipoproteins", "Triglycerides only", "Cholesterol only"], a: 1, w: "Lipids are transported as lipoproteins." },
+    { q: "High LDL cholesterol is associated with:", o: ["Reduced heart disease risk", "Increased heart disease risk", "Better metabolism", "Normal cholesterol"], a: 1, w: "High LDL is a risk factor for heart disease." },
+    { q: "Which vitamin requires dietary fat for absorption?", o: ["Vitamin C", "Vitamin B12", "Vitamin D", "Vitamin B6"], a: 2, w: "Fat-soluble vitamins (A, D, E, K) require fat for absorption." },
+    { q: "The fluid mosaic model describes:", o: ["Protein structure", "DNA structure", "Cell membrane structure", "Carbohydrate structure"], a: 2, w: "The fluid mosaic model describes the cell membrane." },
+    { q: "Butter is solid at room temperature because it contains:", o: ["Unsaturated fatty acids", "Saturated fatty acids", "Phospholipids", "Steroids"], a: 1, w: "Saturated fatty acids make butter solid at room temperature." },
+    { q: "Olive oil is liquid at room temperature because it contains:", o: ["Saturated fatty acids", "Unsaturated fatty acids", "Phospholipids", "Steroids"], a: 1, w: "Unsaturated fatty acids make olive oil liquid." },
+    { q: "The main function of adipose tissue is to:", o: ["Store glycogen", "Store triglycerides", "Store cholesterol", "Store protein"], a: 1, w: "Adipose tissue stores triglycerides." },
+    { q: "Phospholipids in cell membranes form a:", o: ["Micelle", "Bilayer", "Monolayer", "Vesicle"], a: 1, w: "Phospholipids form a bilayer in cell membranes." },
+    { q: "Cortisol is an example of a:", o: ["Fatty acid", "Triglyceride", "Steroid hormone", "Phospholipid"], a: 2, w: "Cortisol is a steroid hormone." },
+    { q: "Bile salts help with lipid digestion by:", o: ["Hydrolysing lipids", "Emulsifying lipids", "Transporting lipids", "Storing lipids"], a: 1, w: "Bile salts emulsify lipids for digestion." },
+    { q: "Lipoproteins with high density (HDL) are associated with:", o: ["Increased heart disease risk", "Reduced heart disease risk", "No effect on heart disease", "Increased cholesterol"], a: 1, w: "HDL is protective against heart disease." },
+    { q: "Fatty acids are stored in the body as:", o: ["Free fatty acids", "Triglycerides", "Phospholipids", "Cholesterol"], a: 1, w: "Fatty acids are stored as triglycerides." },
+    { q: "The main function of cholesterol in membranes is to:", o: ["Store energy", "Regulate membrane fluidity", "Catalyse reactions", "Transport proteins"], a: 1, w: "Cholesterol regulates membrane fluidity." },
+    { q: "Essential fatty acids include:", o: ["Palmitic acid", "Stearic acid", "Linoleic acid", "Oleic acid"], a: 2, w: "Linoleic acid is an essential fatty acid." },
+    { q: "Fat-soluble vitamins are absorbed with:", o: ["Water", "Dietary fat", "Carbohydrates", "Protein"], a: 1, w: "Fat-soluble vitamins require dietary fat for absorption." },
+    { q: "Lipids are digested primarily in the:", o: ["Stomach", "Small intestine", "Large intestine", "Mouth"], a: 1, w: "Lipid digestion occurs mainly in the small intestine." },
+    { q: "The hydrophilic head of a phospholipid is made of:", o: ["Fatty acids", "Phosphate and glycerol", "Cholesterol", "Steroid rings"], a: 1, w: "The hydrophilic head contains phosphate and glycerol." },
+    { q: "Cholesterol is the precursor for:", o: ["Fatty acids", "Triglycerides", "Steroid hormones", "Phospholipids"], a: 2, w: "Cholesterol is the precursor for steroid hormones." },
+    { q: "Lipids provide approximately how many calories per gram?", o: ["4 kcal", "7 kcal", "9 kcal", "3 kcal"], a: 2, w: "Lipids provide about 9 kcal per gram." },
+    { q: "Lipids are hydrophobic because they are composed mainly of:", o: ["Carbon and hydrogen", "Carbon and oxygen", "Nitrogen and hydrogen", "Phosphate and glycerol"], a: 0, w: "Lipids are mainly carbon and hydrogen, making them hydrophobic." }
+  ]
+};
+
 /* --------------------------- psy:1 --------------------------- */
 const T_PSY_PARADIGMS = {
   courseId: "psy",
@@ -11762,6 +12297,10 @@ const CONTENT = {
   "bio:2": T_BIO_CARBS,
   "bio:3": T_BIO_AMINO,
   "bio:4": T_BIO_PROTEINS,
+  "bio:5": T_BIO_ENZYMES, 
+  "bio:6": T_BIO_INHIBITION,  
+  "bio:7": T_BIO_LIPIDS,  
+  "bio:8": T_BIO_NUCLEIC,
   "psy:0": T_PSY_OVERVIEW,
   "psy:1": T_PSY_PARADIGMS,
   "psy:2": T_PSY_BIOFOUND,
