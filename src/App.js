@@ -2621,6 +2621,469 @@ My answers. One: cyanide inhibits Complex IV (cytochrome c oxidase), which norma
   ]
 };
 
+// ==================== BIOCHEMISTRY TOPIC 7: PENTOSE PHOSPHATE PATHWAY ====================
+const T_BCH_PPP = {
+  courseId: "bch",
+  topicIndex: 7,
+  title: "Pentose Phosphate Pathway - The Pathway That Builds and Protects",
+  minutes: 30,
+  note: [
+    {
+      q: "Why does glucose need an alternative pathway when glycolysis already breaks it down?",
+      body: `You have already learned glycolysis — the pathway that breaks down glucose to produce ATP and pyruvate. Glycolysis is the universal energy pathway, running in every cell to extract chemical energy from glucose. It is the pathway that powers muscle contraction, nerve impulse transmission, and all the energy-requiring processes of life. Glycolysis is so fundamental that it is present in virtually every living organism on Earth.
+
+But glycolysis is not the only way glucose can be metabolised. There is another pathway, called the pentose phosphate pathway (PPP), that takes glucose-6-phosphate and processes it differently. This pathway is sometimes called the hexose monophosphate shunt or the phosphogluconate pathway.
+
+My Socratic question: if glycolysis already breaks down glucose to produce energy, why would a cell need an alternative pathway? What does the PPP do that glycolysis cannot?
+
+The answer lies in what glycolysis produces versus what the PPP produces. Glycolysis is about energy — it produces ATP and NADH, which are used to power cellular work. But cells also need other things: they need NADPH for biosynthesis and antioxidant defence, and they need ribose-5-phosphate for building DNA and RNA. Glycolysis cannot produce either of these essential molecules. The PPP exists to meet these specific needs.
+
+Think of it this way: glycolysis is like a power plant that burns fuel to generate electricity. The PPP is like a chemical factory that uses the same raw material to produce specific chemicals needed for manufacturing. Both are essential, but they serve different purposes. A cell cannot survive on ATP alone — it also needs building blocks and protection from oxidative damage.
+
+Crucial insight: the pentose phosphate pathway is an alternative route for glucose metabolism that produces NADPH (for biosynthesis and antioxidant defence) and ribose-5-phosphate (for nucleotide synthesis). It does not produce ATP but is essential for cell growth, repair, and protection against oxidative stress. Without the PPP, cells could not synthesise fatty acids, cholesterol, or nucleotides, and they would be vulnerable to oxidative damage.`
+    },
+    {
+      q: "Where does the PPP occur and how is it organised?",
+      body: `The pentose phosphate pathway takes place in the cytosol of the cell — the same compartment as glycolysis. This location is important because it allows the PPP to interact with glycolysis, sharing intermediates and responding to the same regulatory signals. The cytosol is the fluid portion of the cell where many metabolic pathways occur, including glycolysis, fatty acid synthesis, and the PPP.
+
+The pathway is divided into two distinct phases: the oxidative phase and the non-oxidative phase. Each phase has a different purpose and different regulatory characteristics.
+
+My Socratic question: why would the PPP be organised into two separate phases rather than a single continuous pathway?
+
+The answer is flexibility. The oxidative phase is irreversible and produces NADPH — it is the pathway's main source of reducing power. This phase is like a one-way street that converts glucose-6-phosphate into ribulose-5-phosphate while generating NADPH. Once this phase starts, it cannot be reversed.
+
+The non-oxidative phase is reversible and interconverts sugar phosphates — it allows the pathway to adapt to the cell's changing needs. This phase is like a roundabout that can direct traffic in different directions depending on what the cell needs.
+
+By having two phases, the cell can run the pathway in different ways depending on what it needs at any given moment. When the cell needs NADPH, it runs the oxidative phase. When it needs ribose-5-phosphate, it runs the non-oxidative phase. When it needs both, it runs both phases together. This flexibility is essential because cellular needs are constantly changing.
+
+Crucial insight: the PPP has two phases — an irreversible oxidative phase that produces NADPH and ribulose-5-phosphate, and a reversible non-oxidative phase that interconverts sugar phosphates. This organisation allows the pathway to adjust its output to meet the cell's specific needs, whether that is NADPH, ribose-5-phosphate, or both.`
+    },
+    {
+      q: "How does the oxidative phase produce NADPH?",
+      body: `The oxidative phase of the PPP consists of three reactions that convert glucose-6-phosphate to ribulose-5-phosphate. This phase is the main source of NADPH in the cell, producing two molecules of NADPH for each molecule of glucose-6-phosphate processed.
+
+The first reaction is catalysed by glucose-6-phosphate dehydrogenase (G6PD), the rate-limiting enzyme of the entire pathway. G6PD oxidises glucose-6-phosphate to 6-phosphoglucono-δ-lactone, reducing NADP+ to NADPH. This is the committed step of the PPP and the main regulatory point. The reaction is: Glucose-6-phosphate + NADP+ → 6-phosphoglucono-δ-lactone + NADPH + H+.
+
+The second reaction is catalysed by gluconolactonase, which hydrolyses the lactone to 6-phosphogluconate. This is a simple hydrolysis reaction that prepares the molecule for the next step. The reaction is: 6-phosphoglucono-δ-lactone + H2O → 6-phosphogluconate.
+
+The third reaction is catalysed by 6-phosphogluconate dehydrogenase, which oxidatively decarboxylates 6-phosphogluconate to ribulose-5-phosphate, producing a second molecule of NADPH and releasing CO2. The reaction is: 6-phosphogluconate + NADP+ → Ribulose-5-phosphate + CO2 + NADPH + H+.
+
+My Socratic question: why does the oxidative phase produce CO2, and what does this tell you about what is happening to the glucose molecule?
+
+The answer is that the oxidative phase is removing one carbon atom from the glucose skeleton as CO2. This carbon is lost from carbon 1 of glucose, which is why the pathway is sometimes called the "oxidative decarboxylation" pathway. The loss of this carbon is what makes the pathway irreversible — once CO2 is released, the molecule cannot simply be converted back to glucose-6-phosphate. This is similar to how the TCA cycle loses CO2, but in the PPP, this happens to a sugar phosphate rather than to acetyl-CoA.
+
+Crucial insight: the oxidative phase consists of three reactions — G6PD (rate-limiting), gluconolactonase, and 6-phosphogluconate dehydrogenase — producing two NADPH and one CO2 per glucose-6-phosphate. This phase is irreversible and is the main source of NADPH in the cell. The first reaction is the committed step and the main regulatory point of the entire pathway.`
+    },
+    {
+      q: "How does the non-oxidative phase provide metabolic flexibility?",
+      body: `The non-oxidative phase of the PPP consists of a series of reversible reactions that convert ribulose-5-phosphate into other sugar phosphates. This phase does not produce NADPH — instead, it interconverts sugars to match the cell's needs.
+
+The non-oxidative phase begins with ribulose-5-phosphate, which is isomerised to ribose-5-phosphate (for nucleotide synthesis) or converted to xylulose-5-phosphate. These three-carbon and five-carbon sugars are then rearranged by two key enzymes: transketolase and transaldolase.
+
+Transketolase transfers two-carbon units between sugars. It requires thiamine pyrophosphate (TPP) as a cofactor, which is derived from vitamin B1 (thiamine). This is why thiamine deficiency can affect the PPP. The reaction is: Xylulose-5-phosphate + Ribose-5-phosphate ↔ Glyceraldehyde-3-phosphate + Sedoheptulose-7-phosphate.
+
+Transaldolase transfers three-carbon units between sugars. Together with transketolase, it converts ribulose-5-phosphate into fructose-6-phosphate and glyceraldehyde-3-phosphate, both of which can re-enter glycolysis.
+
+My Socratic question: why is the non-oxidative phase reversible, and how does this affect the pathway's function?
+
+The answer is that reversibility allows the pathway to operate in either direction depending on the cell's needs. If the cell needs ribose-5-phosphate for nucleotide synthesis, the non-oxidative phase can run in reverse, using glycolytic intermediates to produce ribose-5-phosphate. If the cell needs NADPH but not ribose-5-phosphate, the non-oxidative phase can run forward, converting ribulose-5-phosphate into glycolytic intermediates that feed back into glycolysis. This is why the PPP is so flexible — it can adapt to the cell's changing requirements for NADPH, ribose-5-phosphate, or both.
+
+Crucial insight: the non-oxidative phase interconverts sugar phosphates through transketolase and transaldolase. Because these reactions are reversible, the pathway can adapt to cellular needs — producing ribose-5-phosphate when needed or re-entering glycolysis when the cell needs energy or NADPH. This flexibility is essential for the pathway to serve different purposes in different tissues and under different conditions.`
+    },
+    {
+      q: "Why are red blood cells so dependent on the PPP?",
+      body: `Red blood cells are a special case where the PPP is essential for survival. Unlike most cells, red blood cells have no mitochondria and cannot perform oxidative phosphorylation. They rely entirely on glycolysis for ATP production. But they also have another critical need: protecting haemoglobin from oxidation.
+
+Haemoglobin is the protein that carries oxygen in red blood cells. But oxygen is a reactive molecule that can damage proteins, including haemoglobin. To protect haemoglobin from oxidation, red blood cells use glutathione, a powerful antioxidant.
+
+Glutathione exists in two forms: reduced (GSH) and oxidised (GSSG). Reduced glutathione is the active form that protects cells from oxidative damage. When glutathione becomes oxidised, it must be reduced back to its active form, and this requires NADPH. The reaction is: GSSG + NADPH + H+ → 2GSH + NADP+.
+
+My Socratic question: if red blood cells have no mitochondria, where do they get the NADPH needed to keep glutathione reduced?
+
+The answer is the PPP. Red blood cells depend entirely on the PPP for NADPH production. Without the PPP, they could not keep glutathione reduced, and haemoglobin would be oxidised and damaged. This is why the PPP is so important in red blood cells — it keeps the oxygen-carrying protein functional.
+
+When haemoglobin is oxidised, it forms methaemoglobin, which cannot carry oxygen. The body has enzymes to reduce methaemoglobin back to haemoglobin, but these also require NADPH. So the PPP is essential for maintaining both haemoglobin and its function.
+
+Crucial insight: red blood cells depend on the PPP for NADPH, which maintains glutathione in its reduced form. Reduced glutathione protects haemoglobin from oxidation. Without NADPH, haemoglobin is oxidised, denatures, and red blood cells are destroyed — leading to haemolytic anaemia. This is why the PPP is essential for red blood cell survival.`
+    },
+    {
+      q: "What is G6PD deficiency and why is it the most common enzyme deficiency?",
+      body: `Glucose-6-phosphate dehydrogenase (G6PD) deficiency is the most common human enzyme deficiency, affecting hundreds of millions of people worldwide. It is an X-linked recessive condition, meaning it affects males more frequently because they have only one X chromosome. Females can be carriers or affected depending on X-inactivation.
+
+G6PD deficiency reduces the production of NADPH in red blood cells. Without enough NADPH, glutathione cannot be maintained in its reduced form, and red blood cells become vulnerable to oxidative damage.
+
+Normally, this is not a problem — red blood cells can survive with reduced G6PD activity as long as they are not exposed to oxidative stress. But when they are exposed to certain triggers — such as certain drugs, infections, or foods like fava beans — the oxidative stress overwhelms their limited protective capacity.
+
+My Socratic question: why do symptoms of G6PD deficiency appear only after exposure to triggers, rather than being present all the time?
+
+The answer is that red blood cells can tolerate a certain amount of oxidative stress. When G6PD activity is reduced but not absent, the cells can still maintain enough glutathione under normal conditions. But when oxidative stress increases (from drugs, infections, or certain foods), the demand for NADPH exceeds the supply, glutathione becomes depleted, and haemoglobin is oxidised and damaged. This leads to haemolysis — the destruction of red blood cells.
+
+The classic trigger is fava beans, which contain compounds that cause oxidative stress. This condition is called favism. Other triggers include certain drugs like primaquine (an antimalarial), sulfonamides, aspirin, and some antibiotics. Infections can also trigger haemolysis because the immune response produces reactive oxygen species.
+
+Crucial insight: G6PD deficiency causes haemolytic anaemia after exposure to oxidative stressors. The condition is X-linked recessive, affects males more frequently, and is triggered by drugs (such as primaquine and sulfonamides), infections, and fava beans. The haemolysis occurs because red blood cells cannot produce enough NADPH to maintain glutathione and protect haemoglobin from oxidation.`
+    },
+    {
+      q: "How is the PPP regulated and why does this matter?",
+      body: `The pentose phosphate pathway is regulated primarily by the availability of NADP+ — the oxidised form of NADPH. The first enzyme of the pathway, glucose-6-phosphate dehydrogenase (G6PD), is the key regulatory enzyme.
+
+G6PD is activated by NADP+ and inhibited by NADPH. When NADPH is being consumed (for biosynthesis or antioxidant defence), NADP+ accumulates, activating the pathway to produce more NADPH. When NADPH is abundant, it inhibits the enzyme, preventing unnecessary production. This is a classic example of product inhibition.
+
+My Socratic question: why is it important that the PPP is regulated by NADP+ rather than by the concentration of glucose-6-phosphate?
+
+The answer is that the PPP serves a specific purpose — producing NADPH when it is needed. If the pathway were regulated by substrate availability alone, it would produce NADPH whenever glucose-6-phosphate was available, regardless of whether the cell actually needed it. By regulating the pathway through NADP+, the cell ensures that NADPH is produced only when it is required.
+
+There is also regulation at the level of gene expression. In tissues that need large amounts of NADPH, such as the liver and adipose tissue, G6PD expression is upregulated. Hormones such as insulin increase G6PD expression, while glucagon decreases it. This allows the pathway to be adapted to the tissue's needs.
+
+Crucial insight: the PPP is regulated by NADP+ availability. G6PD is activated by NADP+ and inhibited by NADPH. When NADPH is needed, NADP+ accumulates and activates the pathway. When NADPH is abundant, it inhibits the enzyme, preventing wasteful production. This ensures that the pathway produces NADPH only when it is needed, conserving resources and preventing unnecessary glucose consumption.`
+    },
+    {
+      q: "How does the PPP contribute to cancer metabolism?",
+      body: `Cancer cells have altered metabolism, and the PPP is often upregulated in tumours. This is part of the metabolic reprogramming that supports rapid cell growth, known as the Warburg effect.
+
+Cancer cells grow rapidly and need building blocks for new cells. They need ribose-5-phosphate for nucleotide synthesis to build DNA and RNA. They also need NADPH for biosynthesis (fatty acids, cholesterol) and for protecting themselves from the oxidative stress caused by rapid growth and by chemotherapy.
+
+My Socratic question: why would a cancer cell prefer to use the PPP even when it could just use glycolysis for energy?
+
+The answer is that the PPP provides what cancer cells need most: building blocks and protection. While glycolysis provides ATP, the PPP provides the ribose-5-phosphate needed for nucleotides and the NADPH needed for biosynthesis and antioxidant defence. Cancer cells need both energy and building blocks, so they upregulate both pathways.
+
+Cancer cells also use NADPH to protect themselves from the oxidative stress caused by rapid growth and by chemotherapy. Many cancer treatments work by generating reactive oxygen species (ROS) that damage DNA and kill cancer cells. If cancer cells have high NADPH levels, they can neutralise these ROS and become resistant to treatment.
+
+Crucial insight: the PPP is often upregulated in cancer cells to provide NADPH (for biosynthesis and antioxidant defence) and ribose-5-phosphate (for nucleotide synthesis) to support rapid growth. This makes the PPP a potential target for cancer therapy. Inhibiting the PPP could starve cancer cells of the building blocks they need and make them more vulnerable to treatment.`
+    },
+    {
+      q: "Why does the PPP matter in clinical medicine?",
+      body: `The pentose phosphate pathway is clinically important for several reasons, and understanding it is essential for diagnosing and managing certain conditions.
+
+First, G6PD deficiency is the most common enzyme deficiency, affecting hundreds of millions of people. Diagnosing G6PD deficiency is important because patients need to avoid drugs and foods that can trigger haemolysis. The diagnosis is made by measuring G6PD activity in red blood cells, which should be done when the patient is not actively haemolysing to avoid false normal results.
+
+Second, the PPP is involved in the metabolism of many drugs. Some drugs require NADPH for their metabolism, and patients with G6PD deficiency may have altered drug metabolism. This can affect drug efficacy and toxicity.
+
+Third, the PPP is a potential target for cancer therapy. Inhibiting the PPP could starve cancer cells of the building blocks they need and make them more vulnerable to treatment. Several drugs that target the PPP are in development.
+
+Fourth, the PPP is involved in the formation of HbA1c, the glycosylated haemoglobin used to monitor diabetes. Glucose attaches to haemoglobin through a reaction that begins with the formation of a hemiacetal, and the PPP is involved in the metabolism of glucose in red blood cells.
+
+Crucial insight: the PPP is clinically important because of G6PD deficiency (the most common enzyme deficiency), its role in drug metabolism, its potential as a cancer therapy target, and its involvement in HbA1c formation. Understanding the PPP is essential for understanding these clinical conditions and for providing appropriate patient care.`
+    },
+    {
+      q: "Consolidation and your final test on the PPP.",
+      body: `Your cognitive map for the pentose phosphate pathway:
+
+DEFINITION: The pentose phosphate pathway is an alternative route for glucose metabolism that produces NADPH and ribose-5-phosphate. It does not produce ATP.
+
+LOCATION: Cytosol of the cell.
+
+TWO PHASES:
+• Oxidative phase (irreversible): produces NADPH and ribulose-5-phosphate
+• Non-oxidative phase (reversible): interconverts sugar phosphates
+
+KEY ENZYME: Glucose-6-phosphate dehydrogenase (G6PD) — the first and rate-limiting enzyme, activated by NADP+ and inhibited by NADPH.
+
+PRODUCTS: NADPH (for biosynthesis and antioxidant defence) and ribose-5-phosphate (for nucleotide synthesis). Does not produce ATP.
+
+RED BLOOD CELLS: Depend on the PPP for NADPH to maintain glutathione and protect haemoglobin.
+
+CLINICAL RELEVANCE: G6PD deficiency causes haemolytic anaemia after oxidative stress. The PPP is upregulated in cancer to support rapid growth.
+
+Now your final test. A patient develops haemolytic anaemia after taking an antimalarial drug. The patient's red blood cells show Heinz bodies on peripheral smear.
+
+Question one: what enzyme deficiency is most likely responsible, and what is the normal function of this enzyme?
+Question two: why did the drug trigger haemolysis, and what is the role of glutathione in red blood cells?
+Question three: what test would confirm the diagnosis, and when should it be performed?
+
+My answers:
+One: G6PD (glucose-6-phosphate dehydrogenase) deficiency is most likely. G6PD is the first enzyme of the pentose phosphate pathway and produces NADPH from NADP+.
+Two: the drug causes oxidative stress. Red blood cells with G6PD deficiency cannot produce enough NADPH to maintain glutathione in its reduced form. Without reduced glutathione, haemoglobin is oxidised and denatures, forming Heinz bodies and causing haemolysis.
+Three: G6PD enzyme activity assay would confirm the diagnosis. It should be performed when the patient is not actively haemolysing because young red blood cells (reticulocytes) have higher G6PD activity and can give a false normal result.`
+    }
+  ],
+  theory: [
+    { q: "What is the pentose phosphate pathway and what does it produce?", a: "The pentose phosphate pathway is an alternative route for glucose metabolism that produces NADPH (for biosynthesis and antioxidant defence) and ribose-5-phosphate (for nucleotide synthesis). It does not produce ATP." },
+    { q: "Where does the pentose phosphate pathway occur?", a: "The PPP occurs in the cytosol of the cell." },
+    { q: "What are the two phases of the PPP?", a: "The oxidative phase (irreversible, produces NADPH and ribulose-5-phosphate) and the non-oxidative phase (reversible, interconverts sugar phosphates)." },
+    { q: "What is the key regulatory enzyme of the PPP?", a: "Glucose-6-phosphate dehydrogenase (G6PD) is the first and rate-limiting enzyme of the PPP." },
+    { q: "How is the PPP regulated?", a: "The PPP is regulated by NADP+ availability. G6PD is activated by NADP+ and inhibited by NADPH. When NADPH is needed, NADP+ accumulates and activates the pathway." },
+    { q: "Why is the PPP important in red blood cells?", a: "Red blood cells depend on the PPP for NADPH, which maintains glutathione in its reduced form to protect haemoglobin from oxidation. Without NADPH, haemoglobin is oxidised and red blood cells are destroyed." },
+    { q: "What is G6PD deficiency and what does it cause?", a: "G6PD deficiency is the most common human enzyme deficiency. It causes haemolytic anaemia after exposure to oxidative stressors (drugs, infections, fava beans) because red blood cells cannot produce enough NADPH to protect themselves." },
+    { q: "How is G6PD deficiency diagnosed?", a: "G6PD deficiency is diagnosed by measuring G6PD enzyme activity in red blood cells. The test should be performed when the patient is not actively haemolysing to avoid false normal results." },
+    { q: "What is the role of the PPP in cancer metabolism?", a: "The PPP is often upregulated in cancer cells to provide NADPH (for biosynthesis and antioxidant defence) and ribose-5-phosphate (for nucleotide synthesis) to support rapid growth." },
+    { q: "What are Heinz bodies and what do they indicate?", a: "Heinz bodies are inclusions of oxidised, denatured haemoglobin in red blood cells. They indicate oxidative damage and are seen in G6PD deficiency and other conditions causing oxidative stress." }
+  ],
+  videos: [
+    { channel: "Biochemistry", title: "Pentose Phosphate Pathway", note: "The oxidative and non-oxidative phases.", url: "" },
+    { channel: "Biochemistry", title: "G6PD Deficiency", note: "The most common enzyme deficiency.", url: "" },
+    { channel: "Biochemistry", title: "PPP and Cancer Metabolism", note: "How the PPP supports cancer cell growth.", url: "" }
+  ],
+  mcqs: [
+    { q: "The pentose phosphate pathway produces:", o: ["ATP and NADPH", "NADPH and ribose-5-phosphate", "ATP and ribose-5-phosphate", "NADH and ATP"], a: 1, w: "The PPP produces NADPH and ribose-5-phosphate. It does not produce ATP." },
+    { q: "NADPH is essential for:", o: ["Glycolysis", "Fatty acid synthesis and antioxidant defence", "ATP production", "Glucose storage"], a: 1, w: "NADPH is essential for reductive biosynthesis (fatty acids, cholesterol, nucleotides) and for protecting cells against oxidative damage." },
+    { q: "Ribose-5-phosphate is needed for:", o: ["Glycolysis", "Nucleotide synthesis", "Fatty acid synthesis", "ATP production"], a: 1, w: "Ribose-5-phosphate is needed for nucleotide synthesis." },
+    { q: "The oxidative phase of the PPP produces:", o: ["NADPH and ribulose-5-phosphate", "ATP and NADPH", "Ribose-5-phosphate only", "Fructose-6-phosphate"], a: 0, w: "The oxidative phase produces NADPH and ribulose-5-phosphate." },
+    { q: "The non-oxidative phase of the PPP:", o: ["Produces NADPH", "Interconverts sugar phosphates", "Produces ATP", "Is irreversible"], a: 1, w: "The non-oxidative phase interconverts sugar phosphates and is reversible." },
+    { q: "The first and rate-limiting enzyme of the PPP is:", o: ["Hexokinase", "Phosphofructokinase", "Glucose-6-phosphate dehydrogenase", "Pyruvate kinase"], a: 2, w: "Glucose-6-phosphate dehydrogenase (G6PD) is the first and rate-limiting enzyme." },
+    { q: "G6PD is activated by:", o: ["NADPH", "ATP", "NADP+", "Glucose"], a: 2, w: "G6PD is activated by NADP+ (the substrate) and inhibited by NADPH (the product)." },
+    { q: "G6PD is inhibited by:", o: ["NADP+", "NADPH", "ATP", "ADP"], a: 1, w: "G6PD is inhibited by NADPH through feedback inhibition." },
+    { q: "Red blood cells depend on the PPP for:", o: ["ATP", "NADPH", "Ribose-5-phosphate", "Glucose"], a: 1, w: "Red blood cells depend on the PPP for NADPH to protect haemoglobin from oxidation." },
+    { q: "G6PD deficiency is an X-linked recessive condition that affects:", o: ["Males more frequently", "Females more frequently", "Both equally", "Only children"], a: 0, w: "G6PD deficiency is X-linked recessive, so it affects males more frequently." },
+    { q: "G6PD deficiency causes haemolytic anaemia after exposure to:", o: ["Glucose", "Oxidative stressors", "Fatty acids", "Oxygen"], a: 1, w: "Haemolysis is triggered by oxidative stressors like certain drugs, infections, or fava beans." },
+    { q: "Heinz bodies are:", o: ["Normal red blood cell inclusions", "Oxidised haemoglobin inclusions", "White blood cells", "Platelets"], a: 1, w: "Heinz bodies are inclusions of oxidised, denatured haemoglobin seen in G6PD deficiency." },
+    { q: "The PPP is important in cancer because:", o: ["It produces ATP", "It provides NADPH and ribose-5-phosphate for growth", "It inhibits tumour growth", "It produces glucose"], a: 1, w: "Cancer cells use the PPP to provide NADPH for biosynthesis and defence, and ribose-5-phosphate for nucleotide synthesis." },
+    { q: "The non-oxidative phase of the PPP uses the enzymes:", o: ["Hexokinase and glucokinase", "Transketolase and transaldolase", "Pyruvate kinase and lactate dehydrogenase", "Isocitrate dehydrogenase"], a: 1, w: "Transketolase and transaldolase catalyse the reactions of the non-oxidative phase." },
+    { q: "G6PD deficiency is diagnosed by:", o: ["Blood glucose measurement", "G6PD enzyme activity assay", "Liver function tests", "Urine analysis"], a: 1, w: "G6PD deficiency is diagnosed by measuring G6PD enzyme activity in red blood cells." },
+    { q: "The PPP is most active in tissues that:", o: ["Produce ATP", "Synthesise fatty acids", "Store glycogen", "Break down proteins"], a: 1, w: "The PPP is most active in tissues that synthesise fatty acids (liver, adipose tissue) and in red blood cells." },
+    { q: "Glutathione protects cells by:", o: ["Producing ATP", "Acting as an antioxidant", "Synthesising proteins", "Storing glucose"], a: 1, w: "Glutathione acts as an antioxidant, protecting cells from oxidative damage." },
+    { q: "NADPH is required to maintain glutathione in its:", o: ["Oxidised form", "Reduced form", "Active form", "Inactive form"], a: 1, w: "NADPH is required to maintain glutathione in its reduced (active) form." },
+    { q: "The PPP is an alternative pathway for:", o: ["Protein metabolism", "Glucose metabolism", "Fat metabolism", "Amino acid metabolism"], a: 1, w: "The PPP is an alternative pathway for glucose metabolism." },
+    { q: "The PPP does NOT produce:", o: ["NADPH", "Ribose-5-phosphate", "ATP", "None of the above"], a: 2, w: "The PPP does not produce ATP." },
+    { q: "The first reaction of the oxidative phase is catalysed by:", o: ["Transketolase", "Glucose-6-phosphate dehydrogenase", "Phosphogluconate dehydrogenase", "Aldolase"], a: 1, w: "Glucose-6-phosphate dehydrogenase catalyses the first reaction of the oxidative phase." },
+    { q: "The non-oxidative phase is important for:", o: ["Producing NADPH only", "Interconverting sugars to meet cellular needs", "Producing ATP", "Producing lactate"], a: 1, w: "The non-oxidative phase interconverts sugars to meet cellular needs for ribose-5-phosphate or glycolytic intermediates." },
+    { q: "Favism is caused by:", o: ["Bacterial infection", "G6PD deficiency triggered by fava beans", "Vitamin deficiency", "Parasitic infection"], a: 1, w: "Favism is haemolytic anaemia caused by G6PD deficiency triggered by fava beans." },
+    { q: "The PPP is upregulated in cancer cells because:", o: ["It produces energy", "It provides building blocks and NADPH for rapid growth", "It produces glucose", "It produces lactate"], a: 1, w: "Cancer cells need NADPH for biosynthesis and defence, and ribose-5-phosphate for nucleotides." },
+    { q: "Which of the following is a drug that can trigger haemolysis in G6PD deficiency?", o: ["Paracetamol", "Aspirin", "Primaquine", "Penicillin"], a: 2, w: "Primaquine is an antimalarial that can trigger haemolysis in G6PD-deficient individuals." },
+    { q: "The PPP is located in the:", o: ["Mitochondria", "Nucleus", "Cytosol", "Endoplasmic reticulum"], a: 2, w: "The PPP is located in the cytosol." },
+    { q: "The oxidative phase of the PPP produces CO2 from:", o: ["Glucose-6-phosphate", "6-Phosphogluconate", "Ribulose-5-phosphate", "Fructose-6-phosphate"], a: 1, w: "6-Phosphogluconate is decarboxylated to produce CO2 in the oxidative phase." },
+    { q: "The PPP connects to glycolysis through:", o: ["Pyruvate", "Fructose-6-phosphate and glyceraldehyde-3-phosphate", "Acetyl-CoA", "Lactate"], a: 1, w: "The non-oxidative phase produces fructose-6-phosphate and glyceraldehyde-3-phosphate, which re-enter glycolysis." },
+    { q: "NADPH is used in:", o: ["Glycolysis", "Fatty acid synthesis", "The TCA cycle", "Oxidative phosphorylation"], a: 1, w: "NADPH is used in fatty acid synthesis and other reductive biosynthesis." },
+    { q: "A deficiency of G6PD is diagnosed by:", o: ["Blood glucose measurement", "G6PD enzyme activity assay", "Haemoglobin electrophoresis", "Coomb's test"], a: 1, w: "G6PD enzyme activity assay is the definitive diagnostic test." }
+  ]
+};
+
+// ==================== BIOCHEMISTRY TOPIC 8: GLUCONEOGENESIS ====================
+const T_BCH_GLUCONEO = {
+  courseId: "bch",
+  topicIndex: 8,
+  title: "Gluconeogenesis - Making Glucose When You Need It Most",
+  minutes: 30,
+  note: [
+    {
+      q: "Why does the body need to make its own glucose?",
+      body: `You have learned glycolysis — the pathway that breaks down glucose to produce ATP and pyruvate. Glycolysis is the universal energy pathway, running in every cell to extract chemical energy from glucose. It is the pathway that powers muscle contraction, nerve impulse transmission, and all the energy-requiring processes of life. But glycolysis creates a problem: it consumes glucose, and glucose is not always available from the diet.
+
+My Socratic question: your brain consumes about 120 grams of glucose per day, but you may not eat for 12 hours or more. Where does the glucose come from to keep your brain functioning during fasting?
+
+The answer is gluconeogenesis — the synthesis of new glucose from non-carbohydrate precursors. This process is essential for maintaining blood glucose levels during fasting, prolonged exercise, and starvation. Without gluconeogenesis, your brain would run out of fuel and you would lose consciousness and eventually die.
+
+Gluconeogenesis is not simply the reverse of glycolysis. It uses many of the same enzymes but has three bypass reactions that circumvent the irreversible steps of glycolysis. These bypasses are essential because glycolysis has three steps that are irreversible and cannot be simply reversed.
+
+Gluconeogenesis is particularly important for maintaining blood glucose between meals. When you eat, glucose is absorbed and used for energy or stored as glycogen. But between meals, blood glucose would fall if the liver did not release glucose from glycogen and, when glycogen stores are depleted, produce new glucose through gluconeogenesis.
+
+Crucial insight: gluconeogenesis is the synthesis of new glucose from non-carbohydrate precursors (lactate, amino acids, glycerol). It maintains blood glucose levels during fasting and exercise, and is essential for brain function when dietary glucose is unavailable. Without gluconeogenesis, you could not survive more than a few hours without eating.`
+    },
+    {
+      q: "Where does gluconeogenesis occur and what does it use as fuel?",
+      body: `Gluconeogenesis takes place primarily in the liver, with a smaller contribution from the kidneys. It occurs in the cytosol and mitochondria of these cells, using a combination of enzymes that are not present in other tissues.
+
+The liver is the main site of gluconeogenesis because it is the organ responsible for maintaining blood glucose levels. The liver has the full complement of gluconeogenic enzymes, including glucose-6-phosphatase, which allows it to release free glucose into the blood. The kidneys contribute to gluconeogenesis during prolonged fasting, producing about 10-20% of the body's glucose.
+
+My Socratic question: gluconeogenesis uses non-carbohydrate precursors. What are these precursors, and where do they come from?
+
+The answer is that the main precursors for gluconeogenesis are: lactate, amino acids, and glycerol.
+
+Lactate comes from anaerobic glycolysis in muscle and red blood cells. During intense exercise, muscles produce large amounts of lactate because they are working without enough oxygen. This lactate is released into the blood and taken up by the liver for gluconeogenesis.
+
+Amino acids come from protein breakdown, especially alanine and glutamine. When the body is fasting, muscle protein is broken down to provide amino acids for gluconeogenesis. This is why prolonged fasting leads to muscle wasting.
+
+Glycerol comes from triglyceride breakdown in adipose tissue. When fat is broken down for energy, glycerol is released and can be used for gluconeogenesis.
+
+These precursors are converted to intermediates that enter the gluconeogenic pathway.
+
+Crucial insight: gluconeogenesis uses lactate, amino acids, and glycerol as precursors. These substrates come from muscle (lactate), protein breakdown (amino acids), and fat breakdown (glycerol). The liver converts these into glucose to maintain blood sugar.`
+    },
+    {
+      q: "How does gluconeogenesis get around the irreversible steps of glycolysis?",
+      body: `Gluconeogenesis is not simply the reverse of glycolysis — it uses many of the same enzymes but has three bypass reactions that circumvent the irreversible steps of glycolysis.
+
+Glycolysis has three irreversible steps, catalysed by hexokinase, phosphofructokinase-1 (PFK-1), and pyruvate kinase. These steps cannot be simply reversed because they are highly exergonic (release a lot of energy). Instead, gluconeogenesis uses different enzymes to bypass these steps.
+
+My Socratic question: glycolysis has three irreversible steps. If gluconeogenesis were just the reverse of glycolysis, those steps would need to be reversed. How does the body overcome this problem?
+
+The answer is that gluconeogenesis uses three bypass reactions, catalysed by different enzymes, to get around the irreversible steps of glycolysis.
+
+The first bypass converts pyruvate to phosphoenolpyruvate (PEP), bypassing pyruvate kinase. This uses two enzymes: pyruvate carboxylase and PEP carboxykinase (PEPCK).
+
+The second bypass converts fructose-1,6-bisphosphate to fructose-6-phosphate, bypassing phosphofructokinase-1. This uses fructose-1,6-bisphosphatase.
+
+The third bypass converts glucose-6-phosphate to glucose, bypassing hexokinase. This uses glucose-6-phosphatase.
+
+Each bypass consumes energy in the form of ATP or GTP, which is why gluconeogenesis is an energy-requiring process.
+
+Crucial insight: gluconeogenesis uses three bypass reactions to get around the irreversible steps of glycolysis. These bypasses are catalysed by different enzymes: pyruvate carboxylase/PEPCK, fructose-1,6-bisphosphatase, and glucose-6-phosphatase. These bypasses are what make gluconeogenesis possible.`
+    },
+    {
+      q: "How does gluconeogenesis convert pyruvate to PEP?",
+      body: `The first bypass reaction converts pyruvate to phosphoenolpyruvate (PEP), bypassing the irreversible pyruvate kinase step of glycolysis. This is the most complex bypass and requires two enzymes.
+
+Pyruvate kinase catalyses the conversion of PEP to pyruvate, producing ATP. To reverse this, gluconeogenesis uses two separate reactions.
+
+The first reaction is catalysed by pyruvate carboxylase, a mitochondrial enzyme. Pyruvate carboxylase converts pyruvate to oxaloacetate, using ATP and incorporating CO2. The reaction is: Pyruvate + CO2 + ATP → Oxaloacetate + ADP + Pi.
+
+The second reaction is catalysed by phosphoenolpyruvate carboxykinase (PEPCK), which converts oxaloacetate to PEP, releasing CO2 and using GTP. The reaction is: Oxaloacetate + GTP → PEP + GDP + CO2.
+
+My Socratic question: why does gluconeogenesis need to go through oxaloacetate rather than directly converting pyruvate to PEP?
+
+The answer is that the direct conversion of pyruvate to PEP is energetically unfavourable. By going through oxaloacetate, the cell can use the energy from ATP and GTP to drive the reaction forward. The CO2 that is added in the first reaction is removed in the second, so the net effect is the conversion of pyruvate to PEP, but the energy from ATP and GTP makes it possible.
+
+Crucial insight: the first bypass converts pyruvate to PEP via pyruvate carboxylase (mitochondria) and PEPCK (cytosol). This bypass consumes ATP and GTP and is activated by acetyl-CoA, linking gluconeogenesis to fatty acid oxidation. When fatty acids are being oxidised, acetyl-CoA levels rise and activate pyruvate carboxylase, stimulating gluconeogenesis.`
+    },
+    {
+      q: "How does gluconeogenesis convert fructose-1,6-bisphosphate to fructose-6-phosphate?",
+      body: `The second bypass reaction converts fructose-1,6-bisphosphate to fructose-6-phosphate, bypassing the irreversible phosphofructokinase step of glycolysis.
+
+Phosphofructokinase-1 (PFK-1) catalyses the phosphorylation of fructose-6-phosphate to fructose-1,6-bisphosphate, consuming ATP. To reverse this, gluconeogenesis uses fructose-1,6-bisphosphatase.
+
+Fructose-1,6-bisphosphatase catalyses the hydrolysis of fructose-1,6-bisphosphate to fructose-6-phosphate, releasing inorganic phosphate. The reaction is: Fructose-1,6-bisphosphate + H2O → Fructose-6-phosphate + Pi.
+
+This reaction is irreversible and is a key regulatory point of gluconeogenesis.
+
+My Socratic question: why is fructose-1,6-bisphosphatase regulated so tightly?
+
+The answer is that this step is the major control point of gluconeogenesis. Fructose-1,6-bisphosphatase is inhibited by AMP and activated by ATP and citrate. This regulation ensures that gluconeogenesis is active when energy is abundant and glycolysis is active when energy is needed.
+
+When AMP levels are high (indicating low energy), gluconeogenesis is inhibited. When ATP levels are high (indicating abundant energy), gluconeogenesis is activated. This ensures that the cell does not waste energy making glucose when it is already low on energy.
+
+Crucial insight: the second bypass converts fructose-1,6-bisphosphate to fructose-6-phosphate via fructose-1,6-bisphosphatase. This enzyme is inhibited by AMP and activated by ATP and citrate, ensuring that gluconeogenesis occurs when energy is available and is inhibited when energy is scarce.`
+    },
+    {
+      q: "How does gluconeogenesis release glucose into the blood?",
+      body: `The third bypass reaction converts glucose-6-phosphate to glucose, bypassing the irreversible hexokinase step of glycolysis. This is the final step of gluconeogenesis and the step that allows the liver to release glucose into the blood.
+
+Hexokinase catalyses the phosphorylation of glucose to glucose-6-phosphate, consuming ATP. To reverse this, gluconeogenesis uses glucose-6-phosphatase.
+
+Glucose-6-phosphatase catalyses the hydrolysis of glucose-6-phosphate to glucose and inorganic phosphate. The reaction is: Glucose-6-phosphate + H2O → Glucose + Pi.
+
+This enzyme is found in the liver and kidneys but not in muscle or brain, which is why these tissues cannot release glucose into the blood.
+
+My Socratic question: why does muscle lack glucose-6-phosphatase, and what does this mean for muscle glycogen?
+
+The answer is that muscle glycogen is meant to fuel muscle contraction, not to maintain blood glucose. If muscle had glucose-6-phosphatase, it could release glucose into the blood, but this would mean that the muscle was working against the liver's role in maintaining blood glucose. The absence of glucose-6-phosphatase in muscle ensures that glucose-6-phosphate from glycogen breakdown is used for energy by the muscle itself.
+
+When muscle breaks down glycogen, it produces glucose-6-phosphate, which enters glycolysis for energy production. It cannot release free glucose into the blood because it lacks glucose-6-phosphatase.
+
+Crucial insight: the third bypass converts glucose-6-phosphate to glucose via glucose-6-phosphatase. This enzyme is present in the liver and kidneys but not in muscle, explaining why the liver can release glucose into the blood while muscle cannot.`
+    },
+    {
+      q: "How is gluconeogenesis regulated to prevent futile cycling?",
+      body: `Gluconeogenesis is tightly regulated to ensure that glucose is synthesised only when needed. The regulation involves hormones, allosteric effectors, and substrate availability.
+
+My Socratic question: gluconeogenesis and glycolysis are opposing pathways. How does the cell prevent them from running simultaneously in a futile cycle?
+
+The answer is that the pathways are reciprocally regulated — when one is active, the other is inhibited.
+
+Hormonal regulation: Insulin promotes glycolysis and inhibits gluconeogenesis. Glucagon and cortisol promote gluconeogenesis and inhibit glycolysis. This makes sense: after a meal, insulin signals that glucose is abundant and should be stored, not made. During fasting, glucagon signals that glucose is needed and should be produced.
+
+Allosteric regulation: Fructose-2,6-bisphosphate activates glycolysis and inhibits gluconeogenesis. AMP activates glycolysis and inhibits gluconeogenesis. ATP and citrate inhibit glycolysis and activate gluconeogenesis.
+
+Fructose-2,6-bisphosphate is a key regulator. It is a potent activator of PFK-1 (glycolysis) and an inhibitor of fructose-1,6-bisphosphatase (gluconeogenesis). When glucose is abundant, fructose-2,6-bisphosphate levels rise, promoting glycolysis and inhibiting gluconeogenesis. When glucose is scarce, fructose-2,6-bisphosphate levels fall, allowing gluconeogenesis to proceed.
+
+Crucial insight: gluconeogenesis and glycolysis are reciprocally regulated. Insulin promotes glycolysis and inhibits gluconeogenesis; glucagon promotes gluconeogenesis and inhibits glycolysis. Allosteric regulators ensure that the pathways do not run simultaneously.`
+    },
+    {
+      q: "What is the Cori cycle and why is it important?",
+      body: `The Cori cycle is a metabolic pathway that links glycolysis in muscle to gluconeogenesis in the liver. It is an example of how different tissues cooperate to maintain blood glucose.
+
+My Socratic question: during intense exercise, muscle produces lactate. How does the body recycle this lactate to glucose, and why is this important?
+
+The answer is that during intense exercise, muscle produces lactate from pyruvate to regenerate NAD+ and allow glycolysis to continue. This is the same process that occurs in red blood cells, which also lack mitochondria.
+
+The lactate is released into the blood and taken up by the liver, where it is converted back to pyruvate and then to glucose by gluconeogenesis. The glucose is released back into the blood and can be used by the muscle again.
+
+This cycle allows the body to recycle lactate and maintain glucose supply during exercise. It also prevents lactate accumulation, which would otherwise cause acidosis. The Cori cycle is most active during intense exercise when muscles are producing large amounts of lactate.
+
+The Cori cycle also provides a way for the liver to remove lactate from the blood and convert it to glucose, which is why it is sometimes called the "lactate shuttle."
+
+Crucial insight: the Cori cycle links muscle glycolysis to liver gluconeogenesis. Lactate from muscle is converted to glucose in the liver and released back to the muscle. This recycles carbon and maintains glucose supply during exercise.`
+    },
+    {
+      q: "How does gluconeogenesis contribute to disease?",
+      body: `Gluconeogenesis is involved in several disease states, making it clinically relevant. Understanding gluconeogenesis is essential for understanding diabetes, starvation, and other metabolic disorders.
+
+My Socratic question: why do patients with diabetes have high blood glucose, and how does gluconeogenesis contribute to this?
+
+The answer is that in diabetes, insulin is deficient or ineffective. Without insulin, the liver continues to produce glucose through gluconeogenesis, even though blood glucose is already high. The liver fails to sense that glucose is abundant and continues to synthesise new glucose. This contributes to the hyperglycaemia of diabetes.
+
+In type 1 diabetes, the pancreas does not produce insulin, so the liver is constantly producing glucose through gluconeogenesis. In type 2 diabetes, the liver is resistant to insulin's signals, so it continues producing glucose even when insulin is present.
+
+In starvation, gluconeogenesis is essential for survival. The liver converts amino acids from muscle breakdown and glycerol from fat breakdown into glucose to supply the brain and other glucose-dependent tissues. When gluconeogenesis is impaired, blood glucose cannot be maintained, leading to hypoglycaemia.
+
+Certain drugs target gluconeogenesis. Metformin, the most common drug for type 2 diabetes, works by activating AMPK, which inhibits gluconeogenesis. This reduces the liver's production of glucose and helps control blood sugar.
+
+Crucial insight: gluconeogenesis is involved in diabetes (excessive gluconeogenesis contributes to hyperglycaemia) and starvation (gluconeogenesis is essential for survival). Understanding gluconeogenesis is essential for understanding these conditions and for understanding how drugs like metformin work.`
+    },
+    {
+      q: "Consolidation and your final test on gluconeogenesis.",
+      body: `Your cognitive map for gluconeogenesis:
+
+DEFINITION: synthesis of new glucose from non-carbohydrate precursors.
+
+LOCATION: liver (primary) and kidneys.
+
+SUBSTRATES: lactate, amino acids (especially alanine), glycerol.
+
+BYPASS REACTIONS:
+1. Pyruvate → PEP (pyruvate carboxylase + PEPCK)
+2. Fructose-1,6-bisphosphate → fructose-6-phosphate (fructose-1,6-bisphosphatase)
+3. Glucose-6-phosphate → glucose (glucose-6-phosphatase)
+
+REGULATION:
+• Hormones: insulin inhibits, glucagon and cortisol promote
+• Allosteric: ATP and citrate promote; AMP and fructose-2,6-bisphosphate inhibit
+
+CORI CYCLE: lactate from muscle → glucose in liver → glucose to muscle
+
+CLINICAL RELEVANCE: Diabetes (excessive gluconeogenesis), starvation (essential gluconeogenesis), metformin (inhibits gluconeogenesis)
+
+Now your final test. A patient with diabetes has high fasting blood glucose and takes metformin.
+
+Question one: what is gluconeogenesis, and which organ is the primary site of this process?
+Question two: why is gluconeogenesis elevated in diabetes, and how does this contribute to hyperglycaemia?
+Question three: how does metformin work to reduce blood glucose, and what is the mechanism of action?
+
+My answers:
+One: gluconeogenesis is the synthesis of new glucose from non-carbohydrate precursors (lactate, amino acids, glycerol). The liver is the primary site of gluconeogenesis.
+Two: gluconeogenesis is elevated in diabetes because insulin is deficient or ineffective. Without insulin, the liver continues to produce glucose even when blood glucose is already high, contributing to hyperglycaemia.
+Three: metformin reduces hepatic glucose production by activating AMPK, which inhibits gluconeogenesis. It does not increase insulin secretion but reduces the liver's production of glucose.`
+    }
+  ],
+  theory: [
+    { q: "What is gluconeogenesis and what are its substrates?", a: "Gluconeogenesis is the synthesis of new glucose from non-carbohydrate precursors. The main substrates are lactate, amino acids (especially alanine), and glycerol." },
+    { q: "Where does gluconeogenesis primarily occur?", a: "Gluconeogenesis occurs primarily in the liver, with a smaller contribution from the kidneys." },
+    { q: "What are the three bypass reactions of gluconeogenesis?", a: "Pyruvate to PEP (pyruvate carboxylase and PEPCK), fructose-1,6-bisphosphate to fructose-6-phosphate (fructose-1,6-bisphosphatase), and glucose-6-phosphate to glucose (glucose-6-phosphatase)." },
+    { q: "Why are bypass reactions needed in gluconeogenesis?", a: "Bypass reactions are needed to get around the irreversible steps of glycolysis (pyruvate kinase, phosphofructokinase, hexokinase) using different enzymes." },
+    { q: "How is gluconeogenesis regulated?", a: "Gluconeogenesis is regulated by hormones (insulin inhibits, glucagon and cortisol promote) and allosteric regulators (ATP and citrate promote; AMP and fructose-2,6-bisphosphate inhibit)." },
+    { q: "What is the Cori cycle?", a: "The Cori cycle links glycolysis in muscle to gluconeogenesis in the liver. Lactate from muscle is converted to glucose in the liver and released back to the muscle." },
+    { q: "Why is gluconeogenesis important in diabetes?", a: "In diabetes, gluconeogenesis is elevated because insulin is deficient. The liver continues to produce glucose even when blood glucose is high, contributing to hyperglycaemia." },
+    { q: "What is the role of glucose-6-phosphatase?", a: "Glucose-6-phosphatase converts glucose-6-phosphate to glucose, allowing the liver to release glucose into the blood. It is found in the liver and kidneys but not in muscle." },
+    { q: "How does metformin reduce blood glucose?", a: "Metformin reduces hepatic glucose production by activating AMPK, which inhibits gluconeogenesis." },
+    { q: "What hormone inhibits gluconeogenesis?", a: "Insulin inhibits gluconeogenesis." }
+  ],
+  videos: [
+    { channel: "Biochemistry", title: "Gluconeogenesis", note: "The synthesis of new glucose.", url: "" },
+    { channel: "Biochemistry", title: "The Cori Cycle", note: "Lactate recycling between muscle and liver.", url: "" },
+    { channel: "Biochemistry", title: "Gluconeogenesis in Diabetes", note: "Excessive glucose production in diabetes.", url: "" }
+  ],
+  mcqs: [
+    { q: "Gluconeogenesis is the synthesis of glucose from:", o: ["Carbohydrates", "Non-carbohydrate precursors", "Fatty acids", "Ketone bodies"], a: 1, w: "Gluconeogenesis synthesises glucose from non-carbohydrate precursors." },
+    { q: "The primary site of gluconeogenesis is the:", o: ["Muscle", "Liver", "Brain", "Adipose tissue"], a: 1, w: "The liver is the primary site of gluconeogenesis." },
+    { q: "Which of the following is NOT a substrate for gluconeogenesis?", o: ["Lactate", "Glycerol", "Amino acids", "Acetyl-CoA"], a: 3, w: "Acetyl-CoA is not a substrate for gluconeogenesis." },
+    { q: "The first bypass reaction of gluconeogenesis converts pyruvate to:", o: ["Oxaloacetate", "PEP", "Fructose-6-phosphate", "Glucose"], a: 1, w: "Pyruvate is converted to PEP via oxaloacetate." },
+    { q: "Pyruvate carboxylase is activated by:", o: ["NADH", "ATP", "Acetyl-CoA", "AMP"], a: 2, w: "Pyruvate carboxylase is activated by acetyl-CoA." },
+    { q: "Fructose-1,6-bisphosphatase is inhibited by:", o: ["ATP", "Citrate", "AMP", "Glucagon"], a: 2, w: "Fructose-1,6-bisphosphatase is inhibited by AMP." },
+    { q: "Glucose-6-phosphatase is found in:", o: ["Muscle", "Liver", "Brain", "Adipose tissue"], a: 1, w: "Glucose-6-phosphatase is found in the liver and kidneys." },
+    { q: "Glucose-6-phosphatase is NOT found in:", o: ["Liver", "Kidneys", "Muscle", "Intestine"], a: 2, w: "Muscle lacks glucose-6-phosphatase." },
+    { q: "The Cori cycle links:", o: ["Liver and brain", "Muscle and liver", "Adipose and muscle", "Kidney and liver"], a: 1, w: "The Cori cycle links muscle and liver." },
+    { q: "In the Cori cycle, lactate from muscle is converted to glucose in the:", o: ["Muscle", "Liver", "Brain", "Kidney"], a: 1, w: "Lactate is converted to glucose in the liver." },
+    { q: "Insulin inhibits gluconeogenesis and promotes:", o: ["Gluconeogenesis", "Glycolysis", "Glycogenolysis", "Lipolysis"], a: 1, w: "Insulin inhibits gluconeogenesis and promotes glycolysis." },
+    { q: "Glucagon promotes gluconeogenesis and:", o: ["Glycolysis", "Glycogen synthesis", "Glycogenolysis", "Lipogenesis"], a: 2, w: "Glucagon promotes glycogenolysis and gluconeogenesis." },
+    { q: "Gluconeogenesis is essential during:", o: ["Fasting and starvation", "After a meal", "Sleep", "Exercise only"], a: 0, w: "Gluconeogenesis is essential during fasting and starvation." },
+    { q: "Fructose-1,6-bisphosphatase converts:", o: ["Fructose-6-phosphate to fructose-1,6-bisphosphate", "Fructose-1,6-bisphosphate to fructose-6-phosphate", "Glucose-6-phosphate to glucose", "Pyruvate to oxaloacetate"], a: 1, w: "Fructose-1,6-bisphosphatase converts fructose-1,6-bisphosphate to fructose-6-phosphate." },
+    { q: "Gluconeogenesis and glycolysis are reciprocally regulated to prevent:", o: ["Energy production", "Futile cycling", "ATP synthesis", "Glucose storage"], a: 1, w: "Reciprocal regulation prevents futile cycling." },
+    { q: "Which of the following increases gluconeogenesis?", o: ["Insulin", "Glucagon", "AMP", "Fructose-2,6-bisphosphate"], a: 1, w: "Glucagon promotes gluconeogenesis." },
+    { q: "Which of the following decreases gluconeogenesis?", o: ["Glucagon", "Cortisol", "Insulin", "Adrenaline"], a: 2, w: "Insulin decreases gluconeogenesis." },
+    { q: "Pyruvate carboxylase is a mitochondrial enzyme that converts pyruvate to:", o: ["PEP", "Oxaloacetate", "Malate", "Acetyl-CoA"], a: 1, w: "Pyruvate carboxylase converts pyruvate to oxaloacetate." },
+    { q: "PEPCK converts oxaloacetate to:", o: ["Pyruvate", "PEP", "Malate", "Citrate"], a: 1, w: "PEPCK converts oxaloacetate to PEP." },
+    { q: "Gluconeogenesis requires energy in the form of:", o: ["ATP only", "GTP only", "ATP and GTP", "NADPH"], a: 2, w: "Gluconeogenesis requires ATP and GTP." }
+  ]
+};
+
 /* --------------------------- bio:0 --------------------------- */
 const T_BIO_AMINO = {
   courseId: "bio",
@@ -10940,6 +11403,8 @@ const CONTENT = {
   "bch:4": T_BCH_FRUCTOSE,
   "bch:5": T_BCH_TCA,
   "bch:6": T_BCH_ETC,
+  "bch:7": T_BCH_PPP,
+  "bch:8": T_BCH_GLUCONEO,
   "bio:0": T_BIO_ISOMERISM,
   "bio:1": T_BIO_HEMIACETALS,
   "bio:2": T_BIO_CARBS,
