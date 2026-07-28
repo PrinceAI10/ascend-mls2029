@@ -9644,7 +9644,43 @@ Question three: the patient also has shortness of breath. How might the conditio
 Work them through before reading on.
 
 My answers. One: likely scoliosis — a lateral curvature of the spine. It is most commonly diagnosed in adolescence and affects the vertebral column (the part of the axial skeleton). Two: the vertebral column has 7 cervical, 12 thoracic, and 5 lumbar vertebrae (plus the sacrum and coccyx). The number is important because injuries, abnormalities, or procedures are often identified by vertebral level (e.g., fracture at T5). Three: severe scoliosis can reduce the space in the thoracic cavity, compressing the lungs and making it harder to breathe. This can cause shortness of breath and requires monitoring and management.`
-    }
+    },
+    {
+      q: "The regions of the vertebral column.",
+      body: `Having seen the vertebral column as a whole, we now examine its regions, because each region is specialised and the pattern is highly examinable.
+
+The vertebral column has 26 bones grouped into five regions from top to bottom. The cervical region (neck) has 7 vertebrae — the most mobile, allowing the head to turn; the first two, the atlas and axis, are special, letting you nod and shake your head. The thoracic region (upper back) has 12 vertebrae, each articulating with a pair of ribs. The lumbar region (lower back) has 5 large, strong vertebrae that bear most of the body's weight. The sacral region is the sacrum — 5 vertebrae fused into one bone that joins the spine to the pelvis. The coccygeal region is the coccyx (tailbone) — usually 4 small fused vertebrae.
+
+My Socratic question: the lumbar vertebrae are the largest and strongest of the movable vertebrae. Given their position, why does this make sense?
+
+The answer is that the lumbar vertebrae sit in the lower back and must bear the weight of the entire upper body above them, so they are built large and strong to carry that load; the higher cervical vertebrae, carrying only the head, are smaller and lighter. Size matches the weight each region must support.
+
+Crucial insight: the vertebral column has five regions — cervical (7, most mobile, with the atlas and axis), thoracic (12, bearing ribs), lumbar (5, largest, weight-bearing), sacral (5 fused as the sacrum), and coccygeal (the coccyx). A useful memory is 7, 12, 5 for the movable regions. The size and strength of each region matches the load it carries — a clear case of structure following function.`
+    },
+    {
+      q: "The skull: cranial and facial bones.",
+      body: `We return to the skull to divide it into its two functional groups, because this division clarifies how one structure both protects the brain and forms the face.
+
+The skull's 22 bones fall into two groups. The cranial bones (8 bones) form the cranium — the domed braincase that encloses and protects the brain; they include the frontal bone (forehead), two parietal bones (top and sides), two temporal bones (lower sides, housing the ears), the occipital bone (back and base, with the large hole where the spinal cord passes), the sphenoid, and the ethmoid. The facial bones (14 bones) form the framework of the face and include the maxillae (upper jaw), the mandible (lower jaw, the only movable skull bone), the zygomatic bones (cheeks), the nasal bones, and others.
+
+My Socratic question: of all the skull's bones, only the mandible (lower jaw) can move freely. Why is it important that the rest of the skull bones are locked firmly together and immovable?
+
+The answer is that the cranial bones must form a rigid, protective case around the delicate brain — any movement between them would compromise that protection — so they are joined by immovable joints called sutures. The mandible must move to allow chewing and speaking, so it alone has a movable joint. Immovability protects the brain; the one movable bone enables eating and speech.
+
+Crucial insight: the skull's 22 bones divide into 8 cranial bones (forming the protective braincase — frontal, parietal, temporal, occipital, sphenoid, ethmoid) and 14 facial bones (forming the face — maxillae, mandible, zygomatic, nasal and others). The bones are locked by immovable sutures except the mandible, the only freely movable skull bone — protection and function elegantly balanced.`
+    },
+    {
+      q: "Intervertebral discs and the spinal curvatures.",
+      body: `To complete our picture of the vertebral column, we examine two features that give it both flexibility and strength: the intervertebral discs and the natural curves.
+
+Between adjacent vertebrae (from the axis down to the sacrum) sit intervertebral discs — pads of fibrocartilage with a tough outer ring and a soft, gel-like centre. They act as shock absorbers, cushioning the vertebrae during movement and impact, and they allow the spine to bend and twist. The vertebral column is also not straight: viewed from the side it has natural curves — the cervical and lumbar regions curve slightly forward, while the thoracic and sacral regions curve backward. These curves give the spine a gentle S-shape.
+
+My Socratic question: why does a spine with natural curves and cushioning discs handle the forces of standing, walking and jumping better than a perfectly straight, rigid column would?
+
+The answer is that the curves let the spine flex and act like a spring, distributing and absorbing forces rather than transmitting them straight up as a rigid rod would; the discs add further cushioning between the bones. Together, curves and discs absorb shock and add resilience, protecting the vertebrae and the spinal cord during movement.
+
+Crucial insight: intervertebral discs of fibrocartilage cushion the vertebrae and allow bending, while the spine's natural curves (cervical and lumbar forward, thoracic and sacral backward) give it a springy S-shape. Both features let the column absorb shock and move flexibly while still supporting the body — which is also why disc and curvature problems (like a slipped disc or abnormal curvatures) are common sources of back trouble.`
+    },
   ],
   theory: [
     { q: "What is the axial skeleton and what does it include?", a: "The axial skeleton is the central axis of the body, consisting of the skull (22 bones), the vertebral column (26 bones), and the thoracic cage (sternum and 12 pairs of ribs). It protects the brain, spinal cord, heart, and lungs." },
@@ -9655,7 +9691,8 @@ My answers. One: likely scoliosis — a lateral curvature of the spine. It is mo
     { q: "What are the three types of abnormal spinal curvatures?", a: "Kyphosis — exaggerated thoracic curvature (hunchback). Lordosis — exaggerated lumbar curvature (swayback). Scoliosis — lateral (sideways) curvature of the spine." },
     { q: "What is the difference between true, false, and floating ribs?", a: "True ribs (1-7) attach directly to the sternum. False ribs (8-10) attach indirectly via cartilage. Floating ribs (11-12) have no anterior attachment." },
     { q: "Why are the intervertebral discs important?", a: "Intervertebral discs are cushions between vertebrae that absorb shock, allow flexibility, and protect the vertebrae from wear. They can herniate (slipped disc) causing pain and nerve compression." },
-    { q: "What clinical conditions affect the axial skeleton?", a: "Osteoporosis (vertebral fractures), disc herniation (back pain), scoliosis, kyphosis, lordosis, fractures, infections (Pott's disease, tuberculosis of the spine), and degenerative conditions like osteoarthritis." }
+    { q: "What clinical conditions affect the axial skeleton?", a: "Osteoporosis (vertebral fractures), disc herniation (back pain), scoliosis, kyphosis, lordosis, fractures, infections (Pott's disease, tuberculosis of the spine), and degenerative conditions like osteoarthritis." },
+    { q: "Describe the five regions of the vertebral column with their vertebra counts.", a: "Cervical (7 vertebrae, neck, most mobile, including the atlas and axis); thoracic (12, upper back, each bearing a pair of ribs); lumbar (5, lower back, largest and weight-bearing); sacral (5 fused into the sacrum, joining spine to pelvis); and coccygeal (the coccyx or tailbone, usually 4 small fused vertebrae). A useful sequence is 7, 12, 5 for the movable regions." },
   ],
   videos: [
     { channel: "Anatomy", title: "The Axial Skeleton Overview", note: "Skull, vertebral column, and thoracic cage.", url: "" },
@@ -9663,30 +9700,59 @@ My answers. One: likely scoliosis — a lateral curvature of the spine. It is mo
     { channel: "Anatomy", title: "The Vertebral Column and Ribcage", note: "Spinal curves, vertebrae, ribs, and sternum.", url: "" }
   ],
   mcqs: [
-    { q: "The axial skeleton consists of approximately how many bones?", o: ["80", "126", "206", "100"], a: 0, w: "The axial skeleton has 80 bones." },
-    { q: "Which of the following is NOT part of the axial skeleton?", o: ["Skull", "Vertebral column", "Ribs", "Femur"], a: 3, w: "The femur is part of the appendicular skeleton." },
-    { q: "How many bones are in the skull?", o: ["12", "22", "32", "42"], a: 1, w: "The skull has 22 bones." },
-    { q: "The cranium consists of how many bones?", o: ["8", "14", "22", "10"], a: 0, w: "The cranium has 8 bones." },
-    { q: "The facial bones consist of how many bones?", o: ["8", "14", "22", "10"], a: 1, w: "The facial bones have 14 bones." },
-    { q: "The sutures of the skull are:", o: ["Freely movable joints", "Immovable joints", "Slightly movable joints", "Cartilaginous joints"], a: 1, w: "Sutures are immovable fibrous joints." },
-    { q: "Fontanelles are present in:", o: ["Adults", "Infants", "Elderly", "Teenagers"], a: 1, w: "Fontanelles are soft spots in the skull of infants." },
-    { q: "How many cervical vertebrae are there?", o: ["12", "7", "5", "1"], a: 1, w: "There are 7 cervical vertebrae." },
-    { q: "How many thoracic vertebrae are there?", o: ["7", "12", "5", "1"], a: 1, w: "There are 12 thoracic vertebrae." },
-    { q: "How many lumbar vertebrae are there?", o: ["7", "12", "5", "1"], a: 2, w: "There are 5 lumbar vertebrae." },
-    { q: "The sacrum is formed by the fusion of:", o: ["3-5 vertebrae", "5 vertebrae", "4 vertebrae", "6 vertebrae"], a: 1, w: "The sacrum is formed by the fusion of 5 vertebrae." },
-    { q: "The coccyx is the:", o: ["Tailbone", "Neck", "Lower back", "Chest"], a: 0, w: "The coccyx is the tailbone." },
-    { q: "The curve of the neck is called:", o: ["Thoracic kyphosis", "Cervical lordosis", "Lumbar lordosis", "Sacral kyphosis"], a: 1, w: "The cervical spine has a lordotic (forward) curve." },
-    { q: "Scoliosis is a:", o: ["Forward curve of the spine", "Lateral curve of the spine", "Backward curve of the spine", "Normal curve of the spine"], a: 1, w: "Scoliosis is a lateral (sideways) curvature of the spine." },
-    { q: "True ribs are numbered:", o: ["1-7", "8-10", "11-12", "1-12"], a: 0, w: "True ribs are ribs 1-7." },
-    { q: "Floating ribs are numbered:", o: ["1-7", "8-10", "11-12", "1-12"], a: 2, w: "Floating ribs are ribs 11-12." },
-    { q: "The sternum consists of the:", o: ["Manubrium, body, xiphoid process", "Cervical, thoracic, lumbar", "True, false, floating", "Cranial, facial, vertebral"], a: 0, w: "The sternum has three parts: manubrium, body, and xiphoid process." },
-    { q: "The xiphoid process is the:", o: ["Upper part of the sternum", "Middle part of the sternum", "Lower tip of the sternum", "Side of the sternum"], a: 2, w: "The xiphoid process is the lower tip of the sternum." },
-    { q: "Intervertebral discs are found:", o: ["Between skull bones", "Between vertebrae", "Between ribs and sternum", "In the medullary cavity"], a: 1, w: "Intervertebral discs are between vertebrae." },
-    { q: "The vertebral column protects the:", o: ["Heart", "Lungs", "Spinal cord", "Brain"], a: 2, w: "The vertebral column protects the spinal cord." }
+    { q: "The axial skeleton consists of approximately how many bones?", o: ["100", "80", "126", "206"], a: 1, w: "The axial skeleton has 80 bones." },
+    { q: "Which of the following is NOT part of the axial skeleton?", o: ["Vertebral column", "Femur", "Skull", "Ribs"], a: 1, w: "The femur is part of the appendicular skeleton." },
+    { q: "How many bones are in the skull?", o: ["42", "32", "12", "22"], a: 3, w: "The skull has 22 bones." },
+    { q: "The cranium consists of how many bones?", o: ["14", "8", "22", "10"], a: 1, w: "The cranium has 8 bones." },
+    { q: "The facial bones consist of how many bones?", o: ["22", "8", "14", "10"], a: 2, w: "The facial bones have 14 bones." },
+    { q: "The sutures of the skull are:", o: ["Immovable joints", "Slightly movable joints", "Cartilaginous joints", "Freely movable joints"], a: 0, w: "Sutures are immovable fibrous joints." },
+    { q: "Fontanelles are present in:", o: ["Adults", "Infants", "Teenagers", "Elderly"], a: 1, w: "Fontanelles are soft spots in the skull of infants." },
+    { q: "How many cervical vertebrae are there?", o: ["1", "7", "12", "5"], a: 1, w: "There are 7 cervical vertebrae." },
+    { q: "How many thoracic vertebrae are there?", o: ["12", "1", "5", "7"], a: 0, w: "There are 12 thoracic vertebrae." },
+    { q: "How many lumbar vertebrae are there?", o: ["1", "12", "7", "5"], a: 3, w: "There are 5 lumbar vertebrae." },
+    { q: "The sacrum is formed by the fusion of:", o: ["6 vertebrae", "3-5 vertebrae", "4 vertebrae", "5 vertebrae"], a: 3, w: "The sacrum is formed by the fusion of 5 vertebrae." },
+    { q: "The coccyx is the:", o: ["Chest", "Neck", "Lower back", "Tailbone"], a: 3, w: "The coccyx is the tailbone." },
+    { q: "The curve of the neck is called:", o: ["Thoracic kyphosis", "Sacral kyphosis", "Cervical lordosis", "Lumbar lordosis"], a: 2, w: "The cervical spine has a lordotic (forward) curve." },
+    { q: "Scoliosis is a:", o: ["Lateral curve of the spine", "Forward curve of the spine", "Normal curve of the spine", "Backward curve of the spine"], a: 0, w: "Scoliosis is a lateral (sideways) curvature of the spine." },
+    { q: "True ribs are numbered:", o: ["11-12", "1-12", "8-10", "1-7"], a: 3, w: "True ribs are ribs 1-7." },
+    { q: "Floating ribs are numbered:", o: ["8-10", "1-7", "11-12", "1-12"], a: 2, w: "Floating ribs are ribs 11-12." },
+    { q: "The sternum consists of the:", o: ["Cervical, thoracic, lumbar", "Cranial, facial, vertebral", "True, false, floating", "Manubrium, body, xiphoid process"], a: 3, w: "The sternum has three parts: manubrium, body, and xiphoid process." },
+    { q: "The xiphoid process is the:", o: ["Lower tip of the sternum", "Upper part of the sternum", "Middle part of the sternum", "Side of the sternum"], a: 0, w: "The xiphoid process is the lower tip of the sternum." },
+    { q: "Intervertebral discs are found:", o: ["Between ribs and sternum", "Between vertebrae", "In the medullary cavity", "Between skull bones"], a: 1, w: "Intervertebral discs are between vertebrae." },
+    { q: "The vertebral column protects the:", o: ["Spinal cord", "Heart", "Brain", "Lungs"], a: 0, w: "The vertebral column protects the spinal cord." },
+    { q: "The first cervical vertebra, which supports the skull, is the:", o: ["Coccyx", "Atlas", "Axis", "Sacrum"], a: 1, w: "The atlas (C1) holds up the head, like Atlas holding the sky." },
+    { q: "The second cervical vertebra, allowing the head to rotate, is the:", o: ["Sternum", "Axis", "Sacrum", "Atlas"], a: 1, w: "The axis (C2) has a peg that lets the head turn side to side." },
+    { q: "Nodding the head \"yes\" occurs mainly at the joint between the skull and the:", o: ["Atlas", "Sternum", "Axis", "Sacrum"], a: 0, w: "The atlas-skull joint allows the nodding motion." },
+    { q: "The largest and strongest of the movable vertebrae are the:", o: ["Coccygeal", "Lumbar", "Thoracic", "Cervical"], a: 1, w: "Lumbar vertebrae bear the most weight, so they are largest." },
+    { q: "Vertebrae that articulate with the ribs are the:", o: ["Sacral", "Lumbar", "Cervical", "Thoracic"], a: 3, w: "The 12 thoracic vertebrae each bear a pair of ribs." },
+    { q: "The vertebral region that joins the spine to the pelvis is the:", o: ["Lumbar", "Cervical", "Sacrum", "Coccyx"], a: 2, w: "The sacrum connects the vertebral column to the pelvis." },
+    { q: "The correct count of vertebrae in the cervical, thoracic and lumbar regions is:", o: ["7, 12, 5", "5, 12, 7", "12, 7, 5", "7, 5, 12"], a: 0, w: "Cervical 7, thoracic 12, lumbar 5 - a key sequence." },
+    { q: "The only freely movable bone of the skull is the:", o: ["Mandible", "Maxilla", "Occipital bone", "Frontal bone"], a: 0, w: "The mandible (lower jaw) is the only movable skull bone." },
+    { q: "The immovable joints between skull bones are called:", o: ["Ligaments", "Tendons", "Sutures", "Discs"], a: 2, w: "Sutures are the immovable joints of the skull." },
+    { q: "The bone forming the forehead is the:", o: ["Occipital bone", "Parietal bone", "Frontal bone", "Temporal bone"], a: 2, w: "The frontal bone forms the forehead." },
+    { q: "The bones housing the organs of hearing are the:", o: ["Frontal bones", "Nasal bones", "Temporal bones", "Parietal bones"], a: 2, w: "The temporal bones house the ears." },
+    { q: "The upper jaw is formed by the:", o: ["Zygomatic bones", "Nasal bones", "Maxillae", "Mandible"], a: 2, w: "The maxillae form the upper jaw." },
+    { q: "The cheekbones are the:", o: ["Nasal bones", "Temporal bones", "Maxillae", "Zygomatic bones"], a: 3, w: "The zygomatic bones form the cheeks." },
+    { q: "Intervertebral discs are made of:", o: ["Bone", "Muscle", "Hyaline cartilage only", "Fibrocartilage"], a: 3, w: "Discs are fibrocartilage - tough with a soft centre." },
+    { q: "The main function of intervertebral discs is to:", o: ["Store fat", "Make hormones", "Absorb shock and allow movement", "Produce blood"], a: 2, w: "Discs cushion the vertebrae and allow bending." },
+    { q: "The soft gel-like centre of an intervertebral disc is surrounded by a tough ring of:", o: ["Fibrocartilage", "Muscle", "Skin", "Bone"], a: 0, w: "A tough fibrocartilage ring surrounds the soft centre." },
+    { q: "The cervical and lumbar regions of the spine curve:", o: ["Forward", "Sideways only", "Backward", "Not at all"], a: 0, w: "Cervical and lumbar curves are forward (concave back)." },
+    { q: "The thoracic and sacral regions of the spine curve:", o: ["Sideways", "Not at all", "Backward", "Forward"], a: 2, w: "Thoracic and sacral curves are backward." },
+    { q: "The natural side-view shape of the vertebral column is:", o: ["A circle", "An S-shape", "A square", "A straight line"], a: 1, w: "The curves give the spine a gentle S-shape." },
+    { q: "An abnormal sideways curvature of the spine is:", o: ["Lordosis", "Scoliosis", "Kyphosis", "Arthritis"], a: 1, w: "Scoliosis is an abnormal lateral (sideways) curvature." },
+    { q: "An abnormal exaggerated outward (hunchback) curvature is:", o: ["Lordosis", "Kyphosis", "Scoliosis", "Osteoporosis"], a: 1, w: "Kyphosis is an exaggerated backward thoracic curve." },
+    { q: "An abnormal exaggerated inward lower-back (swayback) curvature is:", o: ["Kyphosis", "Fracture", "Scoliosis", "Lordosis"], a: 3, w: "Lordosis is an exaggerated forward lumbar curve." },
+    { q: "Ribs that attach directly to the sternum by their own cartilage are:", o: ["True ribs", "Floating ribs", "Cervical ribs", "False ribs"], a: 0, w: "True ribs (1-7) attach directly to the sternum." },
+    { q: "Ribs 11 and 12, which do not attach to the sternum at all, are:", o: ["False ribs that share cartilage", "True ribs", "Floating ribs", "Cervical ribs"], a: 2, w: "Floating ribs (11-12) have no anterior attachment." },
+    { q: "How many pairs of ribs are there in total?", o: ["8 pairs", "14 pairs", "12 pairs", "10 pairs"], a: 2, w: "There are 12 pairs of ribs." },
+    { q: "The breastbone is the:", o: ["Clavicle", "Sternum", "Scapula", "Sacrum"], a: 1, w: "The sternum is the breastbone at the front of the chest." },
+    { q: "The tail-end small fused bone of the spine is the:", o: ["Coccyx", "Axis", "Atlas", "Sacrum"], a: 0, w: "The coccyx (tailbone) is small fused vertebrae." },
+    { q: "The large opening in the occipital bone where the spinal cord passes is the:", o: ["Disc", "Suture", "Fontanelle", "Foramen magnum"], a: 3, w: "The foramen magnum lets the spinal cord exit the skull." },
+    { q: "The total number of bones in the axial skeleton is about:", o: ["80", "206", "126", "50"], a: 0, w: "The axial skeleton has 80 bones." },
+    { q: "The thoracic cage protects the:", o: ["Bladder", "Liver only", "Brain", "Heart and lungs"], a: 3, w: "The ribcage protects the heart and lungs." },
   ]
 };
 
-// ==================== ANATOMY TOPIC 11: THE APPENDICULAR SKELETON ====================
 const T_ANA_APPENDICULAR = {
   courseId: "ana",
   topicIndex: 10,
