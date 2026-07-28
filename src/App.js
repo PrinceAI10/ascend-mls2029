@@ -13350,6 +13350,43 @@ function QuizView({ app }) {
     try { window.sessionStorage.setItem(sessKey, JSON.stringify({ q, mode, i, answers, left, elapsed, done })); } catch {}
   }, [q, mode, i, answers, left, elapsed, done, sessKey]);
 
+  // SAVE QUIZ STATE - Additional preservation for tab switching
+  useEffect(() => {
+    try {
+      const state = {
+        mode,
+        i,
+        answers,
+        reveal,
+        done,
+        left,
+        elapsed,
+        q
+      };
+      sessionStorage.setItem('ascend_quiz_state_' + app.courseId + '_' + app.topicId, JSON.stringify(state));
+    } catch {}
+  }, [mode, i, answers, reveal, done, left, elapsed, q]);
+
+  // RESTORE QUIZ STATE
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_quiz_state_' + app.courseId + '_' + app.topicId);
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.mode) setMode(state.mode);
+        if (state.i !== undefined) setI(state.i);
+        if (state.answers) setAnswers(state.answers);
+        if (state.reveal !== undefined) setReveal(state.reveal);
+        if (state.done !== undefined) setDone(state.done);
+        if (state.left !== undefined) setLeft(state.left);
+        if (state.elapsed !== undefined) setElapsed(state.elapsed);
+        if (state.q && state.q.length > 0) setQ(state.q);
+      }
+    } catch {}
+  }, []);
+
+  // ... rest of QuizView (the existing code continues here)
+
   // When the quiz is finished/left, clear the saved session so it does not restore
   // an old completed quiz next time.
   const clearSession = () => { try { window.sessionStorage.removeItem(sessKey); } catch {} };
@@ -13543,6 +13580,31 @@ function TopicView({ app }) {
     setReadTime(0);
     setReadingAwarded(false);
     setReadingNotif(false);
+
+    // SAVE READING TIMER STATE
+  useEffect(() => {
+    try {
+      const state = {
+        readTime,
+        readingAwarded,
+        readingNotif
+      };
+      sessionStorage.setItem('ascend_topic_read_' + app.courseId + '_' + app.topicId, JSON.stringify(state));
+    } catch {}
+  }, [readTime, readingAwarded, readingNotif, app.courseId, app.topicId]);
+
+  // RESTORE READING TIMER STATE
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_topic_read_' + app.courseId + '_' + app.topicId);
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.readTime) setReadTime(state.readTime);
+        if (state.readingAwarded !== undefined) setReadingAwarded(state.readingAwarded);
+        if (state.readingNotif !== undefined) setReadingNotif(state.readingNotif);
+      }
+    } catch {}
+  }, [app.courseId, app.topicId]);
     
     timerRef.current = setInterval(() => {
       setReadTime(prev => {
@@ -16012,7 +16074,11 @@ export default function App() {
     }
     return { view: "home" };
   });
-    // GLOBAL STATE PRESERVATION - Save all critical state
+    // ============================================================
+  // GLOBAL STATE PRESERVATION - ALL FEATURES
+  // ============================================================
+  
+  // Save global state
   useEffect(() => {
     try {
       const state = {
@@ -16029,7 +16095,7 @@ export default function App() {
     } catch {}
   }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
 
-  // Restore global state on mount
+  // Restore global state
   useEffect(() => {
     try {
       const saved = sessionStorage.getItem('ascend_global_state');
