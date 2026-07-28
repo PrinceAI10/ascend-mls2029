@@ -14043,7 +14043,7 @@ function CoursesView({ app }) {
       <div className="card" style={{ marginTop: 18 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
           <span className="day-tag">{c.name}</span>
-          <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{app.progress.streak}</span> day streak</span>
+          <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
         </div>
         <h3 style={{ fontSize: 18, lineHeight: 1.4, marginBottom: 16 }}>{d.q}</h3>
         {d.o.map((opt, oi) => {
@@ -16994,14 +16994,13 @@ const render = () => {
 };
 
 const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
-const r = rankOf(progress.xp);
+const r = rankOf(progress?.xp || 0);
 const rootCls = "ascend-root" + (theme === "light" ? " light" : "");
-const dailyNotDone = !progress.dailyDone?.[todayKey()];
-const unreadAnn = (progress.seenAnn || 0) < ANNOUNCEMENTS.length;
+const dailyNotDone = !progress?.dailyDone?.[todayKey()];
+const unreadAnn = (progress?.seenAnn || 0) < ANNOUNCEMENTS.length;
 const hasUnread = unreadAnn || dailyNotDone;
-const openNotif = () => { setNotifOpen(true); if (unreadAnn) persist({ ...progress, seenAnn: ANNOUNCEMENTS.length }); };
-const showRate = !!auth && progress.xp >= 30 && !progress.rated && !progress.ratePromptSeen && !rateDismissed && route.view !== "feedback";
-
+const openNotif = () => { setNotifOpen(true); if (unreadAnn && progress) persist({ ...progress, seenAnn: ANNOUNCEMENTS.length }); };
+const showRate = !!auth && (progress?.xp || 0) >= 30 && !progress?.rated && !progress?.ratePromptSeen && !rateDismissed && route.view !== "feedback";
 // ============================================================
 // FINAL RETURN STATEMENT - ONLY ONE!
 // ============================================================
@@ -17199,7 +17198,7 @@ return (
           paddingLeft: "env(safe-area-inset-left)",
           paddingRight: "env(safe-area-inset-right)"
         }}>
-          <div className="topbar-inner" style={{
+          <div></div> className="topbar-inner" style={{
             maxWidth: "1080px",
             margin: "0 auto",
             width: "100%",
@@ -17208,7 +17207,7 @@ return (
             alignItems: "center",
             gap: "14px",
             flexWrap: "wrap"
-          }}>
+          }}
             <button 
               className="iconbtn onlymobile" 
               onClick={() => setMenuOpen(true)} 
@@ -17224,20 +17223,19 @@ return (
             </button>
             <div className="onlymobile" style={{ flex: 1 }}><Wordmark /></div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
-              <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress.streak}</span></span>
-              <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
-              <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
-              <span className="chip"><span className="val" style={{ color: r.c }}>{progress.xp}</span> XP</span>
-              <span className="chip streakchip" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <Ic.flame p={15} />
-                <span className="val">{progress.streak}</span>
-              </span>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress.name}</span>
-                <button className="avatar" onClick={setName} title="Click to change your username">{progress.name[0]?.toUpperCase()}</button>
-              </div>
-            </div>
-          </div>
+  <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
+  <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
+  <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
+  <span className="chip"><span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP</span>
+  <span className="chip streakchip" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+    <Ic.flame p={15} />
+    <span className="val">{progress?.streak || 0}</span>
+  </span>
+  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+    <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
+    <button className="avatar" onClick={setName} title="Click to change your username">{progress?.name?.[0]?.toUpperCase() || "?"}</button>
+  </div>
+</div>
         </header>
         <div className="content">{render()}</div>
         {showTop && (
