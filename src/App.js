@@ -15768,19 +15768,23 @@ export default function App() {
     return { view: "home" };
   });
 
-  // XP TRACKING FUNCTIONS - for ▲ +150 or ▼ -50 indicator on leaderboard
+    // XP TRACKING FUNCTIONS - for ▲ +150 indicator on leaderboard (only shows increases)
   const setXpChange = (currentXp) => {
     if (typeof window === "undefined") return;
     try {
       const prevXp = parseInt(sessionStorage.getItem('ascend_prev_xp') || '0');
       const change = currentXp - prevXp;
       sessionStorage.setItem('ascend_prev_xp', String(currentXp));
-      if (change !== 0) {
+      // Only store if XP increased (change > 0)
+      if (change > 0) {
         sessionStorage.setItem('ascend_xp_change', JSON.stringify({
           change: change,
-          direction: change > 0 ? 'up' : 'down',
-          display: change > 0 ? `+${change}` : `${change}`
+          direction: 'up',
+          display: `+${change}`
         }));
+      } else {
+        // Clear any existing XP change if no increase
+        sessionStorage.removeItem('ascend_xp_change');
       }
     } catch (e) {
       // Silently fail - XP tracking is a nice-to-have feature
