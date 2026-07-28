@@ -15791,6 +15791,24 @@ export default function App() {
     }
   };
 
+    // STREAK MULTIPLIER - 1.5x XP for 7+ day streaks
+  const getStreakMultiplier = (streak) => {
+    if (streak >= 7) {
+      return { 
+        multiplier: 1.5, 
+        label: '1.5x', 
+        color: '#2E9BFF',
+        message: 'Streak bonus active! 1.5x XP for all activities.'
+      };
+    }
+    return { 
+      multiplier: 1, 
+      label: '1x', 
+      color: 'var(--text-3)',
+      message: null
+    };
+  };
+
   // Persist the current route on every change so a reload can restore it.
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -16007,13 +16025,20 @@ export default function App() {
     const tk = todayKey();
     if (progress.dailyDone?.[tk]) return;
     const streak = progress.lastActive === shift(-1) ? progress.streak + 1 : (progress.lastActive === tk ? progress.streak : 1);
-    persist({ ...progress, xp: progress.xp + (correct ? 20 : 5), streak, lastActive: tk, dailyDone: { ...progress.dailyDone, [tk]: true } });
+    const baseXp = correct ? 20 : 5;
+    const multiplier = getStreakMultiplier(streak);
+    const gained = Math.round(baseXp * multiplier.multiplier);
+    const newXp = progress.xp + gained;
+    setXpChange(newXp);
+    persist({ ...progress, xp: newXp, streak, lastActive: tk, dailyDone: { ...progress.dailyDone, [tk]: true } });
   };
 
   const finishQuiz = (cid, tid, correct, missed = [], total = 0) => {
     const tkey = `${cid}:${tid}`;
     const firstTime = !progress.completed?.[tkey];
-    const gained = firstTime ? correct * 10 : 0;
+    const baseXp = firstTime ? correct * 10 : 0;
+    const multiplier = getStreakMultiplier(progress.streak);
+    const gained = Math.round(baseXp * multiplier.multiplier);
     const prevReview = Array.isArray(progress.review) ? progress.review : [];
     const seen = new Set(prevReview.map((m) => m.q));
     const merged = [...prevReview];
