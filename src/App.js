@@ -12888,13 +12888,27 @@ function shuffleQuestion(item) {
 }
 
 // Shuffle an entire bank of questions
-function shuffleBank(bank) {
-  const q = bank.map(shuffleQuestion);
+const PRACTICE_QUESTION_COUNT = 50;
+
+const questionKey = (item) => String(item && item.q ? item.q : "").trim().toLowerCase().replace(/\s+/g, " ");
+
+function uniqueQuestions(bank) {
+  const seen = new Set();
+  return bank.filter((item) => {
+    const key = questionKey(item);
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function shuffleBank(bank, size = bank.length) {
+  const q = uniqueQuestions(bank).map(shuffleQuestion);
   for (let i = q.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [q[i], q[j]] = [q[j], q[i]];
   }
-  return q;
+  return q.slice(0, size);
 }
 
 /* AI endpoint. On the deployed site this points at your serverless proxy, which
@@ -13188,7 +13202,7 @@ function QuizView({ app }) {
   const [reveal, setReveal] = useState(false);
   const [done, setDone] = useState(saved ? !!saved.done : false);
   const [earnedXp, setEarnedXp] = useState(true);
-  const bankLen = q.length;
+  const bankLen = mode ? q.length : PRACTICE_QUESTION_COUNT;
   const [left, setLeft] = useState(saved && typeof saved.left === "number" ? saved.left : bankLen * 45);
   const [elapsed, setElapsed] = useState(saved && typeof saved.elapsed === "number" ? saved.elapsed : 0);
 
@@ -13203,6 +13217,32 @@ function QuizView({ app }) {
   // When the quiz is finished/left, clear the saved session so it does not restore
   // an old completed quiz next time.
   const clearSession = () => { try { window.sessionStorage.removeItem(sessKey); } catch {} };
+
+  const [building, setBuilding] = useState(false);
+  const [buildErr, setBuildErr] = useState("");
+
+  const startQuiz = async (nextMode) => {
+    if (building) return;
+    setBuilding(true); setBuildErr("");
+    try {
+      const base = uniqueQuestions(mcqs);
+      let complete = base;
+      if (base.length < PRACTICE_QUESTION_COUNT) {
+        const source = (t.note || []).map((step) => step.q + "\n" + step.body).join("\n\n").slice(0, 18000);
+        const prompt = "Generate exactly " + (PRACTICE_QUESTION_COUNT - base.length) + " unique, non-repeating single-best-answer MCQs for " + t.title + ". Use the lesson notes below. Return ONLY a JSON array; each item needs q, o (four strings), a (0-3), and w (short explanation). Do not repeat a question already in the bank.\n\nLESSON NOTES:\n" + source;
+        const raw = await callClaude("Create accurate KNUST medical laboratory science MCQs. Return compact JSON only.", [{ role: "user", content: prompt }], 10000);
+        const generated = (Array.isArray(parseAIJson(raw)) ? parseAIJson(raw) : []).filter((item) => item && typeof item.q === "string" && Array.isArray(item.o) && item.o.length === 4 && item.o.every((option) => typeof option === "string") && Number.isInteger(item.a) && item.a >= 0 && item.a < 4);
+        complete = uniqueQuestions([...base, ...generated]);
+      }
+      if (complete.length < PRACTICE_QUESTION_COUNT) throw new Error("Too few unique questions were generated. Please try again.");
+      setQ(shuffleBank(complete, PRACTICE_QUESTION_COUNT));
+      setMode(nextMode); setI(0); setAnswers({}); setReveal(false); setDone(false);
+      setLeft(PRACTICE_QUESTION_COUNT * 45); setElapsed(0); clearSession();
+    } catch (e) {
+      setBuildErr(e && e.message ? e.message : "Could not prepare this 50-question set.");
+    }
+    setBuilding(false);
+  };
 
   const finish = () => {
     const correct = q.reduce((n, item, idx) => n + (answers[idx] === item.a ? 1 : 0), 0);
@@ -13251,15 +13291,17 @@ function QuizView({ app }) {
         <h2 style={{ fontSize: 24, margin: "6px 0 4px" }}>{t.title}</h2>
         <p style={{ color: "var(--text-2)", marginTop: 0 }}>{bankLen} MCQs - single best answer, options shuffled every attempt.</p>
         <div className="grid g2" style={{ marginTop: 18 }}>
-          <button className="card hover" style={{ textAlign: "left" }} onClick={() => setMode("practice")}>
+          <button className="card hover" style={{ textAlign: "left" }} onClick={() => startQuiz("practice")} disabled={building}>
             <Ic.target p={22} /><h3 style={{ fontSize: 17, margin: "10px 0 4px" }}>Practice mode</h3>
             <p style={{ color: "var(--text-2)", fontSize: 14, margin: 0 }}>Instant feedback after every question.</p>
           </button>
-          <button className="card hover" style={{ textAlign: "left" }} onClick={() => setMode("exam")}>
+          <button className="card hover" style={{ textAlign: "left" }} onClick={() => startQuiz("exam")} disabled={building}>
             <Ic.clock p={22} /><h3 style={{ fontSize: 17, margin: "10px 0 4px" }}>Exam mode</h3>
             <p style={{ color: "var(--text-2)", fontSize: 14, margin: 0 }}>Timed, graded, full review at the end.</p>
           </button>
         </div>
+        {building && <div className="card" style={{ marginTop: 14, color: "var(--text-2)" }}>Preparing a unique 50-question set for this topic...</div>}
+        {buildErr && <div className="card" style={{ marginTop: 14, color: "var(--bad)" }}>{buildErr}</div>}
       </div>
     );
   }
@@ -13278,7 +13320,7 @@ function QuizView({ app }) {
             <span style={{ color: g.letter ? "var(--text)" : "var(--text-2)", fontWeight: 600, textAlign: "left", fontSize: 14.5 }}>{g.remark}</span>
           </div>
           <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 18, flexWrap: "wrap" }}>
-            <button className="btn btn-a" onClick={() => { clearSession(); setQ(shuffleBank(mcqs)); setMode(null); setI(0); setAnswers({}); setReveal(false); setDone(false); setLeft(bankLen * 45); setElapsed(0); }}>Try again</button>
+            <button className="btn btn-a" onClick={() => { clearSession(); setQ(shuffleBank(q, PRACTICE_QUESTION_COUNT)); setMode(null); setI(0); setAnswers({}); setReveal(false); setDone(false); setLeft(PRACTICE_QUESTION_COUNT * 45); setElapsed(0); }}>Try again</button>
             <button className="btn btn-g" onClick={() => app.go("topic", { courseId: t.courseId, topicId: t.topicIndex })}>Back to topic</button>
           </div>
         </div>
@@ -14134,7 +14176,8 @@ function PapersView() {
   const [busy, setBusy] = useState(false);
   const [items, setItems] = useState(null);
   const [err, setErr] = useState("");
-  const [count, setCount] = useState(10); // how many questions the student wants
+  const [similarCount, setSimilarCount] = useState(10);
+  const count = tab === "solve" ? 50 : similarCount;
   const RULES = `Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which position is correct. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {"q": string, "o": [4 strings], "a": integer index, "w": one short explanation}.`;
   // Shuffle each question's four options so the correct answer is not always in the
   // position the AI happened to place it, and update the answer index to match.
@@ -14178,15 +14221,10 @@ function PapersView() {
         {tab === "similar" && (
           <>
             <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Paste one past question</label>
-            <textarea className="pastebox" value={sample} placeholder={"e.g.\n\nThe plane dividing the body into left and right is the\nA. coronal  B. sagittal  C. transverse  D. oblique"} onChange={(e) => setSample(e.target.value)} />
+            <textarea className="pastebox" value={sample} placeholder={"e.g.\n\nThe plane dividing the body into left and right is the\nA. coronal  B. sagittal  C. transverse  D. oblique"} onChange={(e) => setSample(e.target.value)} />\n            <label className="eyebrow" style={{ display: "block", margin: "16px 0 8px" }}>How many similar questions?</label>\n            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[10, 20, 30, 40].map((n) => <button key={n} className="btn btn-sm" style={{ background: similarCount === n ? "var(--amber)" : "var(--bg-3)", color: similarCount === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={() => setSimilarCount(n)}>{n}</button>)}</div>
           </>
         )}
-        <label className="eyebrow" style={{ display: "block", margin: "16px 0 8px" }}>How many questions?</label>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {[5, 10, 15, 20].map((n) => (
-            <button key={n} className="btn btn-sm" style={{ background: count === n ? "var(--amber)" : "var(--bg-3)", color: count === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={() => setCount(n)}>{n}</button>
-          ))}
-        </div>
+        <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>Each set contains 50 questions.</div>
         <div style={{ marginTop: 16 }}>
           {tab === "solve"
             ? <button className="btn btn-a" onClick={startSolve} disabled={busy}>{busy ? "Building your set..." : `Start a set of ${count}`} <Ic.ai p={16} /></button>
