@@ -16060,6 +16060,11 @@ export default function App() {
     const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
     persist({ ...progress, bookmarks: next });
   };
+    // CLEAR REVIEW ITEM - Remove a question from review deck
+  const clearReviewItem = (questionText) => {
+    const prev = Array.isArray(progress.review) ? progress.review : [];
+    persist({ ...progress, review: prev.filter((m) => m.q !== questionText) });
+  };
 
     const setName = async () => {
     if (typeof window === "undefined") return;
@@ -16131,7 +16136,7 @@ export default function App() {
   go, 
   recordDaily, 
   finishQuiz, 
-  clearReviewItem, 
+  clearReviewItem,
   toggleBookmark, 
   supaUid, 
   courseId: route.courseId, 
