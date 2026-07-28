@@ -16014,7 +16014,7 @@ export default function App() {
     persist({ ...progress, bookmarks: next });
   };
 
-  const setName = async () => {
+    const setName = async () => {
     if (typeof window === "undefined") return;
     const raw = window.prompt("Change your username (this is your name on the leaderboard)", progress.name);
     if (!raw) return;
@@ -16046,7 +16046,18 @@ export default function App() {
     persist({ ...progress, name: newName });
   };
 
- const app = { progress, go, recordDaily, finishQuiz, clearReviewItem, toggleBookmark, supaUid, courseId: route.courseId, topicId: route.topicId, setName };
+  // READING XP - Award XP for reading topics
+  const setReadingXp = (newXp) => {
+    const key = `${route.courseId}:${route.topicId}`;
+    const awarded = sessionStorage.getItem('ascend_read_' + key);
+    if (awarded) return;
+    sessionStorage.setItem('ascend_read_' + key, 'true');
+    const updated = { ...progress, xp: newXp };
+    setProgress(updated);
+    persist(updated);
+  };
+ 
+  const app = { progress, go, recordDaily, finishQuiz, clearReviewItem, toggleBookmark, supaUid, courseId: route.courseId, topicId: route.topicId, setName };
   const render = () => {
     switch (route.view) {
       case "home": return <HomeView app={app} />;
