@@ -17010,170 +17010,6 @@ const showRate = !!auth && (progress?.xp || 0) >= 30 && !progress?.rated && !pro
 if (!loaded) return (
   <div className={rootCls}>
     <style>{CSS}</style>
-    <div style={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      minHeight: "100vh",
-      gap: "20px",
-      background: "var(--bg)"
-    }}>
-      <div style={{
-        width: 48,
-        height: 48,
-        border: "3px solid var(--bg-3)",
-        borderTop: "3px solid var(--amber)",
-        borderRadius: "50%",
-        animation: "spin 1s linear infinite"
-      }} />
-      <div style={{
-        color: "var(--text-3)",
-        fontSize: 14,
-        fontFamily: "var(--mono)",
-        letterSpacing: "0.1em"
-      }}>ASCEND</div>
-    </div>
-  </div>
-);
-
-// ============================================================
-// AUTH CHECK - If not logged in, show login screen
-// ============================================================
-if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
-
-// ============================================================
-// MAIN APP - Only runs when loaded AND authenticated
-// ============================================================
-return (
-  <div className={rootCls}>
-    <style>{CSS}</style>
-    
-    {/* RANK UP NOTIFICATION */}
-    {rankUpNotif && (
-      <div style={{
-        position: 'fixed',
-        top: '80px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        zIndex: 100,
-        background: 'var(--bg-2)',
-        border: '2px solid ' + rankUpNotif.color,
-        borderRadius: '12px',
-        padding: '16px 24px',
-        boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 14,
-        maxWidth: '90vw'
-      }}>
-        <div style={{
-          width: 44,
-          height: 44,
-          borderRadius: '50%',
-          background: rankUpNotif.color + '22',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={rankUpNotif.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-            <path d="M4 22h16" />
-            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
-            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
-            <path d="M18 2H6v7a6 6 0 0 0 12 0V2z" />
-          </svg>
-        </div>
-        <div>
-          <div style={{ fontWeight: 700, fontSize: 16, color: rankUpNotif.color }}>Rank Up!</div>
-          <div style={{ color: 'var(--text-2)', fontSize: 14 }}>{rankUpNotif.message}</div>
-        </div>
-        <button 
-          className="btn btn-sm" 
-          style={{ 
-            background: 'var(--bg-3)', 
-            color: 'var(--text-2)', 
-            border: '1px solid var(--line)',
-            padding: '4px 12px',
-            fontSize: 12,
-            cursor: 'pointer'
-          }}
-          onClick={() => setRankUpNotif(null)}
-        >
-          Dismiss
-        </button>
-      </div>
-    )}
-    
-    {/* ACHIEVEMENT NOTIFICATION */}
-    {(() => {
-      try {
-        const stored = sessionStorage.getItem('ascend_achievement_notif');
-        if (stored) {
-          const achievement = JSON.parse(stored);
-          return (
-            <div style={{
-              position: 'fixed',
-              top: '140px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              zIndex: 100,
-              background: 'var(--bg-2)',
-              border: '2px solid #F5B93F',
-              borderRadius: '12px',
-              padding: '16px 24px',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 14,
-              maxWidth: '90vw'
-            }}>
-              <div style={{
-                width: 44,
-                height: 44,
-                borderRadius: '50%',
-                background: 'rgba(245,185,63,0.15)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5B93F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-                  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-                  <path d="M4 22h16" />
-                  <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
-                  <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
-                  <path d="M18 2H6v7a6 6 0 0 0 12 0V2z" />
-                </svg>
-              </div>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: 16, color: '#F5B93F' }}>Achievement Unlocked!</div>
-                <div style={{ color: 'var(--text-2)', fontSize: 14 }}>{achievement.label}: {achievement.description}</div>
-              </div>
-              <button 
-                className="btn btn-sm" 
-                style={{ 
-                  background: 'var(--bg-3)', 
-                  color: 'var(--text-2)', 
-                  border: '1px solid var(--line)',
-                  padding: '4px 12px',
-                  fontSize: 12,
-                  cursor: 'pointer'
-                }}
-                onClick={() => {
-                  sessionStorage.removeItem('ascend_achievement_notif');
-                  window.location.reload();
-                }}
-              >
-                Dismiss
-              </button>
-            </div>
-          );
-        }
-      } catch {}
-      return null;
-    })()}
     
     <div className="shell">
       <aside className="side">
@@ -17186,58 +17022,35 @@ return (
       </aside>
 
       <div className="main">
-        <header className="topbar" style={{ 
-          position: "sticky", 
-          top: 0, 
-          zIndex: 20, 
-          background: "rgba(10,15,26,.82)",
-          backdropFilter: "blur(10px)",
-          borderBottom: "1px solid var(--line)",
-          padding: "0",
-          paddingTop: "env(safe-area-inset-top)",
-          paddingLeft: "env(safe-area-inset-left)",
-          paddingRight: "env(safe-area-inset-right)"
-        }}>
-          <div className="topbar-inner" style={{
-            maxWidth: "1080px",
-            margin: "0 auto",
-            width: "100%",
-            padding: "13px 30px",
-            display: "flex",
-            alignItems: "center",
-            gap: "14px",
-            flexWrap: "wrap"
-          }}></div>
+        <header className="topbar">
+          <div className="topbar-inner">
             <button 
               className="iconbtn onlymobile" 
               onClick={() => setMenuOpen(true)} 
               aria-label="Open menu"
-              style={{ 
-                position: "relative", 
-                zIndex: 999,
-                marginLeft: "4px",
-                flexShrink: 0
-              }}
             >
               <Ic.menu p={18} />
             </button>
             <div className="onlymobile" style={{ flex: 1 }}><Wordmark /></div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
-  <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
-  <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
-  <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
-  <span className="chip"><span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP</span>
-  <span className="chip streakchip" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-    <Ic.flame p={15} />
-    <span className="val">{progress?.streak || 0}</span>
-  </span>
-  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-    <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
-    <button className="avatar" onClick={setName} title="Click to change your username">{progress?.name?.[0]?.toUpperCase() || "?"}</button>
-  </div>
-</div>
+              <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
+              <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
+              <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
+              <span className="chip"><span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP</span>
+              <span className="chip streakchip" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <Ic.flame p={15} />
+                <span className="val">{progress?.streak || 0}</span>
+              </span>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
+                <button className="avatar" onClick={setName} title="Click to change your username">{progress?.name?.[0]?.toUpperCase() || "?"}</button>
+              </div>
+            </div>
+          </div>
         </header>
+        
         <div className="content">{render()}</div>
+        
         {showTop && (
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
