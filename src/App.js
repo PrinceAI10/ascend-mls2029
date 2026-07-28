@@ -13881,7 +13881,7 @@ function CoursesView({ app }) {
 }
 
 /* ------------------------------- daily ---------------------------------- */
-function DailyView({ app }) {
+ function DailyView({ app }) {
   const jsDay = new Date().getDay();
   const d = DAILY[jsDay];
   const c = courseById(d.courseId);
@@ -13889,6 +13889,102 @@ function DailyView({ app }) {
   const [chosen, setChosen] = useState(null);
   const [reveal, setReveal] = useState(!!alreadyDone);
   
+    // ============================================================
+  // STATE PRESERVATION - ALL REMAINING FEATURES
+  // ============================================================
+
+  // 1. RESOURCES VIEW - Save and restore
+  useEffect(() => {
+    try {
+      const state = { text, result };
+      sessionStorage.setItem('ascend_resources_state', JSON.stringify(state));
+    } catch {}
+  }, [text, result]);
+
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_resources_state');
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.text !== undefined) setText(state.text);
+        if (state.result !== undefined) setResult(state.result);
+      }
+    } catch {}
+  }, []);
+
+  // 2. LAMLA VIEW - Save and restore
+  useEffect(() => {
+    try {
+      const state = { step, courseId, hours, prep, goal, examType, plan };
+      sessionStorage.setItem('ascend_lamla_state', JSON.stringify(state));
+    } catch {}
+  }, [step, courseId, hours, prep, goal, examType, plan]);
+
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_lamla_state');
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.step) setStep(state.step);
+        if (state.courseId) setCourseId(state.courseId);
+        if (state.hours !== undefined) setHours(state.hours);
+        if (state.prep !== undefined) setPrep(state.prep);
+        if (state.goal) setGoal(state.goal);
+        if (state.examType) setExamType(state.examType);
+        if (state.plan) setPlan(state.plan);
+      }
+    } catch {}
+  }, []);
+
+  // 3. PAPERS VIEW - Save and restore
+  useEffect(() => {
+    try {
+      const state = {
+        tab, courseId, sample, similarCount, active, items, err, busy
+      };
+      sessionStorage.setItem('ascend_papers_state', JSON.stringify(state));
+    } catch {}
+  }, [tab, courseId, sample, similarCount, active, items, err, busy]);
+
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_papers_state');
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.tab) setTab(state.tab);
+        if (state.courseId) setCourseId(state.courseId);
+        if (state.sample !== undefined) setSample(state.sample);
+        if (state.similarCount) setSimilarCount(state.similarCount);
+        if (state.active) setActive(state.active);
+        if (state.items) setItems(state.items);
+        if (state.err) setErr(state.err);
+      }
+    } catch {}
+  }, []);
+
+  // 4. PLAN VIEW (CWA) - Save and restore
+  useEffect(() => {
+    try {
+      const state = { prevCWA, prevCr, thisCr, target, aiScore, counts };
+      sessionStorage.setItem('ascend_plan_state', JSON.stringify(state));
+    } catch {}
+  }, [prevCWA, prevCr, thisCr, target, aiScore, counts]);
+
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_plan_state');
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.prevCWA !== undefined) setPrevCWA(state.prevCWA);
+        if (state.prevCr !== undefined) setPrevCr(state.prevCr);
+        if (state.thisCr !== undefined) setThisCr(state.thisCr);
+        if (state.target !== undefined) setTarget(state.target);
+        if (state.aiScore !== undefined) setAiScore(state.aiScore);
+        if (state.counts) setCounts(state.counts);
+      }
+    } catch {}
+  }, []);
+ 
   // SAVE DAILY STATE
   useEffect(() => {
     try {
@@ -13985,6 +14081,148 @@ function RanksView({ app }) {
       }
     } catch {}
   }, []);
+
+  // SAVE RANKS SEARCH
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('ascend_ranks_search', search);
+    } catch {}
+  }, [search]);
+
+  // RESTORE RANKS SEARCH
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_ranks_search');
+      if (saved) setSearch(saved);
+    } catch {}
+  }, []);
+  
+function ReviewView({ app }) {
+  const deck = Array.isArray(app.progress.review) ? app.progress.review : [];
+  const [idx, setIdx] = useState(0);
+  const [picked, setPicked] = useState(null);
+
+  // SAVE REVIEW STATE
+  useEffect(() => {
+    try {
+      const state = { idx, picked };
+      sessionStorage.setItem('ascend_review_state', JSON.stringify(state));
+    } catch {}
+  }, [idx, picked]);
+
+  // RESTORE REVIEW STATE
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_review_state');
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.idx !== undefined) setIdx(state.idx);
+        if (state.picked !== undefined) setPicked(state.picked);
+      }
+    } catch {}
+  }, []);
+
+  // Weak-spots: from recorded best scores, list topics scored below 70% so the
+  // student sees exactly where they are weakest and can jump straight to them.
+  const scores = app.progress.scores || {};
+  const scored = Object.keys(scores).map((k) => {
+    const [cid, tid] = k.split(":");
+    const t = contentFor(cid, parseInt(tid, 10));
+    return { key: k, cid, tid: parseInt(tid, 10), pct: scores[k], title: t ? t.title : null, course: courseById(cid) };
+  }).filter((x) => x.title);
+  const weak = scored.filter((x) => x.pct < 70).sort((a, b) => a.pct - b.pct);
+  const strong = scored.filter((x) => x.pct >= 70).length;
+
+  const WeakSpots = () => {
+    if (scored.length === 0) return null;
+    return (
+     <div className="card" style={{ marginTop: 16 }}>
+        <div className="eyebrow" style={{ marginBottom: 10 }}>Your weak spots</div>
+        {weak.length === 0 ? (
+          <p style={{ color: "var(--text-2)", fontSize: 14, margin: 0, lineHeight: 1.6 }}>No weak topics - every quiz you have taken is at 70% or above. Strong work. Keep taking new topics to keep climbing.</p>
+        ) : (
+          <>
+            <p style={{ color: "var(--text-2)", fontSize: 13.5, margin: "0 0 12px", lineHeight: 1.55 }}>Topics you have scored below 70% on. These are where your marks are most easily won - tap one to open it and try again.</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {weak.slice(0, 8).map((w) => (
+                <button key={w.key} className="card hover" style={{ textAlign: "left", padding: 12, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }} onClick={() => app.go("topic", { courseId: w.cid, topicId: w.tid })}>
+                  <div>
+                    <div style={{ fontWeight: 650, fontSize: 14.5 }}>{w.title}</div>
+                    <div className="mono" style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }}>{w.course ? w.course.code : ""}</div>
+                  </div>
+                  <span style={{ fontWeight: 750, fontSize: 15, color: w.pct < 50 ? "#F0776A" : "#F5B93F", flexShrink: 0 }}>{w.pct}%</span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+        {strong > 0 && <p className="note-hint" style={{ marginTop: 12 }}>{strong} topic{strong === 1 ? "" : "s"} mastered at 70% or above.</p>}
+      </div>
+    );
+  };
+
+  if (deck.length === 0) {
+    return (
+      <div className="view">
+        <div className="eyebrow">Review and weak spots</div>
+        <h1 className="headline" style={{ marginTop: 6 }}>{scored.length === 0 ? "Nothing to review yet" : "Your progress so far"}</h1>
+        <div className="card" style={{ marginTop: 16 }}>
+          <p style={{ color: "var(--text-2)", fontSize: 15, lineHeight: 1.6, margin: 0 }}>When you get a question wrong in any quiz, it lands here so you can drill it until it sticks. Right now your review deck is empty - so either you have not taken a quiz yet, or you have cleared every missed question. Either way, keep climbing.</p>
+        </div>
+        <WeakSpots />
+        <button className="btn btn-a" style={{ marginTop: 16 }} onClick={() => app.go("courses")}>Go to courses <Ic.chevR p={16} /></button>
+      </div>
+    );
+  }
+
+  const item = deck[Math.min(idx, deck.length - 1)];
+  const answered = picked !== null;
+  const correct = answered && picked === item.a;
+
+  const next = () => {
+    if (correct) {
+      app.clearReviewItem(item.q);
+      setPicked(null);
+      setIdx(0);
+    } else {
+      setPicked(null);
+      setIdx((idx + 1) % deck.length);
+    }
+  };
+
+  return (
+    <div className="view">
+      <div className="eyebrow">Review your mistakes</div>
+      <h1 className="headline" style={{ marginTop: 6 }}>{deck.length} to master</h1>
+      <p style={{ color: "var(--text-2)", fontSize: 14, margin: "6px 0 18px", lineHeight: 1.55 }}>These are questions you have missed. Answer one correctly and it leaves your deck. Get it wrong and it stays - keep drilling until they are all gone.</p>
+
+      <div className="card">
+        <div className="mono" style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 8 }}>{(item.topic || "").toUpperCase()}</div>
+        <div style={{ fontWeight: 650, fontSize: 16, lineHeight: 1.5, marginBottom: 16 }}>{item.q}</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {item.o.map((opt, k) => {
+            let cls = "opt";
+            if (answered) {
+              if (k === item.a) cls += " correct";
+              else if (k === picked) cls += " wrong";
+            }
+            return (
+              <button key={k} className={cls} disabled={answered} onClick={() => setPicked(k)}>{opt}</button>
+            );
+          })}
+        </div>
+        {answered && (
+          <div style={{ marginTop: 16 }}>
+            <div style={{ fontWeight: 650, color: correct ? "var(--good)" : "var(--bad)", marginBottom: 6 }}>{correct ? "Correct - removing from your deck" : "Not quite - this one stays for another round"}</div>
+            <p style={{ color: "var(--text-2)", fontSize: 14, lineHeight: 1.6, margin: 0 }}>{item.w}</p>
+            <button className="btn btn-a" style={{ marginTop: 14 }} onClick={next}>{correct ? "Next" : "Keep going"} <Ic.chevR p={16} /></button>
+          </div>
+        )}
+      </div>
+      <WeakSpots />
+    </div>
+  );
+}
 
   const loadBoard = async () => {
     setLoading(true);
@@ -14481,6 +14719,27 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit }) {
   const pct = slice.length ? Math.round((correct / slice.length) * 100) : 0;
   const reveal = mode === "practice" || submitted;
   const keys = "ABCDE";
+
+  // SAVE PASSCO SET STATE
+  useEffect(() => {
+    try {
+      const state = { picked, submitted, xpAwarded };
+      sessionStorage.setItem('ascend_passcoset_' + paper.id + '_' + chunkStart, JSON.stringify(state));
+    } catch {}
+  }, [picked, submitted, xpAwarded]);
+
+  // RESTORE PASSCO SET STATE
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_passcoset_' + paper.id + '_' + chunkStart);
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.picked) setPicked(state.picked);
+        if (state.submitted !== undefined) setSubmitted(state.submitted);
+        if (state.xpAwarded !== undefined) setXpAwarded(state.xpAwarded);
+      }
+    } catch {}
+  }, []);
   
   // Calculate XP earned (5 XP per correct answer)
   const earnedXp = correct * 5;
@@ -14574,6 +14833,32 @@ function StudyToolsView() {
   const [flowCode, setFlowCode] = useState("");
   const [flowErr, setFlowErr] = useState("");
   const flowRef = useRef(null);
+
+  // SAVE STUDY TOOLS STATE
+  useEffect(() => {
+    try {
+      const state = { tab, courseId, topic, material, source, cards, map, flowCode };
+      sessionStorage.setItem('ascend_studytools_state', JSON.stringify(state));
+    } catch {}
+  }, [tab, courseId, topic, material, source, cards, map, flowCode]);
+
+  // RESTORE STUDY TOOLS STATE
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_studytools_state');
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.tab) setTab(state.tab);
+        if (state.courseId) setCourseId(state.courseId);
+        if (state.topic !== undefined) setTopic(state.topic);
+        if (state.material !== undefined) setMaterial(state.material);
+        if (state.source) setSource(state.source);
+        if (state.cards) setCards(state.cards);
+        if (state.map) setMap(state.map);
+        if (state.flowCode) setFlowCode(state.flowCode);
+      }
+    } catch {}
+  }, []);
 
   const subject = source === "paste"
     ? `the following material:\n\n${material}`
