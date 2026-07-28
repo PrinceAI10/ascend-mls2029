@@ -16034,26 +16034,23 @@ export default function App() {
   };
 
   const finishQuiz = (cid, tid, correct, missed = [], total = 0) => {
-    const tkey = `${cid}:${tid}`;
-    const firstTime = !progress.completed?.[tkey];
-    const baseXp = firstTime ? correct * 10 : 0;
-    const multiplier = getStreakMultiplier(progress.streak);
-    const gained = Math.round(baseXp * multiplier.multiplier);
-    const prevReview = Array.isArray(progress.review) ? progress.review : [];
-    const seen = new Set(prevReview.map((m) => m.q));
-    const merged = [...prevReview];
-    for (const m of missed) { if (!seen.has(m.q)) { merged.push(m); seen.add(m.q); } }
-    const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
-    const prevScores = progress.scores || {};
-    const bestPrev = prevScores[tkey] || 0;
-    const scores = { ...prevScores, [tkey]: Math.max(bestPrev, pct) };
-    persist({ ...progress, xp: progress.xp + gained, completed: { ...progress.completed, [tkey]: true }, review: merged, scores });
-  };
-
-  const clearReviewItem = (questionText) => {
-    const prev = Array.isArray(progress.review) ? progress.review : [];
-    persist({ ...progress, review: prev.filter((m) => m.q !== questionText) });
-  };
+  const tkey = `${cid}:${tid}`;
+  const firstTime = !progress.completed?.[tkey];
+  const baseXp = firstTime ? correct * 10 : 0;
+  const multiplier = getStreakMultiplier(progress.streak);
+  const gained = Math.round(baseXp * multiplier.multiplier);
+  const prevReview = Array.isArray(progress.review) ? progress.review : [];
+  const seen = new Set(prevReview.map((m) => m.q));
+  const merged = [...prevReview];
+  for (const m of missed) { if (!seen.has(m.q)) { merged.push(m); seen.add(m.q); } }
+  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+  const prevScores = progress.scores || {};
+  const bestPrev = prevScores[tkey] || 0;
+  const scores = { ...prevScores, [tkey]: Math.max(bestPrev, pct) };
+  const newXp = progress.xp + gained;
+  setXpChange(newXp);
+  persist({ ...progress, xp: newXp, completed: { ...progress.completed, [tkey]: true }, review: merged, scores });
+};
 
   const toggleBookmark = (cid, tid) => {
     const key = `${cid}:${tid}`;
