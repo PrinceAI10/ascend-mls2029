@@ -7903,6 +7903,165 @@ Crucial insight: the cell membrane is a fluid mosaic of lipids and proteins. Thi
   ]
 };
 
+// ==================== BIOLOGICAL CHEMISTRY TOPIC 8: NUCLEIC ACIDS ====================
+const T_BIO_NUCLEIC = {
+  courseId: "bio",
+  topicIndex: 8,
+  title: "Nucleic Acids - The Blueprint of Life",
+  minutes: 25,
+  note: [
+    { 
+      q: "What are nucleic acids and why are they essential for life?",
+      body: `Nucleic acids are polymers that store and transmit genetic information. The two types are DNA (deoxyribonucleic acid) and RNA (ribonucleic acid). DNA stores genetic information, while RNA is involved in protein synthesis.
+
+My Socratic question: how does a single cell contain all the information needed to build an entire organism?
+
+The answer is DNA. DNA is a long polymer of nucleotides that stores genetic information in the sequence of its bases. This sequence codes for proteins, which determine an organism's traits.
+
+Crucial insight: nucleic acids store and transmit genetic information. DNA stores the genetic code; RNA helps translate it into proteins.`
+    },
+    { 
+      q: "What are the building blocks of nucleic acids?",
+      body: `The building blocks of nucleic acids are nucleotides. Each nucleotide consists of three components: a sugar (deoxyribose in DNA, ribose in RNA), a phosphate group, and a nitrogenous base.
+
+My Socratic question: DNA and RNA are both made of nucleotides. What makes them different?
+
+The answer is the sugar and some bases. DNA has deoxyribose and the bases A, G, C, T. RNA has ribose and the bases A, G, C, U. This difference affects their structure and function.
+
+Crucial insight: nucleotides are the building blocks of nucleic acids. Each nucleotide has a sugar, phosphate, and base.`
+    },
+    { 
+      q: "What is the structure of DNA?",
+      body: `DNA has a double helix structure. Two strands run in opposite directions (antiparallel) and are held together by hydrogen bonds between complementary bases: A pairs with T, and G pairs with C.
+
+My Socratic question: why does DNA have a double helix rather than being a single strand?
+
+The answer is that the double helix provides stability and allows DNA to be copied accurately. The complementary base pairing ensures that each strand can serve as a template for the other.
+
+Crucial insight: DNA is a double helix with complementary base pairing (A-T, G-C). This structure allows accurate replication and information storage.`
+    },
+    { 
+      q: "What is the structure of RNA?",
+      body: `RNA is typically single-stranded and contains ribose sugar and uracil instead of thymine. The main types are mRNA (messenger RNA), tRNA (transfer RNA), and rRNA (ribosomal RNA).
+
+My Socratic question: why does RNA have uracil instead of thymine?
+
+The answer is that uracil is less stable than thymine, which is acceptable for RNA's temporary role. RNA is synthesised and degraded as needed, so it does not need the same stability as DNA.
+
+Crucial insight: RNA is single-stranded with ribose and uracil. It has multiple roles in protein synthesis.`
+    },
+    { 
+      q: "What is the genetic code?",
+      body: `The genetic code is the set of rules by which information in DNA and RNA is translated into proteins. Codons (three-nucleotide sequences) code for specific amino acids.
+
+My Socratic question: there are 64 possible codons but only 20 amino acids. What does this mean?
+
+The answer is that the genetic code is degenerate — multiple codons can code for the same amino acid. This provides redundancy and protects against mutations.
+
+Crucial insight: the genetic code uses triplets of nucleotides (codons) to specify amino acids. The code is degenerate and universal.`
+    },
+    { 
+      q: "How is DNA replicated?",
+      body: `DNA replication is the process of copying DNA. It is semiconservative — each new DNA molecule contains one old strand and one new strand. Enzymes like DNA polymerase synthesise new strands.
+
+My Socratic question: why is DNA replication described as semiconservative?
+
+The answer is that each daughter molecule receives one parental strand and one newly synthesised strand. This ensures accurate transmission of genetic information.
+
+Crucial insight: DNA replication is semiconservative and requires enzymes like DNA polymerase. It ensures accurate copying of genetic information.`
+    },
+    { 
+      q: "What is transcription?",
+      body: `Transcription is the process of copying DNA into RNA. It is catalysed by RNA polymerase and produces mRNA, which carries the genetic information from DNA to the ribosome.
+
+My Socratic question: why does the cell need to copy DNA into RNA?
+
+The answer is that DNA is too stable and valuable to leave the nucleus. RNA is synthesised as a temporary copy that can be translated into protein without risking damage to the DNA.
+
+Crucial insight: transcription copies DNA into RNA. RNA carries the genetic information to the ribosome for protein synthesis.`
+    },
+    { 
+      q: "What is translation?",
+      body: `Translation is the process of synthesising proteins from mRNA. Ribosomes read the mRNA sequence and assemble amino acids into a polypeptide chain according to the genetic code.
+
+My Socratic question: how does a sequence of nucleotides become a sequence of amino acids?
+
+The answer is that codons in mRNA specify amino acids. tRNA molecules bring the correct amino acids to the ribosome, where they are joined by peptide bonds.
+
+Crucial insight: translation synthesises proteins from mRNA. Codons specify amino acids, and tRNA brings them to the ribosome.`
+    },
+    { 
+      q: "What are mutations and why do they matter?",
+      body: `Mutations are changes in the DNA sequence. They can be silent (no effect), missense (change one amino acid), or nonsense (create a stop codon). Mutations can cause genetic diseases.
+
+My Socratic question: if a mutation changes one nucleotide in a gene, will it always change the protein?
+
+The answer is no. Because the genetic code is degenerate, some mutations (silent mutations) do not change the amino acid. Other mutations (missense) change one amino acid, which may or may not affect protein function.
+
+Crucial insight: mutations are changes in DNA sequence. They can have varying effects, from no effect to causing serious disease.`
+    },
+    { 
+      q: "What is the clinical relevance of nucleic acids?",
+      body: `Nucleic acids are clinically important because they are the basis of genetic testing, diagnosis, and gene therapy. DNA sequencing can identify genetic disorders, and RNA vaccines are used in medicine.
+
+My Socratic question: how does DNA testing help diagnose disease?
+
+The answer is that DNA testing can identify mutations that cause genetic disorders. It can also predict the risk of developing certain diseases and guide treatment decisions.
+
+Crucial insight: nucleic acids are the basis of genetic testing and gene therapy. Understanding them is essential for modern medicine.`
+    }
+  ],
+  theory: [
+    { q: "What are nucleic acids and what are their functions?", a: "Nucleic acids are polymers that store and transmit genetic information. DNA stores genetic information; RNA is involved in protein synthesis." },
+    { q: "What are the building blocks of nucleic acids?", a: "The building blocks are nucleotides, each consisting of a sugar (deoxyribose or ribose), a phosphate group, and a nitrogenous base." },
+    { q: "What are the three components of a nucleotide?", a: "A sugar (deoxyribose or ribose), a phosphate group, and a nitrogenous base (A, G, C, T, or U)." },
+    { q: "What are the base pairing rules in DNA?", a: "A pairs with T (two hydrogen bonds), and G pairs with C (three hydrogen bonds)." },
+    { q: "What is the difference between DNA and RNA?", a: "DNA has deoxyribose and thymine; RNA has ribose and uracil. DNA is double-stranded; RNA is typically single-stranded." },
+    { q: "What is the genetic code?", a: "The genetic code is the set of rules by which codons (three-nucleotide sequences) specify amino acids." },
+    { q: "What is DNA replication?", a: "DNA replication is the semiconservative process of copying DNA, producing two identical DNA molecules from one." },
+    { q: "What is transcription?", a: "Transcription is the process of copying DNA into mRNA, catalysed by RNA polymerase." },
+    { q: "What is translation?", a: "Translation is the process of synthesising proteins from mRNA at the ribosome, using tRNA to bring amino acids." },
+    { q: "What are mutations and what are their types?", a: "Mutations are changes in DNA sequence. Types include silent (no effect), missense (change one amino acid), and nonsense (create a stop codon)." }
+  ],
+  videos: [
+    { channel: "Biological Chemistry", title: "Nucleic Acids Overview", note: "DNA and RNA structure and function.", url: "" },
+    { channel: "Biological Chemistry", title: "DNA Replication", note: "How DNA is copied.", url: "" },
+    { channel: "Biological Chemistry", title: "Transcription and Translation", note: "How genes are expressed.", url: "" }
+  ],
+  mcqs: [
+    { q: "Nucleic acids are polymers of:", o: ["Amino acids", "Nucleotides", "Monosaccharides", "Fatty acids"], a: 1, w: "Nucleic acids are polymers of nucleotides." },
+    { q: "DNA contains which sugar?", o: ["Ribose", "Deoxyribose", "Glucose", "Fructose"], a: 1, w: "DNA contains deoxyribose." },
+    { q: "RNA contains which sugar?", o: ["Ribose", "Deoxyribose", "Glucose", "Fructose"], a: 0, w: "RNA contains ribose." },
+    { q: "Which base is found in DNA but not RNA?", o: ["Adenine", "Guanine", "Thymine", "Cytosine"], a: 2, w: "Thymine is found in DNA but not RNA." },
+    { q: "Which base is found in RNA but not DNA?", o: ["Adenine", "Uracil", "Thymine", "Cytosine"], a: 1, w: "Uracil is found in RNA but not DNA." },
+    { q: "DNA is described as:", o: ["Single-stranded", "Double helix", "Triple helix", "Linear"], a: 1, w: "DNA has a double helix structure." },
+    { q: "RNA is typically:", o: ["Double-stranded", "Single-stranded", "Triple-stranded", "Circular"], a: 1, w: "RNA is typically single-stranded." },
+    { q: "Adenine pairs with:", o: ["Thymine", "Guanine", "Cytosine", "Uracil"], a: 0, w: "A pairs with T in DNA." },
+    { q: "Guanine pairs with:", o: ["Thymine", "Adenine", "Cytosine", "Uracil"], a: 2, w: "G pairs with C." },
+    { q: "In RNA, adenine pairs with:", o: ["Thymine", "Uracil", "Guanine", "Cytosine"], a: 1, w: "A pairs with U in RNA." },
+    { q: "A nucleotide consists of:", o: ["Sugar and phosphate only", "Sugar and base only", "Sugar, phosphate, and base", "Phosphate and base only"], a: 2, w: "A nucleotide has sugar, phosphate, and base." },
+    { q: "The genetic code is read in groups of:", o: ["Two nucleotides", "Three nucleotides", "Four nucleotides", "One nucleotide"], a: 1, w: "Codons are three nucleotides." },
+    { q: "The process of DNA copying is called:", o: ["Transcription", "Translation", "Replication", "Expression"], a: 2, w: "Replication is the copying of DNA." },
+    { q: "The process of DNA to RNA is called:", o: ["Replication", "Transcription", "Translation", "Expression"], a: 1, w: "Transcription is DNA to RNA." },
+    { q: "The process of RNA to protein is called:", o: ["Replication", "Transcription", "Translation", "Expression"], a: 2, w: "Translation is RNA to protein." },
+    { q: "mRNA stands for:", o: ["Messenger RNA", "Micro RNA", "Mitochondrial RNA", "Multiple RNA"], a: 0, w: "mRNA is messenger RNA." },
+    { q: "tRNA stands for:", o: ["Transfer RNA", "Template RNA", "Transcription RNA", "Transport RNA"], a: 0, w: "tRNA is transfer RNA." },
+    { q: "rRNA stands for:", o: ["Ribosomal RNA", "Regulatory RNA", "Reverse RNA", "Replication RNA"], a: 0, w: "rRNA is ribosomal RNA." },
+    { q: "Which enzyme catalyses DNA replication?", o: ["RNA polymerase", "DNA polymerase", "Helicase", "Ligase"], a: 1, w: "DNA polymerase catalyses DNA replication." },
+    { q: "Which enzyme catalyses transcription?", o: ["DNA polymerase", "RNA polymerase", "Helicase", "Ligase"], a: 1, w: "RNA polymerase catalyses transcription." },
+    { q: "A mutation that changes one amino acid is called:", o: ["Silent", "Missense", "Nonsense", "Frameshift"], a: 1, w: "Missense mutations change one amino acid." },
+    { q: "A mutation that creates a stop codon is called:", o: ["Silent", "Missense", "Nonsense", "Frameshift"], a: 2, w: "Nonsense mutations create a stop codon." },
+    { q: "A mutation that does not change the amino acid is called:", o: ["Silent", "Missense", "Nonsense", "Frameshift"], a: 0, w: "Silent mutations do not change the amino acid." },
+    { q: "The double helix structure of DNA was discovered by:", o: ["Watson and Crick", "Mendel", "Darwin", "Franklin"], a: 0, w: "Watson and Crick discovered the double helix." },
+    { q: "Purine bases include:", o: ["Adenine and Guanine", "Cytosine and Thymine", "Uracil and Thymine", "Adenine and Cytosine"], a: 0, w: "Purines are adenine and guanine." },
+    { q: "Pyrimidine bases include:", o: ["Adenine and Guanine", "Cytosine and Thymine", "Uracil and Guanine", "Adenine and Cytosine"], a: 1, w: "Pyrimidines are cytosine, thymine, and uracil." },
+    { q: "The human genome contains approximately how many genes?", o: ["10,000", "20,000", "50,000", "100,000"], a: 1, w: "The human genome has approximately 20,000 genes." },
+    { q: "Which statement about DNA replication is correct?", o: ["It is conservative", "It is semiconservative", "It is dispersive", "It is random"], a: 1, w: "DNA replication is semiconservative." },
+    { q: "The sequence of nucleotides in DNA determines:", o: ["Protein structure", "Lipid structure", "Carbohydrate structure", "All of the above"], a: 0, w: "DNA sequence determines protein structure." },
+    { q: "Nucleic acids are important in medicine because they are the basis of:", o: ["Genetic testing", "Gene therapy", "RNA vaccines", "All of the above"], a: 3, w: "Nucleic acids are used in genetic testing, gene therapy, and RNA vaccines." }
+  ]
+};
+
 /* --------------------------- psy:1 --------------------------- */
 const T_PSY_PARADIGMS = {
   courseId: "psy",
