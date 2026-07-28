@@ -3084,6 +3084,356 @@ Three: metformin reduces hepatic glucose production by activating AMPK, which in
   ]
 };
 
+// ==================== BIOCHEMISTRY TOPIC 9: GLYCOGENESIS ====================
+const T_BCH_GLYCOGEN = {
+  courseId: "bch",
+  topicIndex: 9,
+  title: "Glycogenesis - Building the Body's Glucose Reserve",
+  minutes: 28,
+  note: [
+    {
+      q: "What is glycogenesis and why does the body need to store glucose?",
+      body: `You have learned glycolysis, which breaks down glucose for energy, and gluconeogenesis, which makes new glucose from non-carbohydrate sources. But what happens to glucose when it is not immediately needed for energy? The body cannot simply let glucose accumulate in the blood — high blood glucose is toxic and damages blood vessels, nerves, and organs over time. So the body must store excess glucose for later use. The process of storing glucose is called glycogenesis.
+
+My Socratic question: you have just eaten a large meal and your blood glucose is high. What happens to the excess glucose that is not immediately used for energy, and why is this important?
+
+The answer is that excess glucose is converted to glycogen for storage. This process is called glycogenesis. Glycogen is a branched polymer of glucose that serves as a rapid source of glucose when energy is needed. It is stored primarily in the liver and skeletal muscle. Without glycogenesis, excess glucose would remain in the blood, causing hyperglycaemia and its associated complications.
+
+Glycogenesis is particularly active after meals when insulin levels are high. Insulin signals that glucose is abundant and should be stored. The liver takes up glucose from the blood and converts it to glycogen. Muscle also takes up glucose and stores it as glycogen, but muscle glycogen is used only for muscle energy, not for maintaining blood glucose.
+
+Crucial insight: glycogenesis is the synthesis of glycogen from glucose. It converts excess glucose into a stored form that can be rapidly mobilised when energy is needed. The liver and muscle are the primary sites of glycogen storage.`
+    },
+    {
+      q: "What is the structure of glycogen and why does it matter?",
+      body: `Glycogen has a highly branched structure that allows for rapid synthesis and breakdown. The branches provide multiple ends for enzymes to act simultaneously, making glycogen a highly efficient energy store.
+
+Glycogen is a polymer of glucose units linked by two types of glycosidic bonds. The main chain consists of glucose units linked by alpha-1,4-glycosidic bonds, forming a long chain. Branches are formed by alpha-1,6-glycosidic bonds, which create branch points every 8-12 glucose units.
+
+My Socratic question: why is glycogen branched rather than a straight chain like cellulose or starch?
+
+The answer is that branching allows for rapid mobilisation of glucose. Enzymes that break down glycogen work from the ends of the molecule. With many branches, there are many ends, allowing many glucose units to be released simultaneously. This is important because the body needs to respond quickly to changes in blood glucose.
+
+The branching also increases the solubility of glycogen, making it more accessible to enzymes. A straight chain of glucose would be less soluble and more difficult to break down quickly.
+
+The branches are formed by the branching enzyme (amylo-alpha-1,6-transglucosidase), which transfers a segment of the growing chain to create a new branch point.
+
+Crucial insight: glycogen's highly branched structure allows for rapid glucose release. The main chain has alpha-1,4 linkages; branches are formed by alpha-1,6 linkages. Branching provides multiple ends for enzymes to act simultaneously.`
+    },
+    {
+      q: "How does glycogenesis actually occur at the molecular level?",
+      body: `Glycogenesis is the synthesis of glycogen from glucose. It occurs when blood glucose is high, such as after a meal. The process requires energy and specific enzymes.
+
+The first step is the conversion of glucose to glucose-6-phosphate, catalysed by hexokinase (in most tissues) or glucokinase (in the liver). This step consumes ATP and traps glucose inside the cell.
+
+The second step is the conversion of glucose-6-phosphate to glucose-1-phosphate, catalysed by phosphoglucomutase. This is a reversible reaction that prepares the glucose for activation.
+
+The third step is the conversion of glucose-1-phosphate to UDP-glucose, catalysed by UDP-glucose pyrophosphorylase. This is the activation step — UDP-glucose is the activated form of glucose used for glycogen synthesis. The reaction is: Glucose-1-phosphate + UTP → UDP-glucose + PPi.
+
+The fourth step is the addition of glucose units to the growing glycogen chain, catalysed by glycogen synthase. Glycogen synthase adds glucose units from UDP-glucose to the non-reducing ends of the glycogen chain, forming alpha-1,4 linkages.
+
+The fifth step is the creation of branches, catalysed by the branching enzyme (amylo-alpha-1,6-transglucosidase). This enzyme transfers a segment of the growing chain to create a new alpha-1,6 branch point.
+
+My Socratic question: why does glycogenesis require UDP-glucose rather than using glucose directly?
+
+The answer is that UDP-glucose is a high-energy compound that makes the addition of glucose to the glycogen chain energetically favourable. The energy from the hydrolysis of UTP drives the reaction forward, just as ATP drives many other biosynthetic reactions. Without UDP-glucose, the synthesis of glycogen would be thermodynamically unfavourable.
+
+Crucial insight: glycogenesis converts glucose to glycogen for storage. Glucose is activated to UDP-glucose, which is used by glycogen synthase to build the glycogen chain. Branches are created by the branching enzyme. The process requires energy in the form of ATP and UTP.`
+    },
+    {
+      q: "How is glycogenesis regulated by hormones?",
+      body: `Glycogenesis is tightly regulated to ensure that glucose is stored when it is abundant and released when it is needed. The key regulatory enzyme is glycogen synthase, which is controlled by hormones through covalent modification.
+
+My Socratic question: glycogenesis and glycogenolysis are opposing pathways. How does the body prevent them from running simultaneously in a futile cycle?
+
+The answer is that the pathways are reciprocally regulated by hormones and allosteric effectors. When one pathway is active, the other is inhibited.
+
+Insulin is the key hormone that promotes glycogenesis. After a meal, blood glucose rises, and the pancreas releases insulin. Insulin activates glycogen synthase through a cascade of signalling events. It also inhibits glycogen phosphorylase, preventing glycogen breakdown.
+
+Glucagon and adrenaline inhibit glycogenesis and promote glycogenolysis. During fasting or stress, glucagon and adrenaline signal that glucose is needed, not stored. They inhibit glycogen synthase and activate glycogen phosphorylase.
+
+The regulation of glycogen synthase involves phosphorylation and dephosphorylation. Glycogen synthase is active when dephosphorylated and inactive when phosphorylated. Insulin promotes dephosphorylation, activating glycogen synthase. Glucagon and adrenaline promote phosphorylation, inactivating glycogen synthase.
+
+Crucial insight: glycogenesis is regulated by hormones (insulin promotes, glucagon/adrenaline inhibit) and covalent modification (phosphorylation/dephosphorylation). This ensures glucose is stored when abundant and released when needed.`
+    },
+    {
+      q: "How does the liver and muscle differ in glycogen metabolism?",
+      body: `The liver and muscle have different roles in glycogen metabolism because they serve different purposes in the body. Understanding these differences is essential for understanding how the body maintains blood glucose and provides energy for muscle contraction.
+
+The liver stores glycogen to maintain blood glucose. When blood glucose falls, the liver breaks down glycogen and releases glucose into the blood. The liver can release glucose because it has glucose-6-phosphatase, which converts glucose-6-phosphate to free glucose.
+
+Muscle stores glycogen to fuel muscle contraction. Muscle glycogen is not used to maintain blood glucose. During exercise, muscle breaks down glycogen to provide glucose-6-phosphate for glycolysis, producing ATP for muscle contraction. Muscle cannot release glucose into the blood because it lacks glucose-6-phosphatase.
+
+My Socratic question: both the liver and muscle store glycogen. Why can muscle not release glucose into the blood while the liver can?
+
+The answer is that muscle lacks glucose-6-phosphatase. In the liver, glucose-6-phosphatase converts glucose-6-phosphate to free glucose, which is released into the blood. Muscle does not have this enzyme, so glucose-6-phosphate is trapped in the muscle cell and can only be used for energy through glycolysis.
+
+This makes sense — muscle stores glycogen for its own energy needs, while the liver stores glycogen to maintain blood glucose for the whole body. The different enzyme complements reflect the different purposes of glycogen in these tissues.
+
+The liver also has a higher capacity for glycogen storage than muscle. The liver stores glycogen to buffer blood glucose, while muscle stores glycogen to fuel muscle contraction.
+
+Crucial insight: the liver releases glucose into the blood because it has glucose-6-phosphatase. Muscle lacks this enzyme, so its glycogen is used only for its own energy needs. The liver maintains blood glucose; muscle fuels itself.`
+    },
+    {
+      q: "Why does glycogenesis matter in clinical medicine?",
+      body: `Glycogenesis is clinically important because defects in glycogen metabolism cause serious diseases called glycogen storage diseases. Understanding these diseases helps illustrate the importance of each enzyme in glycogen metabolism.
+
+My Socratic question: what happens when an enzyme in glycogenesis is defective? What are the consequences for the patient?
+
+The answer is that glycogen storage diseases result in abnormal accumulation or deficiency of glycogen. Von Gierke disease (type I) is caused by deficiency of glucose-6-phosphatase, leading to severe hypoglycaemia and glycogen accumulation in the liver. The liver cannot release glucose into the blood, so patients must eat frequently to maintain blood glucose.
+
+Pompe disease (type II) is caused by deficiency of lysosomal acid alpha-glucosidase, leading to glycogen accumulation in lysosomes and progressive muscle weakness. This is a different enzyme from the one involved in glycogenesis, but it illustrates how defects in glycogen metabolism can cause serious disease.
+
+Other glycogen storage diseases affect other enzymes in glycogen metabolism. Each disease has characteristic symptoms and requires specific management.
+
+Crucial insight: glycogen storage diseases are caused by defects in enzymes of glycogen metabolism. Von Gierke (glucose-6-phosphatase deficiency) causes hypoglycaemia; Pompe (lysosomal glucosidase deficiency) causes muscle weakness.`
+    },
+    {
+      q: "Consolidation and your final test on glycogenesis.",
+      body: `Your cognitive map for glycogenesis:
+
+DEFINITION: synthesis of glycogen from glucose for storage.
+
+LOCATION: liver and skeletal muscle (primarily).
+
+KEY ENZYMES: glycogen synthase (regulatory) and branching enzyme.
+
+ACTIVATION: insulin promotes glycogenesis (after a meal).
+
+INHIBITION: glucagon and adrenaline inhibit glycogenesis (during fasting/exercise).
+
+STRUCTURE: glycogen is a branched polymer of glucose with alpha-1,4 and alpha-1,6 linkages.
+
+REGULATION: reciprocal regulation with glycogenolysis; phosphorylation/dephosphorylation of glycogen synthase.
+
+CLINICAL RELEVANCE: glycogen storage diseases (Von Gierke, Pompe).
+
+Now your final test. A patient presents with severe hypoglycaemia and an enlarged liver. A liver biopsy shows massive glycogen accumulation. The patient has fasting hypoglycaemia and cannot raise blood glucose after glucagon administration.
+
+Question one: what enzyme deficiency is most likely, and what is the normal function of this enzyme?
+Question two: why does the patient have an enlarged liver?
+Question three: how is this condition managed?
+
+My answers:
+One: glucose-6-phosphatase deficiency (von Gierke disease) is most likely. Glucose-6-phosphatase converts glucose-6-phosphate to glucose, allowing the liver to release glucose into the blood.
+Two: the liver is enlarged because glycogen accumulates and cannot be broken down to release glucose.
+Three: management involves frequent feedings to maintain blood glucose, and avoiding fasting. Cornstarch may be given to provide slow-release glucose.`
+    }
+  ],
+  theory: [
+    { q: "What is glycogenesis and where does it occur?", a: "Glycogenesis is the synthesis of glycogen from glucose. It occurs primarily in the liver and skeletal muscle." },
+    { q: "What is the key regulatory enzyme of glycogenesis?", a: "Glycogen synthase is the key regulatory enzyme of glycogenesis." },
+    { q: "What hormone activates glycogenesis?", a: "Insulin activates glycogenesis by promoting glycogen synthase activity." },
+    { q: "What hormones inhibit glycogenesis?", a: "Glucagon and adrenaline inhibit glycogenesis." },
+    { q: "What is the structure of glycogen?", a: "Glycogen is a branched polymer of glucose with alpha-1,4 linkages in the main chain and alpha-1,6 linkages at branch points." },
+    { q: "Why is glycogen branched?", a: "Branching allows rapid glucose release by providing multiple ends for enzymes to act simultaneously." },
+    { q: "What is the role of UDP-glucose in glycogenesis?", a: "UDP-glucose is the activated form of glucose used by glycogen synthase to build the glycogen chain." },
+    { q: "What is the difference between liver and muscle glycogen?", a: "Liver glycogen maintains blood glucose; muscle glycogen fuels muscle contraction. Liver has glucose-6-phosphatase; muscle does not." },
+    { q: "What is von Gierke disease?", a: "Von Gierke disease (type I glycogen storage disease) is caused by deficiency of glucose-6-phosphatase, leading to severe hypoglycaemia." },
+    { q: "What is Pompe disease?", a: "Pompe disease (type II glycogen storage disease) is caused by deficiency of lysosomal acid alpha-glucosidase, leading to glycogen accumulation and muscle weakness." }
+  ],
+  videos: [
+    { channel: "Biochemistry", title: "Glycogenesis", note: "How glycogen is synthesised.", url: "" },
+    { channel: "Biochemistry", title: "Glycogen Storage Diseases", note: "Von Gierke, Pompe, and others.", url: "" },
+    { channel: "Biochemistry", title: "Regulation of Glycogen Metabolism", note: "How hormones control glycogen synthesis and breakdown.", url: "" }
+  ],
+  mcqs: [
+    { q: "Glycogenesis is the synthesis of:", o: ["Glucose from glycogen", "Glycogen from glucose", "Fatty acids from glucose", "Protein from amino acids"], a: 1, w: "Glycogenesis is the synthesis of glycogen from glucose." },
+    { q: "The key regulatory enzyme of glycogenesis is:", o: ["Glycogen phosphorylase", "Glycogen synthase", "Phosphoglucomutase", "UDP-glucose pyrophosphorylase"], a: 1, w: "Glycogen synthase is the key regulatory enzyme." },
+    { q: "Insulin promotes glycogenesis by:", o: ["Inhibiting glycogen phosphorylase", "Activating glycogen synthase", "Both A and B", "Neither"], a: 2, w: "Insulin promotes glycogenesis by activating glycogen synthase and inhibiting glycogen phosphorylase." },
+    { q: "Glycogen is stored primarily in the:", o: ["Brain and heart", "Liver and muscle", "Kidney and pancreas", "Adipose tissue"], a: 1, w: "Glycogen is stored primarily in the liver and skeletal muscle." },
+    { q: "The main chain of glycogen has which type of linkage?", o: ["Alpha-1,4", "Alpha-1,6", "Beta-1,4", "Beta-1,6"], a: 0, w: "The main chain has alpha-1,4 linkages." },
+    { q: "Branches in glycogen are formed by:", o: ["Alpha-1,4 linkages", "Alpha-1,6 linkages", "Beta-1,4 linkages", "Beta-1,6 linkages"], a: 1, w: "Branches are formed by alpha-1,6 linkages." },
+    { q: "The branching enzyme is called:", o: ["Glycogen synthase", "Amylo-alpha-1,6-transglucosidase", "Phosphoglucomutase", "UDP-glucose pyrophosphorylase"], a: 1, w: "The branching enzyme is amylo-alpha-1,6-transglucosidase." },
+    { q: "UDP-glucose is:", o: ["A form of glucose storage", "The activated form of glucose for glycogenesis", "A breakdown product of glycogen", "A form of glucose in the blood"], a: 1, w: "UDP-glucose is the activated form of glucose for glycogenesis." },
+    { q: "The liver releases glucose into the blood because it has:", o: ["Glycogen synthase", "Glucose-6-phosphatase", "Phosphoglucomutase", "UDP-glucose pyrophosphorylase"], a: 1, w: "Glucose-6-phosphatase allows the liver to release glucose." },
+    { q: "Muscle cannot release glucose into the blood because it lacks:", o: ["Glycogen", "Glycogen synthase", "Glucose-6-phosphatase", "Phosphoglucomutase"], a: 2, w: "Muscle lacks glucose-6-phosphatase." },
+    { q: "Von Gierke disease is caused by deficiency of:", o: ["Glycogen synthase", "Glucose-6-phosphatase", "Branching enzyme", "Phosphoglucomutase"], a: 1, w: "Von Gierke disease is caused by glucose-6-phosphatase deficiency." },
+    { q: "Pompe disease is caused by deficiency of:", o: ["Glycogen synthase", "Glucose-6-phosphatase", "Lysosomal acid alpha-glucosidase", "Branching enzyme"], a: 2, w: "Pompe disease is caused by lysosomal acid alpha-glucosidase deficiency." },
+    { q: "Glycogen synthase is activated by:", o: ["Phosphorylation", "Dephosphorylation", "Acetylation", "Methylation"], a: 1, w: "Glycogen synthase is activated by dephosphorylation." },
+    { q: "Glycogen synthase is inhibited by:", o: ["Phosphorylation", "Dephosphorylation", "Acetylation", "Methylation"], a: 0, w: "Glycogen synthase is inhibited by phosphorylation." },
+    { q: "Which hormone promotes glycogenesis?", o: ["Glucagon", "Adrenaline", "Insulin", "Cortisol"], a: 2, w: "Insulin promotes glycogenesis." },
+    { q: "Which hormone inhibits glycogenesis?", o: ["Insulin", "Glucagon", "Growth hormone", "Thyroid hormone"], a: 1, w: "Glucagon inhibits glycogenesis." },
+    { q: "The first step of glycogenesis converts glucose to:", o: ["Glucose-1-phosphate", "Glucose-6-phosphate", "UDP-glucose", "Glycogen"], a: 1, w: "The first step converts glucose to glucose-6-phosphate." },
+    { q: "Phosphoglucomutase converts glucose-6-phosphate to:", o: ["Glucose", "Glucose-1-phosphate", "UDP-glucose", "Fructose-6-phosphate"], a: 1, w: "Phosphoglucomutase converts glucose-6-phosphate to glucose-1-phosphate." },
+    { q: "UDP-glucose pyrophosphorylase converts glucose-1-phosphate to:", o: ["Glucose-6-phosphate", "UDP-glucose", "Glycogen", "Glucose"], a: 1, w: "UDP-glucose pyrophosphorylase converts glucose-1-phosphate to UDP-glucose." },
+    { q: "Glycogen synthase adds glucose units from UDP-glucose to:", o: ["The reducing end of glycogen", "The non-reducing end of glycogen", "The branch point", "The middle of the chain"], a: 1, w: "Glycogen synthase adds glucose to the non-reducing ends of glycogen." }
+  ]
+};
+
+// ==================== BIOCHEMISTRY TOPIC 10: GLYCOGENOLYSIS ====================
+const T_BCH_GLYCOGENOLYSIS = {
+  courseId: "bch",
+  topicIndex: 10,
+  title: "Glycogenolysis - Breaking Down the Glucose Reserve",
+  minutes: 28,
+  note: [
+    {
+      q: "What is glycogenolysis and why does the body need to break down glycogen?",
+      body: `You have learned glycogenesis, which stores glucose as glycogen. But stored glycogen is useless if it cannot be mobilised when needed. The process of breaking down glycogen to release glucose is called glycogenolysis.
+
+My Socratic question: you have been fasting for 12 hours and your blood glucose is low. How does your body release glucose from glycogen stores to keep your brain functioning?
+
+The answer is glycogenolysis — the breakdown of glycogen to glucose. When blood glucose falls, the liver breaks down its stored glycogen and releases glucose into the blood. Muscle glycogen is broken down to provide glucose for muscle contraction, but muscle cannot release glucose into the blood because it lacks glucose-6-phosphatase.
+
+Glycogenolysis is essential for maintaining blood glucose between meals and during exercise. The liver's glycogen stores can provide glucose for several hours before gluconeogenesis becomes the primary source of glucose. Muscle glycogen provides a rapid source of glucose for muscle contraction during exercise.
+
+Crucial insight: glycogenolysis is the breakdown of glycogen to glucose. The liver releases free glucose into the blood to maintain blood glucose levels; muscle uses glucose-6-phosphate for its own energy needs.`
+    },
+    {
+      q: "How does glycogenolysis actually occur at the molecular level?",
+      body: `Glycogenolysis is the breakdown of glycogen to glucose. It occurs when blood glucose is low, such as during fasting or exercise. The process involves specific enzymes that break the glycosidic bonds of glycogen.
+
+The key enzyme of glycogenolysis is glycogen phosphorylase. This enzyme cleaves glucose units from the non-reducing ends of glycogen branches, releasing glucose-1-phosphate. The reaction is: Glycogen + Pi → Glycogen (n-1) + Glucose-1-phosphate.
+
+This is a phosphorolysis reaction, not a hydrolysis. The product is glucose-1-phosphate because the phosphate is added to the glucose as it is released. This is important because glucose-1-phosphate is already phosphorylated and can be used directly in metabolism without consuming ATP.
+
+The glucose-1-phosphate is converted to glucose-6-phosphate by phosphoglucomutase. In the liver, glucose-6-phosphatase converts glucose-6-phosphate to free glucose, which is released into the blood. In muscle, glucose-6-phosphate enters glycolysis for energy.
+
+Glycogen phosphorylase cannot remove the last few glucose units or remove branches. The debranching enzyme (amylo-alpha-1,6-glucosidase) removes the branches and transfers the remaining glucose units to the main chain, allowing glycogen phosphorylase to continue.
+
+My Socratic question: why does glycogen phosphorylase use phosphorolysis rather than hydrolysis to release glucose?
+
+The answer is that phosphorolysis produces glucose-1-phosphate, which is already phosphorylated. This saves the cell the energy it would need to phosphorylate free glucose to glucose-6-phosphate. The phosphate comes from inorganic phosphate, so no ATP is consumed. This is more efficient for the cell.
+
+Crucial insight: glycogen phosphorylase releases glucose-1-phosphate from glycogen branches. The debranching enzyme removes branches and transfers remaining units. The product is glucose-1-phosphate, which is already phosphorylated and ready for metabolism.`
+    },
+    {
+      q: "How is glycogenolysis regulated by hormones?",
+      body: `Glycogenolysis is tightly regulated to ensure that glucose is released when it is needed and not wasted when it is abundant. The key regulatory enzyme is glycogen phosphorylase.
+
+My Socratic question: glycogenesis and glycogenolysis are opposing pathways. How does the body prevent them from running simultaneously?
+
+The answer is that the pathways are reciprocally regulated. Glucagon and adrenaline activate glycogen phosphorylase (promoting breakdown) and inhibit glycogen synthase (preventing storage). Insulin activates glycogen synthase (promoting storage) and inhibits glycogen phosphorylase (preventing breakdown).
+
+Glycogen phosphorylase is activated by phosphorylation (addition of phosphate groups) and inhibited by dephosphorylation. Glucagon and adrenaline promote phosphorylation, activating glycogen phosphorylase. This prepares the cell to release glucose during fasting or stress.
+
+Insulin promotes dephosphorylation, inactivating glycogen phosphorylase. This prevents glycogen breakdown when glucose is abundant.
+
+The regulation of glycogen phosphorylase is a classic example of how hormones control metabolism through covalent modification. The phosphorylation of glycogen phosphorylase changes its conformation, making it active.
+
+Crucial insight: glycogenolysis is regulated by hormones (glucagon/adrenaline promote, insulin inhibits) and covalent modification (phosphorylation/dephosphorylation). This ensures glucose is released when needed and stored when abundant.`
+    },
+    {
+      q: "How does glycogen phosphorylase work at the molecular level?",
+      body: `Glycogen phosphorylase is the key enzyme of glycogenolysis. It catalyses the cleavage of glucose units from the ends of glycogen branches. Understanding how it works is essential for understanding glycogen breakdown.
+
+Glycogen phosphorylase is a large enzyme that exists in two forms: phosphorylase b (inactive) and phosphorylase a (active). Phosphorylase b is converted to phosphorylase a by phosphorylation, which is catalysed by phosphorylase kinase. Phosphorylase a is converted back to phosphorylase b by dephosphorylation, which is catalysed by protein phosphatase 1.
+
+The enzyme has a binding site for glycogen and a catalytic site where the reaction occurs. When the enzyme is phosphorylated, it adopts a conformation that is active. When it is dephosphorylated, it is inactive.
+
+Glycogen phosphorylase is also regulated by allosteric effectors. AMP activates phosphorylase b, even without phosphorylation, allowing the muscle to break down glycogen during exercise when AMP levels are high. ATP and glucose-6-phosphate inhibit glycogen phosphorylase, preventing unnecessary glycogen breakdown.
+
+My Socratic question: why does muscle glycogen phosphorylase respond to AMP while liver glycogen phosphorylase does not?
+
+The answer is that muscle needs to break down glycogen during exercise, even when hormonal signals are not present. AMP is a signal of low energy (low ATP), so muscle phosphorylase responds to AMP to provide glucose for energy production. Liver phosphorylase responds primarily to hormonal signals (glucagon) because the liver's job is to maintain blood glucose, not to respond to local energy needs.
+
+Crucial insight: glycogen phosphorylase is activated by phosphorylation and inhibited by dephosphorylation. It is also regulated by allosteric effectors: AMP activates muscle phosphorylase, while ATP and glucose-6-phosphate inhibit it.`
+    },
+    {
+      q: "How does the liver and muscle differ in glycogenolysis?",
+      body: `The liver and muscle have different roles in glycogenolysis because they serve different purposes in the body. Understanding these differences is essential for understanding how the body maintains blood glucose and provides energy for muscle contraction.
+
+In the liver, glycogenolysis maintains blood glucose. When blood glucose falls, the liver breaks down glycogen to glucose-6-phosphate, which is converted to free glucose by glucose-6-phosphatase. The free glucose is released into the blood to maintain blood glucose levels.
+
+In muscle, glycogenolysis provides glucose for muscle contraction. Muscle breaks down glycogen to glucose-6-phosphate, which enters glycolysis for energy production. Muscle cannot release glucose into the blood because it lacks glucose-6-phosphatase.
+
+My Socratic question: both the liver and muscle break down glycogen. Why can muscle not release glucose into the blood while the liver can?
+
+The answer is that muscle lacks glucose-6-phosphatase. In the liver, glucose-6-phosphatase converts glucose-6-phosphate to free glucose, which is released into the blood. Muscle does not have this enzyme, so glucose-6-phosphate is trapped in the muscle cell and enters glycolysis for energy production.
+
+This makes sense — muscle glycogenolysis fuels muscle contraction during exercise. Liver glycogenolysis maintains blood glucose during fasting. The different enzyme complements reflect the different purposes of glycogen in these tissues.
+
+Crucial insight: the liver releases glucose into the blood during glycogenolysis because it has glucose-6-phosphatase. Muscle lacks this enzyme, so its glycogenolysis provides glucose-6-phosphate for its own energy needs.`
+    },
+    {
+      q: "Why does glycogenolysis matter in clinical medicine?",
+      body: `Glycogenolysis is clinically important because defects in glycogen metabolism cause serious diseases called glycogen storage diseases. Understanding these diseases helps illustrate the importance of each enzyme in glycogen metabolism.
+
+McArdle disease (type V) is caused by deficiency of muscle glycogen phosphorylase. Patients with McArdle disease cannot break down glycogen in muscle. They experience exercise intolerance, muscle cramps, and muscle pain. Their blood lactate does not rise during exercise because they cannot produce glucose-6-phosphate for glycolysis.
+
+Hers disease (type VI) is caused by deficiency of liver glycogen phosphorylase. Patients with Hers disease cannot break down glycogen in the liver. They experience hypoglycaemia, especially during fasting, because the liver cannot release glucose into the blood.
+
+Other glycogen storage diseases affect other enzymes in glycogen metabolism. Each disease has characteristic symptoms and requires specific management.
+
+My Socratic question: why does McArdle disease cause exercise intolerance, and why does blood lactate not rise during exercise?
+
+The answer is that muscle glycogen is the primary source of glucose for glycolysis during intense exercise. Without muscle glycogen phosphorylase, muscle cannot break down glycogen to provide glucose-6-phosphate for glycolysis. Blood lactate does not rise because there is no glucose-6-phosphate from glycogen breakdown to feed into glycolysis and produce lactate.
+
+Crucial insight: glycogen storage diseases are caused by defects in enzymes of glycogen metabolism. McArdle disease (muscle phosphorylase deficiency) causes exercise intolerance; Hers disease (liver phosphorylase deficiency) causes hypoglycaemia.`
+    },
+    {
+      q: "Consolidation and your final test on glycogenolysis.",
+      body: `Your cognitive map for glycogenolysis:
+
+DEFINITION: breakdown of glycogen to release glucose.
+
+LOCATION: liver (maintains blood glucose) and muscle (fuels contraction).
+
+KEY ENZYMES: glycogen phosphorylase (regulatory) and debranching enzyme.
+
+ACTIVATION: glucagon and adrenaline promote glycogenolysis (during fasting/stress).
+
+INHIBITION: insulin inhibits glycogenolysis (after a meal).
+
+PRODUCT: glucose-1-phosphate (liver: converted to free glucose; muscle: used for energy).
+
+REGULATION: reciprocal regulation with glycogenesis; phosphorylation/dephosphorylation of glycogen phosphorylase.
+
+CLINICAL RELEVANCE: glycogen storage diseases (McArdle, Hers).
+
+Now your final test. A patient experiences severe muscle cramps and exercise intolerance. After strenuous exercise, the patient's blood lactate does not rise as expected.
+
+Question one: what enzyme deficiency is most likely, and what is the normal function of this enzyme?
+Question two: why does the patient experience muscle cramps and exercise intolerance?
+Question three: why does the patient's blood lactate not rise after exercise?
+
+My answers:
+One: muscle glycogen phosphorylase deficiency (McArdle disease) is most likely. Glycogen phosphorylase breaks down glycogen to release glucose-1-phosphate for energy.
+Two: the patient experiences muscle cramps and exercise intolerance because muscle cannot break down glycogen to provide glucose for energy during exercise.
+Three: blood lactate does not rise because lactate is produced from glycolysis, which requires glucose-6-phosphate from glycogen breakdown. Without glycogen breakdown, glycolysis is limited and less lactate is produced.`
+    }
+  ],
+  theory: [
+    { q: "What is glycogenolysis and where does it occur?", a: "Glycogenolysis is the breakdown of glycogen to release glucose. It occurs in the liver and skeletal muscle." },
+    { q: "What is the key regulatory enzyme of glycogenolysis?", a: "Glycogen phosphorylase is the key regulatory enzyme of glycogenolysis." },
+    { q: "What hormones activate glycogenolysis?", a: "Glucagon and adrenaline activate glycogenolysis." },
+    { q: "What hormone inhibits glycogenolysis?", a: "Insulin inhibits glycogenolysis." },
+    { q: "What is the product of glycogen phosphorylase?", a: "Glycogen phosphorylase releases glucose-1-phosphate from glycogen." },
+    { q: "What is the role of the debranching enzyme?", a: "The debranching enzyme removes branches from glycogen, allowing glycogen phosphorylase to continue breaking down the chain." },
+    { q: "Why can the liver release free glucose but muscle cannot?", a: "The liver has glucose-6-phosphatase, which converts glucose-6-phosphate to free glucose. Muscle lacks this enzyme." },
+    { q: "What is McArdle disease?", a: "McArdle disease (type V glycogen storage disease) is caused by deficiency of muscle glycogen phosphorylase, leading to exercise intolerance." },
+    { q: "What is Hers disease?", a: "Hers disease (type VI glycogen storage disease) is caused by deficiency of liver glycogen phosphorylase, leading to hypoglycaemia." },
+    { q: "How is glycogen phosphorylase regulated?", a: "Glycogen phosphorylase is activated by phosphorylation (glucagon/adrenaline) and inhibited by dephosphorylation (insulin)." }
+  ],
+  videos: [
+    { channel: "Biochemistry", title: "Glycogenolysis", note: "How glycogen is broken down.", url: "" },
+    { channel: "Biochemistry", title: "Glycogen Storage Diseases", note: "McArdle, Hers, and others.", url: "" },
+    { channel: "Biochemistry", title: "Regulation of Glycogen Metabolism", note: "How hormones control glycogen breakdown.", url: "" }
+  ],
+  mcqs: [
+    { q: "Glycogenolysis is the breakdown of:", o: ["Glucose to glycogen", "Glycogen to glucose", "Fatty acids to glucose", "Protein to glucose"], a: 1, w: "Glycogenolysis is the breakdown of glycogen to glucose." },
+    { q: "The key regulatory enzyme of glycogenolysis is:", o: ["Glycogen synthase", "Glycogen phosphorylase", "Phosphoglucomutase", "UDP-glucose pyrophosphorylase"], a: 1, w: "Glycogen phosphorylase is the key regulatory enzyme." },
+    { q: "Glucagon promotes glycogenolysis by:", o: ["Activating glycogen synthase", "Activating glycogen phosphorylase", "Inhibiting glycogen phosphorylase", "Inhibiting glycogen synthase"], a: 1, w: "Glucagon activates glycogen phosphorylase." },
+    { q: "Glycogen phosphorylase releases:", o: ["Free glucose", "Glucose-1-phosphate", "Glucose-6-phosphate", "UDP-glucose"], a: 1, w: "Glycogen phosphorylase releases glucose-1-phosphate." },
+    { q: "The debranching enzyme removes:", o: ["Alpha-1,4 linkages", "Alpha-1,6 linkages", "Beta-1,4 linkages", "Beta-1,6 linkages"], a: 1, w: "The debranching enzyme removes alpha-1,6 linkages." },
+    { q: "The liver releases free glucose because it has:", o: ["Glycogen phosphorylase", "Glucose-6-phosphatase", "Debranching enzyme", "Glycogen synthase"], a: 1, w: "The liver has glucose-6-phosphatase." },
+    { q: "Muscle lacks:", o: ["Glycogen", "Glycogen phosphorylase", "Glucose-6-phosphatase", "Debranching enzyme"], a: 2, w: "Muscle lacks glucose-6-phosphatase." },
+    { q: "McArdle disease is caused by deficiency of:", o: ["Liver glycogen phosphorylase", "Muscle glycogen phosphorylase", "Glucose-6-phosphatase", "Debranching enzyme"], a: 1, w: "McArdle disease is caused by muscle glycogen phosphorylase deficiency." },
+    { q: "Hers disease is caused by deficiency of:", o: ["Liver glycogen phosphorylase", "Muscle glycogen phosphorylase", "Glucose-6-phosphatase", "Debranching enzyme"], a: 0, w: "Hers disease is caused by liver glycogen phosphorylase deficiency." },
+    { q: "Glycogen phosphorylase is activated by:", o: ["Phosphorylation", "Dephosphorylation", "Acetylation", "Methylation"], a: 0, w: "Glycogen phosphorylase is activated by phosphorylation." },
+    { q: "Glycogen phosphorylase is inhibited by:", o: ["Phosphorylation", "Dephosphorylation", "Acetylation", "Methylation"], a: 1, w: "Glycogen phosphorylase is inhibited by dephosphorylation." },
+    { q: "Which hormone promotes glycogenolysis?", o: ["Insulin", "Glucagon", "Growth hormone", "Thyroid hormone"], a: 1, w: "Glucagon promotes glycogenolysis." },
+    { q: "Which hormone inhibits glycogenolysis?", o: ["Glucagon", "Adrenaline", "Insulin", "Cortisol"], a: 2, w: "Insulin inhibits glycogenolysis." },
+    { q: "Phosphorolysis of glycogen produces:", o: ["Free glucose and ATP", "Glucose-1-phosphate", "Glucose-6-phosphate", "UDP-glucose"], a: 1, w: "Phosphorolysis produces glucose-1-phosphate." },
+    { q: "Muscle glycogen phosphorylase is activated by:", o: ["Glucagon", "AMP", "ATP", "Glucose-6-phosphate"], a: 1, w: "AMP activates muscle glycogen phosphorylase." },
+    { q: "Liver glycogen phosphorylase is activated by:", o: ["AMP", "Glucagon", "ATP", "Glucose-6-phosphate"], a: 1, w: "Glucagon activates liver glycogen phosphorylase." },
+    { q: "The debranching enzyme transfers glucose units to:", o: ["The reducing end", "The non-reducing end", "The branch point", "A new branch"], a: 1, w: "The debranching enzyme transfers glucose to the non-reducing end." },
+    { q: "Phosphoglucomutase converts glucose-1-phosphate to:", o: ["Glucose", "Glucose-6-phosphate", "UDP-glucose", "Fructose-6-phosphate"], a: 1, w: "Phosphoglucomutase converts glucose-1-phosphate to glucose-6-phosphate." },
+    { q: "In the liver, glucose-6-phosphatase converts glucose-6-phosphate to:", o: ["Glucose-1-phosphate", "Free glucose", "Glycogen", "UDP-glucose"], a: 1, w: "Glucose-6-phosphatase converts glucose-6-phosphate to free glucose." },
+    { q: "McArdle disease is characterised by:", o: ["Hypoglycaemia", "Exercise intolerance and muscle cramps", "Enlarged liver", "Obesity"], a: 1, w: "McArdle disease causes exercise intolerance and muscle cramps." }
+  ]
+};
+
 /* --------------------------- bio:0 --------------------------- */
 const T_BIO_AMINO = {
   courseId: "bio",
@@ -11405,6 +11755,8 @@ const CONTENT = {
   "bch:6": T_BCH_ETC,
   "bch:7": T_BCH_PPP,
   "bch:8": T_BCH_GLUCONEO,
+  "bch:9": T_BCH_GLYCOGEN,
+  "bch:10": T_BCH_GLYCOGENOLYSIS,
   "bio:0": T_BIO_ISOMERISM,
   "bio:1": T_BIO_HEMIACETALS,
   "bio:2": T_BIO_CARBS,
