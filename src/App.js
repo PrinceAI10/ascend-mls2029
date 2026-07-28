@@ -16012,6 +16012,39 @@ export default function App() {
     }
     return { view: "home" };
   });
+    // GLOBAL STATE PRESERVATION - Save all critical state
+  useEffect(() => {
+    try {
+      const state = {
+        route,
+        progress,
+        lastTopic,
+        theme,
+        menuOpen,
+        notifOpen,
+        rateDismissed,
+        rateStars
+      };
+      sessionStorage.setItem('ascend_global_state', JSON.stringify(state));
+    } catch {}
+  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
+
+  // Restore global state on mount
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_global_state');
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.route) setRoute(state.route);
+        if (state.lastTopic) setLastTopic(state.lastTopic);
+        if (state.theme) setTheme(state.theme);
+        if (state.menuOpen !== undefined) setMenuOpen(state.menuOpen);
+        if (state.notifOpen !== undefined) setNotifOpen(state.notifOpen);
+        if (state.rateDismissed !== undefined) setRateDismissed(state.rateDismissed);
+        if (state.rateStars !== undefined) setRateStars(state.rateStars);
+      }
+    } catch {}
+  }, []);
 
     // XP TRACKING FUNCTIONS - for ▲ +150 indicator on leaderboard (only shows increases)
   const setXpChange = (currentXp) => {
