@@ -13046,7 +13046,37 @@ function parseAIJson(raw) {
   s = s.replace(/,\s*([\]}])/g, "$1");
   // curly quotes -> straight quotes
   s = s.replace(/[\u201C\u201D]/g, '"').replace(/[\u2018\u2019]/g, "'");
-  return JSON.parse(s);
+  
+  // Fix common JSON issues
+  try {
+    return JSON.parse(s);
+  } catch (e) {
+    // If JSON parse fails, try to fix missing commas between array elements
+    // Look for pattern: "}" followed by "{" with no comma
+    s = s.replace(/\}(\s*)\{/g, '},$1{');
+    // Look for pattern: "]" followed by "{" with no comma
+    s = s.replace(/\](\s*)\{/g, '],$1{');
+    // Look for pattern: "}" followed by "[" with no comma
+    s = s.replace(/\}(\s*)\[/g, '},$1[');
+    // Remove any duplicate commas
+    s = s.replace(/,+,/g, ',');
+    // Remove commas before closing brackets
+    s = s.replace(/,\s*\]/g, ']');
+    s = s.replace(/,\s*\}/g, '}');
+    try {
+      return JSON.parse(s);
+    } catch (e2) {
+      // If still failing, try to extract individual questions and rebuild
+      const matches = s.match(/\{[^{}]*"q"\s*:\s*"[^"]*"\s*,\s*"o"\s*:\s*\[[^\]]*\]\s*,\s*"a"\s*:\s*\d+\s*,\s*"w"\s*:\s*"[^"]*"\s*\}/g);
+      if (matches && matches.length > 0) {
+        const fixed = matches.map(m => {
+          try { return JSON.parse(m); } catch { return null; }
+        }).filter(Boolean);
+        if (fixed.length > 0) return fixed;
+      }
+      throw new Error("Could not parse AI response. Please try again.");
+    }
+  }
 }
 
 /* Load the Mermaid diagram library once, on demand, from a CDN. Mermaid turns
@@ -14687,7 +14717,7 @@ function PapersView() {
       if (!clean.length) throw new Error("No usable questions came back - try again.");
       setItems(shuffleOptions(clean));
     } catch (e) {
-      setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again in a moment.");
+     setErr((e && e.message ? e.message : "") + " The AI response could not be parsed. Please try again.");
     }
     setBusy(false);
   };
