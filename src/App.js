@@ -17198,7 +17198,7 @@ return (
           paddingLeft: "env(safe-area-inset-left)",
           paddingRight: "env(safe-area-inset-right)"
         }}>
-          <div></div> className="topbar-inner" style={{
+          <div className="topbar-inner" style={{
             maxWidth: "1080px",
             margin: "0 auto",
             width: "100%",
@@ -17207,7 +17207,7 @@ return (
             alignItems: "center",
             gap: "14px",
             flexWrap: "wrap"
-          }}
+          }}></div>
             <button 
               className="iconbtn onlymobile" 
               onClick={() => setMenuOpen(true)} 
