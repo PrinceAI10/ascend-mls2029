@@ -16960,365 +16960,374 @@ export default function App() {
   setPasscoXp,
   getStreakMultiplier
 };
-  const render = () => {
-    switch (route.view) {
-      case "home": return <HomeView app={app} />;
-      case "courses": return <CoursesView app={app} />;
-      case "course": return <CourseView app={app} />;
-      case "topic": return <TopicView app={app} />;
-      case "quiz": return <QuizView app={app} />;
-      case "daily": return <DailyView app={app} />;
-      case "ranks": return <RanksView app={app} />;
-      case "review": return <ReviewView app={app} />;
-      case "tools": return <StudyToolsView />;
-      case "papers": return <PapersView />;
-      case "plan": return <PlanView />;
-      case "resources": return <ResourcesView />;
-      case "lamla": return <LAMLAView app={app} />;
-      case "feedback": return <FeedbackView />;
-      case "viewfeedback": return <ViewFeedbackView />;
-      default: return <HomeView app={app} />;
-    }
-  };
 
-  const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
-  const r = rankOf(progress.xp);
-  const rootCls = "ascend-root" + (theme === "light" ? " light" : "");
-  const dailyNotDone = !progress.dailyDone?.[todayKey()];
-  const unreadAnn = (progress.seenAnn || 0) < ANNOUNCEMENTS.length;
-  const hasUnread = unreadAnn || dailyNotDone;
-  const openNotif = () => { setNotifOpen(true); if (unreadAnn) persist({ ...progress, seenAnn: ANNOUNCEMENTS.length }); };
-  const showRate = !!auth && progress.xp >= 30 && !progress.rated && !progress.ratePromptSeen && !rateDismissed && route.view !== "feedback";
+const navButtons = (onNav) => NAV.map((n) => {
+  const Icon = Ic[n.icon];
+  return <button key={n.key} className={"navi " + (activeNav === n.key ? "on" : "")} onClick={() => onNav(n.key)}><Icon p={19} />{n.label}</button>;
+});
 
-  if (!loaded) return (
-    <div className={rootCls}>
-      <style>{CSS}</style>
-      
-      {/* RANK UP NOTIFICATION */}
-      {rankUpNotif && (
+const render = () => {
+  switch (route.view) {
+    case "home": return <HomeView app={app} />;
+    case "courses": return <CoursesView app={app} />;
+    case "course": return <CourseView app={app} />;
+    case "topic": return <TopicView app={app} />;
+    case "quiz": return <QuizView app={app} />;
+    case "daily": return <DailyView app={app} />;
+    case "ranks": return <RanksView app={app} />;
+    case "review": return <ReviewView app={app} />;
+    case "tools": return <StudyToolsView />;
+    case "papers": return <PapersView />;
+    case "plan": return <PlanView />;
+    case "resources": return <ResourcesView />;
+    case "lamla": return <LAMLAView app={app} />;
+    case "feedback": return <FeedbackView />;
+    case "viewfeedback": return <ViewFeedbackView />;
+    default: return <HomeView app={app} />;
+  }
+};
+
+const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
+const r = rankOf(progress.xp);
+const rootCls = "ascend-root" + (theme === "light" ? " light" : "");
+const dailyNotDone = !progress.dailyDone?.[todayKey()];
+const unreadAnn = (progress.seenAnn || 0) < ANNOUNCEMENTS.length;
+const hasUnread = unreadAnn || dailyNotDone;
+const openNotif = () => { setNotifOpen(true); if (unreadAnn) persist({ ...progress, seenAnn: ANNOUNCEMENTS.length }); };
+const showRate = !!auth && progress.xp >= 30 && !progress.rated && !progress.ratePromptSeen && !rateDismissed && route.view !== "feedback";
+
+// ============================================================
+// FINAL RETURN STATEMENT - ONLY ONE!
+// ============================================================
+return (
+  <div className={rootCls}>
+    <style>{CSS}</style>
+    
+    {/* RANK UP NOTIFICATION */}
+    {rankUpNotif && (
+      <div style={{
+        position: 'fixed',
+        top: '80px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 100,
+        background: 'var(--bg-2)',
+        border: '2px solid ' + rankUpNotif.color,
+        borderRadius: '12px',
+        padding: '16px 24px',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 14,
+        maxWidth: '90vw'
+      }}>
         <div style={{
-          position: 'fixed',
-          top: '80px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 100,
-          background: 'var(--bg-2)',
-          border: '2px solid ' + rankUpNotif.color,
-          borderRadius: '12px',
-          padding: '16px 24px',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+          width: 44,
+          height: 44,
+          borderRadius: '50%',
+          background: rankUpNotif.color + '22',
           display: 'flex',
           alignItems: 'center',
-          gap: 14,
-          maxWidth: '90vw'
+          justifyContent: 'center'
         }}>
-          <div style={{
-            width: 44,
-            height: 44,
-            borderRadius: '50%',
-            background: rankUpNotif.color + '22',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={rankUpNotif.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-              <path d="M4 22h16" />
-              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
-              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
-              <path d="M18 2H6v7a6 6 0 0 0 12 0V2z" />
-            </svg>
-          </div>
-          <div>
-            <div style={{ fontWeight: 700, fontSize: 16, color: rankUpNotif.color }}>Rank Up!</div>
-            <div style={{ color: 'var(--text-2)', fontSize: 14 }}>{rankUpNotif.message}</div>
-          </div>
-          <button 
-            className="btn btn-sm" 
-            style={{ 
-              background: 'var(--bg-3)', 
-              color: 'var(--text-2)', 
-              border: '1px solid var(--line)',
-              padding: '4px 12px',
-              fontSize: 12,
-              cursor: 'pointer'
-            }}
-            onClick={() => setRankUpNotif(null)}
-          >
-            Dismiss
-          </button>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={rankUpNotif.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+            <path d="M4 22h16" />
+            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2z" />
+          </svg>
         </div>
-      )}
-      
-      {/* ACHIEVEMENT NOTIFICATION */}
-      {(() => {
-        try {
-          const stored = sessionStorage.getItem('ascend_achievement_notif');
-          if (stored) {
-            const achievement = JSON.parse(stored);
-            return (
+        <div>
+          <div style={{ fontWeight: 700, fontSize: 16, color: rankUpNotif.color }}>Rank Up!</div>
+          <div style={{ color: 'var(--text-2)', fontSize: 14 }}>{rankUpNotif.message}</div>
+        </div>
+        <button 
+          className="btn btn-sm" 
+          style={{ 
+            background: 'var(--bg-3)', 
+            color: 'var(--text-2)', 
+            border: '1px solid var(--line)',
+            padding: '4px 12px',
+            fontSize: 12,
+            cursor: 'pointer'
+          }}
+          onClick={() => setRankUpNotif(null)}
+        >
+          Dismiss
+        </button>
+      </div>
+    )}
+    
+    {/* ACHIEVEMENT NOTIFICATION */}
+    {(() => {
+      try {
+        const stored = sessionStorage.getItem('ascend_achievement_notif');
+        if (stored) {
+          const achievement = JSON.parse(stored);
+          return (
+            <div style={{
+              position: 'fixed',
+              top: '140px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 100,
+              background: 'var(--bg-2)',
+              border: '2px solid #F5B93F',
+              borderRadius: '12px',
+              padding: '16px 24px',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 14,
+              maxWidth: '90vw'
+            }}>
               <div style={{
-                position: 'fixed',
-                top: '140px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 100,
-                background: 'var(--bg-2)',
-                border: '2px solid #F5B93F',
-                borderRadius: '12px',
-                padding: '16px 24px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                width: 44,
+                height: 44,
+                borderRadius: '50%',
+                background: 'rgba(245,185,63,0.15)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 14,
-                maxWidth: '90vw'
+                justifyContent: 'center'
               }}>
-                <div style={{
-                  width: 44,
-                  height: 44,
-                  borderRadius: '50%',
-                  background: 'rgba(245,185,63,0.15)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5B93F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-                    <path d="M4 22h16" />
-                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
-                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
-                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2z" />
-                  </svg>
-                </div>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: 16, color: '#F5B93F' }}>Achievement Unlocked!</div>
-                  <div style={{ color: 'var(--text-2)', fontSize: 14 }}>{achievement.label}: {achievement.description}</div>
-                </div>
-                <button 
-                  className="btn btn-sm" 
-                  style={{ 
-                    background: 'var(--bg-3)', 
-                    color: 'var(--text-2)', 
-                    border: '1px solid var(--line)',
-                    padding: '4px 12px',
-                    fontSize: 12,
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => {
-                    sessionStorage.removeItem('ascend_achievement_notif');
-                    window.location.reload();
-                  }}
-                >
-                  Dismiss
-                </button>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5B93F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                  <path d="M4 22h16" />
+                  <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+                  <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+                  <path d="M18 2H6v7a6 6 0 0 0 12 0V2z" />
+                </svg>
               </div>
-            );
-          }
-        } catch {}
-        return null;
-      })()}
-      
-      <div className="shell">
-        <aside className="side">
-          <div style={{ padding: "0 6px 18px" }}><Wordmark /></div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: 16, color: '#F5B93F' }}>Achievement Unlocked!</div>
+                <div style={{ color: 'var(--text-2)', fontSize: 14 }}>{achievement.label}: {achievement.description}</div>
+              </div>
+              <button 
+                className="btn btn-sm" 
+                style={{ 
+                  background: 'var(--bg-3)', 
+                  color: 'var(--text-2)', 
+                  border: '1px solid var(--line)',
+                  padding: '4px 12px',
+                  fontSize: 12,
+                  cursor: 'pointer'
+                }}
+                onClick={() => {
+                  sessionStorage.removeItem('ascend_achievement_notif');
+                  window.location.reload();
+                }}
+              >
+                Dismiss
+              </button>
+            </div>
+          );
+        }
+      } catch {}
+      return null;
+    })()}
+    
+    <div className="shell">
+      <aside className="side">
+        <div style={{ padding: "0 6px 18px" }}><Wordmark /></div>
+        {navButtons(go)}
+        <div style={{ marginTop: "auto", padding: "14px 10px 0", borderTop: "1px solid var(--line)" }}>
+          <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
+          <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
+        </div>
+      </aside>
+
+      <div className="main">
+        <header className="topbar" style={{ 
+          position: "sticky", 
+          top: 0, 
+          zIndex: 20, 
+          background: "rgba(10,15,26,.82)",
+          backdropFilter: "blur(10px)",
+          borderBottom: "1px solid var(--line)",
+          padding: "0",
+          paddingTop: "env(safe-area-inset-top)",
+          paddingLeft: "env(safe-area-inset-left)",
+          paddingRight: "env(safe-area-inset-right)"
+        }}>
+          <div className="topbar-inner" style={{
+            maxWidth: "1080px",
+            margin: "0 auto",
+            width: "100%",
+            padding: "13px 30px",
+            display: "flex",
+            alignItems: "center",
+            gap: "14px",
+            flexWrap: "wrap"
+          }}>
+            <button 
+              className="iconbtn onlymobile" 
+              onClick={() => setMenuOpen(true)} 
+              aria-label="Open menu"
+              style={{ 
+                position: "relative", 
+                zIndex: 999,
+                marginLeft: "4px",
+                flexShrink: 0
+              }}
+            >
+              <Ic.menu p={18} />
+            </button>
+            <div className="onlymobile" style={{ flex: 1 }}><Wordmark /></div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
+              <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress.streak}</span></span>
+              <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
+              <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
+              <span className="chip"><span className="val" style={{ color: r.c }}>{progress.xp}</span> XP</span>
+              <span className="chip streakchip" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <Ic.flame p={15} />
+                <span className="val">{progress.streak}</span>
+              </span>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress.name}</span>
+                <button className="avatar" onClick={setName} title="Click to change your username">{progress.name[0]?.toUpperCase()}</button>
+              </div>
+            </div>
+          </div>
+        </header>
+        <div className="content">{render()}</div>
+        {showTop && (
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            style={{
+              position: "fixed",
+              bottom: "clamp(70px, 10vh, 100px)",
+              right: "clamp(16px, 3vw, 30px)",
+              width: "48px",
+              height: "48px",
+              borderRadius: "50%",
+              background: "var(--amber)",
+              color: "#1B1405",
+              border: "none",
+              fontSize: "22px",
+              fontWeight: 700,
+              cursor: "pointer",
+              boxShadow: "0 4px 16px rgba(245,185,63,0.3)",
+              zIndex: 50,
+              transition: "all 0.3s ease",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: "var(--mono)"
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = "scale(1.1)";
+              e.target.style.boxShadow = "0 6px 24px rgba(245,185,63,0.5)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = "scale(1)";
+              e.target.style.boxShadow = "0 4px 16px rgba(245,185,63,0.3)";
+            }}
+          >
+            ↑
+          </button>
+        )}
+      </div>
+    </div>
+
+    {menuOpen && (
+      <div 
+        className="mobile-sidebar-overlay" 
+        onClick={() => setMenuOpen(false)}
+        style={{ 
+          position: "fixed",
+          inset: 0,
+          zIndex: 1000,
+          background: "rgba(0,0,0,0.5)",
+          display: "flex",
+          alignItems: "flex-start",
+          paddingTop: "env(safe-area-inset-top)"
+        }}
+      >
+        <div 
+          className="mobile-sidebar" 
+          onClick={(e) => e.stopPropagation()}
+          style={{
+            width: "280px",
+            maxWidth: "80vw",
+            height: "100vh",
+            height: "100dvh",
+            background: "var(--bg-2)",
+            borderRight: "1px solid var(--line)",
+            display: "flex",
+            flexDirection: "column",
+            padding: "8px 0",
+            overflowY: "auto",
+            paddingTop: "calc(env(safe-area-inset-top) + 8px)",
+            paddingBottom: "calc(env(safe-area-inset-bottom) + 8px)"
+          }}
+        >
+          <div style={{ padding: "16px 18px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <Wordmark />
+            <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setMenuOpen(false)}><Ic.x p={15} /></button>
+          </div>
           {navButtons(go)}
-          <div style={{ marginTop: "auto", padding: "14px 10px 0", borderTop: "1px solid var(--line)" }}>
+          <div style={{ marginTop: "auto", padding: "14px 18px", borderTop: "1px solid var(--line)" }}>
             <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
             <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
           </div>
-        </aside>
-
-        <div className="main">
-          <header className="topbar" style={{ 
-            position: "sticky", 
-            top: 0, 
-            zIndex: 20, 
-            background: "rgba(10,15,26,.82)",
-            backdropFilter: "blur(10px)",
-            borderBottom: "1px solid var(--line)",
-            padding: "0",
-            paddingTop: "env(safe-area-inset-top)",
-            paddingLeft: "env(safe-area-inset-left)",
-            paddingRight: "env(safe-area-inset-right)"
-          }}>
-            <div className="topbar-inner" style={{
-              maxWidth: "1080px",
-              margin: "0 auto",
-              width: "100%",
-              padding: "13px 30px",
-              display: "flex",
-              alignItems: "center",
-              gap: "14px",
-              flexWrap: "wrap"
-            }}>
-              <button 
-                className="iconbtn onlymobile" 
-                onClick={() => setMenuOpen(true)} 
-                aria-label="Open menu"
-                style={{ 
-                  position: "relative", 
-                  zIndex: 999,
-                  marginLeft: "4px",
-                  flexShrink: 0
-                }}
-              >
-                <Ic.menu p={18} />
-              </button>
-              <div className="onlymobile" style={{ flex: 1 }}><Wordmark /></div>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
-                <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress.streak}</span></span>
-                <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
-                <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
-                <span className="chip"><span className="val" style={{ color: r.c }}>{progress.xp}</span> XP</span>
-                <span className="chip streakchip" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <Ic.flame p={15} />
-                  <span className="val">{progress.streak}</span>
-                </span>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress.name}</span>
-                  <button className="avatar" onClick={setName} title="Click to change your username">{progress.name[0]?.toUpperCase()}</button>
-                </div>
-              </div>
-            </div>
-          </header>
-          <div className="content">{render()}</div>
-          {showTop && (
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              style={{
-                position: "fixed",
-                bottom: "clamp(70px, 10vh, 100px)",
-                right: "clamp(16px, 3vw, 30px)",
-                width: "48px",
-                height: "48px",
-                borderRadius: "50%",
-                background: "var(--amber)",
-                color: "#1B1405",
-                border: "none",
-                fontSize: "22px",
-                fontWeight: 700,
-                cursor: "pointer",
-                boxShadow: "0 4px 16px rgba(245,185,63,0.3)",
-                zIndex: 50,
-                transition: "all 0.3s ease",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontFamily: "var(--mono)"
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = "scale(1.1)";
-                e.target.style.boxShadow = "0 6px 24px rgba(245,185,63,0.5)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = "scale(1)";
-                e.target.style.boxShadow = "0 4px 16px rgba(245,185,63,0.3)";
-              }}
-            >
-              ↑
-            </button>
-          )}
         </div>
       </div>
+    )}
 
-      {menuOpen && (
-        <div 
-          className="mobile-sidebar-overlay" 
-          onClick={() => setMenuOpen(false)}
-          style={{ 
-            position: "fixed",
-            inset: 0,
-            zIndex: 1000,
-            background: "rgba(0,0,0,0.5)",
-            display: "flex",
-            alignItems: "flex-start",
-            paddingTop: "env(safe-area-inset-top)"
-          }}
-        >
-          <div 
-            className="mobile-sidebar" 
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              width: "280px",
-              maxWidth: "80vw",
-              height: "100vh",
-              height: "100dvh",
-              background: "var(--bg-2)",
-              borderRight: "1px solid var(--line)",
-              display: "flex",
-              flexDirection: "column",
-              padding: "8px 0",
-              overflowY: "auto",
-              paddingTop: "calc(env(safe-area-inset-top) + 8px)",
-              paddingBottom: "calc(env(safe-area-inset-bottom) + 8px)"
-            }}
-          >
-            <div style={{ padding: "16px 18px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <Wordmark />
-              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setMenuOpen(false)}><Ic.x p={15} /></button>
+    {notifOpen && (
+      <div className="notif-wrap">
+        <div className="notif-scrim" onClick={() => setNotifOpen(false)} />
+        <div className="notif-panel">
+          <div className="notif-head">
+            <div style={{ fontWeight: 700, fontSize: 15 }}>Announcements</div>
+            <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setNotifOpen(false)}><Ic.x p={15} /></button>
+          </div>
+          {dailyNotDone && (
+            <div className="notif-item" style={{ background: "var(--amber-dim)" }}>
+              <div className="mono" style={{ fontSize: 11, color: "var(--amber-2)", marginBottom: 4 }}>REMINDER</div>
+              <div style={{ fontWeight: 650, marginBottom: 3 }}>Today's daily question is waiting</div>
+              <div style={{ color: "var(--text-2)", fontSize: 13.5, marginBottom: 9 }}>Keep your streak alive - it only takes a minute.</div>
+              <button className="btn btn-a btn-sm" onClick={() => { setNotifOpen(false); go("daily"); }}>Go to daily</button>
             </div>
-            {navButtons(go)}
-            <div style={{ marginTop: "auto", padding: "14px 18px", borderTop: "1px solid var(--line)" }}>
-              <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
-              <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
+          )}
+          {ANNOUNCEMENTS.map((a) => (
+            <div className="notif-item" key={a.id}>
+              <div className="mono" style={{ fontSize: 11, color: "var(--amber)", marginBottom: 4 }}>{a.tag.toUpperCase()}</div>
+              <div style={{ fontWeight: 650, marginBottom: 3 }}>{a.title}</div>
+              <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>{a.body}</div>
             </div>
+          ))}
+          <div style={{ padding: "14px 18px" }}>
+            <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={() => { setNotifOpen(false); go("feedback"); }}>Send feedback</button>
           </div>
         </div>
-      )}
+      </div>
+    )}
 
-      {notifOpen && (
-        <div className="notif-wrap">
-          <div className="notif-scrim" onClick={() => setNotifOpen(false)} />
-          <div className="notif-panel">
-            <div className="notif-head">
-              <div style={{ fontWeight: 700, fontSize: 15 }}>Announcements</div>
-              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setNotifOpen(false)}><Ic.x p={15} /></button>
+    {showRate && (
+      <div className="notif-wrap" style={{ justifyContent: "center", alignItems: "center" }}>
+        <div className="notif-scrim" onClick={() => setRateDismissed(true)} />
+        <div className="notif-panel" style={{ margin: 0, width: "min(400px, calc(100vw - 32px))", maxHeight: "none" }}>
+          <div style={{ padding: 22, textAlign: "center" }}>
+            <div className="eyebrow" style={{ color: "var(--amber)" }}>Enjoying ASCEND?</div>
+            <h3 style={{ fontSize: 19, margin: "8px 0 4px" }}>Rate your experience</h3>
+            <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0 }}>A quick tap helps us make it better for the whole class.</p>
+            <div style={{ display: "flex", gap: 8, justifyContent: "center", margin: "8px 0 16px" }}>
+              {[1, 2, 3, 4, 5].map((s) => (
+                <button key={s} onClick={() => setRateStars(s)} style={{ background: "none", border: "none", cursor: "pointer", color: rateStars >= s ? "var(--amber)" : "var(--text-3)" }}>
+                  <Ic.star p={30} fill={rateStars >= s ? "currentColor" : "none"} />
+                </button>
+              ))}
             </div>
-            {dailyNotDone && (
-              <div className="notif-item" style={{ background: "var(--amber-dim)" }}>
-                <div className="mono" style={{ fontSize: 11, color: "var(--amber-2)", marginBottom: 4 }}>REMINDER</div>
-                <div style={{ fontWeight: 650, marginBottom: 3 }}>Today's daily question is waiting</div>
-                <div style={{ color: "var(--text-2)", fontSize: 13.5, marginBottom: 9 }}>Keep your streak alive - it only takes a minute.</div>
-                <button className="btn btn-a btn-sm" onClick={() => { setNotifOpen(false); go("daily"); }}>Go to daily</button>
-              </div>
-            )}
-            {ANNOUNCEMENTS.map((a) => (
-              <div className="notif-item" key={a.id}>
-                <div className="mono" style={{ fontSize: 11, color: "var(--amber)", marginBottom: 4 }}>{a.tag.toUpperCase()}</div>
-                <div style={{ fontWeight: 650, marginBottom: 3 }}>{a.title}</div>
-                <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>{a.body}</div>
-              </div>
-            ))}
-            <div style={{ padding: "14px 18px" }}>
-              <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={() => { setNotifOpen(false); go("feedback"); }}>Send feedback</button>
-            </div>
+            <button className="btn btn-a" style={{ width: "100%" }} disabled={rateStars === 0} onClick={() => { store.setShared("ascend_feedback:" + Date.now(), { rating: rateStars, comment: "", timestamp: new Date().toISOString() }); persist({ ...progress, rated: true }); setRateDismissed(true); }}>Submit</button>
+            <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 8 }} onClick={() => { persist({ ...progress, ratePromptSeen: true }); setRateDismissed(true); }}>Maybe later</button>
           </div>
         </div>
-      )}
-
-      {showRate && (
-        <div className="notif-wrap" style={{ justifyContent: "center", alignItems: "center" }}>
-          <div className="notif-scrim" onClick={() => setRateDismissed(true)} />
-          <div className="notif-panel" style={{ margin: 0, width: "min(400px, calc(100vw - 32px))", maxHeight: "none" }}>
-            <div style={{ padding: 22, textAlign: "center" }}>
-              <div className="eyebrow" style={{ color: "var(--amber)" }}>Enjoying ASCEND?</div>
-              <h3 style={{ fontSize: 19, margin: "8px 0 4px" }}>Rate your experience</h3>
-              <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0 }}>A quick tap helps us make it better for the whole class.</p>
-              <div style={{ display: "flex", gap: 8, justifyContent: "center", margin: "8px 0 16px" }}>
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <button key={s} onClick={() => setRateStars(s)} style={{ background: "none", border: "none", cursor: "pointer", color: rateStars >= s ? "var(--amber)" : "var(--text-3)" }}>
-                    <Ic.star p={30} fill={rateStars >= s ? "currentColor" : "none"} />
-                  </button>
-                ))}
-              </div>
-              <button className="btn btn-a" style={{ width: "100%" }} disabled={rateStars === 0} onClick={() => { store.setShared("ascend_feedback:" + Date.now(), { rating: rateStars, comment: "", timestamp: new Date().toISOString() }); persist({ ...progress, rated: true }); setRateDismissed(true); }}>Submit</button>
-              <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 8 }} onClick={() => { persist({ ...progress, ratePromptSeen: true }); setRateDismissed(true); }}>Maybe later</button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
 }
