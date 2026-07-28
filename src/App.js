@@ -14901,24 +14901,21 @@ function HomeView({ app }) {
           <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 4 }}>Topics are being built one by one. Browse the full course maps under Courses.</div>
         </div>
       )}
-      {/* CHANGE USERNAME - Visible and easy to find */}
+     {/* CHANGE USERNAME - Blends with background */}
 <div className="card" style={{ 
   marginTop: 16, 
   display: "flex", 
   justifyContent: "space-between", 
   alignItems: "center", 
   gap: 16, 
-  flexWrap: "wrap",
-  borderColor: "var(--amber)",
-  borderWidth: 1,
-  background: "var(--amber-dim)"
+  flexWrap: "wrap"
 }}>
   <div>
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <span style={{ fontWeight: 600, fontSize: 15 }}>Welcome, <span style={{ color: "var(--amber)", fontWeight: 700 }}>{app.progress.name}</span></span>
+      <span style={{ fontWeight: 600, fontSize: 15, color: "var(--text)" }}>Username: <span style={{ color: "#2E9BFF", fontWeight: 700 }}>{app.progress.name}</span></span>
     </div>
     <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 2 }}>
-      This is your display name on the leaderboard.
+      This is how others see you on the leaderboard.
     </div>
   </div>
   <button 
@@ -14963,7 +14960,6 @@ function HomeView({ app }) {
     </div>
   );
 }
-
 /* ------------------------------- auth ----------------------------------- */
 const encodePw = (s) => { try { return btoa(unescape(encodeURIComponent(s))); } catch { return s; } };
 const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [] });
