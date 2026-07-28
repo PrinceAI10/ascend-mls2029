@@ -13669,10 +13669,9 @@ function RanksView({ app }) {
   const [loading, setLoading] = useState(true);
   const [refreshTick, setRefreshTick] = useState(0);
   const [search, setSearch] = useState("");
-  // Set of presence keys for classmates who are online on ASCEND right now.
   const [onlineKeys, setOnlineKeys] = useState(() => new Set());
   
-  // XP CHANGE STATE - shows ▲ +150 or ▼ -50
+  // XP CHANGE STATE - shows Blue ▲ +150
   const [xpChange, setXpChange] = useState(null);
   
   // Load XP change on mount
@@ -13682,17 +13681,13 @@ function RanksView({ app }) {
       if (stored) {
         const parsed = JSON.parse(stored);
         setXpChange(parsed);
-        // Clear after reading so it only shows once
         sessionStorage.removeItem('ascend_xp_change');
       }
     } catch {}
   }, []);
-  
+
   const loadBoard = async () => {
     setLoading(true);
-    // Always read the class-wide leaderboard from Supabase, no matter how the
-    // student logged in (Google or username). Everyone who signed up has a
-    // profile row in the cloud, so everyone sees the same full leaderboard.
     try {
       const rows = await db.leaderboard();
       if (Array.isArray(rows) && rows.length) {
@@ -13718,16 +13713,11 @@ function RanksView({ app }) {
   };
   useEffect(() => {
     loadBoard();
-    // Re-fetch when the student returns to the tab/app, so newly-joined classmates
-    // appear without needing a manual reload.
     const onVis = () => { if (document.visibilityState === "visible") loadBoard(); };
     document.addEventListener("visibilitychange", onVis);
     return () => document.removeEventListener("visibilitychange", onVis);
   }, [meKey, app.progress.xp, app.supaUid, refreshTick]);
 
-  // Live presence: join a shared Realtime channel so classmates currently on
-  // ASCEND show a blue "online" dot. Supabase tracks who is present and tells us
-  // when anyone joins or leaves, so the status stays accurate in real time.
   useEffect(() => {
     if (typeof window === "undefined") return;
     const myKey = presenceKeyFor(app.supaUid, app.progress.name);
@@ -13751,7 +13741,6 @@ function RanksView({ app }) {
           }
         });
     } catch {}
-    // Leaving the page or tab should mark us offline promptly.
     const onHide = () => { try { if (document.visibilityState === "hidden" && channel) channel.untrack(); else if (channel) channel.track({ name: app.progress.name, at: Date.now() }); } catch {} };
     document.addEventListener("visibilitychange", onHide);
     return () => {
@@ -13761,14 +13750,8 @@ function RanksView({ app }) {
   }, [app.supaUid, app.progress.name]);
   const me = { name: app.progress.name, xp: app.progress.xp, streak: app.progress.streak, me: true, id: app.supaUid };
   
-  // Full ranked board with each person's TRUE position (rank 1, 2, 3...), computed
-  // before any search filter so positions stay correct when searching. Each row is
-  // tagged online if their presence key is in the live online set (self is always
-  // online since they are viewing the board now).
   const fullBoard = [...others, me].sort((a, b) => {
-    // First sort by XP descending
     if (b.xp !== a.xp) return b.xp - a.xp;
-    // Same XP: sort by who earned it first (tie-break)
     const aId = a.id || 'local-' + String(a.name).toLowerCase().replace(/[^a-z0-9]/g, '');
     const bId = b.id || 'local-' + String(b.name).toLowerCase().replace(/[^a-z0-9]/g, '');
     const history = JSON.parse(localStorage.getItem('ascend_xp_history') || '{}');
@@ -13784,11 +13767,25 @@ function RanksView({ app }) {
     online: p.me ? true : onlineKeys.has(presenceKeyFor(p.id, p.name)),
   }));
   
-  // Apply the search filter (by name) for display only; positions are preserved.
   const q = search.trim().toLowerCase();
   const board = q ? fullBoard.filter((p) => String(p.name || "").toLowerCase().includes(q)) : fullBoard;
   const r = rankOf(app.progress.xp);
   const toNext = r.next ? r.next.min - app.progress.xp : 0;
+  
+  // Demotion status function
+  const getDemotionStatus = (lastActive) => {
+    if (!lastActive) return null;
+    const today = new Date();
+    const last = new Date(lastActive);
+    const diffDays = Math.floor((today - last) / (1000 * 60 * 60 * 24));
+    if (diffDays >= 10) {
+      return { zone: 'demotion', days: diffDays, label: 'DEMOTED', color: '#F0776A' };
+    } else if (diffDays >= 7) {
+      return { zone: 'warning', days: diffDays, label: 'WARNING', color: '#FFA726' };
+    }
+    return null;
+  };
+  
   return (
     <div className="view">
       <div className="eyebrow">Leaderboard</div>
@@ -13823,48 +13820,73 @@ function RanksView({ app }) {
       <div style={{ marginTop: 10 }}>
         {loading && fullBoard.length <= 1 && <div style={{ padding: "20px", textAlign: "center", color: "var(--text-3)", fontSize: 13 }}>Loading the class leaderboard...</div>}
         {!loading && q && board.length === 0 && <div style={{ padding: "20px", textAlign: "center", color: "var(--text-3)", fontSize: 13 }}>No classmate found matching "{search.trim()}".</div>}
-        {board.map((p) => (
-          <div key={p.pos + "-" + p.name} className="card" style={{ marginBottom: 8, padding: "12px 15px", display: "flex", alignItems: "center", gap: 13, border: p.me ? "1px solid var(--amber)" : "1px solid var(--line)", background: p.me ? "var(--amber-dim)" : "var(--bg-2)" }}>
-            <div className="mono" style={{ width: 24, textAlign: "center", fontWeight: 700, color: p.pos <= 3 ? "var(--amber)" : "var(--text-3)", fontSize: 15 }}>{p.pos}</div>
-            <div style={{ position: "relative", flexShrink: 0 }}>
-              <div style={{ width: 34, height: 34, borderRadius: "50%", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 13, color: "var(--text-2)" }}>{p.name[0]}</div>
-              <span title={p.online ? "Online now" : "Offline"} style={{ position: "absolute", bottom: -1, right: -1, width: 11, height: 11, borderRadius: "50%", background: p.online ? "#2E9BFF" : "var(--text-3)", border: "2px solid var(--bg-2)", boxShadow: p.online ? "0 0 0 1px #2E9BFF55" : "none" }} />
-            </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontWeight: 650, fontSize: 14.5, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.name}{p.me && <span style={{ color: "var(--amber)", fontSize: 12 }}> · you</span>}</div>
-              <div className="mono" style={{ fontSize: 11.5, color: "var(--text-3)" }}>{rankOf(p.xp).name.toUpperCase()}</div>
-            </div>
-            <div style={{ textAlign: "right" }}>
-              <div className="mono" style={{ fontWeight: 700, fontSize: 14 }}>{p.xp}</div>
-              
-              {/* XP CHANGE INDICATOR - Green ▲ for increase, Red ▼ for decrease */}
-              {p.me && xpChange && xpChange.change !== 0 && (
-                <div style={{
-                  fontSize: 11,
-                  fontWeight: 600,
-                  color: xpChange.direction === 'up' ? '#4CAF50' : '#F44336',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'flex-end',
-                  gap: 2,
-                  marginTop: 1
-                }}>
-                  {xpChange.direction === 'up' ? '▲' : '▼'} {xpChange.display}
+        {board.map((p) => {
+          const demotion = !p.me ? getDemotionStatus(p.lastActive) : null;
+          return (
+            <div key={p.pos + "-" + p.name} className="card" style={{ marginBottom: 8, padding: "12px 15px", display: "flex", alignItems: "center", gap: 13, border: p.me ? "1px solid var(--amber)" : "1px solid var(--line)", background: p.me ? "var(--amber-dim)" : "var(--bg-2)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <div className="mono" style={{ width: 24, textAlign: "center", fontWeight: 700, color: p.pos <= 3 ? "#F5B93F" : "var(--text-3)", fontSize: 15 }}>{p.pos}</div>
+                {demotion && (
+                  <span style={{
+                    fontSize: 9,
+                    fontWeight: 700,
+                    color: demotion.color,
+                    background: demotion.zone === 'demotion' ? 'rgba(240,119,106,0.12)' : 'rgba(255,167,38,0.10)',
+                    padding: '1px 6px',
+                    borderRadius: 3,
+                    border: '1px solid ' + demotion.color,
+                    letterSpacing: '0.3px'
+                  }}>
+                    {demotion.label}
+                  </span>
+                )}
+              </div>
+              <div style={{ position: "relative", flexShrink: 0 }}>
+                <div style={{ width: 34, height: 34, borderRadius: "50%", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 13, color: "var(--text-2)" }}>{p.name[0]}</div>
+                <span title={p.online ? "Online now" : "Offline"} style={{ position: "absolute", bottom: -1, right: -1, width: 11, height: 11, borderRadius: "50%", background: p.online ? "#2E9BFF" : "var(--text-3)", border: "2px solid var(--bg-2)", boxShadow: p.online ? "0 0 0 1px #2E9BFF55" : "none" }} />
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontWeight: 650, fontSize: 14.5, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.name}{p.me && <span style={{ color: "#F5B93F", fontSize: 12 }}> · you</span>}</div>
+                <div className="mono" style={{ fontSize: 11.5, color: "var(--text-3)" }}>{rankOf(p.xp).name.toUpperCase()}</div>
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <div className="mono" style={{ fontWeight: 700, fontSize: 14 }}>{p.xp}</div>
+                
+                {/* XP CHANGE INDICATOR - Blue ▲ only when XP increases */}
+                {p.me && xpChange && xpChange.change > 0 && (
+                  <div style={{
+                    fontSize: 11,
+                    fontWeight: 600,
+                    color: '#2E9BFF',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    gap: 2,
+                    marginTop: 1
+                  }}>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2E9BFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 19V6M6 11l6-6 6 6" />
+                    </svg>
+                    +{xpChange.change}
+                  </div>
+                )}
+                
+                <div style={{ fontSize: 11, color: "#F5B93F", display: "flex", alignItems: "center", gap: 3, justifyContent: "flex-end" }}>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#F5B93F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 3c1 3 4 4.2 4 8a4 4 0 1 1-8 0c0-1.4.6-2.4 1.2-3.2C10 9 11 7 12 3z" />
+                  </svg>
+                  {p.streak}
                 </div>
-              )}
-              
-              <div style={{ fontSize: 11, color: "var(--amber-2)", display: "flex", alignItems: "center", gap: 3, justifyContent: "flex-end" }}>
-                <Ic.flame p={12} />{p.streak}
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <div className="divider" />
       <div className="grid g2">
         <div className="card">
           <div className="eyebrow">Top scorer</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: "var(--amber)", marginTop: 6 }}>{fullBoard[0]?.name || "No data yet"}</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: "#F5B93F", marginTop: 6 }}>{fullBoard[0]?.name || "No data yet"}</div>
           <div style={{ color: "var(--text-2)", fontSize: 13 }}>{fullBoard[0] ? fullBoard[0].xp + " XP" : "Do quizzes to appear here"}</div>
         </div>
         <div className="card">
@@ -13876,7 +13898,6 @@ function RanksView({ app }) {
     </div>
   );
 }
-
 /* ------------------------------- review --------------------------------- */
 /* Spaced-style review: every question a student got wrong is collected here so
    they can drill their weak spots. Answer one correctly and it leaves the deck.
@@ -14478,14 +14499,14 @@ function PapersView() {
             <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Paste one passco question</label>
             <textarea className="pastebox" value={sample} placeholder={"e.g.\n\nThe plane dividing the body into left and right is the\nA. coronal  B. sagittal  C. transverse  D. oblique"} onChange={(e) => setSample(e.target.value)} />
             <label className="eyebrow" style={{ display: "block", margin: "16px 0 8px" }}>How many similar questions?</label>
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[10, 20, 30, 40].map((n) => <button key={n} className="btn btn-sm" style={{ background: similarCount === n ? "var(--amber)" : "var(--bg-3)", color: similarCount === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={() => setSimilarCount(n)}>{n}</button>)}</div>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[10, 20, 30, 40, 50].map((n) => <button key={n} className="btn btn-sm" style={{ background: similarCount === n ? "var(--amber)" : "var(--bg-3)", color: similarCount === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={() => setSimilarCount(n)}>{n}</button>)}</div>
           </>
         )}
-        <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>Each set contains 50 questions.</div>
+        <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>Select how many questions you want. More questions = more practice.</div>
         <div style={{ marginTop: 16 }}>
           {tab === "solve"
             ? <button className="btn btn-a" onClick={startSolve} disabled={busy}>{busy ? "Building your set..." : `Start a set of ${count}`} <Ic.ai p={16} /></button>
-            : <button className="btn btn-a" onClick={startSimilar} disabled={busy || !sample.trim()}>{busy ? "Generating..." : `Generate ${count} similar`} <Ic.ai p={16} /></button>}
+            : <button className="btn btn-a" onClick={startSimilar} disabled={busy || !sample.trim()}>{busy ? "Generating..." : `Generate ${similarCount} similar`} <Ic.ai p={16} /></button>}
         </div>
       </div>
       )}
@@ -14495,7 +14516,6 @@ function PapersView() {
     </div>
   );
 }
-
 /* PasscoPicker: lists real past papers (grouped by course), and lets the student
    pick a 50-question chunk and a mode (practice or exam). Chunking keeps sets to
    50 so a 100+ question paper never overwhelms - you solve 50, then the next 50. */
@@ -14881,6 +14901,38 @@ function HomeView({ app }) {
           <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 4 }}>Topics are being built one by one. Browse the full course maps under Courses.</div>
         </div>
       )}
+      {/* CHANGE USERNAME - Visible and easy to find */}
+<div className="card" style={{ 
+  marginTop: 16, 
+  display: "flex", 
+  justifyContent: "space-between", 
+  alignItems: "center", 
+  gap: 16, 
+  flexWrap: "wrap",
+  borderColor: "var(--amber)",
+  borderWidth: 1,
+  background: "var(--amber-dim)"
+}}>
+  <div>
+    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <span style={{ fontWeight: 600, fontSize: 15 }}>Welcome, <span style={{ color: "var(--amber)", fontWeight: 700 }}>{app.progress.name}</span></span>
+    </div>
+    <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 2 }}>
+      This is your display name on the leaderboard.
+    </div>
+  </div>
+  <button 
+    className="btn btn-a" 
+    onClick={() => {
+      const newName = window.prompt("Enter your new username (2-24 characters):", app.progress.name);
+      if (newName && newName.trim().length >= 2) {
+        app.setName && app.setName(newName.trim());
+      }
+    }}
+  >
+    Change name
+  </button>
+</div>
 
             <div className="card card-feature" style={{ marginTop: 26, textAlign: "center" }}>
         <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 10 }}>Built by the ASCEND team</div>
@@ -15919,8 +15971,7 @@ export default function App() {
     persist({ ...progress, name: newName });
   };
 
-  const app = { progress, go, recordDaily, finishQuiz, clearReviewItem, toggleBookmark, supaUid, courseId: route.courseId, topicId: route.topicId };
-
+ const app = { progress, go, recordDaily, finishQuiz, clearReviewItem, toggleBookmark, supaUid, courseId: route.courseId, topicId: route.topicId, setName };
   const render = () => {
     switch (route.view) {
       case "home": return <HomeView app={app} />;
