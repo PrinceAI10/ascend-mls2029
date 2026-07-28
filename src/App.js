@@ -15503,10 +15503,11 @@ ${RULES}`);
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Solve them, don't just stare at the PDF</h1>
       <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "58ch" }}>A passco PDF is easy to put off. Here you actually answer, tap by tap, with instant feedback - and ASCEND can spin fresh questions off any one you show it.</p>
       <div className="tabs">
-        <button className={"tab " + (tab === "passco" ? "on" : "")} onClick={() => { setTab("passco"); setItems(null); setErr(""); setActive(null); }}>Passco</button>
-        <button className={"tab " + (tab === "solve" ? "on" : "")} onClick={() => { setTab("solve"); setItems(null); setErr(""); }}>Practice set (AI)</button>
-        <button className={"tab " + (tab === "similar" ? "on" : "")} onClick={() => { setTab("similar"); setItems(null); setErr(""); }}>Generate similar</button>
-      </div>
+    <button className={"tab " + (tab === "passco" ? "on" : "")} onClick={() => { setTab("passco"); setItems(null); setErr(""); setActive(null); }}>Passco</button>
+    <button className={"tab " + (tab === "solve" ? "on" : "")} onClick={() => { setTab("solve"); setItems(null); setErr(""); }}>Practice set (AI)</button>
+    <button className={"tab " + (tab === "similar" ? "on" : "")} onClick={() => { setTab("similar"); setItems(null); setErr(""); }}>Generate similar</button>
+    <button className={"tab " + (tab === "youtube" ? "on" : "")} onClick={() => { setTab("youtube"); setItems(null); setErr(""); }}>YouTube Links</button>
+</div>
 
       {tab === "passco" && (active
         ? <PasscoSet paper={active.paper} chunkStart={active.chunkStart} chunkEnd={active.chunkEnd} mode={active.mode} onExit={() => setActive(null)} />
