@@ -15598,7 +15598,7 @@ const NAV = [
   { key: "review", label: "Review", icon: "target" },
   { key: "tools", label: "Study Tools", icon: "star" },
   { key: "ranks", label: "Ranks", icon: "trophy" },
-  { key: "papers", label: "Papers", icon: "file" },
+  { key: "papers", label: "Passco", icon: "file" },
   { key: "plan", label: "CWA", icon: "target" },
   { key: "resources", label: "Resources", icon: "upload" },
   { key: "lamla", label: "LAMLA", icon: "clock" },
