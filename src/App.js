@@ -13922,7 +13922,7 @@ function ReviewView({ app }) {
   const WeakSpots = () => {
     if (scored.length === 0) return null;
     return (
-      <div className="card" style={{ marginTop: 16 }}>
+     <div className="card" style={{ marginTop: 16 }}>
         <div className="eyebrow" style={{ marginBottom: 10 }}>Your weak spots</div>
         {weak.length === 0 ? (
           <p style={{ color: "var(--text-2)", fontSize: 14, margin: 0, lineHeight: 1.6 }}>No weak topics - every quiz you have taken is at 70% or above. Strong work. Keep taking new topics to keep climbing.</p>
@@ -13936,7 +13936,7 @@ function ReviewView({ app }) {
                     <div style={{ fontWeight: 650, fontSize: 14.5 }}>{w.title}</div>
                     <div className="mono" style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }}>{w.course ? w.course.code : ""}</div>
                   </div>
-                  <span style={{ fontWeight: 750, fontSize: 15, color: w.pct < 50 ? "var(--bad)" : "var(--amber)", flexShrink: 0 }}>{w.pct}%</span>
+                  <span style={{ fontWeight: 750, fontSize: 15, color: w.pct < 50 ? "#F0776A" : "#F5B93F", flexShrink: 0 }}>{w.pct}%</span>
                 </button>
               ))}
             </div>
