@@ -14711,19 +14711,48 @@ function PapersView() {
     if (busy) return;
     setBusy(true); setErr(""); setItems(null);
     try {
-      let text = await callClaude(`You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid, compact, complete JSON array, no prose, no markdown, no trailing commas. Keep each question and option short.`, [{ role: "user", content: usr }], 8000);
+      let text = await callClaude(`You generate KNUST-style medical laboratory science exam questions based on the specific course content provided. Return ONLY a valid, compact, complete JSON array of exactly ${count} questions, no prose, no markdown, no trailing commas. Keep each question and option short.`, [{ role: "user", content: usr }], 12000);
       const arr = parseAIJson(text);
       const clean = (Array.isArray(arr) ? arr : []).filter((x) => x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number");
       if (!clean.length) throw new Error("No usable questions came back - try again.");
-      setItems(shuffleOptions(clean));
+      if (clean.length < count) {
+        setItems(shuffleOptions(clean));
+        setErr(`Only ${clean.length} questions were generated (requested ${count}). Try again for a full set.`);
+      } else {
+        setItems(shuffleOptions(clean.slice(0, count)));
+      }
     } catch (e) {
-     setErr((e && e.message ? e.message : "") + " The AI response could not be parsed. Please try again.");
+      setErr((e && e.message ? e.message : "") + " The AI response could not be parsed. Please try again.");
     }
     setBusy(false);
   };
-  const startSolve = () => genSet(`Generate exactly ${count} passco-style exam MCQs for a KNUST first-year student in ${courseById(courseId).name} (${courseById(courseId).code}). ${RULES}`);
+  
+  const startSolve = () => {
+    const topics = TOPICS[courseId] || [];
+    const topicNames = topics.slice(0, 8).join(", ");
+    let contentSample = "";
+    for (let i = 0; i < Math.min(3, topics.length); i++) {
+      const t = contentFor(courseId, i);
+      if (t) {
+        const noteText = (t.note || []).slice(0, 3).map(n => n.q).join("; ");
+        contentSample += `Topic ${i+1}: ${t.title}. Key concepts: ${noteText}\n`;
+      }
+    }
+    genSet(`Generate exactly ${count} passco-style exam MCQs for a KNUST first-year student in ${courseById(courseId).name} (${courseById(courseId).code}).
+
+IMPORTANT: Questions MUST be based on these specific topics: ${topicNames}
+
+Here is sample content from the course to guide you:
+${contentSample}
+
+Generate questions that test understanding of these specific topics. Do not ask general anatomy questions.
+
+${RULES}`);
+  };
+  
   const startSimilar = () => genSet(`Here is a passco question:\n\n${sample}\n\nGenerate exactly ${count} fresh MCQs testing the same concept and matching its style, for ${courseById(courseId).name}. ${RULES}`);
-    return (
+  
+  return (
     <div className="view">
       {/* PASSCO XP NOTIFICATION */}
       {passcoNotif && (
