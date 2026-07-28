@@ -15514,7 +15514,11 @@ ${RULES}`);
         : <PasscoPicker onStart={(paper, chunkStart, chunkEnd, mode) => { setActive({ paper, chunkStart, chunkEnd, mode }); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {} }} chunk={CHUNK} />
       )}
 
-      {tab !== "passco" && (
+      {tab === "youtube" && (
+        <YouTubeView />
+      )}
+
+      {(tab !== "passco" && tab !== "youtube") && (
       <div className="card" style={{ marginTop: 12 }}>
         <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Course</label>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: tab === "similar" ? 16 : 4 }}>
