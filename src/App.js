@@ -14251,11 +14251,16 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit }) {
   const slice = paper.questions.slice(chunkStart, chunkEnd);
   const [picked, setPicked] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [xpAwarded, setXpAwarded] = useState(false);
   const answered = Object.keys(picked).length;
   const correct = slice.reduce((n, it, idx) => n + (picked[idx] === it.a ? 1 : 0), 0);
   const pct = slice.length ? Math.round((correct / slice.length) * 100) : 0;
-  const reveal = mode === "practice" || submitted; // when to show right/wrong colours
+  const reveal = mode === "practice" || submitted;
   const keys = "ABCDE";
+  
+  // Calculate XP earned (5 XP per correct answer)
+  const earnedXp = correct * 5;
+  
   return (
     <div>
       <div className="card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 14, marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
@@ -14273,6 +14278,11 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit }) {
           <div className="eyebrow">Your score</div>
           <div style={{ fontSize: 34, fontWeight: 800, color: pct >= 50 ? "var(--good)" : "var(--bad)", margin: "4px 0" }}>{pct}%</div>
           <div style={{ color: "var(--text-2)", fontSize: 14 }}>{correct} out of {slice.length} correct. Review each below.</div>
+          {!xpAwarded && (
+            <div style={{ marginTop: 8, color: "#2E9BFF", fontWeight: 600 }}>
+              +{earnedXp} XP earned for this passco
+            </div>
+          )}
         </div>
       )}
 
@@ -14305,7 +14315,16 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit }) {
 
       <div style={{ display: "flex", gap: 10, marginTop: 8, flexWrap: "wrap" }}>
         {mode === "exam" && !submitted && (
-          <button className="btn btn-a" onClick={() => { setSubmitted(true); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {} }} disabled={answered === 0}>Submit exam ({answered}/{slice.length})</button>
+          <button className="btn btn-a" onClick={() => { 
+            setSubmitted(true); 
+            setXpAwarded(true);
+            // Award XP for completing past paper
+            if (app.setPasscoXp) {
+              const newXp = app.progress.xp + earnedXp;
+              app.setPasscoXp(newXp, earnedXp);
+            }
+            try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {} 
+          }} disabled={answered === 0}>Submit exam ({answered}/{slice.length})</button>
         )}
         <button className="btn btn-g" onClick={onExit}>Back to papers</button>
       </div>
