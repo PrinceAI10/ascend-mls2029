@@ -14819,202 +14819,108 @@ const PAST_PAPERS = [
   },
 ];
 
-function YouTubeView() {
-  const [filterCourse, setFilterCourse] = useState("all");
-  const [filterPriority, setFilterPriority] = useState("all");
-  
-  const courses = [...new Set(YOUTUBE_VIDEOS.map(v => v.courseId))];
-  
-  let filteredVideos = YOUTUBE_VIDEOS;
-  if (filterCourse !== "all") {
-    filteredVideos = filteredVideos.filter(v => v.courseId === filterCourse);
-  }
-  if (filterPriority !== "all") {
-    filteredVideos = filteredVideos.filter(v => v.priority === filterPriority);
-  }
-  
-  // Extract YouTube video ID from URL
-  const getVideoId = (url) => {
-    const patterns = [
-      /youtu\.be\/([^?]+)/,
-      /youtube\.com\/watch\?v=([^&]+)/,
-      /youtube\.com\/embed\/([^?]+)/
-    ];
-    for (const pattern of patterns) {
-      const match = url.match(pattern);
-      if (match) return match[1];
-    }
-    return null;
-  };
-  
-  return (
-    <div style={{ marginTop: 12 }}>
-      <div className="eyebrow">YouTube Links</div>
-      <p style={{ color: "var(--text-2)", fontSize: 14, marginTop: 4, marginBottom: 12 }}>
-        Essential YouTube videos to watch before end of semester. High priority videos are most important for exams.
-      </p>
-      
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
-        <button 
-          className="btn btn-sm" 
-          style={{ background: filterCourse === "all" ? "var(--amber)" : "var(--bg-3)", color: filterCourse === "all" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }}
-          onClick={() => setFilterCourse("all")}
-        >
-          All Courses
-        </button>
-        {courses.map(c => {
-          const course = courseById(c);
-          return (
-            <button 
-              key={c}
-              className="btn btn-sm" 
-              style={{ background: filterCourse === c ? "var(--amber)" : "var(--bg-3)", color: filterCourse === c ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }}
-              onClick={() => setFilterCourse(c)}
-            >
-              {course ? course.code : c.toUpperCase()}
-            </button>
-          );
-        })}
-      </div>
-      
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
-        <button 
-          className="btn btn-sm" 
-          style={{ background: filterPriority === "all" ? "var(--amber)" : "var(--bg-3)", color: filterPriority === "all" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }}
-          onClick={() => setFilterPriority("all")}
-        >
-          All Priorities
-        </button>
-        <button 
-          className="btn btn-sm" 
-          style={{ background: filterPriority === "High" ? "var(--amber)" : "var(--bg-3)", color: filterPriority === "High" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }}
-          onClick={() => setFilterPriority("High")}
-        >
-          High Priority
-        </button>
-        <button 
-          className="btn btn-sm" 
-          style={{ background: filterPriority === "Medium" ? "var(--amber)" : "var(--bg-3)", color: filterPriority === "Medium" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }}
-          onClick={() => setFilterPriority("Medium")}
-        >
-          Medium Priority
-        </button>
-      </div>
-      
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
-        {filteredVideos.map((v) => {
-          const course = courseById(v.courseId);
-          const videoId = getVideoId(v.url);
-          const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` : null;
-          
-          return (
-            <div className="card" key={v.id} style={{ 
-              border: v.priority === "High" ? "2px solid var(--amber)" : "1px solid var(--line)",
-              padding: 0,
-              overflow: "hidden",
-              display: "flex",
-              flexDirection: "column"
-            }}>
-              {thumbnailUrl && (
-                <div style={{ 
-                  position: "relative", 
-                  width: "100%", 
-                  paddingTop: "56.25%", 
-                  background: "var(--bg-3)",
-                  overflow: "hidden"
-                }}>
-                  <img 
-                    src={thumbnailUrl} 
-                    alt={v.title}
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover"
-                    }}
-                    onError={(e) => {
-                      e.target.style.display = "none";
-                    }}
-                  />
-                  <div style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: 56,
-                    height: 56,
-                    borderRadius: "50%",
-                    background: "rgba(255,0,0,0.85)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    transition: "transform 0.2s"
-                  }}
-                  onMouseEnter={(e) => e.target.style.transform = "translate(-50%, -50%) scale(1.1)"}
-                  onMouseLeave={(e) => e.target.style.transform = "translate(-50%, -50%) scale(1)"}
-                  onClick={() => window.open(v.url, "_blank")}
-                  >
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
-                  {v.priority === "High" && (
-                    <div style={{
-                      position: "absolute",
-                      top: 10,
-                      right: 10,
-                      background: "var(--amber)",
-                      color: "#1B1405",
-                      padding: "2px 10px",
-                      borderRadius: 4,
-                      fontSize: 10,
-                      fontWeight: 700
-                    }}>
-                      HIGH
-                    </div>
-                  )}
-                </div>
-              )}
-              <div style={{ padding: 14, flex: 1, display: "flex", flexDirection: "column" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 4 }}>
-                  <div className="eyebrow" style={{ margin: 0, color: "var(--amber)", fontSize: 11 }}>
-                    {course ? course.code : v.courseCode}
-                  </div>
-                  <span style={{ fontSize: 11, color: "var(--text-3)" }}>{v.duration}</span>
-                </div>
-                <div style={{ fontWeight: 700, fontSize: 15, marginTop: 4, lineHeight: 1.3 }}>{v.title}</div>
-                <div style={{ color: "var(--text-3)", fontSize: 12, marginTop: 2 }}>{v.channel}</div>
-                <p style={{ color: "var(--text-2)", fontSize: 13, marginTop: 8, lineHeight: 1.5, flex: 1 }}>{v.notes}</p>
-                <a 
-                  href={v.url} 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  className="btn btn-a btn-sm" 
-                  style={{ marginTop: 10, display: "inline-flex", alignItems: "center", gap: 6, textDecoration: "none", alignSelf: "flex-start" }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                  Watch
-                </a>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      
-      {filteredVideos.length === 0 && (
-        <div className="card" style={{ marginTop: 16 }}>
-          <p style={{ color: "var(--text-2)", fontSize: 14 }}>No YouTube videos found for this filter.</p>
-        </div>
-      )}
-    </div>
-  );
-}
-
+const YOUTUBE_VIDEOS = [
+  // ==================== BIOCHEMISTRY (MLS 158) - End of Semester Prep ====================
+  {
+    id: "bch8",
+    courseId: "bch",
+    courseCode: "MLS 158",
+    title: "Glycogenesis - Glycogen Synthesis",
+    url: "https://youtu.be/zVGbd-df7Y8",
+    channel: "Ninja Nerd",
+    duration: "~15 min",
+    notes: "How glycogen is synthesized and stored in the liver and muscles.",
+    priority: "High"
+  },
+  {
+    id: "bch9",
+    courseId: "bch",
+    courseCode: "MLS 158",
+    title: "Pentose Phosphate Pathway",
+    url: "https://youtu.be/eXXpUxg9vn4",
+    channel: "Ninja Nerd",
+    duration: "~20 min",
+    notes: "The pathway that produces NADPH and ribose-5-phosphate. Essential for understanding G6PD deficiency.",
+    priority: "High"
+  },
+  {
+    id: "bch10",
+    courseId: "bch",
+    courseCode: "MLS 158",
+    title: "Krebs Cycle - TCA / Citric Acid Cycle",
+    url: "https://youtu.be/rr7IRYLqleg",
+    channel: "Ninja Nerd",
+    duration: "~25 min",
+    notes: "Complete breakdown of the Krebs cycle - central to energy metabolism.",
+    priority: "High"
+  },
+  {
+    id: "bch11",
+    courseId: "bch",
+    courseCode: "MLS 158",
+    title: "Glycogenolysis - Glycogen Breakdown",
+    url: "https://youtu.be/YQV_ODVCzQQ",
+    channel: "Ninja Nerd",
+    duration: "~15 min",
+    notes: "How glycogen is broken down to release glucose.",
+    priority: "High"
+  },
+  {
+    id: "bch12",
+    courseId: "bch",
+    courseCode: "MLS 158",
+    title: "Gluconeogenesis - Glucose Synthesis (Part 1)",
+    url: "https://youtu.be/ORIx2WYNWqs",
+    channel: "Ninja Nerd",
+    duration: "~20 min",
+    notes: "How the body synthesizes new glucose from non-carbohydrate sources.",
+    priority: "High"
+  },
+  {
+    id: "bch13",
+    courseId: "bch",
+    courseCode: "MLS 158",
+    title: "Gluconeogenesis - Glucose Synthesis (Part 2)",
+    url: "https://youtu.be/YpV96faQOZc",
+    channel: "Ninja Nerd",
+    duration: "~20 min",
+    notes: "Continuation of gluconeogenesis - regulation and clinical significance.",
+    priority: "High"
+  },
+  {
+    id: "bch14",
+    courseId: "bch",
+    courseCode: "MLS 158",
+    title: "Fructose and Galactose Metabolism",
+    url: "https://youtu.be/y6kVNOs89D4",
+    channel: "Ninja Nerd",
+    duration: "~18 min",
+    notes: "How fructose and galactose are metabolized - essential for understanding hereditary fructose intolerance and galactosemia.",
+    priority: "High"
+  },
+  {
+    id: "bch15",
+    courseId: "bch",
+    courseCode: "MLS 158",
+    title: "Glycolysis - Glucose Breakdown (Part 1)",
+    url: "https://youtu.be/xoqyF6DJZ-Y",
+    channel: "Ninja Nerd",
+    duration: "~25 min",
+    notes: "Step-by-step breakdown of glycolysis - the foundation of energy metabolism.",
+    priority: "High"
+  },
+  {
+    id: "bch16",
+    courseId: "bch",
+    courseCode: "MLS 158",
+    title: "Glycolysis - Glucose Breakdown (Part 2)",
+    url: "https://youtu.be/gggC9vctvBQ",
+    channel: "Ninja Nerd",
+    duration: "~25 min",
+    notes: "Continuation of glycolysis - regulation and energy yield.",
+    priority: "High"
+  },
+];
 /* PasscoSet: solve one 50-question chunk of a real past paper. Two modes -
    Practice shows the correct answer and explanation the moment you tap; Exam
    hides everything until you submit, then reveals your score and full review
