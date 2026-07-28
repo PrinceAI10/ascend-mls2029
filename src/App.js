@@ -179,6 +179,7 @@ html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--b
 .opt.sel{border-color:var(--amber);background:var(--amber-dim)}
 .opt.correct{border-color:var(--good);background:var(--good-dim)}
 .opt.wrong{border-color:var(--bad);background:var(--bad-dim)}
+.opt.chosen{border-color:var(--amber);background:var(--amber-dim)}
 .opt .key{font-family:var(--mono);font-weight:700;color:var(--text-3);flex-shrink:0}
 .opt.sel .key,.opt.correct .key{color:var(--amber-2)}
 .opt.wrong .key{color:var(--bad)}
@@ -2392,36 +2393,37 @@ Crucial insight: defects in TCA cycle enzymes cause serious metabolic diseases. 
     { channel: "Biochemistry", title: "TCA Cycle in Health and Disease", note: "Clinical relevance of the TCA cycle.", url: "" }
   ],
   mcqs: [
-    { q: "The TCA cycle takes place in the:", o: ["Endoplasmic reticulum", "Mitochondrial matrix", "Cytosol", "Nucleus"], a: 1, w: "The TCA cycle occurs in the mitochondrial matrix." },
-    { q: "The entry point of the TCA cycle is the condensation of acetyl-CoA with:", o: ["Oxaloacetate", "α-Ketoglutarate", "Citrate", "Isocitrate"], a: 0, w: "Acetyl-CoA combines with oxaloacetate to form citrate." },
-    { q: "The first step of the TCA cycle is catalysed by:", o: ["Citrate synthase", "α-Ketoglutarate dehydrogenase", "Aconitase", "Isocitrate dehydrogenase"], a: 0, w: "Citrate synthase catalyses the formation of citrate from acetyl-CoA and oxaloacetate." },
-    { q: "How many NADH are produced per turn of the TCA cycle?", o: ["4", "2", "3", "1"], a: 2, w: "Three NADH are produced per acetyl-CoA (steps 3, 4, and 8)." },
-    { q: "How many FADH2 are produced per turn of the TCA cycle?", o: ["1", "3", "2", "0"], a: 0, w: "One FADH2 is produced at step 6 (succinate dehydrogenase)." },
-    { q: "How many GTP are produced per turn of the TCA cycle?", o: ["3", "0", "2", "1"], a: 3, w: "One GTP is produced at step 5 (substrate-level phosphorylation)." },
-    { q: "Which enzyme of the TCA cycle is embedded in the inner mitochondrial membrane?", o: ["Aconitase", "Succinate dehydrogenase", "Isocitrate dehydrogenase", "Citrate synthase"], a: 1, w: "Succinate dehydrogenase is membrane-bound and links to Complex II of the ETC." },
-    { q: "The TCA cycle is inhibited by high levels of:", o: ["NADH", "ADP", "Calcium", "GDP"], a: 0, w: "NADH is a potent inhibitor of the TCA cycle through feedback inhibition." },
-    { q: "Isocitrate dehydrogenase is activated by:", o: ["NADH", "Citrate", "ATP", "ADP"], a: 3, w: "ADP activates isocitrate dehydrogenase when energy is needed." },
-    { q: "The reaction catalysed by α-ketoglutarate dehydrogenase is similar to:", o: ["Citrate synthase", "Glycolysis", "Pyruvate dehydrogenase", "Succinate dehydrogenase"], a: 2, w: "α-Ketoglutarate dehydrogenase is structurally and mechanistically similar to pyruvate dehydrogenase." },
-    { q: "Anaplerotic reactions replenish TCA cycle intermediates withdrawn for:", o: ["Fatty acid oxidation", "Biosynthesis", "Glycolysis", "ATP production"], a: 1, w: "Anaplerotic reactions replenish intermediates used for biosynthesis of amino acids, nucleotides, and other molecules." },
-    { q: "The most important anaplerotic enzyme is:", o: ["Malate dehydrogenase", "Isocitrate dehydrogenase", "Succinate dehydrogenase", "Pyruvate carboxylase"], a: 3, w: "Pyruvate carboxylase converts pyruvate to oxaloacetate, the most important anaplerotic reaction." },
-    { q: "The TCA cycle produces about how many ATP per acetyl-CoA?", o: ["5", "20", "10", "15"], a: 2, w: "Each acetyl-CoA yields about 10 ATP (3 NADH, 1 FADH2, 1 GTP)." },
-    { q: "The TCA cycle is also known as the:", o: ["Glyoxylate cycle", "Krebs cycle", "Urea cycle", "Calvin cycle"], a: 1, w: "The TCA cycle is also called the Krebs cycle or citric acid cycle." },
-    { q: "Citrate synthase is inhibited by:", o: ["Calcium", "ATP and NADH", "GDP", "ADP"], a: 1, w: "Citrate synthase is inhibited by ATP and NADH when energy is abundant." },
-    { q: "The first oxidative decarboxylation of the TCA cycle produces:", o: ["α-Ketoglutarate, NADH, and CO2", "Succinyl-CoA and CO2", "Oxaloacetate", "Citrate"], a: 0, w: "Step 3 (isocitrate dehydrogenase) produces α-ketoglutarate, NADH, and CO2." },
-    { q: "The second oxidative decarboxylation of the TCA cycle produces:", o: ["Oxaloacetate", "Isocitrate", "Citrate", "Succinyl-CoA, NADH, and CO2"], a: 3, w: "Step 4 (α-ketoglutarate dehydrogenase) produces succinyl-CoA, NADH, and CO2." },
-    { q: "Substrate-level phosphorylation in the TCA cycle produces:", o: ["FADH2 from FAD", "NADH from NAD+", "GTP from GDP", "ATP from ADP"], a: 2, w: "Succinyl-CoA synthetase produces GTP (or ATP in some tissues) via substrate-level phosphorylation." },
-    { q: "Malate dehydrogenase produces:", o: ["Fumarate and FADH2", "Succinyl-CoA", "Oxaloacetate and NADH", "Citrate"], a: 2, w: "Step 8 oxidises malate to oxaloacetate, producing NADH." },
-    { q: "Which of the following is NOT a function of the TCA cycle?", o: ["Oxidation of acetyl-CoA", "Providing biosynthetic precursors", "ATP production", "Synthesis of glucose directly"], a: 3, w: "The TCA cycle does not directly synthesise glucose — that occurs via gluconeogenesis." },
-    { q: "The TCA cycle is regulated at which enzymes?", o: ["Succinate dehydrogenase, malate dehydrogenase, fumarase", "Hexokinase, phosphofructokinase, pyruvate kinase", "Citrate synthase, isocitrate dehydrogenase, α-ketoglutarate dehydrogenase", "All enzymes are unregulated"], a: 2, w: "The three key regulatory enzymes are citrate synthase, isocitrate dehydrogenase, and α-ketoglutarate dehydrogenase." },
-    { q: "α-Ketoglutarate dehydrogenase is inhibited by:", o: ["Calcium", "ATP, NADH, and succinyl-CoA", "Citrate", "ADP"], a: 1, w: "It is inhibited by ATP, NADH, and succinyl-CoA when energy is abundant." },
-    { q: "Fumarase catalyses:", o: ["Reduction", "Hydration", "Oxidation", "Decarboxylation"], a: 1, w: "Fumarase hydrates fumarate to malate (adds water across the double bond)." },
-    { q: "The TCA cycle is important in cancer because:", o: ["It produces toxins", "It provides biosynthetic precursors for rapid growth", "It stops in cancer cells", "It only works in normal cells"], a: 1, w: "Cancer cells use TCA cycle intermediates for biosynthesis to support rapid growth." },
-    { q: "A defect in the TCA cycle enzyme fumarase causes:", o: ["Neurological problems", "Kidney failure", "Diabetes", "Heart disease"], a: 0, w: "Fumarase deficiency causes neurological problems." },
-    { q: "The TCA cycle processes the two-carbon acetyl group into:", o: ["Oxygen", "One carbon dioxide", "Four carbon dioxides", "Two carbon dioxides"], a: 3, w: "The two carbons of acetyl-CoA are released as two molecules of carbon dioxide." },
-    { q: "Oxaloacetate is regenerated at the end of the TCA cycle to:", o: ["Enter the urea cycle", "Be excreted", "Produce glucose", "Accept another acetyl-CoA"], a: 3, w: "Oxaloacetate is regenerated to accept another acetyl-CoA and continue the cycle." },
-    { q: "The rate of the TCA cycle is linked to the demand for:", o: ["ATP (energy)", "Protein storage", "Bone growth", "Fat storage"], a: 0, w: "Calcium signals muscle contraction, activating the TCA cycle to meet increased energy demand." },
-    { q: "The TCA cycle provides intermediates for the synthesis of:", o: ["Only carbohydrates", "Only proteins", "Amino acids, nucleotides, and porphyrins", "Only lipids"], a: 2, w: "TCA cycle intermediates are precursors for amino acids, nucleotides, and porphyrins." },
-    { q: "The TCA cycle is the central hub of metabolism because it:", o: ["Connects carbohydrate, fat, and protein metabolism", "Only produces FADH2", "Only produces NADH", "Only produces ATP"], a: 0, w: "The TCA cycle processes acetyl-CoA from carbohydrates, fats, and proteins, making it the central hub of metabolism." },
+    { q: "The TCA cycle takes place in the:", o: ["Cytosol", "Mitochondrial matrix", "Nucleus", "Endoplasmic reticulum"], a: 1, w: "The TCA cycle occurs in the mitochondrial matrix." },
+    { q: "The entry point of the TCA cycle is the condensation of acetyl-CoA with:", o: ["Citrate", "Oxaloacetate", "Isocitrate", "α-Ketoglutarate"], a: 1, w: "Acetyl-CoA combines with oxaloacetate to form citrate." },
+    { q: "The first step of the TCA cycle is catalysed by:", o: ["Aconitase", "Isocitrate dehydrogenase", "Citrate synthase", "α-Ketoglutarate dehydrogenase"], a: 2, w: "Citrate synthase catalyses the formation of citrate from acetyl-CoA and oxaloacetate." },
+    { q: "How many NADH are produced per turn of the TCA cycle?", o: ["1", "2", "3", "4"], a: 2, w: "Three NADH are produced per acetyl-CoA (steps 3, 4, and 8)." },
+    { q: "How many FADH2 are produced per turn of the TCA cycle?", o: ["0", "1", "2", "3"], a: 1, w: "One FADH2 is produced at step 6 (succinate dehydrogenase)." },
+    { q: "How many GTP are produced per turn of the TCA cycle?", o: ["0", "1", "2", "3"], a: 1, w: "One GTP is produced at step 5 (substrate-level phosphorylation)." },
+    { q: "Which enzyme of the TCA cycle is embedded in the inner mitochondrial membrane?", o: ["Citrate synthase", "Aconitase", "Isocitrate dehydrogenase", "Succinate dehydrogenase"], a: 3, w: "Succinate dehydrogenase is membrane-bound and links to Complex II of the ETC." },
+    { q: "The TCA cycle is inhibited by high levels of:", o: ["ADP", "NADH", "Calcium", "GDP"], a: 1, w: "NADH is a potent inhibitor of the TCA cycle through feedback inhibition." },
+    { q: "Isocitrate dehydrogenase is activated by:", o: ["ATP", "NADH", "ADP", "Citrate"], a: 2, w: "ADP activates isocitrate dehydrogenase when energy is needed." },
+    { q: "The reaction catalysed by α-ketoglutarate dehydrogenase is similar to:", o: ["Glycolysis", "Pyruvate dehydrogenase", "Succinate dehydrogenase", "Citrate synthase"], a: 1, w: "α-Ketoglutarate dehydrogenase is structurally and mechanistically similar to pyruvate dehydrogenase." },
+    { q: "Anaplerotic reactions replenish TCA cycle intermediates withdrawn for:", o: ["ATP production", "Biosynthesis", "Glycolysis", "Fatty acid oxidation"], a: 1, w: "Anaplerotic reactions replenish intermediates used for biosynthesis of amino acids, nucleotides, and other molecules." },
+    { q: "The most important anaplerotic enzyme is:", o: ["Succinate dehydrogenase", "Pyruvate carboxylase", "Isocitrate dehydrogenase", "Malate dehydrogenase"], a: 1, w: "Pyruvate carboxylase converts pyruvate to oxaloacetate, the most important anaplerotic reaction." },
+    { q: "The TCA cycle produces about how many ATP per acetyl-CoA?", o: ["5", "10", "15", "20"], a: 1, w: "Each acetyl-CoA yields about 10 ATP (3 NADH, 1 FADH2, 1 GTP)." },
+    { q: "The TCA cycle is also known as the:", o: ["Krebs cycle", "Calvin cycle", "Urea cycle", "Glyoxylate cycle"], a: 0, w: "The TCA cycle is also called the Krebs cycle or citric acid cycle." },
+    { q: "Citrate synthase is inhibited by:", o: ["ADP", "ATP and NADH", "Calcium", "GDP"], a: 1, w: "Citrate synthase is inhibited by ATP and NADH when energy is abundant." },
+    { q: "The first oxidative decarboxylation of the TCA cycle produces:", o: ["Citrate", "α-Ketoglutarate, NADH, and CO2", "Succinyl-CoA and CO2", "Oxaloacetate"], a: 1, w: "Step 3 (isocitrate dehydrogenase) produces α-ketoglutarate, NADH, and CO2." },
+    { q: "The second oxidative decarboxylation of the TCA cycle produces:", o: ["Citrate", "Isocitrate", "Succinyl-CoA, NADH, and CO2", "Oxaloacetate"], a: 2, w: "Step 4 (α-ketoglutarate dehydrogenase) produces succinyl-CoA, NADH, and CO2." },
+    { q: "Substrate-level phosphorylation in the TCA cycle produces:", o: ["ATP from ADP", "GTP from GDP", "NADH from NAD+", "FADH2 from FAD"], a: 1, w: "Succinyl-CoA synthetase produces GTP (or ATP in some tissues) via substrate-level phosphorylation." },
+    { q: "Malate dehydrogenase produces:", o: ["Oxaloacetate and NADH", "Citrate", "Fumarate and FADH2", "Succinyl-CoA"], a: 0, w: "Step 8 oxidises malate to oxaloacetate, producing NADH." },
+    { q: "Which of the following is NOT a function of the TCA cycle?", o: ["ATP production", "Providing biosynthetic precursors", "Oxidation of acetyl-CoA", "Synthesis of glucose directly"], a: 3, w: "The TCA cycle does not directly synthesise glucose — that occurs via gluconeogenesis." },
+    { q: "The TCA cycle is regulated at which enzymes?", o: ["Citrate synthase, isocitrate dehydrogenase, α-ketoglutarate dehydrogenase", "Hexokinase, phosphofructokinase, pyruvate kinase", "Succinate dehydrogenase, malate dehydrogenase, fumarase", "All enzymes are unregulated"], a: 0, w: "The three key regulatory enzymes are citrate synthase, isocitrate dehydrogenase, and α-ketoglutarate dehydrogenase." },
+    { q: "α-Ketoglutarate dehydrogenase is inhibited by:", o: ["ADP", "Calcium", "ATP, NADH, and succinyl-CoA", "Citrate"], a: 2, w: "It is inhibited by ATP, NADH, and succinyl-CoA when energy is abundant." },
+    { q: "Fumarase catalyses:", o: ["Oxidation", "Reduction", "Hydration", "Decarboxylation"], a: 2, w: "Fumarase hydrates fumarate to malate (adds water across the double bond)." },
+    { q: "The TCA cycle is important in cancer because:", o: ["It stops in cancer cells", "It provides biosynthetic precursors for rapid growth", "It only works in normal cells", "It produces toxins"], a: 1, w: "Cancer cells use TCA cycle intermediates for biosynthesis to support rapid growth." },
+    { q: "A defect in the TCA cycle enzyme fumarase causes:", o: ["Diabetes", "Neurological problems", "Heart disease", "Kidney failure"], a: 1, w: "Fumarase deficiency causes neurological problems." },
+    { q: "The TCA cycle processes the two-carbon acetyl group into:", o: ["One carbon dioxide", "Two carbon dioxides", "Four carbon dioxides", "Oxygen"], a: 1, w: "The two carbons of acetyl-CoA are released as two molecules of carbon dioxide." },
+    { q: "Oxaloacetate is regenerated at the end of the TCA cycle to:", o: ["Be excreted", "Accept another acetyl-CoA", "Produce glucose", "Enter the urea cycle"], a: 1, w: "Oxaloacetate is regenerated to accept another acetyl-CoA and continue the cycle." },
+    { q: "The rate of the TCA cycle is linked to the demand for:", a: 2, w: "Calcium signals muscle contraction, activating the TCA cycle to meet increased energy demand." },
+    { q: "The TCA cycle provides intermediates for the synthesis of:", o: ["Only proteins", "Amino acids, nucleotides, and porphyrins", "Only carbohydrates", "Only lipids"], a: 1, w: "TCA cycle intermediates are precursors for amino acids, nucleotides, and porphyrins." },
+    { q: "Malate dehydrogenase produces which of the following?", o: ["Citrate", "Isocitrate", "NADH", "FADH2"], a: 2, w: "Malate dehydrogenase produces NADH (and oxaloacetate)." },
+    { q: "The TCA cycle is the central hub of metabolism because it:", o: ["Only produces ATP", "Connects carbohydrate, fat, and protein metabolism", "Only produces NADH", "Only produces FADH2"], a: 1, w: "The TCA cycle processes acetyl-CoA from carbohydrates, fats, and proteins, making it the central hub of metabolism." }
   ]
 };
 
@@ -2813,36 +2815,36 @@ Three: G6PD enzyme activity assay would confirm the diagnosis. It should be perf
     { channel: "Biochemistry", title: "PPP and Cancer Metabolism", note: "How the PPP supports cancer cell growth.", url: "" }
   ],
   mcqs: [
-    { q: "The pentose phosphate pathway produces:", o: ["NADPH and ribose-5-phosphate", "ATP and ribose-5-phosphate", "ATP and NADPH", "NADH and ATP"], a: 0, w: "The PPP produces NADPH and ribose-5-phosphate. It does not produce ATP." },
+    { q: "The pentose phosphate pathway produces:", o: ["ATP and NADPH", "NADPH and ribose-5-phosphate", "ATP and ribose-5-phosphate", "NADH and ATP"], a: 1, w: "The PPP produces NADPH and ribose-5-phosphate. It does not produce ATP." },
     { q: "NADPH is essential for:", o: ["Glycolysis", "Fatty acid synthesis and antioxidant defence", "ATP production", "Glucose storage"], a: 1, w: "NADPH is essential for reductive biosynthesis (fatty acids, cholesterol, nucleotides) and for protecting cells against oxidative damage." },
-    { q: "Ribose-5-phosphate is needed for:", o: ["Glycolysis", "ATP production", "Fatty acid synthesis", "Nucleotide synthesis"], a: 3, w: "Ribose-5-phosphate is needed for nucleotide synthesis." },
-    { q: "The oxidative phase of the PPP produces:", o: ["Ribose-5-phosphate only", "ATP and NADPH", "Fructose-6-phosphate", "NADPH and ribulose-5-phosphate"], a: 3, w: "The oxidative phase produces NADPH and ribulose-5-phosphate." },
+    { q: "Ribose-5-phosphate is needed for:", o: ["Glycolysis", "Nucleotide synthesis", "Fatty acid synthesis", "ATP production"], a: 1, w: "Ribose-5-phosphate is needed for nucleotide synthesis." },
+    { q: "The oxidative phase of the PPP produces:", o: ["NADPH and ribulose-5-phosphate", "ATP and NADPH", "Ribose-5-phosphate only", "Fructose-6-phosphate"], a: 0, w: "The oxidative phase produces NADPH and ribulose-5-phosphate." },
     { q: "The non-oxidative phase of the PPP:", o: ["Produces NADPH", "Interconverts sugar phosphates", "Produces ATP", "Is irreversible"], a: 1, w: "The non-oxidative phase interconverts sugar phosphates and is reversible." },
-    { q: "The first and rate-limiting enzyme of the PPP is:", o: ["Phosphofructokinase", "Glucose-6-phosphate dehydrogenase", "Hexokinase", "Pyruvate kinase"], a: 1, w: "Glucose-6-phosphate dehydrogenase (G6PD) is the first and rate-limiting enzyme." },
-    { q: "G6PD is activated by:", o: ["ATP", "NADPH", "NADP+", "Glucose"], a: 2, w: "G6PD is activated by NADP+ (the substrate) and inhibited by NADPH (the product)." },
-    { q: "G6PD is inhibited by:", o: ["NADPH", "NADP+", "ATP", "ADP"], a: 0, w: "G6PD is inhibited by NADPH through feedback inhibition." },
-    { q: "Red blood cells depend on the PPP for:", o: ["NADPH", "Ribose-5-phosphate", "ATP", "Glucose"], a: 0, w: "Red blood cells depend on the PPP for NADPH to protect haemoglobin from oxidation." },
-    { q: "G6PD deficiency is an X-linked recessive condition that affects:", o: ["Females more frequently", "Only children", "Males more frequently", "Both equally"], a: 2, w: "G6PD deficiency is X-linked recessive, so it affects males more frequently." },
-    { q: "G6PD deficiency causes haemolytic anaemia after exposure to:", o: ["Oxygen", "Glucose", "Oxidative stressors", "Fatty acids"], a: 2, w: "Haemolysis is triggered by oxidative stressors like certain drugs, infections, or fava beans." },
-    { q: "Heinz bodies are:", o: ["Oxidised haemoglobin inclusions", "Normal red blood cell inclusions", "White blood cells", "Platelets"], a: 0, w: "Heinz bodies are inclusions of oxidised, denatured haemoglobin seen in G6PD deficiency." },
-    { q: "The PPP is important in cancer because:", o: ["It inhibits tumour growth", "It produces ATP", "It provides NADPH and ribose-5-phosphate for growth", "It produces glucose"], a: 2, w: "Cancer cells use the PPP to provide NADPH for biosynthesis and defence, and ribose-5-phosphate for nucleotide synthesis." },
-    { q: "The non-oxidative phase of the PPP uses the enzymes:", o: ["Hexokinase and glucokinase", "Isocitrate dehydrogenase", "Pyruvate kinase and lactate dehydrogenase", "Transketolase and transaldolase"], a: 3, w: "Transketolase and transaldolase catalyse the reactions of the non-oxidative phase." },
-    { q: "G6PD deficiency is diagnosed by:", o: ["Liver function tests", "Blood glucose measurement", "G6PD enzyme activity assay", "Urine analysis"], a: 2, w: "G6PD deficiency is diagnosed by measuring G6PD enzyme activity in red blood cells." },
-    { q: "The PPP is most active in tissues that:", o: ["Break down proteins", "Store glycogen", "Synthesise fatty acids", "Produce ATP"], a: 2, w: "The PPP is most active in tissues that synthesise fatty acids (liver, adipose tissue) and in red blood cells." },
-    { q: "Glutathione protects cells by:", o: ["Producing ATP", "Acting as an antioxidant", "Storing glucose", "Synthesising proteins"], a: 1, w: "Glutathione acts as an antioxidant, protecting cells from oxidative damage." },
-    { q: "NADPH is required to maintain glutathione in its:", o: ["Active form", "Reduced form", "Inactive form", "Oxidised form"], a: 1, w: "NADPH is required to maintain glutathione in its reduced (active) form." },
-    { q: "The PPP is an alternative pathway for:", o: ["Amino acid metabolism", "Glucose metabolism", "Protein metabolism", "Fat metabolism"], a: 1, w: "The PPP is an alternative pathway for glucose metabolism." },
-    { q: "The PPP does NOT produce:", o: ["Ribose-5-phosphate", "None of the above", "NADPH", "ATP"], a: 3, w: "The PPP does not produce ATP." },
-    { q: "The first reaction of the oxidative phase is catalysed by:", o: ["Glucose-6-phosphate dehydrogenase", "Aldolase", "Transketolase", "Phosphogluconate dehydrogenase"], a: 0, w: "Glucose-6-phosphate dehydrogenase catalyses the first reaction of the oxidative phase." },
+    { q: "The first and rate-limiting enzyme of the PPP is:", o: ["Hexokinase", "Phosphofructokinase", "Glucose-6-phosphate dehydrogenase", "Pyruvate kinase"], a: 2, w: "Glucose-6-phosphate dehydrogenase (G6PD) is the first and rate-limiting enzyme." },
+    { q: "G6PD is activated by:", o: ["NADPH", "ATP", "NADP+", "Glucose"], a: 2, w: "G6PD is activated by NADP+ (the substrate) and inhibited by NADPH (the product)." },
+    { q: "G6PD is inhibited by:", o: ["NADP+", "NADPH", "ATP", "ADP"], a: 1, w: "G6PD is inhibited by NADPH through feedback inhibition." },
+    { q: "Red blood cells depend on the PPP for:", o: ["ATP", "NADPH", "Ribose-5-phosphate", "Glucose"], a: 1, w: "Red blood cells depend on the PPP for NADPH to protect haemoglobin from oxidation." },
+    { q: "G6PD deficiency is an X-linked recessive condition that affects:", o: ["Males more frequently", "Females more frequently", "Both equally", "Only children"], a: 0, w: "G6PD deficiency is X-linked recessive, so it affects males more frequently." },
+    { q: "G6PD deficiency causes haemolytic anaemia after exposure to:", o: ["Glucose", "Oxidative stressors", "Fatty acids", "Oxygen"], a: 1, w: "Haemolysis is triggered by oxidative stressors like certain drugs, infections, or fava beans." },
+    { q: "Heinz bodies are:", o: ["Normal red blood cell inclusions", "Oxidised haemoglobin inclusions", "White blood cells", "Platelets"], a: 1, w: "Heinz bodies are inclusions of oxidised, denatured haemoglobin seen in G6PD deficiency." },
+    { q: "The PPP is important in cancer because:", o: ["It produces ATP", "It provides NADPH and ribose-5-phosphate for growth", "It inhibits tumour growth", "It produces glucose"], a: 1, w: "Cancer cells use the PPP to provide NADPH for biosynthesis and defence, and ribose-5-phosphate for nucleotide synthesis." },
+    { q: "The non-oxidative phase of the PPP uses the enzymes:", o: ["Hexokinase and glucokinase", "Transketolase and transaldolase", "Pyruvate kinase and lactate dehydrogenase", "Isocitrate dehydrogenase"], a: 1, w: "Transketolase and transaldolase catalyse the reactions of the non-oxidative phase." },
+    { q: "G6PD deficiency is diagnosed by:", o: ["Blood glucose measurement", "G6PD enzyme activity assay", "Liver function tests", "Urine analysis"], a: 1, w: "G6PD deficiency is diagnosed by measuring G6PD enzyme activity in red blood cells." },
+    { q: "The PPP is most active in tissues that:", o: ["Produce ATP", "Synthesise fatty acids", "Store glycogen", "Break down proteins"], a: 1, w: "The PPP is most active in tissues that synthesise fatty acids (liver, adipose tissue) and in red blood cells." },
+    { q: "Glutathione protects cells by:", o: ["Producing ATP", "Acting as an antioxidant", "Synthesising proteins", "Storing glucose"], a: 1, w: "Glutathione acts as an antioxidant, protecting cells from oxidative damage." },
+    { q: "NADPH is required to maintain glutathione in its:", o: ["Oxidised form", "Reduced form", "Active form", "Inactive form"], a: 1, w: "NADPH is required to maintain glutathione in its reduced (active) form." },
+    { q: "The PPP is an alternative pathway for:", o: ["Protein metabolism", "Glucose metabolism", "Fat metabolism", "Amino acid metabolism"], a: 1, w: "The PPP is an alternative pathway for glucose metabolism." },
+    { q: "The PPP does NOT produce:", o: ["NADPH", "Ribose-5-phosphate", "ATP", "None of the above"], a: 2, w: "The PPP does not produce ATP." },
+    { q: "The first reaction of the oxidative phase is catalysed by:", o: ["Transketolase", "Glucose-6-phosphate dehydrogenase", "Phosphogluconate dehydrogenase", "Aldolase"], a: 1, w: "Glucose-6-phosphate dehydrogenase catalyses the first reaction of the oxidative phase." },
     { q: "The non-oxidative phase is important for:", o: ["Producing NADPH only", "Interconverting sugars to meet cellular needs", "Producing ATP", "Producing lactate"], a: 1, w: "The non-oxidative phase interconverts sugars to meet cellular needs for ribose-5-phosphate or glycolytic intermediates." },
-    { q: "Favism is caused by:", o: ["Bacterial infection", "Vitamin deficiency", "Parasitic infection", "G6PD deficiency triggered by fava beans"], a: 3, w: "Favism is haemolytic anaemia caused by G6PD deficiency triggered by fava beans." },
-    { q: "The PPP is upregulated in cancer cells because:", o: ["It produces glucose", "It produces lactate", "It provides building blocks and NADPH for rapid growth", "It produces energy"], a: 2, w: "Cancer cells need NADPH for biosynthesis and defence, and ribose-5-phosphate for nucleotides." },
-    { q: "Which of the following is a drug that can trigger haemolysis in G6PD deficiency?", o: ["Primaquine", "Penicillin", "Paracetamol", "Aspirin"], a: 0, w: "Primaquine is an antimalarial that can trigger haemolysis in G6PD-deficient individuals." },
-    { q: "The PPP is located in the:", o: ["Cytosol", "Mitochondria", "Nucleus", "Endoplasmic reticulum"], a: 0, w: "The PPP is located in the cytosol." },
-    { q: "The oxidative phase of the PPP produces CO2 from:", o: ["6-Phosphogluconate", "Ribulose-5-phosphate", "Fructose-6-phosphate", "Glucose-6-phosphate"], a: 0, w: "6-Phosphogluconate is decarboxylated to produce CO2 in the oxidative phase." },
-    { q: "The PPP connects to glycolysis through:", o: ["Lactate", "Pyruvate", "Acetyl-CoA", "Fructose-6-phosphate and glyceraldehyde-3-phosphate"], a: 3, w: "The non-oxidative phase produces fructose-6-phosphate and glyceraldehyde-3-phosphate, which re-enter glycolysis." },
-    { q: "NADPH is used in:", o: ["Oxidative phosphorylation", "Fatty acid synthesis", "Glycolysis", "The TCA cycle"], a: 1, w: "NADPH is used in fatty acid synthesis and other reductive biosynthesis." },
-    { q: "A deficiency of G6PD is diagnosed by:", o: ["Haemoglobin electrophoresis", "Coomb's test", "Blood glucose measurement", "G6PD enzyme activity assay"], a: 3, w: "G6PD enzyme activity assay is the definitive diagnostic test." },
+    { q: "Favism is caused by:", o: ["Bacterial infection", "G6PD deficiency triggered by fava beans", "Vitamin deficiency", "Parasitic infection"], a: 1, w: "Favism is haemolytic anaemia caused by G6PD deficiency triggered by fava beans." },
+    { q: "The PPP is upregulated in cancer cells because:", o: ["It produces energy", "It provides building blocks and NADPH for rapid growth", "It produces glucose", "It produces lactate"], a: 1, w: "Cancer cells need NADPH for biosynthesis and defence, and ribose-5-phosphate for nucleotides." },
+    { q: "Which of the following is a drug that can trigger haemolysis in G6PD deficiency?", o: ["Paracetamol", "Aspirin", "Primaquine", "Penicillin"], a: 2, w: "Primaquine is an antimalarial that can trigger haemolysis in G6PD-deficient individuals." },
+    { q: "The PPP is located in the:", o: ["Mitochondria", "Nucleus", "Cytosol", "Endoplasmic reticulum"], a: 2, w: "The PPP is located in the cytosol." },
+    { q: "The oxidative phase of the PPP produces CO2 from:", o: ["Glucose-6-phosphate", "6-Phosphogluconate", "Ribulose-5-phosphate", "Fructose-6-phosphate"], a: 1, w: "6-Phosphogluconate is decarboxylated to produce CO2 in the oxidative phase." },
+    { q: "The PPP connects to glycolysis through:", o: ["Pyruvate", "Fructose-6-phosphate and glyceraldehyde-3-phosphate", "Acetyl-CoA", "Lactate"], a: 1, w: "The non-oxidative phase produces fructose-6-phosphate and glyceraldehyde-3-phosphate, which re-enter glycolysis." },
+    { q: "NADPH is used in:", o: ["Glycolysis", "Fatty acid synthesis", "The TCA cycle", "Oxidative phosphorylation"], a: 1, w: "NADPH is used in fatty acid synthesis and other reductive biosynthesis." },
+    { q: "A deficiency of G6PD is diagnosed by:", o: ["Blood glucose measurement", "G6PD enzyme activity assay", "Haemoglobin electrophoresis", "Coomb's test"], a: 1, w: "G6PD enzyme activity assay is the definitive diagnostic test." }
   ]
 };
 
@@ -7899,36 +7901,36 @@ Crucial insight: the cell membrane is a fluid mosaic of lipids and proteins. Thi
     { channel: "Biological Chemistry", title: "Lipoproteins and Cholesterol", note: "How lipids are transported and measured.", url: "" }
   ],
   mcqs: [
-    { q: "Lipids are defined as molecules that are:", o: ["Water-soluble", "Polar", "Hydrophilic", "Hydrophobic"], a: 3, w: "Lipids are hydrophobic (water-fearing) molecules." },
-    { q: "The main energy storage lipid in the body is:", o: ["Triglyceride", "Phospholipid", "Steroid", "Cholesterol"], a: 0, w: "Triglycerides are the main energy storage lipid." },
-    { q: "The main component of cell membranes is:", o: ["Triglyceride", "Cholesterol", "Phospholipid", "Wax"], a: 2, w: "Phospholipids form the bilayer of cell membranes." },
-    { q: "Steroids are characterised by:", o: ["A phosphate group", "A four-ring structure", "A glycerol backbone", "Fatty acid chains"], a: 1, w: "Steroids have a characteristic four-ring structure." },
-    { q: "Saturated fatty acids have:", o: ["Four rings", "Hydrophilic heads", "No double bonds", "Double bonds"], a: 2, w: "Saturated fatty acids have no double bonds." },
-    { q: "Unsaturated fatty acids have:", o: ["Four rings", "No double bonds", "Only hydrophilic heads", "Double bonds"], a: 3, w: "Unsaturated fatty acids have one or more double bonds." },
-    { q: "Triglycerides consist of:", o: ["Glycerol and two fatty acids", "Cholesterol and fatty acids", "Glycerol and a phosphate", "Glycerol and three fatty acids"], a: 3, w: "Triglycerides are glycerol plus three fatty acids." },
-    { q: "Phospholipids are amphipathic because they have:", o: ["Neither region", "Only hydrophilic heads", "Both hydrophilic and hydrophobic regions", "Only hydrophobic tails"], a: 2, w: "Phospholipids have both hydrophilic and hydrophobic regions." },
-    { q: "Cholesterol is a:", o: ["Steroid", "Phospholipid", "Triglyceride", "Fatty acid"], a: 0, w: "Cholesterol is a steroid." },
-    { q: "Essential fatty acids must be obtained from the diet because:", o: ["They are water-soluble", "They are digested slowly", "They are toxic", "The body cannot synthesise them"], a: 3, w: "Essential fatty acids cannot be synthesised by the body." },
-    { q: "Lipids are transported in the blood as:", o: ["Cholesterol only", "Triglycerides only", "Free fatty acids only", "Lipoproteins"], a: 3, w: "Lipids are transported as lipoproteins." },
-    { q: "High LDL cholesterol is associated with:", o: ["Increased heart disease risk", "Reduced heart disease risk", "Better metabolism", "Normal cholesterol"], a: 0, w: "High LDL is a risk factor for heart disease." },
-    { q: "Which vitamin requires dietary fat for absorption?", o: ["Vitamin D", "Vitamin B12", "Vitamin C", "Vitamin B6"], a: 0, w: "Fat-soluble vitamins (A, D, E, K) require fat for absorption." },
-    { q: "The fluid mosaic model describes:", o: ["Protein structure", "Cell membrane structure", "Carbohydrate structure", "DNA structure"], a: 1, w: "The fluid mosaic model describes the cell membrane." },
-    { q: "Butter is solid at room temperature because it contains:", o: ["Unsaturated fatty acids", "Saturated fatty acids", "Steroids", "Phospholipids"], a: 1, w: "Saturated fatty acids make butter solid at room temperature." },
-    { q: "Olive oil is liquid at room temperature because it contains:", o: ["Phospholipids", "Unsaturated fatty acids", "Saturated fatty acids", "Steroids"], a: 1, w: "Unsaturated fatty acids make olive oil liquid." },
-    { q: "The main function of adipose tissue is to:", o: ["Store glycogen", "Store cholesterol", "Store triglycerides", "Store protein"], a: 2, w: "Adipose tissue stores triglycerides." },
-    { q: "Phospholipids in cell membranes form a:", o: ["Micelle", "Monolayer", "Bilayer", "Vesicle"], a: 2, w: "Phospholipids form a bilayer in cell membranes." },
-    { q: "Cortisol is an example of a:", o: ["Steroid hormone", "Triglyceride", "Fatty acid", "Phospholipid"], a: 0, w: "Cortisol is a steroid hormone." },
-    { q: "Bile salts help with lipid digestion by:", o: ["Emulsifying lipids", "Hydrolysing lipids", "Transporting lipids", "Storing lipids"], a: 0, w: "Bile salts emulsify lipids for digestion." },
-    { q: "Lipoproteins with high density (HDL) are associated with:", o: ["Increased cholesterol", "Reduced heart disease risk", "No effect on heart disease", "Increased heart disease risk"], a: 1, w: "HDL is protective against heart disease." },
-    { q: "Fatty acids are stored in the body as:", o: ["Phospholipids", "Cholesterol", "Free fatty acids", "Triglycerides"], a: 3, w: "Fatty acids are stored as triglycerides." },
-    { q: "The main function of cholesterol in membranes is to:", o: ["Catalyse reactions", "Store energy", "Regulate membrane fluidity", "Transport proteins"], a: 2, w: "Cholesterol regulates membrane fluidity." },
+    { q: "Lipids are defined as molecules that are:", o: ["Water-soluble", "Hydrophobic", "Hydrophilic", "Polar"], a: 1, w: "Lipids are hydrophobic (water-fearing) molecules." },
+    { q: "The main energy storage lipid in the body is:", o: ["Phospholipid", "Triglyceride", "Cholesterol", "Steroid"], a: 1, w: "Triglycerides are the main energy storage lipid." },
+    { q: "The main component of cell membranes is:", o: ["Triglyceride", "Phospholipid", "Cholesterol", "Wax"], a: 1, w: "Phospholipids form the bilayer of cell membranes." },
+    { q: "Steroids are characterised by:", o: ["A glycerol backbone", "A phosphate group", "A four-ring structure", "Fatty acid chains"], a: 2, w: "Steroids have a characteristic four-ring structure." },
+    { q: "Saturated fatty acids have:", o: ["Double bonds", "No double bonds", "Hydrophilic heads", "Four rings"], a: 1, w: "Saturated fatty acids have no double bonds." },
+    { q: "Unsaturated fatty acids have:", o: ["No double bonds", "Double bonds", "Only hydrophilic heads", "Four rings"], a: 1, w: "Unsaturated fatty acids have one or more double bonds." },
+    { q: "Triglycerides consist of:", o: ["Glycerol and three fatty acids", "Glycerol and two fatty acids", "Glycerol and a phosphate", "Cholesterol and fatty acids"], a: 0, w: "Triglycerides are glycerol plus three fatty acids." },
+    { q: "Phospholipids are amphipathic because they have:", o: ["Only hydrophobic tails", "Only hydrophilic heads", "Both hydrophilic and hydrophobic regions", "Neither region"], a: 2, w: "Phospholipids have both hydrophilic and hydrophobic regions." },
+    { q: "Cholesterol is a:", o: ["Phospholipid", "Triglyceride", "Steroid", "Fatty acid"], a: 2, w: "Cholesterol is a steroid." },
+    { q: "Essential fatty acids must be obtained from the diet because:", o: ["They are toxic", "The body cannot synthesise them", "They are water-soluble", "They are digested slowly"], a: 1, w: "Essential fatty acids cannot be synthesised by the body." },
+    { q: "Lipids are transported in the blood as:", o: ["Free fatty acids only", "Lipoproteins", "Triglycerides only", "Cholesterol only"], a: 1, w: "Lipids are transported as lipoproteins." },
+    { q: "High LDL cholesterol is associated with:", o: ["Reduced heart disease risk", "Increased heart disease risk", "Better metabolism", "Normal cholesterol"], a: 1, w: "High LDL is a risk factor for heart disease." },
+    { q: "Which vitamin requires dietary fat for absorption?", o: ["Vitamin C", "Vitamin B12", "Vitamin D", "Vitamin B6"], a: 2, w: "Fat-soluble vitamins (A, D, E, K) require fat for absorption." },
+    { q: "The fluid mosaic model describes:", o: ["Protein structure", "DNA structure", "Cell membrane structure", "Carbohydrate structure"], a: 2, w: "The fluid mosaic model describes the cell membrane." },
+    { q: "Butter is solid at room temperature because it contains:", o: ["Unsaturated fatty acids", "Saturated fatty acids", "Phospholipids", "Steroids"], a: 1, w: "Saturated fatty acids make butter solid at room temperature." },
+    { q: "Olive oil is liquid at room temperature because it contains:", o: ["Saturated fatty acids", "Unsaturated fatty acids", "Phospholipids", "Steroids"], a: 1, w: "Unsaturated fatty acids make olive oil liquid." },
+    { q: "The main function of adipose tissue is to:", o: ["Store glycogen", "Store triglycerides", "Store cholesterol", "Store protein"], a: 1, w: "Adipose tissue stores triglycerides." },
+    { q: "Phospholipids in cell membranes form a:", o: ["Micelle", "Bilayer", "Monolayer", "Vesicle"], a: 1, w: "Phospholipids form a bilayer in cell membranes." },
+    { q: "Cortisol is an example of a:", o: ["Fatty acid", "Triglyceride", "Steroid hormone", "Phospholipid"], a: 2, w: "Cortisol is a steroid hormone." },
+    { q: "Bile salts help with lipid digestion by:", o: ["Hydrolysing lipids", "Emulsifying lipids", "Transporting lipids", "Storing lipids"], a: 1, w: "Bile salts emulsify lipids for digestion." },
+    { q: "Lipoproteins with high density (HDL) are associated with:", o: ["Increased heart disease risk", "Reduced heart disease risk", "No effect on heart disease", "Increased cholesterol"], a: 1, w: "HDL is protective against heart disease." },
+    { q: "Fatty acids are stored in the body as:", o: ["Free fatty acids", "Triglycerides", "Phospholipids", "Cholesterol"], a: 1, w: "Fatty acids are stored as triglycerides." },
+    { q: "The main function of cholesterol in membranes is to:", o: ["Store energy", "Regulate membrane fluidity", "Catalyse reactions", "Transport proteins"], a: 1, w: "Cholesterol regulates membrane fluidity." },
     { q: "Essential fatty acids include:", o: ["Palmitic acid", "Stearic acid", "Linoleic acid", "Oleic acid"], a: 2, w: "Linoleic acid is an essential fatty acid." },
-    { q: "Fat-soluble vitamins are absorbed with:", o: ["Dietary fat", "Protein", "Water", "Carbohydrates"], a: 0, w: "Fat-soluble vitamins require dietary fat for absorption." },
-    { q: "Lipids are digested primarily in the:", o: ["Small intestine", "Large intestine", "Mouth", "Stomach"], a: 0, w: "Lipid digestion occurs mainly in the small intestine." },
-    { q: "The hydrophilic head of a phospholipid is made of:", o: ["Steroid rings", "Phosphate and glycerol", "Fatty acids", "Cholesterol"], a: 1, w: "The hydrophilic head contains phosphate and glycerol." },
-    { q: "Cholesterol is the precursor for:", o: ["Phospholipids", "Triglycerides", "Fatty acids", "Steroid hormones"], a: 3, w: "Cholesterol is the precursor for steroid hormones." },
-    { q: "Lipids provide approximately how many calories per gram?", o: ["3 kcal", "9 kcal", "4 kcal", "7 kcal"], a: 1, w: "Lipids provide about 9 kcal per gram." },
-    { q: "Lipids are hydrophobic because they are composed mainly of:", o: ["Phosphate and glycerol", "Carbon and hydrogen", "Carbon and oxygen", "Nitrogen and hydrogen"], a: 1, w: "Lipids are mainly carbon and hydrogen, making them hydrophobic." },
+    { q: "Fat-soluble vitamins are absorbed with:", o: ["Water", "Dietary fat", "Carbohydrates", "Protein"], a: 1, w: "Fat-soluble vitamins require dietary fat for absorption." },
+    { q: "Lipids are digested primarily in the:", o: ["Stomach", "Small intestine", "Large intestine", "Mouth"], a: 1, w: "Lipid digestion occurs mainly in the small intestine." },
+    { q: "The hydrophilic head of a phospholipid is made of:", o: ["Fatty acids", "Phosphate and glycerol", "Cholesterol", "Steroid rings"], a: 1, w: "The hydrophilic head contains phosphate and glycerol." },
+    { q: "Cholesterol is the precursor for:", o: ["Fatty acids", "Triglycerides", "Steroid hormones", "Phospholipids"], a: 2, w: "Cholesterol is the precursor for steroid hormones." },
+    { q: "Lipids provide approximately how many calories per gram?", o: ["4 kcal", "7 kcal", "9 kcal", "3 kcal"], a: 2, w: "Lipids provide about 9 kcal per gram." },
+    { q: "Lipids are hydrophobic because they are composed mainly of:", o: ["Carbon and hydrogen", "Carbon and oxygen", "Nitrogen and hydrogen", "Phosphate and glycerol"], a: 0, w: "Lipids are mainly carbon and hydrogen, making them hydrophobic." }
   ]
 };
 
@@ -8058,36 +8060,36 @@ Crucial insight: nucleic acids are the basis of genetic testing and gene therapy
     { channel: "Biological Chemistry", title: "Transcription and Translation", note: "How genes are expressed.", url: "" }
   ],
   mcqs: [
-    { q: "Nucleic acids are polymers of:", o: ["Nucleotides", "Monosaccharides", "Fatty acids", "Amino acids"], a: 0, w: "Nucleic acids are polymers of nucleotides." },
-    { q: "DNA contains which sugar?", o: ["Ribose", "Fructose", "Glucose", "Deoxyribose"], a: 3, w: "DNA contains deoxyribose." },
-    { q: "RNA contains which sugar?", o: ["Ribose", "Fructose", "Glucose", "Deoxyribose"], a: 0, w: "RNA contains ribose." },
-    { q: "Which base is found in DNA but not RNA?", o: ["Adenine", "Thymine", "Cytosine", "Guanine"], a: 1, w: "Thymine is found in DNA but not RNA." },
-    { q: "Which base is found in RNA but not DNA?", o: ["Uracil", "Thymine", "Adenine", "Cytosine"], a: 0, w: "Uracil is found in RNA but not DNA." },
-    { q: "DNA is described as:", o: ["Single-stranded", "Linear", "Triple helix", "Double helix"], a: 3, w: "DNA has a double helix structure." },
-    { q: "RNA is typically:", o: ["Circular", "Single-stranded", "Triple-stranded", "Double-stranded"], a: 1, w: "RNA is typically single-stranded." },
-    { q: "Adenine pairs with:", o: ["Guanine", "Thymine", "Uracil", "Cytosine"], a: 1, w: "A pairs with T in DNA." },
-    { q: "Guanine pairs with:", o: ["Thymine", "Cytosine", "Uracil", "Adenine"], a: 1, w: "G pairs with C." },
-    { q: "In RNA, adenine pairs with:", o: ["Uracil", "Guanine", "Cytosine", "Thymine"], a: 0, w: "A pairs with U in RNA." },
-    { q: "A nucleotide consists of:", o: ["Sugar and phosphate only", "Phosphate and base only", "Sugar and base only", "Sugar, phosphate, and base"], a: 3, w: "A nucleotide has sugar, phosphate, and base." },
-    { q: "The genetic code is read in groups of:", o: ["Two nucleotides", "One nucleotide", "Three nucleotides", "Four nucleotides"], a: 2, w: "Codons are three nucleotides." },
-    { q: "The process of DNA copying is called:", o: ["Translation", "Expression", "Transcription", "Replication"], a: 3, w: "Replication is the copying of DNA." },
-    { q: "The process of DNA to RNA is called:", o: ["Expression", "Translation", "Replication", "Transcription"], a: 3, w: "Transcription is DNA to RNA." },
-    { q: "The process of RNA to protein is called:", o: ["Translation", "Expression", "Replication", "Transcription"], a: 0, w: "Translation is RNA to protein." },
-    { q: "mRNA stands for:", o: ["Multiple RNA", "Micro RNA", "Messenger RNA", "Mitochondrial RNA"], a: 2, w: "mRNA is messenger RNA." },
-    { q: "tRNA stands for:", o: ["Transcription RNA", "Transport RNA", "Template RNA", "Transfer RNA"], a: 3, w: "tRNA is transfer RNA." },
-    { q: "rRNA stands for:", o: ["Replication RNA", "Ribosomal RNA", "Regulatory RNA", "Reverse RNA"], a: 1, w: "rRNA is ribosomal RNA." },
-    { q: "Which enzyme catalyses DNA replication?", o: ["Ligase", "Helicase", "DNA polymerase", "RNA polymerase"], a: 2, w: "DNA polymerase catalyses DNA replication." },
-    { q: "Which enzyme catalyses transcription?", o: ["Ligase", "Helicase", "RNA polymerase", "DNA polymerase"], a: 2, w: "RNA polymerase catalyses transcription." },
-    { q: "A mutation that changes one amino acid is called:", o: ["Nonsense", "Silent", "Frameshift", "Missense"], a: 3, w: "Missense mutations change one amino acid." },
-    { q: "A mutation that creates a stop codon is called:", o: ["Frameshift", "Missense", "Nonsense", "Silent"], a: 2, w: "Nonsense mutations create a stop codon." },
-    { q: "A mutation that does not change the amino acid is called:", o: ["Silent", "Frameshift", "Missense", "Nonsense"], a: 0, w: "Silent mutations do not change the amino acid." },
-    { q: "The double helix structure of DNA was discovered by:", o: ["Watson and Crick", "Franklin", "Mendel", "Darwin"], a: 0, w: "Watson and Crick discovered the double helix." },
-    { q: "Purine bases include:", o: ["Adenine and Cytosine", "Adenine and Guanine", "Cytosine and Thymine", "Uracil and Thymine"], a: 1, w: "Purines are adenine and guanine." },
+    { q: "Nucleic acids are polymers of:", o: ["Amino acids", "Nucleotides", "Monosaccharides", "Fatty acids"], a: 1, w: "Nucleic acids are polymers of nucleotides." },
+    { q: "DNA contains which sugar?", o: ["Ribose", "Deoxyribose", "Glucose", "Fructose"], a: 1, w: "DNA contains deoxyribose." },
+    { q: "RNA contains which sugar?", o: ["Ribose", "Deoxyribose", "Glucose", "Fructose"], a: 0, w: "RNA contains ribose." },
+    { q: "Which base is found in DNA but not RNA?", o: ["Adenine", "Guanine", "Thymine", "Cytosine"], a: 2, w: "Thymine is found in DNA but not RNA." },
+    { q: "Which base is found in RNA but not DNA?", o: ["Adenine", "Uracil", "Thymine", "Cytosine"], a: 1, w: "Uracil is found in RNA but not DNA." },
+    { q: "DNA is described as:", o: ["Single-stranded", "Double helix", "Triple helix", "Linear"], a: 1, w: "DNA has a double helix structure." },
+    { q: "RNA is typically:", o: ["Double-stranded", "Single-stranded", "Triple-stranded", "Circular"], a: 1, w: "RNA is typically single-stranded." },
+    { q: "Adenine pairs with:", o: ["Thymine", "Guanine", "Cytosine", "Uracil"], a: 0, w: "A pairs with T in DNA." },
+    { q: "Guanine pairs with:", o: ["Thymine", "Adenine", "Cytosine", "Uracil"], a: 2, w: "G pairs with C." },
+    { q: "In RNA, adenine pairs with:", o: ["Thymine", "Uracil", "Guanine", "Cytosine"], a: 1, w: "A pairs with U in RNA." },
+    { q: "A nucleotide consists of:", o: ["Sugar and phosphate only", "Sugar and base only", "Sugar, phosphate, and base", "Phosphate and base only"], a: 2, w: "A nucleotide has sugar, phosphate, and base." },
+    { q: "The genetic code is read in groups of:", o: ["Two nucleotides", "Three nucleotides", "Four nucleotides", "One nucleotide"], a: 1, w: "Codons are three nucleotides." },
+    { q: "The process of DNA copying is called:", o: ["Transcription", "Translation", "Replication", "Expression"], a: 2, w: "Replication is the copying of DNA." },
+    { q: "The process of DNA to RNA is called:", o: ["Replication", "Transcription", "Translation", "Expression"], a: 1, w: "Transcription is DNA to RNA." },
+    { q: "The process of RNA to protein is called:", o: ["Replication", "Transcription", "Translation", "Expression"], a: 2, w: "Translation is RNA to protein." },
+    { q: "mRNA stands for:", o: ["Messenger RNA", "Micro RNA", "Mitochondrial RNA", "Multiple RNA"], a: 0, w: "mRNA is messenger RNA." },
+    { q: "tRNA stands for:", o: ["Transfer RNA", "Template RNA", "Transcription RNA", "Transport RNA"], a: 0, w: "tRNA is transfer RNA." },
+    { q: "rRNA stands for:", o: ["Ribosomal RNA", "Regulatory RNA", "Reverse RNA", "Replication RNA"], a: 0, w: "rRNA is ribosomal RNA." },
+    { q: "Which enzyme catalyses DNA replication?", o: ["RNA polymerase", "DNA polymerase", "Helicase", "Ligase"], a: 1, w: "DNA polymerase catalyses DNA replication." },
+    { q: "Which enzyme catalyses transcription?", o: ["DNA polymerase", "RNA polymerase", "Helicase", "Ligase"], a: 1, w: "RNA polymerase catalyses transcription." },
+    { q: "A mutation that changes one amino acid is called:", o: ["Silent", "Missense", "Nonsense", "Frameshift"], a: 1, w: "Missense mutations change one amino acid." },
+    { q: "A mutation that creates a stop codon is called:", o: ["Silent", "Missense", "Nonsense", "Frameshift"], a: 2, w: "Nonsense mutations create a stop codon." },
+    { q: "A mutation that does not change the amino acid is called:", o: ["Silent", "Missense", "Nonsense", "Frameshift"], a: 0, w: "Silent mutations do not change the amino acid." },
+    { q: "The double helix structure of DNA was discovered by:", o: ["Watson and Crick", "Mendel", "Darwin", "Franklin"], a: 0, w: "Watson and Crick discovered the double helix." },
+    { q: "Purine bases include:", o: ["Adenine and Guanine", "Cytosine and Thymine", "Uracil and Thymine", "Adenine and Cytosine"], a: 0, w: "Purines are adenine and guanine." },
     { q: "Pyrimidine bases include:", o: ["Adenine and Guanine", "Cytosine and Thymine", "Uracil and Guanine", "Adenine and Cytosine"], a: 1, w: "Pyrimidines are cytosine, thymine, and uracil." },
-    { q: "The human genome contains approximately how many genes?", o: ["100,000", "50,000", "20,000", "10,000"], a: 2, w: "The human genome has approximately 20,000 genes." },
-    { q: "Which statement about DNA replication is correct?", o: ["It is dispersive", "It is conservative", "It is semiconservative", "It is random"], a: 2, w: "DNA replication is semiconservative." },
-    { q: "The sequence of nucleotides in DNA determines:", o: ["Protein structure", "Lipid structure", "All of the above", "Carbohydrate structure"], a: 0, w: "DNA sequence determines protein structure." },
-    { q: "Nucleic acids are important in medicine because they are the basis of:", o: ["Genetic testing", "All of the above", "Gene therapy", "RNA vaccines"], a: 1, w: "Nucleic acids are used in genetic testing, gene therapy, and RNA vaccines." },
+    { q: "The human genome contains approximately how many genes?", o: ["10,000", "20,000", "50,000", "100,000"], a: 1, w: "The human genome has approximately 20,000 genes." },
+    { q: "Which statement about DNA replication is correct?", o: ["It is conservative", "It is semiconservative", "It is dispersive", "It is random"], a: 1, w: "DNA replication is semiconservative." },
+    { q: "The sequence of nucleotides in DNA determines:", o: ["Protein structure", "Lipid structure", "Carbohydrate structure", "All of the above"], a: 0, w: "DNA sequence determines protein structure." },
+    { q: "Nucleic acids are important in medicine because they are the basis of:", o: ["Genetic testing", "Gene therapy", "RNA vaccines", "All of the above"], a: 3, w: "Nucleic acids are used in genetic testing, gene therapy, and RNA vaccines." }
   ]
 };
 
@@ -8622,35 +8624,35 @@ My answers. One: no, she cannot conclude causation because without random assign
   ],
   mcqs: [
     { q: "Psychology is the scientific study of:", o: ["Behaviour and mental processes", "Brain anatomy only", "Mental illness only", "Social relationships only"], a: 0, w: "Psychology studies both observable behaviour and internal mental processes." },
-    { q: "Who established the first psychology laboratory?", o: ["Wilhelm Wundt", "William James", "Sigmund Freud", "B.F. Skinner"], a: 0, w: "Wundt established the first psychology laboratory in Leipzig in 1879." },
-    { q: "Structuralism focused on:", o: ["Breaking down the mind into basic elements", "Observable behaviour", "The unconscious mind", "The functions of the mind"], a: 0, w: "Structuralism aimed to break down the mind into basic elements through introspection." },
-    { q: "Functionalism was influenced by:", o: ["Freud's psychoanalysis", "Darwin's theory of evolution", "Skinner's behaviourism", "Rogers' humanism"], a: 1, w: "James's functionalism was influenced by Darwin and focused on how the mind helps us adapt." },
-    { q: "Which school of psychology focuses on the unconscious mind?", o: ["Psychoanalysis", "Humanism", "Cognitive psychology", "Behaviourism"], a: 0, w: "Psychoanalysis, founded by Freud, focuses on the unconscious mind." },
-    { q: "Which school of psychology focuses on observable behaviour?", o: ["Psychoanalysis", "Humanism", "Cognitive psychology", "Behaviourism"], a: 3, w: "Behaviourism focuses on observable behaviour and its environmental determinants." },
-    { q: "Which school of psychology focuses on human potential and self-actualisation?", o: ["Psychoanalysis", "Cognitive psychology", "Behaviourism", "Humanistic psychology"], a: 3, w: "Humanistic psychology focuses on human potential and self-actualisation." },
-    { q: "Which school of psychology focuses on mental processes like thinking and memory?", o: ["Behaviourism", "Psychoanalysis", "Humanism", "Cognitive psychology"], a: 3, w: "Cognitive psychology focuses on mental processes like thinking, memory, and problem-solving." },
-    { q: "The biopsychosocial model emphasises:", o: ["Only psychological factors", "Only social factors", "Only biological factors", "Biological, psychological, and social factors"], a: 3, w: "The biopsychosocial model integrates biological, psychological, and social factors." },
-    { q: "Which research method is best for establishing cause and effect?", o: ["Case study", "Correlational study", "Experiment", "Survey"], a: 2, w: "Experiments are the best method for establishing cause and effect." },
-    { q: "Correlational studies can tell us:", o: ["The cause of a behaviour", "That two variables are related", "That one variable causes another", "The function of a behaviour"], a: 1, w: "Correlational studies show relationships between variables, not causation." },
-    { q: "Random assignment is important because:", o: ["It ensures groups are equivalent", "It is required by ethics committees", "It ensures large sample sizes", "It makes the study easier"], a: 0, w: "Random assignment ensures groups are equivalent so differences can be attributed to the independent variable." },
-    { q: "Informed consent means:", o: ["Participants must be paid", "Participants must be debriefed", "Participants must be told the results", "Participants must know what they are agreeing to"], a: 3, w: "Informed consent means participants know what they are agreeing to." },
-    { q: "Debriefing occurs:", o: ["After the study", "Before the study", "During the study", "Instead of informed consent"], a: 0, w: "Debriefing happens after the study, especially if deception was used." },
-    { q: "The Hawthorne effect refers to:", o: ["The effect of the environment on behaviour", "The effect of unconscious processes", "The effect of genetics on behaviour", "People behaving differently when they know they are being studied"], a: 3, w: "The Hawthorne effect is the change in behaviour when people know they are being observed." },
-    { q: "A researcher finds that ice cream sales and drowning deaths are correlated. This means:", o: ["The two are related but causation cannot be concluded", "There is no relationship", "Drowning causes ice cream sales", "Ice cream causes drowning"], a: 0, w: "Correlation does not equal causation — the relationship may be due to a third variable like temperature." },
-    { q: "Which of the following is a misconception about psychology?", o: ["Psychology is just common sense", "Psychology has ethical guidelines", "Psychological research uses the scientific method", "Psychology is a science"], a: 0, w: "Psychology is not just common sense — it is a rigorous science with findings that are often counterintuitive." },
-    { q: "Psychoanalysis was founded by:", o: ["B.F. Skinner", "William James", "Sigmund Freud", "Carl Rogers"], a: 2, w: "Sigmund Freud founded psychoanalysis." },
-    { q: "Behaviourism was founded by:", o: ["William James and John Dewey", "John Watson and B.F. Skinner", "Carl Rogers and Abraham Maslow", "Sigmund Freud and Carl Jung"], a: 1, w: "Behaviourism was founded by Watson and later developed by Skinner." },
-    { q: "Humanistic psychology was associated with:", o: ["Watson and Skinner", "Rogers and Maslow", "Freud and Jung", "Wundt and Titchener"], a: 1, w: "Humanistic psychology was associated with Carl Rogers and Abraham Maslow." },
-    { q: "The cognitive revolution in psychology emphasised:", o: ["Observable behaviour", "Human potential", "Mental processes", "The unconscious mind"], a: 2, w: "The cognitive revolution shifted focus back to mental processes like thinking and memory." },
-    { q: "Which level is NOT part of the biopsychosocial model?", o: ["Social", "Psychological", "Spiritual", "Biological"], a: 2, w: "The biopsychosocial model includes biological, psychological, and social levels." },
-    { q: "A case study involves:", o: ["Measuring two variables", "Studying a large sample", "In-depth study of a single individual", "Manipulating a variable"], a: 2, w: "A case study is an in-depth examination of a single individual or small group." },
-    { q: "Naturalistic observation involves:", o: ["Manipulating a variable", "Observing behaviour in a controlled setting", "Asking people about their behaviour", "Observing behaviour in a natural setting"], a: 3, w: "Naturalistic observation involves observing behaviour in natural settings." },
-    { q: "A survey is an example of:", o: ["A correlational method", "A descriptive method", "An experimental method", "A qualitative method"], a: 1, w: "Surveys are descriptive methods that gather data through questionnaires." },
-    { q: "The IRB reviews research to ensure:", o: ["The study is interesting", "The study meets ethical standards", "The study has a large sample", "The study will be published"], a: 1, w: "Institutional Review Boards (IRBs) review research to ensure ethical standards are met." },
-    { q: "Which statement is true about psychological research?", o: ["Psychological research has no practical applications", "Psychological research uses the scientific method", "Psychological research is not scientific", "Psychological research is only about mental illness"], a: 1, w: "Psychological research is scientific and has many practical applications." },
-    { q: "The belief that 'opposites attract' is:", o: ["A well-supported finding in psychology", "A theory in social psychology", "A common misconception", "A research method"], a: 2, w: "Opposites attract is a common misconception — research shows that similarity is more predictive of attraction." },
-    { q: "What is the difference between a hypothesis and a theory?", o: ["A theory is more specific", "A hypothesis is more general", "A hypothesis is a testable prediction; a theory is a well-supported explanation", "There is no difference"], a: 2, w: "A hypothesis is a specific, testable prediction; a theory is a broad, well-supported explanation." },
-    { q: "The most important ethical principle in psychology is:", o: ["Making money from research", "Protecting the welfare of participants", "Publishing results quickly", "Using large sample sizes"], a: 1, w: "Protecting the welfare of participants is the most important ethical principle." },
+    { q: "Who established the first psychology laboratory?", o: ["Sigmund Freud", "Wilhelm Wundt", "William James", "B.F. Skinner"], a: 1, w: "Wundt established the first psychology laboratory in Leipzig in 1879." },
+    { q: "Structuralism focused on:", o: ["The functions of the mind", "Breaking down the mind into basic elements", "Observable behaviour", "The unconscious mind"], a: 1, w: "Structuralism aimed to break down the mind into basic elements through introspection." },
+    { q: "Functionalism was influenced by:", o: ["Darwin's theory of evolution", "Freud's psychoanalysis", "Skinner's behaviourism", "Rogers' humanism"], a: 0, w: "James's functionalism was influenced by Darwin and focused on how the mind helps us adapt." },
+    { q: "Which school of psychology focuses on the unconscious mind?", o: ["Behaviourism", "Psychoanalysis", "Humanism", "Cognitive psychology"], a: 1, w: "Psychoanalysis, founded by Freud, focuses on the unconscious mind." },
+    { q: "Which school of psychology focuses on observable behaviour?", o: ["Psychoanalysis", "Cognitive psychology", "Behaviourism", "Humanism"], a: 2, w: "Behaviourism focuses on observable behaviour and its environmental determinants." },
+    { q: "Which school of psychology focuses on human potential and self-actualisation?", o: ["Psychoanalysis", "Behaviourism", "Cognitive psychology", "Humanistic psychology"], a: 3, w: "Humanistic psychology focuses on human potential and self-actualisation." },
+    { q: "Which school of psychology focuses on mental processes like thinking and memory?", o: ["Behaviourism", "Psychoanalysis", "Cognitive psychology", "Humanism"], a: 2, w: "Cognitive psychology focuses on mental processes like thinking, memory, and problem-solving." },
+    { q: "The biopsychosocial model emphasises:", o: ["Only biological factors", "Only psychological factors", "Biological, psychological, and social factors", "Only social factors"], a: 2, w: "The biopsychosocial model integrates biological, psychological, and social factors." },
+    { q: "Which research method is best for establishing cause and effect?", o: ["Correlational study", "Case study", "Experiment", "Survey"], a: 2, w: "Experiments are the best method for establishing cause and effect." },
+    { q: "Correlational studies can tell us:", o: ["That one variable causes another", "That two variables are related", "The cause of a behaviour", "The function of a behaviour"], a: 1, w: "Correlational studies show relationships between variables, not causation." },
+    { q: "Random assignment is important because:", o: ["It ensures large sample sizes", "It ensures groups are equivalent", "It makes the study easier", "It is required by ethics committees"], a: 1, w: "Random assignment ensures groups are equivalent so differences can be attributed to the independent variable." },
+    { q: "Informed consent means:", o: ["Participants must be paid", "Participants must know what they are agreeing to", "Participants must be told the results", "Participants must be debriefed"], a: 1, w: "Informed consent means participants know what they are agreeing to." },
+    { q: "Debriefing occurs:", o: ["Before the study", "During the study", "After the study", "Instead of informed consent"], a: 2, w: "Debriefing happens after the study, especially if deception was used." },
+    { q: "The Hawthorne effect refers to:", o: ["People behaving differently when they know they are being studied", "The effect of genetics on behaviour", "The effect of the environment on behaviour", "The effect of unconscious processes"], a: 0, w: "The Hawthorne effect is the change in behaviour when people know they are being observed." },
+    { q: "A researcher finds that ice cream sales and drowning deaths are correlated. This means:", o: ["Ice cream causes drowning", "Drowning causes ice cream sales", "The two are related but causation cannot be concluded", "There is no relationship"], a: 2, w: "Correlation does not equal causation — the relationship may be due to a third variable like temperature." },
+    { q: "Which of the following is a misconception about psychology?", o: ["Psychology is a science", "Psychological research uses the scientific method", "Psychology is just common sense", "Psychology has ethical guidelines"], a: 2, w: "Psychology is not just common sense — it is a rigorous science with findings that are often counterintuitive." },
+    { q: "Psychoanalysis was founded by:", o: ["William James", "B.F. Skinner", "Sigmund Freud", "Carl Rogers"], a: 2, w: "Sigmund Freud founded psychoanalysis." },
+    { q: "Behaviourism was founded by:", o: ["John Watson and B.F. Skinner", "Sigmund Freud and Carl Jung", "William James and John Dewey", "Carl Rogers and Abraham Maslow"], a: 0, w: "Behaviourism was founded by Watson and later developed by Skinner." },
+    { q: "Humanistic psychology was associated with:", o: ["Freud and Jung", "Watson and Skinner", "Rogers and Maslow", "Wundt and Titchener"], a: 2, w: "Humanistic psychology was associated with Carl Rogers and Abraham Maslow." },
+    { q: "The cognitive revolution in psychology emphasised:", o: ["Observable behaviour", "The unconscious mind", "Mental processes", "Human potential"], a: 2, w: "The cognitive revolution shifted focus back to mental processes like thinking and memory." },
+    { q: "Which level is NOT part of the biopsychosocial model?", o: ["Biological", "Psychological", "Social", "Spiritual"], a: 3, w: "The biopsychosocial model includes biological, psychological, and social levels." },
+    { q: "A case study involves:", o: ["Studying a large sample", "In-depth study of a single individual", "Manipulating a variable", "Measuring two variables"], a: 1, w: "A case study is an in-depth examination of a single individual or small group." },
+    { q: "Naturalistic observation involves:", o: ["Observing behaviour in a controlled setting", "Observing behaviour in a natural setting", "Asking people about their behaviour", "Manipulating a variable"], a: 1, w: "Naturalistic observation involves observing behaviour in natural settings." },
+    { q: "A survey is an example of:", o: ["An experimental method", "A correlational method", "A qualitative method", "A descriptive method"], a: 3, w: "Surveys are descriptive methods that gather data through questionnaires." },
+    { q: "The IRB reviews research to ensure:", o: ["The study is interesting", "The study has a large sample", "The study meets ethical standards", "The study will be published"], a: 2, w: "Institutional Review Boards (IRBs) review research to ensure ethical standards are met." },
+    { q: "Which statement is true about psychological research?", o: ["Psychological research is not scientific", "Psychological research has no practical applications", "Psychological research uses the scientific method", "Psychological research is only about mental illness"], a: 2, w: "Psychological research is scientific and has many practical applications." },
+    { q: "The belief that 'opposites attract' is:", o: ["A well-supported finding in psychology", "A common misconception", "A theory in social psychology", "A research method"], a: 1, w: "Opposites attract is a common misconception — research shows that similarity is more predictive of attraction." },
+    { q: "What is the difference between a hypothesis and a theory?", o: ["A hypothesis is more general", "A theory is more specific", "A hypothesis is a testable prediction; a theory is a well-supported explanation", "There is no difference"], a: 2, w: "A hypothesis is a specific, testable prediction; a theory is a broad, well-supported explanation." },
+    { q: "The most important ethical principle in psychology is:", o: ["Making money from research", "Publishing results quickly", "Protecting the welfare of participants", "Using large sample sizes"], a: 2, w: "Protecting the welfare of participants is the most important ethical principle." },
   ],
 };
 
@@ -10669,36 +10671,26 @@ My answers. One: this is non-keratinized stratified squamous epithelium. It has 
     { channel: "Histology", title: "Clinical Histology and Pathology", note: "How tissue identification is used in diagnosis.", url: "" },
   ],
   mcqs: [
-    { q: "Tissue identification on a slide should begin by identifying the:", o: ["Number of layers", "Cell shape", "Stain colour", "Tissue type"], a: 3, w: "The first step is to identify the tissue type — epithelium, connective, muscle, or nervous." },
-    { q: "The standard stain used in histology is:", o: ["Haematoxylin and eosin (H&E)", "Silver stain", "PAS", "Masson's trichrome"], a: 0, w: "H&E is the standard stain in histology." },
+    { q: "Tissue identification on a slide should begin by identifying the:", o: ["Cell shape", "Tissue type", "Stain colour", "Number of layers"], a: 1, w: "The first step is to identify the tissue type — epithelium, connective, muscle, or nervous." },
+    { q: "The standard stain used in histology is:", o: ["PAS", "Silver stain", "Haematoxylin and eosin (H&E)", "Masson's trichrome"], a: 2, w: "H&E is the standard stain in histology." },
     { q: "Haematoxylin stains nuclei:", o: ["Pink-red", "Blue-purple", "Magenta", "Black"], a: 1, w: "Haematoxylin is a basic dye that stains nuclei blue-purple." },
-    { q: "Eosin stains cytoplasm and extracellular fibres:", o: ["Magenta", "Blue-purple", "Pink-red", "Black"], a: 2, w: "Eosin is an acidic dye that stains cytoplasm and fibres pink-red." },
-    { q: "Epithelium is characterised by:", o: ["Elongated contractile cells", "Large cells with pale nuclei", "Closely packed cells with little matrix", "Sparse cells in abundant matrix"], a: 2, w: "Epithelium is characterised by closely packed cells with little matrix." },
-    { q: "Connective tissue is characterised by:", o: ["Elongated contractile cells", "Sparse cells in abundant matrix", "Large cells with pale nuclei", "Closely packed cells with little matrix"], a: 1, w: "Connective tissue is characterised by sparse cells in abundant matrix." },
-    { q: "The two questions used to classify epithelium are:", o: ["Stain and thickness", "Number of layers and cell shape", "Colour and texture", "Fibre type and arrangement"], a: 1, w: "Epithelium is classified by number of layers and shape of apical cells." },
-    { q: "A single layer of flat cells is:", o: ["Simple cuboidal", "Simple squamous", "Simple columnar", "Stratified squamous"], a: 1, w: "Simple squamous epithelium is a single layer of flat cells." },
-    { q: "A tissue with multiple layers and flat surface cells is:", o: ["Pseudostratified", "Stratified squamous", "Transitional", "Simple squamous"], a: 1, w: "Stratified squamous epithelium has multiple layers with flat surface cells." },
-    { q: "Transitional epithelium has surface cells that are:", o: ["Cuboidal", "Flat", "Dome-shaped", "Columnar"], a: 2, w: "Transitional epithelium has dome-shaped surface cells when relaxed." },
-    { q: "Skeletal muscle is identified by:", o: ["Striated, long, multinucleated", "Striated, branched, intercalated discs", "Large cells with pale nuclei", "Non-striated, spindle-shaped"], a: 0, w: "Skeletal muscle is striated, long, cylindrical, and multinucleated." },
-    { q: "Cardiac muscle is identified by:", o: ["Striated, branched, intercalated discs", "Striated, long, multinucleated", "Large cells with pale nuclei", "Non-striated, spindle-shaped"], a: 0, w: "Cardiac muscle is striated, branched, and has intercalated discs." },
-    { q: "Smooth muscle is identified by:", o: ["Large cells with pale nuclei", "Striated, branched, intercalated discs", "Non-striated, spindle-shaped", "Striated, long, multinucleated"], a: 2, w: "Smooth muscle is non-striated and spindle-shaped." },
-    { q: "The basement membrane is characteristic of:", o: ["Muscle tissue", "Epithelium", "Nervous tissue", "Connective tissue"], a: 1, w: "Epithelium sits on a basement membrane, which anchors it to underlying connective tissue." },
-    { q: "Loose connective tissue has:", o: ["Loosely arranged fibres with more ground substance", "Parallel fibres", "Many tightly packed fibres", "Mineralised matrix"], a: 0, w: "Loose connective tissue has loosely arranged fibres and more ground substance." },
-    { q: "Dense regular connective tissue has:", o: ["Parallel fibres", "Loosely arranged fibres", "Chondrocytes in lacunae", "Randomly arranged fibres"], a: 0, w: "Dense regular connective tissue has parallel collagen fibres (tendons, ligaments)." },
-    { q: "Dense irregular connective tissue has:", o: ["Parallel fibres", "Chondrocytes in lacunae", "Loosely arranged fibres", "Randomly arranged fibres"], a: 3, w: "Dense irregular connective tissue has fibres arranged in multiple directions (dermis)." },
-    { q: "Chondrocytes in lacunae are characteristic of:", o: ["Blood", "Bone", "Dense connective tissue", "Cartilage"], a: 3, w: "Cartilage has chondrocytes in lacunae." },
-    { q: "Osteocytes in lacunae are characteristic of:", o: ["Bone", "Blood", "Cartilage", "Dense connective tissue"], a: 0, w: "Bone has osteocytes in lacunae." },
-    { q: "Under the microscope, adipose (fat) tissue appears as:", o: ["Empty-looking rounded cells with nuclei pushed to the edge", "Layered flat cells", "Dense pink fibres", "Striated fibres"], a: 0, w: "Fat dissolves in processing, leaving empty rounded cells with peripheral nuclei." },
-    { q: "Hyaline cartilage is identified by chondrocytes in lacunae within a:", o: ["Layered epithelium", "Fibrous red matrix", "Striated matrix", "Smooth glassy blue-staining matrix"], a: 3, w: "Hyaline cartilage has a smooth, glassy matrix with chondrocytes in lacunae." },
-    { q: "Blood on a smear is identified by:", o: ["Layered cells", "Lacunae in matrix", "Red cells and scattered white cells in fluid", "Striations"], a: 2, w: "Blood shows red cells and white cells suspended in plasma." },
-    { q: "Simple columnar epithelium is recognised by:", o: ["Striations", "Many layers", "Flat surface cells", "A single row of tall, column-shaped cells"], a: 3, w: "Simple columnar is one layer of tall cells." },
-    { q: "Pseudostratified epithelium looks layered but is not, because:", o: ["It is muscle", "All cells touch the basement membrane", "It has no nuclei", "It has many true layers"], a: 1, w: "All cells touch the basement membrane though nuclei sit at different levels." },
-    { q: "Nervous tissue on a slide is identified by:", o: ["Flat layered cells", "Striated fibres", "Large neurons with processes and small glial cells", "Lacunae"], a: 3, w: "Nervous tissue shows large neurons with cytoplasmic processes and glia." },
-    { q: "A key first step in identifying an unknown tissue is to determine whether it is:", o: ["Male or female", "Thick or thin", "One of the four basic tissue types", "Stained or not"], a: 2, w: "First classify into epithelium, connective, muscle or nervous tissue." },
-    { q: "Goblet cells seen among columnar cells indicate:", o: ["Muscle tissue", "Cartilage", "A mucus-secreting epithelium", "Bone"], a: 2, w: "Goblet cells secrete mucus and appear in certain epithelia." },
-    { q: "Compact bone is distinguished under the microscope by:", o: ["Striated fibres", "Concentric osteons with central canals", "Empty fat cells", "Loose fibres"], a: 1, w: "Compact bone shows osteons (Haversian systems) with central canals." },
-    { q: "Total magnification of a microscope image equals:", o: ["Objective power multiplied by eyepiece power", "Eyepiece power only", "The slide thickness", "Objective lens power only"], a: 0, w: "Total magnification is objective x eyepiece." },
-    { q: "Elastic cartilage differs from hyaline cartilage by containing:", o: ["Osteons", "Fat droplets", "Striations", "Elastic fibres in its matrix"], a: 3, w: "Elastic cartilage has elastic fibres, giving flexibility (e.g. the ear)." },
+    { q: "Eosin stains cytoplasm and extracellular fibres:", o: ["Blue-purple", "Magenta", "Pink-red", "Black"], a: 2, w: "Eosin is an acidic dye that stains cytoplasm and fibres pink-red." },
+    { q: "Epithelium is characterised by:", o: ["Sparse cells in abundant matrix", "Closely packed cells with little matrix", "Elongated contractile cells", "Large cells with pale nuclei"], a: 1, w: "Epithelium is characterised by closely packed cells with little matrix." },
+    { q: "Connective tissue is characterised by:", o: ["Closely packed cells with little matrix", "Sparse cells in abundant matrix", "Elongated contractile cells", "Large cells with pale nuclei"], a: 1, w: "Connective tissue is characterised by sparse cells in abundant matrix." },
+    { q: "The two questions used to classify epithelium are:", o: ["Colour and texture", "Number of layers and cell shape", "Fibre type and arrangement", "Stain and thickness"], a: 1, w: "Epithelium is classified by number of layers and shape of apical cells." },
+    { q: "A single layer of flat cells is:", o: ["Simple squamous", "Stratified squamous", "Simple cuboidal", "Simple columnar"], a: 0, w: "Simple squamous epithelium is a single layer of flat cells." },
+    { q: "A tissue with multiple layers and flat surface cells is:", o: ["Simple squamous", "Stratified squamous", "Transitional", "Pseudostratified"], a: 1, w: "Stratified squamous epithelium has multiple layers with flat surface cells." },
+    { q: "Transitional epithelium has surface cells that are:", o: ["Flat", "Cuboidal", "Dome-shaped", "Columnar"], a: 2, w: "Transitional epithelium has dome-shaped surface cells when relaxed." },
+    { q: "Skeletal muscle is identified by:", o: ["Non-striated, spindle-shaped", "Striated, long, multinucleated", "Striated, branched, intercalated discs", "Large cells with pale nuclei"], a: 1, w: "Skeletal muscle is striated, long, cylindrical, and multinucleated." },
+    { q: "Cardiac muscle is identified by:", o: ["Non-striated, spindle-shaped", "Striated, long, multinucleated", "Striated, branched, intercalated discs", "Large cells with pale nuclei"], a: 2, w: "Cardiac muscle is striated, branched, and has intercalated discs." },
+    { q: "Smooth muscle is identified by:", o: ["Striated, long, multinucleated", "Striated, branched, intercalated discs", "Non-striated, spindle-shaped", "Large cells with pale nuclei"], a: 2, w: "Smooth muscle is non-striated and spindle-shaped." },
+    { q: "The basement membrane is characteristic of:", o: ["Connective tissue", "Epithelium", "Muscle tissue", "Nervous tissue"], a: 1, w: "Epithelium sits on a basement membrane, which anchors it to underlying connective tissue." },
+    { q: "Loose connective tissue has:", o: ["Many tightly packed fibres", "Loosely arranged fibres with more ground substance", "Parallel fibres", "Mineralised matrix"], a: 1, w: "Loose connective tissue has loosely arranged fibres and more ground substance." },
+    { q: "Dense regular connective tissue has:", o: ["Loosely arranged fibres", "Parallel fibres", "Randomly arranged fibres", "Chondrocytes in lacunae"], a: 1, w: "Dense regular connective tissue has parallel collagen fibres (tendons, ligaments)." },
+    { q: "Dense irregular connective tissue has:", o: ["Loosely arranged fibres", "Parallel fibres", "Randomly arranged fibres", "Chondrocytes in lacunae"], a: 2, w: "Dense irregular connective tissue has fibres arranged in multiple directions (dermis)." },
+    { q: "Chondrocytes in lacunae are characteristic of:", o: ["Bone", "Cartilage", "Blood", "Dense connective tissue"], a: 1, w: "Cartilage has chondrocytes in lacunae." },
+    { q: "Osteocytes in lacunae are characteristic of:", o: ["Bone", "Cartilage", "Blood", "Dense connective tissue"], a: 0, w: "Bone has osteocytes in lacunae." },
+    { q: "Why is tissue identification important in medicine?", a: "It is used in pathology to diagnose cancer and other diseases, and in surgery to guide tumour removal." },
   ],
 };
 
@@ -13978,6 +13970,198 @@ function InteractiveSet({ items }) {
   );
 }
 
+/* ==================== PAST PAPER DATA ====================
+   Real KNUST past papers, extracted into interactive questions. Answers were
+   worked out and verified (a few genuinely ambiguous specimen-ID questions are
+   marked flag:true so they can be double-checked against the lecturer). Each
+   paper auto-chunks into sets of 50 in the UI so students aren't overwhelmed.
+*/
+const PAST_PAPERS = [
+  {
+    id: "sms186-2024-midsem",
+    courseId: "ana",
+    courseCode: "SMS 186",
+    title: "Human Anatomy Theory - Mid Semester",
+    year: "June 2024",
+    note: "First Year Nursing/Midwifery. Single best answer A-E.",
+    questions: [
+      { q: "Every reflex arc includes:", o: ["A receptor", "Sensory neuron", "Synapses", "Motor neuron", "All the above"], a: 4, w: "A reflex arc needs a receptor, sensory neuron, synapse(s), motor neuron and effector - all listed." },
+      { q: "Synapses may be found connecting:", o: ["Axon to axon", "Axon to dendrite", "Dendrite to dendrite", "Axon to muscle", "All the above are correct"], a: 4, w: "Synapses occur in all these arrangements, including neuromuscular (axon to muscle)." },
+      { q: "Synaptic vesicles are:", o: ["Found in electrical synapses", "More flattened in shape in inhibitory synapses", "More rounded in shape in excitatory synapses", "Only A and B are correct", "B and C are correct"], a: 4, w: "Vesicles are flattened in inhibitory and rounded in excitatory synapses; electrical synapses lack vesicles." },
+      { q: "Non-myelinated nerve fibres:", o: ["Are surrounded by a fold of oligodendrocytes of Schwann cell", "Have nodes of Ranvier", "Are very common in the gray matter of the central nervous system", "Only A and B are correct", "Only A and C are correct"], a: 4, w: "Unmyelinated fibres sit in a Schwann cell fold and are common in grey matter; they lack nodes of Ranvier." },
+      { q: "Which of the following is/are NOT derived from the embryonic neural tube?", o: ["Ependyma", "Astrocytes", "Oligodendrocytes", "Microglia", "Neurons"], a: 3, w: "Microglia arise from mesoderm (monocytes); the rest derive from the neural tube." },
+      { q: "Protein synthesis in neurons is a function of:", o: ["Nucleus", "Nucleolus", "Golgi apparatus", "Mitochondria", "Nissl bodies"], a: 4, w: "Nissl bodies are rough endoplasmic reticulum, the site of protein synthesis." },
+      { q: "Specimen A was from a chamber that changes its volume continually, B from a surface where absorption and secretion are required, C from an internal surface where friction may occur. A, B, C were obtained from:", o: ["Uterus, ileum and anal canal respectively", "Ureter, ductuli efferentes and cornea respectively", "Penile urethra, jejunum, laryngeal surface of epiglottis respectively", "Urinary bladder, duodenum and vagina respectively", "Vas deferens, small intestine and pharynx respectively"], a: 2, w: "Volume-changing chamber (transitional), absorption+secretion (simple columnar/jejunum), friction surface (stratified squamous/laryngeal epiglottis)." },
+      { q: "Specimen A was from a surface subjected to severe mechanical stresses, B from a surface where filtration or diffusion occurs, C from an internal chamber where absorption and motility are required. A, B, C were obtained from:", o: ["Filiform papillae of tongue, parietal layer of renal corpuscle and vagina respectively", "Hard palate, respiratory bronchioles and oesophagus respectively", "Skin, alveoli of lungs, efferent ductules respectively", "Soles of feet, visceral layer of renal corpuscle and oesophagus respectively", "Filiform papillae of tongue, endothelium of blood vessels and skin respectively"], a: 3, w: "Mechanical stress (sole of foot, keratinised strat squamous); filtration (visceral renal corpuscle/podocytes, simple squamous); absorption+motility (intestine). A and B fit option D.", flag: true },
+      { q: "Transitional epithelium is found in all the following EXCEPT:", o: ["Ureter", "Urinary bladder", "Prostatic urethra", "Membranous urethra", "Renal pelvis"], a: 3, w: "Transitional lines the ureter, bladder, prostatic urethra and renal pelvis; the membranous urethra is (pseudo)stratified columnar." },
+      { q: "A basal lamina:", o: ["Is a cellular layer secreted by epithelial tissues only", "Is a noncellular layer between adjacent epithelial cells", "Is believed to be secreted by the muscle and epithelial cells only", "Contains fibrillar collagen", "Contains PAS positive glycoproteins and lies between epithelium and connective tissue"], a: 4, w: "The basal lamina is PAS-positive (glycoproteins/type IV collagen) and sits between epithelium and connective tissue." },
+      { q: "The following functions are performed by the lymphatic system:", o: ["Body immunity and filtration of lymph", "Absorption of fats and collection of cellular debris", "Drainage of tissue fluid and production of lymphocytes", "Only A and C are correct", "A, B and C are correct"], a: 4, w: "The lymphatic system does all: immunity/filtration, fat absorption/debris collection, and fluid drainage/lymphocyte production." },
+      { q: "Which of the following statements regarding epithelial tissues is FALSE?", o: ["Junctional complexes are found at numerous sites between adjacent epithelial cells", "Stereocilia are extremely long form of microvilli", "The principal function of microvilli is to increase greatly the surface area of cells", "Desmosomes are sites of strong intercellular adhesion and provide points of attachment for elements of the cytoskeleton", "Cilia constitute the characteristic brush border of the small intestine"], a: 4, w: "FALSE: the brush border of the small intestine is made of microvilli, not cilia." },
+      { q: "Striated borders:", o: ["Consist of tightly packed cilia and usually line the respiratory tract", "Consist of tightly packed microvilli and usually line blood vessels", "Consist of tightly packed stereocilia and usually line the proximal segment of the nephron", "Consist of tightly packed stereocilia and microvilli and usually line male reproductive tract", "Consist of tightly packed microvilli and usually line intestinal absorptive cells"], a: 4, w: "A striated (brush) border is densely packed microvilli on intestinal absorptive cells." },
+      { q: "Stereocilia are present in epithelial linings of the following organs:", o: ["Stomach and gallbladder, membranous urethra", "Ileum, colon, trachea and respiratory bronchioles, membranous urethra", "Primary bronchi and gallbladder, vas deferens, penile urethra", "Trachea, epididymis, penile urethra, membranous urethra", "Vas deferens, epididymis"], a: 4, w: "Stereocilia are classically found in the epididymis and vas deferens." },
+      { q: "Examination of an epithelium showed 3 layers of cells taller than wide, lacking surface specialization. This epithelium is most likely to be located in the:", o: ["Prostatic urethra, membranous urethra and ureter", "Urinary bladder and spongy urethra", "Ureter, spongy urethra and prostatic urethra", "Membranous urethra and fossa navicularis of the penis", "Spongy urethra and membranous urethra"], a: 3, w: "Taller-than-wide, multilayered, no surface specialization = stratified columnar, found in the membranous/penile urethra region.", flag: true },
+      { q: "The following functions are performed by the skeletal system:", o: ["Mineral storage and attachment of muscles", "Haematopoiesis, calcium storage, and support", "Protection, production of blood cells and filtration of blood", "Only A and B are correct", "A, B and C are correct"], a: 3, w: "A and B are true; C is false because bones do not filter blood, so only A and B are correct." },
+      { q: "The following functions are performed by the female reproductive system:", o: ["Production of ova and hormones and elimination of nitrogenous waste products", "Provision of a site for fertilization and implantation", "Nourishment and development of the preimplantation embryo", "Only B and C are correct", "All the above are correct"], a: 3, w: "B and C are correct; A is wrong because eliminating nitrogenous waste is a urinary, not reproductive, function." },
+      { q: "The muscular system:", o: ["Allows manipulation of the environment", "Is responsible for locomotion and facial expression", "Is for maintenance of posture", "Is for production of heat", "All the above"], a: 4, w: "Muscle enables manipulation, locomotion/expression, posture and heat production - all listed." },
+      { q: "Excretory glands are classified as simple branched tubular and merocrine by the:", o: ["Types of secretory products and mechanism of secretion", "Shape of secretory units and types of ducts only", "Presence or absence of ducts and mechanism of secretion", "Mechanism of secretion and shape of secretory units", "Nature of the ducts, shape of secretory unit and mechanism of secretion"], a: 4, w: "Simple (duct nature), branched tubular (secretory unit shape), merocrine (secretion mechanism) - all three criteria." },
+      { q: "Specimens A and B are exocrine with tubular and spherical secretory units, dark-stained serous units, branched ducts, dense irregular CT septa. Specimen B also has ductless cell clusters near blood vessels:", o: ["Specimens A and B are both exocrine with serous secretory units", "Specimen A is solely serous-secreting whereas B is both exocrine and endocrine", "Specimens A and B are the parotid and pancreas respectively", "B and C are correct", "A, B and C are correct"], a: 4, w: "A is serous exocrine (parotid); B is exocrine + endocrine (pancreas, with islet cell clusters near vessels) - all statements fit." },
+      { q: "A specimen has clusters of epithelial cells in connective tissue, some dark-stained with central round nuclei (serous), others pale with peripheral flattened nuclei (mucous), with unbranched epithelial-lined ducts. The specimen is:", o: ["Contains both simple squamous and simple cuboidal epithelial tissues", "A simple endocrine gland with serous and mucous secretory units", "A simple exocrine gland with serous and mucous secretory units", "Is from an organ which secretes both endocrine and exocrine products", "Is a gland that secretes a watery product rich in enzymes"], a: 2, w: "Unbranched duct = simple; serous + mucous units = mixed exocrine gland." },
+      { q: "Regarding HYALINE CARTILAGE, which statement is correct?", o: ["It has a smooth appearance and contains abundant ground substance and isogenous groups of chondrocytes", "It contains more elastic fibres than collagen type II and is found in the thyroid, cricoid and corniculate cartilages of the larynx", "It contains collagen type II fibres and abundant ground substance and is found in the intervertebral discs and epiglottis only", "It contains collagen type I fibres, few chondrocytes in rows and a small fluid ground", "Its chondrocytes occur singly and it is the main supporting framework of the epiglottis, cuneiform cartilage and intrapulmonary bronchi"], a: 0, w: "Hyaline cartilage: smooth glassy matrix, abundant ground substance, isogenous groups of chondrocytes." },
+      { q: "The functions of the cardiovascular system:", o: ["Transport of oxygen and carbon dioxide", "Transport of nutrients and waste products", "Transport of hormones and regulation of water content of the body", "A, B, C are all functions of the cardiovascular system", "Only A and B are functions of the cardiovascular system"], a: 3, w: "The cardiovascular system transports gases, nutrients/wastes and hormones, and helps regulate body water." },
+      { q: "The functions of the nervous system include the following:", o: ["Responds to internal and external changes", "Regulates processes such as growth and reproduction", "Transport of hormones and regulation of water content of the body", "Regulates nutrient use", "Maintenance of the extracellular fluid volume"], a: 0, w: "Responding to internal/external changes is a core nervous function; the others are endocrine/other systems." },
+      { q: "The functions of the respiratory system:", o: ["Transport of oxygen and carbon dioxide", "Speech production", "Responsible for the sense of smell", "Air filtration", "A, B, C and D are all functions of the respiratory system"], a: 4, w: "The respiratory system handles gas exchange, speech, smell and air filtration - all listed." },
+      { q: "An epithelium had cells taller than wide, more than one-cell-layer thick, all cells attached to the basement membrane, extensive apical microvilli, no goblet cells or cilia, and some bipolar neurons. This epithelium is most likely to be:", o: ["Located in the olfactory and respiratory segments", "A modified type of respiratory epithelium with sensory neurons", "Located in the olfactory mucosa", "A, B and C are correct", "Only B and C are correct"], a: 4, w: "Bipolar (olfactory) neurons in a pseudostratified epithelium = olfactory mucosa, a modified respiratory epithelium with sensory neurons." },
+      { q: "An epithelium had several layers, only basal cells attached to the basement membrane, basal cells taller than wide, polyhedral intermediate cells, flattened superficial nuclei, superficial cells covered with an eosinophilic anucleated band and fibrillar anucleated structures (keratin). This epithelium is most likely located:", o: ["In the oesophagus, cornea, vagina and tongue", "Tongue, hard palate, anus", "Tongue, soft palate, oral surface of lips and anal canal", "In an internal environment that is subject to abrasion or the external environment", "Tongue, hard palate and epiglottis"], a: 3, w: "Keratinised stratified squamous - found where surfaces face abrasion or the external environment.", flag: true },
+      { q: "You are given cartilage you think is from the pinna of the ear because:", o: ["It contains alternating layers of collagen fibers and chondrocytes", "It contains hyaline cartilage with chondrocytes that occur singly", "It contains fibrocartilage", "It contains elastic cartilage", "Numerous chondroblasts arranged into isogenous groups"], a: 3, w: "The pinna of the ear is elastic cartilage." },
+      { q: "Which of the following tissue(s) would be most affected by chemotherapy?", o: ["Connective", "Epithelial", "Muscle", "Nervous", "Connective and Nervous tissues"], a: 1, w: "Chemotherapy hits rapidly dividing cells; epithelium has the highest turnover." },
+      { q: "Cartilage is different from bone in that:", o: ["Cartilage contains about 80% water and is more resilient", "Cartilage contains very little water", "Cartilage is highly vascularised", "Cartilage never undergoes calcification", "Cartilage regenerates faster than bone when damaged in the adult skeleton"], a: 0, w: "Cartilage is about 80% water, making it resilient; it is avascular and regenerates poorly." },
+      { q: "Which of the following is NOT a function of cartilage?", o: ["Provision of an embryonic model prior to development of long bones", "Provision of rigidity to soft tissues requiring support", "Allowing long bones to increase in length", "Provision of a smooth surface for epiphyses of articulating joints", "Maintenance of a tubular shape of structures in the digestive tract"], a: 4, w: "Cartilage keeps respiratory (airway) tubes open, not digestive tract structures." },
+      { q: "An area in the body exposed to the external environment would be composed of which of the following tissue types?", o: ["Epithelial tissue", "Connective tissue", "Muscle tissue", "Nervous tissue", "Neuroepithelium"], a: 0, w: "Epithelium covers and protects surfaces exposed to the external environment." },
+      { q: "Which characteristic of epithelial tissues would you expect to find in a duct that is subject to a high degree of pressure?", o: ["Cuboidal shape", "Simple layering", "Pseudostratified layering", "Stratified layering", "Squamous shape"], a: 3, w: "Multiple (stratified) layers resist pressure and abrasion." },
+      { q: "Which of the following types of epithelial tissues is best suited for areas of the body where diffusion or filtration occurs?", o: ["Stratified columnar", "Simple cuboidal", "Simple squamous", "Stratified squamous", "Pseudostratified columnar"], a: 2, w: "Simple squamous is a single thin layer, ideal for diffusion and filtration." },
+      { q: "Which of the following terms reflects the epithelial tissue found lining blood and lymphatic vessels?", o: ["Epithelium", "Endothelium", "Mesothelium", "Urothelium", "Neuroepithelium"], a: 1, w: "Endothelium lines blood and lymphatic vessels." },
+      { q: "Which of the following types of epithelial tissues is normally found in glands?", o: ["Simple squamous", "Stratified squamous", "Transitional epithelium", "Simple cuboidal", "Pseudostratified columnar"], a: 3, w: "Glandular/secretory epithelium is typically simple cuboidal." },
+      { q: "Which of the following is TRUE about epithelia?", o: ["Simple epithelia are commonly found in areas of high abrasion", "Stratified epithelia are associated with filtration", "Endothelium provides a slick surface lining all hollow cardiovascular organs", "Pseudostratified epithelia are commonly keratinized", "Transitional epithelium is for filtration"], a: 2, w: "Endothelium lines the hollow cardiovascular organs with a slick, low-friction surface." },
+      { q: "The type of epithelium which appears to have two or three layers of cells, although all the cells are in contact with the basement membrane, is:", o: ["Stratified cuboidal", "Stratified columnar", "Transitional", "Pseudostratified columnar", "Stratified squamous"], a: 3, w: "Pseudostratified: looks layered, but all cells touch the basement membrane." },
+      { q: "A multilayered epithelium with cuboidal basal cells and flat cells at its surface would be classified as:", o: ["Simple cuboidal", "Simple squamous", "Transitional", "Stratified squamous", "Low cuboidal"], a: 3, w: "Stratified epithelia are named by their surface cell shape - flat surface cells = stratified squamous." },
+      { q: "An epithelial membrane:", o: ["Usually involves transitional epithelium", "Is formed of epithelium and smooth muscle", "Contains simple or stratified epithelia cells and a basement membrane", "Never contains mucus-forming cells", "Contains myoepithelial cells"], a: 2, w: "An epithelial membrane is epithelium (simple or stratified) plus its underlying basement membrane and connective tissue." },
+      { q: "Multicellular exocrine glands can be classified:", o: ["Structurally into alveolar and acinar types", "Structurally into vascular and avascular types", "Functionally into merocrine, holocrine, and apocrine divisions", "Functionally into secreting or nonsecreting types", "Structurally into proliferative and secretory"], a: 2, w: "Functionally, exocrine glands are merocrine, apocrine or holocrine (by secretion mechanism)." },
+      { q: "Which of the following is TRUE about the mode of secretion of exocrine glands?", o: ["Merocrine glands are not altered by the secretory process", "Apocrine cells are destroyed, then replaced, after secretion", "Holocrine cells are slightly damaged by the secretory process, but repair themselves", "Exocrine glands are ductless", "Apocrine cells retain their secretory products"], a: 0, w: "Merocrine (eccrine) secretion is by exocytosis, leaving the cell intact and unaltered." },
+      { q: "In adults, new surface epithelial cells and the epithelial cells lining the intestine are derived from:", o: ["Mitotic division of existing epithelial cells", "Stem cells", "Underlying epithelial cells", "Components of the connective tissue", "Satellite cells"], a: 1, w: "Epithelial renewal comes from stem cells (in the basal layer/crypts)." },
+      { q: "Which cells are commonly found wedged between simple columnar epithelial cells?", o: ["Goblet cells", "Mast cells", "Macrophages", "Cilia", "Myoepithelial cells"], a: 0, w: "Goblet cells (mucus-secreting) sit wedged among simple columnar cells." },
+      { q: "Select the CORRECT statement regarding epithelia.", o: ["Simple epithelia form impermeable barriers", "Stratified epithelia are tall, narrow cells", "Stratified epithelia are present where protection from abrasion is important", "Pseudostratified epithelia consist of at least two layers of cells stacked on top of one another", "Pseudostratified epithelia consist of several layers of cuboidal cells"], a: 2, w: "Stratified epithelia protect against abrasion (e.g. skin, oesophagus)." },
+      { q: "Select the CORRECT statement regarding multicellular exocrine glands.", o: ["Compound glands are so called because they are constructed from more than one cell type", "The secretory cells of holocrine glands release their product by rupturing", "Exocrine glands always lack ducts", "Merocrine glands release their secretion by pinching off part of the cell", "Compound glands are always constructed from mucous cells"], a: 1, w: "Holocrine glands release product by cell rupture (whole cell disintegrates)." },
+      { q: "Which of the following is not found in the matrix of cartilage but present in bone?", o: ["Live cells", "Lacunae", "Blood vessels", "Organic fibres", "Collagen fibres"], a: 2, w: "Cartilage is avascular; bone contains blood vessels." },
+      { q: "Intervertebral discs exhibit a large amount of tensile strength to absorb shock because they possess:", o: ["Hydroxyapatite crystals", "Collagen fibers", "Reticular fibers", "Elastic fibers", "Fibromuscular stroma"], a: 1, w: "Fibrocartilage of the discs is rich in type I collagen, giving tensile strength." },
+      { q: "Which of the following tissues contains lacunae, calcium salts, and blood vessels?", o: ["Cartilage tissue", "Fibrocartilaginous tissue", "Osseous tissue", "Areolar tissue", "Mesenchyme"], a: 2, w: "Bone (osseous tissue) has lacunae, calcium salts and blood vessels; cartilage lacks vessels." },
+      { q: "Chondroblasts:", o: ["Are mature cartilage cells located in spaces called lacunae", "Within the cartilage divide and secrete new matrix", "Located deep to the perichondrium divide and secrete new matrix on the internal portions of the cartilage", "Never lose their ability to divide", "Are post mitotic cells"], a: 2, w: "Chondroblasts from the inner perichondrium drive appositional growth, secreting new matrix at the surface." },
+      { q: "What are glycosaminoglycans?", o: ["Positively charged proteins", "Negatively charged proteins", "Positively charged polysaccharides", "Negatively charged polysaccharides", "Fatty acids"], a: 3, w: "GAGs are long, negatively charged polysaccharide chains." },
+      { q: "Select the CORRECT statement regarding adipose tissue.", o: ["It is composed mostly of extracellular matrix", "Its primary function is nutrient storage", "Mature adipose cells are highly mitotic", "Most of the cell volume is occupied by the nucleus", "Adipose tissue is avascular"], a: 1, w: "Adipose tissue stores energy (nutrients) as fat; it is cellular, vascular, with a peripheral flattened nucleus." },
+      { q: "The following cell types are likely to be seen in areolar connective tissue EXCEPT:", o: ["Chondroblasts", "Fibroblasts", "Macrophages", "Mast cells", "Reticular cells"], a: 0, w: "Chondroblasts belong to cartilage, not areolar connective tissue." },
+      { q: "The fibre type that gives connective tissue GREAT TENSILE STRENGTH is:", o: ["Elastic", "Collagen", "Reticular", "Muscle", "Fibromuscular"], a: 1, w: "Collagen fibres provide great tensile strength." },
+      { q: "The shape of the external ear is maintained by:", o: ["Adipose tissue", "Elastic cartilage", "Hyaline cartilage", "Fibrocartilage", "Fibromuscular tissue"], a: 1, w: "Elastic cartilage maintains the shape of the external ear (pinna)." },
+      { q: "Mesenchymal cells are most commonly found in which type of connective tissue?", o: ["Areolar", "Dense regular", "Embryonic", "Reticular", "Adipose tissue"], a: 2, w: "Mesenchyme is embryonic connective tissue, where mesenchymal cells predominate." },
+      { q: "Elastic cartilage is found in each of the following EXCEPT the:", o: ["External ear", "Auditory tube", "Intervertebral disc", "Cuneiform cartilage of the larynx", "Epiglottis"], a: 2, w: "The intervertebral disc is fibrocartilage, not elastic cartilage." },
+      { q: "The presence of microvilli and cilia on a cell usually indicates that the cell functions in:", o: ["Neurotransmission and motility", "Collagen synthesis and secretion", "Absorption and motility", "Hormone production and absorption", "Secretion and motility"], a: 2, w: "Microvilli = absorption; cilia = motility (moving substances along the surface)." },
+      { q: "Evaluate the following statements about aponeuroses:", o: ["Flattened sheets of dense connective tissue", "Connected to muscular sheets", "Composed of collagenous bundles and fibroblasts", "A and B are correct", "A, B and C are correct"], a: 4, w: "Aponeuroses are flattened dense CT sheets of collagen bundles and fibroblasts, connected to muscle." },
+      { q: "The CORRECT sequential order of the components of a junctional complex is:", o: ["A zonula occludens, a zonula adherens and a desmosome", "A gap junction, a hemidesmosome and a tight junction", "A tight junction, a hemidesmosome and a terminal web", "A tight junction, a macula adherens and a terminal web", "A zonula occludens, a macula adherens, a hemidesmosome and a gap junction"], a: 0, w: "From apical to basal: zonula occludens (tight) -> zonula adherens -> desmosome (macula adherens)." },
+      { q: "Specializations of the surface epithelial cells that permit passage of small molecular weight particles through cell membranes of contiguous cells are:", o: ["Gap junctions", "Tight junctions", "Are not known to exist in humans", "Zonula occludens", "Junctional complexes"], a: 0, w: "Gap junctions allow small molecules to pass directly between adjacent cells." },
+      { q: "Tissue macrophages are:", o: ["Derived from B-lymphocytes", "Highly phagocytic and rich in lysosomes", "Not part of the reticuloendothelial system", "Mast cells", "The producers of connective tissue fibres"], a: 1, w: "Macrophages (from monocytes) are highly phagocytic and lysosome-rich, part of the reticuloendothelial system." },
+      { q: "The most generalized type of connective tissue with the greatest variety of connective tissue components is/are:", o: ["Adipose tissue and mesenchyme", "Reticular connective tissue and loose connective tissue", "Loose connective tissue", "Mesenchyme and wharton's jelly", "Dense regular connective tissue and hyaline cartilage"], a: 2, w: "Loose (areolar) connective tissue has the greatest variety of cells and fibres." },
+      { q: "Elastic connective tissue:", o: ["Is present in adults and foetuses", "Is present in the vocal ligaments of the larynx", "Is typical of the umbilical cord and placenta", "Contains stellate fibroblasts and a mucoid ground substance", "Contains jelly-like intercellular substance with collagenous fibers"], a: 1, w: "Elastic connective tissue is found in the vocal ligaments (and ligamenta flava)." },
+      { q: "Which of the following statements about the perichondrium is FALSE?", o: ["Has two layers, an outer fibrous and inner chondrogenic layers", "Is responsible for appositional growth", "Is the source of nutrients and metabolites for cartilage", "Is a source of chondroblasts", "Is fibrous and avascular"], a: 4, w: "FALSE: the perichondrium is vascular - it supplies the avascular cartilage with nutrients." },
+      { q: "The symphysis pubis:", o: ["It contains alternating layers of collagen fibers and chondrocytes", "It contains hyaline cartilage with chondrocytes that occur singly", "It contains a large amount of ground substance", "It contains elastic cartilage", "It has numerous chondroblasts and few collagen fibers"], a: 0, w: "The symphysis pubis is fibrocartilage: chondrocytes lie in rows between layers of collagen fibres." },
+      { q: "Pieces of cartilage were classified as elastic cartilage. They were most likely obtained from the:", o: ["Symphysis pubis and cricoid cartilage of the larynx", "Thyroid cartilage of the larynx and the pinna of ear", "Intervertebral discs and the epiglottis only", "Arytenoid cartilage of the larynx and corniculate cartilage of the larynx", "Corniculate and cuneiform cartilages of the larynx and the pinna of ear"], a: 4, w: "Elastic cartilage sites: corniculate and cuneiform laryngeal cartilages and the pinna of the ear." },
+      { q: "Collagen type IV is abundant in the:", o: ["Spleen and lymph nodes", "Lymph nodes and thymus", "Red bone marrow and kidney", "Basement membranes and lens capsule", "External laminae of muscle cells and haematopoietic tissues"], a: 3, w: "Type IV collagen is the network collagen of basement membranes and the lens capsule." },
+      { q: "A specimen with a meshwork of irregular polygonal profiles of cells was described as adult white fat cells. These cells have:", o: ["Centrally located nuclei and many small lipid droplets within the cells", "Flattened basal nuclei and single large droplets of lipid within the cells", "Centrally placed nuclei with large amounts of cytoplasm", "Numerous flattened basal nuclei per cell with small peripheral cytoplasm", "Rod-shaped nuclei"], a: 1, w: "White adipocytes are unilocular: one large lipid droplet pushes the flattened nucleus to the periphery." },
+      { q: "Adipose tissue:", o: ["Constitutes up to 5% or more of the total body weight in infants", "Constitutes up to 60% or more of the total body weight in adults and is highly cellular", "Provides thermal insulation, serves as metabolic fuel and is highly phagocytic", "Is lacks blood capillaries", "Acts as shock absorbers in the soles of the feet"], a: 4, w: "Adipose acts as a shock absorber (e.g. in the soles of the feet); it is vascular and not phagocytic." },
+      { q: "Examination of Brown adipose tissue shows that it:", o: ["Is unilocular and mainly found in adults", "Is multilocular and mainly found in adults", "Is absent in adult humans", "Has an extremely rich supply of capillaries", "Is found both in adults and infants"], a: 3, w: "Brown fat is multilocular with a very rich capillary (and mitochondrial) supply, mainly in newborns/infants." },
+      { q: "On the border separating epithelial cells and connective tissue can be found:", o: ["Hemidesmosomes and desmosomes", "Tight junctions, adhering junctions and hemidesmosomes", "Cilia, desmosomes and zona occludens", "Zonula occludens and zonula adherens only", "Zonula adherens and macula adherens only"], a: 0, w: "Hemidesmosomes anchor basal epithelial cells to the basement membrane at the epithelium-CT border (verified)." },
+      { q: "Junctional complexes are located on the:", o: ["Apical membrane only", "Basal and lateral membranes only", "Lateral membrane only", "Apical and basal membranes", "Apical and lateral membranes"], a: 4, w: "The junctional complex sits at the apicolateral border - apical and lateral membranes." },
+      { q: "Which of the following bone tissues is adapted to support weight and withstand tension stress?", o: ["Spongy bone", "Irregular bone", "Compact bone", "Trabecular bone", "Both compact and spongy bone"], a: 2, w: "Compact (cortical) bone bears weight and resists tension via osteons aligned on stress lines (verified)." },
+      { q: "What kind of tissue serves as a model for long bones in the embryo?", o: ["Elastic connective tissue", "Dense fibrous connective tissue", "Fibrocartilage", "Hyaline cartilage", "Dense regular elastic tissue"], a: 3, w: "Endochondral ossification uses a hyaline cartilage model for long bones." },
+      { q: "The most abundant cartilage type is:", o: ["Hyaline", "Elastic", "Fibrocartilage", "Epiphyseal", "Cuneiform cartilage"], a: 0, w: "Hyaline cartilage is the most abundant type." },
+      { q: "Osteocytes are housed in:", o: ["Lacunae", "Volkmann's canals", "Haversian canals", "Trabeculae", "Howship's canal"], a: 0, w: "Osteocytes sit in small spaces called lacunae." },
+      { q: "A man puts his foot on a table while standing to lace his shoe. The hip at this point would be in which position?", o: ["Extended", "Flexed", "Hyperextended", "Hyperflexed", "None Of The Above"], a: 1, w: "Raising the thigh toward the trunk is hip flexion." },
+      { q: "All the following body cavities are components of the ventral body cavity EXCEPT?", o: ["Pericardial", "Vertebral", "Abdominopelvic", "Pleural", "Thoracic"], a: 1, w: "The vertebral (spinal) cavity is part of the DORSAL body cavity, not the ventral." },
+      { q: "Smooth muscle, unlike cardiac muscle, is UNSTRIATED because:", o: ["It lacks many of the filaments found in cardiac muscle", "Its myofilaments are not regularly arranged", "It has more sarcoplasm so the striations are not prominent", "Z-bands are not prominent", "Myosin filaments are attached to the sarcolemma"], a: 1, w: "Smooth muscle lacks the ordered sarcomere arrangement of actin/myosin, so no striations appear." },
+      { q: "The functional unit of skeletal muscle is the:", o: ["Sarcomere", "Fascicle", "Myotendon", "Myofibril", "Myofilament"], a: 0, w: "The sarcomere (between two Z-lines) is the functional/contractile unit." },
+      { q: "In a pseudostratified columnar epithelium, which of the following is characteristic of all cells:", o: ["Possession of a free surface", "Location of nuclei at the same horizontal level", "Direct contact with the basement membrane", "Possession of highly folded basal membranes", "All the above are correct"], a: 2, w: "In pseudostratified epithelium, every cell contacts the basement membrane (though not all reach the surface)." },
+      { q: "What feature distinguishes cardiac muscle from skeletal muscle in microscopic sections?", o: ["Centrally located nuclei in myocytes", "Presence of cross striations", "Location of nuclei beneath sarcolemma", "Multiple nuclei per myocyte", "A and B are correct"], a: 0, w: "Cardiac muscle has centrally located nuclei; skeletal muscle has multiple peripheral nuclei. Both are striated." },
+      { q: "Select the CORRECT statement regarding adipose tissue.", o: ["It is composed mostly of extracellular matrix", "Its primary function is nutrient storage", "Mature adipose cells are highly mitotic", "Most of the cell volume is occupied by the nucleus", "Adipose tissue is avascular"], a: 1, w: "Adipose tissue stores energy (nutrients); it is cellular and vascular with a peripheral nucleus." },
+      { q: "Elastic cartilage is found in each of the following EXCEPT the:", o: ["External ear", "Auditory tube", "Intervertebral disc", "Cuneiform cartilage of the larynx", "Epiglottis"], a: 2, w: "The intervertebral disc is fibrocartilage, not elastic cartilage." },
+      { q: "The presence of microvilli and cilia on a cell usually indicates that the cell functions in:", o: ["Neurotransmission and motility", "Collagen synthesis and secretion", "Absorption and motility", "Hormone production and absorption", "Secretion and motility"], a: 2, w: "Microvilli = absorption; cilia = motility." },
+      { q: "Which of the following is FALSE about Nervous tissue:", o: ["Neurons are characterized by irritability", "Neurons lack processes", "Dendrites are usually more numerous than axons", "Axons are transmitters of impulses away from the perikarya", "Axons are processes of nerve cells"], a: 1, w: "FALSE: neurons have processes (axons and dendrites)." },
+      { q: "The following are characteristics of dendrites EXCEPT:", o: ["Increase the receptive area of neurons", "May have more than one synapse", "Are of constant diameter more or less", "Are usually enveloped by Schwann cells in the peripheral nervous system", "Contain neurotubules"], a: 3, w: "It is axons, not dendrites, that are enveloped by Schwann cells in the PNS." },
+      { q: "Astrocytes:", o: ["Have spherical, lightly staining nuclei", "Are characterized by the presence of many processes", "Have pedicles or end-feet, which terminate on small blood vessels", "Only A and B are correct", "A, B and C are correct"], a: 4, w: "Astrocytes have spherical pale nuclei, many processes, and end-feet on blood vessels (blood-brain barrier)." },
+      { q: "Axons:", o: ["Are processes of nerve cells", "May be myelinated", "May be surrounded by oligodendroglia", "Only A and B are correct", "A, B and C are correct"], a: 4, w: "Axons are neuron processes, may be myelinated, and in the CNS are myelinated by oligodendroglia." },
+      { q: "Multipolar neurons:", o: ["Are the most common type of neuron", "Have more than one dendrite", "Include the motor neurons of the autonomic nervous system", "Only A and C are correct", "A, B and C are correct"], a: 4, w: "Multipolar neurons are most common, have many dendrites, and include autonomic motor neurons." },
+      { q: "Bipolar neurons are found in the:", o: ["Retina", "Cochlear ganglia", "Olfactory nasal epithelium", "Only A and C are correct", "A, B and C are correct"], a: 4, w: "Bipolar neurons occur in the retina, cochlear/vestibular ganglia, and olfactory epithelium." },
+      { q: "Unipolar neurons:", o: ["Develop from bipolar neurons", "Are found in spinal ganglia", "Are found in cranial ganglia", "Only A and B are correct", "A, B and C are correct"], a: 4, w: "Pseudounipolar neurons develop from bipolar cells and occur in spinal (dorsal root) and cranial ganglia." },
+      { q: "The myelin sheath of axons may be formed by:", o: ["Fibrous astrocytes", "Schwann cells", "Oligodendrocytes", "Only A and B are correct", "Only B and C are correct"], a: 4, w: "Schwann cells myelinate in the PNS, oligodendrocytes in the CNS; astrocytes do not myelinate." },
+      { q: "Myelin is:", o: ["A lipoprotein complex", "Preserved in normal wax-embedded nervous tissue", "Composed of many concentrically arranged cell membranes", "Only A and C are correct", "Only B and C are correct"], a: 3, w: "Myelin is a lipoprotein of concentric membrane layers; it dissolves in fat solvents used in wax embedding." },
+      { q: "Which of the following statements about Schwann cells is NOT correct:", o: ["Schwann cells are found in the peripheral nervous system", "Schwann cells are found in the central nervous system", "Schwann cells are a form of oligodendrocyte", "Schwann cells envelope non-myelinated peripheral axons", "Schwann cells are able to envelop more than one axon"], a: 2, w: "NOT correct: Schwann cells are PNS cells, distinct from oligodendrocytes (which are CNS)." },
+      { q: "Which of the following is INCORRECT about Nodes of Ranvier:", o: ["Are only found in peripheral nerves", "Are found in axons of the central nervous system", "Permit saltatory conduction and provide greater efficiency in impulse conduction", "Allow transfer of ions between the axolemma and the intercellular space", "Are bounded by paranodal loops of Schwann cells"], a: 0, w: "INCORRECT: nodes of Ranvier occur in BOTH the CNS and PNS, not only peripheral nerves." },
+      { q: "Neuroglial cells:", o: ["Show characteristics of irritability and conductivity", "Are able to divide", "Do not develop from the neuroectoderm", "Are in synaptic contact with other cells", "Are found in the area of the synaptic cleft"], a: 1, w: "Unlike neurons, neuroglia retain the ability to divide; they are not excitable or synaptic." },
+      { q: "The following are features of Microglia EXCEPT:", o: ["Have densely staining elongated nuclei", "Are the only neuroglia with spherical nuclei", "Originate from mesenchyme", "May be phagocytic", "Are found in both white and gray matter"], a: 1, w: "FALSE: microglia have small elongated/rod-shaped nuclei, not spherical - astrocytes have spherical nuclei." },
+      { q: "Neuroglia can:", o: ["Divide after birth", "Be found in the peripheral nervous system", "Differentiate into neurons if necessary", "Only A and B are correct", "Only B and C are correct"], a: 3, w: "Neuroglia divide after birth and occur in the PNS (satellite/Schwann cells), but do not become neurons." },
+      { q: "Oligodendrocytes:", o: ["Are found in gray matter", "Are found in white matter", "Are smaller than astrocytes", "Only A and B are correct", "A, B and C are correct"], a: 4, w: "Oligodendrocytes occur in grey (perineuronal/satellite) and white matter (interfascicular), and are smaller than astrocytes." },
+      { q: "A technical instructor explained that when the trunk is subjected to physical trauma in automobile accidents, the most vulnerable organs are those within:", o: ["The pelvic cavity because the walls are formed only by muscles", "The bony abdominal cavity because they have little protection", "The thoracic cavity because they are well protected within the bony rib cage", "The abdominal cavity because the walls are formed only by muscles without bone reinforcement", "The thoracic cavity because they have little protection"], a: 3, w: "The abdominal wall is muscular without bony reinforcement, leaving abdominal organs most vulnerable to trauma." },
+    ],
+  },
+];
+
+/* PasscoSet: solve one 50-question chunk of a real past paper. Two modes -
+   Practice shows the correct answer and explanation the moment you tap; Exam
+   hides everything until you submit, then reveals your score and full review
+   (like a real CBT). Supports 4 or 5 options. Flagged questions (rare specimen
+   puzzles whose intended answer depends on the lecturer) show a verify note. */
+function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit }) {
+  const slice = paper.questions.slice(chunkStart, chunkEnd);
+  const [picked, setPicked] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const answered = Object.keys(picked).length;
+  const correct = slice.reduce((n, it, idx) => n + (picked[idx] === it.a ? 1 : 0), 0);
+  const pct = slice.length ? Math.round((correct / slice.length) * 100) : 0;
+  const reveal = mode === "practice" || submitted; // when to show right/wrong colours
+  const keys = "ABCDE";
+  return (
+    <div>
+      <div className="card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 14, marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
+        <div>
+          <div className="eyebrow" style={{ margin: 0 }}>{paper.courseCode} · {paper.year}</div>
+          <div style={{ fontSize: 13, color: "var(--text-3)" }}>Q{chunkStart + 1}-{chunkEnd} · {mode === "practice" ? "Practice (instant feedback)" : "Exam (score at the end)"}</div>
+        </div>
+        <div className="mono" style={{ fontWeight: 700, textAlign: "right" }}>
+          {reveal ? <span><span style={{ color: "var(--amber)" }}>{correct}</span> / {slice.length}</span> : <span style={{ color: "var(--text-3)" }}>{answered}/{slice.length} answered</span>}
+        </div>
+      </div>
+
+      {mode === "exam" && submitted && (
+        <div className="card" style={{ marginBottom: 12, textAlign: "center", borderColor: "var(--amber)" }}>
+          <div className="eyebrow">Your score</div>
+          <div style={{ fontSize: 34, fontWeight: 800, color: pct >= 50 ? "var(--good)" : "var(--bad)", margin: "4px 0" }}>{pct}%</div>
+          <div style={{ color: "var(--text-2)", fontSize: 14 }}>{correct} out of {slice.length} correct. Review each below.</div>
+        </div>
+      )}
+
+      {slice.map((it, idx) => {
+        const chosen = picked[idx];
+        const locked = mode === "practice" ? chosen !== undefined : submitted;
+        return (
+          <div className="card" key={idx} style={{ marginBottom: 10 }}>
+            <div style={{ fontWeight: 600, marginBottom: 10 }}>
+              <span className="mono" style={{ color: "var(--text-3)" }}>{String(chunkStart + idx + 1).padStart(2, "0")}. </span>{it.q}
+              {it.flag && <span title="This is a tricky specimen question - verify the intended answer with your lecturer" style={{ marginLeft: 6, fontSize: 11, color: "var(--amber-2)", border: "1px solid var(--line-2)", borderRadius: 4, padding: "1px 5px" }}>verify</span>}
+            </div>
+            {it.o.map((opt, oi) => {
+              let cls = "opt";
+              if (reveal && locked) { if (oi === it.a) cls += " correct"; else if (oi === chosen) cls += " wrong"; }
+              else if (chosen === oi) cls += " chosen";
+              return <button className={cls} key={oi} disabled={mode === "practice" && locked} onClick={() => { if (!(mode === "practice" && locked) && !submitted) setPicked((p) => ({ ...p, [idx]: oi })); }}><span className="key">{keys[oi]}</span><span>{opt}</span></button>;
+            })}
+            {reveal && locked && chosen !== undefined && (
+              <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 8 }}>
+                <strong style={{ color: chosen === it.a ? "var(--good)" : "var(--bad)" }}>{chosen === it.a ? "Correct. " : ("Answer: " + keys[it.a] + ". ")}</strong>{it.w}
+              </div>
+            )}
+            {reveal && locked && chosen === undefined && (
+              <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 8 }}><strong style={{ color: "var(--text-3)" }}>Not answered. Answer: {keys[it.a]}. </strong>{it.w}</div>
+            )}
+          </div>
+        );
+      })}
+
+      <div style={{ display: "flex", gap: 10, marginTop: 8, flexWrap: "wrap" }}>
+        {mode === "exam" && !submitted && (
+          <button className="btn btn-a" onClick={() => { setSubmitted(true); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {} }} disabled={answered === 0}>Submit exam ({answered}/{slice.length})</button>
+        )}
+        <button className="btn btn-g" onClick={onExit}>Back to papers</button>
+      </div>
+    </div>
+  );
+}
+
 /* ------------------------------- papers --------------------------------- */
 /* ---------------------------- study tools ------------------------------- */
 /* Flashcards and mind maps generated by the free Gemini AI from a chosen course
@@ -14179,14 +14363,17 @@ function StudyToolsView() {
 }
 
 function PapersView() {
-  const [tab, setTab] = useState("solve");
+  const [tab, setTab] = useState("passco");
   const [courseId, setCourseId] = useState("ana");
   const [sample, setSample] = useState("");
   const [busy, setBusy] = useState(false);
   const [items, setItems] = useState(null);
   const [err, setErr] = useState("");
   const [similarCount, setSimilarCount] = useState(10);
+  // Past-paper solving state: which paper, which 50-question chunk, and mode.
+  const [active, setActive] = useState(null); // { paper, chunkStart, chunkEnd, mode }
   const count = tab === "solve" ? 50 : similarCount;
+  const CHUNK = 50;
   const RULES = `Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which position is correct. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {"q": string, "o": [4 strings], "a": integer index, "w": one short explanation}.`;
   // Shuffle each question's four options so the correct answer is not always in the
   // position the AI happened to place it, and update the answer index to match.
@@ -14217,9 +14404,17 @@ function PapersView() {
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Solve them, don't just stare at the PDF</h1>
       <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "58ch" }}>A past-paper PDF is easy to put off. Here you actually answer, tap by tap, with instant feedback - and ASCEND can spin fresh questions off any one you show it.</p>
       <div className="tabs">
-        <button className={"tab " + (tab === "solve" ? "on" : "")} onClick={() => { setTab("solve"); setItems(null); setErr(""); }}>Solve a set</button>
+        <button className={"tab " + (tab === "passco" ? "on" : "")} onClick={() => { setTab("passco"); setItems(null); setErr(""); setActive(null); }}>Past papers</button>
+        <button className={"tab " + (tab === "solve" ? "on" : "")} onClick={() => { setTab("solve"); setItems(null); setErr(""); }}>Practice set (AI)</button>
         <button className={"tab " + (tab === "similar" ? "on" : "")} onClick={() => { setTab("similar"); setItems(null); setErr(""); }}>Generate similar</button>
       </div>
+
+      {tab === "passco" && (active
+        ? <PasscoSet paper={active.paper} chunkStart={active.chunkStart} chunkEnd={active.chunkEnd} mode={active.mode} onExit={() => setActive(null)} />
+        : <PasscoPicker onStart={(paper, chunkStart, chunkEnd, mode) => { setActive({ paper, chunkStart, chunkEnd, mode }); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {} }} chunk={CHUNK} />
+      )}
+
+      {tab !== "passco" && (
       <div className="card" style={{ marginTop: 12 }}>
         <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Course</label>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: tab === "similar" ? 16 : 4 }}>
@@ -14235,16 +14430,68 @@ function PapersView() {
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[10, 20, 30, 40].map((n) => <button key={n} className="btn btn-sm" style={{ background: similarCount === n ? "var(--amber)" : "var(--bg-3)", color: similarCount === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={() => setSimilarCount(n)}>{n}</button>)}</div>
           </>
         )}
-        {tab === "solve" && <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>Each set contains 50 questions.</div>}
+        <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>Each set contains 50 questions.</div>
         <div style={{ marginTop: 16 }}>
           {tab === "solve"
             ? <button className="btn btn-a" onClick={startSolve} disabled={busy}>{busy ? "Building your set..." : `Start a set of ${count}`} <Ic.ai p={16} /></button>
             : <button className="btn btn-a" onClick={startSimilar} disabled={busy || !sample.trim()}>{busy ? "Generating..." : `Generate ${count} similar`} <Ic.ai p={16} /></button>}
         </div>
       </div>
-      {err && <div className="card" style={{ marginTop: 14, borderColor: "var(--line-2)", color: "var(--text-2)", fontSize: 14 }}>{err}</div>}
-      {busy && <div className="card" style={{ marginTop: 14 }}><span className="dots"><span /><span /><span /></span></div>}
-      {items && <InteractiveSet key={items.map((x) => x.q).join("|").length + "-" + items.length} items={items} />}
+      )}
+      {tab !== "passco" && err && <div className="card" style={{ marginTop: 14, borderColor: "var(--line-2)", color: "var(--text-2)", fontSize: 14 }}>{err}</div>}
+      {tab !== "passco" && busy && <div className="card" style={{ marginTop: 14 }}><span className="dots"><span /><span /><span /></span></div>}
+      {tab !== "passco" && items && <InteractiveSet key={items.map((x) => x.q).join("|").length + "-" + items.length} items={items} />}
+    </div>
+  );
+}
+
+/* PasscoPicker: lists real past papers (grouped by course), and lets the student
+   pick a 50-question chunk and a mode (practice or exam). Chunking keeps sets to
+   50 so a 100+ question paper never overwhelms - you solve 50, then the next 50. */
+function PasscoPicker({ onStart, chunk }) {
+  const [openPaper, setOpenPaper] = useState(null); // paper id being configured
+  const [mode, setMode] = useState("practice");
+  if (!PAST_PAPERS.length) {
+    return <div className="card" style={{ marginTop: 12, color: "var(--text-2)", fontSize: 14 }}>No past papers uploaded yet. They will appear here as they are added.</div>;
+  }
+  return (
+    <div style={{ marginTop: 12 }}>
+      <p style={{ color: "var(--text-2)", fontSize: 14, marginTop: 0 }}>Real past papers, worked out and turned into tap-to-answer questions. Long papers are split into sets of {chunk} so you never burn out - finish one set, then the next.</p>
+      {PAST_PAPERS.map((paper) => {
+        const nChunks = Math.ceil(paper.questions.length / chunk);
+        const isOpen = openPaper === paper.id;
+        return (
+          <div className="card" key={paper.id} style={{ marginBottom: 10 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10, flexWrap: "wrap" }}>
+              <div style={{ minWidth: 0 }}>
+                <div className="eyebrow" style={{ margin: 0 }}>{paper.courseCode} · {paper.year}</div>
+                <div style={{ fontWeight: 650, fontSize: 15.5, marginTop: 2 }}>{paper.title}</div>
+                <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 2 }}>{paper.questions.length} questions · {nChunks} set{nChunks > 1 ? "s" : ""} of up to {chunk}</div>
+                {paper.note && <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 4 }}>{paper.note}</div>}
+              </div>
+              <button className="btn btn-sm" style={{ background: isOpen ? "var(--bg-3)" : "var(--amber)", color: isOpen ? "var(--text-2)" : "#1B1405", border: "1px solid var(--line)" }} onClick={() => setOpenPaper(isOpen ? null : paper.id)}>{isOpen ? "Close" : "Open"}</button>
+            </div>
+            {isOpen && (
+              <div style={{ marginTop: 14, borderTop: "1px solid var(--line)", paddingTop: 14 }}>
+                <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Mode</label>
+                <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
+                  <button className="btn btn-sm" style={{ background: mode === "practice" ? "var(--amber)" : "var(--bg-3)", color: mode === "practice" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setMode("practice")}>Practice</button>
+                  <button className="btn btn-sm" style={{ background: mode === "exam" ? "var(--amber)" : "var(--bg-3)", color: mode === "exam" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setMode("exam")}>Exam</button>
+                </div>
+                <div style={{ fontSize: 12.5, color: "var(--text-3)", marginBottom: 14 }}>{mode === "practice" ? "Practice: the correct answer and explanation show the instant you tap." : "Exam: answers stay hidden until you submit, then you get your score and full review."}</div>
+                <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Choose a set</label>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                  {Array.from({ length: nChunks }).map((_, i) => {
+                    const start = i * chunk;
+                    const end = Math.min(start + chunk, paper.questions.length);
+                    return <button key={i} className="btn btn-sm" style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => onStart(paper, start, end, mode)}>Q{start + 1}-{end}</button>;
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
