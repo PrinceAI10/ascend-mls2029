@@ -14685,7 +14685,44 @@ function PapersView() {
   const [active, setActive] = useState(null); // { paper, chunkStart, chunkEnd, mode }
   const [passcoNotif, setPasscoNotif] = useState(null);
   const count = tab === "solve" ? 50 : similarCount;
-    useEffect(() => {
+  const CHUNK = 50;
+  
+  // Save PapersView state when it changes
+  useEffect(() => {
+    try {
+      const state = {
+        tab,
+        courseId,
+        sample,
+        similarCount,
+        active,
+        items,
+        err,
+        busy
+      };
+      sessionStorage.setItem('ascend_papers_state', JSON.stringify(state));
+    } catch {}
+  }, [tab, courseId, sample, similarCount, active, items, err, busy]);
+
+  // Restore PapersView state on mount
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_papers_state');
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.tab) setTab(state.tab);
+        if (state.courseId) setCourseId(state.courseId);
+        if (state.sample !== undefined) setSample(state.sample);
+        if (state.similarCount) setSimilarCount(state.similarCount);
+        if (state.active) setActive(state.active);
+        if (state.items) setItems(state.items);
+        if (state.err) setErr(state.err);
+      }
+    } catch {}
+  }, []);
+  
+  // Load passco notification
+  useEffect(() => {
     try {
       const stored = sessionStorage.getItem('ascend_passco_notif');
       if (stored) {
@@ -14698,7 +14735,7 @@ function PapersView() {
       }
     } catch {}
   }, []);
-  const CHUNK = 50;
+  
   const RULES = `Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which position is correct. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {"q": string, "o": [4 strings], "a": integer index, "w": one short explanation}.`;
   // Shuffle each question's four options so the correct answer is not always in the
   // position the AI happened to place it, and update the answer index to match.
