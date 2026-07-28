@@ -13472,12 +13472,22 @@ function DailyView({ app }) {
 }
 
 /* ------------------------------- ranks ---------------------------------- */
+// Build a stable presence key for a person from their id (preferred) or name, so
+// the same person is matched consistently between the leaderboard rows and the
+// live presence channel.
+function presenceKeyFor(id, name) {
+  if (id) return "id:" + id;
+  return "nm:" + String(name || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
 function RanksView({ app }) {
   const meKey = String(app.progress.name).toLowerCase().replace(/[^a-z0-9]/g, "");
   const [others, setOthers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshTick, setRefreshTick] = useState(0);
   const [search, setSearch] = useState("");
+  // Set of presence keys for classmates who are online on ASCEND right now.
+  const [onlineKeys, setOnlineKeys] = useState(() => new Set());
   const loadBoard = async () => {
     setLoading(true);
     // Always read the class-wide leaderboard from Supabase, no matter how the
@@ -13514,10 +13524,51 @@ function RanksView({ app }) {
     document.addEventListener("visibilitychange", onVis);
     return () => document.removeEventListener("visibilitychange", onVis);
   }, [meKey, app.progress.xp, app.supaUid, refreshTick]);
-  const me = { name: app.progress.name, xp: app.progress.xp, streak: app.progress.streak, me: true };
+
+  // Live presence: join a shared Realtime channel so classmates currently on
+  // ASCEND show a blue "online" dot. Supabase tracks who is present and tells us
+  // when anyone joins or leaves, so the status stays accurate in real time.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const myKey = presenceKeyFor(app.supaUid, app.progress.name);
+    let channel;
+    try {
+      channel = supabase.channel("ascend-presence", { config: { presence: { key: myKey } } });
+      const refresh = () => {
+        try {
+          const state = channel.presenceState();
+          const keys = new Set(Object.keys(state || {}));
+          setOnlineKeys(keys);
+        } catch {}
+      };
+      channel
+        .on("presence", { event: "sync" }, refresh)
+        .on("presence", { event: "join" }, refresh)
+        .on("presence", { event: "leave" }, refresh)
+        .subscribe(async (status) => {
+          if (status === "SUBSCRIBED") {
+            try { await channel.track({ name: app.progress.name, at: Date.now() }); } catch {}
+          }
+        });
+    } catch {}
+    // Leaving the page or tab should mark us offline promptly.
+    const onHide = () => { try { if (document.visibilityState === "hidden" && channel) channel.untrack(); else if (channel) channel.track({ name: app.progress.name, at: Date.now() }); } catch {} };
+    document.addEventListener("visibilitychange", onHide);
+    return () => {
+      document.removeEventListener("visibilitychange", onHide);
+      try { if (channel) { channel.untrack(); supabase.removeChannel(channel); } } catch {}
+    };
+  }, [app.supaUid, app.progress.name]);
+  const me = { name: app.progress.name, xp: app.progress.xp, streak: app.progress.streak, me: true, id: app.supaUid };
   // Full ranked board with each person's TRUE position (rank 1, 2, 3...), computed
-  // before any search filter so positions stay correct when searching.
-  const fullBoard = [...others, me].sort((a, b) => b.xp - a.xp).map((p, i) => ({ ...p, pos: i + 1 }));
+  // before any search filter so positions stay correct when searching. Each row is
+  // tagged online if their presence key is in the live online set (self is always
+  // online since they are viewing the board now).
+  const fullBoard = [...others, me].sort((a, b) => b.xp - a.xp).map((p, i) => ({
+    ...p,
+    pos: i + 1,
+    online: p.me ? true : onlineKeys.has(presenceKeyFor(p.id, p.name)),
+  }));
   // Apply the search filter (by name) for display only; positions are preserved.
   const q = search.trim().toLowerCase();
   const board = q ? fullBoard.filter((p) => String(p.name || "").toLowerCase().includes(q)) : fullBoard;
@@ -13528,6 +13579,10 @@ function RanksView({ app }) {
       <div className="eyebrow">Leaderboard</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>No one wants to be last</h1>
       <p style={{ color: "var(--text-2)", marginTop: 0 }}>XP from daily questions and quizzes.</p>
+      <div style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 13, color: "var(--text-2)", marginTop: -4, marginBottom: 4 }}>
+        <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#2E9BFF", display: "inline-block" }} />
+        {fullBoard.filter((p) => p.online).length} online now
+      </div>
       <div className="card card-feature" style={{ marginTop: 18, display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{ position: "relative", flexShrink: 0 }}>
           <Ring value={r.next ? (app.progress.xp - r.min) / (r.next.min - r.min) : 1} size={64} stroke={6} color={r.c} />
@@ -13556,7 +13611,10 @@ function RanksView({ app }) {
         {board.map((p) => (
           <div key={p.pos + "-" + p.name} className="card" style={{ marginBottom: 8, padding: "12px 15px", display: "flex", alignItems: "center", gap: 13, border: p.me ? "1px solid var(--amber)" : "1px solid var(--line)", background: p.me ? "var(--amber-dim)" : "var(--bg-2)" }}>
             <div className="mono" style={{ width: 24, textAlign: "center", fontWeight: 700, color: p.pos <= 3 ? "var(--amber)" : "var(--text-3)", fontSize: 15 }}>{p.pos}</div>
-            <div style={{ width: 34, height: 34, borderRadius: "50%", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 13, color: "var(--text-2)", flexShrink: 0 }}>{p.name[0]}</div>
+            <div style={{ position: "relative", flexShrink: 0 }}>
+              <div style={{ width: 34, height: 34, borderRadius: "50%", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 13, color: "var(--text-2)" }}>{p.name[0]}</div>
+              <span title={p.online ? "Online now" : "Offline"} style={{ position: "absolute", bottom: -1, right: -1, width: 11, height: 11, borderRadius: "50%", background: p.online ? "#2E9BFF" : "var(--text-3)", border: "2px solid var(--bg-2)", boxShadow: p.online ? "0 0 0 1px #2E9BFF55" : "none" }} />
+            </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontWeight: 650, fontSize: 14.5, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.name}{p.me && <span style={{ color: "var(--amber)", fontSize: 12 }}> · you</span>}</div>
               <div className="mono" style={{ fontSize: 11.5, color: "var(--text-3)" }}>{rankOf(p.xp).name.toUpperCase()}</div>
