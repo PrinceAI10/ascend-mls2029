@@ -295,6 +295,12 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .crs-line:first-child{border-top:none}
 .qbox{width:58px;background:var(--bg-3);border:1px solid var(--line);border-radius:8px;
   padding:7px 8px;color:var(--text);font-size:13px;font-family:var(--mono);text-align:center}
+
+/* Loading spinner animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 `;
 /* ------------------------------- icons ---------------------------------- */
 const I = ({ d, s = 20, fill = "none", w = 1.9, style }) => (
@@ -16474,7 +16480,7 @@ const NAV = [
   { key: "feedback", label: "Feedback", icon: "star" }
 ];
 
-const DEFAULT_PROGRESS = { name: "Prince", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [] };
+const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [] };
 
 /* ------------------------------- app ------------------------------------ */
 export default function App() {
@@ -16491,7 +16497,7 @@ export default function App() {
     return { view: "home" };
   });
 
-  const [progress, setProgress] = useState(DEFAULT_PROGRESS);
+  const [progress, setProgress] = useState(null);
   const [rankUpNotif, setRankUpNotif] = useState(null);
   const [achievements, setAchievements] = useState([]);
   const [auth, setAuth] = useState(null);
@@ -16998,6 +17004,47 @@ const showRate = !!auth && progress.xp >= 30 && !progress.rated && !progress.rat
 
 // ============================================================
 // FINAL RETURN STATEMENT - ONLY ONE!
+// ============================================================
+// ============================================================
+// LOADING STATE - Simple spinner
+// ============================================================
+if (!loaded) return (
+  <div className={rootCls}>
+    <style>{CSS}</style>
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      minHeight: "100vh",
+      gap: "20px",
+      background: "var(--bg)"
+    }}>
+      <div style={{
+        width: 48,
+        height: 48,
+        border: "3px solid var(--bg-3)",
+        borderTop: "3px solid var(--amber)",
+        borderRadius: "50%",
+        animation: "spin 1s linear infinite"
+      }} />
+      <div style={{
+        color: "var(--text-3)",
+        fontSize: 14,
+        fontFamily: "var(--mono)",
+        letterSpacing: "0.1em"
+      }}>ASCEND</div>
+    </div>
+  </div>
+);
+
+// ============================================================
+// AUTH CHECK - If not logged in, show login screen
+// ============================================================
+if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
+
+// ============================================================
+// MAIN APP - Only runs when loaded AND authenticated
 // ============================================================
 return (
   <div className={rootCls}>
