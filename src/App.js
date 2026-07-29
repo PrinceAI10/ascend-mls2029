@@ -13732,32 +13732,6 @@ function QuizView({ app }) {
       </div>
     </div>
   );
-  return (
-    <div className="view">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-        <div className="eyebrow">{mode === "exam" ? "Exam mode" : "Practice"} · {i + 1} / {bankLen}</div>
-        {mode === "exam"
-          ? <div className="chip mono" style={{ color: left < 60 ? "var(--bad)" : "var(--text)" }}><Ic.clock p={15} /> {mm}:{ss}</div>
-          : <div className="chip mono" style={{ color: "var(--text-2)" }}><Ic.clock p={15} /> {emm}:{ess}</div>}
-      </div>
-      <div className="bar" style={{ marginBottom: 20 }}><i style={{ width: (i / bankLen) * 100 + "%" }} /></div>
-      <h3 style={{ fontSize: 19, marginBottom: 16 }}>{item.q}</h3>
-      {item.o.map((opt, oi) => {
-        let cls = "opt";
-        if (mode === "practice" && reveal) { if (oi === item.a) cls += " correct"; else if (oi === chosen) cls += " wrong"; }
-        else if (oi === chosen) cls += " sel";
-        return <button className={cls} key={oi} onClick={() => pick(oi)}><span className="key">{"ABCD"[oi]}</span><span>{opt}</span></button>;
-      })}
-      {mode === "practice" && reveal && (
-        <div className="card" style={{ marginTop: 4, background: "var(--bg-3)" }}>
-          <div style={{ fontSize: 14, color: "var(--text-2)" }}><strong style={{ color: chosen === item.a ? "var(--good)" : "var(--bad)" }}>{chosen === item.a ? "Correct. " : "Not quite. "}</strong>{item.w}</div>
-        </div>
-      )}
-      <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 18 }}>
-        <button className="btn btn-a" disabled={(mode === "exam" && chosen === undefined) || (mode === "practice" && !reveal)} onClick={nextQ}>{i + 1 === bankLen ? "Submit" : "Next"}</button>
-      </div>
-    </div>
-  );
 }
 
 /* ------------------------------- topic ---------------------------------- */
@@ -18554,4 +18528,4 @@ export default function App() {
       )}
     </div>
   );
-}ss
+}s
