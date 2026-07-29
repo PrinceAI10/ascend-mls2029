@@ -13213,22 +13213,28 @@ async function callClaude(system, messages, maxTokens = 4096) {
   const body = JSON.stringify({ max_tokens: maxTokens, system, messages });
   let res;
   // Retry on rate limits (429) and transient overload (529/503). The free AI tier
-  // limits requests per minute, so when several people use it at once we wait and
-  // retry rather than failing - most rate limits clear within a few seconds.
-  for (let attempt = 0; attempt < 5; attempt++) {
+  // uses one shared key for every student, so when several people use it at once
+  // we back off with increasing (and slightly randomised) delays and retry rather
+  // than failing - most rate limits clear within a few seconds.
+  const MAX_ATTEMPTS = 8;
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
     try {
       res = await fetch(API_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body });
     } catch (netErr) {
       // network hiccup - wait briefly and retry
-      if (attempt < 4) { await new Promise((r) => setTimeout(r, 800 * (attempt + 1))); continue; }
+      if (attempt < MAX_ATTEMPTS - 1) { await new Promise((r) => setTimeout(r, 700 * (attempt + 1) + Math.random() * 400)); continue; }
       throw new Error("Could not reach the AI - check your connection and try again.");
     }
     if (res.ok) break;
     if (res.status === 429 || res.status === 529 || res.status === 503) {
-      await new Promise((r) => setTimeout(r, 1200 * (attempt + 1)));
-      continue;
+      if (attempt < MAX_ATTEMPTS - 1) {
+        const backoff = Math.min(1200 * Math.pow(1.6, attempt), 9000) + Math.random() * 600;
+        await new Promise((r) => setTimeout(r, backoff));
+        continue;
+      }
+    } else {
+      throw new Error("The AI service returned an error (" + res.status + ").");
     }
-    throw new Error("The AI service returned an error (" + res.status + ").");
   }
   if (!res.ok) throw new Error((res.status === 429 || res.status === 503 || res.status === 529)
     ? "The AI is handling lots of requests right now. Wait about 20 seconds and try again - it is free, so it just needs a moment."
@@ -17006,6 +17012,14 @@ export default function App() {
         const { data } = await supabase.auth.getSession();
         const sUser = data && data.session ? data.session.user : null;
         if (sUser) {
+          // Supabase parses access_token/refresh_token straight out of the URL
+          // hash on load. If that hash is ever left in the address bar, copying
+          // or sharing the link hands the recipient this exact session - which
+          // is how a "fresh" phone can land on Home already signed in as someone
+          // else. Scrub it the moment it's been consumed.
+          if (window.location.hash && /access_token=/.test(window.location.hash)) {
+            try { window.history.replaceState(null, "", window.location.pathname + window.location.search); } catch {}
+          }
           await adoptSupabaseUser(sUser);
           setLoaded(true);
           return;
@@ -17029,6 +17043,9 @@ export default function App() {
     try {
       const res = supabase.auth.onAuthStateChange((event, session) => {
         if (event === "SIGNED_IN" && session && session.user) {
+          if (window.location.hash && /access_token=/.test(window.location.hash)) {
+            try { window.history.replaceState(null, "", window.location.pathname + window.location.search); } catch {}
+          }
           adoptSupabaseUser(session.user);
         }
         if (event === "SIGNED_OUT") {
