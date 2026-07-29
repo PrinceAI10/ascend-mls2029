@@ -17375,9 +17375,10 @@ export default function App() {
   };
 
   // ============================================================
-  // 4. GLOBAL STATE PRESERVATION (AFTER persist)
-  // ============================================================
-  useEffect(() => {
+// 4. GLOBAL STATE PRESERVATION (FIXED)
+// ============================================================
+useEffect(() => {
+  const saveAllState = () => {
     try {
       const state = {
         route,
@@ -17387,30 +17388,125 @@ export default function App() {
         menuOpen,
         notifOpen,
         rateDismissed,
-        rateStars
+        rateStars,
+        timestamp: Date.now()
       };
       sessionStorage.setItem('ascend_global_state', JSON.stringify(state));
-    } catch {}
-  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
-
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem('ascend_global_state');
-      if (saved) {
-        const state = JSON.parse(saved);
-        if (state.route) setRoute(state.route);
-        if (state.lastTopic) setLastTopic(state.lastTopic);
-        if (state.theme) setTheme(state.theme);
-        if (state.menuOpen !== undefined) setMenuOpen(state.menuOpen);
-        if (state.notifOpen !== undefined) setNotifOpen(state.notifOpen);
-        if (state.rateDismissed !== undefined) setRateDismissed(state.rateDismissed);
-        if (state.rateStars !== undefined) setRateStars(state.rateStars);
+      sessionStorage.setItem('ascend_route', JSON.stringify(route));
+      sessionStorage.setItem('ascend_scroll', String(window.scrollY || 0));
+      if (lastTopic) {
+        sessionStorage.setItem('ascend_last_topic', JSON.stringify(lastTopic));
       }
-    } catch {}
-  }, []);
+    } catch (e) {
+      // Silently fail
+    }
+  };
+
+  // Save on any state change
+  saveAllState();
+
+  // Save on visibility change (tab switch)
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === "hidden") {
+      saveAllState();
+    } else if (document.visibilityState === "visible") {
+      // Restore state when tab becomes visible again
+      try {
+        const saved = sessionStorage.getItem('ascend_global_state');
+        if (saved) {
+          const state = JSON.parse(saved);
+          if (state.route) {
+            setRoute(state.route);
+          }
+          if (state.lastTopic) {
+            setLastTopic(state.lastTopic);
+          }
+          if (state.theme) {
+            setTheme(state.theme);
+          }
+          if (state.menuOpen !== undefined) {
+            setMenuOpen(state.menuOpen);
+          }
+          if (state.notifOpen !== undefined) {
+            setNotifOpen(state.notifOpen);
+          }
+          // Restore scroll position
+          const savedScroll = sessionStorage.getItem('ascend_scroll');
+          if (savedScroll) {
+            const scrollY = parseInt(savedScroll, 10);
+            if (scrollY > 0) {
+              setTimeout(() => window.scrollTo(0, scrollY), 100);
+            }
+          }
+        }
+      } catch (e) {
+        // Silently fail
+      }
+    }
+  };
+
+  document.addEventListener("visibilitychange", handleVisibilityChange);
+  window.addEventListener("pagehide", saveAllState);
+  window.addEventListener("beforeunload", saveAllState);
+
+  // Also save periodically (every 5 seconds) to be safe
+  const interval = setInterval(saveAllState, 5000);
+
+  return () => {
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
+    window.removeEventListener("pagehide", saveAllState);
+    window.removeEventListener("beforeunload", saveAllState);
+    clearInterval(interval);
+  };
+}, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
 
   // ============================================================
-  // 5. COMPREHENSIVE STATE SAVE on page unload
+// 5. ROUTE RESTORATION ON MOUNT (FIXED)
+// ============================================================
+useEffect(() => {
+  // Try to restore from saved state
+  try {
+    const saved = sessionStorage.getItem('ascend_global_state');
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (state.route) {
+        setRoute(state.route);
+      }
+      if (state.lastTopic) {
+        setLastTopic(state.lastTopic);
+      }
+      if (state.theme) {
+        setTheme(state.theme);
+      }
+      if (state.menuOpen !== undefined) {
+        setMenuOpen(state.menuOpen);
+      }
+      if (state.notifOpen !== undefined) {
+        setNotifOpen(state.notifOpen);
+      }
+      if (state.rateDismissed !== undefined) {
+        setRateDismissed(state.rateDismissed);
+      }
+      if (state.rateStars !== undefined) {
+        setRateStars(state.rateStars);
+      }
+    }
+    
+    // Restore scroll position
+    const savedScroll = sessionStorage.getItem('ascend_scroll');
+    if (savedScroll) {
+      const scrollY = parseInt(savedScroll, 10);
+      if (scrollY > 0) {
+        setTimeout(() => window.scrollTo(0, scrollY), 150);
+      }
+    }
+  } catch (e) {
+    // Silently fail
+  }
+}, []);
+
+    // ============================================================
+  // 5. COMPREHENSIVE STATE SAVE on page unload (FIXED)
   // ============================================================
   useEffect(() => {
     const saveEverything = () => {
@@ -17423,6 +17519,19 @@ export default function App() {
         if (lastTopic) {
           window.sessionStorage.setItem("ascend_last_topic", JSON.stringify(lastTopic));
         }
+        // Also save to global state
+        const globalState = {
+          route,
+          progress,
+          lastTopic,
+          theme,
+          menuOpen,
+          notifOpen,
+          rateDismissed,
+          rateStars,
+          timestamp: Date.now()
+        };
+        window.sessionStorage.setItem("ascend_global_state", JSON.stringify(globalState));
       } catch {}
     };
     
@@ -17432,6 +17541,31 @@ export default function App() {
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "hidden") {
         saveEverything();
+      } else if (document.visibilityState === "visible") {
+        // Restore state when tab becomes visible again
+        try {
+          const saved = window.sessionStorage.getItem("ascend_global_state");
+          if (saved) {
+            const state = JSON.parse(saved);
+            if (state.route && state.route.view !== route.view) {
+              setRoute(state.route);
+            }
+            if (state.lastTopic) {
+              setLastTopic(state.lastTopic);
+            }
+            if (state.theme) {
+              setTheme(state.theme);
+            }
+          }
+          // Restore scroll position
+          const savedScroll = window.sessionStorage.getItem("ascend_scroll");
+          if (savedScroll) {
+            const scrollY = parseInt(savedScroll, 10);
+            if (scrollY > 0) {
+              setTimeout(() => window.scrollTo(0, scrollY), 100);
+            }
+          }
+        } catch {}
       }
     });
     
@@ -17440,23 +17574,36 @@ export default function App() {
       window.removeEventListener("pagehide", saveEverything);
       document.removeEventListener("visibilitychange", saveEverything);
     };
-  }, [route, theme, menuOpen, notifOpen, lastTopic]);
+  }, [route, theme, menuOpen, notifOpen, lastTopic, progress, rateDismissed, rateStars]);
 
   // ============================================================
-  // 6. ROUTE PERSISTENCE useEffects
+  // 6. ROUTE PERSISTENCE useEffects (FIXED)
   // ============================================================
   useEffect(() => {
     if (typeof window === "undefined") return;
-    try { window.sessionStorage.setItem("ascend_route", JSON.stringify(route)); } catch {}
+    try { 
+      window.sessionStorage.setItem("ascend_route", JSON.stringify(route));
+      window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
+    } catch {}
     try { window.history.replaceState({ ascendRoute: route }, ""); } catch {}
   }, [route]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const save = () => { try { window.sessionStorage.setItem("ascend_route", JSON.stringify(route)); } catch {} };
+    const save = () => { 
+      try { 
+        window.sessionStorage.setItem("ascend_route", JSON.stringify(route));
+        window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
+      } catch {} 
+    };
     document.addEventListener("visibilitychange", save);
     window.addEventListener("pagehide", save);
-    return () => { document.removeEventListener("visibilitychange", save); window.removeEventListener("pagehide", save); };
+    window.addEventListener("beforeunload", save);
+    return () => { 
+      document.removeEventListener("visibilitychange", save); 
+      window.removeEventListener("pagehide", save);
+      window.removeEventListener("beforeunload", save);
+    };
   }, [route]);
 
   useEffect(() => {
@@ -17464,11 +17611,23 @@ export default function App() {
     const onPop = (e) => {
       let saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : null;
       if (!saved) {
-        try { const r = window.sessionStorage.getItem("ascend_route"); saved = r ? JSON.parse(r) : { view: "home" }; } catch { saved = { view: "home" }; }
+        try { 
+          const r = window.sessionStorage.getItem("ascend_route"); 
+          saved = r ? JSON.parse(r) : { view: "home" }; 
+        } catch { saved = { view: "home" }; }
       }
       setRoute(saved);
       setMenuOpen(false);
-      window.scrollTo?.(0, 0);
+      // Restore scroll position after navigation
+      try {
+        const savedScroll = window.sessionStorage.getItem("ascend_scroll");
+        if (savedScroll) {
+          const scrollY = parseInt(savedScroll, 10);
+          if (scrollY > 0) {
+            setTimeout(() => window.scrollTo(0, scrollY), 100);
+          }
+        }
+      } catch {}
     };
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
@@ -17477,13 +17636,17 @@ export default function App() {
   useEffect(() => {
     const handleScroll = () => {
       setShowTop(window.scrollY > 400);
+      // Save scroll position on scroll
+      try {
+        window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
+      } catch {}
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // ============================================================
-  // 7. MAIN LOADING EFFECT
+  // 7. MAIN LOADING EFFECT (FIXED - Added restore on load)
   // ============================================================
   useEffect(() => {
     const link = document.createElement("link");
@@ -17533,6 +17696,25 @@ export default function App() {
       });
     }
 
+    // RESTORE ROUTE AND SCROLL ON LOAD
+    try {
+      const savedRoute = window.sessionStorage.getItem('ascend_route');
+      if (savedRoute) {
+        const routeData = JSON.parse(savedRoute);
+        if (routeData && routeData.view) {
+          setRoute(routeData);
+        }
+      }
+      
+      const savedScroll = window.sessionStorage.getItem('ascend_scroll');
+      if (savedScroll) {
+        const scrollY = parseInt(savedScroll, 10);
+        if (scrollY > 0) {
+          setTimeout(() => window.scrollTo(0, scrollY), 200);
+        }
+      }
+    } catch {}
+
     (async () => {
       const t = await store.get("ascend_theme");
       if (t === "light" || t === "dark") setTheme(t);
@@ -17580,7 +17762,17 @@ export default function App() {
       sub = res.data ? res.data.subscription : null;
     } catch {}
 
-    return () => { try { document.head.removeChild(link); } catch {} try { sub && sub.unsubscribe(); } catch {} };
+    return () => { 
+      try { 
+        document.head.removeChild(link); 
+        // Save state on unmount
+        try {
+          window.sessionStorage.setItem("ascend_route", JSON.stringify(route));
+          window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
+        } catch {}
+      } catch {} 
+      try { sub && sub.unsubscribe(); } catch {} 
+    };
   }, []);
 
   // ============================================================
@@ -17628,7 +17820,6 @@ export default function App() {
     setProgress(finalProgress);
     setRoute({ view: "home" });
   };
-
   const logout = async () => {
     if (supaUid) { try { await supabase.auth.signOut(); } catch {} setSupaUid(null); }
     await store.set("ascend_session", "");
