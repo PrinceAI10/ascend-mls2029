@@ -7427,7 +7427,7 @@ If those came cleanly, you understand the workhorses of the body - how amino aci
 // ==================== BIOLOGICAL CHEMISTRY TOPIC 6: ENZYMES ====================
 const T_BIO_ENZYMES = {
   courseId: "bio",
-  topicIndex: 6,
+  topicIndex: 5,
   title: "Enzymes - The Catalysts of Life",
   minutes: 25,
   note: [
@@ -7606,7 +7606,7 @@ Crucial insight: enzymes are both the workhorses of metabolism and the markers o
 // ==================== BIOLOGICAL CHEMISTRY TOPIC 7: ENZYME INHIBITION ====================
 const T_BIO_INHIBITION = {
   courseId: "bio",
-  topicIndex: 7,
+  topicIndex: 6,
   title: "Enzyme Inhibition - How Enzymes Are Stopped",
   minutes: 25,
   note: [
@@ -7783,7 +7783,7 @@ Crucial insight: drug discovery is enzyme inhibition at scale. The same kinetics
 // ==================== BIOLOGICAL CHEMISTRY TOPIC 8: LIPIDS ====================
 const T_BIO_LIPIDS = {
   courseId: "bio",
-  topicIndex: 8,
+  topicIndex: 7,
   title: "Lipids - The Hydrophobic Molecules of Life",
   minutes: 25,
   note: [
@@ -13910,106 +13910,10 @@ function CoursesView({ app }) {
   const jsDay = new Date().getDay();
   const d = DAILY[jsDay];
   const c = courseById(d.courseId);
-  const alreadyDone = app.progress.dailyDone?.[todayKey()];
+  const alreadyDone = app.progress?.dailyDone?.[todayKey()] || false;
   const [chosen, setChosen] = useState(null);
   const [reveal, setReveal] = useState(!!alreadyDone);
-  
-    // ============================================================
-  // STATE PRESERVATION - ALL REMAINING FEATURES
-  // ============================================================
 
-  // 1. RESOURCES VIEW - Save and restore
-  useEffect(() => {
-    try {
-      const state = { text, result };
-      sessionStorage.setItem('ascend_resources_state', JSON.stringify(state));
-    } catch {}
-  }, [text, result]);
-
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem('ascend_resources_state');
-      if (saved) {
-        const state = JSON.parse(saved);
-        if (state.text !== undefined) setText(state.text);
-        if (state.result !== undefined) setResult(state.result);
-      }
-    } catch {}
-  }, []);
-
-  // 2. LAMLA VIEW - Save and restore
-  useEffect(() => {
-    try {
-      const state = { step, courseId, hours, prep, goal, examType, plan };
-      sessionStorage.setItem('ascend_lamla_state', JSON.stringify(state));
-    } catch {}
-  }, [step, courseId, hours, prep, goal, examType, plan]);
-
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem('ascend_lamla_state');
-      if (saved) {
-        const state = JSON.parse(saved);
-        if (state.step) setStep(state.step);
-        if (state.courseId) setCourseId(state.courseId);
-        if (state.hours !== undefined) setHours(state.hours);
-        if (state.prep !== undefined) setPrep(state.prep);
-        if (state.goal) setGoal(state.goal);
-        if (state.examType) setExamType(state.examType);
-        if (state.plan) setPlan(state.plan);
-      }
-    } catch {}
-  }, []);
-
-  // 3. PAPERS VIEW - Save and restore
-  useEffect(() => {
-    try {
-      const state = {
-        tab, courseId, sample, similarCount, active, items, err, busy
-      };
-      sessionStorage.setItem('ascend_papers_state', JSON.stringify(state));
-    } catch {}
-  }, [tab, courseId, sample, similarCount, active, items, err, busy]);
-
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem('ascend_papers_state');
-      if (saved) {
-        const state = JSON.parse(saved);
-        if (state.tab) setTab(state.tab);
-        if (state.courseId) setCourseId(state.courseId);
-        if (state.sample !== undefined) setSample(state.sample);
-        if (state.similarCount) setSimilarCount(state.similarCount);
-        if (state.active) setActive(state.active);
-        if (state.items) setItems(state.items);
-        if (state.err) setErr(state.err);
-      }
-    } catch {}
-  }, []);
-
-  // 4. PLAN VIEW (CWA) - Save and restore
-  useEffect(() => {
-    try {
-      const state = { prevCWA, prevCr, thisCr, target, aiScore, counts };
-      sessionStorage.setItem('ascend_plan_state', JSON.stringify(state));
-    } catch {}
-  }, [prevCWA, prevCr, thisCr, target, aiScore, counts]);
-
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem('ascend_plan_state');
-      if (saved) {
-        const state = JSON.parse(saved);
-        if (state.prevCWA !== undefined) setPrevCWA(state.prevCWA);
-        if (state.prevCr !== undefined) setPrevCr(state.prevCr);
-        if (state.thisCr !== undefined) setThisCr(state.thisCr);
-        if (state.target !== undefined) setTarget(state.target);
-        if (state.aiScore !== undefined) setAiScore(state.aiScore);
-        if (state.counts) setCounts(state.counts);
-      }
-    } catch {}
-  }, []);
- 
   // SAVE DAILY STATE
   useEffect(() => {
     try {
@@ -14043,7 +13947,7 @@ function CoursesView({ app }) {
       <div className="card" style={{ marginTop: 18 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
           <span className="day-tag">{c.name}</span>
-          <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
+          <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{app.progress?.streak || 0}</span></span>
         </div>
         <h3 style={{ fontSize: 18, lineHeight: 1.4, marginBottom: 16 }}>{d.q}</h3>
         {d.o.map((opt, oi) => {
@@ -17007,7 +16911,27 @@ const showRate = !!auth && (progress?.xp || 0) >= 30 && !progress?.rated && !pro
 // ============================================================
 // LOADING STATE - Simple spinner
 // ============================================================
+// ============================================================
+// LOADING STATE - Simple spinner (does NOT touch progress/render(),
+// since progress is still null at this point)
+// ============================================================
 if (!loaded) return (
+  <div className={rootCls}>
+    <style>{CSS}</style>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
+      <span className="dots"><span /><span /><span /></span>
+    </div>
+  </div>
+);
+
+// ============================================================
+// AUTH GATE - show the login/signup screen when nobody is signed in.
+// Without this, the app fell straight through to the main UI while
+// `progress` was still null, crashing on `progress.dailyDone` etc.
+// ============================================================
+if (!auth) return <AuthScreen onAuthed={handleAuthed} />;
+
+return (
   <div className={rootCls}>
     <style>{CSS}</style>
     
@@ -17110,7 +17034,6 @@ if (!loaded) return (
           style={{
             width: "280px",
             maxWidth: "80vw",
-            height: "100vh",
             height: "100dvh",
             background: "var(--bg-2)",
             borderRight: "1px solid var(--line)",
