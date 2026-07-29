@@ -13657,48 +13657,6 @@ function QuizView({ app }) {
       </div>
     </div>
   );
- 
-if (done) {
-    const pct = bankLen ? Math.round((score / bankLen) * 100) : 0;
-    const g = gradeOf(pct);
-    return (
-      <div className="view">
-        <div className="card" style={{ textAlign: "center", padding: "30px 20px" }}>
-          <div className="eyebrow">Result</div>
-          <div className="mono" style={{ fontSize: 46, fontWeight: 700, color: "var(--amber)", margin: "8px 0" }}>{score}/{bankLen}</div>
-          <div style={{ color: "var(--text-2)" }}>{pct}% correct{earnedXp ? ` · +${score * 10} XP earned` : " · practice run, no new XP"}</div>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 12, marginTop: 16, padding: "10px 18px", borderRadius: 12, background: "var(--bg-3)", border: "1px solid var(--line)", maxWidth: "42ch" }}>
-            {g.letter && <span style={{ fontSize: 30, fontWeight: 800, color: g.color, fontFamily: "var(--mono)" }}>{g.letter}</span>}
-            <span style={{ color: g.letter ? "var(--text)" : "var(--text-2)", fontWeight: 600, textAlign: "left", fontSize: 14.5 }}>{g.remark}</span>
-          </div>
-          <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 18, flexWrap: "wrap" }}>
-            <button className="btn btn-a" onClick={() => { clearSession(); setQ(shuffleBank(q, PRACTICE_QUESTION_COUNT)); setMode(null); setI(0); setAnswers({}); setReveal(false); setDone(false); setLeft(PRACTICE_QUESTION_COUNT * 45); setElapsed(0); }}>Try again</button>
-            <button className="btn btn-g" onClick={() => app.go("topic", { courseId: t.courseId, topicId: t.topicIndex })}>Back to topic</button>
-          </div>
-        </div>
-        <div className="eyebrow" style={{ margin: "24px 0 12px" }}>Review</div>
-        {q.map((item, idx) => {
-          const chosen = answers[idx];
-          const gotIt = chosen === item.a;
-          return (
-            <div className="card" key={idx} style={{ marginBottom: 10 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", gap: 10, marginBottom: 10 }}>
-                <div style={{ fontWeight: 600 }}><span className="mono" style={{ color: "var(--text-3)" }}>{String(idx + 1).padStart(2, "0")}. </span>{item.q}</div>
-                <span className="mono" style={{ flexShrink: 0, fontSize: 11, fontWeight: 700, color: gotIt ? "var(--good)" : "var(--bad)" }}>{chosen === undefined ? "SKIPPED" : gotIt ? "CORRECT" : "WRONG"}</span>
-              </div>
-              {item.o.map((opt, oi) => {
-                let cls = "opt"; if (oi === item.a) cls += " correct"; else if (oi === chosen) cls += " wrong";
-                return <div className={cls} key={oi}><span className="key">{"ABCD"[oi]}</span><span>{opt}</span></div>;
-              })}
-              <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 6 }}><strong style={{ color: "var(--text)" }}>Why: </strong>{item.w}</div>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-
-  const item = q[i], chosen = answers[i];
   return (
     <div className="view">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
@@ -17375,10 +17333,9 @@ export default function App() {
   };
 
   // ============================================================
-// 4. GLOBAL STATE PRESERVATION (FIXED)
-// ============================================================
-useEffect(() => {
-  const saveAllState = () => {
+  // PERSISTENCE: single source of truth for save + restore
+  // ============================================================
+  const saveAppState = () => {
     try {
       const state = {
         route,
@@ -17391,228 +17348,75 @@ useEffect(() => {
         rateStars,
         timestamp: Date.now()
       };
-      sessionStorage.setItem('ascend_global_state', JSON.stringify(state));
-      sessionStorage.setItem('ascend_route', JSON.stringify(route));
-      sessionStorage.setItem('ascend_scroll', String(window.scrollY || 0));
-      if (lastTopic) {
-        sessionStorage.setItem('ascend_last_topic', JSON.stringify(lastTopic));
-      }
+      sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
+      sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
     } catch (e) {
       // Silently fail
     }
   };
 
-  // Save on any state change
-  saveAllState();
-
-  // Save on visibility change (tab switch)
-  const handleVisibilityChange = () => {
-    if (document.visibilityState === "hidden") {
-      saveAllState();
-    } else if (document.visibilityState === "visible") {
-      // Restore state when tab becomes visible again
-      try {
-        const saved = sessionStorage.getItem('ascend_global_state');
-        if (saved) {
-          const state = JSON.parse(saved);
-          if (state.route) {
-            setRoute(state.route);
-          }
-          if (state.lastTopic) {
-            setLastTopic(state.lastTopic);
-          }
-          if (state.theme) {
-            setTheme(state.theme);
-          }
-          if (state.menuOpen !== undefined) {
-            setMenuOpen(state.menuOpen);
-          }
-          if (state.notifOpen !== undefined) {
-            setNotifOpen(state.notifOpen);
-          }
-          // Restore scroll position
-          const savedScroll = sessionStorage.getItem('ascend_scroll');
-          if (savedScroll) {
-            const scrollY = parseInt(savedScroll, 10);
-            if (scrollY > 0) {
-              setTimeout(() => window.scrollTo(0, scrollY), 100);
-            }
-          }
-        }
-      } catch (e) {
-        // Silently fail
-      }
-    }
-  };
-
-  document.addEventListener("visibilitychange", handleVisibilityChange);
-  window.addEventListener("pagehide", saveAllState);
-  window.addEventListener("beforeunload", saveAllState);
-
-  // Also save periodically (every 5 seconds) to be safe
-  const interval = setInterval(saveAllState, 5000);
-
-  return () => {
-    document.removeEventListener("visibilitychange", handleVisibilityChange);
-    window.removeEventListener("pagehide", saveAllState);
-    window.removeEventListener("beforeunload", saveAllState);
-    clearInterval(interval);
-  };
-}, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
-
-  // ============================================================
-// 5. ROUTE RESTORATION ON MOUNT (FIXED)
-// ============================================================
-useEffect(() => {
-  // Try to restore from saved state
-  try {
-    const saved = sessionStorage.getItem('ascend_global_state');
-    if (saved) {
-      const state = JSON.parse(saved);
-      if (state.route) {
-        setRoute(state.route);
-      }
-      if (state.lastTopic) {
-        setLastTopic(state.lastTopic);
-      }
-      if (state.theme) {
-        setTheme(state.theme);
-      }
-      if (state.menuOpen !== undefined) {
-        setMenuOpen(state.menuOpen);
-      }
-      if (state.notifOpen !== undefined) {
-        setNotifOpen(state.notifOpen);
-      }
-      if (state.rateDismissed !== undefined) {
-        setRateDismissed(state.rateDismissed);
-      }
-      if (state.rateStars !== undefined) {
-        setRateStars(state.rateStars);
-      }
-    }
-    
-    // Restore scroll position
-    const savedScroll = sessionStorage.getItem('ascend_scroll');
-    if (savedScroll) {
-      const scrollY = parseInt(savedScroll, 10);
-      if (scrollY > 0) {
-        setTimeout(() => window.scrollTo(0, scrollY), 150);
-      }
-    }
-  } catch (e) {
-    // Silently fail
-  }
-}, []);
-
-    // ============================================================
-  // 5. COMPREHENSIVE STATE SAVE on page unload (FIXED)
-  // ============================================================
+  // Restore once on mount only
   useEffect(() => {
-    const saveEverything = () => {
-      try {
-        window.sessionStorage.setItem("ascend_route", JSON.stringify(route));
-        window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
-        window.sessionStorage.setItem("ascend_theme_saved", theme);
-        window.sessionStorage.setItem("ascend_menu_open", String(menuOpen));
-        window.sessionStorage.setItem("ascend_notif_open", String(notifOpen));
-        if (lastTopic) {
-          window.sessionStorage.setItem("ascend_last_topic", JSON.stringify(lastTopic));
-        }
-        // Also save to global state
-        const globalState = {
-          route,
-          progress,
-          lastTopic,
-          theme,
-          menuOpen,
-          notifOpen,
-          rateDismissed,
-          rateStars,
-          timestamp: Date.now()
-        };
-        window.sessionStorage.setItem("ascend_global_state", JSON.stringify(globalState));
-      } catch {}
-    };
-    
-    window.addEventListener("beforeunload", saveEverything);
-    window.addEventListener("pagehide", saveEverything);
-    
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "hidden") {
-        saveEverything();
-      } else if (document.visibilityState === "visible") {
-        // Restore state when tab becomes visible again
-        try {
-          const saved = window.sessionStorage.getItem("ascend_global_state");
-          if (saved) {
-            const state = JSON.parse(saved);
-            if (state.route && state.route.view !== route.view) {
-              setRoute(state.route);
-            }
-            if (state.lastTopic) {
-              setLastTopic(state.lastTopic);
-            }
-            if (state.theme) {
-              setTheme(state.theme);
-            }
-          }
-          // Restore scroll position
-          const savedScroll = window.sessionStorage.getItem("ascend_scroll");
-          if (savedScroll) {
-            const scrollY = parseInt(savedScroll, 10);
-            if (scrollY > 0) {
-              setTimeout(() => window.scrollTo(0, scrollY), 100);
-            }
-          }
-        } catch {}
-      }
-    });
-    
-    return () => {
-      window.removeEventListener("beforeunload", saveEverything);
-      window.removeEventListener("pagehide", saveEverything);
-      document.removeEventListener("visibilitychange", saveEverything);
-    };
-  }, [route, theme, menuOpen, notifOpen, lastTopic, progress, rateDismissed, rateStars]);
-
-   // ============================================================
-  // 6. ROUTE PERSISTENCE useEffects (FIXED)
-  // ============================================================
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try { 
-      window.sessionStorage.setItem("ascend_route", JSON.stringify(route));
-      window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
-      // Also save to global state for redundancy
-      const saved = sessionStorage.getItem('ascend_global_state');
+    try {
+      const saved = sessionStorage.getItem("ascend_global_state");
       if (saved) {
         const state = JSON.parse(saved);
-        state.route = route;
-        state.timestamp = Date.now();
-        sessionStorage.setItem('ascend_global_state', JSON.stringify(state));
+        if (state.route) setRoute(state.route);
+        if (state.lastTopic) setLastTopic(state.lastTopic);
+        if (state.theme) setTheme(state.theme);
+        if (state.menuOpen !== undefined) setMenuOpen(state.menuOpen);
+        if (state.notifOpen !== undefined) setNotifOpen(state.notifOpen);
+        if (state.rateDismissed !== undefined) setRateDismissed(state.rateDismissed);
+        if (state.rateStars !== undefined) setRateStars(state.rateStars);
       }
-    } catch {}
-    try { window.history.replaceState({ ascendRoute: route }, ""); } catch {}
-  }, [route]);
+      const savedScroll = sessionStorage.getItem("ascend_scroll");
+      if (savedScroll) {
+        const scrollY = parseInt(savedScroll, 10);
+        if (scrollY > 0) {
+          setTimeout(() => window.scrollTo(0, scrollY), 150);
+        }
+      }
+    } catch (e) {
+      // Silently fail
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
+  // Save whenever relevant state changes (covers tab switches, since React
+  // state never leaves memory on a simple tab switch, but this keeps
+  // sessionStorage in sync for real unload/reload/history navigation cases)
+  useEffect(() => {
+    saveAppState();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
+
+  // Save on page hide / unload (covers actual tab close or reload, NOT
+  // ordinary tab switching — a simple visibilitychange "hidden" event does
+  // not need to trigger a route reset, so we deliberately don't restore
+  // state on "visible" here; that used to cause the app to snap back to
+  // stale/home state whenever the user switched tabs)
+  useEffect(() => {
+    const onHide = () => saveAppState();
+    window.addEventListener("pagehide", onHide);
+    window.addEventListener("beforeunload", onHide);
+    return () => {
+      window.removeEventListener("pagehide", onHide);
+      window.removeEventListener("beforeunload", onHide);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
+
+  // Keep route in sessionStorage + browser history in sync for back/forward nav
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const save = () => { 
-      try { 
-        window.sessionStorage.setItem("ascend_route", JSON.stringify(route));
-        window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
-      } catch {} 
-    };
-    document.addEventListener("visibilitychange", save);
-    window.addEventListener("pagehide", save);
-    window.addEventListener("beforeunload", save);
-    return () => { 
-      document.removeEventListener("visibilitychange", save); 
-      window.removeEventListener("pagehide", save);
-      window.removeEventListener("beforeunload", save);
-    };
+    try {
+      window.sessionStorage.setItem("ascend_route", JSON.stringify(route));
+    } catch {}
+    try {
+      window.history.replaceState({ ascendRoute: route }, "");
+    } catch {}
   }, [route]);
+
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -17704,24 +17508,8 @@ useEffect(() => {
       });
     }
 
-    // RESTORE ROUTE AND SCROLL ON LOAD
-    try {
-      const savedRoute = window.sessionStorage.getItem('ascend_route');
-      if (savedRoute) {
-        const routeData = JSON.parse(savedRoute);
-        if (routeData && routeData.view) {
-          setRoute(routeData);
-        }
-      }
-      
-      const savedScroll = window.sessionStorage.getItem('ascend_scroll');
-      if (savedScroll) {
-        const scrollY = parseInt(savedScroll, 10);
-        if (scrollY > 0) {
-          setTimeout(() => window.scrollTo(0, scrollY), 200);
-        }
-      }
-    } catch {}
+    // Route/scroll restoration is handled once by the dedicated
+    // mount-restore effect above; not duplicated here.
 
     (async () => {
       const t = await store.get("ascend_theme");
