@@ -15338,7 +15338,6 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
   // Practice mode: award as soon as every question in the set has been answered.
   useEffect(() => {
     if (mode === "practice" && allAnswered && questions.length > 0) award();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allAnswered, mode]);
 
   const pick = (idx, oi) => {
