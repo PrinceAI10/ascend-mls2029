@@ -17310,7 +17310,7 @@ if (!loaded) return (
 // Without this, the app fell straight through to the main UI while
 // `progress` was still null, crashing on `progress.dailyDone` etc.
 // ============================================================
-if (!auth) return <AuthScreen onAuthed={handleAuthed} />;
+if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
 
 return (
   <div className={rootCls}>
