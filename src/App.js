@@ -17576,7 +17576,7 @@ useEffect(() => {
     };
   }, [route, theme, menuOpen, notifOpen, lastTopic, progress, rateDismissed, rateStars]);
 
-  // ============================================================
+   // ============================================================
   // 6. ROUTE PERSISTENCE useEffects (FIXED)
   // ============================================================
   useEffect(() => {
@@ -17584,6 +17584,14 @@ useEffect(() => {
     try { 
       window.sessionStorage.setItem("ascend_route", JSON.stringify(route));
       window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
+      // Also save to global state for redundancy
+      const saved = sessionStorage.getItem('ascend_global_state');
+      if (saved) {
+        const state = JSON.parse(saved);
+        state.route = route;
+        state.timestamp = Date.now();
+        sessionStorage.setItem('ascend_global_state', JSON.stringify(state));
+      }
     } catch {}
     try { window.history.replaceState({ ascendRoute: route }, ""); } catch {}
   }, [route]);
@@ -17829,20 +17837,24 @@ useEffect(() => {
   const toggleTheme = () => { const t = theme === "light" ? "dark" : "light"; setTheme(t); store.set("ascend_theme", t); };
 
   const go = (view, extra = {}) => {
-    const next = { view, ...extra };
-    setRoute(next);
+  const next = { view, ...extra };
+  setRoute(next);
 
-    if (view === "topic" && extra.courseId !== undefined && extra.topicId !== undefined) {
-      setLastTopic({ courseId: extra.courseId, topicId: extra.topicId });
-    }
+  if (view === "topic" && extra.courseId !== undefined && extra.topicId !== undefined) {
+    setLastTopic({ courseId: extra.courseId, topicId: extra.topicId });
+  }
 
-    setMenuOpen(false);
-    if (typeof window !== "undefined") {
-      try { window.history.pushState({ ascendRoute: next }, ""); } catch {}
-      window.scrollTo?.(0, 0);
-    }
-  };
-
+  setMenuOpen(false);
+  if (typeof window !== "undefined") {
+    try { 
+      window.history.pushState({ ascendRoute: next }, "");
+      // SAVE ROUTE IMMEDIATELY
+      window.sessionStorage.setItem("ascend_route", JSON.stringify(next));
+      window.sessionStorage.setItem("ascend_scroll", "0");
+    } catch {}
+    window.scrollTo?.(0, 0);
+  }
+};
   const recordDaily = (correct) => {
     const tk = todayKey();
     if (progress.dailyDone?.[tk]) return;
