@@ -13356,118 +13356,184 @@ function QuizView({ app }) {
   const saved = (() => {
     try { const raw = window.sessionStorage.getItem(sessKey); return raw ? JSON.parse(raw) : null; } catch { return null; }
   })();
-  const [q, setQ] = useState(() => (saved && saved.q ? saved.q : shuffleBank(mcqs)));
-  const [mode, setMode] = useState(saved ? saved.mode : null);
-  const [i, setI] = useState(saved ? saved.i || 0 : 0);
-  const [answers, setAnswers] = useState(saved ? saved.answers || {} : {});
-  const [reveal, setReveal] = useState(false);
-  const [done, setDone] = useState(saved ? !!saved.done : false);
-  const [earnedXp, setEarnedXp] = useState(true);
-  const bankLen = mode ? q.length : PRACTICE_QUESTION_COUNT;
-  const [left, setLeft] = useState(saved && typeof saved.left === "number" ? saved.left : bankLen * 45);
-  const [elapsed, setElapsed] = useState(saved && typeof saved.elapsed === "number" ? saved.elapsed : 0);
+  // PERSISTENCE: Load from sessionStorage on mount
+const [q, setQ] = useState(() => {
+  try {
+    const saved = sessionStorage.getItem('ascend_quiz_questions');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed && parsed.length > 0) return parsed;
+    }
+  } catch {}
+  return shuffleBank(mcqs);
+});
 
-  // Save the quiz session on every meaningful change, so a reload (e.g. phone
-  // browser refreshing when the student switches apps) restores their exact place -
-  // question number, answers so far, mode and timer - instead of starting over.
-  useEffect(() => {
-    if (mode === null) return; // nothing to save until a quiz has started
-    try { window.sessionStorage.setItem(sessKey, JSON.stringify({ q, mode, i, answers, left, elapsed, done })); } catch {}
-  }, [q, mode, i, answers, left, elapsed, done, sessKey]);
+const [mode, setMode] = useState(() => {
+  try {
+    const saved = sessionStorage.getItem('ascend_quiz_mode');
+    return saved || null;
+  } catch { return null; }
+});
 
-  // SAVE QUIZ STATE - Additional preservation for tab switching
-  useEffect(() => {
-    try {
-      const state = {
-        mode,
-        i,
-        answers,
-        reveal,
-        done,
-        left,
-        elapsed,
-        q
-      };
-      sessionStorage.setItem('ascend_quiz_state_' + app.courseId + '_' + app.topicId, JSON.stringify(state));
-    } catch {}
-  }, [mode, i, answers, reveal, done, left, elapsed, q]);
+const [i, setI] = useState(() => {
+  try {
+    const saved = sessionStorage.getItem('ascend_quiz_index');
+    return saved ? parseInt(saved, 10) : 0;
+  } catch { return 0; }
+});
 
-  // RESTORE QUIZ STATE
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem('ascend_quiz_state_' + app.courseId + '_' + app.topicId);
-      if (saved) {
-        const state = JSON.parse(saved);
-        if (state.mode) setMode(state.mode);
-        if (state.i !== undefined) setI(state.i);
-        if (state.answers) setAnswers(state.answers);
-        if (state.reveal !== undefined) setReveal(state.reveal);
-        if (state.done !== undefined) setDone(state.done);
-        if (state.left !== undefined) setLeft(state.left);
-        if (state.elapsed !== undefined) setElapsed(state.elapsed);
-        if (state.q && state.q.length > 0) setQ(state.q);
-      }
-    } catch {}
-  }, []);
+const [answers, setAnswers] = useState(() => {
+  try {
+    const saved = sessionStorage.getItem('ascend_quiz_answers');
+    return saved ? JSON.parse(saved) : {};
+  } catch { return {}; }
+});
 
-  // ... rest of QuizView (the existing code continues here)
+const [reveal, setReveal] = useState(() => {
+  try {
+    const saved = sessionStorage.getItem('ascend_quiz_reveal');
+    return saved === "true";
+  } catch { return false; }
+});
 
-  // When the quiz is finished/left, clear the saved session so it does not restore
-  // an old completed quiz next time.
-  const clearSession = () => { try { window.sessionStorage.removeItem(sessKey); } catch {} };
+const [done, setDone] = useState(() => {
+  try {
+    const saved = sessionStorage.getItem('ascend_quiz_done');
+    return saved === "true";
+  } catch { return false; }
+});
 
-  const [building, setBuilding] = useState(false);
-  const [buildErr, setBuildErr] = useState("");
+const [earnedXp, setEarnedXp] = useState(true);
+const bankLen = mode ? q.length : PRACTICE_QUESTION_COUNT;
 
-  const startQuiz = async (nextMode) => {
-    if (building) return;
-    setBuilding(true); setBuildErr("");
-    try {
-      const base = uniqueQuestions(mcqs);
-      let complete = base;
-      if (base.length < PRACTICE_QUESTION_COUNT) {
-        const source = (t.note || []).map((step) => step.q + "\n" + step.body).join("\n\n").slice(0, 18000);
-        const prompt = "Generate exactly " + (PRACTICE_QUESTION_COUNT - base.length) + " unique, non-repeating single-best-answer MCQs for " + t.title + ". Use the lesson notes below. Return ONLY a JSON array; each item needs q, o (four strings), a (0-3), and w (short explanation). Do not repeat a question already in the bank.\n\nLESSON NOTES:\n" + source;
+const [left, setLeft] = useState(() => {
+  try {
+    const saved = sessionStorage.getItem('ascend_quiz_left');
+    return saved ? parseInt(saved, 10) : bankLen * 45;
+  } catch { return bankLen * 45; }
+});
+
+const [elapsed, setElapsed] = useState(() => {
+  try {
+    const saved = sessionStorage.getItem('ascend_quiz_elapsed');
+    return saved ? parseInt(saved, 10) : 0;
+  } catch { return 0; }
+});
+
+// SAVE: Persist all quiz state changes
+useEffect(() => {
+  if (mode === null) return;
+  try {
+    if (q && q.length > 0) {
+      sessionStorage.setItem('ascend_quiz_questions', JSON.stringify(q));
+    }
+    sessionStorage.setItem('ascend_quiz_mode', mode);
+    sessionStorage.setItem('ascend_quiz_index', String(i));
+    sessionStorage.setItem('ascend_quiz_answers', JSON.stringify(answers));
+    sessionStorage.setItem('ascend_quiz_reveal', String(reveal));
+    sessionStorage.setItem('ascend_quiz_done', String(done));
+    sessionStorage.setItem('ascend_quiz_left', String(left));
+    sessionStorage.setItem('ascend_quiz_elapsed', String(elapsed));
+  } catch {}
+}, [q, mode, i, answers, reveal, done, left, elapsed]);
+
+// Clear all quiz session storage
+const clearQuizSession = () => {
+  try {
+    sessionStorage.removeItem('ascend_quiz_questions');
+    sessionStorage.removeItem('ascend_quiz_mode');
+    sessionStorage.removeItem('ascend_quiz_index');
+    sessionStorage.removeItem('ascend_quiz_answers');
+    sessionStorage.removeItem('ascend_quiz_reveal');
+    sessionStorage.removeItem('ascend_quiz_done');
+    sessionStorage.removeItem('ascend_quiz_left');
+    sessionStorage.removeItem('ascend_quiz_elapsed');
+  } catch {}
+};
+
+const [building, setBuilding] = useState(false);
+const [buildErr, setBuildErr] = useState("");
+
+const startQuiz = async (nextMode) => {
+  if (building) return;
+  setBuilding(true); 
+  setBuildErr("");
+  
+  try {
+    const base = uniqueQuestions(mcqs);
+    let complete = [...base];
+    
+    // Generate additional questions if needed
+    if (complete.length < PRACTICE_QUESTION_COUNT) {
+      const needed = PRACTICE_QUESTION_COUNT - complete.length;
+      const source = (t.note || []).map((step) => step.q + "\n" + step.body).join("\n\n").slice(0, 18000);
+      const prompt = "Generate exactly " + needed + " unique, non-repeating single-best-answer MCQs for " + t.title + ". Use the lesson notes below. Return ONLY a JSON array; each item needs q, o (four strings), a (0-3), and w (short explanation). Do not repeat a question already in the bank.\n\nLESSON NOTES:\n" + source;
+      
+      try {
         const raw = await callClaude("Create accurate KNUST medical laboratory science MCQs. Return compact JSON only.", [{ role: "user", content: prompt }], 10000);
-        const generated = (Array.isArray(parseAIJson(raw)) ? parseAIJson(raw) : []).filter((item) => item && typeof item.q === "string" && Array.isArray(item.o) && item.o.length === 4 && item.o.every((option) => typeof option === "string") && Number.isInteger(item.a) && item.a >= 0 && item.a < 4);
-        complete = uniqueQuestions([...base, ...generated]);
+        const generated = (Array.isArray(parseAIJson(raw)) ? parseAIJson(raw) : []).filter((item) => 
+          item && typeof item.q === "string" && Array.isArray(item.o) && item.o.length === 4 && 
+          item.o.every((option) => typeof option === "string") && Number.isInteger(item.a) && item.a >= 0 && item.a < 4
+        );
+        complete = uniqueQuestions([...complete, ...generated]);
+      } catch (genErr) {
+        // Silent fallback - use what we have
       }
-      if (complete.length < PRACTICE_QUESTION_COUNT) throw new Error("Too few unique questions were generated. Please try again.");
-      setQ(shuffleBank(complete, PRACTICE_QUESTION_COUNT));
-      setMode(nextMode); setI(0); setAnswers({}); setReveal(false); setDone(false);
-      setLeft(PRACTICE_QUESTION_COUNT * 45); setElapsed(0); clearSession();
-    } catch (e) {
-      setBuildErr(e && e.message ? e.message : "Could not prepare this 50-question set.");
     }
-    setBuilding(false);
-  };
+    
+    // FIX: Accept partial sets - don't reject
+    if (complete.length < PRACTICE_QUESTION_COUNT) {
+      setBuildErr("Only " + complete.length + " unique questions available. You can still practice with these, or try again for a full set.");
+    }
+    
+    // Minimum threshold (10 questions makes it worthwhile)
+    if (complete.length < 10) {
+      throw new Error("Too few unique questions. Please try again.");
+    }
+    
+    // Use all available questions
+    const shuffled = shuffleBank(complete, complete.length);
+    setQ(shuffled);
+    setMode(nextMode); 
+    setI(0); 
+    setAnswers({}); 
+    setReveal(false); 
+    setDone(false);
+    setLeft(shuffled.length * 45); 
+    setElapsed(0); 
+    clearQuizSession();
+    
+  } catch (e) {
+    setBuildErr(e && e.message ? e.message : "Could not prepare this question set.");
+  }
+  setBuilding(false);
+};
 
-  const finish = () => {
-    const correct = q.reduce((n, item, idx) => n + (answers[idx] === item.a ? 1 : 0), 0);
-    if (t) {
-      const already = !!app.progress.completed?.[`${t.courseId}:${t.topicIndex}`];
-      setEarnedXp(!already);
-      // collect the questions the student got wrong, so they can review them later
-      const missed = q.filter((item, idx) => answers[idx] !== undefined && answers[idx] !== item.a)
-        .map((item) => ({ q: item.q, o: item.o, a: item.a, w: item.w, topic: t.title, courseId: t.courseId }));
-      app.finishQuiz(t.courseId, t.topicIndex, correct, missed, bankLen);
-    }
-    setDone(true);
-    clearSession();
-  };
-  useEffect(() => {
-    if (mode !== "exam" || done || bankLen === 0) return;
-    if (left <= 0) { finish(); return; }
-    const timer = setTimeout(() => setLeft((s) => s - 1), 1000);
-    return () => clearTimeout(timer);
-  }, [mode, left, done, bankLen]);
-  // Practice mode: a gentle count-up timer so students can see how long they take,
-  // without the pressure of a countdown.
-  useEffect(() => {
-    if (mode !== "practice" || done) return;
-    const t = setTimeout(() => setElapsed((s) => s + 1), 1000);
-    return () => clearTimeout(t);
-  }, [mode, elapsed, done]);
+const finish = () => {
+  const correct = q.reduce((n, item, idx) => n + (answers[idx] === item.a ? 1 : 0), 0);
+  if (t) {
+    const already = !!app.progress.completed?.[`${t.courseId}:${t.topicIndex}`];
+    setEarnedXp(!already);
+    const missed = q.filter((item, idx) => answers[idx] !== undefined && answers[idx] !== item.a)
+      .map((item) => ({ q: item.q, o: item.o, a: item.a, w: item.w, topic: t.title, courseId: t.courseId }));
+    app.finishQuiz(t.courseId, t.topicIndex, correct, missed, bankLen);
+  }
+  setDone(true);
+  clearQuizSession();
+};
+
+useEffect(() => {
+  if (mode !== "exam" || done || bankLen === 0) return;
+  if (left <= 0) { finish(); return; }
+  const timer = setTimeout(() => setLeft((s) => s - 1), 1000);
+  return () => clearTimeout(timer);
+}, [mode, left, done, bankLen]);
+
+useEffect(() => {
+  if (mode !== "practice" || done) return;
+  const t = setTimeout(() => setElapsed((s) => s + 1), 1000);
+  return () => clearTimeout(t);
+}, [mode, elapsed, done]);
 
   if (!t) return <div className="view"><button className="back" onClick={() => app.go("courses")}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Back</button><div className="card">This topic has no question bank yet.</div></div>;
 
