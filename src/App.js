@@ -218,6 +218,10 @@ textarea.pastebox:focus{border-color:var(--amber)}
   margin:0 2px;animation:bl 1.2s infinite}
 .dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
 .loading-dots span{width:8px;height:8px;background:var(--amber)}
+.spinner-ring{width:34px;height:34px;border-radius:50%;
+  border:3px solid var(--line-2);border-top-color:var(--amber);
+  animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 @keyframes bl{0%,60%,100%{opacity:.25}30%{opacity:1}}
 .divider{height:1px;background:var(--line);margin:24px 0}
 .back{display:inline-flex;align-items:center;gap:6px;color:var(--text-2);font-size:13.5px;font-weight:600;margin-bottom:14px;cursor:pointer}
@@ -16921,7 +16925,7 @@ if (!loaded) return (
     <style>{CSS}</style>
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18, minHeight: "100vh" }}>
       <Wordmark />
-      <span className="dots loading-dots"><span /><span /><span /></span>
+      <div className="spinner-ring" />
     </div>
   </div>
 );
