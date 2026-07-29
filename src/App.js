@@ -13350,190 +13350,195 @@ function gradeOf(pct) {
 function QuizView({ app }) {
   const t = contentFor(app.courseId, app.topicId);
   const mcqs = t ? (t.mcqs || []) : [];
-  // Key the saved quiz session to this specific topic, so restoring only applies
-  // to the quiz the student was actually taking.
   const sessKey = "ascend_quiz_" + app.courseId + "_" + app.topicId;
-  const saved = (() => {
-    try { const raw = window.sessionStorage.getItem(sessKey); return raw ? JSON.parse(raw) : null; } catch { return null; }
-  })();
-  // PERSISTENCE: Load from sessionStorage on mount
-const [q, setQ] = useState(() => {
-  try {
-    const saved = sessionStorage.getItem('ascend_quiz_questions');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      if (parsed && parsed.length > 0) return parsed;
-    }
-  } catch {}
-  return shuffleBank(mcqs);
-});
-
-const [mode, setMode] = useState(() => {
-  try {
-    const saved = sessionStorage.getItem('ascend_quiz_mode');
-    return saved || null;
-  } catch { return null; }
-});
-
-const [i, setI] = useState(() => {
-  try {
-    const saved = sessionStorage.getItem('ascend_quiz_index');
-    return saved ? parseInt(saved, 10) : 0;
-  } catch { return 0; }
-});
-
-const [answers, setAnswers] = useState(() => {
-  try {
-    const saved = sessionStorage.getItem('ascend_quiz_answers');
-    return saved ? JSON.parse(saved) : {};
-  } catch { return {}; }
-});
-
-const [reveal, setReveal] = useState(() => {
-  try {
-    const saved = sessionStorage.getItem('ascend_quiz_reveal');
-    return saved === "true";
-  } catch { return false; }
-});
-
-const [done, setDone] = useState(() => {
-  try {
-    const saved = sessionStorage.getItem('ascend_quiz_done');
-    return saved === "true";
-  } catch { return false; }
-});
-
-const [earnedXp, setEarnedXp] = useState(true);
-const bankLen = mode ? q.length : PRACTICE_QUESTION_COUNT;
-
-const [left, setLeft] = useState(() => {
-  try {
-    const saved = sessionStorage.getItem('ascend_quiz_left');
-    return saved ? parseInt(saved, 10) : bankLen * 45;
-  } catch { return bankLen * 45; }
-});
-
-const [elapsed, setElapsed] = useState(() => {
-  try {
-    const saved = sessionStorage.getItem('ascend_quiz_elapsed');
-    return saved ? parseInt(saved, 10) : 0;
-  } catch { return 0; }
-});
-
-// SAVE: Persist all quiz state changes
-useEffect(() => {
-  if (mode === null) return;
-  try {
-    if (q && q.length > 0) {
-      sessionStorage.setItem('ascend_quiz_questions', JSON.stringify(q));
-    }
-    sessionStorage.setItem('ascend_quiz_mode', mode);
-    sessionStorage.setItem('ascend_quiz_index', String(i));
-    sessionStorage.setItem('ascend_quiz_answers', JSON.stringify(answers));
-    sessionStorage.setItem('ascend_quiz_reveal', String(reveal));
-    sessionStorage.setItem('ascend_quiz_done', String(done));
-    sessionStorage.setItem('ascend_quiz_left', String(left));
-    sessionStorage.setItem('ascend_quiz_elapsed', String(elapsed));
-  } catch {}
-}, [q, mode, i, answers, reveal, done, left, elapsed]);
-
-// Clear all quiz session storage
-const clearQuizSession = () => {
-  try {
-    sessionStorage.removeItem('ascend_quiz_questions');
-    sessionStorage.removeItem('ascend_quiz_mode');
-    sessionStorage.removeItem('ascend_quiz_index');
-    sessionStorage.removeItem('ascend_quiz_answers');
-    sessionStorage.removeItem('ascend_quiz_reveal');
-    sessionStorage.removeItem('ascend_quiz_done');
-    sessionStorage.removeItem('ascend_quiz_left');
-    sessionStorage.removeItem('ascend_quiz_elapsed');
-  } catch {}
-};
-
-const [building, setBuilding] = useState(false);
-const [buildErr, setBuildErr] = useState("");
-
-const startQuiz = async (nextMode) => {
-  if (building) return;
-  setBuilding(true); 
-  setBuildErr("");
   
-  try {
-    const base = uniqueQuestions(mcqs);
-    let complete = [...base];
-    
-    // Generate additional questions if needed
-    if (complete.length < PRACTICE_QUESTION_COUNT) {
-      const needed = PRACTICE_QUESTION_COUNT - complete.length;
-      const source = (t.note || []).map((step) => step.q + "\n" + step.body).join("\n\n").slice(0, 18000);
-      const prompt = "Generate exactly " + needed + " unique, non-repeating single-best-answer MCQs for " + t.title + ". Use the lesson notes below. Return ONLY a JSON array; each item needs q, o (four strings), a (0-3), and w (short explanation). Do not repeat a question already in the bank.\n\nLESSON NOTES:\n" + source;
-      
-      try {
-        const raw = await callClaude("Create accurate KNUST medical laboratory science MCQs. Return compact JSON only.", [{ role: "user", content: prompt }], 10000);
-        const generated = (Array.isArray(parseAIJson(raw)) ? parseAIJson(raw) : []).filter((item) => 
-          item && typeof item.q === "string" && Array.isArray(item.o) && item.o.length === 4 && 
-          item.o.every((option) => typeof option === "string") && Number.isInteger(item.a) && item.a >= 0 && item.a < 4
-        );
-        complete = uniqueQuestions([...complete, ...generated]);
-      } catch (genErr) {
-        // Silent fallback - use what we have
+  // PERSISTENCE: Load from sessionStorage on mount
+  const [q, setQ] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_quiz_questions');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && parsed.length > 0) return parsed;
       }
-    }
+    } catch {}
+    return shuffleBank(mcqs);
+  });
+
+  const [mode, setMode] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_quiz_mode');
+      return saved || null;
+    } catch { return null; }
+  });
+
+  const [i, setI] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_quiz_index');
+      return saved ? parseInt(saved, 10) : 0;
+    } catch { return 0; }
+  });
+
+  const [answers, setAnswers] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_quiz_answers');
+      return saved ? JSON.parse(saved) : {};
+    } catch { return {}; }
+  });
+
+  const [reveal, setReveal] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_quiz_reveal');
+      return saved === "true";
+    } catch { return false; }
+  });
+
+  const [done, setDone] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_quiz_done');
+      return saved === "true";
+    } catch { return false; }
+  });
+
+  const [earnedXp, setEarnedXp] = useState(true);
+  const bankLen = mode ? q.length : PRACTICE_QUESTION_COUNT;
+
+  const [left, setLeft] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_quiz_left');
+      if (saved) {
+        const val = parseInt(saved, 10);
+        if (val > 0) return val;
+      }
+    } catch {}
+    return bankLen * 45;
+  });
+
+  const [elapsed, setElapsed] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_quiz_elapsed');
+      if (saved) {
+        const val = parseInt(saved, 10);
+        if (val > 0) return val;
+      }
+    } catch {}
+    return 0;
+  });
+
+  // SAVE: Persist all quiz state changes
+  useEffect(() => {
+    if (mode === null) return;
+    try {
+      if (q && q.length > 0) {
+        sessionStorage.setItem('ascend_quiz_questions', JSON.stringify(q));
+      }
+      sessionStorage.setItem('ascend_quiz_mode', mode);
+      sessionStorage.setItem('ascend_quiz_index', String(i));
+      sessionStorage.setItem('ascend_quiz_answers', JSON.stringify(answers));
+      sessionStorage.setItem('ascend_quiz_reveal', String(reveal));
+      sessionStorage.setItem('ascend_quiz_done', String(done));
+      sessionStorage.setItem('ascend_quiz_left', String(left));
+      sessionStorage.setItem('ascend_quiz_elapsed', String(elapsed));
+    } catch {}
+  }, [q, mode, i, answers, reveal, done, left, elapsed]);
+
+  // Clear all quiz session storage
+  const clearQuizSession = () => {
+    try {
+      sessionStorage.removeItem('ascend_quiz_questions');
+      sessionStorage.removeItem('ascend_quiz_mode');
+      sessionStorage.removeItem('ascend_quiz_index');
+      sessionStorage.removeItem('ascend_quiz_answers');
+      sessionStorage.removeItem('ascend_quiz_reveal');
+      sessionStorage.removeItem('ascend_quiz_done');
+      sessionStorage.removeItem('ascend_quiz_left');
+      sessionStorage.removeItem('ascend_quiz_elapsed');
+    } catch {}
+  };
+
+  const [building, setBuilding] = useState(false);
+  const [buildErr, setBuildErr] = useState("");
+
+  const startQuiz = async (nextMode) => {
+    if (building) return;
+    setBuilding(true); 
+    setBuildErr("");
     
-    // FIX: Accept partial sets - don't reject
-    if (complete.length < PRACTICE_QUESTION_COUNT) {
-      setBuildErr("Only " + complete.length + " unique questions available. You can still practice with these, or try again for a full set.");
+    try {
+      const base = uniqueQuestions(mcqs);
+      let complete = [...base];
+      
+      // Generate additional questions if needed
+      if (complete.length < PRACTICE_QUESTION_COUNT) {
+        const needed = PRACTICE_QUESTION_COUNT - complete.length;
+        const source = (t.note || []).map((step) => step.q + "\n" + step.body).join("\n\n").slice(0, 18000);
+        const prompt = "Generate exactly " + needed + " unique, non-repeating single-best-answer MCQs for " + t.title + ". Use the lesson notes below. Return ONLY a JSON array; each item needs q, o (four strings), a (0-3), and w (short explanation). Do not repeat a question already in the bank.\n\nLESSON NOTES:\n" + source;
+        
+        try {
+          const raw = await callClaude("Create accurate KNUST medical laboratory science MCQs. Return compact JSON only.", [{ role: "user", content: prompt }], 10000);
+          const generated = (Array.isArray(parseAIJson(raw)) ? parseAIJson(raw) : []).filter((item) => 
+            item && typeof item.q === "string" && Array.isArray(item.o) && item.o.length === 4 && 
+            item.o.every((option) => typeof option === "string") && Number.isInteger(item.a) && item.a >= 0 && item.a < 4
+          );
+          complete = uniqueQuestions([...complete, ...generated]);
+        } catch (genErr) {
+          // Silent fallback - use what we have
+        }
+      }
+      
+      // FIX: Accept partial sets - don't reject
+      if (complete.length < PRACTICE_QUESTION_COUNT) {
+        setBuildErr("Only " + complete.length + " unique questions available. You can still practice with these, or try again for a full set.");
+      }
+      
+      // Minimum threshold (10 questions makes it worthwhile)
+      if (complete.length < 10) {
+        throw new Error("Too few unique questions. Please try again.");
+      }
+      
+      // Use all available questions
+      const shuffled = shuffleBank(complete, complete.length);
+      setQ(shuffled);
+      setMode(nextMode); 
+      setI(0); 
+      setAnswers({}); 
+      setReveal(false); 
+      setDone(false);
+      setLeft(shuffled.length * 45); 
+      setElapsed(0); 
+      clearQuizSession();
+      
+    } catch (e) {
+      setBuildErr(e && e.message ? e.message : "Could not prepare this question set.");
     }
-    
-    // Minimum threshold (10 questions makes it worthwhile)
-    if (complete.length < 10) {
-      throw new Error("Too few unique questions. Please try again.");
+    setBuilding(false);
+  };
+
+  const finish = () => {
+    const correct = q.reduce((n, item, idx) => n + (answers[idx] === item.a ? 1 : 0), 0);
+    if (t) {
+      const already = !!app.progress.completed?.[`${t.courseId}:${t.topicIndex}`];
+      setEarnedXp(!already);
+      const missed = q.filter((item, idx) => answers[idx] !== undefined && answers[idx] !== item.a)
+        .map((item) => ({ q: item.q, o: item.o, a: item.a, w: item.w, topic: t.title, courseId: t.courseId }));
+      app.finishQuiz(t.courseId, t.topicIndex, correct, missed, bankLen);
     }
-    
-    // Use all available questions
-    const shuffled = shuffleBank(complete, complete.length);
-    setQ(shuffled);
-    setMode(nextMode); 
-    setI(0); 
-    setAnswers({}); 
-    setReveal(false); 
-    setDone(false);
-    setLeft(shuffled.length * 45); 
-    setElapsed(0); 
+    setDone(true);
     clearQuizSession();
-    
-  } catch (e) {
-    setBuildErr(e && e.message ? e.message : "Could not prepare this question set.");
-  }
-  setBuilding(false);
-};
+  };
 
-const finish = () => {
-  const correct = q.reduce((n, item, idx) => n + (answers[idx] === item.a ? 1 : 0), 0);
-  if (t) {
-    const already = !!app.progress.completed?.[`${t.courseId}:${t.topicIndex}`];
-    setEarnedXp(!already);
-    const missed = q.filter((item, idx) => answers[idx] !== undefined && answers[idx] !== item.a)
-      .map((item) => ({ q: item.q, o: item.o, a: item.a, w: item.w, topic: t.title, courseId: t.courseId }));
-    app.finishQuiz(t.courseId, t.topicIndex, correct, missed, bankLen);
-  }
-  setDone(true);
-  clearQuizSession();
-};
+  // Timer effects
+  useEffect(() => {
+    if (mode !== "exam" || done || bankLen === 0) return;
+    if (left <= 0) { finish(); return; }
+    const timer = setTimeout(() => setLeft((s) => s - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [mode, left, done, bankLen]);
 
-useEffect(() => {
-  if (mode !== "exam" || done || bankLen === 0) return;
-  if (left <= 0) { finish(); return; }
-  const timer = setTimeout(() => setLeft((s) => s - 1), 1000);
-  return () => clearTimeout(timer);
-}, [mode, left, done, bankLen]);
-
-useEffect(() => {
-  if (mode !== "practice" || done) return;
-  const t = setTimeout(() => setElapsed((s) => s + 1), 1000);
-  return () => clearTimeout(t);
-}, [mode, elapsed, done]);
+  useEffect(() => {
+    if (mode !== "practice" || done) return;
+    const t = setTimeout(() => setElapsed((s) => s + 1), 1000);
+    return () => clearTimeout(t);
+  }, [mode, elapsed, done]);
 
   if (!t) return <div className="view"><button className="back" onClick={() => app.go("courses")}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Back</button><div className="card">This topic has no question bank yet.</div></div>;
 
@@ -13542,7 +13547,13 @@ useEffect(() => {
     setAnswers((a) => ({ ...a, [i]: oi }));
     if (mode === "practice") setReveal(true);
   };
-  const nextQ = () => { setReveal(false); if (i + 1 < bankLen) setI(i + 1); else finish(); };
+  
+  const nextQ = () => { 
+    setReveal(false); 
+    if (i + 1 < bankLen) setI(i + 1); 
+    else finish(); 
+  };
+  
   const score = q.reduce((n, item, idx) => n + (answers[idx] === item.a ? 1 : 0), 0);
   const mm = String(Math.floor(left / 60)).padStart(2, "0"), ss = String(left % 60).padStart(2, "0");
   const emm = String(Math.floor(elapsed / 60)).padStart(2, "0"), ess = String(elapsed % 60).padStart(2, "0");
@@ -13550,17 +13561,21 @@ useEffect(() => {
   if (!mode) {
     return (
       <div className="view">
-        <button className="back" onClick={() => app.go("topic", { courseId: t.courseId, topicId: t.topicIndex })}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Back</button>
+        <button className="back" onClick={() => app.go("topic", { courseId: t.courseId, topicId: t.topicIndex })}>
+          <Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Back
+        </button>
         <div className="eyebrow">Question bank</div>
         <h2 style={{ fontSize: 24, margin: "6px 0 4px" }}>{t.title}</h2>
         <p style={{ color: "var(--text-2)", marginTop: 0 }}>{bankLen} MCQs - single best answer, options shuffled every attempt.</p>
         <div className="grid g2" style={{ marginTop: 18 }}>
           <button className="card hover" style={{ textAlign: "left" }} onClick={() => startQuiz("practice")} disabled={building}>
-            <Ic.target p={22} /><h3 style={{ fontSize: 17, margin: "10px 0 4px" }}>Practice mode</h3>
+            <Ic.target p={22} />
+            <h3 style={{ fontSize: 17, margin: "10px 0 4px" }}>Practice mode</h3>
             <p style={{ color: "var(--text-2)", fontSize: 14, margin: 0 }}>Instant feedback after every question.</p>
           </button>
           <button className="card hover" style={{ textAlign: "left" }} onClick={() => startQuiz("exam")} disabled={building}>
-            <Ic.clock p={22} /><h3 style={{ fontSize: 17, margin: "10px 0 4px" }}>Exam mode</h3>
+            <Ic.clock p={22} />
+            <h3 style={{ fontSize: 17, margin: "10px 0 4px" }}>Exam mode</h3>
             <p style={{ color: "var(--text-2)", fontSize: 14, margin: 0 }}>Timed, graded, full review at the end.</p>
           </button>
         </div>
@@ -13571,6 +13586,79 @@ useEffect(() => {
   }
 
   if (done) {
+    const pct = bankLen ? Math.round((score / bankLen) * 100) : 0;
+    const g = gradeOf(pct);
+    return (
+      <div className="view">
+        <div className="card" style={{ textAlign: "center", padding: "30px 20px" }}>
+          <div className="eyebrow">Result</div>
+          <div className="mono" style={{ fontSize: 46, fontWeight: 700, color: "var(--amber)", margin: "8px 0" }}>{score}/{bankLen}</div>
+          <div style={{ color: "var(--text-2)" }}>{pct}% correct{earnedXp ? ` · +${score * 10} XP earned` : " · practice run, no new XP"}</div>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 12, marginTop: 16, padding: "10px 18px", borderRadius: 12, background: "var(--bg-3)", border: "1px solid var(--line)", maxWidth: "42ch" }}>
+            {g.letter && <span style={{ fontSize: 30, fontWeight: 800, color: g.color, fontFamily: "var(--mono)" }}>{g.letter}</span>}
+            <span style={{ color: g.letter ? "var(--text)" : "var(--text-2)", fontWeight: 600, textAlign: "left", fontSize: 14.5 }}>{g.remark}</span>
+          </div>
+          <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 18, flexWrap: "wrap" }}>
+            <button className="btn btn-a" onClick={() => { clearQuizSession(); setQ(shuffleBank(q, PRACTICE_QUESTION_COUNT)); setMode(null); setI(0); setAnswers({}); setReveal(false); setDone(false); setLeft(PRACTICE_QUESTION_COUNT * 45); setElapsed(0); }}>Try again</button>
+            <button className="btn btn-g" onClick={() => app.go("topic", { courseId: t.courseId, topicId: t.topicIndex })}>Back to topic</button>
+          </div>
+        </div>
+        <div className="eyebrow" style={{ margin: "24px 0 12px" }}>Review</div>
+        {q.map((item, idx) => {
+          const chosen = answers[idx];
+          const gotIt = chosen === item.a;
+          return (
+            <div className="card" key={idx} style={{ marginBottom: 10 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", gap: 10, marginBottom: 10 }}>
+                <div style={{ fontWeight: 600 }}><span className="mono" style={{ color: "var(--text-3)" }}>{String(idx + 1).padStart(2, "0")}. </span>{item.q}</div>
+                <span className="mono" style={{ flexShrink: 0, fontSize: 11, fontWeight: 700, color: gotIt ? "var(--good)" : "var(--bad)" }}>{chosen === undefined ? "SKIPPED" : gotIt ? "CORRECT" : "WRONG"}</span>
+              </div>
+              {item.o.map((opt, oi) => {
+                let cls = "opt"; 
+                if (oi === item.a) cls += " correct"; 
+                else if (oi === chosen) cls += " wrong";
+                return <div className={cls} key={oi}><span className="key">{"ABCD"[oi]}</span><span>{opt}</span></div>;
+              })}
+              <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 6 }}><strong style={{ color: "var(--text)" }}>Why: </strong>{item.w}</div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  const item = q[i], chosen = answers[i];
+  return (
+    <div className="view">
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+        <div className="eyebrow">{mode === "exam" ? "Exam mode" : "Practice"} · {i + 1} / {bankLen}</div>
+        {mode === "exam"
+          ? <div className="chip mono" style={{ color: left < 60 ? "var(--bad)" : "var(--text)" }}><Ic.clock p={15} /> {mm}:{ss}</div>
+          : <div className="chip mono" style={{ color: "var(--text-2)" }}><Ic.clock p={15} /> {emm}:{ess}</div>}
+      </div>
+      <div className="bar" style={{ marginBottom: 20 }}><i style={{ width: (i / bankLen) * 100 + "%" }} /></div>
+      <h3 style={{ fontSize: 19, marginBottom: 16 }}>{item.q}</h3>
+      {item.o.map((opt, oi) => {
+        let cls = "opt";
+        if (mode === "practice" && reveal) { 
+          if (oi === item.a) cls += " correct"; 
+          else if (oi === chosen) cls += " wrong"; 
+        }
+        else if (oi === chosen) cls += " sel";
+        return <button className={cls} key={oi} onClick={() => pick(oi)}><span className="key">{"ABCD"[oi]}</span><span>{opt}</span></button>;
+      })}
+      {mode === "practice" && reveal && (
+        <div className="card" style={{ marginTop: 4, background: "var(--bg-3)" }}>
+          <div style={{ fontSize: 14, color: "var(--text-2)" }}><strong style={{ color: chosen === item.a ? "var(--good)" : "var(--bad)" }}>{chosen === item.a ? "Correct. " : "Not quite. "}</strong>{item.w}</div>
+        </div>
+      )}
+      <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 18 }}>
+        <button className="btn btn-a" disabled={(mode === "exam" && chosen === undefined) || (mode === "practice" && !reveal)} onClick={nextQ}>{i + 1 === bankLen ? "Submit" : "Next"}</button>
+      </div>
+    </div>
+  );
+ 
+if (done) {
     const pct = bankLen ? Math.round((score / bankLen) * 100) : 0;
     const g = gradeOf(pct);
     return (
