@@ -17353,14 +17353,14 @@ export default function App() {
   const saveAppState = () => {
     try {
       const state = {
-        route,
-        progress,
-        lastTopic,
-        theme,
-        menuOpen,
-        notifOpen,
-        rateDismissed,
-        rateStars,
+        route: route,
+        progress: progress,
+        lastTopic: lastTopic,
+        theme: theme,
+        menuOpen: menuOpen,
+        notifOpen: notifOpen,
+        rateDismissed: rateDismissed,
+        rateStars: rateStars,
         timestamp: Date.now()
       };
       sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
@@ -17373,173 +17373,220 @@ export default function App() {
 
   // RESTORE STATE FUNCTION
   const restoreAppState = () => {
+    // Prevent multiple simultaneous restores
     if (isRestoring) return;
     setIsRestoring(true);
     
     try {
-      // Restore route from sessionStorage
+      // First try to restore from ascend_route (most specific)
       const savedRoute = sessionStorage.getItem("ascend_route");
       if (savedRoute) {
-        const parsed = JSON.parse(savedRoute);
-        if (parsed && parsed.view) {
-          setRoute(parsed);
-        }
+        try {
+          const parsed = JSON.parse(savedRoute);
+          if (parsed && parsed.view) {
+            // Only update if different to avoid unnecessary re-renders
+            setRoute(function(prevRoute) {
+              if (JSON.stringify(prevRoute) !== JSON.stringify(parsed)) {
+                return parsed;
+              }
+              return prevRoute;
+            });
+          }
+        } catch (e) {}
       }
       
-      // Restore global state
+      // Then restore from global state
       const saved = sessionStorage.getItem("ascend_global_state");
       if (saved) {
-        const state = JSON.parse(saved);
-        if (state.route && state.route.view) {
-          setRoute(state.route);
-        }
-        if (state.lastTopic) {
-          setLastTopic(state.lastTopic);
-        }
-        if (state.theme) {
-          setTheme(state.theme);
-        }
-        if (state.menuOpen !== undefined) {
-          setMenuOpen(state.menuOpen);
-        }
-        if (state.notifOpen !== undefined) {
-          setNotifOpen(state.notifOpen);
-        }
-        if (state.rateDismissed !== undefined) {
-          setRateDismissed(state.rateDismissed);
-        }
-        if (state.rateStars !== undefined) {
-          setRateStars(state.rateStars);
-        }
+        try {
+          const state = JSON.parse(saved);
+          if (state.route && state.route.view) {
+            setRoute(function(prevRoute) {
+              if (JSON.stringify(prevRoute) !== JSON.stringify(state.route)) {
+                return state.route;
+              }
+              return prevRoute;
+            });
+          }
+          if (state.lastTopic) {
+            setLastTopic(state.lastTopic);
+          }
+          if (state.theme) {
+            setTheme(state.theme);
+          }
+          if (state.menuOpen !== undefined) {
+            setMenuOpen(state.menuOpen);
+          }
+          if (state.notifOpen !== undefined) {
+            setNotifOpen(state.notifOpen);
+          }
+          if (state.rateDismissed !== undefined) {
+            setRateDismissed(state.rateDismissed);
+          }
+          if (state.rateStars !== undefined) {
+            setRateStars(state.rateStars);
+          }
+        } catch (e) {}
       }
       
       // Restore scroll position
       const savedScroll = sessionStorage.getItem("ascend_scroll");
       if (savedScroll) {
-        const scrollY = parseInt(savedScroll, 10);
-        if (scrollY > 0) {
-          setTimeout(() => window.scrollTo(0, scrollY), 150);
-        }
+        try {
+          const scrollY = parseInt(savedScroll, 10);
+          if (scrollY > 0) {
+            setTimeout(function() { window.scrollTo(0, scrollY); }, 150);
+          }
+        } catch (e) {}
       }
     } catch (e) {
       // Silently fail
     }
     
-    setTimeout(() => {
+    setTimeout(function() {
       setIsRestoring(false);
-    }, 200);
+    }, 300);
   };
 
   // Restore once on mount only
-  useEffect(() => {
+  useEffect(function() {
     restoreAppState();
   }, []);
 
   // Save whenever relevant state changes
-  useEffect(() => {
+  useEffect(function() {
     saveAppState();
   }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
 
   // Save on page hide / unload
-  useEffect(() => {
-    const onHide = () => {
+  useEffect(function() {
+    var onHide = function() {
       saveAppState();
     };
     window.addEventListener("pagehide", onHide);
     window.addEventListener("beforeunload", onHide);
-    return () => {
+    return function() {
       window.removeEventListener("pagehide", onHide);
       window.removeEventListener("beforeunload", onHide);
     };
   }, []);
 
   // Keep route in sessionStorage + browser history in sync
-  useEffect(() => {
+  useEffect(function() {
     if (typeof window === "undefined") return;
     try {
       sessionStorage.setItem("ascend_route", JSON.stringify(route));
-    } catch {}
+    } catch (e) {}
     try {
       window.history.replaceState({ ascendRoute: route }, "");
-    } catch {}
+    } catch (e) {}
   }, [route]);
 
   // Handle browser back/forward navigation
-  useEffect(() => {
+  useEffect(function() {
     if (typeof window === "undefined") return;
-    const onPop = (e) => {
-      let saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : null;
+    var onPop = function(e) {
+      var saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : null;
       if (!saved) {
         try { 
-          const r = sessionStorage.getItem("ascend_route"); 
+          var r = sessionStorage.getItem("ascend_route"); 
           saved = r ? JSON.parse(r) : { view: "home" }; 
-        } catch { 
+        } catch (e) { 
           saved = { view: "home" }; 
         }
       }
       setRoute(saved);
       setMenuOpen(false);
       try {
-        const savedScroll = sessionStorage.getItem("ascend_scroll");
+        var savedScroll = sessionStorage.getItem("ascend_scroll");
         if (savedScroll) {
-          const scrollY = parseInt(savedScroll, 10);
+          var scrollY = parseInt(savedScroll, 10);
           if (scrollY > 0) {
-            setTimeout(() => window.scrollTo(0, scrollY), 100);
+            setTimeout(function() { window.scrollTo(0, scrollY); }, 100);
           }
         }
-      } catch {}
+      } catch (e) {}
     };
     window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
+    return function() { window.removeEventListener("popstate", onPop); };
   }, []);
 
   // TAB SWITCHING FIX - Restore state when tab becomes visible
-  useEffect(() => {
+  useEffect(function() {
     if (typeof window === "undefined") return;
     
-    const onVisibilityChange = () => {
+    // Store current route to ensure we can restore it
+    var currentRoute = route;
+    
+    var onVisibilityChange = function() {
       if (document.visibilityState === "visible") {
-        restoreAppState();
+        // Check if we have a saved route that's different from current
+        var savedRoute = sessionStorage.getItem("ascend_route");
+        if (savedRoute) {
+          try {
+            var parsed = JSON.parse(savedRoute);
+            if (parsed && parsed.view && JSON.stringify(parsed) !== JSON.stringify(route)) {
+              restoreAppState();
+            } else {
+              // Even if route is the same, restore scroll position
+              var savedScroll = sessionStorage.getItem("ascend_scroll");
+              if (savedScroll) {
+                var scrollY = parseInt(savedScroll, 10);
+                if (scrollY > 0) {
+                  setTimeout(function() { window.scrollTo(0, scrollY); }, 50);
+                }
+              }
+            }
+          } catch (e) {}
+        }
       }
     };
     
-    const onFocus = () => {
+    var onFocus = function() {
       if (document.visibilityState === "visible") {
-        restoreAppState();
+        var savedRoute = sessionStorage.getItem("ascend_route");
+        if (savedRoute) {
+          try {
+            var parsed = JSON.parse(savedRoute);
+            if (parsed && parsed.view && JSON.stringify(parsed) !== JSON.stringify(route)) {
+              restoreAppState();
+            }
+          } catch (e) {}
+        }
       }
     };
     
     document.addEventListener("visibilitychange", onVisibilityChange);
     window.addEventListener("focus", onFocus);
     
-    return () => {
+    return function() {
       document.removeEventListener("visibilitychange", onVisibilityChange);
       window.removeEventListener("focus", onFocus);
     };
-  }, []);
+  }, [route]);
 
   // Scroll position tracking
-  useEffect(() => {
-    const handleScroll = () => {
+  useEffect(function() {
+    var handleScroll = function() {
       setShowTop(window.scrollY > 400);
       try {
         sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
-      } catch {}
+      } catch (e) {}
     };
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return function() { window.removeEventListener("scroll", handleScroll); };
   }, []);
 
   // ============================================================
   // 7. MAIN LOADING EFFECT (FIXED - Added restore on load)
   // ============================================================
-  useEffect(() => {
-    const link = document.createElement("link");
+  useEffect(function() {
+    var link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap";
     document.head.appendChild(link);
 
-    let viewport = document.querySelector('meta[name="viewport"]');
+    var viewport = document.querySelector('meta[name="viewport"]');
     if (!viewport) {
       viewport = document.createElement("meta");
       viewport.name = "viewport";
@@ -17549,14 +17596,14 @@ export default function App() {
       viewport.content = (viewport.content ? viewport.content.replace(/,?\s*viewport-fit=[^,]*/, "") + "," : "width=device-width,initial-scale=1,") + "viewport-fit=cover";
     }
 
-    const icon = "/ascend-icon.png";
+    var icon = "/ascend-icon.png";
     if (!document.querySelector('link[rel="apple-touch-icon"]')) {
-      const aLink = document.createElement("link");
+      var aLink = document.createElement("link");
       aLink.rel = "apple-touch-icon";
       aLink.href = icon;
       document.head.appendChild(aLink);
     }
-    let meta = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
+    var meta = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
     if (!meta) {
       meta = document.createElement("meta");
       meta.name = "apple-mobile-web-app-capable";
@@ -17565,78 +17612,78 @@ export default function App() {
     }
 
     if (!document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')) {
-      const m = document.createElement("meta");
+      var m = document.createElement("meta");
       m.name = "apple-mobile-web-app-status-bar-style";
       m.content = "black-translucent";
       document.head.appendChild(m);
     }
     if (!document.querySelector('meta[name="apple-mobile-web-app-title"]')) {
-      const m = document.createElement("meta");
-      m.name = "apple-mobile-web-app-title";
-      m.content = "ASCEND";
-      document.head.appendChild(m);
+      var m2 = document.createElement("meta");
+      m2.name = "apple-mobile-web-app-title";
+      m2.content = "ASCEND";
+      document.head.appendChild(m2);
     }
     if (!document.querySelector('meta[name="theme-color"]')) {
-      const m = document.createElement("meta");
-      m.name = "theme-color";
-      m.content = "#0A0F1A";
-      document.head.appendChild(m);
+      var m3 = document.createElement("meta");
+      m3.name = "theme-color";
+      m3.content = "#0A0F1A";
+      document.head.appendChild(m3);
     }
     if (!document.querySelector('link[rel="manifest"]')) {
-      const m = document.createElement("link");
-      m.rel = "manifest";
-      m.href = "/manifest.json";
-      document.head.appendChild(m);
+      var m4 = document.createElement("link");
+      m4.rel = "manifest";
+      m4.href = "/manifest.json";
+      document.head.appendChild(m4);
     }
 
     if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      window.addEventListener("load", function() {
+        navigator.serviceWorker.register("/sw.js").catch(function() {});
       });
     }
 
-    (async () => {
-      const t = await store.get("ascend_theme");
+    (async function() {
+      var t = await store.get("ascend_theme");
       if (t === "light" || t === "dark") {
         setTheme(t);
       }
 
       try {
-        const { data } = await supabase.auth.getSession();
-        const sUser = data && data.session ? data.session.user : null;
+        var data = await supabase.auth.getSession();
+        var sUser = data && data.session ? data.session.user : null;
         if (sUser) {
           if (window.location.hash && /access_token=/.test(window.location.hash)) {
             try {
               window.history.replaceState(null, "", window.location.pathname + window.location.search);
-            } catch {}
+            } catch (e) {}
           }
           await adoptSupabaseUser(sUser);
           setLoaded(true);
           return;
         }
-      } catch {}
+      } catch (e) {}
 
-      const session = await store.get("ascend_session");
+      var session = await store.get("ascend_session");
       if (session) {
-        const accounts = (await store.get("ascend_accounts")) || {};
-        const acct = accounts[session];
+        var accounts = (await store.get("ascend_accounts")) || {};
+        var acct = accounts[session];
         if (acct) {
           setAuth(acct);
-          const p = await store.get(progKey(acct.username));
+          var p = await store.get(progKey(acct.username));
           setProgress(p ? { ...freshProgress(acct.username), ...p, name: acct.username } : freshProgress(acct.username));
         }
       }
       setLoaded(true);
     })();
 
-    let sub;
+    var sub;
     try {
-      const res = supabase.auth.onAuthStateChange((event, session) => {
+      var res = supabase.auth.onAuthStateChange(function(event, session) {
         if (event === "SIGNED_IN" && session && session.user) {
           if (window.location.hash && /access_token=/.test(window.location.hash)) {
             try {
               window.history.replaceState(null, "", window.location.pathname + window.location.search);
-            } catch {}
+            } catch (e) {}
           }
           adoptSupabaseUser(session.user);
         }
@@ -17646,46 +17693,46 @@ export default function App() {
         }
       });
       sub = res.data ? res.data.subscription : null;
-    } catch {}
+    } catch (e) {}
 
-    return () => { 
+    return function() { 
       try { 
         document.head.removeChild(link); 
         // Save state on unmount
         try {
           sessionStorage.setItem("ascend_route", JSON.stringify(route));
           sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
-        } catch {}
-      } catch {} 
+        } catch (e) {}
+      } catch (e) {} 
       try { 
         if (sub && sub.unsubscribe) {
           sub.unsubscribe();
         }
-      } catch {} 
+      } catch (e) {} 
     };
   }, []);
 
   // ============================================================
   // 8. adoptSupabaseUser, handleAuthed, logout, toggleTheme
   // ============================================================
-  const adoptSupabaseUser = async (sUser) => {
-    const uid = sUser.id;
-    const displayName =
+  var adoptSupabaseUser = async function(sUser) {
+    var uid = sUser.id;
+    var displayName =
       (sUser.user_metadata && (sUser.user_metadata.full_name || sUser.user_metadata.name)) ||
       (sUser.email ? sUser.email.split("@")[0] : "student");
     setSupaUid(uid);
-    const cloud = await db.loadProgress(uid);
-    let profileXp = 0, profileStreak = 0, profileName = null;
+    var cloud = await db.loadProgress(uid);
+    var profileXp = 0, profileStreak = 0, profileName = null;
     try {
-      const { data } = await supabase.from("profiles").select("name, xp, streak").eq("id", uid).maybeSingle();
+      var data = await supabase.from("profiles").select("name, xp, streak").eq("id", uid).maybeSingle();
       if (data) {
         profileXp = data.xp || 0;
         profileStreak = data.streak || 0;
         profileName = data.name;
       }
-    } catch {}
-    const base = freshProgress(displayName);
-    const merged = cloud ? { ...base, ...cloud } : { ...base };
+    } catch (e) {}
+    var base = freshProgress(displayName);
+    var merged = cloud ? { ...base, ...cloud } : { ...base };
     merged.xp = Math.max(merged.xp || 0, profileXp);
     merged.streak = Math.max(merged.streak || 0, profileStreak);
     merged.name = (cloud && cloud.name) || profileName || displayName;
@@ -17702,26 +17749,26 @@ export default function App() {
         streak: merged.streak || 0,
         updated_at: new Date().toISOString(),
       });
-    } catch {}
+    } catch (e) {}
     db.saveProgress(uid, merged);
     saveAppState();
   };
 
-  const handleAuthed = async (acct) => {
+  var handleAuthed = async function(acct) {
     setAuth(acct);
-    const p = await store.get(progKey(acct.username));
-    const finalProgress = p ? { ...freshProgress(acct.username), ...p, name: acct.username } : freshProgress(acct.username);
+    var p = await store.get(progKey(acct.username));
+    var finalProgress = p ? { ...freshProgress(acct.username), ...p, name: acct.username } : freshProgress(acct.username);
     setXpChange(finalProgress.xp || 0);
     setProgress(finalProgress);
     setRoute({ view: "home" });
     saveAppState();
   };
 
-  const logout = async () => {
+  var logout = async function() {
     if (supaUid) {
       try {
         await supabase.auth.signOut();
-      } catch {}
+      } catch (e) {}
       setSupaUid(null);
     }
     await store.set("ascend_session", "");
@@ -17731,8 +17778,8 @@ export default function App() {
     saveAppState();
   };
 
-  const toggleTheme = () => {
-    const t = theme === "light" ? "dark" : "light";
+  var toggleTheme = function() {
+    var t = theme === "light" ? "dark" : "light";
     setTheme(t);
     store.set("ascend_theme", t);
     saveAppState();
@@ -17741,8 +17788,14 @@ export default function App() {
   // ============================================================
   // 9. NAVIGATION - go function with proper persistence
   // ============================================================
-  const go = (view, extra = {}) => {
-    const next = { view, ...extra };
+  var go = function(view, extra) {
+    extra = extra || {};
+    var next = { view: view };
+    for (var key in extra) {
+      if (extra.hasOwnProperty(key)) {
+        next[key] = extra[key];
+      }
+    }
     setRoute(next);
 
     if (view === "topic" && extra.courseId !== undefined && extra.topicId !== undefined) {
@@ -17757,98 +17810,121 @@ export default function App() {
         sessionStorage.setItem("ascend_route", JSON.stringify(next));
         sessionStorage.setItem("ascend_scroll", "0");
         // Also save to global state
-        const saved = sessionStorage.getItem("ascend_global_state");
+        var saved = sessionStorage.getItem("ascend_global_state");
         if (saved) {
-          const state = JSON.parse(saved);
+          var state = JSON.parse(saved);
           state.route = next;
           state.timestamp = Date.now();
           sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
         } else {
-          const state = {
+          var newState = {
             route: next,
-            progress,
-            lastTopic,
-            theme,
+            progress: progress,
+            lastTopic: lastTopic,
+            theme: theme,
             menuOpen: false,
             notifOpen: false,
-            rateDismissed,
-            rateStars,
+            rateDismissed: rateDismissed,
+            rateStars: rateStars,
             timestamp: Date.now()
           };
-          sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
+          sessionStorage.setItem("ascend_global_state", JSON.stringify(newState));
         }
-      } catch {}
-      window.scrollTo?.(0, 0);
+      } catch (e) {}
+      if (window.scrollTo) window.scrollTo(0, 0);
     }
   };
 
-  const recordDaily = (correct) => {
-    const tk = todayKey();
-    if (progress.dailyDone?.[tk]) return;
-    const streak = progress.lastActive === shift(-1) ? progress.streak + 1 : (progress.lastActive === tk ? progress.streak : 1);
-    const baseXp = correct ? 20 : 5;
-    const multiplier = getStreakMultiplier(streak);
-    const gained = Math.round(baseXp * multiplier.multiplier);
-    const newXp = progress.xp + gained;
-    setXpChange(newXp);
-    persist({ ...progress, xp: newXp, streak, lastActive: tk, dailyDone: { ...progress.dailyDone, [tk]: true } });
-  };
-
-  const finishQuiz = (cid, tid, correct, missed = [], total = 0) => {
-    const tkey = cid + ':' + tid;
-    const firstTime = !progress.completed?.[tkey];
-    
-    // FIX: Always award XP for correct answers
-    const baseXp = correct * 10;
-    const bonusXp = firstTime ? correct * 5 : 0;
-    
-    const multiplier = getStreakMultiplier(progress.streak);
-    const gained = Math.round((baseXp + bonusXp) * multiplier.multiplier);
-    
-    const prevReview = Array.isArray(progress.review) ? progress.review : [];
-    const seen = new Set(prevReview.map((m) => m.q));
-    const merged = [...prevReview];
-    for (const m of missed) { 
-      if (!seen.has(m.q)) { 
-        merged.push(m); 
-        seen.add(m.q); 
-      } 
-    }
-    
-    const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
-    const prevScores = progress.scores || {};
-    const bestPrev = prevScores[tkey] || 0;
-    const scores = { ...prevScores, [tkey]: Math.max(bestPrev, pct) };
-    
-    const newXp = progress.xp + gained;
-    
+  var recordDaily = function(correct) {
+    var tk = todayKey();
+    if (progress.dailyDone && progress.dailyDone[tk]) return;
+    var streak = progress.lastActive === shift(-1) ? progress.streak + 1 : (progress.lastActive === tk ? progress.streak : 1);
+    var baseXp = correct ? 20 : 5;
+    var multiplier = getStreakMultiplier(streak);
+    var gained = Math.round(baseXp * multiplier.multiplier);
+    var newXp = progress.xp + gained;
     setXpChange(newXp);
     persist({ 
-      ...progress, 
       xp: newXp, 
-      completed: { ...progress.completed, [tkey]: true }, 
-      review: merged, 
-      scores 
+      streak: streak, 
+      lastActive: tk, 
+      dailyDone: { ...(progress.dailyDone || {}), [tk]: true },
+      name: progress.name,
+      completed: progress.completed || {},
+      review: progress.review || [],
+      scores: progress.scores || {},
+      bookmarks: progress.bookmarks || [],
+      passcoCompleted: progress.passcoCompleted || 0
     });
   };
 
-  const toggleBookmark = (cid, tid) => {
-    const key = cid + ':' + tid;
-    const prev = Array.isArray(progress.bookmarks) ? progress.bookmarks : [];
-    const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
-    persist({ ...progress, bookmarks: next });
+  var finishQuiz = function(cid, tid, correct, missed, total) {
+    missed = missed || [];
+    total = total || 0;
+    var tkey = cid + ':' + tid;
+    var firstTime = !(progress.completed && progress.completed[tkey]);
+    
+    var baseXp = correct * 10;
+    var bonusXp = firstTime ? correct * 5 : 0;
+    var multiplier = getStreakMultiplier(progress.streak);
+    var gained = Math.round((baseXp + bonusXp) * multiplier.multiplier);
+    
+    var prevReview = Array.isArray(progress.review) ? progress.review : [];
+    var seen = new Set(prevReview.map(function(m) { return m.q; }));
+    var merged = prevReview.slice();
+    for (var i = 0; i < missed.length; i++) {
+      var m = missed[i];
+      if (!seen.has(m.q)) {
+        merged.push(m);
+        seen.add(m.q);
+      }
+    }
+    
+    var pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+    var prevScores = progress.scores || {};
+    var bestPrev = prevScores[tkey] || 0;
+    var scores = { ...prevScores, [tkey]: Math.max(bestPrev, pct) };
+    
+    var newXp = progress.xp + gained;
+    
+    setXpChange(newXp);
+    persist({ 
+      xp: newXp, 
+      completed: { ...(progress.completed || {}), [tkey]: true }, 
+      review: merged, 
+      scores: scores,
+      name: progress.name,
+      streak: progress.streak,
+      lastActive: progress.lastActive,
+      dailyDone: progress.dailyDone || {},
+      bookmarks: progress.bookmarks || [],
+      passcoCompleted: progress.passcoCompleted || 0
+    });
   };
 
-  const clearReviewItem = (questionText) => {
-    const prev = Array.isArray(progress.review) ? progress.review : [];
-    persist({ ...progress, review: prev.filter((m) => m.q !== questionText) });
+  var toggleBookmark = function(cid, tid) {
+    var key = cid + ':' + tid;
+    var prev = Array.isArray(progress.bookmarks) ? progress.bookmarks : [];
+    var next = prev.includes(key) ? prev.filter(function(k) { return k !== key; }) : prev.concat([key]);
+    persist({ 
+      ...progress, 
+      bookmarks: next 
+    });
   };
 
-  const setName = async () => {
+  var clearReviewItem = function(questionText) {
+    var prev = Array.isArray(progress.review) ? progress.review : [];
+    persist({ 
+      ...progress, 
+      review: prev.filter(function(m) { return m.q !== questionText; }) 
+    });
+  };
+
+  var setName = async function() {
     if (typeof window === "undefined") return;
-    const raw = window.prompt("Change your username (this is your name on the leaderboard)", progress.name);
+    var raw = window.prompt("Change your username (this is your name on the leaderboard)", progress.name);
     if (!raw) return;
-    const newName = raw.trim().slice(0, 24);
+    var newName = raw.trim().slice(0, 24);
     if (newName.length < 2 || newName === progress.name) return;
 
     if (supaUid) {
@@ -17861,25 +17937,25 @@ export default function App() {
           streak: progress.streak || 0,
           updated_at: new Date().toISOString(),
         });
-      } catch {}
+      } catch (e) {}
       persist({ ...progress, name: newName });
       return;
     }
     
     if (progress.name) {
-      const oldBoardKey = "ascend_board:" + String(progress.name).toLowerCase().replace(/[^a-z0-9]/g, "");
+      var oldBoardKey = "ascend_board:" + String(progress.name).toLowerCase().replace(/[^a-z0-9]/g, "");
       try { 
         if (hasWS()) { 
-          await window.storage.delete?.(oldBoardKey, true); 
+          if (window.storage && window.storage.delete) await window.storage.delete(oldBoardKey, true); 
         } else { 
           localStorage.removeItem(oldBoardKey); 
         } 
-      } catch {}
+      } catch (e) {}
     }
     
     if (auth) {
-      const accounts = (await store.get("ascend_accounts")) || {};
-      const key = auth.username.toLowerCase();
+      var accounts = (await store.get("ascend_accounts")) || {};
+      var key = auth.username.toLowerCase();
       if (accounts[key]) { 
         accounts[key] = { ...accounts[key], name: newName }; 
         await store.set("ascend_accounts", accounts); 
@@ -17888,27 +17964,27 @@ export default function App() {
     persist({ ...progress, name: newName });
   };
 
-  const setReadingXp = (newXp) => {
-    const key = route.courseId + ':' + route.topicId;
-    const awarded = sessionStorage.getItem('ascend_read_' + key);
+  var setReadingXp = function(newXp) {
+    var key = route.courseId + ':' + route.topicId;
+    var awarded = sessionStorage.getItem('ascend_read_' + key);
     if (awarded) return;
     sessionStorage.setItem('ascend_read_' + key, 'true');
-    const multiplier = getStreakMultiplier(progress.streak);
-    const baseXp = 15;
-    const gained = Math.round(baseXp * multiplier.multiplier);
-    const updated = { ...progress, xp: progress.xp + gained };
+    var multiplier = getStreakMultiplier(progress.streak);
+    var baseXp = 15;
+    var gained = Math.round(baseXp * multiplier.multiplier);
+    var updated = { ...progress, xp: progress.xp + gained };
     setProgress(updated);
     persist(updated);
   };
 
-  const setPasscoXp = (earnedXp) => {
-    const key = 'passco_' + Date.now();
-    const awarded = sessionStorage.getItem('ascend_passco_' + key);
+  var setPasscoXp = function(earnedXp) {
+    var key = 'passco_' + Date.now();
+    var awarded = sessionStorage.getItem('ascend_passco_' + key);
     if (awarded) return;
     sessionStorage.setItem('ascend_passco_' + key, 'true');
-    const multiplier = getStreakMultiplier(progress.streak);
-    const gained = Math.round(earnedXp * multiplier.multiplier);
-    const updated = { 
+    var multiplier = getStreakMultiplier(progress.streak);
+    var gained = Math.round(earnedXp * multiplier.multiplier);
+    var updated = { 
       ...progress, 
       xp: progress.xp + gained, 
       passcoCompleted: (progress.passcoCompleted || 0) + 1 
@@ -17922,344 +17998,337 @@ export default function App() {
     }));
   };
 
-  const app = { 
-    progress, 
-    go, 
-    recordDaily, 
-    finishQuiz, 
-    clearReviewItem,
-    toggleBookmark, 
-    supaUid, 
+  var app = { 
+    progress: progress, 
+    go: go, 
+    recordDaily: recordDaily, 
+    finishQuiz: finishQuiz, 
+    clearReviewItem: clearReviewItem,
+    toggleBookmark: toggleBookmark, 
+    supaUid: supaUid, 
     courseId: route.courseId, 
     topicId: route.topicId, 
-    setName,
-    setReadingXp,
-    setPasscoXp,
-    getStreakMultiplier
+    setName: setName,
+    setReadingXp: setReadingXp,
+    setPasscoXp: setPasscoXp,
+    getStreakMultiplier: getStreakMultiplier
   };
 
-  const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
+  var activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
 
-  const navButtons = (onNav) => NAV.map((n) => {
-    const Icon = Ic[n.icon];
-    return (
-      <button 
-        key={n.key} 
-        className={"navi " + (activeNav === n.key ? "on" : "")} 
-        onClick={() => onNav(n.key)}
-      >
-        <Icon p={19} />
-        {n.label}
-      </button>
-    );
-  });
+  var navButtons = function(onNav) {
+    return NAV.map(function(n) {
+      var Icon = Ic[n.icon];
+      return React.createElement(
+        "button",
+        {
+          key: n.key,
+          className: "navi " + (activeNav === n.key ? "on" : ""),
+          onClick: function() { onNav(n.key); }
+        },
+        React.createElement(Icon, { p: 19 }),
+        n.label
+      );
+    });
+  };
 
-  const render = () => {
+  var render = function() {
     switch (route.view) {
-      case "home": return <HomeView app={app} />;
-      case "courses": return <CoursesView app={app} />;
-      case "course": return <CourseView app={app} />;
-      case "topic": return <TopicView app={app} />;
-      case "quiz": return <QuizView app={app} />;
-      case "daily": return <DailyView app={app} />;
-      case "ranks": return <RanksView app={app} />;
-      case "review": return <ReviewView app={app} />;
-      case "tools": return <StudyToolsView />;
-      case "papers": return <PapersView app={app} />;
-      case "plan": return <PlanView />;
-      case "resources": return <ResourcesView />;
-      case "lamla": return <LAMLAView app={app} />;
-      case "feedback": return <FeedbackView />;
-      case "viewfeedback": return <ViewFeedbackView />;
-      default: return <HomeView app={app} />;
+      case "home": return React.createElement(HomeView, { app: app });
+      case "courses": return React.createElement(CoursesView, { app: app });
+      case "course": return React.createElement(CourseView, { app: app });
+      case "topic": return React.createElement(TopicView, { app: app });
+      case "quiz": return React.createElement(QuizView, { app: app });
+      case "daily": return React.createElement(DailyView, { app: app });
+      case "ranks": return React.createElement(RanksView, { app: app });
+      case "review": return React.createElement(ReviewView, { app: app });
+      case "tools": return React.createElement(StudyToolsView, null);
+      case "papers": return React.createElement(PapersView, { app: app });
+      case "plan": return React.createElement(PlanView, null);
+      case "resources": return React.createElement(ResourcesView, null);
+      case "lamla": return React.createElement(LAMLAView, { app: app });
+      case "feedback": return React.createElement(FeedbackView, null);
+      case "viewfeedback": return React.createElement(ViewFeedbackView, null);
+      default: return React.createElement(HomeView, { app: app });
     }
   };
 
-  const r = rankOf(progress?.xp || 0);
-  const rootCls = "ascend-root" + (theme === "light" ? " light" : "");
-  const dailyNotDone = !progress?.dailyDone?.[todayKey()];
-  const unreadAnn = (progress?.seenAnn || 0) < ANNOUNCEMENTS.length;
-  const hasUnread = unreadAnn || dailyNotDone;
-  const openNotif = () => {
+  var r = rankOf(progress ? progress.xp || 0 : 0);
+  var rootCls = "ascend-root" + (theme === "light" ? " light" : "");
+  var dailyNotDone = !(progress && progress.dailyDone && progress.dailyDone[todayKey()]);
+  var unreadAnn = (progress && progress.seenAnn || 0) < ANNOUNCEMENTS.length;
+  var hasUnread = unreadAnn || dailyNotDone;
+  var openNotif = function() {
     setNotifOpen(true);
     if (unreadAnn && progress) {
       persist({ ...progress, seenAnn: ANNOUNCEMENTS.length });
     }
   };
-  const showRate = !!auth && (progress?.xp || 0) >= 30 && !progress?.rated && !progress?.ratePromptSeen && !rateDismissed && route.view !== "feedback";
+  var showRate = !!auth && (progress ? progress.xp || 0 : 0) >= 30 && !(progress && progress.rated) && !(progress && progress.ratePromptSeen) && !rateDismissed && route.view !== "feedback";
 
   if (!loaded) {
-    return (
-      <div className={rootCls}>
-        <style>{CSS}</style>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18, minHeight: "100vh" }}>
-          <Wordmark />
-          <div className="spinner-ring" />
-        </div>
-      </div>
+    return React.createElement(
+      "div", { className: rootCls },
+      React.createElement("style", null, CSS),
+      React.createElement(
+        "div", { style: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18, minHeight: "100vh" } },
+        React.createElement(Wordmark, null),
+        React.createElement("div", { className: "spinner-ring" })
+      )
     );
   }
 
   if (!auth) {
-    return (
-      <div className={rootCls}>
-        <style>{CSS}</style>
-        <AuthScreen onAuthed={handleAuthed} />
-      </div>
+    return React.createElement(
+      "div", { className: rootCls },
+      React.createElement("style", null, CSS),
+      React.createElement(AuthScreen, { onAuthed: handleAuthed })
     );
   }
 
-  return (
-    <div className={rootCls}>
-      <style>{CSS}</style>
-      
-      <div className="shell">
-        <aside className="side">
-          <div style={{ padding: "0 6px 18px" }}>
-            <Wordmark />
-          </div>
-          {navButtons(go)}
-          <div style={{ marginTop: "auto", padding: "14px 10px 0", borderTop: "1px solid var(--line)" }}>
-            <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
-            <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>
-              Log out
-            </button>
-          </div>
-        </aside>
-
-        <div className="main">
-          <header className="topbar">
-            <div className="topbar-inner">
-              <button 
-                className="iconbtn onlymobile" 
-                onClick={() => setMenuOpen(true)} 
-                aria-label="Open menu"
-              >
-                <Ic.menu p={18} />
-              </button>
-              <div className="onlymobile" style={{ flex: 1 }}>
-                <Wordmark />
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
-                <span className="chip streakchip">
-                  <Ic.flame p={15} />
-                  <span className="val">{progress?.streak || 0}</span>
-                </span>
-                <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">
-                  {theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}
-                </button>
-                <button className="iconbtn" onClick={openNotif} title="Announcements">
-                  <Ic.bell p={18} />
-                  {hasUnread && <span className="notif-dot" />}
-                </button>
-                <span className="chip">
-                  <span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP
-                </span>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>
-                    {progress?.name || ""}
-                  </span>
-                  <button className="avatar" onClick={setName} title="Click to change your username">
-                    {progress?.name?.[0]?.toUpperCase() || "?"}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </header>
-          
-          <div className="content">
-            {render()}
-          </div>
-          
-          {showTop && (
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              style={{
-                position: "fixed",
-                bottom: "clamp(70px, 10vh, 100px)",
-                right: "clamp(16px, 3vw, 30px)",
-                width: "48px",
-                height: "48px",
-                borderRadius: "50%",
-                background: "var(--amber)",
-                color: "#1B1405",
-                border: "none",
-                fontSize: "22px",
-                fontWeight: 700,
-                cursor: "pointer",
-                boxShadow: "0 4px 16px rgba(245,185,63,0.3)",
-                zIndex: 50,
-                transition: "all 0.3s ease",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontFamily: "var(--mono)"
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = "scale(1.1)";
-                e.target.style.boxShadow = "0 6px 24px rgba(245,185,63,0.5)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = "scale(1)";
-                e.target.style.boxShadow = "0 4px 16px rgba(245,185,63,0.3)";
-              }}
-            >
-              ↑
-            </button>
-          )}
-        </div>
-      </div>
-
-      {menuOpen && (
-        <div 
-          className="mobile-sidebar-overlay" 
-          onClick={() => setMenuOpen(false)}
-          style={{ 
-            position: "fixed",
-            inset: 0,
-            zIndex: 1000,
-            background: "rgba(0,0,0,0.5)",
-            display: "flex",
-            alignItems: "flex-start",
-            paddingTop: "env(safe-area-inset-top)"
-          }}
-        >
-          <div 
-            className="mobile-sidebar" 
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              width: "280px",
-              maxWidth: "80vw",
-              height: "100dvh",
-              background: "var(--bg-2)",
-              borderRight: "1px solid var(--line)",
+  return React.createElement(
+    "div", { className: rootCls },
+    React.createElement("style", null, CSS),
+    React.createElement(
+      "div", { className: "shell" },
+      React.createElement(
+        "aside", { className: "side" },
+        React.createElement("div", { style: { padding: "0 6px 18px" } }, React.createElement(Wordmark, null)),
+        navButtons(go),
+        React.createElement(
+          "div", { style: { marginTop: "auto", padding: "14px 10px 0", borderTop: "1px solid var(--line)" } },
+          React.createElement("div", { className: "note-hint", style: { lineHeight: 1.6, marginBottom: 10 } }, "No gatekeeping."),
+          React.createElement("button", { className: "btn btn-g btn-sm", style: { width: "100%" }, onClick: logout }, "Log out")
+        )
+      ),
+      React.createElement(
+        "div", { className: "main" },
+        React.createElement(
+          "header", { className: "topbar" },
+          React.createElement(
+            "div", { className: "topbar-inner" },
+            React.createElement(
+              "button",
+              { className: "iconbtn onlymobile", onClick: function() { setMenuOpen(true); }, "aria-label": "Open menu" },
+              React.createElement(Ic.menu, { p: 18 })
+            ),
+            React.createElement("div", { className: "onlymobile", style: { flex: 1 } }, React.createElement(Wordmark, null)),
+            React.createElement(
+              "div", { style: { display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" } },
+              React.createElement(
+                "span", { className: "chip streakchip" },
+                React.createElement(Ic.flame, { p: 15 }),
+                React.createElement("span", { className: "val" }, progress ? progress.streak || 0 : 0)
+              ),
+              React.createElement(
+                "button", { className: "iconbtn", onClick: toggleTheme, title: "Toggle light and dark" },
+                theme === "light" ? React.createElement(Ic.moon, { p: 17 }) : React.createElement(Ic.sun, { p: 17 })
+              ),
+              React.createElement(
+                "button", { className: "iconbtn", onClick: openNotif, title: "Announcements" },
+                React.createElement(Ic.bell, { p: 18 }),
+                hasUnread && React.createElement("span", { className: "notif-dot" })
+              ),
+              React.createElement(
+                "span", { className: "chip" },
+                React.createElement("span", { className: "val", style: { color: r.c } }, progress ? progress.xp || 0 : 0),
+                " XP"
+              ),
+              React.createElement(
+                "div", { style: { display: "flex", alignItems: "center", gap: 8 } },
+                React.createElement("span", { style: { fontSize: 13, color: "var(--text-2)", fontWeight: 500 } }, progress ? progress.name || "" : ""),
+                React.createElement("button", { className: "avatar", onClick: setName, title: "Click to change your username" },
+                  progress && progress.name ? progress.name[0].toUpperCase() : "?"
+                )
+              )
+            )
+          )
+        ),
+        React.createElement(
+          "div", { className: "content" },
+          render()
+        ),
+        showTop && React.createElement(
+          "button",
+          {
+            onClick: function() { window.scrollTo({ top: 0, behavior: "smooth" }); },
+            style: {
+              position: "fixed",
+              bottom: "clamp(70px, 10vh, 100px)",
+              right: "clamp(16px, 3vw, 30px)",
+              width: "48px",
+              height: "48px",
+              borderRadius: "50%",
+              background: "var(--amber)",
+              color: "#1B1405",
+              border: "none",
+              fontSize: "22px",
+              fontWeight: 700,
+              cursor: "pointer",
+              boxShadow: "0 4px 16px rgba(245,185,63,0.3)",
+              zIndex: 50,
+              transition: "all 0.3s ease",
               display: "flex",
-              flexDirection: "column",
-              padding: "8px 0",
-              overflowY: "auto",
-              paddingTop: "calc(env(safe-area-inset-top) + 8px)",
-              paddingBottom: "calc(env(safe-area-inset-bottom) + 8px)"
-            }}
-          >
-            <div style={{ padding: "16px 18px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <Wordmark />
-              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setMenuOpen(false)}>
-                <Ic.x p={15} />
-              </button>
-            </div>
-            {navButtons(go)}
-            <div style={{ marginTop: "auto", padding: "14px 18px", borderTop: "1px solid var(--line)" }}>
-              <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
-              <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>
-                Log out
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {notifOpen && (
-        <div className="notif-wrap">
-          <div className="notif-scrim" onClick={() => setNotifOpen(false)} />
-          <div className="notif-panel">
-            <div className="notif-head">
-              <div style={{ fontWeight: 700, fontSize: 15 }}>Announcements</div>
-              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setNotifOpen(false)}>
-                <Ic.x p={15} />
-              </button>
-            </div>
-            {dailyNotDone && (
-              <div className="notif-item" style={{ background: "var(--amber-dim)" }}>
-                <div className="mono" style={{ fontSize: 11, color: "var(--amber-2)", marginBottom: 4 }}>REMINDER</div>
-                <div style={{ fontWeight: 650, marginBottom: 3 }}>Today's daily question is waiting</div>
-                <div style={{ color: "var(--text-2)", fontSize: 13.5, marginBottom: 9 }}>
-                  Keep your streak alive - it only takes a minute.
-                </div>
-                <button className="btn btn-a btn-sm" onClick={() => { 
-                  setNotifOpen(false); 
-                  go("daily"); 
-                }}>
-                  Go to daily
-                </button>
-              </div>
-            )}
-            {ANNOUNCEMENTS.map((a) => (
-              <div className="notif-item" key={a.id}>
-                <div className="mono" style={{ fontSize: 11, color: "var(--amber)", marginBottom: 4 }}>
-                  {a.tag.toUpperCase()}
-                </div>
-                <div style={{ fontWeight: 650, marginBottom: 3 }}>{a.title}</div>
-                <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>{a.body}</div>
-              </div>
-            ))}
-            <div style={{ padding: "14px 18px" }}>
-              <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={() => { 
-                setNotifOpen(false); 
-                go("feedback"); 
-              }}>
-                Send feedback
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showRate && (
-        <div className="notif-wrap" style={{ justifyContent: "center", alignItems: "center" }}>
-          <div className="notif-scrim" onClick={() => setRateDismissed(true)} />
-          <div className="notif-panel" style={{ margin: 0, width: "min(400px, calc(100vw - 32px))", maxHeight: "none" }}>
-            <div style={{ padding: 22, textAlign: "center" }}>
-              <div className="eyebrow" style={{ color: "var(--amber)" }}>Enjoying ASCEND?</div>
-              <h3 style={{ fontSize: 19, margin: "8px 0 4px" }}>Rate your experience</h3>
-              <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0 }}>
-                A quick tap helps us make it better for the whole class.
-              </p>
-              <div style={{ display: "flex", gap: 8, justifyContent: "center", margin: "8px 0 16px" }}>
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <button 
-                    key={s} 
-                    onClick={() => setRateStars(s)} 
-                    style={{ 
-                      background: "none", 
-                      border: "none", 
-                      cursor: "pointer", 
-                      color: rateStars >= s ? "var(--amber)" : "var(--text-3)" 
-                    }}
-                  >
-                    <Ic.star p={30} fill={rateStars >= s ? "currentColor" : "none"} />
-                  </button>
-                ))}
-              </div>
-              <button 
-                className="btn btn-a" 
-                style={{ width: "100%" }} 
-                disabled={rateStars === 0} 
-                onClick={() => { 
-                  store.setShared("ascend_feedback:" + Date.now(), { 
-                    rating: rateStars, 
-                    comment: "", 
-                    timestamp: new Date().toISOString() 
-                  }); 
-                  persist({ ...progress, rated: true }); 
-                  setRateDismissed(true); 
-                }}
-              >
-                Submit
-              </button>
-              <button 
-                className="btn btn-g btn-sm" 
-                style={{ width: "100%", marginTop: 8 }} 
-                onClick={() => { 
-                  persist({ ...progress, ratePromptSeen: true }); 
-                  setRateDismissed(true); 
-                }}
-              >
-                Maybe later
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: "var(--mono)"
+            },
+            onMouseEnter: function(e) {
+              e.target.style.transform = "scale(1.1)";
+              e.target.style.boxShadow = "0 6px 24px rgba(245,185,63,0.5)";
+            },
+            onMouseLeave: function(e) {
+              e.target.style.transform = "scale(1)";
+              e.target.style.boxShadow = "0 4px 16px rgba(245,185,63,0.3)";
+            }
+          },
+          "\u2191"
+        )
+      )
+    ),
+    menuOpen && React.createElement(
+      "div",
+      {
+        className: "mobile-sidebar-overlay",
+        onClick: function() { setMenuOpen(false); },
+        style: {
+          position: "fixed",
+          inset: 0,
+          zIndex: 1000,
+          background: "rgba(0,0,0,0.5)",
+          display: "flex",
+          alignItems: "flex-start",
+          paddingTop: "env(safe-area-inset-top)"
+        }
+      },
+      React.createElement(
+        "div",
+        {
+          className: "mobile-sidebar",
+          onClick: function(e) { e.stopPropagation(); },
+          style: {
+            width: "280px",
+            maxWidth: "80vw",
+            height: "100dvh",
+            background: "var(--bg-2)",
+            borderRight: "1px solid var(--line)",
+            display: "flex",
+            flexDirection: "column",
+            padding: "8px 0",
+            overflowY: "auto",
+            paddingTop: "calc(env(safe-area-inset-top) + 8px)",
+            paddingBottom: "calc(env(safe-area-inset-bottom) + 8px)"
+          }
+        },
+        React.createElement(
+          "div", { style: { padding: "16px 18px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center" } },
+          React.createElement(Wordmark, null),
+          React.createElement("button", { className: "iconbtn", style: { width: 30, height: 30 }, onClick: function() { setMenuOpen(false); } },
+            React.createElement(Ic.x, { p: 15 })
+          )
+        ),
+        navButtons(go),
+        React.createElement(
+          "div", { style: { marginTop: "auto", padding: "14px 18px", borderTop: "1px solid var(--line)" } },
+          React.createElement("div", { className: "note-hint", style: { lineHeight: 1.6, marginBottom: 10 } }, "No gatekeeping."),
+          React.createElement("button", { className: "btn btn-g btn-sm", style: { width: "100%" }, onClick: logout }, "Log out")
+        )
+      )
+    ),
+    notifOpen && React.createElement(
+      "div", { className: "notif-wrap" },
+      React.createElement("div", { className: "notif-scrim", onClick: function() { setNotifOpen(false); } }),
+      React.createElement(
+        "div", { className: "notif-panel" },
+        React.createElement(
+          "div", { className: "notif-head" },
+          React.createElement("div", { style: { fontWeight: 700, fontSize: 15 } }, "Announcements"),
+          React.createElement("button", { className: "iconbtn", style: { width: 30, height: 30 }, onClick: function() { setNotifOpen(false); } },
+            React.createElement(Ic.x, { p: 15 })
+          )
+        ),
+        dailyNotDone && React.createElement(
+          "div", { className: "notif-item", style: { background: "var(--amber-dim)" } },
+          React.createElement("div", { className: "mono", style: { fontSize: 11, color: "var(--amber-2)", marginBottom: 4 } }, "REMINDER"),
+          React.createElement("div", { style: { fontWeight: 650, marginBottom: 3 } }, "Today's daily question is waiting"),
+          React.createElement("div", { style: { color: "var(--text-2)", fontSize: 13.5, marginBottom: 9 } }, "Keep your streak alive - it only takes a minute."),
+          React.createElement("button", { className: "btn btn-a btn-sm", onClick: function() { setNotifOpen(false); go("daily"); } }, "Go to daily")
+        ),
+        ANNOUNCEMENTS.map(function(a) {
+          return React.createElement(
+            "div", { className: "notif-item", key: a.id },
+            React.createElement("div", { className: "mono", style: { fontSize: 11, color: "var(--amber)", marginBottom: 4 } }, a.tag.toUpperCase()),
+            React.createElement("div", { style: { fontWeight: 650, marginBottom: 3 } }, a.title),
+            React.createElement("div", { style: { color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 } }, a.body)
+          );
+        }),
+        React.createElement(
+          "div", { style: { padding: "14px 18px" } },
+          React.createElement("button", { className: "btn btn-g btn-sm", style: { width: "100%" }, onClick: function() { setNotifOpen(false); go("feedback"); } }, "Send feedback")
+        )
+      )
+    ),
+    showRate && React.createElement(
+      "div", { className: "notif-wrap", style: { justifyContent: "center", alignItems: "center" } },
+      React.createElement("div", { className: "notif-scrim", onClick: function() { setRateDismissed(true); } }),
+      React.createElement(
+        "div", { className: "notif-panel", style: { margin: 0, width: "min(400px, calc(100vw - 32px))", maxHeight: "none" } },
+        React.createElement(
+          "div", { style: { padding: 22, textAlign: "center" } },
+          React.createElement("div", { className: "eyebrow", style: { color: "var(--amber)" } }, "Enjoying ASCEND?"),
+          React.createElement("h3", { style: { fontSize: 19, margin: "8px 0 4px" } }, "Rate your experience"),
+          React.createElement("p", { style: { color: "var(--text-2)", fontSize: 13.5, marginTop: 0 } }, "A quick tap helps us make it better for the whole class."),
+          React.createElement(
+            "div", { style: { display: "flex", gap: 8, justifyContent: "center", margin: "8px 0 16px" } },
+            [1, 2, 3, 4, 5].map(function(s) {
+              return React.createElement(
+                "button",
+                {
+                  key: s,
+                  onClick: function() { setRateStars(s); },
+                  style: {
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    color: rateStars >= s ? "var(--amber)" : "var(--text-3)"
+                  }
+                },
+                React.createElement(Ic.star, { p: 30, fill: rateStars >= s ? "currentColor" : "none" })
+              );
+            })
+          ),
+          React.createElement(
+            "button",
+            {
+              className: "btn btn-a",
+              style: { width: "100%" },
+              disabled: rateStars === 0,
+              onClick: function() {
+                store.setShared("ascend_feedback:" + Date.now(), {
+                  rating: rateStars,
+                  comment: "",
+                  timestamp: new Date().toISOString()
+                });
+                persist({ ...progress, rated: true });
+                setRateDismissed(true);
+              }
+            },
+            "Submit"
+          ),
+          React.createElement(
+            "button",
+            {
+              className: "btn btn-g btn-sm",
+              style: { width: "100%", marginTop: 8 },
+              onClick: function() {
+                persist({ ...progress, ratePromptSeen: true });
+                setRateDismissed(true);
+              }
+            },
+            "Maybe later"
+          )
+        )
+      )
+    )
   );
 }
