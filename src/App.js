@@ -16993,7 +16993,7 @@ function PlanView() {
         <div className="eyebrow" style={{ marginBottom: 12 }}>Where you stand</div>
         <div className="plan-row">
           <label className="field"><span>Current CWA (from AIM)</span>
-            <input className="plan-in" inputMode="decimal" value={prevCWA} onChange={(e) => setPrevCWA(e.target.value)} placeholder="e.g. 68.5" />
+            <input className="plan-in" inputMode="decimal" value={prevCWA} onChange={(e) => setPrevCWA(e.target.value)} placeholder="e.g. 78.10" />
           </label>
           <label className="field"><span>Credits completed so far</span>
             <input className="plan-in" inputMode="numeric" value={prevCr} onChange={(e) => setPrevCr(e.target.value)} placeholder="21" />
@@ -17001,7 +17001,7 @@ function PlanView() {
         </div>
         <div className="plan-row" style={{ marginTop: 4 }}>
           <label className="field"><span>Target CWA (what you want to achieve)</span>
-            <input className="plan-in" inputMode="decimal" value={target} onChange={(e) => setTarget(e.target.value)} placeholder="e.g. 70 (Second Class Upper)" />
+            <input className="plan-in" inputMode="decimal" value={target} onChange={(e) => setTarget(e.target.value)} placeholder="e.g. 80.00" />
           </label>
           <label className="field"><span>This semester's credits</span>
             <input className="plan-in" inputMode="numeric" value={thisCr} onChange={(e) => setThisCr(e.target.value)} placeholder="20" />
@@ -17018,7 +17018,7 @@ function PlanView() {
             <path d="M2 12l10 5 10-5" />
           </svg>
           <p style={{ color: "var(--text-2)", fontSize: 13.5, margin: 0, lineHeight: 1.6, flex: 1 }}>
-            This course has no mid-sem or final exams - you just complete it. Most students score between 90-100%. 
+            This course has no mid-sem or final exams - you just complete it on the KNUST student portal. Most students score between 90-100%. 
             Enter your expected score and ASCEND will include it in your calculations.
           </p>
         </div>
