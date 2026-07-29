@@ -17379,7 +17379,6 @@ export default function App() {
     } catch (e) {
       // Silently fail
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Save whenever relevant state changes (covers tab switches, since React
@@ -17387,7 +17386,6 @@ export default function App() {
   // sessionStorage in sync for real unload/reload/history navigation cases)
   useEffect(() => {
     saveAppState();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
 
   // Save on page hide / unload (covers actual tab close or reload, NOT
@@ -17403,7 +17401,6 @@ export default function App() {
       window.removeEventListener("pagehide", onHide);
       window.removeEventListener("beforeunload", onHide);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
 
   // Keep route in sessionStorage + browser history in sync for back/forward nav
