@@ -15760,10 +15760,9 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
   // quick decode guide - this is the single most-missed question type students
   // asked for help with. Two formats show up across passco sets: the standard
   // 5-way A-E code, and a simpler True/False/Neither/Both style.
-  const hasAR = questions.some((it) => / BECAUSE /i.test(it.q || ""));
-  const arIsFiveWay = hasAR && questions.some((it) => (it.o || []).some((o) => /correct explanation/i.test(o)));
-  const [showTip, setShowTip] = useState(true);
-
+  const hasAR = questions.some((it) => / BECAUSE /i.test(it.q || "")) && paper.courseId === "bch";
+const arIsFiveWay = hasAR && questions.some((it) => (it.o || []).some((o) => /correct explanation/i.test(o)));
+const [showTip, setShowTip] = useState(true);
   return (
     <div style={{ marginTop: 12 }}>
       <button className="back" onClick={onExit}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Back to sets</button>
@@ -17416,31 +17415,31 @@ export default function App() {
 
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const onPop = (e) => {
-      let saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : null;
-      if (!saved) {
-        try { 
-          const r = window.sessionStorage.getItem("ascend_route"); 
-          saved = r ? JSON.parse(r) : { view: "home" }; 
-        } catch { saved = { view: "home" }; }
-      }
-      setRoute(saved);
-      setMenuOpen(false);
-      // Restore scroll position after navigation
-      try {
-        const savedScroll = window.sessionStorage.getItem("ascend_scroll");
-        if (savedScroll) {
-          const scrollY = parseInt(savedScroll, 10);
-          if (scrollY > 0) {
-            setTimeout(() => window.scrollTo(0, scrollY), 100);
-          }
+  if (typeof window === "undefined") return;
+  const onPop = (e) => {
+    let saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : null;
+    if (!saved) {
+      try { 
+        const r = window.sessionStorage.getItem("ascend_route"); 
+        saved = r ? JSON.parse(r) : { view: "home" }; 
+      } catch { saved = { view: "home" }; }
+    }
+    setRoute(saved);
+    setMenuOpen(false);
+    // Restore scroll position after navigation
+    try {
+      const savedScroll = window.sessionStorage.getItem("ascend_scroll");
+      if (savedScroll) {
+        const scrollY = parseInt(savedScroll, 10);
+        if (scrollY > 0) {
+          setTimeout(() => window.scrollTo(0, scrollY), 100);
         }
-      } catch {}
-    };
-    window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
-  }, []);
+      }
+    } catch {}
+  };
+  window.addEventListener("popstate", onPop);
+  return () => window.removeEventListener("popstate", onPop);
+}, [setRoute]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17507,6 +17506,25 @@ export default function App() {
 
     // Route/scroll restoration is handled once by the dedicated
     // mount-restore effect above; not duplicated here.
+    // Restore route from sessionStorage on page load
+try {
+  const savedRoute = window.sessionStorage.getItem("ascend_route");
+  if (savedRoute) {
+    const parsed = JSON.parse(savedRoute);
+    if (parsed && parsed.view) {
+      setRoute(parsed);
+    }
+  }
+  const savedScroll = window.sessionStorage.getItem("ascend_scroll");
+  if (savedScroll) {
+    const scrollY = parseInt(savedScroll, 10);
+    if (scrollY > 0) {
+      setTimeout(() => window.scrollTo(0, scrollY), 100);
+    }
+  }
+} catch (e) {
+  // Silently fail
+}
 
     (async () => {
       const t = await store.get("ascend_theme");
