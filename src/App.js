@@ -17848,23 +17848,6 @@ try {
   );
 
   if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
-
-  // Handle OAuth redirect callback in PWA mode
-useEffect(() => {
-  // Check if we're returning from Google OAuth
-  const urlParams = new URLSearchParams(window.location.search);
-  const hash = window.location.hash;
-  
-  // If there's an access token in the URL, it's an OAuth callback
-  if (hash && hash.includes('access_token')) {
-    // The app will handle this via the onAuthStateChange listener
-    // Just clean up the URL to remove the hash
-    try {
-      window.history.replaceState(null, "", window.location.pathname + window.location.search);
-    } catch {}
-  }
-}, []);
-
   return (
     <div className={rootCls}>
       <style>{CSS}</style>
