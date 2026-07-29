@@ -17322,7 +17322,40 @@ export default function App() {
   }, []);
 
   // ============================================================
-  // 5. ROUTE PERSISTENCE useEffects
+  // 5. COMPREHENSIVE STATE SAVE on page unload
+  // ============================================================
+  useEffect(() => {
+    const saveEverything = () => {
+      try {
+        window.sessionStorage.setItem("ascend_route", JSON.stringify(route));
+        window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
+        window.sessionStorage.setItem("ascend_theme_saved", theme);
+        window.sessionStorage.setItem("ascend_menu_open", String(menuOpen));
+        window.sessionStorage.setItem("ascend_notif_open", String(notifOpen));
+        if (lastTopic) {
+          window.sessionStorage.setItem("ascend_last_topic", JSON.stringify(lastTopic));
+        }
+      } catch {}
+    };
+    
+    window.addEventListener("beforeunload", saveEverything);
+    window.addEventListener("pagehide", saveEverything);
+    
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        saveEverything();
+      }
+    });
+    
+    return () => {
+      window.removeEventListener("beforeunload", saveEverything);
+      window.removeEventListener("pagehide", saveEverything);
+      document.removeEventListener("visibilitychange", saveEverything);
+    };
+  }, [route, theme, menuOpen, notifOpen, lastTopic]);
+
+  // ============================================================
+  // 6. ROUTE PERSISTENCE useEffects
   // ============================================================
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -17362,7 +17395,7 @@ export default function App() {
   }, []);
 
   // ============================================================
-  // 6. MAIN LOADING EFFECT
+  // 7. MAIN LOADING EFFECT
   // ============================================================
   useEffect(() => {
     const link = document.createElement("link");
@@ -17370,8 +17403,6 @@ export default function App() {
     link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap";
     document.head.appendChild(link);
 
-    // Notch fix: env(safe-area-inset-*) in the CSS does nothing unless the
-    // viewport explicitly opts into the safe-area layout with viewport-fit=cover.
     let viewport = document.querySelector('meta[name="viewport"]');
     if (!viewport) { viewport = document.createElement("meta"); viewport.name = "viewport"; document.head.appendChild(viewport); }
     if (!/viewport-fit=cover/.test(viewport.content || "")) {
@@ -17387,8 +17418,6 @@ export default function App() {
     let meta = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
     if (!meta) { meta = document.createElement("meta"); meta.name = "apple-mobile-web-app-capable"; meta.content = "yes"; document.head.appendChild(meta); }
 
-    // Status bar style + home-screen title, so ASCEND looks like a real app once
-    // added to the home screen, not just a bookmark with the wrong bar colour.
     if (!document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')) {
       const m = document.createElement("meta");
       m.name = "apple-mobile-web-app-status-bar-style"; m.content = "black-translucent";
@@ -17404,9 +17433,6 @@ export default function App() {
       m.name = "theme-color"; m.content = "#0A0F1A";
       document.head.appendChild(m);
     }
-    // Android/Chrome "Add to Home Screen" reads this for name + icons + display
-    // mode. If public/manifest.json does not exist yet in the project, this link
-    // tag alone will 404 quietly and Chrome just won't offer the install prompt.
     if (!document.querySelector('link[rel="manifest"]')) {
       const m = document.createElement("link");
       m.rel = "manifest"; m.href = "/manifest.json";
@@ -17427,11 +17453,6 @@ export default function App() {
         const { data } = await supabase.auth.getSession();
         const sUser = data && data.session ? data.session.user : null;
         if (sUser) {
-          // Supabase parses access_token/refresh_token straight out of the URL
-          // hash on load. If that hash is ever left in the address bar, copying
-          // or sharing the link hands the recipient this exact session - which
-          // is how a "fresh" phone can land on Home already signed in as someone
-          // else. Scrub it the moment it's been consumed.
           if (window.location.hash && /access_token=/.test(window.location.hash)) {
             try { window.history.replaceState(null, "", window.location.pathname + window.location.search); } catch {}
           }
@@ -17475,7 +17496,7 @@ export default function App() {
   }, []);
 
   // ============================================================
-  // 7. adoptSupabaseUser, handleAuthed, logout, toggleTheme
+  // 8. adoptSupabaseUser, handleAuthed, logout, toggleTheme
   // ============================================================
   const adoptSupabaseUser = async (sUser) => {
     const uid = sUser.id;
@@ -17556,388 +17577,371 @@ export default function App() {
   };
 
   const finishQuiz = (cid, tid, correct, missed = [], total = 0) => {
-  const tkey = `${cid}:${tid}`;
-  const firstTime = !progress.completed?.[tkey];
-  
-  // FIX: Always award XP for correct answers
-  const baseXp = correct * 10;  // 10 XP per correct answer
-  const bonusXp = firstTime ? correct * 5 : 0;  // Bonus for first-time completion
-  
-  const multiplier = getStreakMultiplier(progress.streak);
-  const gained = Math.round((baseXp + bonusXp) * multiplier.multiplier);
-  
-  const prevReview = Array.isArray(progress.review) ? progress.review : [];
-  const seen = new Set(prevReview.map((m) => m.q));
-  const merged = [...prevReview];
-  for (const m of missed) { 
-    if (!seen.has(m.q)) { 
-      merged.push(m); 
-      seen.add(m.q); 
-    } 
-  }
-  
-  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
-  const prevScores = progress.scores || {};
-  const bestPrev = prevScores[tkey] || 0;
-  const scores = { ...prevScores, [tkey]: Math.max(bestPrev, pct) };
-  
-  const newXp = progress.xp + gained;
-  
-  setXpChange(newXp);
-  persist({ 
-    ...progress, 
-    xp: newXp, 
-    completed: { ...progress.completed, [tkey]: true }, 
-    review: merged, 
-    scores 
-  });
-};
-
-const toggleBookmark = (cid, tid) => {
-  const key = `${cid}:${tid}`;
-  const prev = Array.isArray(progress.bookmarks) ? progress.bookmarks : [];
-  const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
-  persist({ ...progress, bookmarks: next });
-};
-
-// CLEAR REVIEW ITEM - Remove a question from review deck
-const clearReviewItem = (questionText) => {
-  const prev = Array.isArray(progress.review) ? progress.review : [];
-  persist({ ...progress, review: prev.filter((m) => m.q !== questionText) });
-};
-
-const setName = async () => {
-  if (typeof window === "undefined") return;
-  const raw = window.prompt("Change your username (this is your name on the leaderboard)", progress.name);
-  if (!raw) return;
-  const newName = raw.trim().slice(0, 24);
-  if (newName.length < 2 || newName === progress.name) return;
-
-  if (supaUid) {
-    try {
-      await supabase.from("profiles").upsert({
-        id: supaUid, 
-        name: newName, 
-        username: newName,
-        xp: progress.xp || 0, 
-        streak: progress.streak || 0,
-        updated_at: new Date().toISOString(),
-      });
-    } catch {}
-    persist({ ...progress, name: newName });
-    return;
-  }
-  
-  if (progress.name) {
-    const oldBoardKey = "ascend_board:" + String(progress.name).toLowerCase().replace(/[^a-z0-9]/g, "");
-    try { 
-      if (hasWS()) { 
-        await window.storage.delete?.(oldBoardKey, true); 
-      } else { 
-        localStorage.removeItem(oldBoardKey); 
-      } 
-    } catch {}
-  }
-  
-  if (auth) {
-    const accounts = (await store.get("ascend_accounts")) || {};
-    const key = auth.username.toLowerCase();
-    if (accounts[key]) { 
-      accounts[key] = { ...accounts[key], name: newName }; 
-      await store.set("ascend_accounts", accounts); 
-    }
-  }
-  persist({ ...progress, name: newName });
-};
-
-// READING XP - Award XP for reading topics with streak multiplier
-const setReadingXp = (newXp) => {
-  const key = `${route.courseId}:${route.topicId}`;
-  const awarded = sessionStorage.getItem('ascend_read_' + key);
-  if (awarded) return;
-  sessionStorage.setItem('ascend_read_' + key, 'true');
-  const multiplier = getStreakMultiplier(progress.streak);
-  const baseXp = 15;
-  const gained = Math.round(baseXp * multiplier.multiplier);
-  const updated = { ...progress, xp: progress.xp + gained };
-  setProgress(updated);
-  persist(updated);
-};
-
-// PASSCO XP - Award XP for completing past papers with streak multiplier
-const setPasscoXp = (earnedXp) => {
-  const key = `passco_${Date.now()}`;
-  const awarded = sessionStorage.getItem('ascend_passco_' + key);
-  if (awarded) return;
-  sessionStorage.setItem('ascend_passco_' + key, 'true');
-  const multiplier = getStreakMultiplier(progress.streak);
-  const gained = Math.round(earnedXp * multiplier.multiplier);
-  const updated = { 
-    ...progress, 
-    xp: progress.xp + gained, 
-    passcoCompleted: (progress.passcoCompleted || 0) + 1 
-  };
-  setProgress(updated);
-  persist(updated);
-  
-  // Show notification
-  sessionStorage.setItem('ascend_passco_notif', JSON.stringify({
-    earned: gained,
-    total: updated.xp
-  }));
-};
-  const app = { 
-  progress, 
-  go, 
-  recordDaily, 
-  finishQuiz, 
-  clearReviewItem,
-  toggleBookmark, 
-  supaUid, 
-  courseId: route.courseId, 
-  topicId: route.topicId, 
-  setName,
-  setReadingXp,
-  setPasscoXp,
-  getStreakMultiplier
-};
-
-const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
-
-const navButtons = (onNav) => NAV.map((n) => {
-  const Icon = Ic[n.icon];
-  return <button key={n.key} className={"navi " + (activeNav === n.key ? "on" : "")} onClick={() => onNav(n.key)}><Icon p={19} />{n.label}</button>;
-});
-
-const render = () => {
-  switch (route.view) {
-    case "home": return <HomeView app={app} />;
-    case "courses": return <CoursesView app={app} />;
-    case "course": return <CourseView app={app} />;
-    case "topic": return <TopicView app={app} />;
-    case "quiz": return <QuizView app={app} />;
-    case "daily": return <DailyView app={app} />;
-    case "ranks": return <RanksView app={app} />;
-    case "review": return <ReviewView app={app} />;
-    case "tools": return <StudyToolsView />;
-    case "papers": return <PapersView app={app} />;
-    case "plan": return <PlanView />;
-    case "resources": return <ResourcesView />;
-    case "lamla": return <LAMLAView app={app} />;
-    case "feedback": return <FeedbackView />;
-    case "viewfeedback": return <ViewFeedbackView />;
-    default: return <HomeView app={app} />;
-  }
-};
-
-const r = rankOf(progress?.xp || 0);
-const rootCls = "ascend-root" + (theme === "light" ? " light" : "");
-const dailyNotDone = !progress?.dailyDone?.[todayKey()];
-const unreadAnn = (progress?.seenAnn || 0) < ANNOUNCEMENTS.length;
-const hasUnread = unreadAnn || dailyNotDone;
-const openNotif = () => { setNotifOpen(true); if (unreadAnn && progress) persist({ ...progress, seenAnn: ANNOUNCEMENTS.length }); };
-const showRate = !!auth && (progress?.xp || 0) >= 30 && !progress?.rated && !progress?.ratePromptSeen && !rateDismissed && route.view !== "feedback";
-// ============================================================
-// FINAL RETURN STATEMENT - ONLY ONE!
-// ============================================================
-// ============================================================
-// LOADING STATE - Simple spinner
-// ============================================================
-// ============================================================
-// LOADING STATE - Simple spinner (does NOT touch progress/render(),
-// since progress is still null at this point)
-// ============================================================
-if (!loaded) return (
-  <div className={rootCls}>
-    <style>{CSS}</style>
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18, minHeight: "100vh" }}>
-      <Wordmark />
-      <div className="spinner-ring" />
-    </div>
-  </div>
-);
-
-// ============================================================
-// AUTH GATE - show the login/signup screen when nobody is signed in.
-// Without this, the app fell straight through to the main UI while
-// `progress` was still null, crashing on `progress.dailyDone` etc.
-// ============================================================
-if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
-
-return (
-  <div className={rootCls}>
-    <style>{CSS}</style>
+    const tkey = `${cid}:${tid}`;
+    const firstTime = !progress.completed?.[tkey];
     
-    <div className="shell">
-      <aside className="side">
-        <div style={{ padding: "0 6px 18px" }}><Wordmark /></div>
-        {navButtons(go)}
-        <div style={{ marginTop: "auto", padding: "14px 10px 0", borderTop: "1px solid var(--line)" }}>
-          <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
-          <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
-        </div>
-      </aside>
+    // FIX: Always award XP for correct answers
+    const baseXp = correct * 10;
+    const bonusXp = firstTime ? correct * 5 : 0;
+    
+    const multiplier = getStreakMultiplier(progress.streak);
+    const gained = Math.round((baseXp + bonusXp) * multiplier.multiplier);
+    
+    const prevReview = Array.isArray(progress.review) ? progress.review : [];
+    const seen = new Set(prevReview.map((m) => m.q));
+    const merged = [...prevReview];
+    for (const m of missed) { 
+      if (!seen.has(m.q)) { 
+        merged.push(m); 
+        seen.add(m.q); 
+      } 
+    }
+    
+    const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+    const prevScores = progress.scores || {};
+    const bestPrev = prevScores[tkey] || 0;
+    const scores = { ...prevScores, [tkey]: Math.max(bestPrev, pct) };
+    
+    const newXp = progress.xp + gained;
+    
+    setXpChange(newXp);
+    persist({ 
+      ...progress, 
+      xp: newXp, 
+      completed: { ...progress.completed, [tkey]: true }, 
+      review: merged, 
+      scores 
+    });
+  };
 
-      <div className="main">
-        <header className="topbar">
-          <div className="topbar-inner">
-            <button 
-              className="iconbtn onlymobile" 
-              onClick={() => setMenuOpen(true)} 
-              aria-label="Open menu"
-            >
-              <Ic.menu p={18} />
-            </button>
-            <div className="onlymobile" style={{ flex: 1 }}><Wordmark /></div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
-              <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
-              <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
-              <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
-              <span className="chip"><span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP</span>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
-                <button className="avatar" onClick={setName} title="Click to change your username">{progress?.name?.[0]?.toUpperCase() || "?"}</button>
-              </div>
-            </div>
-          </div>
-        </header>
-        
-        <div className="content">{render()}</div>
-        
-        {showTop && (
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            style={{
-              position: "fixed",
-              bottom: "clamp(70px, 10vh, 100px)",
-              right: "clamp(16px, 3vw, 30px)",
-              width: "48px",
-              height: "48px",
-              borderRadius: "50%",
-              background: "var(--amber)",
-              color: "#1B1405",
-              border: "none",
-              fontSize: "22px",
-              fontWeight: 700,
-              cursor: "pointer",
-              boxShadow: "0 4px 16px rgba(245,185,63,0.3)",
-              zIndex: 50,
-              transition: "all 0.3s ease",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontFamily: "var(--mono)"
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = "scale(1.1)";
-              e.target.style.boxShadow = "0 6px 24px rgba(245,185,63,0.5)";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = "scale(1)";
-              e.target.style.boxShadow = "0 4px 16px rgba(245,185,63,0.3)";
-            }}
-          >
-            ↑
-          </button>
-        )}
+  const toggleBookmark = (cid, tid) => {
+    const key = `${cid}:${tid}`;
+    const prev = Array.isArray(progress.bookmarks) ? progress.bookmarks : [];
+    const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
+    persist({ ...progress, bookmarks: next });
+  };
+
+  const clearReviewItem = (questionText) => {
+    const prev = Array.isArray(progress.review) ? progress.review : [];
+    persist({ ...progress, review: prev.filter((m) => m.q !== questionText) });
+  };
+
+  const setName = async () => {
+    if (typeof window === "undefined") return;
+    const raw = window.prompt("Change your username (this is your name on the leaderboard)", progress.name);
+    if (!raw) return;
+    const newName = raw.trim().slice(0, 24);
+    if (newName.length < 2 || newName === progress.name) return;
+
+    if (supaUid) {
+      try {
+        await supabase.from("profiles").upsert({
+          id: supaUid, 
+          name: newName, 
+          username: newName,
+          xp: progress.xp || 0, 
+          streak: progress.streak || 0,
+          updated_at: new Date().toISOString(),
+        });
+      } catch {}
+      persist({ ...progress, name: newName });
+      return;
+    }
+    
+    if (progress.name) {
+      const oldBoardKey = "ascend_board:" + String(progress.name).toLowerCase().replace(/[^a-z0-9]/g, "");
+      try { 
+        if (hasWS()) { 
+          await window.storage.delete?.(oldBoardKey, true); 
+        } else { 
+          localStorage.removeItem(oldBoardKey); 
+        } 
+      } catch {}
+    }
+    
+    if (auth) {
+      const accounts = (await store.get("ascend_accounts")) || {};
+      const key = auth.username.toLowerCase();
+      if (accounts[key]) { 
+        accounts[key] = { ...accounts[key], name: newName }; 
+        await store.set("ascend_accounts", accounts); 
+      }
+    }
+    persist({ ...progress, name: newName });
+  };
+
+  const setReadingXp = (newXp) => {
+    const key = `${route.courseId}:${route.topicId}`;
+    const awarded = sessionStorage.getItem('ascend_read_' + key);
+    if (awarded) return;
+    sessionStorage.setItem('ascend_read_' + key, 'true');
+    const multiplier = getStreakMultiplier(progress.streak);
+    const baseXp = 15;
+    const gained = Math.round(baseXp * multiplier.multiplier);
+    const updated = { ...progress, xp: progress.xp + gained };
+    setProgress(updated);
+    persist(updated);
+  };
+
+  const setPasscoXp = (earnedXp) => {
+    const key = `passco_${Date.now()}`;
+    const awarded = sessionStorage.getItem('ascend_passco_' + key);
+    if (awarded) return;
+    sessionStorage.setItem('ascend_passco_' + key, 'true');
+    const multiplier = getStreakMultiplier(progress.streak);
+    const gained = Math.round(earnedXp * multiplier.multiplier);
+    const updated = { 
+      ...progress, 
+      xp: progress.xp + gained, 
+      passcoCompleted: (progress.passcoCompleted || 0) + 1 
+    };
+    setProgress(updated);
+    persist(updated);
+    
+    sessionStorage.setItem('ascend_passco_notif', JSON.stringify({
+      earned: gained,
+      total: updated.xp
+    }));
+  };
+
+  const app = { 
+    progress, 
+    go, 
+    recordDaily, 
+    finishQuiz, 
+    clearReviewItem,
+    toggleBookmark, 
+    supaUid, 
+    courseId: route.courseId, 
+    topicId: route.topicId, 
+    setName,
+    setReadingXp,
+    setPasscoXp,
+    getStreakMultiplier
+  };
+
+  const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
+
+  const navButtons = (onNav) => NAV.map((n) => {
+    const Icon = Ic[n.icon];
+    return <button key={n.key} className={"navi " + (activeNav === n.key ? "on" : "")} onClick={() => onNav(n.key)}><Icon p={19} />{n.label}</button>;
+  });
+
+  const render = () => {
+    switch (route.view) {
+      case "home": return <HomeView app={app} />;
+      case "courses": return <CoursesView app={app} />;
+      case "course": return <CourseView app={app} />;
+      case "topic": return <TopicView app={app} />;
+      case "quiz": return <QuizView app={app} />;
+      case "daily": return <DailyView app={app} />;
+      case "ranks": return <RanksView app={app} />;
+      case "review": return <ReviewView app={app} />;
+      case "tools": return <StudyToolsView />;
+      case "papers": return <PapersView app={app} />;
+      case "plan": return <PlanView />;
+      case "resources": return <ResourcesView />;
+      case "lamla": return <LAMLAView app={app} />;
+      case "feedback": return <FeedbackView />;
+      case "viewfeedback": return <ViewFeedbackView />;
+      default: return <HomeView app={app} />;
+    }
+  };
+
+  const r = rankOf(progress?.xp || 0);
+  const rootCls = "ascend-root" + (theme === "light" ? " light" : "");
+  const dailyNotDone = !progress?.dailyDone?.[todayKey()];
+  const unreadAnn = (progress?.seenAnn || 0) < ANNOUNCEMENTS.length;
+  const hasUnread = unreadAnn || dailyNotDone;
+  const openNotif = () => { setNotifOpen(true); if (unreadAnn && progress) persist({ ...progress, seenAnn: ANNOUNCEMENTS.length }); };
+  const showRate = !!auth && (progress?.xp || 0) >= 30 && !progress?.rated && !progress?.ratePromptSeen && !rateDismissed && route.view !== "feedback";
+
+  if (!loaded) return (
+    <div className={rootCls}>
+      <style>{CSS}</style>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18, minHeight: "100vh" }}>
+        <Wordmark />
+        <div className="spinner-ring" />
       </div>
     </div>
+  );
 
-    {menuOpen && (
-      <div 
-        className="mobile-sidebar-overlay" 
-        onClick={() => setMenuOpen(false)}
-        style={{ 
-          position: "fixed",
-          inset: 0,
-          zIndex: 1000,
-          background: "rgba(0,0,0,0.5)",
-          display: "flex",
-          alignItems: "flex-start",
-          paddingTop: "env(safe-area-inset-top)"
-        }}
-      >
-        <div 
-          className="mobile-sidebar" 
-          onClick={(e) => e.stopPropagation()}
-          style={{
-            width: "280px",
-            maxWidth: "80vw",
-            height: "100dvh",
-            background: "var(--bg-2)",
-            borderRight: "1px solid var(--line)",
-            display: "flex",
-            flexDirection: "column",
-            padding: "8px 0",
-            overflowY: "auto",
-            paddingTop: "calc(env(safe-area-inset-top) + 8px)",
-            paddingBottom: "calc(env(safe-area-inset-bottom) + 8px)"
-          }}
-        >
-          <div style={{ padding: "16px 18px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Wordmark />
-            <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setMenuOpen(false)}><Ic.x p={15} /></button>
-          </div>
+  if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
+
+  return (
+    <div className={rootCls}>
+      <style>{CSS}</style>
+      
+      <div className="shell">
+        <aside className="side">
+          <div style={{ padding: "0 6px 18px" }}><Wordmark /></div>
           {navButtons(go)}
-          <div style={{ marginTop: "auto", padding: "14px 18px", borderTop: "1px solid var(--line)" }}>
+          <div style={{ marginTop: "auto", padding: "14px 10px 0", borderTop: "1px solid var(--line)" }}>
             <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
             <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
           </div>
-        </div>
-      </div>
-    )}
+        </aside>
 
-    {notifOpen && (
-      <div className="notif-wrap">
-        <div className="notif-scrim" onClick={() => setNotifOpen(false)} />
-        <div className="notif-panel">
-          <div className="notif-head">
-            <div style={{ fontWeight: 700, fontSize: 15 }}>Announcements</div>
-            <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setNotifOpen(false)}><Ic.x p={15} /></button>
-          </div>
-          {dailyNotDone && (
-            <div className="notif-item" style={{ background: "var(--amber-dim)" }}>
-              <div className="mono" style={{ fontSize: 11, color: "var(--amber-2)", marginBottom: 4 }}>REMINDER</div>
-              <div style={{ fontWeight: 650, marginBottom: 3 }}>Today's daily question is waiting</div>
-              <div style={{ color: "var(--text-2)", fontSize: 13.5, marginBottom: 9 }}>Keep your streak alive - it only takes a minute.</div>
-              <button className="btn btn-a btn-sm" onClick={() => { setNotifOpen(false); go("daily"); }}>Go to daily</button>
+        <div className="main">
+          <header className="topbar">
+            <div className="topbar-inner">
+              <button 
+                className="iconbtn onlymobile" 
+                onClick={() => setMenuOpen(true)} 
+                aria-label="Open menu"
+              >
+                <Ic.menu p={18} />
+              </button>
+              <div className="onlymobile" style={{ flex: 1 }}><Wordmark /></div>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
+                <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
+                <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
+                <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
+                <span className="chip"><span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP</span>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
+                  <button className="avatar" onClick={setName} title="Click to change your username">{progress?.name?.[0]?.toUpperCase() || "?"}</button>
+                </div>
+              </div>
             </div>
+          </header>
+          
+          <div className="content">{render()}</div>
+          
+          {showTop && (
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              style={{
+                position: "fixed",
+                bottom: "clamp(70px, 10vh, 100px)",
+                right: "clamp(16px, 3vw, 30px)",
+                width: "48px",
+                height: "48px",
+                borderRadius: "50%",
+                background: "var(--amber)",
+                color: "#1B1405",
+                border: "none",
+                fontSize: "22px",
+                fontWeight: 700,
+                cursor: "pointer",
+                boxShadow: "0 4px 16px rgba(245,185,63,0.3)",
+                zIndex: 50,
+                transition: "all 0.3s ease",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: "var(--mono)"
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = "scale(1.1)";
+                e.target.style.boxShadow = "0 6px 24px rgba(245,185,63,0.5)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = "scale(1)";
+                e.target.style.boxShadow = "0 4px 16px rgba(245,185,63,0.3)";
+              }}
+            >
+              ↑
+            </button>
           )}
-          {ANNOUNCEMENTS.map((a) => (
-            <div className="notif-item" key={a.id}>
-              <div className="mono" style={{ fontSize: 11, color: "var(--amber)", marginBottom: 4 }}>{a.tag.toUpperCase()}</div>
-              <div style={{ fontWeight: 650, marginBottom: 3 }}>{a.title}</div>
-              <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>{a.body}</div>
-            </div>
-          ))}
-          <div style={{ padding: "14px 18px" }}>
-            <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={() => { setNotifOpen(false); go("feedback"); }}>Send feedback</button>
-          </div>
         </div>
       </div>
-    )}
 
-    {showRate && (
-      <div className="notif-wrap" style={{ justifyContent: "center", alignItems: "center" }}>
-        <div className="notif-scrim" onClick={() => setRateDismissed(true)} />
-        <div className="notif-panel" style={{ margin: 0, width: "min(400px, calc(100vw - 32px))", maxHeight: "none" }}>
-          <div style={{ padding: 22, textAlign: "center" }}>
-            <div className="eyebrow" style={{ color: "var(--amber)" }}>Enjoying ASCEND?</div>
-            <h3 style={{ fontSize: 19, margin: "8px 0 4px" }}>Rate your experience</h3>
-            <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0 }}>A quick tap helps us make it better for the whole class.</p>
-            <div style={{ display: "flex", gap: 8, justifyContent: "center", margin: "8px 0 16px" }}>
-              {[1, 2, 3, 4, 5].map((s) => (
-                <button key={s} onClick={() => setRateStars(s)} style={{ background: "none", border: "none", cursor: "pointer", color: rateStars >= s ? "var(--amber)" : "var(--text-3)" }}>
-                  <Ic.star p={30} fill={rateStars >= s ? "currentColor" : "none"} />
-                </button>
-              ))}
+      {menuOpen && (
+        <div 
+          className="mobile-sidebar-overlay" 
+          onClick={() => setMenuOpen(false)}
+          style={{ 
+            position: "fixed",
+            inset: 0,
+            zIndex: 1000,
+            background: "rgba(0,0,0,0.5)",
+            display: "flex",
+            alignItems: "flex-start",
+            paddingTop: "env(safe-area-inset-top)"
+          }}
+        >
+          <div 
+            className="mobile-sidebar" 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "280px",
+              maxWidth: "80vw",
+              height: "100dvh",
+              background: "var(--bg-2)",
+              borderRight: "1px solid var(--line)",
+              display: "flex",
+              flexDirection: "column",
+              padding: "8px 0",
+              overflowY: "auto",
+              paddingTop: "calc(env(safe-area-inset-top) + 8px)",
+              paddingBottom: "calc(env(safe-area-inset-bottom) + 8px)"
+            }}
+          >
+            <div style={{ padding: "16px 18px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <Wordmark />
+              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setMenuOpen(false)}><Ic.x p={15} /></button>
             </div>
-            <button className="btn btn-a" style={{ width: "100%" }} disabled={rateStars === 0} onClick={() => { store.setShared("ascend_feedback:" + Date.now(), { rating: rateStars, comment: "", timestamp: new Date().toISOString() }); persist({ ...progress, rated: true }); setRateDismissed(true); }}>Submit</button>
-            <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 8 }} onClick={() => { persist({ ...progress, ratePromptSeen: true }); setRateDismissed(true); }}>Maybe later</button>
+            {navButtons(go)}
+            <div style={{ marginTop: "auto", padding: "14px 18px", borderTop: "1px solid var(--line)" }}>
+              <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
+              <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
+            </div>
           </div>
         </div>
-      </div>
-    )}
-  </div>
-);
+      )}
+
+      {notifOpen && (
+        <div className="notif-wrap">
+          <div className="notif-scrim" onClick={() => setNotifOpen(false)} />
+          <div className="notif-panel">
+            <div className="notif-head">
+              <div style={{ fontWeight: 700, fontSize: 15 }}>Announcements</div>
+              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setNotifOpen(false)}><Ic.x p={15} /></button>
+            </div>
+            {dailyNotDone && (
+              <div className="notif-item" style={{ background: "var(--amber-dim)" }}>
+                <div className="mono" style={{ fontSize: 11, color: "var(--amber-2)", marginBottom: 4 }}>REMINDER</div>
+                <div style={{ fontWeight: 650, marginBottom: 3 }}>Today's daily question is waiting</div>
+                <div style={{ color: "var(--text-2)", fontSize: 13.5, marginBottom: 9 }}>Keep your streak alive - it only takes a minute.</div>
+                <button className="btn btn-a btn-sm" onClick={() => { setNotifOpen(false); go("daily"); }}>Go to daily</button>
+              </div>
+            )}
+            {ANNOUNCEMENTS.map((a) => (
+              <div className="notif-item" key={a.id}>
+                <div className="mono" style={{ fontSize: 11, color: "var(--amber)", marginBottom: 4 }}>{a.tag.toUpperCase()}</div>
+                <div style={{ fontWeight: 650, marginBottom: 3 }}>{a.title}</div>
+                <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>{a.body}</div>
+              </div>
+            ))}
+            <div style={{ padding: "14px 18px" }}>
+              <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={() => { setNotifOpen(false); go("feedback"); }}>Send feedback</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showRate && (
+        <div className="notif-wrap" style={{ justifyContent: "center", alignItems: "center" }}>
+          <div className="notif-scrim" onClick={() => setRateDismissed(true)} />
+          <div className="notif-panel" style={{ margin: 0, width: "min(400px, calc(100vw - 32px))", maxHeight: "none" }}>
+            <div style={{ padding: 22, textAlign: "center" }}>
+              <div className="eyebrow" style={{ color: "var(--amber)" }}>Enjoying ASCEND?</div>
+              <h3 style={{ fontSize: 19, margin: "8px 0 4px" }}>Rate your experience</h3>
+              <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0 }}>A quick tap helps us make it better for the whole class.</p>
+              <div style={{ display: "flex", gap: 8, justifyContent: "center", margin: "8px 0 16px" }}>
+                {[1, 2, 3, 4, 5].map((s) => (
+                  <button key={s} onClick={() => setRateStars(s)} style={{ background: "none", border: "none", cursor: "pointer", color: rateStars >= s ? "var(--amber)" : "var(--text-3)" }}>
+                    <Ic.star p={30} fill={rateStars >= s ? "currentColor" : "none"} />
+                  </button>
+                ))}
+              </div>
+              <button className="btn btn-a" style={{ width: "100%" }} disabled={rateStars === 0} onClick={() => { store.setShared("ascend_feedback:" + Date.now(), { rating: rateStars, comment: "", timestamp: new Date().toISOString() }); persist({ ...progress, rated: true }); setRateDismissed(true); }}>Submit</button>
+              <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 8 }} onClick={() => { persist({ ...progress, ratePromptSeen: true }); setRateDismissed(true); }}>Maybe later</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
