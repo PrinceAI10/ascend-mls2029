@@ -15227,17 +15227,74 @@ function YouTubeView() {
   );
 }
 function PapersView({ app }) {
-  const [tab, setTab] = useState("passco");
-  const [courseId, setCourseId] = useState("ana");
-  const [sample, setSample] = useState("");
+  // PERSISTENCE: Load from sessionStorage on mount
+  const [tab, setTab] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_papers_tab');
+      return saved || "passco";
+    } catch { return "passco"; }
+  });
+  
+  const [courseId, setCourseId] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_papers_course');
+      return saved || "ana";
+    } catch { return "ana"; }
+  });
+  
+  const [sample, setSample] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_papers_sample');
+      return saved || "";
+    } catch { return ""; }
+  });
+  
+  const [similarCount, setSimilarCount] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_papers_count');
+      return saved ? parseInt(saved, 10) : 10;
+    } catch { return 10; }
+  });
+  
+  const [active, setActive] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_papers_active');
+      return saved ? JSON.parse(saved) : null;
+    } catch { return null; }
+  });
+  
+  const [items, setItems] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_papers_items');
+      return saved ? JSON.parse(saved) : null;
+    } catch { return null; }
+  });
+  
+  const [err, setErr] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_papers_err');
+      return saved || "";
+    } catch { return ""; }
+  });
+  
   const [busy, setBusy] = useState(false);
-  const [items, setItems] = useState(null);
-  const [err, setErr] = useState("");
-  const [similarCount, setSimilarCount] = useState(10);
-  const [active, setActive] = useState(null);
   const [passcoNotif, setPasscoNotif] = useState(null);
-  const count = tab === "solve" ? 100 : similarCount;  // CHANGED: 100 for practice sets
+  
+  const count = tab === "solve" ? 100 : similarCount;
   const CHUNK = 50;
+  
+  // SAVE: Persist all state changes
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('ascend_papers_tab', tab);
+      sessionStorage.setItem('ascend_papers_course', courseId);
+      sessionStorage.setItem('ascend_papers_sample', sample);
+      sessionStorage.setItem('ascend_papers_count', String(similarCount));
+      if (active) sessionStorage.setItem('ascend_papers_active', JSON.stringify(active));
+      if (items) sessionStorage.setItem('ascend_papers_items', JSON.stringify(items));
+      if (err) sessionStorage.setItem('ascend_papers_err', err);
+    } catch {}
+  }, [tab, courseId, sample, similarCount, active, items, err]);
   
   // Save PapersView state when it changes
   useEffect(() => {
@@ -15319,36 +15376,65 @@ function PapersView({ app }) {
   };
   
   const genSet = async function(usr) {
-    if (busy) return;
-    setBusy(true);
-    setErr("");
-    setItems(null);
+  if (busy) return;
+  setBusy(true);
+  setErr("");
+  setItems(null);
+  
+  let attempts = 0;
+  const maxAttempts = 3;
+  let allQuestions = [];
+  
+  while (attempts < maxAttempts && allQuestions.length < count) {
+    attempts++;
     try {
-      var text = await callClaude(
+      const text = await callClaude(
         "You generate KNUST-style medical laboratory science exam questions based on the specific course content provided. Return ONLY a valid, compact, complete JSON array of exactly " + count + " questions, no prose, no markdown, no trailing commas. Keep each question and option short.",
         [{ role: "user", content: usr }],
         12000
       );
-      var arr = parseAIJson(text);
-      var clean = (Array.isArray(arr) ? arr : []).filter(function(x) {
+      const arr = parseAIJson(text);
+      const filtered = (Array.isArray(arr) ? arr : []).filter(function(x) {
         return x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number";
       });
-      if (!clean.length) {
-        throw new Error("No usable questions came back - try again.");
+      
+      if (filtered.length > 0) {
+        // Add to collection and remove duplicates
+        allQuestions = [...allQuestions, ...filtered];
+        const seen = new Set();
+        allQuestions = allQuestions.filter(function(item) {
+          const key = item.q.toLowerCase().trim();
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
       }
-      if (clean.length < count) {
-        setItems(shuffleOptions(clean));
-        setErr("Only " + clean.length + " questions were generated (requested " + count + "). Try again for a full set.");
-      } else {
-        setItems(shuffleOptions(clean.slice(0, count)));
-      }
+      
+      // If we have enough, break out
+      if (allQuestions.length >= count) break;
+      
     } catch (error) {
-      var msg = error && error.message ? error.message : "";
-      setErr(msg + " The AI response could not be parsed. Please try again.");
+      // Continue to next attempt
     }
-    setBusy(false);
-  };
+  }
   
+  if (!allQuestions.length) {
+    setErr("No usable questions came back - please try again.");
+    setBusy(false);
+    return;
+  }
+  
+  // FIX: Accept what we have with warning if less than requested
+  if (allQuestions.length < count) {
+    const shuffled = shuffleOptions(allQuestions);
+    setItems(shuffled);
+    setErr("Generated " + allQuestions.length + " questions (requested " + count + "). You can still practice with these.");
+  } else {
+    setItems(shuffleOptions(allQuestions.slice(0, count)));
+  }
+  
+  setBusy(false);
+};
   const startSolve = function() {
     var topics = TOPICS[courseId] || [];
     var topicNames = topics.slice(0, 8).join(", ");
