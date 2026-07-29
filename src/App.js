@@ -14978,7 +14978,7 @@ function PapersView({ app }) {
   const [similarCount, setSimilarCount] = useState(10);
   const [active, setActive] = useState(null);
   const [passcoNotif, setPasscoNotif] = useState(null);
-  const count = tab === "solve" ? 50 : similarCount;
+  const count = tab === "solve" ? 100 : similarCount;  // CHANGED: 100 for practice sets
   const CHUNK = 50;
   
   // Save PapersView state when it changes
@@ -14995,7 +14995,9 @@ function PapersView({ app }) {
         busy
       };
       sessionStorage.setItem('ascend_papers_state', JSON.stringify(state));
-    } catch {}
+    } catch (error) {
+      // Silently fail
+    }
   }, [tab, courseId, sample, similarCount, active, items, err, busy]);
 
   // Restore PapersView state on mount
@@ -15012,7 +15014,9 @@ function PapersView({ app }) {
         if (state.items) setItems(state.items);
         if (state.err) setErr(state.err);
       }
-    } catch {}
+    } catch (error) {
+      // Silently fail
+    }
   }, []);
   
   // Load passco notification
@@ -15022,71 +15026,88 @@ function PapersView({ app }) {
       if (stored) {
         const parsed = JSON.parse(stored);
         setPasscoNotif(parsed);
-        setTimeout(() => {
+        setTimeout(function() {
           setPasscoNotif(null);
           sessionStorage.removeItem('ascend_passco_notif');
         }, 5000);
       }
-    } catch {}
+    } catch (error) {
+      // Silently fail
+    }
   }, []);
   
-  const RULES = `Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which position is correct. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {"q": string, "o": [4 strings], "a": integer index, "w": one short explanation}.`;
+  const RULES = "Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which position is correct. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {\"q\": string, \"o\": [4 strings], \"a\": integer index, \"w\": one short explanation}.";
   
-  const shuffleOptions = (arr) => arr.map((item) => {
-    const opts = item.o.map((text, i) => ({ text, correct: i === item.a }));
-    for (let pass = 0; pass < 3; pass++) {
-      for (let i = opts.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [opts[i], opts[j]] = [opts[j], opts[i]];
+  const shuffleOptions = function(arr) {
+    return arr.map(function(item) {
+      var opts = item.o.map(function(text, i) {
+        return { text: text, correct: i === item.a };
+      });
+      for (var pass = 0; pass < 3; pass++) {
+        for (var i = opts.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = opts[i];
+          opts[i] = opts[j];
+          opts[j] = temp;
+        }
       }
-    }
-    return { ...item, o: opts.map((x) => x.text), a: opts.findIndex((x) => x.correct) };
-  });
+      return {
+        q: item.q,
+        o: opts.map(function(x) { return x.text; }),
+        a: opts.findIndex(function(x) { return x.correct; }),
+        w: item.w
+      };
+    });
+  };
   
-  const genSet = async (usr) => {
+  const genSet = async function(usr) {
     if (busy) return;
-    setBusy(true); setErr(""); setItems(null);
+    setBusy(true);
+    setErr("");
+    setItems(null);
     try {
-      let text = await callClaude(`You generate KNUST-style medical laboratory science exam questions based on the specific course content provided. Return ONLY a valid, compact, complete JSON array of exactly ${count} questions, no prose, no markdown, no trailing commas. Keep each question and option short.`, [{ role: "user", content: usr }], 12000);
-      const arr = parseAIJson(text);
-      const clean = (Array.isArray(arr) ? arr : []).filter((x) => x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number");
-      if (!clean.length) throw new Error("No usable questions came back - try again.");
+      var text = await callClaude(
+        "You generate KNUST-style medical laboratory science exam questions based on the specific course content provided. Return ONLY a valid, compact, complete JSON array of exactly " + count + " questions, no prose, no markdown, no trailing commas. Keep each question and option short.",
+        [{ role: "user", content: usr }],
+        12000
+      );
+      var arr = parseAIJson(text);
+      var clean = (Array.isArray(arr) ? arr : []).filter(function(x) {
+        return x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number";
+      });
+      if (!clean.length) {
+        throw new Error("No usable questions came back - try again.");
+      }
       if (clean.length < count) {
         setItems(shuffleOptions(clean));
-        setErr(`Only ${clean.length} questions were generated (requested ${count}). Try again for a full set.`);
+        setErr("Only " + clean.length + " questions were generated (requested " + count + "). Try again for a full set.");
       } else {
         setItems(shuffleOptions(clean.slice(0, count)));
       }
-    } catch (e) {
-      setErr((e && e.message ? e.message : "") + " The AI response could not be parsed. Please try again.");
+    } catch (error) {
+      var msg = error && error.message ? error.message : "";
+      setErr(msg + " The AI response could not be parsed. Please try again.");
     }
     setBusy(false);
   };
   
-  const startSolve = () => {
-    const topics = TOPICS[courseId] || [];
-    const topicNames = topics.slice(0, 8).join(", ");
-    let contentSample = "";
-    for (let i = 0; i < Math.min(3, topics.length); i++) {
-      const t = contentFor(courseId, i);
+  const startSolve = function() {
+    var topics = TOPICS[courseId] || [];
+    var topicNames = topics.slice(0, 8).join(", ");
+    var contentSample = "";
+    for (var i = 0; i < Math.min(3, topics.length); i++) {
+      var t = contentFor(courseId, i);
       if (t) {
-        const noteText = (t.note || []).slice(0, 3).map(n => n.q).join("; ");
-        contentSample += `Topic ${i+1}: ${t.title}. Key concepts: ${noteText}\n`;
+        var noteText = (t.note || []).slice(0, 3).map(function(n) { return n.q; }).join("; ");
+        contentSample += "Topic " + (i+1) + ": " + t.title + ". Key concepts: " + noteText + "\n";
       }
     }
-    genSet(`Generate exactly ${count} passco-style exam MCQs for a KNUST first-year student in ${courseById(courseId).name} (${courseById(courseId).code}).
-
-IMPORTANT: Questions MUST be based on these specific topics: ${topicNames}
-
-Here is sample content from the course to guide you:
-${contentSample}
-
-Generate questions that test understanding of these specific topics. Do not ask general anatomy questions.
-
-${RULES}`);
+    genSet("Generate exactly " + count + " passco-style exam MCQs for a KNUST first-year student in " + courseById(courseId).name + " (" + courseById(courseId).code + ").\n\nIMPORTANT: Questions MUST be based on these specific topics: " + topicNames + "\n\nHere is sample content from the course to guide you:\n" + contentSample + "\n\nGenerate questions that test understanding of these specific topics. Do not ask general anatomy questions.\n\n" + RULES);
   };
   
-  const startSimilar = () => genSet(`Here is a passco question:\n\n${sample}\n\nGenerate exactly ${count} fresh MCQs testing the same concept and matching its style, for ${courseById(courseId).name}. ${RULES}`);
+  const startSimilar = function() {
+    genSet("Here is a passco question:\n\n" + sample + "\n\nGenerate exactly " + count + " fresh MCQs testing the same concept and matching its style, for " + courseById(courseId).name + ". " + RULES);
+  };
   
   return (
     <div className="view">
@@ -15119,15 +15140,15 @@ ${RULES}`);
       <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "58ch" }}>A passco PDF is easy to put off. Here you actually answer, tap by tap, with instant feedback - and ASCEND can spin fresh questions off any one you show it.</p>
       
       <div className="tabs">
-        <button className={"tab " + (tab === "passco" ? "on" : "")} onClick={() => { setTab("passco"); setItems(null); setErr(""); setActive(null); }}>Passco</button>
-        <button className={"tab " + (tab === "solve" ? "on" : "")} onClick={() => { setTab("solve"); setItems(null); setErr(""); }}>Practice set (AI)</button>
-        <button className={"tab " + (tab === "similar" ? "on" : "")} onClick={() => { setTab("similar"); setItems(null); setErr(""); }}>Generate similar</button>
-        <button className={"tab " + (tab === "youtube" ? "on" : "")} onClick={() => { setTab("youtube"); setItems(null); setErr(""); }}>YouTube Links</button>
+        <button className={"tab " + (tab === "passco" ? "on" : "")} onClick={function() { setTab("passco"); setItems(null); setErr(""); setActive(null); }}>Passco</button>
+        <button className={"tab " + (tab === "solve" ? "on" : "")} onClick={function() { setTab("solve"); setItems(null); setErr(""); }}>Practice set (AI)</button>
+        <button className={"tab " + (tab === "similar" ? "on" : "")} onClick={function() { setTab("similar"); setItems(null); setErr(""); }}>Generate similar</button>
+        <button className={"tab " + (tab === "youtube" ? "on" : "")} onClick={function() { setTab("youtube"); setItems(null); setErr(""); }}>YouTube Links</button>
       </div>
 
       {tab === "passco" && (active
-        ? <PasscoSet paper={active.paper} chunkStart={active.chunkStart} chunkEnd={active.chunkEnd} mode={active.mode} onExit={() => setActive(null)} app={app} />
-        : <PasscoPicker onStart={(paper, chunkStart, chunkEnd, mode) => { setActive({ paper, chunkStart, chunkEnd, mode }); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {} }} chunk={CHUNK} />
+        ? <PasscoSet paper={active.paper} chunkStart={active.chunkStart} chunkEnd={active.chunkEnd} mode={active.mode} onExit={function() { setActive(null); }} app={app} />
+        : <PasscoPicker onStart={function(paper, chunkStart, chunkEnd, mode) { setActive({ paper: paper, chunkStart: chunkStart, chunkEnd: chunkEnd, mode: mode }); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (error) {} }} chunk={CHUNK} />
       )}
 
       {tab === "youtube" && (
@@ -15135,32 +15156,42 @@ ${RULES}`);
       )}
 
       {(tab !== "passco" && tab !== "youtube") && (
-      <div className="card" style={{ marginTop: 12 }}>
-        <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Course</label>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: tab === "similar" ? 16 : 4 }}>
-          {COURSES.map((c) => (
-            <button key={c.id} className="btn btn-sm" style={{ background: courseId === c.id ? "var(--amber)" : "var(--bg-3)", color: courseId === c.id ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setCourseId(c.id)}>{c.code}</button>
-          ))}
+        <div className="card" style={{ marginTop: 12 }}>
+          <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Course</label>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: tab === "similar" ? 16 : 4 }}>
+            {COURSES.map(function(c) {
+              return (
+                <button key={c.id} className="btn btn-sm" style={{ background: courseId === c.id ? "var(--amber)" : "var(--bg-3)", color: courseId === c.id ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={function() { setCourseId(c.id); }}>{c.code}</button>
+              );
+            })}
+          </div>
+          {tab === "similar" && (
+            <>
+              <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Paste one passco question</label>
+              <textarea className="pastebox" value={sample} placeholder={"e.g.\n\nThe plane dividing the body into left and right is the\nA. coronal  B. sagittal  C. transverse  D. oblique"} onChange={function(e) { setSample(e.target.value); }} />
+              <label className="eyebrow" style={{ display: "block", margin: "16px 0 8px" }}>How many similar questions?</label>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[10, 20, 30, 40, 50].map(function(n) {
+                return <button key={n} className="btn btn-sm" style={{ background: similarCount === n ? "var(--amber)" : "var(--bg-3)", color: similarCount === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={function() { setSimilarCount(n); }}>{n}</button>;
+              })}</div>
+            </>
+          )}
+          {/* CHANGED: Different messages for practice vs similar */}
+          {tab === "solve" && (
+            <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>ASCEND will generate 100 fresh questions on this course. More questions = more practice.</div>
+          )}
+          {tab === "similar" && (
+            <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>Select how many questions you want. More questions = more practice.</div>
+          )}
+          <div style={{ marginTop: 16 }}>
+            {tab === "solve"
+              ? <button className="btn btn-a" onClick={startSolve} disabled={busy}>{busy ? "Building your set..." : "Start a set of 100"} <Ic.ai p={16} /></button>
+              : <button className="btn btn-a" onClick={startSimilar} disabled={busy || !sample.trim()}>{busy ? "Generating..." : "Generate " + similarCount + " similar"} <Ic.ai p={16} /></button>}
+          </div>
         </div>
-        {tab === "similar" && (
-          <>
-            <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Paste one passco question</label>
-            <textarea className="pastebox" value={sample} placeholder={"e.g.\n\nThe plane dividing the body into left and right is the\nA. coronal  B. sagittal  C. transverse  D. oblique"} onChange={(e) => setSample(e.target.value)} />
-            <label className="eyebrow" style={{ display: "block", margin: "16px 0 8px" }}>How many similar questions?</label>
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[10, 20, 30, 40, 50].map((n) => <button key={n} className="btn btn-sm" style={{ background: similarCount === n ? "var(--amber)" : "var(--bg-3)", color: similarCount === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={() => setSimilarCount(n)}>{n}</button>)}</div>
-          </>
-        )}
-        <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>Select how many questions you want. More questions = more practice.</div>
-        <div style={{ marginTop: 16 }}>
-          {tab === "solve"
-            ? <button className="btn btn-a" onClick={startSolve} disabled={busy}>{busy ? "Building your set..." : `Start a set of ${count}`} <Ic.ai p={16} /></button>
-            : <button className="btn btn-a" onClick={startSimilar} disabled={busy || !sample.trim()}>{busy ? "Generating..." : `Generate ${similarCount} similar`} <Ic.ai p={16} /></button>}
-        </div>
-      </div>
       )}
       {tab !== "passco" && tab !== "youtube" && err && <div className="card" style={{ marginTop: 14, borderColor: "var(--line-2)", color: "var(--text-2)", fontSize: 14 }}>{err}</div>}
       {tab !== "passco" && tab !== "youtube" && busy && <div className="card" style={{ marginTop: 14 }}><span className="dots"><span /><span /><span /></span></div>}
-      {tab !== "passco" && tab !== "youtube" && items && <InteractiveSet key={items.map((x) => x.q).join("|").length + "-" + items.length} items={items} />}
+      {tab !== "passco" && tab !== "youtube" && items && <InteractiveSet key={items.map(function(x) { return x.q; }).join("|").length + "-" + items.length} items={items} />}
     </div>
   );
 }
@@ -15177,9 +15208,9 @@ function PasscoPicker({ onStart, chunk }) {
   return (
     <div style={{ marginTop: 12 }}>
       <p style={{ color: "var(--text-2)", fontSize: 14, marginTop: 0 }}>Real passco papers, worked out and turned into tap-to-answer questions. Long papers are split into sets of {chunk} so you never burn out - finish one set, then the next.</p>
-      {PAST_PAPERS.map((paper) => {
-        const nChunks = Math.ceil(paper.questions.length / chunk);
-        const isOpen = openPaper === paper.id;
+      {PAST_PAPERS.map(function(paper) {
+        var nChunks = Math.ceil(paper.questions.length / chunk);
+        var isOpen = openPaper === paper.id;
         return (
           <div className="card" key={paper.id} style={{ marginBottom: 10 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10, flexWrap: "wrap" }}>
@@ -15189,22 +15220,22 @@ function PasscoPicker({ onStart, chunk }) {
                 <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 2 }}>{paper.questions.length} questions · {nChunks} set{nChunks > 1 ? "s" : ""} of up to {chunk}</div>
                 {paper.note && <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 4 }}>{paper.note}</div>}
               </div>
-              <button className="btn btn-sm" style={{ background: isOpen ? "var(--bg-3)" : "var(--amber)", color: isOpen ? "var(--text-2)" : "#1B1405", border: "1px solid var(--line)" }} onClick={() => setOpenPaper(isOpen ? null : paper.id)}>{isOpen ? "Close" : "Open"}</button>
+              <button className="btn btn-sm" style={{ background: isOpen ? "var(--bg-3)" : "var(--amber)", color: isOpen ? "var(--text-2)" : "#1B1405", border: "1px solid var(--line)" }} onClick={function() { setOpenPaper(isOpen ? null : paper.id); }}>{isOpen ? "Close" : "Open"}</button>
             </div>
             {isOpen && (
               <div style={{ marginTop: 14, borderTop: "1px solid var(--line)", paddingTop: 14 }}>
                 <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Mode</label>
                 <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
-                  <button className="btn btn-sm" style={{ background: mode === "practice" ? "var(--amber)" : "var(--bg-3)", color: mode === "practice" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setMode("practice")}>Practice</button>
-                  <button className="btn btn-sm" style={{ background: mode === "exam" ? "var(--amber)" : "var(--bg-3)", color: mode === "exam" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setMode("exam")}>Exam</button>
+                  <button className="btn btn-sm" style={{ background: mode === "practice" ? "var(--amber)" : "var(--bg-3)", color: mode === "practice" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={function() { setMode("practice"); }}>Practice</button>
+                  <button className="btn btn-sm" style={{ background: mode === "exam" ? "var(--amber)" : "var(--bg-3)", color: mode === "exam" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={function() { setMode("exam"); }}>Exam</button>
                 </div>
                 <div style={{ fontSize: 12.5, color: "var(--text-3)", marginBottom: 14 }}>{mode === "practice" ? "Practice: the correct answer and explanation show the instant you tap." : "Exam: answers stay hidden until you submit, then you get your score and full review."}</div>
                 <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Choose a set</label>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                  {Array.from({ length: nChunks }).map((_, i) => {
-                    const start = i * chunk;
-                    const end = Math.min(start + chunk, paper.questions.length);
-                    return <button key={i} className="btn btn-sm" style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => onStart(paper, start, end, mode)}>Q{start + 1}-{end}</button>;
+                  {Array.from({ length: nChunks }).map(function(_, i) {
+                    var start = i * chunk;
+                    var end = Math.min(start + chunk, paper.questions.length);
+                    return <button key={i} className="btn btn-sm" style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }} onClick={function() { onStart(paper, start, end, mode); }}>Q{start + 1}-{end}</button>;
                   })}
                 </div>
               </div>
