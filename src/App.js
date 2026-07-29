@@ -12899,13 +12899,13 @@ const store = {
   }
 };
 
-/* ---------------------------------------------------------------------------
+/* ===========================================================================
    Supabase data layer.
    The whole class shares one database, so the leaderboard shows everyone and
    progress follows a student across devices. Every function fails soft: if the
    network or Supabase is unavailable, it returns a safe default and the app
    keeps working on local data rather than crashing.
---------------------------------------------------------------------------- */
+============================================================================ */
 const db = {
   // the id of the signed-in user, or null
   async uid() {
@@ -13043,6 +13043,7 @@ const API_ENDPOINT = "/api/claude";
 /* Password-reset backend (see password-reset.js), e.g. "/api/request-reset".
    While empty, the reset screen explains that email delivery is not yet connected. */
 const AUTH_ENDPOINT = "";
+
 /* Gemini sometimes wraps JSON in markdown fences, adds prose around it, or
    leaves a trailing comma - all of which break JSON.parse. This helper pulls out
    the JSON and cleans the common problems so LAMLA and Papers parse reliably. */
@@ -13121,15 +13122,9 @@ function loadMermaid() {
   return _mermaidPromise;
 }
 
-/* Formats AI text output for clean display: converts markdown bold, removes stray
-   asterisks, turns caret exponents like 10^3 into real superscripts (10 with a
-   small raised 3), and renders bullet lines and paragraphs neatly. This is why AI
-   answers read cleanly instead of showing raw ** and ^ symbols. */
-function supSpan(exp) {
-  // map digits and a few signs to Unicode superscript characters
-  const map = { "0": "\u2070", "1": "\u00B9", "2": "\u00B2", "3": "\u00B3", "4": "\u2074", "5": "\u2075", "6": "\u2076", "7": "\u2077", "8": "\u2078", "9": "\u2079", "+": "\u207A", "-": "\u207B", "n": "\u207F" };
-  return exp.split("").map((ch) => map[ch] || ch).join("");
-}
+/* ============================================================
+   formatInline - Formats AI text for display
+   ============================================================ */
 function formatInline(text) {
   if (!text) return text;
   let t = String(text);
@@ -13174,71 +13169,140 @@ function formatInline(text) {
   });
 }
 
-function AIText({ text, style }) {
+/* ============================================================
+   AIText Component - Optimized with React.memo
+   ============================================================ */
+const AIText = React.memo(({ text, style }) => {
   const raw = String(text || "");
   const lines = raw.split("\n");
   const blocks = [];
   let list = [];
+  
   const flush = (key) => {
     if (list.length) {
-      blocks.push(<ul key={"ul" + key} style={{ margin: "6px 0 6px 18px", padding: 0 }}>{list.map((li, j) => <li key={j} style={{ marginBottom: 4 }}>{formatInline(li)}</li>)}</ul>);
+      blocks.push(
+        <ul key={"ul" + key} style={{ margin: "6px 0 6px 18px", padding: 0 }}>
+          {list.map((li, j) => (
+            <li key={j} style={{ marginBottom: 4 }}>{formatInline(li)}</li>
+          ))}
+        </ul>
+      );
       list = [];
     }
   };
+  
   lines.forEach((ln, i) => {
     // Detect bullet points with standard bullet characters
     const bullet = ln.match(/^\s*[-*\u2022]\s+(.*)$/);
-    if (bullet) { list.push(bullet[1]); return; }
+    if (bullet) { 
+      list.push(bullet[1]); 
+      return; 
+    }
     flush(i);
     // Skip empty lines (add a small spacer)
-    if (ln.trim() === "") { blocks.push(<div key={"sp" + i} style={{ height: 8 }} />); return; }
+    if (ln.trim() === "") { 
+      blocks.push(<div key={"sp" + i} style={{ height: 8 }} />); 
+      return; 
+    }
     blocks.push(<p key={"p" + i} style={{ margin: "0 0 8px" }}>{formatInline(ln)}</p>);
   });
   flush("end");
+  
   return <div style={style}>{blocks}</div>;
-}
+}, (prevProps, nextProps) => {
+  // Only re-render if text or style actually changed
+  return prevProps.text === nextProps.text && prevProps.style === nextProps.style;
+});
 
+/* ============================================================
+   callClaude - AI API Call with Gemini Proxy
+   ============================================================ */
 async function callClaude(system, messages, maxTokens = 4096) {
-  const body = JSON.stringify({ max_tokens: maxTokens, system, messages });
+  // Gemini uses a slightly different format - we need to adapt
+  // messages array: each has role: "user" or "assistant" and content: string or array
+  const body = JSON.stringify({ 
+    system: system || "",
+    messages: messages || [],
+    max_tokens: maxTokens 
+  });
+  
   let res;
-  // Retry on rate limits (429) and transient overload (529/503). The free AI tier
-  // uses one shared key for every student, so when several people use it at once
-  // we back off with increasing (and slightly randomised) delays and retry rather
-  // than failing - most rate limits clear within a few seconds.
   const MAX_ATTEMPTS = 8;
+  
   for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
     try {
-      res = await fetch(API_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body });
+      res = await fetch(API_ENDPOINT, { 
+        method: "POST", 
+        headers: { "Content-Type": "application/json" }, 
+        body 
+      });
     } catch (netErr) {
-      // network hiccup - wait briefly and retry
-      if (attempt < MAX_ATTEMPTS - 1) { await new Promise((r) => setTimeout(r, 700 * (attempt + 1) + Math.random() * 400)); continue; }
-      throw new Error("Could not reach the AI - check your connection and try again.");
+      if (attempt < MAX_ATTEMPTS - 1) { 
+        await new Promise((r) => setTimeout(r, 700 * (attempt + 1) + Math.random() * 400)); 
+        continue; 
+      }
+      throw new Error("Cannot connect to the AI service. Please check your internet connection and try again.");
     }
+    
     if (res.ok) break;
+    
+    // Handle rate limits and errors
     if (res.status === 429 || res.status === 529 || res.status === 503) {
       if (attempt < MAX_ATTEMPTS - 1) {
         const backoff = Math.min(1200 * Math.pow(1.6, attempt), 9000) + Math.random() * 600;
         await new Promise((r) => setTimeout(r, backoff));
         continue;
       }
+      throw new Error("The AI service is busy right now. Please wait a few moments and try again.");
+    } else if (res.status === 401) {
+      throw new Error("AI service authentication failed. Please contact the ASCEND team.");
+    } else if (res.status >= 500) {
+      throw new Error("The AI service is temporarily unavailable. Please try again in a few minutes.");
     } else {
-      throw new Error("The AI service returned an error (" + res.status + ").");
+      // Try to get error message from response
+      let errorMsg = `The AI service returned an error (${res.status}).`;
+      try {
+        const errData = await res.json();
+        if (errData && errData.error) {
+          errorMsg = errData.error;
+        }
+      } catch {}
+      throw new Error(errorMsg);
     }
   }
-  if (!res.ok) throw new Error((res.status === 429 || res.status === 503 || res.status === 529)
-    ? "The AI is handling lots of requests right now. Wait about 20 seconds and try again - it is free, so it just needs a moment."
-    : "The AI service is unavailable at the moment.");
+  
+  if (!res.ok) {
+    if (res.status === 429 || res.status === 503 || res.status === 529) {
+      throw new Error("The AI is handling lots of requests right now. Wait about 20 seconds and try again.");
+    }
+    throw new Error("The AI service is unavailable at the moment. Please try again later.");
+  }
+  
   const data = await res.json();
-  if (data && data.error) throw new Error(typeof data.error === "string" ? data.error : (data.error.message || "AI error"));
-  // accept Anthropic ({content:[{type:'text',text}]}) and OpenAI/DeepSeek/Gemini-proxied ({choices:[{message:{content}}]}) shapes
+  
+  // Check for Gemini error format
+  if (data && data.error) {
+    const msg = typeof data.error === "string" ? data.error : (data.error.message || "Unknown AI error");
+    throw new Error(`AI error: ${msg}`);
+  }
+  
+  // Extract text from Gemini response format
+  // Our proxy returns: { choices: [{ message: { content: text } }] }
   let text = "";
-  if (Array.isArray(data.content)) text = data.content.map((b) => (b.type === "text" ? b.text : "")).join("");
-  else if (data.choices && data.choices[0]) text = data.choices[0].message ? data.choices[0].message.content : data.choices[0].text;
-  else if (typeof data.text === "string") text = data.text;
+  if (data.choices && data.choices[0]) {
+    text = data.choices[0].message ? data.choices[0].message.content : data.choices[0].text;
+  } else if (Array.isArray(data.content)) {
+    // Anthropic format fallback
+    text = data.content.map((b) => (b.type === "text" ? b.text : "")).join("");
+  } else if (typeof data.text === "string") {
+    text = data.text;
+  }
+  
   text = (text || "").trim();
-  if (!text) throw new Error("The AI returned an empty reply.");
+  if (!text) throw new Error("The AI returned an empty reply. Please try again.");
   return text;
 }
+
 /* ------------------------ uploaded file extraction ----------------------- */
 const fileExt = (f) => (f && f.name ? f.name.split(".").pop().toLowerCase() : "");
 
@@ -13303,6 +13367,9 @@ async function pptxToText(file) {
   return slides.sort((a, b) => a.n - b.n).map((s) => `Slide ${s.n}: ${s.text}`).join("\n\n").slice(0, 20000);
 }
 
+/* ============================================================
+   AITutor Component
+   ============================================================ */
 function AITutor({ topicTitle, context }) {
   const [msgs, setMsgs] = useState([{ role: "assistant", content: `I'm your ASCEND tutor for "${topicTitle}". Ask me anything as you read, and I'll break it down step by step.` }]);
   const [input, setInput] = useState("");
@@ -13318,7 +13385,6 @@ function AITutor({ topicTitle, context }) {
     const apiMsgs = next.slice(1);
     try {
       const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })), 4096);
-      // tutor answers capped at 3000 tokens so they stay complete but focused
       setMsgs([...next, { role: "assistant", content: reply }]);
     } catch (e) {
       setMsgs([...next, { role: "assistant", content: (e && e.message ? e.message + " " : "") + "The tutor could not respond just now. Please try again in a moment." }]);
@@ -16471,33 +16537,33 @@ function AuthScreen({ onAuthed }) {
   const clearMsgs = () => { setErr(""); setOk(""); };
 
   const signInWithGoogle = async () => {
-  clearMsgs();
-  try {
-    setBusy(true);
-    // Detect if in standalone PWA mode
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-    
-    // Use redirect instead of popup for PWA
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: window.location.origin,
-        // For PWA, this helps handle the redirect better
-        ...(isStandalone && { 
-          // In standalone mode, use the same window
-          // No extra options needed if the OAuth config handles it
-        })
-      },
-    });
-    if (error) throw error;
-    
-    // For PWA, we need to handle the redirect
-    // The page will redirect to Google, then come back
-  } catch (e) {
-    setErr(e && e.message ? e.message : "Google sign-in could not start. Please try again.");
-    setBusy(false);
-  }
-};
+    clearMsgs();
+    try {
+      setBusy(true);
+      // Detect if in standalone PWA mode
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+      
+      // Use redirect instead of popup for PWA
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: window.location.origin,
+          // For PWA, this helps handle the redirect better
+          ...(isStandalone && { 
+            // In standalone mode, use the same window
+            // No extra options needed if the OAuth config handles it
+          })
+        },
+      });
+      if (error) throw error;
+      
+      // For PWA, we need to handle the redirect
+      // The page will redirect to Google, then come back
+    } catch (e) {
+      setErr(e && e.message ? e.message : "Google sign-in could not start. Please try again.");
+      setBusy(false);
+    }
+  };
 
   const submit = async () => {
     clearMsgs();
@@ -16523,22 +16589,41 @@ function AuthScreen({ onAuthed }) {
         await store.set("ascend_accounts", accounts);
         await store.set("ascend_session", key);
         await store.set("ascend_last_user", acct.username);
-        // register on the class board WITHOUT blocking sign-in (fire and forget)
-        store.setShared("ascend_board:" + key.replace(/[^a-z0-9]/g, ""), { name: u, xp: 0, streak: 0 });
-        db.publishLocalUser(u, 0, 0); // also put them on the cloud leaderboard everyone reads
+        
+        // ============================================================
+        // FIXED: Register on the class board with the correct username
+        // ============================================================
+        const boardKey = "ascend_board:" + u.toLowerCase().replace(/[^a-z0-9]/g, "");
+        await store.setShared(boardKey, { name: u, xp: 0, streak: 0 });
+        
+        // Also publish to Supabase cloud leaderboard
+        await db.publishLocalUser(u, 0, 0);
+        
         setBusy(false);
         onAuthed(acct);
         return;
       }
+      
+      // ============================================================
+      // FIXED: Login section with board sync
+      // ============================================================
       // login
       const acct = accounts[key];
       if (!acct) { setBusy(false); setErr("No account with that username. Tap Create account to sign up."); return; }
       if (acct.pass !== encodePw(pw)) { setBusy(false); setErr("Password is not right. Try again or reset it."); return; }
       await store.set("ascend_session", key);
       await store.set("ascend_last_user", acct.username);
-      // make sure this returning user is on the cloud leaderboard everyone reads
+      
+      // FIXED: Make sure this user appears on the board
+      const boardKey = "ascend_board:" + acct.username.toLowerCase().replace(/[^a-z0-9]/g, "");
       const savedP = await store.get(progKey(acct.username));
+      await store.setShared(boardKey, { 
+        name: acct.username, 
+        xp: savedP ? savedP.xp || 0 : 0, 
+        streak: savedP ? savedP.streak || 0 : 0 
+      });
       db.publishLocalUser(acct.username, savedP ? savedP.xp || 0 : 0, savedP ? savedP.streak || 0 : 0);
+      
       setBusy(false);
       onAuthed(acct);
     } catch (e) {
@@ -16548,98 +16633,98 @@ function AuthScreen({ onAuthed }) {
   };
 
   const requestReset = async () => {
-  clearMsgs();
-  const id = username.trim().toLowerCase();
-  if (!id) {
-    setErr("Type your username or email first.");
-    return;
-  }
-  setBusy(true);
-  // Real email delivery needs the reset backend (see password-reset.js). When
-  // AUTH_ENDPOINT is set, this calls it; until then we tell the student plainly.
-  if (AUTH_ENDPOINT) {
-    try {
-      const res = await fetch(AUTH_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ identifier: id })
-      });
-      setBusy(false);
-      if (res.ok) {
-        setFStage("sent");
-        return;
-      }
-      throw new Error("reset service error");
-    } catch (error) {
-      setBusy(false);
-      setErr("The reset email could not be sent right now. Please try again later.");
+    clearMsgs();
+    const id = username.trim().toLowerCase();
+    if (!id) {
+      setErr("Type your username or email first.");
       return;
     }
-  }
-  // If no reset endpoint is configured, show a clear message
-  setBusy(false);
-  setOk("A reset link would be sent here, but email delivery is not yet configured. Please contact the ASCEND team for password reset assistance.");
-  setFStage("sent");
-};
+    setBusy(true);
+    // Real email delivery needs the reset backend (see password-reset.js). When
+    // AUTH_ENDPOINT is set, this calls it; until then we tell the student plainly.
+    if (AUTH_ENDPOINT) {
+      try {
+        const res = await fetch(AUTH_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ identifier: id })
+        });
+        setBusy(false);
+        if (res.ok) {
+          setFStage("sent");
+          return;
+        }
+        throw new Error("reset service error");
+      } catch (error) {
+        setBusy(false);
+        setErr("The reset email could not be sent right now. Please try again later.");
+        return;
+      }
+    }
+    // If no reset endpoint is configured, show a clear message
+    setBusy(false);
+    setOk("A reset link would be sent here, but email delivery is not yet configured. Please contact the ASCEND team for password reset assistance.");
+    setFStage("sent");
+  };
 
-const goTab = (t) => {
-  setTab(t);
-  clearMsgs();
-  setPw("");
-  setPw2("");
-  setFStage("who");
-};
+  const goTab = (t) => {
+    setTab(t);
+    clearMsgs();
+    setPw("");
+    setPw2("");
+    setFStage("who");
+  };
 
-const Logo = (
-  <div className="auth-logo">
-    <div className="auth-mark">
-      <svg width="46" height="46" viewBox="0 0 26 26" aria-hidden>
-        <rect x="3" y="15" width="4.5" height="8" rx="1.4" fill="var(--amber)" opacity=".55" />
-        <rect x="10.8" y="9" width="4.5" height="14" rx="1.4" fill="var(--amber)" opacity=".8" />
-        <rect x="18.5" y="3" width="4.5" height="20" rx="1.4" fill="var(--amber)" />
-      </svg>
-      <span className="auth-name">ASCEND</span>
+  const Logo = (
+    <div className="auth-logo">
+      <div className="auth-mark">
+        <svg width="46" height="46" viewBox="0 0 26 26" aria-hidden>
+          <rect x="3" y="15" width="4.5" height="8" rx="1.4" fill="var(--amber)" opacity=".55" />
+          <rect x="10.8" y="9" width="4.5" height="14" rx="1.4" fill="var(--amber)" opacity=".8" />
+          <rect x="18.5" y="3" width="4.5" height="20" rx="1.4" fill="var(--amber)" />
+        </svg>
+        <span className="auth-name">ASCEND</span>
+      </div>
+      <p className="auth-tag">The climb to First Class, together. <strong>No gatekeeping.</strong> Learn the why, not just the what.</p>
     </div>
-    <p className="auth-tag">The climb to First Class, together. <strong>No gatekeeping.</strong> Learn the why, not just the what.</p>
-  </div>
-);
+  );
 
-if (tab === "forgot") return (
-  <div className="auth-wrap">
-    {Logo}
-    <div className="auth-card">
-      <div className="eyebrow" style={{ marginBottom: 4 }}>Password reset</div>
-      <h2 style={{ fontSize: 19, margin: "0 0 12px" }}>Forgot your password?</h2>
-      {fStage === "who" && (
-        <>
-          <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0, lineHeight: 1.6 }}>Enter your username or the email you signed up with, and we will send a reset link to your email.</p>
-          <label className="field"><span>Username or email</span>
-            <input className="auth-input" name="username" autoComplete="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="prince_a  or  you@gmail.com" autoCapitalize="none" autoCorrect="off" />
-          </label>
-          {err && <div className="auth-err">{err}</div>}
-          <button className="btn btn-a auth-btn" onClick={requestReset} disabled={busy}>{busy ? "Sending..." : "Send reset link"}</button>
-          <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 10 }} onClick={() => goTab("login")}>Back to log in</button>
-        </>
-      )}
-      {fStage === "sent" && (
-        <>
-          <div className="card" style={{ background: "var(--good-dim)", padding: 16, marginBottom: 14 }}>
-            <div style={{ fontWeight: 700, color: "var(--good)", marginBottom: 5 }}>
-              {AUTH_ENDPOINT ? "Check your email" : "Password reset assistance needed"}
+  if (tab === "forgot") return (
+    <div className="auth-wrap">
+      {Logo}
+      <div className="auth-card">
+        <div className="eyebrow" style={{ marginBottom: 4 }}>Password reset</div>
+        <h2 style={{ fontSize: 19, margin: "0 0 12px" }}>Forgot your password?</h2>
+        {fStage === "who" && (
+          <>
+            <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0, lineHeight: 1.6 }}>Enter your username or the email you signed up with, and we will send a reset link to your email.</p>
+            <label className="field"><span>Username or email</span>
+              <input className="auth-input" name="username" autoComplete="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="prince_a  or  you@gmail.com" autoCapitalize="none" autoCorrect="off" />
+            </label>
+            {err && <div className="auth-err">{err}</div>}
+            <button className="btn btn-a auth-btn" onClick={requestReset} disabled={busy}>{busy ? "Sending..." : "Send reset link"}</button>
+            <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 10 }} onClick={() => goTab("login")}>Back to log in</button>
+          </>
+        )}
+        {fStage === "sent" && (
+          <>
+            <div className="card" style={{ background: "var(--good-dim)", padding: 16, marginBottom: 14 }}>
+              <div style={{ fontWeight: 700, color: "var(--good)", marginBottom: 5 }}>
+                {AUTH_ENDPOINT ? "Check your email" : "Password reset assistance needed"}
+              </div>
+              <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>
+                {AUTH_ENDPOINT
+                  ? "If an account matches that username or email, a reset link is on its way. It expires in one hour - check your spam folder if you do not see it."
+                  : "Email delivery is not yet configured for this system. Please contact the ASCEND team directly for password reset assistance."
+                }
+              </div>
             </div>
-            <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>
-              {AUTH_ENDPOINT
-                ? "If an account matches that username or email, a reset link is on its way. It expires in one hour - check your spam folder if you do not see it."
-                : "Email delivery is not yet configured for this system. Please contact the ASCEND team directly for password reset assistance."
-              }
-            </div>
-          </div>
-          <button className="btn btn-a auth-btn" onClick={() => goTab("login")}>Back to log in</button>
-        </>
-      )}
+            <button className="btn btn-a auth-btn" onClick={() => goTab("login")}>Back to log in</button>
+          </>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
 
   return (
     <div className="auth-wrap">
@@ -16731,82 +16816,314 @@ function PlanView() {
     maxCWA = (prevWeighted + aiWeighted + 100 * examCr) / totalCr;
   }
   const rawNeeded = (count) => { const n = parseFloat(count); return isNaN(n) || S < 0 ? "-" : Math.ceil((S / 100) * n); };
+  
   return (
     <div className="view">
-      <div className="eyebrow">CWA planner</div>
+      <div className="eyebrow">CWA Planner</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Reverse-engineer your target</h1>
-      <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "60ch" }}>Open AIM, read your current CWA, and tell ASCEND the CWA you are chasing. It works out the average you need this semester, then the raw score to aim for on every mid-sem and final.</p>
+      
+      {/* ============================================================
+          KNUST-SPECIFIC EXPLANATION - NO EMOJIS
+          ============================================================ */}
+      <div className="card" style={{ 
+        marginTop: 12, 
+        background: "var(--bg-3)", 
+        border: "1px solid var(--amber)", 
+        borderLeft: "4px solid var(--amber)"
+      }}>
+        <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}>
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 16v-4M12 8h.01" />
+          </svg>
+          <div>
+            <p style={{ color: "var(--text)", fontSize: 14, margin: 0, lineHeight: 1.7 }}>
+              <strong style={{ color: "var(--amber)" }}>How CWA works at KNUST:</strong><br />
+              Your CWA is your <strong>cumulative weighted average</strong> across all courses you've taken. 
+              Each course has <strong>credit hours</strong> (e.g., Anatomy = 3 credits). 
+              Your grade in a course is weighted by its credits to calculate your CWA.
+            </p>
+            <p style={{ color: "var(--text-2)", fontSize: 13.5, margin: "8px 0 0", lineHeight: 1.6 }}>
+              <strong style={{ color: "var(--amber)" }}>Example:</strong> If you scored 70% in a 3-credit course, that contributes 70 × 3 = 210 weighted marks to your total.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <p style={{ color: "var(--text-2)", marginTop: 8, maxWidth: "60ch" }}>
+        Enter your current CWA from AIM, your target, and see exactly what you need to score this semester.
+      </p>
+      
       <div className="card" style={{ marginTop: 16 }}>
         <div className="eyebrow" style={{ marginBottom: 12 }}>Where you stand</div>
         <div className="plan-row">
-          <label className="field"><span>Current CWA (from AIM)</span><input className="plan-in" inputMode="decimal" value={prevCWA} onChange={(e) => setPrevCWA(e.target.value)} placeholder="e.g. 78.1" /></label>
-          <label className="field"><span>Credits done so far</span><input className="plan-in" inputMode="numeric" value={prevCr} onChange={(e) => setPrevCr(e.target.value)} placeholder="21" /></label>
+          <label className="field"><span>Current CWA (from AIM)</span>
+            <input className="plan-in" inputMode="decimal" value={prevCWA} onChange={(e) => setPrevCWA(e.target.value)} placeholder="e.g. 68.5" />
+          </label>
+          <label className="field"><span>Credits completed so far</span>
+            <input className="plan-in" inputMode="numeric" value={prevCr} onChange={(e) => setPrevCr(e.target.value)} placeholder="21" />
+          </label>
         </div>
         <div className="plan-row" style={{ marginTop: 4 }}>
-          <label className="field"><span>Target CWA (cumulative)</span><input className="plan-in" inputMode="decimal" value={target} onChange={(e) => setTarget(e.target.value)} placeholder="e.g. 80" /></label>
-          <label className="field"><span>This semester's credits</span><input className="plan-in" inputMode="numeric" value={thisCr} onChange={(e) => setThisCr(e.target.value)} placeholder="20" /></label>
+          <label className="field"><span>Target CWA (what you want to achieve)</span>
+            <input className="plan-in" inputMode="decimal" value={target} onChange={(e) => setTarget(e.target.value)} placeholder="e.g. 70 (Second Class Upper)" />
+          </label>
+          <label className="field"><span>This semester's credits</span>
+            <input className="plan-in" inputMode="numeric" value={thisCr} onChange={(e) => setThisCr(e.target.value)} placeholder="20" />
+          </label>
         </div>
       </div>
+      
       <div className="card" style={{ marginTop: 12 }}>
-        <div className="eyebrow" style={{ marginBottom: 8 }}>AI for Learning (self-paced, 2 credits)</div>
-        <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0, lineHeight: 1.6 }}>This portal course has no mid-sem or finals - you just finish it before the semester ends, and most students land between 90 and 100. Predict the score you expect and ASCEND folds it into the plan.</p>
-        <label className="field" style={{ maxWidth: 220, marginBottom: 0 }}><span>Expected score</span><input className="plan-in" inputMode="decimal" value={aiScore} onChange={(e) => setAiScore(e.target.value)} placeholder="e.g. 97" /></label>
+        <div className="eyebrow" style={{ marginBottom: 8 }}>AI for Learning (2 credits, self-paced)</div>
+        <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-2)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}>
+            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+            <path d="M2 17l10 5 10-5" />
+            <path d="M2 12l10 5 10-5" />
+          </svg>
+          <p style={{ color: "var(--text-2)", fontSize: 13.5, margin: 0, lineHeight: 1.6, flex: 1 }}>
+            This course has no mid-sem or final exams - you just complete it. Most students score between 90-100%. 
+            Enter your expected score and ASCEND will include it in your calculations.
+          </p>
+        </div>
+        <label className="field" style={{ maxWidth: 220, marginBottom: 0, marginTop: 8 }}>
+          <span>Expected score</span>
+          <input className="plan-in" inputMode="decimal" value={aiScore} onChange={(e) => setAiScore(e.target.value)} placeholder="e.g. 95" />
+        </label>
       </div>
-      {!valid && <div className="card" style={{ marginTop: 14, color: "var(--text-2)", fontSize: 14 }}>Fill in your current CWA, your credits, and a target CWA between 0 and 100 to see your plan.</div>}
-      {valid && S > 100 && <div className="card" style={{ marginTop: 14 }}><div style={{ fontWeight: 700, color: "var(--bad)", marginBottom: 6 }}>That target is out of reach in one semester.</div><p style={{ color: "var(--text-2)", margin: 0, fontSize: 14.5, lineHeight: 1.6 }}>Even a perfect 100% in every exam course, plus your predicted AI score, lands you at about <strong style={{ color: "var(--text)" }}>{maxCWA.toFixed(2)}</strong>. Aim at or below that, or spread the climb across more semesters.</p></div>}
-      {valid && S < 0 && <div className="card" style={{ marginTop: 14 }}><div style={{ fontWeight: 700, color: "var(--good)", marginBottom: 6 }}>You are already past this target.</div><p style={{ color: "var(--text-2)", margin: 0, fontSize: 14.5 }}>Your current standing already clears a CWA of {tg}. Raise the bar and push higher.</p></div>}
+      
+      {!valid && (
+        <div className="card" style={{ marginTop: 14, color: "var(--text-2)", fontSize: 14 }}>
+          Fill in your current CWA, credits completed, and a target CWA between 0 and 100 to see your plan.
+        </div>
+      )}
+      
+      {valid && S > 100 && (
+        <div className="card" style={{ marginTop: 14 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--bad)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 8v4M12 16h.01" />
+            </svg>
+            <span style={{ fontWeight: 700, color: "var(--bad)" }}>That target is out of reach this semester.</span>
+          </div>
+          <p style={{ color: "var(--text-2)", margin: 0, fontSize: 14.5, lineHeight: 1.6 }}>
+            Even scoring 100% in every exam course, plus your predicted AI score, 
+            lands you at about <strong style={{ color: "var(--text)" }}>{maxCWA.toFixed(2)}</strong>. 
+            Aim at or below that, or spread the climb across more semesters.
+          </p>
+        </div>
+      )}
+      
+      {valid && S < 0 && (
+        <div className="card" style={{ marginTop: 14 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--good)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            <span style={{ fontWeight: 700, color: "var(--good)" }}>You are already past this target!</span>
+          </div>
+          <p style={{ color: "var(--text-2)", margin: 0, fontSize: 14.5 }}>
+            Your current standing already gives you a CWA of {tg}. Raise the bar and push higher!
+          </p>
+        </div>
+      )}
+      
       {valid && S >= 0 && S <= 100 && (
         <>
+          {/* ============================================================
+              THE MAIN RESULT - CLEAR AND BOLD
+              ============================================================ */}
           <div className="card" style={{ marginTop: 14, textAlign: "center", padding: "26px 20px" }}>
             <div className="eyebrow">You need to average</div>
             <div className="headline" style={{ margin: "10px 0" }}>{S.toFixed(1)}%</div>
-            <div style={{ color: "var(--text-2)", fontSize: 14 }}>across your seven exam courses this semester to reach a CWA of {tg}</div>
+            <div style={{ color: "var(--text-2)", fontSize: 14 }}>
+              across your <strong style={{ color: "var(--text)" }}>{examCr}</strong> exam courses this semester 
+              to reach a CWA of <strong style={{ color: "var(--amber)" }}>{tg}</strong>
+            </div>
           </div>
+          
+          {/* ============================================================
+              HOW THE NUMBER IS BUILT - TRANSPARENT CALCULATION
+              ============================================================ */}
           <div className="card" style={{ marginTop: 12 }}>
-            <div className="eyebrow" style={{ marginBottom: 10 }}>How that number is built</div>
-            <p style={{ color: "var(--text-2)", fontSize: 14, lineHeight: 1.8, margin: 0 }}>
-              Target CWA x total credits = {tg} x {totalCr} = <strong style={{ color: "var(--text)" }}>{(tg * totalCr).toFixed(1)}</strong> weighted marks needed overall.<br />
-              You already hold {pc} x {pcr} = <strong style={{ color: "var(--text)" }}>{prevWeighted.toFixed(1)}</strong>, and your predicted AI course adds {aiVal} x {AI_CR} = <strong style={{ color: "var(--text)" }}>{aiWeighted.toFixed(1)}</strong>.<br />
-              That leaves <strong style={{ color: "var(--amber-2)" }}>{neededExams.toFixed(1)}</strong> weighted marks from your exam courses ({examCr} credits) - which is {S.toFixed(1)}% each.
+            <div className="eyebrow" style={{ marginBottom: 10 }}>How this number is calculated</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, fontSize: 13.5, lineHeight: 1.8 }}>
+              <div style={{ color: "var(--text-2)" }}>
+                Target CWA × total credits = 
+                <br /><strong style={{ color: "var(--text)" }}>{tg} × {totalCr} = {(tg * totalCr).toFixed(1)}</strong>
+              </div>
+              <div style={{ color: "var(--text-2)" }}>
+                Your current weighted marks = 
+                <br /><strong style={{ color: "var(--text)" }}>{pc} × {pcr} = {prevWeighted.toFixed(1)}</strong>
+              </div>
+              <div style={{ color: "var(--text-2)" }}>
+                AI course predicted marks = 
+                <br /><strong style={{ color: "var(--text)" }}>{aiVal} × {AI_CR} = {aiWeighted.toFixed(1)}</strong>
+              </div>
+              <div style={{ color: "var(--text-2)" }}>
+                Remaining marks needed = 
+                <br /><strong style={{ color: "var(--amber-2)" }}>{neededExams.toFixed(1)}</strong> from exam courses
+              </div>
+            </div>
+            <p style={{ color: "var(--text-3)", fontSize: 12, marginTop: 10, lineHeight: 1.6 }}>
+              Your exam courses total <strong>{examCr}</strong> credits, so you need to average 
+              <strong style={{ color: "var(--amber)" }}> {S.toFixed(1)}%</strong> across them.
             </p>
           </div>
+          
+          {/* ============================================================
+              WHAT THIS MEANS FOR EACH PAPER - PRACTICAL BREAKDOWN
+              ============================================================ */}
           <div className="card" style={{ marginTop: 12 }}>
             <div className="eyebrow" style={{ marginBottom: 4 }}>What {S.toFixed(1)}% means on each paper</div>
-            <p style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 0 }}>Mid-sem is scaled to 30, finals to 70. Aim for {S.toFixed(1)}% on both.</p>
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <div style={{ flex: 1, minWidth: 150, background: "var(--bg-3)", border: "1px solid var(--line)", borderRadius: 11, padding: 14 }}>
+            
+            <div style={{ 
+              background: "var(--bg-3)", 
+              border: "1px solid var(--line)", 
+              borderRadius: 8, 
+              padding: "12px 16px", 
+              marginBottom: 12 
+            }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}>
+                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                  <path d="M2 17l10 5 10-5" />
+                  <path d="M2 12l10 5 10-5" />
+                </svg>
+                <div>
+                  <p style={{ color: "var(--text)", fontSize: 13.5, margin: 0, lineHeight: 1.6 }}>
+                    <strong style={{ color: "var(--amber)" }}>Your target for each course:</strong>
+                  </p>
+                  <p style={{ color: "var(--text-2)", fontSize: 13, margin: "6px 0 0", lineHeight: 1.6 }}>
+                    Aim for <strong style={{ color: "var(--amber)" }}>{(0.30 * S).toFixed(1)}/30</strong> on your mid-semester 
+                    and <strong style={{ color: "var(--amber)" }}>{(0.70 * S).toFixed(1)}/70</strong> on your final exam.
+                  </p>
+                  <p style={{ color: "var(--text-3)", fontSize: 12, margin: "6px 0 0", lineHeight: 1.6 }}>
+                    This is the same percentage - just broken down by the marks available.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
+              <div style={{ flex: 1, minWidth: 150, background: "var(--bg-3)", border: "1px solid var(--line)", borderRadius: 11, padding: 14, textAlign: "center" }}>
                 <div className="mono" style={{ fontSize: 11, color: "var(--amber)" }}>MID-SEM · 30%</div>
                 <div style={{ fontWeight: 700, fontSize: 22, margin: "4px 0" }}>{(0.30 * S).toFixed(1)}<span style={{ fontSize: 13, color: "var(--text-3)" }}> / 30</span></div>
+                <div style={{ fontSize: 11, color: "var(--text-3)" }}>≈ {S.toFixed(0)}%</div>
               </div>
-              <div style={{ flex: 1, minWidth: 150, background: "var(--bg-3)", border: "1px solid var(--line)", borderRadius: 11, padding: 14 }}>
+              <div style={{ flex: 1, minWidth: 150, background: "var(--bg-3)", border: "1px solid var(--line)", borderRadius: 11, padding: 14, textAlign: "center" }}>
                 <div className="mono" style={{ fontSize: 11, color: "var(--amber)" }}>FINALS · 70%</div>
                 <div style={{ fontWeight: 700, fontSize: 22, margin: "4px 0" }}>{(0.70 * S).toFixed(1)}<span style={{ fontSize: 13, color: "var(--text-3)" }}> / 70</span></div>
+                <div style={{ fontSize: 11, color: "var(--text-3)" }}>≈ {S.toFixed(0)}%</div>
               </div>
             </div>
           </div>
+          
+          {/* ============================================================
+              COURSE-BY-COURSE BREAKDOWN
+              ============================================================ */}
           <div className="card" style={{ marginTop: 12 }}>
-            <div className="eyebrow" style={{ marginBottom: 4 }}>Raw score to aim for, course by course</div>
-            <p style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 0 }}>Set each paper's question count (mid-sem 70-100, finals 150-200) to see the marks to hit at {S.toFixed(1)}%.</p>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr auto auto", gap: 10, alignItems: "center", fontSize: 11, color: "var(--text-3)", fontWeight: 600, paddingBottom: 2 }}>
-              <span>COURSE</span><span style={{ textAlign: "center" }}>MID-SEM</span><span style={{ textAlign: "center" }}>FINALS</span>
+            <div className="eyebrow" style={{ marginBottom: 4 }}>Your target per course</div>
+            
+            <div style={{ 
+              background: "var(--bg-3)", 
+              border: "1px solid var(--line)", 
+              borderRadius: 8, 
+              padding: "10px 14px", 
+              marginBottom: 12 
+            }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-2)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}>
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 16v-4M12 8h.01" />
+                </svg>
+                <p style={{ color: "var(--text-2)", fontSize: 12.5, margin: 0, lineHeight: 1.6 }}>
+                  <strong style={{ color: "var(--amber)" }}>How to use this:</strong> For each course, enter the total number of questions 
+                  on the paper. The <strong style={{ color: "var(--good)" }}>green number</strong> shows how many questions you need to get right 
+                  to hit your target of <strong style={{ color: "var(--amber)" }}>{S.toFixed(0)}%</strong>.
+                </p>
+              </div>
             </div>
+            
+            <div style={{ display: "grid", gridTemplateColumns: "1fr auto auto", gap: 10, alignItems: "center", fontSize: 11, color: "var(--text-3)", fontWeight: 600, paddingBottom: 2 }}>
+              <span>COURSE</span>
+              <span style={{ textAlign: "center" }}>MID-SEM</span>
+              <span style={{ textAlign: "center" }}>FINALS</span>
+            </div>
+            
             {planCourses.map((c) => {
               const cc = counts[c.id] || { mid: "80", fin: "200" };
+              const midNeeded = rawNeeded(cc.mid);
+              const finNeeded = rawNeeded(cc.fin);
               return (
                 <div className="crs-line" key={c.id}>
-                  <div><div style={{ fontWeight: 600, fontSize: 14 }}>{c.name}</div><div className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>{c.cr} credits</div></div>
-                  <div style={{ textAlign: "center" }}>
-                    <div style={{ fontWeight: 700, color: "var(--good)", fontSize: 15 }}>{rawNeeded(cc.mid)}</div>
-                    <input className="qbox" inputMode="numeric" value={cc.mid} onChange={(e) => setCounts((s) => ({ ...s, [c.id]: { ...cc, mid: e.target.value } }))} />
+                  <div>
+                    <div style={{ fontWeight: 600, fontSize: 14 }}>{c.name}</div>
+                    <div className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>{c.cr} credits</div>
                   </div>
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontWeight: 700, color: "var(--good)", fontSize: 15 }}>{rawNeeded(cc.fin)}</div>
-                    <input className="qbox" inputMode="numeric" value={cc.fin} onChange={(e) => setCounts((s) => ({ ...s, [c.id]: { ...cc, fin: e.target.value } }))} />
+                    <div style={{ fontWeight: 700, color: "var(--good)", fontSize: 15 }}>
+                      {midNeeded !== "-" ? `${midNeeded}/${cc.mid}` : "-"}
+                    </div>
+                    <input className="qbox" inputMode="numeric" value={cc.mid} 
+                      onChange={(e) => setCounts((s) => ({ ...s, [c.id]: { ...cc, mid: e.target.value } }))} 
+                    />
+                  </div>
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontWeight: 700, color: "var(--good)", fontSize: 15 }}>
+                      {finNeeded !== "-" ? `${finNeeded}/${cc.fin}` : "-"}
+                    </div>
+                    <input className="qbox" inputMode="numeric" value={cc.fin} 
+                      onChange={(e) => setCounts((s) => ({ ...s, [c.id]: { ...cc, fin: e.target.value } }))} 
+                    />
                   </div>
                 </div>
               );
             })}
-            <p style={{ color: "var(--text-3)", fontSize: 12, marginTop: 10, lineHeight: 1.6 }}>The green number is the marks to score; the box beneath it is that paper's total questions. This assumes the same percentage on both papers - score higher on finals and you can ease off on the mid-sem.</p>
+            
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 10, marginTop: 10 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}>
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5" />
+                <path d="M2 12l10 5 10-5" />
+              </svg>
+              <p style={{ color: "var(--text-3)", fontSize: 12, margin: 0, lineHeight: 1.6 }}>
+                <strong>Pro tip:</strong> Score higher on finals (which are worth 70%) and you can afford to drop a few marks on mid-sems.
+                Change the question counts above to match your actual papers.
+              </p>
+            </div>
+          </div>
+          
+          {/* ============================================================
+              CWA CLASSIFICATION REFERENCE
+              ============================================================ */}
+          <div className="card" style={{ marginTop: 12 }}>
+            <div className="eyebrow" style={{ marginBottom: 6 }}>KNUST CWA Classification</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4, fontSize: 13 }}>
+              <div style={{ padding: "4px 8px", color: "var(--text-2)" }}>70.00 - 100.00</div>
+              <div style={{ padding: "4px 8px", fontWeight: 700, color: "var(--good)" }}>First Class</div>
+              <div style={{ padding: "4px 8px", color: "var(--text-2)" }}>60.00 - 69.99</div>
+              <div style={{ padding: "4px 8px", fontWeight: 700, color: "var(--amber)" }}>Second Class (Upper)</div>
+              <div style={{ padding: "4px 8px", color: "var(--text-2)" }}>50.00 - 59.99</div>
+              <div style={{ padding: "4px 8px", fontWeight: 700, color: "var(--amber-2)" }}>Second Class (Lower)</div>
+              <div style={{ padding: "4px 8px", color: "var(--text-2)" }}>40.00 - 49.99</div>
+              <div style={{ padding: "4px 8px", fontWeight: 700, color: "var(--bad)" }}>Pass</div>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 8 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 16v-4M12 8h.01" />
+              </svg>
+              <p style={{ color: "var(--text-3)", fontSize: 11.5, margin: 0, lineHeight: 1.5 }}>
+                Your target of <strong style={{ color: "var(--amber)" }}>{tg}</strong> is 
+                <strong style={{ color: tg >= 70 ? "var(--good)" : tg >= 60 ? "var(--amber)" : "var(--text-2)" }}>
+                  {tg >= 70 ? " First Class" : tg >= 60 ? " Second Class (Upper)" : tg >= 50 ? " Second Class (Lower)" : " Pass"}
+                </strong>
+              </p>
+            </div>
           </div>
         </>
       )}
@@ -17211,9 +17528,39 @@ export default function App() {
   const [showTop, setShowTop] = useState(false);
 
   // ============================================================
-// 1.5 REF DECLARATIONS
-// ============================================================
-const saveAppStateRef = useRef(null);
+  // 1.5 STATE RESTORATION (Runs ONCE on mount) - NEW FIX
+  // ============================================================
+  useEffect(() => {
+    // This runs ONCE when the app loads to restore full state
+    try {
+      const savedState = window.sessionStorage.getItem("ascend_global_state");
+      if (savedState) {
+        const state = JSON.parse(savedState);
+        if (state.route && state.route.view) {
+          setRoute(state.route);
+        }
+        if (state.progress) {
+          setProgress(state.progress);
+        }
+        if (state.lastTopic) {
+          setLastTopic(state.lastTopic);
+        }
+        if (state.theme) {
+          setTheme(state.theme);
+        }
+        // Restore scroll position
+        const savedScroll = window.sessionStorage.getItem("ascend_scroll");
+        if (savedScroll) {
+          const scrollY = parseInt(savedScroll, 10);
+          if (scrollY > 0) {
+            setTimeout(() => window.scrollTo(0, scrollY), 100);
+          }
+        }
+      }
+    } catch (e) {
+      // Silently fail - app will still work
+    }
+  }, []); // Empty array = runs ONCE on mount
 
   // ============================================================
   // 2. HELPER FUNCTIONS (BEFORE persist)
@@ -17350,44 +17697,36 @@ const saveAppStateRef = useRef(null);
   };
 
   // ============================================================
-// PERSISTENCE: Save state with correct dependencies
-// ============================================================
-const saveAppState = () => {
-  try {
-    // Don't save if route is undefined or empty - prevents homepage reset
-    if (!route || !route.view) return;
-    const state = {
-      route,
-      progress,
-      lastTopic,
-      theme,
-      menuOpen,
-      notifOpen,
-      rateDismissed,
-      rateStars,
-      timestamp: Date.now()
-    };
-    sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
-    sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
-  } catch (e) {
-    // Silently fail
-  }
-};
+  // 4. STATE PERSISTENCE (Saves whenever state changes) - IMPROVED
+  // ============================================================
+  const saveAppState = useCallback(() => {
+    try {
+      // Don't save if route is undefined or empty
+      if (!route || !route.view) return;
+      const state = {
+        route,
+        progress,
+        lastTopic,
+        theme,
+        menuOpen,
+        notifOpen,
+        rateDismissed,
+        rateStars,
+        timestamp: Date.now()
+      };
+      window.sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
+      window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
+    } catch (e) {
+      // Silently fail
+    }
+  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
 
-// Update the ref whenever saveAppState changes
-useEffect(() => {
-  saveAppStateRef.current = saveAppState;
-}, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
-
-// Save state whenever route changes - so refresh goes back to same page
-useEffect(() => {
-  saveAppState();
-}, [route]);
-
-
-
-// The actual event listeners - use the ref to always call the latest version
-
+  // ============================================================
+  // 5. AUTO-SAVE: Save state whenever it changes - NEW
+  // ============================================================
+  useEffect(() => {
+    saveAppState();
+  }, [saveAppState]); // Runs whenever saveAppState changes (which is whenever state changes)
 
   // Keep route in sessionStorage + browser history in sync for back/forward nav
   useEffect(() => {
@@ -17400,34 +17739,39 @@ useEffect(() => {
     } catch {}
   }, [route]);
 
-
+  // ============================================================
+  // 6. POPSTATE EVENT LISTENER (unchanged)
+  // ============================================================
   useEffect(() => {
-  if (typeof window === "undefined") return;
-  const onPop = (e) => {
-    let saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : null;
-    if (!saved) {
-      try { 
-        const r = window.sessionStorage.getItem("ascend_route"); 
-        saved = r ? JSON.parse(r) : { view: "home" }; 
-      } catch { saved = { view: "home" }; }
-    }
-    setRoute(saved);
-    setMenuOpen(false);
-    // Restore scroll position after navigation
-    try {
-      const savedScroll = window.sessionStorage.getItem("ascend_scroll");
-      if (savedScroll) {
-        const scrollY = parseInt(savedScroll, 10);
-        if (scrollY > 0) {
-          setTimeout(() => window.scrollTo(0, scrollY), 100);
-        }
+    if (typeof window === "undefined") return;
+    const onPop = (e) => {
+      let saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : null;
+      if (!saved) {
+        try { 
+          const r = window.sessionStorage.getItem("ascend_route"); 
+          saved = r ? JSON.parse(r) : { view: "home" }; 
+        } catch { saved = { view: "home" }; }
       }
-    } catch {}
-  };
-  window.addEventListener("popstate", onPop);
-  return () => window.removeEventListener("popstate", onPop);
-}, [setRoute]);
+      setRoute(saved);
+      setMenuOpen(false);
+      // Restore scroll position after navigation
+      try {
+        const savedScroll = window.sessionStorage.getItem("ascend_scroll");
+        if (savedScroll) {
+          const scrollY = parseInt(savedScroll, 10);
+          if (scrollY > 0) {
+            setTimeout(() => window.scrollTo(0, scrollY), 100);
+          }
+        }
+      } catch {}
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [setRoute]);
 
+  // ============================================================
+  // 7. SCROLL HANDLER (unchanged)
+  // ============================================================
   useEffect(() => {
     const handleScroll = () => {
       setShowTop(window.scrollY > 400);
@@ -17441,7 +17785,7 @@ useEffect(() => {
   }, []);
 
   // ============================================================
-  // 7. MAIN LOADING EFFECT (FIXED - Added restore on load)
+  // 8. MAIN LOADING EFFECT (unchanged)
   // ============================================================
   useEffect(() => {
     const link = document.createElement("link");
@@ -17490,28 +17834,6 @@ useEffect(() => {
         navigator.serviceWorker.register("/sw.js").catch(() => {});
       });
     }
-
-    // Route/scroll restoration is handled once by the dedicated
-    // mount-restore effect above; not duplicated here.
-    // Restore route from sessionStorage on page load
-try {
-  const savedRoute = window.sessionStorage.getItem("ascend_route");
-  if (savedRoute) {
-    const parsed = JSON.parse(savedRoute);
-    if (parsed && parsed.view) {
-      setRoute(parsed);
-    }
-  }
-  const savedScroll = window.sessionStorage.getItem("ascend_scroll");
-  if (savedScroll) {
-    const scrollY = parseInt(savedScroll, 10);
-    if (scrollY > 0) {
-      setTimeout(() => window.scrollTo(0, scrollY), 100);
-    }
-  }
-} catch (e) {
-  // Silently fail
-}
 
     (async () => {
       const t = await store.get("ascend_theme");
@@ -17574,7 +17896,7 @@ try {
   }, []);
 
   // ============================================================
-  // 8. adoptSupabaseUser, handleAuthed, logout, toggleTheme
+  // 9. adoptSupabaseUser, handleAuthed, logout, toggleTheme (unchanged)
   // ============================================================
   const adoptSupabaseUser = async (sUser) => {
     const uid = sUser.id;
@@ -17618,6 +17940,7 @@ try {
     setProgress(finalProgress);
     setRoute({ view: "home" });
   };
+  
   const logout = async () => {
     if (supaUid) { try { await supabase.auth.signOut(); } catch {} setSupaUid(null); }
     await store.set("ascend_session", "");
@@ -17627,24 +17950,25 @@ try {
   const toggleTheme = () => { const t = theme === "light" ? "dark" : "light"; setTheme(t); store.set("ascend_theme", t); };
 
   const go = (view, extra = {}) => {
-  const next = { view, ...extra };
-  setRoute(next);
+    const next = { view, ...extra };
+    setRoute(next);
 
-  if (view === "topic" && extra.courseId !== undefined && extra.topicId !== undefined) {
-    setLastTopic({ courseId: extra.courseId, topicId: extra.topicId });
-  }
+    if (view === "topic" && extra.courseId !== undefined && extra.topicId !== undefined) {
+      setLastTopic({ courseId: extra.courseId, topicId: extra.topicId });
+    }
 
-  setMenuOpen(false);
-  if (typeof window !== "undefined") {
-    try { 
-      window.history.pushState({ ascendRoute: next }, "");
-      // SAVE ROUTE IMMEDIATELY
-      window.sessionStorage.setItem("ascend_route", JSON.stringify(next));
-      window.sessionStorage.setItem("ascend_scroll", "0");
-    } catch {}
-    window.scrollTo?.(0, 0);
-  }
-};
+    setMenuOpen(false);
+    if (typeof window !== "undefined") {
+      try { 
+        window.history.pushState({ ascendRoute: next }, "");
+        // SAVE ROUTE IMMEDIATELY
+        window.sessionStorage.setItem("ascend_route", JSON.stringify(next));
+        window.sessionStorage.setItem("ascend_scroll", "0");
+      } catch {}
+      window.scrollTo?.(0, 0);
+    }
+  };
+  
   const recordDaily = (correct) => {
     const tk = todayKey();
     if (progress.dailyDone?.[tk]) return;
@@ -17848,6 +18172,7 @@ try {
   );
 
   if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
+  
   return (
     <div className={rootCls}>
       <style>{CSS}</style>
