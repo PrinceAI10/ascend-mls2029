@@ -17335,125 +17335,204 @@ export default function App() {
   // ============================================================
   // PERSISTENCE: single source of truth for save + restore
   // ============================================================
-  const saveAppState = () => {
-    try {
-      const state = {
-        route,
-        progress,
-        lastTopic,
-        theme,
-        menuOpen,
-        notifOpen,
-        rateDismissed,
-        rateStars,
-        timestamp: Date.now()
-      };
-      sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
-      sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
-    } catch (e) {
-      // Silently fail
-    }
-  };
+  // ============================================================
+// STATE PERSISTENCE - FIXED FOR TAB SWITCHING
+// ============================================================
 
-  // Restore once on mount only
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem("ascend_global_state");
-      if (saved) {
-        const state = JSON.parse(saved);
-        if (state.route) setRoute(state.route);
-        if (state.lastTopic) setLastTopic(state.lastTopic);
-        if (state.theme) setTheme(state.theme);
-        if (state.menuOpen !== undefined) setMenuOpen(state.menuOpen);
-        if (state.notifOpen !== undefined) setNotifOpen(state.notifOpen);
-        if (state.rateDismissed !== undefined) setRateDismissed(state.rateDismissed);
-        if (state.rateStars !== undefined) setRateStars(state.rateStars);
+const saveAppState = () => {
+  try {
+    const state = {
+      route,
+      progress,
+      lastTopic,
+      theme,
+      menuOpen,
+      notifOpen,
+      rateDismissed,
+      rateStars,
+      timestamp: Date.now()
+    };
+    sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
+    sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
+    sessionStorage.setItem("ascend_route", JSON.stringify(route));
+  } catch (e) {
+    // Silently fail
+  }
+};
+
+// Restore once on mount only
+useEffect(() => {
+  try {
+    // First restore from global state
+    const saved = sessionStorage.getItem("ascend_global_state");
+    if (saved) {
+      const state = JSON.parse(saved);
+      if (state.route) setRoute(state.route);
+      if (state.lastTopic) setLastTopic(state.lastTopic);
+      if (state.theme) setTheme(state.theme);
+      if (state.menuOpen !== undefined) setMenuOpen(state.menuOpen);
+      if (state.notifOpen !== undefined) setNotifOpen(state.notifOpen);
+      if (state.rateDismissed !== undefined) setRateDismissed(state.rateDismissed);
+      if (state.rateStars !== undefined) setRateStars(state.rateStars);
+    }
+    
+    // Also ensure route from sessionStorage is used
+    const savedRoute = sessionStorage.getItem("ascend_route");
+    if (savedRoute) {
+      const parsed = JSON.parse(savedRoute);
+      if (parsed && parsed.view) {
+        // Only update if different to avoid loops
+        setRoute(prevRoute => {
+          if (JSON.stringify(prevRoute) !== JSON.stringify(parsed)) {
+            return parsed;
+          }
+          return prevRoute;
+        });
       }
+    }
+    
+    // Restore scroll position
+    const savedScroll = sessionStorage.getItem("ascend_scroll");
+    if (savedScroll) {
+      const scrollY = parseInt(savedScroll, 10);
+      if (scrollY > 0) {
+        setTimeout(() => window.scrollTo(0, scrollY), 150);
+      }
+    }
+  } catch (e) {
+    // Silently fail
+  }
+}, []);
+
+// Save whenever relevant state changes
+useEffect(() => {
+  saveAppState();
+}, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
+
+// Save on page hide / unload
+useEffect(() => {
+  const onHide = () => saveAppState();
+  window.addEventListener("pagehide", onHide);
+  window.addEventListener("beforeunload", onHide);
+  return () => {
+    window.removeEventListener("pagehide", onHide);
+    window.removeEventListener("beforeunload", onHide);
+  };
+}, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
+
+// Keep route in sessionStorage + browser history in sync
+useEffect(() => {
+  if (typeof window === "undefined") return;
+  try {
+    window.sessionStorage.setItem("ascend_route", JSON.stringify(route));
+  } catch {}
+  try {
+    window.history.replaceState({ ascendRoute: route }, "");
+  } catch {}
+}, [route]);
+
+// Handle browser back/forward navigation
+useEffect(() => {
+  if (typeof window === "undefined") return;
+  const onPop = (e) => {
+    let saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : null;
+    if (!saved) {
+      try { 
+        const r = window.sessionStorage.getItem("ascend_route"); 
+        saved = r ? JSON.parse(r) : { view: "home" }; 
+      } catch { saved = { view: "home" }; }
+    }
+    setRoute(saved);
+    setMenuOpen(false);
+    try {
+      const savedScroll = window.sessionStorage.getItem("ascend_scroll");
+      if (savedScroll) {
+        const scrollY = parseInt(savedScroll, 10);
+        if (scrollY > 0) {
+          setTimeout(() => window.scrollTo(0, scrollY), 100);
+        }
+      }
+    } catch {}
+  };
+  window.addEventListener("popstate", onPop);
+  return () => window.removeEventListener("popstate", onPop);
+}, []);
+
+// ============================================================
+// TAB SWITCHING FIX - Restore state when tab becomes visible
+// ============================================================
+useEffect(() => {
+  if (typeof window === "undefined") return;
+  
+  let isRestoring = false;
+  
+  const restoreState = () => {
+    // Prevent multiple rapid restores
+    if (isRestoring) return;
+    isRestoring = true;
+    
+    try {
+      // Restore route from sessionStorage when tab becomes visible
+      const savedRoute = sessionStorage.getItem("ascend_route");
+      if (savedRoute) {
+        const parsed = JSON.parse(savedRoute);
+        // Only update if different to avoid loops
+        setRoute(prevRoute => {
+          if (JSON.stringify(prevRoute) !== JSON.stringify(parsed)) {
+            return parsed;
+          }
+          return prevRoute;
+        });
+      }
+      
+      // Restore scroll position
       const savedScroll = sessionStorage.getItem("ascend_scroll");
       if (savedScroll) {
         const scrollY = parseInt(savedScroll, 10);
         if (scrollY > 0) {
-          setTimeout(() => window.scrollTo(0, scrollY), 150);
+          setTimeout(() => window.scrollTo(0, scrollY), 50);
         }
       }
     } catch (e) {
       // Silently fail
     }
-  }, []);
+    
+    setTimeout(() => { isRestoring = false; }, 100);
+  };
+  
+  const onVisibilityChange = () => {
+    if (document.visibilityState === "visible") {
+      restoreState();
+    }
+  };
+  
+  const onFocus = () => {
+    // Check if we're actually in the tab (not just a child window)
+    if (document.visibilityState === "visible") {
+      restoreState();
+    }
+  };
+  
+  document.addEventListener("visibilitychange", onVisibilityChange);
+  window.addEventListener("focus", onFocus);
+  
+  return () => {
+    document.removeEventListener("visibilitychange", onVisibilityChange);
+    window.removeEventListener("focus", onFocus);
+  };
+}, [route]);
 
-  // Save whenever relevant state changes (covers tab switches, since React
-  // state never leaves memory on a simple tab switch, but this keeps
-  // sessionStorage in sync for real unload/reload/history navigation cases)
-  useEffect(() => {
-    saveAppState();
-  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
-
-  // Save on page hide / unload (covers actual tab close or reload, NOT
-  // ordinary tab switching — a simple visibilitychange "hidden" event does
-  // not need to trigger a route reset, so we deliberately don't restore
-  // state on "visible" here; that used to cause the app to snap back to
-  // stale/home state whenever the user switched tabs)
-  useEffect(() => {
-    const onHide = () => saveAppState();
-    window.addEventListener("pagehide", onHide);
-    window.addEventListener("beforeunload", onHide);
-    return () => {
-      window.removeEventListener("pagehide", onHide);
-      window.removeEventListener("beforeunload", onHide);
-    };
-  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
-
-  // Keep route in sessionStorage + browser history in sync for back/forward nav
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+// Scroll position tracking
+useEffect(() => {
+  const handleScroll = () => {
+    setShowTop(window.scrollY > 400);
     try {
-      window.sessionStorage.setItem("ascend_route", JSON.stringify(route));
+      window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
     } catch {}
-    try {
-      window.history.replaceState({ ascendRoute: route }, "");
-    } catch {}
-  }, [route]);
-
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const onPop = (e) => {
-      let saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : null;
-      if (!saved) {
-        try { 
-          const r = window.sessionStorage.getItem("ascend_route"); 
-          saved = r ? JSON.parse(r) : { view: "home" }; 
-        } catch { saved = { view: "home" }; }
-      }
-      setRoute(saved);
-      setMenuOpen(false);
-      // Restore scroll position after navigation
-      try {
-        const savedScroll = window.sessionStorage.getItem("ascend_scroll");
-        if (savedScroll) {
-          const scrollY = parseInt(savedScroll, 10);
-          if (scrollY > 0) {
-            setTimeout(() => window.scrollTo(0, scrollY), 100);
-          }
-        }
-      } catch {}
-    };
-    window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowTop(window.scrollY > 400);
-      // Save scroll position on scroll
-      try {
-        window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
-      } catch {}
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+  };
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
   // ============================================================
   // 7. MAIN LOADING EFFECT (FIXED - Added restore on load)
   // ============================================================
