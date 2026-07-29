@@ -17174,15 +17174,26 @@ export default function App() {
   // 1. STATE DECLARATIONS FIRST (BEFORE everything else)
   // ============================================================
   const [route, setRoute] = useState(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const saved = window.sessionStorage.getItem("ascend_route");
-        if (saved) return JSON.parse(saved);
-      } catch {}
-    }
-    return { view: "home" };
-  });
-
+  if (typeof window !== "undefined") {
+    try {
+      // First check sessionStorage for route
+      const savedRoute = sessionStorage.getItem("ascend_route");
+      if (savedRoute) {
+        const parsed = JSON.parse(savedRoute);
+        if (parsed && parsed.view) {
+          return parsed;
+        }
+      }
+      // Fallback to global state
+      const saved = sessionStorage.getItem("ascend_global_state");
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.route) return state.route;
+      }
+    } catch {}
+  }
+  return { view: "home" };
+});
   const [progress, setProgress] = useState(null);
   const [rankUpNotif, setRankUpNotif] = useState(null);
   const [achievements, setAchievements] = useState([]);
@@ -17332,157 +17343,70 @@ export default function App() {
     }
   };
 
-  // ============================================================
+   // ============================================================
   // PERSISTENCE: single source of truth for save + restore
   // ============================================================
   // ============================================================
-// STATE PERSISTENCE - FIXED FOR TAB SWITCHING
-// ============================================================
-
-const saveAppState = () => {
-  try {
-    const state = {
-      route,
-      progress,
-      lastTopic,
-      theme,
-      menuOpen,
-      notifOpen,
-      rateDismissed,
-      rateStars,
-      timestamp: Date.now()
-    };
-    sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
-    sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
-    sessionStorage.setItem("ascend_route", JSON.stringify(route));
-  } catch (e) {
-    // Silently fail
-  }
-};
-
-// Restore once on mount only
-useEffect(() => {
-  try {
-    // First restore from global state
-    const saved = sessionStorage.getItem("ascend_global_state");
-    if (saved) {
-      const state = JSON.parse(saved);
-      if (state.route) setRoute(state.route);
-      if (state.lastTopic) setLastTopic(state.lastTopic);
-      if (state.theme) setTheme(state.theme);
-      if (state.menuOpen !== undefined) setMenuOpen(state.menuOpen);
-      if (state.notifOpen !== undefined) setNotifOpen(state.notifOpen);
-      if (state.rateDismissed !== undefined) setRateDismissed(state.rateDismissed);
-      if (state.rateStars !== undefined) setRateStars(state.rateStars);
-    }
-    
-    // Also ensure route from sessionStorage is used
-    const savedRoute = sessionStorage.getItem("ascend_route");
-    if (savedRoute) {
-      const parsed = JSON.parse(savedRoute);
-      if (parsed && parsed.view) {
-        // Only update if different to avoid loops
-        setRoute(prevRoute => {
-          if (JSON.stringify(prevRoute) !== JSON.stringify(parsed)) {
-            return parsed;
-          }
-          return prevRoute;
-        });
-      }
-    }
-    
-    // Restore scroll position
-    const savedScroll = sessionStorage.getItem("ascend_scroll");
-    if (savedScroll) {
-      const scrollY = parseInt(savedScroll, 10);
-      if (scrollY > 0) {
-        setTimeout(() => window.scrollTo(0, scrollY), 150);
-      }
-    }
-  } catch (e) {
-    // Silently fail
-  }
-}, []);
-
-// Save whenever relevant state changes
-useEffect(() => {
-  saveAppState();
-}, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
-
-// Save on page hide / unload
-useEffect(() => {
-  const onHide = () => saveAppState();
-  window.addEventListener("pagehide", onHide);
-  window.addEventListener("beforeunload", onHide);
-  return () => {
-    window.removeEventListener("pagehide", onHide);
-    window.removeEventListener("beforeunload", onHide);
-  };
-}, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
-
-// Keep route in sessionStorage + browser history in sync
-useEffect(() => {
-  if (typeof window === "undefined") return;
-  try {
-    window.sessionStorage.setItem("ascend_route", JSON.stringify(route));
-  } catch {}
-  try {
-    window.history.replaceState({ ascendRoute: route }, "");
-  } catch {}
-}, [route]);
-
-// Handle browser back/forward navigation
-useEffect(() => {
-  if (typeof window === "undefined") return;
-  const onPop = (e) => {
-    let saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : null;
-    if (!saved) {
-      try { 
-        const r = window.sessionStorage.getItem("ascend_route"); 
-        saved = r ? JSON.parse(r) : { view: "home" }; 
-      } catch { saved = { view: "home" }; }
-    }
-    setRoute(saved);
-    setMenuOpen(false);
+  // STATE PERSISTENCE - COMPLETE FIX FOR TAB SWITCHING
+  // ============================================================
+  const saveAppState = () => {
     try {
-      const savedScroll = window.sessionStorage.getItem("ascend_scroll");
-      if (savedScroll) {
-        const scrollY = parseInt(savedScroll, 10);
-        if (scrollY > 0) {
-          setTimeout(() => window.scrollTo(0, scrollY), 100);
+      const state = {
+        route,
+        progress,
+        lastTopic,
+        theme,
+        menuOpen,
+        notifOpen,
+        rateDismissed,
+        rateStars,
+        timestamp: Date.now()
+      };
+      sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
+      sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
+      sessionStorage.setItem("ascend_route", JSON.stringify(route));
+    } catch (e) {
+      // Silently fail
+    }
+  };
+
+  // Restore once on mount only
+  useEffect(() => {
+    try {
+      // First restore from global state
+      const saved = sessionStorage.getItem("ascend_global_state");
+      if (saved) {
+        const state = JSON.parse(saved);
+        if (state.route) {
+          setRoute(state.route);
+        }
+        if (state.lastTopic) {
+          setLastTopic(state.lastTopic);
+        }
+        if (state.theme) {
+          setTheme(state.theme);
+        }
+        if (state.menuOpen !== undefined) {
+          setMenuOpen(state.menuOpen);
+        }
+        if (state.notifOpen !== undefined) {
+          setNotifOpen(state.notifOpen);
+        }
+        if (state.rateDismissed !== undefined) {
+          setRateDismissed(state.rateDismissed);
+        }
+        if (state.rateStars !== undefined) {
+          setRateStars(state.rateStars);
         }
       }
-    } catch {}
-  };
-  window.addEventListener("popstate", onPop);
-  return () => window.removeEventListener("popstate", onPop);
-}, []);
-
-// ============================================================
-// TAB SWITCHING FIX - Restore state when tab becomes visible
-// ============================================================
-useEffect(() => {
-  if (typeof window === "undefined") return;
-  
-  let isRestoring = false;
-  
-  const restoreState = () => {
-    // Prevent multiple rapid restores
-    if (isRestoring) return;
-    isRestoring = true;
-    
-    try {
-      // Restore route from sessionStorage when tab becomes visible
+      
+      // Also ensure route from sessionStorage is used (fallback)
       const savedRoute = sessionStorage.getItem("ascend_route");
       if (savedRoute) {
         const parsed = JSON.parse(savedRoute);
-        // Only update if different to avoid loops
-        setRoute(prevRoute => {
-          if (JSON.stringify(prevRoute) !== JSON.stringify(parsed)) {
-            return parsed;
-          }
-          return prevRoute;
-        });
+        if (parsed && parsed.view) {
+          setRoute(parsed);
+        }
       }
       
       // Restore scroll position
@@ -17490,49 +17414,168 @@ useEffect(() => {
       if (savedScroll) {
         const scrollY = parseInt(savedScroll, 10);
         if (scrollY > 0) {
-          setTimeout(() => window.scrollTo(0, scrollY), 50);
+          setTimeout(() => window.scrollTo(0, scrollY), 150);
         }
       }
     } catch (e) {
       // Silently fail
     }
-    
-    setTimeout(() => { isRestoring = false; }, 100);
-  };
-  
-  const onVisibilityChange = () => {
-    if (document.visibilityState === "visible") {
-      restoreState();
-    }
-  };
-  
-  const onFocus = () => {
-    // Check if we're actually in the tab (not just a child window)
-    if (document.visibilityState === "visible") {
-      restoreState();
-    }
-  };
-  
-  document.addEventListener("visibilitychange", onVisibilityChange);
-  window.addEventListener("focus", onFocus);
-  
-  return () => {
-    document.removeEventListener("visibilitychange", onVisibilityChange);
-    window.removeEventListener("focus", onFocus);
-  };
-}, [route]);
+  }, []);
 
-// Scroll position tracking
-useEffect(() => {
-  const handleScroll = () => {
-    setShowTop(window.scrollY > 400);
+  // Save whenever relevant state changes
+  useEffect(() => {
+    saveAppState();
+  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
+
+  // Save on page hide / unload
+  useEffect(() => {
+    const onHide = () => {
+      saveAppState();
+    };
+    window.addEventListener("pagehide", onHide);
+    window.addEventListener("beforeunload", onHide);
+    return () => {
+      window.removeEventListener("pagehide", onHide);
+      window.removeEventListener("beforeunload", onHide);
+    };
+  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
+
+  // Keep route in sessionStorage + browser history in sync
+  useEffect(() => {
+    if (typeof window === "undefined") return;
     try {
-      window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
+      sessionStorage.setItem("ascend_route", JSON.stringify(route));
     } catch {}
-  };
-  window.addEventListener("scroll", handleScroll);
-  return () => window.removeEventListener("scroll", handleScroll);
-}, []);
+    try {
+      window.history.replaceState({ ascendRoute: route }, "");
+    } catch {}
+  }, [route]);
+
+  // Handle browser back/forward navigation
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const onPop = (e) => {
+      let saved = e.state && e.state.ascendRoute ? e.state.ascendRoute : null;
+      if (!saved) {
+        try { 
+          const r = sessionStorage.getItem("ascend_route"); 
+          saved = r ? JSON.parse(r) : { view: "home" }; 
+        } catch { 
+          saved = { view: "home" }; 
+        }
+      }
+      setRoute(saved);
+      setMenuOpen(false);
+      try {
+        const savedScroll = sessionStorage.getItem("ascend_scroll");
+        if (savedScroll) {
+          const scrollY = parseInt(savedScroll, 10);
+          if (scrollY > 0) {
+            setTimeout(() => window.scrollTo(0, scrollY), 100);
+          }
+        }
+      } catch {}
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
+  // ============================================================
+  // TAB SWITCHING FIX - Restore state when tab becomes visible
+  // ============================================================
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    
+    let isRestoring = false;
+    let restoreTimeout = null;
+    
+    const restoreState = () => {
+      // Prevent multiple rapid restores
+      if (isRestoring) return;
+      isRestoring = true;
+      
+      try {
+        // Restore route from sessionStorage when tab becomes visible
+        const savedRoute = sessionStorage.getItem("ascend_route");
+        if (savedRoute) {
+          const parsed = JSON.parse(savedRoute);
+          // Only update if different to avoid loops
+          setRoute((prevRoute) => {
+            if (JSON.stringify(prevRoute) !== JSON.stringify(parsed)) {
+              return parsed;
+            }
+            return prevRoute;
+          });
+        }
+        
+        // Also restore from global state if route is still home
+        setRoute((prevRoute) => {
+          if (prevRoute.view === "home") {
+            const saved = sessionStorage.getItem("ascend_global_state");
+            if (saved) {
+              const state = JSON.parse(saved);
+              if (state.route && state.route.view !== "home") {
+                return state.route;
+              }
+            }
+          }
+          return prevRoute;
+        });
+        
+        // Restore scroll position
+        const savedScroll = sessionStorage.getItem("ascend_scroll");
+        if (savedScroll) {
+          const scrollY = parseInt(savedScroll, 10);
+          if (scrollY > 0) {
+            setTimeout(() => window.scrollTo(0, scrollY), 50);
+          }
+        }
+      } catch (e) {
+        // Silently fail
+      }
+      
+      restoreTimeout = setTimeout(() => { 
+        isRestoring = false; 
+      }, 200);
+    };
+    
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        restoreState();
+      }
+    };
+    
+    const onFocus = () => {
+      // Check if we're actually in the tab (not just a child window)
+      if (document.visibilityState === "visible") {
+        restoreState();
+      }
+    };
+    
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    window.addEventListener("focus", onFocus);
+    
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("focus", onFocus);
+      if (restoreTimeout) {
+        clearTimeout(restoreTimeout);
+      }
+    };
+  }, [route]);
+
+  // Scroll position tracking
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowTop(window.scrollY > 400);
+      try {
+        sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
+      } catch {}
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // ============================================================
   // 7. MAIN LOADING EFFECT (FIXED - Added restore on load)
   // ============================================================
@@ -17543,7 +17586,11 @@ useEffect(() => {
     document.head.appendChild(link);
 
     let viewport = document.querySelector('meta[name="viewport"]');
-    if (!viewport) { viewport = document.createElement("meta"); viewport.name = "viewport"; document.head.appendChild(viewport); }
+    if (!viewport) {
+      viewport = document.createElement("meta");
+      viewport.name = "viewport";
+      document.head.appendChild(viewport);
+    }
     if (!/viewport-fit=cover/.test(viewport.content || "")) {
       viewport.content = (viewport.content ? viewport.content.replace(/,?\s*viewport-fit=[^,]*/, "") + "," : "width=device-width,initial-scale=1,") + "viewport-fit=cover";
     }
@@ -17551,30 +17598,40 @@ useEffect(() => {
     const icon = "/ascend-icon.png";
     if (!document.querySelector('link[rel="apple-touch-icon"]')) {
       const aLink = document.createElement("link");
-      aLink.rel = "apple-touch-icon"; aLink.href = icon;
+      aLink.rel = "apple-touch-icon";
+      aLink.href = icon;
       document.head.appendChild(aLink);
     }
     let meta = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
-    if (!meta) { meta = document.createElement("meta"); meta.name = "apple-mobile-web-app-capable"; meta.content = "yes"; document.head.appendChild(meta); }
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.name = "apple-mobile-web-app-capable";
+      meta.content = "yes";
+      document.head.appendChild(meta);
+    }
 
     if (!document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')) {
       const m = document.createElement("meta");
-      m.name = "apple-mobile-web-app-status-bar-style"; m.content = "black-translucent";
+      m.name = "apple-mobile-web-app-status-bar-style";
+      m.content = "black-translucent";
       document.head.appendChild(m);
     }
     if (!document.querySelector('meta[name="apple-mobile-web-app-title"]')) {
       const m = document.createElement("meta");
-      m.name = "apple-mobile-web-app-title"; m.content = "ASCEND";
+      m.name = "apple-mobile-web-app-title";
+      m.content = "ASCEND";
       document.head.appendChild(m);
     }
     if (!document.querySelector('meta[name="theme-color"]')) {
       const m = document.createElement("meta");
-      m.name = "theme-color"; m.content = "#0A0F1A";
+      m.name = "theme-color";
+      m.content = "#0A0F1A";
       document.head.appendChild(m);
     }
     if (!document.querySelector('link[rel="manifest"]')) {
       const m = document.createElement("link");
-      m.rel = "manifest"; m.href = "/manifest.json";
+      m.rel = "manifest";
+      m.href = "/manifest.json";
       document.head.appendChild(m);
     }
 
@@ -17584,19 +17641,20 @@ useEffect(() => {
       });
     }
 
-    // Route/scroll restoration is handled once by the dedicated
-    // mount-restore effect above; not duplicated here.
-
     (async () => {
       const t = await store.get("ascend_theme");
-      if (t === "light" || t === "dark") setTheme(t);
+      if (t === "light" || t === "dark") {
+        setTheme(t);
+      }
 
       try {
         const { data } = await supabase.auth.getSession();
         const sUser = data && data.session ? data.session.user : null;
         if (sUser) {
           if (window.location.hash && /access_token=/.test(window.location.hash)) {
-            try { window.history.replaceState(null, "", window.location.pathname + window.location.search); } catch {}
+            try {
+              window.history.replaceState(null, "", window.location.pathname + window.location.search);
+            } catch {}
           }
           await adoptSupabaseUser(sUser);
           setLoaded(true);
@@ -17622,7 +17680,9 @@ useEffect(() => {
       const res = supabase.auth.onAuthStateChange((event, session) => {
         if (event === "SIGNED_IN" && session && session.user) {
           if (window.location.hash && /access_token=/.test(window.location.hash)) {
-            try { window.history.replaceState(null, "", window.location.pathname + window.location.search); } catch {}
+            try {
+              window.history.replaceState(null, "", window.location.pathname + window.location.search);
+            } catch {}
           }
           adoptSupabaseUser(session.user);
         }
@@ -17639,11 +17699,15 @@ useEffect(() => {
         document.head.removeChild(link); 
         // Save state on unmount
         try {
-          window.sessionStorage.setItem("ascend_route", JSON.stringify(route));
-          window.sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
+          sessionStorage.setItem("ascend_route", JSON.stringify(route));
+          sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
         } catch {}
       } catch {} 
-      try { sub && sub.unsubscribe(); } catch {} 
+      try { 
+        if (sub && sub.unsubscribe) {
+          sub.unsubscribe();
+        }
+      } catch {} 
     };
   }, []);
 
@@ -17660,7 +17724,11 @@ useEffect(() => {
     let profileXp = 0, profileStreak = 0, profileName = null;
     try {
       const { data } = await supabase.from("profiles").select("name, xp, streak").eq("id", uid).maybeSingle();
-      if (data) { profileXp = data.xp || 0; profileStreak = data.streak || 0; profileName = data.name; }
+      if (data) {
+        profileXp = data.xp || 0;
+        profileStreak = data.streak || 0;
+        profileName = data.name;
+      }
     } catch {}
     const base = freshProgress(displayName);
     const merged = cloud ? { ...base, ...cloud } : { ...base };
@@ -17692,33 +17760,57 @@ useEffect(() => {
     setProgress(finalProgress);
     setRoute({ view: "home" });
   };
+
   const logout = async () => {
-    if (supaUid) { try { await supabase.auth.signOut(); } catch {} setSupaUid(null); }
+    if (supaUid) {
+      try {
+        await supabase.auth.signOut();
+      } catch {}
+      setSupaUid(null);
+    }
     await store.set("ascend_session", "");
-    setAuth(null); setMenuOpen(false); setRoute({ view: "home" });
+    setAuth(null);
+    setMenuOpen(false);
+    setRoute({ view: "home" });
   };
 
-  const toggleTheme = () => { const t = theme === "light" ? "dark" : "light"; setTheme(t); store.set("ascend_theme", t); };
+  const toggleTheme = () => {
+    const t = theme === "light" ? "dark" : "light";
+    setTheme(t);
+    store.set("ascend_theme", t);
+  };
 
+  // ============================================================
+  // 9. NAVIGATION - go function with proper persistence
+  // ============================================================
   const go = (view, extra = {}) => {
-  const next = { view, ...extra };
-  setRoute(next);
+    const next = { view, ...extra };
+    setRoute(next);
 
-  if (view === "topic" && extra.courseId !== undefined && extra.topicId !== undefined) {
-    setLastTopic({ courseId: extra.courseId, topicId: extra.topicId });
-  }
+    if (view === "topic" && extra.courseId !== undefined && extra.topicId !== undefined) {
+      setLastTopic({ courseId: extra.courseId, topicId: extra.topicId });
+    }
 
-  setMenuOpen(false);
-  if (typeof window !== "undefined") {
-    try { 
-      window.history.pushState({ ascendRoute: next }, "");
-      // SAVE ROUTE IMMEDIATELY
-      window.sessionStorage.setItem("ascend_route", JSON.stringify(next));
-      window.sessionStorage.setItem("ascend_scroll", "0");
-    } catch {}
-    window.scrollTo?.(0, 0);
-  }
-};
+    setMenuOpen(false);
+    if (typeof window !== "undefined") {
+      try { 
+        window.history.pushState({ ascendRoute: next }, "");
+        // SAVE ROUTE IMMEDIATELY - CRITICAL FOR PERSISTENCE
+        sessionStorage.setItem("ascend_route", JSON.stringify(next));
+        sessionStorage.setItem("ascend_scroll", "0");
+        // Also save to global state
+        const saved = sessionStorage.getItem("ascend_global_state");
+        if (saved) {
+          const state = JSON.parse(saved);
+          state.route = next;
+          state.timestamp = Date.now();
+          sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
+        }
+      } catch {}
+      window.scrollTo?.(0, 0);
+    }
+  };
+
   const recordDaily = (correct) => {
     const tk = todayKey();
     if (progress.dailyDone?.[tk]) return;
@@ -17879,7 +17971,16 @@ useEffect(() => {
 
   const navButtons = (onNav) => NAV.map((n) => {
     const Icon = Ic[n.icon];
-    return <button key={n.key} className={"navi " + (activeNav === n.key ? "on" : "")} onClick={() => onNav(n.key)}><Icon p={19} />{n.label}</button>;
+    return (
+      <button 
+        key={n.key} 
+        className={"navi " + (activeNav === n.key ? "on" : "")} 
+        onClick={() => onNav(n.key)}
+      >
+        <Icon p={19} />
+        {n.label}
+      </button>
+    );
   });
 
   const render = () => {
@@ -17908,20 +18009,34 @@ useEffect(() => {
   const dailyNotDone = !progress?.dailyDone?.[todayKey()];
   const unreadAnn = (progress?.seenAnn || 0) < ANNOUNCEMENTS.length;
   const hasUnread = unreadAnn || dailyNotDone;
-  const openNotif = () => { setNotifOpen(true); if (unreadAnn && progress) persist({ ...progress, seenAnn: ANNOUNCEMENTS.length }); };
+  const openNotif = () => {
+    setNotifOpen(true);
+    if (unreadAnn && progress) {
+      persist({ ...progress, seenAnn: ANNOUNCEMENTS.length });
+    }
+  };
   const showRate = !!auth && (progress?.xp || 0) >= 30 && !progress?.rated && !progress?.ratePromptSeen && !rateDismissed && route.view !== "feedback";
 
-  if (!loaded) return (
-    <div className={rootCls}>
-      <style>{CSS}</style>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18, minHeight: "100vh" }}>
-        <Wordmark />
-        <div className="spinner-ring" />
+  if (!loaded) {
+    return (
+      <div className={rootCls}>
+        <style>{CSS}</style>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18, minHeight: "100vh" }}>
+          <Wordmark />
+          <div className="spinner-ring" />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 
-  if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
+  if (!auth) {
+    return (
+      <div className={rootCls}>
+        <style>{CSS}</style>
+        <AuthScreen onAuthed={handleAuthed} />
+      </div>
+    );
+  }
 
   return (
     <div className={rootCls}>
@@ -17929,11 +18044,15 @@ useEffect(() => {
       
       <div className="shell">
         <aside className="side">
-          <div style={{ padding: "0 6px 18px" }}><Wordmark /></div>
+          <div style={{ padding: "0 6px 18px" }}>
+            <Wordmark />
+          </div>
           {navButtons(go)}
           <div style={{ marginTop: "auto", padding: "14px 10px 0", borderTop: "1px solid var(--line)" }}>
             <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
-            <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
+            <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>
+              Log out
+            </button>
           </div>
         </aside>
 
@@ -17947,21 +18066,39 @@ useEffect(() => {
               >
                 <Ic.menu p={18} />
               </button>
-              <div className="onlymobile" style={{ flex: 1 }}><Wordmark /></div>
+              <div className="onlymobile" style={{ flex: 1 }}>
+                <Wordmark />
+              </div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
-                <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
-                <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
-                <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
-                <span className="chip"><span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP</span>
+                <span className="chip streakchip">
+                  <Ic.flame p={15} />
+                  <span className="val">{progress?.streak || 0}</span>
+                </span>
+                <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">
+                  {theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}
+                </button>
+                <button className="iconbtn" onClick={openNotif} title="Announcements">
+                  <Ic.bell p={18} />
+                  {hasUnread && <span className="notif-dot" />}
+                </button>
+                <span className="chip">
+                  <span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP
+                </span>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
-                  <button className="avatar" onClick={setName} title="Click to change your username">{progress?.name?.[0]?.toUpperCase() || "?"}</button>
+                  <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>
+                    {progress?.name || ""}
+                  </span>
+                  <button className="avatar" onClick={setName} title="Click to change your username">
+                    {progress?.name?.[0]?.toUpperCase() || "?"}
+                  </button>
                 </div>
               </div>
             </div>
           </header>
           
-          <div className="content">{render()}</div>
+          <div className="content">
+            {render()}
+          </div>
           
           {showTop && (
             <button
@@ -18035,12 +18172,16 @@ useEffect(() => {
           >
             <div style={{ padding: "16px 18px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <Wordmark />
-              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setMenuOpen(false)}><Ic.x p={15} /></button>
+              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setMenuOpen(false)}>
+                <Ic.x p={15} />
+              </button>
             </div>
             {navButtons(go)}
             <div style={{ marginTop: "auto", padding: "14px 18px", borderTop: "1px solid var(--line)" }}>
               <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
-              <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
+              <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>
+                Log out
+              </button>
             </div>
           </div>
         </div>
@@ -18052,25 +18193,41 @@ useEffect(() => {
           <div className="notif-panel">
             <div className="notif-head">
               <div style={{ fontWeight: 700, fontSize: 15 }}>Announcements</div>
-              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setNotifOpen(false)}><Ic.x p={15} /></button>
+              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setNotifOpen(false)}>
+                <Ic.x p={15} />
+              </button>
             </div>
             {dailyNotDone && (
               <div className="notif-item" style={{ background: "var(--amber-dim)" }}>
                 <div className="mono" style={{ fontSize: 11, color: "var(--amber-2)", marginBottom: 4 }}>REMINDER</div>
                 <div style={{ fontWeight: 650, marginBottom: 3 }}>Today's daily question is waiting</div>
-                <div style={{ color: "var(--text-2)", fontSize: 13.5, marginBottom: 9 }}>Keep your streak alive - it only takes a minute.</div>
-                <button className="btn btn-a btn-sm" onClick={() => { setNotifOpen(false); go("daily"); }}>Go to daily</button>
+                <div style={{ color: "var(--text-2)", fontSize: 13.5, marginBottom: 9 }}>
+                  Keep your streak alive - it only takes a minute.
+                </div>
+                <button className="btn btn-a btn-sm" onClick={() => { 
+                  setNotifOpen(false); 
+                  go("daily"); 
+                }}>
+                  Go to daily
+                </button>
               </div>
             )}
             {ANNOUNCEMENTS.map((a) => (
               <div className="notif-item" key={a.id}>
-                <div className="mono" style={{ fontSize: 11, color: "var(--amber)", marginBottom: 4 }}>{a.tag.toUpperCase()}</div>
+                <div className="mono" style={{ fontSize: 11, color: "var(--amber)", marginBottom: 4 }}>
+                  {a.tag.toUpperCase()}
+                </div>
                 <div style={{ fontWeight: 650, marginBottom: 3 }}>{a.title}</div>
                 <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>{a.body}</div>
               </div>
             ))}
             <div style={{ padding: "14px 18px" }}>
-              <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={() => { setNotifOpen(false); go("feedback"); }}>Send feedback</button>
+              <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={() => { 
+                setNotifOpen(false); 
+                go("feedback"); 
+              }}>
+                Send feedback
+              </button>
             </div>
           </div>
         </div>
@@ -18083,16 +18240,51 @@ useEffect(() => {
             <div style={{ padding: 22, textAlign: "center" }}>
               <div className="eyebrow" style={{ color: "var(--amber)" }}>Enjoying ASCEND?</div>
               <h3 style={{ fontSize: 19, margin: "8px 0 4px" }}>Rate your experience</h3>
-              <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0 }}>A quick tap helps us make it better for the whole class.</p>
+              <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0 }}>
+                A quick tap helps us make it better for the whole class.
+              </p>
               <div style={{ display: "flex", gap: 8, justifyContent: "center", margin: "8px 0 16px" }}>
                 {[1, 2, 3, 4, 5].map((s) => (
-                  <button key={s} onClick={() => setRateStars(s)} style={{ background: "none", border: "none", cursor: "pointer", color: rateStars >= s ? "var(--amber)" : "var(--text-3)" }}>
+                  <button 
+                    key={s} 
+                    onClick={() => setRateStars(s)} 
+                    style={{ 
+                      background: "none", 
+                      border: "none", 
+                      cursor: "pointer", 
+                      color: rateStars >= s ? "var(--amber)" : "var(--text-3)" 
+                    }}
+                  >
                     <Ic.star p={30} fill={rateStars >= s ? "currentColor" : "none"} />
                   </button>
                 ))}
               </div>
-              <button className="btn btn-a" style={{ width: "100%" }} disabled={rateStars === 0} onClick={() => { store.setShared("ascend_feedback:" + Date.now(), { rating: rateStars, comment: "", timestamp: new Date().toISOString() }); persist({ ...progress, rated: true }); setRateDismissed(true); }}>Submit</button>
-              <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 8 }} onClick={() => { persist({ ...progress, ratePromptSeen: true }); setRateDismissed(true); }}>Maybe later</button>
+              <button 
+                className="btn btn-a" 
+                style={{ width: "100%" }} 
+                disabled={rateStars === 0} 
+                onClick={() => { 
+                  store.setShared("ascend_feedback:" + Date.now(), { 
+                    rating: rateStars, 
+                    comment: "", 
+                    timestamp: new Date().toISOString() 
+                  }); 
+                  persist({ ...progress, rated: true }); 
+                  setRateDismissed(true); 
+                }}
+              >
+                Submit
+              </button>
+              <button 
+                className="btn btn-g btn-sm" 
+                style={{ width: "100%", marginTop: 8 }} 
+                onClick={() => { 
+                  persist({ ...progress, ratePromptSeen: true }); 
+                  setRateDismissed(true); 
+                }}
+              >
+                Maybe later
+              </button>
             </div>
           </div>
         </div>
