@@ -217,6 +217,7 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .dots span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--text-3);
   margin:0 2px;animation:bl 1.2s infinite}
 .dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+.loading-dots span{width:8px;height:8px;background:var(--amber)}
 @keyframes bl{0%,60%,100%{opacity:.25}30%{opacity:1}}
 .divider{height:1px;background:var(--line);margin:24px 0}
 .back{display:inline-flex;align-items:center;gap:6px;color:var(--text-2);font-size:13.5px;font-weight:600;margin-bottom:14px;cursor:pointer}
@@ -16918,8 +16919,9 @@ const showRate = !!auth && (progress?.xp || 0) >= 30 && !progress?.rated && !pro
 if (!loaded) return (
   <div className={rootCls}>
     <style>{CSS}</style>
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh" }}>
-      <span className="dots"><span /><span /><span /></span>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18, minHeight: "100vh" }}>
+      <Wordmark />
+      <span className="dots loading-dots"><span /><span /><span /></span>
     </div>
   </div>
 );
