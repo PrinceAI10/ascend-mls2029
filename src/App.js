@@ -1,4 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+// ============================================================
+// TOP OF App.js - FIXED IMPORTS
+// ============================================================
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { supabase } from "./supabaseClient";
 // ============================================================
 // FIX: Suppress browser extension errors (Grammarly, etc.)
