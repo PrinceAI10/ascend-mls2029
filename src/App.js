@@ -12950,15 +12950,17 @@ const db = {
   // save this user's progress JSON, and mirror name/xp/streak into their profile
   async saveProgress(uid, progress) {
     try {
-      await supabase.from("progress").upsert({ id: uid, data: progress, updated_at: new Date().toISOString() });
-      await supabase.from("profiles").upsert({
+      const r1 = await supabase.from("progress").upsert({ id: uid, data: progress, updated_at: new Date().toISOString() });
+      if (r1.error) console.error("saveProgress: progress upsert failed:", r1.error.message);
+      const r2 = await supabase.from("profiles").upsert({
         id: uid,
         name: progress.name,
         xp: progress.xp,
         streak: progress.streak,
         updated_at: new Date().toISOString(),
       });
-    } catch {}
+      if (r2.error) console.error("saveProgress: profiles upsert failed:", r2.error.message);
+    } catch (e) { console.error("saveProgress: unexpected error:", e); }
   },
 
   // change the display name / username on the profile
@@ -13252,11 +13254,15 @@ async function callClaude(system, messages, maxTokens = 4096) {
     // Handle rate limits and errors
     if (res.status === 429 || res.status === 529 || res.status === 503) {
       if (attempt < MAX_ATTEMPTS - 1) {
-        const backoff = Math.min(1200 * Math.pow(1.6, attempt), 9000) + Math.random() * 600;
+        const retryAfterHeader = res.headers.get && res.headers.get("Retry-After");
+        const retryAfterMs = retryAfterHeader ? parseInt(retryAfterHeader, 10) * 1000 : null;
+        const backoff = retryAfterMs && !isNaN(retryAfterMs)
+          ? retryAfterMs + Math.random() * 400
+          : Math.min(1200 * Math.pow(1.6, attempt), 9000) + Math.random() * 600;
         await new Promise((r) => setTimeout(r, backoff));
         continue;
       }
-      throw new Error("The AI service is busy right now. Please wait a few moments and try again.");
+      throw new Error("The AI service is busy right now (this usually means the free Gemini quota for the class got maxed out). Please wait about a minute and try again.");
     } else if (res.status === 401) {
       throw new Error("AI service authentication failed. Please contact the ASCEND team.");
     } else if (res.status >= 500) {
@@ -18225,7 +18231,7 @@ export default function App() {
 
     if (supaUid) {
       try {
-        await supabase.from("profiles").upsert({
+        const { error } = await supabase.from("profiles").upsert({
           id: supaUid, 
           name: newName, 
           username: newName,
@@ -18233,7 +18239,21 @@ export default function App() {
           streak: progress.streak || 0,
           updated_at: new Date().toISOString(),
         });
-      } catch {}
+        if (error) {
+          // Surface the real reason instead of silently reverting on next reload.
+          // Common causes: RLS policy blocking the update, or a unique constraint
+          // on "username" because someone else already has that name.
+          if (error.code === "23505" || /duplicate|unique/i.test(error.message || "")) {
+            window.alert("That username is already taken. Please choose another.");
+          } else {
+            window.alert("Couldn't save your new username (" + (error.message || "unknown error") + "). Please try again.");
+          }
+          return;
+        }
+      } catch (e) {
+        window.alert("Couldn't save your new username - check your connection and try again.");
+        return;
+      }
       persist({ ...progress, name: newName });
       return;
     }
@@ -18534,4 +18554,4 @@ export default function App() {
       )}
     </div>
   );
-}
+}ss
