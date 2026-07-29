@@ -17406,99 +17406,134 @@ export default function App() {
   const finishQuiz = (cid, tid, correct, missed = [], total = 0) => {
   const tkey = `${cid}:${tid}`;
   const firstTime = !progress.completed?.[tkey];
-  const baseXp = firstTime ? correct * 10 : 0;
+  
+  // FIX: Always award XP for correct answers
+  const baseXp = correct * 10;  // 10 XP per correct answer
+  const bonusXp = firstTime ? correct * 5 : 0;  // Bonus for first-time completion
+  
   const multiplier = getStreakMultiplier(progress.streak);
-  const gained = Math.round(baseXp * multiplier.multiplier);
+  const gained = Math.round((baseXp + bonusXp) * multiplier.multiplier);
+  
   const prevReview = Array.isArray(progress.review) ? progress.review : [];
   const seen = new Set(prevReview.map((m) => m.q));
   const merged = [...prevReview];
-  for (const m of missed) { if (!seen.has(m.q)) { merged.push(m); seen.add(m.q); } }
+  for (const m of missed) { 
+    if (!seen.has(m.q)) { 
+      merged.push(m); 
+      seen.add(m.q); 
+    } 
+  }
+  
   const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
   const prevScores = progress.scores || {};
   const bestPrev = prevScores[tkey] || 0;
   const scores = { ...prevScores, [tkey]: Math.max(bestPrev, pct) };
+  
   const newXp = progress.xp + gained;
+  
   setXpChange(newXp);
-  persist({ ...progress, xp: newXp, completed: { ...progress.completed, [tkey]: true }, review: merged, scores });
+  persist({ 
+    ...progress, 
+    xp: newXp, 
+    completed: { ...progress.completed, [tkey]: true }, 
+    review: merged, 
+    scores 
+  });
 };
 
-  const toggleBookmark = (cid, tid) => {
-    const key = `${cid}:${tid}`;
-    const prev = Array.isArray(progress.bookmarks) ? progress.bookmarks : [];
-    const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
-    persist({ ...progress, bookmarks: next });
-  };
-    // CLEAR REVIEW ITEM - Remove a question from review deck
-  const clearReviewItem = (questionText) => {
-    const prev = Array.isArray(progress.review) ? progress.review : [];
-    persist({ ...progress, review: prev.filter((m) => m.q !== questionText) });
-  };
+const toggleBookmark = (cid, tid) => {
+  const key = `${cid}:${tid}`;
+  const prev = Array.isArray(progress.bookmarks) ? progress.bookmarks : [];
+  const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
+  persist({ ...progress, bookmarks: next });
+};
 
-    const setName = async () => {
-    if (typeof window === "undefined") return;
-    const raw = window.prompt("Change your username (this is your name on the leaderboard)", progress.name);
-    if (!raw) return;
-    const newName = raw.trim().slice(0, 24);
-    if (newName.length < 2 || newName === progress.name) return;
+// CLEAR REVIEW ITEM - Remove a question from review deck
+const clearReviewItem = (questionText) => {
+  const prev = Array.isArray(progress.review) ? progress.review : [];
+  persist({ ...progress, review: prev.filter((m) => m.q !== questionText) });
+};
 
-    if (supaUid) {
-      // update the profile row with the new name (keeping current xp/streak) so the
-      // change shows on everyone's leaderboard, then persist locally.
-      try {
-        await supabase.from("profiles").upsert({
-          id: supaUid, name: newName, username: newName,
-          xp: progress.xp || 0, streak: progress.streak || 0,
-          updated_at: new Date().toISOString(),
-        });
-      } catch {}
-      persist({ ...progress, name: newName });
-      return;
-    }
-    if (progress.name) {
-      const oldBoardKey = "ascend_board:" + String(progress.name).toLowerCase().replace(/[^a-z0-9]/g, "");
-      try { if (hasWS()) { await window.storage.delete?.(oldBoardKey, true); } else { localStorage.removeItem(oldBoardKey); } } catch {}
-    }
-    if (auth) {
-      const accounts = (await store.get("ascend_accounts")) || {};
-      const key = auth.username.toLowerCase();
-      if (accounts[key]) { accounts[key] = { ...accounts[key], name: newName }; await store.set("ascend_accounts", accounts); }
-    }
+const setName = async () => {
+  if (typeof window === "undefined") return;
+  const raw = window.prompt("Change your username (this is your name on the leaderboard)", progress.name);
+  if (!raw) return;
+  const newName = raw.trim().slice(0, 24);
+  if (newName.length < 2 || newName === progress.name) return;
+
+  if (supaUid) {
+    try {
+      await supabase.from("profiles").upsert({
+        id: supaUid, 
+        name: newName, 
+        username: newName,
+        xp: progress.xp || 0, 
+        streak: progress.streak || 0,
+        updated_at: new Date().toISOString(),
+      });
+    } catch {}
     persist({ ...progress, name: newName });
-  };
+    return;
+  }
+  
+  if (progress.name) {
+    const oldBoardKey = "ascend_board:" + String(progress.name).toLowerCase().replace(/[^a-z0-9]/g, "");
+    try { 
+      if (hasWS()) { 
+        await window.storage.delete?.(oldBoardKey, true); 
+      } else { 
+        localStorage.removeItem(oldBoardKey); 
+      } 
+    } catch {}
+  }
+  
+  if (auth) {
+    const accounts = (await store.get("ascend_accounts")) || {};
+    const key = auth.username.toLowerCase();
+    if (accounts[key]) { 
+      accounts[key] = { ...accounts[key], name: newName }; 
+      await store.set("ascend_accounts", accounts); 
+    }
+  }
+  persist({ ...progress, name: newName });
+};
 
-  // READING XP - Award XP for reading topics
-    // READING XP - Award XP for reading topics with streak multiplier
-  const setReadingXp = (newXp) => {
-    const key = `${route.courseId}:${route.topicId}`;
-    const awarded = sessionStorage.getItem('ascend_read_' + key);
-    if (awarded) return;
-    sessionStorage.setItem('ascend_read_' + key, 'true');
-    const multiplier = getStreakMultiplier(progress.streak);
-    const baseXp = 15;
-    const gained = Math.round(baseXp * multiplier.multiplier);
-    const updated = { ...progress, xp: progress.xp + gained };
-    setProgress(updated);
-    persist(updated);
-  };
+// READING XP - Award XP for reading topics with streak multiplier
+const setReadingXp = (newXp) => {
+  const key = `${route.courseId}:${route.topicId}`;
+  const awarded = sessionStorage.getItem('ascend_read_' + key);
+  if (awarded) return;
+  sessionStorage.setItem('ascend_read_' + key, 'true');
+  const multiplier = getStreakMultiplier(progress.streak);
+  const baseXp = 15;
+  const gained = Math.round(baseXp * multiplier.multiplier);
+  const updated = { ...progress, xp: progress.xp + gained };
+  setProgress(updated);
+  persist(updated);
+};
 
-    // PASSCO XP - Award XP for completing past papers with streak multiplier
-  const setPasscoXp = (earnedXp) => {
-    const key = `passco_${Date.now()}`;
-    const awarded = sessionStorage.getItem('ascend_passco_' + key);
-    if (awarded) return;
-    sessionStorage.setItem('ascend_passco_' + key, 'true');
-    const multiplier = getStreakMultiplier(progress.streak);
-    const gained = Math.round(earnedXp * multiplier.multiplier);
-    const updated = { ...progress, xp: progress.xp + gained, passcoCompleted: (progress.passcoCompleted || 0) + 1 };
-    setProgress(updated);
-    persist(updated);
-    // Show notification
-    sessionStorage.setItem('ascend_passco_notif', JSON.stringify({
-      earned: gained,
-      total: updated.xp
-    }));
+// PASSCO XP - Award XP for completing past papers with streak multiplier
+const setPasscoXp = (earnedXp) => {
+  const key = `passco_${Date.now()}`;
+  const awarded = sessionStorage.getItem('ascend_passco_' + key);
+  if (awarded) return;
+  sessionStorage.setItem('ascend_passco_' + key, 'true');
+  const multiplier = getStreakMultiplier(progress.streak);
+  const gained = Math.round(earnedXp * multiplier.multiplier);
+  const updated = { 
+    ...progress, 
+    xp: progress.xp + gained, 
+    passcoCompleted: (progress.passcoCompleted || 0) + 1 
   };
- 
+  setProgress(updated);
+  persist(updated);
+  
+  // Show notification
+  sessionStorage.setItem('ascend_passco_notif', JSON.stringify({
+    earned: gained,
+    total: updated.xp
+  }));
+};
   const app = { 
   progress, 
   go, 
