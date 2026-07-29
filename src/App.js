@@ -13594,67 +13594,79 @@ function TopicView({ app }) {
   
   const noteContext = (t.note || []).map((n) => n.q + " " + n.body).join("\n\n").slice(0, 5000);
   
-    // READING TIMER
+      // READING TIMER
   const [readTime, setReadTime] = useState(0);
   const [readingAwarded, setReadingAwarded] = useState(false);
   const [readingNotif, setReadingNotif] = useState(false);
   const timerRef = useRef(null);
   
-  // READING TIMER - Start timer when topic loads
-  useEffect(() => {
-    setReadTime(0);
-    setReadingAwarded(false);
-    setReadingNotif(false);
-
-    // SAVE READING TIMER STATE
+  // READING TIMER - Save state
   useEffect(() => {
     try {
       const state = {
-        readTime,
-        readingAwarded,
-        readingNotif
+        readTime: readTime,
+        readingAwarded: readingAwarded,
+        readingNotif: readingNotif
       };
       sessionStorage.setItem('ascend_topic_read_' + app.courseId + '_' + app.topicId, JSON.stringify(state));
-    } catch {}
+    } catch (error) {
+      // Silently fail
+    }
   }, [readTime, readingAwarded, readingNotif, app.courseId, app.topicId]);
 
-  // RESTORE READING TIMER STATE
+  // READING TIMER - Restore state on mount
   useEffect(() => {
     try {
       const saved = sessionStorage.getItem('ascend_topic_read_' + app.courseId + '_' + app.topicId);
       if (saved) {
         const state = JSON.parse(saved);
-        if (state.readTime) setReadTime(state.readTime);
-        if (state.readingAwarded !== undefined) setReadingAwarded(state.readingAwarded);
-        if (state.readingNotif !== undefined) setReadingNotif(state.readingNotif);
+        if (state.readTime !== undefined) {
+          setReadTime(state.readTime);
+        }
+        if (state.readingAwarded !== undefined) {
+          setReadingAwarded(state.readingAwarded);
+        }
+        if (state.readingNotif !== undefined) {
+          setReadingNotif(state.readingNotif);
+        }
       }
-    } catch {}
+    } catch (error) {
+      // Silently fail
+    }
   }, [app.courseId, app.topicId]);
-    
-    timerRef.current = setInterval(() => {
-      setReadTime(prev => {
-        const newTime = prev + 1;
+
+  // READING TIMER - Timer functionality
+  useEffect(() => {
+    // Reset when topic changes
+    setReadTime(0);
+    setReadingAwarded(false);
+    setReadingNotif(false);
+
+    const timer = setInterval(() => {
+      setReadTime(function(prev) {
+        var newTime = prev + 1;
         if (newTime >= 300 && !readingAwarded) {
           setReadingAwarded(true);
           setReadingNotif(true);
-          // Use streak multiplier for reading XP
-          const multiplier = app.getStreakMultiplier ? app.getStreakMultiplier(app.progress.streak) : { multiplier: 1 };
-          const baseXp = 15;
-          const gained = Math.round(baseXp * multiplier.multiplier);
-          const newXp = app.progress.xp + gained;
+          var multiplier = app.getStreakMultiplier ? app.getStreakMultiplier(app.progress.streak) : { multiplier: 1 };
+          var baseXp = 15;
+          var gained = Math.round(baseXp * multiplier.multiplier);
+          var newXp = app.progress.xp + gained;
           if (app.setReadingXp) {
             app.setReadingXp(newXp);
           }
-          setTimeout(() => setReadingNotif(false), 5000);
+          setTimeout(function() {
+            setReadingNotif(false);
+          }, 5000);
         }
         return newTime;
       });
     }, 1000);
-    
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+
+    return function cleanup() {
+      clearInterval(timer);
     };
-  }, [app.courseId, app.topicId]);;
+  }, [app.courseId, app.topicId, app.progress?.streak, readingAwarded]);
   
   return (
     <div className="view">
@@ -14008,14 +14020,18 @@ function RanksView({ app }) {
         setXpChange(parsed);
         sessionStorage.removeItem('ascend_xp_change');
       }
-    } catch {}
+    } catch (error) {
+      // Silently fail
+    }
   }, []);
 
   // SAVE RANKS SEARCH
   useEffect(() => {
     try {
       sessionStorage.setItem('ascend_ranks_search', search);
-    } catch {}
+    } catch (error) {
+      // Silently fail
+    }
   }, [search]);
 
   // RESTORE RANKS SEARCH
@@ -14023,7 +14039,9 @@ function RanksView({ app }) {
     try {
       const saved = sessionStorage.getItem('ascend_ranks_search');
       if (saved) setSearch(saved);
-    } catch {}
+    } catch (error) {
+      // Silently fail
+    }
   }, []);
   
   const loadBoard = async () => {
@@ -14039,7 +14057,9 @@ function RanksView({ app }) {
         setLoading(false);
         return;
       }
-    } catch {}
+    } catch (error) {
+      // Silently fail
+    }
     try {
       const keys = await store.listShared("ascend_board:");
       const rows = [];
@@ -14048,9 +14068,12 @@ function RanksView({ app }) {
         if (v && v.name && k !== "ascend_board:" + meKey) rows.push(v);
       }
       setOthers(rows);
-    } catch {}
+    } catch (error) {
+      // Silently fail
+    }
     setLoading(false);
   };
+  
   useEffect(() => {
     loadBoard();
     const onVis = () => { if (document.visibilityState === "visible") loadBoard(); };
@@ -14069,7 +14092,9 @@ function RanksView({ app }) {
           const state = channel.presenceState();
           const keys = new Set(Object.keys(state || {}));
           setOnlineKeys(keys);
-        } catch {}
+        } catch (error) {
+          // Silently fail
+        }
       };
       channel
         .on("presence", { event: "sync" }, refresh)
@@ -14077,17 +14102,34 @@ function RanksView({ app }) {
         .on("presence", { event: "leave" }, refresh)
         .subscribe(async (status) => {
           if (status === "SUBSCRIBED") {
-            try { await channel.track({ name: app.progress.name, at: Date.now() }); } catch {}
+            try { await channel.track({ name: app.progress.name, at: Date.now() }); } catch (error) {
+              // Silently fail
+            }
           }
         });
-    } catch {}
-    const onHide = () => { try { if (document.visibilityState === "hidden" && channel) channel.untrack(); else if (channel) channel.track({ name: app.progress.name, at: Date.now() }); } catch {} };
+    } catch (error) {
+      // Silently fail
+    }
+    const onHide = () => { 
+      try { 
+        if (document.visibilityState === "hidden" && channel) {
+          channel.untrack(); 
+        } else if (channel) { 
+          channel.track({ name: app.progress.name, at: Date.now() }); 
+        } 
+      } catch (error) {
+        // Silently fail
+      } 
+    };
     document.addEventListener("visibilitychange", onHide);
     return () => {
       document.removeEventListener("visibilitychange", onHide);
-      try { if (channel) { channel.untrack(); supabase.removeChannel(channel); } } catch {}
+      try { if (channel) { channel.untrack(); supabase.removeChannel(channel); } } catch (error) {
+        // Silently fail
+      }
     };
   }, [app.supaUid, app.progress.name]);
+  
   const me = { name: app.progress.name, xp: app.progress.xp, streak: app.progress.streak, me: true, id: app.supaUid };
   
   const fullBoard = [...others, me].sort((a, b) => {
@@ -14095,29 +14137,31 @@ function RanksView({ app }) {
     const aId = a.id || 'local-' + String(a.name).toLowerCase().replace(/[^a-z0-9]/g, '');
     const bId = b.id || 'local-' + String(b.name).toLowerCase().replace(/[^a-z0-9]/g, '');
     const history = JSON.parse(localStorage.getItem('ascend_xp_history') || '{}');
-    const aEntry = (history[aId] || []).find(h => h.xp === a.xp);
-    const bEntry = (history[bId] || []).find(h => h.xp === b.xp);
+    const aEntry = (history[aId] || []).find(function(h) { return h.xp === a.xp; });
+    const bEntry = (history[bId] || []).find(function(h) { return h.xp === b.xp; });
     if (aEntry && bEntry) return aEntry.time - bEntry.time;
     if (aEntry) return -1;
     if (bEntry) return 1;
     return String(a.name).localeCompare(String(b.name));
-  }).map((p, i) => ({
-    ...p,
-    pos: i + 1,
-    online: p.me ? true : onlineKeys.has(presenceKeyFor(p.id, p.name)),
-  }));
+  }).map(function(p, i) {
+    return {
+      ...p,
+      pos: i + 1,
+      online: p.me ? true : onlineKeys.has(presenceKeyFor(p.id, p.name))
+    };
+  });
   
   const q = search.trim().toLowerCase();
-  const board = q ? fullBoard.filter((p) => String(p.name || "").toLowerCase().includes(q)) : fullBoard;
+  const board = q ? fullBoard.filter(function(p) { return String(p.name || "").toLowerCase().includes(q); }) : fullBoard;
   const r = rankOf(app.progress.xp);
   const toNext = r.next ? r.next.min - app.progress.xp : 0;
   
   // Demotion status function
-  const getDemotionStatus = (lastActive) => {
+  const getDemotionStatus = function(lastActive) {
     if (!lastActive) return null;
-    const today = new Date();
-    const last = new Date(lastActive);
-    const diffDays = Math.floor((today - last) / (1000 * 60 * 60 * 24));
+    var today = new Date();
+    var last = new Date(lastActive);
+    var diffDays = Math.floor((today - last) / (1000 * 60 * 60 * 24));
     if (diffDays >= 10) {
       return { zone: 'demotion', days: diffDays, label: 'DEMOTED', color: '#F0776A' };
     } else if (diffDays >= 7) {
@@ -14133,7 +14177,7 @@ function RanksView({ app }) {
       <p style={{ color: "var(--text-2)", marginTop: 0 }}>XP from daily questions and quizzes.</p>
       <div style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 13, color: "var(--text-2)", marginTop: -4, marginBottom: 4 }}>
         <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#2E9BFF", display: "inline-block" }} />
-        {fullBoard.filter((p) => p.online).length} online now
+        {fullBoard.filter(function(p) { return p.online; }).length} online now
       </div>
       <div className="card card-feature" style={{ marginTop: 18, display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{ position: "relative", flexShrink: 0 }}>
@@ -14149,7 +14193,7 @@ function RanksView({ app }) {
         <input
           className="auth-input"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={function(e) { setSearch(e.target.value); }}
           placeholder="Search for a classmate by name"
           autoCapitalize="none"
           autoCorrect="off"
@@ -14160,8 +14204,8 @@ function RanksView({ app }) {
       <div style={{ marginTop: 10 }}>
         {loading && fullBoard.length <= 1 && <div style={{ padding: "20px", textAlign: "center", color: "var(--text-3)", fontSize: 13 }}>Loading the class leaderboard...</div>}
         {!loading && q && board.length === 0 && <div style={{ padding: "20px", textAlign: "center", color: "var(--text-3)", fontSize: 13 }}>No classmate found matching "{search.trim()}".</div>}
-        {board.map((p) => {
-          const demotion = !p.me ? getDemotionStatus(p.lastActive) : null;
+        {board.map(function(p) {
+          var demotion = !p.me ? getDemotionStatus(p.lastActive) : null;
           return (
             <div key={p.pos + "-" + p.name} className="card" style={{ marginBottom: 8, padding: "12px 15px", display: "flex", alignItems: "center", gap: 13, border: p.me ? "1px solid var(--amber)" : "1px solid var(--line)", background: p.me ? "var(--amber-dim)" : "var(--bg-2)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -15960,76 +16004,98 @@ function AuthScreen({ onAuthed }) {
   };
 
   const requestReset = async () => {
-    clearMsgs();
-    const id = username.trim().toLowerCase();
-    if (!id) { setErr("Type your username or email first."); return; }
-    setBusy(true);
-    // Real email delivery needs the reset backend (see password-reset.js). When
-    // AUTH_ENDPOINT is set, this calls it; until then we tell the student plainly.
-    if (AUTH_ENDPOINT) {
-      try {
-        const res = await fetch(AUTH_ENDPOINT, {
-          method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ identifier: id })
-        });
-        setBusy(false);
-        if (res.ok) { setFStage("sent"); return; }
-        throw new Error("reset service error");
-      } catch (e) {
-        setBusy(false);
-        setErr("The reset email could not be sent right now. Please try again later.");
+  clearMsgs();
+  const id = username.trim().toLowerCase();
+  if (!id) {
+    setErr("Type your username or email first.");
+    return;
+  }
+  setBusy(true);
+  // Real email delivery needs the reset backend (see password-reset.js). When
+  // AUTH_ENDPOINT is set, this calls it; until then we tell the student plainly.
+  if (AUTH_ENDPOINT) {
+    try {
+      const res = await fetch(AUTH_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ identifier: id })
+      });
+      setBusy(false);
+      if (res.ok) {
+        setFStage("sent");
         return;
       }
+      throw new Error("reset service error");
+    } catch (error) {
+      setBusy(false);
+      setErr("The reset email could not be sent right now. Please try again later.");
+      return;
     }
-    setBusy(false);
-    setFStage("sent");
-  };
+  }
+  // If no reset endpoint is configured, show a clear message
+  setBusy(false);
+  setOk("A reset link would be sent here, but email delivery is not yet configured. Please contact the ASCEND team for password reset assistance.");
+  setFStage("sent");
+};
 
-  const goTab = (t) => { setTab(t); clearMsgs(); setPw(""); setPw2(""); setFStage("who"); };
+const goTab = (t) => {
+  setTab(t);
+  clearMsgs();
+  setPw("");
+  setPw2("");
+  setFStage("who");
+};
 
-  const Logo = (
-    <div className="auth-logo">
-      <div className="auth-mark">
-        <svg width="46" height="46" viewBox="0 0 26 26" aria-hidden>
-          <rect x="3" y="15" width="4.5" height="8" rx="1.4" fill="var(--amber)" opacity=".55" />
-          <rect x="10.8" y="9" width="4.5" height="14" rx="1.4" fill="var(--amber)" opacity=".8" />
-          <rect x="18.5" y="3" width="4.5" height="20" rx="1.4" fill="var(--amber)" />
-        </svg>
-        <span className="auth-name">ASCEND</span>
-      </div>
-      <p className="auth-tag">The climb to First Class, together. <strong>No gatekeeping.</strong> Learn the why, not just the what.</p>
+const Logo = (
+  <div className="auth-logo">
+    <div className="auth-mark">
+      <svg width="46" height="46" viewBox="0 0 26 26" aria-hidden>
+        <rect x="3" y="15" width="4.5" height="8" rx="1.4" fill="var(--amber)" opacity=".55" />
+        <rect x="10.8" y="9" width="4.5" height="14" rx="1.4" fill="var(--amber)" opacity=".8" />
+        <rect x="18.5" y="3" width="4.5" height="20" rx="1.4" fill="var(--amber)" />
+      </svg>
+      <span className="auth-name">ASCEND</span>
     </div>
-  );
+    <p className="auth-tag">The climb to First Class, together. <strong>No gatekeeping.</strong> Learn the why, not just the what.</p>
+  </div>
+);
 
-  if (tab === "forgot") return (
-    <div className="auth-wrap">
-      {Logo}
-      <div className="auth-card">
-        <div className="eyebrow" style={{ marginBottom: 4 }}>Password reset</div>
-        <h2 style={{ fontSize: 19, margin: "0 0 12px" }}>Forgot your password?</h2>
-        {fStage === "who" && (
-          <>
-            <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0, lineHeight: 1.6 }}>Enter your username or the email you signed up with, and we will send a reset link to your email.</p>
-            <label className="field"><span>Username or email</span>
-              <input className="auth-input" name="username" autoComplete="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="prince_a  or  you@gmail.com" autoCapitalize="none" autoCorrect="off" />
-            </label>
-            {err && <div className="auth-err">{err}</div>}
-            <button className="btn btn-a auth-btn" onClick={requestReset} disabled={busy}>{busy ? "Sending..." : "Send reset link"}</button>
-            <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 10 }} onClick={() => goTab("login")}>Back to log in</button>
-          </>
-        )}
-        {fStage === "sent" && (
-          <>
-            <div className="card" style={{ background: "var(--good-dim)", padding: 16, marginBottom: 14 }}>
-              <div style={{ fontWeight: 700, color: "var(--good)", marginBottom: 5 }}>Check your email</div>
-              <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>If an account matches that username or email, a reset link is on its way. It expires in one hour - check your spam folder if you do not see it.{AUTH_ENDPOINT ? "" : " (Email delivery activates once the ASCEND team connects the mail service.)"}</div>
+if (tab === "forgot") return (
+  <div className="auth-wrap">
+    {Logo}
+    <div className="auth-card">
+      <div className="eyebrow" style={{ marginBottom: 4 }}>Password reset</div>
+      <h2 style={{ fontSize: 19, margin: "0 0 12px" }}>Forgot your password?</h2>
+      {fStage === "who" && (
+        <>
+          <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0, lineHeight: 1.6 }}>Enter your username or the email you signed up with, and we will send a reset link to your email.</p>
+          <label className="field"><span>Username or email</span>
+            <input className="auth-input" name="username" autoComplete="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="prince_a  or  you@gmail.com" autoCapitalize="none" autoCorrect="off" />
+          </label>
+          {err && <div className="auth-err">{err}</div>}
+          <button className="btn btn-a auth-btn" onClick={requestReset} disabled={busy}>{busy ? "Sending..." : "Send reset link"}</button>
+          <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 10 }} onClick={() => goTab("login")}>Back to log in</button>
+        </>
+      )}
+      {fStage === "sent" && (
+        <>
+          <div className="card" style={{ background: "var(--good-dim)", padding: 16, marginBottom: 14 }}>
+            <div style={{ fontWeight: 700, color: "var(--good)", marginBottom: 5 }}>
+              {AUTH_ENDPOINT ? "Check your email" : "Password reset assistance needed"}
             </div>
-            <button className="btn btn-a auth-btn" onClick={() => goTab("login")}>Back to log in</button>
-          </>
-        )}
-      </div>
+            <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>
+              {AUTH_ENDPOINT
+                ? "If an account matches that username or email, a reset link is on its way. It expires in one hour - check your spam folder if you do not see it."
+                : "Email delivery is not yet configured for this system. Please contact the ASCEND team directly for password reset assistance."
+              }
+            </div>
+          </div>
+          <button className="btn btn-a auth-btn" onClick={() => goTab("login")}>Back to log in</button>
+        </>
+      )}
     </div>
-  );
+  </div>
+);
 
   return (
     <div className="auth-wrap">
@@ -16588,6 +16654,7 @@ export default function App() {
   const [progress, setProgress] = useState(null);
   const [rankUpNotif, setRankUpNotif] = useState(null);
   const [achievements, setAchievements] = useState([]);
+  const [achNotif, setAchNotif] = useState(null);
   const [auth, setAuth] = useState(null);
   const [supaUid, setSupaUid] = useState(null);
   const [loaded, setLoaded] = useState(false);
@@ -17113,6 +17180,8 @@ export default function App() {
   getStreakMultiplier
 };
 
+const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
+
 const navButtons = (onNav) => NAV.map((n) => {
   const Icon = Ic[n.icon];
   return <button key={n.key} className={"navi " + (activeNav === n.key ? "on" : "")} onClick={() => onNav(n.key)}><Icon p={19} />{n.label}</button>;
@@ -17139,7 +17208,6 @@ const render = () => {
   }
 };
 
-const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
 const r = rankOf(progress?.xp || 0);
 const rootCls = "ascend-root" + (theme === "light" ? " light" : "");
 const dailyNotDone = !progress?.dailyDone?.[todayKey()];
@@ -17204,10 +17272,6 @@ return (
               <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
               <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
               <span className="chip"><span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP</span>
-              <span className="chip streakchip" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <Ic.flame p={15} />
-                <span className="val">{progress?.streak || 0}</span>
-              </span>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
                 <button className="avatar" onClick={setName} title="Click to change your username">{progress?.name?.[0]?.toUpperCase() || "?"}</button>
