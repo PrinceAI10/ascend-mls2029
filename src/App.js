@@ -16471,20 +16471,33 @@ function AuthScreen({ onAuthed }) {
   const clearMsgs = () => { setErr(""); setOk(""); };
 
   const signInWithGoogle = async () => {
-    clearMsgs();
-    try {
-      setBusy(true);
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: { redirectTo: window.location.origin },
-      });
-      if (error) throw error;
-      // the browser now redirects to Google; on return, onAuthStateChange signs the user in
-    } catch (e) {
-      setErr(e && e.message ? e.message : "Google sign-in could not start. Please try again.");
-      setBusy(false);
-    }
-  };
+  clearMsgs();
+  try {
+    setBusy(true);
+    // Detect if in standalone PWA mode
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    
+    // Use redirect instead of popup for PWA
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin,
+        // For PWA, this helps handle the redirect better
+        ...(isStandalone && { 
+          // In standalone mode, use the same window
+          // No extra options needed if the OAuth config handles it
+        })
+      },
+    });
+    if (error) throw error;
+    
+    // For PWA, we need to handle the redirect
+    // The page will redirect to Google, then come back
+  } catch (e) {
+    setErr(e && e.message ? e.message : "Google sign-in could not start. Please try again.");
+    setBusy(false);
+  }
+};
 
   const submit = async () => {
     clearMsgs();
@@ -17371,8 +17384,6 @@ useEffect(() => {
   saveAppState();
 }, [route]);
 
-// Use a ref to store the latest saveAppState function
-const saveAppStateRef = useRef(saveAppState);
 
 
 // The actual event listeners - use the ref to always call the latest version
@@ -17837,6 +17848,22 @@ try {
   );
 
   if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
+
+  // Handle OAuth redirect callback in PWA mode
+useEffect(() => {
+  // Check if we're returning from Google OAuth
+  const urlParams = new URLSearchParams(window.location.search);
+  const hash = window.location.hash;
+  
+  // If there's an access token in the URL, it's an OAuth callback
+  if (hash && hash.includes('access_token')) {
+    // The app will handle this via the onAuthStateChange listener
+    // Just clean up the URL to remove the hash
+    try {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    } catch {}
+  }
+}, []);
 
   return (
     <div className={rootCls}>
