@@ -15915,9 +15915,38 @@ const [showTip, setShowTip] = useState(true);
 const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical laboratory science students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it to superscript). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac.";
 const SOCRATIC_TASK = "Break this study material into a focused Socratic lesson of 4 to 6 steps. For each step: state the question, explain the answer in one or two clear paragraphs, then give the crucial insight in one line. End with three short self-test questions and their answers. Be economical so the whole lesson is complete and never cut off.";
 
+// ============================================================
+// PDF.js loader - extracts text from PDFs client-side
+// ============================================================
+let _pdfjsPromise = null;
+
+function loadPDFJS() {
+  if (typeof window === "undefined") return Promise.reject(new Error("no window"));
+  if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+  if (_pdfjsPromise) return _pdfjsPromise;
+  
+  _pdfjsPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+    script.onload = () => {
+      if (window.pdfjsLib) {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+        resolve(window.pdfjsLib);
+      } else {
+        reject(new Error("PDF library failed to load"));
+      }
+    };
+    script.onerror = () => reject(new Error("Could not load PDF library - check your connection"));
+    document.head.appendChild(script);
+  });
+  
+  return _pdfjsPromise;
+}
+
+// ============================================================
+// ResourcesView - Fully Debugged
+// ============================================================
 function ResourcesView() {
-  // Persist pasted text and result so switching apps/tabs (which can reload the
-  // page on mobile) does not wipe the student's work.
   const [text, setText] = useState(() => {
     try { return window.sessionStorage.getItem("ascend_res_text") || ""; } catch { return ""; }
   });
@@ -15937,36 +15966,129 @@ function ResourcesView() {
   }, [result]);
 
   const run = async () => {
-    setErr(""); setResult("");
+    setErr(""); 
+    setResult("");
+    
     const typed = text.trim();
-    if (!typed && !file) { setErr("Paste some content or choose a file first."); return; }
+    if (!typed && !file) { 
+      setErr("Paste some content or choose a file first."); 
+      return; 
+    }
+    
     setBusy(true);
+    
     try {
       const ext = fileExt(file);
+      
+      // ============================================================
+      // FIXED: Better PDF handling - extract text client-side
+      // ============================================================
       if (file && ext === "pdf") {
         setStage("Reading your PDF...");
-        const b64 = await readBase64(file);
-        setStage("Building your lesson...");
-        const content = [
-          { type: "document", source: { type: "base64", media_type: "application/pdf", data: b64 } },
-          { type: "text", text: SOCRATIC_TASK + (typed ? "\n\nFocus especially on: " + typed : "") }
-        ];
-        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content }], 8000));
-      } else {
+        
+        try {
+          // Load PDF.js library
+          const pdfjsLib = await loadPDFJS();
+          const arrayBuffer = await file.arrayBuffer();
+          const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+          
+          let fullText = "";
+          const maxPages = Math.min(pdf.numPages, 20);
+          
+          for (let i = 1; i <= maxPages; i++) {
+            try {
+              const page = await pdf.getPage(i);
+              const textContent = await page.getTextContent();
+              const pageText = textContent.items.map(item => item.str).join(" ");
+              if (pageText.trim()) {
+                fullText += `\n--- Page ${i} ---\n${pageText}`;
+              }
+            } catch (pageErr) {
+              // Skip pages that fail
+              continue;
+            }
+          }
+          
+          if (!fullText.trim()) {
+            throw new Error("Could not extract text from this PDF. It may be a scanned image-based PDF.");
+          }
+          
+          // Truncate to reasonable size for AI
+          if (fullText.length > 25000) {
+            fullText = fullText.slice(0, 25000) + "\n... (truncated)";
+          }
+          
+          setStage("Building your lesson...");
+          
+          // Use the extracted text with the AI
+          const material = typed ? `${typed}\n\n${fullText}` : fullText;
+          setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 8000));
+          
+        } catch (pdfErr) {
+          // If PDF extraction fails, try fallback with base64 method
+          const msg = pdfErr && pdfErr.message ? pdfErr.message : "Could not read PDF";
+          
+          // Check if it's a scanned/image PDF
+          if (msg.toLowerCase().includes("image") || msg.toLowerCase().includes("scan")) {
+            throw new Error("This appears to be a scanned/image-based PDF. Please try copying the text directly from the PDF and pasting it instead.");
+          } else {
+            // Try base64 method as fallback
+            setStage("Trying alternative PDF reading method...");
+            const b64 = await readBase64(file);
+            setStage("Building your lesson...");
+            const content = [
+              { type: "document", source: { type: "base64", media_type: "application/pdf", data: b64 } },
+              { type: "text", text: SOCRATIC_TASK + (typed ? "\n\nFocus especially on: " + typed : "") }
+            ];
+            setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content }], 8000));
+          }
+        }
+        
+      } else if (file) {
+        // Handle other file types
         let material = typed;
         if (file && !material) {
-          if (ext === "pptx") { setStage("Opening your slides..."); material = await pptxToText(file); }
-          else if (ext === "txt" || ext === "md") { setStage("Reading your file..."); material = await readTextFile(file); }
-          else throw new Error("Supported files are PDF, PowerPoint (.pptx), and plain text. For .ppt or .doc, export to PDF first.");
+          if (ext === "pptx") { 
+            setStage("Opening your slides..."); 
+            material = await pptxToText(file); 
+          } else if (ext === "txt" || ext === "md") { 
+            setStage("Reading your file..."); 
+            material = await readTextFile(file); 
+          } else {
+            throw new Error("Supported files are PDF, PowerPoint (.pptx), and plain text. For .ppt or .doc, export to PDF first.");
+          }
         }
         if (!material) throw new Error("That file had no readable text.");
         setStage("Building your lesson...");
         setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 8000));
+        
+      } else {
+        // Just text input
+        setStage("Building your lesson...");
+        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + typed }], 8000));
       }
+      
     } catch (e) {
-      setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again in a moment.");
+      const msg = e && e.message ? e.message : "The AI could not respond just now.";
+      
+      // ============================================================
+      // FIXED: Better error messages for different issues
+      // ============================================================
+      if (msg.toLowerCase().includes("pdf") || msg.toLowerCase().includes("scan")) {
+        setErr(`${msg}\n\nTry: Copy the text directly from the PDF and paste it instead.`);
+      } else if (msg.includes("429") || msg.includes("rate") || msg.includes("busy") || msg.includes("overload")) {
+        setErr("The AI service is busy right now. Please wait about 20 seconds and try again.");
+      } else if (msg.toLowerCase().includes("connection") || msg.toLowerCase().includes("internet") || msg.toLowerCase().includes("network")) {
+        setErr("Connection issue. Please check your internet and try again.");
+      } else if (msg.toLowerCase().includes("timeout")) {
+        setErr("The request timed out. The file may be too large. Try pasting the text directly instead.");
+      } else {
+        setErr(msg + " Please try again in a moment.");
+      }
     }
-    setStage(""); setBusy(false);
+    
+    setStage(""); 
+    setBusy(false);
   };
 
   return (
@@ -16007,16 +16129,15 @@ function ResourcesView() {
   );
 }
 
-/* Flashcards, mind maps and Mermaid flow diagrams generated by ASCEND from a
-   chosen course topic or pasted material. Flashcards drill active recall, the
-   mind map shows how ideas connect, and the flow diagram traces a process or
-   pathway step by step - restored from the original implementation. */
+// ============================================================
+// StudyToolsView - Fully Debugged
+// ============================================================
 function StudyToolsView() {
   const [tab, setTab] = useState("cards");
   const [courseId, setCourseId] = useState("ana");
   const [topic, setTopic] = useState("");
   const [material, setMaterial] = useState("");
-  const [source, setSource] = useState("topic"); // "topic" or "paste"
+  const [source, setSource] = useState("topic");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const [cards, setCards] = useState(null);
@@ -16046,7 +16167,12 @@ function StudyToolsView() {
       if (!clean.length) throw new Error("No cards came back - try again.");
       setCards(clean);
     } catch (e) {
-      setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again.");
+      const msg = e && e.message ? e.message : "The AI could not respond just now.";
+      if (msg.includes("429") || msg.includes("rate") || msg.includes("busy")) {
+        setErr("The AI service is busy. Please wait a moment and try again.");
+      } else {
+        setErr(msg + " Please try again in a moment.");
+      }
     }
     setBusy(false);
   };
@@ -16066,7 +16192,12 @@ function StudyToolsView() {
       if (!data || !data.central || !Array.isArray(data.branches)) throw new Error("bad shape");
       setMap(data);
     } catch (e) {
-      setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again.");
+      const msg = e && e.message ? e.message : "The AI could not respond just now.";
+      if (msg.includes("429") || msg.includes("rate") || msg.includes("busy")) {
+        setErr("The AI service is busy. Please wait a moment and try again.");
+      } else {
+        setErr(msg + " Please try again in a moment.");
+      }
     }
     setBusy(false);
   };
@@ -16084,20 +16215,22 @@ function StudyToolsView() {
         [{ role: "user", content: `Write a Mermaid flowchart showing the flow, pathway or process of ${subject}. Keep it to 6 to 14 nodes so it stays clear. Output only the Mermaid code.` }],
         1500
       );
-      // strip any stray markdown fences or prose the AI may add
       let code = String(raw).replace(/```mermaid/gi, "").replace(/```/g, "").trim();
-      // if the AI added a sentence before the graph, cut to the graph start
       const gi = code.search(/graph\s+(TD|LR|TB|RL)/i);
       if (gi > 0) code = code.slice(gi);
       if (!/graph\s+(TD|LR|TB|RL)/i.test(code)) throw new Error("The diagram could not be built - try again.");
       setFlowCode(code);
     } catch (e) {
-      setErr((e && e.message ? e.message + " " : "") + "The AI could not respond just now. Please try again.");
+      const msg = e && e.message ? e.message : "The AI could not respond just now.";
+      if (msg.includes("429") || msg.includes("rate") || msg.includes("busy")) {
+        setErr("The AI service is busy. Please wait a moment and try again.");
+      } else {
+        setErr(msg + " Please try again in a moment.");
+      }
     }
     setBusy(false);
   };
 
-  // render the Mermaid code whenever it changes
   useEffect(() => {
     if (!flowCode || tab !== "flow") return;
     let cancelled = false;
@@ -16205,7 +16338,6 @@ function StudyToolsView() {
     </div>
   );
 }
-
 /* ------------------------------- home ----------------------------------- */
 function HomeView({ app }) {
   const jsDay = new Date().getDay();
@@ -17135,9 +17267,11 @@ function PlanView() {
 }
 
 /* ------------------------------- LAMLA ---------------------------------- */
+/* ------------------------------- LAMLA ---------------------------------- */
 function LAMLAView({ app }) {
   const [step, setStep] = useState("setup");
   const [courseId, setCourseId] = useState("");
+  const [topicIndex, setTopicIndex] = useState("");
   const [hours, setHours] = useState(6);
   const [prep, setPrep] = useState(1);
   const [goal, setGoal] = useState("pass");
@@ -17152,13 +17286,18 @@ function LAMLAView({ app }) {
   const examOptions = ["MCQ", "Essay", "Practical", "Mixed"];
   const targetFor = (g) => g === "distinction" ? "90%" : g === "a" ? "80%" : g === "b" ? "70%" : "60%";
 
+  // Get available topics for selected course
+  const availableTopics = courseId ? (TOPICS[courseId] || []) : [];
+  const selectedCourse = courseById(courseId);
+
   /* offline fallback: order topics by position in the syllabus and time available */
   const fallbackPlan = () => {
-    const topics = TOPICS[courseId] || [];
+    const topics = courseId ? TOPICS[courseId] || [] : [];
+    const topicList = topicIndex !== "" ? [topics[parseInt(topicIndex)]] : topics;
     const budget = Math.max(1, Math.round((hours * 60) * 0.8));
-    const howMany = Math.max(3, Math.min(topics.length, Math.round(hours * 1.5)));
+    const howMany = Math.max(1, Math.min(topicList.length, Math.round(hours * 1.5)));
     const per = Math.max(10, Math.round(budget / howMany));
-    const picked = topics.slice(0, howMany).map((title, i) => ({
+    const picked = topicList.slice(0, howMany).map((title, i) => ({
       topic: title, index: i, allocatedMinutes: per,
       priority: i < howMany / 3 ? "High" : i < (howMany * 2) / 3 ? "Med" : "Low",
       bullets: ["Open this topic in ASCEND, read the note steps and lock in the crucial-insight lines.", "Redo the MCQs until you score full marks, and reread every explanation.", "Write the key definitions and diagrams from memory, then check them."]
@@ -17171,16 +17310,33 @@ function LAMLAView({ app }) {
     setBusy(true); setOffline(false);
     const course = courseById(courseId);
     const allTopics = TOPICS[courseId] || [];
-    // Cap how many topics we ask the AI to detail, so the JSON reply stays small
-    // enough to complete within the function timeout and not get cut off.
-    const maxTopics = Math.max(4, Math.min(8, Math.round(hours * 1.2)));
-    const topics = allTopics.slice(0, maxTopics);
+    
+    // Determine which topics to include
+    let topicsToCover = [];
+    if (topicIndex !== "") {
+      // Single topic selected
+      const idx = parseInt(topicIndex);
+      if (allTopics[idx]) {
+        topicsToCover = [allTopics[idx]];
+      }
+    } else {
+      // All topics - cap at 8
+      topicsToCover = allTopics.slice(0, Math.max(4, Math.min(8, Math.round(hours * 1.2))));
+    }
+    
+    if (topicsToCover.length === 0) {
+      setErr("No topics available for this course.");
+      setBusy(false);
+      return;
+    }
+    
     const prompt = `A KNUST medical laboratory science student is cramming for their ${course.name} (${course.code}) exam with ${hours} hours left. Preparation: "${prepOptions[prep]}". Goal: ${goal}. Format: ${examType}.
-Topics to cover (already prioritised): ${topics.join("; ")}.
+Topics to cover: ${topicsToCover.join("; ")}.
 
 You are triaging for the exam, NOT teaching. For each topic give 3 to 5 "bullets" that are the actual exam-guaranteed facts to MEMORISE - specific definitions, values, classifications, steps, enzymes, or one-liners. NOT study instructions. Keep each bullet short. Example style: "Resting potential = -70 mV, set by K+ permeability"; "Na/K pump: 3 Na out, 2 K in per ATP - electrogenic".
 
 Return ONLY compact JSON, no markdown, no trailing commas, all strings short: {"topics":[{"topic":"name","allocatedMinutes":20,"priority":"High","bullets":["fact","fact","fact"]}],"summary":{"confidence":"65%","targetScore":"70%","focusAreas":["area","area","area"]}}`;
+    
     let lastErr = "";
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
@@ -17206,11 +17362,27 @@ Return ONLY compact JSON, no markdown, no trailing commas, all strings short: {"
         <p style={{ color: "var(--text-2)", marginTop: 0 }}>Exam close and no time to learn everything? Tell LAMLA your situation and it hands you a cram sheet - the exact facts most likely to be on the paper, in bullets you can memorise fast.</p>
         <div className="card" style={{ marginTop: 18 }}>
           <label className="field"><span>Which course?</span>
-            <select className="auth-input" value={courseId} onChange={(e) => setCourseId(e.target.value)}>
+            <select className="auth-input" value={courseId} onChange={(e) => { setCourseId(e.target.value); setTopicIndex(""); }}>
               <option value="">Select a course</option>
               {COURSES.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
           </label>
+          
+          {/* ============================================================
+              NEW: Topic Selection
+              ============================================================ */}
+          {courseId && availableTopics.length > 0 && (
+            <label className="field" style={{ marginTop: 8 }}>
+              <span>Which topic? <span style={{ color: "var(--text-3)", fontWeight: 400, fontSize: 12 }}>(leave blank for all topics)</span></span>
+              <select className="auth-input" value={topicIndex} onChange={(e) => setTopicIndex(e.target.value)}>
+                <option value="">All topics in this course</option>
+                {availableTopics.map((title, idx) => (
+                  <option key={idx} value={String(idx)}>{title}</option>
+                ))}
+              </select>
+            </label>
+          )}
+          
           <label className="field"><span>How many hours do you have?</span>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               {[1, 2, 4, 6, 8, 12, 24].map((h) => (
@@ -17242,6 +17414,11 @@ Return ONLY compact JSON, no markdown, no trailing commas, all strings short: {"
           <button className="btn btn-a" style={{ width: "100%", marginTop: 8, padding: "14px", fontSize: "15px" }} onClick={generatePlan} disabled={!courseId || busy}>
             {busy ? "Building your cram sheet..." : "Build my cram sheet"}
           </button>
+          {courseId && topicIndex !== "" && availableTopics[parseInt(topicIndex)] && (
+            <p style={{ color: "var(--amber)", fontSize: 12.5, marginTop: 8, textAlign: "center" }}>
+              Cramming: <strong>{availableTopics[parseInt(topicIndex)]}</strong>
+            </p>
+          )}
         </div>
       </div>
     );
@@ -17252,6 +17429,12 @@ Return ONLY compact JSON, no markdown, no trailing commas, all strings short: {"
       <button className="back" onClick={() => { setStep("setup"); setPlan(null); }}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Back</button>
       <div className="eyebrow">LAMLA · cram sheet</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>{courseById(courseId)?.name}</h1>
+      {topicIndex !== "" && availableTopics[parseInt(topicIndex)] && (
+        <div className="card" style={{ marginTop: 8, padding: "10px 16px", borderColor: "var(--amber)" }}>
+          <span className="day-tag" style={{ marginRight: 8 }}>FOCUS</span>
+          <span style={{ fontWeight: 650 }}>{availableTopics[parseInt(topicIndex)]}</span>
+        </div>
+      )}
       <div className="card card-feature" style={{ marginTop: 16 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 12, textAlign: "center" }}>
           <div><div className="eyebrow">Time</div><div style={{ fontSize: 20, fontWeight: 700, color: "var(--amber)" }}>{hours}h</div></div>
@@ -17295,7 +17478,6 @@ Return ONLY compact JSON, no markdown, no trailing commas, all strings short: {"
     </div>
   );
 }
-
 /* ------------------------------- feedback ------------------------------- */
 function FeedbackView() {
   const [rating, setRating] = useState(0);
