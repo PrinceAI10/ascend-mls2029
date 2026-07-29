@@ -17174,26 +17174,26 @@ export default function App() {
   // 1. STATE DECLARATIONS FIRST (BEFORE everything else)
   // ============================================================
   const [route, setRoute] = useState(() => {
-  if (typeof window !== "undefined") {
-    try {
-      // First check sessionStorage for route
-      const savedRoute = sessionStorage.getItem("ascend_route");
-      if (savedRoute) {
-        const parsed = JSON.parse(savedRoute);
-        if (parsed && parsed.view) {
-          return parsed;
+    if (typeof window !== "undefined") {
+      try {
+        // First check sessionStorage for route
+        const savedRoute = sessionStorage.getItem("ascend_route");
+        if (savedRoute) {
+          const parsed = JSON.parse(savedRoute);
+          if (parsed && parsed.view) {
+            return parsed;
+          }
         }
-      }
-      // Fallback to global state
-      const saved = sessionStorage.getItem("ascend_global_state");
-      if (saved) {
-        const state = JSON.parse(saved);
-        if (state.route) return state.route;
-      }
-    } catch {}
-  }
-  return { view: "home" };
-});
+        // Fallback to global state
+        const saved = sessionStorage.getItem("ascend_global_state");
+        if (saved) {
+          const state = JSON.parse(saved);
+          if (state.route) return state.route;
+        }
+      } catch {}
+    }
+    return { view: "home" };
+  });
   const [progress, setProgress] = useState(null);
   const [rankUpNotif, setRankUpNotif] = useState(null);
   const [achievements, setAchievements] = useState([]);
@@ -17208,6 +17208,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [lastTopic, setLastTopic] = useState(null);
   const [showTop, setShowTop] = useState(false);
+  const [isRestoring, setIsRestoring] = useState(false);
 
   // ============================================================
   // 2. HELPER FUNCTIONS (BEFORE persist)
@@ -17224,7 +17225,7 @@ export default function App() {
         sessionStorage.setItem('ascend_xp_change', JSON.stringify({
           change: change,
           direction: 'up',
-          display: `+${change}`
+          display: '+' + change
         }));
       } else {
         sessionStorage.removeItem('ascend_xp_change');
@@ -17309,14 +17310,14 @@ export default function App() {
       setRankUpNotif({
         newRank: newRank.name,
         color: newRank.c,
-        message: `You've reached ${newRank.name}! Keep climbing!`
+        message: 'You have reached ' + newRank.name + '! Keep climbing!'
       });
       setTimeout(() => setRankUpNotif(null), 8000);
     } else if (!rankUpNotif) {
       setRankUpNotif({
         newRank: newRank.name,
         color: newRank.c,
-        message: `You are ${newRank.name}! Keep climbing!`
+        message: 'You are ' + newRank.name + '! Keep climbing!'
       });
       setTimeout(() => setRankUpNotif(null), 5000);
     }
@@ -17341,11 +17342,11 @@ export default function App() {
       store.setShared("ascend_board:" + p.name.toLowerCase().replace(/[^a-z0-9]/g, ""), { name: p.name, xp: p.xp, streak: p.streak });
       db.publishLocalUser(p.name, p.xp, p.streak);
     }
+    
+    // Save app state after progress update
+    saveAppState();
   };
 
-   // ============================================================
-  // PERSISTENCE: single source of truth for save + restore
-  // ============================================================
   // ============================================================
   // STATE PERSISTENCE - COMPLETE FIX FOR TAB SWITCHING
   // ============================================================
@@ -17370,14 +17371,26 @@ export default function App() {
     }
   };
 
-  // Restore once on mount only
-  useEffect(() => {
+  // RESTORE STATE FUNCTION
+  const restoreAppState = () => {
+    if (isRestoring) return;
+    setIsRestoring(true);
+    
     try {
-      // First restore from global state
+      // Restore route from sessionStorage
+      const savedRoute = sessionStorage.getItem("ascend_route");
+      if (savedRoute) {
+        const parsed = JSON.parse(savedRoute);
+        if (parsed && parsed.view) {
+          setRoute(parsed);
+        }
+      }
+      
+      // Restore global state
       const saved = sessionStorage.getItem("ascend_global_state");
       if (saved) {
         const state = JSON.parse(saved);
-        if (state.route) {
+        if (state.route && state.route.view) {
           setRoute(state.route);
         }
         if (state.lastTopic) {
@@ -17400,15 +17413,6 @@ export default function App() {
         }
       }
       
-      // Also ensure route from sessionStorage is used (fallback)
-      const savedRoute = sessionStorage.getItem("ascend_route");
-      if (savedRoute) {
-        const parsed = JSON.parse(savedRoute);
-        if (parsed && parsed.view) {
-          setRoute(parsed);
-        }
-      }
-      
       // Restore scroll position
       const savedScroll = sessionStorage.getItem("ascend_scroll");
       if (savedScroll) {
@@ -17420,6 +17424,15 @@ export default function App() {
     } catch (e) {
       // Silently fail
     }
+    
+    setTimeout(() => {
+      setIsRestoring(false);
+    }, 200);
+  };
+
+  // Restore once on mount only
+  useEffect(() => {
+    restoreAppState();
   }, []);
 
   // Save whenever relevant state changes
@@ -17438,7 +17451,7 @@ export default function App() {
       window.removeEventListener("pagehide", onHide);
       window.removeEventListener("beforeunload", onHide);
     };
-  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
+  }, []);
 
   // Keep route in sessionStorage + browser history in sync
   useEffect(() => {
@@ -17480,75 +17493,19 @@ export default function App() {
     return () => window.removeEventListener("popstate", onPop);
   }, []);
 
-  // ============================================================
   // TAB SWITCHING FIX - Restore state when tab becomes visible
-  // ============================================================
   useEffect(() => {
     if (typeof window === "undefined") return;
     
-    let isRestoring = false;
-    let restoreTimeout = null;
-    
-    const restoreState = () => {
-      // Prevent multiple rapid restores
-      if (isRestoring) return;
-      isRestoring = true;
-      
-      try {
-        // Restore route from sessionStorage when tab becomes visible
-        const savedRoute = sessionStorage.getItem("ascend_route");
-        if (savedRoute) {
-          const parsed = JSON.parse(savedRoute);
-          // Only update if different to avoid loops
-          setRoute((prevRoute) => {
-            if (JSON.stringify(prevRoute) !== JSON.stringify(parsed)) {
-              return parsed;
-            }
-            return prevRoute;
-          });
-        }
-        
-        // Also restore from global state if route is still home
-        setRoute((prevRoute) => {
-          if (prevRoute.view === "home") {
-            const saved = sessionStorage.getItem("ascend_global_state");
-            if (saved) {
-              const state = JSON.parse(saved);
-              if (state.route && state.route.view !== "home") {
-                return state.route;
-              }
-            }
-          }
-          return prevRoute;
-        });
-        
-        // Restore scroll position
-        const savedScroll = sessionStorage.getItem("ascend_scroll");
-        if (savedScroll) {
-          const scrollY = parseInt(savedScroll, 10);
-          if (scrollY > 0) {
-            setTimeout(() => window.scrollTo(0, scrollY), 50);
-          }
-        }
-      } catch (e) {
-        // Silently fail
-      }
-      
-      restoreTimeout = setTimeout(() => { 
-        isRestoring = false; 
-      }, 200);
-    };
-    
     const onVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        restoreState();
+        restoreAppState();
       }
     };
     
     const onFocus = () => {
-      // Check if we're actually in the tab (not just a child window)
       if (document.visibilityState === "visible") {
-        restoreState();
+        restoreAppState();
       }
     };
     
@@ -17558,11 +17515,8 @@ export default function App() {
     return () => {
       document.removeEventListener("visibilitychange", onVisibilityChange);
       window.removeEventListener("focus", onFocus);
-      if (restoreTimeout) {
-        clearTimeout(restoreTimeout);
-      }
     };
-  }, [route]);
+  }, []);
 
   // Scroll position tracking
   useEffect(() => {
@@ -17750,6 +17704,7 @@ export default function App() {
       });
     } catch {}
     db.saveProgress(uid, merged);
+    saveAppState();
   };
 
   const handleAuthed = async (acct) => {
@@ -17759,6 +17714,7 @@ export default function App() {
     setXpChange(finalProgress.xp || 0);
     setProgress(finalProgress);
     setRoute({ view: "home" });
+    saveAppState();
   };
 
   const logout = async () => {
@@ -17772,12 +17728,14 @@ export default function App() {
     setAuth(null);
     setMenuOpen(false);
     setRoute({ view: "home" });
+    saveAppState();
   };
 
   const toggleTheme = () => {
     const t = theme === "light" ? "dark" : "light";
     setTheme(t);
     store.set("ascend_theme", t);
+    saveAppState();
   };
 
   // ============================================================
@@ -17805,6 +17763,19 @@ export default function App() {
           state.route = next;
           state.timestamp = Date.now();
           sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
+        } else {
+          const state = {
+            route: next,
+            progress,
+            lastTopic,
+            theme,
+            menuOpen: false,
+            notifOpen: false,
+            rateDismissed,
+            rateStars,
+            timestamp: Date.now()
+          };
+          sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
         }
       } catch {}
       window.scrollTo?.(0, 0);
@@ -17824,7 +17795,7 @@ export default function App() {
   };
 
   const finishQuiz = (cid, tid, correct, missed = [], total = 0) => {
-    const tkey = `${cid}:${tid}`;
+    const tkey = cid + ':' + tid;
     const firstTime = !progress.completed?.[tkey];
     
     // FIX: Always award XP for correct answers
@@ -17862,7 +17833,7 @@ export default function App() {
   };
 
   const toggleBookmark = (cid, tid) => {
-    const key = `${cid}:${tid}`;
+    const key = cid + ':' + tid;
     const prev = Array.isArray(progress.bookmarks) ? progress.bookmarks : [];
     const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
     persist({ ...progress, bookmarks: next });
@@ -17918,7 +17889,7 @@ export default function App() {
   };
 
   const setReadingXp = (newXp) => {
-    const key = `${route.courseId}:${route.topicId}`;
+    const key = route.courseId + ':' + route.topicId;
     const awarded = sessionStorage.getItem('ascend_read_' + key);
     if (awarded) return;
     sessionStorage.setItem('ascend_read_' + key, 'true');
@@ -17931,7 +17902,7 @@ export default function App() {
   };
 
   const setPasscoXp = (earnedXp) => {
-    const key = `passco_${Date.now()}`;
+    const key = 'passco_' + Date.now();
     const awarded = sessionStorage.getItem('ascend_passco_' + key);
     if (awarded) return;
     sessionStorage.setItem('ascend_passco_' + key, 'true');
