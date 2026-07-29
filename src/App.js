@@ -15056,7 +15056,7 @@ function YouTubeView() {
   );
 }
 
-function PapersView() {
+function PapersView({ app }) {
   const [tab, setTab] = useState("passco");
   const [courseId, setCourseId] = useState("ana");
   const [sample, setSample] = useState("");
@@ -15214,7 +15214,7 @@ ${RULES}`);
       </div>
 
       {tab === "passco" && (active
-        ? <PasscoSet paper={active.paper} chunkStart={active.chunkStart} chunkEnd={active.chunkEnd} mode={active.mode} onExit={() => setActive(null)} />
+        ? <PasscoSet paper={active.paper} chunkStart={active.chunkStart} chunkEnd={active.chunkEnd} mode={active.mode} onExit={() => setActive(null)} app={app} />
         : <PasscoPicker onStart={(paper, chunkStart, chunkEnd, mode) => { setActive({ paper, chunkStart, chunkEnd, mode }); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {} }} chunk={CHUNK} />
       )}
 
@@ -15300,6 +15300,119 @@ function PasscoPicker({ onStart, chunk }) {
           </div>
         );
       })}
+    </div>
+  );
+}
+
+/* PasscoSet: renders one chunk of a real past paper as tap-to-answer questions.
+   Practice mode reveals the answer + explanation the instant you tap (like the
+   AI-generated sets). Exam mode hides answers until you submit the whole set,
+   then shows your score and a full review. Awards XP once per set via
+   app.setPasscoXp, guarded so re-opening a finished set never double-pays. */
+function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
+  const questions = paper.questions.slice(chunkStart, chunkEnd);
+  const setKey = `${paper.id}_${chunkStart}_${chunkEnd}_${mode}`;
+  const doneFlagKey = "ascend_passco_done_" + setKey;
+
+  const [picked, setPicked] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const awardedRef = useRef(false);
+
+  const answered = Object.keys(picked).length;
+  const allAnswered = answered === questions.length;
+  const correctCount = questions.reduce((n, it, idx) => n + (picked[idx] === it.a ? 1 : 0), 0);
+  const revealAll = mode === "practice" ? false : submitted;
+
+  const award = () => {
+    if (awardedRef.current) return;
+    let already = false;
+    try { already = !!sessionStorage.getItem(doneFlagKey); } catch {}
+    if (already) { awardedRef.current = true; return; }
+    awardedRef.current = true;
+    try { sessionStorage.setItem(doneFlagKey, "true"); } catch {}
+    if (app && typeof app.setPasscoXp === "function") {
+      app.setPasscoXp(correctCount * 5);
+    }
+  };
+
+  // Practice mode: award as soon as every question in the set has been answered.
+  useEffect(() => {
+    if (mode === "practice" && allAnswered && questions.length > 0) award();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allAnswered, mode]);
+
+  const pick = (idx, oi) => {
+    if (mode === "practice") {
+      if (picked[idx] !== undefined) return;
+      setPicked((p) => ({ ...p, [idx]: oi }));
+    } else {
+      if (submitted) return;
+      setPicked((p) => ({ ...p, [idx]: oi }));
+    }
+  };
+
+  const submitExam = () => {
+    setSubmitted(true);
+    award();
+  };
+
+  const letters = "ABCDE";
+
+  return (
+    <div style={{ marginTop: 12 }}>
+      <button className="back" onClick={onExit}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Back to sets</button>
+
+      <div className="card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 12, marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
+        <div>
+          <div className="eyebrow" style={{ margin: 0 }}>{paper.courseCode} · {paper.title}</div>
+          <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 2 }}>Q{chunkStart + 1}-{chunkEnd} · {mode === "practice" ? "Practice" : "Exam"} mode</div>
+        </div>
+        <div className="mono" style={{ fontWeight: 700 }}>
+          <span style={{ color: "var(--amber)" }}>{correctCount}</span> / {mode === "practice" ? answered : (submitted ? questions.length : answered)}
+          <span style={{ color: "var(--text-3)" }}> · {questions.length}</span>
+        </div>
+      </div>
+
+      {questions.map((it, idx) => {
+        const chosen = picked[idx];
+        const locked = mode === "practice" ? chosen !== undefined : revealAll;
+        return (
+          <div className="card" key={idx} style={{ marginBottom: 10 }}>
+            <div style={{ fontWeight: 600, marginBottom: 10 }}>
+              <span className="mono" style={{ color: "var(--text-3)" }}>{String(chunkStart + idx + 1).padStart(2, "0")}. </span>{it.q}
+            </div>
+            {it.o.map((opt, oi) => {
+              let cls = "opt";
+              if (locked) { if (oi === it.a) cls += " correct"; else if (oi === chosen) cls += " wrong"; }
+              return (
+                <button className={cls} key={oi} disabled={mode === "practice" ? chosen !== undefined : submitted} onClick={() => pick(idx, oi)}>
+                  <span className="key">{letters[oi] || oi + 1}</span><span>{opt}</span>
+                </button>
+              );
+            })}
+            {locked && (
+              <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 8 }}>
+                <strong style={{ color: chosen === it.a ? "var(--good)" : "var(--bad)" }}>{chosen === it.a ? "Correct. " : "Not quite. "}</strong>
+                {it.w}
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      {mode === "exam" && !submitted && (
+        <button className="btn btn-a" style={{ width: "100%", padding: "12px", marginTop: 4 }} disabled={!allAnswered} onClick={submitExam}>
+          {allAnswered ? "Submit exam" : `Answer all ${questions.length} to submit (${answered}/${questions.length})`}
+        </button>
+      )}
+
+      {((mode === "practice" && allAnswered) || (mode === "exam" && submitted)) && (
+        <div className="card" style={{ marginTop: 4, textAlign: "center" }}>
+          <div className="eyebrow" style={{ margin: 0 }}>Set complete</div>
+          <div style={{ fontSize: 20, fontWeight: 700, margin: "6px 0" }}>{correctCount} / {questions.length} correct</div>
+          <button className="btn btn-g" onClick={onExit}>Back to sets</button>
+        </div>
+      )}
     </div>
   );
 }
@@ -15395,6 +15508,49 @@ function ResourcesView() {
           <AIText text={result} style={{ lineHeight: 1.8, fontSize: 15 }} />
         </div>
       )}
+    </div>
+  );
+}
+
+/* StudyToolsView: a hub that surfaces every study tool ASCEND has in one place,
+   so "Study Tools" in the nav isn't a dead end - it links straight into Passco,
+   Resources, CWA planning, Review deck, Daily question and LAMLA. */
+function StudyToolsView({ app }) {
+  const reviewCount = Array.isArray(app?.progress?.review) ? app.progress.review.length : 0;
+  const TOOLS = [
+    { key: "papers", icon: "file", title: "Passco", desc: "Solve real past questions tap by tap, or generate fresh AI practice sets from any course." },
+    { key: "review", icon: "target", title: "Review deck", desc: reviewCount ? `${reviewCount} question${reviewCount === 1 ? "" : "s"} you've missed before, ready to revisit.` : "Questions you miss get collected here automatically for later revision." },
+    { key: "resources", icon: "upload", title: "Resources", desc: "Paste lecture notes or slides and ASCEND rebuilds them as a Socratic lesson." },
+    { key: "plan", icon: "target", title: "CWA planner", desc: "Work out what you need on your next assessment to hit your target CWA." },
+    { key: "daily", icon: "flame", title: "Daily question", desc: "One question a day, every day - keeps your streak alive." },
+    { key: "lamla", icon: "clock", title: "LAMLA", desc: "Quick reference and timers for lab-adjacent study sessions." },
+  ];
+  return (
+    <div className="view">
+      <div className="eyebrow">Study Tools</div>
+      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Everything you need, in one place</h1>
+      <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "58ch" }}>Pick a tool below to jump straight in.</p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 12, marginTop: 16 }}>
+        {TOOLS.map((tool) => {
+          const Icon = Ic[tool.icon];
+          return (
+            <button
+              key={tool.key}
+              className="card"
+              style={{ textAlign: "left", cursor: "pointer", display: "flex", flexDirection: "column", gap: 8, border: "1px solid var(--line)" }}
+              onClick={() => app.go(tool.key)}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ width: 36, height: 36, borderRadius: 10, background: "var(--amber-dim)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  {Icon ? <Icon p={18} style={{ color: "var(--amber)" }} /> : null}
+                </span>
+                <div style={{ fontWeight: 650, fontSize: 15.5 }}>{tool.title}</div>
+              </div>
+              <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.5 }}>{tool.desc}</div>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -16389,7 +16545,7 @@ const NAV = [
   { key: "feedback", label: "Feedback", icon: "star" }
 ];
 
-const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [] };
+const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0 };
 
 /* ------------------------------- app ------------------------------------ */
 export default function App() {
@@ -16465,7 +16621,20 @@ export default function App() {
   const checkAchievements = (p) => {
     const unlocked = [...achievements];
     let newAchievement = null;
-    
+    const quizzesDone = Object.keys(p.completed || {}).length;
+
+    if (quizzesDone >= 1 && !unlocked.find(a => a.id === 'first_quiz')) {
+      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'first_quiz'), unlocked: true };
+      unlocked.push(newAchievement);
+    }
+    if (quizzesDone >= 10 && !unlocked.find(a => a.id === 'quiz_master')) {
+      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'quiz_master'), unlocked: true };
+      unlocked.push(newAchievement);
+    }
+    if ((p.passcoCompleted || 0) >= 10 && !unlocked.find(a => a.id === 'passco_10')) {
+      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'passco_10'), unlocked: true };
+      unlocked.push(newAchievement);
+    }
     if (p.xp >= 500 && !unlocked.find(a => a.id === 'xp_500')) {
       newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'xp_500'), unlocked: true };
       unlocked.push(newAchievement);
@@ -16625,6 +16794,14 @@ export default function App() {
     link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap";
     document.head.appendChild(link);
 
+    // Notch fix: env(safe-area-inset-*) in the CSS does nothing unless the
+    // viewport explicitly opts into the safe-area layout with viewport-fit=cover.
+    let viewport = document.querySelector('meta[name="viewport"]');
+    if (!viewport) { viewport = document.createElement("meta"); viewport.name = "viewport"; document.head.appendChild(viewport); }
+    if (!/viewport-fit=cover/.test(viewport.content || "")) {
+      viewport.content = (viewport.content ? viewport.content.replace(/,?\s*viewport-fit=[^,]*/, "") + "," : "width=device-width,initial-scale=1,") + "viewport-fit=cover";
+    }
+
     const icon = "/ascend-icon.png";
     if (!document.querySelector('link[rel="apple-touch-icon"]')) {
       const aLink = document.createElement("link");
@@ -16633,6 +16810,32 @@ export default function App() {
     }
     let meta = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
     if (!meta) { meta = document.createElement("meta"); meta.name = "apple-mobile-web-app-capable"; meta.content = "yes"; document.head.appendChild(meta); }
+
+    // Status bar style + home-screen title, so ASCEND looks like a real app once
+    // added to the home screen, not just a bookmark with the wrong bar colour.
+    if (!document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')) {
+      const m = document.createElement("meta");
+      m.name = "apple-mobile-web-app-status-bar-style"; m.content = "black-translucent";
+      document.head.appendChild(m);
+    }
+    if (!document.querySelector('meta[name="apple-mobile-web-app-title"]')) {
+      const m = document.createElement("meta");
+      m.name = "apple-mobile-web-app-title"; m.content = "ASCEND";
+      document.head.appendChild(m);
+    }
+    if (!document.querySelector('meta[name="theme-color"]')) {
+      const m = document.createElement("meta");
+      m.name = "theme-color"; m.content = "#0A0F1A";
+      document.head.appendChild(m);
+    }
+    // Android/Chrome "Add to Home Screen" reads this for name + icons + display
+    // mode. If public/manifest.json does not exist yet in the project, this link
+    // tag alone will 404 quietly and Chrome just won't offer the install prompt.
+    if (!document.querySelector('link[rel="manifest"]')) {
+      const m = document.createElement("link");
+      m.rel = "manifest"; m.href = "/manifest.json";
+      document.head.appendChild(m);
+    }
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
@@ -16850,7 +17053,7 @@ export default function App() {
     sessionStorage.setItem('ascend_passco_' + key, 'true');
     const multiplier = getStreakMultiplier(progress.streak);
     const gained = Math.round(earnedXp * multiplier.multiplier);
-    const updated = { ...progress, xp: progress.xp + gained };
+    const updated = { ...progress, xp: progress.xp + gained, passcoCompleted: (progress.passcoCompleted || 0) + 1 };
     setProgress(updated);
     persist(updated);
     // Show notification
@@ -16891,8 +17094,8 @@ const render = () => {
     case "daily": return <DailyView app={app} />;
     case "ranks": return <RanksView app={app} />;
     case "review": return <ReviewView app={app} />;
-    case "tools": return <StudyToolsView />;
-    case "papers": return <PapersView />;
+    case "tools": return <StudyToolsView app={app} />;
+    case "papers": return <PapersView app={app} />;
     case "plan": return <PlanView />;
     case "resources": return <ResourcesView />;
     case "lamla": return <LAMLAView app={app} />;
