@@ -14898,7 +14898,7 @@ const PAST_PAPERS = [
   courseCode: "MLS 158",
   title: "Biochemistry Passco 2 - Mid-Sem (Enzymes, Carb Metabolism, TCA/Glyoxylate, Lab Safety)",
   year: "2019",
-  note: "110 questions: assertion-reason on enzymes/metabolism, classification, TCA cofactors, gluconeogenesis, TCA/glyoxylate, lab technique (tubes, pipetting, dilutions). Bracketed notes in an explanation mean that answer wasn't clearly marked in the source - double-check those before an exam.",
+  note: "110 questions: assertion-reason, enzymes, TCA, gluconeogenesis, glyoxylate, lab techniques.",
   questions: [
     { q: "Metabolism in living organisms is very important BECAUSE metabolism is organized into several discrete pathways.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 1, w: "Both statements are true, but the second does not directly explain why metabolism's importance follows from its organization into pathways." },
     { q: "Enzymes are crucial to metabolism BECAUSE enzymes drive desirable reactions that cannot occur on their own.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 0, w: "Both true; enzymes catalyze reactions that would otherwise be too slow to sustain life." },
@@ -15674,7 +15674,7 @@ function PasscoPicker({ onStart, chunk }) {
                 <div className="eyebrow" style={{ margin: 0 }}>{paper.courseCode} · {paper.year}</div>
                 <div style={{ fontWeight: 650, fontSize: 15.5, marginTop: 2 }}>{paper.title}</div>
                 <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 2 }}>{paper.questions.length} questions · {nChunks} set{nChunks > 1 ? "s" : ""} of up to {chunk}</div>
-                {paper.note && <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 4 }}>{paper.note}</div>}
+                {paper.note && <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 4, maxWidth: "70%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{paper.note}</div>}
               </div>
               <button className="btn btn-sm" style={{ background: isOpen ? "var(--bg-3)" : "var(--amber)", color: isOpen ? "var(--text-2)" : "#1B1405", border: "1px solid var(--line)" }} onClick={function() { setOpenPaper(isOpen ? null : paper.id); }}>{isOpen ? "Close" : "Open"}</button>
             </div>
@@ -17198,6 +17198,11 @@ export default function App() {
   const [showTop, setShowTop] = useState(false);
 
   // ============================================================
+// 1.5 REF DECLARATIONS
+// ============================================================
+const saveAppStateRef = useRef(null);
+
+  // ============================================================
   // 2. HELPER FUNCTIONS (BEFORE persist)
   // ============================================================
   
@@ -17332,75 +17337,46 @@ export default function App() {
   };
 
   // ============================================================
-  // PERSISTENCE: single source of truth for save + restore
-  // ============================================================
-  const saveAppState = () => {
-    try {
-      const state = {
-        route,
-        progress,
-        lastTopic,
-        theme,
-        menuOpen,
-        notifOpen,
-        rateDismissed,
-        rateStars,
-        timestamp: Date.now()
-      };
-      sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
-      sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
-    } catch (e) {
-      // Silently fail
-    }
-  };
-
-  // Restore once on mount only
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem("ascend_global_state");
-      if (saved) {
-        const state = JSON.parse(saved);
-        if (state.route) setRoute(state.route);
-        if (state.lastTopic) setLastTopic(state.lastTopic);
-        if (state.theme) setTheme(state.theme);
-        if (state.menuOpen !== undefined) setMenuOpen(state.menuOpen);
-        if (state.notifOpen !== undefined) setNotifOpen(state.notifOpen);
-        if (state.rateDismissed !== undefined) setRateDismissed(state.rateDismissed);
-        if (state.rateStars !== undefined) setRateStars(state.rateStars);
-      }
-      const savedScroll = sessionStorage.getItem("ascend_scroll");
-      if (savedScroll) {
-        const scrollY = parseInt(savedScroll, 10);
-        if (scrollY > 0) {
-          setTimeout(() => window.scrollTo(0, scrollY), 150);
-        }
-      }
-    } catch (e) {
-      // Silently fail
-    }
-  }, []);
-
-  // Save whenever relevant state changes (covers tab switches, since React
-  // state never leaves memory on a simple tab switch, but this keeps
-  // sessionStorage in sync for real unload/reload/history navigation cases)
-  useEffect(() => {
-    saveAppState();
-  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
-
-  // Save on page hide / unload (covers actual tab close or reload, NOT
-  // ordinary tab switching — a simple visibilitychange "hidden" event does
-  // not need to trigger a route reset, so we deliberately don't restore
-  // state on "visible" here; that used to cause the app to snap back to
-  // stale/home state whenever the user switched tabs)
-  useEffect(() => {
-    const onHide = () => saveAppState();
-    window.addEventListener("pagehide", onHide);
-    window.addEventListener("beforeunload", onHide);
-    return () => {
-      window.removeEventListener("pagehide", onHide);
-      window.removeEventListener("beforeunload", onHide);
+// PERSISTENCE: Save state with correct dependencies
+// ============================================================
+const saveAppState = () => {
+  try {
+    // Don't save if route is undefined or empty - prevents homepage reset
+    if (!route || !route.view) return;
+    const state = {
+      route,
+      progress,
+      lastTopic,
+      theme,
+      menuOpen,
+      notifOpen,
+      rateDismissed,
+      rateStars,
+      timestamp: Date.now()
     };
-  }, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
+    sessionStorage.setItem("ascend_global_state", JSON.stringify(state));
+    sessionStorage.setItem("ascend_scroll", String(window.scrollY || 0));
+  } catch (e) {
+    // Silently fail
+  }
+};
+
+// Update the ref whenever saveAppState changes
+useEffect(() => {
+  saveAppStateRef.current = saveAppState;
+}, [route, progress, lastTopic, theme, menuOpen, notifOpen, rateDismissed, rateStars]);
+
+// Save state whenever route changes - so refresh goes back to same page
+useEffect(() => {
+  saveAppState();
+}, [route]);
+
+// Use a ref to store the latest saveAppState function
+const saveAppStateRef = useRef(saveAppState);
+
+
+// The actual event listeners - use the ref to always call the latest version
+
 
   // Keep route in sessionStorage + browser history in sync for back/forward nav
   useEffect(() => {
