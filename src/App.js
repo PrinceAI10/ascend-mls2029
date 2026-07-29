@@ -17305,7 +17305,8 @@ function LAMLAView({ app }) {
     }
     
     if (topicsToCover.length === 0) {
-      setErr("No topics available for this course.");
+      setOffline(true);
+      setOfflineReason("No topics available for this course.");
       setBusy(false);
       return;
     }
@@ -18528,4 +18529,4 @@ export default function App() {
       )}
     </div>
   );
-}s
+}
