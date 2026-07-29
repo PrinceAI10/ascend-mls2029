@@ -14439,6 +14439,9 @@ function InteractiveSet({ items }) {
 // PAST PAPERS DATA
 // ============================================================
 const PAST_PAPERS = [
+  // ============================================================
+  // HUMAN ANATOMY PASSCO 1 - SMS 186 (June 2024)
+  // ============================================================
   {
     id: "sms186-2024-midsem",
     courseId: "ana",
@@ -14454,7 +14457,7 @@ const PAST_PAPERS = [
       { q: "Which of the following is/are NOT derived from the embryonic neural tube?", o: ["Ependyma", "Astrocytes", "Oligodendrocytes", "Microglia", "Neurons"], a: 3, w: "Microglia arise from mesoderm (monocytes); the rest derive from the neural tube." },
       { q: "Protein synthesis in neurons is a function of:", o: ["Nucleus", "Nucleolus", "Golgi apparatus", "Mitochondria", "Nissl bodies"], a: 4, w: "Nissl bodies are rough endoplasmic reticulum, the site of protein synthesis." },
       { q: "Specimen A was from a chamber that changes its volume continually, B from a surface where absorption and secretion are required, C from an internal surface where friction may occur. A, B, C were obtained from:", o: ["Uterus, ileum and anal canal respectively", "Ureter, ductuli efferentes and cornea respectively", "Penile urethra, jejunum, laryngeal surface of epiglottis respectively", "Urinary bladder, duodenum and vagina respectively", "Vas deferens, small intestine and pharynx respectively"], a: 2, w: "Volume-changing chamber (transitional), absorption+secretion (simple columnar/jejunum), friction surface (stratified squamous/laryngeal epiglottis)." },
-      { q: "Specimen A was from a surface subjected to severe mechanical stresses, B from a surface where filtration or diffusion occurs, C from an internal chamber where absorption and motility are required. A, B, C were obtained from:", o: ["Filiform papillae of tongue, parietal layer of renal corpuscle and vagina respectively", "Hard palate, respiratory bronchioles and oesophagus respectively", "Skin, alveoli of lungs, efferent ductules respectively", "Soles of feet, visceral layer of renal corpuscle and oesophagus respectively", "Filiform papillae of tongue, endothelium of blood vessels and skin respectively"], a: 3, w: "Mechanical stress (sole of foot, keratinised strat squamous); filtration (visceral renal corpuscle/podocytes, simple squamous); absorption+motility (intestine). A and B fit option D." },
+      { q: "Specimen A was from a surface subjected to severe mechanical stresses, B from a surface where filtration or diffusion occurs, C from an internal chamber where absorption and motility are required. A, B, C were obtained from:", o: ["Filiform papillae of tongue, parietal layer of renal corpuscle and vagina respectively", "Hard palate, respiratory bronchioles and oesophagus respectively", "Skin, alveoli of lungs, efferent ductules respectively", "Soles of feet, visceral layer of renal corpuscle and oesophagus respectively", "Filiform papillae of tongue, endothelium of blood vessels and skin respectively"], a: 3, w: "Mechanical stress (sole of foot, keratinised strat squamous); filtration (visceral renal corpuscle/podocytes, simple squamous); absorption+motility (intestine)." },
       { q: "Transitional epithelium is found in all the following EXCEPT:", o: ["Ureter", "Urinary bladder", "Prostatic urethra", "Membranous urethra", "Renal pelvis"], a: 3, w: "Transitional lines the ureter, bladder, prostatic urethra and renal pelvis; the membranous urethra is (pseudo)stratified columnar." },
       { q: "A basal lamina:", o: ["Is a cellular layer secreted by epithelial tissues only", "Is a noncellular layer between adjacent epithelial cells", "Is believed to be secreted by the muscle and epithelial cells only", "Contains fibrillar collagen", "Contains PAS positive glycoproteins and lies between epithelium and connective tissue"], a: 4, w: "The basal lamina is PAS-positive (glycoproteins/type IV collagen) and sits between epithelium and connective tissue." },
       { q: "The following functions are performed by the lymphatic system:", o: ["Body immunity and filtration of lymph", "Absorption of fats and collection of cellular debris", "Drainage of tissue fluid and production of lymphocytes", "Only A and C are correct", "A, B and C are correct"], a: 4, w: "The lymphatic system does all: immunity/filtration, fat absorption/debris collection, and fluid drainage/lymphocyte production." },
@@ -14552,6 +14555,9 @@ const PAST_PAPERS = [
     ],
   },
 
+  // ============================================================
+  // HUMAN ANATOMY PASSCO 2 - SMS 186 (July 2023)
+  // ============================================================
   {
     id: "sms186-2023-midsem",
     courseId: "ana",
@@ -14667,13 +14673,16 @@ const PAST_PAPERS = [
     ],
   },
 
+  // ============================================================
+  // BIOCHEMISTRY PASSCO - MLS 158 (Benjamin Abbam 2024)
+  // ============================================================
   {
     id: "bch-abbam-2024",
     courseId: "bch",
     courseCode: "MLS 158",
     title: "Biochemistry Passco - Benjamin Abbam",
     year: "2024",
-    note: "Comprehensive Biochemistry passco covering enzymes, glycolysis, gluconeogenesis, glycogen metabolism, fructose/galactose metabolism, and citric acid cycle. Single best answer A-E.",
+    note: "Comprehensive Biochemistry passco covering enzymes, glycolysis, gluconeogenesis, glycogen metabolism, fructose/galactose metabolism, and citric acid cycle.",
     questions: [
       // SECTION A - True/False (Questions 1-29)
       { q: "Anaplerotic reactions decrease citric acid cycle intermediates BECAUSE some intermediates of the citric acid cycle are used to synthesize other molecules.", o: ["True", "False", "Neither", "Both"], a: 1, w: "Anaplerotic reactions INCREASE citric acid cycle intermediates to replenish those withdrawn for biosynthesis - the statement is false." },
@@ -14723,7 +14732,7 @@ const PAST_PAPERS = [
       { q: "What type of bond often forms between enzyme and substrate?", o: ["Covalent only", "Ionic only", "Hydrogen and ionic bonds", "Metallic bonds"], a: 2, w: "Enzyme-substrate interactions involve non-covalent bonds including hydrogen and ionic bonds." },
       { q: "Which of the following is NOT a gluconeogenic organ?", o: ["Liver", "Kidneys", "Brain", "Intestine"], a: 2, w: "The brain does not perform gluconeogenesis - it relies on glucose from the blood." },
       { q: "What is the major source of energy for gluconeogenesis?", o: ["ATP", "NADH", "FADH2", "GTP"], a: 0, w: "ATP is the major energy source for gluconeogenesis, along with GTP." },
-      { q: "Which enzyme catalyzes the first step of gluconeogenesis?", o: ["Pyruvate kinase", "Phosphoenolpyruvate carboxylase", "Glucose-6-phosphatase", "Fructose-1,6-bisphosphatase"], a: 1, w: "Pyruvate carboxylase (not listed) catalyzes the first step. Among options, PEP carboxykinase (PEPCK) is listed as 'Phosphoenolpyruvate carboxylase' which is incorrect naming." },
+      { q: "Which enzyme catalyzes the first step of gluconeogenesis?", o: ["Pyruvate kinase", "Phosphoenolpyruvate carboxylase", "Glucose-6-phosphatase", "Fructose-1,6-bisphosphatase"], a: 1, w: "Pyruvate carboxylase (not listed) catalyzes the first step. Among options, PEP carboxykinase (PEPCK) is listed as 'Phosphoenolpyruvate carboxylase'." },
       { q: "Which of the following is a gluconeogenic precursor?", o: ["Lactate", "Glycogen", "Glucose", "Pyruvate"], a: 0, w: "Lactate is a major gluconeogenic precursor (Cori cycle). Pyruvate is also a precursor but lactate is the better answer." },
       { q: "Pyruvate carboxylase, the allosteric gluconeogenesis enzyme that catalyses the conversion of pyruvate to oxaloacetate is activated by", o: ["Acetyl CoA", "Acetaldehyde", "Pyruvate", "Biotin"], a: 0, w: "Pyruvate carboxylase is allosterically activated by acetyl-CoA." },
       { q: "Glucagon and epinephrine stimulate glycogen breakdown to glucose 6-phosphate", o: ["Directly by binding to glycogen phosphorylase", "Indirectly by first stimulating adenylate cyclase to make cAMP", "Only in the liver", "Only in muscle cells"], a: 1, w: "Glucagon and epinephrine activate adenylate cyclase → cAMP → PKA → phosphorylase kinase → glycogen phosphorylase." },
@@ -14745,6 +14754,14 @@ const PAST_PAPERS = [
       { q: "Living organisms:", o: ["I. Maintain specific internal concentration of ions, metabolites, and enzymes", "II. Extract energy from external sources to drive energy-consuming reactions", "III. Metabolic pathways are specified by the genes in each organism", "A. I and II only", "B. I, II and III", "C. II and III only", "D. I only", "E. III only"], a: 1, w: "Living organisms maintain internal concentrations, extract energy, and have genetically specified metabolic pathways." },
       { q: "Which of the following statements correctly describes glycolysis? Glycolysis:", o: ["I. Is catabolic", "II. directly requires O2", "III. produces two molecules of pyruvate", "A. I and II only", "B. I, II and III", "C. II and III only", "D. I only"], a: 3, w: "Glycolysis is catabolic and produces 2 pyruvate. It does not directly require O2 (it's anaerobic)." },
       { q: "Which of the following statements(s) is/are TRUE about glycolysis?", o: ["I. Can operate under both aerobic and anaerobic conditions", "II. Does not occur in the absence of O2", "III. Does not occur in the presence of O2", "A. I only", "B. I, II and III", "C. II and III only", "D. I only"], a: 0, w: "Glycolysis can operate under both aerobic and anaerobic conditions." },
+      { q: "The citric acid cycle is regulated by:", o: ["I. Substrate availability", "II. Product inhibition", "III. Allosteric regulation", "A. I and II only", "B. I, II and III", "C. II and III only", "D. I only", "E. III only"], a: 0, w: "The TCA cycle is regulated by substrate availability, product inhibition, and allosteric regulation." },
+      { q: "Which of the following are ketone bodies?", o: ["I. Acetoacetate", "II. β-Hydroxybutyrate", "III. Acetone", "A. I and II only", "B. I, II and III", "C. II and III only", "D. I only", "E. III only"], a: 1, w: "Acetoacetate, β-hydroxybutyrate, and acetone are the three ketone bodies." },
+      { q: "Which of the following are functions of the liver?", o: ["I. Gluconeogenesis", "II. Urea synthesis", "III. Detoxification", "A. I and II only", "B. I, II and III", "C. II and III only", "D. I only", "E. III only"], a: 1, w: "The liver performs gluconeogenesis, urea synthesis, and detoxification." },
+      { q: "Which of the following are components of the electron transport chain?", o: ["I. Complex I (NADH dehydrogenase)", "II. Complex II (Succinate dehydrogenase)", "III. Complex III (Cytochrome bc1)", "A. I and II only", "B. I, II and III", "C. II and III only", "D. I only", "E. III only"], a: 1, w: "Complexes I, II, and III are all components of the ETC." },
+      { q: "Which of the following are true about oxidative phosphorylation?", o: ["I. Occurs in the inner mitochondrial membrane", "II. Produces ATP", "III. Requires oxygen as final electron acceptor", "A. I and II only", "B. I, II and III", "C. II and III only", "D. I only", "E. III only"], a: 1, w: "Oxidative phosphorylation occurs in the inner mitochondrial membrane, produces ATP, and requires oxygen." },
+      { q: "Which of the following are gluconeogenic substrates?", o: ["I. Lactate", "II. Pyruvate", "III. Glycerol", "A. I and II only", "B. I, II and III", "C. II and III only", "D. I only", "E. III only"], a: 1, w: "Lactate, pyruvate, and glycerol are all gluconeogenic substrates." },
+      { q: "Which of the following are true about enzyme kinetics?", o: ["I. Vmax is the maximum velocity", "II. Km is the substrate concentration at half Vmax", "III. Km is a measure of enzyme affinity", "A. I and II only", "B. I, II and III", "C. II and III only", "D. I only", "E. III only"], a: 1, w: "Vmax is maximum velocity, Km is the substrate at half Vmax, and Km reflects enzyme affinity." },
+      { q: "Which of the following are true about cholesterol metabolism?", o: ["I. Cholesterol is synthesized from acetyl-CoA", "II. LDL transports cholesterol to tissues", "III. HDL removes cholesterol from tissues", "A. I and II only", "B. I, II and III", "C. II and III only", "D. I only", "E. III only"], a: 1, w: "Cholesterol is synthesized from acetyl-CoA, LDL transports cholesterol to tissues, and HDL removes it." },
       { q: "Galactokinase (GALK) Deficiency:", o: ["I. It is marked by an accumulation of galactose", "II. Is an autosomal recessive metabolic disorder", "III. Caused by a deficiency of the enzyme galactokinase", "A. I and II only", "B. I, II and III", "C. II and III only", "D. I only", "E. III only"], a: 1, w: "GALK deficiency is autosomal recessive, causes galactose accumulation, and is due to galactokinase deficiency." },
       { q: "Salient features of classical galactosemia include(s):", o: ["I. Galactosuria", "II. Development of cataract", "III. Deficiency of galactokinase", "A. I and II only", "B. I, II and III", "C. II and III only", "D. I only", "E. III only"], a: 0, w: "Classical galactosemia features galactosuria and cataracts. It's caused by galactose-1-phosphate uridyltransferase deficiency, not galactokinase." },
       { q: "Which of the following enzyme(s) is/are involved in galactose metabolism?", o: ["I. Glucose 1-Phosphatase", "II. Galactose 4-epimerase", "III. Glucose 6-phosphatase", "A. I and II only", "B. I, II and III", "C. II and III only", "D. I only", "E. III only"], a: 2, w: "Galactose-4-epimerase (UDP-galactose 4-epimerase) is involved in galactose metabolism. Glucose 1-phosphatase and glucose 6-phosphatase are not directly involved." },
