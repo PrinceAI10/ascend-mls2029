@@ -14768,6 +14768,29 @@ const YOUTUBE_VIDEOS = [
     notes: "Continuation of glycolysis - regulation and energy yield.",
     priority: "High"
   },
+  // ===== NEW VIDEOS ADDED BELOW =====
+  {
+    id: "bch17",
+    courseId: "bch",
+    courseCode: "MLS 158",
+    title: "Transition Stage (Preparatory Phase)",
+    url: "https://youtu.be/5WHFJ0ypeFE",
+    channel: "Ninja Nerd",
+    duration: "~15 min",
+    notes: "The link between glycolysis and the Krebs cycle - pyruvate to acetyl-CoA. This is a prelude to the Electron Transport Chain.",
+    priority: "High"
+  },
+  {
+    id: "bch18",
+    courseId: "bch",
+    courseCode: "MLS 158",
+    title: "Electron Transport Chain (Detailed)",
+    url: "https://youtu.be/Z2F0Dt8e4eg",
+    channel: "Ninja Nerd",
+    duration: "~25 min",
+    notes: "How the ETC generates ATP - the final stage of aerobic respiration. Detailed breakdown of Complexes I-IV.",
+    priority: "High"
+  }
 ];
 
 // ============================================================
@@ -14967,7 +14990,6 @@ function YouTubeView() {
     </div>
   );
 }
-
 function PapersView({ app }) {
   const [tab, setTab] = useState("passco");
   const [courseId, setCourseId] = useState("ana");
@@ -15891,7 +15913,7 @@ function HomeView({ app }) {
           <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 4 }}>Topics are being built one by one. Browse the full course maps under Courses.</div>
         </div>
       )}
-      {/* CHANGE USERNAME - Blends with background */}
+      {/* CHANGE USERNAME - Matches website color scheme */}
 <div className="card" style={{ 
   marginTop: 16, 
   display: "flex", 
@@ -15899,11 +15921,14 @@ function HomeView({ app }) {
   alignItems: "center", 
   gap: 16, 
   flexWrap: "wrap",
-  background: "var(--bg-2)"
+  background: "var(--bg-2)",
+  border: "1px solid var(--line)",
+  borderRadius: "var(--r)",
+  padding: "20px"
 }}>
   <div>
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <span style={{ fontWeight: 600, fontSize: 15, color: "var(--text)" }}>Username: <span style={{ color: "var(--text)", fontWeight: 700 }}>{app.progress.name}</span></span>
+      <span style={{ fontWeight: 600, fontSize: 15, color: "var(--text)" }}>Username: <span style={{ color: "var(--amber)", fontWeight: 700 }}>{app.progress.name}</span></span>
     </div>
     <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 2 }}>
       This is how others see you on the leaderboard.
@@ -15911,6 +15936,18 @@ function HomeView({ app }) {
   </div>
   <button 
     className="btn btn-a" 
+    style={{
+      background: "var(--amber)",
+      color: "#1B1405",
+      fontWeight: 650,
+      padding: "10px 18px",
+      borderRadius: "11px",
+      border: "none",
+      cursor: "pointer",
+      transition: "filter 0.15s, transform 0.12s"
+    }}
+    onMouseEnter={(e) => { e.target.style.filter = "brightness(1.06)"; }}
+    onMouseLeave={(e) => { e.target.style.filter = "brightness(1)"; }}
     onClick={() => {
       const newName = window.prompt("Enter your new username (2-24 characters):", app.progress.name);
       if (newName && newName.trim().length >= 2) {
@@ -15921,33 +15958,34 @@ function HomeView({ app }) {
     Change name
   </button>
 </div>
-            <div className="card card-feature" style={{ marginTop: 26, textAlign: "center" }}>
-        <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 10 }}>Built by the ASCEND team</div>
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8 }}>
-          {["Prince", "Ansah", "Jeffery", "Dacosta"].map((n) => (
-            <span key={n} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "var(--bg-3)", border: "1px solid var(--line)", borderRadius: 999, padding: "8px 14px", fontSize: 14, fontWeight: 600 }}>
-              <span style={{ width: 24, height: 24, borderRadius: "50%", background: "var(--amber-dim)", color: "var(--amber-2)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 750 }}>{n[0]}</span>
-              {n}
-            </span>
-          ))}
-        </div>
-        <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 12, lineHeight: 1.6 }}>For the MLS Class of 2029. No gatekeeping.</div>
-        
-        {/* Admin-only feedback link */}
-        <div style={{ marginTop: 10, opacity: 0.3 }}>
-          <button 
-            style={{ background: "none", border: "none", color: "var(--text-3)", fontSize: 10, cursor: "pointer", textDecoration: "underline" }}
-            onClick={() => { 
-              if (window.confirm('View student feedback? (Admin only)')) { 
-                app.go("viewfeedback"); 
-              } 
-            }}
-          >
-            view feedback
-          </button>
-        </div>
-      </div>
-    </div>
+
+<div className="card card-feature" style={{ marginTop: 26, textAlign: "center" }}>
+  <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 10 }}>Built by the ASCEND team</div>
+  <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8 }}>
+    {["Prince", "Ansah", "Jeffery", "Dacosta"].map((n) => (
+      <span key={n} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "var(--bg-3)", border: "1px solid var(--line)", borderRadius: 999, padding: "8px 14px", fontSize: 14, fontWeight: 600 }}>
+        <span style={{ width: 24, height: 24, borderRadius: "50%", background: "var(--amber-dim)", color: "var(--amber-2)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 750 }}>{n[0]}</span>
+        {n}
+      </span>
+    ))}
+  </div>
+  <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 12, lineHeight: 1.6 }}>For the MLS Class of 2029. No gatekeeping.</div>
+  
+  {/* Admin-only feedback link */}
+  <div style={{ marginTop: 10, opacity: 0.3 }}>
+    <button 
+      style={{ background: "none", border: "none", color: "var(--text-3)", fontSize: 10, cursor: "pointer", textDecoration: "underline" }}
+      onClick={() => { 
+        if (window.confirm('View student feedback? (Admin only)')) { 
+          app.go("viewfeedback"); 
+        } 
+      }}
+    >
+      view feedback
+    </button>
+  </div>
+</div>
+</div>
   );
 }
 /* ------------------------------- auth ----------------------------------- */
