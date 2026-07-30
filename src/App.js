@@ -13232,8 +13232,8 @@ async function callClaude(system, messages, maxTokens = 4096) {
   });
   
   let res;
-  const MAX_ATTEMPTS = 8;
-  const REQUEST_TIMEOUT_MS = 25000; // a single attempt can't hang forever - retry instead
+  const MAX_ATTEMPTS = 3;
+  const REQUEST_TIMEOUT_MS = 12000; // a single attempt can't hang forever - retry instead
   
   for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
     const controller = new AbortController();
@@ -18025,7 +18025,7 @@ export default function App() {
           if (window.location.hash && /access_token=/.test(window.location.hash)) {
             try { window.history.replaceState(null, "", window.location.pathname + window.location.search); } catch {}
           }
-          await adoptSupabaseUser(sUser);
+          await adoptSupabaseUser(sUser, false);
           setLoaded(true);
           return;
         }
@@ -18059,7 +18059,7 @@ export default function App() {
           if (window.location.hash && /access_token=/.test(window.location.hash)) {
             try { window.history.replaceState(null, "", window.location.pathname + window.location.search); } catch {}
           }
-          adoptSupabaseUser(session.user);
+          adoptSupabaseUser(session.user, true);
         }
         if (event === "SIGNED_OUT") {
           setSupaUid(null);
@@ -18085,7 +18085,7 @@ export default function App() {
   // ============================================================
   // 9. adoptSupabaseUser, handleAuthed, logout, toggleTheme (unchanged)
   // ============================================================
-  const adoptSupabaseUser = async (sUser) => {
+  const adoptSupabaseUser = async (sUser, isFreshLogin = true) => {
     const uid = sUser.id;
     const displayName =
       (sUser.user_metadata && (sUser.user_metadata.full_name || sUser.user_metadata.name)) ||
@@ -18105,7 +18105,12 @@ export default function App() {
     setAuth({ username: merged.name, email: sUser.email, name: merged.name, supabase: true });
     setXpChange(merged.xp || 0);
     setProgress(merged);
-    setRoute({ view: "home" });
+    // Only force the home screen for a genuine new sign-in. When we're just
+    // re-adopting an existing session (initial mount / tab was reloaded in
+    // the background), leave the route alone - it was already restored from
+    // sessionStorage by the state-restoration effect, and stomping on it
+    // here is what was wiping the user's in-progress screen on tab switch.
+    if (isFreshLogin) setRoute({ view: "home" });
     try {
       await supabase.from("profiles").upsert({
         id: uid,
