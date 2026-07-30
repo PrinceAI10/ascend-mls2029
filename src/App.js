@@ -13962,6 +13962,74 @@ function QuizView({ app }) {
   );
 }
 
+/* Inline flow-diagram generator shown inside each topic, so a student can turn
+   the lesson they're reading into a visual Mermaid flowchart without leaving it.
+   Reuses sanitizeMermaid/stripMermaid so AI output renders on Mermaid 10.9.1. */
+function TopicFlowDiagram({ title, context }) {
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const [code, setCode] = useState("");
+  const ref = useRef(null);
+
+  const build = async () => {
+    if (busy) return;
+    setBusy(true); setErr(""); setCode("");
+    try {
+      const raw = await callClaude(
+        "You write Mermaid flowchart code for KNUST medical laboratory science students. Output ONLY Mermaid code - no prose, no markdown fences. The first line must be exactly: flowchart TD. Wrap EVERY node label in double quotes, e.g. A[\"Glycolysis\"] --> B[\"Pyruvate\"]. Use curly braces only for yes/no decisions, e.g. C{\"Oxygen present?\"}. Never use parentheses, semicolons, or the word 'end' as a node id. Show the pathway as a clear step-by-step flow.",
+        [{ role: "user", content: `Draw a Mermaid flowchart of the key process, pathway or logical flow in this topic: "${title}".\n\nBase it on this lesson material:\n${(context || "").slice(0, 3500)}\n\nUse 6 to 14 nodes. Every label in double quotes. Output only the code.` }],
+        1500
+      );
+      const clean = sanitizeMermaid(raw);
+      if (!/^flowchart\s+(TD|TB|LR|RL|BT)/i.test(clean)) throw new Error("build failed");
+      setCode(clean);
+    } catch (e) {
+      const msg = e && e.message ? e.message : "";
+      setErr(/429|rate|busy/i.test(msg) ? "The AI service is busy. Please wait a moment and try again." : "Could not build the diagram just now. Please try again.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!code) return;
+    let cancelled = false;
+    (async () => {
+      const mermaid = await loadMermaid().catch(() => null);
+      if (!mermaid || cancelled) { if (!cancelled) setErr("Could not load the diagram library - check your connection."); return; }
+      const tryRender = async (src) => {
+        const id = "topicflow-" + Math.random().toString(36).slice(2);
+        const { svg } = await mermaid.render(id, src);
+        return svg;
+      };
+      try {
+        let svg;
+        try { svg = await tryRender(code); }
+        catch { svg = await tryRender(stripMermaid(code)); }
+        if (!cancelled && ref.current) { ref.current.innerHTML = svg; setErr(""); }
+      } catch (e) {
+        if (!cancelled) setErr("This diagram did not render cleanly. Tap Build again for a fresh version.");
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [code]);
+
+  return (
+    <div className="card" style={{ marginTop: 4 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+        <div>
+          <div style={{ fontWeight: 700, fontSize: 15.5 }}>See it as a flow diagram</div>
+          <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.55, maxWidth: "52ch" }}>Turn this topic's process into a visual step-by-step map. Rebuild any time for a fresh version.</div>
+        </div>
+        <button className="btn btn-a" onClick={build} disabled={busy}>{busy ? "Drawing..." : (code ? "Rebuild" : "Build flow diagram")} <Ic.ai p={16} /></button>
+      </div>
+      {busy && <div style={{ marginTop: 12 }}><span className="dots"><span /><span /><span /></span></div>}
+      {err && <div style={{ marginTop: 12, color: "var(--text-2)", fontSize: 13.5 }}>{err}</div>}
+      {code && <div style={{ marginTop: 14, overflowX: "auto" }}><div ref={ref} style={{ display: "flex", justifyContent: "center", minHeight: 60 }} /></div>}
+    </div>
+  );
+}
+
 /* ------------------------------- topic ---------------------------------- */
 function TopicView({ app }) {
   const t = contentFor(app.courseId, app.topicId);
@@ -14133,6 +14201,9 @@ function TopicView({ app }) {
           </div>
         ))}
       </div>
+      <div className="divider" />
+      <div className="eyebrow" style={{ marginBottom: 12 }}>Visualise it</div>
+      <TopicFlowDiagram title={t.title} context={noteContext} />
       <div className="divider" />
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}><Ic.ai p={18} /><div className="eyebrow" style={{ margin: 0 }}>Ask ASCEND</div></div>
       <AITutor topicTitle={t.title} context={noteContext} />
@@ -16255,7 +16326,7 @@ function PapersView({ app }) {
           <div style={{ marginTop: 16 }}>
             {tab === "solve"
               ? <button className="btn btn-a" onClick={function() { setPracticeActive(true); }}>Generate 100 with AI <Ic.ai p={16} /></button>
-              : <button className="btn btn-a" onClick={function() { setSimilarActive(true); }} disabled={!sample.trim()}>Generate {similarCount} similar <Ic.ai p={16} /></button>}
+              : <button className="btn btn-a" onClick={function() { if (!sample.trim()) { setErr("Paste a passco question above first, then generate."); return; } setErr(""); setSimilarActive(true); }}>Generate {similarCount} similar <Ic.ai p={16} /></button>}
           </div>
         </div>
       )}
