@@ -312,8 +312,30 @@ export default async function handler(req, res) {
   try {
     let result;
     if (hasFileContent) {
-      if (!geminiKey) { res.status(500).json({ error: "This request includes a file, but GEMINI_API_KEY is not set." }); return; }
-      result = await callGemini();
+      // Gemini is the only provider here that can read the actual file bytes,
+      // so try it first. But don't let a maxed-out/broken Gemini key kill the
+      // whole request: fall back to the text chain (Groq -> OpenRouter ->
+      // Cohere), which will still see any plain-text parts of the message
+      // (e.g. the task instructions, and "focus on" text) even though it
+      // can't see the binary file itself. This keeps the feature working
+      // instead of hard-failing whenever Gemini's free quota is exhausted.
+      let geminiErr = null;
+      if (geminiKey) {
+        try {
+          result = await callGemini();
+        } catch (e) {
+          geminiErr = e;
+        }
+      }
+      if (!result) {
+        try {
+          result = await callTextChain();
+        } catch (chainErr) {
+          // Report whichever error is more informative; prefer the Gemini
+          // one since that's the provider that actually should have handled this.
+          throw geminiErr || chainErr;
+        }
+      }
     } else {
       result = await callTextChain();
     }
