@@ -31,7 +31,7 @@
 
 // Allow the function up to 30s so a multi-provider fallback has room to finish.
 // (Vercel Hobby permits raising this; Pro allows more. Safe to keep at 30.)
-export const config = { maxDuration: 30 };
+export const config = { maxDuration: 60 };
 
 const GROQ_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-20b";
 const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "meta-llama/llama-3.3-70b-instruct:free";
@@ -289,7 +289,7 @@ export default async function handler(req, res) {
 
     // Overall budget for the whole chain. Once we're past it we stop starting
     // new providers so the function returns before the platform kills it.
-    const CHAIN_DEADLINE_MS = 26000;
+    const CHAIN_DEADLINE_MS = 45000;
     const startedAt = Date.now();
 
     let firstErr = null;
@@ -312,30 +312,29 @@ export default async function handler(req, res) {
   try {
     let result;
     if (hasFileContent) {
-      // Gemini is the only provider here that can read the actual file bytes,
-      // so try it first. But don't let a maxed-out/broken Gemini key kill the
-      // whole request: fall back to the text chain (Groq -> OpenRouter ->
-      // Cohere), which will still see any plain-text parts of the message
-      // (e.g. the task instructions, and "focus on" text) even though it
-      // can't see the binary file itself. This keeps the feature working
-      // instead of hard-failing whenever Gemini's free quota is exhausted.
-      let geminiErr = null;
-      if (geminiKey) {
+      // Groq/OpenRouter/Cohere can't see the actual file bytes - only Gemini
+      // (via inlineData) can read PDFs/images directly. But per request, we
+      // now try the text chain FIRST since it's faster and spreads load
+      // across the 5 Groq keys instead of hammering Gemini's free quota.
+      // In practice this still works well because the frontend already
+      // extracts PDF text client-side before it ever gets here - the only
+      // time real binary file data reaches this function is the rare
+      // fallback path, so trying text-capable providers first is safe and
+      // Gemini remains the safety net for genuine binary content.
+      let chainErr = null;
+      try {
+        result = await callTextChain();
+      } catch (e) {
+        chainErr = e;
+      }
+      if (!result && geminiKey) {
         try {
           result = await callGemini();
-        } catch (e) {
-          geminiErr = e;
+        } catch (geminiErr) {
+          throw chainErr || geminiErr;
         }
       }
-      if (!result) {
-        try {
-          result = await callTextChain();
-        } catch (chainErr) {
-          // Report whichever error is more informative; prefer the Gemini
-          // one since that's the provider that actually should have handled this.
-          throw geminiErr || chainErr;
-        }
-      }
+      if (!result) throw chainErr || new Error("No AI provider could process this file.");
     } else {
       result = await callTextChain();
     }
