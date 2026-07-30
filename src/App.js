@@ -3,11 +3,13 @@
 // ============================================================
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Tesseract from 'tesseract.js';              
+// eslint-disable-next-line no-unused-vars
 import MermaidDiagram from './components/MermaidDiagram';  
 import './App.css';
 import { supabase } from "./supabaseClient";
 
 // OCR Function for image text extraction
+// eslint-disable-next-line no-unused-vars
 async function extractTextFromImage(imageFile) {
   try {
     console.log('Starting OCR on:', imageFile.name);
@@ -18407,47 +18409,9 @@ const NAV = [
 const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0 };
 
 // ============================================
-// OCR FUNCTION - Paste this here
-// ============================================
-async function extractTextFromImage(imageFile) {
-  try {
-    console.log('Starting OCR on:', imageFile.name);
-    
-    const result = await Tesseract.recognize(
-      imageFile,
-      'eng',
-      {
-        logger: (m) => {
-          if (m.status === 'recognizing text') {
-            console.log(`OCR Progress: ${Math.round(m.progress * 100)}%`);
-          }
-        }
-      }
-    );
-
-    const extractedText = result.data.text;
-    console.log('OCR completed. Text length:', extractedText.length);
-    
-    if (!extractedText || extractedText.trim().length < 5) {
-      return { 
-        success: false, 
-        message: 'No clear text found. Please type the content manually.'
-      };
-    }
-
-    return { success: true, text: extractedText };
-  } catch (error) {
-    console.error('OCR Error:', error);
-    return { 
-      success: false, 
-      message: 'OCR failed: ' + error.message
-    };
-  }
-}
-
-// ============================================
 // QUICK FLOW BUTTON - Paste this here
 // ============================================
+// eslint-disable-next-line no-unused-vars
 const QuickFlowButton = ({ topic, onGenerate }) => {
   if (!topic || topic.length < 10) return null;
   
