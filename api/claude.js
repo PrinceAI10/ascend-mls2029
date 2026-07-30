@@ -31,7 +31,7 @@
 
 export const config = { maxDuration: 60 };
 
-const GROQ_MODEL = process.env.GROQ_MODEL || "llama-3.3-70b-specdec";
+const GROQ_MODEL = process.env.GROQ_MODEL || "mixtral-8x7b-32768";
 const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "meta-llama/llama-3.3-70b-instruct:free";
 const COHERE_MODEL = process.env.COHERE_MODEL || "command-r-08-2024";
 const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash-lite";
@@ -76,6 +76,11 @@ export default async function handler(req, res) {
   const openrouterKey = process.env.OPENROUTER_API_KEY;
   const cohereKey = process.env.COHERE_API_KEY;
   const geminiKey = process.env.GEMINI_API_KEY;
+
+  console.log("Groq keys loaded:", groqKeys.length);
+  console.log("OpenRouter key present:", !!openrouterKey);
+  console.log("Cohere key present:", !!cohereKey);
+  console.log("Gemini key present:", !!geminiKey);
   
   if (!groqKeys.length && !openrouterKey && !cohereKey && !geminiKey) {
     res.status(500).json({ error: "No AI provider keys set. Add GROQ_API_KEY (and/or OPENROUTER_API_KEY, COHERE_API_KEY, GEMINI_API_KEY) in Vercel environment variables." });
