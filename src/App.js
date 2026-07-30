@@ -16694,8 +16694,9 @@ function StudyToolsView() {
       } else {
         setErr(msg + " Please try again in a moment.");
       }
+    } finally {
+      setBusy(false);
     }
-    setBusy(false);
   };
 
   const genMap = async () => {
@@ -16719,8 +16720,9 @@ function StudyToolsView() {
       } else {
         setErr(msg + " Please try again in a moment.");
       }
+    } finally {
+      setBusy(false);
     }
-    setBusy(false);
   };
 
   const branchColors = ["var(--amber)", "#5B8DEF", "#4FB477", "#E86A6A", "#B07CE8", "#E0A32E"];
@@ -16748,8 +16750,9 @@ function StudyToolsView() {
       } else {
         setErr(msg + " Please try again in a moment.");
       }
+    } finally {
+      setBusy(false);
     }
-    setBusy(false);
   };
 
   useEffect(() => {
