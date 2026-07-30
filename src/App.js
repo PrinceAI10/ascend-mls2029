@@ -17393,7 +17393,7 @@ function PlanView() {
             <div className="eyebrow">You need to average</div>
             <div className="headline" style={{ margin: "10px 0" }}>{S.toFixed(1)}%</div>
             <div style={{ color: "var(--text-2)", fontSize: 14 }}>
-              across your <strong style={{ color: "var(--text)" }}>{examCr}</strong> exam courses this semester 
+              across your <strong style={{ color: "var(--text)" }}>{examCr}</strong> credit exam courses this semester 
               to reach a CWA of <strong style={{ color: "var(--amber)" }}>{tg}</strong>
             </div>
           </div>
