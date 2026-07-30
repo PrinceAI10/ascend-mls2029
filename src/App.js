@@ -3,9 +3,6 @@
 // ============================================================
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Tesseract from 'tesseract.js';              
-// eslint-disable-next-line no-unused-vars
-import MermaidDiagram from './components/MermaidDiagram';  
-import './App.css';
 import { supabase } from "./supabaseClient";
 
 // OCR Function for image text extraction
