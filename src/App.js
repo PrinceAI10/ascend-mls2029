@@ -13300,7 +13300,10 @@ async function callClaude(system, messages, maxTokens = 4096) {
   
   let res;
   const MAX_ATTEMPTS = 1;
-  const REQUEST_TIMEOUT_MS = 15000; // a single attempt can't hang forever - retry instead
+  // The serverless proxy may fall through several providers (Groq keys ->
+  // OpenRouter -> Cohere -> Gemini) within one request, so give it room to
+  // finish before we abort. Kept just above the proxy's own chain deadline.
+  const REQUEST_TIMEOUT_MS = 28000;
   
   for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
     const controller = new AbortController();
@@ -14374,13 +14377,17 @@ function RanksView({ app }) {
   
   const me = { name: app.progress.name, xp: app.progress.xp, streak: app.progress.streak, me: true, id: app.supaUid };
   
+  // Parse XP-earned history once (not inside the sort comparator, which runs many
+  // times). Used to tie-break equal XP by who reached that XP first.
+  const xpHistory = (() => {
+    try { return JSON.parse(localStorage.getItem('ascend_xp_history') || '{}'); } catch { return {}; }
+  })();
   const fullBoard = [...others, me].sort((a, b) => {
     if (b.xp !== a.xp) return b.xp - a.xp;
     const aId = a.id || 'local-' + String(a.name).toLowerCase().replace(/[^a-z0-9]/g, '');
     const bId = b.id || 'local-' + String(b.name).toLowerCase().replace(/[^a-z0-9]/g, '');
-    const history = JSON.parse(localStorage.getItem('ascend_xp_history') || '{}');
-    const aEntry = (history[aId] || []).find(function(h) { return h.xp === a.xp; });
-    const bEntry = (history[bId] || []).find(function(h) { return h.xp === b.xp; });
+    const aEntry = (xpHistory[aId] || []).find(function(h) { return h.xp === a.xp; });
+    const bEntry = (xpHistory[bId] || []).find(function(h) { return h.xp === b.xp; });
     if (aEntry && bEntry) return aEntry.time - bEntry.time;
     if (aEntry) return -1;
     if (bEntry) return 1;
@@ -14431,6 +14438,24 @@ function RanksView({ app }) {
           <div className="mono" style={{ color: "var(--text-2)", fontSize: 13 }}>{app.progress.xp} XP{r.next ? ` · ${toNext} to ${r.next.name}` : " · top tier"}</div>
         </div>
       </div>
+
+      {/* HOW TO EARN XP - small banner so students know how to climb beyond the daily question */}
+      <div className="card" style={{ marginTop: 12, padding: "12px 14px", borderColor: "var(--amber)", background: "var(--amber-dim)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+          </svg>
+          <span style={{ fontWeight: 750, fontSize: 14, color: "var(--amber)" }}>Ways to climb the board</span>
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18, color: "var(--text-2)", fontSize: 13, lineHeight: 1.7 }}>
+          <li><strong style={{ color: "var(--text-1)" }}>Daily question</strong> - +20 XP for a correct answer, every day (also keeps your streak alive)</li>
+          <li><strong style={{ color: "var(--text-1)" }}>Topic quizzes</strong> - +10 XP per correct answer, plus a +5 first-time bonus per correct the first time you finish a topic</li>
+          <li><strong style={{ color: "var(--text-1)" }}>Passco &amp; AI practice sets</strong> - +10 XP per correct answer, as many sets as you want</li>
+          <li><strong style={{ color: "var(--text-1)" }}>Read a topic</strong> - +15 XP for studying a topic for 5 minutes</li>
+          <li><strong style={{ color: "var(--text-1)" }}>Keep a 7-day streak</strong> - everything you earn is boosted x1.5</li>
+        </ul>
+      </div>
+
       <div style={{ marginTop: 18, marginBottom: 4 }}>
         <input
           className="auth-input"
@@ -14684,8 +14709,8 @@ function InteractiveSet({ items }) {
    ============================================================ */
 const PRACTICE_MCQ_RULES = "Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which position is correct. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {\"q\": string, \"o\": [4 strings], \"a\": integer index, \"w\": one short explanation}.";
 
-function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQuiz }) {
-  const TOTAL = 100;
+function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQuiz, total, sampleQuestion }) {
+  const TOTAL = total || 100;
   const CHUNK = 10;
   const totalChunks = Math.ceil(TOTAL / CHUNK);
   const PASS_MARK = 7;
@@ -14704,6 +14729,10 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   const pendingPromiseRef = useRef(null);
 
   const buildPrompt = (n) => {
+    // "Generate similar" mode: base fresh questions on a pasted sample question.
+    if (sampleQuestion && sampleQuestion.trim()) {
+      return `Here is a passco exam question:\n\n${sampleQuestion}\n\nGenerate exactly ${n} fresh MCQs testing the same concept(s) and matching this question's style and structure, for a KNUST first-year student in ${course.name} (${course.code}).\n\n${PRACTICE_MCQ_RULES}`;
+    }
     const topicPart = topicName ? `Focus specifically on the topic: ${topicName}.` : `Cover a mix of topics across the course.`;
     return `Generate exactly ${n} passco-style exam MCQs for a KNUST first-year student in ${course.name} (${course.code}). ${topicPart}\n\n${PRACTICE_MCQ_RULES}`;
   };
@@ -15708,9 +15737,23 @@ function PapersView({ app }) {
   const [similarCount, setSimilarCount] = useState(() => {
     try {
       const saved = sessionStorage.getItem('ascend_papers_count');
-      return saved ? parseInt(saved, 10) : 10;
-    } catch { return 10; }
+      const v = saved ? parseInt(saved, 10) : 20;
+      return [20, 30, 40, 50].includes(v) ? v : 20;
+    } catch { return 20; }
   });
+
+  // How many questions a "Practice set (AI)" run generates. Chunked into 10s
+  // exactly like the "Generate similar" flow, so it never stalls.
+  const [practiceCount, setPracticeCount] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('ascend_papers_practice_count');
+      const v = saved ? parseInt(saved, 10) : 50;
+      return [20, 30, 40, 50].includes(v) ? v : 50;
+    } catch { return 50; }
+  });
+  useEffect(() => {
+    try { sessionStorage.setItem('ascend_papers_practice_count', String(practiceCount)); } catch {}
+  }, [practiceCount]);
   
   const [active, setActive] = useState(() => {
     try {
@@ -15737,6 +15780,7 @@ function PapersView({ app }) {
   const [passcoNotif, setPasscoNotif] = useState(null);
   const [practiceTopicIdx, setPracticeTopicIdx] = useState("");
   const [practiceActive, setPracticeActive] = useState(false);
+  const [similarActive, setSimilarActive] = useState(false);
   const [requireMastery, setRequireMastery] = useState(() => {
     try { return sessionStorage.getItem("ascend_practice_mastery") === "1"; } catch { return false; }
   });
@@ -15951,10 +15995,10 @@ function PapersView({ app }) {
       <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "58ch" }}>A passco PDF is easy to put off. Here you actually answer, tap by tap, with instant feedback - and ASCEND can spin fresh questions off any one you show it.</p>
       
       <div className="tabs">
-        <button className={"tab " + (tab === "passco" ? "on" : "")} onClick={function() { setTab("passco"); setItems(null); setErr(""); setActive(null); setPracticeActive(false); }}>Passco</button>
-        <button className={"tab " + (tab === "solve" ? "on" : "")} onClick={function() { setTab("solve"); setItems(null); setErr(""); }}>Practice set (AI)</button>
+        <button className={"tab " + (tab === "passco" ? "on" : "")} onClick={function() { setTab("passco"); setItems(null); setErr(""); setActive(null); setPracticeActive(false); setSimilarActive(false); }}>Passco</button>
+        <button className={"tab " + (tab === "solve" ? "on" : "")} onClick={function() { setTab("solve"); setItems(null); setErr(""); setSimilarActive(false); }}>Practice set (AI)</button>
         <button className={"tab " + (tab === "similar" ? "on" : "")} onClick={function() { setTab("similar"); setItems(null); setErr(""); setPracticeActive(false); }}>Generate similar</button>
-        <button className={"tab " + (tab === "youtube" ? "on" : "")} onClick={function() { setTab("youtube"); setItems(null); setErr(""); setPracticeActive(false); }}>YouTube Links</button>
+        <button className={"tab " + (tab === "youtube" ? "on" : "")} onClick={function() { setTab("youtube"); setItems(null); setErr(""); setPracticeActive(false); setSimilarActive(false); }}>YouTube Links</button>
       </div>
 
       {tab === "passco" && (active
@@ -15966,7 +16010,7 @@ function PapersView({ app }) {
         <YouTubeView />
       )}
 
-      {(tab !== "passco" && tab !== "youtube" && !(tab === "solve" && practiceActive)) && (
+      {(tab !== "passco" && tab !== "youtube" && !(tab === "solve" && practiceActive) && !(tab === "similar" && similarActive)) && (
         <div className="card" style={{ marginTop: 12 }}>
           <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Course</label>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: tab === "similar" ? 16 : 4 }}>
@@ -15992,15 +16036,23 @@ function PapersView({ app }) {
               <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Paste one passco question</label>
               <textarea className="pastebox" value={sample} placeholder={"e.g.\n\nThe plane dividing the body into left and right is the\nA. coronal  B. sagittal  C. transverse  D. oblique"} onChange={function(e) { setSample(e.target.value); }} />
               <label className="eyebrow" style={{ display: "block", margin: "16px 0 8px" }}>How many similar questions?</label>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[10, 20, 30, 40, 50].map(function(n) {
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[20, 30, 40, 50].map(function(n) {
                 return <button key={n} className="btn btn-sm" style={{ background: similarCount === n ? "var(--amber)" : "var(--bg-3)", color: similarCount === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={function() { setSimilarCount(n); }}>{n}</button>;
               })}</div>
+              <label style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 12, cursor: "pointer" }}>
+                <input type="checkbox" checked={requireMastery} onChange={function(e) { setRequireMastery(e.target.checked); }} />
+                <span style={{ fontSize: 13.5, color: "var(--text-2)" }}>Require 7/10 to advance to the next set (missed questions get reviewed first)</span>
+              </label>
             </>
           )}
           {/* CHANGED: Different messages for practice vs similar */}
           {tab === "solve" && (
             <>
-              <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>ASCEND builds this in sets of 10 so it never stalls - 100 questions total, delivered as you go.</div>
+              <label className="eyebrow" style={{ display: "block", margin: "16px 0 8px" }}>How many questions?</label>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[20, 30, 40, 50].map(function(n) {
+                return <button key={n} className="btn btn-sm" style={{ background: practiceCount === n ? "var(--amber)" : "var(--bg-3)", color: practiceCount === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={function() { setPracticeCount(n); }}>{n}</button>;
+              })}</div>
+              <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>ASCEND builds this in sets of 10 so it never stalls - {practiceCount} questions total, delivered as you go.</div>
               <label style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 12, cursor: "pointer" }}>
                 <input type="checkbox" checked={requireMastery} onChange={function(e) { setRequireMastery(e.target.checked); }} />
                 <span style={{ fontSize: 13.5, color: "var(--text-2)" }}>Require 7/10 to advance to the next set (missed questions get reviewed first)</span>
@@ -16008,12 +16060,12 @@ function PapersView({ app }) {
             </>
           )}
           {tab === "similar" && (
-            <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>Select how many questions you want. More questions = more practice.</div>
+            <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>ASCEND builds this in sets of 10 so it never stalls - {similarCount} questions total, delivered as you go.</div>
           )}
           <div style={{ marginTop: 16 }}>
             {tab === "solve"
-              ? <button className="btn btn-a" onClick={function() { setPracticeActive(true); }}>Start a set of 100 <Ic.ai p={16} /></button>
-              : <button className="btn btn-a" onClick={startSimilar} disabled={busy || !sample.trim()}>{busy ? "Generating..." : "Generate " + similarCount + " similar"} <Ic.ai p={16} /></button>}
+              ? <button className="btn btn-a" onClick={function() { setPracticeActive(true); }}>Generate {practiceCount} with AI <Ic.ai p={16} /></button>
+              : <button className="btn btn-a" onClick={function() { setSimilarActive(true); }} disabled={!sample.trim()}>Generate {similarCount} similar <Ic.ai p={16} /></button>}
           </div>
         </div>
       )}
@@ -16021,8 +16073,19 @@ function PapersView({ app }) {
         <ChunkedPracticeSet
           course={courseById(courseId)}
           topicName={practiceTopicIdx !== "" ? (TOPICS[courseId] || [])[parseInt(practiceTopicIdx, 10)] : null}
+          total={practiceCount}
           requireMastery={requireMastery}
           onExit={function() { setPracticeActive(false); }}
+          finishQuiz={app.finishQuiz}
+        />
+      )}
+      {tab === "similar" && similarActive && (
+        <ChunkedPracticeSet
+          course={courseById(courseId)}
+          sampleQuestion={sample}
+          total={similarCount}
+          requireMastery={requireMastery}
+          onExit={function() { setSimilarActive(false); }}
           finishQuiz={app.finishQuiz}
         />
       )}
@@ -16096,12 +16159,12 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
 
   const [picked, setPicked] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [cur, setCur] = useState(0); // index of the current question being shown
   const awardedRef = useRef(false);
 
   const answered = Object.keys(picked).length;
   const allAnswered = answered === questions.length;
   const correctCount = questions.reduce((n, it, idx) => n + (picked[idx] === it.a ? 1 : 0), 0);
-  const revealAll = mode === "practice" ? false : submitted;
 
   const award = () => {
     if (awardedRef.current) return;
@@ -16133,17 +16196,51 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
   const submitExam = () => {
     setSubmitted(true);
     award();
+    try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {}
   };
 
+  const go = (i) => { setCur(Math.max(0, Math.min(questions.length - 1, i))); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {} };
   const letters = "ABCDE";
 
-  // Detect assertion-reason style questions ("X BECAUSE Y") so we can show a
-  // quick decode guide - this is the single most-missed question type students
-  // asked for help with. Two formats show up across passco sets: the standard
-  // 5-way A-E code, and a simpler True/False/Neither/Both style.
   const hasAR = questions.some((it) => / BECAUSE /i.test(it.q || "")) && paper.courseId === "bch";
-const arIsFiveWay = hasAR && questions.some((it) => (it.o || []).some((o) => /correct explanation/i.test(o)));
-const [showTip, setShowTip] = useState(true);
+  const arIsFiveWay = hasAR && questions.some((it) => (it.o || []).some((o) => /correct explanation/i.test(o)));
+  const [showTip, setShowTip] = useState(true);
+
+  // ===== EXAM REVIEW SCREEN: after submit, show every question marked =====
+  if (mode === "exam" && submitted) {
+    const pct = questions.length ? Math.round((correctCount / questions.length) * 100) : 0;
+    return (
+      <div style={{ marginTop: 12 }}>
+        <button className="back" onClick={onExit}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Back to sets</button>
+        <div className="card" style={{ marginTop: 12, marginBottom: 12, textAlign: "center", borderColor: "var(--amber)" }}>
+          <div className="eyebrow">Your score</div>
+          <div style={{ fontSize: 36, fontWeight: 800, color: pct >= 50 ? "var(--good)" : "var(--bad)", margin: "4px 0" }}>{pct}%</div>
+          <div style={{ color: "var(--text-2)", fontSize: 14 }}>{correctCount} out of {questions.length} correct · {paper.courseCode} · Q{chunkStart + 1}-{chunkEnd}</div>
+        </div>
+        {questions.map((it, idx) => {
+          const chosen = picked[idx];
+          return (
+            <div className="card" key={idx} style={{ marginBottom: 10 }}>
+              <div style={{ fontWeight: 600, marginBottom: 10 }}><span className="mono" style={{ color: "var(--text-3)" }}>{String(chunkStart + idx + 1).padStart(2, "0")}. </span>{it.q}{it.flag && <span style={{ marginLeft: 6, fontSize: 11, color: "var(--amber-2)", border: "1px solid var(--line-2)", borderRadius: 4, padding: "1px 5px" }}>verify</span>}</div>
+              {it.o.map((opt, oi) => {
+                let cls = "opt";
+                if (oi === it.a) cls += " correct"; else if (oi === chosen) cls += " wrong";
+                return <div className={cls} key={oi} style={{ cursor: "default" }}><span className="key">{letters[oi] || oi + 1}</span><span>{opt}</span></div>;
+              })}
+              <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 8 }}><strong style={{ color: chosen === it.a ? "var(--good)" : "var(--bad)" }}>{chosen === undefined ? "Not answered. " : (chosen === it.a ? "Correct. " : "Your answer: " + (letters[chosen] || "") + ". ")}</strong>{chosen !== it.a && "Answer: " + (letters[it.a] || "") + ". "}{it.w}</div>
+            </div>
+          );
+        })}
+        <button className="btn btn-g" onClick={onExit} style={{ marginTop: 4 }}>Back to sets</button>
+      </div>
+    );
+  }
+
+  // ===== ONE-QUESTION-AT-A-TIME CBT VIEW =====
+  const it = questions[cur];
+  const chosen = picked[cur];
+  const revealHere = mode === "practice" ? chosen !== undefined : false;
+
   return (
     <div style={{ marginTop: 12 }}>
       <button className="back" onClick={onExit}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Back to sets</button>
@@ -16151,11 +16248,10 @@ const [showTip, setShowTip] = useState(true);
       <div className="card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 12, marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
         <div>
           <div className="eyebrow" style={{ margin: 0 }}>{paper.courseCode} · {paper.title}</div>
-          <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 2 }}>Q{chunkStart + 1}-{chunkEnd} · {mode === "practice" ? "Practice" : "Exam"} mode</div>
+          <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 2 }}>Q{chunkStart + 1}-{chunkEnd} · {mode === "practice" ? "Practice" : "Exam"} · question {cur + 1} of {questions.length}</div>
         </div>
         <div className="mono" style={{ fontWeight: 700 }}>
-          <span style={{ color: "var(--amber)" }}>{correctCount}</span> / {mode === "practice" ? answered : (submitted ? questions.length : answered)}
-          <span style={{ color: "var(--text-3)" }}> · {questions.length}</span>
+          {mode === "practice" ? <span><span style={{ color: "var(--amber)" }}>{correctCount}</span> / {answered}</span> : <span style={{ color: "var(--text-3)" }}>{answered}/{questions.length}</span>}
         </div>
       </div>
 
@@ -16166,7 +16262,7 @@ const [showTip, setShowTip] = useState(true);
             <button onClick={() => setShowTip(false)} style={{ background: "none", border: "none", color: "var(--text-3)", cursor: "pointer", fontSize: 13, padding: 0 }}>Hide</button>
           </div>
           <p style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6, margin: "8px 0 0" }}>
-            Each question has two statements: <strong>statement 1</strong> (the assertion) and <strong>statement 2</strong> (the reason, after "BECAUSE"). Judge them separately first - is each one true or false on its own? Only once both are true do you ask the third question: does statement 2 actually explain <em>why</em> statement 1 is true?
+            Each question has two statements: <strong>statement 1</strong> (the assertion) and <strong>statement 2</strong> (the reason, after "BECAUSE"). Judge them separately first - is each one true or false on its own? Only once both are true do you ask: does statement 2 actually explain <em>why</em> statement 1 is true?
           </p>
           {arIsFiveWay ? (
             <p style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.7, margin: "10px 0 0" }}>
@@ -16174,47 +16270,64 @@ const [showTip, setShowTip] = useState(true);
             </p>
           ) : (
             <p style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6, margin: "10px 0 0" }}>
-              This set uses True / False / Neither / Both instead of the 5-way code - read the options as given rather than assuming the A-E scheme, since the wording changes what each choice means.
+              This set uses True / False / Neither / Both instead of the 5-way code - read the options as given rather than assuming the A-E scheme.
             </p>
           )}
         </div>
       )}
 
-      {questions.map((it, idx) => {
-        const chosen = picked[idx];
-        const locked = mode === "practice" ? chosen !== undefined : revealAll;
-        return (
-          <div className="card" key={idx} style={{ marginBottom: 10 }}>
-            <div style={{ fontWeight: 600, marginBottom: 10 }}>
-              <span className="mono" style={{ color: "var(--text-3)" }}>{String(chunkStart + idx + 1).padStart(2, "0")}. </span>{it.q}
-            </div>
-            {it.o.map((opt, oi) => {
-              let cls = "opt";
-              if (locked) { if (oi === it.a) cls += " correct"; else if (oi === chosen) cls += " wrong"; }
-              return (
-                <button className={cls} key={oi} disabled={mode === "practice" ? chosen !== undefined : submitted} onClick={() => pick(idx, oi)}>
-                  <span className="key">{letters[oi] || oi + 1}</span><span>{opt}</span>
-                </button>
-              );
-            })}
-            {locked && (
-              <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 8 }}>
-                <strong style={{ color: chosen === it.a ? "var(--good)" : "var(--bad)" }}>{chosen === it.a ? "Correct. " : "Not quite. "}</strong>
-                {it.w}
-              </div>
-            )}
+      {/* Question navigator grid - tap any number to jump */}
+      <div className="card" style={{ marginBottom: 12, padding: "12px 14px" }}>
+        <div className="eyebrow" style={{ marginBottom: 8 }}>Question navigator</div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+          {questions.map((_, i) => {
+            const isAns = picked[i] !== undefined;
+            const isCur = i === cur;
+            let bg = "var(--bg-3)", col = "var(--text-3)", bd = "var(--line)";
+            if (isAns) { bg = "var(--amber-dim)"; col = "var(--amber-2)"; bd = "var(--amber)"; }
+            if (isCur) { bg = "var(--amber)"; col = "#1B1405"; bd = "var(--amber)"; }
+            return <button key={i} onClick={() => go(i)} className="mono" style={{ width: 32, height: 32, borderRadius: 7, border: "1px solid " + bd, background: bg, color: col, fontWeight: 700, fontSize: 12.5, cursor: "pointer" }}>{chunkStart + i + 1}</button>;
+          })}
+        </div>
+      </div>
+
+      {/* The single current question */}
+      <div className="card" style={{ marginBottom: 12 }}>
+        <div style={{ fontWeight: 600, marginBottom: 12, fontSize: 15.5 }}>
+          <span className="mono" style={{ color: "var(--text-3)" }}>{String(chunkStart + cur + 1).padStart(2, "0")}. </span>{it.q}
+          {it.flag && <span title="Tricky specimen question - verify the intended answer with your lecturer" style={{ marginLeft: 6, fontSize: 11, color: "var(--amber-2)", border: "1px solid var(--line-2)", borderRadius: 4, padding: "1px 5px" }}>verify</span>}
+        </div>
+        {it.o.map((opt, oi) => {
+          let cls = "opt";
+          if (revealHere) { if (oi === it.a) cls += " correct"; else if (oi === chosen) cls += " wrong"; }
+          else if (chosen === oi) cls += " chosen";
+          const lock = mode === "practice" && chosen !== undefined;
+          return (
+            <button className={cls} key={oi} disabled={lock} onClick={() => pick(cur, oi)}>
+              <span className="key">{letters[oi] || oi + 1}</span><span>{opt}</span>
+            </button>
+          );
+        })}
+        {revealHere && chosen !== undefined && (
+          <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 10 }}>
+            <strong style={{ color: chosen === it.a ? "var(--good)" : "var(--bad)" }}>{chosen === it.a ? "Correct. " : "Answer: " + (letters[it.a] || "") + ". "}</strong>{it.w}
           </div>
-        );
-      })}
+        )}
+      </div>
 
-      {mode === "exam" && !submitted && (
-        <button className="btn btn-a" style={{ width: "100%", padding: "12px", marginTop: 4 }} disabled={!allAnswered} onClick={submitExam}>
-          {allAnswered ? "Submit exam" : `Answer all ${questions.length} to submit (${answered}/${questions.length})`}
-        </button>
-      )}
+      {/* Navigation controls */}
+      <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+        <button className="btn btn-g" onClick={() => go(cur - 1)} disabled={cur === 0}>Previous</button>
+        {cur < questions.length - 1
+          ? <button className="btn btn-a" onClick={() => go(cur + 1)}>Next question</button>
+          : (mode === "exam"
+              ? <button className="btn btn-a" onClick={submitExam} disabled={answered === 0}>Submit exam ({answered}/{questions.length})</button>
+              : <button className="btn btn-a" onClick={onExit}>Finish set</button>)}
+        <button className="btn btn-g" onClick={onExit} style={{ marginLeft: "auto" }}>Exit</button>
+      </div>
 
-      {((mode === "practice" && allAnswered) || (mode === "exam" && submitted)) && (
-        <div className="card" style={{ marginTop: 4, textAlign: "center" }}>
+      {mode === "practice" && allAnswered && (
+        <div className="card" style={{ marginTop: 12, textAlign: "center" }}>
           <div className="eyebrow" style={{ margin: 0 }}>Set complete</div>
           <div style={{ fontSize: 20, fontWeight: 700, margin: "6px 0" }}>{correctCount} / {questions.length} correct</div>
           <button className="btn btn-g" onClick={onExit}>Back to sets</button>
@@ -18163,8 +18276,18 @@ export default function App() {
     for (const r of RANKS) {
       if (currentXp >= r.min) newRank = r;
     }
-    
-    if (rankUpNotif && rankUpNotif.newRank !== newRank.name) {
+
+    // Work out the tier the user was on BEFORE this XP change (persist calls
+    // this before the progress state has re-rendered, so the `progress` closure
+    // still holds the old XP). A genuine promotion is crossing into a higher tier.
+    let prevRank = RANKS[0];
+    const prevXp = (progress && typeof progress.xp === "number") ? progress.xp : currentXp;
+    for (const r of RANKS) {
+      if (prevXp >= r.min) prevRank = r;
+    }
+
+    if (newRank.min > prevRank.min) {
+      // Actually moved up a rank this time -> celebrate it.
       setRankUpNotif({
         newRank: newRank.name,
         color: newRank.c,
@@ -18337,9 +18460,41 @@ export default function App() {
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/sw.js").catch(() => {});
+        // updateViaCache:'none' ensures the browser always re-fetches sw.js so
+        // new deploys (new questions, passco, fixes) are picked up promptly.
+        navigator.serviceWorker.register("/sw.js", { updateViaCache: "none" }).then((reg) => {
+          // Check for a new version now and every hour the app stays open.
+          try { reg.update(); } catch (e) {}
+          setInterval(() => { try { reg.update(); } catch (e) {} }, 60 * 60 * 1000);
+          // When an updated worker has installed and is waiting, tell it to take
+          // over immediately so users aren't stuck on a stale build.
+          reg.addEventListener("updatefound", () => {
+            const nw = reg.installing;
+            if (!nw) return;
+            nw.addEventListener("statechange", () => {
+              if (nw.state === "installed" && navigator.serviceWorker.controller) {
+                try { nw.postMessage({ type: "SKIP_WAITING" }); } catch (e) {}
+              }
+            });
+          });
+        }).catch(() => {});
+        // Reload once when a new service worker takes control, so the fresh
+        // assets are actually shown. Guarded so it only ever fires a single time.
+        let hasReloaded = false;
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          if (hasReloaded) return;
+          hasReloaded = true;
+          try { window.location.reload(); } catch (e) {}
+        });
       });
     }
+
+    // Capture the install prompt so the app can offer "Add to home screen"
+    // later. We stash it rather than preventing default, so browsers that show
+    // their own install affordance still work.
+    window.addEventListener("beforeinstallprompt", (e) => {
+      try { window.__ascendInstallPrompt = e; } catch (err) {}
+    });
 
     (async () => {
       const t = await store.get("ascend_theme");
@@ -18528,6 +18683,20 @@ export default function App() {
     
     const newXp = progress.xp + gained;
     
+    // Record WHEN this XP level was reached, so the leaderboard can tie-break equal
+    // XP by who got there first. Keyed by user id (or a local fallback).
+    try {
+      const myId = supaUid || ('local-' + String(progress.name).toLowerCase().replace(/[^a-z0-9]/g, ''));
+      const hist = JSON.parse(localStorage.getItem('ascend_xp_history') || '{}');
+      const mine = hist[myId] || [];
+      if (!mine.find(function(h) { return h.xp === newXp; })) {
+        mine.push({ xp: newXp, time: Date.now() });
+        if (mine.length > 200) mine.splice(0, mine.length - 200);
+        hist[myId] = mine;
+        localStorage.setItem('ascend_xp_history', JSON.stringify(hist));
+      }
+    } catch (e) {}
+    
     setXpChange(newXp);
     persist({ 
       ...progress, 
@@ -18628,11 +18797,26 @@ export default function App() {
     sessionStorage.setItem('ascend_passco_' + key, 'true');
     const multiplier = getStreakMultiplier(progress.streak);
     const gained = Math.round(earnedXp * multiplier.multiplier);
+    const newXp = progress.xp + gained;
     const updated = { 
       ...progress, 
-      xp: progress.xp + gained, 
+      xp: newXp, 
       passcoCompleted: (progress.passcoCompleted || 0) + 1 
     };
+    // Record XP history (for leaderboard tie-break) and the session XP change (for
+    // the "+150" indicator), so passco XP behaves exactly like quiz XP.
+    try {
+      const myId = supaUid || ('local-' + String(progress.name).toLowerCase().replace(/[^a-z0-9]/g, ''));
+      const hist = JSON.parse(localStorage.getItem('ascend_xp_history') || '{}');
+      const mine = hist[myId] || [];
+      if (!mine.find(function(h) { return h.xp === newXp; })) {
+        mine.push({ xp: newXp, time: Date.now() });
+        if (mine.length > 200) mine.splice(0, mine.length - 200);
+        hist[myId] = mine;
+        localStorage.setItem('ascend_xp_history', JSON.stringify(hist));
+      }
+    } catch (e) {}
+    setXpChange(newXp);
     setProgress(updated);
     persist(updated);
     
