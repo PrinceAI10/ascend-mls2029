@@ -16503,7 +16503,10 @@ function ResourcesView() {
         
         try {
           // Load PDF.js library
-          const pdfjsLib = await loadPDFJS();
+          const pdfjsLib = await Promise.race([
+            loadPDFJS(),
+            new Promise((_, reject) => setTimeout(() => reject(new Error("Timed out loading the PDF reader library (it may be blocked by an ad blocker or firewall).")), 15000))
+          ]);
           const arrayBuffer = await file.arrayBuffer();
           const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
           
@@ -16600,10 +16603,13 @@ function ResourcesView() {
       } else {
         setErr(msg + " Please try again in a moment.");
       }
+    } finally {
+      // GUARANTEED reset - runs no matter what happened above (success,
+      // caught error, or even an unexpected throw inside the catch block
+      // itself), so the button can never get stuck disabled again.
+      setStage("");
+      setBusy(false);
     }
-    
-    setStage(""); 
-    setBusy(false);
   };
 
   return (
