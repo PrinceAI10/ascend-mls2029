@@ -26,6 +26,28 @@
 
 const GROQ_MODEL = "openai/gpt-oss-20b";
 const GEMINI_MODEL = "gemini-2.0-flash-lite";
+// Keep each provider attempt well under Vercel's function time limit (10s on
+// the Hobby plan) so a stalled Groq call still leaves room to fall back to
+// Gemini within the same invocation, instead of the whole function hanging
+// until Vercel kills it (which is what caused the client to spin forever).
+const PROVIDER_TIMEOUT_MS = 8000;
+
+async function fetchWithTimeout(url, options, timeoutMs) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } catch (e) {
+    if (e && e.name === "AbortError") {
+      const err = new Error("Upstream AI provider timed out");
+      err.status = 504;
+      throw err;
+    }
+    throw e;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
 
 export default async function handler(req, res) {
   // CORS (harmless, keeps things smooth)
@@ -73,7 +95,7 @@ export default async function handler(req, res) {
   }
 
   async function callGroq() {
-    const r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    const r = await fetchWithTimeout("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Authorization": "Bearer " + groqKey },
       body: JSON.stringify({
@@ -82,11 +104,12 @@ export default async function handler(req, res) {
         max_completion_tokens: max_tokens || 1024,
         temperature: 0.7,
       }),
-    });
-    const data = await r.json();
-    if (!r.ok) {
+    }, PROVIDER_TIMEOUT_MS);
+    let data;
+    try { data = await r.json(); } catch { data = null; }
+    if (!r.ok || !data) {
       const err = new Error((data && data.error && data.error.message) || "Groq request failed");
-      err.status = r.status;
+      err.status = r.status || 502;
       throw err;
     }
     return data; // already { choices: [{ message: { content } }] }
@@ -122,11 +145,12 @@ export default async function handler(req, res) {
     if (system) bodyOut.systemInstruction = { parts: [{ text: String(system) }] };
 
     const url = "https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent?key=" + geminiKey;
-    const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(bodyOut) });
-    const data = await r.json();
-    if (!r.ok) {
+    const r = await fetchWithTimeout(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(bodyOut) }, PROVIDER_TIMEOUT_MS);
+    let data;
+    try { data = await r.json(); } catch { data = null; }
+    if (!r.ok || !data) {
       const err = new Error((data && data.error && data.error.message) || "Gemini request failed");
-      err.status = r.status;
+      err.status = r.status || 502;
       if (r.status === 429) {
         const details = (data && data.error && data.error.details) || [];
         const retryInfo = details.find((d) => d["@type"] && String(d["@type"]).includes("RetryInfo"));

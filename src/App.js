@@ -13233,20 +13233,29 @@ async function callClaude(system, messages, maxTokens = 4096) {
   
   let res;
   const MAX_ATTEMPTS = 8;
+  const REQUEST_TIMEOUT_MS = 25000; // a single attempt can't hang forever - retry instead
   
   for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
     try {
       res = await fetch(API_ENDPOINT, { 
         method: "POST", 
         headers: { "Content-Type": "application/json" }, 
-        body 
+        body,
+        signal: controller.signal,
       });
     } catch (netErr) {
+      const timedOut = netErr && netErr.name === "AbortError";
       if (attempt < MAX_ATTEMPTS - 1) { 
         await new Promise((r) => setTimeout(r, 700 * (attempt + 1) + Math.random() * 400)); 
         continue; 
       }
-      throw new Error("Cannot connect to the AI service. Please check your internet connection and try again.");
+      throw new Error(timedOut
+        ? "The AI service took too long to respond. Please try again."
+        : "Cannot connect to the AI service. Please check your internet connection and try again.");
+    } finally {
+      clearTimeout(timeoutId);
     }
     
     if (res.ok) break;
@@ -13287,7 +13296,12 @@ async function callClaude(system, messages, maxTokens = 4096) {
     throw new Error("The AI service is unavailable at the moment. Please try again later.");
   }
   
-  const data = await res.json();
+  let data;
+  try {
+    data = await res.json();
+  } catch (parseErr) {
+    throw new Error("The AI service sent back an unreadable response. Please try again.");
+  }
   
   // Check for Gemini error format
   if (data && data.error) {
@@ -16592,10 +16606,7 @@ function HomeView({ app }) {
     onMouseEnter={(e) => { e.target.style.filter = "brightness(1.06)"; }}
     onMouseLeave={(e) => { e.target.style.filter = "brightness(1)"; }}
     onClick={() => {
-      const newName = window.prompt("Enter your new username (2-24 characters):", app.progress.name);
-      if (newName && newName.trim().length >= 2) {
-        app.setName && app.setName(newName.trim());
-      }
+      app.setName && app.setName();
     }}
   >
     Change name
@@ -17684,6 +17695,8 @@ export default function App() {
   const [achNotif, setAchNotif] = useState(null);
   const [auth, setAuth] = useState(null);
   const [supaUid, setSupaUid] = useState(null);
+  const supaUidRef = useRef(null);
+  useEffect(() => { supaUidRef.current = supaUid; }, [supaUid]);
   const [loaded, setLoaded] = useState(false);
   const [theme, setTheme] = useState("dark");
   const [notifOpen, setNotifOpen] = useState(false);
@@ -18035,6 +18048,14 @@ export default function App() {
     try {
       const res = supabase.auth.onAuthStateChange((event, session) => {
         if (event === "SIGNED_IN" && session && session.user) {
+          // Supabase re-fires SIGNED_IN when it silently refreshes the auth
+          // token, which happens automatically whenever the tab regains
+          // focus/visibility. If we already have this exact user adopted,
+          // this is just a token refresh, not a new login - adopting again
+          // would reset the route to "home" and wipe the user's current
+          // screen/progress-in-view for no reason. Only run the full adopt
+          // flow for a genuinely new sign-in.
+          if (supaUidRef.current === session.user.id) return;
           if (window.location.hash && /access_token=/.test(window.location.hash)) {
             try { window.history.replaceState(null, "", window.location.pathname + window.location.search); } catch {}
           }
