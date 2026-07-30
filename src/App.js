@@ -13232,8 +13232,8 @@ async function callClaude(system, messages, maxTokens = 4096) {
   });
   
   let res;
-  const MAX_ATTEMPTS = 3;
-  const REQUEST_TIMEOUT_MS = 12000; // a single attempt can't hang forever - retry instead
+  const MAX_ATTEMPTS = 1;
+  const REQUEST_TIMEOUT_MS = 15000; // a single attempt can't hang forever - retry instead
   
   for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
     const controller = new AbortController();
@@ -15737,7 +15737,7 @@ function PasscoPicker({ onStart, chunk }) {
                 <div className="eyebrow" style={{ margin: 0 }}>{paper.courseCode} · {paper.year}</div>
                 <div style={{ fontWeight: 650, fontSize: 15.5, marginTop: 2 }}>{paper.title}</div>
                 <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 2 }}>{paper.questions.length} questions · {nChunks} set{nChunks > 1 ? "s" : ""} of up to {chunk}</div>
-                {paper.note && <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 4, maxWidth: "70%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{paper.note}</div>}
+                {paper.note && <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 4, maxWidth: "100%" }}>{paper.note}</div>}
               </div>
               <button className="btn btn-sm" style={{ background: isOpen ? "var(--bg-3)" : "var(--amber)", color: isOpen ? "var(--text-2)" : "#1B1405", border: "1px solid var(--line)" }} onClick={function() { setOpenPaper(isOpen ? null : paper.id); }}>{isOpen ? "Close" : "Open"}</button>
             </div>
