@@ -29,21 +29,18 @@
  * through to the other providers.
  */
 
-// Allow the function up to 60s so a multi-provider fallback has room to finish.
 export const config = { maxDuration: 60 };
 
-const GROQ_MODEL = process.env.GROQ_MODEL || "llama-3.1-70b-versatile";
+const GROQ_MODEL = process.env.GROQ_MODEL || "llama-3.3-70b-specdec";
 const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "meta-llama/llama-3.3-70b-instruct:free";
 const COHERE_MODEL = process.env.COHERE_MODEL || "command-r-08-2024";
 const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash-lite";
 
-// Keep each provider attempt well under Vercel's function time limit
 const PROVIDER_TIMEOUT_MS = 8000;
 
 function getGroqKeys() {
   const keys = [process.env.GROQ_API_KEY, process.env.GROQ_API_KEY_2, process.env.GROQ_API_KEY_3]
     .filter(Boolean);
-  // Shuffle so requests spread across keys instead of always starting on the same one.
   for (let i = keys.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [keys[i], keys[j]] = [keys[j], keys[i]];
@@ -93,7 +90,6 @@ export default async function handler(req, res) {
     (m) => Array.isArray(m.content) && m.content.some((b) => b && (b.type === "document" || b.type === "image"))
   );
 
-  // Flatten our message format into plain {role, content:string} pairs
   function toOpenAIMessages() {
     const out = [];
     if (system) out.push({ role: "system", content: String(system) });
@@ -112,14 +108,12 @@ export default async function handler(req, res) {
     return out;
   }
 
-  // Pull the assistant text out of an OpenAI-style response shape.
   function readOpenAIContent(data) {
     return data && data.choices && data.choices[0] && data.choices[0].message
       ? (data.choices[0].message.content || "")
       : "";
   }
 
-  // ---- Groq (OpenAI-compatible) --------------------------------------------
   async function callGroqWithKey(key) {
     const r = await fetchWithTimeout("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
@@ -141,7 +135,6 @@ export default async function handler(req, res) {
     return data;
   }
 
-  // Try each Groq key in turn
   async function callGroq() {
     let lastErr;
     for (const key of groqKeys) {
@@ -151,13 +144,11 @@ export default async function handler(req, res) {
         lastErr = e;
         const retryable = e.status === 429 || e.status === 503 || e.status === 502 || e.status === 504;
         if (!retryable) throw e;
-        // else try next key
       }
     }
     throw lastErr || new Error("All Groq keys failed");
   }
 
-  // ---- OpenRouter (OpenAI-compatible) --------------------------------------
   async function callOpenRouter() {
     if (!openrouterKey) throw new Error("OpenRouter key not configured");
     const r = await fetchWithTimeout("https://openrouter.ai/api/v1/chat/completions", {
@@ -185,7 +176,6 @@ export default async function handler(req, res) {
     return data;
   }
 
-  // ---- Cohere (v2 chat) ----------------------------------------------------
   async function callCohere() {
     if (!cohereKey) throw new Error("Cohere key not configured");
     const r = await fetchWithTimeout("https://api.cohere.com/v2/chat", {
@@ -214,7 +204,6 @@ export default async function handler(req, res) {
     return { choices: [{ message: { content: text } }] };
   }
 
-  // ---- Gemini (also handles files/images) ----------------------------------
   async function callGemini() {
     if (!geminiKey) throw new Error("Gemini key not configured");
     const contents = [];
@@ -266,7 +255,6 @@ export default async function handler(req, res) {
     return { choices: [{ message: { content: text } }] };
   }
 
-  // ---- Text Chain with Debug Logging ---------------------------------------
   async function callTextChain() {
     const providers = [];
     if (groqKeys.length) providers.push({ name: "Groq", fn: callGroq });
@@ -318,7 +306,6 @@ export default async function handler(req, res) {
     throw firstErr || new Error("All AI providers failed");
   }
 
-  // ---- Main Execution ------------------------------------------------------
   try {
     let result;
     if (hasFileContent) {
