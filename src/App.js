@@ -2,7 +2,47 @@
 // TOP OF App.js - FIXED IMPORTS
 // ============================================================
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import Tesseract from 'tesseract.js';              
+import MermaidDiagram from './components/MermaidDiagram';  
+import './App.css';
 import { supabase } from "./supabaseClient";
+
+// OCR Function for image text extraction
+async function extractTextFromImage(imageFile) {
+  try {
+    console.log('Starting OCR on:', imageFile.name);
+    
+    const result = await Tesseract.recognize(
+      imageFile,
+      'eng',
+      {
+        logger: (m) => {
+          if (m.status === 'recognizing text') {
+            console.log(`OCR Progress: ${Math.round(m.progress * 100)}%`);
+          }
+        }
+      }
+    );
+
+    const extractedText = result.data.text;
+    console.log('OCR completed. Text length:', extractedText.length);
+    
+    if (!extractedText || extractedText.trim().length < 5) {
+      return { 
+        success: false, 
+        message: 'No clear text found. Please type the content manually.'
+      };
+    }
+
+    return { success: true, text: extractedText };
+  } catch (error) {
+    console.error('OCR Error:', error);
+    return { 
+      success: false, 
+      message: 'OCR failed: ' + error.message
+    };
+  }
+}
 // ============================================================
 // FIX: Suppress browser extension errors (Grammarly, etc.)
 // ============================================================
@@ -13153,6 +13193,83 @@ function loadMermaid() {
   return _mermaidPromise;
 }
 
+/* Sanitise AI-written Mermaid so it parses on 10.9.1. Gemini emits parens,
+   colons, commas, quotes and the reserved word "end" inside labels - all of
+   which throw "Syntax error in text". We quote every label and clean the few
+   things that break even inside quotes. */
+function sanitizeMermaid(input) {
+  let code = String(input || "")
+    .replace(/```mermaid/gi, "").replace(/```/g, "").replace(/\r/g, "").trim();
+
+  const gi = code.search(/(?:graph|flowchart)\s+(TD|TB|LR|RL|BT)/i);
+  if (gi > 0) code = code.slice(gi);
+
+  let lines = code.split("\n").map(l => l.trim()).filter(Boolean);
+
+  let dir = "TD";
+  const h = (lines[0] || "").match(/^(?:graph|flowchart)\s+(TD|TB|LR|RL|BT)/i);
+  if (h) { dir = h[1].toUpperCase(); lines.shift(); }
+  else if (/^(?:graph|flowchart)\b/i.test(lines[0] || "")) lines.shift();
+
+  const cleanLabel = (t) => t
+    .replace(/^["'`]+|["'`]+$/g, "")
+    .replace(/[\u201C\u201D]/g, "'").replace(/[\u2018\u2019]/g, "'").replace(/"/g, "'")
+    .replace(/\|/g, "/")        // pipe = edge-label delimiter
+    .replace(/;/g, ",")         // semicolon ends a statement
+    .replace(/#(?=\w)/g, "no. ")// # can start an HTML entity
+    .replace(/\s+/g, " ").trim();
+
+  // Left-to-right scan so labels are quoted exactly once (no re-wrapping).
+  const quoteLabels = (line) => {
+    const pairs = [["((","))"],["([","])"],["[[","]]"],["{{","}}"],
+                   ["[(",")]"],["[","]"],["(",")"],["{","}"]];
+    let out = "", i = 0;
+    while (i < line.length) {
+      let m = null;
+      for (const p of pairs) if (line.startsWith(p[0], i)) { m = p; break; }
+      if (m) {
+        const start = i + m[0].length;
+        const end = line.indexOf(m[1], start);
+        if (end !== -1) {
+          out += m[0] + '"' + cleanLabel(line.slice(start, end)) + '"' + m[1];
+          i = end + m[1].length; continue;
+        }
+      }
+      out += line[i++];
+    }
+    return out;
+  };
+
+  lines = lines.map((l) => {
+    if (/^end$/i.test(l) || /^(subgraph|style|classDef|linkStyle|class|click)\b/i.test(l)) return l;
+    let out = quoteLabels(l);
+    out = out.replace(/\|([^|]*?)\|/g, (_, t) => '|"' + cleanLabel(t) + '"|'); // edge labels
+    return out;
+  });
+
+  // "end" as a node id breaks Mermaid; leave a bare "end" (subgraph close) alone.
+  // Replace every unquoted "end" token on other lines, protecting label text.
+  lines = lines.map((l) => {
+    if (/^end$/i.test(l)) return l;
+    const held = [];
+    let masked = l.replace(/"[^"]*"/g, (m) => { held.push(m); return "\u0000" + (held.length - 1) + "\u0000"; });
+    masked = masked.replace(/\bend\b/gi, "endStep");
+    return masked.replace(/\u0000(\d+)\u0000/g, (_, i) => held[+i]);
+  });
+
+  return "flowchart " + dir + "\n" + lines.map(l => "  " + l).join("\n");
+}
+
+// Last-resort strip: drop styling + edge labels, downgrade decisions to boxes.
+function stripMermaid(code) {
+  return String(code).split("\n")
+    .filter(l => !/^\s*(style|classDef|linkStyle|class|click)\b/i.test(l))
+    .join("\n")
+    .replace(/\|[^|]*\|/g, "")
+    .replace(/\{\{([^}]*)\}\}/g, "[$1]")
+    .replace(/\{([^}]*)\}/g, "[$1]");
+}
+
 /* Load jsPDF once, on demand, from a CDN - used to let students download an
    AI-generated mind map as a keepable PDF. */
 let _jsPDFPromise = null;
@@ -16734,14 +16851,12 @@ function StudyToolsView() {
     setBusy(true); setErr(""); setFlowErr(""); setFlowCode("");
     try {
       const raw = await callClaude(
-        "You write Mermaid flowchart code for KNUST medical laboratory science students. Output ONLY valid Mermaid flowchart syntax - nothing else, no explanation, no markdown fences. Start with 'graph TD' or 'graph LR'. Use short node labels in square brackets and arrows with -->. Keep node text free of parentheses, colons and special characters that break Mermaid. Show the process or pathway as a clear step-by-step flow.",
-        [{ role: "user", content: `Write a Mermaid flowchart showing the flow, pathway or process of ${subject}. Keep it to 6 to 14 nodes so it stays clear. Output only the Mermaid code.` }],
+        "You write Mermaid flowchart code for KNUST medical laboratory science students. Output ONLY Mermaid code - no prose, no markdown fences. The first line must be exactly: flowchart TD. Wrap EVERY node label in double quotes, e.g. A[\"Glycolysis\"] --> B[\"Pyruvate\"]. Use curly braces only for yes/no decisions, e.g. C{\"Oxygen present?\"}. Never use parentheses, semicolons, or the word 'end' as a node id. Show the pathway as a clear step-by-step flow.",
+        [{ role: "user", content: `Write a Mermaid flowchart of the process or pathway of ${subject}. Use 6 to 14 nodes. Every label in double quotes. Output only the code.` }],
         1500
       );
-      let code = String(raw).replace(/```mermaid/gi, "").replace(/```/g, "").trim();
-      const gi = code.search(/graph\s+(TD|LR|TB|RL)/i);
-      if (gi > 0) code = code.slice(gi);
-      if (!/graph\s+(TD|LR|TB|RL)/i.test(code)) throw new Error("The diagram could not be built - try again.");
+      const code = sanitizeMermaid(raw);
+      if (!/^flowchart\s+(TD|TB|LR|RL|BT)/i.test(code)) throw new Error("The diagram could not be built - try again.");
       setFlowCode(code);
     } catch (e) {
       const msg = e && e.message ? e.message : "The AI could not respond just now.";
@@ -16759,10 +16874,17 @@ function StudyToolsView() {
     if (!flowCode || tab !== "flow") return;
     let cancelled = false;
     (async () => {
+      const mermaid = await loadMermaid().catch(() => null);
+      if (!mermaid || cancelled) { if (!cancelled) setFlowErr("Could not load the diagram library - check your connection."); return; }
+      const tryRender = async (src) => {
+        const id = "flow-" + Math.random().toString(36).slice(2);
+        const { svg } = await mermaid.render(id, src);
+        return svg;
+      };
       try {
-        const mermaid = await loadMermaid();
-        const id = "flow-" + Date.now();
-        const { svg } = await mermaid.render(id, flowCode);
+        let svg;
+        try { svg = await tryRender(flowCode); }
+        catch { svg = await tryRender(stripMermaid(flowCode)); } // fallback pass
         if (!cancelled && flowRef.current) { flowRef.current.innerHTML = svg; setFlowErr(""); }
       } catch (e) {
         if (!cancelled) setFlowErr("This diagram did not render cleanly. Tap Build again for a fresh version.");
@@ -18212,6 +18334,107 @@ const NAV = [
 ];
 
 const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0 };
+
+// ============================================
+// OCR FUNCTION - Paste this here
+// ============================================
+async function extractTextFromImage(imageFile) {
+  try {
+    console.log('Starting OCR on:', imageFile.name);
+    
+    const result = await Tesseract.recognize(
+      imageFile,
+      'eng',
+      {
+        logger: (m) => {
+          if (m.status === 'recognizing text') {
+            console.log(`OCR Progress: ${Math.round(m.progress * 100)}%`);
+          }
+        }
+      }
+    );
+
+    const extractedText = result.data.text;
+    console.log('OCR completed. Text length:', extractedText.length);
+    
+    if (!extractedText || extractedText.trim().length < 5) {
+      return { 
+        success: false, 
+        message: 'No clear text found. Please type the content manually.'
+      };
+    }
+
+    return { success: true, text: extractedText };
+  } catch (error) {
+    console.error('OCR Error:', error);
+    return { 
+      success: false, 
+      message: 'OCR failed: ' + error.message
+    };
+  }
+}
+
+// ============================================
+// QUICK FLOW BUTTON - Paste this here
+// ============================================
+const QuickFlowButton = ({ topic, onGenerate }) => {
+  if (!topic || topic.length < 10) return null;
+  
+  return (
+    <button
+      onClick={() => {
+        const prompt = `Create a flow diagram for: "${topic}"
+
+Use Mermaid syntax (flowchart TD):
+
+\`\`\`mermaid
+flowchart TD
+    A[Start] --> B[Process]
+    B --> C{Decision}
+    C -->|Yes| D[Action 1]
+    C -->|No| E[Action 2]
+    D --> F[Result]
+    E --> F
+    F --> G[End]
+\`\`\`
+
+Rules:
+- Use flowchart TD (top-down)
+- Use [square brackets] for processes
+- Use {curly braces} for decisions
+- Use --> for arrows
+- Keep labels simple and short
+
+Generate a clear diagram for ${topic}.`;
+        
+        onGenerate(prompt);
+      }}
+      className="btn btn-a"
+      style={{
+        marginTop: '10px',
+        marginRight: '10px',
+        background: '#FFB800',
+        color: '#1B1405',
+        padding: '8px 16px',
+        fontSize: '14px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '6px',
+      }}
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M4 4h16v4H4zM4 14h16v4H4z" />
+        <path d="M4 9h16" />
+        <path d="M4 19h16" />
+        <path d="M12 4v2" />
+        <path d="M12 14v2" />
+        <path d="M12 9v2" />
+        <path d="M12 19v2" />
+      </svg>
+      Generate Flow Diagram
+    </button>
+  );
+};
 
 /* ------------------------------- app ------------------------------------ */
 export default function App() {
