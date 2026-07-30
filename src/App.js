@@ -15557,16 +15557,19 @@ function PapersView({ app }) {
   setItems(null);
   
   let attempts = 0;
-  const maxAttempts = 3;
+  const BATCH_SIZE = 12; // keep each call small enough to finish inside the server's per-request timeout
+  const maxAttempts = Math.max(3, Math.ceil(count / BATCH_SIZE) * 2);
   let allQuestions = [];
   
   while (attempts < maxAttempts && allQuestions.length < count) {
     attempts++;
+    const remaining = count - allQuestions.length;
+    const thisBatch = Math.min(BATCH_SIZE, remaining);
     try {
       const text = await callClaude(
-        "You generate KNUST-style medical laboratory science exam questions based on the specific course content provided. Return ONLY a valid, compact, complete JSON array of exactly " + count + " questions, no prose, no markdown, no trailing commas. Keep each question and option short.",
-        [{ role: "user", content: usr }],
-        12000
+        "You generate KNUST-style medical laboratory science exam questions based on the specific course content provided. Return ONLY a valid, compact, complete JSON array of exactly " + thisBatch + " questions, no prose, no markdown, no trailing commas. Keep each question and option short.",
+        [{ role: "user", content: usr.replace(/exactly \d+/, "exactly " + thisBatch) }],
+        Math.min(4000, thisBatch * 300 + 500)
       );
       const arr = parseAIJson(text);
       const filtered = (Array.isArray(arr) ? arr : []).filter(function(x) {
