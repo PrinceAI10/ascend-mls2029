@@ -12758,9 +12758,15 @@ const DAILY = {
 const BOARD_SEED = [];
 const RANKS = [
   { name: "Bronze", min: 0, c: "#C08A5B" },
-  { name: "Silver", min: 200, c: "#C6D2E0" },
-  { name: "Gold", min: 500, c: "#F5B93F" },
-  { name: "Elite", min: 1000, c: "#8FE3C6" }
+  { name: "Silver", min: 300, c: "#C6D2E0" },
+  { name: "Gold", min: 800, c: "#F5B93F" },
+  { name: "Sapphire", min: 1600, c: "#3B82F6" },
+  { name: "Ruby", min: 2800, c: "#E11D48" },
+  { name: "Emerald", min: 4400, c: "#10B981" },
+  { name: "Amethyst", min: 6400, c: "#9333EA" },
+  { name: "Pearl", min: 8900, c: "#F5F0E6" },
+  { name: "Obsidian", min: 12000, c: "#3F3F46" },
+  { name: "Diamond", min: 16000, c: "#8FE3F5" }
 ];
   // ACHIEVEMENT DEFINITIONS - SVG Icons only
   const ACHIEVEMENTS = [
@@ -13143,6 +13149,7 @@ function loadMermaid() {
     s.onerror = () => reject(new Error("Could not load the diagram library - check your connection."));
     document.head.appendChild(s);
   });
+  _mermaidPromise = _mermaidPromise.catch((e) => { _mermaidPromise = null; throw e; });
   return _mermaidPromise;
 }
 
@@ -13162,6 +13169,7 @@ function loadJsPDF() {
     s.onerror = () => reject(new Error("Could not load the PDF library - check your connection."));
     document.head.appendChild(s);
   });
+  _jsPDFPromise = _jsPDFPromise.catch((e) => { _jsPDFPromise = null; throw e; });
   return _jsPDFPromise;
 }
 
@@ -14720,10 +14728,14 @@ function InteractiveSet({ items }) {
    (e.g. 100 questions) in small chunks of 10 instead of one huge
    generation. This keeps every AI call well inside timeout limits.
    If requireMastery is on, the student must score 7/10 on a chunk
-   before advancing; missed questions go to a review step first,
-   then the chunk can be retried with a freshly generated set. The
-   next chunk (or retry set) is generated in the background while
-   the student is reviewing/reading their result, so continuing
+   to move straight on. If they score below that, they don't get a
+   brand-new set - instead they immediately re-attempt each missed
+   question, one at a time, until they get it right. A question that's
+   answered correctly clears out of the correction queue; a wrong
+   retry keeps it in the queue so it pops back up until it's mastered.
+   Once every missed question in the chunk has been corrected, they
+   move on to the next 10. The next chunk is generated in the
+   background while the student is answering/correcting, so continuing
    feels instant.
    ============================================================ */
 const PRACTICE_MCQ_RULES = "Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which position is correct. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {\"q\": string, \"o\": [4 strings], \"a\": integer index, \"w\": one short explanation}.";
@@ -14744,6 +14756,8 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   const [runCorrect, setRunCorrect] = useState(0);
   const [runAnswered, setRunAnswered] = useState(0);
   const [runMissed, setRunMissed] = useState([]);
+  const [correctionQueue, setCorrectionQueue] = useState([]);
+  const [correctionPicked, setCorrectionPicked] = useState({});
   const recordedRef = useRef(false);
   const pendingPromiseRef = useRef(null);
 
@@ -14820,7 +14834,8 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   useEffect(() => {
     if (!chunkComplete || phase !== "answering") return;
     recordedRef.current = false;
-    const missed = items.filter((it, idx) => picked[idx] !== it.a).map((it) => ({ q: it.q, o: it.o, a: it.a, w: it.w, topic: topicName || course.name, courseId: course.id }));
+    const missedList = items.map((it, idx) => ({ it, idx })).filter(({ it, idx }) => picked[idx] !== it.a);
+    const missed = missedList.map(({ it }) => ({ q: it.q, o: it.o, a: it.a, w: it.w, topic: topicName || course.name, courseId: course.id }));
     setRunCorrect((c) => c + chunkScore);
     setRunAnswered((a) => a + items.length);
     setRunMissed((m) => [...m, ...missed]);
@@ -14828,21 +14843,49 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
       recordedRef.current = true;
       finishQuiz(course.id, "ai-practice-" + course.id + "-" + chunkNum + "-" + Date.now(), chunkScore, missed, items.length);
     }
-    const passed = !requireMastery || chunkScore >= PASS_MARK;
     const isLast = chunkNum + 1 >= totalChunks;
-    setPhase(passed ? (isLast ? "done" : "result") : "review");
+    const needsCorrection = requireMastery && chunkScore < PASS_MARK;
 
-    // Background pre-generation: if passed and there's a next chunk, start
-    // building it now so "Continue" feels instant. If gated, start building
-    // a fresh retry set now so it's ready the moment the student finishes reviewing.
-    if (passed && !isLast) {
-      setPendingLoading(true);
-      pendingPromiseRef.current = generateBatch(CHUNK).then((b) => { setPending(b.map(shuffleQuestion)); setPendingLoading(false); });
-    } else if (!passed) {
+    if (needsCorrection) {
+      // Don't regenerate anything - the student re-attempts exactly the
+      // questions they missed, right now, until each one is correct.
+      setCorrectionQueue(missedList.map(({ it, idx }) => ({ ...it, key: chunkNum + "-" + idx + "-" + Date.now() })));
+      setCorrectionPicked({});
+      setPhase("correcting");
+    } else {
+      setPhase(isLast ? "done" : "result");
+    }
+
+    // Pre-generate the next chunk in the background - whether the student
+    // passed straight away or still has corrections to clear - so
+    // continuing feels instant either way.
+    if (!isLast) {
       setPendingLoading(true);
       pendingPromiseRef.current = generateBatch(CHUNK).then((b) => { setPending(b.map(shuffleQuestion)); setPendingLoading(false); });
     }
   }, [chunkComplete]);
+
+  // A correctly-answered correction question clears out of the queue a beat
+  // later (so the student sees the "correct" feedback first). A wrong retry
+  // stays in the queue - it pops back up (via the "Try again" reset below)
+  // until it's answered correctly.
+  useEffect(() => {
+    const toClear = correctionQueue.filter((it) => correctionPicked[it.key] === it.a);
+    if (!toClear.length) return;
+    const timers = toClear.map((it) => setTimeout(() => {
+      setCorrectionQueue((q) => q.filter((x) => x.key !== it.key));
+      setCorrectionPicked((p) => { const n = { ...p }; delete n[it.key]; return n; });
+    }, 900));
+    return () => timers.forEach(clearTimeout);
+  }, [correctionPicked, correctionQueue]);
+
+  // Once every missed question has been corrected, move on to the next 10
+  // (or finish, if this was the last chunk).
+  useEffect(() => {
+    if (phase !== "correcting" || correctionQueue.length > 0) return;
+    const isLast = chunkNum + 1 >= totalChunks;
+    if (isLast) { setPhase("done"); } else { advance(); }
+  }, [correctionQueue, phase]);
 
   const advance = async () => {
     let batch = pending;
@@ -14860,24 +14903,6 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
     setItems(batch.map(shuffleQuestion));
     setPicked({});
     setChunkNum((n) => n + 1);
-    setPhase("answering");
-  };
-
-  const retrySameChunk = async () => {
-    let batch = pending;
-    if (!batch) {
-      setPhase("loading"); setLoadErr(""); setLoadFailed(false);
-      retryActionRef.current = retrySameChunk;
-      batch = await generateBatch(CHUNK);
-      if (!batch.length) {
-        setLoadErr("The AI could not generate a retry set. This usually means the free AI quota is busy right now.");
-        setLoadFailed(true);
-        return;
-      }
-    }
-    setPending(null);
-    setItems(batch.map(shuffleQuestion));
-    setPicked({});
     setPhase("answering");
   };
 
@@ -14902,26 +14927,38 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
     );
   }
 
-  if (phase === "review") {
-    const missedThisChunk = items.filter((it, idx) => picked[idx] !== it.a);
+  if (phase === "correcting") {
+    const remaining = correctionQueue.length;
     return (
       <div>
         <div className="card" style={{ marginTop: 12, textAlign: "center" }}>
           <div className="eyebrow">Set {chunkNum + 1} of {totalChunks}</div>
           <div style={{ fontSize: 20, fontWeight: 700, margin: "6px 0" }}>{chunkScore} / {items.length} - below the {PASS_MARK}/10 needed to continue</div>
-          <div style={{ color: "var(--text-2)", fontSize: 13.5 }}>Review what you missed below, then retry this set with a fresh batch of questions.</div>
+          <div style={{ color: "var(--text-2)", fontSize: 13.5 }}>Fix the {remaining} question{remaining === 1 ? "" : "s"} you missed. Get each one right to clear it - then you'll move on to the next 10.</div>
         </div>
-        <div className="eyebrow" style={{ margin: "16px 0 10px" }}>What you missed</div>
-        {missedThisChunk.map((it, idx) => (
-          <div className="card" key={idx} style={{ marginBottom: 10 }}>
-            <div style={{ fontWeight: 600, marginBottom: 8 }}>{it.q}</div>
-            <div style={{ color: "var(--good)", fontSize: 13.5, marginBottom: 4 }}>Correct: {it.o[it.a]}</div>
-            <div style={{ color: "var(--text-2)", fontSize: 13.5 }}>{it.w}</div>
-          </div>
-        ))}
-        <button className="btn btn-a" style={{ width: "100%", padding: "12px", marginTop: 6 }} onClick={retrySameChunk} disabled={pendingLoading && !pending}>
-          {pending ? "Retry this set" : (pendingLoading ? "Preparing a fresh set..." : "Retry this set")}
-        </button>
+        {correctionQueue.map((it) => {
+          const chosen = correctionPicked[it.key];
+          const locked = chosen !== undefined;
+          const isCorrect = locked && chosen === it.a;
+          return (
+            <div className="card" key={it.key} style={{ marginTop: 10, marginBottom: 10 }}>
+              <div style={{ fontWeight: 600, marginBottom: 10 }}>{it.q}</div>
+              {it.o.map((opt, oi) => {
+                let cls = "opt";
+                if (locked) { if (oi === it.a) cls += " correct"; else if (oi === chosen) cls += " wrong"; }
+                return <button className={cls} key={oi} disabled={locked} onClick={() => setCorrectionPicked((p) => ({ ...p, [it.key]: oi }))}><span className="key">{"ABCD"[oi]}</span><span>{opt}</span></button>;
+              })}
+              {locked && (
+                <div style={{ marginTop: 8 }}>
+                  <div style={{ color: "var(--text-2)", fontSize: 13.5 }}><strong style={{ color: isCorrect ? "var(--good)" : "var(--bad)" }}>{isCorrect ? "Correct - cleared. " : "Not quite - try it again. "}</strong>{it.w}</div>
+                  {!isCorrect && (
+                    <button className="btn btn-g btn-sm" style={{ marginTop: 8 }} onClick={() => setCorrectionPicked((p) => { const n = { ...p }; delete n[it.key]; return n; })}>Try again</button>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -16084,16 +16121,15 @@ function PapersView({ app }) {
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[20, 30, 40, 50].map(function(n) {
                 return <button key={n} className="btn btn-sm" style={{ background: similarCount === n ? "var(--amber)" : "var(--bg-3)", color: similarCount === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={function() { setSimilarCount(n); }}>{n}</button>;
               })}</div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 12 }}>
-                <span style={{ color: "var(--good)", fontSize: 15 }}>✓</span>
-                <span style={{ fontSize: 13.5, color: "var(--text-2)" }}>Requires 7/10 to advance to the next set (missed questions get reviewed first)</span>
+              <div style={{ marginTop: 12 }}>
+                <span style={{ fontSize: 13.5, color: "var(--text-2)" }}>Requires 7/10 to advance - any question you miss, you redo right away until you get it right.</span>
               </div>
             </>
           )}
           {/* CHANGED: Different messages for practice vs similar */}
           {tab === "solve" && (
             <>
-              <div style={{ color: "var(--text-2)", marginTop: 4, fontSize: 14, lineHeight: 1.6 }}>100 questions total, delivered in sets of 10 with rising difficulty. You must score 7/10 to unlock the next set - missed questions get reviewed first, then you retry with a fresh set.</div>
+              <div style={{ color: "var(--text-2)", marginTop: 4, fontSize: 14, lineHeight: 1.6 }}>100 questions total, delivered in sets of 10 with rising difficulty. You must score 7/10 to unlock the next set - any question you miss, you redo immediately until you get it right, then you move on.</div>
             </>
           )}
           {tab === "similar" && (
@@ -16386,22 +16422,39 @@ function loadPDFJS() {
   if (typeof window === "undefined") return Promise.reject(new Error("no window"));
   if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
   if (_pdfjsPromise) return _pdfjsPromise;
-  
-  _pdfjsPromise = new Promise((resolve, reject) => {
+
+  // Try a couple of CDN mirrors in case one is down or the version got
+  // pulled/renamed - and never cache a failed load, so the next attempt
+  // (next upload, or a retry) gets a fresh shot instead of being stuck
+  // permanently failing for the rest of the session.
+  const CDN_SOURCES = [
+    { js: "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js", worker: "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js" },
+    { js: "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js", worker: "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js" },
+    { js: "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js", worker: "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js" }
+  ];
+
+  const tryLoad = (i) => new Promise((resolve, reject) => {
+    if (i >= CDN_SOURCES.length) { reject(new Error("Could not load the PDF reader library - check your connection.")); return; }
+    const src = CDN_SOURCES[i];
     const script = document.createElement("script");
-    script.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+    script.src = src.js;
     script.onload = () => {
       if (window.pdfjsLib) {
-        window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = src.worker;
         resolve(window.pdfjsLib);
       } else {
-        reject(new Error("PDF library failed to load"));
+        script.remove();
+        tryLoad(i + 1).then(resolve, reject);
       }
     };
-    script.onerror = () => reject(new Error("Could not load PDF library - check your connection"));
+    script.onerror = () => {
+      script.remove();
+      tryLoad(i + 1).then(resolve, reject);
+    };
     document.head.appendChild(script);
   });
-  
+
+  _pdfjsPromise = tryLoad(0).catch((e) => { _pdfjsPromise = null; throw e; });
   return _pdfjsPromise;
 }
 
