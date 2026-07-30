@@ -12723,6 +12723,25 @@ const CONTENT = {
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
+
+// Builds a grounding block listing the real syllabus topics (and a sample of
+// key concepts) for a course, so every AI question generator - Practice set
+// (AI) and Generate similar alike - stays inside the actual KNUST curriculum
+// instead of drifting into generic/external content.
+const curriculumContextFor = (cid, topicName) => {
+  const topics = TOPICS[cid] || [];
+  if (!topics.length) return "";
+  const topicList = topics.join(", ");
+  let sample = "";
+  for (let i = 0; i < Math.min(3, topics.length); i++) {
+    const t = contentFor(cid, i);
+    if (t) {
+      const noteText = (t.note || []).slice(0, 3).map((n) => n.q).join("; ");
+      sample += `- ${t.title}: ${noteText}\n`;
+    }
+  }
+  return `CURRICULUM GROUNDING (mandatory): This course's syllabus topics are: ${topicList}.${topicName ? ` The current focus topic is "${topicName}" - stay tightly within it.` : ""}${sample ? `\nSample key concepts from the syllabus:\n${sample}` : ""}\nEvery question MUST test knowledge that falls within these syllabus topics. Do NOT introduce concepts, terminology, or depth outside this curriculum, even if related in general biology/science.`;
+};
 const builtInCourse = (cid) => Object.keys(CONTENT).filter((k) => k.startsWith(cid + ":")).length;
 const totalBuilt = () => Object.keys(CONTENT).length;
 
@@ -13299,7 +13318,7 @@ async function callClaude(system, messages, maxTokens = 4096) {
   });
   
   let res;
-  const MAX_ATTEMPTS = 1;
+  const MAX_ATTEMPTS = 3;
   // The serverless proxy may fall through several providers (Groq keys ->
   // OpenRouter -> Cohere -> Gemini) within one request, so give it room to
   // finish before we abort. Kept just above the proxy's own chain deadline.
@@ -14729,12 +14748,13 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   const pendingPromiseRef = useRef(null);
 
   const buildPrompt = (n) => {
+    const curriculum = curriculumContextFor(course.id, topicName);
     // "Generate similar" mode: base fresh questions on a pasted sample question.
     if (sampleQuestion && sampleQuestion.trim()) {
-      return `Here is a passco exam question:\n\n${sampleQuestion}\n\nGenerate exactly ${n} fresh MCQs testing the same concept(s) and matching this question's style and structure, for a KNUST first-year student in ${course.name} (${course.code}).\n\n${PRACTICE_MCQ_RULES}`;
+      return `Here is a passco exam question:\n\n${sampleQuestion}\n\nGenerate exactly ${n} fresh MCQs testing the same concept(s) and matching this question's style and structure, for a KNUST first-year student in ${course.name} (${course.code}).\n\n${curriculum}\nIf the pasted question's concept falls outside the syllabus topics above, anchor the new questions to the closest syllabus topic instead of following the pasted question off-curriculum.\n\n${PRACTICE_MCQ_RULES}`;
     }
     const topicPart = topicName ? `Focus specifically on the topic: ${topicName}.` : `Cover a mix of topics across the course.`;
-    return `Generate exactly ${n} passco-style exam MCQs for a KNUST first-year student in ${course.name} (${course.code}). ${topicPart}\n\n${PRACTICE_MCQ_RULES}`;
+    return `Generate exactly ${n} passco-style exam MCQs for a KNUST first-year student in ${course.name} (${course.code}). ${topicPart}\n\n${curriculum}\n\n${PRACTICE_MCQ_RULES}`;
   };
 
   const generateBatch = async (n) => {
@@ -14758,14 +14778,34 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
     return collected.slice(0, n);
   };
 
+  const [loadFailed, setLoadFailed] = useState(false);
+  const retryActionRef = useRef(null);
+
+  const loadFirstChunk = async () => {
+    setPhase("loading"); setLoadErr(""); setLoadFailed(false);
+    retryActionRef.current = loadFirstChunk;
+    const batch = await generateBatch(CHUNK);
+    if (!batch.length) {
+      setLoadErr("The AI could not generate this set. This usually means the free AI quota is busy right now.");
+      setLoadFailed(true);
+      return;
+    }
+    setItems(batch.map(shuffleQuestion)); setPicked({}); setPhase("answering");
+  };
+
   // Load the very first chunk on mount.
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      setPhase("loading"); setLoadErr("");
+      setPhase("loading"); setLoadErr(""); setLoadFailed(false);
+      retryActionRef.current = loadFirstChunk;
       const batch = await generateBatch(CHUNK);
       if (cancelled) return;
-      if (!batch.length) { setLoadErr("Could not generate this set - try again."); setPhase("loading"); return; }
+      if (!batch.length) {
+        setLoadErr("The AI could not generate this set. This usually means the free AI quota is busy right now.");
+        setLoadFailed(true);
+        return;
+      }
       setItems(batch.map(shuffleQuestion)); setPicked({}); setPhase("answering");
     })();
     return () => { cancelled = true; };
@@ -14807,9 +14847,14 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   const advance = async () => {
     let batch = pending;
     if (!batch) {
-      setPhase("loading");
+      setPhase("loading"); setLoadErr(""); setLoadFailed(false);
+      retryActionRef.current = advance;
       batch = await generateBatch(CHUNK);
-      if (!batch.length) { setLoadErr("Could not generate the next set - try again."); return; }
+      if (!batch.length) {
+        setLoadErr("The AI could not generate the next set. This usually means the free AI quota is busy right now.");
+        setLoadFailed(true);
+        return;
+      }
     }
     setPending(null);
     setItems(batch.map(shuffleQuestion));
@@ -14821,9 +14866,14 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   const retrySameChunk = async () => {
     let batch = pending;
     if (!batch) {
-      setPhase("loading");
+      setPhase("loading"); setLoadErr(""); setLoadFailed(false);
+      retryActionRef.current = retrySameChunk;
       batch = await generateBatch(CHUNK);
-      if (!batch.length) { setLoadErr("Could not generate a retry set - try again."); return; }
+      if (!batch.length) {
+        setLoadErr("The AI could not generate a retry set. This usually means the free AI quota is busy right now.");
+        setLoadFailed(true);
+        return;
+      }
     }
     setPending(null);
     setItems(batch.map(shuffleQuestion));
@@ -14834,9 +14884,20 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   if (phase === "loading") {
     return (
       <div className="card" style={{ marginTop: 16, textAlign: "center", padding: "30px 20px" }}>
-        <span className="dots"><span /><span /><span /></span>
-        <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 10 }}>Building your next 10 questions...</div>
-        {loadErr && <div style={{ color: "var(--bad)", fontSize: 13.5, marginTop: 10 }}>{loadErr}</div>}
+        {!loadFailed ? (
+          <>
+            <span className="dots"><span /><span /><span /></span>
+            <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 10 }}>Building your next 10 questions...</div>
+          </>
+        ) : (
+          <>
+            <div style={{ color: "var(--bad)", fontSize: 13.5, marginBottom: 14, lineHeight: 1.6 }}>{loadErr}</div>
+            <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+              <button className="btn btn-a" onClick={() => { const fn = retryActionRef.current || loadFirstChunk; fn(); }}>Try again</button>
+              <button className="btn btn-g" onClick={onExit}>Back to sets</button>
+            </div>
+          </>
+        )}
       </div>
     );
   }
@@ -15742,18 +15803,8 @@ function PapersView({ app }) {
     } catch { return 20; }
   });
 
-  // How many questions a "Practice set (AI)" run generates. Chunked into 10s
-  // exactly like the "Generate similar" flow, so it never stalls.
-  const [practiceCount, setPracticeCount] = useState(() => {
-    try {
-      const saved = sessionStorage.getItem('ascend_papers_practice_count');
-      const v = saved ? parseInt(saved, 10) : 50;
-      return [20, 30, 40, 50].includes(v) ? v : 50;
-    } catch { return 50; }
-  });
-  useEffect(() => {
-    try { sessionStorage.setItem('ascend_papers_practice_count', String(practiceCount)); } catch {}
-  }, [practiceCount]);
+  // Practice set (AI) is fixed at 100 questions, chunked into 10s with
+  // mandatory 7/10 mastery gating - no selector, per spec.
   
   const [active, setActive] = useState(() => {
     try {
@@ -15781,12 +15832,6 @@ function PapersView({ app }) {
   const [practiceTopicIdx, setPracticeTopicIdx] = useState("");
   const [practiceActive, setPracticeActive] = useState(false);
   const [similarActive, setSimilarActive] = useState(false);
-  const [requireMastery, setRequireMastery] = useState(() => {
-    try { return sessionStorage.getItem("ascend_practice_mastery") === "1"; } catch { return false; }
-  });
-  useEffect(() => {
-    try { sessionStorage.setItem("ascend_practice_mastery", requireMastery ? "1" : "0"); } catch {}
-  }, [requireMastery]);
   
   const count = tab === "solve" ? 100 : similarCount;
   const CHUNK = 50;
@@ -16039,24 +16084,16 @@ function PapersView({ app }) {
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[20, 30, 40, 50].map(function(n) {
                 return <button key={n} className="btn btn-sm" style={{ background: similarCount === n ? "var(--amber)" : "var(--bg-3)", color: similarCount === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={function() { setSimilarCount(n); }}>{n}</button>;
               })}</div>
-              <label style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 12, cursor: "pointer" }}>
-                <input type="checkbox" checked={requireMastery} onChange={function(e) { setRequireMastery(e.target.checked); }} />
-                <span style={{ fontSize: 13.5, color: "var(--text-2)" }}>Require 7/10 to advance to the next set (missed questions get reviewed first)</span>
-              </label>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 12 }}>
+                <span style={{ color: "var(--good)", fontSize: 15 }}>✓</span>
+                <span style={{ fontSize: 13.5, color: "var(--text-2)" }}>Requires 7/10 to advance to the next set (missed questions get reviewed first)</span>
+              </div>
             </>
           )}
           {/* CHANGED: Different messages for practice vs similar */}
           {tab === "solve" && (
             <>
-              <label className="eyebrow" style={{ display: "block", margin: "16px 0 8px" }}>How many questions?</label>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[20, 30, 40, 50].map(function(n) {
-                return <button key={n} className="btn btn-sm" style={{ background: practiceCount === n ? "var(--amber)" : "var(--bg-3)", color: practiceCount === n ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", minWidth: 48 }} onClick={function() { setPracticeCount(n); }}>{n}</button>;
-              })}</div>
-              <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>ASCEND builds this in sets of 10 so it never stalls - {practiceCount} questions total, delivered as you go.</div>
-              <label style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 12, cursor: "pointer" }}>
-                <input type="checkbox" checked={requireMastery} onChange={function(e) { setRequireMastery(e.target.checked); }} />
-                <span style={{ fontSize: 13.5, color: "var(--text-2)" }}>Require 7/10 to advance to the next set (missed questions get reviewed first)</span>
-              </label>
+              <div style={{ color: "var(--text-2)", marginTop: 4, fontSize: 14, lineHeight: 1.6 }}>100 questions total, delivered in sets of 10 with rising difficulty. You must score 7/10 to unlock the next set - missed questions get reviewed first, then you retry with a fresh set.</div>
             </>
           )}
           {tab === "similar" && (
@@ -16064,7 +16101,7 @@ function PapersView({ app }) {
           )}
           <div style={{ marginTop: 16 }}>
             {tab === "solve"
-              ? <button className="btn btn-a" onClick={function() { setPracticeActive(true); }}>Generate {practiceCount} with AI <Ic.ai p={16} /></button>
+              ? <button className="btn btn-a" onClick={function() { setPracticeActive(true); }}>Generate 100 with AI <Ic.ai p={16} /></button>
               : <button className="btn btn-a" onClick={function() { setSimilarActive(true); }} disabled={!sample.trim()}>Generate {similarCount} similar <Ic.ai p={16} /></button>}
           </div>
         </div>
@@ -16073,8 +16110,8 @@ function PapersView({ app }) {
         <ChunkedPracticeSet
           course={courseById(courseId)}
           topicName={practiceTopicIdx !== "" ? (TOPICS[courseId] || [])[parseInt(practiceTopicIdx, 10)] : null}
-          total={practiceCount}
-          requireMastery={requireMastery}
+          total={100}
+          requireMastery={true}
           onExit={function() { setPracticeActive(false); }}
           finishQuiz={app.finishQuiz}
         />
@@ -16084,7 +16121,7 @@ function PapersView({ app }) {
           course={courseById(courseId)}
           sampleQuestion={sample}
           total={similarCount}
-          requireMastery={requireMastery}
+          requireMastery={true}
           onExit={function() { setSimilarActive(false); }}
           finishQuiz={app.finishQuiz}
         />
