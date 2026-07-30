@@ -1,33 +1,46 @@
 /*
- * ASCEND AI proxy for VERCEL  ->  Groq (free, primary, multi-key rotation) with Gemini (free) as fallback
+ * ASCEND AI proxy for VERCEL
+ * Fallback chain:  Groq (multi-key)  ->  OpenRouter  ->  Cohere  ->  Gemini
  * ---------------------------------------------------------------------------
  * WHERE THIS GOES
  * Put this file at:   api/claude.js
  *
  * ENVIRONMENT VARIABLES (Vercel -> Project -> Settings -> Environment Variables):
- *   GROQ_API_KEY    = your first gsk_... key
- *   GROQ_API_KEY_2  = a second gsk_... key (optional but recommended)
- *   GROQ_API_KEY_3  = a third gsk_... key (optional)
- *   GEMINI_API_KEY  = your AIza... key (fallback / for file uploads)
+ *   GROQ_API_KEY        = your first  gsk_... key   (primary)
+ *   GROQ_API_KEY_2      = a second    gsk_... key   (optional)
+ *   GROQ_API_KEY_3      = a third     gsk_... key   (optional)
+ *   OPENROUTER_API_KEY  = your sk-or-... key         (1st fallback, optional)
+ *   COHERE_API_KEY      = your Cohere key            (2nd fallback, optional)
+ *   GEMINI_API_KEY      = your AIza... key           (final fallback + file uploads)
  *
- * You can add just GROQ_API_KEY alone and everything still works exactly as
- * before - GROQ_API_KEY_2 and _3 are optional extras. Add as many as you have;
- * unset ones are simply skipped.
+ * You can set only the keys you have; unset providers are simply skipped.
+ * Order of attempts for a normal text request:
+ *   each Groq key in turn  ->  OpenRouter  ->  Cohere  ->  Gemini
+ * A request that includes a file/image goes straight to Gemini (the only
+ * provider wired here for inline documents/images).
  *
- * HOW THE ROTATION WORKS
- * Groq's free tier limit (30 requests/minute, 14,400/day) is PER KEY. A whole
- * class hitting one shared key exhausts it fast. Each additional key adds
- * another full 30 RPM / 14,400 RPD bucket. On every request we pick a random
- * starting key (so load spreads out instead of always hammering key #1 first)
- * and if that key is rate-limited or errors, we try the next one before ever
- * falling through to Gemini.
+ * Optional model overrides (all have sensible defaults):
+ *   GROQ_MODEL, OPENROUTER_MODEL, COHERE_MODEL, GEMINI_MODEL
+ *
+ * HOW GROQ ROTATION WORKS
+ * Groq's free tier (30 req/min, 14,400/day) is PER KEY. Each extra key adds a
+ * fresh bucket. On every request we pick a random starting key so load spreads
+ * out, and if a key is rate-limited/errors we try the next before falling
+ * through to the other providers.
  */
 
-const GROQ_MODEL = "openai/gpt-oss-20b";
-const GEMINI_MODEL = "gemini-2.0-flash-lite";
+// Allow the function up to 30s so a multi-provider fallback has room to finish.
+// (Vercel Hobby permits raising this; Pro allows more. Safe to keep at 30.)
+export const config = { maxDuration: 30 };
+
+const GROQ_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-20b";
+const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "meta-llama/llama-3.3-70b-instruct:free";
+const COHERE_MODEL = process.env.COHERE_MODEL || "command-r-08-2024";
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash-lite";
+
 // Keep each provider attempt well under Vercel's function time limit (10s on
-// the Hobby plan) so a stalled call still leaves room to try the next key /
-// fall back to Gemini within the same invocation.
+// the Hobby plan) so a stalled call still leaves room to try the next
+// provider within the same invocation.
 const PROVIDER_TIMEOUT_MS = 8000;
 
 function getGroqKeys() {
@@ -66,9 +79,11 @@ export default async function handler(req, res) {
   if (req.method !== "POST") { res.status(405).json({ error: "Method not allowed" }); return; }
 
   const groqKeys = getGroqKeys();
+  const openrouterKey = process.env.OPENROUTER_API_KEY;
+  const cohereKey = process.env.COHERE_API_KEY;
   const geminiKey = process.env.GEMINI_API_KEY;
-  if (!groqKeys.length && !geminiKey) {
-    res.status(500).json({ error: "No GROQ_API_KEY(s) or GEMINI_API_KEY set in Vercel environment variables." });
+  if (!groqKeys.length && !openrouterKey && !cohereKey && !geminiKey) {
+    res.status(500).json({ error: "No AI provider keys set. Add GROQ_API_KEY (and/or OPENROUTER_API_KEY, COHERE_API_KEY, GEMINI_API_KEY) in Vercel environment variables." });
     return;
   }
 
@@ -80,6 +95,8 @@ export default async function handler(req, res) {
     (m) => Array.isArray(m.content) && m.content.some((b) => b && (b.type === "document" || b.type === "image"))
   );
 
+  // Flatten our message format into plain {role, content:string} pairs that the
+  // OpenAI-compatible providers (Groq, OpenRouter) and Cohere all understand.
   function toOpenAIMessages() {
     const out = [];
     if (system) out.push({ role: "system", content: String(system) });
@@ -98,6 +115,14 @@ export default async function handler(req, res) {
     return out;
   }
 
+  // Pull the assistant text out of an OpenAI-style response shape.
+  function readOpenAIContent(data) {
+    return data && data.choices && data.choices[0] && data.choices[0].message
+      ? (data.choices[0].message.content || "")
+      : "";
+  }
+
+  // ---- Groq (OpenAI-compatible) --------------------------------------------
   async function callGroqWithKey(key) {
     const r = await fetchWithTimeout("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
@@ -138,6 +163,65 @@ export default async function handler(req, res) {
     throw lastErr || new Error("All Groq keys failed");
   }
 
+  // ---- OpenRouter (OpenAI-compatible) --------------------------------------
+  async function callOpenRouter() {
+    const r = await fetchWithTimeout("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + openrouterKey,
+        // OpenRouter asks for these for attribution; harmless if generic.
+        "HTTP-Referer": "https://ascend29.vercel.app",
+        "X-Title": "ASCEND",
+      },
+      body: JSON.stringify({
+        model: OPENROUTER_MODEL,
+        messages: toOpenAIMessages(),
+        max_tokens: max_tokens || 1024,
+        temperature: 0.7,
+      }),
+    }, PROVIDER_TIMEOUT_MS);
+    let data;
+    try { data = await r.json(); } catch { data = null; }
+    if (!r.ok || !data) {
+      const err = new Error((data && data.error && data.error.message) || "OpenRouter request failed");
+      err.status = r.status || 502;
+      throw err;
+    }
+    return data; // already OpenAI shape
+  }
+
+  // ---- Cohere (v2 chat) ----------------------------------------------------
+  async function callCohere() {
+    // Cohere v2 uses OpenAI-like roles (system/user/assistant) and returns the
+    // reply under data.message.content (an array of {type:"text", text}).
+    const r = await fetchWithTimeout("https://api.cohere.com/v2/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + cohereKey },
+      body: JSON.stringify({
+        model: COHERE_MODEL,
+        messages: toOpenAIMessages(),
+        max_tokens: max_tokens || 1024,
+        temperature: 0.7,
+      }),
+    }, PROVIDER_TIMEOUT_MS);
+    let data;
+    try { data = await r.json(); } catch { data = null; }
+    if (!r.ok || !data) {
+      const err = new Error((data && (data.message || (data.error && data.error.message))) || "Cohere request failed");
+      err.status = r.status || 502;
+      throw err;
+    }
+    let text = "";
+    if (data.message && Array.isArray(data.message.content)) {
+      text = data.message.content.map((b) => (b && b.text ? b.text : "")).join("");
+    } else if (typeof data.text === "string") {
+      text = data.text; // very old shape, just in case
+    }
+    return { choices: [{ message: { content: text } }] };
+  }
+
+  // ---- Gemini (also handles files/images) ----------------------------------
   async function callGemini() {
     const contents = [];
     if (Array.isArray(messages)) {
@@ -188,24 +272,50 @@ export default async function handler(req, res) {
     return { choices: [{ message: { content: text } }] };
   }
 
+  // Build the ordered list of text providers that actually have a key, then try
+  // each in turn. A provider is retried-past only on transient errors (429/5xx/
+  // timeout) OR when it returned an empty completion; a genuine 4xx bad request
+  // is surfaced immediately since the next provider would reject it too... except
+  // we still continue, because a bad-request on one model (e.g. context length)
+  // may well succeed on another. We keep the FIRST meaningful error to report.
+  async function callTextChain() {
+    const providers = [];
+    if (groqKeys.length) providers.push({ name: "Groq", fn: callGroq });
+    if (openrouterKey) providers.push({ name: "OpenRouter", fn: callOpenRouter });
+    if (cohereKey) providers.push({ name: "Cohere", fn: callCohere });
+    if (geminiKey) providers.push({ name: "Gemini", fn: callGemini });
+
+    if (!providers.length) throw new Error("No text-capable AI provider is configured.");
+
+    // Overall budget for the whole chain. Once we're past it we stop starting
+    // new providers so the function returns before the platform kills it.
+    const CHAIN_DEADLINE_MS = 26000;
+    const startedAt = Date.now();
+
+    let firstErr = null;
+    for (const p of providers) {
+      if (Date.now() - startedAt > CHAIN_DEADLINE_MS) break;
+      try {
+        const result = await p.fn();
+        const content = readOpenAIContent(result);
+        if (content && content.trim()) return result;
+        // Empty completion -> treat as a soft failure and try the next provider.
+        if (!firstErr) firstErr = new Error(p.name + " returned an empty response");
+      } catch (e) {
+        if (!firstErr) firstErr = e;
+        // try next provider
+      }
+    }
+    throw firstErr || new Error("All AI providers failed");
+  }
+
   try {
     let result;
     if (hasFileContent) {
       if (!geminiKey) { res.status(500).json({ error: "This request includes a file, but GEMINI_API_KEY is not set." }); return; }
       result = await callGemini();
-    } else if (groqKeys.length) {
-      try {
-        result = await callGroq();
-      } catch (groqErr) {
-        if (!geminiKey) throw groqErr;
-        try {
-          result = await callGemini();
-        } catch (geminiErr) {
-          throw groqErr; // report the primary provider's error
-        }
-      }
     } else {
-      result = await callGemini();
+      result = await callTextChain();
     }
     res.status(200).json(result);
   } catch (err) {
