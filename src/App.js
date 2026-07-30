@@ -3,9 +3,6 @@
 // ============================================================
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Tesseract from 'tesseract.js';              
-// eslint-disable-next-line no-unused-vars
-import MermaidDiagram from './components/MermaidDiagram';  
-import './App.css';
 import { supabase } from "./supabaseClient";
 
 // OCR Function for image text extraction
@@ -14943,6 +14940,7 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   const [loadErr, setLoadErr] = useState("");
   const [pending, setPending] = useState(null); // pre-generated next/retry batch
   const [pendingLoading, setPendingLoading] = useState(false);
+  const [ready, setReady] = useState(0); // questions ready so far in the current load (for progress)
   const [runCorrect, setRunCorrect] = useState(0);
   const [runAnswered, setRunAnswered] = useState(0);
   const [runMissed, setRunMissed] = useState([]);
@@ -14961,23 +14959,38 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
     return `Generate exactly ${n} passco-style exam MCQs for a KNUST first-year student in ${course.name} (${course.code}). ${topicPart}\n\n${curriculum}\n\n${PRACTICE_MCQ_RULES}`;
   };
 
-  const generateBatch = async (n) => {
-    let attempts = 0;
-    const maxAttempts = 3;
+  // Request only a few questions per AI call. A single 10-question generation is
+  // large enough to overrun the serverless function's time limit (which kills the
+  // request and makes the loader spin forever); small sub-batches each return fast
+  // and as clean, complete JSON, and we loop to fill the set of 10.
+  const SUB_BATCH = 4;
+  const normQ = (q) => String(q || "").toLowerCase().replace(/\s+/g, " ").trim().slice(0, 80);
+
+  const generateBatch = async (n, onProgress) => {
+    const seen = new Set();
     let collected = [];
-    while (attempts < maxAttempts && collected.length < n) {
-      attempts++;
-      const need = n - collected.length;
+    let misses = 0;                 // consecutive calls that added nothing
+    const maxMisses = 3;
+    while (collected.length < n && misses < maxMisses) {
+      const need = Math.min(SUB_BATCH, n - collected.length);
+      let got = [];
       try {
         const text = await callClaude(
           "You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid, compact, complete JSON array of exactly " + need + " questions, no prose, no markdown, no trailing commas. Keep each question and option short.",
           [{ role: "user", content: buildPrompt(need) }],
-          Math.min(4000, need * 300 + 500)
+          need * 260 + 400
         );
         const arr = parseAIJson(text);
-        const filtered = (Array.isArray(arr) ? arr : []).filter((x) => x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number");
-        collected = collected.concat(filtered);
-      } catch (e) { /* try again */ }
+        got = (Array.isArray(arr) ? arr : []).filter((x) => x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number" && x.a >= 0 && x.a < 4);
+      } catch (e) { got = []; }
+      const fresh = got.filter((x) => { const k = normQ(x.q); if (seen.has(k)) return false; seen.add(k); return true; });
+      if (fresh.length) {
+        collected = collected.concat(fresh);
+        misses = 0;
+        if (onProgress) onProgress(Math.min(collected.length, n));
+      } else {
+        misses++;
+      }
     }
     return collected.slice(0, n);
   };
@@ -14986,9 +14999,9 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   const retryActionRef = useRef(null);
 
   const loadFirstChunk = async () => {
-    setPhase("loading"); setLoadErr(""); setLoadFailed(false);
+    setPhase("loading"); setLoadErr(""); setLoadFailed(false); setReady(0);
     retryActionRef.current = loadFirstChunk;
-    const batch = await generateBatch(CHUNK);
+    const batch = await generateBatch(CHUNK, setReady);
     if (!batch.length) {
       setLoadErr("The AI could not generate this set. This usually means the free AI quota is busy right now.");
       setLoadFailed(true);
@@ -15001,9 +15014,9 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      setPhase("loading"); setLoadErr(""); setLoadFailed(false);
+      setPhase("loading"); setLoadErr(""); setLoadFailed(false); setReady(0);
       retryActionRef.current = loadFirstChunk;
-      const batch = await generateBatch(CHUNK);
+      const batch = await generateBatch(CHUNK, setReady);
       if (cancelled) return;
       if (!batch.length) {
         setLoadErr("The AI could not generate this set. This usually means the free AI quota is busy right now.");
@@ -15079,10 +15092,10 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
 
   const advance = async () => {
     let batch = pending;
-    if (!batch) {
-      setPhase("loading"); setLoadErr(""); setLoadFailed(false);
+    if (!batch || !batch.length) {
+      setPhase("loading"); setLoadErr(""); setLoadFailed(false); setReady(0);
       retryActionRef.current = advance;
-      batch = await generateBatch(CHUNK);
+      batch = await generateBatch(CHUNK, setReady);
       if (!batch.length) {
         setLoadErr("The AI could not generate the next set. This usually means the free AI quota is busy right now.");
         setLoadFailed(true);
@@ -15102,7 +15115,7 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
         {!loadFailed ? (
           <>
             <span className="dots"><span /><span /><span /></span>
-            <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 10 }}>Building your next 10 questions...</div>
+            <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 10 }}>{ready > 0 ? `Building your questions... ${ready} of ${CHUNK} ready` : "Building your questions..."}</div>
           </>
         ) : (
           <>
