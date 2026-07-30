@@ -13127,9 +13127,76 @@ function loadMermaid() {
   return _mermaidPromise;
 }
 
-/* ============================================================
-   formatInline - Formats AI text for display
-   ============================================================ */
+/* Load jsPDF once, on demand, from a CDN - used to let students download an
+   AI-generated mind map as a keepable PDF. */
+let _jsPDFPromise = null;
+function loadJsPDF() {
+  if (typeof window === "undefined") return Promise.reject(new Error("no window"));
+  if (window.jspdf && window.jspdf.jsPDF) return Promise.resolve(window.jspdf.jsPDF);
+  if (_jsPDFPromise) return _jsPDFPromise;
+  _jsPDFPromise = new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+    s.onload = () => {
+      try { resolve(window.jspdf.jsPDF); } catch (e) { reject(e); }
+    };
+    s.onerror = () => reject(new Error("Could not load the PDF library - check your connection."));
+    document.head.appendChild(s);
+  });
+  return _jsPDFPromise;
+}
+
+/* Renders a mind map object ({central, branches:[{title, points}]}) as a
+   clean, readable one-page-plus PDF and triggers a download. */
+async function downloadMindMapPDF(map) {
+  const { jsPDF } = { jsPDF: await loadJsPDF() };
+  const doc = new jsPDF({ unit: "pt", format: "a4" });
+  const pageW = doc.internal.pageSize.getWidth();
+  const margin = 48;
+  const maxW = pageW - margin * 2;
+  let y = margin;
+
+  const ensureRoom = (needed) => {
+    if (y + needed > doc.internal.pageSize.getHeight() - margin) {
+      doc.addPage();
+      y = margin;
+    }
+  };
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  const centralLines = doc.splitTextToSize(map.central || "Mind map", maxW);
+  ensureRoom(centralLines.length * 22 + 16);
+  doc.text(centralLines, margin, y);
+  y += centralLines.length * 22 + 10;
+  doc.setDrawColor(200);
+  doc.line(margin, y, pageW - margin, y);
+  y += 20;
+
+  (map.branches || []).forEach((b) => {
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13.5);
+    const titleLines = doc.splitTextToSize(b.title || "", maxW);
+    ensureRoom(titleLines.length * 17 + 8);
+    doc.text(titleLines, margin, y);
+    y += titleLines.length * 17 + 4;
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    (b.points || []).forEach((p) => {
+      const lines = doc.splitTextToSize("\u2022 " + p, maxW - 14);
+      ensureRoom(lines.length * 14 + 4);
+      doc.text(lines, margin + 14, y);
+      y += lines.length * 14 + 4;
+    });
+    y += 12;
+  });
+
+  const fname = "mindmap-" + (map.central || "topic").toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 40) + ".pdf";
+  doc.save(fname);
+}
+
+
 function formatInline(text) {
   if (!text) return text;
   let t = String(text);
@@ -14604,7 +14671,222 @@ function InteractiveSet({ items }) {
   );
 }
 
-/* ==================== PAST PAPER DATA ====================
+/* ============================================================
+   ChunkedPracticeSet - delivers a large AI-generated practice run
+   (e.g. 100 questions) in small chunks of 10 instead of one huge
+   generation. This keeps every AI call well inside timeout limits.
+   If requireMastery is on, the student must score 7/10 on a chunk
+   before advancing; missed questions go to a review step first,
+   then the chunk can be retried with a freshly generated set. The
+   next chunk (or retry set) is generated in the background while
+   the student is reviewing/reading their result, so continuing
+   feels instant.
+   ============================================================ */
+const PRACTICE_MCQ_RULES = "Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which position is correct. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {\"q\": string, \"o\": [4 strings], \"a\": integer index, \"w\": one short explanation}.";
+
+function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQuiz }) {
+  const TOTAL = 100;
+  const CHUNK = 10;
+  const totalChunks = Math.ceil(TOTAL / CHUNK);
+  const PASS_MARK = 7;
+
+  const [chunkNum, setChunkNum] = useState(0);
+  const [items, setItems] = useState(null);
+  const [picked, setPicked] = useState({});
+  const [phase, setPhase] = useState("loading"); // loading | answering | result | review | done
+  const [loadErr, setLoadErr] = useState("");
+  const [pending, setPending] = useState(null); // pre-generated next/retry batch
+  const [pendingLoading, setPendingLoading] = useState(false);
+  const [runCorrect, setRunCorrect] = useState(0);
+  const [runAnswered, setRunAnswered] = useState(0);
+  const [runMissed, setRunMissed] = useState([]);
+  const recordedRef = useRef(false);
+  const pendingPromiseRef = useRef(null);
+
+  const buildPrompt = (n) => {
+    const topicPart = topicName ? `Focus specifically on the topic: ${topicName}.` : `Cover a mix of topics across the course.`;
+    return `Generate exactly ${n} passco-style exam MCQs for a KNUST first-year student in ${course.name} (${course.code}). ${topicPart}\n\n${PRACTICE_MCQ_RULES}`;
+  };
+
+  const generateBatch = async (n) => {
+    let attempts = 0;
+    const maxAttempts = 3;
+    let collected = [];
+    while (attempts < maxAttempts && collected.length < n) {
+      attempts++;
+      const need = n - collected.length;
+      try {
+        const text = await callClaude(
+          "You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid, compact, complete JSON array of exactly " + need + " questions, no prose, no markdown, no trailing commas. Keep each question and option short.",
+          [{ role: "user", content: buildPrompt(need) }],
+          Math.min(4000, need * 300 + 500)
+        );
+        const arr = parseAIJson(text);
+        const filtered = (Array.isArray(arr) ? arr : []).filter((x) => x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number");
+        collected = collected.concat(filtered);
+      } catch (e) { /* try again */ }
+    }
+    return collected.slice(0, n);
+  };
+
+  // Load the very first chunk on mount.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setPhase("loading"); setLoadErr("");
+      const batch = await generateBatch(CHUNK);
+      if (cancelled) return;
+      if (!batch.length) { setLoadErr("Could not generate this set - try again."); setPhase("loading"); return; }
+      setItems(batch.map(shuffleQuestion)); setPicked({}); setPhase("answering");
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const answeredCount = items ? Object.keys(picked).length : 0;
+  const chunkScore = items ? items.reduce((n, it, idx) => n + (picked[idx] === it.a ? 1 : 0), 0) : 0;
+  const chunkComplete = items && answeredCount === items.length;
+
+  // When the chunk is fully answered, score it, record it, and decide whether
+  // to gate on mastery or move straight to "result".
+  useEffect(() => {
+    if (!chunkComplete || phase !== "answering") return;
+    recordedRef.current = false;
+    const missed = items.filter((it, idx) => picked[idx] !== it.a).map((it) => ({ q: it.q, o: it.o, a: it.a, w: it.w, topic: topicName || course.name, courseId: course.id }));
+    setRunCorrect((c) => c + chunkScore);
+    setRunAnswered((a) => a + items.length);
+    setRunMissed((m) => [...m, ...missed]);
+    if (typeof finishQuiz === "function" && !recordedRef.current) {
+      recordedRef.current = true;
+      finishQuiz(course.id, "ai-practice-" + course.id + "-" + chunkNum + "-" + Date.now(), chunkScore, missed, items.length);
+    }
+    const passed = !requireMastery || chunkScore >= PASS_MARK;
+    const isLast = chunkNum + 1 >= totalChunks;
+    setPhase(passed ? (isLast ? "done" : "result") : "review");
+
+    // Background pre-generation: if passed and there's a next chunk, start
+    // building it now so "Continue" feels instant. If gated, start building
+    // a fresh retry set now so it's ready the moment the student finishes reviewing.
+    if (passed && !isLast) {
+      setPendingLoading(true);
+      pendingPromiseRef.current = generateBatch(CHUNK).then((b) => { setPending(b.map(shuffleQuestion)); setPendingLoading(false); });
+    } else if (!passed) {
+      setPendingLoading(true);
+      pendingPromiseRef.current = generateBatch(CHUNK).then((b) => { setPending(b.map(shuffleQuestion)); setPendingLoading(false); });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chunkComplete]);
+
+  const advance = async () => {
+    let batch = pending;
+    if (!batch) {
+      setPhase("loading");
+      batch = await generateBatch(CHUNK);
+      if (!batch.length) { setLoadErr("Could not generate the next set - try again."); return; }
+    }
+    setPending(null);
+    setItems(batch.map(shuffleQuestion));
+    setPicked({});
+    setChunkNum((n) => n + 1);
+    setPhase("answering");
+  };
+
+  const retrySameChunk = async () => {
+    let batch = pending;
+    if (!batch) {
+      setPhase("loading");
+      batch = await generateBatch(CHUNK);
+      if (!batch.length) { setLoadErr("Could not generate a retry set - try again."); return; }
+    }
+    setPending(null);
+    setItems(batch.map(shuffleQuestion));
+    setPicked({});
+    setPhase("answering");
+  };
+
+  if (phase === "loading") {
+    return (
+      <div className="card" style={{ marginTop: 16, textAlign: "center", padding: "30px 20px" }}>
+        <span className="dots"><span /><span /><span /></span>
+        <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 10 }}>Building your next 10 questions...</div>
+        {loadErr && <div style={{ color: "var(--bad)", fontSize: 13.5, marginTop: 10 }}>{loadErr}</div>}
+      </div>
+    );
+  }
+
+  if (phase === "review") {
+    const missedThisChunk = items.filter((it, idx) => picked[idx] !== it.a);
+    return (
+      <div>
+        <div className="card" style={{ marginTop: 12, textAlign: "center" }}>
+          <div className="eyebrow">Set {chunkNum + 1} of {totalChunks}</div>
+          <div style={{ fontSize: 20, fontWeight: 700, margin: "6px 0" }}>{chunkScore} / {items.length} - below the {PASS_MARK}/10 needed to continue</div>
+          <div style={{ color: "var(--text-2)", fontSize: 13.5 }}>Review what you missed below, then retry this set with a fresh batch of questions.</div>
+        </div>
+        <div className="eyebrow" style={{ margin: "16px 0 10px" }}>What you missed</div>
+        {missedThisChunk.map((it, idx) => (
+          <div className="card" key={idx} style={{ marginBottom: 10 }}>
+            <div style={{ fontWeight: 600, marginBottom: 8 }}>{it.q}</div>
+            <div style={{ color: "var(--good)", fontSize: 13.5, marginBottom: 4 }}>Correct: {it.o[it.a]}</div>
+            <div style={{ color: "var(--text-2)", fontSize: 13.5 }}>{it.w}</div>
+          </div>
+        ))}
+        <button className="btn btn-a" style={{ width: "100%", padding: "12px", marginTop: 6 }} onClick={retrySameChunk} disabled={pendingLoading && !pending}>
+          {pending ? "Retry this set" : (pendingLoading ? "Preparing a fresh set..." : "Retry this set")}
+        </button>
+      </div>
+    );
+  }
+
+  if (phase === "result" || phase === "done") {
+    return (
+      <div className="card" style={{ marginTop: 16, textAlign: "center", padding: "26px 20px" }}>
+        <div className="eyebrow">{phase === "done" ? "Practice run complete" : `Set ${chunkNum + 1} of ${totalChunks} complete`}</div>
+        <div style={{ fontSize: 20, fontWeight: 700, margin: "6px 0" }}>{chunkScore} / {items.length} this set</div>
+        {phase === "done" && (
+          <div style={{ color: "var(--text-2)", fontSize: 14, marginTop: 4 }}>
+            {runCorrect} / {runAnswered} correct overall{runMissed.length ? ` - ${runMissed.length} question${runMissed.length === 1 ? "" : "s"} added to your Review tab` : ""}.
+          </div>
+        )}
+        <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 16, flexWrap: "wrap" }}>
+          {phase === "result" && (
+            <button className="btn btn-a" onClick={advance} disabled={false}>
+              {pending ? "Continue to next 10" : (pendingLoading ? "Preparing next 10..." : "Continue to next 10")}
+            </button>
+          )}
+          <button className="btn btn-g" onClick={onExit}>Back to sets</button>
+        </div>
+      </div>
+    );
+  }
+
+  // phase === "answering"
+  return (
+    <div>
+      <div className="card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 14, marginBottom: 12 }}>
+        <div className="eyebrow" style={{ margin: 0 }}>Set {chunkNum + 1} of {totalChunks}{topicName ? " · " + topicName : ""}</div>
+        <div className="mono" style={{ fontWeight: 700 }}><span style={{ color: "var(--amber)" }}>{chunkScore}</span> / {answeredCount} <span style={{ color: "var(--text-3)" }}>· {items.length}</span></div>
+      </div>
+      {items.map((it, idx) => {
+        const chosen = picked[idx];
+        const locked = chosen !== undefined;
+        return (
+          <div className="card" key={idx} style={{ marginBottom: 10 }}>
+            <div style={{ fontWeight: 600, marginBottom: 10 }}><span className="mono" style={{ color: "var(--text-3)" }}>{String(chunkNum * CHUNK + idx + 1).padStart(3, "0")}. </span>{it.q}</div>
+            {it.o.map((opt, oi) => {
+              let cls = "opt";
+              if (locked) { if (oi === it.a) cls += " correct"; else if (oi === chosen) cls += " wrong"; }
+              return <button className={cls} key={oi} disabled={locked} onClick={() => setPicked((p) => ({ ...p, [idx]: oi }))}><span className="key">{"ABCD"[oi]}</span><span>{opt}</span></button>;
+            })}
+            {locked && <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 8 }}><strong style={{ color: chosen === it.a ? "var(--good)" : "var(--bad)" }}>{chosen === it.a ? "Correct. " : "Not quite. "}</strong>{it.w}</div>}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+
    Real KNUST past papers, extracted into interactive questions. Answers were
    worked out and verified (a few genuinely ambiguous specimen-ID questions are
    marked flag:true so they can be double-checked against the lecturer). Each
@@ -15454,6 +15736,14 @@ function PapersView({ app }) {
   
   const [busy, setBusy] = useState(false);
   const [passcoNotif, setPasscoNotif] = useState(null);
+  const [practiceTopicIdx, setPracticeTopicIdx] = useState("");
+  const [practiceActive, setPracticeActive] = useState(false);
+  const [requireMastery, setRequireMastery] = useState(() => {
+    try { return sessionStorage.getItem("ascend_practice_mastery") === "1"; } catch { return false; }
+  });
+  useEffect(() => {
+    try { sessionStorage.setItem("ascend_practice_mastery", requireMastery ? "1" : "0"); } catch {}
+  }, [requireMastery]);
   
   const count = tab === "solve" ? 100 : similarCount;
   const CHUNK = 50;
@@ -15662,10 +15952,10 @@ function PapersView({ app }) {
       <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "58ch" }}>A passco PDF is easy to put off. Here you actually answer, tap by tap, with instant feedback - and ASCEND can spin fresh questions off any one you show it.</p>
       
       <div className="tabs">
-        <button className={"tab " + (tab === "passco" ? "on" : "")} onClick={function() { setTab("passco"); setItems(null); setErr(""); setActive(null); }}>Passco</button>
+        <button className={"tab " + (tab === "passco" ? "on" : "")} onClick={function() { setTab("passco"); setItems(null); setErr(""); setActive(null); setPracticeActive(false); }}>Passco</button>
         <button className={"tab " + (tab === "solve" ? "on" : "")} onClick={function() { setTab("solve"); setItems(null); setErr(""); }}>Practice set (AI)</button>
-        <button className={"tab " + (tab === "similar" ? "on" : "")} onClick={function() { setTab("similar"); setItems(null); setErr(""); }}>Generate similar</button>
-        <button className={"tab " + (tab === "youtube" ? "on" : "")} onClick={function() { setTab("youtube"); setItems(null); setErr(""); }}>YouTube Links</button>
+        <button className={"tab " + (tab === "similar" ? "on" : "")} onClick={function() { setTab("similar"); setItems(null); setErr(""); setPracticeActive(false); }}>Generate similar</button>
+        <button className={"tab " + (tab === "youtube" ? "on" : "")} onClick={function() { setTab("youtube"); setItems(null); setErr(""); setPracticeActive(false); }}>YouTube Links</button>
       </div>
 
       {tab === "passco" && (active
@@ -15677,16 +15967,27 @@ function PapersView({ app }) {
         <YouTubeView />
       )}
 
-      {(tab !== "passco" && tab !== "youtube") && (
+      {(tab !== "passco" && tab !== "youtube" && !(tab === "solve" && practiceActive)) && (
         <div className="card" style={{ marginTop: 12 }}>
           <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Course</label>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: tab === "similar" ? 16 : 4 }}>
             {COURSES.map(function(c) {
               return (
-                <button key={c.id} className="btn btn-sm" style={{ background: courseId === c.id ? "var(--amber)" : "var(--bg-3)", color: courseId === c.id ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={function() { setCourseId(c.id); }}>{c.code}</button>
+                <button key={c.id} className="btn btn-sm" style={{ background: courseId === c.id ? "var(--amber)" : "var(--bg-3)", color: courseId === c.id ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={function() { setCourseId(c.id); setPracticeTopicIdx(""); }}>{c.code}</button>
               );
             })}
           </div>
+          {tab === "solve" && (TOPICS[courseId] || []).length > 0 && (
+            <>
+              <label className="eyebrow" style={{ display: "block", margin: "12px 0 8px" }}>Which topic? <span style={{ color: "var(--text-3)", fontWeight: 400, fontSize: 12 }}>(leave blank for a mix of all topics)</span></label>
+              <select className="auth-input" value={practiceTopicIdx} onChange={function(e) { setPracticeTopicIdx(e.target.value); }}>
+                <option value="">All topics mixed</option>
+                {(TOPICS[courseId] || []).map(function(title, idx) {
+                  return <option key={idx} value={String(idx)}>{title}</option>;
+                })}
+              </select>
+            </>
+          )}
           {tab === "similar" && (
             <>
               <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Paste one passco question</label>
@@ -15699,21 +16000,36 @@ function PapersView({ app }) {
           )}
           {/* CHANGED: Different messages for practice vs similar */}
           {tab === "solve" && (
-            <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>ASCEND will generate 100 fresh questions on this course. More questions = more practice.</div>
+            <>
+              <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>ASCEND builds this in sets of 10 so it never stalls - 100 questions total, delivered as you go.</div>
+              <label style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 12, cursor: "pointer" }}>
+                <input type="checkbox" checked={requireMastery} onChange={function(e) { setRequireMastery(e.target.checked); }} />
+                <span style={{ fontSize: 13.5, color: "var(--text-2)" }}>Require 7/10 to advance to the next set (missed questions get reviewed first)</span>
+              </label>
+            </>
           )}
           {tab === "similar" && (
             <div style={{ color: "var(--text-2)", marginTop: 16, fontSize: 14 }}>Select how many questions you want. More questions = more practice.</div>
           )}
           <div style={{ marginTop: 16 }}>
             {tab === "solve"
-              ? <button className="btn btn-a" onClick={startSolve} disabled={busy}>{busy ? "Building your set..." : "Start a set of 100"} <Ic.ai p={16} /></button>
+              ? <button className="btn btn-a" onClick={function() { setPracticeActive(true); }}>Start a set of 100 <Ic.ai p={16} /></button>
               : <button className="btn btn-a" onClick={startSimilar} disabled={busy || !sample.trim()}>{busy ? "Generating..." : "Generate " + similarCount + " similar"} <Ic.ai p={16} /></button>}
           </div>
         </div>
       )}
-      {tab !== "passco" && tab !== "youtube" && err && <div className="card" style={{ marginTop: 14, borderColor: "var(--line-2)", color: "var(--text-2)", fontSize: 14 }}>{err}</div>}
-      {tab !== "passco" && tab !== "youtube" && busy && <div className="card" style={{ marginTop: 14 }}><span className="dots"><span /><span /><span /></span></div>}
-      {tab !== "passco" && tab !== "youtube" && items && <InteractiveSet key={items.map(function(x) { return x.q; }).join("|").length + "-" + items.length} items={items} />}
+      {tab === "solve" && practiceActive && (
+        <ChunkedPracticeSet
+          course={courseById(courseId)}
+          topicName={practiceTopicIdx !== "" ? (TOPICS[courseId] || [])[parseInt(practiceTopicIdx, 10)] : null}
+          requireMastery={requireMastery}
+          onExit={function() { setPracticeActive(false); }}
+          finishQuiz={app.finishQuiz}
+        />
+      )}
+      {tab !== "passco" && tab !== "youtube" && tab !== "solve" && err && <div className="card" style={{ marginTop: 14, borderColor: "var(--line-2)", color: "var(--text-2)", fontSize: 14 }}>{err}</div>}
+      {tab !== "passco" && tab !== "youtube" && tab !== "solve" && busy && <div className="card" style={{ marginTop: 14 }}><span className="dots"><span /><span /><span /></span></div>}
+      {tab !== "passco" && tab !== "youtube" && tab !== "solve" && items && <InteractiveSet key={items.map(function(x) { return x.q; }).join("|").length + "-" + items.length} items={items} />}
     </div>
   );
 }
@@ -16308,6 +16624,15 @@ function StudyToolsView() {
 
       {tab === "map" && map && (
         <div className="card" style={{ marginTop: 16 }}>
+          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 4 }}>
+            <button
+              className="btn btn-sm"
+              style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }}
+              onClick={() => downloadMindMapPDF(map).catch(() => setErr("Could not build the PDF - try again."))}
+            >
+              Download as PDF
+            </button>
+          </div>
           <div style={{ textAlign: "center", marginBottom: 18 }}>
             <span style={{ display: "inline-block", background: "var(--amber)", color: "#1B1405", fontWeight: 750, fontSize: 16, padding: "10px 20px", borderRadius: 12 }}>{map.central}</span>
           </div>
