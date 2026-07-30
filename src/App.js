@@ -14740,7 +14740,6 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
       setItems(batch.map(shuffleQuestion)); setPicked({}); setPhase("answering");
     })();
     return () => { cancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const answeredCount = items ? Object.keys(picked).length : 0;
@@ -14774,7 +14773,6 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
       setPendingLoading(true);
       pendingPromiseRef.current = generateBatch(CHUNK).then((b) => { setPending(b.map(shuffleQuestion)); setPendingLoading(false); });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chunkComplete]);
 
   const advance = async () => {
@@ -14887,6 +14885,7 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
 }
 
 
+/*
    Real KNUST past papers, extracted into interactive questions. Answers were
    worked out and verified (a few genuinely ambiguous specimen-ID questions are
    marked flag:true so they can be double-checked against the lecturer). Each
