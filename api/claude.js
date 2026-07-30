@@ -1,36 +1,45 @@
 /*
- * ASCEND AI proxy for VERCEL  ->  Groq (free, primary) with Gemini (free) as fallback
+ * ASCEND AI proxy for VERCEL  ->  Groq (free, primary, multi-key rotation) with Gemini (free) as fallback
  * ---------------------------------------------------------------------------
  * WHERE THIS GOES
- * Create a folder named  api  at the root of your project, and put this file in
- * it as:   api/claude.js
- * Vercel automatically turns files in /api into serverless functions, reachable
- * at  /api/claude  - so the app must call "/api/claude" (see the app change).
+ * Put this file at:   api/claude.js
  *
- * WHY GROQ + GEMINI
- * Gemini's free tier alone (15 RPM / 1,500 RPD on flash-lite) gets exhausted
- * fast with a whole class hitting it at once - that's the "AI is busy" spam.
- * Groq's free tier is far more generous for a text-only classroom tool
- * (30 RPM / 14,400 RPD on openai/gpt-oss-20b) and is very fast. So:
- *   - Plain text requests (the vast majority: MCQs, flashcards, notes, chat)
- *     go to Groq first.
- *   - Requests that include a PDF/image attachment go straight to Gemini,
- *     since Groq's gpt-oss-20b is text-only.
- *   - If Groq is rate-limited or errors, we automatically fall back to
- *     Gemini so the request still has a chance to succeed.
+ * ENVIRONMENT VARIABLES (Vercel -> Project -> Settings -> Environment Variables):
+ *   GROQ_API_KEY    = your first gsk_... key
+ *   GROQ_API_KEY_2  = a second gsk_... key (optional but recommended)
+ *   GROQ_API_KEY_3  = a third gsk_... key (optional)
+ *   GEMINI_API_KEY  = your AIza... key (fallback / for file uploads)
  *
- * ENVIRONMENT VARIABLES (set in Vercel -> Project -> Settings -> Environment Variables):
- *   GROQ_API_KEY   = your gsk_... key from console.groq.com/keys (free, no card)
- *   GEMINI_API_KEY = your AIza... key (kept as fallback / for file uploads)
+ * You can add just GROQ_API_KEY alone and everything still works exactly as
+ * before - GROQ_API_KEY_2 and _3 are optional extras. Add as many as you have;
+ * unset ones are simply skipped.
+ *
+ * HOW THE ROTATION WORKS
+ * Groq's free tier limit (30 requests/minute, 14,400/day) is PER KEY. A whole
+ * class hitting one shared key exhausts it fast. Each additional key adds
+ * another full 30 RPM / 14,400 RPD bucket. On every request we pick a random
+ * starting key (so load spreads out instead of always hammering key #1 first)
+ * and if that key is rate-limited or errors, we try the next one before ever
+ * falling through to Gemini.
  */
 
 const GROQ_MODEL = "openai/gpt-oss-20b";
 const GEMINI_MODEL = "gemini-2.0-flash-lite";
 // Keep each provider attempt well under Vercel's function time limit (10s on
-// the Hobby plan) so a stalled Groq call still leaves room to fall back to
-// Gemini within the same invocation, instead of the whole function hanging
-// until Vercel kills it (which is what caused the client to spin forever).
+// the Hobby plan) so a stalled call still leaves room to try the next key /
+// fall back to Gemini within the same invocation.
 const PROVIDER_TIMEOUT_MS = 8000;
+
+function getGroqKeys() {
+  const keys = [process.env.GROQ_API_KEY, process.env.GROQ_API_KEY_2, process.env.GROQ_API_KEY_3]
+    .filter(Boolean);
+  // Shuffle so requests spread across keys instead of always starting on the same one.
+  for (let i = keys.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [keys[i], keys[j]] = [keys[j], keys[i]];
+  }
+  return keys;
+}
 
 async function fetchWithTimeout(url, options, timeoutMs) {
   const controller = new AbortController();
@@ -50,21 +59,19 @@ async function fetchWithTimeout(url, options, timeoutMs) {
 }
 
 export default async function handler(req, res) {
-  // CORS (harmless, keeps things smooth)
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   if (req.method === "OPTIONS") { res.status(200).end(); return; }
   if (req.method !== "POST") { res.status(405).json({ error: "Method not allowed" }); return; }
 
-  const groqKey = process.env.GROQ_API_KEY;
+  const groqKeys = getGroqKeys();
   const geminiKey = process.env.GEMINI_API_KEY;
-  if (!groqKey && !geminiKey) {
-    res.status(500).json({ error: "Neither GROQ_API_KEY nor GEMINI_API_KEY is set in Vercel environment variables." });
+  if (!groqKeys.length && !geminiKey) {
+    res.status(500).json({ error: "No GROQ_API_KEY(s) or GEMINI_API_KEY set in Vercel environment variables." });
     return;
   }
 
-  // Vercel parses JSON bodies automatically, but guard just in case.
   let payload = req.body;
   if (typeof payload === "string") { try { payload = JSON.parse(payload); } catch { payload = {}; } }
   const { system, messages, max_tokens } = payload || {};
@@ -73,9 +80,6 @@ export default async function handler(req, res) {
     (m) => Array.isArray(m.content) && m.content.some((b) => b && (b.type === "document" || b.type === "image"))
   );
 
-  // Groq (OpenAI-compatible) only accepts plain text content per message, so
-  // flatten any text blocks into a single string. PDFs/images can't go to
-  // Groq at all - those requests skip straight to Gemini below.
   function toOpenAIMessages() {
     const out = [];
     if (system) out.push({ role: "system", content: String(system) });
@@ -94,10 +98,10 @@ export default async function handler(req, res) {
     return out;
   }
 
-  async function callGroq() {
+  async function callGroqWithKey(key) {
     const r = await fetchWithTimeout("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + groqKey },
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + key },
       body: JSON.stringify({
         model: GROQ_MODEL,
         messages: toOpenAIMessages(),
@@ -112,7 +116,26 @@ export default async function handler(req, res) {
       err.status = r.status || 502;
       throw err;
     }
-    return data; // already { choices: [{ message: { content } }] }
+    return data;
+  }
+
+  // Try each Groq key in turn (order already randomised). Only fall through to
+  // the next key on a rate-limit/server-type error - a genuine bad-request
+  // error (4xx other than 429) is the same regardless of key, so don't waste
+  // the timeout budget retrying it.
+  async function callGroq() {
+    let lastErr;
+    for (const key of groqKeys) {
+      try {
+        return await callGroqWithKey(key);
+      } catch (e) {
+        lastErr = e;
+        const retryable = e.status === 429 || e.status === 503 || e.status === 502 || e.status === 504;
+        if (!retryable) throw e;
+        // else try next key
+      }
+    }
+    throw lastErr || new Error("All Groq keys failed");
   }
 
   async function callGemini() {
@@ -168,11 +191,9 @@ export default async function handler(req, res) {
   try {
     let result;
     if (hasFileContent) {
-      // PDFs/images: Gemini only.
       if (!geminiKey) { res.status(500).json({ error: "This request includes a file, but GEMINI_API_KEY is not set." }); return; }
       result = await callGemini();
-    } else if (groqKey) {
-      // Plain text: Groq first, Gemini as fallback.
+    } else if (groqKeys.length) {
       try {
         result = await callGroq();
       } catch (groqErr) {
