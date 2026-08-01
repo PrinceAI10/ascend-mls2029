@@ -13112,6 +13112,30 @@ function shuffleQuestion(item) {
   };
 }
 
+// LLMs generating MCQs sometimes write four options and a correct-answer
+// explanation that clearly point at, say, option C, but still emit "a": 1
+// for the numeric index - the text and the index aren't cross-checked by
+// the model itself. Trusting that index directly is how a student can pick
+// the objectively right answer and still get marked wrong. So instead of
+// asking the AI for a numeric index, we ask it to repeat the correct
+// option's exact text ("correct" field), then resolve the index ourselves
+// by matching that text against the options - and discard any question
+// where the match fails, rather than silently falling back to a guess.
+function normalizeMcqText(s) {
+  return String(s || "").trim().toLowerCase().replace(/\s+/g, " ").replace(/[.,;:!?]+$/, "");
+}
+function resolveMcqAnswer(item) {
+  if (!item || !item.q || !Array.isArray(item.o) || item.o.length !== 4 || !item.correct) return null;
+  const target = normalizeMcqText(item.correct);
+  let idx = item.o.findIndex((o) => normalizeMcqText(o) === target);
+  if (idx < 0) {
+    // Fall back to a looser containment match in case of minor wording drift
+    idx = item.o.findIndex((o) => normalizeMcqText(o).includes(target) || target.includes(normalizeMcqText(o)));
+  }
+  if (idx < 0) return null;
+  return { q: item.q, o: item.o, a: idx, w: item.w || "" };
+}
+
 // Shuffle an entire bank of questions
 const PRACTICE_QUESTION_COUNT = 30;
 
@@ -13668,7 +13692,7 @@ function AITutor({ topicTitle, context }) {
     if (!text || busy) return;
     const next = [...msgs, { role: "user", content: text }];
     setMsgs(next); setInput(""); setBusy(true);
-    const sys = `You are the ASCEND tutor for KNUST medical laboratory science students. Teach the WHY and the mechanism, step by step. Keep each answer complete but focused. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac.\n\nTOPIC: ${topicTitle}\n\nSOURCE:\n${context}`;
+    const sys = `You are the ASCEND tutor for KNUST medical laboratory science students. Teach the WHY and the mechanism, step by step. Keep each answer complete but focused. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac. Accuracy is critical: only state specific facts, numbers, or mechanisms you are confident are correct, and describe concepts in general terms rather than inventing a precise figure you are unsure of.\n\nTOPIC: ${topicTitle}\n\nSOURCE:\n${context}`;
     const apiMsgs = next.slice(1);
     try {
       const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })), 4096);
@@ -13843,14 +13867,11 @@ function QuizView({ app }) {
       if (complete.length < PRACTICE_QUESTION_COUNT) {
         const needed = PRACTICE_QUESTION_COUNT - complete.length;
         const source = (t.note || []).map((step) => step.q + "\n" + step.body).join("\n\n").slice(0, 18000);
-        const prompt = "Generate exactly " + needed + " unique, non-repeating single-best-answer MCQs for " + t.title + ". Use the lesson notes below. Return ONLY a JSON array; each item needs q, o (four strings), a (0-3), and w (short explanation). Do not repeat a question already in the bank.\n\nLESSON NOTES:\n" + source;
+        const prompt = "Generate exactly " + needed + " unique, non-repeating single-best-answer MCQs for " + t.title + ". Use the lesson notes below. Return ONLY a JSON array; each item needs q, o (four strings), correct (the exact text of the correct option copied verbatim from o), and w (short explanation). Double-check that \"correct\" is copied character-for-character from one of the four options in \"o\". Do not repeat a question already in the bank.\n\nLESSON NOTES:\n" + source;
         
         try {
-          const raw = await callClaude("Create accurate KNUST medical laboratory science MCQs. Return compact JSON only.", [{ role: "user", content: prompt }], 10000);
-          const generated = (Array.isArray(parseAIJson(raw)) ? parseAIJson(raw) : []).filter((item) => 
-            item && typeof item.q === "string" && Array.isArray(item.o) && item.o.length === 4 && 
-            item.o.every((option) => typeof option === "string") && Number.isInteger(item.a) && item.a >= 0 && item.a < 4
-          );
+          const raw = await callClaude("Create accurate KNUST medical laboratory science MCQs. Return compact JSON only. Every question must have exactly one unambiguously correct option - double-check your own \"correct\" field actually matches one of the four options verbatim before responding.", [{ role: "user", content: prompt }], 10000);
+          const generated = (Array.isArray(parseAIJson(raw)) ? parseAIJson(raw) : []).map(resolveMcqAnswer).filter(Boolean);
           complete = uniqueQuestions([...complete, ...generated]);
         } catch (genErr) {
           // Silent fallback - use what we have
@@ -15018,7 +15039,7 @@ function InteractiveSet({ items }) {
    background while the student is answering/correcting, so continuing
    feels instant.
    ============================================================ */
-const PRACTICE_MCQ_RULES = "Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which position is correct. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {\"q\": string, \"o\": [4 strings], \"a\": integer index, \"w\": one short explanation}.";
+const PRACTICE_MCQ_RULES = "Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which option is correct across questions. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {\"q\": string, \"o\": [4 strings], \"correct\": the exact text of the correct option copied verbatim from \"o\", \"w\": one short explanation}. Double-check that \"correct\" is copied character-for-character from one of the four options in \"o\".";
 
 function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQuiz, total, sampleQuestion }) {
   const TOTAL = total || 100;
@@ -15094,12 +15115,12 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
       let got = [];
       try {
         const text = await callClaude(
-          "You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid, compact, complete JSON array of exactly " + need + " questions, no prose, no markdown, no trailing commas. Keep each question and option short.",
+          "You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid, compact, complete JSON array of exactly " + need + " questions, no prose, no markdown, no trailing commas. Keep each question and option short. Every question must have exactly one unambiguously correct option - double-check your \"correct\" field matches one of the four options verbatim.",
           [{ role: "user", content: buildPrompt(need) }],
           need * 260 + 400
         );
         const arr = parseAIJson(text);
-        got = (Array.isArray(arr) ? arr : []).filter((x) => x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number" && x.a >= 0 && x.a < 4);
+        got = (Array.isArray(arr) ? arr : []).map(resolveMcqAnswer).filter(Boolean);
       } catch (e) { got = []; }
       const fresh = got.filter((x) => { const k = normQ(x.q); if (seen.has(k)) return false; seen.add(k); newlySeen.push(k); return true; });
       if (fresh.length) {
@@ -16282,7 +16303,7 @@ function PapersView({ app }) {
     }
   }, []);
   
-  const RULES = "Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which position is correct. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {\"q\": string, \"o\": [4 strings], \"a\": integer index, \"w\": one short explanation}.";
+  const RULES = "Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which option is correct across questions. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {\"q\": string, \"o\": [4 strings], \"correct\": the exact text of the correct option copied verbatim from \"o\", \"w\": one short explanation}. Double-check that \"correct\" is copied character-for-character from one of the four options in \"o\".";
   
   const shuffleOptions = function(arr) {
     return arr.map(function(item) {
@@ -16323,14 +16344,12 @@ function PapersView({ app }) {
     const thisBatch = Math.min(BATCH_SIZE, remaining);
     try {
       const text = await callClaude(
-        "You generate KNUST-style medical laboratory science exam questions based on the specific course content provided. Return ONLY a valid, compact, complete JSON array of exactly " + thisBatch + " questions, no prose, no markdown, no trailing commas. Keep each question and option short.",
+        "You generate KNUST-style medical laboratory science exam questions based on the specific course content provided. Return ONLY a valid, compact, complete JSON array of exactly " + thisBatch + " questions, no prose, no markdown, no trailing commas. Keep each question and option short. Every question must have exactly one unambiguously correct option - double-check your \"correct\" field matches one of the four options verbatim.",
         [{ role: "user", content: usr.replace(/exactly \d+/, "exactly " + thisBatch) }],
         Math.min(4000, thisBatch * 300 + 500)
       );
       const arr = parseAIJson(text);
-      const filtered = (Array.isArray(arr) ? arr : []).filter(function(x) {
-        return x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number";
-      });
+      const filtered = (Array.isArray(arr) ? arr : []).map(resolveMcqAnswer).filter(Boolean);
       
       if (filtered.length > 0) {
         // Add to collection and remove duplicates
@@ -16763,7 +16782,7 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
   );
 }
 /* ------------------------------- resources ------------------------------ */
-const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical laboratory science students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it to superscript). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac.";
+const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical laboratory science students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it to superscript). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac. Accuracy is critical - these are medical facts students will be examined on. Only state specific numbers, values, classifications, enzyme names, or mechanisms you are confident are correct. If you are not certain of an exact figure or detail, describe the concept accurately without inventing a precise number.";
 const SOCRATIC_TASK = "Break this study material into a focused Socratic lesson of 4 to 6 steps. For each step: state the question, explain the answer in one or two clear paragraphs, then give the crucial insight in one line. End with three short self-test questions and their answers. Be economical so the whole lesson is complete and never cut off.";
 
 // ============================================================
@@ -17079,7 +17098,7 @@ function StudyToolsView() {
     setBusy(true); setErr(""); setCards(null); setFlipped({});
     try {
       const raw = await callClaude(
-        "You create study flashcards for KNUST medical laboratory science students. Each card has a short front (a question, term, or prompt) and a concise back (the answer or definition). Focus on the most important, testable facts. Return ONLY a valid, compact JSON array, no prose, no markdown, no trailing commas.",
+        "You create study flashcards for KNUST medical laboratory science students. Each card has a short front (a question, term, or prompt) and a concise back (the answer or definition). Focus on the most important, testable facts. Return ONLY a valid, compact JSON array, no prose, no markdown, no trailing commas. Only include facts you are confident are correct - do not invent specific numbers or classifications you are unsure of.",
         [{ role: "user", content: `Create 10 to 14 flashcards on ${subject}. Format: [{"front":"...","back":"..."}]. Keep each side short and precise.` }],
         3000
       );
@@ -17106,7 +17125,7 @@ function StudyToolsView() {
     setBusy(true); setErr(""); setMap(null);
     try {
       const raw = await callClaude(
-        "You create hierarchical mind maps for KNUST medical laboratory science students. A mind map has a central topic, main branches, and sub-points under each. Return ONLY valid compact JSON, no prose, no markdown, no trailing commas.",
+        "You create hierarchical mind maps for KNUST medical laboratory science students. A mind map has a central topic, main branches, and sub-points under each. Return ONLY valid compact JSON, no prose, no markdown, no trailing commas. Only include facts you are confident are correct - do not invent specific numbers or classifications you are unsure of.",
         [{ role: "user", content: `Create a mind map of ${subject}. Format: {"central":"topic name","branches":[{"title":"main idea","points":["sub-point","sub-point"]}],"recommendations":["short study tip","short study tip"]}. Give 4 to 6 branches, each with 2 to 4 short points. "points" must be pure high-yield facts (definitions, values, mechanisms) - never vague prose. "recommendations" is a separate list of 2 to 4 short, concrete study/recall tips for using this map (e.g. "Redraw this from memory, then check against the branches").` }],
         3000
       );
@@ -18284,7 +18303,7 @@ Return ONLY compact JSON, no markdown, no trailing commas, all strings short: {"
     let lastErr = "";
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
-        const res = await callClaude("You are LAMLA, an exam-cram assistant for KNUST medical laboratory science students. You give precise, memorisable facts - definitions, values, classifications, steps - never vague study advice. Return ONLY valid, compact, complete JSON. No emojis.", [{ role: "user", content: prompt }], 6000);
+        const res = await callClaude("You are LAMLA, an exam-cram assistant for KNUST medical laboratory science students. You give precise, memorisable facts - definitions, values, classifications, steps - never vague study advice. Return ONLY valid, compact, complete JSON. No emojis. Accuracy matters more than confidence: only state a specific number, value, or classification if you are sure it is correct - a vaguer but true statement beats a precise but wrong one.", [{ role: "user", content: prompt }], 6000);
         const data = parseAIJson(res);
         if (!data || !Array.isArray(data.topics) || !data.topics.length) throw new Error("unexpected shape from AI");
         setPlan(data); setOffline(false); setStep("plan"); setBusy(false);
