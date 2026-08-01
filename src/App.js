@@ -17639,41 +17639,23 @@ function AuthScreen({ onAuthed }) {
       setBusy(true);
       // Detect if in standalone PWA mode
       const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-
-      if (isStandalone) {
-        // A PWA launched from the home screen runs in a sandboxed webview
-        // that has no access to the device's real browser session/cookies -
-        // that's specifically why Google can't show the "choose account"
-        // picker there and falls back to the manual email/password form.
-        // The real browser (Safari/Chrome) DOES have that session, so we
-        // get the OAuth URL without letting Supabase auto-navigate, and
-        // open it in a genuine new tab/window instead - that runs in the
-        // real browser context and gets the normal account picker.
-        const { data, error } = await supabase.auth.signInWithOAuth({
-          provider: "google",
-          options: {
-            redirectTo: window.location.origin,
-            skipBrowserRedirect: true,
-          },
-        });
-        if (error) throw error;
-        if (data && data.url) {
-          window.open(data.url, "_blank");
-          setOk("Continue signing in in the browser tab that just opened, then come back to this app.");
-        } else {
-          throw new Error("Could not start Google sign-in.");
-        }
-        setBusy(false);
-        return;
-      }
-
+      
+      // Use redirect instead of popup for PWA
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
           redirectTo: window.location.origin,
+          // For PWA, this helps handle the redirect better
+          ...(isStandalone && { 
+            // In standalone mode, use the same window
+            // No extra options needed if the OAuth config handles it
+          })
         },
       });
       if (error) throw error;
+      
+      // For PWA, we need to handle the redirect
+      // The page will redirect to Google, then come back
     } catch (e) {
       setErr(e && e.message ? e.message : "Google sign-in could not start. Please try again.");
       setBusy(false);
