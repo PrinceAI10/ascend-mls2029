@@ -392,13 +392,13 @@ export default async function handler(req, res) {
   async function callTextChain() {
     const providers = [];
     if (groqKeys.length) providers.push({ name: "Groq", fn: callGroq });
+    if (cerebrasKey) providers.push({ name: "Cerebras", fn: callCerebras });
     if (openrouterKey) providers.push({ name: "OpenRouter", fn: callOpenRouter });
     if (cohereKey) providers.push({ name: "Cohere", fn: callCohere });
     if (deepseekKey) providers.push({ name: "DeepSeek", fn: callDeepSeek });
-    if (togetherKey) providers.push({ name: "Together", fn: callTogether });
     if (mistralKey) providers.push({ name: "Mistral", fn: callMistral });
-    if (cerebrasKey) providers.push({ name: "Cerebras", fn: callCerebras });
     if (fireworksKey) providers.push({ name: "Fireworks", fn: callFireworks });
+    if (togetherKey) providers.push({ name: "Together", fn: callTogether });
 
     if (!providers.length) {
       throw new Error("No AI providers configured");
