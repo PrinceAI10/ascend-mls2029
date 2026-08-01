@@ -12782,6 +12782,25 @@ const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
 const curriculumContextFor = (cid, topicName) => {
   const topics = TOPICS[cid] || [];
   if (!topics.length) return "";
+
+  // When a specific topic is chosen, lock the grounding to ONLY that topic.
+  // Listing the other syllabus topics (even just for "context") is what was
+  // inviting drift - the AI would occasionally borrow content from a
+  // neighboring topic. So in single-topic mode we omit the full topicList
+  // entirely and give a hard single-topic instruction instead.
+  if (topicName) {
+    const idx = topics.findIndex((t) => t === topicName);
+    let sample = "";
+    if (idx >= 0) {
+      const t = contentFor(cid, idx);
+      if (t) {
+        const noteText = (t.note || []).slice(0, 6).map((n) => n.q).join("; ");
+        if (noteText) sample = `\nKey concepts within this topic (for grounding, not an exhaustive list):\n${noteText}`;
+      }
+    }
+    return `CURRICULUM GROUNDING (mandatory, STRICT single-topic mode): The ONLY topic in scope is "${topicName}".${sample}\nEvery single question MUST test knowledge that falls strictly within "${topicName}" and nothing else. Do NOT include, reference, or drift into any other topic from this course's syllabus, even ones that are closely related, come right before/after it, or share overlapping concepts. Do NOT introduce concepts, terminology, or depth outside this exact topic, even if related in general biology/science.`;
+  }
+
   const topicList = topics.join(", ");
   let sample = "";
   for (let i = 0; i < Math.min(3, topics.length); i++) {
@@ -12791,7 +12810,7 @@ const curriculumContextFor = (cid, topicName) => {
       sample += `- ${t.title}: ${noteText}\n`;
     }
   }
-  return `CURRICULUM GROUNDING (mandatory): This course's syllabus topics are: ${topicList}.${topicName ? ` The current focus topic is "${topicName}" - stay tightly within it.` : ""}${sample ? `\nSample key concepts from the syllabus:\n${sample}` : ""}\nEvery question MUST test knowledge that falls within these syllabus topics. Do NOT introduce concepts, terminology, or depth outside this curriculum, even if related in general biology/science.`;
+  return `CURRICULUM GROUNDING (mandatory): This course's syllabus topics are: ${topicList}.${sample ? `\nSample key concepts from the syllabus:\n${sample}` : ""}\nEvery question MUST test knowledge that falls within these syllabus topics. Do NOT introduce concepts, terminology, or depth outside this curriculum, even if related in general biology/science.`;
 };
 const builtInCourse = (cid) => Object.keys(CONTENT).filter((k) => k.startsWith(cid + ":")).length;
 const totalBuilt = () => Object.keys(CONTENT).length;
@@ -13346,6 +13365,26 @@ async function downloadMindMapPDF(map) {
     });
     y += 12;
   });
+
+  if (Array.isArray(map.recommendations) && map.recommendations.length > 0) {
+    doc.setDrawColor(200);
+    ensureRoom(20);
+    doc.line(margin, y, pageW - margin, y);
+    y += 20;
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(13.5);
+    ensureRoom(21);
+    doc.text("Recommendations", margin, y);
+    y += 17;
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    map.recommendations.forEach((r) => {
+      const lines = doc.splitTextToSize("\u2022 " + r, maxW - 14);
+      ensureRoom(lines.length * 14 + 4);
+      doc.text(lines, margin + 14, y);
+      y += lines.length * 14 + 4;
+    });
+  }
 
   const fname = "mindmap-" + (map.central || "topic").toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 40) + ".pdf";
   doc.save(fname);
@@ -14574,18 +14613,29 @@ function RanksView({ app }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const myKey = presenceKeyFor(app.supaUid, app.progress.name);
+    // A presence entry is only trusted as "online" if its timestamp is
+    // recent. Without this, someone whose tab crashed or lost network
+    // (so no "leave" event ever fires) would show as online forever.
+    const STALE_MS = 45000;
     let channel;
+    let heartbeatId;
+    const refresh = () => {
+      try {
+        const state = channel.presenceState();
+        const now = Date.now();
+        const keys = new Set();
+        Object.keys(state || {}).forEach((k) => {
+          const entries = state[k] || [];
+          const fresh = entries.some((e) => !e || typeof e.at !== "number" || (now - e.at) < STALE_MS);
+          if (fresh) keys.add(k);
+        });
+        setOnlineKeys(keys);
+      } catch (error) {
+        // Silently fail
+      }
+    };
     try {
       channel = supabase.channel("ascend-presence", { config: { presence: { key: myKey } } });
-      const refresh = () => {
-        try {
-          const state = channel.presenceState();
-          const keys = new Set(Object.keys(state || {}));
-          setOnlineKeys(keys);
-        } catch (error) {
-          // Silently fail
-        }
-      };
       channel
         .on("presence", { event: "sync" }, refresh)
         .on("presence", { event: "join" }, refresh)
@@ -14597,6 +14647,16 @@ function RanksView({ app }) {
             }
           }
         });
+      // Heartbeat: re-track periodically so our own "at" timestamp stays
+      // fresh, and re-run the staleness filter so other people's dots turn
+      // off promptly even if their leave event never arrived.
+      heartbeatId = setInterval(() => {
+        if (document.visibilityState !== "visible") return;
+        try { channel.track({ name: app.progress.name, at: Date.now() }); } catch (error) {
+          // Silently fail
+        }
+        refresh();
+      }, 20000);
     } catch (error) {
       // Silently fail
     }
@@ -14606,6 +14666,7 @@ function RanksView({ app }) {
           channel.untrack(); 
         } else if (channel) { 
           channel.track({ name: app.progress.name, at: Date.now() }); 
+          refresh();
         } 
       } catch (error) {
         // Silently fail
@@ -14613,6 +14674,7 @@ function RanksView({ app }) {
     };
     document.addEventListener("visibilitychange", onHide);
     return () => {
+      if (heartbeatId) clearInterval(heartbeatId);
       document.removeEventListener("visibilitychange", onHide);
       try { if (channel) { channel.untrack(); supabase.removeChannel(channel); } } catch (error) {
         // Silently fail
@@ -14984,7 +15046,10 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
     const curriculum = curriculumContextFor(course.id, topicName);
     // "Generate similar" mode: base fresh questions on a pasted sample question.
     if (sampleQuestion && sampleQuestion.trim()) {
-      return `Here is a passco exam question:\n\n${sampleQuestion}\n\nGenerate exactly ${n} fresh MCQs testing the same concept(s) and matching this question's style and structure, for a KNUST first-year student in ${course.name} (${course.code}).\n\n${curriculum}\nIf the pasted question's concept falls outside the syllabus topics above, anchor the new questions to the closest syllabus topic instead of following the pasted question off-curriculum.\n\n${PRACTICE_MCQ_RULES}`;
+      const anchorNote = topicName
+        ? `The pasted question is only a style/format reference. Every generated question MUST stay strictly within the "${topicName}" topic as defined above, even if the pasted question's own concept sits elsewhere - in that case, keep the pasted question's structure/style but write about "${topicName}" instead.`
+        : `If the pasted question's concept falls outside the syllabus topics above, anchor the new questions to the closest syllabus topic instead of following the pasted question off-curriculum.`;
+      return `Here is a passco exam question:\n\n${sampleQuestion}\n\nGenerate exactly ${n} fresh MCQs testing the same concept(s) and matching this question's style and structure, for a KNUST first-year student in ${course.name} (${course.code}).\n\n${curriculum}\n${anchorNote}\n\n${PRACTICE_MCQ_RULES}`;
     }
     const topicPart = topicName ? `Focus specifically on the topic: ${topicName}.` : `Cover a mix of topics across the course.`;
     return `Generate exactly ${n} passco-style exam MCQs for a KNUST first-year student in ${course.name} (${course.code}). ${topicPart}\n\n${curriculum}\n\n${PRACTICE_MCQ_RULES}`;
@@ -14997,8 +15062,30 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   const SUB_BATCH = 4;
   const normQ = (q) => String(q || "").toLowerCase().replace(/\s+/g, " ").trim().slice(0, 80);
 
+  // No-repeat-ever memory: every question a user has seen for this course+topic
+  // is remembered in localStorage (per browser/user), so future practice runs
+  // never resurface a question they've already been asked - even in a brand
+  // new session, weeks later.
+  const SEEN_CAP = 1200; // cap so storage doesn't grow unbounded
+  const seenStoreKey = "ascend_seen_q:" + (course && course.id) + ":" + (topicName || "all");
+  const loadSeenHistory = () => {
+    try {
+      const raw = window.localStorage.getItem(seenStoreKey);
+      const arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    } catch (e) { return []; }
+  };
+  const saveSeenHistory = (arr) => {
+    try {
+      const trimmed = arr.length > SEEN_CAP ? arr.slice(arr.length - SEEN_CAP) : arr;
+      window.localStorage.setItem(seenStoreKey, JSON.stringify(trimmed));
+    } catch (e) { /* storage full or unavailable - fail silently, not critical */ }
+  };
+
   const generateBatch = async (n, onProgress) => {
-    const seen = new Set();
+    const history = loadSeenHistory();
+    const seen = new Set(history);
+    const newlySeen = [];
     let collected = [];
     let misses = 0;                 // consecutive calls that added nothing
     const maxMisses = 3;
@@ -15014,7 +15101,7 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
         const arr = parseAIJson(text);
         got = (Array.isArray(arr) ? arr : []).filter((x) => x && x.q && Array.isArray(x.o) && x.o.length === 4 && typeof x.a === "number" && x.a >= 0 && x.a < 4);
       } catch (e) { got = []; }
-      const fresh = got.filter((x) => { const k = normQ(x.q); if (seen.has(k)) return false; seen.add(k); return true; });
+      const fresh = got.filter((x) => { const k = normQ(x.q); if (seen.has(k)) return false; seen.add(k); newlySeen.push(k); return true; });
       if (fresh.length) {
         collected = collected.concat(fresh);
         misses = 0;
@@ -15023,6 +15110,7 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
         misses++;
       }
     }
+    if (newlySeen.length) saveSeenHistory(history.concat(newlySeen));
     return collected.slice(0, n);
   };
 
@@ -16374,7 +16462,18 @@ function PapersView({ app }) {
           )}
           {tab === "similar" && (
             <>
-              <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Paste one passco question</label>
+              {(TOPICS[courseId] || []).length > 0 && (
+                <>
+                  <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Which topic? <span style={{ color: "var(--text-3)", fontWeight: 400, fontSize: 12 }}>(leave blank for a mix of all topics)</span></label>
+                  <select className="auth-input" value={practiceTopicIdx} onChange={function(e) { setPracticeTopicIdx(e.target.value); }}>
+                    <option value="">All topics mixed</option>
+                    {(TOPICS[courseId] || []).map(function(title, idx) {
+                      return <option key={idx} value={String(idx)}>{title}</option>;
+                    })}
+                  </select>
+                </>
+              )}
+              <label className="eyebrow" style={{ display: "block", margin: "16px 0 8px" }}>Paste one passco question</label>
               <textarea className="pastebox" value={sample} placeholder={"e.g.\n\nThe plane dividing the body into left and right is the\nA. coronal  B. sagittal  C. transverse  D. oblique"} onChange={function(e) { setSample(e.target.value); }} />
               <label className="eyebrow" style={{ display: "block", margin: "16px 0 8px" }}>How many similar questions?</label>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>{[20, 30, 40, 50].map(function(n) {
@@ -16414,6 +16513,7 @@ function PapersView({ app }) {
       {tab === "similar" && similarActive && (
         <ChunkedPracticeSet
           course={courseById(courseId)}
+          topicName={practiceTopicIdx !== "" ? (TOPICS[courseId] || [])[parseInt(practiceTopicIdx, 10)] : null}
           sampleQuestion={sample}
           total={similarCount}
           requireMastery={true}
@@ -16717,6 +16817,36 @@ function loadPDFJS() {
   return _pdfjsPromise;
 }
 
+// Fallback for PDFs where pdf.js finds no embedded text layer (scanned/
+// image-based PDFs): render each page to a canvas and OCR it with Tesseract
+// (already used elsewhere in the app for image uploads). This produces plain
+// text, which is the only content format the /api/claude proxy actually
+// understands - unlike sending the raw PDF bytes as an Anthropic-style
+// "document" content block, which the Gemini-backed proxy cannot parse.
+async function ocrPdfToText(pdfjsLib, pdf, maxPages, onProgress) {
+  let text = "";
+  const pages = Math.min(pdf.numPages, maxPages);
+  for (let i = 1; i <= pages; i++) {
+    try {
+      const page = await pdf.getPage(i);
+      const viewport = page.getViewport({ scale: 2 });
+      const canvas = document.createElement("canvas");
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      const ctx = canvas.getContext("2d");
+      await page.render({ canvasContext: ctx, viewport }).promise;
+      if (onProgress) onProgress(i, pages);
+      const { data } = await Tesseract.recognize(canvas, "eng");
+      if (data && data.text && data.text.trim()) {
+        text += `\n--- Page ${i} ---\n${data.text}`;
+      }
+    } catch (e) {
+      continue; // skip pages that fail to render/OCR, keep the rest
+    }
+  }
+  return text.trim();
+}
+
 // ============================================================
 // ResourcesView - Fully Debugged
 // ============================================================
@@ -16802,22 +16932,23 @@ function ResourcesView() {
           setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 8000));
           
         } catch (pdfErr) {
-          // If PDF extraction fails, try fallback with base64 method
-          const msg = pdfErr && pdfErr.message ? pdfErr.message : "Could not read PDF";
-          
-          // Check if it's a scanned/image PDF
-          if (msg.toLowerCase().includes("image") || msg.toLowerCase().includes("scan")) {
-            throw new Error("This appears to be a scanned/image-based PDF. Please try copying the text directly from the PDF and pasting it instead.");
-          } else {
-            // Try base64 method as fallback
-            setStage("Trying alternative PDF reading method...");
-            const b64 = await readBase64(file);
+          // The embedded-text extraction found nothing (commonly a scanned/
+          // image-based PDF) or otherwise failed. Fall back to OCR-ing each
+          // page image client-side, then send the resulting plain text to
+          // the AI - this is the format the proxy actually supports.
+          try {
+            setStage("No text layer found - reading pages with OCR (this can take a minute)...");
+            const pdfjsLib = await loadPDFJS();
+            const arrayBuffer2 = await file.arrayBuffer();
+            const pdf2 = await pdfjsLib.getDocument({ data: arrayBuffer2 }).promise;
+            const ocrText = await ocrPdfToText(pdfjsLib, pdf2, 8, (done, total) => setStage(`Reading page ${done} of ${total} with OCR...`));
+            if (!ocrText) throw new Error("OCR found no readable text on these pages.");
+            let material = typed ? `${typed}\n\n${ocrText}` : ocrText;
+            if (material.length > 25000) material = material.slice(0, 25000) + "\n... (truncated)";
             setStage("Building your lesson...");
-            const content = [
-              { type: "document", source: { type: "base64", media_type: "application/pdf", data: b64 } },
-              { type: "text", text: SOCRATIC_TASK + (typed ? "\n\nFocus especially on: " + typed : "") }
-            ];
-            setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content }], 8000));
+            setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 8000));
+          } catch (ocrErr) {
+            throw new Error("This PDF's text could not be read automatically - it may be a low-quality scan. Please try copying the text directly from the PDF and pasting it instead.");
           }
         }
         
@@ -16966,7 +17097,7 @@ function StudyToolsView() {
     try {
       const raw = await callClaude(
         "You create hierarchical mind maps for KNUST medical laboratory science students. A mind map has a central topic, main branches, and sub-points under each. Return ONLY valid compact JSON, no prose, no markdown, no trailing commas.",
-        [{ role: "user", content: `Create a mind map of ${subject}. Format: {"central":"topic name","branches":[{"title":"main idea","points":["sub-point","sub-point"]}]}. Give 4 to 6 branches, each with 2 to 4 short points.` }],
+        [{ role: "user", content: `Create a mind map of ${subject}. Format: {"central":"topic name","branches":[{"title":"main idea","points":["sub-point","sub-point"]}],"recommendations":["short study tip","short study tip"]}. Give 4 to 6 branches, each with 2 to 4 short points. "points" must be pure high-yield facts (definitions, values, mechanisms) - never vague prose. "recommendations" is a separate list of 2 to 4 short, concrete study/recall tips for using this map (e.g. "Redraw this from memory, then check against the branches").` }],
         3000
       );
       const data = parseAIJson(raw);
@@ -17121,6 +17252,19 @@ function StudyToolsView() {
               </div>
             ))}
           </div>
+          {Array.isArray(map.recommendations) && map.recommendations.length > 0 && (
+            <div style={{ marginTop: 18, paddingTop: 14, borderTop: "1px solid var(--line)" }}>
+              <div className="eyebrow" style={{ marginBottom: 8 }}>Recommendations</div>
+              <ul style={{ margin: 0, paddingLeft: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 7 }}>
+                {map.recommendations.map((r, ri) => (
+                  <li key={ri} style={{ display: "flex", gap: 9, alignItems: "flex-start", color: "var(--text)", fontSize: 14, lineHeight: 1.55 }}>
+                    <span style={{ color: "var(--amber)", flexShrink: 0, marginTop: 6, width: 5, height: 5, borderRadius: "50%", background: "var(--amber)" }} />
+                    <span>{r}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
       {tab === "flow" && flowCode && (
@@ -18255,8 +18399,20 @@ Return ONLY compact JSON, no markdown, no trailing commas, all strings short: {"
         ))}
       </div>
       <div className="card" style={{ marginTop: 12 }}>
-        <div className="eyebrow">How to use the time</div>
-        <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 4, lineHeight: 1.6 }}>{hours < 2 ? "Under two hours: read each fact aloud once, then cover it and recall it. Do not open full lessons." : hours < 4 ? "A few hours: memorise the facts above, then blitz the MCQs for these topics to test recall." : "You have room: memorise these facts first, then open the full lessons for the High-priority topics to cement the mechanism."}</p>
+        <div className="eyebrow" style={{ marginBottom: 8 }}>Recommendations</div>
+        <ul style={{ margin: 0, paddingLeft: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 7 }}>
+          {(hours < 2
+            ? ["Read each fact aloud once, then cover it and recall it from memory.", "Do not open full lessons - bullets only, no exploring.", "Prioritise the High-priority topics; skip Low if time runs out."]
+            : hours < 4
+            ? ["Memorise the facts above first, topic by topic.", "Then blitz the MCQs for these topics to test recall.", "Re-check any bullet you got wrong before moving on."]
+            : ["Memorise these facts first, in priority order.", "Then open the full lessons for the High-priority topics to cement the mechanism.", "Finish with a full MCQ pass across all topics covered here."]
+          ).map((r, ri) => (
+            <li key={ri} style={{ display: "flex", gap: 9, alignItems: "flex-start", color: "var(--text)", fontSize: 14, lineHeight: 1.55 }}>
+              <span style={{ color: "var(--amber)", flexShrink: 0, marginTop: 6, width: 5, height: 5, borderRadius: "50%", background: "var(--amber)" }} />
+              <span>{r}</span>
+            </li>
+          ))}
+        </ul>
       </div>
       <button className="btn btn-a" style={{ width: "100%", marginTop: 12, padding: "14px" }} onClick={() => app.go("courses")}>Open the topics</button>
     </div>
