@@ -18126,12 +18126,8 @@ function AuthScreen({ onAuthed }) {
         {fStage === "newpass" && (
           <>
             <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0, lineHeight: 1.6 }}>Verified! Choose a new password.</p>
-            <label className="field"><span>New password</span>
-              <input className="auth-input" type="password" autoComplete="new-password" value={resetPw} onChange={(e) => setResetPw(e.target.value)} placeholder="At least 4 characters" />
-            </label>
-            <label className="field"><span>Confirm new password</span>
-              <input className="auth-input" type="password" autoComplete="new-password" value={resetPw2} onChange={(e) => setResetPw2(e.target.value)} placeholder="Repeat password" />
-            </label>
+            <PasswordInput label="New password" id="reset-newpass" autoComplete="new-password" value={resetPw} onChange={(e) => setResetPw(e.target.value)} placeholder="At least 4 characters" />
+            <PasswordInput label="Confirm new password" id="reset-newpass2" autoComplete="new-password" value={resetPw2} onChange={(e) => setResetPw2(e.target.value)} placeholder="Repeat password" />
             {err && <div className="auth-err">{err}</div>}
             <button className="btn btn-a auth-btn" onClick={confirmNewPassword} disabled={busy}>{busy ? "Saving..." : "Set new password"}</button>
           </>
