@@ -16820,23 +16820,34 @@ function loadPDFJS() {
 async function ocrPdfToText(pdfjsLib, pdf, maxPages, onProgress) {
   let text = "";
   const pages = Math.min(pdf.numPages, maxPages);
-  for (let i = 1; i <= pages; i++) {
-    try {
-      const page = await pdf.getPage(i);
-      const viewport = page.getViewport({ scale: 2 });
-      const canvas = document.createElement("canvas");
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
-      const ctx = canvas.getContext("2d");
-      await page.render({ canvasContext: ctx, viewport }).promise;
-      if (onProgress) onProgress(i, pages);
-      const { data } = await Tesseract.recognize(canvas, "eng");
-      if (data && data.text && data.text.trim()) {
-        text += `\n--- Page ${i} ---\n${data.text}`;
+  // Reuse a single worker across all pages instead of recognize()'s default
+  // behavior of spinning up a fresh worker (re-downloading the ~10MB language
+  // model) for every single call. With 8 pages that was 8x redundant loads,
+  // which is slow enough to blow past reasonable time budgets and made OCR
+  // effectively fail on most real scans.
+  const worker = await Tesseract.createWorker("eng");
+  try {
+    for (let i = 1; i <= pages; i++) {
+      try {
+        const page = await pdf.getPage(i);
+        const viewport = page.getViewport({ scale: 2 });
+        const canvas = document.createElement("canvas");
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext("2d");
+        await page.render({ canvasContext: ctx, viewport }).promise;
+        if (onProgress) onProgress(i, pages);
+        const { data } = await worker.recognize(canvas);
+        if (data && data.text && data.text.trim()) {
+          text += `\n--- Page ${i} ---\n${data.text}`;
+        }
+      } catch (e) {
+        console.log("OCR page failed:", i, e && e.message);
+        continue; // skip pages that fail to render/OCR, keep the rest
       }
-    } catch (e) {
-      continue; // skip pages that fail to render/OCR, keep the rest
     }
+  } finally {
+    try { await worker.terminate(); } catch {}
   }
   return text.trim();
 }
@@ -16935,14 +16946,19 @@ function ResourcesView() {
             const pdfjsLib = await loadPDFJS();
             const arrayBuffer2 = await file.arrayBuffer();
             const pdf2 = await pdfjsLib.getDocument({ data: arrayBuffer2 }).promise;
-            const ocrText = await ocrPdfToText(pdfjsLib, pdf2, 8, (done, total) => setStage(`Reading page ${done} of ${total} with OCR...`));
-            if (!ocrText) throw new Error("OCR found no readable text on these pages.");
+            const ocrText = await Promise.race([
+              ocrPdfToText(pdfjsLib, pdf2, 8, (done, total) => setStage(`Reading page ${done} of ${total} with OCR...`)),
+              new Promise((_, reject) => setTimeout(() => reject(new Error("OCR took too long (over 90 seconds) and was stopped.")), 90000))
+            ]);
+            if (!ocrText) throw new Error("OCR ran but found no readable text on these pages.");
             let material = typed ? `${typed}\n\n${ocrText}` : ocrText;
             if (material.length > 25000) material = material.slice(0, 25000) + "\n... (truncated)";
             setStage("Building your lesson...");
             setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 8000));
           } catch (ocrErr) {
-            throw new Error("This PDF's text could not be read automatically - it may be a low-quality scan. Please try copying the text directly from the PDF and pasting it instead.");
+            console.log("PDF OCR fallback failed:", ocrErr && ocrErr.message);
+            const reason = (ocrErr && ocrErr.message) || "an unknown error";
+            throw new Error(`This PDF's text could not be read automatically (${reason}). Please try copying the text directly from the PDF and pasting it instead.`);
           }
         }
         
@@ -19439,7 +19455,8 @@ export default function App() {
     setName,
     setReadingXp,
     setPasscoXp,
-    getStreakMultiplier
+    getStreakMultiplier,
+    lastTopic
   };
 
   const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
