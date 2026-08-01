@@ -17734,6 +17734,7 @@ function AuthScreen({ onAuthed }) {
   const [fStage, setFStage] = useState("who");    // who | code | newpass | done
   const [resetUserKey, setResetUserKey] = useState(""); // ascend_accounts key being reset
   const [resetEmail, setResetEmail] = useState("");
+  const [resetLookupEmail, setResetLookupEmail] = useState(""); // what the student types on the "who" stage
   const [resetCode, setResetCode] = useState("");
   const [resetPw, setResetPw] = useState("");
   const [resetPw2, setResetPw2] = useState("");
@@ -17941,30 +17942,25 @@ function AuthScreen({ onAuthed }) {
   // them into an unrelated account.
   const requestReset = async () => {
     clearMsgs();
-    const id = username.trim().toLowerCase();
+    const id = resetLookupEmail.trim().toLowerCase();
     if (!id) {
-      setErr("Type your username or email first.");
+      setErr("Type the email you signed up with.");
+      return;
+    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(id)) {
+      setErr("Enter a valid email address.");
       return;
     }
     setBusy(true);
     try {
       const accounts = (await store.get("ascend_accounts")) || {};
-      // Match by username key first, then fall back to scanning by email.
-      let key = accounts[id] ? id : "";
-      if (!key) {
-        key = Object.keys(accounts).find((k) => accounts[k].email && accounts[k].email.toLowerCase() === id) || "";
-      }
+      const key = Object.keys(accounts).find((k) => accounts[k].email && accounts[k].email.toLowerCase() === id) || "";
       if (!key) {
         setBusy(false);
-        setErr("No account found with that username or email. Check the spelling, or contact the ASCEND team if you're sure it's right.");
+        setErr("No account found with that email. Check the spelling, or contact the ASCEND team if you're sure it's right.");
         return;
       }
       const acct = accounts[key];
-      if (!acct.email) {
-        setBusy(false);
-        setErr("This account has no email on file, so it can't be reset automatically. Please contact the ASCEND team.");
-        return;
-      }
       const { error } = await supabase.auth.signInWithOtp({
         email: acct.email,
         options: { shouldCreateUser: true },
@@ -18044,6 +18040,7 @@ function AuthScreen({ onAuthed }) {
     setPw2("");
     setFStage("who");
     setResetUserKey("");
+    setResetLookupEmail("");
     setResetEmail("");
     setResetCode("");
     setResetPw("");
@@ -18072,9 +18069,9 @@ function AuthScreen({ onAuthed }) {
         <h2 style={{ fontSize: 19, margin: "0 0 12px" }}>Forgot your password?</h2>
         {fStage === "who" && (
           <>
-            <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0, lineHeight: 1.6 }}>Enter your username or the email you signed up with, and we'll email you a 6-digit code to verify it's you.</p>
-            <label className="field"><span>Username or email</span>
-              <input className="auth-input" name="username" autoComplete="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="prince_a  or  you@gmail.com" autoCapitalize="none" autoCorrect="off" />
+            <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0, lineHeight: 1.6 }}>Enter the email you signed up with, and we'll email you a 6-digit code to verify it's you.</p>
+            <label className="field"><span>Email</span>
+              <input className="auth-input" type="email" name="email" autoComplete="email" value={resetLookupEmail} onChange={(e) => setResetLookupEmail(e.target.value)} placeholder="you@gmail.com" autoCapitalize="none" autoCorrect="off" />
             </label>
             {err && <div className="auth-err">{err}</div>}
             {ok && <div style={{ color: "var(--good)", fontSize: 13, margin: "2px 0 12px" }}>{ok}</div>}
