@@ -12,7 +12,8 @@ const COHERE_MODEL = process.env.COHERE_MODEL || "command-r-08-2024";
 const DEEPSEEK_MODEL = process.env.DEEPSEEK_MODEL || "deepseek-chat";
 const TOGETHER_MODEL = process.env.TOGETHER_MODEL || "meta-llama/Llama-3.2-3B-Instruct-Turbo";
 const MISTRAL_MODEL = process.env.MISTRAL_MODEL || "mistral-tiny";
-const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash-lite";
+const CEREBRAS_MODEL = process.env.CEREBRAS_MODEL || "llama-3.3-70b";
+const FIREWORKS_MODEL = process.env.FIREWORKS_MODEL || "accounts/fireworks/models/llama-v3p1-8b-instruct";
 
 const PROVIDER_TIMEOUT_MS = 10000;
 
@@ -71,7 +72,8 @@ export default async function handler(req, res) {
   const deepseekKey = process.env.DEEPSEEK_API_KEY;
   const togetherKey = process.env.TOGETHER_API_KEY;
   const mistralKey = process.env.MISTRAL_API_KEY;
-  const geminiKey = process.env.GEMINI_API_KEY;
+  const cerebrasKey = process.env.CEREBRAS_API_KEY;
+  const fireworksKey = process.env.FIREWORKS_API_KEY;
 
   console.log("=== KEYS STATUS ===");
   console.log("Groq keys:", groqKeys.length);
@@ -80,9 +82,10 @@ export default async function handler(req, res) {
   console.log("DeepSeek:", !!deepseekKey);
   console.log("Together:", !!togetherKey);
   console.log("Mistral:", !!mistralKey);
-  console.log("Gemini:", !!geminiKey);
+  console.log("Cerebras:", !!cerebrasKey);
+  console.log("Fireworks:", !!fireworksKey);
   
-  if (!groqKeys.length && !openrouterKey && !cohereKey && !deepseekKey && !togetherKey && !mistralKey && !geminiKey) {
+  if (!groqKeys.length && !openrouterKey && !cohereKey && !deepseekKey && !togetherKey && !mistralKey && !cerebrasKey && !fireworksKey) {
     res.status(500).json({ error: "No AI provider keys configured." });
     return;
   }
@@ -327,73 +330,62 @@ export default async function handler(req, res) {
     return data;
   }
 
-  // 7. Gemini (last resort + files)
-  async function callGemini() {
-    if (!geminiKey) throw new Error("Gemini key not configured");
+  // 7. Cerebras
+  async function callCerebras() {
+    if (!cerebrasKey) throw new Error("Cerebras key not configured");
     
-    const contents = [];
-    if (Array.isArray(messages)) {
-      for (const m of messages) {
-        const role = m.role === "assistant" ? "model" : "user";
-        const parts = [];
-        if (Array.isArray(m.content)) {
-          for (const b of m.content) {
-            if (typeof b === "string") {
-              parts.push({ text: b });
-            } else if (b.type === "text" && b.text) {
-              parts.push({ text: b.text });
-            } else if ((b.type === "document" || b.type === "image") && b.source?.type === "base64") {
-              parts.push({ 
-                inlineData: { 
-                  mimeType: b.source.media_type || "application/pdf", 
-                  data: b.source.data 
-                } 
-              });
-            } else if (b.text) {
-              parts.push({ text: b.text });
-            }
-          }
-        } else {
-          parts.push({ text: String(m.content || "") });
-        }
-        if (parts.length === 0) parts.push({ text: "" });
-        contents.push({ role, parts });
-      }
-    }
-
-    const bodyOut = { 
-      contents, 
-      generationConfig: { 
-        maxOutputTokens: max_tokens || 1024, 
-        temperature: 0.7 
-      } 
-    };
-    if (system) bodyOut.systemInstruction = { parts: [{ text: String(system) }] };
-
-    const url = "https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent?key=" + geminiKey;
-    const r = await fetchWithTimeout(url, { 
-      method: "POST", 
-      headers: { "Content-Type": "application/json" }, 
-      body: JSON.stringify(bodyOut) 
+    const r = await fetchWithTimeout("https://api.cerebras.ai/v1/chat/completions", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json", 
+        "Authorization": "Bearer " + cerebrasKey 
+      },
+      body: JSON.stringify({
+        model: CEREBRAS_MODEL,
+        messages: toOpenAIMessages(),
+        max_tokens: max_tokens || 1024,
+        temperature: 0.7,
+      }),
     }, PROVIDER_TIMEOUT_MS);
     
     let data;
     try { data = await r.json(); } catch { data = null; }
     
     if (!r.ok || !data) {
-      const err = new Error(data?.error?.message || "Gemini request failed");
+      const err = new Error(data?.error?.message || "Cerebras request failed");
       err.status = r.status || 502;
-      if (r.status === 429) {
-        err.retryDelay = data?.error?.details?.find(d => d["@type"]?.includes("RetryInfo"))?.retryDelay || 60;
-      }
       throw err;
     }
+    return data;
+  }
+
+  // 8. Fireworks
+  async function callFireworks() {
+    if (!fireworksKey) throw new Error("Fireworks key not configured");
     
-    let text = "";
-    if (data.candidates?.[0]?.content?.parts) {
-      text = data.candidates[0].content.parts.map((p) => p.text || "").join("");
+    const r = await fetchWithTimeout("https://api.fireworks.ai/inference/v1/chat/completions", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json", 
+        "Authorization": "Bearer " + fireworksKey 
+      },
+      body: JSON.stringify({
+        model: FIREWORKS_MODEL,
+        messages: toOpenAIMessages(),
+        max_tokens: max_tokens || 1024,
+        temperature: 0.7,
+      }),
+    }, PROVIDER_TIMEOUT_MS);
+    
+    let data;
+    try { data = await r.json(); } catch { data = null; }
+    
+    if (!r.ok || !data) {
+      const err = new Error(data?.error?.message || "Fireworks request failed");
+      err.status = r.status || 502;
+      throw err;
     }
-    return { choices: [{ message: { content: text } }] };
+    return data;
   }
 
   // === MAIN CHAIN ===
@@ -405,7 +397,8 @@ export default async function handler(req, res) {
     if (deepseekKey) providers.push({ name: "DeepSeek", fn: callDeepSeek });
     if (togetherKey) providers.push({ name: "Together", fn: callTogether });
     if (mistralKey) providers.push({ name: "Mistral", fn: callMistral });
-    if (geminiKey) providers.push({ name: "Gemini", fn: callGemini });
+    if (cerebrasKey) providers.push({ name: "Cerebras", fn: callCerebras });
+    if (fireworksKey) providers.push({ name: "Fireworks", fn: callFireworks });
 
     if (!providers.length) {
       throw new Error("No AI providers configured");
@@ -451,32 +444,15 @@ export default async function handler(req, res) {
 
   // === EXECUTE ===
   try {
-    let result;
     if (hasFileContent) {
-      console.log("File content detected, trying providers...");
-      let chainErr = null;
-      try {
-        result = await callTextChain();
-      } catch (e) {
-        chainErr = e;
-      }
-      
-      if (!result && geminiKey) {
-        console.log("Falling back to Gemini for file...");
-        try {
-          result = await callGemini();
-        } catch (geminiErr) {
-          throw chainErr || geminiErr;
-        }
-      }
-      
-      if (!result) {
-        throw chainErr || new Error("No provider could process this file");
-      }
-    } else {
-      result = await callTextChain();
+      // None of the configured providers accept raw image/document blocks -
+      // that was Gemini-only. The client (App.js) already extracts PDF/image
+      // text before calling this endpoint, so this path shouldn't normally
+      // be hit; fail clearly instead of silently trying and failing.
+      console.log("Raw file content block received, but no vision-capable provider is configured.");
+      throw Object.assign(new Error("This endpoint only accepts plain text. Extract text from files before sending."), { status: 400 });
     }
-    
+    const result = await callTextChain();
     res.status(200).json(result);
   } catch (err) {
     const status = err?.status || 502;
