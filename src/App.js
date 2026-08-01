@@ -15053,7 +15053,7 @@ function InteractiveSet({ items }) {
    background while the student is answering/correcting, so continuing
    feels instant.
    ============================================================ */
-const PRACTICE_MCQ_RULES = "Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which option is correct across questions. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {\"q\": string, \"o\": [4 strings], \"correct\": the exact text of the correct option copied verbatim from \"o\", \"w\": one short explanation}. Double-check that \"correct\" is copied character-for-character from one of the four options in \"o\".";
+const PRACTICE_MCQ_RULES = "Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which option is correct across questions. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {\"q\": string, \"o\": [4 strings], \"correct\": the exact text of the correct option copied verbatim from \"o\", \"w\": one short explanation}.  ACCURACY IS CRITICAL: for EACH question, independently work out the correct answer from your own subject knowledge and set \"correct\" to exactly that option. If two options could both be defended, rewrite the question so exactly one is unambiguously correct. Never mark an answer you are not fully certain is factually correct - if unsure, replace that question with one whose answer you are certain of. The one-line explanation in \"w\" must justify why \"correct\" is right.";
 
 function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQuiz, total, sampleQuestion }) {
   const TOTAL = total || 100;
@@ -16338,7 +16338,7 @@ function PapersView({ app }) {
     }
   }, []);
   
-  const RULES = "Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which option is correct across questions. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {\"q\": string, \"o\": [4 strings], \"correct\": the exact text of the correct option copied verbatim from \"o\", \"w\": one short explanation}. Double-check that \"correct\" is copied character-for-character from one of the four options in \"o\".";
+  const RULES = "Rules: single best-answer MCQs, recall and understanding, NO diagrams. Make all four options similar in length and equally plausible so the answer is never obvious. Vary which option is correct across questions. No repeats. Return ONLY a JSON array - no prose, no markdown. Each item: {\"q\": string, \"o\": [4 strings], \"correct\": the exact text of the correct option copied verbatim from \"o\", \"w\": one short explanation}.  ACCURACY IS CRITICAL: for EACH question, independently work out the correct answer from your own subject knowledge and set \"correct\" to exactly that option. If two options could both be defended, rewrite the question so exactly one is unambiguously correct. Never mark an answer you are not fully certain is factually correct - if unsure, replace that question with one whose answer you are certain of. The one-line explanation in \"w\" must justify why \"correct\" is right.";
   
   const shuffleOptions = function(arr) {
     return arr.map(function(item) {
@@ -17161,7 +17161,7 @@ function StudyToolsView() {
     try {
       const raw = await callClaude(
         "You create hierarchical mind maps for KNUST medical laboratory science students. A mind map has a central topic, main branches, and sub-points under each. Return ONLY valid compact JSON, no prose, no markdown, no trailing commas. Only include facts you are confident are correct - do not invent specific numbers or classifications you are unsure of.",
-        [{ role: "user", content: `Create a mind map of ${subject}. Format: {"central":"topic name","branches":[{"title":"main idea","points":["sub-point","sub-point"]}],"recommendations":["short study tip","short study tip"]}. Give 4 to 6 branches, each with 2 to 4 short points. "points" must be pure high-yield facts (definitions, values, mechanisms) - never vague prose. "recommendations" is a separate list of 2 to 4 short, concrete study/recall tips for using this map (e.g. "Redraw this from memory, then check against the branches").` }],
+        [{ role: "user", content: `Create a mind map of ${subject}. Format: {"central":"topic name","branches":[{"title":"main idea","points":["sub-point","sub-point"]}],"recommendations":["short study tip","short study tip"]}. Give 4 to 6 branches, each with 2 to 4 short points. "points" must be pure high-yield EXAM facts - specifically the 20% of content that appears in ~80% of exams: the definitions, values, classifications, enzymes and mechanisms an examiner keeps testing. Each point a crisp memorisable fact, never vague prose (good: "Glycolysis nets 2 ATP, 2 NADH, 2 pyruvate"; bad: "Glycolysis is important"). "recommendations" is a separate list of 2 to 4 short, concrete study/recall tips for using this map (e.g. "Redraw this from memory, then check against the branches").` }],
         3000
       );
       const data = parseAIJson(raw);
@@ -17344,6 +17344,44 @@ function StudyToolsView() {
   );
 }
 /* ------------------------------- home ----------------------------------- */
+// A daily-rotating motivational line for the home screen. Deterministic by date,
+// so every student sees the same quote each day and it changes at midnight.
+const MOTIVATION_QUOTES = [
+  { q: "The lab does not care how you feel today. Show up anyway - competence is built on the days you did not want to.", a: "ASCEND" },
+  { q: "One accurate result can change a diagnosis. One more topic tonight can change your grade. Both are worth it.", a: "ASCEND" },
+  { q: "You are not behind. You are exactly one focused hour away from understanding the thing you feared.", a: "ASCEND" },
+  { q: "Discipline is choosing what you want most over what you want now.", a: "Abraham Lincoln" },
+  { q: "Small daily improvements are the key to staggering long-term results.", a: "Robin Sharma" },
+  { q: "The expert in anything was once a beginner who refused to quit.", a: "Helen Hayes" },
+  { q: "A smooth sea never made a skilled sailor. Hard topics are making you a scientist.", a: "Franklin D. Roosevelt" },
+  { q: "Do not wish it were easier. Wish you were better.", a: "Jim Rohn" },
+  { q: "Every slide you master today is a patient you serve better tomorrow.", a: "ASCEND" },
+  { q: "Success is the sum of small efforts repeated day in and day out.", a: "Robert Collier" },
+  { q: "The pain of discipline weighs ounces. The pain of regret weighs tons.", a: "Jim Rohn" },
+  { q: "You do not have to be extraordinary to start. You have to start to become extraordinary.", a: "ASCEND" },
+  { q: "Fall seven times, stand up eight.", a: "Japanese proverb" },
+  { q: "Knowledge is the one thing no one can take from you. Stack it daily.", a: "ASCEND" },
+  { q: "The two best days are the day you started and the day you understood why.", a: "ASCEND" },
+  { q: "Slow progress is still progress. Do not stop.", a: "ASCEND" },
+  { q: "Study while others sleep; work while others waste time. First Class is built quietly.", a: "ASCEND" },
+  { q: "Your future patients are counting on the questions you answer tonight.", a: "ASCEND" },
+  { q: "Motivation gets you started. Habit keeps you going. Build the habit.", a: "Jim Ryun" },
+  { q: "It always seems impossible until it is done.", a: "Nelson Mandela" },
+  { q: "If you are tired, learn to rest, not to quit.", a: "Banksy" },
+  { q: "The person who moves a mountain begins by carrying away small stones.", a: "Confucius" },
+  { q: "You are allowed to be both a masterpiece and a work in progress.", a: "ASCEND" },
+  { q: "Consistency beats intensity. Ten minutes today beats three hours next week.", a: "ASCEND" },
+  { q: "Doubt kills more dreams than failure ever will. Open the topic anyway.", a: "Suzy Kassem" },
+  { q: "The climb to First Class is together. No gatekeeping. Keep moving.", a: "ASCEND" },
+];
+
+function motivationForToday() {
+  const start = new Date(new Date().getFullYear(), 0, 0);
+  const diff = new Date() - start;
+  const dayOfYear = Math.floor(diff / 86400000);
+  return MOTIVATION_QUOTES[dayOfYear % MOTIVATION_QUOTES.length];
+}
+
 function HomeView({ app }) {
   const jsDay = new Date().getDay();
   const todayCourse = courseById(DAILY[jsDay].courseId);
@@ -17417,6 +17455,20 @@ function HomeView({ app }) {
     }}>Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
   </div>
 </div>
+
+      {(() => {
+        const mq = motivationForToday();
+        return (
+          <div className="card" style={{ marginTop: 16, borderLeft: "3px solid var(--amber)", display: "flex", gap: 12, alignItems: "flex-start" }}>
+            <div style={{ flexShrink: 0, width: 34, height: 34, borderRadius: 10, background: "var(--amber-dim)", color: "var(--amber)", display: "flex", alignItems: "center", justifyContent: "center", marginTop: 2 }}><Ic.flame p={18} /></div>
+            <div>
+              <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 5 }}>Daily fuel</div>
+              <div style={{ fontSize: 15, lineHeight: 1.6, fontWeight: 550 }}>"{mq.q}"</div>
+              <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 6 }}>— {mq.a}</div>
+            </div>
+          </div>
+        );
+      })()}
 
       {(() => {
         // Exam countdown - end-of-semester exams begin 17 August 2026.
@@ -17672,25 +17724,19 @@ function AuthScreen({ onAuthed }) {
     clearMsgs();
     try {
       setBusy(true);
-      // Detect if in standalone PWA mode
-      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-      
-      // Use redirect instead of popup for PWA
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
           redirectTo: window.location.origin,
-          // For PWA, this helps handle the redirect better
-          ...(isStandalone && { 
-            // In standalone mode, use the same window
-            // No extra options needed if the OAuth config handles it
-          })
+          // Force Google's "choose an account" picker instead of letting the
+          // installed PWA fall back to the raw email + password form (which most
+          // students can't complete, because the account picker normally saves
+          // them from ever typing that password).
+          queryParams: { prompt: "select_account" },
         },
       });
       if (error) throw error;
-      
-      // For PWA, we need to handle the redirect
-      // The page will redirect to Google, then come back
+      // The page now redirects to Google and returns to redirectTo after sign-in.
     } catch (e) {
       setErr(e && e.message ? e.message : "Google sign-in could not start. Please try again.");
       setBusy(false);
@@ -18328,10 +18374,23 @@ function LAMLAView({ app }) {
       return;
     }
     
+    // Depth scales with time left: less time = ONLY the most obvious, highest-yield
+    // facts (the 20% that shows up in 80% of exams); more time allows second-tier detail.
+    let timeGuidance;
+    if (hours <= 1) {
+      timeGuidance = "The student has about 1 hour or less - this is CRITICAL triage. Give ONLY the most exam-guaranteed, obvious high-yield facts: the 20% of the content that shows up in ~80% of exams. At most 3 bullets per topic, the ones you would bet money appear on the paper. Nothing niche, nothing second-tier.";
+    } else if (hours <= 3) {
+      timeGuidance = "The student has limited time. High-yield only - the facts most likely to be tested. 3 to 4 tight bullets per topic. Skip anything obscure.";
+    } else {
+      timeGuidance = "The student has a bit more time. Cover the core high-yield facts plus the most important second-tier detail. 4 to 5 bullets per topic.";
+    }
+
     const prompt = `A KNUST medical laboratory science student is cramming for their ${course.name} (${course.code}) exam with ${hours} hours left. Preparation: "${prepOptions[prep]}". Goal: ${goal}. Format: ${examType}.
 Topics to cover: ${topicsToCover.join("; ")}.
 
-You are triaging for the exam, NOT teaching. For each topic give 3 to 5 "bullets" that are the actual exam-guaranteed facts to MEMORISE - specific definitions, values, classifications, steps, enzymes, or one-liners. NOT study instructions. Keep each bullet short. Example style: "Resting potential = -70 mV, set by K+ permeability"; "Na/K pump: 3 Na out, 2 K in per ATP - electrogenic".
+${timeGuidance}
+
+You are triaging for the exam, NOT teaching. For each topic give "bullets" that are the actual exam-guaranteed facts to MEMORISE - specific definitions, values, classifications, steps, enzymes, or one-liners. NOT study instructions. Keep each bullet short. Example style: "Resting potential = -70 mV, set by K+ permeability"; "Na/K pump: 3 Na out, 2 K in per ATP - electrogenic".
 
 Return ONLY compact JSON, no markdown, no trailing commas, all strings short: {"topics":[{"topic":"name","allocatedMinutes":20,"priority":"High","bullets":["fact","fact","fact"]}],"summary":{"confidence":"65%","targetScore":"70%","focusAreas":["area","area","area"]}}`;
     
