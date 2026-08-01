@@ -13170,6 +13170,14 @@ const API_ENDPOINT = "/api/claude";
 /* Password-reset backend (see password-reset.js), e.g. "/api/request-reset".
    While empty, the reset screen explains that email delivery is not yet connected. */
 const AUTH_ENDPOINT = "";
+// Guard flag: while a self-service password reset is verifying its OTP code,
+// Supabase briefly creates a real auth session for the reset email. The app's
+// global onAuthStateChange listener must NOT adopt that as a sign-in (it would
+// log the student into a different, throwaway identity mid-reset). This flag
+// is flipped on right before verifyOtp is called during a reset, and back off
+// right after (in both success and failure paths), so the listener can tell
+// "resetting a password" apart from a genuine sign-in.
+let ASCEND_RESET_GUARD = false;
 
 /* Gemini sometimes wraps JSON in markdown fences, adds prose around it, or
    leaves a trailing comma - all of which break JSON.parse. This helper pulls out
@@ -17614,7 +17622,98 @@ function HomeView({ app }) {
   );
 }
 /* ------------------------------- auth ----------------------------------- */
-const encodePw = (s) => { try { return btoa(unescape(encodeURIComponent(s))); } catch { return s; } };
+// --- Password hashing -------------------------------------------------
+// History: local username/password accounts first stored passwords as plain
+// base64 (trivially reversible), then a single round of salted SHA-256
+// (fast to brute-force at billions/sec on a GPU). This is the strongest
+// version we can reasonably do with no backend: PBKDF2-HMAC-SHA256 with a
+// high iteration count, via the browser's built-in Web Crypto API. PBKDF2
+// is deliberately slow - each guess costs real compute - which is what
+// actually matters for password storage, not just "not plaintext". Every
+// account also gets its own random salt so two students with the same
+// password never produce the same hash, defeating rainbow tables.
+//
+// acct.algo tags which scheme produced acct.hash, so old accounts verify
+// correctly and get silently upgraded to the strongest scheme the moment
+// they next log in successfully - see verifyAndMigratePw.
+const PBKDF2_ITERATIONS = 150000;
+const CURRENT_PW_ALGO = "pbkdf2-sha256-150000";
+
+const legacyEncodePw = (s) => { try { return btoa(unescape(encodeURIComponent(s))); } catch { return s; } };
+
+const randomSaltHex = () => {
+  const bytes = new Uint8Array(16);
+  (window.crypto || window.msCrypto).getRandomValues(bytes);
+  return Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join("");
+};
+
+const bufToHex = (buf) => Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
+
+const sha256Hex = async (s) => {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+  return bufToHex(digest);
+};
+
+const pbkdf2Hex = async (pw, saltHex, iterations) => {
+  const keyMaterial = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), { name: "PBKDF2" }, false, ["deriveBits"]);
+  const saltBytes = new Uint8Array((saltHex.match(/.{2}/g) || []).map((h) => parseInt(h, 16)));
+  const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt: saltBytes, iterations, hash: "SHA-256" }, keyMaterial, 256);
+  return bufToHex(bits);
+};
+
+// Hash a password with a fresh random salt for a brand-new/reset password,
+// always using the current strongest scheme.
+const hashNewPw = async (pw) => {
+  const salt = randomSaltHex();
+  const hash = await pbkdf2Hex(pw, salt, PBKDF2_ITERATIONS);
+  return { salt, hash, algo: CURRENT_PW_ALGO };
+};
+
+// --- Brute-force lockout -----------------------------------------------
+// A handful of guesses is normal (fat fingers); dozens in a row is an
+// attack. After MAX_FAILED_ATTEMPTS wrong passwords, the account is locked
+// for LOCKOUT_MS regardless of whether the next guess would be correct,
+// which is what actually stops automated password guessing (hashing
+// strength alone doesn't help if the attacker can just keep asking the
+// login form). A successful login always clears the counter.
+const MAX_FAILED_ATTEMPTS = 6;
+const LOCKOUT_MS = 15 * 60 * 1000; // 15 minutes
+
+// Check a typed password against a stored account. Supports the current
+// PBKDF2 format and both older formats (single-round salted SHA-256, and
+// the original plain base64) so nobody's account breaks. Returns
+// { ok, locked, retryAt, upgrade, failCount } - if ok is true and upgrade
+// is a {salt, hash, algo} object, the caller should overwrite the
+// account's fields with it (the login just proved the password, so this is
+// the one safe moment to move it onto the strongest scheme without ever
+// asking the student to do anything).
+const verifyAndMigratePw = async (acct, pw) => {
+  const now = Date.now();
+  if (acct.lockUntil && acct.lockUntil > now) {
+    return { ok: false, locked: true, retryAt: acct.lockUntil, upgrade: null, failCount: acct.failCount || 0 };
+  }
+
+  let ok = false;
+  let upgrade = null;
+  if (acct.algo === CURRENT_PW_ALGO && acct.salt && acct.hash) {
+    ok = (await pbkdf2Hex(pw, acct.salt, PBKDF2_ITERATIONS)) === acct.hash;
+  } else if (acct.salt && acct.hash) {
+    // Older single-round SHA-256 format (no algo tag).
+    ok = (await sha256Hex(acct.salt + ":" + pw)) === acct.hash;
+    if (ok) upgrade = await hashNewPw(pw);
+  } else if (acct.pass !== undefined) {
+    // Original plain base64 format.
+    ok = acct.pass === legacyEncodePw(pw);
+    if (ok) upgrade = await hashNewPw(pw);
+  }
+
+  if (ok) {
+    return { ok: true, locked: false, retryAt: null, upgrade, failCount: 0 };
+  }
+  const failCount = (acct.failCount || 0) + 1;
+  const lockUntil = failCount >= MAX_FAILED_ATTEMPTS ? now + LOCKOUT_MS : null;
+  return { ok: false, locked: false, retryAt: lockUntil, upgrade: null, failCount, lockUntil };
+};
 const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [] });
 const progKey = (u) => "ascend_progress:" + String(u).toLowerCase();
 // "Jump back in" needs to survive the user closing and reopening the app -
@@ -17632,7 +17731,12 @@ function AuthScreen({ onAuthed }) {
   const [err, setErr] = useState("");
   const [ok, setOk] = useState("");
   const [busy, setBusy] = useState(false);
-  const [fStage, setFStage] = useState("who");    // who | sent
+  const [fStage, setFStage] = useState("who");    // who | code | newpass | done
+  const [resetUserKey, setResetUserKey] = useState(""); // ascend_accounts key being reset
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetCode, setResetCode] = useState("");
+  const [resetPw, setResetPw] = useState("");
+  const [resetPw2, setResetPw2] = useState("");
 
   // remember the last student who used this device, so the field is prefilled
   useEffect(() => { (async () => { const last = await store.get("ascend_last_user"); if (last) setUsername(last); })(); }, []);
@@ -17746,7 +17850,8 @@ function AuthScreen({ onAuthed }) {
           setErr("That username already exists. Switch to Log in to sign in with it.");
           return;
         }
-        const acct = { username: u, email: email.trim().toLowerCase(), pass: encodePw(pw), createdAt: Date.now() };
+        const { salt, hash, algo } = await hashNewPw(pw);
+        const acct = { username: u, email: email.trim().toLowerCase(), salt, hash, algo, createdAt: Date.now() };
         accounts[key] = acct;
         await store.set("ascend_accounts", accounts);
         await store.set("ascend_session", key);
@@ -17772,28 +17877,68 @@ function AuthScreen({ onAuthed }) {
       // login
       const acct = accounts[key];
       if (!acct) { setBusy(false); setErr("No account with that username. Tap Create account to sign up."); return; }
-      if (acct.pass !== encodePw(pw)) { setBusy(false); setErr("Password is not right. Try again or reset it."); return; }
+      const result = await verifyAndMigratePw(acct, pw);
+      if (result.locked) {
+        setBusy(false);
+        const mins = Math.max(1, Math.ceil((result.retryAt - Date.now()) / 60000));
+        setErr(`Too many wrong passwords. This account is temporarily locked - try again in about ${mins} minute${mins === 1 ? "" : "s"}, or reset your password.`);
+        return;
+      }
+      if (!result.ok) {
+        // Persist the failed attempt so lockout survives even if the student
+        // closes the app and comes straight back to try again.
+        accounts[key] = { ...acct, failCount: result.failCount, ...(result.lockUntil ? { lockUntil: result.lockUntil } : {}) };
+        await store.set("ascend_accounts", accounts);
+        setBusy(false);
+        if (result.lockUntil) {
+          setErr("Too many wrong passwords. This account is now locked for 15 minutes. Please try again later, or reset your password.");
+        } else {
+          const left = MAX_FAILED_ATTEMPTS - result.failCount;
+          setErr(`Password is not right. ${left} attempt${left === 1 ? "" : "s"} left before a temporary lockout. Try again or reset it.`);
+        }
+        return;
+      }
+      let finalAcct = acct;
+      if (result.upgrade) {
+        // The login just proved the password - this is the one safe moment
+        // to move this account onto the strongest hashing scheme available.
+        finalAcct = { ...acct, salt: result.upgrade.salt, hash: result.upgrade.hash, algo: result.upgrade.algo };
+        delete finalAcct.pass;
+      }
+      // A successful login always clears any failed-attempt history.
+      delete finalAcct.failCount;
+      delete finalAcct.lockUntil;
+      accounts[key] = finalAcct;
+      await store.set("ascend_accounts", accounts);
       await store.set("ascend_session", key);
-      await store.set("ascend_last_user", acct.username);
+      await store.set("ascend_last_user", finalAcct.username);
       
       // FIXED: Make sure this user appears on the board
-      const boardKey = "ascend_board:" + acct.username.toLowerCase().replace(/[^a-z0-9]/g, "");
-      const savedP = await store.get(progKey(acct.username));
+      const boardKey = "ascend_board:" + finalAcct.username.toLowerCase().replace(/[^a-z0-9]/g, "");
+      const savedP = await store.get(progKey(finalAcct.username));
       await store.setShared(boardKey, { 
-        name: acct.username, 
+        name: finalAcct.username, 
         xp: savedP ? savedP.xp || 0 : 0, 
         streak: savedP ? savedP.streak || 0 : 0 
       });
-      db.publishLocalUser(acct.username, savedP ? savedP.xp || 0 : 0, savedP ? savedP.streak || 0 : 0);
+      db.publishLocalUser(finalAcct.username, savedP ? savedP.xp || 0 : 0, savedP ? savedP.streak || 0 : 0);
       
       setBusy(false);
-      onAuthed(acct);
+      onAuthed(finalAcct);
     } catch (e) {
       setBusy(false);
       setErr("Something went wrong. Please try again.");
     }
   };
 
+  // Self-service reset for local username/password accounts. These accounts
+  // aren't Supabase auth users, but we captured their email at signup and
+  // email delivery now works - so we borrow the same OTP system used for
+  // email sign-in purely as an identity-verification step: send a 6-digit
+  // code to the email on file, verify it, then let the student set a new
+  // local password. The OTP-created Supabase session is discarded right
+  // after verification (see ASCEND_RESET_GUARD above) so this never logs
+  // them into an unrelated account.
   const requestReset = async () => {
     clearMsgs();
     const id = username.trim().toLowerCase();
@@ -17802,31 +17947,94 @@ function AuthScreen({ onAuthed }) {
       return;
     }
     setBusy(true);
-    // Real email delivery needs the reset backend (see password-reset.js). When
-    // AUTH_ENDPOINT is set, this calls it; until then we tell the student plainly.
-    if (AUTH_ENDPOINT) {
-      try {
-        const res = await fetch(AUTH_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ identifier: id })
-        });
+    try {
+      const accounts = (await store.get("ascend_accounts")) || {};
+      // Match by username key first, then fall back to scanning by email.
+      let key = accounts[id] ? id : "";
+      if (!key) {
+        key = Object.keys(accounts).find((k) => accounts[k].email && accounts[k].email.toLowerCase() === id) || "";
+      }
+      if (!key) {
         setBusy(false);
-        if (res.ok) {
-          setFStage("sent");
-          return;
-        }
-        throw new Error("reset service error");
-      } catch (error) {
-        setBusy(false);
-        setErr("The reset email could not be sent right now. Please try again later.");
+        setErr("No account found with that username or email. Check the spelling, or contact the ASCEND team if you're sure it's right.");
         return;
       }
+      const acct = accounts[key];
+      if (!acct.email) {
+        setBusy(false);
+        setErr("This account has no email on file, so it can't be reset automatically. Please contact the ASCEND team.");
+        return;
+      }
+      const { error } = await supabase.auth.signInWithOtp({
+        email: acct.email,
+        options: { shouldCreateUser: true },
+      });
+      if (error) throw error;
+      setResetUserKey(key);
+      setResetEmail(acct.email);
+      setResetCode("");
+      setBusy(false);
+      setOk("We sent a 6-digit code to " + acct.email + ". Check your inbox (and spam).");
+      setFStage("code");
+    } catch (e) {
+      setBusy(false);
+      setErr(e && e.message ? e.message : "The reset code could not be sent right now. Please try again later.");
     }
-    // If no reset endpoint is configured, show a clear message
-    setBusy(false);
-    setOk("A reset link would be sent here, but email delivery is not yet configured. Please contact the ASCEND team for password reset assistance.");
-    setFStage("sent");
+  };
+
+  const verifyResetCode = async () => {
+    clearMsgs();
+    const code = resetCode.trim();
+    if (code.length < 6) { setErr("Enter the 6-digit code from your email."); return; }
+    setBusy(true);
+    ASCEND_RESET_GUARD = true;
+    try {
+      const { error } = await supabase.auth.verifyOtp({ email: resetEmail, token: code, type: "email" });
+      if (error) throw error;
+      // Discard the throwaway Supabase session the OTP verify just created -
+      // we only needed it to prove the student owns this email.
+      try { await supabase.auth.signOut(); } catch {}
+      setBusy(false);
+      setResetPw("");
+      setResetPw2("");
+      setOk("");
+      setFStage("newpass");
+    } catch (e) {
+      setBusy(false);
+      setErr(e && e.message ? e.message : "That code was not valid. Check it, or go back and resend a new one.");
+    } finally {
+      ASCEND_RESET_GUARD = false;
+    }
+  };
+
+  const confirmNewPassword = async () => {
+    clearMsgs();
+    if (resetPw.length < 4) { setErr("Use a password of at least 4 characters."); return; }
+    if (resetPw !== resetPw2) { setErr("The two passwords do not match."); return; }
+    setBusy(true);
+    try {
+      const accounts = (await store.get("ascend_accounts")) || {};
+      if (!accounts[resetUserKey]) {
+        setBusy(false);
+        setErr("Something went wrong finding that account. Please start the reset again.");
+        setFStage("who");
+        return;
+      }
+      const { salt, hash, algo } = await hashNewPw(resetPw);
+      const upd = { ...accounts[resetUserKey], salt, hash, algo };
+      delete upd.pass;
+      delete upd.failCount;
+      delete upd.lockUntil;
+      accounts[resetUserKey] = upd;
+      await store.set("ascend_accounts", accounts);
+      setBusy(false);
+      setResetPw("");
+      setResetPw2("");
+      setFStage("done");
+    } catch (e) {
+      setBusy(false);
+      setErr("Something went wrong saving the new password. Please try again.");
+    }
   };
 
   const goTab = (t) => {
@@ -17835,6 +18043,11 @@ function AuthScreen({ onAuthed }) {
     setPw("");
     setPw2("");
     setFStage("who");
+    setResetUserKey("");
+    setResetEmail("");
+    setResetCode("");
+    setResetPw("");
+    setResetPw2("");
   };
 
   const Logo = (
@@ -17859,26 +18072,47 @@ function AuthScreen({ onAuthed }) {
         <h2 style={{ fontSize: 19, margin: "0 0 12px" }}>Forgot your password?</h2>
         {fStage === "who" && (
           <>
-            <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0, lineHeight: 1.6 }}>Enter your username or the email you signed up with, and we will send a reset link to your email.</p>
+            <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0, lineHeight: 1.6 }}>Enter your username or the email you signed up with, and we'll email you a 6-digit code to verify it's you.</p>
             <label className="field"><span>Username or email</span>
               <input className="auth-input" name="username" autoComplete="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="prince_a  or  you@gmail.com" autoCapitalize="none" autoCorrect="off" />
             </label>
             {err && <div className="auth-err">{err}</div>}
-            <button className="btn btn-a auth-btn" onClick={requestReset} disabled={busy}>{busy ? "Sending..." : "Send reset link"}</button>
+            {ok && <div style={{ color: "var(--good)", fontSize: 13, margin: "2px 0 12px" }}>{ok}</div>}
+            <button className="btn btn-a auth-btn" onClick={requestReset} disabled={busy}>{busy ? "Sending..." : "Send code"}</button>
             <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 10 }} onClick={() => goTab("login")}>Back to log in</button>
           </>
         )}
-        {fStage === "sent" && (
+        {fStage === "code" && (
+          <>
+            <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0, lineHeight: 1.6 }}>Enter the 6-digit code we sent to <strong>{resetEmail}</strong>.</p>
+            <label className="field"><span>6-digit code</span>
+              <input className="auth-input" inputMode="numeric" value={resetCode} onChange={(e) => setResetCode(e.target.value.replace(/[^0-9]/g, "").slice(0, 6))} placeholder="123456" maxLength={6} style={{ letterSpacing: 4, textAlign: "center", fontSize: 20, fontWeight: 700 }} />
+            </label>
+            {err && <div className="auth-err">{err}</div>}
+            <button className="btn btn-a auth-btn" onClick={verifyResetCode} disabled={busy}>{busy ? "Verifying..." : "Verify code"}</button>
+            <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 10 }} onClick={requestReset} disabled={busy}>Resend code</button>
+            <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 6 }} onClick={() => goTab("login")}>Back to log in</button>
+          </>
+        )}
+        {fStage === "newpass" && (
+          <>
+            <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0, lineHeight: 1.6 }}>Verified! Choose a new password.</p>
+            <label className="field"><span>New password</span>
+              <input className="auth-input" type="password" autoComplete="new-password" value={resetPw} onChange={(e) => setResetPw(e.target.value)} placeholder="At least 4 characters" />
+            </label>
+            <label className="field"><span>Confirm new password</span>
+              <input className="auth-input" type="password" autoComplete="new-password" value={resetPw2} onChange={(e) => setResetPw2(e.target.value)} placeholder="Repeat password" />
+            </label>
+            {err && <div className="auth-err">{err}</div>}
+            <button className="btn btn-a auth-btn" onClick={confirmNewPassword} disabled={busy}>{busy ? "Saving..." : "Set new password"}</button>
+          </>
+        )}
+        {fStage === "done" && (
           <>
             <div className="card" style={{ background: "var(--good-dim)", padding: 16, marginBottom: 14 }}>
-              <div style={{ fontWeight: 700, color: "var(--good)", marginBottom: 5 }}>
-                {AUTH_ENDPOINT ? "Check your email" : "Password reset assistance needed"}
-              </div>
+              <div style={{ fontWeight: 700, color: "var(--good)", marginBottom: 5 }}>Password updated</div>
               <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>
-                {AUTH_ENDPOINT
-                  ? "If an account matches that username or email, a reset link is on its way. It expires in one hour - check your spam folder if you do not see it."
-                  : "Email delivery is not yet configured for this system. Please contact the ASCEND team directly for password reset assistance."
-                }
+                Your password has been reset. You can log in with it now.
               </div>
             </div>
             <button className="btn btn-a auth-btn" onClick={() => goTab("login")}>Back to log in</button>
@@ -19257,6 +19491,7 @@ export default function App() {
     let sub;
     try {
       const res = supabase.auth.onAuthStateChange((event, session) => {
+        if (ASCEND_RESET_GUARD) return; // mid password-reset OTP verify - not a real sign-in
         if (event === "SIGNED_IN" && session && session.user) {
           // Supabase re-fires SIGNED_IN when it silently refreshes the auth
           // token, which happens automatically whenever the tab regains
