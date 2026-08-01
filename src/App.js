@@ -14559,7 +14559,9 @@ function RanksView({ app }) {
   const [loading, setLoading] = useState(true);
   const [refreshTick, setRefreshTick] = useState(0);
   const [search, setSearch] = useState("");
-  const [onlineKeys, setOnlineKeys] = useState(() => new Set());
+  // Online presence is now tracked app-wide (in the root App component) so it
+  // reflects everyone using ASCEND, not just people on this leaderboard screen.
+  const onlineKeys = app.onlineKeys || new Set();
   
   // XP CHANGE STATE - shows Blue ▲ +150
   const [xpChange, setXpChange] = useState(null);
@@ -14634,89 +14636,6 @@ function RanksView({ app }) {
     return () => document.removeEventListener("visibilitychange", onVis);
   }, [meKey, app.progress.xp, app.supaUid, refreshTick]);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const myKey = presenceKeyFor(app.supaUid, app.progress.name);
-    // A presence entry is only trusted as "online" if its timestamp is
-    // recent. Without this, someone whose tab crashed or lost network
-    // (so no "leave" event ever fires) would show as online forever.
-    const STALE_MS = 30000;   // treat as offline ~30s after their last heartbeat
-    let channel;
-    let heartbeatId;
-    let refreshId;
-    const refresh = () => {
-      try {
-        const state = channel.presenceState();
-        const now = Date.now();
-        const keys = new Set();
-        Object.keys(state || {}).forEach((k) => {
-          const entries = state[k] || [];
-          const fresh = entries.some((e) => !e || typeof e.at !== "number" || (now - e.at) < STALE_MS);
-          if (fresh) keys.add(k);
-        });
-        setOnlineKeys(keys);
-      } catch (error) {
-        // Silently fail
-      }
-    };
-    try {
-      channel = supabase.channel("ascend-presence", { config: { presence: { key: myKey } } });
-      channel
-        .on("presence", { event: "sync" }, refresh)
-        .on("presence", { event: "join" }, refresh)
-        .on("presence", { event: "leave" }, refresh)
-        .subscribe(async (status) => {
-          if (status === "SUBSCRIBED") {
-            try { await channel.track({ name: app.progress.name, at: Date.now() }); } catch (error) {
-              // Silently fail
-            }
-          }
-        });
-      // Heartbeat: re-track often so our own "at" timestamp stays well within
-      // STALE_MS, keeping us reliably "online" while active.
-      heartbeatId = setInterval(() => {
-        if (document.visibilityState !== "visible") return;
-        try { channel.track({ name: app.progress.name, at: Date.now() }); } catch (error) {
-          // Silently fail
-        }
-        refresh();
-      }, 12000);
-      // Dedicated fast refresh: re-run the staleness filter frequently so other
-      // people's dots and the "online now" count update sharply as they come
-      // and go, without waiting for the slower heartbeat.
-      refreshId = setInterval(refresh, 6000);
-    } catch (error) {
-      // Silently fail
-    }
-    const onFocus = () => {
-      try { if (channel) { channel.track({ name: app.progress.name, at: Date.now() }); } } catch (e) {}
-      refresh();
-    };
-    window.addEventListener("focus", onFocus);
-    const onHide = () => { 
-      try { 
-        if (document.visibilityState === "hidden" && channel) {
-          channel.untrack(); 
-        } else if (channel) { 
-          channel.track({ name: app.progress.name, at: Date.now() }); 
-          refresh();
-        } 
-      } catch (error) {
-        // Silently fail
-      } 
-    };
-    document.addEventListener("visibilitychange", onHide);
-    return () => {
-      if (heartbeatId) clearInterval(heartbeatId);
-      if (refreshId) clearInterval(refreshId);
-      document.removeEventListener("visibilitychange", onHide);
-      window.removeEventListener("focus", onFocus);
-      try { if (channel) { channel.untrack(); supabase.removeChannel(channel); } } catch (error) {
-        // Silently fail
-      }
-    };
-  }, [app.supaUid, app.progress.name]);
-  
   const me = { name: app.progress.name, xp: app.progress.xp, streak: app.progress.streak, me: true, id: app.supaUid };
   
   // Parse XP-earned history once (not inside the sort comparator, which runs many
@@ -18845,6 +18764,9 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [lastTopic, setLastTopic] = useState(null);
   const [showTop, setShowTop] = useState(false);
+  // App-wide online presence: tracked here at the root so a student counts as
+  // "online" whenever the app is open - not only while viewing the leaderboard.
+  const [onlineKeys, setOnlineKeys] = useState(() => new Set());
 
   // ============================================================
   // 1.5 STATE RESTORATION (Runs ONCE on mount) - NEW FIX
@@ -19555,6 +19477,63 @@ export default function App() {
     }));
   };
 
+  // Track presence app-wide so the leaderboard's "online now" reflects everyone
+  // currently using ASCEND, regardless of which screen they are on.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!progress || !progress.name) return;
+    const myKey = presenceKeyFor(supaUid, progress.name);
+    const STALE_MS = 30000;
+    let channel, heartbeatId, refreshId;
+    const refresh = () => {
+      try {
+        const state = channel.presenceState();
+        const now = Date.now();
+        const keys = new Set();
+        Object.keys(state || {}).forEach((k) => {
+          const entries = state[k] || [];
+          const fresh = entries.some((e) => !e || typeof e.at !== "number" || (now - e.at) < STALE_MS);
+          if (fresh) keys.add(k);
+        });
+        setOnlineKeys(keys);
+      } catch (e) { /* ignore */ }
+    };
+    try {
+      channel = supabase.channel("ascend-presence", { config: { presence: { key: myKey } } });
+      channel
+        .on("presence", { event: "sync" }, refresh)
+        .on("presence", { event: "join" }, refresh)
+        .on("presence", { event: "leave" }, refresh)
+        .subscribe(async (status) => {
+          if (status === "SUBSCRIBED") {
+            try { await channel.track({ name: progress.name, at: Date.now() }); } catch (e) {}
+          }
+        });
+      heartbeatId = setInterval(() => {
+        if (document.visibilityState !== "visible") return;
+        try { channel.track({ name: progress.name, at: Date.now() }); } catch (e) {}
+        refresh();
+      }, 12000);
+      refreshId = setInterval(refresh, 6000);
+    } catch (e) { /* ignore */ }
+    const onHide = () => {
+      try {
+        if (document.visibilityState === "hidden" && channel) channel.untrack();
+        else if (channel) { channel.track({ name: progress.name, at: Date.now() }); refresh(); }
+      } catch (e) {}
+    };
+    const onFocus = () => { try { if (channel) channel.track({ name: progress.name, at: Date.now() }); } catch (e) {} refresh(); };
+    document.addEventListener("visibilitychange", onHide);
+    window.addEventListener("focus", onFocus);
+    return () => {
+      if (heartbeatId) clearInterval(heartbeatId);
+      if (refreshId) clearInterval(refreshId);
+      document.removeEventListener("visibilitychange", onHide);
+      window.removeEventListener("focus", onFocus);
+      try { if (channel) { channel.untrack(); supabase.removeChannel(channel); } } catch (e) {}
+    };
+  }, [supaUid, progress && progress.name]);
+
   const app = { 
     progress, 
     go, 
@@ -19569,7 +19548,8 @@ export default function App() {
     setReadingXp,
     setPasscoXp,
     getStreakMultiplier,
-    lastTopic
+    lastTopic,
+    onlineKeys
   };
 
   const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
