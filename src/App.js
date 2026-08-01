@@ -14614,7 +14614,7 @@ function RanksView({ app }) {
       if (Array.isArray(rows) && rows.length) {
         const mine = app.supaUid;
         const filtered = rows.filter((r) =>
-          mine ? r.id !== mine : String(r.name || "").toLowerCase().replace(/[^a-z0-9]/g, "") !== meKey
+          !isTestAccount(r.name) && (mine ? r.id !== mine : String(r.name || "").toLowerCase().replace(/[^a-z0-9]/g, "") !== meKey)
         );
         setOthers(filtered);
         setLoading(false);
@@ -14628,7 +14628,7 @@ function RanksView({ app }) {
       const rows = [];
       for (const k of keys) {
         const v = await store.get(k, true);
-        if (v && v.name && k !== "ascend_board:" + meKey) rows.push(v);
+        if (v && v.name && k !== "ascend_board:" + meKey && !isTestAccount(v.name)) rows.push(v);
       }
       setOthers(rows);
     } catch (error) {
@@ -17622,6 +17622,15 @@ function HomeView({ app }) {
   );
 }
 /* ------------------------------- auth ----------------------------------- */
+// Any username starting with "test" or "demo" is treated as a throwaway
+// testing account and NEVER gets published to the real class leaderboard
+// (neither the Supabase profiles table nor the shared board keys). This
+// lets anyone - founder or student - safely create test accounts to try
+// things like the password reset flow without polluting the leaderboard
+// real classmates see. Use names like "test_prince" or "demo_reset" for
+// anything you don't want showing up publicly.
+const isTestAccount = (username) => /^(test|demo)[_-]?/i.test(String(username || "").trim());
+
 // --- Password hashing -------------------------------------------------
 // History: local username/password accounts first stored passwords as plain
 // base64 (trivially reversible), then a single round of salted SHA-256
@@ -17861,11 +17870,12 @@ function AuthScreen({ onAuthed }) {
         // ============================================================
         // FIXED: Register on the class board with the correct username
         // ============================================================
-        const boardKey = "ascend_board:" + u.toLowerCase().replace(/[^a-z0-9]/g, "");
-        await store.setShared(boardKey, { name: u, xp: 0, streak: 0 });
-        
-        // Also publish to Supabase cloud leaderboard
-        await db.publishLocalUser(u, 0, 0);
+        if (!isTestAccount(u)) {
+          const boardKey = "ascend_board:" + u.toLowerCase().replace(/[^a-z0-9]/g, "");
+          await store.setShared(boardKey, { name: u, xp: 0, streak: 0 });
+          // Also publish to Supabase cloud leaderboard
+          await db.publishLocalUser(u, 0, 0);
+        }
         
         setBusy(false);
         onAuthed(acct);
@@ -17914,15 +17924,18 @@ function AuthScreen({ onAuthed }) {
       await store.set("ascend_session", key);
       await store.set("ascend_last_user", finalAcct.username);
       
-      // FIXED: Make sure this user appears on the board
-      const boardKey = "ascend_board:" + finalAcct.username.toLowerCase().replace(/[^a-z0-9]/g, "");
-      const savedP = await store.get(progKey(finalAcct.username));
-      await store.setShared(boardKey, { 
-        name: finalAcct.username, 
-        xp: savedP ? savedP.xp || 0 : 0, 
-        streak: savedP ? savedP.streak || 0 : 0 
-      });
-      db.publishLocalUser(finalAcct.username, savedP ? savedP.xp || 0 : 0, savedP ? savedP.streak || 0 : 0);
+      // FIXED: Make sure this user appears on the board (real accounts only -
+      // test/demo accounts are deliberately kept off the shared leaderboard)
+      if (!isTestAccount(finalAcct.username)) {
+        const boardKey = "ascend_board:" + finalAcct.username.toLowerCase().replace(/[^a-z0-9]/g, "");
+        const savedP = await store.get(progKey(finalAcct.username));
+        await store.setShared(boardKey, { 
+          name: finalAcct.username, 
+          xp: savedP ? savedP.xp || 0 : 0, 
+          streak: savedP ? savedP.streak || 0 : 0 
+        });
+        db.publishLocalUser(finalAcct.username, savedP ? savedP.xp || 0 : 0, savedP ? savedP.streak || 0 : 0);
+      }
       
       setBusy(false);
       onAuthed(finalAcct);
@@ -19291,8 +19304,10 @@ export default function App() {
       db.saveProgress(supaUid, p);
     } else if (auth) {
       store.set(progKey(auth.username), p);
-      store.setShared("ascend_board:" + p.name.toLowerCase().replace(/[^a-z0-9]/g, ""), { name: p.name, xp: p.xp, streak: p.streak });
-      db.publishLocalUser(p.name, p.xp, p.streak);
+      if (!isTestAccount(p.name)) {
+        store.setShared("ascend_board:" + p.name.toLowerCase().replace(/[^a-z0-9]/g, ""), { name: p.name, xp: p.xp, streak: p.streak });
+        db.publishLocalUser(p.name, p.xp, p.streak);
+      }
     }
   };
 
