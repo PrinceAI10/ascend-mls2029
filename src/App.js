@@ -17956,6 +17956,25 @@ function AuthScreen({ onAuthed }) {
       const accounts = (await store.get("ascend_accounts")) || {};
       const key = Object.keys(accounts).find((k) => accounts[k].email && accounts[k].email.toLowerCase() === id) || "";
       if (!key) {
+        // Not a local username/password account. Check whether this email
+        // belongs to a real Supabase Auth user instead (e.g. signed up via
+        // Google) - those accounts have no local password to reset, so the
+        // student should be told to use Google sign-in rather than being
+        // left thinking the app is broken. shouldCreateUser:false means
+        // this never creates a new account or sends a code to a stranger's
+        // inbox - it only succeeds if the email is already a real user.
+        try {
+          const { error: probeError } = await supabase.auth.signInWithOtp({
+            email: id,
+            options: { shouldCreateUser: false },
+          });
+          if (!probeError) {
+            setBusy(false);
+            setOk("This email is signed in with Google, so there's no separate ASCEND password to reset - just use \"Continue with Google\" to log in.");
+            setFStage("who");
+            return;
+          }
+        } catch (probeErr) { /* fall through to the generic not-found message */ }
         setBusy(false);
         setErr("No account found with that email. Check the spelling, or contact the ASCEND team if you're sure it's right.");
         return;
