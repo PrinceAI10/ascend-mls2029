@@ -19211,19 +19211,6 @@ export default function App() {
     const next = { view, ...extra };
     setRoute(next);
 
-    if (view === "topic" && extra.courseId !== undefined && extra.topicId !== undefined) {
-      const lt = { courseId: extra.courseId, topicId: extra.topicId };
-      setLastTopic(lt);
-      const ownerKey = supaUidRef.current || (auth && auth.username);
-      // Always persist to a durable anonymous fallback key, in addition to the
-      // per-user key when signed in. Without this, guests (and anyone whose
-      // auth state hasn't resolved yet right after app load) never got a
-      // durable save at all - only the sessionStorage snapshot, which is
-      // wiped on full close, so "Jump back in" would forget the topic.
-      store.set(lastTopicKey("anon"), lt);
-      if (ownerKey) store.set(lastTopicKey(ownerKey), lt);
-    }
-
     setMenuOpen(false);
     if (typeof window !== "undefined") {
       try { 
@@ -19235,6 +19222,26 @@ export default function App() {
       window.scrollTo?.(0, 0);
     }
   };
+
+  // "Jump back in" should only adopt a topic once the student has genuinely
+  // spent time on it (>= 60s), not the instant they tap into it. A quick
+  // accidental open (or passing through on the way somewhere else) shouldn't
+  // immediately bump the resume card. We track dwell time on the topic route
+  // here, separate from navigation itself, and only commit the durable save
+  // (in-memory + storage) once the threshold is met while still on that
+  // same topic. If the student navigates away before 60s, the timer is
+  // cleared and the previous "Jump back in" topic is left untouched.
+  useEffect(() => {
+    if (!route || route.view !== "topic" || route.courseId === undefined || route.topicId === undefined) return;
+    const lt = { courseId: route.courseId, topicId: route.topicId };
+    const timer = setTimeout(() => {
+      setLastTopic(lt);
+      const ownerKey = supaUidRef.current || (auth && auth.username);
+      store.set(lastTopicKey("anon"), lt);
+      if (ownerKey) store.set(lastTopicKey(ownerKey), lt);
+    }, 60000);
+    return () => clearTimeout(timer);
+  }, [route, auth]);
   
   const recordDaily = (correct) => {
     const tk = todayKey();
