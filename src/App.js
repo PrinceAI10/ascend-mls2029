@@ -17662,6 +17662,52 @@ function AuthScreen({ onAuthed }) {
     }
   };
 
+  // Email one-time-code sign-in. This works fully inside an installed PWA (no
+  // password page, no browser hand-off), which Google OAuth cannot guarantee on
+  // iOS. The student enters their email, gets a 6-digit code, and is signed in;
+  // the App's onAuthStateChange then adopts the session, exactly like Google.
+  const [otpOpen, setOtpOpen] = useState(false);
+  const [otpStage, setOtpStage] = useState("email"); // email | code
+  const [otpEmail, setOtpEmail] = useState("");
+  const [otpCode, setOtpCode] = useState("");
+
+  const sendOtp = async () => {
+    clearMsgs();
+    const em = otpEmail.trim().toLowerCase();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { setErr("Enter a valid email address."); return; }
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email: em,
+        options: { shouldCreateUser: true, emailRedirectTo: window.location.origin },
+      });
+      if (error) throw error;
+      setOtpStage("code");
+      setOk("We sent a 6-digit code to " + em + ". Check your inbox (and spam).");
+    } catch (e) {
+      setErr(e && e.message ? e.message : "Could not send the code. Please try again in a moment.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const verifyOtpCode = async () => {
+    clearMsgs();
+    const em = otpEmail.trim().toLowerCase();
+    const code = otpCode.trim();
+    if (code.length < 6) { setErr("Enter the 6-digit code from your email."); return; }
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.verifyOtp({ email: em, token: code, type: "email" });
+      if (error) throw error;
+      // Success: the App's onAuthStateChange adopts the new session and signs the
+      // student in (same path as Google), so this screen will unmount itself.
+    } catch (e) {
+      setErr(e && e.message ? e.message : "That code was not valid. Check it, or resend a new one.");
+      setBusy(false);
+    }
+  };
+
   const submit = async () => {
     clearMsgs();
     const u = username.trim();
@@ -17844,6 +17890,32 @@ function AuthScreen({ onAuthed }) {
         </button>
         <p className="note-hint" style={{ textAlign: "center", margin: "0 0 12px", fontSize: 12 }}>Recommended - saves your progress and rank across all your devices.</p>
 
+        {!otpOpen ? (
+          <button className="btn btn-g auth-btn" style={{ width: "100%", marginBottom: 4 }} onClick={() => { clearMsgs(); setOtpOpen(true); setOtpStage("email"); }} disabled={busy}>
+            Continue with email code (no password)
+          </button>
+        ) : (
+          <div style={{ border: "1px solid var(--line)", borderRadius: 12, padding: 14, marginBottom: 6 }}>
+            <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4 }}>Sign in with an email code</div>
+            <div style={{ color: "var(--text-3)", fontSize: 12.5, marginBottom: 10, lineHeight: 1.5 }}>No password needed - we email you a 6-digit code. Works on any device.</div>
+            {otpStage === "email" ? (
+              <>
+                <input className="auth-input" type="email" value={otpEmail} onChange={(e) => setOtpEmail(e.target.value)} placeholder="you@gmail.com" autoCapitalize="none" autoCorrect="off" style={{ marginBottom: 10 }} />
+                <button className="btn btn-a auth-btn" style={{ width: "100%" }} onClick={sendOtp} disabled={busy}>{busy ? "Sending..." : "Send me a code"}</button>
+              </>
+            ) : (
+              <>
+                <input className="auth-input" inputMode="numeric" value={otpCode} onChange={(e) => setOtpCode(e.target.value.replace(/[^0-9]/g, "").slice(0, 6))} placeholder="6-digit code" maxLength={6} style={{ marginBottom: 10, letterSpacing: 4, textAlign: "center", fontSize: 20, fontWeight: 700 }} />
+                <button className="btn btn-a auth-btn" style={{ width: "100%" }} onClick={verifyOtpCode} disabled={busy}>{busy ? "Verifying..." : "Verify & sign in"}</button>
+                <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 8 }} onClick={sendOtp} disabled={busy}>Resend code</button>
+              </>
+            )}
+            {err && <div className="auth-err" style={{ marginTop: 10 }}>{err}</div>}
+            {ok && <div style={{ color: "var(--good)", fontSize: 13, marginTop: 10 }}>{ok}</div>}
+            <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 8 }} onClick={() => { setOtpOpen(false); setOtpStage("email"); setOtpCode(""); clearMsgs(); }} disabled={busy}>Back to other options</button>
+          </div>
+        )}
+
         <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "4px 0 14px" }}>
           <div style={{ flex: 1, height: 1, background: "var(--line)" }} />
           <span style={{ color: "var(--text-3)", fontSize: 12 }}>or use a username</span>
@@ -17863,8 +17935,8 @@ function AuthScreen({ onAuthed }) {
             </label>
           </>
         )}
-        {err && <div className="auth-err">{err}</div>}
-        {ok && <div style={{ color: "var(--good)", fontSize: 13, margin: "2px 0 12px" }}>{ok}</div>}
+        {!otpOpen && err && <div className="auth-err">{err}</div>}
+        {!otpOpen && ok && <div style={{ color: "var(--good)", fontSize: 13, margin: "2px 0 12px" }}>{ok}</div>}
         <button className="btn btn-g auth-btn" onClick={submit} disabled={busy}>{busy ? "Please wait..." : tab === "signup" ? "Create account" : "Log in"}</button>
         {tab === "login" && (
           <button className="btn btn-g btn-sm" style={{ width: "100%", marginTop: 10 }} onClick={() => goTab("forgot")}>Forgot password?</button>
