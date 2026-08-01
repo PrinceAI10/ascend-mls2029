@@ -4929,6 +4929,415 @@ My answers. One: the subject line "Safety" is too vague — it does not tell the
   ],
 };
 
+const T_COM_REPORT = {
+  courseId: "com",
+  topicIndex: 5,
+  title: "Report Writing",
+  minutes: 20,
+  note: [
+    { q: "What is a report and why does it matter in professional communication?",
+      body: `A report is a structured, factual document that presents information about a specific subject to a specific audience for a specific purpose - usually to inform a decision or record what has happened. Unlike a story or an essay, a report is organised, objective, and built to be scanned quickly by busy readers.
+
+My Socratic question: a laboratory has just investigated a batch of failed test results, and management must decide whether to recall the batch. Someone could explain what happened in a long conversation, or in a rambling email. Why is a written report the better tool, and what does it give the reader that talking cannot?
+
+The answer is that a report provides a permanent, organised, evidence-based record that a decision can be built on and defended later. It separates fact from opinion, presents findings in a logical order, and ends with clear conclusions and recommendations. Because it is structured with headings and sections, a reader can go straight to the part they need - the findings, or the recommendations - without reading every word.
+
+In healthcare and the laboratory, reports are everywhere: incident reports, quality-control reports, equipment validation reports, audit reports, and research reports. Your ability to write a clear report directly affects patient safety and how seriously your findings are taken.
+
+Crucial insight: a report is a structured, objective document that presents information for a specific purpose and audience. It exists to support decisions and to serve as a permanent record - which is why structure, objectivity, and evidence matter more than style.` },
+
+    { q: "Types of reports: matching the report to its purpose.",
+      body: `Reports come in different types, and knowing which type you are writing shapes its length, tone, and structure.
+
+My Socratic question: a short note recording that a fridge temperature was checked and found normal, versus a document analysing why a whole run of results was wrong and recommending changes - both are "reports", yet they look nothing alike. What distinguishes them?
+
+The first distinction is informational versus analytical. An informational report presents facts without interpretation - it tells the reader what happened or what exists (for example, a monthly workload report). An analytical report goes further: it examines the facts, interprets them, and draws conclusions and recommendations (for example, a report investigating the cause of contaminated cultures and recommending corrective action).
+
+The second distinction is formal versus informal. Informal reports are short, often a page or a memo, used for routine internal matters. Formal reports are longer, structured documents with front matter (title page, contents) and back matter (references, appendices), used for significant or external matters.
+
+The third distinction is routine versus special. Routine reports are produced regularly (daily, weekly, monthly) to a fixed format. Special reports are one-off, written to address a specific event or question, such as an incident investigation.
+
+Crucial insight: reports may be informational or analytical, formal or informal, routine or special. Identifying the type first tells you how long, how structured, and how interpretive the report should be.` },
+
+    { q: "The structure of a formal report.",
+      body: `A formal report follows a recognised structure so that any reader knows where to find each kind of information. Learning this structure is the backbone of report writing.
+
+My Socratic question: a reader wants only your recommendations; another wants your raw data; a third wants a one-paragraph overview. How can a single document serve all three without wasting anyone's time?
+
+The answer is a sectioned structure with three broad parts. The front matter orients the reader: a title page (title, author, date, who it is for), a table of contents for longer reports, and an executive summary or abstract - a short overview of the whole report, including the main findings and recommendations, so a busy manager can grasp it in a minute.
+
+The body carries the substance: an introduction (the purpose, background, and scope - what the report covers and what it does not), the methodology (how the information was gathered), the findings or results (the facts, presented logically, often with tables and figures), and the discussion or analysis (what the findings mean).
+
+The back matter supports and closes: conclusions (the key takeaways drawn from the findings), recommendations (specific, actionable suggestions), references (sources cited), and appendices (supporting material too detailed for the body).
+
+Crucial insight: a formal report has front matter (title page, contents, executive summary), a body (introduction, methodology, findings, discussion), and back matter (conclusions, recommendations, references, appendices). This structure lets every reader find exactly what they need.` },
+
+    { q: "Planning and researching before you write.",
+      body: `The quality of a report is decided before the first sentence is written - in the planning and research. A report built on weak information cannot be rescued by good writing.
+
+My Socratic question: two students are asked to write a report on a laboratory error. One starts writing immediately; the other first defines the purpose, identifies the readers, gathers the evidence, and outlines the sections. Whose report will be stronger, and why?
+
+The second, because they planned. Planning begins with the terms of reference - a clear statement of the report's purpose, scope, and audience. Ask: why is this report needed, who will read it, and what decision must it support? These answers determine what to include and what to leave out.
+
+Next comes gathering information - the research. This may involve reviewing records, observing procedures, running tests, interviewing staff, or consulting the literature. Good reports are built on accurate, verifiable evidence, not assumptions. Keep track of your sources so you can reference them.
+
+Finally, before writing, create an outline - a logical order of sections and the main points under each. The outline is your map; it prevents rambling and ensures nothing essential is missed.
+
+Crucial insight: a report is only as good as its planning. Define the purpose, scope, and audience (the terms of reference), gather accurate evidence, and outline the structure before writing. Planning prevents the two biggest failures: missing information and disorganisation.` },
+
+    { q: "Writing the report: clarity, objectivity, and evidence.",
+      body: `Once planned, a report must be written in a style that serves its purpose: clear, objective, and grounded in evidence.
+
+My Socratic question: a report states, "The results were probably wrong because the machine seemed off and everyone was rushing." Another states, "Twelve of forty samples fell outside the acceptable range; the internal control also failed, indicating a calibration fault confirmed by the service log." Which will be trusted, and what is the difference?
+
+The difference is objectivity and evidence. Report writing avoids emotion, guesswork, and vague language. It presents facts, supported by data, and clearly separates those facts from any interpretation. Where the writer offers an opinion or conclusion, it is labelled as such and justified by the evidence presented.
+
+Clarity means plain, precise language. Use short sentences, define technical terms where the reader may not know them, and avoid unnecessary jargon. Write in a formal, impersonal tone - often the third person and, in scientific reports, frequently the passive voice ("the samples were analysed") - though clear active sentences are increasingly accepted.
+
+Accuracy is non-negotiable. Every figure, name, and date must be correct, because decisions and, in healthcare, patient safety depend on it.
+
+Crucial insight: report writing is clear, objective, and evidence-based. It presents accurate facts, separates fact from interpretation, and uses plain, formal language. In a report, being trusted matters more than sounding impressive.` },
+
+    { q: "Headings, visuals, and readability.",
+      body: `A report is not read like a novel - it is scanned, searched, and returned to. Its layout must make information easy to find and easy to grasp.
+
+My Socratic question: a manager has thirty seconds and needs the one figure that matters from a ten-page report. What features of the document let them find it, and what would happen if those features were missing?
+
+The features are headings, numbering, and visuals. Clear, descriptive headings and sub-headings (often numbered, such as 3.1, 3.2) let readers navigate straight to the section they need. White space and short paragraphs prevent fatigue. Bullet points and numbered lists break complex information into digestible pieces.
+
+Visuals - tables, graphs, and charts - present numerical data far more clearly than prose. A table shows exact values; a graph shows a trend at a glance. Every visual should have a number and a caption, be referred to in the text, and be simple enough to interpret without a struggle.
+
+In laboratory and healthcare reports, well-chosen visuals are especially powerful: a control chart instantly shows whether a process is in control, where a paragraph of numbers would hide it.
+
+Crucial insight: readability is built through descriptive headings, numbering, white space, lists, and well-labelled visuals. A report must be easy to navigate and easy to grasp, because readers scan for what they need rather than reading every word.` },
+
+    { q: "Conclusions and recommendations: where a report earns its keep.",
+      body: `The conclusions and recommendations are what most readers act on - they are the point of the whole report. Getting them right is essential.
+
+My Socratic question: a report presents excellent findings but then simply stops, offering no conclusion and no recommendation. What has the writer failed to do, and why is the report now almost useless to the decision-maker?
+
+The writer has failed to tell the reader what it all means and what to do. Conclusions are the key takeaways drawn logically from the findings - they answer the question the report set out to address. They must follow from the evidence already presented; a conclusion must never introduce new information or contradict the findings.
+
+Recommendations are specific, actionable suggestions for what should happen next. A strong recommendation states what should be done, by whom, and by when. Vague recommendations ("something should be done about calibration") are worthless; specific ones ("the analyser should be recalibrated weekly by the senior technologist, with results logged") drive action.
+
+In an analytical report, conclusions and recommendations are the destination the whole document has been building towards. In an informational report, they may be brief or absent, because the purpose is simply to inform.
+
+Crucial insight: conclusions state what the findings mean and must follow logically from the evidence; recommendations state specific, actionable next steps - what, by whom, and by when. These sections turn information into decisions, which is the reason the report exists.` },
+
+    { q: "Common mistakes in report writing.",
+      body: `Certain mistakes appear again and again in reports. Knowing them lets you check your own work against them.
+
+The first mistake is no clear purpose - a report that wanders because the writer never defined what it was for. Always fix the terms of reference first.
+
+The second is mixing fact and opinion - stating interpretations as if they were facts. Keep findings objective and clearly label any interpretation.
+
+The third is poor structure - information in no logical order, with no headings, so the reader cannot navigate. Use the standard sections and clear headings.
+
+The fourth is conclusions that do not match the findings - drawing a conclusion the evidence does not support, or introducing new material in the conclusion. Conclusions must flow from what was presented.
+
+The fifth is vague recommendations - suggestions too general to act on. Make them specific: what, who, when.
+
+The sixth is inaccuracy - wrong figures, names, or dates. In healthcare this can be dangerous; always verify.
+
+The seventh is wordiness and jargon - burying the message in long sentences and unexplained terms. Write plainly.
+
+Crucial insight: the common failures are unclear purpose, mixing fact with opinion, poor structure, unsupported conclusions, vague recommendations, inaccuracy, and wordiness. A good report is planned, structured, objective, accurate, and specific.` },
+
+    { q: "Reports in the laboratory and healthcare.",
+      body: `Report writing is not an abstract skill for the classroom - in the laboratory and healthcare it is a daily, safety-critical activity. Seeing how the principles apply in practice makes them concrete.
+
+My Socratic question: a contaminated blood culture is discovered, a reagent lot performs poorly, or a patient is harmed by a delayed result. Each of these produces a specific kind of report. What are these reports, and why does the quality of the writing directly affect patient safety?
+
+Several report types dominate the laboratory. The incident report documents an adverse event or near miss - what happened, when, who was involved, the immediate action taken, and often the root cause and corrective action. Because it may be reviewed in investigations or audits, it must be factual, objective, and complete. The quality-control report presents whether processes are performing within acceptable limits, usually with control charts and data. The validation or verification report documents that a new method or instrument performs as required before it is used on patient samples. The audit report presents the findings of a review against a standard, with recommendations for improvement.
+
+In every case, the same principles apply: define the purpose, gather accurate evidence, present findings objectively, separate fact from interpretation, and end with clear, actionable recommendations. What raises the stakes is the consequence - a vague or inaccurate laboratory report can lead directly to a wrong clinical decision and patient harm.
+
+Crucial insight: in the laboratory, reports include incident, quality-control, validation, and audit reports. They apply the same principles - purpose, evidence, objectivity, clear recommendations - but the stakes are patient safety, so accuracy and completeness are not optional.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for Report Writing.
+
+Definition: a report is a structured, objective document presenting information for a specific purpose and audience, to support a decision and serve as a record.
+
+Types: informational vs analytical; formal vs informal; routine vs special.
+
+Structure: front matter (title page, contents, executive summary), body (introduction, methodology, findings, discussion), back matter (conclusions, recommendations, references, appendices).
+
+Planning: define terms of reference (purpose, scope, audience), gather accurate evidence, outline before writing.
+
+Style: clear, objective, evidence-based; separate fact from interpretation; plain, formal language; total accuracy.
+
+Readability: descriptive headings, numbering, white space, lists, well-labelled visuals.
+
+Conclusions and recommendations: conclusions follow logically from findings; recommendations are specific and actionable (what, who, when).
+
+Common mistakes: no clear purpose, mixing fact and opinion, poor structure, unsupported conclusions, vague recommendations, inaccuracy, wordiness.
+
+Now your final test. A laboratory technologist is asked to write a report after a week of unexpectedly high glucose control results. They write two pages describing their feelings about the stressful week, state that "the machine is clearly useless," present no data, and end with the line "I think we should probably get a new one someday."
+
+Question one: what is wrong with the objectivity and evidence of this report?
+Question two: what structural and content elements are missing?
+Question three: how should the recommendation be rewritten?
+
+Work them through before reading on.
+
+My answers. One: the report is subjective and unsupported - it describes feelings and states an opinion ("the machine is clearly useless") as if it were a proven fact, with no data. It should present the actual control values, show which fell outside range, and let the evidence support any interpretation. Two: it is missing almost every essential element - a clear purpose and scope, a methodology (how the results were checked), findings (the actual data, ideally in a table or control chart), and logical conclusions drawn from that evidence. Three: the recommendation "get a new one someday" is hopelessly vague. It should be specific and actionable, for example: "The analyser should be taken out of service and recalibrated by the biomedical engineer within 24 hours; if control results remain out of range after recalibration, a service call should be logged and an alternative analyser used for glucose testing in the interim."` }
+  ],
+  theory: [
+    { q: "What is a report?", a: "A report is a structured, objective document that presents information about a specific subject to a specific audience for a specific purpose - usually to inform a decision and serve as a permanent record." },
+    { q: "What is the difference between an informational and an analytical report?", a: "An informational report presents facts without interpretation (what happened or what exists). An analytical report examines the facts, interprets them, and draws conclusions and recommendations." },
+    { q: "What are the three broad parts of a formal report?", a: "Front matter (title page, table of contents, executive summary), the body (introduction, methodology, findings, discussion), and back matter (conclusions, recommendations, references, appendices)." },
+    { q: "What is an executive summary?", a: "A short overview of the whole report - including the main findings and recommendations - placed at the front so a busy reader can grasp the report quickly without reading it all." },
+    { q: "What are terms of reference?", a: "A clear statement of a report's purpose, scope, and audience - defined before writing to determine what to include and what to leave out." },
+    { q: "Why must a report be objective?", a: "Because decisions, and in healthcare patient safety, depend on it. Objectivity separates verifiable facts from interpretation, so readers can trust the findings and act on them." },
+    { q: "How should conclusions relate to findings?", a: "Conclusions must follow logically from the findings already presented. They must not introduce new information or contradict the evidence." },
+    { q: "What makes a good recommendation?", a: "A good recommendation is specific and actionable - it states what should be done, by whom, and by when, rather than a vague suggestion." },
+    { q: "Why are visuals useful in reports?", a: "Tables, graphs, and charts present numerical data more clearly than prose - a table gives exact values, a graph shows a trend at a glance. Each should be numbered, captioned, and referred to in the text." },
+    { q: "Name three common mistakes in report writing.", a: "Any of: no clear purpose, mixing fact with opinion, poor structure, conclusions unsupported by findings, vague recommendations, inaccuracy, or wordiness and jargon." },
+  ],
+  videos: [
+    { channel: "Professional Writing", title: "How to Write a Formal Report", note: "Report structure from title page to recommendations.", url: "" },
+    { channel: "Business Communication", title: "Informational vs Analytical Reports", note: "Choosing the right type of report for the purpose.", url: "" },
+    { channel: "Academic Skills", title: "Writing Clear Conclusions and Recommendations", note: "Turning findings into actionable recommendations.", url: "" },
+  ],
+  mcqs: [
+    { q: "A report is best described as:", o: ["A personal opinion piece", "A structured, objective document presenting information for a purpose", "An informal chat", "A creative story"], a: 1, w: "A report is structured and objective, written to inform a decision and serve as a record." },
+    { q: "An informational report:", o: ["Presents facts without interpretation", "Always recommends action", "Is always informal", "Contains only opinions"], a: 0, w: "Informational reports present facts without interpretation." },
+    { q: "An analytical report:", o: ["Only lists data", "Examines facts and draws conclusions and recommendations", "Avoids conclusions", "Is never formal"], a: 1, w: "Analytical reports interpret the facts and draw conclusions and recommendations." },
+    { q: "The executive summary is placed:", o: ["In the appendices", "At the front, as a short overview of the whole report", "In the middle", "After the references"], a: 1, w: "The executive summary is front matter - a short overview for busy readers." },
+    { q: "Which is part of the front matter?", o: ["Findings", "Methodology", "Title page and table of contents", "Discussion"], a: 2, w: "Front matter includes the title page, table of contents, and executive summary." },
+    { q: "The section that explains how information was gathered is the:", o: ["Introduction", "Methodology", "Conclusion", "Appendix"], a: 1, w: "The methodology explains how the information or data was gathered." },
+    { q: "Terms of reference define a report's:", o: ["Font and colour", "Purpose, scope, and audience", "Length only", "Author's mood"], a: 1, w: "Terms of reference state the purpose, scope, and audience." },
+    { q: "Conclusions in a report must:", o: ["Introduce brand-new data", "Follow logically from the findings", "Contradict the findings", "Be omitted"], a: 1, w: "Conclusions must follow logically from the evidence already presented." },
+    { q: "A strong recommendation states:", o: ["Only that 'something should be done'", "What should be done, by whom, and by when", "Nothing specific", "A personal feeling"], a: 1, w: "Good recommendations are specific: what, by whom, and by when." },
+    { q: "Which report is produced regularly to a fixed format?", o: ["A special report", "A routine report", "An incident report", "A one-off report"], a: 1, w: "Routine reports are produced regularly (daily, weekly, monthly)." },
+    { q: "A one-off report addressing a specific event is a:", o: ["Routine report", "Special report", "Monthly report", "Annual report"], a: 1, w: "Special reports are written to address a specific event or question." },
+    { q: "Objectivity in a report means:", o: ["Writing about your feelings", "Presenting verifiable facts and separating them from interpretation", "Using dramatic language", "Guessing the cause"], a: 1, w: "Objectivity means presenting facts and clearly separating them from interpretation." },
+    { q: "Visuals such as tables and graphs are used to:", o: ["Fill space", "Present numerical data clearly", "Replace the conclusion", "Hide the findings"], a: 1, w: "Visuals present numerical data more clearly than prose." },
+    { q: "Every visual in a report should be:", o: ["Left unlabelled", "Numbered, captioned, and referred to in the text", "As complex as possible", "Placed only in the appendix"], a: 1, w: "Visuals should be numbered, captioned, and referred to in the text." },
+    { q: "Descriptive headings and numbering help the reader:", o: ["Get confused", "Navigate straight to the section they need", "Read every word", "Skip the report"], a: 1, w: "Headings and numbering let readers navigate to the section they need." },
+    { q: "Which is a common report-writing mistake?", o: ["Clear purpose", "Logical structure", "Mixing fact and opinion", "Accurate figures"], a: 2, w: "Mixing fact and opinion is a common mistake; findings should stay objective." },
+    { q: "Report writing should use:", o: ["Emotional, dramatic language", "Plain, precise, formal language", "Slang", "Vague terms"], a: 1, w: "Reports use plain, precise, formal language." },
+    { q: "The purpose of the introduction in a report is to state the:", o: ["Recommendations", "Purpose, background, and scope", "Raw data only", "References"], a: 1, w: "The introduction states the purpose, background, and scope." },
+    { q: "Accuracy in a report matters because:", o: ["It looks nicer", "Decisions and patient safety depend on it", "It is optional", "It lengthens the report"], a: 1, w: "Wrong figures can lead to poor decisions and, in healthcare, patient harm." },
+    { q: "An informal report is typically:", o: ["A long formal document with a title page", "Short, often a page or a memo, for routine internal matters", "Always external", "Full of appendices"], a: 1, w: "Informal reports are short and used for routine internal matters." },
+    { q: "The findings section should present facts:", o: ["In no particular order", "Logically, often with tables and figures", "As personal opinions", "Only in the summary"], a: 1, w: "Findings are presented logically, often supported by tables and figures." },
+    { q: "Appendices contain:", o: ["The main conclusions", "Supporting material too detailed for the body", "The title", "The recommendations"], a: 1, w: "Appendices hold supporting detail that would clutter the body." },
+    { q: "Which comes logically before writing a report?", o: ["Planning and research", "Distribution", "Filing", "Nothing"], a: 0, w: "Planning and research come before writing." },
+    { q: "A recommendation like 'get a new machine someday' is weak because it is:", o: ["Too specific", "Vague and not actionable", "Too short", "Too formal"], a: 1, w: "It is vague - it does not say what, by whom, or by when." },
+    { q: "In scientific reports, the tone is usually:", o: ["Casual and personal", "Formal and impersonal", "Humorous", "Persuasive and emotional"], a: 1, w: "Scientific reports use a formal, impersonal tone." },
+    { q: "A quality-control report in a lab is mainly:", o: ["A creative essay", "An informational or analytical report on process performance", "A letter", "A memo of thanks"], a: 1, w: "QC reports present information (and often analysis) on process performance." },
+    { q: "The scope of a report defines:", o: ["The author's salary", "What the report covers and what it does not", "The font size", "The number of readers"], a: 1, w: "Scope states what the report covers and excludes." },
+    { q: "The best way to show a trend over time is a:", o: ["Long paragraph of numbers", "Graph", "Title page", "Reference list"], a: 1, w: "A graph shows a trend at a glance." },
+    { q: "Which statement is objective?", o: ["The results were probably off", "Twelve of forty samples fell outside the acceptable range", "The machine seemed useless", "Everyone was rushing"], a: 1, w: "A specific, measurable statement supported by data is objective." },
+    { q: "The ultimate purpose of a report is to:", o: ["Impress with long words", "Provide accurate information that supports sound decisions", "Create paperwork", "Fill a filing cabinet"], a: 1, w: "A report exists to support sound decisions with accurate information." },
+  ],
+};
+
+const T_COM_MEETINGS = {
+  courseId: "com",
+  topicIndex: 6,
+  title: "Meeting and Minutes",
+  minutes: 20,
+  note: [
+    { q: "What are meetings and minutes, and why do they matter?",
+      body: `A meeting is a planned gathering of people to discuss matters, make decisions, and coordinate action. Minutes are the official written record of what happened in that meeting - the decisions made, the actions agreed, and who is responsible for them.
+
+My Socratic question: a team meets, has a long discussion, and agrees on several actions. A month later, no one can remember exactly what was decided or who was supposed to do what, and the work has not been done. What went wrong, and what single document would have prevented it?
+
+The answer is minutes. Without a written record, decisions are forgotten, responsibilities blur, and accountability disappears. Minutes create a permanent, agreed record: they confirm what was decided, assign responsibility, set deadlines, and can be referred to later to check progress or settle disputes about what was actually agreed.
+
+In healthcare and the laboratory, meetings drive quality improvement, safety reviews, and departmental coordination - and their minutes are often required for audits and accreditation. Knowing how to run a meeting and record it accurately is a core professional skill.
+
+Crucial insight: a meeting is a structured gathering to discuss and decide; minutes are the official record of decisions, actions, and responsibilities. Minutes turn a conversation into accountability - without them, decisions are forgotten and no one is answerable.` },
+
+    { q: "Types of meetings and the key roles.",
+      body: `Meetings vary in formality and purpose, and each has defined roles that keep it orderly and productive.
+
+My Socratic question: a formal committee meeting and a quick team huddle are both "meetings", yet one has a chairperson, a secretary, and a formal agenda while the other does not. Why the difference, and what do those roles actually do?
+
+Meetings range from formal to informal. Formal meetings (such as committee or board meetings) follow strict procedures: a written notice, a formal agenda, a chairperson, a secretary, quorum requirements, and formal minutes. Informal meetings (such as team briefings) are more relaxed but still benefit from an agenda and a record of decisions.
+
+The key roles are the chairperson and the secretary. The chairperson leads the meeting: they open it, keep discussion on the agenda, ensure everyone can contribute, manage time, and guide the group to decisions. The secretary supports the meeting: they prepare the notice and agenda, take the minutes, and circulate them afterwards.
+
+Two more terms matter in formal meetings. A quorum is the minimum number of members who must be present for decisions to be valid. A motion is a formal proposal put to the meeting, which members debate and then vote on.
+
+Crucial insight: meetings range from formal to informal. The chairperson leads and keeps order; the secretary prepares the agenda and records the minutes. In formal meetings, a quorum makes decisions valid, and motions are formally proposed and voted on.` },
+
+    { q: "Before the meeting: notice and agenda.",
+      body: `A productive meeting is prepared before it begins. Two documents make that preparation possible: the notice and the agenda.
+
+My Socratic question: people arrive at a meeting not knowing when it started, why they are there, or what will be discussed - so they are unprepared and the meeting drifts. Which two documents, sent in advance, would have fixed all of this?
+
+The notice informs members that a meeting will take place. It states the date, time, and venue (or link), and is sent far enough in advance for people to prepare and attend. For formal bodies, giving proper notice is a requirement for the meeting's decisions to be valid.
+
+The agenda is the list of items to be discussed, in order. A standard agenda opens with apologies for absence, then approval of the minutes of the previous meeting, then matters arising from those minutes, then the main business items, then any other business (AOB), and finally the date of the next meeting. Sent in advance, the agenda lets members prepare, brings the right information to the table, and keeps the discussion focused and time-bound.
+
+A good agenda is realistic - it does not cram in more than the time allows - and, ideally, notes roughly how long each item should take.
+
+Crucial insight: the notice announces the meeting (date, time, venue) so people can attend; the agenda lists the items in order so people can prepare and the meeting stays focused. A standard agenda runs from apologies and previous minutes through the main business to AOB and the next meeting date.` },
+
+    { q: "What are minutes, and what is their purpose?",
+      body: `Minutes are the heart of meeting documentation - the official, agreed record of what the meeting decided.
+
+My Socratic question: two people leave the same meeting with different memories of what was agreed. How does an official record settle the disagreement, and why must that record be accepted by the group rather than written by one person's opinion?
+
+Minutes serve several purposes. They provide a permanent record of decisions and actions. They assign responsibility - stating who agreed to do what, and by when. They inform absent members of what happened. They enable follow-up, because at the next meeting the group checks progress on the actions recorded. And they provide accountability and evidence, which is why minutes are often required for audits and legal or accreditation purposes.
+
+Crucially, minutes are not a personal account - they become official only when the group approves them (usually at the start of the next meeting) as an accurate record. Once approved and signed by the chairperson, they are the authoritative version of what happened, settling any later dispute.
+
+Minutes should record decisions and actions, not every word spoken. They are objective and impersonal - they report what was agreed, not who said what emotionally, unless a member specifically asks for their view to be recorded.
+
+Crucial insight: minutes are the official, approved record of a meeting's decisions and actions. They assign responsibility, inform absentees, enable follow-up, and provide accountability. They become authoritative only when the group approves them as accurate.` },
+
+    { q: "The structure and content of minutes.",
+      body: `Minutes follow a standard structure so that any reader can find what was decided and who must act.
+
+My Socratic question: a set of minutes records a long, vivid description of the discussion but never clearly states the decision or who is responsible for the next step. What essential content has been lost, and how does a proper structure prevent it?
+
+Minutes begin with a heading: the name of the group, and the date, time, and venue of the meeting. Next come the attendance details: members present, those who sent apologies for absence, and any guests. Then, following the agenda, each item is minuted in turn.
+
+For each item, good minutes record three things: a brief summary of the discussion (the key points, not every word), the decision reached (clearly stated), and the action agreed - what will be done, by whom, and by when. Many organisations use an "action column" down the right-hand side listing the responsible person's initials against each action, so responsibilities stand out at a glance.
+
+Standard early items are the approval of the previous minutes and matters arising (progress on previous actions). The minutes close with any other business, the date of the next meeting, and the time the meeting closed. The chairperson signs the approved minutes.
+
+Crucial insight: minutes have a heading (group, date, time, venue), attendance (present, apologies, guests), and then each agenda item recording the discussion summary, the decision, and the action (what, who, when). An action column makes responsibilities visible; the chairperson signs the approved record.` },
+
+    { q: "How to take effective minutes.",
+      body: `Taking good minutes is a skill. It is not about writing fast enough to capture everything - it is about capturing the right things clearly.
+
+My Socratic question: a new secretary tries to write down every sentence spoken and ends up with pages of confusing, unusable notes that miss the actual decisions. What should they have focused on instead?
+
+Effective minute-taking focuses on decisions and actions, not verbatim speech. Before the meeting, the secretary reads the agenda and prepares a template with the headings and items ready, so they can record under each item as it is discussed. During the meeting, they listen for the decision - the moment the group agrees something - and record it clearly, along with who is responsible and the deadline. If a decision is unclear, a good secretary asks the chairperson to confirm the exact wording before moving on.
+
+The language of minutes is concise, objective, and past tense ("the committee agreed", "it was decided", "the report was noted"). Names are used for actions and, where relevant, for proposers of motions, but personal opinions and heated exchanges are summarised neutrally, not quoted.
+
+Minutes should be written up and circulated promptly, while memories are fresh - ideally within a few days - so members can act on their responsibilities without delay.
+
+Crucial insight: effective minute-taking captures decisions and actions, not every word. Prepare a template from the agenda, listen for and confirm each decision, write concisely in the past tense, and circulate promptly so people can act.` },
+
+    { q: "Types of minutes and their uses.",
+      body: `Not all minutes look the same. The level of detail depends on the meeting's needs, and there are recognised styles.
+
+My Socratic question: a disciplinary hearing needs a near word-for-word record, while a busy project team just needs to know who is doing what next. Should both use the same style of minutes, and if not, what are the options?
+
+There are three common styles. Verbatim minutes record everything said, word for word - used where an exact record is legally important, such as formal hearings or parliamentary proceedings. They are detailed but time-consuming and rarely needed for routine meetings.
+
+Action minutes (also called resolution minutes) are brief - they record only the decisions and the actions agreed, with who is responsible and by when. They are ideal for busy operational meetings where the group cares about outcomes, not discussion.
+
+Narrative minutes (also called discursive minutes) sit in between: they summarise the key points of the discussion as well as the decisions and actions. They give context - why a decision was made - which is useful for committees and for informing people who were not present.
+
+Most workplace and healthcare meetings use action or narrative minutes. The choice depends on how much of the discussion, not just the outcome, needs to be preserved.
+
+Crucial insight: verbatim minutes record every word (for legal or formal records); action minutes record only decisions and actions (for busy operational meetings); narrative minutes summarise the discussion plus the decisions (for context). The right style matches how much detail the meeting truly needs.` },
+
+    { q: "Common mistakes, and the approval of minutes.",
+      body: `Minutes fail in predictable ways, and there is a formal process that turns a draft into the official record.
+
+The common mistakes are these. Recording too much - trying to capture every word, producing bloated, unusable minutes. Recording too little - failing to state the decision or the responsible person clearly. Vague actions - "someone will look into it", with no name or deadline. Injecting opinion - reporting the discussion emotionally or taking sides, rather than neutrally. Delay - circulating minutes so late that people cannot act in time, or have forgotten the meeting. And inaccuracy - misrecording a decision, which can cause real harm when people act on the wrong instruction.
+
+The approval process guards against these. The draft minutes are circulated after the meeting. At the next meeting, the group reviews them: any errors are corrected, and the group then formally agrees them as a true record. The chairperson signs the approved minutes, and from that point they are the authoritative version. This shared approval is what gives minutes their authority - they are the group's agreed account, not one person's.
+
+Crucial insight: minutes commonly fail through recording too much or too little, vague actions, injected opinion, delay, or inaccuracy. The approval process - circulate, correct, formally agree, and have the chairperson sign - turns a draft into the authoritative, agreed record.` },
+
+    { q: "Conducting the meeting: motions, debate, and voting.",
+      body: `In formal meetings, decisions are not reached by vague agreement - they are made through a defined process of proposing, debating, and voting. Understanding this process explains how a group turns discussion into a binding decision.
+
+My Socratic question: a committee discusses a proposal for an hour but never actually decides anything, because no one ever put the proposal formally or called for a decision. What procedure was missing, and how does it convert talk into a clear, recordable outcome?
+
+The missing procedure is the motion. A motion is a formal proposal put to the meeting - for example, "that the department adopt the new specimen-labelling protocol." One member proposes the motion, and usually another must second it (support it being discussed) before it can be debated. The chairperson then opens the floor to debate, ensuring both support and objections are heard.
+
+When debate is complete, the chairperson puts the motion to a vote. Members vote for, against, or abstain, and the motion is carried (passed) if it gains the required majority, or defeated if it does not. The outcome - carried or defeated, and any vote count - is exactly what the minutes must record, because it is the decision.
+
+The chairperson's skill holds this together: keeping debate relevant and civil, giving everyone a fair chance to speak, preventing a few voices from dominating, and moving the group to a clear vote rather than letting discussion drift. A well-chaired meeting reaches decisions; a poorly chaired one produces only talk.
+
+Crucial insight: formal decisions are made by motion - a proposal that is seconded, debated, and then voted on, becoming carried or defeated by majority. The chairperson guides debate fairly and moves the group to a vote, and the minutes record the outcome as the decision.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for Meeting and Minutes.
+
+Meeting: a planned gathering to discuss matters, make decisions, and coordinate action.
+
+Minutes: the official, approved record of decisions, actions, and responsibilities.
+
+Roles: chairperson (leads, keeps order, guides to decisions); secretary (prepares notice and agenda, takes and circulates minutes). Quorum makes decisions valid; a motion is a formal proposal that is debated and voted on.
+
+Before the meeting: the notice announces date, time, and venue; the agenda lists items in order (apologies, previous minutes, matters arising, main business, AOB, next meeting date).
+
+Purpose of minutes: permanent record, assigned responsibility, informing absentees, follow-up, accountability and evidence.
+
+Structure of minutes: heading (group, date, time, venue); attendance (present, apologies, guests); each item's discussion summary, decision, and action (what, who, when), often with an action column.
+
+Taking minutes: capture decisions and actions, not every word; prepare a template; confirm unclear decisions; write concisely in the past tense; circulate promptly.
+
+Types: verbatim (every word), action (decisions and actions only), narrative (discussion plus decisions).
+
+Common mistakes: too much or too little detail, vague actions, opinion, delay, inaccuracy.
+
+Approval: circulate, correct, formally agree, chairperson signs - this makes minutes authoritative.
+
+Now your final test. After a laboratory quality meeting, the secretary produces minutes that read like a story: three paragraphs describing how heated the discussion about the faulty centrifuge became, no clear statement of what was decided, and a final line saying "it was agreed that the centrifuge issue would be handled."
+
+Question one: what essential content is missing from these minutes?
+Question two: what is wrong with the line "the centrifuge issue would be handled"?
+Question three: what must happen before these minutes become the official record?
+
+Work them through before reading on.
+
+My answers. One: the minutes record the discussion but not the outcome - they are missing the clear decision and the action, including who is responsible and by when. Good minutes for this item would state the decision (for example, "it was decided to remove the centrifuge from service pending repair") and the action with an owner and deadline. Two: "the centrifuge issue would be handled" is a vague action - it names no responsible person, no specific action, and no deadline. It should read, for example: "Action: the senior technologist (J. Mensah) will remove the centrifuge from service, log a service request, and report back at the next meeting by 30 June." Three: these draft minutes become the official record only after they are circulated, reviewed and corrected at the next meeting, formally agreed by the group as a true record, and signed by the chairperson.` }
+  ],
+  theory: [
+    { q: "What is a meeting?", a: "A meeting is a planned gathering of people to discuss matters, make decisions, and coordinate action." },
+    { q: "What are minutes?", a: "Minutes are the official written record of a meeting - the decisions made, the actions agreed, and who is responsible, by when." },
+    { q: "What does the chairperson do?", a: "The chairperson leads the meeting: opens it, keeps discussion on the agenda, ensures everyone can contribute, manages time, and guides the group to decisions." },
+    { q: "What does the secretary do?", a: "The secretary prepares the notice and agenda, takes the minutes during the meeting, and circulates them afterwards." },
+    { q: "What is the difference between the notice and the agenda?", a: "The notice announces that a meeting will take place (date, time, venue). The agenda lists the items to be discussed, in order, so members can prepare." },
+    { q: "What is a quorum?", a: "A quorum is the minimum number of members who must be present for the meeting's decisions to be valid." },
+    { q: "What three things should be recorded for each agenda item?", a: "A brief summary of the discussion, the decision reached, and the action agreed (what will be done, by whom, and by when)." },
+    { q: "Name the three styles of minutes.", a: "Verbatim (every word, for legal/formal records), action or resolution (decisions and actions only), and narrative or discursive (discussion plus decisions)." },
+    { q: "When do minutes become the official record?", a: "When the group reviews them at the next meeting, corrects any errors, formally agrees them as a true record, and the chairperson signs them." },
+    { q: "Why should minutes be circulated promptly?", a: "So members can act on their responsibilities without delay, while the meeting is still fresh in memory." },
+  ],
+  videos: [
+    { channel: "Business Communication", title: "How to Take Meeting Minutes", note: "What to record and what to leave out.", url: "" },
+    { channel: "Professional Skills", title: "Running an Effective Meeting", note: "The roles of chair and secretary, and the agenda.", url: "" },
+    { channel: "Workplace Writing", title: "Agenda and Minutes Explained", note: "Standard agenda order and minute structure.", url: "" },
+  ],
+  mcqs: [
+    { q: "Minutes are best described as:", o: ["A word-for-word transcript always", "The official record of a meeting's decisions and actions", "A personal diary", "An agenda"], a: 1, w: "Minutes are the official record of decisions and actions (style varies)." },
+    { q: "The person who leads a meeting is the:", o: ["Secretary", "Chairperson", "Treasurer", "Guest"], a: 1, w: "The chairperson leads and keeps order." },
+    { q: "The person who takes the minutes is usually the:", o: ["Chairperson", "Secretary", "Treasurer", "Auditor"], a: 1, w: "The secretary prepares the agenda and takes the minutes." },
+    { q: "A document announcing a meeting's date, time, and venue is the:", o: ["Agenda", "Notice", "Minutes", "Motion"], a: 1, w: "The notice announces the meeting so members can attend." },
+    { q: "The list of items to be discussed, in order, is the:", o: ["Notice", "Minutes", "Agenda", "Quorum"], a: 2, w: "The agenda lists the items to be discussed." },
+    { q: "A quorum is:", o: ["The meeting room", "The minimum members present for valid decisions", "The chairperson's vote", "The set of minutes"], a: 1, w: "A quorum is the minimum number needed for decisions to be valid." },
+    { q: "A formal proposal put to a meeting for debate and vote is a:", o: ["Motion", "Minute", "Notice", "Quorum"], a: 0, w: "A motion is a formal proposal that is debated and voted on." },
+    { q: "'Apologies' on an agenda refers to:", o: ["The chairperson saying sorry", "Members who cannot attend", "An error in the minutes", "A vote"], a: 1, w: "Apologies are noted for members who cannot attend." },
+    { q: "'Matters arising' means:", o: ["New business", "Progress or issues from the previous meeting's minutes", "The next meeting date", "The attendance list"], a: 1, w: "Matters arising deals with follow-up from the previous minutes." },
+    { q: "AOB stands for:", o: ["Any Other Business", "Agenda Of Board", "Approval Of Business", "All Officers Board"], a: 0, w: "AOB is Any Other Business, near the end of the agenda." },
+    { q: "For each agenda item, minutes should record:", o: ["Every word spoken", "The discussion summary, the decision, and the action", "Only who attended", "Only the time"], a: 1, w: "Record the discussion summary, decision, and action (what, who, when)." },
+    { q: "An action in the minutes should state:", o: ["Only that something will happen", "What will be done, by whom, and by when", "The chairperson's opinion", "Nothing specific"], a: 1, w: "Actions must name the task, the person, and the deadline." },
+    { q: "Verbatim minutes:", o: ["Record only decisions", "Record everything said, word for word", "Are the shortest style", "Are used for casual huddles"], a: 1, w: "Verbatim minutes record every word, for legal or formal records." },
+    { q: "Action (resolution) minutes record:", o: ["Every word", "Only decisions and actions agreed", "Personal feelings", "The full discussion"], a: 1, w: "Action minutes record only decisions and actions." },
+    { q: "Narrative minutes:", o: ["Record nothing", "Summarise the discussion plus the decisions", "Are word-for-word", "Contain only names"], a: 1, w: "Narrative minutes summarise discussion and decisions for context." },
+    { q: "Minutes should generally be written in the:", o: ["Future tense", "Past tense", "First person", "Second person"], a: 1, w: "Minutes are written concisely in the past tense (e.g., 'it was agreed')." },
+    { q: "Minutes become the official record when:", o: ["The secretary types them", "The group approves them as accurate and the chair signs", "They are emailed", "They are printed"], a: 1, w: "Approval by the group and the chairperson's signature make them official." },
+    { q: "Why should minutes be circulated promptly?", o: ["To fill inboxes", "So members can act on their responsibilities in time", "To delay work", "It is not important"], a: 1, w: "Prompt circulation lets people act while the meeting is fresh." },
+    { q: "A common minute-taking mistake is:", o: ["Recording decisions clearly", "Writing vague actions with no owner or deadline", "Using the past tense", "Preparing a template"], a: 1, w: "Vague actions with no owner or deadline are a common failure." },
+    { q: "A good secretary who is unsure of a decision should:", o: ["Guess and move on", "Ask the chairperson to confirm the exact wording", "Leave it blank", "Record their own opinion"], a: 1, w: "Confirming the exact decision prevents an inaccurate record." },
+    { q: "The heading of a set of minutes includes:", o: ["The group name, date, time, and venue", "Only the date", "The chairperson's home address", "The full discussion"], a: 0, w: "The heading gives the group, date, time, and venue." },
+    { q: "An 'action column' in minutes is used to:", o: ["Hide responsibilities", "Show who is responsible for each action at a glance", "List apologies", "Record the vote count"], a: 1, w: "The action column makes responsibilities visible." },
+    { q: "The agenda item usually taken first is:", o: ["Any other business", "Apologies for absence", "Date of next meeting", "The main report"], a: 1, w: "Apologies for absence are taken early in the agenda." },
+    { q: "Which is NOT typically a role or term in formal meetings?", o: ["Chairperson", "Secretary", "Quorum", "Narrator"], a: 3, w: "Narrator is not a formal meeting role." },
+    { q: "Minutes should record opinions and heated exchanges:", o: ["Word for word with names", "Neutrally summarised, not quoted (unless a member requests)", "Dramatically", "Never at all in any form"], a: 1, w: "Discussion is summarised neutrally, not quoted emotionally." },
+    { q: "The main purpose of minutes is to:", o: ["Entertain readers", "Provide a permanent, accountable record of decisions and actions", "Replace the meeting", "List attendees only"], a: 1, w: "Minutes provide a permanent, accountable record." },
+    { q: "In healthcare, meeting minutes are often required for:", o: ["Decoration", "Audits and accreditation", "Personal scrapbooks", "Nothing"], a: 1, w: "Minutes are often required for audits and accreditation." },
+    { q: "The date of the next meeting is usually placed:", o: ["At the very start", "Near the end of the agenda and minutes", "In the heading", "In the attendance list"], a: 1, w: "The next meeting date comes near the end." },
+    { q: "Which action statement is best?", o: ["The centrifuge issue will be handled", "Someone should look at the centrifuge", "J. Mensah to log a repair request by 30 June and report back", "Maybe fix the centrifuge soon"], a: 2, w: "It names the person, the specific action, and the deadline." },
+    { q: "The style of minutes chosen should depend on:", o: ["The secretary's mood", "How much of the discussion, not just the outcome, must be preserved", "The room size", "The number of chairs"], a: 1, w: "The right style matches how much detail the meeting truly needs." },
+  ],
+};
+
+
 /* --------------------------- mls:0 --------------------------- */
 const T_MLS_SAFETY = {
   courseId: "lab",
@@ -12753,6 +13162,8 @@ const CONTENT = {
   "com:2": T_COM_ORGANISATIONAL, 
   "com:3": T_COM_LETTERS,
   "com:4": T_COM_MEMO,     
+  "com:5": T_COM_REPORT,
+  "com:6": T_COM_MEETINGS,
   "phy:0": T_PHY_GENERAL,
   "phy:1": T_PHY_HOMEO,
   "phy:2": T_PHY_TRANSPORT,
