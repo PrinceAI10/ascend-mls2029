@@ -323,10 +323,13 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .notif-item:last-child{border-bottom:none}
 .notif-dot{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;
   background:var(--bad);border:2px solid var(--bg-2)}
-.notif-badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;
-  border-radius:9px;background:var(--bad);color:#fff;border:2px solid var(--bg-2);
-  font-size:10.5px;font-weight:800;line-height:1;display:inline-flex;align-items:center;
-  justify-content:center;font-family:var(--mono);box-shadow:0 1px 4px rgba(0,0,0,0.35)}
+.notif-badge{position:absolute;top:-6px;right:-6px;min-width:21px;height:21px;padding:0 6px;
+  border-radius:11px;background:var(--bad);color:#fff;border:2px solid var(--bg-2);
+  font-size:12.5px;font-weight:800;line-height:1;display:inline-flex;align-items:center;
+  justify-content:center;font-family:var(--mono);box-shadow:0 2px 6px rgba(240,119,106,0.55);
+  animation:notifPulse 1.8s ease-in-out infinite}
+@keyframes notifPulse{0%,100%{transform:scale(1);box-shadow:0 2px 6px rgba(240,119,106,0.55)}
+  50%{transform:scale(1.12);box-shadow:0 2px 12px rgba(240,119,106,0.9)}}
 .notif-item.unread{background:var(--amber-dim)}
 .notif-item .unread-dot{width:8px;height:8px;border-radius:50%;background:var(--bad);
   display:inline-block;flex-shrink:0}
@@ -14637,9 +14640,10 @@ function RanksView({ app }) {
     // A presence entry is only trusted as "online" if its timestamp is
     // recent. Without this, someone whose tab crashed or lost network
     // (so no "leave" event ever fires) would show as online forever.
-    const STALE_MS = 45000;
+    const STALE_MS = 30000;   // treat as offline ~30s after their last heartbeat
     let channel;
     let heartbeatId;
+    let refreshId;
     const refresh = () => {
       try {
         const state = channel.presenceState();
@@ -14668,19 +14672,27 @@ function RanksView({ app }) {
             }
           }
         });
-      // Heartbeat: re-track periodically so our own "at" timestamp stays
-      // fresh, and re-run the staleness filter so other people's dots turn
-      // off promptly even if their leave event never arrived.
+      // Heartbeat: re-track often so our own "at" timestamp stays well within
+      // STALE_MS, keeping us reliably "online" while active.
       heartbeatId = setInterval(() => {
         if (document.visibilityState !== "visible") return;
         try { channel.track({ name: app.progress.name, at: Date.now() }); } catch (error) {
           // Silently fail
         }
         refresh();
-      }, 20000);
+      }, 12000);
+      // Dedicated fast refresh: re-run the staleness filter frequently so other
+      // people's dots and the "online now" count update sharply as they come
+      // and go, without waiting for the slower heartbeat.
+      refreshId = setInterval(refresh, 6000);
     } catch (error) {
       // Silently fail
     }
+    const onFocus = () => {
+      try { if (channel) { channel.track({ name: app.progress.name, at: Date.now() }); } } catch (e) {}
+      refresh();
+    };
+    window.addEventListener("focus", onFocus);
     const onHide = () => { 
       try { 
         if (document.visibilityState === "hidden" && channel) {
@@ -14696,7 +14708,9 @@ function RanksView({ app }) {
     document.addEventListener("visibilitychange", onHide);
     return () => {
       if (heartbeatId) clearInterval(heartbeatId);
+      if (refreshId) clearInterval(refreshId);
       document.removeEventListener("visibilitychange", onHide);
+      window.removeEventListener("focus", onFocus);
       try { if (channel) { channel.untrack(); supabase.removeChannel(channel); } } catch (error) {
         // Silently fail
       }
@@ -15063,17 +15077,26 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   const recordedRef = useRef(false);
   const pendingPromiseRef = useRef(null);
 
-  const buildPrompt = (n) => {
+  const buildPrompt = (n, avoidStems, progress) => {
     const curriculum = curriculumContextFor(course.id, topicName);
+    const avoidNote = (avoidStems && avoidStems.length)
+      ? `\n\nThese questions have ALREADY been asked in this set - do NOT repeat, rephrase, or paraphrase any of them. Every new question must test a genuinely DIFFERENT fact or angle:\n${avoidStems.map((s, i) => `- ${s}`).join("\n")}`
+      : "";
+    const diffNote = progress
+      ? `\nThese are questions ${progress.from} to ${progress.to} of a ${progress.total}-question set that gets harder as it goes. Make this batch ${progress.level}.`
+      : "";
+    const syllabusNote = topicName
+      ? `\nStay STRICTLY within the KNUST syllabus topic "${topicName}". Do not test anything outside it.`
+      : `\nStay STRICTLY within the KNUST syllabus for ${course.name}. Do not test anything outside the course.`;
     // "Generate similar" mode: base fresh questions on a pasted sample question.
     if (sampleQuestion && sampleQuestion.trim()) {
       const anchorNote = topicName
         ? `The pasted question is only a style/format reference. Every generated question MUST stay strictly within the "${topicName}" topic as defined above, even if the pasted question's own concept sits elsewhere - in that case, keep the pasted question's structure/style but write about "${topicName}" instead.`
         : `If the pasted question's concept falls outside the syllabus topics above, anchor the new questions to the closest syllabus topic instead of following the pasted question off-curriculum.`;
-      return `Here is a passco exam question:\n\n${sampleQuestion}\n\nGenerate exactly ${n} fresh MCQs testing the same concept(s) and matching this question's style and structure, for a KNUST first-year student in ${course.name} (${course.code}).\n\n${curriculum}\n${anchorNote}\n\n${PRACTICE_MCQ_RULES}`;
+      return `Here is a passco exam question:\n\n${sampleQuestion}\n\nGenerate exactly ${n} fresh MCQs testing the same concept(s) and matching this question's style and structure, for a KNUST first-year student in ${course.name} (${course.code}).\n\n${curriculum}\n${anchorNote}${syllabusNote}${diffNote}${avoidNote}\n\n${PRACTICE_MCQ_RULES}`;
     }
     const topicPart = topicName ? `Focus specifically on the topic: ${topicName}.` : `Cover a mix of topics across the course.`;
-    return `Generate exactly ${n} passco-style exam MCQs for a KNUST first-year student in ${course.name} (${course.code}). ${topicPart}\n\n${curriculum}\n\n${PRACTICE_MCQ_RULES}`;
+    return `Generate exactly ${n} passco-style exam MCQs for a KNUST first-year student in ${course.name} (${course.code}). ${topicPart}\n\n${curriculum}${syllabusNote}${diffNote}${avoidNote}\n\n${PRACTICE_MCQ_RULES}`;
   };
 
   // Request only a few questions per AI call. A single 10-question generation is
@@ -15081,7 +15104,9 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   // request and makes the loader spin forever); small sub-batches each return fast
   // and as clean, complete JSON, and we loop to fill the set of 10.
   const SUB_BATCH = 4;
-  const normQ = (q) => String(q || "").toLowerCase().replace(/\s+/g, " ").trim().slice(0, 80);
+  // Stronger normalisation for dedupe: lowercase, strip punctuation, collapse
+  // spaces, and use more of the stem so near-duplicates are caught too.
+  const normQ = (q) => String(q || "").toLowerCase().replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ").trim().slice(0, 120);
 
   // No-repeat-ever memory: every question a user has seen for this course+topic
   // is remembered in localStorage (per browser/user), so future practice runs
@@ -15112,11 +15137,21 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
     const maxMisses = 3;
     while (collected.length < n && misses < maxMisses) {
       const need = Math.min(SUB_BATCH, n - collected.length);
+      // Tell this sub-batch which questions already exist in the set so it does
+      // not repeat them, and ramp difficulty as the set fills up.
+      const avoidStems = collected.map((x) => x.q).slice(-24);
+      const frac = collected.length / Math.max(1, n);
+      const level = frac < 0.34
+        ? "foundational recall - clear, single-step questions"
+        : frac < 0.67
+        ? "moderate - require applying or linking a concept"
+        : "challenging - multi-step reasoning, calculations, or the common exam traps";
+      const progress = { from: collected.length + 1, to: collected.length + need, total: n, level };
       let got = [];
       try {
         const text = await callClaude(
-          "You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid, compact, complete JSON array of exactly " + need + " questions, no prose, no markdown, no trailing commas. Keep each question and option short. Every question must have exactly one unambiguously correct option - double-check your \"correct\" field matches one of the four options verbatim.",
-          [{ role: "user", content: buildPrompt(need) }],
+          "You generate KNUST-style medical laboratory science exam questions. Return ONLY a valid, compact, complete JSON array of exactly " + need + " questions, no prose, no markdown, no trailing commas. Keep each question and option short. Every question must be UNIQUE within the set and have exactly one unambiguously correct option - double-check your \"correct\" field matches one of the four options verbatim.",
+          [{ role: "user", content: buildPrompt(need, avoidStems, progress) }],
           need * 260 + 400
         );
         const arr = parseAIJson(text);
