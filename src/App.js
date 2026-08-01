@@ -112,6 +112,8 @@ html, body {
   --bad:#D4482F; --bad-dim:rgba(212,72,47,.10);
 }
 .ascend-root.light .opt.correct{color:var(--text)}
+.ascend-root.light .opt.correct{background:rgba(30,158,94,.20);border-color:var(--good);color:var(--text)}
+.ascend-root.light .opt.wrong{background:rgba(212,72,47,.16);border-color:var(--bad);color:var(--text)}
 .ascend-root.light .hero{background:linear-gradient(160deg,#E8EDF5 0%,#D5DDE8 60%)}
 .ascend-root.light .hero-h .hl{color:#B4790A}
 .ascend-root.light .hero-p{color:#4B5A70}
@@ -13663,6 +13665,23 @@ function QuizView({ app }) {
   const t = contentFor(app.courseId, app.topicId);
   const mcqs = t ? (t.mcqs || []) : [];
   const sessKey = "ascend_quiz_" + app.courseId + "_" + app.topicId;
+
+  // The quiz state is saved in sessionStorage under generic keys. If that saved
+  // session belongs to a DIFFERENT topic than the one now open, discard it so the
+  // new topic starts fresh - otherwise the previous topic's (often finished)
+  // questions load here and block you from starting a new set.
+  try {
+    if (sessionStorage.getItem('ascend_quiz_topic') !== sessKey) {
+      sessionStorage.removeItem('ascend_quiz_questions');
+      sessionStorage.removeItem('ascend_quiz_mode');
+      sessionStorage.removeItem('ascend_quiz_index');
+      sessionStorage.removeItem('ascend_quiz_answers');
+      sessionStorage.removeItem('ascend_quiz_reveal');
+      sessionStorage.removeItem('ascend_quiz_done');
+      sessionStorage.removeItem('ascend_quiz_left');
+      sessionStorage.removeItem('ascend_quiz_elapsed');
+    }
+  } catch {}
   
   // PERSISTENCE: Load from sessionStorage on mount
   const [q, setQ] = useState(() => {
@@ -13750,6 +13769,7 @@ function QuizView({ app }) {
       sessionStorage.setItem('ascend_quiz_done', String(done));
       sessionStorage.setItem('ascend_quiz_left', String(left));
       sessionStorage.setItem('ascend_quiz_elapsed', String(elapsed));
+      sessionStorage.setItem('ascend_quiz_topic', sessKey);
     } catch {}
   }, [q, mode, i, answers, reveal, done, left, elapsed]);
 
@@ -13764,6 +13784,7 @@ function QuizView({ app }) {
       sessionStorage.removeItem('ascend_quiz_done');
       sessionStorage.removeItem('ascend_quiz_left');
       sessionStorage.removeItem('ascend_quiz_elapsed');
+      sessionStorage.removeItem('ascend_quiz_topic');
     } catch {}
   };
 
@@ -14868,8 +14889,8 @@ function ReviewView({ app }) {
           {item.o.map((opt, k) => {
             let cls = "opt";
             if (answered) {
-              if (k === item.a) cls += " opt-correct";
-              else if (k === picked) cls += " opt-wrong";
+              if (k === item.a) cls += " correct";
+              else if (k === picked) cls += " wrong";
             }
             return (
               <button key={k} className={cls} disabled={answered} onClick={() => setPicked(k)}>{opt}</button>
@@ -17124,6 +17145,11 @@ function HomeView({ app }) {
   const nextKey = builtKeys.find((k) => !app.progress.completed?.[k]) || builtKeys[builtKeys.length - 1] || null;
   const nt = nextKey ? CONTENT[nextKey] : null;
   const ntCourse = nt ? courseById(nt.courseId) : null;
+  // "Jump back in" should resume the LAST topic the student actually opened,
+  // not the next unstarted one. Fall back to the next topic if they haven't
+  // opened any topic yet this session.
+  const resumeTopic = (app.lastTopic && contentFor(app.lastTopic.courseId, app.lastTopic.topicId)) || nt;
+  const resumeCourse = resumeTopic ? courseById(resumeTopic.courseId) : null;
   return (
     <div className="view">
       <div className="hero" style={{ 
@@ -17183,22 +17209,6 @@ function HomeView({ app }) {
     }}>Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
   </div>
 </div>
-      {app.lastTopic && (() => {
-        const t = contentFor(app.lastTopic.courseId, app.lastTopic.topicId);
-        if (!t) return null;
-        return (
-          <button className="card hover" style={{ width: "100%", textAlign: "left", marginTop: 16 }} onClick={() => app.go("topic", app.lastTopic)}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <div>
-                <div className="eyebrow" style={{ color: "var(--amber)" }}>Continue reading</div>
-                <div style={{ fontWeight: 650, fontSize: 16 }}>{t.title}</div>
-                <div style={{ color: "var(--text-3)", fontSize: 13 }}>{courseById(app.lastTopic.courseId)?.name}</div>
-              </div>
-              <Ic.chevR p={22} />
-            </div>
-          </button>
-        );
-      })()}
 
       {(() => {
         // Exam countdown - end-of-semester exams begin 17 August 2026.
@@ -17335,13 +17345,13 @@ function HomeView({ app }) {
         </button>
       </div>
       <div className="eyebrow" style={{ margin: "26px 0 12px" }}>Jump back in</div>
-      {nt && ntCourse ? (
-        <button className="card hover" style={{ width: "100%", textAlign: "left" }} onClick={() => app.go("topic", { courseId: nt.courseId, topicId: nt.topicIndex })}>
+      {resumeTopic && resumeCourse ? (
+        <button className="card hover" style={{ width: "100%", textAlign: "left" }} onClick={() => app.go("topic", { courseId: resumeTopic.courseId, topicId: resumeTopic.topicIndex })}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 14 }}>
             <div>
-              <div className="mono" style={{ fontSize: 11, color: "var(--amber)" }}>{ntCourse.name.toUpperCase()} · TOPIC {String(nt.topicIndex + 1).padStart(2, "0")}</div>
-              <div style={{ fontWeight: 650, fontSize: 16, margin: "4px 0 2px" }}>{nt.title}</div>
-              <div style={{ color: "var(--text-3)", fontSize: 13 }}>Lesson · AI tutor · {(nt.mcqs || []).length} MCQs</div>
+              <div className="mono" style={{ fontSize: 11, color: "var(--amber)" }}>{resumeCourse.name.toUpperCase()} · TOPIC {String(resumeTopic.topicIndex + 1).padStart(2, "0")}</div>
+              <div style={{ fontWeight: 650, fontSize: 16, margin: "4px 0 2px" }}>{resumeTopic.title}</div>
+              <div style={{ color: "var(--text-3)", fontSize: 13 }}>Lesson · AI tutor · {(resumeTopic.mcqs || []).length} MCQs</div>
             </div>
             <Ic.chevR p={22} />
           </div>
