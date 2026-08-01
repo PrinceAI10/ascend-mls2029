@@ -13,9 +13,39 @@ const DEEPSEEK_MODEL = process.env.DEEPSEEK_MODEL || "deepseek-chat";
 const TOGETHER_MODEL = process.env.TOGETHER_MODEL || "meta-llama/Llama-3.2-3B-Instruct-Turbo";
 const MISTRAL_MODEL = process.env.MISTRAL_MODEL || "mistral-tiny";
 const CEREBRAS_MODEL = process.env.CEREBRAS_MODEL || "llama-3.3-70b";
-const FIREWORKS_MODEL = process.env.FIREWORKS_MODEL || "accounts/fireworks/models/llama-v3p1-8b-instruct";
+const FIREWORKS_MODEL = process.env.FIREWORKS_MODEL || "accounts/fireworks/models/llama-v3p3-70b-instruct";
 
-const PROVIDER_TIMEOUT_MS = 10000;
+const PROVIDER_TIMEOUT_MS = 15000;
+
+// Each provider/model caps max output tokens differently. Requesting more
+// than a model allows (e.g. Cohere's command-r caps at 4096) causes an
+// outright rejection instead of just truncating - so clamp per provider
+// rather than sending the same max_tokens to everyone.
+const TOKEN_CAPS = {
+  groq: 8000,
+  openrouter: 8000,
+  cohere: 4000,
+  deepseek: 8000,
+  together: 8000,
+  mistral: 8000,
+  cerebras: 8000,
+  fireworks: 4000,
+};
+function capTokens(provider, requested) {
+  const cap = TOKEN_CAPS[provider] || 4000;
+  return Math.min(requested || 1024, cap);
+}
+
+// Reads the raw response body once and tries JSON.parse on it, keeping the
+// raw text around so a real failure reason can be surfaced even when a
+// provider returns an error body that doesn't match the {error:{message}}
+// shape we assume elsewhere (this is what was hiding Cerebras's actual error).
+async function readBody(r) {
+  const raw = await r.text();
+  let data = null;
+  try { data = JSON.parse(raw); } catch {}
+  return { data, raw };
+}
 
 function getGroqKeys() {
   const keys = [
@@ -148,16 +178,15 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: GROQ_MODEL,
         messages: toOpenAIMessages(),
-        max_completion_tokens: max_tokens || 1024,
+        max_completion_tokens: capTokens("groq", max_tokens),
         temperature: 0.7,
       }),
     }, PROVIDER_TIMEOUT_MS);
     
-    let data;
-    try { data = await r.json(); } catch { data = null; }
+    const { data, raw } = await readBody(r);
     
     if (!r.ok || !data) {
-      const err = new Error(data?.error?.message || "Groq request failed");
+      const err = new Error(data?.error?.message || data?.message || (raw ? raw.slice(0,200) : "Groq request failed"));
       err.status = r.status || 502;
       throw err;
     }
@@ -193,16 +222,15 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: OPENROUTER_MODEL,
         messages: toOpenAIMessages(),
-        max_tokens: max_tokens || 1024,
+        max_tokens: capTokens("openrouter", max_tokens),
         temperature: 0.7,
       }),
     }, PROVIDER_TIMEOUT_MS);
     
-    let data;
-    try { data = await r.json(); } catch { data = null; }
+    const { data, raw } = await readBody(r);
     
     if (!r.ok || !data) {
-      const err = new Error(data?.error?.message || "OpenRouter request failed");
+      const err = new Error(data?.error?.message || data?.message || (raw ? raw.slice(0,200) : "OpenRouter request failed"));
       err.status = r.status || 502;
       throw err;
     }
@@ -222,16 +250,15 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: COHERE_MODEL,
         messages: toOpenAIMessages(),
-        max_tokens: max_tokens || 1024,
+        max_tokens: capTokens("cohere", max_tokens),
         temperature: 0.7,
       }),
     }, PROVIDER_TIMEOUT_MS);
     
-    let data;
-    try { data = await r.json(); } catch { data = null; }
+    const { data, raw } = await readBody(r);
     
     if (!r.ok || !data) {
-      const err = new Error(data?.message || data?.error?.message || "Cohere request failed");
+      const err = new Error(data?.message || data?.error?.message || (raw ? raw.slice(0,200) : "Cohere request failed"));
       err.status = r.status || 502;
       throw err;
     }
@@ -256,16 +283,15 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: DEEPSEEK_MODEL,
         messages: toOpenAIMessages(),
-        max_tokens: max_tokens || 1024,
+        max_tokens: capTokens("deepseek", max_tokens),
         temperature: 0.7,
       }),
     }, PROVIDER_TIMEOUT_MS);
     
-    let data;
-    try { data = await r.json(); } catch { data = null; }
+    const { data, raw } = await readBody(r);
     
     if (!r.ok || !data) {
-      const err = new Error(data?.error?.message || "DeepSeek request failed");
+      const err = new Error(data?.error?.message || data?.message || (raw ? raw.slice(0,200) : "DeepSeek request failed"));
       err.status = r.status || 502;
       throw err;
     }
@@ -285,16 +311,15 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: TOGETHER_MODEL,
         messages: toOpenAIMessages(),
-        max_tokens: max_tokens || 1024,
+        max_tokens: capTokens("together", max_tokens),
         temperature: 0.7,
       }),
     }, PROVIDER_TIMEOUT_MS);
     
-    let data;
-    try { data = await r.json(); } catch { data = null; }
+    const { data, raw } = await readBody(r);
     
     if (!r.ok || !data) {
-      const err = new Error(data?.error?.message || "Together request failed");
+      const err = new Error(data?.error?.message || data?.message || (raw ? raw.slice(0,200) : "Together request failed"));
       err.status = r.status || 502;
       throw err;
     }
@@ -314,16 +339,15 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: MISTRAL_MODEL,
         messages: toOpenAIMessages(),
-        max_tokens: max_tokens || 1024,
+        max_tokens: capTokens("mistral", max_tokens),
         temperature: 0.7,
       }),
     }, PROVIDER_TIMEOUT_MS);
     
-    let data;
-    try { data = await r.json(); } catch { data = null; }
+    const { data, raw } = await readBody(r);
     
     if (!r.ok || !data) {
-      const err = new Error(data?.error?.message || "Mistral request failed");
+      const err = new Error(data?.error?.message || data?.message || (raw ? raw.slice(0,200) : "Mistral request failed"));
       err.status = r.status || 502;
       throw err;
     }
@@ -343,16 +367,15 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: CEREBRAS_MODEL,
         messages: toOpenAIMessages(),
-        max_tokens: max_tokens || 1024,
+        max_tokens: capTokens("cerebras", max_tokens),
         temperature: 0.7,
       }),
     }, PROVIDER_TIMEOUT_MS);
     
-    let data;
-    try { data = await r.json(); } catch { data = null; }
+    const { data, raw } = await readBody(r);
     
     if (!r.ok || !data) {
-      const err = new Error(data?.error?.message || "Cerebras request failed");
+      const err = new Error(data?.error?.message || data?.message || (raw ? raw.slice(0,200) : "Cerebras request failed"));
       err.status = r.status || 502;
       throw err;
     }
@@ -372,16 +395,15 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: FIREWORKS_MODEL,
         messages: toOpenAIMessages(),
-        max_tokens: max_tokens || 1024,
+        max_tokens: capTokens("fireworks", max_tokens),
         temperature: 0.7,
       }),
     }, PROVIDER_TIMEOUT_MS);
     
-    let data;
-    try { data = await r.json(); } catch { data = null; }
+    const { data, raw } = await readBody(r);
     
     if (!r.ok || !data) {
-      const err = new Error(data?.error?.message || "Fireworks request failed");
+      const err = new Error(data?.error?.message || data?.message || (raw ? raw.slice(0,200) : "Fireworks request failed"));
       err.status = r.status || 502;
       throw err;
     }
