@@ -13082,7 +13082,7 @@ function shuffleQuestion(item) {
 }
 
 // Shuffle an entire bank of questions
-const PRACTICE_QUESTION_COUNT = 50;
+const PRACTICE_QUESTION_COUNT = 30;
 
 const questionKey = (item) => String(item && item.q ? item.q : "").trim().toLowerCase().replace(/\s+/g, " ");
 
@@ -13881,7 +13881,7 @@ function QuizView({ app }) {
             <p style={{ color: "var(--text-2)", fontSize: 14, margin: 0 }}>Timed, graded, full review at the end.</p>
           </button>
         </div>
-        {building && <div className="card" style={{ marginTop: 14, color: "var(--text-2)" }}>Preparing a unique 50-question set for this topic...</div>}
+        {building && <div className="card" style={{ marginTop: 14, color: "var(--text-2)" }}>Preparing a unique {PRACTICE_QUESTION_COUNT}-question set for this topic...</div>}
         {buildErr && <div className="card" style={{ marginTop: 14, color: "var(--bad)" }}>{buildErr}</div>}
       </div>
     );
@@ -15523,12 +15523,12 @@ const PAST_PAPERS = [
     { q: "What type of bond often forms between enzyme and substrate?", o: ["Covalent only", "Ionic only", "Hydrogen and ionic bonds", "Metallic bonds"], a: 2, w: "Enzyme-substrate interactions involve non-covalent bonds including hydrogen and ionic bonds." },
     { q: "Which of the following is NOT a gluconeogenic organ?", o: ["Liver", "Kidneys", "Brain", "Intestine"], a: 2, w: "The brain does not perform gluconeogenesis - it relies on glucose from the blood." },
     { q: "What is the major source of energy for gluconeogenesis?", o: ["ATP", "NADH", "FADH2", "GTP"], a: 0, w: "ATP is the major energy source for gluconeogenesis, along with GTP." },
-    { q: "Which enzyme catalyzes the first step of gluconeogenesis?", o: ["Pyruvate kinase", "Phosphoenolpyruvate carboxylase", "Glucose-6-phosphatase", "Fructose-1,6-bisphosphatase"], a: 1, w: "Pyruvate carboxylase (not listed) catalyzes the first step. Among options, PEP carboxykinase (PEPCK) is listed as 'Phosphoenolpyruvate carboxylase'." },
+    { q: "Which enzyme catalyzes the first step of gluconeogenesis?", o: ["Pyruvate kinase", "Pyruvate carboxylase", "Glucose-6-phosphatase", "Fructose-1,6-bisphosphatase"], a: 1, w: "The first (committed) step of gluconeogenesis is pyruvate to oxaloacetate, catalysed by pyruvate carboxylase in the mitochondria." },
     { q: "Which of the following is a gluconeogenic precursor?", o: ["Lactate", "Glycogen", "Glucose", "Pyruvate"], a: 0, w: "Lactate is a major gluconeogenic precursor (Cori cycle). Pyruvate is also a precursor but lactate is the better answer." },
     { q: "Pyruvate carboxylase, the allosteric gluconeogenesis enzyme that catalyses the conversion of pyruvate to oxaloacetate is activated by", o: ["Acetyl CoA", "Acetaldehyde", "Pyruvate", "Biotin"], a: 0, w: "Pyruvate carboxylase is allosterically activated by acetyl-CoA." },
     { q: "Glucagon and epinephrine stimulate glycogen breakdown to glucose 6-phosphate", o: ["Directly by binding to glycogen phosphorylase", "Indirectly by first stimulating adenylate cyclase to make cAMP", "Only in the liver", "Only in muscle cells"], a: 1, w: "Glucagon and epinephrine activate adenylate cyclase → cAMP → PKA → phosphorylase kinase → glycogen phosphorylase." },
     { q: "Which compounds are responsible for the coordinated regulation of glucose and glycogen metabolism?", o: ["NADH", "NAD+", "Acetyl Co-A", "Fructose 2,6-bisphosphate"], a: 3, w: "Fructose-2,6-bisphosphate is a key regulator of glycolysis and gluconeogenesis." },
-    { q: "Glycogen synthase is activated by", o: ["Phosphorylation catalysed by GSK3", "Dephosphorylation catalysed by GSK3", "Phosphorylation catalysed by pyruvate kinase", "Phosphorylation catalysed by pyruvate carboxylase"], a: 1, w: "Glycogen synthase is activated by dephosphorylation (GSK3 phosphorylates and inactivates it)." },
+    { q: "Glycogen synthase is activated by", o: ["Phosphorylation catalysed by GSK3", "Dephosphorylation catalysed by protein phosphatase 1", "Phosphorylation catalysed by pyruvate kinase", "Phosphorylation catalysed by pyruvate carboxylase"], a: 1, w: "Glycogen synthase is activated by dephosphorylation, carried out by protein phosphatase 1 (PP1). GSK3 phosphorylates and inactivates it." },
     { q: "What type of glycosidic bond is found at the branch points of glycogen?", o: ["α-1,3", "α-1,4", "β-1,4", "α-1,6"], a: 3, w: "Glycogen branches are formed by α-1,6-glycosidic bonds (main chain is α-1,4)." },
     { q: "The action of which of the following enzymes both activates glycogen breakdown and inhibits glycogen synthesis?", o: ["Protein phosphatase 1", "Phosphorylase kinase", "Protein kinase A", "Protein kinase C"], a: 2, w: "Protein kinase A (PKA) activates glycogen phosphorylase and inactivates glycogen synthase." },
     { q: "Which enzyme breaks down glycogen to glucose-1-phosphate?", o: ["Glycogen phosphorylase", "Glycogen synthase", "Glucose-6-phosphatase", "Phosphoglucomutase"], a: 0, w: "Glycogen phosphorylase cleaves glycogen to release glucose-1-phosphate." },
@@ -15665,7 +15665,7 @@ const PAST_PAPERS = [
     { q: "Which of the following enzymes of the TCA cycle does NOT generate reducing equivalents:", o: ["Isocitrate dehydrogenase", "Succinate dehydrogenase", "α-ketoglutarate dehydrogenase", "Malate dehydrogenase"], a: 1, w: "[No answer mark visible in your source — determined from biochemistry] All four technically generate reducing equivalents, but succinate dehydrogenase is the exception that produces FADH2 (not NADH) and is membrane-bound as Complex II — the classic 'odd one out' in this comparison." },
     { q: "The TCA cycle is a/an ........... pathway", o: ["catabolic", "amphibolic", "anabolic", "anaplerotic"], a: 1, w: "Consistent with Q31's answer key — the TCA cycle serves both catabolic and anabolic roles, making it amphibolic." },
     { q: "The enzyme .................. catalyses an anaplerotic reaction", o: ["PEP carboxylase", "Malate dehydrogenase", "Pyruvate dehrogenase", "SuccinylCoA synthetase"], a: 0, w: "[No answer mark visible in your source — determined from biochemistry] PEP carboxylase (and pyruvate carboxylase) are classic anaplerotic enzymes that replenish TCA intermediates; the other options are standard cyclic TCA enzymes." },
-    { q: "Malic enzyme converts", o: ["Phosphoenolpyruvate (PEP) to Oxaloacetate", "Phosphoenolpyruvate (PEP) to pyruvate", "Pyruvate to malate", "Pyruvate to Oxaloacetate"], a: 2, w: "[No answer mark visible in your source, AND this one is genuinely ambiguous — flag for a second opinion] Malic enzyme classically catalyzes malate → pyruvate + CO2 + NADPH; among the directions listed here, (c) reflects the reverse (carboxylating) direction sometimes described for this enzyme, but please verify against your lecture notes before relying on this one." },
+    { q: "Malic enzyme converts", o: ["Phosphoenolpyruvate (PEP) to Oxaloacetate", "Phosphoenolpyruvate (PEP) to pyruvate", "Malate to pyruvate", "Pyruvate to Oxaloacetate"], a: 2, w: "Malic enzyme catalyses the oxidative decarboxylation of malate to pyruvate, generating NADPH and CO2." },
     { q: "The TCA cycle is NOT inhibited by", o: ["Flouride oxalate", "FluroacetylCoA poisoning", "Pyruvate dehydrogenase deficiency", "Lactate Deficiency"], a: 0, w: "Pencil-circled in your source (not blue ink — treat as a student mark, not a confirmed key). Biochemically defensible: fluoride/oxalate act on glycolysis (enolase) rather than the TCA cycle directly, while fluoroacetyl-CoA and PDH deficiency do affect the TCA cycle." },
     { q: "Glyoxylate cycle", o: ["is a source for carbohydrate synthesis in some yeast", "is energy consuming", "uses one acetylCoA per turn of the cycle", "occurs in certain mammals"], a: 0, w: "[No answer mark visible in your source — determined from biochemistry] The glyoxylate cycle allows net carbohydrate synthesis from fat in yeast/plants/some bacteria; it uses 2 acetyl-CoA per turn (not 1) and does NOT occur in mammals." },
     { q: "The Glyoxylate cycle uses ..............derived AcetylCoA", o: ["Protein", "Glucose", "Fatty acid", "Carbohydrate"], a: 2, w: "Pencil-circled in your source (not blue ink). This matches real biochemistry: the glyoxylate cycle's defining role is converting fatty-acid-derived acetyl-CoA into carbohydrate." },
@@ -15687,6 +15687,31 @@ const PAST_PAPERS = [
   ]
 },
 ];
+
+// Remove structurally malformed passco questions - ones where the individual
+// statements (I, II, III) were mistakenly entered as clickable OPTIONS alongside
+// the "I and II only" combos. Those questions are mis-keyed and would mislead
+// students, so we drop them everywhere rather than serve a wrong answer. Correct
+// combo-style questions keep their statements in the QUESTION text, so they pass.
+(function sanitizePastPapers() {
+  var romanOpt = /^\s*(III|II|I)\.\s/;
+  // Descriptive "identify the location/gland from a microscopy description" questions.
+  // Several are mis-keyed (e.g. the same question appears twice with different answers)
+  // and cannot be verified against the official marking scheme, so we hide them until
+  // the correct answers are confirmed - better than serving a disputed answer.
+  var disputedDescriptive = /^\s*(Specimens?\s+A\b|Examination of (an epithelium|three|a )|An epithelium had|A specimen (has|with)|You are given (a )?specimen)/i;
+  PAST_PAPERS.forEach(function (paper) {
+    if (!paper || !Array.isArray(paper.questions)) return;
+    paper.questions = paper.questions.filter(function (q) {
+      if (!q || !Array.isArray(q.o) || q.o.length < 2) return false;
+      if (typeof q.a !== "number" || q.a < 0 || q.a >= q.o.length) return false; // must have a valid answer
+      var romanCount = q.o.filter(function (o) { return romanOpt.test(String(o)); }).length;
+      if (romanCount >= 2) return false;               // broken statements-as-options
+      if (disputedDescriptive.test(String(q.q))) return false; // unverified descriptive-ID
+      return true;
+    });
+  });
+})();
 
 // ============================================================
 // YOUTUBE VIDEOS DATA
@@ -19299,6 +19324,10 @@ export default function App() {
           </header>
           
           <div className="content">{render()}</div>
+
+          <footer style={{ textAlign: "center", padding: "24px 16px 32px", marginTop: 8, color: "var(--text-2)", fontSize: 12.5, lineHeight: 1.6, borderTop: "1px solid var(--line)" }}>
+            © 2026 ASCEND · Built by Prince, Ansah, Jeffery &amp; Dacosta for the MLS Class of 2029. All rights reserved.
+          </footer>
           
           {showTop && (
             <button
