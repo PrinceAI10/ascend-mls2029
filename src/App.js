@@ -321,6 +321,16 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .notif-item:last-child{border-bottom:none}
 .notif-dot{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;
   background:var(--bad);border:2px solid var(--bg-2)}
+.notif-badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;
+  border-radius:9px;background:var(--bad);color:#fff;border:2px solid var(--bg-2);
+  font-size:10.5px;font-weight:800;line-height:1;display:inline-flex;align-items:center;
+  justify-content:center;font-family:var(--mono);box-shadow:0 1px 4px rgba(0,0,0,0.35)}
+.notif-item.unread{background:var(--amber-dim)}
+.notif-item .unread-dot{width:8px;height:8px;border-radius:50%;background:var(--bad);
+  display:inline-block;flex-shrink:0}
+.notif-markall{background:none;border:none;color:var(--amber-2);font-size:12.5px;font-weight:700;
+  cursor:pointer;padding:2px 4px;font-family:var(--mono)}
+.notif-markall:disabled{color:var(--text-3);cursor:default}
 .iconbtn{position:relative;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
   background:var(--bg-2);color:var(--text-2);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
 .iconbtn:hover{color:var(--text);border-color:var(--line-2)}
@@ -19268,9 +19278,31 @@ export default function App() {
   const r = rankOf(progress?.xp || 0);
   const rootCls = "ascend-root" + (theme === "light" ? " light" : "");
   const dailyNotDone = !progress?.dailyDone?.[todayKey()];
-  const unreadAnn = (progress?.seenAnn || 0) < ANNOUNCEMENTS.length;
-  const hasUnread = unreadAnn || dailyNotDone;
-  const openNotif = () => { setNotifOpen(true); if (unreadAnn && progress) persist({ ...progress, seenAnn: ANNOUNCEMENTS.length }); };
+  // Per-announcement read state (email-style). readAnn holds the ids the student
+  // has opened. We fall back to the old seenAnn count so existing users don't
+  // suddenly see everything as unread again.
+  const readAnn = Array.isArray(progress?.readAnn) ? progress.readAnn : [];
+  const legacySeen = progress?.seenAnn || 0;
+  const isAnnRead = (id) => {
+    if (readAnn.includes(id)) return true;
+    const idx = ANNOUNCEMENTS.findIndex((a) => a.id === id);
+    return idx >= 0 && idx < legacySeen;
+  };
+  const unreadAnnCount = ANNOUNCEMENTS.filter((a) => !isAnnRead(a.id)).length;
+  const unreadCount = unreadAnnCount + (dailyNotDone ? 1 : 0); // daily reminder counts as one
+  const hasUnread = unreadCount > 0;
+  const markAnnRead = (id) => {
+    if (!progress || isAnnRead(id)) return;
+    const next = ANNOUNCEMENTS.filter((a) => isAnnRead(a.id) || a.id === id).map((a) => a.id);
+    persist({ ...progress, readAnn: next, seenAnn: Math.max(legacySeen, next.length) });
+  };
+  const markAllAnnRead = () => {
+    if (!progress) return;
+    persist({ ...progress, readAnn: ANNOUNCEMENTS.map((a) => a.id), seenAnn: ANNOUNCEMENTS.length });
+  };
+  // Opening the panel no longer wipes the badge - the student marks items read
+  // themselves (like an inbox), so the count reflects what they've actually seen.
+  const openNotif = () => { setNotifOpen(true); };
   const showRate = !!auth && (progress?.xp || 0) >= 30 && !progress?.rated && !progress?.ratePromptSeen && !rateDismissed && route.view !== "feedback";
 
   if (!loaded) return (
@@ -19313,7 +19345,7 @@ export default function App() {
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
                 <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
                 <button className="iconbtn" onClick={toggleTheme} title="Toggle light and dark">{theme === "light" ? <Ic.moon p={17} /> : <Ic.sun p={17} />}</button>
-                <button className="iconbtn" onClick={openNotif} title="Announcements"><Ic.bell p={18} />{hasUnread && <span className="notif-dot" />}</button>
+                <button className="iconbtn" onClick={openNotif} title="Notifications"><Ic.bell p={18} />{unreadCount > 0 && <span className="notif-badge">{unreadCount > 9 ? "9+" : unreadCount}</span>}</button>
                 <span className="chip"><span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP</span>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
@@ -19417,24 +19449,37 @@ export default function App() {
           <div className="notif-scrim" onClick={() => setNotifOpen(false)} />
           <div className="notif-panel">
             <div className="notif-head">
-              <div style={{ fontWeight: 700, fontSize: 15 }}>Announcements</div>
-              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setNotifOpen(false)}><Ic.x p={15} /></button>
+              <div style={{ fontWeight: 700, fontSize: 15 }}>Notifications{unreadCount > 0 ? ` (${unreadCount})` : ""}</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <button className="notif-markall" onClick={markAllAnnRead} disabled={unreadAnnCount === 0}>Mark all read</button>
+                <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setNotifOpen(false)}><Ic.x p={15} /></button>
+              </div>
             </div>
             {dailyNotDone && (
-              <div className="notif-item" style={{ background: "var(--amber-dim)" }}>
-                <div className="mono" style={{ fontSize: 11, color: "var(--amber-2)", marginBottom: 4 }}>REMINDER</div>
+              <div className="notif-item unread">
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                  <span className="unread-dot" />
+                  <div className="mono" style={{ fontSize: 11, color: "var(--amber-2)" }}>REMINDER</div>
+                </div>
                 <div style={{ fontWeight: 650, marginBottom: 3 }}>Today's daily question is waiting</div>
                 <div style={{ color: "var(--text-2)", fontSize: 13.5, marginBottom: 9 }}>Keep your streak alive - it only takes a minute.</div>
                 <button className="btn btn-a btn-sm" onClick={() => { setNotifOpen(false); go("daily"); }}>Go to daily</button>
               </div>
             )}
-            {ANNOUNCEMENTS.map((a) => (
-              <div className="notif-item" key={a.id}>
-                <div className="mono" style={{ fontSize: 11, color: "var(--amber)", marginBottom: 4 }}>{a.tag.toUpperCase()}</div>
-                <div style={{ fontWeight: 650, marginBottom: 3 }}>{a.title}</div>
-                <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>{a.body}</div>
-              </div>
-            ))}
+            {ANNOUNCEMENTS.map((a) => {
+              const read = isAnnRead(a.id);
+              return (
+                <div className={"notif-item" + (read ? "" : " unread")} key={a.id} onClick={() => markAnnRead(a.id)} style={{ cursor: read ? "default" : "pointer" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                    {!read && <span className="unread-dot" />}
+                    <div className="mono" style={{ fontSize: 11, color: "var(--amber)" }}>{a.tag.toUpperCase()}</div>
+                  </div>
+                  <div style={{ fontWeight: read ? 550 : 700, marginBottom: 3 }}>{a.title}</div>
+                  <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>{a.body}</div>
+                  {!read && <div style={{ marginTop: 6, fontSize: 11.5, color: "var(--amber-2)", fontWeight: 600 }}>Tap to mark as read</div>}
+                </div>
+              );
+            })}
             <div style={{ padding: "14px 18px" }}>
               <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={() => { setNotifOpen(false); go("feedback"); }}>Send feedback</button>
             </div>
