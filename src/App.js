@@ -6839,6 +6839,332 @@ My answers. One: the technician should use an analytical balance because it read
   ],
 };
 
+/* --------------------------- lab:5 --------------------------- */
+const T_LAB_PIPETTING = {
+  courseId: "lab",
+  topicIndex: 5,
+  title: "Pipetting",
+  minutes: 20,
+  note: [
+    { q: "Why pipetting is one of the most important skills in the laboratory.",
+      body: `You have learned to weigh samples accurately on the balance. Now we turn to the instrument used to measure and transfer liquids: the pipette. Pipetting is performed more often than almost any other laboratory task, and small errors in pipetting compound quickly across a whole procedure.
+
+My Socratic question: a laboratory technician needs to transfer 200 microlitres of serum into a reagent for a chemistry test. If she is off by even 5%, what happens to the final result?
+
+The answer is that the final result will be inaccurate, because the ratio of sample to reagent is now wrong. Since so many laboratory procedures depend on precise volumes — dilutions, reagent preparation, sample analysis — pipetting accuracy directly determines the accuracy of the entire test.
+
+Crucial insight: pipetting is a foundational laboratory skill because so many procedures depend on accurately measured and transferred liquid volumes. Small pipetting errors propagate through an entire procedure, making correct technique essential for reliable results.` },
+
+    { q: "Types of pipettes: volumetric, graduated, and micropipettes.",
+      body: `Not all pipettes are used the same way, and choosing the right pipette for a task matters as much as choosing the right balance.
+
+My Socratic question: a laboratory needs to measure exactly 10 mL of a standard solution, and also needs to measure 50 microlitres of a patient sample. Can the same pipette be used for both?
+
+The answer is no. A volumetric pipette is designed to deliver one single, fixed volume with high accuracy — commonly used for preparing standards and precise dilutions. A graduated (measuring) pipette has multiple markings along its length, allowing it to deliver variable volumes, though generally with slightly less precision than a volumetric pipette. A micropipette is an adjustable, mechanical or electronic device used to measure very small volumes, typically in the microlitre range, and is the pipette of choice for most modern clinical and molecular laboratory work.
+
+Crucial insight: volumetric pipettes deliver one fixed, precise volume; graduated pipettes deliver variable volumes with a scale; micropipettes measure adjustable, very small volumes and dominate modern laboratory practice. Selecting the correct pipette type for the required volume and precision is essential.` },
+
+    { q: "Micropipette anatomy and setting the volume.",
+      body: `Since the micropipette is the most commonly used pipette in modern laboratories, understanding its parts and correct use is essential.
+
+My Socratic question: a micropipette has a plunger, a volume adjustment dial, a tip ejector button, and a disposable tip. What is the function of each part, and why does the order of use matter?
+
+The plunger is pressed to draw up and expel liquid, and has two distinct stops — the first stop draws up the set volume, while the second stop (pressed further) expels any residual liquid. The volume adjustment dial sets the exact volume to be drawn, shown on a digital or mechanical display, and must always be set within the pipette's specified range — forcing it outside this range damages the internal mechanism. The tip ejector button releases the used disposable tip without the user touching it, maintaining sterility and preventing contamination. The disposable tip attaches to the shaft and is the only part that actually contacts the liquid, which is why tips are changed between samples.
+
+Crucial insight: a micropipette's key parts are the plunger (with two stops, for drawing up and fully expelling liquid), the volume adjustment dial (set within the specified range only), the tip ejector, and the disposable tip. Understanding each part's function prevents both technique errors and damage to the instrument.` },
+
+    { q: "The forward pipetting technique, step by step.",
+      body: `Forward pipetting is the standard, most commonly used technique for measuring and dispensing a liquid, suitable for most aqueous solutions and samples.
+
+My Socratic question: a technician needs to transfer exactly 100 microlitres of a reagent into a tube. What is the correct sequence of steps to do this accurately?
+
+Set the micropipette to the required volume using the adjustment dial. Attach a new, correctly sized disposable tip firmly onto the shaft. Press the plunger down to the first stop. Immerse the tip just below the surface of the liquid — typically 2 to 4 mm deep — and slowly release the plunger to draw up the liquid. Move to the destination vessel, touch the tip gently against the inside wall, and press the plunger smoothly to the first stop, then continue to the second stop to expel any remaining liquid. Withdraw the tip while still holding the plunger at the second stop, then release the plunger and eject the tip.
+
+Crucial insight: forward pipetting follows a precise sequence — set volume, attach tip, press to first stop, aspirate slowly, dispense to the second stop against the vessel wall, then withdraw and eject the tip. Following each step exactly, rather than rushing, is what produces an accurate transfer.` },
+
+    { q: "Reverse pipetting: for viscous, foaming, or precious samples.",
+      body: `Some liquids do not behave well with forward pipetting, and a different technique — reverse pipetting — solves specific problems that arise with certain sample types.
+
+My Socratic question: a technician using forward pipetting to measure a viscous, protein-rich sample notices small air bubbles appearing in her dispensed volume, causing inaccurate results. What technique should she use instead, and why does it help?
+
+The answer is reverse pipetting. Instead of pressing to the first stop before aspirating, the plunger is pressed all the way to the second stop, then released slowly to draw up liquid — this draws in a larger volume than the set amount. When dispensing, only the plunger is pressed to the first stop, delivering exactly the set volume, while the small excess remains in the tip rather than being expelled. This technique avoids the bubble formation and volume loss that can occur with foaming, viscous, or very precious samples during forward pipetting, because the liquid is aspirated more gently and gradually.
+
+Crucial insight: reverse pipetting — aspirating to the second stop, then dispensing only to the first stop — is used for viscous, foaming, or precious samples, because it avoids bubble formation and ensures the exact set volume is delivered even when some liquid remains in the tip.` },
+
+    { q: "Common pipetting errors and their causes.",
+      body: `Even with the right pipette and technique in mind, several common errors reduce accuracy and precision if not deliberately avoided.
+
+My Socratic question: a technician repeatedly gets slightly different volumes each time she pipettes the same set volume of the same liquid. What might be causing this inconsistency?
+
+Angle of aspiration matters — holding the pipette at an angle rather than vertically changes the effective volume drawn up. Immersion depth matters — too shallow an immersion can draw in air, while too deep an immersion can coat the outside of the tip with excess liquid that is then transferred inaccurately. Aspiration speed matters — aspirating too quickly can create bubbles or fail to draw up the full volume, particularly with viscous liquids. Pre-wetting the tip — drawing up and expelling the liquid once or twice before the actual measurement — equilibrates the air inside the tip with the liquid's vapour, improving consistency, especially for volatile liquids.
+
+Crucial insight: pipetting inconsistency commonly results from incorrect angle, wrong immersion depth, aspirating too quickly, or skipping tip pre-wetting. Controlling each of these variables — vertical angle, correct depth, slow and steady aspiration, and pre-wetting when appropriate — produces more consistent, accurate results.` },
+
+    { q: "Pipette calibration and maintenance.",
+      body: `Like the electronic balance, a pipette must be regularly checked and maintained to ensure it continues to deliver accurate volumes over time.
+
+My Socratic question: a micropipette that has been dropped, or used heavily for months without any check, may silently begin delivering slightly wrong volumes. How would a laboratory detect this before it affects patient results?
+
+Pipettes should undergo periodic calibration checks, typically by gravimetric testing — pipetting a set volume of water repeatedly onto an analytical balance and confirming the measured mass matches the expected mass (since the density of water is known). Pipettes should also be inspected regularly for damage to the tip cone, plunger smoothness, and seals, since worn seals are a common cause of volume drift. Manufacturer-recommended servicing intervals should be followed, and any pipette that has been dropped should be checked before further use, even if it appears undamaged.
+
+Crucial insight: pipette accuracy is not permanent — it must be verified through periodic gravimetric calibration checks and physical inspection, especially after a drop or heavy use. Treating a pipette as "always accurate" without verification risks silent, undetected errors in every result it produces.` },
+
+    { q: "Tip selection and avoiding cross-contamination.",
+      body: `Using the correct tip, and changing it appropriately, is as important as the pipetting technique itself, particularly for preventing contamination between samples.
+
+My Socratic question: a technician reuses the same tip to pipette two different patient samples in a row to save time. What is the risk, and why does this matter clinically?
+
+The answer is carryover contamination — trace amounts of the first sample remaining in or on the tip can mix into the second sample, potentially causing a false result, such as a false positive in an infectious disease test or an inaccurate concentration reading. Tips must be matched to the pipette model and volume range, since an incorrectly sized tip will not seal properly, causing air leaks and inaccurate volumes. A fresh, correctly sized tip should be used for every new sample or reagent, and filter tips (containing a barrier that blocks aerosols and liquid from reaching the pipette shaft) should be used for particularly sensitive or infectious samples, such as in molecular diagnostics.
+
+Crucial insight: using a fresh, correctly sized tip for every sample prevents carryover contamination that could cause false clinical results, and filter tips provide an additional barrier against aerosol contamination for sensitive or infectious samples.` },
+
+    { q: "Pipetting technique and the quality of laboratory results.",
+      body: `Pipetting connects directly back to earlier topics — the electronic balance, quality control, and measurement accuracy — showing how laboratory skills build on and reinforce one another.
+
+My Socratic question: a laboratory's quality control results for a chemistry analyser suddenly begin drifting out of range, despite the analyser itself being recently serviced and functioning normally. What laboratory step, easy to overlook, might be responsible?
+
+The answer is that pipetting technique — used to prepare the QC material, standards, or reagents — may be the true source of the drift, even though the analyser itself is functioning correctly. Because so many upstream steps depend on accurate pipetting, an analyser can be perfectly calibrated and still produce unreliable results if the liquids feeding into it were measured or transferred inaccurately. This illustrates why pipetting technique deserves the same rigorous attention as instrument calibration itself.
+
+Crucial insight: pipetting errors can masquerade as instrument or reagent problems, since inaccurate liquid measurement upstream can produce unreliable results even from a correctly functioning analyser. Rigorous pipetting technique is therefore as critical to result quality as instrument calibration and maintenance.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for pipetting, in four lines.
+
+Why it matters and the tools: pipetting accuracy determines the accuracy of everything that follows it in a procedure; volumetric pipettes deliver one fixed volume, graduated pipettes deliver variable volumes with a scale, and micropipettes offer adjustable, precise small-volume measurement.
+
+Technique: forward pipetting (aspirate to the first stop, dispense to the second) suits most liquids; reverse pipetting (aspirate to the second stop, dispense only to the first) suits viscous, foaming, or precious samples, leaving a small excess in the tip.
+
+Sources of error and their control: incorrect angle, wrong immersion depth, aspirating too quickly, and skipping tip pre-wetting all reduce accuracy; pipettes require periodic gravimetric calibration and physical inspection, especially after being dropped.
+
+Contamination control: a fresh, correctly sized tip for every sample prevents carryover contamination, and filter tips add protection for sensitive or infectious samples.
+
+Now your final test. A technician is measuring a small volume of a viscous, protein-rich reagent and needs to transfer it into several tubes without introducing bubbles or losing volume to the tip.
+
+Question one: which pipetting technique should she use, and why?
+Question two: name two technique variables (besides the pipette itself) that could still cause inconsistent volumes even with the right technique.
+Question three: what quality check should be performed periodically on her micropipette, and how is it typically carried out?
+
+Work them through before reading on.
+
+My answers. One: reverse pipetting should be used, because aspirating to the second stop draws up a slightly larger volume, and dispensing only to the first stop delivers the exact set volume while avoiding the bubble formation and volume loss that viscous or foaming liquids can cause with forward pipetting. Two: aspiration speed (too fast can create bubbles or an incomplete draw) and immersion depth (too shallow draws in air, too deep coats the tip with excess liquid) can both cause inconsistency even with the correct technique chosen. Three: a periodic gravimetric calibration check should be performed — pipetting a set volume of water repeatedly onto an analytical balance and confirming the measured mass matches the expected mass for that volume, given water's known density.
+
+If those came cleanly, you understand how pipette selection, aspiration and dispensing technique, error sources, and calibration together ensure that every liquid transfer in the laboratory is accurate and trustworthy — the same foundational rigour you learned for the electronic balance, now applied to liquid measurement.` },
+  ],
+  theory: [
+    { q: "Why does pipetting accuracy matter so much in laboratory work?", a: "Because so many procedures — dilutions, reagent preparation, sample analysis — depend on precisely measured and transferred liquid volumes; small pipetting errors propagate through the entire procedure and compromise the final result." },
+    { q: "Distinguish volumetric, graduated, and micropipettes.", a: "A volumetric pipette delivers one fixed, precise volume. A graduated pipette has multiple markings, delivering variable volumes with slightly less precision. A micropipette is an adjustable device measuring small, typically microlitre-range volumes, and is the most commonly used pipette in modern laboratories." },
+    { q: "Explain the function of the two plunger stops on a micropipette.", a: "The first stop draws up the set volume of liquid. The second stop, reached by pressing the plunger further, expels any residual liquid remaining in the tip after dispensing." },
+    { q: "Outline the forward pipetting technique.", a: "Set the volume, attach a fresh tip, press the plunger to the first stop, immerse the tip 2-4 mm below the surface and release slowly to aspirate, then dispense against the vessel wall by pressing to the first stop and then the second stop to expel any residual liquid." },
+    { q: "Explain reverse pipetting and when it should be used.", a: "In reverse pipetting, the plunger is pressed to the second stop before aspirating (drawing a larger volume), and only pressed to the first stop when dispensing, leaving excess in the tip. It is used for viscous, foaming, or precious samples to avoid bubble formation and volume loss." },
+    { q: "List four common sources of pipetting error.", a: "Incorrect angle of aspiration (not vertical), incorrect immersion depth (too shallow or too deep), aspirating too quickly, and failing to pre-wet the tip before measurement." },
+    { q: "Why should tips be pre-wetted before measuring volatile liquids?", a: "Pre-wetting equilibrates the air inside the tip with the liquid's vapour, improving the consistency and accuracy of the volume drawn up on subsequent aspirations." },
+    { q: "How is pipette calibration typically checked?", a: "Through gravimetric testing: pipetting a set volume of water repeatedly onto an analytical balance and confirming the measured mass matches the expected mass, since the density of water is known." },
+    { q: "Why must tips be changed between different samples?", a: "To prevent carryover contamination - trace amounts of a previous sample remaining in or on the tip could mix into the next sample, potentially causing false results such as a false positive or an inaccurate concentration reading." },
+    { q: "What is the purpose of a filter tip, and when is it used?", a: "A filter tip contains a barrier that blocks aerosols and liquid from reaching the pipette shaft, providing additional protection against contamination; it is used for particularly sensitive or infectious samples, such as in molecular diagnostics." },
+  ],
+  videos: [
+    { channel: "Lab Skills", title: "Micropipette Technique for Beginners", note: "Correct forward pipetting step by step.", url: "" },
+    { channel: "Lab Skills", title: "Reverse Pipetting Explained", note: "When and how to use reverse pipetting for viscous samples.", url: "" },
+    { channel: "Lab Safety", title: "Pipette Calibration and Maintenance", note: "Gravimetric checks and preventing volume drift.", url: "" },
+  ],
+  mcqs: [
+    { q: "Pipetting accuracy matters mainly because:", o: ["It has no effect on other lab results", "So many procedures depend on precisely measured and transferred volumes", "Only balances need to be accurate", "Pipettes are rarely used in modern labs"], a: 1, w: "Many procedures depend on precise liquid volumes." },
+    { q: "A pipette designed to deliver one single, fixed, precise volume is a:", o: ["Graduated pipette", "Volumetric pipette", "Micropipette", "Serological pipette only"], a: 1, w: "A volumetric pipette delivers one fixed volume with high accuracy." },
+    { q: "A pipette with multiple markings allowing variable volumes is a:", o: ["Volumetric pipette", "Graduated pipette", "Analytical balance", "Filter tip"], a: 1, w: "Graduated pipettes have markings for variable volumes." },
+    { q: "The most commonly used pipette type in modern clinical and molecular laboratories is the:", o: ["Volumetric pipette", "Graduated pipette", "Micropipette", "Pasteur pipette"], a: 2, w: "Micropipettes dominate modern laboratory practice for small volumes." },
+    { q: "On a micropipette plunger, the first stop is used to:", o: ["Expel residual liquid", "Draw up the set volume", "Eject the tip", "Set the volume dial"], a: 1, w: "The first stop draws up the set volume." },
+    { q: "On a micropipette plunger, the second stop is used to:", o: ["Draw up the set volume", "Expel any residual liquid remaining in the tip", "Adjust the volume dial", "Attach a new tip"], a: 1, w: "The second stop expels residual liquid after dispensing." },
+    { q: "Forcing a micropipette's volume dial outside its specified range will:", o: ["Improve accuracy", "Damage the internal mechanism", "Have no effect", "Automatically recalibrate the pipette"], a: 1, w: "Setting the volume outside the specified range can damage the mechanism." },
+    { q: "In forward pipetting, the tip should be immersed below the liquid surface to a depth of approximately:", o: ["10-15 mm", "2-4 mm", "50 mm", "It should not be immersed at all"], a: 1, w: "The tip is typically immersed 2-4 mm below the surface." },
+    { q: "In forward pipetting, dispensing is completed by:", o: ["Only pressing to the first stop", "Pressing to the first stop, then continuing to the second stop", "Never touching the vessel wall", "Ejecting the tip before dispensing"], a: 1, w: "Dispensing continues to the second stop to expel all liquid." },
+    { q: "Reverse pipetting is best suited for:", o: ["Simple aqueous solutions only", "Viscous, foaming, or precious samples", "Only volumetric pipettes", "Samples that never need accuracy"], a: 1, w: "Reverse pipetting suits viscous, foaming, or precious samples." },
+    { q: "In reverse pipetting, aspiration is performed by pressing the plunger to:", o: ["The first stop", "The second stop", "Halfway between stops", "No stop is used"], a: 1, w: "Reverse pipetting aspirates by pressing to the second stop, drawing extra volume." },
+    { q: "In reverse pipetting, dispensing is performed by pressing the plunger only to:", o: ["The second stop", "The first stop, leaving excess liquid in the tip", "No stop", "Beyond the second stop"], a: 1, w: "Dispensing to the first stop delivers the exact set volume, leaving excess in the tip." },
+    { q: "Reverse pipetting helps avoid which specific problem seen with forward pipetting on viscous liquids?", o: ["Excess accuracy", "Bubble formation and volume loss", "Faster pipetting speed", "Tip contamination"], a: 1, w: "Reverse pipetting reduces bubble formation and volume loss with viscous liquids." },
+    { q: "Holding a pipette at an angle rather than vertically during aspiration:", o: ["Has no effect on volume", "Can change the effective volume drawn up", "Always improves accuracy", "Is the recommended technique"], a: 1, w: "Angle affects the effective aspirated volume; vertical holding is correct." },
+    { q: "Immersing the tip too deeply during aspiration can cause:", o: ["Improved accuracy", "The outside of the tip to be coated with excess liquid, transferring inaccurately", "Faster aspiration with no downsides", "The pipette to self-calibrate"], a: 1, w: "Excess immersion depth coats the tip exterior with liquid, causing inaccuracy." },
+    { q: "Pre-wetting a pipette tip before measurement is done to:", o: ["Contaminate the sample intentionally", "Equilibrate the air inside the tip with the liquid's vapour, improving consistency", "Slow down the procedure unnecessarily", "Replace the need for calibration"], a: 1, w: "Pre-wetting equilibrates internal air with vapour, especially for volatile liquids." },
+    { q: "Pipette calibration is commonly checked using:", o: ["Visual inspection alone", "Gravimetric testing against an analytical balance using water", "Testing with coloured dye only", "It never needs to be checked"], a: 1, w: "Gravimetric testing with water on an analytical balance checks calibration." },
+    { q: "A worn seal in a pipette is a common cause of:", o: ["Improved accuracy", "Volume drift over time", "Faster aspiration", "Better tip attachment"], a: 1, w: "Worn seals commonly cause volume drift and inaccuracy." },
+    { q: "After a micropipette has been dropped, best practice is to:", o: ["Assume it is fine if it looks undamaged", "Check it before further use, even if it appears undamaged", "Discard it immediately regardless of condition", "Increase the volume setting to compensate"], a: 1, w: "A dropped pipette should always be checked before further use." },
+    { q: "Reusing the same tip across two different patient samples risks:", o: ["Improved efficiency with no downside", "Carryover contamination between samples", "Automatic sterilisation of the tip", "No clinical consequence at all"], a: 1, w: "Reusing tips risks carryover contamination, potentially causing false results." },
+    { q: "An incorrectly sized tip on a micropipette can cause:", o: ["Perfect sealing and accuracy", "Air leaks and inaccurate volumes due to poor sealing", "Automatic volume correction", "No effect on results"], a: 1, w: "Incorrectly sized tips leak air and cause inaccurate volumes." },
+    { q: "Filter tips are particularly recommended for:", o: ["Routine water measurements only", "Sensitive or infectious samples, such as in molecular diagnostics", "Reducing the cost of tips", "Replacing the need for a pipette entirely"], a: 1, w: "Filter tips provide an aerosol barrier for sensitive or infectious samples." },
+    { q: "A laboratory's quality control results begin drifting despite the analyser being recently serviced. A commonly overlooked cause is:", o: ["The weather", "Pipetting technique used to prepare QC material, standards, or reagents", "The colour of the reagent bottles", "The size of the laboratory"], a: 1, w: "Pipetting technique upstream can cause drift even with a correctly functioning analyser." },
+    { q: "An analyser that is perfectly calibrated can still produce unreliable results if:", o: ["The liquids feeding into it were measured or transferred inaccurately", "It is cleaned regularly", "It is serviced on schedule", "The laboratory has good lighting"], a: 0, w: "Upstream pipetting errors can undermine even a correctly calibrated analyser." },
+    { q: "Volumetric pipettes are typically used for:", o: ["Routine bulk reagent measurement only", "Preparing standards and precise dilutions", "Measuring viscous samples exclusively", "Replacing micropipettes entirely"], a: 1, w: "Volumetric pipettes suit standards and precise dilutions." },
+    { q: "Compared to a volumetric pipette, a graduated pipette generally offers:", o: ["Higher precision but only one volume", "Variable volumes with slightly less precision", "No measurement capability at all", "Only microlitre-range measurements"], a: 1, w: "Graduated pipettes trade some precision for the ability to deliver variable volumes." },
+    { q: "The tip is significant in pipetting because it is:", o: ["Purely decorative", "The only part of the pipette that actually contacts the liquid", "Never changed between samples", "Only used with volumetric pipettes"], a: 1, w: "The disposable tip is the only part contacting the liquid, hence changed between samples." },
+    { q: "Overall, mastering pipetting technique is best understood as:", o: ["Optional, since instruments correct for errors automatically", "Foundational, since it directly determines the accuracy of results built upon it", "Irrelevant to quality control", "Only relevant to molecular laboratories"], a: 1, w: "Pipetting technique is foundational to the accuracy of downstream results." },
+    { q: "A key principle connecting pipetting to earlier laboratory topics (like the balance) is that:", o: ["Different instruments require entirely unrelated skills", "Accurate measurement, careful technique, and periodic calibration matter across instruments", "Only the balance requires calibration", "Pipettes never need maintenance, unlike balances"], a: 1, w: "The same rigour of technique and calibration applies across laboratory instruments." },
+    { q: "Weighing by difference, covered in the balance topic, and reverse pipetting share which underlying principle?", o: ["Both involve no measurement at all", "Both adapt standard technique to better handle sensitive or difficult samples", "Both require a microscope", "Both are used only for solids"], a: 1, w: "Both techniques adapt the standard method to handle sensitive or difficult samples more accurately." },
+  ],
+};
+
+/* --------------------------- lab:6 --------------------------- */
+const T_LAB_MICROSCOPY = {
+  courseId: "lab",
+  topicIndex: 6,
+  title: "Microscopy and its Principles",
+  minutes: 20,
+  note: [
+    { q: "Why the microscope is the laboratory's window into the invisible.",
+      body: `You have mastered accurate weighing and pipetting. Now we turn to the instrument that lets the laboratory see what the naked eye cannot: the microscope. Much of laboratory science - identifying cells, organisms, and structures - depends entirely on the ability to magnify and resolve fine detail.
+
+My Socratic question: two structures are extremely close together, so close that the naked eye sees them as a single blur. Simply magnifying the image bigger - as with a photocopier enlarging text - does not separate them. What property of a microscope actually allows two close structures to be seen as distinct?
+
+The answer is resolution, not magnification alone. A microscope's true power lies in its ability to distinguish two close points as separate, not merely in making things appear bigger. This distinction - between magnification and resolution - is the foundation for understanding how microscopes work and why some are far more powerful than others.
+
+Crucial insight: the microscope is essential to laboratory science because it reveals structures invisible to the naked eye, and its real power lies in resolution - the ability to distinguish two close points as separate - not simply in magnification, which only makes an image larger without necessarily making it clearer.` },
+
+    { q: "Magnification versus resolution: the crucial distinction.",
+      body: `Building on the idea that resolution, not magnification, is what truly matters, we now define both terms precisely, since they are often confused.
+
+My Socratic question: a blurry photograph enlarged on a computer screen becomes bigger, but does it become clearer? What does this tell us about the difference between making something bigger and making it more detailed?
+
+Magnification is the ratio between the size of an image and the actual size of the object - how much bigger the image appears compared to reality. Resolution (or resolving power) is the minimum distance between two points at which they can still be distinguished as separate, rather than blurring into one. A microscope can have high magnification but poor resolution, producing a large but blurry, uninformative image - much like the enlarged blurry photograph.
+
+Crucial insight: magnification describes how much bigger an image appears, while resolution describes how much genuine detail can be distinguished. A microscope's usefulness depends far more on its resolving power than on magnification alone, since magnifying a blurry image only produces a bigger blur.` },
+
+    { q: "The compound light microscope: structure and light path.",
+      body: `The compound light microscope is the workhorse instrument of most laboratories, and understanding its structure explains how it produces a magnified image.
+
+My Socratic question: light from a lamp beneath the stage must pass through the specimen and reach the observer's eye, becoming magnified along the way. Through how many separate lenses must that light pass to achieve useful magnification?
+
+Light from the illuminator passes through the condenser, which focuses light onto the specimen on the stage. Light then passes through the objective lens, which provides the primary magnification (commonly 4x, 10x, 40x, and 100x, the last used with oil immersion). The image formed by the objective is then further magnified by the ocular lens (eyepiece), typically 10x. Total magnification is calculated by multiplying objective magnification by ocular magnification - for example, a 40x objective with a 10x eyepiece gives 400x total magnification.
+
+Crucial insight: in a compound light microscope, light passes through the condenser (focusing light onto the specimen), the objective lens (primary magnification), and the ocular lens (further magnification), with total magnification equal to objective magnification multiplied by ocular magnification.` },
+
+    { q: "Numerical aperture and its relationship to resolution.",
+      body: `Since resolution matters more than magnification, we need to understand what actually determines a microscope's resolving power: numerical aperture.
+
+My Socratic question: two microscope objectives have the same magnification, but one produces a noticeably sharper, more detailed image than the other. If magnification is identical, what property must differ between them?
+
+The answer is numerical aperture (NA) - a measure of the light-gathering ability of a lens, determined by the angle of the light cone entering the objective and the refractive index of the medium between the specimen and the lens. A higher numerical aperture allows a lens to capture more light and finer detail, giving better resolution, independent of magnification. This is why oil immersion objectives use oil (with a higher refractive index than air) between the lens and the specimen - it increases the numerical aperture and therefore the resolution achievable at high magnification.
+
+Crucial insight: numerical aperture, not magnification, determines a lens's resolving power; it depends on the angle of light captured and the refractive index of the medium. Oil immersion increases numerical aperture and resolution at high magnification by replacing air with a higher-refractive-index oil between specimen and lens.` },
+
+    { q: "Types of microscopy beyond brightfield: phase contrast and fluorescence.",
+      body: `Standard brightfield microscopy, where light simply passes through a stained or naturally coloured specimen, is not always sufficient - some specimens are transparent or require special detection methods, leading to alternative microscopy techniques.
+
+My Socratic question: a laboratory needs to observe live, unstained cells, which are nearly transparent and show almost no contrast under a standard brightfield microscope. What kind of microscopy would solve this problem?
+
+Phase contrast microscopy exploits tiny differences in refractive index within a transparent specimen, converting these into visible differences in brightness and contrast, allowing unstained, living cells to be observed clearly without killing or staining them. Fluorescence microscopy uses specimens (either naturally fluorescent or labelled with fluorescent dyes/antibodies) that absorb light at one wavelength and emit it at another; a specific excitation light source and filters isolate the emitted fluorescence, allowing specific structures (such as particular proteins or DNA sequences) to be visualised with high specificity, widely used in diagnostics and research.
+
+Crucial insight: phase contrast microscopy allows unstained, living, transparent specimens to be seen clearly by converting refractive index differences into contrast, while fluorescence microscopy uses excitation and emission wavelengths to visualise specific labelled structures with high specificity - both techniques solving limitations of standard brightfield microscopy.` },
+
+    { q: "Specimen preparation: mounting, staining, and common stains.",
+      body: `A microscope is only as good as the specimen prepared for it - poor preparation can defeat even the best instrument, making preparation technique as important as the microscope itself.
+
+My Socratic question: a bacterial smear observed directly under brightfield microscopy without any preparation shows almost no visible detail. What is missing, and how is this typically corrected?
+
+The answer is contrast - most biological specimens are nearly colourless and transparent, so they must be stained to become visible under brightfield illumination. A wet mount involves placing the specimen in a drop of liquid (such as water or saline) under a coverslip, suitable for observing live, motile organisms. Staining involves applying dyes that bind differentially to cellular components; Gram staining, one of the most important stains in microbiology, differentiates bacteria into Gram-positive (retaining crystal violet, appearing purple) and Gram-negative (losing crystal violet, counterstained pink with safranin) based on differences in cell wall structure. Other common stains include methylene blue (a simple stain for general cell visualisation) and Ziehl-Neelsen (acid-fast) staining, used to detect acid-fast organisms such as Mycobacterium tuberculosis.
+
+Crucial insight: specimen preparation - through wet mounts for live organisms or staining for fixed specimens - provides the contrast needed to see structures clearly under brightfield microscopy. Gram staining, in particular, is a foundational technique that both provides contrast and yields clinically important diagnostic information about bacterial cell wall type.` },
+
+    { q: "Focusing technique: coarse and fine adjustment, and working distance.",
+      body: `Correct focusing technique protects both the specimen (particularly a delicate slide) and the objective lens (particularly at high magnification) from damage, and follows a specific, deliberate sequence.
+
+My Socratic question: a student, working at high magnification (100x oil immersion), quickly turns the coarse focus knob while looking through the eyepiece, without watching the objective from the side. What risk does this create?
+
+The answer is that the objective lens - which has a very small working distance (the gap between the lens and the specimen) at high magnification - could crash directly into the slide, damaging the lens, the slide, or both. Correct technique is to always begin focusing at the lowest magnification first, using the coarse focus knob while watching from the side to bring the objective close to (but not touching) the specimen, then focusing while looking through the eyepiece. When moving to higher magnifications, only the fine focus knob should be used, since the working distance shrinks dramatically as magnification increases, leaving very little room for error.
+
+Crucial insight: focusing should always begin at the lowest magnification, using the coarse focus knob cautiously (watching from the side) to approach the specimen, then refining with the fine focus knob - and only the fine focus knob should be used at high magnification, since the shrinking working distance leaves minimal safe clearance between lens and slide.` },
+
+    { q: "Microscope care and maintenance.",
+      body: `Like the balance and the pipette before it, the microscope is a precision instrument that requires deliberate care to maintain its performance over time.
+
+My Socratic question: a laboratory's microscope images have gradually become dimmer and less sharp over several months, despite no obvious damage. What routine maintenance issue is a likely explanation?
+
+Lenses should be cleaned only with lens paper and appropriate lens cleaning solution, never with tissue, cloth, or bare fingers, since these can scratch the lens coating or leave oily residues that degrade image quality over time. Oil immersion objectives must be wiped clean of oil immediately after use, since dried oil residue on the lens or on other objectives (if accidentally rotated into oil) significantly degrades image quality. The microscope should be stored covered, in a dry environment, to protect it from dust and humidity, both of which can promote fungal growth on internal optics - a serious and sometimes irreversible cause of image degradation. Carrying a microscope always requires two hands - one under the base, one on the arm - to prevent the heavy, delicate optical components from being jarred out of alignment.
+
+Crucial insight: microscope maintenance - correct lens cleaning, prompt removal of immersion oil, dust and humidity protection during storage, and careful two-handed carrying - prevents gradual image degradation and protects a precision instrument that, once its internal optics are damaged, can be difficult or impossible to fully restore.` },
+
+    { q: "Microscopy's clinical role and connecting laboratory skills together.",
+      body: `Microscopy connects directly to the specimen quality, staining, and diagnostic accuracy that underpin much of clinical laboratory work, showing again how laboratory skills reinforce one another.
+
+My Socratic question: a well-prepared Gram stain, viewed under a poorly maintained microscope with a scratched objective lens and dried oil residue, may still produce a misleading result. Why does this matter, given how carefully the specimen itself was prepared?
+
+The answer is that even excellent specimen preparation - correct staining, technique, and timing - cannot compensate for a compromised optical instrument; a scratched lens or oil residue introduces artefacts or blurs precisely the detail the stain was designed to reveal, potentially leading to a missed or incorrect diagnosis. This illustrates that laboratory accuracy depends on a chain of correctly executed steps - accurate weighing, accurate pipetting, correct specimen preparation, and a well-maintained microscope - where a weak link at any point undermines the whole result.
+
+Crucial insight: microscopy's clinical value depends on the entire chain of laboratory technique working correctly together - specimen preparation, staining, and a well-maintained, correctly used microscope - since even a perfectly prepared specimen can yield a misleading result if viewed through a compromised instrument.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for microscopy, in five lines.
+
+The foundation: a microscope's true value lies in resolution - the ability to distinguish two close points as separate - not simply magnification, which only enlarges an image without necessarily clarifying it.
+
+Structure and resolving power: the compound light microscope magnifies light through the condenser, objective lens, and ocular lens (total magnification = objective x ocular); numerical aperture, shaped by light-gathering angle and refractive index, determines actual resolving power, which is why oil immersion improves resolution at high magnification.
+
+Beyond brightfield: phase contrast microscopy reveals unstained, living, transparent specimens through refractive index-based contrast; fluorescence microscopy visualises specific labelled structures using excitation and emission wavelengths.
+
+Preparation and focusing: wet mounts suit live organisms while staining (such as Gram staining) provides contrast and diagnostic information for fixed specimens; focusing should begin at low magnification with the coarse knob, moving to the fine knob only as magnification increases and working distance shrinks.
+
+Maintenance and the clinical chain: correct lens cleaning, prompt oil removal, dust and humidity protection, and careful carrying preserve image quality; microscopy's clinical accuracy depends on the entire chain of laboratory technique - preparation, staining, and a well-maintained instrument - working correctly together.
+
+Now your final test. A laboratory technician prepares a Gram stain and observes it at 100x oil immersion, but the image appears hazy and lacks fine detail, despite the staining procedure being performed correctly.
+
+Question one: name two possible instrument-related causes (rather than staining-related causes) for this haziness.
+Question two: what property of the objective lens, rather than its magnification, most directly explains resolving power, and what role does the immersion oil play?
+Question three: what focusing technique should have been used to reach 100x safely, and why does this matter especially at this magnification?
+
+Work them through before reading on.
+
+My answers. One: dried immersion oil residue left on the lens from a previous use, or a scratched or dirty objective lens from improper cleaning, are both plausible instrument-related causes of persistent haziness despite correct staining. Two: numerical aperture, determined by the light-gathering angle and the refractive index of the medium, most directly explains resolving power; the immersion oil increases the refractive index between the specimen and the lens, increasing the numerical aperture and therefore the resolution achievable at high magnification. Three: focusing should have begun at the lowest magnification using the coarse focus knob (watched from the side) to safely approach the specimen, then progressed upward through the magnifications using only the fine focus knob at high magnification - this matters especially at 100x because the working distance between the oil objective and the slide is extremely small, leaving very little safe clearance for error.
+
+If those came cleanly, you understand how magnification, resolution, numerical aperture, specimen preparation, correct focusing, and instrument maintenance together determine whether a microscope reveals the detail a diagnosis depends on - completing your foundation in the core instruments of the laboratory.` },
+  ],
+  theory: [
+    { q: "Distinguish magnification from resolution.", a: "Magnification is the ratio between the size of an image and the actual size of the object - how much bigger the image appears. Resolution is the minimum distance between two points at which they can still be distinguished as separate, rather than blurring into one; resolution, not magnification, determines genuine image usefulness." },
+    { q: "Describe the light path through a compound light microscope and how total magnification is calculated.", a: "Light passes from the illuminator through the condenser (focusing it on the specimen), then through the objective lens (primary magnification), then the ocular lens (further magnification). Total magnification equals objective magnification multiplied by ocular magnification." },
+    { q: "Define numerical aperture and explain its significance.", a: "Numerical aperture (NA) is a measure of a lens's light-gathering ability, determined by the angle of the light cone entering the objective and the refractive index of the medium between specimen and lens. It determines resolving power independent of magnification - a higher NA gives better resolution." },
+    { q: "Explain why oil immersion improves resolution at high magnification.", a: "Immersion oil has a higher refractive index than air; placing it between the specimen and the objective lens increases the numerical aperture of the lens system, improving the resolution achievable at high magnification (e.g. 100x)." },
+    { q: "Describe phase contrast microscopy and its main use.", a: "Phase contrast microscopy exploits tiny differences in refractive index within a transparent specimen, converting them into visible brightness/contrast differences, allowing unstained, living cells to be observed clearly without staining or killing them." },
+    { q: "Describe fluorescence microscopy and its main use.", a: "Fluorescence microscopy uses specimens that are naturally fluorescent or labelled with fluorescent dyes/antibodies, which absorb light at one wavelength and emit it at another; specific excitation light and filters isolate the emitted fluorescence, allowing specific structures to be visualised with high specificity." },
+    { q: "Explain the purpose and basic result of Gram staining.", a: "Gram staining differentiates bacteria based on cell wall structure into Gram-positive (retain crystal violet, appear purple) and Gram-negative (lose crystal violet, counterstained pink with safranin); it provides both contrast for viewing and clinically important diagnostic information." },
+    { q: "Outline correct focusing technique from low to high magnification.", a: "Always begin at the lowest magnification, using the coarse focus knob cautiously (watching from the side) to bring the objective close to the specimen, then refine with the fine focus knob. At higher magnifications, only the fine focus knob should be used, since working distance shrinks dramatically." },
+    { q: "List key microscope maintenance practices.", a: "Clean lenses only with lens paper and appropriate solution (never tissue, cloth, or fingers); wipe oil immersion objectives clean immediately after use; store the microscope covered in a dry environment to prevent dust and fungal growth; always carry it with two hands (base and arm)." },
+    { q: "Explain why a well-prepared specimen can still produce a misleading result under microscopy.", a: "Even correct staining and preparation cannot compensate for a compromised optical instrument; a scratched lens or dried oil residue can introduce artefacts or blur fine detail, potentially leading to a missed or incorrect diagnosis despite excellent specimen preparation." },
+  ],
+  videos: [
+    { channel: "Lab Skills", title: "Magnification vs Resolution Explained", note: "The key distinction underlying all microscopy.", url: "" },
+    { channel: "Lab Skills", title: "Compound Light Microscope: Parts and Light Path", note: "How the condenser, objective, and ocular work together.", url: "" },
+    { channel: "Lab Safety", title: "Microscope Care and Maintenance", note: "Cleaning, oil removal, and safe carrying technique.", url: "" },
+  ],
+  mcqs: [
+    { q: "The true measure of a microscope's usefulness is best described as:", o: ["Magnification alone", "Resolution - the ability to distinguish two close points as separate", "The size of the eyepiece", "The colour of the light source"], a: 1, w: "Resolution, not magnification alone, determines genuine image usefulness." },
+    { q: "Magnification is best defined as:", o: ["The minimum distance between two distinguishable points", "The ratio between image size and actual object size", "A property only of the ocular lens", "The amount of light entering the lens"], a: 1, w: "Magnification is the ratio of image size to actual object size." },
+    { q: "Resolution is best defined as:", o: ["How much bigger an image appears", "The minimum distance between two points at which they can still be distinguished as separate", "The brightness of the light source", "The total cost of the microscope"], a: 1, w: "Resolution is the minimum distinguishable distance between two points." },
+    { q: "In a compound light microscope, the condenser's main function is to:", o: ["Provide the primary magnification", "Focus light onto the specimen", "Magnify the image further for the eye", "Store immersion oil"], a: 1, w: "The condenser focuses light onto the specimen." },
+    { q: "Primary magnification in a compound light microscope is provided by the:", o: ["Ocular lens", "Condenser", "Objective lens", "Light source"], a: 2, w: "The objective lens provides the primary magnification." },
+    { q: "Total magnification in a compound light microscope is calculated by:", o: ["Adding objective and ocular magnification", "Multiplying objective magnification by ocular magnification", "Using only the objective magnification", "Using only the ocular magnification"], a: 1, w: "Total magnification equals objective magnification times ocular magnification." },
+    { q: "A 40x objective combined with a 10x ocular gives a total magnification of:", o: ["50x", "400x", "4x", "4000x"], a: 1, w: "40 multiplied by 10 gives 400x total magnification." },
+    { q: "Numerical aperture is best described as a measure of:", o: ["A lens's magnifying power only", "A lens's light-gathering ability, related to resolving power", "The cost of an objective lens", "The colour of the specimen"], a: 1, w: "Numerical aperture measures light-gathering ability and determines resolving power." },
+    { q: "Numerical aperture is determined by:", o: ["Magnification alone", "The angle of the light cone entering the objective and the refractive index of the medium", "The brightness of the illuminator only", "The type of eyepiece used"], a: 1, w: "NA depends on light-gathering angle and refractive index of the medium." },
+    { q: "Oil immersion improves resolution at high magnification mainly because oil:", o: ["Reduces the refractive index between specimen and lens", "Increases the refractive index between specimen and lens, increasing numerical aperture", "Magnifies the image directly", "Cleans the lens automatically"], a: 1, w: "Oil's higher refractive index increases numerical aperture and resolution." },
+    { q: "Phase contrast microscopy is particularly useful for observing:", o: ["Only heavily stained, fixed specimens", "Unstained, living, transparent cells", "Fluorescently labelled DNA only", "Only bacterial spores"], a: 1, w: "Phase contrast allows unstained, living, transparent specimens to be seen clearly." },
+    { q: "Phase contrast microscopy works by converting differences in:", o: ["Colour into sound", "Refractive index into visible brightness/contrast differences", "Temperature into light", "Magnification into resolution directly"], a: 1, w: "Phase contrast converts refractive index differences into visible contrast." },
+    { q: "Fluorescence microscopy relies on specimens that:", o: ["Absorb light at one wavelength and emit it at another", "Are always naturally colourless", "Cannot be labelled with dyes", "Require no special filters"], a: 0, w: "Fluorescence microscopy uses specimens that absorb and re-emit light at different wavelengths." },
+    { q: "A wet mount is most suitable for observing:", o: ["Fixed, heavily stained specimens only", "Live, motile organisms", "Only fluorescently labelled samples", "Specimens requiring oil immersion exclusively"], a: 1, w: "Wet mounts are suitable for observing live, motile organisms." },
+    { q: "Gram staining differentiates bacteria based on:", o: ["Their motility", "Differences in cell wall structure", "Their size alone", "Their colour before staining"], a: 1, w: "Gram staining differentiates bacteria by cell wall structure." },
+    { q: "Bacteria that retain crystal violet and appear purple after Gram staining are classified as:", o: ["Gram-negative", "Gram-positive", "Acid-fast", "Non-viable"], a: 1, w: "Gram-positive bacteria retain crystal violet and appear purple." },
+    { q: "Ziehl-Neelsen (acid-fast) staining is specifically used to detect organisms such as:", o: ["Escherichia coli", "Mycobacterium tuberculosis", "Staphylococcus aureus", "Candida albicans"], a: 1, w: "Ziehl-Neelsen staining detects acid-fast organisms like Mycobacterium tuberculosis." },
+    { q: "When first focusing a specimen, correct technique is to begin at:", o: ["The highest magnification available", "The lowest magnification, using the coarse focus knob cautiously", "100x oil immersion directly", "Any magnification, since it makes no difference"], a: 1, w: "Focusing should always begin at the lowest magnification." },
+    { q: "At high magnification (such as 100x oil immersion), focusing should be adjusted using:", o: ["Only the coarse focus knob", "Only the fine focus knob", "Neither focus knob", "The condenser adjustment only"], a: 1, w: "Only the fine focus knob should be used at high magnification due to shrinking working distance." },
+    { q: "Working distance refers to:", o: ["The total time spent focusing", "The gap between the objective lens and the specimen", "The distance between the eyepiece and the eye", "The length of the microscope arm"], a: 1, w: "Working distance is the gap between the objective lens and the specimen." },
+    { q: "Rapidly turning the coarse focus knob at high magnification risks:", o: ["Improved image clarity", "The objective lens crashing into the slide", "Automatic recalibration", "No risk at all"], a: 1, w: "Rapid coarse focusing at high magnification risks lens-slide collision." },
+    { q: "Microscope lenses should be cleaned using:", o: ["Any tissue or cloth available", "Lens paper and appropriate lens cleaning solution", "Bare fingers for precision", "Water and dish soap only"], a: 1, w: "Lenses should be cleaned only with lens paper and appropriate solution." },
+    { q: "Immersion oil should be removed from the objective:", o: ["Never, since it protects the lens", "Immediately after use", "Only once a year", "Only when visibly dirty"], a: 1, w: "Immersion oil should be wiped clean from the objective immediately after use." },
+    { q: "Storing a microscope uncovered in a humid environment risks:", o: ["Improved optical performance", "Fungal growth on internal optics", "Automatic self-cleaning", "No meaningful risk"], a: 1, w: "Humidity and dust exposure can promote fungal growth on internal optics." },
+    { q: "A microscope should be carried by:", o: ["One hand on the eyepiece only", "Two hands - one under the base, one on the arm", "Dragging it across the bench", "Any single point of contact"], a: 1, w: "Correct carrying technique uses two hands - base and arm." },
+    { q: "A scratched objective lens or dried oil residue can cause an image to appear hazy:", o: ["Only if the specimen was poorly stained", "Even when the specimen was prepared and stained correctly", "Never, since staining is the only factor", "Only at low magnification"], a: 1, w: "Instrument issues can degrade image quality regardless of correct specimen preparation." },
+    { q: "The clinical accuracy of microscopy depends on:", o: ["Specimen preparation alone", "The entire chain of preparation, staining, and a well-maintained, correctly used microscope", "Only the brand of microscope used", "Magnification alone, regardless of technique"], a: 1, w: "Clinical accuracy depends on the whole chain of technique working together." },
+    { q: "Overall, understanding resolution and numerical aperture matters most because:", o: ["They determine the true diagnostic usefulness of an image, beyond simple magnification", "They only matter for research microscopes", "Magnification alone always gives clearer images", "They are unrelated to clinical diagnosis"], a: 0, w: "Resolution and numerical aperture determine genuine diagnostic image usefulness." },
+    { q: "A microscope with high magnification but poor resolution will most likely produce:", o: ["A small, sharp image", "A large but blurry, uninformative image", "No image at all", "An image with perfect colour but no size change"], a: 1, w: "High magnification with poor resolution produces a large but blurry image." },
+    { q: "Like the balance and pipette, the microscope requires which shared underlying discipline?", o: ["No maintenance is ever needed once purchased", "Deliberate care and periodic verification to maintain accurate performance", "Replacement after every single use", "Only annual cleaning, regardless of use"], a: 1, w: "All precision laboratory instruments require deliberate care and periodic verification." },
+  ],
+};
+
 /* --------------------------- ana:4 --------------------------- */
 const T_ANA_GLAND = {
   courseId: "ana",
@@ -14660,6 +14986,8 @@ const CONTENT = {
   "lab:2": T_LAB_ELECTRICAL,
   "lab:3": T_LAB_METRICS,
   "lab:4": T_LAB_BALANCE, 
+  "lab:5": T_LAB_PIPETTING,
+  "lab:6": T_LAB_MICROSCOPY,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
