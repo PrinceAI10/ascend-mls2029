@@ -5337,6 +5337,395 @@ My answers. One: the minutes record the discussion but not the outcome - they ar
   ],
 };
 
+const T_COM_PRESENTATION = {
+  courseId: "com",
+  topicIndex: 7,
+  title: "Presentation Skills",
+  minutes: 20,
+  note: [
+    { q: "What is a presentation and why does it matter?",
+      body: `A presentation is a structured spoken delivery of information to an audience, usually supported by visual aids, for a specific purpose - to inform, persuade, instruct, or report. It is one of the most visible professional skills, because it happens in front of others.
+
+My Socratic question: two people have identical, excellent findings from a laboratory audit. One mumbles through dense slides and loses the room; the other explains the same findings clearly, confidently, and memorably. Their content is the same - so why do their careers, and the impact of their work, diverge?
+
+The answer is delivery. A presentation is not just what you say but how you say it. Good content delivered poorly is wasted; even modest content delivered well can inform and persuade. A presentation packages information for a live audience: it must be structured so listeners can follow it in real time (they cannot re-read a spoken sentence), and delivered so they stay engaged.
+
+In healthcare and the laboratory, you will present constantly: case discussions, journal clubs, quality-improvement findings, training sessions, and research at conferences. Your ability to present clearly affects whether your findings are understood, believed, and acted upon.
+
+Crucial insight: a presentation is a structured spoken delivery to an audience for a purpose. Its impact depends not only on content but on structure and delivery - because a live audience must follow you in real time and stay engaged.` },
+
+    { q: "Know your audience and your purpose.",
+      body: `Every effective presentation begins with two questions answered before a single slide is made: who is the audience, and what is the purpose?
+
+My Socratic question: the same data on a new laboratory method is presented to a room of senior pathologists and, on another day, to first-year students. Should the two presentations be identical? If not, what must change, and why?
+
+They must differ, because the audience differs. Knowing your audience tells you their level of knowledge (how much to explain, what jargon they will understand), their interests and concerns (what they most want to know), and their expectations (formal conference versus informal team briefing). A presentation pitched over the audience's head loses them; one pitched below it bores them.
+
+Knowing your purpose shapes everything else. An informative presentation aims to teach or update - its success is measured by understanding. A persuasive presentation aims to change minds or drive a decision - its success is measured by agreement or action. An instructive presentation teaches a skill or procedure. Your purpose determines what to include, what to emphasise, and how to close.
+
+Together, audience and purpose are the foundation. They decide the depth, the tone, the examples you choose, and the single message you most want the audience to remember.
+
+Crucial insight: before preparing, define your audience (their knowledge, interests, and expectations) and your purpose (to inform, persuade, or instruct). These two decisions shape the depth, tone, examples, and message of the entire presentation.` },
+
+    { q: "Structuring a presentation: tell them, tell them, tell them.",
+      body: `A presentation must be structured so a listener can follow it live, without the ability to go back. The classic structure exists for exactly this reason.
+
+My Socratic question: a listener joins a talk that plunges straight into detail with no roadmap, wanders between points, and stops abruptly with no summary. Why do they feel lost, and what structure would have carried them through?
+
+The reliable structure has three parts, often summarised as: tell them what you are going to tell them, tell them, then tell them what you told them. The introduction opens with something that grabs attention, states the topic and purpose, and previews the main points - giving the audience a roadmap. The body develops the main points in a logical order, ideally just three to five key points, each with supporting evidence or examples, and clear transitions between them. The conclusion summarises the key points, restates the core message, and ends with a strong closing - a call to action, a memorable statement, or a clear takeaway.
+
+This "signposting" - previewing, transitioning, and summarising - is what lets a listener follow a spoken argument in real time. Without it, even good content feels like a stream of disconnected facts.
+
+Crucial insight: structure a presentation as introduction (attention, purpose, preview), body (three to five main points with evidence and transitions), and conclusion (summary, core message, strong close). Signposting throughout lets a live audience follow you without getting lost.` },
+
+    { q: "Preparing content and visual aids.",
+      body: `Once the structure is set, the content and its visual support must be prepared so they clarify rather than clutter the message.
+
+My Socratic question: a slide is crammed with a hundred words in tiny font, and the presenter reads it aloud word for word. What has gone wrong, and what should slides actually do?
+
+The mistake is treating slides as a script. Visual aids exist to support the spoken message, not replace it. A good slide carries a single idea, a few words or a strong image, a clear graph, or a short list - something the audience grasps in seconds while they listen to you explain it. If the audience is reading a dense slide, they are not listening to you.
+
+Content preparation means selecting only what serves the purpose - resisting the urge to include everything you know. Depth beats breadth: a few points made well are remembered; many points rushed are forgotten. Support each point with concrete evidence, examples, or a visual, because people remember stories and images far better than abstract statements.
+
+Practise with your visual aids so they flow with your words, and always prepare for technology to fail - know your material well enough to present without the slides if needed.
+
+Crucial insight: visual aids support the spoken message; they never replace it. Each slide should carry one clear idea, image, or graph - not a script. Select content for depth over breadth, support points with evidence and visuals, and rehearse so words and slides flow together.` },
+
+    { q: "Delivery: voice, body language, and eye contact.",
+      body: `Delivery is where a presentation lives or dies. How you use your voice and body determines whether the audience stays engaged and believes you.
+
+My Socratic question: a presenter reads from notes in a flat monotone, stares at the screen, and stands frozen behind the lectern. Another varies their voice, looks at the audience, and moves naturally. Why does the second command attention while the first loses it, even with identical words?
+
+The difference is vocal and physical delivery. The voice should vary in pace, pitch, and volume - a monotone signals boredom and induces it. Pauses are powerful: they let a key point land and give the audience time to absorb it. Speak clearly and a little slower than feels natural, because nervous presenters rush.
+
+Body language communicates confidence. Stand upright and open, not hunched or hidden behind the lectern. Use natural gestures to emphasise points. Move purposefully, not restlessly. Eye contact is the single most important non-verbal skill: looking at your audience (not the slides or the floor) builds connection and conveys confidence and honesty. Distribute your gaze across the room rather than fixing on one spot.
+
+Crucial insight: delivery makes or breaks a presentation. Vary your voice in pace, pitch, and volume, use pauses, stand open and confident, gesture naturally, and - above all - make eye contact with the audience. How you deliver conveys as much as what you say.` },
+
+    { q: "Managing nervousness.",
+      body: `Almost everyone feels nervous before presenting. The skill is not eliminating nerves but managing them so they do not undermine the delivery.
+
+My Socratic question: a capable student knows their material perfectly but freezes, races, and forgets it all the moment they stand up. What is happening, and what practical steps convert that nervous energy into effective delivery?
+
+What is happening is the body's stress response - a normal reaction that becomes a problem only when it controls you. The most powerful remedy is preparation and practice: the better you know your material and the more you have rehearsed aloud, the more confidence you have to fall back on. Rehearse out loud, ideally in front of others or a mirror, and time yourself.
+
+Practical techniques help in the moment. Slow, deep breaths before starting calm the body. Arriving early and checking the setup removes surprises. Beginning with a strong, well-rehearsed opening builds momentum. Focusing on the message and the audience - rather than on yourself - shifts attention away from self-consciousness. And remembering that some nervous energy actually sharpens performance reframes the feeling as fuel rather than a threat.
+
+Crucial insight: nervousness is normal; the goal is to manage it, not banish it. Thorough preparation and rehearsal give confidence; deep breathing, a strong opening, and focusing on the message rather than yourself convert nervous energy into effective delivery.` },
+
+    { q: "Handling questions from the audience.",
+      body: `The question-and-answer session is part of the presentation, and how you handle it shapes the final impression you leave.
+
+My Socratic question: a presenter is asked a tough question, becomes defensive, waffles, and clearly does not know the answer but pretends to. How does this damage their credibility, and how should questions be handled instead?
+
+Questions should be welcomed, not feared - they show engagement and let you clarify and reinforce your message. The technique is straightforward. Listen to the whole question without interrupting. If it is complex or the room is large, repeat or rephrase it so everyone hears it and to confirm you understood. Answer concisely and honestly, directed to the whole audience, not only the questioner.
+
+Crucially, if you do not know the answer, say so honestly - "I don't have that figure to hand, but I will find out and get back to you" - rather than bluffing. Honesty preserves credibility; bluffing destroys it the moment someone realises. Stay calm and respectful even with a hostile or challenging question; do not become defensive. And keep answers brief, so a few people do not consume everyone's time.
+
+Crucial insight: welcome questions as a chance to clarify and reinforce. Listen fully, rephrase if needed, answer concisely and honestly to the whole audience, and - if you do not know - say so rather than bluff. Composure and honesty protect your credibility.` },
+
+    { q: "Designing effective slides.",
+      body: `Slides are the most common visual aid, and poorly designed slides actively harm a presentation. A few principles keep them working for you.
+
+My Socratic question: two presenters cover the same material. One uses busy slides full of text, clashing colours, and tiny fonts; the other uses clean slides with one idea each and a clear image. Why does slide design alone change how professional and clear the talk feels?
+
+Because slides shape what the audience can process. The core principle is simplicity - one main idea per slide. Use short phrases and bullet points, not full sentences or paragraphs; the words on the slide are cues, while the detail comes from your mouth. Keep fonts large enough to read from the back of the room, and limit the amount of text so a slide can be grasped in a few seconds.
+
+Use visuals well: a relevant image, a clear chart, or a simple diagram communicates faster than words. Keep design consistent - the same fonts, colours, and layout throughout - and ensure strong contrast between text and background so it is readable. Avoid distracting animations and clutter. And never simply read your slides aloud; the slide supports you, it is not your script.
+
+Crucial insight: effective slides are simple - one idea each, short phrases not paragraphs, large readable fonts, strong contrast, consistent design, and clear visuals. The slide is a cue and a support; you provide the detail.` },
+
+    { q: "Presentations in healthcare and the laboratory.",
+      body: `The principles of presenting apply directly to the settings you will work in, where presentations carry real professional and clinical weight.
+
+My Socratic question: a laboratory scientist must present a quality-improvement project to a hospital committee that controls whether it is adopted. Why does the quality of this presentation, not just the quality of the project, determine its fate?
+
+Because decision-makers act on what they understand and believe, and a presentation is how they come to understand and believe it. In healthcare you will present in several recurring formats. Case presentations follow a structured order (history, findings, results, interpretation, plan) and demand clarity and accuracy. Journal clubs require you to summarise and critically appraise a paper for colleagues. Quality-improvement and audit presentations must convince a committee to adopt a change - so clear findings and specific, actionable recommendations matter. Research presentations at conferences distil months of work into a short, focused talk.
+
+In all of these, accuracy is paramount - you are presenting medical information that others will act on - and clarity determines impact. The same skills apply: know the audience, structure clearly, support with good visuals, deliver confidently, and handle questions honestly.
+
+Crucial insight: in healthcare, presentations include case presentations, journal clubs, audit and quality-improvement talks, and research. Their outcome depends on the presentation, not only the work - so accuracy, clear structure, good visuals, and confident, honest delivery decide whether findings are understood and adopted.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for Presentation Skills.
+
+Definition: a presentation is a structured spoken delivery to an audience for a purpose - to inform, persuade, or instruct. Impact depends on content plus delivery.
+
+Audience and purpose: define both first - they shape depth, tone, examples, and the core message.
+
+Structure: introduction (attention, purpose, preview), body (three to five points with evidence and transitions), conclusion (summary, core message, strong close). Signpost throughout.
+
+Content and visual aids: aids support, never replace, the spoken message; one idea per slide; depth over breadth; support points with evidence and visuals; rehearse.
+
+Delivery: vary voice (pace, pitch, volume), use pauses, stand open, gesture naturally, and make eye contact with the audience.
+
+Nervousness: normal; manage it through preparation and rehearsal, deep breathing, a strong opening, and focusing on the message rather than yourself.
+
+Questions: welcome them; listen fully, rephrase if needed, answer concisely and honestly; if you do not know, say so rather than bluff.
+
+Slide design: simple - one idea each, short phrases, large fonts, strong contrast, consistent design, clear visuals; never read slides aloud.
+
+Healthcare settings: case presentations, journal clubs, audit/QI talks, research - accuracy paramount, clarity decides impact.
+
+Now your final test. A nervous student presents laboratory audit findings. They face the screen and read forty dense slides word for word in a flat monotone, cram every finding into the talk, and when asked a question they do not know, they bluff a confident but wrong answer.
+
+Question one: what are the two biggest delivery problems, and how should each be fixed?
+Question two: what is wrong with the content and slides, and what principle should guide them?
+Question three: how should the unknown question have been handled, and why?
+
+Work them through before reading on.
+
+My answers. One: the two biggest delivery problems are facing the screen (no eye contact) and the flat monotone. The student should face and look at the audience, distributing eye contact around the room, and vary pace, pitch, and volume with deliberate pauses so key points land. Two: the content and slides fail because everything is crammed in and the slides are dense scripts read aloud. The guiding principle is depth over breadth with slides as support, not script: select only the key findings, put one idea (or a clear chart) per slide in short phrases, and speak the detail rather than reading it. Three: bluffing a wrong answer is the worst option because it destroys credibility and, in healthcare, spreads misinformation others may act on. The honest response is to say, "I don't have that to hand, but I'll find out and follow up," which preserves trust and models professional integrity.` }
+  ],
+  theory: [
+    { q: "What is a presentation?", a: "A structured spoken delivery of information to an audience, usually with visual aids, for a specific purpose - to inform, persuade, or instruct." },
+    { q: "Why must you know your audience before preparing?", a: "The audience's knowledge, interests, and expectations determine the depth, tone, jargon, examples, and message. A talk pitched too high loses them; too low bores them." },
+    { q: "What is the classic three-part structure of a presentation?", a: "Introduction (grab attention, state purpose, preview points), body (three to five main points with evidence and transitions), and conclusion (summarise, restate the message, close strongly) - 'tell them, tell them, tell them.'" },
+    { q: "What is the role of visual aids?", a: "Visual aids support the spoken message; they do not replace it. A good slide carries one clear idea, image, or graph that the audience grasps quickly while listening." },
+    { q: "Name three key elements of good delivery.", a: "Varied voice (pace, pitch, volume) with pauses; confident, open body language and natural gestures; and eye contact with the audience." },
+    { q: "Why is eye contact important?", a: "It is the most important non-verbal skill - it builds connection with the audience and conveys confidence and honesty. Looking at slides or the floor loses the audience." },
+    { q: "How should nervousness be managed?", a: "Through thorough preparation and rehearsal, deep breathing before starting, a strong rehearsed opening, and focusing on the message and audience rather than on yourself." },
+    { q: "How should you handle a question you cannot answer?", a: "Say so honestly - offer to find out and follow up - rather than bluffing. Bluffing destroys credibility; in healthcare it can spread misinformation." },
+    { q: "State three principles of good slide design.", a: "Any of: one idea per slide, short phrases not paragraphs, large readable fonts, strong contrast, consistent design, clear visuals, and never reading slides aloud." },
+    { q: "Name two presentation formats used in healthcare.", a: "Any of: case presentations, journal clubs, audit or quality-improvement talks, and research/conference presentations." },
+  ],
+  videos: [
+    { channel: "Public Speaking", title: "How to Structure a Presentation", note: "Introduction, body, and conclusion made clear.", url: "" },
+    { channel: "Professional Skills", title: "Delivery: Voice, Body Language, and Eye Contact", note: "The non-verbal skills that hold an audience.", url: "" },
+    { channel: "Presentation Design", title: "Designing Slides That Work", note: "One idea per slide and other design principles.", url: "" },
+  ],
+  mcqs: [
+    { q: "A presentation is:", o: ["A written report", "A structured spoken delivery to an audience for a purpose", "A private note", "A silent activity"], a: 1, w: "A presentation is a structured spoken delivery for a purpose." },
+    { q: "The impact of a presentation depends on:", o: ["Content only", "Content and delivery", "Delivery only", "Slide colour only"], a: 1, w: "Both what you say and how you say it determine impact." },
+    { q: "Before preparing, you should first define your:", o: ["Font", "Audience and purpose", "Slide count", "Closing joke"], a: 1, w: "Audience and purpose shape the whole presentation." },
+    { q: "An informative presentation is measured by:", o: ["Agreement", "Audience understanding", "Applause length", "Slide count"], a: 1, w: "Informative presentations aim for understanding." },
+    { q: "The classic presentation structure is summarised as:", o: ["Read everything aloud", "Tell them, tell them, tell them", "Start at the end", "Skip the introduction"], a: 1, w: "Preview, deliver, then summarise." },
+    { q: "The body of a presentation should ideally have:", o: ["Twenty points", "Three to five key points", "No points", "One long point"], a: 1, w: "Three to five key points are manageable for a live audience." },
+    { q: "Visual aids should:", o: ["Replace the speaker", "Support the spoken message", "Be read aloud word for word", "Contain full paragraphs"], a: 1, w: "Aids support the message; they do not replace it." },
+    { q: "A good slide carries:", o: ["A hundred words", "One clear idea, image, or graph", "The full script", "Nothing readable"], a: 1, w: "One idea per slide keeps it graspable." },
+    { q: "In content selection, you should favour:", o: ["Breadth over depth", "Depth over breadth", "Everything you know", "Only jokes"], a: 1, w: "A few points made well beat many points rushed." },
+    { q: "A monotone voice tends to:", o: ["Engage the audience", "Signal and induce boredom", "Convey confidence", "Improve clarity"], a: 1, w: "A monotone induces boredom; vary your voice." },
+    { q: "Pauses in a presentation are:", o: ["A sign of failure", "Powerful - they let a point land", "To be avoided", "Only for beginners"], a: 1, w: "Pauses let key points land and be absorbed." },
+    { q: "The most important non-verbal skill is:", o: ["Standing still", "Eye contact with the audience", "Reading the slides", "Facing the wall"], a: 1, w: "Eye contact builds connection and conveys confidence." },
+    { q: "Nervous presenters commonly:", o: ["Speak too slowly", "Rush and speak too fast", "Pause too much", "Over-explain"], a: 1, w: "Nerves make presenters rush, so slow down deliberately." },
+    { q: "The most powerful remedy for nervousness is:", o: ["Avoiding practice", "Preparation and rehearsal", "Memorising every word rigidly", "Ignoring the audience"], a: 1, w: "Knowing your material and rehearsing builds confidence." },
+    { q: "To calm nerves just before starting, you can:", o: ["Hold your breath", "Take slow, deep breaths", "Speak faster", "Skip the opening"], a: 1, w: "Slow, deep breaths calm the stress response." },
+    { q: "When asked a question, you should first:", o: ["Interrupt the questioner", "Listen to the whole question", "Guess the answer", "Ignore it"], a: 1, w: "Listen fully before answering." },
+    { q: "If you do not know the answer to a question, you should:", o: ["Bluff confidently", "Say so honestly and offer to follow up", "Change the subject", "End the talk"], a: 1, w: "Honesty preserves credibility; bluffing destroys it." },
+    { q: "In a large room, a question should be:", o: ["Ignored", "Repeated or rephrased so all can hear", "Answered silently", "Written down only"], a: 1, w: "Repeating the question ensures everyone hears it." },
+    { q: "Answers to questions should be directed to:", o: ["Only the questioner", "The whole audience", "The floor", "The slides"], a: 1, w: "Answer to the whole audience, not just the questioner." },
+    { q: "A key principle of slide design is:", o: ["Cram in as much text as possible", "Simplicity - one idea per slide", "Tiny fonts", "Clashing colours"], a: 1, w: "Simplicity, one idea per slide, is the core principle." },
+    { q: "Slide text should be:", o: ["Full paragraphs", "Short phrases or bullet points", "Read aloud verbatim", "Invisible"], a: 1, w: "Short phrases act as cues; you provide the detail." },
+    { q: "Fonts on slides should be:", o: ["As small as possible", "Large enough to read from the back", "Decorative and hard to read", "All different"], a: 1, w: "Fonts must be readable from the back of the room." },
+    { q: "Consistent fonts, colours, and layout across slides:", o: ["Look unprofessional", "Make the talk look clear and professional", "Confuse the audience", "Are unnecessary"], a: 1, w: "Consistency looks professional and aids clarity." },
+    { q: "Reading slides word for word is a problem because:", o: ["It saves time", "The audience stops listening to you and it signals unpreparedness", "It is more accurate", "It is expected"], a: 1, w: "If the audience reads dense slides, they are not listening to you." },
+    { q: "A case presentation in healthcare typically follows:", o: ["No order", "A structured order: history, findings, results, interpretation, plan", "Only the conclusion", "A random sequence"], a: 1, w: "Case presentations follow a structured clinical order." },
+    { q: "A journal club presentation requires you to:", o: ["Ignore the paper", "Summarise and critically appraise a paper", "Read the paper aloud fully", "Present unrelated data"], a: 1, w: "Journal clubs involve summarising and appraising a paper." },
+    { q: "Why does accuracy matter especially in healthcare presentations?", o: ["It does not", "Others act on the medical information presented", "It lengthens the talk", "It impresses only"], a: 1, w: "People act on the information, so accuracy is paramount." },
+    { q: "A strong conclusion should:", o: ["Introduce new detailed data", "Summarise and end with a clear takeaway or call to action", "Stop abruptly", "Apologise"], a: 1, w: "Conclusions summarise and close with a memorable takeaway." },
+    { q: "Preparing for technology to fail means:", o: ["Refusing to present", "Knowing your material well enough to present without slides", "Bringing more slides", "Blaming the venue"], a: 1, w: "Always be able to present even if the slides fail." },
+    { q: "The ultimate goal of a presentation is to:", o: ["Show off", "Communicate the message so the audience understands and acts", "Fill time", "Use many slides"], a: 1, w: "The goal is effective communication that lands with the audience." },
+  ],
+};
+
+const T_COM_CV = {
+  courseId: "com",
+  topicIndex: 8,
+  title: "CV Writing",
+  minutes: 20,
+  note: [
+    { q: "What is a CV and why does it matter?",
+      body: `A CV - curriculum vitae, Latin for "course of life" - is a formal document that summarises your education, qualifications, experience, and skills for a potential employer or academic body. It is your professional first impression, usually made before anyone meets you.
+
+My Socratic question: an employer has one advertised position and eighty applicants, and perhaps thirty seconds to spend on each application at first glance. What single document decides whether you make the shortlist or are set aside, and what does that tell you about how a CV must be written?
+
+The answer is the CV, and it tells you the CV must communicate your suitability quickly and clearly. It is a marketing document - its purpose is to secure an interview, not to tell your whole life story. In those first seconds, a recruiter scans for relevance: do your qualifications and experience match what they need? A cluttered, generic, or error-filled CV is discarded; a clear, tailored, well-organised one earns a closer look.
+
+For a laboratory scientist, a strong CV is essential for internships, national service, jobs, and further study. Learning to present yourself professionally on paper is a skill you will use throughout your career, and updating your CV is a lifelong habit.
+
+Crucial insight: a CV is a formal summary of your education, qualifications, experience, and skills - a marketing document whose purpose is to secure an interview. Because recruiters scan quickly for relevance, a CV must be clear, tailored, and well-organised.` },
+
+    { q: "CV, resume, and cover letter: knowing the difference.",
+      body: `The words CV, resume, and cover letter are often confused, but they are distinct documents with distinct roles. Knowing the difference prevents you from submitting the wrong thing.
+
+My Socratic question: an applicant is asked for "a CV and a covering letter" and submits only a long list of everything they have ever done. What have they misunderstood, and what should each document have contained?
+
+A CV is a comprehensive record of your academic and professional history - education, qualifications, experience, skills, publications, and so on. In much of the world (including Ghana, the UK, and Europe), "CV" is the standard document for job applications, typically one to three pages for early-career applicants.
+
+A resume, more common in the United States, is a brief, one-page summary tailored tightly to a specific job. In practice the terms overlap, but a resume is generally shorter and more targeted than a full CV.
+
+A cover letter (or covering letter) is a separate one-page letter that accompanies the CV. It is not a repeat of the CV; it introduces you, states the specific role you are applying for, highlights why you are a strong fit, and expresses your motivation. The CV shows what you have done; the cover letter argues why it matters for this role.
+
+Crucial insight: a CV is a comprehensive record of your history; a resume is a shorter, job-targeted summary; a cover letter is a separate one-page letter that introduces you and argues your fit for a specific role. The CV shows what; the cover letter argues why.` },
+
+    { q: "The essential sections of a CV.",
+      body: `A CV follows a recognised set of sections so that a recruiter knows exactly where to find each kind of information. Learning these sections is the framework of CV writing.
+
+My Socratic question: a recruiter opens a CV looking for the applicant's qualifications and contact details but cannot find them amid a jumble of unlabelled text. What structural failure has occurred, and what standard sections would have prevented it?
+
+A CV typically contains these sections. Personal or contact details at the top: full name, phone number, professional email address, and location (a full home address is now often reduced to town and region). A personal profile or professional summary: two to four lines summarising who you are and what you offer. Education and qualifications: your academic history, most recent first. Work experience: jobs, internships, and attachments, most recent first. Skills: relevant technical and transferable skills. And additional sections as relevant: certifications, publications, professional memberships, languages, and interests. References are usually listed as "available on request" or given at the end.
+
+Two ordering conventions matter. Reverse chronological order (most recent first) is standard for education and experience, because recent activity is most relevant. And the order of sections can be adjusted to lead with your strongest asset - a student with little experience leads with education; an experienced professional leads with work experience.
+
+Crucial insight: a CV's standard sections are contact details, personal profile, education, work experience, skills, and additional sections (certifications, memberships, interests), with references on request. Education and experience run in reverse chronological order, and sections are arranged to lead with your strongest asset.` },
+
+    { q: "The personal profile: your opening pitch.",
+      body: `The personal profile (or professional summary) sits at the top of the CV and is often the only part read before the recruiter decides whether to continue. It must earn that continuation.
+
+My Socratic question: two CVs open differently. One begins, "I am a hard-working team player seeking a challenging role." The other begins, "Final-year Medical Laboratory Science student at KNUST with hands-on experience in clinical chemistry and haematology, seeking a laboratory internship." Which makes the recruiter read on, and why?
+
+The second, because it is specific and relevant. A strong personal profile is a concise two-to-four-line statement that says who you are (your professional identity), what you offer (your key strengths or experience), and what you are seeking (the kind of role). It is tailored to the specific application - the same generic profile pasted into every CV signals that the applicant has not thought about this role.
+
+The first example fails because it is a cliche. Phrases like "hard-working team player" and "challenging role" appear on countless CVs and say nothing distinctive. Replace generic claims with specific, relevant facts: your field, your level, your concrete experience, and the exact opportunity you want.
+
+Crucial insight: the personal profile is a concise, tailored two-to-four-line pitch stating who you are, what you offer, and what you seek. Avoid generic cliches; use specific, relevant facts, because this opening often decides whether the rest of the CV is read.` },
+
+    { q: "Presenting education and qualifications.",
+      body: `For a student or recent graduate, education is usually the strongest section, and it must be presented clearly and truthfully.
+
+My Socratic question: a recent graduate buries their degree in a dense paragraph, omits the dates, and vaguely describes their results. What has the recruiter lost, and how should education be laid out instead?
+
+Education should be listed in reverse chronological order - most recent first - because your most advanced qualification is most relevant. For each entry, give the qualification, the institution, the dates, and, where helpful, the result or key details. For example: "BSc Medical Laboratory Science, Kwame Nkrumah University of Science and Technology (KNUST), 2025-2029 (expected)." Relevant modules, projects, or a strong result can be added where they strengthen your case for the specific role.
+
+Clarity of layout matters as much as content: consistent formatting, clear dates, and clean alignment let the recruiter scan your qualifications instantly. And honesty is absolute - never inflate a grade, claim a qualification you do not hold, or misstate dates. Qualifications are routinely verified, and a single discovered lie discredits the entire application and can end a career.
+
+Crucial insight: list education in reverse chronological order, giving the qualification, institution, dates, and relevant results or details, laid out consistently for quick scanning. Above all, be completely honest - qualifications are verified, and any dishonesty destroys credibility.` },
+
+    { q: "Presenting work experience and skills.",
+      body: `Work experience and skills show what you can actually do. Presented well, they turn a list of jobs into evidence of your value.
+
+My Socratic question: one CV says "worked in a lab." Another says "completed a clinical laboratory attachment where I performed routine haematology and clinical chemistry tests, operated an automated analyser, and maintained quality-control records." Which convinces the recruiter, and what makes the difference?
+
+The second, because it shows specific, relevant achievements rather than a bare title. List experience - jobs, internships, attachments, and significant volunteering - in reverse chronological order. For each, give the role, the organisation, the dates, and, most importantly, a few bullet points describing what you did and achieved. Use active verbs (performed, operated, analysed, maintained, led) and, where possible, concrete detail or results. Focus on what is relevant to the role you are seeking.
+
+The skills section should list genuinely relevant abilities, both technical (specific laboratory techniques, instruments, software) and transferable (communication, teamwork, attention to detail, problem-solving). Avoid a meaningless list of buzzwords; where you can, back a skill with evidence elsewhere in the CV.
+
+Crucial insight: present work experience in reverse chronological order with role, organisation, dates, and bulleted, active-verb descriptions of what you did and achieved - specific and relevant. List genuinely relevant technical and transferable skills, backed by evidence rather than buzzwords.` },
+
+    { q: "Formatting and presentation.",
+      body: `A CV is judged partly on how it looks before a word is read. Professional formatting signals attention to detail; poor formatting signals the opposite.
+
+My Socratic question: two CVs contain identical information. One is clean, consistently formatted, and two pages; the other uses five fonts, clashing colours, inconsistent spacing, and runs to six cluttered pages. Why does the first win the interview, even though the content is the same?
+
+Because presentation communicates professionalism. A good CV is clean and consistent: one or two professional fonts, consistent sizing and spacing, clear section headings, and sensible use of white space so it is easy to scan. It is concise - typically one to two pages for a student or early-career applicant, and rarely more than three; recruiters value relevance over length. It uses reverse chronological order and clear bullet points rather than dense paragraphs.
+
+It is also error-free. Spelling and grammar mistakes are among the most common reasons CVs are rejected, because they suggest carelessness - a serious concern in a field like laboratory science where precision is everything. Proofread carefully, and have someone else check it. Finally, tailor the CV to each application rather than sending an identical copy everywhere, and save and send it as a PDF so the formatting cannot shift.
+
+Crucial insight: format a CV cleanly and consistently - professional fonts, clear headings, white space, one to two pages, bullet points - and make it completely error-free. Tailor it to each role and send it as a PDF. Presentation signals the attention to detail employers expect.` },
+
+    { q: "Common mistakes in CV writing.",
+      body: `CVs fail in predictable ways. Knowing the common mistakes lets you check your own against them before you submit.
+
+The first mistake is spelling and grammar errors - the fastest route to rejection, because in a precision field they signal carelessness. Proofread and have others check.
+
+The second is being too generic - a one-size-fits-all CV sent unchanged to every employer. Tailor each CV to the specific role.
+
+The third is being too long or cluttered - burying relevant information in pages of detail. Keep it concise and relevant, one to two pages.
+
+The fourth is dishonesty - inflating grades, inventing experience, or false dates. It is verified and discovered, and it ends applications and careers.
+
+The fifth is vague, cliched language - "hard-working team player seeking a challenging role" - that says nothing. Use specific, evidenced statements.
+
+The sixth is poor formatting - inconsistent fonts, no headings, dense text - that makes the CV hard to scan.
+
+The seventh is including irrelevant or inappropriate information, or omitting essential details like a professional email or clear dates. Include what is relevant; use a professional email address, not a joke one.
+
+Crucial insight: the common CV failures are spelling and grammar errors, being generic, being too long, dishonesty, vague cliched language, poor formatting, and irrelevant or missing information. A strong CV is accurate, tailored, concise, honest, specific, well-formatted, and relevant.` },
+
+    { q: "The cover letter that accompanies your CV.",
+      body: `A CV is usually submitted with a cover letter, and together they form your application. The cover letter does a job the CV cannot.
+
+My Socratic question: a CV lists an applicant's qualifications and experience perfectly, but the employer still cannot tell why this person wants this particular role or why they suit it better than the next candidate. What document fills that gap, and what should it contain?
+
+The cover letter fills it. Where the CV shows what you have done, the cover letter argues why it matters for this specific role and this specific employer. It is a formal one-page letter, following business-letter conventions, with a clear structure. The opening states the role you are applying for and where you saw it. The middle paragraphs make your case: why you are a strong fit, drawing out the most relevant qualifications and experience from your CV and connecting them to what the employer needs, and why you are motivated to work for them specifically. The closing thanks the reader, states your availability for interview, and ends professionally.
+
+A strong cover letter is tailored, specific, and concise - it does not simply repeat the CV, and it is not generic. Like the CV, it must be error-free and professional in tone. Together, a targeted CV and a persuasive cover letter give you the best chance of the interview.
+
+Crucial insight: the cover letter is a tailored one-page letter accompanying the CV. It states the role, argues why you fit and why you are motivated (connecting your experience to the employer's needs), and closes professionally. The CV shows what you have done; the cover letter argues why it matters here.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for CV Writing.
+
+Definition: a CV (curriculum vitae) is a formal summary of your education, qualifications, experience, and skills - a marketing document whose purpose is to secure an interview.
+
+CV vs resume vs cover letter: a CV is a comprehensive record; a resume is a shorter, job-targeted summary; a cover letter is a separate one-page letter arguing your fit.
+
+Essential sections: contact details, personal profile, education, work experience, skills, additional sections (certifications, memberships, interests), references on request. Education and experience in reverse chronological order; lead with your strongest asset.
+
+Personal profile: a concise, tailored two-to-four-line pitch - who you are, what you offer, what you seek. Avoid cliches.
+
+Education: reverse chronological; qualification, institution, dates, results; consistent layout; absolute honesty.
+
+Experience and skills: role, organisation, dates, and bulleted active-verb achievements; relevant technical and transferable skills backed by evidence.
+
+Formatting: clean and consistent, one to two pages, clear headings, bullet points, error-free, tailored, sent as PDF.
+
+Common mistakes: spelling/grammar errors, being generic, too long, dishonesty, vague cliches, poor formatting, irrelevant or missing information.
+
+Cover letter: tailored one-page letter - states the role, argues fit and motivation, closes professionally; does not repeat the CV.
+
+Now your final test. A final-year student applies for a laboratory internship. They send a five-page CV in three clashing fonts, opening with "I am a hard-working team player looking for a challenging opportunity," list "worked in lab" under experience with no detail, include their personal nickname email, and send the same CV to every employer with no cover letter. There are also two spelling errors.
+
+Question one: identify three problems with this CV and how to fix each.
+Question two: what is wrong with the personal profile and the experience entry?
+Question three: what is missing from the application, and why does it matter?
+
+Work them through before reading on.
+
+My answers. One: three problems - it is too long and inconsistently formatted (fix: cut to one to two pages, one or two professional fonts, consistent layout, clear headings); it contains spelling errors (fix: proofread carefully and have someone else check, since errors signal carelessness in a precision field); and it uses an unprofessional email (fix: use a simple professional address based on the name). Two: the personal profile is a generic cliche that says nothing distinctive - it should be a specific, tailored statement, for example: "Final-year Medical Laboratory Science student at KNUST with clinical attachment experience in haematology and clinical chemistry, seeking a laboratory internship." The experience entry "worked in lab" is uselessly vague - it should give the role, organisation, dates, and bulleted, active-verb achievements describing what was actually done. Three: the application is missing a cover letter and is not tailored to each role. This matters because the CV shows what the applicant has done but the cover letter argues why they fit this specific internship and why they are motivated - without it, and without tailoring, the application looks generic and is easily set aside.` }
+  ],
+  theory: [
+    { q: "What is a CV?", a: "A curriculum vitae - a formal document summarising your education, qualifications, experience, and skills. It is a marketing document whose purpose is to secure an interview." },
+    { q: "What is the difference between a CV and a cover letter?", a: "A CV is a comprehensive record of what you have done; a cover letter is a separate one-page letter that introduces you and argues why you fit a specific role. The CV shows what; the cover letter argues why." },
+    { q: "What are the essential sections of a CV?", a: "Contact details, personal profile, education, work experience, skills, and additional sections (certifications, memberships, interests), with references usually 'available on request.'" },
+    { q: "What order are education and experience listed in, and why?", a: "Reverse chronological order (most recent first), because your most recent qualifications and roles are the most relevant to an employer." },
+    { q: "What should a personal profile contain?", a: "A concise, tailored two-to-four-line statement of who you are (professional identity), what you offer (key strengths/experience), and what you are seeking, using specific facts rather than cliches." },
+    { q: "How should work experience be described?", a: "With the role, organisation, dates, and bulleted descriptions of what you did and achieved, using active verbs and concrete, relevant detail rather than a bare job title." },
+    { q: "Why must a CV be completely honest?", a: "Qualifications and experience are routinely verified. A single discovered lie discredits the whole application and can end a career." },
+    { q: "What is an appropriate length for a student's CV?", a: "Typically one to two pages (rarely more than three). Recruiters value relevance over length." },
+    { q: "Why are spelling and grammar errors so damaging on a CV?", a: "They are a common reason for rejection because they signal carelessness - a serious concern in a precision field like laboratory science. Always proofread and have others check." },
+    { q: "What does a cover letter add that a CV does not?", a: "It argues why your experience matters for this specific role and employer, and shows your motivation - connecting your CV to the employer's needs, rather than just listing what you have done." },
+  ],
+  videos: [
+    { channel: "Careers", title: "How to Write a Winning CV", note: "Sections, order, and what recruiters look for.", url: "" },
+    { channel: "Professional Skills", title: "CV vs Resume vs Cover Letter", note: "The differences and when to use each.", url: "" },
+    { channel: "Job Applications", title: "Writing an Effective Cover Letter", note: "Structuring a persuasive one-page letter.", url: "" },
+  ],
+  mcqs: [
+    { q: "CV stands for:", o: ["Career Verification", "Curriculum Vitae", "Certified Value", "Current Version"], a: 1, w: "CV is curriculum vitae, Latin for 'course of life.'" },
+    { q: "The main purpose of a CV is to:", o: ["Tell your whole life story", "Secure an interview", "List every hobby", "Replace the interview"], a: 1, w: "A CV is a marketing document aimed at securing an interview." },
+    { q: "A CV should be treated as a:", o: ["Diary", "Marketing document", "Legal contract", "Textbook"], a: 1, w: "It markets your suitability to an employer." },
+    { q: "A cover letter is:", o: ["The same as a CV", "A separate one-page letter arguing your fit", "A list of references", "An appendix"], a: 1, w: "The cover letter is separate and argues why you fit the role." },
+    { q: "Education and work experience are listed in:", o: ["Alphabetical order", "Reverse chronological order (most recent first)", "Random order", "Order of importance to you"], a: 1, w: "Reverse chronological order puts the most recent, most relevant first." },
+    { q: "A personal profile should be:", o: ["A full page", "A concise, tailored two-to-four-line pitch", "Omitted", "A list of hobbies"], a: 1, w: "A concise, tailored statement of who you are, what you offer, and what you seek." },
+    { q: "Which is a weak, generic profile line?", o: ["Final-year MLS student with clinical attachment experience", "Hard-working team player seeking a challenging role", "Seeking a laboratory internship in haematology", "Experienced in clinical chemistry testing"], a: 1, w: "It is a cliche that says nothing distinctive." },
+    { q: "For each education entry you should give:", o: ["Only the year", "Qualification, institution, dates, and relevant results", "Only the institution", "A paragraph of feelings"], a: 1, w: "Qualification, institution, dates, and relevant details." },
+    { q: "Honesty on a CV is:", o: ["Optional", "Absolute - qualifications are verified", "Only for grades", "Unimportant"], a: 1, w: "Qualifications are verified; dishonesty ends applications." },
+    { q: "Work experience entries are strongest when they:", o: ["Give only a job title", "Describe what you did and achieved with active verbs", "List feelings", "Are left blank"], a: 1, w: "Specific, active-verb achievements convince recruiters." },
+    { q: "'Worked in lab' is a weak experience entry because it is:", o: ["Too specific", "Vague, with no role, dates, or achievements", "Too long", "Too honest"], a: 1, w: "It lacks role, organisation, dates, and concrete detail." },
+    { q: "The skills section should list:", o: ["Random buzzwords", "Genuinely relevant technical and transferable skills", "Only hobbies", "Nothing"], a: 1, w: "Relevant technical and transferable skills, ideally backed by evidence." },
+    { q: "An appropriate length for a student CV is:", o: ["Ten pages", "One to two pages", "One line", "Twenty pages"], a: 1, w: "One to two pages; recruiters value relevance over length." },
+    { q: "A common reason CVs are rejected is:", o: ["Being concise", "Spelling and grammar errors", "Using headings", "Reverse chronological order"], a: 1, w: "Errors signal carelessness and are a top rejection reason." },
+    { q: "To avoid formatting shifting, a CV should be sent as a:", o: ["PDF", "Blurry photo", "Voice note", "Spreadsheet"], a: 0, w: "A PDF preserves the formatting across devices." },
+    { q: "Which email address is appropriate on a CV?", o: ["A professional address based on your name", "A joke nickname address", "No email", "A shared family email"], a: 0, w: "Use a professional email based on your name." },
+    { q: "A CV should be tailored:", o: ["Never - send the same one everywhere", "To each specific application", "Only once a year", "Only for senior roles"], a: 1, w: "Tailoring to each role shows genuine interest and fit." },
+    { q: "References on a CV are usually:", o: ["Listed in full at the top", "Available on request or at the end", "Never mentioned", "The first section"], a: 1, w: "References are typically 'available on request' or given at the end." },
+    { q: "A student with little experience should usually lead with:", o: ["Work experience", "Education", "Hobbies", "References"], a: 1, w: "Lead with your strongest asset - for a student, education." },
+    { q: "The cover letter, unlike the CV, mainly:", o: ["Repeats the CV word for word", "Argues why you fit this specific role and your motivation", "Lists references", "Contains your grades only"], a: 1, w: "It argues fit and motivation, not just what you have done." },
+    { q: "A cover letter should typically be:", o: ["Five pages", "One page", "A single line", "Ten pages"], a: 1, w: "A cover letter is a focused one-page letter." },
+    { q: "The opening of a cover letter should state:", o: ["Your salary demand", "The role you are applying for and where you saw it", "Your hobbies", "Nothing"], a: 1, w: "State the specific role and where you found it." },
+    { q: "A resume, compared with a full CV, is usually:", o: ["Longer and broader", "Shorter and more targeted to a job", "Identical", "A cover letter"], a: 1, w: "A resume is generally shorter and job-targeted." },
+    { q: "White space and clear headings on a CV:", o: ["Waste space", "Make it easy to scan quickly", "Confuse recruiters", "Are unprofessional"], a: 1, w: "They make the CV easy to scan, which recruiters need." },
+    { q: "Active verbs on a CV (performed, operated, analysed):", o: ["Weaken the CV", "Make achievements concrete and convincing", "Should be avoided", "Are only for senior roles"], a: 1, w: "Active verbs present achievements concretely." },
+    { q: "Including irrelevant information on a CV:", o: ["Strengthens it", "Clutters it and buries what matters", "Is required", "Impresses recruiters"], a: 1, w: "Irrelevant detail buries the relevant information." },
+    { q: "Before submitting a CV, you should:", o: ["Send it immediately unchecked", "Proofread it and have someone else check it", "Add more pages", "Remove all dates"], a: 1, w: "Proofreading and a second reader catch costly errors." },
+    { q: "A professional summary/profile is placed:", o: ["At the very end", "Near the top, after contact details", "In the references", "Nowhere"], a: 1, w: "The profile sits near the top so it is read first." },
+    { q: "For a laboratory role, a strong CV would emphasise:", o: ["Unrelated hobbies", "Relevant lab techniques, instruments, and clinical attachment experience", "Personal opinions", "Nothing technical"], a: 1, w: "Emphasise relevant technical experience and skills." },
+    { q: "The ultimate aim of a CV and cover letter together is to:", o: ["Fill pages", "Win an interview", "Avoid work", "List everything you have ever done"], a: 1, w: "Together they aim to secure the interview." },
+  ],
+};
+
+
 
 /* --------------------------- mls:0 --------------------------- */
 const T_MLS_SAFETY = {
@@ -13164,6 +13553,8 @@ const CONTENT = {
   "com:4": T_COM_MEMO,     
   "com:5": T_COM_REPORT,
   "com:6": T_COM_MEETINGS,
+  "com:7": T_COM_PRESENTATION,
+  "com:8": T_COM_CV,
   "phy:0": T_PHY_GENERAL,
   "phy:1": T_PHY_HOMEO,
   "phy:2": T_PHY_TRANSPORT,
