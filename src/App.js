@@ -9741,6 +9741,365 @@ My answers. One: I would apply multiple learning principles — cognitive learni
     { q: "Which of the following is an example of negative punishment in healthcare?", o: ["Praising a patient for taking medication", "Removing a patient's restriction for good behaviour", "Giving a patient a time-out", "Taking away a patient's phone privilege"], a: 3, w: "Taking away phone privilege is negative punishment — removing something pleasant to decrease the behaviour." },
   ],
 };
+// ==================== MEDICAL PSYCHOLOGY TOPIC 05: PSYCHOLOGY OF LEARNING ====================
+const T_PSY_PSYCHLEARN = {
+  courseId: "psy",
+  topicIndex: 5,
+  title: "Psychology of Learning",
+  minutes: 22,
+  note: [
+    { q: "Beyond conditioning: how learning shapes the whole person.",
+      body: `You already know classical and operant conditioning — how associations and consequences shape behaviour. Now we widen the lens: the psychology of learning also covers how people learn by watching others, how they build mental models of the world, and how learning affects memory, skill and identity, not just single responses.
+
+My Socratic question: a student nurse who has never given an injection watches a senior nurse do it twice, then performs it competently herself. She was never directly reinforced for injecting - so how did she learn?
+
+The answer is that she learned by observation, not by trial-and-error conditioning alone. This shows that learning is broader than conditioning: it includes cognitive processes - attention, memory, and thought - not just stimulus-response links. The psychology of learning studies all the ways experience produces relatively permanent changes in behaviour or knowledge.
+
+Crucial insight: learning is any relatively permanent change in behaviour or knowledge that results from experience, and it happens through several distinct processes - conditioning, observation, and cognitive processing - each important for understanding how healthcare workers and patients acquire skills, habits and health beliefs.` },
+
+    { q: "Observational learning: Bandura and social learning theory.",
+      body: `Much human learning happens without direct reinforcement at all - simply by watching others. This is observational learning, formalised by Albert Bandura's social learning theory.
+
+Observational learning is learning that occurs through watching the behaviour of a model and its consequences, without needing to perform the behaviour oneself first. Bandura's famous Bobo doll experiment showed that children who watched an adult act aggressively toward a doll later imitated that aggression themselves, even without being reinforced.
+
+My Socratic question: if a new health worker sees a senior colleague skip hand hygiene without any negative consequence, what is she likely to learn - and why does this matter for infection control training?
+
+The answer is that she may learn, through observation, that skipping hand hygiene is acceptable, because she saw the model's behaviour go unpunished. This is vicarious reinforcement - learning from the consequences experienced by someone else, not oneself. It explains why role-modelling by senior staff is so powerful in shaping junior staff behaviour, for better or worse.
+
+Crucial insight: observational learning, described by Bandura's social learning theory, shows that people learn by watching models and their consequences (vicarious reinforcement), without needing direct reinforcement themselves. This makes role-modelling a powerful - and sometimes overlooked - tool for shaping behaviour in healthcare teams.` },
+
+    { q: "The four processes required for observational learning.",
+      body: `Bandura identified that observational learning does not happen automatically just because someone watches a behaviour - four specific processes must occur.
+
+Attention is the first requirement: the observer must actually notice and attend to the model's behaviour. Retention follows: the observer must remember what was observed, storing it mentally for later use. Reproduction is next: the observer must be physically and mentally capable of reproducing the behaviour. Finally, motivation: the observer must have a reason to perform the behaviour, often based on expected reinforcement or punishment.
+
+My Socratic question: a student watches a demonstration of a clinical procedure but is distracted on her phone throughout. Later she cannot perform the procedure. Which of Bandura's four processes failed first?
+
+The answer is attention - without attending to the model, none of the later steps (retention, reproduction, motivation) can occur. This is why active engagement, not passive presence, is essential in clinical skills teaching; simply being in the room is not enough.
+
+Crucial insight: observational learning requires four processes in sequence - attention, retention, reproduction, and motivation. A breakdown at any stage prevents learning, which is why effective clinical teaching deliberately secures attention, aids memory, allows supervised practice, and provides motivating feedback.` },
+
+    { q: "Cognitive learning: insight and latent learning.",
+      body: `Not all learning is gradual trial-and-error. Sometimes learning happens suddenly, through understanding, or occurs without being immediately shown in behaviour - both challenge a purely behaviourist view of learning.
+
+Insight learning, studied by Wolfgang Kohler with chimpanzees, is the sudden realisation of a solution to a problem, without gradual trial-and-error. The chimp did not slowly shape its behaviour through reinforcement; it suddenly grasped how to use a stick to reach a banana. Latent learning, demonstrated by Edward Tolman, is learning that occurs but is not demonstrated in behaviour until there is a reason (an incentive) to display it. Tolman's rats explored a maze with no reward and appeared to learn nothing - but when a food reward was later introduced, they navigated it immediately, revealing they had been learning a cognitive map all along.
+
+My Socratic question: a final-year student has never been tested on emergency drug dosages but performs excellently when a real emergency arises. What does this suggest about learning that had occurred earlier, unseen?
+
+The answer is that this may reflect latent learning - the student had already learned the material through lectures and reading, but this learning was not visible until a real incentive (the emergency) required its expression. Learning and its performance are not always the same thing.
+
+Crucial insight: insight learning (sudden understanding) and latent learning (learning that is not shown until there is incentive to display it) both demonstrate that learning involves internal cognitive processes - mental representations and understanding - not merely visible, gradually shaped behaviour. This matters clinically because a learner's silence or lack of demonstrated skill does not always mean an absence of learning.` },
+
+    { q: "Memory and learning: how what is learned is kept.",
+      body: `Learning would be useless if it were not retained, so the psychology of learning connects closely to memory - the process of encoding, storing, and retrieving information.
+
+Encoding is the process of getting information into memory. Storage is retaining that information over time. Retrieval is accessing stored information when needed. Memory is often divided into sensory memory (very brief), short-term/working memory (limited capacity, seconds to minutes), and long-term memory (relatively permanent, vast capacity).
+
+My Socratic question: a student crams drug names the night before an exam and recalls them well the next morning, but cannot remember them a month later on the ward. What does this suggest about how the information was encoded?
+
+The answer is that cramming often produces shallow encoding - information reaches short-term memory and can be retrieved briefly, but without deeper processing (understanding, repetition, linking to existing knowledge) it fails to consolidate into durable long-term memory. This is why spaced, meaningful study outperforms cramming for clinical knowledge that must last.
+
+Crucial insight: learning depends on memory processes - encoding, storage and retrieval - and the depth of encoding determines how durable learning is. Shallow, rushed encoding (cramming) supports only short-term recall, while spaced and meaningful encoding supports the long-term retention healthcare practice demands.` },
+
+    { q: "Forgetting and the transfer of learning.",
+      body: `Learning is not permanent by default; without reinforcement or use, it decays or becomes hard to retrieve - and understanding forgetting helps healthcare educators design better training.
+
+Forgetting can occur through decay (memory traces fade over time if unused), interference (new or old learning interferes with recall - proactive interference is old learning disrupting new, retroactive interference is new learning disrupting old), or retrieval failure (the information is stored but the right cues are missing to access it). Transfer of learning is the application of something learned in one context to a new context - positive transfer helps performance in the new context, negative transfer hinders it.
+
+My Socratic question: a nurse trained on one brand of infusion pump struggles when a different brand is introduced, briefly reverting to the old pump's button sequence. What is happening here?
+
+The answer is negative transfer - the strong prior learning on the old pump interferes with correctly performing the new, different procedure. This is common whenever equipment, protocols or software change, and it explains why retraining, not just informing, is needed when systems change.
+
+Crucial insight: forgetting occurs through decay, interference, and retrieval failure, while transfer of learning describes how prior learning helps (positive transfer) or hinders (negative transfer) new learning. Recognising negative transfer explains common errors when familiar routines meet new equipment or protocols, and points to the need for deliberate retraining.` },
+
+    { q: "Skill learning and the stages of acquiring a clinical skill.",
+      body: `Beyond facts and associations, a large part of healthcare learning is motor and procedural skill - learning to perform a physical task accurately and fluently, such as venepuncture or pipetting.
+
+Fitts and Posner's model describes three stages of skill learning. In the cognitive stage, the learner consciously thinks through each step, is slow, and makes many errors - like a student reciting each step of a procedure aloud while performing it. In the associative stage, the learner practises, refines movements, and makes fewer errors, gradually needing less conscious thought. In the autonomous stage, the skill becomes automatic, fast, and accurate, requiring minimal conscious attention - freeing the mind to attend to the patient or unexpected problems.
+
+My Socratic question: why might an expert lab technician find it hard to explain, step-by-step, exactly how she performs a familiar technique to a beginner?
+
+The answer is that her skill has become autonomous - so automatic that the individual steps are no longer consciously accessible to her, even though she performs them flawlessly. This is why expert demonstration alone is often insufficient for teaching beginners; explicit, broken-down instruction (matching the learner's cognitive stage) is also needed.
+
+Crucial insight: skill learning progresses through the cognitive stage (conscious, effortful, error-prone), the associative stage (practised, improving), and the autonomous stage (automatic, fluent). Recognising a learner's stage - and that experts operate autonomously - helps trainers pitch instruction appropriately rather than assuming what is obvious to an expert is obvious to a beginner.` },
+
+    { q: "Motivation and readiness to learn.",
+      body: `Learning does not happen in a vacuum - a learner's motivation and emotional state strongly affect whether, and how well, learning occurs, especially in high-stakes healthcare training.
+
+Intrinsic motivation is the drive to learn for its own sake - curiosity, interest, satisfaction of understanding. Extrinsic motivation is the drive to learn for external outcomes - grades, praise, avoiding punishment. Both operate in students, but intrinsic motivation is generally linked to deeper, more durable learning. Anxiety also affects learning: moderate anxiety can improve focus and performance (per the Yerkes-Dodson law), but excessive anxiety impairs concentration, working memory, and skill performance - a stressed learner may "freeze" during a procedure they normally perform well.
+
+My Socratic question: a normally competent student performs a familiar procedure badly while being formally assessed by an examiner. What is the most likely explanation, and what does it suggest about how skills should be tested?
+
+The answer is that excessive anxiety, not lack of learning, is the likely cause - high-stakes assessment can push arousal beyond the optimal point on the Yerkes-Dodson curve, impairing performance of an already-learned skill. This suggests assessments should distinguish between a genuine skill deficit and an anxiety-driven performance dip, perhaps through repeated observation rather than a single high-pressure test.
+
+Crucial insight: motivation (intrinsic and extrinsic) and emotional arousal (per the Yerkes-Dodson law) strongly influence learning and its performance. Moderate arousal aids performance, but excessive anxiety impairs it - a distinction healthcare educators must consider when assessing whether a learner truly lacks a skill or is simply overwhelmed in the moment.` },
+
+    { q: "Applying the psychology of learning in healthcare training and patient education.",
+      body: `The psychology of learning is not only about how healthcare workers are trained - it also explains how patients learn to manage their own health, making it doubly relevant to your career.
+
+My Socratic question: you need to teach a newly diagnosed diabetic patient to self-inject insulin. Which principles from this topic would make your teaching most effective?
+
+The answer draws on nearly everything covered here: use observational learning by demonstrating the injection yourself (securing the patient's attention); support memory by breaking the skill into clear steps and allowing spaced, repeated practice rather than a single rushed session; recognise that the patient will move through the cognitive, associative, then autonomous stages of skill learning, so early clumsiness is normal and not a sign of failure; and keep anxiety moderate - present, not overwhelming - by creating a calm, supportive teaching environment, since excessive fear will impair the patient's ability to learn and later recall the technique.
+
+More broadly, understanding how learning works helps you design better staff training, recognise why some educational interventions fail, and appreciate that patient non-adherence sometimes reflects a learning or memory problem, not defiance.
+
+Crucial insight: the psychology of learning applies directly to both staff training and patient education. Effective teaching in healthcare deliberately uses observation, supports memory through spacing and repetition, respects the stages of skill acquisition, and manages anxiety - turning abstract learning theory into practical, life-relevant teaching skill.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the psychology of learning, in five lines.
+
+Beyond conditioning: learning is any relatively permanent change in behaviour or knowledge from experience, occurring through conditioning, observation, and cognitive processing.
+
+Observation and cognition: Bandura's social learning theory shows learning occurs by watching models (needing attention, retention, reproduction, motivation), including vicarious reinforcement; insight learning (sudden understanding) and latent learning (Tolman - learned but undemonstrated until incentive) show learning is more than visible behaviour.
+
+Memory and its failure: learning depends on encoding, storage and retrieval; forgetting occurs through decay, interference, and retrieval failure; transfer of learning can be positive (helps) or negative (hinders, as with new equipment).
+
+Skill acquisition: Fitts and Posner's cognitive, associative, and autonomous stages describe how a skill moves from effortful and error-prone to automatic and fluent.
+
+Motivation and application: intrinsic and extrinsic motivation, and the Yerkes-Dodson law (moderate arousal aids performance, excess impairs it), shape learning - and all these principles apply directly to training staff and educating patients.
+
+Now your final test. A senior lab technician is teaching a nervous first-year student to use a new piece of equipment. The student watches the demonstration closely, but during her own graded attempt the next day, she fumbles steps she seemed to understand, and afterwards says she "just froze."
+
+Question one: name and explain the Bandura process most clearly represented by the student watching the demonstration closely.
+Question two: what psychological explanation best accounts for her fumbling during the graded attempt, despite apparently understanding the procedure the day before?
+Question three: according to Fitts and Posner's model, which stage of skill learning is the student most likely in, and what does this predict about her performance?
+
+Work them through before reading on.
+
+My answers. One: attention - the first of Bandura's four processes for observational learning; by watching closely, she secured the necessary attention for the demonstration to be encoded, without which retention, reproduction and motivation could not follow. Two: excessive anxiety during the graded, high-stakes attempt likely pushed her arousal beyond the optimal point described by the Yerkes-Dodson law, impairing her working memory and performance of an already-partially-learned skill - "freezing" is a classic sign of anxiety-driven performance failure rather than an absence of learning. Three: she is most likely in the cognitive stage of skill learning - conscious, effortful, and error-prone - so continued fumbling and reliance on conscious step-by-step thinking is expected, and should improve with practice through the associative stage toward autonomous performance.
+
+If those came cleanly, you understand how learning extends beyond simple conditioning into observation, cognition, memory, skill and motivation - and how each piece applies directly to training healthcare staff and educating patients.` },
+  ],
+  theory: [
+    { q: "Define learning in the psychological sense.", a: "Learning is any relatively permanent change in behaviour or knowledge that results from experience, occurring through processes including conditioning, observational learning, and cognitive processing." },
+    { q: "What is observational learning, and who is associated with it?", a: "Observational learning is learning that occurs through watching the behaviour of a model and its consequences, without needing to perform the behaviour oneself first. It is associated with Albert Bandura and his social learning theory, demonstrated in the Bobo doll experiment." },
+    { q: "List Bandura's four processes required for observational learning.", a: "Attention (noticing the model's behaviour), retention (remembering what was observed), reproduction (being capable of performing the behaviour), and motivation (having a reason to perform it, often based on expected consequences)." },
+    { q: "What is vicarious reinforcement?", a: "Vicarious reinforcement is learning from the consequences experienced by someone else (a model), rather than from consequences experienced directly - for example, learning that a behaviour is acceptable because a model was not punished for it." },
+    { q: "Distinguish insight learning from latent learning.", a: "Insight learning (Kohler) is the sudden realisation of a solution to a problem without gradual trial-and-error. Latent learning (Tolman) is learning that occurs but is not shown in behaviour until there is an incentive to display it - shown by rats that navigated a maze immediately once a reward was introduced, despite no reward during earlier exploration." },
+    { q: "What are encoding, storage and retrieval in memory?", a: "Encoding is the process of getting information into memory; storage is retaining that information over time; retrieval is accessing stored information when needed. Learning depends on all three, and the depth of encoding affects how durable the learning is." },
+    { q: "Explain three causes of forgetting.", a: "Decay (memory traces fade over time if unused), interference (proactive - old learning disrupts new; retroactive - new learning disrupts old), and retrieval failure (information is stored but the right cues are missing to access it)." },
+    { q: "Distinguish positive and negative transfer of learning.", a: "Transfer of learning is applying something learned in one context to a new context. Positive transfer helps performance in the new context; negative transfer hinders it - for example, prior training on one type of equipment interfering with learning a different, similar type." },
+    { q: "Describe Fitts and Posner's three stages of skill learning.", a: "The cognitive stage (conscious, effortful, error-prone, step-by-step thinking), the associative stage (practised, improving, fewer errors, less conscious thought needed), and the autonomous stage (automatic, fast, accurate, requiring minimal conscious attention)." },
+    { q: "Explain the Yerkes-Dodson law and its relevance to learning performance.", a: "The Yerkes-Dodson law states that moderate arousal (motivation/anxiety) improves performance, but excessive arousal impairs it. This explains why a learner under too much pressure or anxiety may perform worse than their actual level of learning, such as 'freezing' during a high-stakes assessment." },
+  ],
+  videos: [
+    { channel: "Medical Psychology", title: "Bandura's Social Learning Theory", note: "Observational learning and the Bobo doll experiment explained.", url: "" },
+    { channel: "Medical Psychology", title: "Insight and Latent Learning", note: "Kohler and Tolman's cognitive views of learning.", url: "" },
+    { channel: "Medical Psychology", title: "Stages of Skill Acquisition", note: "Fitts and Posner's model of learning a motor skill.", url: "" },
+  ],
+  mcqs: [
+    { q: "Learning is best defined as:", o: ["A fixed trait present at birth", "A relatively permanent change in behaviour or knowledge from experience", "Only classical conditioning", "A purely biological reflex"], a: 1, w: "Learning is a relatively permanent change from experience." },
+    { q: "Observational learning is most closely associated with:", o: ["B.F. Skinner", "Ivan Pavlov", "Albert Bandura", "Sigmund Freud"], a: 2, w: "Bandura developed social learning theory around observational learning." },
+    { q: "The Bobo doll experiment demonstrated that children:", o: ["Only learn through direct reinforcement", "Cannot learn aggression", "Imitated aggression they observed in a model, without direct reinforcement", "Learn only through classical conditioning"], a: 2, w: "Children imitated observed aggression without being reinforced themselves." },
+    { q: "Vicarious reinforcement refers to learning from:", o: ["One's own punishments only", "Consequences experienced by another person (a model)", "Genetic instinct", "Random chance"], a: 1, w: "Vicarious reinforcement is learning from a model's consequences." },
+    { q: "The first of Bandura's four processes for observational learning is:", o: ["Motivation", "Reproduction", "Attention", "Retention"], a: 2, w: "Attention must occur first, or nothing else can follow." },
+    { q: "A learner who understood a demonstration but cannot physically perform it yet is most likely missing:", o: ["Attention", "Reproduction (capability)", "Retention", "Motivation"], a: 1, w: "Reproduction is the capability to physically perform the observed behaviour." },
+    { q: "Insight learning, studied by Kohler, refers to:", o: ["Gradual trial-and-error shaping", "A sudden realisation of a problem's solution", "Learning only through reinforcement", "Forgetting information quickly"], a: 1, w: "Insight learning is sudden understanding, not gradual conditioning." },
+    { q: "Tolman's rats that explored a maze without reward, then navigated it perfectly once reward was introduced, demonstrated:", o: ["Classical conditioning", "Insight learning", "Latent learning", "Forgetting"], a: 2, w: "This is latent learning - learned earlier but undemonstrated until incentivised." },
+    { q: "The process of getting information into memory is called:", o: ["Retrieval", "Storage", "Encoding", "Decay"], a: 2, w: "Encoding is getting information into memory." },
+    { q: "Cramming the night before an exam typically produces:", o: ["Deep, durable encoding", "Shallow encoding supporting only short-term recall", "Permanent long-term memory", "No memory at all"], a: 1, w: "Cramming often gives shallow encoding and short-term recall only." },
+    { q: "Old learning disrupting the recall of new learning is called:", o: ["Retroactive interference", "Decay", "Proactive interference", "Retrieval failure"], a: 2, w: "Proactive interference is old learning disrupting new learning." },
+    { q: "New learning disrupting the recall of old learning is called:", o: ["Proactive interference", "Retroactive interference", "Latent learning", "Positive transfer"], a: 1, w: "Retroactive interference is new learning disrupting old learning." },
+    { q: "A nurse trained on one infusion pump reverting to old button sequences on a new, different pump illustrates:", o: ["Positive transfer", "Insight learning", "Negative transfer", "Vicarious reinforcement"], a: 2, w: "Old training interfering with new learning is negative transfer." },
+    { q: "In Fitts and Posner's model, the stage marked by conscious, slow, error-prone performance is the:", o: ["Autonomous stage", "Cognitive stage", "Associative stage", "Latent stage"], a: 1, w: "The cognitive stage is conscious, effortful and error-prone." },
+    { q: "A skill that has become fast, automatic and requires minimal conscious thought is in the:", o: ["Cognitive stage", "Associative stage", "Autonomous stage", "Encoding stage"], a: 2, w: "The autonomous stage is automatic and fluent." },
+    { q: "The stage between cognitive and autonomous, marked by practice and improving accuracy, is the:", o: ["Retrieval stage", "Associative stage", "Latent stage", "Sensory stage"], a: 1, w: "The associative stage involves practice and improving performance." },
+    { q: "An expert who struggles to explain each step of a familiar skill likely has a skill that is:", o: ["In the cognitive stage", "Forgotten", "Autonomous", "Never learned"], a: 2, w: "Autonomous skills are automatic, making steps hard to consciously access." },
+    { q: "Motivation to learn for its own sake, out of curiosity or interest, is called:", o: ["Extrinsic motivation", "Vicarious motivation", "Intrinsic motivation", "Latent motivation"], a: 2, w: "Intrinsic motivation is driven by internal interest, not external reward." },
+    { q: "Motivation to learn driven by grades or external rewards is called:", o: ["Intrinsic motivation", "Extrinsic motivation", "Insight motivation", "Vicarious motivation"], a: 1, w: "Extrinsic motivation is driven by external outcomes." },
+    { q: "The Yerkes-Dodson law states that:", o: ["Anxiety never affects performance", "Moderate arousal improves performance, but excessive arousal impairs it", "More arousal always improves performance", "Arousal only affects physical, not mental, tasks"], a: 1, w: "Moderate arousal aids performance; excess arousal impairs it." },
+    { q: "A competent student who 'freezes' and performs poorly only during a high-stakes formal assessment most likely illustrates:", o: ["A total absence of learning", "Excessive anxiety impairing performance despite prior learning", "Latent learning", "Negative transfer"], a: 1, w: "Excessive assessment anxiety can impair performance without reflecting a lack of learning." },
+    { q: "Teaching a patient to self-inject insulin by first demonstrating it yourself uses the principle of:", o: ["Latent learning", "Observational learning", "Retroactive interference", "Decay"], a: 1, w: "Demonstrating the skill uses observational learning." },
+    { q: "Breaking a new skill into clear steps with spaced, repeated practice mainly supports:", o: ["Forgetting", "Negative transfer", "Encoding and retention of the skill", "Vicarious reinforcement only"], a: 2, w: "Structured, spaced practice supports encoding and retention." },
+    { q: "Recognising that a patient's early clumsiness with a new self-care skill is normal reflects understanding of the:", o: ["Cognitive stage of skill learning", "Yerkes-Dodson law only", "Latent learning effect", "Forgetting curve"], a: 0, w: "Early clumsiness is expected in the cognitive stage of skill learning." },
+    { q: "A calm, supportive teaching environment for a new patient skill is important mainly to:", o: ["Increase extrinsic motivation only", "Keep arousal/anxiety at a moderate, performance-supporting level", "Prevent insight learning", "Cause retroactive interference"], a: 1, w: "A calm environment helps keep arousal moderate rather than excessive." },
+    { q: "Memory that is very brief, holding raw sensory impressions, is called:", o: ["Long-term memory", "Sensory memory", "Working memory", "Latent memory"], a: 1, w: "Sensory memory is very brief, holding raw sensory input." },
+    { q: "Limited-capacity memory that holds information for seconds to minutes is:", o: ["Long-term memory", "Short-term/working memory", "Sensory memory", "Procedural memory only"], a: 1, w: "Short-term/working memory has limited capacity over short durations." },
+    { q: "Non-adherence to treatment that stems from a patient forgetting instructions, rather than defiance, points to a problem with:", o: ["Motivation only", "Memory/learning, such as poor encoding or retrieval", "Insight learning", "Vicarious reinforcement"], a: 1, w: "Forgetting instructions reflects a memory/learning issue, not necessarily defiance." },
+    { q: "Overall, the psychology of learning is important in healthcare because it explains:", o: ["Only how children learn language", "How both staff training and patient education can be made more effective", "Only genetic influences on disease", "Only unconscious conflicts"], a: 1, w: "It applies broadly to training staff and educating patients effectively." },
+    { q: "A single graded observation of a nervous student's performance may unfairly conclude a skill deficit because it does not account for:", o: ["Vicarious reinforcement", "Anxiety-driven performance dips despite genuine learning", "Retroactive interference only", "Insight learning only"], a: 1, w: "High-pressure single assessments can mask real learning due to anxiety, per Yerkes-Dodson." },
+  ],
+};
+
+// ==================== MEDICAL PSYCHOLOGY TOPIC 06: MOTIVATION ====================
+const T_PSY_MOTIVATION = {
+  courseId: "psy",
+  topicIndex: 6,
+  title: "Motivation",
+  minutes: 22,
+  note: [
+    { q: "What is motivation, and why does it matter in healthcare?",
+      body: `Every behaviour, from getting out of bed to adhering to a strict medication regimen, is driven by something. That "something" is motivation - the psychological force that directs, energises and sustains behaviour toward a goal.
+
+My Socratic question: two patients receive identical instructions to exercise daily after a heart attack. One does it faithfully; the other stops after a week. Both received the same information - so what differs between them?
+
+The answer is motivation - the internal and external forces driving each patient toward or away from the behaviour. Information alone rarely changes behaviour; motivation determines whether knowledge is acted upon. Understanding motivation - what creates it, sustains it, and undermines it - is essential for helping patients adhere to treatment and for understanding your own drive through demanding training.
+
+Crucial insight: motivation is the psychological force that directs, energises and sustains goal-directed behaviour. In healthcare, understanding motivation explains why identical information produces very different patient behaviour, making it central to treatment adherence, health promotion and self-management.` },
+
+    { q: "Instinct and drive-reduction theories: motivation from within.",
+      body: `Early theories of motivation looked inward, to biological forces pushing behaviour from within the body.
+
+Instinct theory proposed that behaviour is motivated by innate, biologically programmed patterns - instincts - shared across a species. It fell out of favour because it labelled behaviours without explaining them, and could not account for the huge variability in human behaviour. Drive-reduction theory, proposed by Clark Hull, argued that physiological needs (like hunger or thirst) create an uncomfortable state of tension called a drive, and behaviour is motivated by the desire to reduce this tension and restore homeostasis - a stable internal balance.
+
+My Socratic question: a patient who is dehydrated feels thirst and drinks water, restoring balance. This fits drive-reduction theory well. But what about a patient who eats a rich dessert despite being full? Does drive-reduction theory explain this?
+
+The answer is no - eating when not hungry, for pleasure, is not explained by tension-reduction alone. This reveals a limitation of drive-reduction theory: it explains basic biological needs well but struggles to explain behaviours driven by pleasure-seeking, curiosity, or external incentives that exist independently of internal deficit.
+
+Crucial insight: instinct theory and drive-reduction theory locate motivation in innate patterns or the reduction of internal physiological tension (restoring homeostasis). They explain basic biological drives like hunger and thirst well, but cannot fully explain motivation for pleasure, novelty or external rewards - showing that internal-deficit models alone are incomplete.` },
+
+    { q: "Incentive and arousal theories: motivation from outside and from optimal stimulation.",
+      body: `Where drive-reduction theory looks inward, incentive theory looks outward - to features of the environment that pull behaviour toward them.
+
+Incentive theory proposes that motivation is driven by external stimuli - incentives - that we are drawn toward because of their positive properties, such as rewards, praise, or pleasurable stimuli, regardless of internal deficit. Arousal theory proposes that people are motivated to maintain an optimal level of physiological and psychological arousal - not too high, not too low - and will act to increase arousal when bored or decrease it when overstimulated.
+
+My Socratic question: a well-fed medical student still studies late into the night, motivated by the prospect of a good exam result and eventual career success, not by hunger or thirst. Which theory best explains this behaviour, and why does the earlier drive-reduction theory fall short here?
+
+The answer is incentive theory - the external reward (a good grade, career success) pulls behaviour, independent of any internal physiological deficit. Drive-reduction theory falls short because there is no bodily tension being reduced; the motivation is entirely about the value of an external outcome.
+
+Crucial insight: incentive theory explains motivation as being pulled by external rewards, while arousal theory explains motivation as the drive to maintain an optimal level of stimulation. Together with drive-reduction theory, they show that motivation arises from both internal push (deficit) and external pull (incentive), plus a need for balanced stimulation - no single theory fully explains all behaviour alone.` },
+
+    { q: "Maslow's hierarchy of needs: a holistic model of motivation.",
+      body: `Abraham Maslow proposed one of psychology's most influential motivational models: a hierarchy of needs arranged from most basic to most advanced, which must generally be satisfied in order, from the bottom up.
+
+The hierarchy, from bottom to top: physiological needs (food, water, sleep, warmth), safety needs (security, stability, freedom from harm), love and belonging needs (relationships, connection, acceptance), esteem needs (achievement, respect, self-confidence), and at the peak, self-actualisation (realising one's full potential, personal growth). Maslow argued that lower needs generally must be reasonably satisfied before higher needs become motivating.
+
+My Socratic question: a patient in severe, untreated pain is unlikely to be receptive to health education about long-term lifestyle change. Why does Maslow's hierarchy explain this?
+
+The answer is that severe pain represents an unmet physiological or safety need, which dominates attention and motivation. Until this basic, lower-level need is addressed, the patient's motivational resources are consumed by it, leaving little capacity to engage with higher-level concerns like future health planning (which relates to self-actualisation or esteem). This is why pain control often must come before patient education can be effective.
+
+Crucial insight: Maslow's hierarchy of needs - physiological, safety, love/belonging, esteem, self-actualisation - proposes that lower, more basic needs generally must be met before higher needs motivate behaviour. In healthcare, this explains why addressing pain, safety and basic comfort is often a necessary first step before patients can meaningfully engage with education, self-improvement or long-term health goals.` },
+
+    { q: "Self-determination theory: autonomy, competence and relatedness.",
+      body: `A more modern and influential model, self-determination theory (Deci and Ryan), proposes that human motivation - especially the intrinsic kind - depends on satisfying three innate psychological needs.
+
+Autonomy is the need to feel in control of one's own choices and behaviour, rather than controlled by others. Competence is the need to feel capable and effective in one's actions. Relatedness is the need to feel connected to and cared for by others. When these three needs are satisfied, intrinsic motivation flourishes; when they are thwarted, motivation - especially the internally driven kind - suffers.
+
+My Socratic question: a diabetic patient is simply told, "You must follow this diet exactly, no exceptions," with no explanation or involvement in decisions. According to self-determination theory, why might this approach backfire, even though the advice is medically correct?
+
+The answer is that this approach undermines autonomy - the patient feels controlled rather than empowered, which tends to reduce intrinsic motivation to sustain the behaviour, even if short-term compliance occurs. An approach that explains the reasoning, offers reasonable choices within the plan, and involves the patient in decisions supports autonomy, and research consistently shows this produces more durable adherence.
+
+Crucial insight: self-determination theory holds that intrinsic motivation depends on satisfying three needs - autonomy (control over one's choices), competence (feeling capable), and relatedness (feeling connected to others). Healthcare approaches that support these needs, rather than simply issuing directives, tend to produce more genuine and lasting patient motivation and adherence.` },
+
+    { q: "Achievement motivation and goal-setting.",
+      body: `Beyond broad theories of motivation lies a specific and highly relevant form: achievement motivation, the desire to accomplish challenging tasks, meet high standards, and excel.
+
+Achievement motivation varies between individuals and is shaped by the balance between the motive to approach success and the motive to avoid failure. People high in achievement motivation tend to prefer moderately challenging tasks - hard enough to be satisfying, but realistic enough to be achievable - rather than very easy tasks (no real accomplishment) or very hard tasks (high risk of failure). Goal-setting theory adds that specific, challenging, but attainable goals produce better performance than vague goals ("do your best") or goals that are too easy or impossibly hard.
+
+My Socratic question: which is likely to be more motivating for a student preparing for a difficult practical exam - the vague goal "try to do well" or the specific goal "score at least 75% by practising two techniques daily for two weeks"?
+
+The answer is the specific, challenging but attainable goal - it provides a clear target, a concrete path to it, and a realistic sense that success is achievable with effort, all of which sustain motivation far better than a vague intention.
+
+Crucial insight: achievement motivation is shaped by the balance of approaching success versus avoiding failure, and is best supported by specific, challenging, attainable goals (goal-setting theory) rather than vague or unrealistic ones. This applies both to your own study strategy and to setting health goals collaboratively with patients.` },
+
+    { q: "Motivation, emotion and health behaviour change.",
+      body: `Motivation for health behaviour change - such as quitting smoking, adhering to medication, or losing weight - is complicated by the fact that people are often ambivalent, holding both reasons to change and reasons to stay the same.
+
+The Transtheoretical Model (Stages of Change), developed by Prochaska and DiClemente, describes behaviour change as moving through stages: precontemplation (not yet considering change), contemplation (considering it, weighing pros and cons), preparation (intending to act soon, making small steps), action (actively changing behaviour), and maintenance (sustaining the change over time), with relapse possible at any stage. Motivation for change differs by stage, so interventions must match the patient's actual stage rather than assuming everyone is ready to act.
+
+My Socratic question: a health worker gives detailed instructions for quitting smoking to a patient who has not yet considered quitting at all. Why is this intervention likely to fail, and what would be more appropriate?
+
+The answer is that the patient is in the precontemplation stage, not the action stage, so action-oriented instructions are premature and mismatched to their motivational state. A more appropriate intervention would raise awareness and explore ambivalence (motivational interviewing techniques) to help move the patient toward contemplation, rather than giving instructions for a behaviour change they are not yet ready to attempt.
+
+Crucial insight: the Transtheoretical Model describes behaviour change as a sequence of stages - precontemplation, contemplation, preparation, action, maintenance - each requiring a different motivational approach. Matching the intervention to the patient's actual stage of readiness, rather than assuming universal readiness for action, is essential for effective, motivation-sensitive health promotion.` },
+
+    { q: "Why understanding motivation matters for your own training and career.",
+      body: `Motivation theory is not only about patients - it applies directly to you as a student and future health professional navigating a demanding programme.
+
+My Socratic question: which is likely to sustain your motivation through years of demanding study more reliably - studying purely to avoid failing exams, or studying because you find the science of the human body genuinely interesting and value the future career it builds?
+
+The answer, based on self-determination theory, is that intrinsic motivation (interest, valuing the goal) tends to sustain effort more reliably and with less burnout than purely extrinsic motivation (avoiding punishment), though both often operate together in real life. Recognising your own sources of motivation - and deliberately connecting daily tasks to autonomy (your own choices), competence (mastery, seen through progress), and relatedness (support from peers and mentors) - can help sustain motivation through the inevitable difficult stretches of training.
+
+This also matters for how you will motivate future patients and junior colleagues: supporting their autonomy, building their competence through achievable goals, and fostering relatedness through genuine connection will produce more durable behaviour change than instructions or threats alone.
+
+Crucial insight: motivation theory applies as much to your own training as to your patients. Recognising and nurturing intrinsic motivation - through autonomy, competence and relatedness - sustains long-term effort better than external pressure alone, a principle equally valuable for surviving your own studies and for motivating others throughout your career.` },
+
+    { q: "Intrinsic versus extrinsic motivation, and the overjustification effect.",
+      body: `A closely related distinction, already touched on, deserves its own attention because it has a surprising and clinically important twist: sometimes adding an external reward can actually reduce motivation.
+
+Intrinsic motivation is engaging in a behaviour for its own inherent satisfaction - enjoyment, curiosity, personal value. Extrinsic motivation is engaging in a behaviour to obtain an external outcome - money, praise, avoiding punishment. Both can coexist, but research on the overjustification effect shows that adding a strong external reward for a behaviour someone already found intrinsically enjoyable can reduce their intrinsic motivation for it once the reward is removed - the person begins to attribute their behaviour to the reward rather than to genuine interest.
+
+My Socratic question: a hospital gives staff small cash bonuses for washing their hands correctly, a behaviour most already performed conscientiously out of professional pride. What does the overjustification effect predict will happen if the bonus scheme is later discontinued?
+
+The answer is that hand hygiene compliance may actually drop below its original level, because staff's sense of intrinsic professional motivation for the behaviour may have been partly replaced by extrinsic motivation for the reward; once the reward disappears, so does part of the drive that used to sustain the behaviour. This is why reward-based interventions for behaviours people already find meaningful must be designed carefully.
+
+Crucial insight: intrinsic and extrinsic motivation can interact in non-obvious ways - the overjustification effect shows that adding external rewards to an already intrinsically motivated behaviour can undermine that intrinsic motivation once the reward is withdrawn. This is a crucial caution for designing incentive schemes in healthcare settings, where many desirable behaviours are already sustained by professional pride and genuine care.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for motivation, in five lines.
+
+The foundation: motivation is the psychological force that directs, energises and sustains goal-directed behaviour, and it explains why identical information produces different behaviour in different people.
+
+Early theories: instinct theory (innate patterns) and drive-reduction theory (Hull - reducing tension to restore homeostasis) explain basic biological drives but not pleasure-seeking; incentive theory (external rewards pull behaviour) and arousal theory (seeking optimal stimulation) fill these gaps.
+
+Holistic and modern models: Maslow's hierarchy (physiological, safety, love/belonging, esteem, self-actualisation) shows lower needs generally must be met before higher ones motivate; self-determination theory (Deci and Ryan) shows intrinsic motivation depends on autonomy, competence and relatedness.
+
+Achievement and change: achievement motivation favours moderately challenging tasks, and goal-setting theory favours specific, challenging, attainable goals; the Transtheoretical Model (precontemplation, contemplation, preparation, action, maintenance) shows behaviour change interventions must match the patient's actual stage of readiness.
+
+Personal relevance: these principles apply to sustaining your own motivation through training, and to motivating patients and colleagues through autonomy-supportive, competence-building, connected approaches rather than directives alone.
+
+Now your final test. A patient with newly diagnosed hypertension is told bluntly by a busy clinician, "Take this pill every day, cut out salt, that's it," with no further discussion. Three months later the patient has not filled the prescription and says she "hasn't gotten around to" changing her diet.
+
+Question one: using the Transtheoretical Model, which stage of change does the patient's inaction after three months most likely reflect, and why might the blunt advice have failed to move her forward?
+Question two: using self-determination theory, name one psychological need that the clinician's approach likely failed to support, and explain how.
+Question three: propose one specific, achievement-motivation-informed goal that would likely be more motivating than "cut out salt."
+
+Work them through before reading on.
+
+My answers. One: her continued inaction suggests she remains in precontemplation or early contemplation - not yet meaningfully engaged with change - and the blunt, action-oriented instruction (suited to someone in the preparation or action stage) was mismatched to her actual readiness, likely failing to build the motivation needed to move forward. Two: autonomy was likely undermined - she was given directives with no explanation, choice, or involvement in decisions, which tends to reduce intrinsic motivation to sustain a difficult lifestyle change, even when the advice is medically sound. Three: a specific, moderately challenging, attainable goal such as "reduce added salt at one meal per day for the next two weeks, then reassess," gives a clear, realistic target rather than a vague, all-or-nothing instruction, better supporting sustained motivation according to goal-setting theory.
+
+If those came cleanly, you understand how motivation arises from internal drives, external incentives, hierarchical needs, and the psychological needs for autonomy, competence and relatedness - and how matching your approach to a person's actual motivational state, rather than assuming universal readiness, is essential for real behaviour change in healthcare.` },
+  ],
+  theory: [
+    { q: "Define motivation and its relevance to healthcare.", a: "Motivation is the psychological force that directs, energises and sustains behaviour toward a goal. In healthcare it is relevant because information alone rarely changes behaviour - motivation determines whether knowledge is actually acted upon, such as with treatment adherence." },
+    { q: "Explain drive-reduction theory and one of its limitations.", a: "Drive-reduction theory (Clark Hull) proposes that physiological needs create tension (a drive), and behaviour is motivated by reducing this tension to restore homeostasis. Its limitation is that it cannot fully explain behaviours driven by pleasure, novelty, or external rewards that exist independently of an internal deficit, such as eating dessert when full." },
+    { q: "What is incentive theory, and how does it differ from drive-reduction theory?", a: "Incentive theory proposes that motivation is driven by external stimuli (incentives) we are drawn toward because of their positive properties, regardless of internal deficit. It differs from drive-reduction theory, which focuses on reducing internal physiological tension; incentive theory instead explains behaviours pulled by external rewards even with no bodily deficit." },
+    { q: "List Maslow's hierarchy of needs from bottom to top.", a: "Physiological needs (food, water, sleep), safety needs (security, stability), love and belonging needs (relationships, connection), esteem needs (achievement, respect), and self-actualisation (realising one's full potential) at the top." },
+    { q: "Why does Maslow's hierarchy suggest pain control should often precede patient education?", a: "Because severe unmet physiological or safety needs (like pain) dominate attention and motivation; until such basic needs are reasonably met, patients have little motivational capacity to engage with higher-level concerns like long-term health education." },
+    { q: "Name and describe the three needs in self-determination theory.", a: "Autonomy (the need to feel in control of one's own choices), competence (the need to feel capable and effective), and relatedness (the need to feel connected to and cared for by others). Satisfying these three needs supports intrinsic motivation." },
+    { q: "Why might a purely directive approach ('just do this') undermine patient motivation?", a: "According to self-determination theory, directives with no explanation or involvement undermine the patient's sense of autonomy, which tends to reduce intrinsic motivation to sustain the behaviour, even if short-term compliance occurs." },
+    { q: "What does goal-setting theory recommend for effective goals?", a: "Goal-setting theory recommends specific, challenging, but attainable goals, which produce better performance and sustained motivation than vague goals ('do your best') or goals that are too easy or impossibly hard." },
+    { q: "List the stages of the Transtheoretical Model (Stages of Change).", a: "Precontemplation (not yet considering change), contemplation (considering it, weighing pros and cons), preparation (intending to act soon), action (actively changing behaviour), and maintenance (sustaining change over time), with relapse possible at any stage." },
+    { q: "Why must health interventions be matched to a patient's stage of change?", a: "Because motivation and readiness differ by stage; an action-oriented intervention (like detailed instructions to quit smoking) is premature and likely to fail for a patient still in precontemplation, who first needs awareness-raising rather than action steps." },
+  ],
+  videos: [
+    { channel: "Medical Psychology", title: "Theories of Motivation Explained", note: "Drive-reduction, incentive and arousal theories compared.", url: "" },
+    { channel: "Medical Psychology", title: "Maslow's Hierarchy of Needs in Healthcare", note: "How the hierarchy applies to patient care.", url: "" },
+    { channel: "Medical Psychology", title: "Self-Determination Theory and Patient Motivation", note: "Autonomy, competence and relatedness in health behaviour change.", url: "" },
+  ],
+  mcqs: [
+    { q: "Motivation is best defined as the psychological force that:", o: ["Only reduces hunger", "Directs, energises and sustains goal-directed behaviour", "Causes forgetting", "Is identical to emotion"], a: 1, w: "Motivation directs, energises and sustains behaviour toward goals." },
+    { q: "Two patients given the same instructions respond very differently mainly because of differences in:", o: ["Their eyesight", "Motivation", "Memory capacity only", "Age alone"], a: 1, w: "Differing motivation explains differing responses to identical information." },
+    { q: "Drive-reduction theory was proposed mainly by:", o: ["Abraham Maslow", "Clark Hull", "Albert Bandura", "Deci and Ryan"], a: 1, w: "Clark Hull proposed drive-reduction theory." },
+    { q: "According to drive-reduction theory, behaviour is motivated by the desire to:", o: ["Increase arousal always", "Reduce tension and restore homeostasis", "Seek external rewards only", "Imitate others"], a: 1, w: "Drive-reduction theory centres on reducing tension to restore balance." },
+    { q: "Eating a dessert for pleasure despite being full is poorly explained by:", o: ["Incentive theory", "Drive-reduction theory", "Arousal theory", "Achievement motivation"], a: 1, w: "There is no internal deficit being reduced, so drive-reduction theory falls short here." },
+    { q: "Incentive theory explains motivation as being driven mainly by:", o: ["Innate instincts", "Internal physiological deficits", "External rewards or stimuli", "Random chance"], a: 2, w: "Incentive theory focuses on external rewards pulling behaviour." },
+    { q: "Arousal theory proposes that people are motivated to:", o: ["Always minimise all stimulation", "Maintain an optimal level of stimulation", "Avoid all rewards", "Reduce only hunger"], a: 1, w: "Arousal theory is about seeking an optimal, not minimal, level of arousal." },
+    { q: "In Maslow's hierarchy, the most basic level of needs is:", o: ["Self-actualisation", "Esteem needs", "Physiological needs", "Love and belonging"], a: 2, w: "Physiological needs form the base of Maslow's hierarchy." },
+    { q: "The peak of Maslow's hierarchy, representing realising one's full potential, is:", o: ["Safety needs", "Self-actualisation", "Esteem needs", "Physiological needs"], a: 1, w: "Self-actualisation is at the top of Maslow's hierarchy." },
+    { q: "A patient in severe untreated pain is unlikely to engage with long-term health education mainly because:", o: ["They lack intelligence", "Unmet basic needs dominate their motivation, per Maslow's hierarchy", "They dislike their clinician", "Pain has no motivational effect"], a: 1, w: "Unmet lower needs, like safety from pain, dominate attention per Maslow." },
+    { q: "Self-determination theory was developed by:", o: ["Maslow", "Deci and Ryan", "Prochaska and DiClemente", "Hull"], a: 1, w: "Deci and Ryan developed self-determination theory." },
+    { q: "The three needs central to self-determination theory are:", o: ["Hunger, thirst, sleep", "Autonomy, competence, relatedness", "Safety, esteem, self-actualisation", "Attention, retention, reproduction"], a: 1, w: "Autonomy, competence, and relatedness are self-determination theory's core needs." },
+    { q: "Telling a patient 'you must follow this exactly, no exceptions,' with no explanation, risks undermining their:", o: ["Competence only", "Relatedness only", "Autonomy", "Arousal"], a: 2, w: "Directives with no choice or explanation undermine autonomy." },
+    { q: "Feeling capable and effective in one's actions corresponds to the self-determination theory need for:", o: ["Autonomy", "Competence", "Relatedness", "Esteem"], a: 1, w: "Competence is feeling capable and effective." },
+    { q: "Feeling connected to and cared for by others corresponds to the need for:", o: ["Relatedness", "Autonomy", "Competence", "Arousal"], a: 0, w: "Relatedness is the need for connection to others." },
+    { q: "People high in achievement motivation tend to prefer tasks that are:", o: ["Extremely easy", "Extremely difficult, high failure risk", "Moderately challenging", "Random in difficulty"], a: 2, w: "Achievement-motivated people prefer moderately challenging tasks." },
+    { q: "Goal-setting theory recommends goals that are:", o: ["Vague, like 'do your best'", "Specific, challenging, but attainable", "Always extremely easy", "Impossible to achieve"], a: 1, w: "Specific, challenging, attainable goals produce the best performance." },
+    { q: "The Transtheoretical Model (Stages of Change) was developed by:", o: ["Prochaska and DiClemente", "Bandura", "Maslow", "Hull"], a: 0, w: "Prochaska and DiClemente developed the Transtheoretical Model." },
+    { q: "A patient who has not yet considered changing a health behaviour at all is in the stage of:", o: ["Action", "Maintenance", "Precontemplation", "Preparation"], a: 2, w: "Precontemplation is not yet considering change." },
+    { q: "A patient actively changing their behaviour right now is in the stage of:", o: ["Contemplation", "Action", "Precontemplation", "Maintenance"], a: 1, w: "Action is the stage of actively changing behaviour." },
+    { q: "Sustaining a change over time, with risk of relapse, corresponds to the stage of:", o: ["Preparation", "Maintenance", "Contemplation", "Precontemplation"], a: 1, w: "Maintenance is sustaining change over time." },
+    { q: "Giving detailed action instructions to a patient in precontemplation is likely to fail because:", o: ["The instructions are too easy", "The intervention is mismatched to their actual stage of readiness", "Precontemplation does not exist", "Patients in precontemplation cannot read"], a: 1, w: "Interventions must match the patient's actual readiness stage." },
+    { q: "Studying because you find the material genuinely interesting reflects mainly:", o: ["Extrinsic motivation", "Intrinsic motivation", "Drive-reduction only", "Arousal theory only"], a: 1, w: "Interest-driven study reflects intrinsic motivation." },
+    { q: "Studying mainly to avoid failing an exam reflects mainly:", o: ["Intrinsic motivation", "Extrinsic motivation", "Self-actualisation", "Latent learning"], a: 1, w: "Avoiding a negative external consequence reflects extrinsic motivation." },
+    { q: "Compared with purely extrinsic motivation, intrinsic motivation tends to:", o: ["Never sustain effort", "Sustain effort more reliably with less burnout", "Be irrelevant to performance", "Only apply to children"], a: 1, w: "Intrinsic motivation tends to sustain effort more durably." },
+    { q: "Instinct theory of motivation lost favour mainly because it:", o: ["Explained all behaviour perfectly", "Labelled behaviours without truly explaining them and ignored human variability", "Was proven biologically impossible", "Applied only to animals"], a: 1, w: "It merely labelled behaviours rather than explaining their causes." },
+    { q: "A specific goal like 'practise two techniques daily for two weeks' is more motivating than 'try to do well' mainly because it:", o: ["Is easier to ignore", "Provides a clear, concrete, attainable target", "Removes all challenge", "Guarantees success automatically"], a: 1, w: "Specific, attainable goals provide clear direction, per goal-setting theory." },
+    { q: "Supporting a patient's autonomy, competence and relatedness when discussing a treatment plan is likely to:", o: ["Reduce adherence", "Have no effect on motivation", "Produce more durable, intrinsically motivated adherence", "Only work for children"], a: 2, w: "Supporting these three needs tends to produce more durable motivation." },
+    { q: "Overall, matching motivational strategies to a person's actual needs and readiness is important because:", o: ["One-size-fits-all advice is always most effective", "Different theories and stages explain different aspects of real, varied human motivation", "Motivation is identical in everyone", "Only extrinsic motivation matters in healthcare"], a: 1, w: "Motivation is complex and varied, so no single theory or approach fits everyone." },
+    { q: "The overjustification effect describes how:", o: ["Extrinsic rewards always increase intrinsic motivation", "Adding external rewards to an already intrinsically motivated behaviour can undermine that intrinsic motivation once rewards stop", "Intrinsic motivation cannot be measured", "Rewards have no effect on behaviour"], a: 1, w: "Overjustification shows rewards can undermine pre-existing intrinsic motivation once withdrawn." },
+  ],
+};
 
 /* --------------------------- ana:5 --------------------------- */
 const T_ANA_CONNECTIVE = {
@@ -13546,6 +13905,8 @@ const CONTENT = {
   "psy:2": T_PSY_BIOFOUND,
   "psy:3": T_PSY_INTRO,
   "psy:4": T_PSY_LEARNING,
+  "psy:5": T_PSY_PSYCHLEARN,
+  "psy:6": T_PSY_MOTIVATION,
   "com:0": T_COM_OVERVIEW,   
   "com:1": T_COM_WRITING_PROCESS,
   "com:2": T_COM_ORGANISATIONAL, 
