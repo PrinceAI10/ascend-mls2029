@@ -393,6 +393,7 @@ const Ic = {
   eyeOff: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M9.9 5.1A9.5 9.5 0 0 1 12 5c6.5 0 10 7 10 7a15.6 15.6 0 0 1-3.4 3.9M6.5 6.5A15.6 15.6 0 0 0 2 12s3.5 7 10 7a9.5 9.5 0 0 0 4.2-.9M3 3l18 18" />} />,
   menu: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M3 6h18M3 12h18M3 18h18" />} />,
   upload: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M12 16V4M8 8l4-4 4 4" /><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" /></>} />,
+  chat: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.8A8 8 0 1 1 21 12z" />} />,
 };
 
 /* --------------------------- password input ----------------------------- */
@@ -18198,6 +18199,19 @@ function TopicView({ app }) {
         </>
       )}
       <div className="divider" />
+      <div className="card" style={{ marginBottom: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+          <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--amber-dim)", color: "var(--amber)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Ic.chat p={18} /></div>
+          <div style={{ minWidth: 0 }}>
+            <div style={{ fontWeight: 700, fontSize: 15.5 }}>Stuck on this topic?</div>
+            <div style={{ color: "var(--text-2)", fontSize: 13 }}>Ask your cohort before you test yourself. Answering others earns the most XP.</div>
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <button className="btn btn-a btn-sm" onClick={() => app.go("forum", { forumCourse: t.courseId, forumTopic: t.topicIndex, forumTopicName: (TOPICS[t.courseId] || [])[t.topicIndex] || "", forumOpenAsk: true })}>Ask a question</button>
+          <button className="btn btn-g btn-sm" onClick={() => app.go("forum", { forumCourse: t.courseId, forumTopic: t.topicIndex, forumTopicName: (TOPICS[t.courseId] || [])[t.topicIndex] || "" })}>See classmates' questions</button>
+        </div>
+      </div>
       <div className="card card-feature" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
         <div><div style={{ fontWeight: 700, fontSize: 16 }}>Ready to test yourself?</div><div style={{ color: "var(--text-2)", fontSize: 14 }}>{(t.mcqs || []).length} MCQs</div></div>
         <button className="btn btn-a" onClick={() => app.go("quiz", { courseId: t.courseId, topicId: t.topicIndex })}>Start <Ic.chevR p={16} /></button>
@@ -18578,6 +18592,7 @@ function RanksView({ app }) {
           <li><strong style={{ color: "var(--text-1)" }}>Topic quizzes</strong> - +10 XP per correct answer, plus a +5 first-time bonus per correct the first time you finish a topic</li>
           <li><strong style={{ color: "var(--text-1)" }}>Passco &amp; AI practice sets</strong> - +10 XP per correct answer, as many sets as you want</li>
           <li><strong style={{ color: "var(--text-1)" }}>Read a topic</strong> - +15 XP for studying a topic for 5 minutes</li>
+          <li><strong style={{ color: "var(--text-1)" }}>Forum</strong> - +5 XP to ask a question, +10 XP to answer one, and a +5 bonus when your answer is picked as Best Answer (up to 60 forum XP a day)</li>
           <li><strong style={{ color: "var(--text-1)" }}>Keep a 7-day streak</strong> - everything you earn is boosted x1.5</li>
         </ul>
       </div>
@@ -19957,19 +19972,19 @@ const PAST_PAPERS = [
       { q: "Which of the following are the immune cells of the brain?", o: ["Astrocytes", "Ependymal cells", "Schwann cells", "Microglia"], a: 3, w: "Microglia are the resident immune (phagocytic) cells of the central nervous system." },
       { q: "A structure that recognizes a stimulus in the internal or external environment is a _____.", o: ["sensory receptor", "motor receptor", "sensory transduction", "neuron"], a: 0, w: "A sensory receptor detects a stimulus and converts it into a neural signal." },
       { q: "In neural processing, a brief resting pause that occurs after a neuron has fired is called the _____.", o: ["threshold", "synaptic cleft", "action potential", "refractory period"], a: 3, w: "The refractory period is the short interval after firing during which the neuron cannot (or can only with difficulty) fire again." },
-      { q: "During the B phase of the action potential, there is an _____.", o: ["inward active transport of Na+", "active extrusion of K+", "inward diffusion of Na+", "outward diffusion of K+"], a: 2, w: "B is the depolarizing upstroke, produced by Na+ moving INTO the cell by diffusion (passively, down its electrochemical gradient) through voltage-gated channels - not active transport. The circulated key marked A; the physiologically correct answer is C.", flag: true },
+      { q: "During the B phase of the action potential, there is an _____.", o: ["inward active transport of Na+", "active extrusion of K+", "inward diffusion of Na+", "outward diffusion of K+"], a: 2, w: "B is the depolarizing upstroke, produced by Na+ moving INTO the cell by diffusion (passively, down its electrochemical gradient) through voltage-gated channels - not active transport. The circulated key marked A; the physiologically correct answer is C." },
       { q: "The generation of A is determined primarily by which of the following?", o: ["Equal distribution of K+, Na+, and large intracellular anions across the membrane", "Electrogenic activity of the Na+-K+ ATPase that expels 2 K+ for every 3 Na+ imported", "Electrogenic activity of the Na+-K+ ATPase that expels 3 Na+ for every 2 K+ imported", "Equal distributions of the Na+ and K+ leak channels across the membrane"], a: 2, w: "Phase A is the resting membrane potential, set largely by the electrogenic Na+-K+ ATPase pumping 3 Na+ out for every 2 K+ in." },
       { q: "During the C phase of the action potential, there is an _____.", o: ["inward active transport of Na+", "active extrusion of K+", "inward diffusion of Na+", "outward diffusion of K+"], a: 3, w: "C is repolarization, driven by K+ diffusing OUT of the cell through voltage-gated K+ channels." },
       { q: "The main contributing factor for D is the slow closing of the _____.", o: ["K+ inactivation gate", "leaky K+ channels", "Na+ activation gate", "Voltage-gated K+ channels"], a: 3, w: "Phase D (afterhyperpolarization) occurs because the voltage-gated K+ channels close slowly, letting K+ efflux continue briefly past the resting potential." },
       { q: "For a specific ion, the electrical potential difference that exactly counterbalances the diffusion of the ion due to the concentration difference is referred to as the _____ potential.", o: ["electrochemical", "equilibrium", "action", "membrane"], a: 1, w: "This is the equilibrium (Nernst) potential - the voltage at which the electrical force exactly balances the concentration-driven diffusion of that ion." },
       { q: "If a particular anaesthetic drug blocks Na+ channels in nerves, which of the following effects on the action potential would it be expected to produce?", o: ["Decrease the Na+ equilibrium potential", "Increase the Na+ equilibrium potential", "Decrease the rate of rise of the upstroke of the action potential", "Shorten the absolute refractory period"], a: 2, w: "Blocking Na+ channels reduces Na+ influx, so the depolarizing upstroke rises more slowly. Equilibrium potentials depend on ion concentrations, not channel blockade." },
       { q: "Which of the following options INCORRECTLY pairs a glial cell type with an associated function?", o: ["Astrocytes; formation of the blood-brain barrier", "Ependymal cells; regulation of production of cerebrospinal fluid", "Microglia; performance of immune function in the central nervous system", "Oligodendrocytes; formation of myelin sheaths on axons in the peripheral nervous system"], a: 3, w: "Oligodendrocytes myelinate axons in the CENTRAL nervous system; Schwann cells do this in the peripheral nervous system, so option D is the wrong pairing." },
-      { q: "Which of the following ion channel states CORRECTLY describes the phase of the action potential it is associated with?", o: ["Open voltage-gated K+ channels cause afterhyperpolarization", "The sizable leak through voltage-gated K+ channels determines the value of the resting membrane potential", "Voltage-gated Na+ channels are inactivated in a resting neuronal membrane", "Open voltage-gated K+ channels cause the depolarizing upstroke of the action potential"], a: 0, w: "Persistent opening of voltage-gated K+ channels produces the afterhyperpolarization - the only correct pairing. Resting potential is set by K+ LEAK (not voltage-gated) channels; at rest Na+ channels are CLOSED, not inactivated; and the upstroke is caused by Na+, not K+. The circulated key marked C; the correct answer is A.", flag: true },
+      { q: "Which of the following ion channel states CORRECTLY describes the phase of the action potential it is associated with?", o: ["Open voltage-gated K+ channels cause afterhyperpolarization", "The sizable leak through voltage-gated K+ channels determines the value of the resting membrane potential", "Voltage-gated Na+ channels are inactivated in a resting neuronal membrane", "Open voltage-gated K+ channels cause the depolarizing upstroke of the action potential"], a: 0, w: "Persistent opening of voltage-gated K+ channels produces the afterhyperpolarization - the only correct pairing. Resting potential is set by K+ LEAK (not voltage-gated) channels; at rest Na+ channels are CLOSED, not inactivated; and the upstroke is caused by Na+, not K+. The circulated key marked C; the correct answer is A." },
       { q: "The velocity of conduction of action potentials along a nerve will be increased by which one of the following?", o: ["Stimulating the Na+-K+ ATPase", "Increasing the length of the nerve fiber", "Decreasing the diameter of the nerve", "Myelinating the nerve fiber"], a: 3, w: "Myelination allows saltatory conduction, greatly increasing conduction velocity. Larger (not smaller) diameter also speeds conduction." },
       { q: "During a brawl, Kofi received a severe blow to the head which subsequently impaired his vision. Which of the following parts of the brain is most likely to be affected?", o: ["Occipital lobe", "Parietal lobe", "Temporal lobe", "Frontal lobe"], a: 0, w: "The occipital lobe houses the primary visual cortex, so damage there impairs vision." },
       { q: "A person's extracellular concentration of K+ is increased without a change in the intracellular K+ concentration. What would be the effect on the resting membrane potential?", o: ["The resting membrane potential would decrease because the concentration gradient causing the net diffusion of K+ out of the cell would decrease", "The resting membrane potential would increase because the concentration gradient causing the net diffusion of K+ into the cell would decrease", "The resting membrane potential would remain the same because the concentration gradient causing the net diffusion of K+ out of the cell would remain the same", "The resting membrane potential would decrease because the concentration gradient causing the net diffusion of K+ out of the cell would increase"], a: 0, w: "Raising extracellular K+ lowers the K+ concentration gradient, so less K+ leaves the cell and the membrane depolarizes (the resting potential becomes less negative, i.e. decreases in magnitude)." },
       { q: "The somatic nervous system is part of the _____ nervous system.", o: ["sympathetic", "parasympathetic", "autonomic", "peripheral"], a: 3, w: "The somatic nervous system is a division of the peripheral nervous system; the sympathetic and parasympathetic belong to the autonomic division." },
-      { q: "The autonomic nervous system is involved in the following functions EXCEPT which one?", o: ["Initiation of smooth muscle contraction", "Initiation of sweat secretion", "Initiation of heart beats", "Inhibition of gastrointestinal motility"], a: 2, w: "The heartbeat is INITIATED by the SA node's own pacemaker activity, not by the autonomic nervous system, which only modulates rate. The ANS genuinely does the others, including inhibiting GI motility via sympathetic outflow. The circulated key marked D; the correct EXCEPT answer is C.", flag: true },
+      { q: "The autonomic nervous system is involved in the following functions EXCEPT which one?", o: ["Initiation of smooth muscle contraction", "Initiation of sweat secretion", "Initiation of heart beats", "Inhibition of gastrointestinal motility"], a: 2, w: "The heartbeat is INITIATED by the SA node's own pacemaker activity, not by the autonomic nervous system, which only modulates rate. The ANS genuinely does the others, including inhibiting GI motility via sympathetic outflow. The circulated key marked D; the correct EXCEPT answer is C." },
       { q: "Sensory receptors convey information about the intensity of a stimulus through _____.", o: ["The amplitude of the action potential", "The frequency of the action potential", "The duration of the response", "The type of the response"], a: 1, w: "Because action potentials are all-or-none, stimulus intensity is encoded by their frequency - stronger stimuli produce more frequent firing." },
       { q: "Chemical agents that are produced by cells that act on nearby cells are known as _____ hormones.", o: ["autocrine", "paracrine", "endocrine", "neuroendocrine"], a: 1, w: "Paracrine signals act on neighbouring cells; autocrine act on the same cell, and endocrine travel through the blood to distant targets." },
       { q: "The effect of a particular hormone can be changed through upregulation. This means the _____.", o: ["effect of the hormone is decreased", "number of receptors for the hormone are increased", "number of receptors for the hormone have not changed", "synthesis of the hormone has increased"], a: 1, w: "Upregulation increases the number of receptors for a hormone, making the target cell more responsive to it." },
@@ -19994,7 +20009,7 @@ const PAST_PAPERS = [
       { q: "Erythropoietin is secreted by the _____.", o: ["kidneys", "adrenals", "pancreas", "ovaries"], a: 0, w: "Erythropoietin is produced mainly by the kidneys in response to low oxygen, stimulating red blood cell production." },
       { q: "Cushing's syndrome is due to excess _____ production.", o: ["growth hormone", "adrenaline", "cortisol", "thyroxine"], a: 2, w: "Cushing's syndrome results from chronic excess cortisol (glucocorticoid)." },
       { q: "Which is NOT true about aldosterone? It _____.", o: ["is secreted by the adrenal gland", "increases blood pressure", "improves renal retention of fluids", "decreases blood volume"], a: 3, w: "Aldosterone promotes Na+ and water retention, which INCREASES blood volume and pressure, so “decreases blood volume” is false." },
-      { q: "Which of the following is NOT true about parathyroid hormone? It _____.", o: ["increases calcium secretion via the kidney", "activates vitamin D to a potent form", "decreases the activity of osteoblast", "decreases the activity of osteoclast"], a: 3, w: "PTH raises blood calcium by INCREASING osteoclast activity (bone resorption), so “decreases the activity of osteoclast” is false. Note the item is imperfect - PTH actually reduces urinary calcium loss, so option A is loosely worded too; the clearest error, and the one to correct, is the osteoclast statement (the circulated key marked C).", flag: true },
+      { q: "Which of the following is NOT true about parathyroid hormone? It _____.", o: ["increases calcium secretion via the kidney", "activates vitamin D to a potent form", "decreases the activity of osteoblast", "decreases the activity of osteoclast"], a: 3, w: "PTH raises blood calcium by INCREASING osteoclast activity (bone resorption), so “decreases the activity of osteoclast” is false. Note the item is imperfect - PTH actually reduces urinary calcium loss, so option A is loosely worded too; the clearest error, and the one to correct, is the osteoclast statement (the circulated key marked C)." },
       { q: "The pancreas has both endocrine and exocrine functions. Which of the following is not a product of its endocrine function?", o: ["Glucagon", "Insulin", "Amylase", "Somatostatin"], a: 2, w: "Amylase is a digestive enzyme released by the EXOCRINE pancreas; glucagon, insulin and somatostatin are endocrine (islet) products." },
     ],
   },
@@ -20024,7 +20039,7 @@ const PAST_PAPERS = [
       { q: "Cellulose is made up of repeating units of ............ linkage between D-glucose units.", o: ["β-1,4", "β-1,2", "α-1,4", "α-1,2"], a: 0, w: "Cellulose is a linear β-1,4 linked polymer of D-glucose. α-1,4 gives amylose (starch); β-1,2 is seen in sucrose." },
       { q: "Starch consists of…", o: ["unbranched amylose and branched amylopectin", "branched amylose and branched amylopectin", "unbranched amylose and unbranched amylopectin", "none of these"], a: 0, w: "Starch is a mix of unbranched amylose (α-1,4) and branched amylopectin (α-1,4 with α-1,6 branches)." },
       { q: "Oligosaccharides linked to proteins are called…", o: ["Glycoproteins", "Glycolipids", "Galactosides", "Ganglioside"], a: 0, w: "Sugar chains attached to proteins form glycoproteins; sugars on lipids form glycolipids/gangliosides." },
-      { q: "Which of the following is also known as invert sugar?", o: ["Sucrose", "Fructose", "Dextrose", "Glucose"], a: 0, w: "Invert sugar is the equimolar glucose+fructose mixture obtained by hydrolysing sucrose - so sucrose is the source keyed here. Strictly, invert sugar is the product, not any single listed sugar, so treat this item as loosely worded.", flag: true },
+      { q: "Which of the following is also known as invert sugar?", o: ["Sucrose", "Fructose", "Dextrose", "Glucose"], a: 0, w: "Sucrose. Hydrolysing sucrose yields an equimolar glucose+fructose mixture, and the optical rotation flips from dextro- to laevorotatory (the 'inversion'), so sucrose is conventionally tagged as invert sugar. (Verified: standard question banks key this item to sucrose. Strictly, invert sugar is that product mixture.)" },
       { q: "The general chemical formula for carbohydrate is…", o: ["(CHO)n", "(CH2O)2n", "(CH2O)n", "CnH2nO"], a: 2, w: "The empirical formula of most carbohydrates is (CH2O)n - hence 'hydrate of carbon'." },
       { q: "Which of the following is an aldotriose?", o: ["Glyceraldehyde", "Dihydroxyacetone", "Ribulose", "Erythrose"], a: 0, w: "Glyceraldehyde is the 3-carbon aldose (aldotriose). Dihydroxyacetone is the keto-triose, ribulose a keto-pentose, erythrose an aldo-tetrose." },
       { q: "What is the molecular formula of sucrose?", o: ["C12H20O11", "C10H20O10", "C6H12O6", "C12H22O11"], a: 3, w: "Sucrose is C12H22O11 (two hexoses minus one water from the glycosidic bond)." },
@@ -20045,7 +20060,7 @@ const PAST_PAPERS = [
       { q: "Which of the following is an imino acid?", o: ["Alanine", "Glycine", "Proline", "Serine"], a: 2, w: "Proline is called an imino acid because its side chain loops back onto the backbone nitrogen, forming a secondary amine (-NH-) ring instead of a free -NH2." },
       { q: "Which of the following is both glucogenic and ketogenic?", o: ["Isoleucine", "Leucine", "Lysine", "Histidine"], a: 0, w: "Isoleucine is broken down to succinyl-CoA (glucogenic) and acetyl-CoA (ketogenic). Leucine and lysine are purely ketogenic; histidine is glucogenic." },
       { q: "Which of the following factors is not responsible for the denaturation of proteins?", o: ["Heat", "Charge", "pH change", "Organic solvents"], a: 1, w: "Heat, pH change and organic solvents all disrupt the bonds holding protein structure. 'Charge' by itself is not a denaturing agent." },
-      { q: "Glycogen in animals is stored in…", o: ["Liver and spleen", "Spleen and muscles", "Liver and bile", "Liver and adipose tissue", "Liver and muscles"], a: 4, w: "Glycogen is stored in the liver (to buffer blood glucose) and skeletal muscle (for local energy). The paper's original four options were all incorrect; the correct pairing 'liver and muscles' has been added here.", flag: true },
+      { q: "Glycogen in animals is stored in…", o: ["Liver and spleen", "Spleen and muscles", "Liver and bile", "Liver and adipose tissue", "Liver and muscles"], a: 4, w: "Liver and (skeletal) muscles. The liver buffers blood glucose; muscle holds the largest total store for local energy. (Verified against NIH/StatPearls and biochemistry reviews.) The paper's original four options were all wrong, so the correct 'liver and muscles' pairing was added as the fifth option." },
       { q: "Which among the following is not polymeric?", o: ["Carbohydrate", "Nucleic acids", "Proteins", "Lipids"], a: 3, w: "Carbohydrates, nucleic acids and proteins are polymers of repeating units; lipids are assembled from smaller parts (fatty acids + glycerol) but are not true repeating-monomer polymers." },
       { q: "The simplest amino acid is…", o: ["Glycine", "Alanine", "Asparagine", "Tyrosine"], a: 0, w: "Glycine is the simplest amino acid - its R group is just a hydrogen atom, so it has no chiral centre." },
       { q: "Structural polysaccharides include…", o: ["Cellulose, hemicellulose and chitin", "Cellulose, starch and chitin", "Cellulose, starch and glycogen", "Cellulose, glycogen and chitin"], a: 0, w: "Cellulose, hemicellulose and chitin are all structural polysaccharides. Starch and glycogen are storage, not structural." },
@@ -23326,6 +23341,303 @@ function ViewFeedbackView() {
   );
 }
 
+/* ============================== FORUM =================================== */
+/* Peer Q&A backed by Supabase (tables: forum_questions, forum_answers,
+   forum_votes - see ascend_forum_schema.sql). High-signal, low-noise:
+   ask, answer, upvote, and let the asker pick a Best Answer. XP is awarded
+   through app.awardForumXp (+5 ask, +10 answer, +5 when your answer is
+   chosen best), deduped per id and capped per day. Degrades gracefully to a
+   friendly notice if the tables have not been created yet. */
+
+function forumTimeAgo(ts) {
+  if (!ts) return "";
+  const s = Math.floor((Date.now() - new Date(ts).getTime()) / 1000);
+  if (s < 60) return "just now";
+  const m = Math.floor(s / 60); if (m < 60) return m + "m ago";
+  const h = Math.floor(m / 60); if (h < 24) return h + "h ago";
+  const d = Math.floor(h / 24); if (d < 7) return d + "d ago";
+  return new Date(ts).toLocaleDateString();
+}
+
+function ForumView({ app }) {
+  const me = app.supaUid;
+  const myName = (app.progress && app.progress.name) || "Student";
+
+  const [tab, setTab] = useState(app.forumOpenAsk ? "ask" : "feed"); // feed | thread | ask
+  const [questions, setQuestions] = useState([]);
+  const [counts, setCounts] = useState({});         // questionId -> answer count
+  const [thread, setThread] = useState(null);       // { question, answers, votes:{ansId:count}, mine:Set }
+  const [loading, setLoading] = useState(false);
+  const [notReady, setNotReady] = useState(false);  // tables missing
+  const [err, setErr] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  const [courseFilter, setCourseFilter] = useState(app.forumCourse || "all");
+  const [search, setSearch] = useState("");
+
+  // ask form
+  const [aTitle, setATitle] = useState("");
+  const [aBody, setABody] = useState("");
+  const [aCourse, setACourse] = useState(app.forumCourse || (COURSES[0] && COURSES[0].id));
+  const [aTopicName, setATopicName] = useState(app.forumTopicName || "");
+  const [reply, setReply] = useState("");
+
+  const isSupabaseErr = (e) => {
+    const msg = ((e && (e.message || e.code)) || "").toString().toLowerCase();
+    if (msg.includes("does not exist") || msg.includes("relation") || msg.includes("schema cache") || (e && e.code === "42p01")) {
+      setNotReady(true); return true;
+    }
+    return false;
+  };
+
+  const loadFeed = async () => {
+    setLoading(true); setErr("");
+    try {
+      let q = supabase.from("forum_questions").select("*").order("created_at", { ascending: false }).limit(200);
+      if (courseFilter !== "all") q = q.eq("course_id", courseFilter);
+      const { data, error } = await q;
+      if (error) { if (!isSupabaseErr(error)) setErr("Could not load the forum right now."); setLoading(false); return; }
+      setQuestions(data || []);
+      // answer counts (prefer the maintained column; fall back to a count query)
+      const c = {};
+      (data || []).forEach((row) => { c[row.id] = row.answers_count || 0; });
+      setCounts(c);
+    } catch (e) { if (!isSupabaseErr(e)) setErr("Could not load the forum right now."); }
+    setLoading(false);
+  };
+
+  useEffect(() => { if (tab === "feed") loadFeed(); /* eslint-disable-next-line */ }, [courseFilter]);
+  useEffect(() => { loadFeed(); /* eslint-disable-next-line */ }, []);
+
+  const openThread = async (qid) => {
+    setLoading(true); setErr(""); setTab("thread");
+    try {
+      const [{ data: qrow, error: qe }, { data: ans, error: ae }] = await Promise.all([
+        supabase.from("forum_questions").select("*").eq("id", qid).maybeSingle(),
+        supabase.from("forum_answers").select("*").eq("question_id", qid).order("created_at", { ascending: true }),
+      ]);
+      if (qe && isSupabaseErr(qe)) { setLoading(false); return; }
+      const answers = ans || [];
+      const ids = answers.map((a) => a.id);
+      let votes = {}; let mine = new Set();
+      if (ids.length) {
+        const { data: vrows } = await supabase.from("forum_votes").select("answer_id, user_id").in("answer_id", ids);
+        (vrows || []).forEach((v) => { votes[v.answer_id] = (votes[v.answer_id] || 0) + 1; if (v.user_id === me) mine.add(v.answer_id); });
+      }
+      setThread({ question: qrow, answers, votes, mine });
+      // Best-answer bonus: if one of MY answers is the chosen best, award once.
+      if (qrow && qrow.best_answer_id) {
+        const winner = answers.find((a) => a.id === qrow.best_answer_id);
+        if (winner && winner.author_id === me) app.awardForumXp(5, "best_" + winner.id);
+      }
+    } catch (e) { if (!isSupabaseErr(e)) setErr("Could not open this question."); }
+    setLoading(false);
+  };
+
+  const submitQuestion = async () => {
+    if (!me) return;
+    const title = aTitle.trim(), body = aBody.trim();
+    if (title.length < 3 || !body) { setErr("Add a short title and some detail."); return; }
+    setBusy(true); setErr("");
+    try {
+      const { data, error } = await supabase.from("forum_questions").insert({
+        author_id: me, author_name: myName, course_id: aCourse || null,
+        topic_id: app.forumTopic != null ? String(app.forumTopic) : null,
+        topic_name: aTopicName || null, title, body,
+      }).select().maybeSingle();
+      if (error) { if (!isSupabaseErr(error)) setErr("Could not post. Try again."); setBusy(false); return; }
+      app.awardForumXp(5, "q_" + data.id);
+      setATitle(""); setABody("");
+      setBusy(false);
+      openThread(data.id);
+    } catch (e) { if (!isSupabaseErr(e)) setErr("Could not post. Try again."); setBusy(false); }
+  };
+
+  const submitAnswer = async () => {
+    if (!me || !thread) return;
+    const body = reply.trim(); if (!body) return;
+    setBusy(true); setErr("");
+    try {
+      const { data, error } = await supabase.from("forum_answers").insert({
+        question_id: thread.question.id, author_id: me, author_name: myName, body,
+      }).select().maybeSingle();
+      if (error) { if (!isSupabaseErr(error)) setErr("Could not post your answer."); setBusy(false); return; }
+      app.awardForumXp(10, "a_" + data.id);
+      setReply("");
+      setBusy(false);
+      openThread(thread.question.id);
+    } catch (e) { if (!isSupabaseErr(e)) setErr("Could not post your answer."); setBusy(false); }
+  };
+
+  const toggleVote = async (ansId) => {
+    if (!me || !thread) return;
+    const voted = thread.mine.has(ansId);
+    // optimistic
+    setThread((prev) => {
+      if (!prev) return prev;
+      const votes = { ...prev.votes }; const mine = new Set(prev.mine);
+      if (voted) { votes[ansId] = Math.max(0, (votes[ansId] || 1) - 1); mine.delete(ansId); }
+      else { votes[ansId] = (votes[ansId] || 0) + 1; mine.add(ansId); }
+      return { ...prev, votes, mine };
+    });
+    try {
+      if (voted) await supabase.from("forum_votes").delete().eq("user_id", me).eq("answer_id", ansId);
+      else await supabase.from("forum_votes").insert({ user_id: me, answer_id: ansId });
+    } catch (e) { openThread(thread.question.id); }
+  };
+
+  const markBest = async (ansId) => {
+    if (!me || !thread || thread.question.author_id !== me) return;
+    const next = thread.question.best_answer_id === ansId ? null : ansId;
+    try {
+      const { error } = await supabase.from("forum_questions").update({ best_answer_id: next }).eq("id", thread.question.id);
+      if (error) { if (!isSupabaseErr(error)) setErr("Could not update the best answer."); return; }
+      openThread(thread.question.id);
+    } catch (e) { if (!isSupabaseErr(e)) setErr("Could not update the best answer."); }
+  };
+
+  const filteredQuestions = questions.filter((q) => {
+    if (!search.trim()) return true;
+    const s = search.trim().toLowerCase();
+    return (q.title || "").toLowerCase().includes(s) || (q.body || "").toLowerCase().includes(s) || (q.topic_name || "").toLowerCase().includes(s);
+  });
+
+  const courseTag = (cid) => { const c = COURSES.find((x) => x.id === cid); return c ? c.code : null; };
+
+  // ---- shared bits --------------------------------------------------------
+  const setupNotice = (
+    <div className="card" style={{ marginTop: 12 }}>
+      <div style={{ fontWeight: 700, marginBottom: 6, fontSize: 15.5 }}>The forum is almost ready</div>
+      <p style={{ color: "var(--text-2)", fontSize: 14, lineHeight: 1.7, margin: 0 }}>The forum tables have not been set up on the server yet. Once the one-time database setup is run, questions and answers will appear here automatically - no app update needed.</p>
+    </div>
+  );
+
+  const signInNotice = (
+    <div className="card" style={{ marginTop: 12, borderColor: "var(--amber)", background: "var(--amber-dim)" }}>
+      <div style={{ fontWeight: 700, marginBottom: 4, fontSize: 15 }}>Sign in to post</div>
+      <p style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6, margin: 0 }}>You can read every thread, but you need an account to ask questions, answer, or upvote - that is how your XP and name get attached.</p>
+    </div>
+  );
+
+  // ---- ASK ----------------------------------------------------------------
+  if (tab === "ask") {
+    return (
+      <div className="view">
+        <button className="back" onClick={() => { setTab("feed"); setErr(""); }}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Forum</button>
+        <h1 style={{ fontSize: "clamp(20px,4vw,26px)", margin: "8px 0 4px" }}>Ask the class</h1>
+        <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0 }}>Be specific - a clear question gets a clear answer. +5 XP for asking.</p>
+        {notReady ? setupNotice : !me ? signInNotice : (
+          <div className="card" style={{ marginTop: 12 }}>
+            <label className="eyebrow" style={{ display: "block", marginBottom: 6 }}>Course</label>
+            <select className="auth-input" value={aCourse} onChange={(e) => setACourse(e.target.value)} style={{ width: "100%", marginBottom: 12 }}>
+              {COURSES.map((c) => <option key={c.id} value={c.id}>{c.code} · {c.name}</option>)}
+            </select>
+            {aTopicName ? <div style={{ fontSize: 12.5, color: "var(--text-3)", marginBottom: 12 }}>Topic: <strong style={{ color: "var(--text-2)" }}>{aTopicName}</strong></div> : null}
+            <label className="eyebrow" style={{ display: "block", marginBottom: 6 }}>Title</label>
+            <input className="auth-input" value={aTitle} onChange={(e) => setATitle(e.target.value)} maxLength={200} placeholder="e.g. Why do the palms face forward in the anatomical position?" style={{ width: "100%", marginBottom: 12 }} />
+            <label className="eyebrow" style={{ display: "block", marginBottom: 6 }}>Details</label>
+            <textarea value={aBody} onChange={(e) => setABody(e.target.value)} maxLength={5000} rows={6} placeholder="Explain what you understand so far and where exactly you are stuck." style={{ width: "100%", background: "var(--bg-3)", color: "var(--text-1)", border: "1px solid var(--line)", borderRadius: 10, padding: 12, fontSize: 14.5, fontFamily: "inherit", resize: "vertical", marginBottom: 12 }} />
+            {err && <div style={{ color: "var(--bad)", fontSize: 13, marginBottom: 10 }}>{err}</div>}
+            <button className="btn btn-a" style={{ width: "100%" }} disabled={busy} onClick={submitQuestion}>{busy ? "Posting..." : "Post question"}</button>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ---- THREAD -------------------------------------------------------------
+  if (tab === "thread" && thread && thread.question) {
+    const q = thread.question;
+    const sorted = [...thread.answers].sort((a, b) => {
+      if (q.best_answer_id === a.id) return -1;
+      if (q.best_answer_id === b.id) return 1;
+      return (thread.votes[b.id] || 0) - (thread.votes[a.id] || 0);
+    });
+    const iAmAsker = me && q.author_id === me;
+    return (
+      <div className="view">
+        <button className="back" onClick={() => { setTab("feed"); setThread(null); loadFeed(); }}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Forum</button>
+        <div className="card" style={{ marginTop: 8 }}>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", marginBottom: 8 }}>
+            {courseTag(q.course_id) && <span className="eyebrow" style={{ margin: 0, color: "var(--amber)" }}>{courseTag(q.course_id)}</span>}
+            {q.topic_name && <span style={{ fontSize: 11.5, color: "var(--text-3)", border: "1px solid var(--line)", borderRadius: 4, padding: "1px 6px" }}>{q.topic_name}</span>}
+          </div>
+          <h1 style={{ fontSize: "clamp(18px,3.5vw,23px)", margin: "0 0 8px" }}>{q.title}</h1>
+          <p style={{ color: "var(--text-2)", fontSize: 14.5, lineHeight: 1.7, whiteSpace: "pre-wrap", margin: 0 }}>{q.body}</p>
+          <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 10 }}>{q.author_name} · {forumTimeAgo(q.created_at)}</div>
+        </div>
+
+        <div style={{ margin: "16px 0 8px", fontWeight: 700, fontSize: 15 }}>{sorted.length} answer{sorted.length === 1 ? "" : "s"}</div>
+        {sorted.map((a) => {
+          const best = q.best_answer_id === a.id;
+          const voted = thread.mine.has(a.id);
+          return (
+            <div key={a.id} className="card" style={{ marginBottom: 10, border: best ? "1px solid var(--good)" : "1px solid var(--line)" }}>
+              {best && <div style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 11.5, fontWeight: 700, color: "var(--good)", marginBottom: 8 }}><Ic.check p={13} /> BEST ANSWER</div>}
+              <p style={{ color: "var(--text-1)", fontSize: 14.5, lineHeight: 1.7, whiteSpace: "pre-wrap", margin: 0 }}>{a.body}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 12 }}>
+                <button className="btn btn-sm" onClick={() => toggleVote(a.id)} disabled={!me} style={{ background: voted ? "var(--amber)" : "var(--bg-3)", color: voted ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", display: "inline-flex", alignItems: "center", gap: 5 }}><Ic.up p={14} /> {thread.votes[a.id] || 0}</button>
+                {iAmAsker && <button className="btn btn-sm" onClick={() => markBest(a.id)} style={{ background: best ? "var(--good)" : "var(--bg-3)", color: best ? "#08140b" : "var(--text-2)", border: "1px solid var(--line)" }}>{best ? "Unpick" : "Mark best"}</button>}
+                <span style={{ marginLeft: "auto", fontSize: 12, color: "var(--text-3)" }}>{a.author_name} · {forumTimeAgo(a.created_at)}</span>
+              </div>
+            </div>
+          );
+        })}
+        {sorted.length === 0 && <div className="card" style={{ color: "var(--text-3)", fontSize: 14 }}>No answers yet. Be the first - +10 XP.</div>}
+
+        <div className="card" style={{ marginTop: 12 }}>
+          <label className="eyebrow" style={{ display: "block", marginBottom: 6 }}>Your answer</label>
+          {!me ? signInNotice : (<>
+            <textarea value={reply} onChange={(e) => setReply(e.target.value)} maxLength={5000} rows={4} placeholder="Explain it clearly - teaching it is how you learn it." style={{ width: "100%", background: "var(--bg-3)", color: "var(--text-1)", border: "1px solid var(--line)", borderRadius: 10, padding: 12, fontSize: 14.5, fontFamily: "inherit", resize: "vertical", marginBottom: 10 }} />
+            {err && <div style={{ color: "var(--bad)", fontSize: 13, marginBottom: 10 }}>{err}</div>}
+            <button className="btn btn-a" style={{ width: "100%" }} disabled={busy || !reply.trim()} onClick={submitAnswer}>{busy ? "Posting..." : "Post answer (+10 XP)"}</button>
+          </>)}
+        </div>
+      </div>
+    );
+  }
+
+  // ---- FEED ---------------------------------------------------------------
+  return (
+    <div className="view">
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+        <h1 style={{ fontSize: "clamp(22px,4vw,30px)", margin: "10px 0 4px" }}>Forum</h1>
+        <button className="btn btn-a btn-sm" style={{ flexShrink: 0, whiteSpace: "nowrap" }} onClick={() => { setErr(""); setTab("ask"); }}>Ask question</button>
+      </div>
+      <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0 }}>Ask your cohort, answer others, upvote what helps. Turning confusion into clear answers - and earning XP for it.</p>
+
+      {notReady ? setupNotice : (<>
+        <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4, marginTop: 6 }}>
+          <button className="btn btn-sm" onClick={() => setCourseFilter("all")} style={{ background: courseFilter === "all" ? "var(--amber)" : "var(--bg-3)", color: courseFilter === "all" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", flexShrink: 0 }}>All</button>
+          {COURSES.map((c) => <button key={c.id} className="btn btn-sm" onClick={() => setCourseFilter(c.id)} style={{ background: courseFilter === c.id ? "var(--amber)" : "var(--bg-3)", color: courseFilter === c.id ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", flexShrink: 0, whiteSpace: "nowrap" }}>{c.code}</button>)}
+        </div>
+        <input className="auth-input" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search questions" style={{ width: "100%", margin: "10px 0" }} autoCapitalize="none" autoCorrect="off" />
+
+        {loading && questions.length === 0 && <div style={{ padding: 20, textAlign: "center", color: "var(--text-3)", fontSize: 13 }}>Loading questions...</div>}
+        {!loading && filteredQuestions.length === 0 && (
+          <div className="card" style={{ color: "var(--text-2)", fontSize: 14, lineHeight: 1.7 }}>
+            {search.trim() ? "No questions match your search." : "No questions here yet. Be the first to ask - it is +5 XP, and your classmates get notified."}
+          </div>
+        )}
+        {err && <div style={{ color: "var(--bad)", fontSize: 13, margin: "6px 0" }}>{err}</div>}
+
+        {filteredQuestions.map((q) => (
+          <button key={q.id} className="card hover" onClick={() => openThread(q.id)} style={{ width: "100%", textAlign: "left", marginBottom: 10, display: "block", cursor: "pointer" }}>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", marginBottom: 6 }}>
+              {courseTag(q.course_id) && <span className="eyebrow" style={{ margin: 0, color: "var(--amber)" }}>{courseTag(q.course_id)}</span>}
+              {q.topic_name && <span style={{ fontSize: 11, color: "var(--text-3)", border: "1px solid var(--line)", borderRadius: 4, padding: "1px 6px" }}>{q.topic_name}</span>}
+              {q.best_answer_id && <span style={{ fontSize: 11, color: "var(--good)", display: "inline-flex", alignItems: "center", gap: 3 }}><Ic.check p={12} /> solved</span>}
+            </div>
+            <div style={{ fontWeight: 650, fontSize: 15.5, marginBottom: 4 }}>{q.title}</div>
+            <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.5, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>{q.body}</div>
+            <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 8 }}>{q.author_name} · {forumTimeAgo(q.created_at)} · {counts[q.id] || 0} answer{(counts[q.id] || 0) === 1 ? "" : "s"}</div>
+          </button>
+        ))}
+      </>)}
+    </div>
+  );
+}
+
 const NAV = [
   { key: "home", label: "Home", icon: "home" },
   { key: "courses", label: "Courses", icon: "book" },
@@ -23333,6 +23645,7 @@ const NAV = [
   { key: "review", label: "Review", icon: "target" },
   { key: "tools", label: "Study Tools", icon: "star" },
   { key: "ranks", label: "Ranks", icon: "trophy" },
+  { key: "forum", label: "Forum", icon: "chat" },
   { key: "papers", label: "Passco", icon: "file" },
   { key: "plan", label: "CWA", icon: "target" },
   { key: "resources", label: "Resources", icon: "upload" },
@@ -24164,6 +24477,39 @@ export default function App() {
     }));
   };
 
+  // Forum XP: +5 ask, +10 answer, +5 when your answer is chosen best. Deduped
+  // per id (so re-renders never double-award) and capped per day so nobody can
+  // farm the board by spamming low-effort posts. No streak multiplier - the
+  // rank banner advertises fixed values, so we keep them exact.
+  const FORUM_XP_DAILY_CAP = 60;
+  const awardForumXp = (amount, dedupeKey) => {
+    if (!progress) return 0;
+    try { if (dedupeKey && localStorage.getItem('ascend_fxp_' + dedupeKey)) return 0; } catch (e) {}
+    const tk = todayKey();
+    const fx = (progress.forumXp && progress.forumXp.d === tk) ? progress.forumXp : { d: tk, n: 0 };
+    const remaining = Math.max(0, FORUM_XP_DAILY_CAP - fx.n);
+    const gained = Math.min(amount, remaining);
+    try { if (dedupeKey) localStorage.setItem('ascend_fxp_' + dedupeKey, '1'); } catch (e) {}
+    if (gained <= 0) return 0;
+    const newXp = progress.xp + gained;
+    const updated = { ...progress, xp: newXp, forumXp: { d: tk, n: fx.n + gained } };
+    try {
+      const myId = supaUid || ('local-' + String(progress.name).toLowerCase().replace(/[^a-z0-9]/g, ''));
+      const hist = JSON.parse(localStorage.getItem('ascend_xp_history') || '{}');
+      const mine = hist[myId] || [];
+      if (!mine.find(function (h) { return h.xp === newXp; })) {
+        mine.push({ xp: newXp, time: Date.now() });
+        if (mine.length > 200) mine.splice(0, mine.length - 200);
+        hist[myId] = mine;
+        localStorage.setItem('ascend_xp_history', JSON.stringify(hist));
+      }
+    } catch (e) {}
+    setXpChange(newXp);
+    setProgress(updated);
+    persist(updated);
+    return gained;
+  };
+
   // Track presence app-wide so the leaderboard's "online now" reflects everyone
   // currently using ASCEND, regardless of which screen they are on.
   useEffect(() => {
@@ -24234,6 +24580,11 @@ export default function App() {
     setName,
     setReadingXp,
     setPasscoXp,
+    awardForumXp,
+    forumCourse: route.forumCourse,
+    forumTopic: route.forumTopic,
+    forumTopicName: route.forumTopicName,
+    forumOpenAsk: route.forumOpenAsk,
     getStreakMultiplier,
     lastTopic,
     onlineKeys
@@ -24255,6 +24606,7 @@ export default function App() {
       case "quiz": return <QuizView app={app} />;
       case "daily": return <DailyView app={app} />;
       case "ranks": return <RanksView app={app} />;
+      case "forum": return <ForumView app={app} />;
       case "review": return <ReviewView app={app} />;
       case "tools": return <StudyToolsView />;
       case "papers": return <PapersView app={app} />;
