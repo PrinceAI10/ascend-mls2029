@@ -20008,7 +20008,7 @@ const PAST_PAPERS = [
     id: "bio-biomolecules-mcq",
     courseId: "bio",
     courseCode: "BIOL 158",
-    title: "Biomolecules MCQs",
+    title: "Biological Chemistry MCQs",
     year: "Past Questions",
     note: "Carbohydrates, amino acids & proteins. Single best answer; some carry molecule structures.",
     questions: [
