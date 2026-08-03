@@ -18496,8 +18496,11 @@ var LockIcon = function(color) {
 
 /* Slim banner shown while offline. Notes, materials, and saved questions are
    cached by the service worker and keep working; this just says so plainly
-   so nobody thinks the app is broken, and makes clear AI/diagrams are paused. */
-function OfflineBanner() {
+   so nobody thinks the app is broken, and makes clear AI/diagrams are paused.
+   When pendingSync is true, we came up offline with no local progress cache
+   yet, so the streak/XP/calendar on screen may not reflect the student's
+   real saved progress - say so rather than let them think it was wiped. */
+function OfflineBanner({ pendingSync }) {
   return (
     <div style={{
       display: "flex", alignItems: "center", gap: 8,
@@ -18512,7 +18515,9 @@ function OfflineBanner() {
         <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88" /><path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
         <line x1="12" y1="20" x2="12.01" y2="20" />
       </svg>
-      You're offline — notes, materials, and saved questions still work. AI and diagrams need a connection.
+      {pendingSync
+        ? "You're offline and this device hasn't synced your saved streak/XP yet - what you see here may be incomplete. Reconnect once to pull your real progress."
+        : "You're offline — notes, materials, and saved questions still work. AI and diagrams need a connection."}
     </div>
   );
 }
@@ -24499,12 +24504,27 @@ export default function App() {
   const [isOffline, setIsOffline] = useState(
     typeof navigator !== "undefined" ? navigator.onLine === false : false
   );
+  // True only in the narrow window where we came up offline with no local
+  // progress cache to fall back on, so what's on screen may not be the
+  // student's real saved progress yet (see adoptSupabaseUser).
+  const [progressPendingSync, setProgressPendingSync] = useState(false);
   useEffect(() => {
     const goOffline = () => setIsOffline(true);
     const goOnline = () => {
       setIsOffline(false);
       const uid = supaUidRef.current;
-      if (uid && progressRef.current) db.saveProgress(uid, progressRef.current);
+      if (!uid) return;
+      if (progressPendingSync) {
+        // We never got the student's real progress on load (offline, no
+        // cache) - now that we're back online, fetch it for real instead of
+        // pushing the placeholder blank progress up to Supabase.
+        supabase.auth.getSession().then(({ data }) => {
+          const sUser = data && data.session ? data.session.user : null;
+          if (sUser) adoptSupabaseUser(sUser, false);
+        }).catch(() => {});
+      } else if (progressRef.current) {
+        db.saveProgress(uid, progressRef.current);
+      }
     };
     window.addEventListener("offline", goOffline);
     window.addEventListener("online", goOnline);
@@ -24512,7 +24532,7 @@ export default function App() {
       window.removeEventListener("offline", goOffline);
       window.removeEventListener("online", goOnline);
     };
-  }, []);
+  }, [progressPendingSync]);
   // Shown briefly whenever the installed app is re-opened/resumed, so the user
   // sees a spinner (instead of a stale screen) while we check for and apply
   // any update that shipped while they were away, then land them back on the
@@ -25001,8 +25021,21 @@ export default function App() {
     const displayName =
       (sUser.user_metadata && (sUser.user_metadata.full_name || sUser.user_metadata.name)) ||
       (sUser.email ? sUser.email.split("@")[0] : "student");
+    const offlineNow = typeof navigator !== "undefined" && navigator.onLine === false;
     setSupaUid(uid);
     const cloud = await db.loadProgress(uid);
+    // Offline with nothing cached locally yet (e.g. first launch after this
+    // device last synced, or cache cleared): do NOT fall back to a blank
+    // freshProgress() here - that's what was wiping real streaks/dailyDone
+    // to zero. Keep whatever is already on screen and wait for a connection
+    // instead of manufacturing a "new" empty profile.
+    if (!cloud && offlineNow) {
+      setAuth({ username: (progressRef.current && progressRef.current.name) || displayName, email: sUser.email, name: (progressRef.current && progressRef.current.name) || displayName, supabase: true });
+      if (!progressRef.current) setProgress(freshProgress(displayName)); // nothing to show at all yet - only case where a blank profile is correct
+      setProgressPendingSync(true);
+      return;
+    }
+    setProgressPendingSync(false);
     let profileXp = 0, profileStreak = 0, profileName = null;
     try {
       const { data } = await supabase.from("profiles").select("name, xp, streak").eq("id", uid).maybeSingle();
@@ -25512,7 +25545,7 @@ export default function App() {
           </header>
           
           <div className="content">
-            {isOffline && <OfflineBanner />}
+            {isOffline && <OfflineBanner pendingSync={progressPendingSync} />}
             {render()}
           </div>
 
