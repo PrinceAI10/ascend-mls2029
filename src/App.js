@@ -180,6 +180,12 @@ html, body {
   .qbox{width:46px}
   .topbar-inner .chip{display:none}
   .topbar-inner .iconbtn{width:34px;height:34px}
+  /* Badges: on phones there's no room to swipe sideways and nothing hints
+     that you can, so wrap them onto new rows instead - everything is visible
+     just by scrolling the page down, the way people already expect. */
+  .badge-shelf{flex-wrap:wrap;overflow-x:visible;justify-content:flex-start;gap:10px 8px}
+  .badge{width:72px}
+  .badge-medal{width:56px;height:56px}
   .topbar-inner .avatar{width:30px;height:30px}
 }
 .brand{display:flex;align-items:center;gap:9px;flex-shrink:0}
@@ -16907,17 +16913,40 @@ const db = {
     } catch {}
   },
 
-  // load this user's progress JSON (or null if none saved yet)
+  // load this user's progress JSON (or null if none saved yet). Falls back to
+  // a local cache when offline or when Supabase can't be reached, so opening
+  // the app without a connection doesn't reset a signed-in student's XP,
+  // streak, or completed topics.
   async loadProgress(uid) {
+    const cacheKey = "ascend_progress_cache_" + uid;
     try {
+      if (typeof navigator !== "undefined" && navigator.onLine === false) throw new Error("offline");
       const { data, error } = await supabase.from("progress").select("data").eq("id", uid).maybeSingle();
-      if (error || !data) return null;
+      if (error || !data) {
+        // No row yet (or a transient error) - see if we have a local copy
+        // before giving up and treating this as a brand-new user.
+        try {
+          const cached = localStorage.getItem(cacheKey);
+          if (cached) return JSON.parse(cached);
+        } catch {}
+        return null;
+      }
+      try { localStorage.setItem(cacheKey, JSON.stringify(data.data || {})); } catch {}
       return data.data || null;
-    } catch { return null; }
+    } catch {
+      try {
+        const cached = localStorage.getItem(cacheKey);
+        return cached ? JSON.parse(cached) : null;
+      } catch { return null; }
+    }
   },
 
-  // save this user's progress JSON, and mirror name/xp/streak into their profile
+  // save this user's progress JSON, and mirror name/xp/streak into their profile.
+  // Always writes the local cache first (synchronous, never fails offline),
+  // then best-effort syncs to Supabase when there's a connection.
   async saveProgress(uid, progress) {
+    try { localStorage.setItem("ascend_progress_cache_" + uid, JSON.stringify(progress)); } catch {}
+    if (typeof navigator !== "undefined" && navigator.onLine === false) return; // sync later when back online
     try {
       const r1 = await supabase.from("progress").upsert({ id: uid, data: progress, updated_at: new Date().toISOString() });
       if (r1.error) console.error("saveProgress: progress upsert failed:", r1.error.message);
@@ -17390,6 +17419,12 @@ const AIText = React.memo(({ text, style }) => {
    callClaude - AI API Call with Gemini Proxy
    ============================================================ */
 async function callClaude(system, messages, maxTokens = 4096) {
+  // AI generation (and diagrams, which go through the same proxy) needs a
+  // live connection - fail fast with a clear message instead of burning
+  // through retries and a 28s timeout when we already know we're offline.
+  if (typeof navigator !== "undefined" && navigator.onLine === false) {
+    throw new Error("You're offline. Notes, materials, and saved questions still work, but AI features and diagrams need an internet connection.");
+  }
   // Gemini uses a slightly different format - we need to adapt
   // messages array: each has role: "user" or "assistant" and content: string or array
   const body = JSON.stringify({ 
@@ -18458,6 +18493,29 @@ var LockIcon = function(color) {
     </svg>
   );
 };
+
+/* Slim banner shown while offline. Notes, materials, and saved questions are
+   cached by the service worker and keep working; this just says so plainly
+   so nobody thinks the app is broken, and makes clear AI/diagrams are paused. */
+function OfflineBanner() {
+  return (
+    <div style={{
+      display: "flex", alignItems: "center", gap: 8,
+      padding: "9px 14px", margin: "0 0 12px", borderRadius: 10,
+      background: "var(--amber-dim, rgba(240,180,60,0.14))",
+      border: "1px solid var(--amber-2, #d9a441)",
+      color: "var(--amber-2, #a97a1f)", fontSize: 13, fontWeight: 550,
+    }}>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+        <line x1="1" y1="1" x2="23" y2="23" /><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55" />
+        <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39" /><path d="M10.71 5.05A16 16 0 0 1 22.58 9" />
+        <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88" /><path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+        <line x1="12" y1="20" x2="12.01" y2="20" />
+      </svg>
+      You're offline — notes, materials, and saved questions still work. AI and diagrams need a connection.
+    </div>
+  );
+}
 
 /* Duolingo-style badge shelf: the XP rank stages plus milestone achievements,
    shown as glossy medallions that light up when earned and stay greyed + locked
@@ -24424,6 +24482,8 @@ export default function App() {
   });
 
   const [progress, setProgress] = useState(null);
+  const progressRef = useRef(null);
+  useEffect(() => { progressRef.current = progress; }, [progress]);
   const [rankUpNotif, setRankUpNotif] = useState(null);
   const [achievements, setAchievements] = useState([]);
   const [achNotif, setAchNotif] = useState(null);
@@ -24432,6 +24492,27 @@ export default function App() {
   const supaUidRef = useRef(null);
   useEffect(() => { supaUidRef.current = supaUid; }, [supaUid]);
   const [loaded, setLoaded] = useState(false);
+  // Offline banner + reconnect sync: notes/materials/questions already work
+  // offline (cached by the service worker + the local progress cache above);
+  // this just keeps the user informed and pushes any progress made while
+  // offline back up to Supabase the moment the connection returns.
+  const [isOffline, setIsOffline] = useState(
+    typeof navigator !== "undefined" ? navigator.onLine === false : false
+  );
+  useEffect(() => {
+    const goOffline = () => setIsOffline(true);
+    const goOnline = () => {
+      setIsOffline(false);
+      const uid = supaUidRef.current;
+      if (uid && progressRef.current) db.saveProgress(uid, progressRef.current);
+    };
+    window.addEventListener("offline", goOffline);
+    window.addEventListener("online", goOnline);
+    return () => {
+      window.removeEventListener("offline", goOffline);
+      window.removeEventListener("online", goOnline);
+    };
+  }, []);
   // Shown briefly whenever the installed app is re-opened/resumed, so the user
   // sees a spinner (instead of a stale screen) while we check for and apply
   // any update that shipped while they were away, then land them back on the
@@ -25430,7 +25511,10 @@ export default function App() {
             </div>
           </header>
           
-          <div className="content">{render()}</div>
+          <div className="content">
+            {isOffline && <OfflineBanner />}
+            {render()}
+          </div>
 
           <footer style={{ textAlign: "center", padding: "24px 16px 32px", marginTop: 8, color: "var(--text-2)", fontSize: 12.5, lineHeight: 1.6, borderTop: "1px solid var(--line)" }}>
             © 2026 ASCEND · Built by Prince, Ansah, Jeffery &amp; Dacosta for the MLS Class of 2029. All rights reserved.
