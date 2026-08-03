@@ -336,6 +336,19 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .notif-markall{background:none;border:none;color:var(--amber-2);font-size:12.5px;font-weight:700;
   cursor:pointer;padding:2px 4px;font-family:var(--mono)}
 .notif-markall:disabled{color:var(--text-3);cursor:default}
+/* ---- Duolingo-style stage & achievement badges ---- */
+.badge-shelf{display:flex;gap:12px;overflow-x:auto;padding:8px 2px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.badge-shelf::-webkit-scrollbar{display:none}
+.badge{flex:0 0 auto;width:84px;text-align:center}
+.badge-medal{position:relative;width:66px;height:66px;margin:0 auto 8px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-sizing:border-box}
+.badge-core{width:100%;height:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.badge-shine{position:absolute;top:9px;left:14px;width:22px;height:12px;border-radius:50%;background:rgba(255,255,255,.55);filter:blur(1.5px);transform:rotate(-18deg);pointer-events:none}
+.badge.locked .badge-shine{display:none}
+.badge-lock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.badge.current .badge-medal{animation:badgePulse 2.1s ease-in-out infinite}
+.badge-name{font-size:12px;font-weight:750;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge-sub{font-size:10px;font-family:var(--mono);color:var(--text-3);margin-top:2px;line-height:1.2}
+@keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 .iconbtn{position:relative;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);
   background:var(--bg-2);color:var(--text-2);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
 .iconbtn:hover{color:var(--text);border-color:var(--line-2)}
@@ -18432,12 +18445,100 @@ function presenceKeyFor(id, name) {
   return "nm:" + String(name || "").toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
+/* Small colour helpers for the medallion gradients/glows. */
+function _hx(hex) { hex = String(hex).replace("#", ""); if (hex.length === 3) hex = hex.split("").map(function(c){ return c + c; }).join(""); return [parseInt(hex.slice(0,2),16), parseInt(hex.slice(2,4),16), parseInt(hex.slice(4,6),16)]; }
+function shade(hex, amt) { var c = _hx(hex); var f = function(v){ return Math.max(0, Math.min(255, v + amt)); }; return "rgb(" + f(c[0]) + "," + f(c[1]) + "," + f(c[2]) + ")"; }
+function hexA(hex, a) { var c = _hx(hex); return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")"; }
+
+var LockIcon = function(color) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color || "var(--text-3)"} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  );
+};
+
+/* Duolingo-style badge shelf: the XP rank stages plus milestone achievements,
+   shown as glossy medallions that light up when earned and stay greyed + locked
+   until reached. Purely presentational - it reads app progress, changes nothing. */
+function StageBadges({ xp, achievements }) {
+  var earned = {};
+  (achievements || []).forEach(function(a){ if (a && a.id) earned[a.id] = true; });
+  var earnedCount = 0; for (var k in earned) earnedCount++;
+  var curIdx = 0;
+  for (var i = 0; i < RANKS.length; i++) { if (xp >= RANKS[i].min) curIdx = i; }
+
+  var stageBadge = function(rk, i) {
+    var unlocked = xp >= rk.min;
+    var isCurrent = i === curIdx;
+    var toGo = rk.min - xp;
+    return (
+      <div key={rk.name} className={"badge" + (unlocked ? "" : " locked") + (isCurrent ? " current" : "")} title={unlocked ? (rk.name + " - unlocked at " + rk.min + " XP") : (toGo + " XP to unlock " + rk.name)}>
+        <div className="badge-medal" style={{
+          padding: 4,
+          background: unlocked ? "linear-gradient(145deg," + shade(rk.c, 25) + "," + shade(rk.c, -35) + ")" : "var(--bg-3)",
+          border: isCurrent ? ("2px solid " + rk.c) : "2px solid transparent",
+          boxShadow: unlocked ? ("0 6px 16px " + hexA(rk.c, 0.45) + (isCurrent ? (", 0 0 0 4px " + hexA(rk.c, 0.30)) : "")) : "none"
+        }}>
+          <div className="badge-core" style={{ background: unlocked ? ("radial-gradient(circle at 33% 27%," + shade(rk.c, 45) + "," + rk.c + " 72%)") : "var(--bg-2)" }}>
+            {unlocked && <span className="badge-shine" />}
+            <span style={{ zIndex: 1, fontWeight: 800, fontSize: 22, color: unlocked ? "#fff" : "var(--text-3)", textShadow: unlocked ? "0 1px 2px rgba(0,0,0,0.35)" : "none" }}>{rk.name[0]}</span>
+            {!unlocked && <span className="badge-lock">{LockIcon("var(--text-3)")}</span>}
+          </div>
+        </div>
+        <div className="badge-name" style={{ color: unlocked ? rk.c : "var(--text-3)" }}>{rk.name}</div>
+        <div className="badge-sub">{unlocked ? (isCurrent ? "You are here" : "Unlocked") : (toGo + " XP")}</div>
+      </div>
+    );
+  };
+
+  var achBadge = function(ac) {
+    var got = !!earned[ac.id];
+    return (
+      <div key={ac.id} className={"badge" + (got ? "" : " locked")} title={ac.description + (got ? " - unlocked" : " (locked)")}>
+        <div className="badge-medal" style={{
+          padding: 4,
+          background: got ? "linear-gradient(145deg,#FFD873,#C68A1E)" : "var(--bg-3)",
+          boxShadow: got ? "0 6px 16px rgba(245,185,63,0.45)" : "none"
+        }}>
+          <div className="badge-core" style={{ background: got ? "radial-gradient(circle at 33% 27%,#FFE49B,#F0A81E 72%)" : "var(--bg-2)" }}>
+            {got && <span className="badge-shine" />}
+            <span style={{ zIndex: 1, display: "flex" }}>{ac.icon(got ? "#5A3B00" : "var(--text-3)")}</span>
+            {!got && <span className="badge-lock">{LockIcon("var(--text-3)")}</span>}
+          </div>
+        </div>
+        <div className="badge-name" style={{ color: got ? "#F5B93F" : "var(--text-3)" }}>{ac.label}</div>
+        <div className="badge-sub">{got ? "Unlocked" : "Locked"}</div>
+      </div>
+    );
+  };
+
+  return (
+    <div style={{ marginTop: 16 }}>
+      <div className="eyebrow">Stages</div>
+      <p style={{ color: "var(--text-2)", fontSize: 13, margin: "4px 0 2px" }}>Badges that light up as your XP climbs. You're on <strong style={{ color: RANKS[curIdx].c }}>{RANKS[curIdx].name}</strong>.</p>
+      <div className="badge-shelf">{RANKS.map(stageBadge)}</div>
+
+      <div className="eyebrow" style={{ marginTop: 10 }}>Achievements</div>
+      <p style={{ color: "var(--text-2)", fontSize: 13, margin: "4px 0 2px" }}>Milestones you earn as you study - {earnedCount} of {ACHIEVEMENTS.length} unlocked.</p>
+      <div className="badge-shelf">{ACHIEVEMENTS.map(achBadge)}</div>
+    </div>
+  );
+}
+
 function RanksView({ app }) {
   const meKey = String(app.progress.name).toLowerCase().replace(/[^a-z0-9]/g, "");
   const [others, setOthers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshTick, setRefreshTick] = useState(0);
   const [search, setSearch] = useState("");
+  const [onlineOnly, setOnlineOnly] = useState(function() {
+    try { return sessionStorage.getItem('ascend_ranks_online_only') === '1'; } catch (e) { return false; }
+  });
+  useEffect(function() {
+    try { sessionStorage.setItem('ascend_ranks_online_only', onlineOnly ? '1' : '0'); } catch (e) {}
+  }, [onlineOnly]);
   // Online presence is now tracked app-wide (in the root App component) so it
   // reflects everyone using ASCEND, not just people on this leaderboard screen.
   const onlineKeys = app.onlineKeys || new Set();
@@ -18541,7 +18642,10 @@ function RanksView({ app }) {
   });
   
   const q = search.trim().toLowerCase();
-  const board = q ? fullBoard.filter(function(p) { return String(p.name || "").toLowerCase().includes(q); }) : fullBoard;
+  const onlineCount = fullBoard.filter(function(p) { return p.online; }).length;
+  let board = fullBoard;
+  if (onlineOnly) board = board.filter(function(p) { return p.online; });
+  if (q) board = board.filter(function(p) { return String(p.name || "").toLowerCase().includes(q); });
   const r = rankOf(app.progress.xp);
   const toNext = r.next ? r.next.min - app.progress.xp : 0;
   
@@ -18564,9 +18668,23 @@ function RanksView({ app }) {
       <div className="eyebrow">Leaderboard</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>No one wants to be last</h1>
       <p style={{ color: "var(--text-2)", marginTop: 0 }}>XP from daily questions and quizzes.</p>
-      <div style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 13, color: "var(--text-2)", marginTop: -4, marginBottom: 4 }}>
-        <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#2E9BFF", display: "inline-block" }} />
-        {fullBoard.filter(function(p) { return p.online; }).length} online now
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: -4, marginBottom: 4, flexWrap: "wrap" }}>
+        <button
+          onClick={function() { setOnlineOnly(function(v) { return !v; }); }}
+          title={onlineOnly ? "Showing only classmates online now - tap to show everyone" : "Filter to classmates online now"}
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 7, fontSize: 13, cursor: "pointer",
+            padding: "5px 11px", borderRadius: 999,
+            border: "1px solid " + (onlineOnly ? "#2E9BFF" : "var(--line)"),
+            background: onlineOnly ? "rgba(46,155,255,0.12)" : "var(--bg-2)",
+            color: onlineOnly ? "#2E9BFF" : "var(--text-2)", fontWeight: onlineOnly ? 700 : 500
+          }}
+        >
+          <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#2E9BFF", display: "inline-block", boxShadow: "0 0 0 3px rgba(46,155,255,0.22)" }} />
+          {onlineCount} online now
+          {onlineOnly && <span style={{ fontSize: 12, marginLeft: 1 }}>&times;</span>}
+        </button>
+        {onlineOnly && <span style={{ fontSize: 12, color: "var(--text-3)" }}>Tap the pill to show everyone</span>}
       </div>
       <div className="card card-feature" style={{ marginTop: 18, display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{ position: "relative", flexShrink: 0 }}>
@@ -18578,6 +18696,8 @@ function RanksView({ app }) {
           <div className="mono" style={{ color: "var(--text-2)", fontSize: 13 }}>{app.progress.xp} XP{r.next ? ` · ${toNext} to ${r.next.name}` : " · top tier"}</div>
         </div>
       </div>
+
+      <StageBadges xp={app.progress.xp} achievements={app.achievements || []} />
 
       {/* HOW TO EARN XP - small banner so students know how to climb beyond the daily question */}
       <div className="card" style={{ marginTop: 12, padding: "12px 14px", borderColor: "var(--amber)", background: "var(--amber-dim)" }}>
@@ -18612,6 +18732,7 @@ function RanksView({ app }) {
       <div style={{ marginTop: 10 }}>
         {loading && fullBoard.length <= 1 && <div style={{ padding: "20px", textAlign: "center", color: "var(--text-3)", fontSize: 13 }}>Loading the class leaderboard...</div>}
         {!loading && q && board.length === 0 && <div style={{ padding: "20px", textAlign: "center", color: "var(--text-3)", fontSize: 13 }}>No classmate found matching "{search.trim()}".</div>}
+        {!loading && onlineOnly && !q && board.length <= 1 && <div style={{ padding: "20px", textAlign: "center", color: "var(--text-3)", fontSize: 13 }}>No classmates are online right now. Tap the blue pill above to show everyone.</div>}
         {board.map(function(p) {
           var demotion = !p.me ? getDemotionStatus(p.lastActive) : null;
           return (
@@ -25185,7 +25306,8 @@ export default function App() {
     forumOpenAsk: route.forumOpenAsk,
     getStreakMultiplier,
     lastTopic,
-    onlineKeys
+    onlineKeys,
+    achievements
   };
 
   const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
