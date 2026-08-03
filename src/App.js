@@ -16832,6 +16832,21 @@ const rankOf = (xp) => {
 const courseById = (id) => COURSES.find((c) => c.id === id);
 const todayKey = () => new Date().toISOString().slice(0, 10);
 const shift = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+// Counts consecutive filled days in the study calendar, walking backward from
+// endDateKey (inclusive). This is the source of truth for "how long is the
+// real streak" - it reads the calendar itself rather than trusting a single
+// separately-stored streak counter, which is what let a corrupted lastActive
+// field silently reset a real 9-day streak down to 1.
+const countConsecutiveStreak = (dailyDone, endDateKey) => {
+  if (!dailyDone) return 0;
+  let count = 0;
+  let d = new Date(endDateKey + "T00:00:00");
+  while (dailyDone[d.toISOString().slice(0, 10)]) {
+    count++;
+    d.setDate(d.getDate() - 1);
+  }
+  return count;
+};
 
 /* Storage works in both places:
    - inside the Claude artifact preview, window.storage exists
@@ -24724,6 +24739,24 @@ export default function App() {
     }
   };
 
+  // Self-heal the streak number: if the study calendar (dailyDone) shows a
+  // longer unbroken run than the stored streak counter reflects - which is
+  // exactly what happened when a sync bug corrupted lastActive and dropped a
+  // real 9-day streak's displayed count to 1 - correct it automatically the
+  // moment progress loads, instead of waiting for the next daily question.
+  // The calendar itself is unioned/protected on every save (see
+  // db.saveProgress), so it's the more trustworthy source of truth.
+  useEffect(() => {
+    if (!progress || !progress.dailyDone) return;
+    const tk = todayKey();
+    const throughKey = progress.dailyDone[tk] ? tk : shift(-1);
+    const calendarStreak = countConsecutiveStreak(progress.dailyDone, throughKey);
+    if (calendarStreak > (progress.streak || 0)) {
+      persist({ ...progress, streak: calendarStreak });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progress?.dailyDone]);
+
   // ============================================================
   // 4. STATE PERSISTENCE (Saves whenever state changes) - IMPROVED
   // ============================================================
@@ -25111,7 +25144,15 @@ export default function App() {
   const recordDaily = (correct) => {
     const tk = todayKey();
     if (progress.dailyDone?.[tk]) return;
-    const streak = progress.lastActive === shift(-1) ? progress.streak + 1 : (progress.lastActive === tk ? progress.streak : 1);
+    // Trust the calendar (dailyDone), not just the lastActive field, to decide
+    // whether the streak continues - and to recover the true count if the
+    // streak/lastActive fields ever drift out of sync with the calendar
+    // (e.g. from a past sync bug). The calendar itself is what's shown on
+    // screen and what students count, so it's the authoritative source.
+    const yesterdayKey = shift(-1);
+    const streakThroughYesterday = countConsecutiveStreak(progress.dailyDone, yesterdayKey);
+    const continuing = progress.lastActive === yesterdayKey || streakThroughYesterday > 0;
+    const streak = continuing ? Math.max(progress.streak || 0, streakThroughYesterday) + 1 : 1;
     const baseXp = correct ? 20 : 5;
     const multiplier = getStreakMultiplier(streak);
     const gained = Math.round(baseXp * multiplier.multiplier);
