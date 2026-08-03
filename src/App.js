@@ -16913,45 +16913,22 @@ const db = {
     } catch {}
   },
 
-  // load this user's progress JSON (or null if truly nothing saved yet).
-  // Retries a couple of times before giving up (Supabase cold-starts and
-  // flaky campus wifi cause transient failures that look identical to "no
-  // data" otherwise), then falls back to the local cache. This is read-only -
-  // it never touches Supabase, so it can't itself lose data.
+  // load this user's progress JSON (or null if none saved yet).
+  // Restored to the exact proven logic from the pre-offline-patch build after
+  // the added caching/retry logic caused a real streak loss - simple and
+  // reliable beats clever here. Offline access to notes/materials doesn't
+  // depend on this at all (that's handled entirely by the service worker),
+  // so this can stay simple without giving anything up.
   async loadProgress(uid) {
-    const cacheKey = "ascend_progress_cache_" + uid;
-    const cached = () => {
-      try {
-        const c = localStorage.getItem(cacheKey);
-        return c ? JSON.parse(c) : null;
-      } catch { return null; }
-    };
-    if (typeof navigator !== "undefined" && navigator.onLine === false) return cached();
-    for (let attempt = 0; attempt < 3; attempt++) {
-      try {
-        const { data, error } = await supabase.from("progress").select("data").eq("id", uid).maybeSingle();
-        if (!error) {
-          if (data) {
-            try { localStorage.setItem(cacheKey, JSON.stringify(data.data || {})); } catch {}
-            return data.data || null;
-          }
-          return null; // genuinely no row for this user - a real "new user"
-        }
-      } catch {}
-      if (attempt < 2) await new Promise((r) => setTimeout(r, 500 * (attempt + 1)));
-    }
-    // 3 attempts all failed to even get a clean answer from Supabase - this is
-    // a connectivity problem, not evidence the user has no saved progress.
-    // Fall back to cache rather than reporting "no data".
-    return cached();
+    try {
+      const { data, error } = await supabase.from("progress").select("data").eq("id", uid).maybeSingle();
+      if (error || !data) return null;
+      return data.data || null;
+    } catch { return null; }
   },
 
-  // save this user's progress JSON, and mirror name/xp/streak into their profile.
-  // Always writes the local cache first (synchronous, never fails offline),
-  // then best-effort syncs to Supabase when there's a connection.
+  // save this user's progress JSON, and mirror name/xp/streak into their profile
   async saveProgress(uid, progress) {
-    try { localStorage.setItem("ascend_progress_cache_" + uid, JSON.stringify(progress)); } catch {}
-    if (typeof navigator !== "undefined" && navigator.onLine === false) return; // sync later when back online
     try {
       const r1 = await supabase.from("progress").upsert({ id: uid, data: progress, updated_at: new Date().toISOString() });
       if (r1.error) console.error("saveProgress: progress upsert failed:", r1.error.message);
@@ -18501,11 +18478,8 @@ var LockIcon = function(color) {
 
 /* Slim banner shown while offline. Notes, materials, and saved questions are
    cached by the service worker and keep working; this just says so plainly
-   so nobody thinks the app is broken, and makes clear AI/diagrams are paused.
-   When pendingSync is true, we came up offline with no local progress cache
-   yet, so the streak/XP/calendar on screen may not reflect the student's
-   real saved progress - say so rather than let them think it was wiped. */
-function OfflineBanner({ pendingSync }) {
+   so nobody thinks the app is broken, and makes clear AI/diagrams are paused. */
+function OfflineBanner() {
   return (
     <div style={{
       display: "flex", alignItems: "center", gap: 8,
@@ -18520,9 +18494,7 @@ function OfflineBanner({ pendingSync }) {
         <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88" /><path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
         <line x1="12" y1="20" x2="12.01" y2="20" />
       </svg>
-      {pendingSync
-        ? "You're offline and this device hasn't synced your saved streak/XP yet - what you see here may be incomplete. Reconnect once to pull your real progress."
-        : "You're offline — notes, materials, and saved questions still work. AI and diagrams need a connection."}
+      You're offline — notes, materials, and saved questions still work. AI and diagrams need a connection.
     </div>
   );
 }
@@ -24501,44 +24473,24 @@ export default function App() {
   const [supaUid, setSupaUid] = useState(null);
   const supaUidRef = useRef(null);
   useEffect(() => { supaUidRef.current = supaUid; }, [supaUid]);
-  const adoptingUidRef = useRef(null); // re-entrancy lock for adoptSupabaseUser, see below
   const [loaded, setLoaded] = useState(false);
-  // Offline banner + reconnect sync: notes/materials/questions already work
-  // offline (cached by the service worker + the local progress cache above);
-  // this just keeps the user informed and pushes any progress made while
-  // offline back up to Supabase the moment the connection returns.
+  // Offline banner: notes/materials/questions already work offline (cached
+  // by the service worker), so this is purely informational - it doesn't
+  // touch progress loading/saving at all, which stays on the simple, proven
+  // Supabase-only logic in adoptSupabaseUser/db.loadProgress/db.saveProgress.
   const [isOffline, setIsOffline] = useState(
     typeof navigator !== "undefined" ? navigator.onLine === false : false
   );
-  // True only in the narrow window where we came up offline with no local
-  // progress cache to fall back on, so what's on screen may not be the
-  // student's real saved progress yet (see adoptSupabaseUser).
-  const [progressPendingSync, setProgressPendingSync] = useState(false);
   useEffect(() => {
     const goOffline = () => setIsOffline(true);
-    const goOnline = () => {
-      setIsOffline(false);
-      const uid = supaUidRef.current;
-      if (!uid) return;
-      if (progressPendingSync) {
-        // We never got the student's real progress on load (offline, no
-        // cache) - now that we're back online, fetch it for real instead of
-        // pushing the placeholder blank progress up to Supabase.
-        supabase.auth.getSession().then(({ data }) => {
-          const sUser = data && data.session ? data.session.user : null;
-          if (sUser) adoptSupabaseUser(sUser, false);
-        }).catch(() => {});
-      } else if (progressRef.current) {
-        db.saveProgress(uid, progressRef.current);
-      }
-    };
+    const goOnline = () => setIsOffline(false);
     window.addEventListener("offline", goOffline);
     window.addEventListener("online", goOnline);
     return () => {
       window.removeEventListener("offline", goOffline);
       window.removeEventListener("online", goOnline);
     };
-  }, [progressPendingSync]);
+  }, []);
   // Shown briefly whenever the installed app is re-opened/resumed, so the user
   // sees a spinner (instead of a stale screen) while we check for and apply
   // any update that shipped while they were away, then land them back on the
@@ -25024,76 +24976,45 @@ export default function App() {
   // ============================================================
   const adoptSupabaseUser = async (sUser, isFreshLogin = true) => {
     const uid = sUser.id;
-    // Guard against two overlapping calls for the same user (e.g. the initial
-    // getSession() check and the onAuthStateChange listener both firing on
-    // load) racing each other - the loser could otherwise finish second with
-    // stale/failed data and stomp on the winner's good data.
-    if (adoptingUidRef.current === uid) return;
-    adoptingUidRef.current = uid;
+    const displayName =
+      (sUser.user_metadata && (sUser.user_metadata.full_name || sUser.user_metadata.name)) ||
+      (sUser.email ? sUser.email.split("@")[0] : "student");
+    setSupaUid(uid);
+    const cloud = await db.loadProgress(uid);
+    let profileXp = 0, profileStreak = 0, profileName = null;
     try {
-      const displayName =
-        (sUser.user_metadata && (sUser.user_metadata.full_name || sUser.user_metadata.name)) ||
-        (sUser.email ? sUser.email.split("@")[0] : "student");
-      setSupaUid(uid);
-      const cloud = await db.loadProgress(uid); // already retries + falls back to local cache internally
-      let profileXp = 0, profileStreak = 0, profileName = null, profileReadOk = false;
-      try {
-        const { data, error } = await supabase.from("profiles").select("name, xp, streak").eq("id", uid).maybeSingle();
-        if (!error) {
-          profileReadOk = true;
-          if (data) { profileXp = data.xp || 0; profileStreak = data.streak || 0; profileName = data.name; }
-        }
-      } catch {}
-      // We could not get real progress from Supabase or the local cache, AND
-      // we have no clear signal (from the profiles table, or from what's
-      // already on screen) that this account has zero progress. Treat this
-      // as "temporarily can't verify" rather than "new user" - never build or
-      // save a blank profile here, that's what erased real streaks before.
-      const cannotVerify = !cloud && !(profileReadOk && profileXp === 0 && profileStreak === 0);
-      const hasExistingOnScreen = progressRef.current && supaUidRef.current === uid;
-      if (cannotVerify) {
-        if (!hasExistingOnScreen) {
-          setAuth({ username: displayName, email: sUser.email, name: displayName, supabase: true });
-          setProgress(freshProgress(displayName)); // nothing else to show - but NOT saved anywhere below
-        }
-        setProgressPendingSync(true);
-        return;
-      }
-      setProgressPendingSync(false);
-      const base = freshProgress(displayName);
-      const merged = cloud ? { ...base, ...cloud } : { ...base };
-      merged.xp = Math.max(merged.xp || 0, profileXp);
-      merged.streak = Math.max(merged.streak || 0, profileStreak);
-      merged.name = (cloud && cloud.name) || profileName || displayName;
-      setAuth({ username: merged.name, email: sUser.email, name: merged.name, supabase: true });
-      setXpChange(merged.xp || 0);
-      setProgress(merged);
-      try {
-        const savedLastTopic = (await store.get(lastTopicKey(uid))) || (await store.get(lastTopicKey("anon")));
-        if (savedLastTopic) setLastTopic((prev) => prev || savedLastTopic);
-      } catch {}
-      // Only force the home screen for a genuine new sign-in. When we're just
-      // re-adopting an existing session (initial mount / tab was reloaded in
-      // the background), leave the route alone - it was already restored from
-      // sessionStorage by the state-restoration effect, and stomping on it
-      // here is what was wiping the user's in-progress screen on tab switch.
-      if (isFreshLogin) setRoute({ view: "home" });
-      try {
-        await supabase.from("profiles").upsert({
-          id: uid,
-          name: merged.name,
-          username: merged.name,
-          xp: merged.xp || 0,
-          streak: merged.streak || 0,
-          updated_at: new Date().toISOString(),
-        });
-      } catch {}
-      db.saveProgress(uid, merged);
-    } catch (e) {
-      console.error("adoptSupabaseUser: unexpected error:", e);
-    } finally {
-      adoptingUidRef.current = null;
-    }
+      const { data } = await supabase.from("profiles").select("name, xp, streak").eq("id", uid).maybeSingle();
+      if (data) { profileXp = data.xp || 0; profileStreak = data.streak || 0; profileName = data.name; }
+    } catch {}
+    const base = freshProgress(displayName);
+    const merged = cloud ? { ...base, ...cloud } : { ...base };
+    merged.xp = Math.max(merged.xp || 0, profileXp);
+    merged.streak = Math.max(merged.streak || 0, profileStreak);
+    merged.name = (cloud && cloud.name) || profileName || displayName;
+    setAuth({ username: merged.name, email: sUser.email, name: merged.name, supabase: true });
+    setXpChange(merged.xp || 0);
+    setProgress(merged);
+    try {
+      const savedLastTopic = (await store.get(lastTopicKey(uid))) || (await store.get(lastTopicKey("anon")));
+      if (savedLastTopic) setLastTopic((prev) => prev || savedLastTopic);
+    } catch {}
+    // Only force the home screen for a genuine new sign-in. When we're just
+    // re-adopting an existing session (initial mount / tab was reloaded in
+    // the background), leave the route alone - it was already restored from
+    // sessionStorage by the state-restoration effect, and stomping on it
+    // here is what was wiping the user's in-progress screen on tab switch.
+    if (isFreshLogin) setRoute({ view: "home" });
+    try {
+      await supabase.from("profiles").upsert({
+        id: uid,
+        name: merged.name,
+        username: merged.name,
+        xp: merged.xp || 0,
+        streak: merged.streak || 0,
+        updated_at: new Date().toISOString(),
+      });
+    } catch {}
+    db.saveProgress(uid, merged);
   };
 
   const handleAuthed = async (acct) => {
@@ -25569,7 +25490,7 @@ export default function App() {
           </header>
           
           <div className="content">
-            {isOffline && <OfflineBanner pendingSync={progressPendingSync} />}
+            {isOffline && <OfflineBanner />}
             {render()}
           </div>
 
