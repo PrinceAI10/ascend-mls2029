@@ -16927,16 +16927,52 @@ const db = {
     } catch { return null; }
   },
 
-  // save this user's progress JSON, and mirror name/xp/streak into their profile
+  // save this user's progress JSON, and mirror name/xp/streak into their profile.
+  //
+  // SAFETY NET (added after a bug wiped real students' streaks on a bad
+  // connection): before writing, read what's already stored and refuse to
+  // let a save destroy real progress -
+  //   - dailyDone / completed / scores / bookmarks are UNIONED with what's
+  //     already saved, never replaced. Once a day/topic is marked done it can
+  //     never become "undone" by a save, no matter what bug produced this call.
+  //   - xp only ever goes up in this app, so it's floored at the existing value.
+  //   - streak is allowed to go down ONLY when the incoming payload actually
+  //     contains today's date in dailyDone - i.e. only when this save is a
+  //     genuine "answered today's question" event, which is the one place
+  //     streak legitimately resets after a missed day. Any other save that
+  //     tries to lower streak (e.g. a stale/blank reload) is blocked and the
+  //     existing streak is kept instead.
+  // This makes it very hard for any future bug, on any device, to erase a
+  // student's real streak - worst case a save is a no-op instead of a wipe.
   async saveProgress(uid, progress) {
     try {
-      const r1 = await supabase.from("progress").upsert({ id: uid, data: progress, updated_at: new Date().toISOString() });
+      let toSave = progress;
+      try {
+        const { data: existingRow } = await supabase.from("progress").select("data").eq("id", uid).maybeSingle();
+        const existing = existingRow ? existingRow.data : null;
+        if (existing) {
+          const tk = new Date().toISOString().slice(0, 10);
+          const incomingHasToday = !!(progress.dailyDone && progress.dailyDone[tk]);
+          toSave = {
+            ...progress,
+            xp: Math.max(progress.xp || 0, existing.xp || 0),
+            streak: (incomingHasToday || (progress.streak || 0) >= (existing.streak || 0))
+              ? (progress.streak || 0)
+              : (existing.streak || 0),
+            dailyDone: { ...(existing.dailyDone || {}), ...(progress.dailyDone || {}) },
+            completed: { ...(existing.completed || {}), ...(progress.completed || {}) },
+            scores: { ...(existing.scores || {}), ...(progress.scores || {}) },
+            bookmarks: Array.from(new Set([...(existing.bookmarks || []), ...(progress.bookmarks || [])])),
+          };
+        }
+      } catch {} // if this safety read fails, fall through and save the payload as-is (unchanged behaviour)
+      const r1 = await supabase.from("progress").upsert({ id: uid, data: toSave, updated_at: new Date().toISOString() });
       if (r1.error) console.error("saveProgress: progress upsert failed:", r1.error.message);
       const r2 = await supabase.from("profiles").upsert({
         id: uid,
-        name: progress.name,
-        xp: progress.xp,
-        streak: progress.streak,
+        name: toSave.name,
+        xp: toSave.xp,
+        streak: toSave.streak,
         updated_at: new Date().toISOString(),
       });
       if (r2.error) console.error("saveProgress: profiles upsert failed:", r2.error.message);
