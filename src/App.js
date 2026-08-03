@@ -23379,7 +23379,7 @@ function ForumView({ app }) {
   const [aTitle, setATitle] = useState("");
   const [aBody, setABody] = useState("");
   const [aCourse, setACourse] = useState(app.forumCourse || (COURSES[0] && COURSES[0].id));
-  const [aTopicName, setATopicName] = useState(app.forumTopicName || "");
+  const [aTopicIdx, setATopicIdx] = useState(app.forumTopic != null ? String(app.forumTopic) : "");
   const [reply, setReply] = useState("");
 
   const isSupabaseErr = (e) => {
@@ -23442,8 +23442,8 @@ function ForumView({ app }) {
     try {
       const { data, error } = await supabase.from("forum_questions").insert({
         author_id: me, author_name: myName, course_id: aCourse || null,
-        topic_id: app.forumTopic != null ? String(app.forumTopic) : null,
-        topic_name: aTopicName || null, title, body,
+        topic_id: aTopicIdx !== "" ? aTopicIdx : null,
+        topic_name: aTopicIdx !== "" ? ((TOPICS[aCourse] || [])[Number(aTopicIdx)] || null) : null, title, body,
       }).select().maybeSingle();
       if (error) { if (!isSupabaseErr(error)) setErr("Could not post. Try again."); setBusy(false); return; }
       app.awardForumXp(5, "q_" + data.id);
@@ -23529,10 +23529,14 @@ function ForumView({ app }) {
         {notReady ? setupNotice : !me ? signInNotice : (
           <div className="card" style={{ marginTop: 12 }}>
             <label className="eyebrow" style={{ display: "block", marginBottom: 6 }}>Course</label>
-            <select className="auth-input" value={aCourse} onChange={(e) => setACourse(e.target.value)} style={{ width: "100%", marginBottom: 12 }}>
+            <select className="auth-input" value={aCourse} onChange={(e) => { setACourse(e.target.value); setATopicIdx(""); }} style={{ width: "100%", marginBottom: 12 }}>
               {COURSES.map((c) => <option key={c.id} value={c.id}>{c.code} · {c.name}</option>)}
             </select>
-            {aTopicName ? <div style={{ fontSize: 12.5, color: "var(--text-3)", marginBottom: 12 }}>Topic: <strong style={{ color: "var(--text-2)" }}>{aTopicName}</strong></div> : null}
+            <label className="eyebrow" style={{ display: "block", marginBottom: 6 }}>Topic</label>
+            <select className="auth-input" value={aTopicIdx} onChange={(e) => setATopicIdx(e.target.value)} style={{ width: "100%", marginBottom: 12 }}>
+              <option value="">General / not topic-specific</option>
+              {(TOPICS[aCourse] || []).map((name, i) => <option key={i} value={String(i)}>{name}</option>)}
+            </select>
             <label className="eyebrow" style={{ display: "block", marginBottom: 6 }}>Title</label>
             <input className="auth-input" value={aTitle} onChange={(e) => setATitle(e.target.value)} maxLength={200} placeholder="e.g. Why do the palms face forward in the anatomical position?" style={{ width: "100%", marginBottom: 12 }} />
             <label className="eyebrow" style={{ display: "block", marginBottom: 6 }}>Details</label>
