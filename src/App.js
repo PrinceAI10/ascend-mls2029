@@ -18204,7 +18204,7 @@ function TopicView({ app }) {
           <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--amber-dim)", color: "var(--amber)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Ic.chat p={18} /></div>
           <div style={{ minWidth: 0 }}>
             <div style={{ fontWeight: 700, fontSize: 15.5 }}>Stuck on this topic?</div>
-            <div style={{ color: "var(--text-2)", fontSize: 13 }}>Ask your cohort before you test yourself. Answering others earns the most XP.</div>
+            <div style={{ color: "var(--text-2)", fontSize: 13 }}>Ask your classmates before you test yourself. Answering others earns the most XP.</div>
           </div>
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -18617,7 +18617,7 @@ function RanksView({ app }) {
           return (
             <div key={p.pos + "-" + p.name} className="card" style={{ marginBottom: 8, padding: "12px 15px", display: "flex", alignItems: "center", gap: 13, border: p.me ? "1px solid var(--amber)" : "1px solid var(--line)", background: p.me ? "var(--amber-dim)" : "var(--bg-2)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <div className="mono" style={{ width: 24, textAlign: "center", fontWeight: 700, color: p.pos <= 3 ? "#F5B93F" : "var(--text-3)", fontSize: 15 }}>{p.pos}</div>
+                <div className="mono" style={{ minWidth: 24, textAlign: "center", fontWeight: 700, color: p.pos <= 3 ? "#F5B93F" : "var(--text-3)", fontSize: 15, whiteSpace: "nowrap", flexShrink: 0 }}>{p.pos}</div>
                 {demotion && (
                   <span style={{
                     fontSize: 9,
@@ -23608,7 +23608,7 @@ function ForumView({ app }) {
         <h1 style={{ fontSize: "clamp(22px,4vw,30px)", margin: "10px 0 4px" }}>Forum</h1>
         <button className="btn btn-a btn-sm" style={{ flexShrink: 0, whiteSpace: "nowrap" }} onClick={() => { setErr(""); setTab("ask"); }}>Ask question</button>
       </div>
-      <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0 }}>Ask your cohort, answer others, upvote what helps. Turning confusion into clear answers - and earning XP for it.</p>
+      <p style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 0 }}>Ask your classmates, answer others, upvote what helps. Turning confusion into clear answers - and earning XP for it.</p>
 
       {notReady ? setupNotice : (<>
         <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4, marginTop: 6 }}>
@@ -23746,6 +23746,11 @@ export default function App() {
   const supaUidRef = useRef(null);
   useEffect(() => { supaUidRef.current = supaUid; }, [supaUid]);
   const [loaded, setLoaded] = useState(false);
+  // Shown briefly whenever the installed app is re-opened/resumed, so the user
+  // sees a spinner (instead of a stale screen) while we check for and apply
+  // any update that shipped while they were away, then land them back on the
+  // exact page they left - see the resume/visibilitychange effect below.
+  const [resuming, setResuming] = useState(false);
   const [theme, setTheme] = useState("dark");
   const [notifOpen, setNotifOpen] = useState(false);
   const [rateStars, setRateStars] = useState(0);
@@ -24088,10 +24093,30 @@ export default function App() {
           // deploy is fetched and swapped in as soon as they reopen it.
           const checkForUpdate = () => { try { reg.update(); } catch (e) {} };
           checkForUpdate();
-          document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") checkForUpdate(); });
-          window.addEventListener("focus", checkForUpdate);
           window.addEventListener("online", checkForUpdate);
           setInterval(checkForUpdate, 15 * 60 * 1000); // hourly -> 15 min fallback
+
+          // Whenever the user actually reopens/resumes the app (switches back
+          // to the tab, or brings the installed PWA to the foreground), the
+          // update check can take a moment. Rather than leave them looking at
+          // a possibly-stale screen while that happens, show the spinner,
+          // check for and apply any update that shipped while they were gone,
+          // then drop them right back on the page (route + scroll position)
+          // they left - it's already persisted to sessionStorage below.
+          let resumeSpinnerTimer = null;
+          const onResume = () => {
+            setResuming(true);
+            checkForUpdate();
+            // If an update is found, `controllerchange` below reloads the
+            // page - the post-reload boot spinner takes over seamlessly, and
+            // the saved route brings the user right back to where they were.
+            // If there's no update, just clear the spinner shortly after so
+            // the resume still feels responsive rather than instant/jarring.
+            clearTimeout(resumeSpinnerTimer);
+            resumeSpinnerTimer = setTimeout(() => setResuming(false), 900);
+          };
+          document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") onResume(); });
+          window.addEventListener("focus", onResume);
 
           // When an updated worker has installed and is waiting, tell it to take
           // over immediately so users aren't stuck on a stale build.
@@ -24105,6 +24130,10 @@ export default function App() {
         }).catch(() => {});
         // Reload once when a new service worker takes control, so the fresh
         // assets are actually shown. Guarded so it only ever fires a single time.
+        // The resume spinner (set in onResume above) stays up right through the
+        // reload, since the freshly-booted app shows its own loading spinner
+        // before restoring the saved route - so the user just sees one
+        // continuous spin, then lands back on the page they left.
         let hasReloaded = false;
         navigator.serviceWorker.addEventListener("controllerchange", () => {
           if (hasReloaded) return;
@@ -24664,10 +24693,21 @@ export default function App() {
   );
 
   if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
-  
+
+  const resumeOverlay = resuming ? (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 9999,
+      display: "flex", alignItems: "center", justifyContent: "center",
+      background: "var(--bg)",
+    }}>
+      <div className="spinner-ring" />
+    </div>
+  ) : null;
+
   return (
     <div className={rootCls}>
       <style>{CSS}</style>
+      {resumeOverlay}
       
       <div className="shell">
         <aside className="side">
