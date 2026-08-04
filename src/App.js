@@ -210,14 +210,13 @@ html, body {
 .card-feature{background:linear-gradient(150deg,#13203a,#0d1526)}
 .ascend-root.light .card-feature{background:linear-gradient(150deg,#EAEFF7,#DCE4EF)}
 .card-feature.hover:hover{background:linear-gradient(150deg,#172a48,#101a2e)}
-.slide-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.slide-card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px;display:flex;flex-direction:column;overflow:hidden}
-.slide-thumb-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:var(--bg-3);margin-bottom:9px}
-.slide-thumb-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.slide-thumb-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:11px;text-align:center;padding:8px}
-@media (min-width:640px){.slide-grid{grid-template-columns:repeat(3,1fr)}}
-@media (min-width:1000px){.slide-grid{grid-template-columns:repeat(4,1fr)}}
-@media (min-width:1280px){.slide-grid{grid-template-columns:repeat(5,1fr)}}
+.slide-links{display:flex;flex-direction:column;gap:6px;margin:10px 0 4px}
+.slide-chip{display:flex;align-items:center;gap:9px;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;text-decoration:none;color:var(--text);font-size:13.5px;font-weight:550;transition:border-color .15s,background .15s}
+.slide-chip:hover{border-color:var(--line-2);background:var(--bg-3)}
+.slide-chip svg{flex-shrink:0;color:var(--amber)}
+.slide-chip .slide-chip-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.slide-chip .slide-chip-dl{flex-shrink:0;color:var(--text-3);font-size:11.5px;font-weight:600;font-family:var(--mono);padding:3px 7px;border-radius:6px;border:1px solid var(--line)}
+.slide-chip .slide-chip-dl:hover{color:var(--text);border-color:var(--line-2)}
 .ascend-root.light .card-feature.hover:hover{background:linear-gradient(150deg,#E2E9F4,#D2DCEA)}
 .grid{display:grid;gap:14px}
 .hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:20px;
@@ -567,51 +566,31 @@ function LectureSlides({ courseId, topicIndex }) {
   const cleanName = (name) =>
     name.replace(/^[a-z0-9]+_\d+_/i, "").replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").trim();
 
-  // Drive's thumbnailLink defaults to a tiny ~220px preview. Bump the size
-  // param up so the thumbnail still looks sharp filling a wider card on
-  // desktop, while staying a real preview of a page from the slide deck.
-  // The size param can show up as either "=s220" or "=w220-h150..." depending
-  // on file type, so strip whatever trailing size suffix Drive attached.
-  const bigThumb = (link) => (link ? link.replace(/=(s|w)\d+.*$/, "=s800") : link);
-
   return (
-    <div style={{ marginBottom: 18 }}>
-      <div className="eyebrow" style={{ marginBottom: 10 }}>Lecture slides</div>
-      <div className="slide-grid">
-        {matches.map((f) => <SlideCard key={f.id} f={f} cleanName={cleanName} bigThumb={bigThumb} />)}
-      </div>
+    <div className="slide-links">
+      {matches.map((f) => <SlideLinkChip key={f.id} f={f} cleanName={cleanName} />)}
     </div>
   );
 }
 
-function SlideCard({ f, cleanName, bigThumb }) {
-  // Track load failures per-file so a broken/expired thumbnail URL falls
-  // back to the placeholder instead of showing a broken image icon.
-  const [broken, setBroken] = useState(false);
-  const showThumb = f.thumbnailLink && !broken;
-
+// Simple link-chip - no thumbnail, so it can't break on Drive's inconsistent
+// preview generation. Just a slide icon + filename that opens the deck.
+// Div wrapper (not <a>) so the "View" and "Download" links can sit as
+// siblings instead of illegally nesting an <a> inside an <a>.
+function SlideLinkChip({ f, cleanName }) {
   return (
-    <div className="slide-card">
-      <a href={f.webViewLink} target="_blank" rel="noopener noreferrer" className="slide-thumb-wrap" style={{ display: "block" }}>
-        {showThumb ? (
-          <img
-            src={bigThumb(f.thumbnailLink)}
-            alt={f.name}
-            loading="lazy"
-            referrerPolicy="no-referrer"
-            onError={() => setBroken(true)}
-          />
-        ) : (
-          <div className="slide-thumb-fallback">No preview</div>
-        )}
-      </a>
-      <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 8, lineHeight: 1.3 }}>
+    <div className="slide-chip">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+        <path d="M2 17l10 5 10-5" />
+        <path d="M2 12l10 5 10-5" />
+      </svg>
+      <a href={f.webViewLink} target="_blank" rel="noopener noreferrer" className="slide-chip-name" style={{ color: "inherit", textDecoration: "none" }}>
         {cleanName(f.name)}
-      </div>
-      <div style={{ display: "flex", gap: 6, marginTop: "auto" }}>
-        <a href={f.webViewLink} target="_blank" rel="noopener noreferrer" className="btn btn-sm" style={{ flex: 1, textAlign: "center", textDecoration: "none" }}>View</a>
-        <a href={`https://drive.google.com/uc?export=download&id=${f.id}`} className="btn btn-sm" style={{ flex: 1, textAlign: "center", textDecoration: "none" }}>Download</a>
-      </div>
+      </a>
+      <a href={`https://drive.google.com/uc?export=download&id=${f.id}`} className="slide-chip-dl">
+        Download
+      </a>
     </div>
   );
 }
@@ -18367,6 +18346,7 @@ function TopicView({ app }) {
           );
         })()}
       </div>
+      <LectureSlides courseId={t.courseId} topicIndex={t.topicIndex} />
       <div className="divider" />
       <div className="eyebrow" style={{ marginBottom: 14 }}>The lesson</div>
       <div className="lesson">
@@ -18384,7 +18364,6 @@ function TopicView({ app }) {
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}><Ic.ai p={18} /><div className="eyebrow" style={{ margin: 0 }}>Ask ASCEND</div></div>
       <AITutor topicTitle={t.title} context={noteContext} />
       <div className="divider" />
-      <LectureSlides courseId={t.courseId} topicIndex={t.topicIndex} />
       <div className="eyebrow" style={{ marginBottom: 12 }}>{(t.theory || []).length} theory questions</div>
       <div className="qa">
         {(t.theory || []).map((it, idx) => (
