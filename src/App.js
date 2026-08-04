@@ -570,30 +570,47 @@ function LectureSlides({ courseId, topicIndex }) {
   // Drive's thumbnailLink defaults to a tiny ~220px preview. Bump the size
   // param up so the thumbnail still looks sharp filling a wider card on
   // desktop, while staying a real preview of a page from the slide deck.
-  const bigThumb = (link) => (link ? link.replace(/=s\d+$/, "=s800") : link);
+  // The size param can show up as either "=s220" or "=w220-h150..." depending
+  // on file type, so strip whatever trailing size suffix Drive attached.
+  const bigThumb = (link) => (link ? link.replace(/=(s|w)\d+.*$/, "=s800") : link);
 
   return (
     <div style={{ marginBottom: 18 }}>
       <div className="eyebrow" style={{ marginBottom: 10 }}>Lecture slides</div>
       <div className="slide-grid">
-        {matches.map((f) => (
-          <div key={f.id} className="slide-card">
-            <a href={f.webViewLink} target="_blank" rel="noopener noreferrer" className="slide-thumb-wrap" style={{ display: "block" }}>
-              {f.thumbnailLink ? (
-                <img src={bigThumb(f.thumbnailLink)} alt={f.name} loading="lazy" />
-              ) : (
-                <div className="slide-thumb-fallback">No preview</div>
-              )}
-            </a>
-            <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 8, lineHeight: 1.3 }}>
-              {cleanName(f.name)}
-            </div>
-            <div style={{ display: "flex", gap: 6, marginTop: "auto" }}>
-              <a href={f.webViewLink} target="_blank" rel="noopener noreferrer" className="btn btn-sm" style={{ flex: 1, textAlign: "center", textDecoration: "none" }}>View</a>
-              <a href={`https://drive.google.com/uc?export=download&id=${f.id}`} className="btn btn-sm" style={{ flex: 1, textAlign: "center", textDecoration: "none" }}>Download</a>
-            </div>
-          </div>
-        ))}
+        {matches.map((f) => <SlideCard key={f.id} f={f} cleanName={cleanName} bigThumb={bigThumb} />)}
+      </div>
+    </div>
+  );
+}
+
+function SlideCard({ f, cleanName, bigThumb }) {
+  // Track load failures per-file so a broken/expired thumbnail URL falls
+  // back to the placeholder instead of showing a broken image icon.
+  const [broken, setBroken] = useState(false);
+  const showThumb = f.thumbnailLink && !broken;
+
+  return (
+    <div className="slide-card">
+      <a href={f.webViewLink} target="_blank" rel="noopener noreferrer" className="slide-thumb-wrap" style={{ display: "block" }}>
+        {showThumb ? (
+          <img
+            src={bigThumb(f.thumbnailLink)}
+            alt={f.name}
+            loading="lazy"
+            referrerPolicy="no-referrer"
+            onError={() => setBroken(true)}
+          />
+        ) : (
+          <div className="slide-thumb-fallback">No preview</div>
+        )}
+      </a>
+      <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 8, lineHeight: 1.3 }}>
+        {cleanName(f.name)}
+      </div>
+      <div style={{ display: "flex", gap: 6, marginTop: "auto" }}>
+        <a href={f.webViewLink} target="_blank" rel="noopener noreferrer" className="btn btn-sm" style={{ flex: 1, textAlign: "center", textDecoration: "none" }}>View</a>
+        <a href={`https://drive.google.com/uc?export=download&id=${f.id}`} className="btn btn-sm" style={{ flex: 1, textAlign: "center", textDecoration: "none" }}>Download</a>
       </div>
     </div>
   );
