@@ -490,6 +490,101 @@ const TOPICS = {
   ]
 };
 
+/* ===================== LECTURE SLIDES (Google Drive) =====================
+   Slides live in one shared Drive folder in a dedicated ASCEND Google
+   account. Each file is named "<courseId>_<topicIndex>_description.ext" -
+   that's the only linking step; matching is fully automatic below.
+   The folder is shared "Anyone with the link -> Viewer" and the API key is
+   restricted (Drive API only, HTTP referrer locked to the deployed domain),
+   so this is safe to ship in client code. */
+
+const DRIVE_API_KEY = "AIzaSyBtnnk4Zd8-l6incfE1JQtbkqMJNbjtuk8";
+const DRIVE_FOLDER_ID = "1jlr6ok9DdA9_K4JiU1y-USt7-wTmNj4C";
+
+let _driveSlidesCache = null;
+let _driveSlidesPromise = null;
+const DRIVE_CACHE_MS = 30 * 60 * 1000; // refetch at most every 30 min
+let _driveSlidesFetchedAt = 0;
+
+async function fetchDriveSlideFiles() {
+  const now = Date.now();
+  if (_driveSlidesCache && (now - _driveSlidesFetchedAt) < DRIVE_CACHE_MS) return _driveSlidesCache;
+  if (_driveSlidesPromise) return _driveSlidesPromise;
+
+  const q = encodeURIComponent(`'${DRIVE_FOLDER_ID}' in parents and trashed = false`);
+  const fields = encodeURIComponent("files(id,name,thumbnailLink,webViewLink,mimeType)");
+  const url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=${fields}&pageSize=1000&key=${DRIVE_API_KEY}`;
+
+  _driveSlidesPromise = fetch(url)
+    .then((r) => r.json())
+    .then((data) => {
+      _driveSlidesCache = Array.isArray(data.files) ? data.files : [];
+      _driveSlidesFetchedAt = Date.now();
+      _driveSlidesPromise = null;
+      return _driveSlidesCache;
+    })
+    .catch((e) => {
+      console.error("Drive slides fetch failed:", e);
+      _driveSlidesPromise = null;
+      return _driveSlidesCache || [];
+    });
+  return _driveSlidesPromise;
+}
+
+// Matches files named "<courseId>_<topicIndex>_...ext" (case-insensitive).
+function slidesForTopic(files, courseId, topicIndex) {
+  const prefix = `${courseId}_${topicIndex}_`.toLowerCase();
+  return (files || []).filter((f) => f.name && f.name.toLowerCase().startsWith(prefix));
+}
+
+function LectureSlides({ courseId, topicIndex }) {
+  const [files, setFiles] = useState(null);
+
+  useEffect(() => {
+    let alive = true;
+    fetchDriveSlideFiles().then((all) => { if (alive) setFiles(all); });
+    return () => { alive = false; };
+  }, []);
+
+  if (files === null) return null; // still loading - render nothing rather than a flash
+  const matches = slidesForTopic(files, courseId, topicIndex);
+  if (matches.length === 0) return null;
+
+  const cleanName = (name) =>
+    name.replace(/^[a-z0-9]+_\d+_/i, "").replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").trim();
+
+  return (
+    <div style={{ marginBottom: 18 }}>
+      <div className="eyebrow" style={{ marginBottom: 10 }}>Lecture slides</div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+        {matches.map((f) => (
+          <div key={f.id} className="card" style={{ width: 168, padding: 10 }}>
+            {f.thumbnailLink ? (
+              <img
+                src={f.thumbnailLink}
+                alt={f.name}
+                style={{ width: "100%", height: 100, objectFit: "cover", borderRadius: 8, marginBottom: 8, display: "block", background: "var(--bg-3)" }}
+                loading="lazy"
+              />
+            ) : (
+              <div style={{ width: "100%", height: 100, background: "var(--bg-3)", borderRadius: 8, marginBottom: 8, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-3)", fontSize: 11 }}>
+                No preview
+              </div>
+            )}
+            <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 8, lineHeight: 1.3 }}>
+              {cleanName(f.name)}
+            </div>
+            <div style={{ display: "flex", gap: 6 }}>
+              <a href={f.webViewLink} target="_blank" rel="noopener noreferrer" className="btn btn-sm" style={{ flex: 1, textAlign: "center", textDecoration: "none" }}>View</a>
+              <a href={`https://drive.google.com/uc?export=download&id=${f.id}`} className="btn btn-sm" style={{ flex: 1, textAlign: "center", textDecoration: "none" }}>Download</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ===================== CONTENT =====================
    Topic objects live here. In a Vite/Next project these can be split into
    content/ana.js etc. and imported; a single-file preview needs them inline. */
@@ -18242,6 +18337,7 @@ function TopicView({ app }) {
         })()}
       </div>
       <div className="divider" />
+      <LectureSlides courseId={t.courseId} topicIndex={t.topicIndex} />
       <div className="eyebrow" style={{ marginBottom: 14 }}>The lesson</div>
       <div className="lesson">
         {(t.note || []).map((it, idx) => (
