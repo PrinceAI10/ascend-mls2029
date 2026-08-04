@@ -16968,13 +16968,23 @@ const db = {
         if (existing) {
           const tk = new Date().toISOString().slice(0, 10);
           const incomingHasToday = !!(progress.dailyDone && progress.dailyDone[tk]);
+          const mergedDailyDone = { ...(existing.dailyDone || {}), ...(progress.dailyDone || {}) };
+          // Derive streak from the MERGED calendar itself rather than trusting
+          // whatever number the client computed. The client's number can be
+          // wrong/stale if its local `progress.dailyDone` hadn't fully synced
+          // yet when the streak was calculated (e.g. mid-reconnect right after
+          // going offline) - the calendar merge above is what's actually safe,
+          // so let it be the one source of truth for streak too, not just for
+          // dailyDone itself.
+          const calendarThroughKey = mergedDailyDone[tk] ? tk : new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+          const calendarStreak = countConsecutiveStreak(mergedDailyDone, calendarThroughKey);
           toSave = {
             ...progress,
             xp: Math.max(progress.xp || 0, existing.xp || 0),
-            streak: (incomingHasToday || (progress.streak || 0) >= (existing.streak || 0))
-              ? (progress.streak || 0)
-              : (existing.streak || 0),
-            dailyDone: { ...(existing.dailyDone || {}), ...(progress.dailyDone || {}) },
+            streak: incomingHasToday
+              ? Math.max(calendarStreak, existing.streak || 0)
+              : Math.max(progress.streak || 0, existing.streak || 0),
+            dailyDone: mergedDailyDone,
             completed: { ...(existing.completed || {}), ...(progress.completed || {}) },
             scores: { ...(existing.scores || {}), ...(progress.scores || {}) },
             bookmarks: Array.from(new Set([...(existing.bookmarks || []), ...(progress.bookmarks || [])])),
@@ -24738,6 +24748,33 @@ export default function App() {
       }
     }
   };
+
+  // ONE-TIME PERSONAL REPAIR: exposes a console command that fixes *your own*
+  // streak only. It saves through the currently logged-in session (persist ->
+  // db.saveProgress(supaUid, ...)), so it can only ever touch the account
+  // that's actually signed in when you run it - nobody else's data is
+  // affected. Usage: open the browser console on the deployed site while
+  // logged into your account and run:  ascendRepairMyStreak(10)
+  useEffect(() => {
+    window.ascendRepairMyStreak = (days) => {
+      if (!progress) { console.warn("Progress not loaded yet - wait a moment and try again."); return; }
+      const target = typeof days === "number" && days > 0 ? days : 10;
+      // Backfill the calendar so it actually shows `target` consecutive days
+      // ending today - otherwise the calendar-derived safety net (which is
+      // the real source of truth) would just clamp the number back down on
+      // the very next save.
+      const dd = { ...(progress.dailyDone || {}) };
+      let d = new Date();
+      for (let i = 0; i < target; i++) {
+        dd[d.toISOString().slice(0, 10)] = true;
+        d.setDate(d.getDate() - 1);
+      }
+      const fixed = { ...progress, streak: target, dailyDone: dd, lastActive: todayKey() };
+      persist(fixed);
+      console.log("Streak repaired to", target, "- reload the app to see it.");
+      return "done";
+    };
+  }, [progress]);
 
   // Self-heal the streak number: if the study calendar (dailyDone) shows a
   // longer unbroken run than the stored streak counter reflects - which is
