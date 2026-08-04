@@ -493,6 +493,7 @@ const TOPICS = {
     "Metrics and Measurements", "Taking Mass Measurements with an Electronic Balance", "Pipetting",
     "Microscopy and its Principles", "pH Meter", "Spectrophotometer", "Centrifuge", "Autoclaving",
     "Biosafety Levels", "IPC (Infection Prevention and Control)", "Lab Equipments and Their Uses",
+    "Operation and Design of Laboratory Equipment I", "Operation and Design of Laboratory Equipment II",
     "Referencing", "Writing Lab Reports"
   ]
 };
@@ -8576,9 +8577,359 @@ If those came cleanly, you understand how the everyday glassware, flame equipmen
 };
 
 /* --------------------------- lab:14 --------------------------- */
-const T_LAB_REFERENCING = {
+const T_LAB_OPDESIGN_I = {
   courseId: "lab",
   topicIndex: 14,
+  title: "Operation and Design of Laboratory Equipment I",
+  minutes: 20,
+  note: [
+    { q: "Why must a lab scientist understand how equipment is designed, not just which button to press?",
+      body: `You have now met a whole bench of instruments individually - the balance, the pipette, the microscope, the pH meter, the spectrophotometer, the centrifuge, the autoclave. Each was taught as its own machine, with its own steps. This topic steps back and asks a different question: what do all of them have in common, and why does that matter?
+
+My Socratic question: two scientists both know the button sequence to run a spectrophotometer. One of them also understands roughly how it works inside. When the reading suddenly looks wrong, which one is more likely to know whether to trust the number, suspect the machine, or suspect the sample?
+
+The answer is obvious once asked - the one who understands the design. A user who only knows the sequence of buttons is helpless the moment something deviates from the script: an odd reading, an error code, a result that "feels wrong." A user who understands the underlying design can reason about it - is the lamp warmed up, is the cuvette clean, is the blank still valid - because they know what the machine is actually doing, not just what it displays.
+
+Crucial insight: operating equipment safely and interpreting its results correctly are two different skills, and design knowledge is what bridges them. This topic and its sequel are not about learning new buttons - every specific instrument's steps were already covered. They are about learning the shared logic underneath all of them, so that a genuinely new instrument you meet for the first time in your career is never a complete mystery.` },
+
+    { q: "The universal architecture: what four functional blocks does almost every piece of lab equipment share?",
+      body: `Strip away the casing, the brand name, and the specific measurement, and almost every laboratory instrument is built from the same four functional blocks in the same order.
+
+Block one is the power supply - the source of energy, usually electrical, that runs everything else. Block two is the sensor or transducer - the part that actually detects the physical or chemical quantity of interest and converts it into a usable signal. Block three is signal processing - circuitry (and, in modern instruments, software) that amplifies, filters, and converts that raw signal into something meaningful. Block four is the display or output - the readout, printout, or digital record the operator finally sees or the laboratory information system receives.
+
+My Socratic question: if you strip away the buttons, the casing, and the specific quantity being measured, what functional blocks are always present, no matter what the instrument does?
+
+The answer is exactly this sequence - power in, signal detected, signal processed, result out. A balance detects weight, a pH meter detects hydrogen ion activity, a spectrophotometer detects transmitted light - different quantities, identical architecture.
+
+Crucial insight: once you can name these four blocks in any instrument, you have a mental map for troubleshooting. A wrong reading is either a power problem, a sensor problem, a processing problem, or a display problem - and narrowing it to one of four categories is far more useful than simply saying "it's broken."` },
+
+    { q: "Transducers: the true heart of every measuring instrument.",
+      body: `Of the four blocks, the transducer is the one worth understanding most deeply, because it is where the physical world becomes a signal an instrument can work with.
+
+A transducer is a component that converts energy from one form into another - specifically, in laboratory instruments, it converts the physical or chemical quantity being measured into an electrical signal proportional to that quantity. The balance's load cell converts a mechanical force (weight) into an electrical signal. The pH meter's ion-selective electrode converts hydrogen ion activity into a small electrical voltage. The spectrophotometer's photodetector converts light intensity into an electrical current.
+
+My Socratic question: why must the transducer's output specifically be electrical, even though the quantity being measured - mass, pH, light - is not electrical at all?
+
+The answer is that electrical signals are uniquely easy to amplify, filter, digitise, store, and display precisely, using well-understood, cheap, fast electronic circuits. No other form of signal is as convenient to manipulate. So instrument designers converge on the same strategy again and again: convert whatever you are measuring into electricity as early as possible, then let electronics do the rest of the work.
+
+Crucial insight: electrical signal is the "universal currency" that instrumentation converts everything into. Once you see the transducer as a currency exchange - physical quantity in, electrical signal out - every instrument's basic operating principle becomes readable, even one you have never used before.` },
+
+    { q: "Accuracy, precision, sensitivity, specificity - the four target properties every design aims for.",
+      body: `Every instrument designer is chasing the same four properties, and confusing them is one of the most common examination errors.
+
+Accuracy is closeness to the true value - how near the reading is to reality. Precision is reproducibility - how closely repeated readings of the same sample agree with each other, regardless of whether they are correct. Sensitivity is the smallest change or smallest quantity the instrument can reliably detect. Specificity is the instrument's ability to respond only to the intended quantity, without being fooled by interfering substances or conditions.
+
+My Socratic question: an instrument gives five readings of the same known sample, and all five agree closely with each other - but all five are wrong by the same margin, offset from the true value. Is that instrument accurate, precise, both, or neither?
+
+The answer is precise but not accurate - like an archer whose arrows cluster tightly together, but off to one side of the target, rather than centred on it. A miscalibrated instrument is a classic example: tightly reproducible, systematically wrong.
+
+Crucial insight: designers must balance these properties against each other. Pushing sensitivity higher often makes an instrument more vulnerable to noise and interference, which can quietly erode specificity. There is no such thing as a "perfect" instrument in the abstract - only one whose particular balance of these four properties fits the task it was built for.` },
+
+    { q: "Energy transformations: classifying instruments by what they fundamentally manipulate.",
+      body: `A second, complementary way to understand any instrument is to ask what form of energy sits at its core.
+
+Mechanical instruments primarily measure or manipulate force and motion - the balance (weight) and the centrifuge (rotational force) belong here. Optical instruments manipulate and measure light - the microscope and the spectrophotometer belong here. Electrochemical instruments convert chemical activity into an electrical signal - the pH meter belongs here. Thermal instruments manage heat energy for a defined outcome - the autoclave belongs here.
+
+My Socratic question: take the seven specific instruments you have already studied in this course and sort each one into one of these four energy categories. Which category holds the most members?
+
+Work through it before reading on - balance (mechanical), pipette (mechanical, though it manipulates liquid volume rather than weighing it), microscope (optical), pH meter (electrochemical), spectrophotometer (optical), centrifuge (mechanical), autoclave (thermal). Mechanical and optical dominate the list.
+
+Crucial insight: recognising an unfamiliar instrument's energy category tells you immediately what to expect - what can drift, what needs alignment, what is fragile, and roughly how it should behave - long before you have read its specific manual.` },
+
+    { q: "Materials selection: why the parts touching your sample matter as much as the electronics.",
+      body: `Good instrument design is not only about circuits and sensors - it is also about choosing the right physical material for every part that contacts the sample or the environment, and this is a frequent source of examination questions.
+
+Parts that contact chemicals need corrosion resistance - stainless steel, borosilicate glass, and certain inert plastics resist attack by acids, bases, and solvents. Optical parts need the right transparency for the wavelengths involved - ordinary glass is fine for visible light, but quartz is required for ultraviolet work because ordinary glass itself absorbs UV. Parts that contact biological samples need to be inert and easy to disinfect, so they do not react with or contaminate the specimen. Parts that must survive an autoclave cycle need to tolerate high heat and pressure repeatedly without degrading.
+
+My Socratic question: why can you not simply substitute an ordinary glass cuvette for a quartz one when reading absorbance in the ultraviolet range?
+
+The answer is that ordinary glass itself absorbs ultraviolet light, so the cuvette would block or distort the very signal you are trying to measure before it ever reaches the sample properly, or before the transmitted light reaches the detector. Quartz is transparent to UV, so it stays out of the way of the measurement.
+
+Crucial insight: material choice in instrument design is never cosmetic. It is dictated by exactly what the instrument must let through, keep out, or resist - and choosing the wrong material silently corrupts results without ever producing an obvious error message.` },
+
+    { q: "Human factors: designing for the person operating the machine, not only for the physics of measurement.",
+      body: `A well-designed instrument protects its operator as deliberately as it measures its sample. This branch of design is called human factors, or ergonomics.
+
+Good human-factors design includes clear, intuitive displays and controls that are hard to misread or misuse; physical comfort for repeated or prolonged use; and - most importantly for safety - features that make dangerous actions difficult or impossible, such as interlocks. An interlock is a mechanism that physically prevents an unsafe action from occurring, rather than simply warning against it.
+
+My Socratic question: why do centrifuges have a lid lock that prevents the lid from opening while the rotor is still spinning, even though this seems inconvenient when you are in a hurry?
+
+The answer connects directly back to the hierarchy of controls from the lab safety topic: an interlock is an engineering control, sitting above administrative rules and PPE in effectiveness, because it removes the *possibility* of the unsafe action rather than merely telling the operator not to do it. A spinning rotor disturbed by an opened lid can cause severe injury; the interlock makes that specific accident physically impossible, regardless of how tired, rushed, or careless the operator is that day.
+
+Crucial insight: good design assumes the operator will eventually make a mistake, and builds in protection so that the mistake cannot cause harm. This is safety engineered into the machine itself, not left to memory or good intentions.` },
+
+    { q: "Calibration as a built-in design feature, not just an occasional maintenance chore.",
+      body: `Well-designed equipment is not calibrated despite its design - it is calibrated because of its design. Designers deliberately build in the means to check and correct an instrument's accuracy.
+
+This shows up as an internal calibration weight built into an analytical balance, a menu-driven calibration routine using known buffers on a pH meter, or a "blank" step built into a spectrophotometer's standard procedure. In every case, the instrument is designed to be checked against a known reference and adjusted if it has drifted.
+
+My Socratic question: why do designers build calibration routines directly into an instrument's own software or physical mechanism, rather than leaving all calibration to occasional external servicing by a technician?
+
+The answer is that drift is gradual and invisible day to day, but calibration checks catch it early, before it produces a run of wrong patient results. Putting calibration in the operator's own hands, as a quick routine step, means accuracy is verified constantly rather than only once a year when a service technician visits.
+
+Crucial insight: when you see a "zero," "blank," or "calibrate" step in a standard operating procedure, you are looking at a design decision, not a bureaucratic formality - the manufacturer built that step in because they know, better than anyone, exactly how and when their instrument tends to drift.` },
+
+    { q: "Designing for maintenance: accessibility, modularity, and the cost of getting this wrong.",
+      body: `The final design principle in this set concerns what happens after the instrument leaves the factory and starts wearing out - because every instrument eventually will.
+
+Modular design means parts that are expected to wear out or need periodic replacement - lamps, filters, seals, tubing - are made physically accessible and easy to swap, without needing to dismantle the whole instrument. Precision components that must never be disturbed by routine users - internal optical alignments, sealed sensor housings - are, by contrast, deliberately made hard to access, protecting them from well-meaning but untrained interference.
+
+My Socratic question: why does a spectrophotometer typically make its lamp module easy to open and replace, while sealing away its internal optical alignment components?
+
+The answer is that these two kinds of parts have opposite maintenance needs. The lamp is a consumable that predictably burns out and must be replaced by ordinary lab staff without special tools. The optical alignment, once set at the factory, must stay exactly as it is - opening it invites misalignment that no untrained user could correctly reverse. Good design keeps these two categories physically separate.
+
+Crucial insight: a well-designed instrument anticipates its own future failure and builds an accessible, safe path to fix the parts that are meant to fail, while locking away the parts that must not be touched. Poor design blurs this line - either making routine maintenance needlessly difficult, or leaving precision components dangerously exposed to casual tampering.` },
+
+    { q: "Bringing it together: the design cognitive map, and a worked case.",
+      body: `Your cognitive map for this first half of equipment design, in five lines.
+
+The architecture: every instrument shares four blocks - power supply, sensor/transducer, signal processing, and display/output - regardless of what it measures.
+
+The transducer: the true heart of the instrument, converting a physical or chemical quantity into an electrical signal, because electrical signals are the easiest to amplify, process, and display precisely.
+
+The four target properties: accuracy (closeness to truth), precision (reproducibility), sensitivity (smallest detectable change), and specificity (freedom from interference) - design is always a balance among these.
+
+The physical design layer: materials are chosen deliberately for what they must resist or transmit, and human-factors features like interlocks build safety directly into the machine rather than relying on operator memory.
+
+The lifecycle layer: calibration is designed in as a routine check against drift, and modularity separates parts meant to be replaced from precision parts meant to stay untouched.
+
+Now your worked case. A new laboratory scientist notices that a spectrophotometer has started giving absorbance readings that are consistently higher than expected for a known standard solution, though the readings are very reproducible run to run.
+
+Question one: using the accuracy/precision distinction, how would you describe this instrument's current behaviour?
+Question two: name two design-layer explanations (not user error) that could plausibly produce this exact pattern, and briefly justify each using what you learned in this note set.
+Question three: what built-in design feature should the scientist use first to investigate, before assuming the machine needs a service technician?
+
+Work them through before reading on.
+
+My answers. One: the instrument is precise (highly reproducible) but not accurate (systematically off from the true value) - a classic "consistently wrong" pattern. Two: a plausible explanation is calibration drift in the transducer or signal-processing block, causing a small but systematic offset in every reading; another is a materials-related fault, such as a scratched or fouled cuvette or degraded lamp affecting the light path consistently on every run. Three: the scientist should first use the instrument's own built-in blank/calibration routine, since this is precisely the design feature meant to catch and correct exactly this kind of systematic drift before assuming external servicing is required.
+
+If those came cleanly, you have the foundation for reasoning about design generally. In Part II, you will apply this same architecture to each specific instrument you already know, and go further into safety and selection.` },
+  ],
+  theory: [
+    { q: "Explain why understanding equipment design, not just operating steps, matters for a laboratory scientist.", a: "Knowing button sequences only allows correct operation when everything runs normally. Understanding the underlying design allows a scientist to reason about unexpected readings, error codes, or malfunctions - distinguishing a machine problem from a sample problem - which pure procedural knowledge cannot do." },
+    { q: "List the four universal functional blocks shared by almost all laboratory instruments and briefly state the role of each.", a: "Power supply (provides the energy to run the instrument), sensor/transducer (detects the quantity of interest and converts it to a usable signal), signal processing (amplifies, filters, and converts the raw signal into a meaningful value), and display/output (presents the result to the operator or a laboratory information system)." },
+    { q: "Define a transducer and explain why its output is almost always converted into an electrical signal.", a: "A transducer converts energy from one form into another, specifically converting a physical or chemical quantity into a signal the instrument can use. The output is made electrical because electrical signals are the easiest to amplify, filter, digitise, store, and display precisely using standard electronic circuits." },
+    { q: "Distinguish accuracy, precision, sensitivity, and specificity, and explain how an instrument can be precise but not accurate.", a: "Accuracy is closeness to the true value; precision is reproducibility of repeated readings; sensitivity is the smallest detectable change or quantity; specificity is freedom from interference by other substances or conditions. An instrument is precise but not accurate when repeated readings agree closely with each other but are all offset from the true value, such as from a calibration error." },
+    { q: "Name the four energy-transformation categories used to classify laboratory instruments, with one example instrument in each.", a: "Mechanical (balance, centrifuge), optical (microscope, spectrophotometer), electrochemical (pH meter), and thermal (autoclave)." },
+    { q: "Explain, with the UV cuvette example, why materials selection in instrument design is not a cosmetic choice.", a: "Materials are chosen for what they must transmit or resist. Ordinary glass absorbs ultraviolet light and would block or distort a UV absorbance reading, whereas quartz is transparent to UV; using the wrong material silently corrupts results without producing an obvious error." },
+    { q: "Define an interlock and explain, using the centrifuge lid lock, why it is considered a strong safety design feature.", a: "An interlock is a mechanism that physically prevents an unsafe action rather than merely warning against it. The centrifuge lid lock prevents the lid opening while the rotor spins, making a specific severe-injury accident physically impossible regardless of operator error, which places it as an engineering control - more effective than relying on rules or memory alone." },
+    { q: "Explain why calibration routines are described as a built-in design feature rather than an external maintenance task.", a: "Manufacturers deliberately build calibration mechanisms - such as internal reference weights, buffer-based routines, or blank steps - directly into the instrument so that operators can catch and correct gradual, otherwise invisible drift routinely, rather than waiting for infrequent external servicing." },
+    { q: "Explain the design logic behind making an instrument's consumable parts (like a lamp) accessible while sealing away its precision components.", a: "Consumable parts predictably wear out and must be replaced by ordinary staff without special tools, so they are made accessible. Precision components, such as optical alignments, must remain exactly as factory-set, so they are deliberately sealed away to prevent untrained interference that could misalign them." },
+    { q: "A spectrophotometer gives absorbance readings for a known standard that are highly reproducible but consistently too high. Identify the accuracy/precision pattern and the first design-based troubleshooting step.", a: "This is a precise-but-not-accurate pattern, consistent with systematic drift somewhere in the transducer or optical path. The first step should be to use the instrument's own built-in blank/calibration routine, since this is the design feature specifically meant to catch and correct this kind of systematic offset." },
+  ],
+  videos: [
+    { channel: "Lab Instrumentation", title: "How Laboratory Instruments Work: Sensors and Transducers Explained", note: "The shared architecture behind almost every measuring instrument.", url: "" },
+    { channel: "Biomedical Engineering", title: "Accuracy vs Precision vs Sensitivity vs Specificity", note: "Clarifying the four properties every instrument design targets.", url: "" },
+    { channel: "Lab Safety", title: "Engineering Controls and Interlocks in Laboratory Equipment", note: "How safety is built into a machine's design rather than left to the user.", url: "" },
+  ],
+  mcqs: [
+    { q: "Understanding equipment design, beyond just its operating steps, is most valuable because it allows a scientist to:", o: ["Skip calibration entirely", "Reason about unexpected readings or malfunctions rather than being helpless when something deviates from normal", "Avoid ever reading the manual", "Ignore the instrument's power supply"], a: 1, w: "Design knowledge lets a user reason about deviations, not just follow a fixed button sequence." },
+    { q: "The four universal functional blocks shared by nearly all lab instruments are:", o: ["Casing, buttons, screen, cable", "Power supply, sensor/transducer, signal processing, display/output", "Lamp, lens, mirror, filter", "Motor, rotor, brake, timer"], a: 1, w: "These four blocks form the shared underlying architecture of instrumentation." },
+    { q: "The block of an instrument responsible for detecting the quantity of interest is the:", o: ["Power supply", "Sensor/transducer", "Display", "Casing"], a: 1, w: "The sensor/transducer detects and converts the measured quantity into a usable signal." },
+    { q: "A transducer is best defined as a component that:", o: ["Displays a final numeric result only", "Converts energy from one form into another, typically producing an electrical signal proportional to the measured quantity", "Supplies electrical power to the instrument", "Cleans the instrument's optical parts"], a: 1, w: "Transducers convert a physical/chemical quantity into a proportional signal, usually electrical." },
+    { q: "In a balance, the transducer that converts weight into an electrical signal is the:", o: ["Photodetector", "Load cell", "Ion-selective electrode", "Diffraction grating"], a: 1, w: "The load cell converts mechanical force (weight) into an electrical signal." },
+    { q: "In a pH meter, the component that converts hydrogen ion activity into an electrical signal is the:", o: ["Load cell", "Ion-selective electrode", "Photodetector", "Rotor"], a: 1, w: "The ion-selective electrode generates a voltage proportional to hydrogen ion activity." },
+    { q: "Instrument designers convert the measured quantity into an electrical signal mainly because electrical signals are:", o: ["Impossible to amplify", "Easy to amplify, filter, digitise, store, and display precisely", "Only useful for optical instruments", "Unsuitable for digital displays"], a: 1, w: "Electrical signals are uniquely convenient for further processing and display." },
+    { q: "Accuracy is best defined as:", o: ["Reproducibility of repeated readings", "Closeness of a reading to the true value", "The smallest detectable change", "Freedom from interference"], a: 1, w: "Accuracy specifically concerns closeness to the true value." },
+    { q: "Precision is best defined as:", o: ["Closeness to the true value", "Reproducibility - how closely repeated readings agree with each other", "The smallest quantity detectable", "Resistance to corrosion"], a: 1, w: "Precision concerns agreement among repeated measurements, not correctness." },
+    { q: "An instrument whose repeated readings cluster tightly together but are all offset from the true value is:", o: ["Accurate but not precise", "Precise but not accurate", "Neither accurate nor precise", "Both accurate and precise"], a: 1, w: "Tight clustering away from the true value is the classic precise-but-inaccurate pattern." },
+    { q: "Sensitivity, as a design target, refers to:", o: ["Freedom from interference by other substances", "The smallest change or quantity the instrument can reliably detect", "How comfortable the instrument is to operate", "How easily the instrument can be repaired"], a: 1, w: "Sensitivity is about detecting small changes or quantities reliably." },
+    { q: "Specificity, as a design target, refers to an instrument's ability to:", o: ["Detect the smallest possible change", "Respond only to the intended quantity, without being fooled by interfering substances or conditions", "Be reproducible on repeat testing", "Match its true value exactly"], a: 1, w: "Specificity concerns selective response to the intended analyte only." },
+    { q: "Pushing an instrument's sensitivity higher can sometimes reduce its:", o: ["Power consumption", "Specificity, by making it more vulnerable to noise and interference", "Physical size", "Purchase cost"], a: 1, w: "Very high sensitivity can pick up noise/interference, eroding specificity." },
+    { q: "The balance and the centrifuge both fall under which energy-transformation category?", o: ["Optical", "Mechanical", "Electrochemical", "Thermal"], a: 1, w: "Both primarily measure or manipulate force and motion." },
+    { q: "The microscope and spectrophotometer both fall under which energy-transformation category?", o: ["Mechanical", "Electrochemical", "Optical", "Thermal"], a: 2, w: "Both fundamentally manipulate and measure light." },
+    { q: "The pH meter is classified under which energy-transformation category?", o: ["Mechanical", "Electrochemical", "Optical", "Thermal"], a: 1, w: "It converts chemical (ionic) activity into an electrical signal." },
+    { q: "The autoclave is classified under which energy-transformation category?", o: ["Optical", "Electrochemical", "Mechanical", "Thermal"], a: 3, w: "The autoclave manages heat energy to achieve sterilisation." },
+    { q: "An ordinary glass cuvette is unsuitable for ultraviolet absorbance readings because ordinary glass:", o: ["Reacts chemically with most reagents", "Itself absorbs ultraviolet light, blocking or distorting the reading", "Is too fragile to hold liquid", "Cannot be cleaned effectively"], a: 1, w: "Ordinary glass absorbs UV, unlike quartz, which is transparent to it." },
+    { q: "Materials used in parts that contact chemical reagents are chosen mainly for:", o: ["Attractive appearance", "Corrosion resistance", "Low cost only", "Maximum weight"], a: 1, w: "Chemical-contact parts must resist corrosive attack from reagents." },
+    { q: "Materials that must survive repeated autoclave cycles are chosen mainly for:", o: ["Optical clarity", "Tolerance to repeated high heat and pressure without degrading", "Electrical conductivity", "Magnetic properties"], a: 1, w: "Autoclavable materials must withstand repeated heat/pressure cycling." },
+    { q: "Human factors (ergonomic) design in laboratory instruments is primarily concerned with:", o: ["Making the instrument as complex as possible", "Designing for the person operating the machine, including comfort, clarity, and built-in safety", "Reducing accuracy in favour of speed", "Eliminating the need for any display"], a: 1, w: "Human-factors design protects and supports the operator directly." },
+    { q: "An interlock is best defined as a mechanism that:", o: ["Warns the operator verbally about a hazard", "Physically prevents an unsafe action from occurring at all", "Increases an instrument's sensitivity", "Displays the final result"], a: 1, w: "An interlock removes the possibility of the unsafe action, rather than just warning." },
+    { q: "The centrifuge's lid lock, which prevents opening the lid while the rotor spins, is an example of a(n):", o: ["Administrative control", "Engineering control (interlock)", "Piece of PPE", "Calibration routine"], a: 1, w: "It is a physical, built-in engineering control preventing a specific hazard." },
+    { q: "Good human-factors design assumes that:", o: ["Operators will never make mistakes", "Operators will eventually make a mistake, so the design should prevent that mistake from causing harm", "Safety features are unnecessary if staff are well trained", "Only expensive instruments need safety features"], a: 1, w: "Good design anticipates operator error and engineers around it." },
+    { q: "Built-in calibration routines (such as an internal reference weight or buffer-based check) exist mainly to:", o: ["Slow down routine work unnecessarily", "Let operators catch and correct gradual, otherwise invisible instrument drift routinely", "Replace the need for a transducer", "Increase an instrument's sensitivity"], a: 1, w: "Calibration routines are designed to catch drift regularly, before it corrupts results." },
+    { q: "Relying only on infrequent external servicing for calibration, instead of routine built-in checks, risks:", o: ["No meaningful risk", "Gradual drift going undetected for long periods, producing a run of wrong results", "Making the instrument too sensitive", "Improving specificity"], a: 1, w: "Without routine checks, drift can silently persist between service visits." },
+    { q: "Modular design in instrumentation refers to:", o: ["Sealing every internal part equally", "Making parts expected to wear out or need replacement easily accessible and swappable", "Removing all consumable parts from the design", "Using only one material throughout the instrument"], a: 1, w: "Modularity separates easily replaceable consumables from the rest of the instrument." },
+    { q: "Precision components such as an instrument's internal optical alignment are typically:", o: ["Made freely accessible to all users", "Deliberately sealed away to prevent untrained interference", "Removed entirely from modern designs", "Replaced daily by the operator"], a: 1, w: "Precision components are protected from casual tampering because misalignment is hard to reverse." },
+    { q: "A spectrophotometer's lamp module is usually made easy to access mainly because it is:", o: ["A precision optical alignment component", "A consumable that predictably wears out and needs routine replacement", "The instrument's power supply", "Irrelevant to instrument performance"], a: 1, w: "Lamps are consumables, so accessibility supports routine, expected replacement." },
+    { q: "An instrument gives highly reproducible readings that are all consistently too high for a known standard. The most appropriate first design-based troubleshooting step is to:", o: ["Assume the instrument needs replacement immediately", "Use the instrument's own built-in blank/calibration routine to check for systematic drift", "Ignore the discrepancy since the readings are reproducible", "Increase the instrument's sensitivity setting"], a: 1, w: "Built-in calibration/blank routines are specifically designed to catch this systematic-offset pattern." },
+  ],
+};
+
+/* --------------------------- lab:15 --------------------------- */
+const T_LAB_OPDESIGN_II = {
+  courseId: "lab",
+  topicIndex: 15,
+  title: "Operation and Design of Laboratory Equipment II",
+  minutes: 20,
+  note: [
+    { q: "Recap and bridge: applying the general architecture to specific machines.",
+      body: `Part I gave you the shared skeleton behind every instrument - power supply, sensor/transducer, signal processing, display - plus the target properties (accuracy, precision, sensitivity, specificity) and the design layers of materials, human factors, calibration, and maintenance. This second half puts that skeleton to work on the actual instruments you already know from earlier in this course.
+
+My Socratic question: if you already learned the operating steps for the balance, spectrophotometer, microscope, centrifuge, and autoclave in their own dedicated topics, what is left to learn here?
+
+The answer is the "why" behind the steps. Earlier, you learned *what* to do - zero the balance, blank the spectrophotometer, balance the centrifuge rotor. Here, you learn *why* the design demands exactly that step, by tracing it through the same four-block architecture and design principles from Part I. This turns memorised procedure into understood procedure - and understood procedure is what survives an exam question phrased in an unfamiliar way, or a real instrument behaving unexpectedly.
+
+Crucial insight: every "why does the manual say to do this" question about a specific instrument almost always resolves back to one of the general design principles from Part I. This topic is where the two halves of your knowledge finally meet.` },
+
+    { q: "Applying the model to the balance: how a mechanical quantity becomes a digital number.",
+      body: `Trace a modern electronic balance through the four-block architecture. Power supply: mains or battery power runs the internal electronics. Transducer: the load cell, typically using a strain gauge, flexes by a tiny, precise amount under the applied weight, and this mechanical strain is converted into a proportional electrical signal. Signal processing: the tiny analogue signal is amplified, filtered to remove electrical noise and vibration artefacts, then converted from analogue to digital by an analogue-to-digital converter (ADC). Display: the processed digital value is shown as a mass reading, often to four or five decimal places on an analytical balance.
+
+My Socratic question: why does a sensitive analytical balance need such heavy filtering of its signal, far more than a simple top-loading balance?
+
+The answer is that at extremely high sensitivity, the load cell picks up genuine "noise" from sources that are irrelevant to the sample - air currents, building vibration, even a nearby door closing - and heavy filtering (plus the draught shield you learned about in the balance topic) is what separates the true mass signal from this background noise.
+
+Crucial insight: the draught shield and anti-vibration table you were taught as "good practice" for analytical balances are not arbitrary habits - they exist because the transducer's extreme sensitivity, which is the whole point of the instrument, makes it equally vulnerable to picking up everything else nearby.` },
+
+    { q: "Applying the model to optical instruments: engineering the spectrophotometer's light path.",
+      body: `A spectrophotometer's core design is a carefully engineered light path. A light source (often a halogen lamp for visible light, or a deuterium lamp for ultraviolet) produces broad-spectrum light. A monochromator - typically a diffraction grating or prism - selects out a single, narrow wavelength band before the light ever reaches the sample. That selected light passes through the sample in its cuvette, some is absorbed, and the remainder reaches a photodetector (the transducer), which converts the transmitted light intensity into an electrical signal, processed and displayed as absorbance or transmittance.
+
+My Socratic question: why must the monochromator select the wavelength *before* the light reaches the sample, rather than filtering the wavelength afterward, at the detector?
+
+The answer is that absorbance is wavelength-specific - a compound absorbs different wavelengths to different extents, so the instrument must know it is delivering a single, defined wavelength to the sample in order to correctly calculate absorbance at that wavelength. If unfiltered, mixed light struck the sample first, the resulting absorbance reading would be an uninterpretable average across many wavelengths, defeating the purpose of choosing a specific wavelength for the assay.
+
+Crucial insight: every step in the spectrophotometer's light path exists to guarantee that the number displayed reflects absorbance at one known, controlled wavelength - this is why lamp warm-up, correct cuvette orientation, and a valid blank all matter so much, each protects a different point along that same engineered path.` },
+
+    { q: "Applying the model to the microscope: an instrument that mostly skips electronic transduction.",
+      body: `The microscope is a useful exception that proves how general the four-block model really is. A basic light microscope has a light source and optical components (condenser, objective, ocular lenses) that bend and magnify light - but for a simple non-digital microscope, there is no electronic transducer converting the image into an electrical signal at all.
+
+My Socratic question: why doesn't a basic light microscope need any electronic transducer or signal processing, unlike a pH meter or a spectrophotometer?
+
+The answer is that the microscope's "display" is simply the magnified, focused light itself, arriving directly at the operator's eye. The human eye and brain act as the final detector and processor - the instrument's entire job is purely optical: bend and magnify light correctly, then hand it directly to a biological system that is already superbly good at interpreting it. There is nothing left for electronics to convert, because no electrical signal was ever needed.
+
+Crucial insight: modern digital microscopes add a camera sensor (a transducer) precisely to close this gap, converting the optical image into an electrical signal so it can be displayed on a screen, stored, or shared - which is exactly the same transducer logic from Part I, simply applied on top of an otherwise purely optical instrument.` },
+
+    { q: "Applying the model to the centrifuge: converting electrical energy into controlled rotational force.",
+      body: `The centrifuge runs the four-block model in reverse compared to a measuring instrument - it converts electrical power into a controlled physical output, rather than converting a physical input into an electrical reading. An electric motor, driven by the power supply, spins a rotor at high speed. Rotor design - fixed-angle versus swinging-bucket, as you learned earlier - determines the exact direction and pattern of the sedimenting force. Crucially, a feedback sensor (often a tachometer, a transducer that measures rotational speed) continuously reports the actual speed back to the control circuitry, which adjusts motor power moment to moment to hold the set speed steady.
+
+My Socratic question: why must the centrifuge's speed-control system continuously measure and adjust, rather than simply setting the motor's power once at the start of the run?
+
+The answer is that the load on the motor is not constant - an imbalanced rotor, changing air resistance, or friction can all cause the actual speed to drift from the intended speed if the motor power were left fixed. A continuous feedback loop - measure actual speed, compare to target speed, adjust power, repeat - is what holds the rotor at a genuinely constant, reproducible speed throughout the run, which matters directly for reproducible sedimentation.
+
+Crucial insight: this same closed-loop feedback principle - measure, compare, adjust, repeat - reappears throughout precision instrumentation wherever a stable condition must be actively maintained rather than simply set once, from temperature control in an incubator to speed control in a centrifuge.` },
+
+    { q: "Applying the model to the autoclave: engineering heat and pressure together, deliberately.",
+      body: `The autoclave's design links two physical quantities on purpose. At normal atmospheric pressure, water boils at 100°C - too low a temperature to reliably kill resistant bacterial spores within a practical time. The autoclave's pressure vessel is designed to hold steam under increased pressure, and increasing pressure raises the temperature at which steam forms - allowing the chamber to reach roughly 121°C. Sensors continuously monitor both temperature and pressure, and the control system will not start the sterilisation timer until both required values are confirmed simultaneously; a safety valve prevents pressure exceeding safe limits, and the whole vessel is engineered to contain that pressure safely.
+
+My Socratic question: why can't an autoclave simply rely on temperature control alone, without also engineering and monitoring pressure?
+
+The answer is that, in this system, pressure is not a side effect to be tolerated - it is the deliberate mechanism the design uses to reach a temperature higher than plain boiling water could ever achieve. Monitoring pressure is really monitoring whether the intended higher-temperature environment has actually been created; temperature and pressure verify each other, which is precisely why both are checked together before the sterilising timer is allowed to begin.
+
+Crucial insight: recognising that pressure and temperature are deliberately coupled in the autoclave's design - not two unrelated readings - is exactly the kind of "why" question that separates genuine understanding from memorised steps.` },
+
+    { q: "Electrical and electronic safety features engineered directly into the circuit.",
+      body: `Return now to the electrical hazards you met in the lab electricals and safety topic, and see how design answers them directly, as physical features of the circuit itself, not merely as rules to remember.
+
+Fuses and circuit breakers interrupt current automatically if it exceeds a safe level, preventing overheating or fire. Earthing (grounding) provides a low-resistance path so that, if a fault causes the metal casing to become live, current flows safely to earth and trips the protective device, rather than passing through anyone who touches the casing. Double insulation uses two independent layers of insulating protection so a single failure cannot expose a live part. Overheat cut-offs shut equipment down automatically if internal temperature rises dangerously.
+
+My Socratic question: what specifically happens to a poorly grounded, metal-cased instrument if an internal wire frays and touches the casing?
+
+The answer is that, without a low-resistance path to earth, the casing itself can become live, and the next person who touches it completes the circuit through their own body, risking a serious or fatal shock. With correct grounding, the fault current instead flows through the much lower-resistance earth path, which trips a fuse or circuit breaker - the danger is resolved by the circuit itself, automatically, before a person is ever involved.
+
+Crucial insight: these are not accessories bolted onto an otherwise-finished design - grounding, fusing, and insulation are integral parts of the electrical circuit, engineered in from the start specifically because instrument designers assume faults will eventually occur.` },
+
+    { q: "Digital versus analogue instrumentation, and the shift toward automated, connected lab equipment.",
+      body: `A further design distinction worth understanding is analogue versus digital instrumentation. An analogue instrument represents its reading as a continuously variable physical quantity - a needle position on a dial, for instance. A digital instrument uses an analogue-to-digital converter and a microprocessor to represent the same reading as a discrete number, which can then be stored, transmitted, and displayed with exact precision.
+
+Modern laboratories increasingly use instruments that go a step further: touchscreens, onboard data storage, and direct electronic connection to a Laboratory Information System (LIS), which receives results automatically rather than requiring a person to read a screen and type the number in elsewhere.
+
+My Socratic question: what specific type of error does a direct digital connection to a laboratory information system eliminate that manual transcription cannot?
+
+The answer is transcription error - the mistake of a human misreading, mistyping, or misrecording a value while copying it from an instrument's display into a separate record. A direct digital link removes the human copying step from the chain entirely, so that particular category of error becomes structurally impossible, not merely less likely.
+
+Crucial insight: automation in modern instrument design is not simply about convenience or speed - it is frequently a deliberate error-elimination strategy, removing entire categories of human mistake from the chain between measurement and recorded result.` },
+
+    { q: "Choosing the right equipment for the task: matching design to the job at hand.",
+      body: `The final applied design skill is equipment selection - matching an instrument's design specifications to the actual task, rather than always reaching for the most impressive-sounding option.
+
+Relevant selection criteria include the required measurement range and capacity, the necessary sensitivity, throughput (how many samples per hour), sample volume available, budget, and ongoing maintenance and consumable costs.
+
+My Socratic question: why would using an ultra-sensitive analytical balance, capable of reading to 0.0001 g, actually be a poor choice for weighing out 200 g of a bulk buffer salt, despite its impressive precision?
+
+The answer is a mismatch between design and task. Analytical balances typically have a low maximum capacity and are engineered to be extremely sensitive to draughts and vibration - both properties that make them slow, fussy, and sometimes simply incapable of handling a large bulk mass efficiently. A top-loading balance, with a higher capacity and lower (but entirely sufficient) sensitivity, is the properly matched tool for that particular task.
+
+Crucial insight: "better" precision or sensitivity is not universally better - it is only better when the task actually requires it. Fit-for-purpose matching between an instrument's design and the specific job is itself a core professional skill, distinct from simply knowing how to operate any single machine.` },
+
+    { q: "When design fails: recognising common failure modes, and the closing case.",
+      body: `Your cognitive map for this second half, in five lines, followed by a closing case that draws on both topics.
+
+Applying the architecture: every specific instrument you already know - balance, spectrophotometer, microscope, centrifuge, autoclave - runs the same four-block model, though the microscope substitutes the human eye for an electronic transducer, and the centrifuge runs the model in reverse to produce a controlled output.
+
+Feedback and coupling: precision instruments like the centrifuge use continuous feedback loops to hold a condition steady, and the autoclave deliberately couples pressure to temperature to reach a sterilising heat that plain boiling could never achieve.
+
+Safety by circuit: fuses, earthing, double insulation, and overheat cut-offs are built into the electrical design itself, assuming faults will eventually occur.
+
+The automation shift: digital and connected instruments do not just add convenience - they structurally eliminate categories of human error such as transcription mistakes.
+
+Selection and failure: matching an instrument's design specifications to the actual task matters as much as understanding the instrument itself, and common design-related failures - drift, sensor fouling, mechanical wear, material degradation, electronic faults - each trace back to one of the design layers you have now studied.
+
+Now your closing case, spanning both topics. An autoclave repeatedly fails to reach its sterilising hold temperature, even though the timer starts normally and the pressure gauge appears roughly normal throughout the cycle.
+
+Question one: name the most likely design-related fault, and explain specifically why it could produce this exact pattern - a gauge that looks roughly normal, yet the target temperature is not reached.
+Question two: which safety-by-design feature discussed in this topic ensures the cycle cannot be falsely recorded as a successful sterilisation, despite the fault?
+Question three: is this fault best classified as a materials-layer, maintenance-layer, or feedback-layer design failure, and justify your choice.
+
+Work them through before reading on.
+
+My answers. One: the most likely fault is a perished or damaged door seal, allowing a slow, continuous steam leak; because the leak is gradual rather than sudden, the pressure gauge can still read close to normal at any given instant even while pressure and temperature are quietly failing to sustain the required sterilising level over time. Two: the design principle from Part I - that temperature and pressure are deliberately coupled and monitored together - means the control system requires both values to be confirmed simultaneously before starting (and, in most designs, continuously maintained throughout) the sterilising timer, so a genuine failure to reach or hold temperature should prevent the cycle from being logged as a successful, completed sterilisation. Three: this is a materials-layer design failure, since the root cause is the degradation of a physical material (the door seal) chosen for a specific tolerance property, distinguishing it from a feedback-control fault (where the control loop itself malfunctions) or a pure maintenance-scheduling issue (where a known consumable was simply never replaced on time), though in practice the two are related, since a design that made the seal more visibly inspectable would catch this earlier.
+
+If those came cleanly, you can now reason about laboratory equipment the way its designers do - not simply as a sequence of buttons to press, but as an engineered system whose "why" you can trace, troubleshoot, and trust.` },
+  ],
+  theory: [
+    { q: "Explain the purpose of Part II relative to Part I, in terms of what each topic actually teaches about the same instruments.", a: "Part I established the general, shared design architecture and principles (the four-block model, target properties, materials, human factors, calibration, maintenance) across instruments in the abstract. Part II applies that same architecture to the specific instruments already studied elsewhere in the course, explaining the design 'why' behind operating steps that were previously learned as procedure." },
+    { q: "Trace an electronic balance through the four-block architecture, naming the transducer used.", a: "Power supply runs the electronics; the transducer is the load cell (typically strain-gauge based), which converts mechanical strain from the applied weight into a proportional electrical signal; signal processing amplifies and filters this signal and converts it via an analogue-to-digital converter; the display shows the resulting digital mass reading." },
+    { q: "Explain why the monochromator in a spectrophotometer must select the wavelength before light reaches the sample, not after.", a: "Absorbance is wavelength-specific, so the instrument must deliver a single, known wavelength to the sample to correctly calculate absorbance at that wavelength. If unfiltered light struck the sample first, the resulting reading would be an uninterpretable average across many wavelengths." },
+    { q: "Explain why a basic (non-digital) light microscope requires no electronic transducer, and what changes in a digital microscope.", a: "In a basic microscope, the human eye and brain serve as the final detector/processor of the magnified light directly, so no electrical signal conversion is needed. A digital microscope adds a camera sensor as a transducer, converting the optical image into an electrical signal so it can be displayed, stored, or shared." },
+    { q: "Explain why a centrifuge's speed-control system must continuously measure and adjust motor power rather than setting it once.", a: "Load on the motor is not constant - imbalance, air resistance, and friction can all cause actual speed to drift from the target if power were fixed. A continuous feedback loop (measure actual speed via a tachometer, compare to target, adjust power, repeat) holds the rotor at a genuinely constant, reproducible speed." },
+    { q: "Explain why the autoclave's design deliberately couples pressure to temperature rather than controlling temperature alone.", a: "At atmospheric pressure water boils at only 100°C, too low to reliably kill resistant spores in practical time. Increasing pressure raises the temperature at which steam forms, allowing roughly 121°C to be reached; pressure is therefore the deliberate mechanism used to achieve the higher sterilising temperature, so both must be monitored together." },
+    { q: "Using the frayed-wire example, explain how earthing (grounding) protects an operator from electric shock.", a: "Without grounding, a fault that causes an internal wire to touch the casing can make the casing live, and the next person to touch it completes the circuit through their body. With correct grounding, fault current instead flows through the low-resistance earth path, tripping a fuse or circuit breaker automatically, before a person is involved." },
+    { q: "Explain what type of error a direct digital connection between an instrument and a Laboratory Information System eliminates, and why.", a: "It eliminates transcription error - the mistake of a human misreading, mistyping, or misrecording a value while manually copying it. A direct digital link removes the human copying step from the chain entirely, making that category of error structurally impossible rather than merely less likely." },
+    { q: "Explain, using the analytical balance and bulk buffer salt example, why higher precision is not always the better equipment choice.", a: "Analytical balances have low maximum capacity and extreme sensitivity to draughts and vibration, making them slow and sometimes incapable for large bulk masses. A top-loading balance, with sufficient (lower) sensitivity and higher capacity, better matches that task - 'better' precision is only advantageous when the task actually requires it." },
+    { q: "An autoclave fails to reach its sterilising temperature despite a roughly normal-looking pressure gauge and a normally-starting timer. Identify the likely fault and the design layer it belongs to.", a: "The likely fault is a perished or damaged door seal causing a slow, continuous steam leak, which can leave the gauge looking roughly normal at any instant while temperature/pressure fail to be sustained. This is a materials-layer design failure, since it stems from degradation of a physical material chosen for a specific tolerance property." },
+  ],
+  videos: [
+    { channel: "Lab Instrumentation", title: "Inside a Spectrophotometer: The Light Path Explained", note: "How the monochromator, cuvette, and detector work together.", url: "" },
+    { channel: "Biomedical Engineering", title: "Feedback Control Loops in Precision Instruments", note: "The measure-compare-adjust cycle behind centrifuges and other precision equipment.", url: "" },
+    { channel: "Lab Safety", title: "Electrical Safety Features Inside Laboratory Equipment", note: "Fuses, earthing, and insulation as built-in circuit design, not add-ons.", url: "" },
+  ],
+  mcqs: [
+    { q: "The main purpose of Part II, relative to Part I, is to:", o: ["Introduce entirely new operating steps for each instrument", "Apply the general design architecture and principles from Part I to the specific instruments already studied", "Replace the need to know any operating procedures", "Cover instruments unrelated to the rest of the course"], a: 1, w: "Part II applies the shared architecture from Part I to instruments already covered elsewhere." },
+    { q: "In a modern electronic balance, the transducer is the:", o: ["Photodetector", "Load cell", "Ion-selective electrode", "Diffraction grating"], a: 1, w: "The load cell converts applied weight into a proportional electrical signal." },
+    { q: "Heavy signal filtering in a sensitive analytical balance exists mainly to:", o: ["Increase the instrument's maximum capacity", "Separate the true mass signal from background noise such as air currents and vibration", "Reduce the instrument's sensitivity deliberately", "Eliminate the need for a draught shield"], a: 1, w: "High sensitivity makes the load cell equally vulnerable to irrelevant background noise, which filtering removes." },
+    { q: "In a spectrophotometer, the monochromator's role is to:", o: ["Detect transmitted light intensity", "Select a single, narrow wavelength band before light reaches the sample", "Amplify the electrical signal from the detector", "Supply electrical power to the lamp"], a: 1, w: "The monochromator selects the working wavelength before the sample is illuminated." },
+    { q: "If unfiltered, mixed-wavelength light struck a sample before wavelength selection, the resulting absorbance reading would be:", o: ["More accurate than usual", "An uninterpretable average across many wavelengths", "Unaffected, since absorbance is wavelength-independent", "Automatically corrected by the detector"], a: 1, w: "Absorbance is wavelength-specific, so mixed light produces a meaningless averaged reading." },
+    { q: "A basic (non-digital) light microscope needs no electronic transducer because:", o: ["It uses no light source at all", "The human eye and brain act as the final detector and processor of the magnified image", "It has no optical components", "Electronic transducers are illegal in optical instruments"], a: 1, w: "The eye directly receives and interprets the magnified light; no electrical conversion is needed." },
+    { q: "A digital microscope adds a transducer in the form of a:", o: ["Load cell", "Ion-selective electrode", "Camera sensor", "Tachometer"], a: 2, w: "A camera sensor converts the optical image into an electrical signal for display/storage." },
+    { q: "In a centrifuge, the sensor that reports actual rotor speed back to the control circuitry is typically a:", o: ["Load cell", "Photodetector", "Tachometer", "Ion-selective electrode"], a: 2, w: "A tachometer measures rotational speed as feedback for the control loop." },
+    { q: "A centrifuge's speed-control system continuously adjusts motor power mainly because:", o: ["The operator changes the setting during the run", "Load factors such as imbalance and friction can cause speed to drift if power were fixed once", "The rotor cools down during the run", "Continuous adjustment is required by law only"], a: 1, w: "Continuous feedback compensates for changing load conditions to hold speed steady." },
+    { q: "The general control principle 'measure, compare to target, adjust, repeat' is known as a:", o: ["Open-loop system", "Closed-loop feedback control", "Static calibration", "One-time adjustment"], a: 1, w: "This describes closed-loop feedback control, used in centrifuges and similar precision instruments." },
+    { q: "In an autoclave, increasing the internal pressure serves mainly to:", o: ["Reduce energy consumption", "Raise the temperature at which steam forms, allowing sterilising temperatures above 100°C to be reached", "Lower the sterilising temperature required", "Replace the need for a safety valve"], a: 1, w: "Higher pressure raises steam temperature, enabling effective sterilisation above plain boiling point." },
+    { q: "An autoclave's control system typically will not start the sterilising timer until:", o: ["The lid is simply closed", "Both the required temperature and pressure are confirmed simultaneously", "The operator manually overrides the sensors", "A full hour has elapsed regardless of readings"], a: 1, w: "Temperature and pressure verify each other, so both must be confirmed before timing begins." },
+    { q: "Fuses and circuit breakers protect an instrument's circuit mainly by:", o: ["Increasing voltage automatically", "Interrupting current automatically if it exceeds a safe level, preventing overheating or fire", "Grounding the casing permanently", "Reducing the instrument's sensitivity"], a: 1, w: "Fuses/breakers cut current when it exceeds safe limits." },
+    { q: "Earthing (grounding) an instrument's metal casing is designed to:", o: ["Increase the instrument's sensitivity", "Provide a low-resistance path so fault current trips a protective device instead of passing through a person", "Eliminate the need for insulation", "Reduce the instrument's weight"], a: 1, w: "Grounding diverts fault current safely to earth, protecting the operator." },
+    { q: "Without adequate grounding, a fraying internal wire that contacts the casing risks:", o: ["No real danger, since casings are always insulated", "Making the casing live, risking a serious shock to the next person who touches it", "Automatically improving instrument accuracy", "Triggering an interlock only"], a: 1, w: "An ungrounded live casing can deliver a shock to anyone who touches it." },
+    { q: "Double insulation, as a design feature, provides protection by:", o: ["Using two independent insulating layers so a single failure cannot expose a live part", "Doubling the instrument's power output", "Removing the need for any fuse", "Increasing signal amplification"], a: 0, w: "Two independent insulation layers guard against a single point of failure." },
+    { q: "Compared to an analogue instrument, a digital instrument represents its reading as:", o: ["A continuously variable needle position", "A discrete number generated via an analogue-to-digital converter", "An entirely non-electrical output", "A sound signal only"], a: 1, w: "Digital instruments convert readings into discrete numeric values via an ADC." },
+    { q: "A direct digital connection between an instrument and a Laboratory Information System (LIS) mainly eliminates:", o: ["The need for any transducer", "Transcription error from manual copying of results", "The need for calibration", "The need for a power supply"], a: 1, w: "Removing the manual copying step structurally eliminates transcription error." },
+    { q: "Choosing laboratory equipment appropriately involves matching design specifications primarily to the:", o: ["Instrument's brand reputation alone", "Actual task's required range, sensitivity, throughput, and sample volume", "Colour of the instrument's casing", "Number of buttons on the control panel"], a: 1, w: "Selection should be driven by genuine task requirements, not superficial features." },
+    { q: "Using an ultra-sensitive analytical balance to weigh 200 g of bulk buffer salt is a poor choice mainly because:", o: ["Analytical balances cannot display numbers above 100", "Analytical balances typically have low capacity and high sensitivity to draughts/vibration, making them slow or incapable for bulk masses", "Analytical balances cannot be calibrated", "Bulk salts damage all balances equally"], a: 1, w: "The balance's design (low capacity, high environmental sensitivity) is mismatched to a bulk-weighing task." },
+    { q: "The principle that 'better precision is not universally better' means that:", o: ["High precision instruments should never be purchased", "An instrument's design should be fit for the specific task, not simply the most impressive-sounding option", "Precision is irrelevant to instrument selection", "Only cost should determine equipment selection"], a: 1, w: "Fit-for-purpose matching between design and task, not maximum precision alone, should guide selection." },
+    { q: "A gradual, unnoticed change in an instrument's readings over time, away from the true value, is called:", o: ["Specificity loss only", "Drift", "An interlock failure", "A transcription error"], a: 1, w: "Drift describes gradual, often invisible deviation of readings from the true value over time." },
+    { q: "Sensor fouling (such as a contaminated pH electrode membrane) is best classified as what type of design-related failure?", o: ["A feedback-control failure", "A materials/sensor-layer failure affecting the transducer's function", "A purely administrative failure", "A power-supply failure"], a: 1, w: "Fouling directly affects the transducer/sensor component's ability to function correctly." },
+    { q: "An autoclave repeatedly fails to reach its sterilising temperature, though the pressure gauge looks roughly normal throughout. The most likely explanation is:", o: ["A broken timer only", "A perished door seal causing a slow, continuous steam leak", "An oversensitive balance nearby", "A transcription error in the LIS"], a: 1, w: "A gradual seal leak can leave the gauge looking near-normal instantaneously while sterilising conditions are not sustained." },
+    { q: "The design principle that should prevent a failed autoclave cycle (as in the case above) from being falsely logged as successful is:", o: ["The requirement that both temperature and pressure be confirmed together before/throughout the sterilising timer", "The presence of a lamp warm-up period", "The use of a load cell", "The presence of an inoculating loop"], a: 0, w: "Coupled temperature/pressure verification is designed to catch exactly this kind of failure." },
+    { q: "Mechanical wear, such as bearing wear in a centrifuge causing imbalance or noise, is an example of a failure in which design layer?", o: ["The display/output layer", "The mechanical/materials layer", "The power-supply layer only", "The human-factors layer only"], a: 1, w: "Bearing wear is a physical/mechanical degradation of a material component over time." },
+    { q: "Compared to a fixed-power motor design, a closed-loop feedback speed control is generally:", o: ["Less accurate under changing load conditions", "Better able to maintain a stable, reproducible speed despite changing load conditions", "Unnecessary for any precision instrument", "Only relevant to optical instruments"], a: 1, w: "Feedback control actively compensates for changing conditions, unlike a fixed, uncorrected setting." },
+    { q: "An engineered design feature that prevents an unsafe action from being physically possible, rather than merely warning against it, is called a(n):", o: ["Administrative control", "Interlock", "Calibration routine", "Transducer"], a: 1, w: "Interlocks are engineering controls that make the unsafe action physically impossible." },
+    { q: "Overall, the central theme connecting both Operation and Design topics is that:", o: ["Every instrument must be treated as a unique, unrelated black box", "A shared set of design principles - architecture, target properties, materials, human factors, calibration, and feedback - underlies and explains the specific behaviour of every instrument in the laboratory", "Design knowledge is irrelevant once operating steps are memorised", "Only expensive instruments follow identifiable design principles"], a: 1, w: "The course's central theme is that shared design principles explain and unify the behaviour of every specific instrument studied." },
+    { q: "A traditional dial-based analogue thermometer, compared to a digital probe thermometer, represents its reading as:", o: ["A discrete number from an analogue-to-digital converter", "A continuously variable needle or column position", "A signal sent directly to a Laboratory Information System", "An encrypted digital file only"], a: 1, w: "Analogue instruments display a continuously variable physical position rather than a converted discrete number." },
+  ],
+};
+
+/* --------------------------- lab:16 --------------------------- */
+const T_LAB_REFERENCING = {
+  courseId: "lab",
+  topicIndex: 16,
   title: "Referencing",
   minutes: 18,
   note: [
@@ -8744,10 +9095,10 @@ If those came cleanly, you understand how in-text citations and reference lists 
   ],
 };
 
-/* --------------------------- lab:15 --------------------------- */
+/* --------------------------- lab:17 --------------------------- */
 const T_LAB_REPORTS = {
   courseId: "lab",
-  topicIndex: 15,
+  topicIndex: 17,
   title: "Writing Lab Reports",
   minutes: 20,
   note: [
@@ -16754,8 +17105,10 @@ const CONTENT = {
   "lab:11": T_LAB_BIOSAFETY,
   "lab:12": T_LAB_IPC,
   "lab:13": T_LAB_EQUIPMENT,
-  "lab:14": T_LAB_REFERENCING,
-  "lab:15": T_LAB_REPORTS,
+  "lab:14": T_LAB_OPDESIGN_I,
+  "lab:15": T_LAB_OPDESIGN_II,
+  "lab:16": T_LAB_REFERENCING,
+  "lab:17": T_LAB_REPORTS,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
