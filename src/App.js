@@ -518,9 +518,15 @@ async function fetchDriveSlideFiles() {
   _driveSlidesPromise = fetch(url)
     .then((r) => r.json())
     .then((data) => {
+      if (data && data.error) {
+        console.error("Drive slides API error:", data.error.code, data.error.message, data.error);
+        _driveSlidesPromise = null;
+        return _driveSlidesCache || [];
+      }
       _driveSlidesCache = Array.isArray(data.files) ? data.files : [];
       _driveSlidesFetchedAt = Date.now();
       _driveSlidesPromise = null;
+      console.log("Drive slides loaded:", _driveSlidesCache.length, "files");
       return _driveSlidesCache;
     })
     .catch((e) => {
