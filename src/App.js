@@ -24754,7 +24754,7 @@ export default function App() {
     if (calendarStreak > (progress.streak || 0)) {
       persist({ ...progress, streak: calendarStreak });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [progress?.dailyDone]);
 
   // ============================================================
