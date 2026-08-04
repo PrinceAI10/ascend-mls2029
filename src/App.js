@@ -16987,7 +16987,7 @@ const db = {
             dailyDone: mergedDailyDone,
             completed: { ...(existing.completed || {}), ...(progress.completed || {}) },
             scores: { ...(existing.scores || {}), ...(progress.scores || {}) },
-            bookmarks: Array.from(new Set([...(existing.bookmarks || []), ...(progress.bookmarks || [])])),
+            bookmarks: Array.isArray(progress.bookmarks) ? progress.bookmarks : (existing.bookmarks || []),
           };
         }
       } catch {} // if this safety read fails, fall through and save the payload as-is (unchanged behaviour)
