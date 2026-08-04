@@ -210,6 +210,14 @@ html, body {
 .card-feature{background:linear-gradient(150deg,#13203a,#0d1526)}
 .ascend-root.light .card-feature{background:linear-gradient(150deg,#EAEFF7,#DCE4EF)}
 .card-feature.hover:hover{background:linear-gradient(150deg,#172a48,#101a2e)}
+.slide-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.slide-card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px;display:flex;flex-direction:column;overflow:hidden}
+.slide-thumb-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:var(--bg-3);margin-bottom:9px}
+.slide-thumb-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.slide-thumb-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:11px;text-align:center;padding:8px}
+@media (min-width:640px){.slide-grid{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:1000px){.slide-grid{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:1280px){.slide-grid{grid-template-columns:repeat(5,1fr)}}
 .ascend-root.light .card-feature.hover:hover{background:linear-gradient(150deg,#E2E9F4,#D2DCEA)}
 .grid{display:grid;gap:14px}
 .hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:20px;
@@ -559,28 +567,28 @@ function LectureSlides({ courseId, topicIndex }) {
   const cleanName = (name) =>
     name.replace(/^[a-z0-9]+_\d+_/i, "").replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").trim();
 
+  // Drive's thumbnailLink defaults to a tiny ~220px preview. Bump the size
+  // param up so the thumbnail still looks sharp filling a wider card on
+  // desktop, while staying a real preview of a page from the slide deck.
+  const bigThumb = (link) => (link ? link.replace(/=s\d+$/, "=s800") : link);
+
   return (
     <div style={{ marginBottom: 18 }}>
       <div className="eyebrow" style={{ marginBottom: 10 }}>Lecture slides</div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+      <div className="slide-grid">
         {matches.map((f) => (
-          <div key={f.id} className="card" style={{ width: 168, padding: 10 }}>
-            {f.thumbnailLink ? (
-              <img
-                src={f.thumbnailLink}
-                alt={f.name}
-                style={{ width: "100%", height: 100, objectFit: "cover", borderRadius: 8, marginBottom: 8, display: "block", background: "var(--bg-3)" }}
-                loading="lazy"
-              />
-            ) : (
-              <div style={{ width: "100%", height: 100, background: "var(--bg-3)", borderRadius: 8, marginBottom: 8, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-3)", fontSize: 11 }}>
-                No preview
-              </div>
-            )}
+          <div key={f.id} className="slide-card">
+            <a href={f.webViewLink} target="_blank" rel="noopener noreferrer" className="slide-thumb-wrap" style={{ display: "block" }}>
+              {f.thumbnailLink ? (
+                <img src={bigThumb(f.thumbnailLink)} alt={f.name} loading="lazy" />
+              ) : (
+                <div className="slide-thumb-fallback">No preview</div>
+              )}
+            </a>
             <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 8, lineHeight: 1.3 }}>
               {cleanName(f.name)}
             </div>
-            <div style={{ display: "flex", gap: 6 }}>
+            <div style={{ display: "flex", gap: 6, marginTop: "auto" }}>
               <a href={f.webViewLink} target="_blank" rel="noopener noreferrer" className="btn btn-sm" style={{ flex: 1, textAlign: "center", textDecoration: "none" }}>View</a>
               <a href={`https://drive.google.com/uc?export=download&id=${f.id}`} className="btn btn-sm" style={{ flex: 1, textAlign: "center", textDecoration: "none" }}>Download</a>
             </div>
@@ -18343,7 +18351,6 @@ function TopicView({ app }) {
         })()}
       </div>
       <div className="divider" />
-      <LectureSlides courseId={t.courseId} topicIndex={t.topicIndex} />
       <div className="eyebrow" style={{ marginBottom: 14 }}>The lesson</div>
       <div className="lesson">
         {(t.note || []).map((it, idx) => (
@@ -18360,6 +18367,7 @@ function TopicView({ app }) {
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}><Ic.ai p={18} /><div className="eyebrow" style={{ margin: 0 }}>Ask ASCEND</div></div>
       <AITutor topicTitle={t.title} context={noteContext} />
       <div className="divider" />
+      <LectureSlides courseId={t.courseId} topicIndex={t.topicIndex} />
       <div className="eyebrow" style={{ marginBottom: 12 }}>{(t.theory || []).length} theory questions</div>
       <div className="qa">
         {(t.theory || []).map((it, idx) => (
