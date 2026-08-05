@@ -1,7 +1,7 @@
 // ============================================================
 // TOP OF App.js - FIXED IMPORTS
 // ============================================================
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Tesseract from 'tesseract.js';              
 import { supabase } from "./supabaseClient";
 
@@ -17163,6 +17163,70 @@ const DAILY = {
   0: { courseId: "lab", q: "Standard precautions assume that:", o: ["Only sick patients are infectious", "All blood and body fluids are potentially infectious", "Gloves give full protection", "Handwashing is optional"], a: 1, w: "All blood and body fluids are potentially infectious." }
 };
 
+/* ===================== DAILY CBT (5-question set) =====================
+   DAILY above only maps each weekday to a course. The actual 5 questions
+   are pulled live from that course's full topic syllabus (every topic's
+   mcqs in CONTENT), so the set changes as more topics/mcqs are added.
+   The pick is seeded by courseId+date, so everyone sees the same 5
+   questions on a given day, and reloading mid-CBT doesn't reshuffle them,
+   but tomorrow's set is different from today's. */
+
+// Small deterministic PRNG (mulberry32) seeded from a string, so the same
+// seed always produces the same sequence - no external dependency needed.
+function seededRng(seedStr) {
+  let h = 1779033703 ^ seedStr.length;
+  for (let i = 0; i < seedStr.length; i++) {
+    h = Math.imul(h ^ seedStr.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  return function () {
+    h = Math.imul(h ^ (h >>> 16), 2246822507);
+    h = Math.imul(h ^ (h >>> 13), 3266489909);
+    h ^= h >>> 16;
+    return (h >>> 0) / 4294967296;
+  };
+}
+
+function seededShuffle(arr, rng) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Builds today's 5-question CBT set for a course, spread across its topic
+// syllabus rather than clustered in one topic. Deterministic per
+// courseId+dateKey so it's stable across reloads/devices for the same day.
+function dailyQuestionsFor(courseId, dateKey, count = 5) {
+  const topicIndices = Object.keys(CONTENT)
+    .filter((k) => k.startsWith(courseId + ":"))
+    .map((k) => parseInt(k.split(":")[1], 10))
+    .filter((n) => !isNaN(n) && (CONTENT[`${courseId}:${n}`].mcqs || []).length > 0);
+  if (topicIndices.length === 0) return [];
+
+  const rng = seededRng(`${courseId}|${dateKey}`);
+  const topicOrder = seededShuffle(topicIndices, rng);
+  const questions = [];
+  const usedKeys = new Set();
+  let ti = 0;
+  let guard = 0;
+  while (questions.length < count && guard < count * 25) {
+    guard++;
+    const topicIdx = topicOrder[ti % topicOrder.length];
+    ti++;
+    const topic = CONTENT[`${courseId}:${topicIdx}`];
+    const pool = (topic && topic.mcqs) || [];
+    const shuffledPool = seededShuffle(pool.map((mcq, i) => ({ mcq, key: `${topicIdx}:${i}` })), rng);
+    const pick = shuffledPool.find((p) => !usedKeys.has(p.key));
+    if (!pick) continue;
+    usedKeys.add(pick.key);
+    questions.push({ ...pick.mcq, topicIndex: topicIdx, topicTitle: topic.title });
+  }
+  return questions;
+}
+
 const BOARD_SEED = [];
 const RANKS = [
   { name: "Bronze", min: 0, c: "#C08A5B" },
@@ -18902,63 +18966,155 @@ function CoursesView({ app }) {
 /* ------------------------------- daily ---------------------------------- */
  function DailyView({ app }) {
   const jsDay = new Date().getDay();
-  const d = DAILY[jsDay];
-  const c = courseById(d.courseId);
-  const alreadyDone = app.progress?.dailyDone?.[todayKey()] || false;
-  const [chosen, setChosen] = useState(null);
-  const [reveal, setReveal] = useState(!!alreadyDone);
+  const dayMeta = DAILY[jsDay];
+  const c = courseById(dayMeta.courseId);
+  const tk = todayKey();
+  const alreadyDone = app.progress?.dailyDone?.[tk] || false;
 
-  // SAVE DAILY STATE
+  // Deterministic 5-question set for today: same for everyone, stable across
+  // reloads, changes tomorrow. Pulled from the course's full topic syllabus.
+  const questions = useMemo(() => dailyQuestionsFor(dayMeta.courseId, tk, 5), [dayMeta.courseId, tk]);
+
+  const [qIndex, setQIndex] = useState(0);
+  const [answers, setAnswers] = useState(() => Array(questions.length).fill(null));
+  const [finished, setFinished] = useState(false);
+  const [restored, setRestored] = useState(false);
+
+  // RESTORE today's in-progress or completed CBT state, if this is a reload
+  // on the same day. A saved state from a previous day is ignored.
   useEffect(() => {
     try {
-      const state = { chosen, reveal };
-      sessionStorage.setItem('ascend_daily_state', JSON.stringify(state));
-    } catch {}
-  }, [chosen, reveal]);
-
-  // RESTORE DAILY STATE
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem('ascend_daily_state');
-      if (saved) {
-        const state = JSON.parse(saved);
-        if (state.chosen !== undefined) setChosen(state.chosen);
-        if (state.reveal !== undefined) setReveal(state.reveal);
+      const saved = JSON.parse(sessionStorage.getItem("ascend_daily_cbt") || "null");
+      if (saved && saved.tk === tk && Array.isArray(saved.answers) && saved.answers.length === questions.length) {
+        setAnswers(saved.answers);
+        setQIndex(Math.min(saved.qIndex || 0, questions.length - 1));
+        setFinished(!!saved.finished);
       }
     } catch {}
-  }, []);
-  
-  const submit = () => {
-    if (chosen === null) return;
-    setReveal(true);
-    if (!alreadyDone) app.recordDaily(chosen === d.a);
+    setRestored(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tk, questions.length]);
+
+  // SAVE state on every change, once restore has run (so we don't
+  // immediately clobber a just-restored state with fresh defaults).
+  useEffect(() => {
+    if (!restored) return;
+    try {
+      sessionStorage.setItem("ascend_daily_cbt", JSON.stringify({ tk, qIndex, answers, finished }));
+    } catch {}
+  }, [restored, tk, qIndex, answers, finished]);
+
+  if (questions.length === 0) {
+    return (
+      <div className="view">
+        <div className="eyebrow">Daily CBT · {new Date().toLocaleDateString("en-GB", { weekday: "long" })}</div>
+        <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Nothing to show yet</h1>
+        <p style={{ color: "var(--text-2)" }}>{c.name} doesn't have any live topics with questions yet - check back once a few topics are up.</p>
+      </div>
+    );
+  }
+
+  const current = questions[qIndex];
+  const chosen = answers[qIndex];
+  const answeredCount = answers.filter((a) => a !== null).length;
+  const correctCount = answers.reduce((n, a, i) => n + (a === questions[i].a ? 1 : 0), 0);
+
+  const pick = (oi) => {
+    if (finished) return;
+    const next = answers.slice();
+    next[qIndex] = oi;
+    setAnswers(next);
   };
+
+  const goNext = () => {
+    if (qIndex < questions.length - 1) setQIndex(qIndex + 1);
+    else finish();
+  };
+  const goPrev = () => { if (qIndex > 0) setQIndex(qIndex - 1); };
+
+  const finish = () => {
+    setFinished(true);
+    if (!alreadyDone) app.recordDaily(correctCount, questions.length);
+  };
+
   return (
     <div className="view">
-      <div className="eyebrow">Daily question · {new Date().toLocaleDateString("en-GB", { weekday: "long" })}</div>
+      <div className="eyebrow">Daily CBT · {new Date().toLocaleDateString("en-GB", { weekday: "long" })}</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Keep the streak alive</h1>
-      <p style={{ color: "var(--text-2)", marginTop: 0 }}>One question, one course, every day.</p>
-      <div className="card" style={{ marginTop: 18 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-          <span className="day-tag">{c.name}</span>
-          <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{app.progress?.streak || 0}</span></span>
-        </div>
-        <h3 style={{ fontSize: 18, lineHeight: 1.4, marginBottom: 16 }}>{d.q}</h3>
-        {d.o.map((opt, oi) => {
-          let cls = "opt";
-          if (reveal) { if (oi === d.a) cls += " correct"; else if (oi === chosen) cls += " wrong"; }
-          else if (oi === chosen) cls += " sel";
-          return <button className={cls} key={oi} disabled={reveal} onClick={() => setChosen(oi)}><span className="key">{"ABCD"[oi]}</span><span>{opt}</span></button>;
-        })}
-        {reveal ? (
-          <div className="card" style={{ marginTop: 6, background: "var(--bg-3)" }}>
-            <div style={{ fontSize: 14, color: "var(--text-2)" }}><strong style={{ color: "var(--text)" }}>Why: </strong>{d.w}</div>
-            {alreadyDone && chosen === null && <div className="note-hint" style={{ marginTop: 8 }}>You already logged today's streak.</div>}
+      <p style={{ color: "var(--text-2)", marginTop: 0 }}>5 questions, spanning {c.name}'s syllabus, every day.</p>
+
+      {!finished ? (
+        <div className="card" style={{ marginTop: 18 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14, flexWrap: "wrap", gap: 8 }}>
+            <span className="day-tag">{c.name}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <span className="mono" style={{ fontSize: 12.5, color: "var(--text-3)" }}>Question {qIndex + 1} of {questions.length}</span>
+              <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{app.progress?.streak || 0}</span></span>
+            </div>
           </div>
-        ) : (
-          <button className="btn btn-a" style={{ marginTop: 8 }} disabled={chosen === null} onClick={submit}>Submit answer</button>
-        )}
-      </div>
+
+          {/* CBT-style progress dots */}
+          <div style={{ display: "flex", gap: 6, marginBottom: 16 }}>
+            {questions.map((_, i) => (
+              <div
+                key={i}
+                onClick={() => setQIndex(i)}
+                style={{
+                  flex: 1, height: 5, borderRadius: 3, cursor: "pointer",
+                  background: i === qIndex ? "var(--amber)" : (answers[i] !== null ? "var(--good)" : "var(--line-2)"),
+                  opacity: i === qIndex ? 1 : 0.85,
+                }}
+              />
+            ))}
+          </div>
+
+          {current.topicTitle && (
+            <div className="mono" style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 8 }}>{current.topicTitle.toUpperCase()}</div>
+          )}
+          <h3 style={{ fontSize: 18, lineHeight: 1.4, marginBottom: 16 }}>{current.q}</h3>
+          {current.o.map((opt, oi) => {
+            let cls = "opt";
+            if (oi === chosen) cls += " sel";
+            return <button className={cls} key={oi} onClick={() => pick(oi)}><span className="key">{"ABCD"[oi]}</span><span>{opt}</span></button>;
+          })}
+
+          <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
+            <button className="btn btn-g" disabled={qIndex === 0} onClick={goPrev}>Back</button>
+            <button className="btn btn-a" style={{ flex: 1 }} disabled={chosen === null} onClick={goNext}>
+              {qIndex < questions.length - 1 ? "Next question" : "Finish & submit"}
+            </button>
+          </div>
+          <div style={{ marginTop: 10, fontSize: 12, color: "var(--text-3)", textAlign: "center" }}>{answeredCount} of {questions.length} answered</div>
+        </div>
+      ) : (
+        <div className="card" style={{ marginTop: 18 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+            <span className="day-tag">{c.name}</span>
+            <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{app.progress?.streak || 0}</span></span>
+          </div>
+          <h3 style={{ fontSize: 20, margin: "10px 0 4px" }}>You scored {correctCount} / {questions.length}</h3>
+          <p style={{ color: "var(--text-2)", marginTop: 0, fontSize: 13.5 }}>
+            {alreadyDone ? "You'd already logged today's streak - this run was just for practice, no extra XP." : "Nice work - streak and XP logged for today."}
+          </p>
+          <div className="divider" />
+          {questions.map((q, i) => {
+            const userChoice = answers[i];
+            return (
+              <div key={i} style={{ marginBottom: 18 }}>
+                {q.topicTitle && <div className="mono" style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 6 }}>{q.topicTitle.toUpperCase()}</div>}
+                <div style={{ fontWeight: 650, marginBottom: 10, fontSize: 14.5 }}>{i + 1}. {q.q}</div>
+                {q.o.map((opt, oi) => {
+                  let cls = "opt";
+                  if (oi === q.a) cls += " correct"; else if (oi === userChoice) cls += " wrong";
+                  return <button className={cls} key={oi} disabled><span className="key">{"ABCD"[oi]}</span><span>{opt}</span></button>;
+                })}
+                <div style={{ fontSize: 13.5, color: "var(--text-2)", marginTop: 8 }}><strong style={{ color: "var(--text)" }}>Why: </strong>{q.w}</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       <div className="card" style={{ marginTop: 14 }}>
         <div className="eyebrow" style={{ marginBottom: 10 }}>Weekly rotation</div>
         <div className="grid" style={{ gap: 6 }}>
@@ -25637,7 +25793,7 @@ export default function App() {
     return () => clearTimeout(timer);
   }, [route, auth]);
   
-  const recordDaily = (correct) => {
+  const recordDaily = (correctCount, total) => {
     const tk = todayKey();
     if (progress.dailyDone?.[tk]) return;
     // Trust the calendar (dailyDone), not just the lastActive field, to decide
@@ -25649,7 +25805,12 @@ export default function App() {
     const streakThroughYesterday = countConsecutiveStreak(progress.dailyDone, yesterdayKey);
     const continuing = progress.lastActive === yesterdayKey || streakThroughYesterday > 0;
     const streak = continuing ? Math.max(progress.streak || 0, streakThroughYesterday) + 1 : 1;
-    const baseXp = correct ? 20 : 5;
+    // 5 XP just for completing the set, plus 3 XP per correct answer out of
+    // 5 - so a perfect run earns the same 20 XP the old single-question
+    // daily used to award for a correct answer, and a clean sweep of zero
+    // correct still earns the old 5 XP participation floor.
+    const safeTotal = total || 5;
+    const baseXp = 5 + Math.round((15 * correctCount) / safeTotal);
     const multiplier = getStreakMultiplier(streak);
     const gained = Math.round(baseXp * multiplier.multiplier);
     const newXp = progress.xp + gained;
