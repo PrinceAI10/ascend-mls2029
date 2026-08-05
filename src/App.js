@@ -18992,7 +18992,6 @@ function CoursesView({ app }) {
       }
     } catch {}
     setRestored(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tk, questions.length]);
 
   // SAVE state on every change, once restore has run (so we don't
