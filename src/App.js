@@ -25750,7 +25750,7 @@ export default function App() {
       viewport.content = (viewport.content ? viewport.content.replace(/,?\s*viewport-fit=[^,]*/, "") + "," : "width=device-width,initial-scale=1,") + "viewport-fit=cover";
     }
 
-    const icon = "/ascend-icon.png";
+    const icon = "/icons/icon-192x192.png"; // real, existing branded icon (matches manifest); avoids the Drive-logo fallback
     if (!document.querySelector('link[rel="apple-touch-icon"]')) {
       const aLink = document.createElement("link");
       aLink.rel = "apple-touch-icon"; aLink.href = icon;
