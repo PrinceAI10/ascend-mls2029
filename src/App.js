@@ -519,22 +519,41 @@ async function fetchDriveSlideFiles() {
   if (_driveSlidesCache && (now - _driveSlidesFetchedAt) < DRIVE_CACHE_MS) return _driveSlidesCache;
   if (_driveSlidesPromise) return _driveSlidesPromise;
 
+  const fields = encodeURIComponent("nextPageToken, files(id,name,thumbnailLink,webViewLink,mimeType)");
   const q = encodeURIComponent(`'${DRIVE_FOLDER_ID}' in parents and trashed = false`);
-  const fields = encodeURIComponent("files(id,name,thumbnailLink,webViewLink,mimeType)");
-  const url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=${fields}&pageSize=1000&key=${DRIVE_API_KEY}`;
 
-  _driveSlidesPromise = fetch(url)
-    .then((r) => r.json())
-    .then((data) => {
+  // Google's Drive API caps how many files it actually returns per page,
+  // regardless of the pageSize we ask for (in practice this can be well
+  // under 1000, e.g. ~57 was the real cutoff seen here). We MUST follow
+  // nextPageToken until it stops appearing, or files silently go missing
+  // with no error - it just looks like "some slides never loaded."
+  async function fetchAllPages() {
+    let allFiles = [];
+    let pageToken = "";
+    let guard = 0; // safety net against an infinite loop if Google ever misbehaves
+    do {
+      const url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=${fields}&pageSize=1000&key=${DRIVE_API_KEY}` +
+        (pageToken ? `&pageToken=${pageToken}` : "");
+      const res = await fetch(url);
+      const data = await res.json();
       if (data && data.error) {
         console.error("Drive slides API error:", data.error.code, data.error.message, data.error);
-        _driveSlidesPromise = null;
-        return _driveSlidesCache || [];
+        break;
       }
-      _driveSlidesCache = Array.isArray(data.files) ? data.files : [];
+      if (Array.isArray(data.files)) allFiles = allFiles.concat(data.files);
+      pageToken = data.nextPageToken || "";
+      guard++;
+    } while (pageToken && guard < 50); // 50 pages = 50,000 files, way more than enough headroom
+    return allFiles;
+  }
+
+  _driveSlidesPromise = fetchAllPages()
+    .then((allFiles) => {
+      _driveSlidesCache = allFiles;
       _driveSlidesFetchedAt = Date.now();
       _driveSlidesPromise = null;
       console.log("Drive slides loaded:", _driveSlidesCache.length, "files");
+      logUnmatchedDriveFiles(_driveSlidesCache);
       return _driveSlidesCache;
     })
     .catch((e) => {
@@ -543,6 +562,40 @@ async function fetchDriveSlideFiles() {
       return _driveSlidesCache || [];
     });
   return _driveSlidesPromise;
+}
+
+// Diagnostic: after every Drive fetch, log any filename that doesn't start
+// with a "<courseId>_<topicIndex>_" prefix matching a CURRENT topic. This is
+// what catches the "some topics don't show slides" bug - usually caused by
+// TOPICS array indices shifting (e.g. inserting a topic in the middle) while
+// the Drive filenames still reference the old index.
+function logUnmatchedDriveFiles(files) {
+  if (!Array.isArray(files) || files.length === 0) return;
+
+  // Build the full set of valid prefixes from the current TOPICS data.
+  const validPrefixes = new Set();
+  Object.keys(TOPICS).forEach((courseId) => {
+    TOPICS[courseId].forEach((_, topicIndex) => {
+      validPrefixes.add(`${courseId}_${topicIndex}_`.toLowerCase());
+    });
+  });
+
+  const unmatched = files.filter((f) => {
+    const name = (f.name || "").toLowerCase();
+    // does it start with SOME "<id>_<num>_" pattern at all?
+    const m = name.match(/^([a-z0-9]+)_(\d+)_/i);
+    if (!m) return true; // doesn't even follow the naming convention
+    const prefix = `${m[1]}_${m[2]}_`.toLowerCase();
+    return !validPrefixes.has(prefix);
+  });
+
+  if (unmatched.length > 0) {
+    console.warn(
+      `[Drive slides] ${unmatched.length} file(s) don't match any current topic index ` +
+      `(likely a stale filename after topics were reordered/inserted):`,
+      unmatched.map((f) => f.name)
+    );
+  }
 }
 
 // Matches files named "<courseId>_<topicIndex>_...ext" (case-insensitive).
@@ -589,7 +642,7 @@ function SlideLinkChip({ f, cleanName }) {
       <a href={f.webViewLink} target="_blank" rel="noopener noreferrer" className="slide-chip-name" style={{ color: "inherit", textDecoration: "none" }}>
         {cleanName(f.name)}
       </a>
-      <a href={`https://drive.google.com/uc?export=download&id=${f.id}`} className="slide-chip-dl">
+      <a href={`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media&key=${DRIVE_API_KEY}`} className="slide-chip-dl">
         Download
       </a>
     </div>
