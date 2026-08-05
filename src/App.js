@@ -402,6 +402,7 @@ const Ic = {
   flame: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M12 3c1 3 4 4.2 4 8a4 4 0 1 1-8 0c0-1.4.6-2.4 1.2-3.2C10 9 11 7 12 3z" />} />,
   trophy: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M7 4h10v4a5 5 0 0 1-10 0z" /><path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3M9 20h6M12 14v4" /></>} />,
   file: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4M9 13h6M9 17h6" /></>} />,
+  slides: ({ p = 20, style }) => <I s={p} style={style} d={<><rect x="3" y="4" width="18" height="12" rx="1.5" /><path d="M12 16v3.4M8.5 20h7" /><path d="M10.6 8.4l3.4 2.1-3.4 2.1z" /></>} />,
   chevR: ({ p = 20, style }) => <I s={p} style={style} d={<path d="m9 6 6 6-6 6" />} />,
   check: ({ p = 20, style }) => <I s={p} style={style} w={2.4} d={<path d="m5 12 5 5L20 6" />} />,
   x: ({ p = 20, style }) => <I s={p} style={style} w={2.4} d={<path d="M6 6 18 18M18 6 6 18" />} />,
@@ -777,9 +778,32 @@ function SlidesView({ app }) {
     );
   }
 
-  // Topic list screen for the chosen course
+  // Course "folder" screen: every slide in the course flattened into one list,
+  // ordered by ASCEND topic (syllabus) order. No per-topic grouping and no
+  // "No slides yet" rows - just the decks that exist, like a Drive folder.
   const course = COURSES.find((c) => c.id === courseId);
   const topics = TOPICS[courseId] || [];
+
+  const cleanName = (name) =>
+    normalizeDriveFileName(name).replace(/^[a-z0-9]+_\d+_/i, "").replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").trim();
+
+  // Walk the topics in order, collect their slide files, de-duplicate by id.
+  const seen = {};
+  const deck = [];
+  if (!loading) {
+    topics.forEach((_, i) => {
+      const matches = slidesForTopic(files, courseId, i);
+      if (!matches.length) return;
+      const pdfFallback = matches.find((m) => m.mimeType === "application/pdf") || null;
+      matches
+        .filter((f) => f !== pdfFallback || matches.length === 1)
+        .forEach((f) => {
+          if (seen[f.id]) return;
+          seen[f.id] = true;
+          deck.push({ f: f, pdf: f.mimeType === "application/pdf" ? null : pdfFallback });
+        });
+    });
+  }
 
   return (
     <div className="view">
@@ -787,27 +811,24 @@ function SlidesView({ app }) {
         <Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> All courses
       </button>
       <div className="eyebrow" style={{ marginTop: 10 }}>Lecture Slides · {course.code}</div>
-      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 14px" }}>{course.name}</h1>
+      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>{course.name}</h1>
+      <div style={{ color: "var(--text-3)", fontSize: 13, marginBottom: 14 }}>
+        {loading ? "Loading slide library..." : (deck.length + " slide file" + (deck.length === 1 ? "" : "s") + (deck.length ? " · in syllabus order" : ""))}
+      </div>
 
       {loading ? (
         <div style={{ color: "var(--text-3)", fontSize: 13.5 }}>Loading slide library...</div>
+      ) : deck.length === 0 ? (
+        <div className="card" style={{ color: "var(--text-3)", fontSize: 13.5, padding: 16 }}>
+          No slides uploaded for this course yet. Check back soon.
+        </div>
       ) : (
-        <div style={{ display: "grid", gap: 12 }}>
-          {topics.map((title, i) => {
-            const matches = slidesForTopic(files, courseId, i);
-            return (
-              <div key={i} className="card" style={{ padding: 14 }}>
-                <div style={{ fontWeight: 600, fontSize: 14.5, marginBottom: matches.length ? 10 : 0 }}>
-                  {i + 1}. {title}
-                </div>
-                {matches.length === 0 ? (
-                  <div style={{ color: "var(--text-3)", fontSize: 12.5 }}>No slides uploaded yet</div>
-                ) : (
-                  <LectureSlides courseId={courseId} topicIndex={i} />
-                )}
-              </div>
-            );
-          })}
+        <div className="card" style={{ padding: 12 }}>
+          <div className="slide-links">
+            {deck.map((d) => (
+              <SlideLinkChip key={d.f.id} f={d.f} cleanName={cleanName} pdfFallback={d.pdf} />
+            ))}
+          </div>
         </div>
       )}
     </div>
@@ -25271,7 +25292,7 @@ const NAV = [
   { key: "papers", label: "Passco", icon: "file" },
   { key: "plan", label: "CWA", icon: "target" },
   { key: "resources", label: "Resources", icon: "upload" },
-  { key: "slides", label: "Slides", icon: "file" },
+  { key: "slides", label: "Slides", icon: "slides" },
   { key: "lamla", label: "LAMLA", icon: "clock" },
   { key: "feedback", label: "Feedback", icon: "star" }
 ];
@@ -25735,6 +25756,25 @@ export default function App() {
       aLink.rel = "apple-touch-icon"; aLink.href = icon;
       document.head.appendChild(aLink);
     }
+
+    // Pin the browser tab / tab-switcher favicon to ASCEND's own icon. Some
+    // setups were showing the Google Drive logo there (a Drive-hosted favicon or
+    // a stale manifest icon leaking through); strip any Google-hosted icon link
+    // and use the local ASCEND icon instead.
+    try {
+      var _oldIcons = document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"]');
+      for (var _oi = 0; _oi < _oldIcons.length; _oi++) {
+        var _oh = _oldIcons[_oi].href || "";
+        if (/googleusercontent|drive\.google|drive-thirdparty|\.google\.com/i.test(_oh)) {
+          if (_oldIcons[_oi].parentNode) _oldIcons[_oi].parentNode.removeChild(_oldIcons[_oi]);
+        }
+      }
+      if (!document.querySelector('link[rel="icon"][data-ascend]')) {
+        var _fav = document.createElement("link");
+        _fav.rel = "icon"; _fav.type = "image/png"; _fav.href = icon; _fav.setAttribute("data-ascend", "1");
+        document.head.appendChild(_fav);
+      }
+    } catch (e) {}
     let meta = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
     if (!meta) { meta = document.createElement("meta"); meta.name = "apple-mobile-web-app-capable"; meta.content = "yes"; document.head.appendChild(meta); }
 
