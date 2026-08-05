@@ -508,7 +508,7 @@ const TOPICS = {
    so this is safe to ship in client code. */
 
 const DRIVE_API_KEY = "AIzaSyBtnnk4Zd8-l6incfE1JQtbkqMJNbjtuk8";
-const DRIVE_FOLDER_ID = "1jlr6ok9DdA9_K4JiU1y-USt7-wTmNj4C";
+const DRIVE_FOLDER_ID = "1jQlxuYFqrx4U4HGhaERrDKUFgtiWiTeN";
 
 let _driveSlidesCache = null;
 let _driveSlidesPromise = null;
