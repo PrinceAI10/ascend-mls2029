@@ -564,6 +564,21 @@ async function fetchDriveSlideFiles() {
   return _driveSlidesPromise;
 }
 
+// Normalizes a raw Drive filename before prefix matching. Handles two real
+// issues seen in the wild: (1) a stray leading/trailing space someone typed
+// when renaming a file in Drive (" psy_3_..." never starts with "psy_3_" as
+// far as .startsWith() is concerned), and (2) Drive's own "Copy of " prefix
+// added automatically when a file gets duplicated ("Copy of ana_3_...").
+function normalizeDriveFileName(name) {
+  let n = (name || "").trim();
+  // Strip one or more "Copy of " / "copy of " prefixes (Drive can stack these
+  // if a file gets duplicated more than once), then re-trim.
+  while (/^copy of\s+/i.test(n)) {
+    n = n.replace(/^copy of\s+/i, "").trim();
+  }
+  return n;
+}
+
 // Diagnostic: after every Drive fetch, log any filename that doesn't start
 // with a "<courseId>_<topicIndex>_" prefix matching a CURRENT topic. This is
 // what catches the "some topics don't show slides" bug - usually caused by
@@ -581,7 +596,7 @@ function logUnmatchedDriveFiles(files) {
   });
 
   const unmatched = files.filter((f) => {
-    const name = (f.name || "").toLowerCase();
+    const name = normalizeDriveFileName(f.name).toLowerCase();
     // does it start with SOME "<id>_<num>_" pattern at all?
     const m = name.match(/^([a-z0-9]+)_(\d+)_/i);
     if (!m) return true; // doesn't even follow the naming convention
@@ -592,16 +607,23 @@ function logUnmatchedDriveFiles(files) {
   if (unmatched.length > 0) {
     console.warn(
       `[Drive slides] ${unmatched.length} file(s) don't match any current topic index ` +
-      `(likely a stale filename after topics were reordered/inserted):`,
+      `(likely a stale filename after topics were reordered/inserted, or a stray ` +
+      `leading space / "Copy of " in the Drive filename):`,
       unmatched.map((f) => f.name)
     );
   }
 }
 
 // Matches files named "<courseId>_<topicIndex>_...ext" (case-insensitive).
+// Also matches an EXACT duplicate index collision on purpose: if two files
+// both legitimately target "lab_1_", both should show up as slide options
+// for that topic (e.g. "Part 1" and "Part 2" decks for the same lecture).
 function slidesForTopic(files, courseId, topicIndex) {
   const prefix = `${courseId}_${topicIndex}_`.toLowerCase();
-  return (files || []).filter((f) => f.name && f.name.toLowerCase().startsWith(prefix));
+  return (files || []).filter((f) => {
+    const name = normalizeDriveFileName(f.name).toLowerCase();
+    return name.startsWith(prefix);
+  });
 }
 
 function LectureSlides({ courseId, topicIndex }) {
@@ -618,7 +640,7 @@ function LectureSlides({ courseId, topicIndex }) {
   if (matches.length === 0) return null;
 
   const cleanName = (name) =>
-    name.replace(/^[a-z0-9]+_\d+_/i, "").replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").trim();
+    normalizeDriveFileName(name).replace(/^[a-z0-9]+_\d+_/i, "").replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").trim();
 
   return (
     <div className="slide-links">
