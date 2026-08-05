@@ -519,7 +519,7 @@ async function fetchDriveSlideFiles() {
   if (_driveSlidesCache && (now - _driveSlidesFetchedAt) < DRIVE_CACHE_MS) return _driveSlidesCache;
   if (_driveSlidesPromise) return _driveSlidesPromise;
 
-  const fields = encodeURIComponent("nextPageToken, files(id,name,thumbnailLink,webViewLink,mimeType)");
+  const fields = encodeURIComponent("nextPageToken, files(id,name,thumbnailLink,webViewLink,mimeType,size)");
   const q = encodeURIComponent(`'${DRIVE_FOLDER_ID}' in parents and trashed = false`);
 
   // Google's Drive API caps how many files it actually returns per page,
@@ -642,18 +642,47 @@ function LectureSlides({ courseId, topicIndex }) {
   const cleanName = (name) =>
     normalizeDriveFileName(name).replace(/^[a-z0-9]+_\d+_/i, "").replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").trim();
 
+  // If a PDF export lives alongside the original file (same "<courseId>_
+  // <topicIndex>_" prefix, uploaded separately), use it as the preview
+  // fallback for any file too large for Google's Slides converter. PDFs
+  // stream directly through Drive with no conversion step, so there's no
+  // 100MB cap on them the way there is on PPTX preview.
+  const pdfFallback = matches.find((m) => m.mimeType === "application/pdf") || null;
+
   return (
     <div className="slide-links">
-      {matches.map((f) => <SlideLinkChip key={f.id} f={f} cleanName={cleanName} />)}
+      {matches
+        .filter((f) => f !== pdfFallback || matches.length === 1) // don't double-list the PDF as its own fallback unless it's the only file
+        .map((f) => <SlideLinkChip key={f.id} f={f} cleanName={cleanName} pdfFallback={f.mimeType === "application/pdf" ? null : pdfFallback} />)}
     </div>
   );
+}
+
+// Google's own Slides/Docs converter refuses to preview any file over
+// exactly 100MB (104,857,600 bytes) - this is a hard Google-side limit, not
+// something we can work around client-side. Clicking "View" on a file above
+// this size will always throw a FILE_TOO_LARGE error, no matter what URL we
+// point it at. So: for files at/above this size, we just don't offer a
+// preview link at all - only Download, which has no such cap.
+const DRIVE_PREVIEW_MAX_BYTES = 100 * 1024 * 1024;
+
+function formatBytes(bytes) {
+  const n = Number(bytes);
+  if (!n) return "";
+  if (n >= 1024 * 1024) return `${(n / (1024 * 1024)).toFixed(1)} MB`;
+  return `${Math.round(n / 1024)} KB`;
 }
 
 // Simple link-chip - no thumbnail, so it can't break on Drive's inconsistent
 // preview generation. Just a slide icon + filename that opens the deck.
 // Div wrapper (not <a>) so the "View" and "Download" links can sit as
 // siblings instead of illegally nesting an <a> inside an <a>.
-function SlideLinkChip({ f, cleanName }) {
+function SlideLinkChip({ f, cleanName, pdfFallback }) {
+  const size = Number(f.size) || 0;
+  const tooLargeToPreview = size >= DRIVE_PREVIEW_MAX_BYTES;
+  const previewFile = tooLargeToPreview && pdfFallback ? pdfFallback : f;
+  const previewBlocked = tooLargeToPreview && !pdfFallback;
+
   return (
     <div className="slide-chip">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -661,12 +690,126 @@ function SlideLinkChip({ f, cleanName }) {
         <path d="M2 17l10 5 10-5" />
         <path d="M2 12l10 5 10-5" />
       </svg>
-      <a href={f.webViewLink} target="_blank" rel="noopener noreferrer" className="slide-chip-name" style={{ color: "inherit", textDecoration: "none" }}>
-        {cleanName(f.name)}
-      </a>
+      {previewBlocked ? (
+        // Not clickable to a preview - Google Slides hard-caps conversion at
+        // 100MB, so a "View" link here would just error out every time, and
+        // there's no PDF fallback uploaded for this one yet.
+        <span
+          className="slide-chip-name"
+          title={`${formatBytes(size)} - too large for Google's preview (100MB limit). Upload a PDF export alongside it to enable View, or use Download.`}
+          style={{ color: "inherit", opacity: 0.85 }}
+        >
+          {cleanName(f.name)} <span style={{ opacity: 0.6, fontWeight: 400 }}>({formatBytes(size)})</span>
+        </span>
+      ) : (
+        <a
+          href={previewFile.webViewLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="slide-chip-name"
+          style={{ color: "inherit", textDecoration: "none" }}
+          title={tooLargeToPreview ? `Previewing PDF export (${formatBytes(size)} original is too large for Slides preview)` : undefined}
+        >
+          {cleanName(f.name)}{tooLargeToPreview ? <span style={{ opacity: 0.6, fontWeight: 400 }}> (PDF preview)</span> : null}
+        </a>
+      )}
       <a href={`https://www.googleapis.com/drive/v3/files/${f.id}?alt=media&key=${DRIVE_API_KEY}`} className="slide-chip-dl">
         Download
       </a>
+    </div>
+  );
+}
+
+/* ===================== SLIDES TAB =====================
+   A dedicated top-level view: pick a course -> see every topic with its own
+   slide chips underneath, in one place. Deliberately kept separate from
+   TopicView's lesson notes so slides never sit inline with written content -
+   this is the only place slides live in the app now. */
+function slideCountForTopic(files, courseId, topicIndex) {
+  return slidesForTopic(files, courseId, topicIndex).length;
+}
+
+function SlidesView({ app }) {
+  const [files, setFiles] = useState(null);
+  const [courseId, setCourseId] = useState(null); // null = course picker; set = topic list for that course
+
+  useEffect(() => {
+    let alive = true;
+    fetchDriveSlideFiles().then((all) => { if (alive) setFiles(all); });
+    return () => { alive = false; };
+  }, []);
+
+  const loading = files === null;
+
+  // Course picker screen
+  if (!courseId) {
+    return (
+      <div className="view">
+        <div className="eyebrow">Lecture Slides</div>
+        <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Pick a course</h1>
+        <div style={{ color: "var(--text-3)", fontSize: 13.5, marginBottom: 16 }}>
+          {loading ? "Loading slide library..." : `${files.length} file${files.length === 1 ? "" : "s"} in the shared Drive folder`}
+        </div>
+        <div style={{ display: "grid", gap: 10 }}>
+          {COURSES.map((c) => {
+            const count = loading ? null : (TOPICS[c.id] || []).reduce(
+              (sum, _, i) => sum + slideCountForTopic(files, c.id, i), 0
+            );
+            return (
+              <button
+                key={c.id}
+                className="card hover"
+                style={{ textAlign: "left", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10 }}
+                onClick={() => setCourseId(c.id)}
+              >
+                <div>
+                  <div style={{ fontWeight: 650, fontSize: 15.5 }}>{c.name}</div>
+                  <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 2 }} className="mono">{c.code}</div>
+                </div>
+                <div style={{ fontSize: 12.5, color: "var(--text-3)", flexShrink: 0 }}>
+                  {loading ? "…" : `${count} slide file${count === 1 ? "" : "s"}`}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  // Topic list screen for the chosen course
+  const course = COURSES.find((c) => c.id === courseId);
+  const topics = TOPICS[courseId] || [];
+
+  return (
+    <div className="view">
+      <button className="back" onClick={() => setCourseId(null)}>
+        <Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> All courses
+      </button>
+      <div className="eyebrow" style={{ marginTop: 10 }}>Lecture Slides · {course.code}</div>
+      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 14px" }}>{course.name}</h1>
+
+      {loading ? (
+        <div style={{ color: "var(--text-3)", fontSize: 13.5 }}>Loading slide library...</div>
+      ) : (
+        <div style={{ display: "grid", gap: 12 }}>
+          {topics.map((title, i) => {
+            const matches = slidesForTopic(files, courseId, i);
+            return (
+              <div key={i} className="card" style={{ padding: 14 }}>
+                <div style={{ fontWeight: 600, fontSize: 14.5, marginBottom: matches.length ? 10 : 0 }}>
+                  {i + 1}. {title}
+                </div>
+                {matches.length === 0 ? (
+                  <div style={{ color: "var(--text-3)", fontSize: 12.5 }}>No slides uploaded yet</div>
+                ) : (
+                  <LectureSlides courseId={courseId} topicIndex={i} />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
@@ -18838,7 +18981,6 @@ function TopicView({ app }) {
           );
         })()}
       </div>
-      <LectureSlides courseId={t.courseId} topicIndex={t.topicIndex} />
       <div className="divider" />
       <div className="eyebrow" style={{ marginBottom: 14 }}>The lesson</div>
       <div className="lesson">
@@ -25129,6 +25271,7 @@ const NAV = [
   { key: "papers", label: "Passco", icon: "file" },
   { key: "plan", label: "CWA", icon: "target" },
   { key: "resources", label: "Resources", icon: "upload" },
+  { key: "slides", label: "Slides", icon: "file" },
   { key: "lamla", label: "LAMLA", icon: "clock" },
   { key: "feedback", label: "Feedback", icon: "star" }
 ];
@@ -26199,6 +26342,7 @@ export default function App() {
       case "papers": return <PapersView app={app} />;
       case "plan": return <PlanView />;
       case "resources": return <ResourcesView />;
+      case "slides": return <SlidesView app={app} />;
       case "lamla": return <LAMLAView app={app} />;
       case "feedback": return <FeedbackView />;
       case "viewfeedback": return <ViewFeedbackView />;
