@@ -17477,7 +17477,8 @@ const RANKS = [
   { name: "Amethyst", min: 6400, c: "#9333EA" },
   { name: "Pearl", min: 8900, c: "#F5F0E6" },
   { name: "Obsidian", min: 12000, c: "#3F3F46" },
-  { name: "Diamond", min: 16000, c: "#8FE3F5" }
+  { name: "Diamond", min: 16000, c: "#8FE3F5" },
+  { name: "Grand Master", min: 50000, c: "#FFD700" }
 ];
   // ACHIEVEMENT DEFINITIONS - SVG Icons only
   const ACHIEVEMENTS = [
@@ -17614,20 +17615,65 @@ const countConsecutiveStreak = (dailyDone, endDateKey) => {
    - on your deployed site (Netlify/Vercel) it does not, so we use localStorage
    Without this fallback, nothing would save once deployed. */
 const hasWS = () => typeof window !== "undefined" && !!window.storage;
+
+// Cookie fallback for login persistence only (ascend_session / ascend_accounts).
+// Some mobile browsers (private/incognito tabs, some in-app webviews, iOS under
+// storage pressure) silently fail or refuse to persist localStorage - the writes
+// above are wrapped in try/catch, so login LOOKS successful but quietly doesn't
+// survive closing the app, forcing students to "create a new account" every time.
+// Cookies use a different browser storage mechanism, so mirroring these two keys
+// there means persistence doesn't depend on localStorage alone.
+const COOKIE_PERSIST_KEYS = new Set(["ascend_session", "ascend_accounts", "ascend_last_user"]);
+function cookieSet(name, value) {
+  try {
+    if (typeof document === "undefined") return;
+    const maxAge = 60 * 60 * 24 * 365; // 1 year
+    document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) +
+      "; max-age=" + maxAge + "; path=/; SameSite=Lax";
+  } catch {}
+}
+function cookieGet(name) {
+  try {
+    if (typeof document === "undefined") return null;
+    const match = document.cookie.match(new RegExp("(?:^|; )" + encodeURIComponent(name) + "=([^;]*)"));
+    return match ? decodeURIComponent(match[1]) : null;
+  } catch { return null; }
+}
+
 const store = {
   async get(k, shared = false) {
     try {
       if (hasWS()) { const r = await window.storage.get(k, shared); return r ? JSON.parse(r.value) : null; }
-      if (typeof localStorage === "undefined") return null;
+      if (typeof localStorage === "undefined") {
+        if (COOKIE_PERSIST_KEYS.has(k)) { const c = cookieGet(k); return c ? JSON.parse(c) : null; }
+        return null;
+      }
       const item = localStorage.getItem(k);
-      return item ? JSON.parse(item) : null;
+      if (item) return JSON.parse(item);
+      // localStorage had nothing for this key - if it's a login-persistence key,
+      // check the cookie fallback before giving up (covers localStorage being
+      // wiped/blocked while cookies survived).
+      if (COOKIE_PERSIST_KEYS.has(k)) {
+        const c = cookieGet(k);
+        if (c) {
+          // Heal localStorage for next time now that we know it's writable again.
+          try { localStorage.setItem(k, c); } catch {}
+          return JSON.parse(c);
+        }
+      }
+      return null;
     } catch { return null; }
   },
   async set(k, v) {
+    const json = JSON.stringify(v);
     try {
-      if (hasWS()) { await window.storage.set(k, JSON.stringify(v)); return; }
-      if (typeof localStorage !== "undefined") localStorage.setItem(k, JSON.stringify(v));
+      if (hasWS()) { await window.storage.set(k, json); return; }
+      if (typeof localStorage !== "undefined") localStorage.setItem(k, json);
     } catch {}
+    // Always mirror login-persistence keys to a cookie too, regardless of
+    // whether localStorage succeeded - belt-and-suspenders against any single
+    // storage mechanism failing silently for a given student's browser.
+    if (!hasWS() && COOKIE_PERSIST_KEYS.has(k)) cookieSet(k, json);
   },
   async setShared(k, v) {
     try {
