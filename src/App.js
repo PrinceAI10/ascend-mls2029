@@ -25884,16 +25884,8 @@ export default function App() {
       setRankUpNotif({
         newRank: newRank.name,
         color: newRank.c,
-        message: `You've reached ${newRank.name}! Keep climbing!`
+        message: `You've reached ${newRank.name}!`
       });
-      setTimeout(() => setRankUpNotif(null), 8000);
-    } else if (!rankUpNotif) {
-      setRankUpNotif({
-        newRank: newRank.name,
-        color: newRank.c,
-        message: `You are ${newRank.name}! Keep climbing!`
-      });
-      setTimeout(() => setRankUpNotif(null), 5000);
     }
   };
 
@@ -26760,10 +26752,68 @@ export default function App() {
     </div>
   ) : null;
 
+  // Duolingo-style full-screen rank-up celebration. Fires once, right when a
+  // student's XP crosses into a new tier (see checkRankUp), regardless of
+  // which screen they're on - a tier is a big enough deal to interrupt with,
+  // same as a mission-complete popup in a game. Tap anywhere/the button to
+  // dismiss; it also auto-dismisses after 6s so it never blocks the app if a
+  // student walks away mid-quiz.
+  const rankUpOverlay = rankUpNotif ? (
+    <div
+      onClick={() => setRankUpNotif(null)}
+      style={{
+        position: "fixed", inset: 0, zIndex: 10000,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        background: "rgba(10,12,16,0.72)", backdropFilter: "blur(2px)",
+        padding: 20, cursor: "pointer",
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: "var(--bg-2)", border: `1px solid ${rankUpNotif.color}`,
+          borderRadius: 22, padding: "36px 28px 28px", maxWidth: 340, width: "100%",
+          textAlign: "center", cursor: "default",
+          boxShadow: `0 0 60px ${rankUpNotif.color}55`,
+          animation: "rankUpPop .45s cubic-bezier(.2,1.4,.4,1)",
+        }}
+      >
+        <div style={{
+          width: 84, height: 84, margin: "0 auto 18px", borderRadius: "50%",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          background: `${rankUpNotif.color}22`, border: `2px solid ${rankUpNotif.color}`,
+        }}>
+          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke={rankUpNotif.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 15l-5.5 3 1.5-6-4.5-4h6L12 2l2.5 6h6l-4.5 4 1.5 6z" />
+          </svg>
+        </div>
+        <div style={{ fontSize: 13, letterSpacing: ".08em", textTransform: "uppercase", color: "var(--text-2)", fontWeight: 700 }}>Rank up!</div>
+        <div style={{ fontSize: 26, fontWeight: 800, color: rankUpNotif.color, margin: "6px 0 4px" }}>{rankUpNotif.newRank}</div>
+        <p style={{ color: "var(--text-2)", fontSize: 14.5, margin: "0 0 22px" }}>{rankUpNotif.message}</p>
+        <button
+          className="btn btn-p"
+          style={{ width: "100%", justifyContent: "center", background: rankUpNotif.color, borderColor: rankUpNotif.color, color: "#0A0C10" }}
+          onClick={() => setRankUpNotif(null)}
+        >
+          Keep going
+        </button>
+      </div>
+    </div>
+  ) : null;
+
+  // Auto-dismiss so a student who doesn't tap it isn't blocked forever.
+  useEffect(() => {
+    if (!rankUpNotif) return;
+    const t = setTimeout(() => setRankUpNotif(null), 6000);
+    return () => clearTimeout(t);
+  }, [rankUpNotif]);
+
   return (
     <div className={rootCls}>
       <style>{CSS}</style>
+      <style>{`@keyframes rankUpPop{0%{transform:scale(.75);opacity:0}60%{transform:scale(1.04);opacity:1}100%{transform:scale(1)}}`}</style>
       {resumeOverlay}
+      {rankUpOverlay}
       
       <div className="shell">
         <aside className="side">
