@@ -25699,6 +25699,16 @@ export default function App() {
   const progressRef = useRef(null);
   useEffect(() => { progressRef.current = progress; }, [progress]);
   const [rankUpNotif, setRankUpNotif] = useState(null);
+  // Auto-dismiss the rank-up popup so a student who doesn't tap it isn't
+  // blocked forever. Declared here (with the other hooks, before any early
+  // return below) so it always runs on every render, per the rules of hooks -
+  // placing it further down where !loaded/!auth can return early caused a
+  // "rendered more hooks than previous render" crash (React error #310).
+  useEffect(() => {
+    if (!rankUpNotif) return;
+    const t = setTimeout(() => setRankUpNotif(null), 6000);
+    return () => clearTimeout(t);
+  }, [rankUpNotif]);
   const [achievements, setAchievements] = useState([]);
   const [achNotif, setAchNotif] = useState(null);
   const [auth, setAuth] = useState(null);
@@ -26800,13 +26810,6 @@ export default function App() {
       </div>
     </div>
   ) : null;
-
-  // Auto-dismiss so a student who doesn't tap it isn't blocked forever.
-  useEffect(() => {
-    if (!rankUpNotif) return;
-    const t = setTimeout(() => setRankUpNotif(null), 6000);
-    return () => clearTimeout(t);
-  }, [rankUpNotif]);
 
   return (
     <div className={rootCls}>
