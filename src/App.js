@@ -17818,6 +17818,53 @@ const db = {
     } catch {}
   },
 
+  // ============================================================
+  // Cloud copy of username/password ("local") accounts.
+  //
+  // WHY THIS EXISTS: local accounts used to live ONLY in the browser's
+  // localStorage/cookies. That meant a cleared cache, a shared/lab computer,
+  // private browsing, or simply switching devices made the account (and its
+  // progress) disappear completely - login and "forgot password" would both
+  // fail to find it, so the student's only option looked like "create a new
+  // account". Mirroring the account record here means login and password
+  // reset can always find it, on any device, as long as they signed up (or
+  // logged in) at least once after this was added.
+  //
+  // Table: local_accounts (id = lowercase username, name, email, salt, hash,
+  // algo, created_at, updated_at). RLS is permissive (anon can read/write),
+  // matching the same trust model this app already uses for "profiles" -
+  // password verification has always happened client-side against a locally
+  // held salted hash, so this doesn't lower security below what already
+  // existed, it just stops the account from being device-locked.
+  async upsertLocalAccount(acct) {
+    try {
+      const id = String(acct.username).toLowerCase();
+      await supabase.from("local_accounts").upsert({
+        id,
+        name: acct.username,
+        email: acct.email || null,
+        salt: acct.salt || null,
+        hash: acct.hash || null,
+        algo: acct.algo || null,
+        updated_at: new Date().toISOString(),
+      });
+    } catch {}
+  },
+  async fetchLocalAccountByUsername(usernameLower) {
+    try {
+      const { data } = await supabase.from("local_accounts").select("*").eq("id", usernameLower).maybeSingle();
+      if (!data) return null;
+      return { username: data.name, email: data.email, salt: data.salt, hash: data.hash, algo: data.algo };
+    } catch { return null; }
+  },
+  async fetchLocalAccountByEmail(email) {
+    try {
+      const { data } = await supabase.from("local_accounts").select("*").ilike("email", email).maybeSingle();
+      if (!data) return null;
+      return { username: data.name, email: data.email, salt: data.salt, hash: data.hash, algo: data.algo };
+    } catch { return null; }
+  },
+
   // load this user's progress JSON (or null if none saved yet).
   // Restored to the exact proven logic from the pre-offline-patch build after
   // the added caching/retry logic caused a real streak loss - simple and
@@ -17877,6 +17924,7 @@ const db = {
             dailyDone: mergedDailyDone,
             completed: { ...(existing.completed || {}), ...(progress.completed || {}) },
             scores: { ...(existing.scores || {}), ...(progress.scores || {}) },
+            passcoScores: { ...(existing.passcoScores || {}), ...(progress.passcoScores || {}) },
             bookmarks: Array.isArray(progress.bookmarks) ? progress.bookmarks : (existing.bookmarks || []),
           };
         }
@@ -22770,7 +22818,7 @@ function PapersView({ app }) {
 
       {tab === "passco" && (active
         ? <PasscoSet paper={active.paper} chunkStart={active.chunkStart} chunkEnd={active.chunkEnd} mode={active.mode} onExit={function() { setActive(null); }} app={app} />
-        : <PasscoPicker onStart={function(paper, chunkStart, chunkEnd, mode) { setActive({ paper: paper, chunkStart: chunkStart, chunkEnd: chunkEnd, mode: mode }); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (error) {} }} chunk={CHUNK} />
+        : <PasscoPicker onStart={function(paper, chunkStart, chunkEnd, mode) { setActive({ paper: paper, chunkStart: chunkStart, chunkEnd: chunkEnd, mode: mode }); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (error) {} }} chunk={CHUNK} passcoScores={app.progress.passcoScores} />
       )}
 
       {tab === "youtube" && (
@@ -22869,7 +22917,8 @@ function PapersView({ app }) {
 /* PasscoPicker: lists real past papers (grouped by course), and lets the student
    pick a 50-question chunk and a mode (practice or exam). Chunking keeps sets to
    50 so a 100+ question paper never overwhelms - you solve 50, then the next 50. */
-function PasscoPicker({ onStart, chunk }) {
+function PasscoPicker({ onStart, chunk, passcoScores }) {
+  const scores = passcoScores || {};
   const [openPaper, setOpenPaper] = useState(null);
   const [mode, setMode] = useState("practice");
   if (!PAST_PAPERS.length) {
@@ -22905,7 +22954,14 @@ function PasscoPicker({ onStart, chunk }) {
                   {Array.from({ length: nChunks }).map(function(_, i) {
                     var start = i * chunk;
                     var end = Math.min(start + chunk, paper.questions.length);
-                    return <button key={i} className="btn btn-sm" style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }} onClick={function() { onStart(paper, start, end, mode); }}>Q{start + 1}-{end}</button>;
+                    var sk = `${paper.id}_${start}_${end}_${mode}`;
+                    var prevScore = scores[sk];
+                    return (
+                      <button key={i} className="btn btn-sm" style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid " + (prevScore ? "var(--amber)" : "var(--line)"), display: "flex", flexDirection: "column", alignItems: "center", gap: 2, lineHeight: 1.2 }} onClick={function() { onStart(paper, start, end, mode); }}>
+                        <span>Q{start + 1}-{end}</span>
+                        {prevScore && <span className="mono" style={{ fontSize: 10.5, color: prevScore.pct >= 70 ? "var(--good)" : "var(--amber-2)" }}>{prevScore.pct}%</span>}
+                      </button>
+                    );
                   })}
                 </div>
               </div>
@@ -22944,7 +23000,7 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
     awardedRef.current = true;
     try { sessionStorage.setItem(doneFlagKey, "true"); } catch {}
     if (app && typeof app.setPasscoXp === "function") {
-      app.setPasscoXp(correctCount * 5);
+      app.setPasscoXp(correctCount * 5, setKey, correctCount, questions.length);
     }
   };
 
@@ -23999,6 +24055,11 @@ function HomeView({ app }) {
 // real classmates see. Use names like "test_prince" or "demo_reset" for
 // anything you don't want showing up publicly.
 const isTestAccount = (username) => /^(test|demo)[_-]?/i.test(String(username || "").trim());
+// Stable id used to store a local (username/password) account's progress in
+// the same cloud "progress" table Supabase-authenticated users use, so it
+// survives lost local storage / a new device exactly like a Google account's
+// progress does. Must match the synthId shape already used in publishLocalUser.
+const localSynthId = (username) => "local-" + String(username).toLowerCase().replace(/[^a-z0-9]/g, "");
 
 // --- Password hashing -------------------------------------------------
 // History: local username/password accounts first stored passwords as plain
@@ -24235,6 +24296,9 @@ function AuthScreen({ onAuthed }) {
         await store.set("ascend_accounts", accounts);
         await store.set("ascend_session", key);
         await store.set("ascend_last_user", acct.username);
+        // Mirror the account to the cloud so login/reset can find it even if
+        // this device's storage is later cleared or they use a different one.
+        await db.upsertLocalAccount(acct);
         
         // ============================================================
         // FIXED: Register on the class board with the correct username
@@ -24255,7 +24319,19 @@ function AuthScreen({ onAuthed }) {
       // FIXED: Login section with board sync
       // ============================================================
       // login
-      const acct = accounts[key];
+      let acct = accounts[key];
+      if (!acct) {
+        // Not found on this device/browser - this is exactly the scenario that
+        // used to force "create a new account". Check the cloud copy before
+        // giving up: if they signed up (or logged in) at least once since the
+        // cloud mirror was added, their account lives there too.
+        const cloudAcct = await db.fetchLocalAccountByUsername(key);
+        if (cloudAcct) {
+          acct = cloudAcct;
+          accounts[key] = cloudAcct;
+          await store.set("ascend_accounts", accounts); // heal local cache for next time
+        }
+      }
       if (!acct) { setBusy(false); setErr("No account with that username. Tap Create account to sign up."); return; }
       const result = await verifyAndMigratePw(acct, pw);
       if (result.locked) {
@@ -24292,6 +24368,9 @@ function AuthScreen({ onAuthed }) {
       await store.set("ascend_accounts", accounts);
       await store.set("ascend_session", key);
       await store.set("ascend_last_user", finalAcct.username);
+      // Keep the cloud copy in sync too (covers hash-upgrade migration and
+      // clears any stale failCount/lockUntil there as well).
+      await db.upsertLocalAccount(finalAcct);
       
       // FIXED: Make sure this user appears on the board (real accounts only -
       // test/demo accounts are deliberately kept off the shared leaderboard)
@@ -24336,7 +24415,20 @@ function AuthScreen({ onAuthed }) {
     setBusy(true);
     try {
       const accounts = (await store.get("ascend_accounts")) || {};
-      const key = Object.keys(accounts).find((k) => accounts[k].email && accounts[k].email.toLowerCase() === id) || "";
+      let key = Object.keys(accounts).find((k) => accounts[k].email && accounts[k].email.toLowerCase() === id) || "";
+      let localMatch = key ? accounts[key] : null;
+      if (!localMatch) {
+        // Not found on this device - check the cloud copy before concluding
+        // there's no account at all (this is the same fix as login: local
+        // storage being empty doesn't mean the account doesn't exist).
+        const cloudAcct = await db.fetchLocalAccountByEmail(id);
+        if (cloudAcct) {
+          key = String(cloudAcct.username).toLowerCase();
+          localMatch = cloudAcct;
+          accounts[key] = cloudAcct;
+          await store.set("ascend_accounts", accounts);
+        }
+      }
       if (!key) {
         // Not a local username/password account. Check whether this email
         // belongs to a real Supabase Auth user instead (e.g. signed up via
@@ -24424,6 +24516,9 @@ function AuthScreen({ onAuthed }) {
       delete upd.lockUntil;
       accounts[resetUserKey] = upd;
       await store.set("ascend_accounts", accounts);
+      // Push the new password to the cloud copy too, so it's the new password
+      // that's found on any other device, not the stale local-only one.
+      await db.upsertLocalAccount(upd);
       setBusy(false);
       setResetPw("");
       setResetPw2("");
@@ -25698,7 +25793,7 @@ const NAV = [
   { key: "feedback", label: "Feedback", icon: "star" }
 ];
 
-const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0 };
+const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0, passcoScores: {} };
 
 // ============================================
 // QUICK FLOW BUTTON - Paste this here
@@ -26002,6 +26097,11 @@ export default function App() {
         store.setShared("ascend_board:" + p.name.toLowerCase().replace(/[^a-z0-9]/g, ""), { name: p.name, xp: p.xp, streak: p.streak });
         db.publishLocalUser(p.name, p.xp, p.streak);
       }
+      // Also save the FULL progress to the cloud (not just the leaderboard
+      // summary above), keyed by a stable id derived from the username. This
+      // is what makes a local account's progress survive lost local storage
+      // or a different device, the same way a Google account's does.
+      db.saveProgress(localSynthId(p.name), p);
     }
   };
 
@@ -26400,8 +26500,29 @@ export default function App() {
 
   const handleAuthed = async (acct) => {
     setAuth(acct);
-    const p = await store.get(progKey(acct.username));
-    const finalProgress = p ? { ...freshProgress(acct.username), ...p, name: acct.username } : freshProgress(acct.username);
+    // Merge local + cloud progress, same pattern as adoptSupabaseUser, so
+    // progress follows this account across devices/cleared storage too.
+    const localP = await store.get(progKey(acct.username));
+    const cloudP = await db.loadProgress(localSynthId(acct.username));
+    const base = freshProgress(acct.username);
+    let finalProgress;
+    if (localP || cloudP) {
+      finalProgress = {
+        ...base,
+        ...(cloudP || {}),
+        ...(localP || {}),
+        name: acct.username,
+        xp: Math.max((cloudP && cloudP.xp) || 0, (localP && localP.xp) || 0),
+        streak: Math.max((cloudP && cloudP.streak) || 0, (localP && localP.streak) || 0),
+        dailyDone: { ...((cloudP && cloudP.dailyDone) || {}), ...((localP && localP.dailyDone) || {}) },
+        completed: { ...((cloudP && cloudP.completed) || {}), ...((localP && localP.completed) || {}) },
+        scores: { ...((cloudP && cloudP.scores) || {}), ...((localP && localP.scores) || {}) },
+        passcoScores: { ...((cloudP && cloudP.passcoScores) || {}), ...((localP && localP.passcoScores) || {}) },
+        bookmarks: Array.isArray(localP && localP.bookmarks) ? localP.bookmarks : ((cloudP && cloudP.bookmarks) || []),
+      };
+    } else {
+      finalProgress = base;
+    }
     setXpChange(finalProgress.xp || 0);
     setProgress(finalProgress);
     const savedLastTopic = (await store.get(lastTopicKey(acct.username))) || (await store.get(lastTopicKey("anon")));
@@ -26613,7 +26734,10 @@ export default function App() {
     persist(updated);
   };
 
-  const setPasscoXp = (earnedXp) => {
+  // setKey (optional) identifies which passco set this was (paper+range+mode) so
+  // the score can be recorded and shown back on the picker as "last score: X%",
+  // instead of only flashing on the results screen and then disappearing.
+  const setPasscoXp = (earnedXp, setKey, correctCount, totalCount) => {
     const key = `passco_${Date.now()}`;
     const awarded = sessionStorage.getItem('ascend_passco_' + key);
     if (awarded) return;
@@ -26621,10 +26745,16 @@ export default function App() {
     const multiplier = getStreakMultiplier(progress.streak);
     const gained = Math.round(earnedXp * multiplier.multiplier);
     const newXp = progress.xp + gained;
+    const prevPasscoScores = progress.passcoScores || {};
+    const pct = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : undefined;
+    const passcoScores = setKey && pct !== undefined
+      ? { ...prevPasscoScores, [setKey]: { pct, correct: correctCount, total: totalCount, at: Date.now() } }
+      : prevPasscoScores;
     const updated = { 
       ...progress, 
       xp: newXp, 
-      passcoCompleted: (progress.passcoCompleted || 0) + 1 
+      passcoCompleted: (progress.passcoCompleted || 0) + 1,
+      passcoScores
     };
     // Record XP history (for leaderboard tie-break) and the session XP change (for
     // the "+150" indicator), so passco XP behaves exactly like quiz XP.
