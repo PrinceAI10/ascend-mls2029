@@ -2794,18 +2794,7 @@ The answer is that each glucose produces two pyruvate, which yield two acetyl-Co
 
 Crucial insight: the TCA cycle produces about 10 ATP per acetyl-CoA, making it the major energy-yielding pathway of aerobic metabolism. From one glucose, the TCA cycle produces about 20 ATP, far more than the 2 ATP from glycolysis.` },
 
-    { q: "Anaplerotic reactions: replenishing the cycle.",
-      body: `The TCA cycle not only produces energy — it also provides intermediates for biosynthesis. When intermediates are removed for biosynthesis, the cycle must be replenished through anaplerotic reactions.
-
-My Socratic question: amino acids, heme, and glucose can all be synthesised from TCA cycle intermediates. What happens to the cycle when these intermediates are removed, and how is it replenished?
-
-The answer is that when intermediates are withdrawn, the cycle would stall unless they are replaced. Anaplerotic reactions replenish the cycle. The most important anaplerotic reaction is the carboxylation of pyruvate to oxaloacetate by pyruvate carboxylase, using ATP and bicarbonate.
-
-Other anaplerotic reactions include the conversion of amino acids to TCA cycle intermediates. For example, aspartate can be converted to oxaloacetate, and glutamate can be converted to α-ketoglutarate. These reactions link the TCA cycle to amino acid metabolism.
-
-Crucial insight: anaplerotic reactions replenish TCA cycle intermediates that are withdrawn for biosynthesis. Pyruvate carboxylase is the most important anaplerotic enzyme, converting pyruvate to oxaloacetate. This connects the TCA cycle to amino acid metabolism and gluconeogenesis.` },
-
-    { q: "Regulation of the TCA cycle.",
+    { q: "Regulation of the TCA cycle, and how it stays replenished.",
       body: `The TCA cycle is tightly regulated to match the cell's energy needs. Three key enzymes control the flow through the cycle.
 
 Citrate synthase is inhibited by ATP and NADH, and activated by ADP. This ensures the cycle only runs when energy is needed. Isocitrate dehydrogenase is activated by ADP and inhibited by ATP and NADH — it is the major regulatory point. α-Ketoglutarate dehydrogenase is inhibited by ATP, NADH, and succinyl-CoA, and activated by calcium ions.
@@ -2814,7 +2803,9 @@ My Socratic question: why are there three regulatory enzymes rather than just on
 
 The answer is that multi-point regulation allows fine control over the cycle's activity. Different enzymes respond to different signals, so the cycle can be adjusted precisely to match the cell's needs. Calcium activation links the TCA cycle to muscle contraction — when muscles need energy, calcium signals speed up the cycle.
 
-Crucial insight: the TCA cycle is regulated at three key enzymes — citrate synthase, isocitrate dehydrogenase, and α-ketoglutarate dehydrogenase — responding to ATP, NADH, ADP, and calcium. This multi-point control ensures the cycle runs at the right speed for the cell's energy needs.` },
+The cycle also has to stay stocked. Amino acids, heme, and glucose can all be synthesised from TCA cycle intermediates, so when those intermediates are withdrawn for biosynthesis the cycle would stall unless they are replaced. This replenishment is done by anaplerotic reactions. The most important one is the carboxylation of pyruvate to oxaloacetate by pyruvate carboxylase, using ATP and bicarbonate. Other anaplerotic reactions convert amino acids into TCA cycle intermediates - aspartate into oxaloacetate, glutamate into α-ketoglutarate - linking the cycle directly to amino acid metabolism.
+
+Crucial insight: the TCA cycle is regulated at three key enzymes - citrate synthase, isocitrate dehydrogenase, and α-ketoglutarate dehydrogenase - responding to ATP, NADH, ADP, and calcium, while anaplerotic reactions (chiefly pyruvate carboxylase) keep its intermediate pool topped up whenever biosynthesis draws it down.` },
 
     { q: "Clinical relevance: why the TCA cycle matters in medicine.",
       body: `The TCA cycle is central to health and disease, making it relevant to your future work in the laboratory.
@@ -2986,18 +2977,7 @@ This is called chemiosmosis — the coupling of a proton gradient to ATP synthes
 
 Crucial insight: ATP synthase uses the proton gradient created by the ETC to drive ATP synthesis. Protons flowing back into the matrix cause rotation of the enzyme, which synthesises ATP from ADP and Pi. This is the mechanism of oxidative phosphorylation.` },
 
-    { q: "Inhibitors of the electron transport chain.",
-      body: `The electron transport chain is the target of several important inhibitors, some of which are toxins and some of which are used therapeutically. Understanding these inhibitors is essential for understanding how the ETC can be blocked.
-
-My Socratic question: cyanide is a rapid poison that causes death within minutes. How does cyanide kill, and why is it so fast?
-
-The answer is that cyanide inhibits Complex IV (cytochrome c oxidase), blocking the transfer of electrons to oxygen. The ETC stops, the proton gradient dissipates, and ATP production ceases. Cells that require a lot of ATP, like heart and brain cells, are affected first, leading to cardiac arrest and respiratory failure. Cyanide is fast-acting because these cells cannot survive without ATP.
-
-Other inhibitors include: rotenone (inhibits Complex I, used as an insecticide), antimycin A (inhibits Complex III, used in research), and oligomycin (inhibits ATP synthase, blocking ATP production). These inhibitors have been used to study the ETC and understand its function.
-
-Crucial insight: the ETC is inhibited by several toxins — rotenone (Complex I), antimycin A (Complex III), cyanide (Complex IV), and oligomycin (ATP synthase). These inhibitors block electron flow and ATP production, demonstrating the essential role of the ETC in cellular energy metabolism.` },
-
-    { q: "Consolidation and your final test.",
+    { q: "Consolidation, inhibitors, and your final test.",
       body: `Your cognitive map for the electron transport chain.
 
 Location: inner mitochondrial membrane.
@@ -3010,7 +2990,11 @@ Proton gradient: created by pumping protons from matrix to intermembrane space. 
 
 ATP yield: NADH → 2.5 ATP; FADH2 → 1.5 ATP. Total from glucose: about 32 ATP.
 
-Inhibitors: rotenone (Complex I), antimycin A (Complex III), cyanide (Complex IV), oligomycin (ATP synthase).
+My Socratic question: cyanide is a rapid poison that causes death within minutes. How does cyanide kill, and why is it so fast?
+
+The answer is that cyanide inhibits Complex IV (cytochrome c oxidase), blocking the transfer of electrons to oxygen. The ETC stops, the proton gradient dissipates, and ATP production ceases. Cells that require a lot of ATP, like heart and brain cells, are affected first, leading to cardiac arrest and respiratory failure. Cyanide is fast-acting because these cells cannot survive without ATP.
+
+Inhibitors: rotenone (Complex I, used as an insecticide), antimycin A (Complex III, used in research), cyanide (Complex IV), oligomycin (ATP synthase, blocks ATP production directly). These have been used to study the ETC and, in cyanide's case, are also a real clinical poisoning to recognise.
 
 Now your final test. A patient is exposed to cyanide gas. Within minutes, they lose consciousness and stop breathing.
 
@@ -3650,6 +3634,40 @@ Other glycogen storage diseases affect other enzymes in glycogen metabolism. Eac
 Crucial insight: glycogen storage diseases are caused by defects in enzymes of glycogen metabolism. Von Gierke (glucose-6-phosphatase deficiency) causes hypoglycaemia; Pompe (lysosomal glucosidase deficiency) causes muscle weakness.`
     },
     {
+      q: "How does a brand-new glycogen chain get started?",
+      body: `Glycogen synthase, covered a moment ago, has a strange limitation: it can only add glucose units onto an existing chain - it cannot start one from scratch. My Socratic question: if glycogen synthase needs a chain to already exist before it can extend it, how does an entirely new glycogen molecule ever get built in the first place?
+
+The answer is a dedicated primer protein called glycogenin. Glycogenin is both the primer and its own initiating enzyme: it catalyses the attachment of the first glucose unit from UDP-glucose onto one of its own tyrosine residues, then extends this short chain autocatalytically to about eight glucose units. Only once this short primer chain exists can glycogen synthase take over and extend it into a full-sized glycogen molecule, adding thousands more glucose units.
+
+This is why every glycogen granule, however large it eventually becomes, has a single glycogenin molecule buried at its very core - a permanent structural remnant of how the whole thing began, the way a pearl always has a grain of sand at its centre.
+
+My Socratic question: why might it matter, clinically or practically, that a functioning glycogenin molecule is absolutely required before any glycogen synthesis can occur at all?
+
+The answer is that a defect in glycogenin itself (a rare condition) prevents glycogen synthesis entirely, regardless of how much glycogen synthase enzyme is present and functioning normally - underscoring that glycogenin is not optional scaffolding but an obligatory first step, upstream of every other enzyme discussed in this topic.
+
+Crucial insight: glycogen synthase can only extend an existing chain, so a separate protein, glycogenin, initiates every new glycogen molecule by self-glucosylating a short primer chain. Every glycogen granule therefore has a glycogenin core, and a defective glycogenin blocks glycogen synthesis entirely.`
+    },
+    {
+      q: "Why don't glycogen stores just keep growing indefinitely?",
+      body: `Glycogenesis, as described so far, sounds like it could simply keep adding glucose units forever whenever insulin is high. My Socratic question: given how much glucose a person eats over a lifetime, why doesn't liver and muscle glycogen simply keep growing larger and larger indefinitely, rather than settling at a fairly fixed maximum size in a healthy person?
+
+The answer is a combination of physical and regulatory limits. Physically, as a glycogen granule grows, its geometry works against it: because branching adds new chain ends roughly exponentially while the total volume of the granule increases roughly with the cube of its radius, the granule eventually becomes so densely packed with branch ends near its surface that there is no longer physical room for glycogen synthase and the branching enzyme to access and extend it further - a self-limiting property arising directly from the branched structure discussed earlier in this topic. This caps a single glycogen granule at a maximum practical size of roughly 40,000-60,000 glucose units.
+
+Regulatory limits also matter: once liver and muscle glycogen stores approach their typical capacity, continued excess dietary glucose is increasingly redirected toward a different fate entirely - conversion to fatty acids for storage as triglyceride in adipose tissue - rather than further glycogen synthesis, since the body has essentially "topped off" its rapidly mobilisable glucose reserve and switches to its much larger-capacity, longer-term fat storage system instead.
+
+Crucial insight: glycogen granule size is limited both physically (branching eventually leaves no room near the surface for synthesising enzymes to act) and metabolically (once glycogen stores are full, excess glucose is redirected to fat synthesis instead) - glycogen functions as a capped, rapidly-accessible reserve, not the body's primary long-term energy store.`
+    },
+    {
+      q: "Glycogen loading: applying this topic to athletic performance.",
+      body: `Endurance athletes sometimes practise "carbohydrate loading" or "glycogen loading" in the days before a competition. My Socratic question: given everything covered in this topic about how glycogenesis works and what drives it, why would eating a very high-carbohydrate diet for several days before an event actually increase the amount of glycogen stored in muscle, beyond a person's normal baseline?
+
+The answer follows directly from the regulatory logic already covered: a sustained high-carbohydrate intake keeps blood glucose elevated for days, which keeps insulin elevated for days, which keeps glycogen synthase persistently activated (dephosphorylated) and glycogen phosphorylase persistently suppressed. Combined with prior glycogen-depleting exercise (which some loading protocols use deliberately beforehand), this sustained hormonal signal can drive muscle glycogen storage to roughly double its normal resting level in trained athletes, extending the time before glycogen depletion becomes a limiting factor during prolonged exercise.
+
+This is also why the phenomenon of "hitting the wall" in endurance events reflects this topic directly: it is the point at which muscle glycogen stores become significantly depleted, and the muscle must shift toward relying more heavily on fatty acid oxidation, which cannot sustain the same power output as glycogen-fuelled glycolysis - directly illustrating why liver and muscle glycogen, despite being a comparatively small energy reserve next to the body's fat stores, matters so much for sustained physical performance.
+
+Crucial insight: carbohydrate loading exploits the same insulin-driven activation of glycogen synthase covered throughout this topic, sustained over several days, to roughly double muscle glycogen stores above baseline - and "hitting the wall" during endurance exercise is the direct physiological consequence of those same glycogen stores running low.`
+    },
+    {
       q: "Consolidation and your final test on glycogenesis.",
       body: `Your cognitive map for glycogenesis:
 
@@ -3832,6 +3850,38 @@ My Socratic question: why does McArdle disease cause exercise intolerance, and w
 The answer is that muscle glycogen is the primary source of glucose for glycolysis during intense exercise. Without muscle glycogen phosphorylase, muscle cannot break down glycogen to provide glucose-6-phosphate for glycolysis. Blood lactate does not rise because there is no glucose-6-phosphate from glycogen breakdown to feed into glycolysis and produce lactate.
 
 Crucial insight: glycogen storage diseases are caused by defects in enzymes of glycogen metabolism. McArdle disease (muscle phosphorylase deficiency) causes exercise intolerance; Hers disease (liver phosphorylase deficiency) causes hypoglycaemia.`
+    },
+    {
+      q: "The cAMP cascade: how one hormone molecule triggers a flood of glucose.",
+      body: `Earlier notes established that glucagon and adrenaline activate glycogen phosphorylase by promoting its phosphorylation. My Socratic question: a single glucagon molecule binds a single receptor on a single liver cell - yet within seconds, that cell releases an enormous number of glucose molecules. How does one hormone molecule produce such a disproportionately large effect?
+
+The answer is a signalling cascade that amplifies the signal at every step. Glucagon binds its receptor and activates adenylate cyclase, which converts many ATP molecules into the second messenger cyclic AMP (cAMP). cAMP activates protein kinase A, which then phosphorylates and activates phosphorylase kinase, which in turn phosphorylates and activates many molecules of glycogen phosphorylase itself. Each step in this chain converts one active enzyme molecule into many active copies of the next enzyme, so the effect multiplies at every stage - a single hormone-receptor binding event can ultimately activate millions of glycogen phosphorylase molecules, each cleaving glucose units continuously.
+
+This same cascade explains why hormonal control of glycogenolysis is so fast: because each step is catalytic rather than stoichiometric (one enzyme molecule can act on many substrate molecules in succession, rather than being consumed in a single reaction), the whole cascade unfolds and amplifies within seconds of the hormone binding, exactly the speed needed for a "fight or flight" glucose surge from adrenaline.
+
+Crucial insight: hormonal activation of glycogenolysis works through a cAMP-driven amplifying cascade - glucagon/adrenaline receptor binding → adenylate cyclase → cAMP → protein kinase A → phosphorylase kinase → glycogen phosphorylase - with each step multiplying the signal, so a tiny amount of hormone produces a large, rapid glucose release.`
+    },
+    {
+      q: "Why glycogen phosphorylase alone can't finish the job.",
+      body: `Glycogen phosphorylase was described earlier as unable to remove the last few glucose units near a branch point, requiring the debranching enzyme to step in. My Socratic question: why does phosphorylase specifically stall four glucose units away from a branch point, rather than simply continuing to cleave right up to the branch itself?
+
+The answer is steric - a matter of physical fit, not chemistry. Glycogen phosphorylase's catalytic site is shaped to accommodate a straight, unbranched stretch of the glycogen chain; it requires enough clearance around the glucose unit it is cleaving to fit properly into its active site. As it approaches within four residues of an alpha-1,6 branch point, the branching itself physically crowds the active site, and the enzyme can no longer bind productively. The residual, stalled structure left behind - a short branch stub about four glucose units long attached to the main chain - is called a limit dextrin.
+
+The debranching enzyme then resolves this in two distinct catalytic steps performed by two active sites on the same protein: first, a transferase activity moves three of the four remaining glucose units from the branch onto the end of a nearby main chain, extending it (which glycogen phosphorylase can then continue cleaving); second, a glucosidase activity hydrolyses the single remaining glucose unit still attached directly at the former branch point, releasing it as free glucose - the only point in glycogenolysis where free glucose, rather than glucose-1-phosphate, is produced directly.
+
+Crucial insight: glycogen phosphorylase stalls four residues from a branch point for steric reasons, leaving a limit dextrin; the bifunctional debranching enzyme resolves this by transferring three glucose units onto the main chain and hydrolysing the last one as free glucose - the sole step in glycogenolysis that yields glucose directly rather than glucose-1-phosphate.`
+    },
+    {
+      q: "Applying this topic: why severe hypoglycaemia is treated with injected glucagon.",
+      body: `Everything in this topic explains a practical emergency intervention you may already have heard of. My Socratic question: a person with diabetes on insulin therapy becomes unconscious from severe hypoglycaemia, and a bystander or family member administers an emergency glucagon injection rather than trying to give them food or drink by mouth. Why does an injected hormone work here when the person cannot safely swallow anything?
+
+The answer follows directly from this topic's mechanism. Injected glucagon travels through the bloodstream to the liver, binds hepatic glucagon receptors, and triggers the cAMP cascade covered in this topic, rapidly activating glycogen phosphorylase and mobilising the liver's stored glycogen into free glucose released directly into the blood - raising blood glucose within about ten to fifteen minutes, without requiring the person to swallow, digest, or absorb anything through the gut. This is precisely why emergency glucagon kits exist for people with diabetes at risk of severe hypoglycaemia, and why glucagon (not insulin) is the hormone used in this specific emergency.
+
+My Socratic question: would this same emergency glucagon injection work as effectively in a patient with Von Gierke disease (glucose-6-phosphatase deficiency, covered in the previous topic) or Hers disease (liver glycogen phosphorylase deficiency, covered earlier in this topic)?
+
+The answer is no - in both conditions, the liver cannot complete the pathway this emergency treatment depends on: Hers disease patients lack the very enzyme glucagon is trying to activate, and Von Gierke patients lack the enzyme needed to release free glucose at the final step, so glucagon injection would fail to raise blood glucose effectively in either case, illustrating why understanding exactly which enzyme is missing matters for predicting whether a given treatment will actually work.
+
+Crucial insight: emergency glucagon injection for severe hypoglycaemia works by directly triggering hepatic glycogenolysis through the cAMP cascade, bypassing the need for oral intake - but this only works if the liver's glycogenolysis pathway is intact, which is precisely why it would fail in glycogen storage diseases affecting glycogen phosphorylase or glucose-6-phosphatase.`
     },
     {
       q: "Consolidation and your final test on glycogenolysis.",
@@ -8366,17 +8416,6 @@ In practice, a comprehensive laboratory safety and security programme addresses 
 
 Crucial insight: biosafety concerns protecting people and the environment from unintentional, accidental exposure to hazardous biological agents, while biosecurity concerns protecting those agents themselves from unauthorised access, theft, or deliberate malicious misuse - related, often complementary concerns addressed together in practice, but requiring distinct approaches given their different underlying threat models.` },
 
-    { q: "Connecting biosafety levels to the wider chain of laboratory responsibility.",
-      body: `Biosafety levels, like every topic covered throughout this laboratory skills course, do not exist as an isolated administrative formality - they connect directly to the practical, everyday techniques covered earlier, and a breakdown in biosafety practice can undermine the safety and validity of laboratory work in ways that echo the same chain-of-accuracy theme seen with instruments like the centrifuge, autoclave, and pipette.
-
-My Socratic question: a laboratory technician, working correctly according to BSL-2 practice, uses a biological safety cabinet appropriately for a potentially infectious sample - but then centrifuges that same sample afterward using incorrect technique, without any additional biosafety consideration for the aerosol-generating potential of the centrifugation step itself. What has actually gone wrong here, even though the biological safety cabinet was used correctly earlier in the process?
-
-The answer is that biosafety considerations must be applied consistently across an entire procedure's workflow, not just at a single step - centrifugation itself is a recognised aerosol-generating procedure (particularly if a tube cracks or is improperly sealed during a run, as covered in the earlier centrifuge topic), meaning appropriate biosafety measures (such as using sealed centrifuge safety cups or rotors, and ideally opening them within a biological safety cabinet afterward) are required at this step too, not merely during the initial pipetting or handling stage. This illustrates that biosafety is not a single checkpoint completed once at the start of a procedure, but a consideration that must be woven consistently through every step of a laboratory workflow, exactly as accuracy and technique must be maintained consistently across every instrument and process covered throughout this entire course.
-
-This reinforces, one final time, the central theme running through this whole laboratory skills course: whether the concern is measurement accuracy (as with the balance, pipette, pH meter, and spectrophotometer), physical separation (as with the centrifuge), sterility (as with the autoclave), or now personal and environmental safety (as with biosafety levels), a laboratory's overall reliability and safety depend on every link in a long chain of correct technique, correct equipment use, and correct judgement holding together consistently, from the very first step of a procedure to its very last.
-
-Crucial insight: biosafety practice must be applied consistently across every step of a laboratory procedure's workflow, not treated as a single checkpoint at the start - a correctly used biological safety cabinet at one stage does not compensate for inadequate biosafety consideration at another (such as centrifugation), reinforcing the course-wide theme that laboratory reliability and safety depend on every link in the chain of technique and judgement holding together consistently throughout.` },
-
     { q: "Consolidation and your final test.",
       body: `Your cognitive map for biosafety levels, in five lines.
 
@@ -9257,6 +9296,19 @@ The answer is a broken citation-to-reference-list link - one of the most common 
 Each of these errors, in its own way, damages the same underlying quality that correct referencing exists to protect: the traceable, verifiable connection between a specific claim made in your work and the specific, genuine source that claim actually and accurately came from - precisely the same traceability principle, applied here to information and ideas, that correct sample labelling protects for physical laboratory specimens.
 
 Crucial insight: common referencing errors - broken citation-to-reference-list links, inconsistent mixing of different referencing styles, incomplete reference list entries, over-reliance on a narrow range of sources, and citing sources never actually read directly - all damage the same underlying traceability that correct referencing exists to protect, and careful, deliberate proofreading specifically for these issues is an essential final step before submitting any referenced work.` },
+
+    { q: "Referencing images, tables, and your own earlier work.",
+      body: `Two further situations trip students up because they don't feel like "quoting" in the traditional sense: reproducing a figure or table someone else made, and reusing material you yourself wrote for an earlier assignment.
+
+My Socratic question: a laboratory report includes a diagram of the citric acid cycle, copied directly from a textbook and placed into the report exactly as it appeared there, with no accompanying acknowledgement of where it came from. Does the fact that it is an image, not a sentence, change whether it needs a reference?
+
+The answer is no - a figure, table, chart, or diagram reproduced from another source is exactly as much someone else's intellectual work as a sentence would be, and it requires the same treatment: typically a caption naming the original source directly beneath the figure (for example, "Figure 3. Reproduced from Smith, 2021") in addition to a full entry in the reference list. If the figure has been adapted or redrawn rather than copied exactly, this should also be stated ("Adapted from...") rather than presenting a modified version as if it were entirely your own original creation.
+
+The second situation is less obvious: reusing substantial material from your own earlier submitted work - a previous laboratory report, a past assignment - without acknowledgement. My Socratic question: since you wrote the original material yourself, can copying it into a new report ever be considered plagiarism?
+
+The answer is yes, in a specific sense called self-plagiarism: submitting the same or substantially the same work twice, presented as new, original work for a new assessment, misrepresents how much new effort and content that new submission actually contains, even though you are technically the original author of the reused material. Most institutions treat this as a genuine academic integrity issue, not a harmless shortcut, and it is avoided the same way any other reused material is handled - by citing your own earlier work explicitly if you build directly on it, rather than silently resubmitting it as if newly produced.
+
+Crucial insight: reproduced or adapted figures, tables, and diagrams require a caption naming the source plus a full reference list entry, exactly like reused text; and reusing substantial material from your own previously submitted work without acknowledgement constitutes self-plagiarism, since it misrepresents a resubmission as new original work.` },
 
     { q: "Consolidation and your final test.",
       body: `Your cognitive map for referencing, in five lines.
@@ -11817,7 +11869,7 @@ If those came cleanly, you understand the great frameworks of psychology - the d
     { q: "The humanistic paradigm is associated with:", o: ["Pavlov and Watson", "Skinner and Thorndike", "Rogers and Maslow", "Freud and Jung"], a: 2, w: "Rogers and Maslow are the humanistic figures." },
     { q: "The humanistic paradigm emphasises:", o: ["Only brain chemistry", "Unconscious conflict", "Free will, growth and self-actualisation", "Only conditioning"], a: 2, w: "Humanism stresses growth and fulfilling potential." },
     { q: "Fulfilling one's full potential is called:", o: ["Reinforcement", "Repression", "Conditioning", "Self-actualisation"], a: 3, w: "Self-actualisation is fulfilling one's potential." },
-    { q: "Maslow is known for the:", o: ["Theory of conditioning", "Id, ego and superego", "Hierarchy of needs", "Information-processing model"], a: 0, w: "Maslow's hierarchy of needs orders human needs." },
+    { q: "Maslow is known for the:", o: ["Theory of conditioning", "Id, ego and superego", "Hierarchy of needs", "Information-processing model"], a: 2, w: "Maslow's hierarchy of needs orders human needs." },
     { q: "Treating patients with genuine acceptance is Rogers's idea of:", o: ["Unconditional positive regard", "Punishment", "Repression", "Reinforcement"], a: 0, w: "Unconditional positive regard is genuine acceptance." },
     { q: "The biological paradigm explains behaviour through:", o: ["Unconscious drives", "Free will only", "Learned associations only", "Physical causes like brain, neurotransmitters and genes"], a: 3, w: "The biological paradigm stresses physical/bodily causes." },
     { q: "Chemical messengers in the brain are called:", o: ["Neurotransmitters", "Reflexes", "Hormones only", "Genes"], a: 0, w: "Neurotransmitters are the brain's chemical messengers." },
@@ -15147,7 +15199,7 @@ My answers. One: the frontal lobe and temporal lobe are most likely affected. Th
     { q: "The brain region controlling breathing and heartbeat is the:", o: ["Cerebrum", "Brainstem", "Cerebellum", "Parietal lobe"], a: 1, w: "The brainstem controls vital automatic functions." },
     { q: "The outer folded layer of the cerebrum is the:", o: ["Corpus callosum", "Meninges", "Medulla", "Cerebral cortex"], a: 3, w: "The cerebral cortex is the folded outer layer." },
     { q: "The band of fibres connecting the two cerebral hemispheres is the:", o: ["Brainstem", "Cerebellum", "Corpus callosum", "Thalamus"], a: 2, w: "The corpus callosum links the two hemispheres." },
-    { q: "The relay station directing sensory information in the brain is the:", o: ["Cerebellum", "Pituitary", "Thalamus", "Cortex"], a: 0, w: "The thalamus relays sensory information." },
+    { q: "The relay station directing sensory information in the brain is the:", o: ["Cerebellum", "Pituitary", "Thalamus", "Cortex"], a: 2, w: "The thalamus relays sensory information." },
     { q: "The brain region controlling hunger, thirst and temperature is the:", o: ["Hypothalamus", "Thalamus", "Cerebellum", "Occipital lobe"], a: 0, w: "The hypothalamus regulates these homeostatic drives." },
     { q: "Vision is processed in the ___ lobe:", o: ["Parietal", "Frontal", "Temporal", "Occipital"], a: 3, w: "The occipital lobe processes vision." },
     { q: "The right side of the body is generally controlled by the ___ side of the brain:", o: ["Left", "Neither", "Right", "Both equally"], a: 0, w: "The brain controls the opposite (contralateral) side." },
@@ -15242,6 +15294,17 @@ The answer is that the pathologist examines the tissue under a microscope, ident
 Histology is also used in surgery — frozen sections allow surgeons to determine whether a tumour has been completely removed during an operation.
 
 Crucial insight: tissue identification is essential in pathology for diagnosing diseases like cancer. Understanding normal tissue appearance is the first step to recognising abnormal tissue.` },
+
+    { q: "Artefacts: when the slide lies to you.",
+      body: `Not everything you see under the microscope is real tissue structure - processing itself can introduce false features, and mistaking these "artefacts" for genuine pathology is a classic beginner's error.
+
+My Socratic question: a slide shows a clean, empty gap between the epithelium and the underlying connective tissue, as if the two layers have physically pulled apart from each other. Has the patient's tissue actually torn apart inside the body, or is something else going on?
+
+The answer is usually something else: shrinkage artefact. During processing, tissue is dehydrated through a series of alcohols and then infiltrated with wax, and this can cause tissue components with different physical properties to shrink at slightly different rates, pulling epithelium away from the connective tissue beneath it and leaving a clean gap that was never actually present in the living tissue. Recognising this as a processing artefact, rather than as a genuine finding such as tissue necrosis or an abnormal cleavage plane, prevents a serious misdiagnosis.
+
+Other common artefacts include folds (a wrinkle in the tissue section, visible as a dark, out-of-focus band that does not correspond to any real structure), bubbles trapped under the coverslip (perfectly round, sharply outlined structures that some students mistake for cells or parasites), and knife chatter (regular, parallel scoring lines left by a dull or poorly set microtome blade, which can be confused with genuine tissue banding).
+
+Crucial insight: shrinkage gaps, folds, bubbles, and knife-chatter lines are processing artefacts, not real tissue features - recognising their characteristic, unnatural appearance (too clean, too regular, or physically implausible for living tissue) prevents mistaking a technical imperfection for genuine pathology.` },
 
     { q: "Consolidation and your final test.",
       body: `Your cognitive map for identifying micrographs.
@@ -17036,6 +17099,15 @@ Diagnosis involves history, examination, hormone measurements (FSH, LH, oestroge
 
 Crucial insight: reproductive disorders include infertility, PCOS, endometriosis, and erectile dysfunction. Diagnosis involves hormone tests, imaging, and specialised investigations.` },
 
+    { q: "Puberty: switching the reproductive system on.",
+      body: `Everything covered so far describes an already-functioning reproductive system, but that system is dormant for most of childhood. My Socratic question: what actually switches it on at puberty, and why does this happen around age 10-14 rather than at birth?
+
+The answer is a reawakening of the hypothalamic-pituitary-gonadal axis that was already introduced earlier in this topic. The axis is technically active briefly in infancy, then becomes suppressed throughout childhood. At puberty, the hypothalamus resumes pulsatile GnRH secretion, which drives rising FSH and LH, which in turn drive rising testosterone in boys and oestrogen in girls. Exactly what triggers this reawakening is still an active area of research, but body mass, nutritional status, and the hormone leptin (released from fat tissue) are known to play a permissive role, which is part of why puberty's timing varies with nutrition and body composition.
+
+The downstream effects differ by sex but follow the same hormonal logic. In males, rising testosterone drives testicular growth, the onset of spermatogenesis, and secondary sexual characteristics — deepening voice, facial hair, increased muscle mass. In females, rising oestrogen drives breast development, the onset of the menstrual cycle (menarche), and the beginning of ovulatory cycles, though the first cycles are often irregular before the HPG axis fully matures.
+
+Crucial insight: puberty is the reawakening of the HPG axis - the same axis responsible for the adult menstrual cycle and spermatogenesis covered elsewhere in this topic - triggered by resumed pulsatile GnRH secretion, with nutritional status and leptin playing a permissive role in its timing.` },
+
     { q: "Consolidation and your final test.",
       body: `Your cognitive map for the reproductive system.
 
@@ -17185,6 +17257,15 @@ My Socratic question: what are common skin disorders, and how are they diagnosed
 The answer is that common skin disorders include acne, eczema, psoriasis, skin cancers (basal cell carcinoma, squamous cell carcinoma, melanoma), burns, and infections. Diagnosis involves clinical examination, dermatoscopy, and biopsy.
 
 Crucial insight: common skin disorders include acne, eczema, psoriasis, skin cancers, burns, and infections.` },
+    { q: "Classifying burns by depth.",
+      body: `Skin disorders were introduced earlier, but burns deserve their own treatment because their severity is judged by a specific, clinically important system: depth of tissue destruction.
+
+My Socratic question: two patients each have a burn covering the same surface area. One burn is red, painful, and blanches when pressed, with no blistering. The other is white and leathery, and the patient reports feeling nothing at all when the area is touched. Which burn is actually more dangerous, and why might the "painless" one be the more serious injury?
+
+The answer reveals something counterintuitive about depth and pain. A first-degree burn damages only the epidermis - it is red, painful, and heals within days without scarring, exactly as described in the first patient (think of a mild sunburn). A second-degree burn extends into the dermis, damaging blood vessels and nerve endings partially, producing blistering along with pain, and heals in one to three weeks, sometimes with scarring. A third-degree (full-thickness) burn destroys the epidermis and the entire dermis, including the nerve endings that would otherwise register pain - which is exactly why the second patient's burn, appearing white or leathery and feeling numb, is actually the more severe injury: the nerve endings that carry pain signals have themselves been destroyed. Third-degree burns cannot heal by re-epithelialisation from the wound edges alone over a large area, since the dermis (which holds hair follicles and glands that would otherwise reseed new epidermis) is gone, and typically require skin grafting.
+
+Crucial insight: burn severity is classified by depth - first-degree (epidermis only, painful), second-degree (into the dermis, blistering and painful), and third-degree (full-thickness, often painless due to nerve destruction, usually requiring grafting) - and a numb, leathery burn is a warning sign of greater severity, not less, precisely because it means the pain-sensing nerve endings have been destroyed along with everything else.` },
+
     { q: "Consolidation and your final test.",
       body: `Your cognitive map for the integumentary system.
 
@@ -17478,7 +17559,9 @@ const RANKS = [
   { name: "Pearl", min: 8900, c: "#F5F0E6" },
   { name: "Obsidian", min: 12000, c: "#3F3F46" },
   { name: "Diamond", min: 16000, c: "#8FE3F5" },
-  { name: "Grand Master", min: 50000, c: "#FFD700" }
+  { name: "Grand Master", min: 50000, c: "#FFD700" },
+  { name: "Luminary", min: 100000, c: "#C084FC" },
+  { name: "Ascendant", min: 200000, c: "#7DF9FF" }
 ];
   // ACHIEVEMENT DEFINITIONS - SVG Icons only
   const ACHIEVEMENTS = [
@@ -19959,7 +20042,7 @@ function InteractiveSet({ items }) {
 
 /* ============================================================
    ChunkedPracticeSet - delivers a large AI-generated practice run
-   (e.g. 100 questions) in small chunks of 10 instead of one huge
+   (e.g. 50 questions) in small chunks of 10 instead of one huge
    generation. This keeps every AI call well inside timeout limits.
    If requireMastery is on, the student must score 7/10 on a chunk
    to move straight on. If they score below that, they don't get a
@@ -20911,11 +20994,11 @@ const PAST_PAPERS = [
     // SECTION A - Assertion-Reason (5-Option Standard Format)
     // ============================================================
     { q: "Anaplerotic reactions decrease citric acid cycle intermediates BECAUSE some intermediates of the citric acid cycle are used to synthesize other molecules.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 3, w: "Anaplerotic reactions INCREASE, not decrease, cycle intermediates. The reason is true (intermediates are withdrawn for biosynthesis), but it doesn't explain the (false) assertion. So: assertion false, reason true." },
-    { q: "Molecule A transfers electrons to molecule B BECAUSE molecule A has a higher reduction potential than B.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 2, w: "A molecule with higher reduction potential ACCEPTS electrons, it does not transfer them. Both the assertion and reason are false." },
+    { q: "Molecule A transfers electrons to molecule B BECAUSE molecule A has a higher reduction potential than B.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 4, w: "A molecule with higher reduction potential ACCEPTS electrons, it does not transfer them. Both the assertion and reason are false." },
     { q: "Enzymes remain unchanged after product formation BECAUSE enzymes are thermostable, pH specific and substrate dependent.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 2, w: "Assertion is true (enzymes are catalysts and remain unchanged). Reason is false (enzymes are generally NOT thermostable)." },
     { q: "The human body contains about 2500 eukaryotic cells BECAUSE the human body has cells for special activities.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 3, w: "Assertion is false (trillions of cells). The reason is true: cells are indeed specialized." },
     { q: "The eukaryotic cell has only a rigid cell membrane BECAUSE a eukaryotic cell is involved with cellular metabolism.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 3, w: "Assertion is false (eukaryotic cells have a flexible plasma membrane). The reason is true but doesn't explain the false statement." },
-    { q: "Ribozymes are protein based enzymes which contains the genetic material of the cells BECAUSE ribozymes are determine factor for gene replication.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 3, w: "Assertion is false (ribozymes are RNA-based, not protein-based). The reason is also false as described." },
+    { q: "Ribozymes are protein based enzymes which contains the genetic material of the cells BECAUSE ribozymes are determine factor for gene replication.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 4, w: "Assertion is false (ribozymes are RNA-based, not protein-based). The reason is also false as described." },
     { q: "Substrate concentration maximizes product per time BECAUSE substrate concentration determines the number of active site of the enzymes to be filled.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 0, w: "Both statements are true, and the second correctly explains why substrate concentration affects product formation." },
     { q: "Maximum velocity of a reaction is reached when the active sites are almost continuously filled BECAUSE maximum velocity will continue to rise when active sites are over saturated by substrate.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 2, w: "Assertion is true (Vmax is reached at saturation). The reason is false (Vmax is a plateau, it does not continue to rise)." },
     { q: "Excessive product formation will lead to negative feedback inhibition because excessive product formation will cause some of the products stopping the action of initial enzymes in the reaction.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 0, w: "Both statements are true, and the second correctly explains the mechanism of negative feedback inhibition." },
@@ -20925,20 +21008,20 @@ const PAST_PAPERS = [
     { q: "Phosphofructokinase-1 is stimulated by both AMP and fructose-1,6-bisphosphate BECAUSE Phosphofructokinase-1 has allosteric sites for AMP and fructose-1,6-bisphosphate.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 2, w: "AMP does activate PFK-1. However, fructose-2,6-bisphosphate (not fructose-1,6-bisphosphate) activates it, so the reason is false." },
     { q: "Glycolysis is very essential in the brain BECAUSE glycolysis is the only energy producing pathway for the brain.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 2, w: "The assertion is true, but the reason is false; the brain also uses oxidative phosphorylation." },
     { q: "Glycolysis is a central metabolic pathway BECAUSE glycolysis provides intermediates for other metabolic pathways.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 0, w: "Both statements are true, and the second correctly explains glycolysis's central role." },
-    { q: "The first phase of glycolysis is called the pay-off phase BECAUSE the first phase of glycolysis produces ATPs.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 3, w: "Assertion is false: the first phase is the investment phase. The reason is also false because ATP is produced in the second (pay-off) phase." },
-    { q: "Glucokinase is found only in the liver BECAUSE glucokinase has a high affinity for glucose.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 2, w: "Assertion false (also found in pancreatic beta-cells); reason false (it has low affinity, not high)." },
+    { q: "The first phase of glycolysis is called the pay-off phase BECAUSE the first phase of glycolysis produces ATPs.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 4, w: "Assertion is false: the first phase is the investment phase. The reason is also false because ATP is produced in the second (pay-off) phase." },
+    { q: "Glucokinase is found only in the liver BECAUSE glucokinase has a high affinity for glucose.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 4, w: "Assertion false (also found in pancreatic beta-cells); reason false (it has low affinity, not high)." },
     { q: "Glucose 6-phosphate in glycolysis is a central molecule for other metabolic pathways BECAUSE glucose 6-phosphate is impermeable to the cell membrane.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 1, w: "Both statements are true, but the second doesn't explain why G6P is central; it explains why glucose is trapped." },
-    { q: "Fluoride is used as an additive in blood fructose estimation BECAUSE fluoride competitively inhibits enzymes in fructolysis.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 2, w: "Assertion false. Fluoride is used to preserve glucose in blood samples by inhibiting enolase in glycolysis, not fructolysis." },
+    { q: "Fluoride is used as an additive in blood fructose estimation BECAUSE fluoride competitively inhibits enzymes in fructolysis.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 4, w: "Assertion false. Fluoride is used to preserve glucose in blood samples by inhibiting enolase in glycolysis, not fructolysis." },
     { q: "Phosphofructokinase is the most important regulatory step in glycolysis BECAUSE phosphofructokinase catalyzes the rate-limiting committed step of glycolysis.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 0, w: "Both statements are true, and the second correctly explains PFK-1's regulatory importance." },
     { q: "Fructolysis occurs mainly in the liver BECAUSE fructolysis is mainly directed towards glycogen replenishment.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 0, w: "Both true; liver is the primary site of fructose metabolism, and it feeds into glycogen and glucose synthesis." },
     { q: "Fructose deficiency has been implicated in male infertility BECAUSE fructose is the main source of energy for sperm motility.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 0, w: "Both statements are true; sperm use fructose in seminal fluid for energy." },
-    { q: "Essential fructosuria results in the inability to metabolize fructose beyond fructose 1-phosphate BECAUSE essential fructosuria is caused by the deficiency of fructose 1-phosphate aldolase.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 3, w: "Assertion false; essential fructosuria is a benign fructokinase deficiency, not a block beyond fructose-1-phosphate. The reason is also false." },
-    { q: "Essential fructosemia results in the accumulation of fructose BECAUSE essential fructosemia is caused by deficiency of aldolase B.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 3, w: "Assertion true (fructose accumulates), but reason false (aldolase B deficiency causes hereditary fructose intolerance, not essential fructosemia)." },
+    { q: "Essential fructosuria results in the inability to metabolize fructose beyond fructose 1-phosphate BECAUSE essential fructosuria is caused by the deficiency of fructose 1-phosphate aldolase.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 4, w: "Assertion false; essential fructosuria is a benign fructokinase deficiency, not a block beyond fructose-1-phosphate. The reason is also false." },
+    { q: "Essential fructosemia results in the accumulation of fructose BECAUSE essential fructosemia is caused by deficiency of aldolase B.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 2, w: "Assertion true (fructose accumulates), but reason false (aldolase B deficiency causes hereditary fructose intolerance, not essential fructosemia)." },
     { q: "Lactose intolerance results in bloating of the stomach after ingestion of lactose BECAUSE lactose intolerance results from lack of lactase.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 0, w: "Both true; lactase deficiency causes undigested lactose to be fermented by bacteria, leading to bloating." },
     { q: "UDP-glucose is considered as a coenzyme in galactose metabolism BECAUSE UDP-glucose deficiency affects galactose metabolism.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 0, w: "Both statements are true, and the second correctly explains UDP-glucose's role in the Leloir pathway." },
     { q: "Galactokinase deficiency is an autosomal dominant disorder BECAUSE galactokinase deficiency results in the accumulation of Galactitol.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 3, w: "Assertion false (autosomal recessive). Reason true (galactitol accumulation does cause cataracts)." },
     { q: "Galactitol accumulation in the lens of the eye leads to cataract formation BECAUSE Galactitol has osmotic properties.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 0, w: "Both true; galactitol's osmotic effect causes lens swelling and cataracts." },
-    { q: "Galactose cannot be produced in the cell BECAUSE galactose is only obtained from dietary sources.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 3, w: "Assertion false (galactose can be synthesized endogenously). Reason is also false (even though it is obtained from diet)." },
+    { q: "Galactose cannot be produced in the cell BECAUSE galactose is only obtained from dietary sources.", o: ["Both statements true, 2nd is correct explanation of 1st", "Both statements true, 2nd is NOT correct explanation of 1st", "1st statement true, 2nd statement false", "1st statement false, 2nd statement true", "Both statements false"], a: 4, w: "Assertion false (galactose can be synthesized endogenously). Reason is also false (even though it is obtained from diet)." },
     
     // ============================================================
     // SECTION B - Single Best Answer (Questions 30-55)
@@ -21181,7 +21264,7 @@ const PAST_PAPERS = [
       { q: "Which of these is not among the four kinds of questions that typically fall under directive interviews?", o: ["Situational questions", "Behavioral questions", "Job knowledge questions", "Worker requirement questions"], a: 1, w: "The classic four categories under structured/directive interviews are situational, job knowledge, job simulation, and worker requirement questions. Behavioral questions are more associated with less-structured interview formats, not this standard four-part structured model." },
       { q: "Which of these must an applicant avoid during an interview?", o: ["Be courteous.", "Sit comfortably.", "Engage the interviewers in arguments.", "Be accommodating."], a: 2, w: "Arguing with interviewers is unprofessional and damaging; courtesy, comfortable posture, and being accommodating are all encouraged instead." },
       { q: "An interview that helps employees to overcome their emotional setbacks and other problems that hinder the progress of their effectiveness at work is known as ........ interview.", o: ["group", "counselling", "one-on-one", "stress"], a: 1, w: "Helping an employee work through emotional or personal issues affecting their work performance is the defining purpose of a counselling interview." },
-      { q: "In a formal letter, the writer sees himself and the recipient as ......... distant from each other.", o: ["academically", "economically", "politically", "socially"], a: 3, w: "The formality of a formal letter reflects social distance between writer and recipient - this is the standard concept taught around register and formality, not a specifically academic, economic, or political distance. Note: the scan shows a pen circle on option C (politically); this looks like a mismark, since \"social distance\" is the standard term used to explain formal register - please verify against an official key if available." },
+      { q: "In a formal letter, the writer sees himself and the recipient as ......... distant from each other.", o: ["academically", "economically", "politically", "socially"], a: 3, w: "The formality of a formal letter reflects social distance between writer and recipient - \"social distance\" is the standard term taught for explaining formal register, not an academic, economic, or political one." },
       { q: "The ....... states explicitly where the letter is coming from.", o: ["date", "recipient's address", "salutation", "writer's address"], a: 3, w: "The writer's address (return address) at the top of a formal letter explicitly states where the letter is coming from." },
       { q: "The ........... is used for the official for whom a formal letter is meant.", o: ["actual name", "agency's position", "concrete name", "establishment position"], a: 3, w: "When the specific recipient's name is unknown, a formal letter addresses the recipient by their establishment position/title (e.g. \"The Human Resource Manager\")." },
       { q: "The .................. is a call to the recipient for his/her attention.", o: ["introduction", "recipient's address", "salutation", "subscription"], a: 0, w: "The introduction of a formal letter is where the writer states the purpose of the letter, directly calling the recipient's attention to the matter at hand." },
@@ -22444,7 +22527,7 @@ function PapersView({ app }) {
     } catch { return 20; }
   });
 
-  // Practice set (AI) is fixed at 100 questions, chunked into 10s with
+  // Practice set (AI) is fixed at 50 questions, chunked into 10s with
   // mandatory 7/10 mastery gating - no selector, per spec.
   
   const [active, setActive] = useState(() => {
@@ -22474,7 +22557,7 @@ function PapersView({ app }) {
   const [practiceActive, setPracticeActive] = useState(false);
   const [similarActive, setSimilarActive] = useState(false);
   
-  const count = tab === "solve" ? 100 : similarCount;
+  const count = tab === "solve" ? 50 : similarCount;
   const CHUNK = 50;
   
   // SAVE: Persist all state changes
@@ -22742,7 +22825,7 @@ function PapersView({ app }) {
           {/* CHANGED: Different messages for practice vs similar */}
           {tab === "solve" && (
             <>
-              <div style={{ color: "var(--text-2)", marginTop: 4, fontSize: 14, lineHeight: 1.6 }}>100 questions total, delivered in sets of 10 with rising difficulty. You must score 7/10 to unlock the next set - any question you miss, you redo immediately until you get it right, then you move on.</div>
+              <div style={{ color: "var(--text-2)", marginTop: 4, fontSize: 14, lineHeight: 1.6 }}>50 questions total, delivered in sets of 10 with rising difficulty. You must score 7/10 to unlock the next set - any question you miss, you redo immediately until you get it right, then you move on.</div>
             </>
           )}
           {tab === "similar" && (
@@ -22750,7 +22833,7 @@ function PapersView({ app }) {
           )}
           <div style={{ marginTop: 16 }}>
             {tab === "solve"
-              ? <button className="btn btn-a" onClick={function() { setPracticeActive(true); }}>Generate 100 with AI <Ic.ai p={16} /></button>
+              ? <button className="btn btn-a" onClick={function() { setPracticeActive(true); }}>Generate 50 with AI <Ic.ai p={16} /></button>
               : <button className="btn btn-a" onClick={function() { if (!sample.trim()) { setErr("Paste a passco question above first, then generate."); return; } setErr(""); setSimilarActive(true); }}>Generate {similarCount} similar <Ic.ai p={16} /></button>}
           </div>
         </div>
@@ -22759,7 +22842,7 @@ function PapersView({ app }) {
         <ChunkedPracticeSet
           course={courseById(courseId)}
           topicName={practiceTopicIdx !== "" ? (TOPICS[courseId] || [])[parseInt(practiceTopicIdx, 10)] : null}
-          total={100}
+          total={50}
           requireMastery={true}
           onExit={function() { setPracticeActive(false); }}
           finishQuiz={app.finishQuiz}
