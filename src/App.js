@@ -17925,6 +17925,11 @@ const db = {
             completed: { ...(existing.completed || {}), ...(progress.completed || {}) },
             scores: { ...(existing.scores || {}), ...(progress.scores || {}) },
             passcoScores: { ...(existing.passcoScores || {}), ...(progress.passcoScores || {}) },
+            achievements: (() => {
+              const merged = [...(existing.achievements || [])];
+              (progress.achievements || []).forEach((a) => { if (a && a.id && !merged.find((m) => m.id === a.id)) merged.push(a); });
+              return merged;
+            })(),
             bookmarks: Array.isArray(progress.bookmarks) ? progress.bookmarks : (existing.bookmarks || []),
           };
         }
@@ -24153,7 +24158,7 @@ const verifyAndMigratePw = async (acct, pw) => {
   const lockUntil = failCount >= MAX_FAILED_ATTEMPTS ? now + LOCKOUT_MS : null;
   return { ok: false, locked: false, retryAt: lockUntil, upgrade: null, failCount, lockUntil };
 };
-const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [] });
+const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], achievements: [] });
 const progKey = (u) => "ascend_progress:" + String(u).toLowerCase();
 // "Jump back in" needs to survive the user closing and reopening the app -
 // not just staying in the same tab. sessionStorage (used for in-session
@@ -25793,7 +25798,7 @@ const NAV = [
   { key: "feedback", label: "Feedback", icon: "star" }
 ];
 
-const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0, passcoScores: {} };
+const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0, passcoScores: {}, achievements: [] };
 
 // ============================================
 // QUICK FLOW BUTTON - Paste this here
@@ -25887,7 +25892,6 @@ export default function App() {
     const t = setTimeout(() => setRankUpNotif(null), 6000);
     return () => clearTimeout(t);
   }, [rankUpNotif]);
-  const [achievements, setAchievements] = useState([]);
   const [achNotif, setAchNotif] = useState(null);
   const [auth, setAuth] = useState(null);
   const [supaUid, setSupaUid] = useState(null);
@@ -26004,51 +26008,41 @@ export default function App() {
   };
 
   // CHECK ACHIEVEMENTS
-  const checkAchievements = (p) => {
-    const unlocked = [...achievements];
+  //
+  // FIX: achievements used to live in their own React state (setAchievements)
+  // that was NEVER saved anywhere - not to localStorage, not to the cloud.
+  // So the unlock toast would show, the badge would glow gold for a moment,
+  // and then the very next reload/login re-created empty state and the badge
+  // went straight back to locked. Achievements are now computed onto the
+  // progress object itself (progress.achievements) so they get saved and
+  // restored by the exact same mechanism as XP, streak, and scores.
+  const computeAchievements = (p) => {
+    const unlocked = [...(p.achievements || [])];
     let newAchievement = null;
     const quizzesDone = Object.keys(p.completed || {}).length;
-
-    if (quizzesDone >= 1 && !unlocked.find(a => a.id === 'first_quiz')) {
-      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'first_quiz'), unlocked: true };
+    const add = (id) => {
+      if (unlocked.find(a => a.id === id)) return;
+      const def = ACHIEVEMENTS.find(a => a.id === id);
+      if (!def) return;
+      newAchievement = { id: def.id, label: def.label, description: def.description, unlocked: true };
       unlocked.push(newAchievement);
+    };
+    if (quizzesDone >= 1) add('first_quiz');
+    if (quizzesDone >= 10) add('quiz_master');
+    if ((p.passcoCompleted || 0) >= 10) add('passco_10');
+    if (p.xp >= 500) add('xp_500');
+    if (p.xp >= 1000) add('xp_1000');
+    if (p.streak >= 7) add('streak_7');
+    if (p.streak >= 30) add('streak_30');
+    if (newAchievement) {
+      sessionStorage.setItem('ascend_achievement_notif', JSON.stringify({
+        id: newAchievement.id,
+        label: newAchievement.label,
+        description: newAchievement.description,
+        icon: 'trophy'
+      }));
     }
-    if (quizzesDone >= 10 && !unlocked.find(a => a.id === 'quiz_master')) {
-      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'quiz_master'), unlocked: true };
-      unlocked.push(newAchievement);
-    }
-    if ((p.passcoCompleted || 0) >= 10 && !unlocked.find(a => a.id === 'passco_10')) {
-      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'passco_10'), unlocked: true };
-      unlocked.push(newAchievement);
-    }
-    if (p.xp >= 500 && !unlocked.find(a => a.id === 'xp_500')) {
-      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'xp_500'), unlocked: true };
-      unlocked.push(newAchievement);
-    }
-    if (p.xp >= 1000 && !unlocked.find(a => a.id === 'xp_1000')) {
-      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'xp_1000'), unlocked: true };
-      unlocked.push(newAchievement);
-    }
-    if (p.streak >= 7 && !unlocked.find(a => a.id === 'streak_7')) {
-      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'streak_7'), unlocked: true };
-      unlocked.push(newAchievement);
-    }
-    if (p.streak >= 30 && !unlocked.find(a => a.id === 'streak_30')) {
-      newAchievement = { ...ACHIEVEMENTS.find(a => a.id === 'streak_30'), unlocked: true };
-      unlocked.push(newAchievement);
-    }
-    
-    if (unlocked.length > achievements.length) {
-      setAchievements(unlocked);
-      if (newAchievement) {
-        sessionStorage.setItem('ascend_achievement_notif', JSON.stringify({
-          id: newAchievement.id,
-          label: newAchievement.label,
-          description: newAchievement.description,
-          icon: 'trophy'
-        }));
-      }
-    }
+    return unlocked;
   };
 
   // RANK UP CHECK
@@ -26080,14 +26074,15 @@ export default function App() {
   // ============================================================
   // 3. PERSIST (AFTER helper functions)
   // ============================================================
-  const persist = (p) => {
+  const persist = (pIn) => {
+    // Fold any newly-unlocked achievements into the SAME object being saved,
+    // rather than tracking them in separate, never-persisted state (see
+    // computeAchievements above for why that broke unlocking).
+    const p = { ...pIn, achievements: computeAchievements(pIn) };
     setProgress(p);
     
     // Check for rank up
     checkRankUp(p.xp);
-    
-    // Check for achievements
-    checkAchievements(p);
     
     if (supaUid) {
       db.saveProgress(supaUid, p);
@@ -26518,6 +26513,11 @@ export default function App() {
         completed: { ...((cloudP && cloudP.completed) || {}), ...((localP && localP.completed) || {}) },
         scores: { ...((cloudP && cloudP.scores) || {}), ...((localP && localP.scores) || {}) },
         passcoScores: { ...((cloudP && cloudP.passcoScores) || {}), ...((localP && localP.passcoScores) || {}) },
+        achievements: (() => {
+          const merged = [...(((cloudP && cloudP.achievements) || []))];
+          (((localP && localP.achievements) || [])).forEach((a) => { if (a && a.id && !merged.find((m) => m.id === a.id)) merged.push(a); });
+          return merged;
+        })(),
         bookmarks: Array.isArray(localP && localP.bookmarks) ? localP.bookmarks : ((cloudP && cloudP.bookmarks) || []),
       };
     } else {
@@ -26890,7 +26890,7 @@ export default function App() {
     getStreakMultiplier,
     lastTopic,
     onlineKeys,
-    achievements
+    achievements: (progress && progress.achievements) || []
   };
 
   const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
