@@ -26127,6 +26127,68 @@ export default function App() {
     };
   }, [progress]);
 
+  // ADMIN TOOL: directly set (or nudge) ANY user's XP from the console, not
+  // just the currently logged-in account. Unlike persist()/db.saveProgress,
+  // this deliberately bypasses the "XP can only go up" safety net - that
+  // floor exists to stop a stale client overwriting real progress, but an
+  // admin correcting a wrong value needs to be able to move it either way.
+  //
+  // Usage (paste into the browser console on the deployed site, logged in as
+  // anyone - it writes straight to the cloud, it doesn't touch your own
+  // session or account):
+  //
+  //   ascendAdminSetXp("kwame", 750)        // set kwame's XP to exactly 750
+  //   ascendAdminAddXp("kwame", -50)        // subtract 50 from kwame's XP
+  //   ascendAdminAddXp("kwame", 200)        // add 200 to kwame's XP
+  //
+  // The first argument can be their username (matches either a real
+  // Supabase-auth profile name or a local username/password account) or,
+  // if you already have it, the raw profile id.
+  useEffect(() => {
+    const findProfileRow = async (usernameOrId) => {
+      let { data: row } = await supabase.from("profiles").select("id,name,xp,streak").eq("id", usernameOrId).maybeSingle();
+      if (!row) {
+        const { data } = await supabase.from("profiles").select("id,name,xp,streak").ilike("name", usernameOrId).maybeSingle();
+        row = data;
+      }
+      if (!row) {
+        // Local username/password accounts are stored under a synthetic id.
+        const synth = "local-" + String(usernameOrId).toLowerCase().replace(/[^a-z0-9]/g, "");
+        const { data } = await supabase.from("profiles").select("id,name,xp,streak").eq("id", synth).maybeSingle();
+        row = data;
+      }
+      return row || null;
+    };
+
+    const writeXp = async (row, newXp) => {
+      const clamped = Math.max(0, Math.round(newXp));
+      const { data: progRow } = await supabase.from("progress").select("data").eq("id", row.id).maybeSingle();
+      const data = { ...(progRow && progRow.data ? progRow.data : {}), xp: clamped };
+      await supabase.from("progress").upsert({ id: row.id, data, updated_at: new Date().toISOString() });
+      await supabase.from("profiles").upsert({ id: row.id, name: row.name, xp: clamped, streak: row.streak || 0, updated_at: new Date().toISOString() });
+      console.log(`Set ${row.name}'s XP to ${clamped}${row.xp !== undefined ? ` (was ${row.xp})` : ""}. They'll see it next time they reload/reopen the app.`);
+      return clamped;
+    };
+
+    window.ascendAdminSetXp = async (usernameOrId, newXp) => {
+      if (!usernameOrId || typeof newXp !== "number" || isNaN(newXp)) { console.warn("Usage: ascendAdminSetXp('username', 500)"); return; }
+      try {
+        const row = await findProfileRow(usernameOrId);
+        if (!row) { console.warn("No user found matching:", usernameOrId); return; }
+        return await writeXp(row, newXp);
+      } catch (e) { console.error("ascendAdminSetXp failed:", e); }
+    };
+
+    window.ascendAdminAddXp = async (usernameOrId, delta) => {
+      if (!usernameOrId || typeof delta !== "number" || isNaN(delta)) { console.warn("Usage: ascendAdminAddXp('username', -50)"); return; }
+      try {
+        const row = await findProfileRow(usernameOrId);
+        if (!row) { console.warn("No user found matching:", usernameOrId); return; }
+        return await writeXp(row, (row.xp || 0) + delta);
+      } catch (e) { console.error("ascendAdminAddXp failed:", e); }
+    };
+  }, []);
+
   // Self-heal the streak number: if the study calendar (dailyDone) shows a
   // longer unbroken run than the stored streak counter reflects - which is
   // exactly what happened when a sync bug corrupted lastActive and dropped a
