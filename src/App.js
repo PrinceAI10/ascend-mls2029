@@ -17932,6 +17932,23 @@ const db = {
             })(),
             bookmarks: Array.isArray(progress.bookmarks) ? progress.bookmarks : (existing.bookmarks || []),
           };
+          // ADMIN LOCK: once an admin correction (ascendAdminSetXp/
+          // ascendAdminAddXp) has been applied, existing.adminXpLocked is
+          // set to true. While that flag is set, ignore whatever XP this
+          // save brought in and keep the admin-corrected number instead -
+          // otherwise a stale tab that still has the student's old XP in
+          // memory will re-save that old value on their next action, and
+          // the normal "XP only goes up" floor above would keep that
+          // stale-but-higher-or-equal number instead of the admin's fix.
+          // This lock does NOT expire on its own - it stays in effect
+          // (protecting whatever the admin last set) until an admin runs
+          // ascendAdminSetXp/ascendAdminAddXp again (which just re-locks at
+          // the new value) or explicitly clears it with
+          // ascendAdminUnlockXp("username").
+          if (existing.adminXpLocked) {
+            toSave.xp = existing.xp;
+            toSave.adminXpLocked = true;
+          }
         }
       } catch {} // if this safety read fails, fall through and save the payload as-is (unchanged behaviour)
       const r1 = await supabase.from("progress").upsert({ id: uid, data: toSave, updated_at: new Date().toISOString() });
@@ -26140,6 +26157,11 @@ export default function App() {
   //   ascendAdminSetXp("kwame", 750)        // set kwame's XP to exactly 750
   //   ascendAdminAddXp("kwame", -50)        // subtract 50 from kwame's XP
   //   ascendAdminAddXp("kwame", 200)        // add 200 to kwame's XP
+  //   ascendAdminUnlockXp("kwame")          // let normal play affect their XP again
+  //
+  // Once you set/add XP for someone, their XP is LOCKED at that number - it
+  // will not move again (even from real gameplay) until you either run one
+  // of these commands again for them or run ascendAdminUnlockXp on them.
   //
   // The first argument can be their username (matches either a real
   // Supabase-auth profile name or a local username/password account) or,
@@ -26160,14 +26182,32 @@ export default function App() {
       return row || null;
     };
 
+    // How the lock behaves: it does NOT expire on its own. Once set, that
+    // student's XP is pinned at whatever the admin last wrote - normal
+    // gameplay saves will no longer move it - until an admin either sets it
+    // again or explicitly releases the lock with ascendAdminUnlockXp.
     const writeXp = async (row, newXp) => {
       const clamped = Math.max(0, Math.round(newXp));
       const { data: progRow } = await supabase.from("progress").select("data").eq("id", row.id).maybeSingle();
-      const data = { ...(progRow && progRow.data ? progRow.data : {}), xp: clamped };
+      const data = { ...(progRow && progRow.data ? progRow.data : {}), xp: clamped, adminXpLocked: true };
       await supabase.from("progress").upsert({ id: row.id, data, updated_at: new Date().toISOString() });
       await supabase.from("profiles").upsert({ id: row.id, name: row.name, xp: clamped, streak: row.streak || 0, updated_at: new Date().toISOString() });
-      console.log(`Set ${row.name}'s XP to ${clamped}${row.xp !== undefined ? ` (was ${row.xp})` : ""}. They'll see it next time they reload/reopen the app.`);
+      console.log(`Set ${row.name}'s XP to ${clamped}${row.xp !== undefined ? ` (was ${row.xp})` : ""}. They'll see it next time they reload/reopen the app. This value is now LOCKED - it will stay exactly ${clamped} through future saves until you run ascendAdminUnlockXp("${row.name}") to let their normal XP gains resume.`);
       return clamped;
+    };
+
+    window.ascendAdminUnlockXp = async (usernameOrId) => {
+      if (!usernameOrId) { console.warn('Usage: ascendAdminUnlockXp("username")'); return; }
+      try {
+        const row = await findProfileRow(usernameOrId);
+        if (!row) { console.warn("No user found matching:", usernameOrId); return; }
+        const { data: progRow } = await supabase.from("progress").select("data").eq("id", row.id).maybeSingle();
+        if (!progRow || !progRow.data) { console.warn("No progress row found for:", usernameOrId); return; }
+        const data = { ...progRow.data };
+        delete data.adminXpLocked;
+        await supabase.from("progress").upsert({ id: row.id, data, updated_at: new Date().toISOString() });
+        console.log(`${row.name}'s XP is unlocked - normal play will affect it again.`);
+      } catch (e) { console.error("ascendAdminUnlockXp failed:", e); }
     };
 
     window.ascendAdminSetXp = async (usernameOrId, newXp) => {
