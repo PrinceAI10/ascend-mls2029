@@ -469,7 +469,8 @@ const TOPICS = {
     "Skeletal Muscle Length-Tension Relationship", "Muscular System",
     "Nervous System 1 - Neurons, Neuroglia, CNS/PNS", "Nervous System 2 - CNS In Depth",
     "Sensory Physiology", "Endocrine System", "Metabolism and Thyroid Hormone",
-    "Reproductive System (Male and Female)", "Integumentary System"
+    "Reproductive System (Male and Female)", "Male Reproductive System", "Female Reproductive System",
+    "Integumentary System"
   ],
   bch: [
     "Introduction to Biochemistry", "Enzymes", "Enzyme Inhibition", "Glycolysis",
@@ -3359,6 +3360,18 @@ My Socratic question: why does gluconeogenesis need to go through oxaloacetate r
 The answer is that the direct conversion of pyruvate to PEP is energetically unfavourable. By going through oxaloacetate, the cell can use the energy from ATP and GTP to drive the reaction forward. The CO2 that is added in the first reaction is removed in the second, so the net effect is the conversion of pyruvate to PEP, but the energy from ATP and GTP makes it possible.
 
 Crucial insight: the first bypass converts pyruvate to PEP via pyruvate carboxylase (mitochondria) and PEPCK (cytosol). This bypass consumes ATP and GTP and is activated by acetyl-CoA, linking gluconeogenesis to fatty acid oxidation. When fatty acids are being oxidised, acetyl-CoA levels rise and activate pyruvate carboxylase, stimulating gluconeogenesis.`
+    },
+    {
+      q: "Why does oxaloacetate have to be converted to malate before it can leave the mitochondrion?",
+      body: `Pyruvate carboxylase produces oxaloacetate inside the mitochondrion, but PEPCK's cytosolic isoform needs that oxaloacetate in the cytosol to make PEP. This creates a transport problem.
+
+My Socratic question: oxaloacetate is made in the mitochondrial matrix but is needed in the cytosol — so why can't it simply diffuse or be transported straight across the inner mitochondrial membrane?
+
+The answer is that the inner mitochondrial membrane has no transporter for oxaloacetate itself — it is essentially impermeable to oxaloacetate. To get around this, oxaloacetate is first reduced to malate by mitochondrial malate dehydrogenase, using NADH: Oxaloacetate + NADH + H+ → Malate + NAD+. Malate can cross the inner mitochondrial membrane via the malate-alpha-ketoglutarate transporter (part of the malate shuttle system). Once in the cytosol, cytosolic malate dehydrogenase reoxidises malate back to oxaloacetate, regenerating NADH in the cytosol: Malate + NAD+ → Oxaloacetate + NADH + H+. Only then can cytosolic PEPCK convert this oxaloacetate to PEP.
+
+This detour is not wasted effort — it solves two problems simultaneously. First, it solves the membrane permeability problem, since malate has a transporter and oxaloacetate does not. Second, it solves an NADH-location problem: cytosolic gluconeogenesis needs NADH for a later step (the glyceraldehyde-3-phosphate dehydrogenase reaction, run in reverse), and this shuttle exports reducing power from the mitochondrion (where NADH is abundant from beta-oxidation and the TCA cycle) to the cytosol (where it is needed), in the same step that solves the transport problem.
+
+Crucial insight: oxaloacetate cannot cross the inner mitochondrial membrane, so it is converted to malate (using NADH) to cross into the cytosol, then converted back to oxaloacetate (regenerating NADH) once there. This oxaloacetate-malate shuttle simultaneously solves the membrane-impermeability problem and supplies the cytosolic NADH that later gluconeogenic steps require. When gluconeogenesis starts from lactate (via the Cori cycle) rather than most other substrates, cytosolic NADH is already supplied by the lactate dehydrogenase reaction, so oxaloacetate can in that case be exported by a different route without strictly needing the malate shuttle for redox balance — but the shuttle remains the general solution to the membrane-permeability problem itself.`
     },
     {
       q: "How does gluconeogenesis convert fructose-1,6-bisphosphate to fructose-6-phosphate?",
@@ -17186,10 +17199,342 @@ My answers. One: polycystic ovary syndrome (PCOS) is the most likely diagnosis. 
   ],
 };
 
-// ==================== PHYSIOLOGY TOPIC 16: INTEGUMENTARY SYSTEM ====================
-const T_PHY_INTEGUMENTARY = {
+// ==================== PHYSIOLOGY TOPIC 16: MALE REPRODUCTIVE SYSTEM ====================
+const T_PHY_MALE_REPRODUCTIVE = {
   courseId: "phy",
   topicIndex: 15,
+  title: "Male Reproductive System",
+  minutes: 20,
+  note: [
+    { q: "Why does the male reproductive system need two separate jobs — hormone production and sperm production — happening in the same organ?",
+      body: `The testis is unusual: it is both an endocrine gland (Leydig cells making testosterone) and an exocrine/germinal organ (seminiferous tubules making sperm), yet these two jobs are kept physically apart inside the same organ.
+
+My Socratic question: if testosterone and sperm are both made in the testis, why are they made in two completely separate compartments rather than mixed together?
+
+The answer is that spermatogenesis needs an immune-privileged, tightly controlled micro-environment (protected by the blood-testis barrier), while testosterone secretion needs direct access to the bloodstream. The seminiferous tubules (lined by Sertoli cells, housing the developing sperm) are sealed off from the interstitial space, where the Leydig cells sit bathed in blood vessels and freely release testosterone into circulation. Keeping them separate lets each compartment optimise for its own job without interfering with the other.
+
+Crucial insight: the testis has two compartments — seminiferous tubules (sperm, Sertoli cells, immune-protected) and interstitium (Leydig cells, testosterone, blood-accessible). Compartmentalisation lets exocrine and endocrine functions coexist.` },
+
+    { q: "What is the blood-testis barrier and why does the immune system need to be kept out of the seminiferous tubules?",
+      body: `Sperm are produced only after puberty, long after the immune system has already learned to recognise "self." This creates a problem.
+
+My Socratic question: if sperm did not exist when the immune system was mapping out "self" antigens in early life, what would the immune system do if it later encountered a sperm cell?
+
+The answer is that the immune system would treat sperm as foreign and attack them, since sperm-specific proteins were never presented during immune tolerance formation. To prevent this, Sertoli cells form tight junctions with each other, creating the blood-testis barrier, which physically separates developing sperm (in the adluminal compartment) from the bloodstream and immune cells (which stay in the basal compartment). This barrier also protects sperm from bloodborne toxins and creates a controlled fluid environment for maturation.
+
+Crucial insight: the blood-testis barrier (Sertoli cell tight junctions) prevents the immune system from attacking sperm, which are antigenically "foreign" because they appear after immune tolerance is set, and shelters sperm from toxins.` },
+
+    { q: "The pathway of sperm: from production to ejaculation.",
+      body: `Sperm are produced in one location but must travel a long route before they are ejaculated, being modified along the way.
+
+My Socratic question: trace a sperm cell's journey from where it is made to where it leaves the body. What happens to it at each stop, and why can't it simply be ejaculated straight from where it was made?
+
+The answer is that sperm are produced in the seminiferous tubules of the testes, but at this stage they are immotile and cannot fertilise an egg. They pass into the epididymis, where over roughly 2-3 weeks they gain motility and fertilising capacity (maturation) and are stored. During ejaculation, sperm move through the vas deferens (a muscular tube that propels them by peristalsis) to the ejaculatory duct, picking up secretions from the seminal vesicles (fructose-rich fluid for energy, prostaglandins) and the prostate gland (alkaline fluid that protects sperm from vaginal acidity) along the way, then pass through the urethra and out. The bulbourethral (Cowper's) glands add a pre-ejaculatory lubricating and buffering fluid.
+
+Crucial insight: sperm mature and are stored in the epididymis before ejaculation; seminal vesicle and prostate secretions are added during transit to nourish and protect sperm, forming semen.` },
+
+    { q: "Why must the testes be outside the abdominal cavity, and what goes wrong if they aren't?",
+      body: `Most organs stay warm and protected inside the abdomen, but the testes descend into an external, exposed scrotum.
+
+My Socratic question: what is different about spermatogenesis that requires the testes to sit outside the body, roughly 2-3°C below core body temperature?
+
+The answer is that the enzymes driving spermatogenesis function optimally at a temperature lower than 37°C core body temperature; if the testes remain at core temperature, sperm production is impaired. The scrotum keeps the testes cooler through its position outside the body wall, thin skin, sparse fat, and a countercurrent heat-exchange mechanism (the pampiniform plexus of veins wrapping around the testicular artery, cooling incoming arterial blood). The cremaster and dartos muscles adjust scrotal position and surface area in response to temperature, pulling the testes closer to the body when cold and letting them hang further when warm. Cryptorchidism (undescended testes) leaves the testes at core body temperature and, if uncorrected, leads to impaired spermatogenesis and infertility, plus increased cancer risk.
+
+Crucial insight: spermatogenesis requires a temperature below core body temperature; the scrotum, pampiniform plexus, and cremaster/dartos muscles maintain this cooler environment. Cryptorchidism impairs fertility.` },
+
+    { q: "Spermatogenesis: how does one diploid cell become four specialised haploid sperm?",
+      body: `Spermatogenesis converts diploid stem cells into highly specialised haploid gametes through a defined sequence of divisions and remodelling.
+
+My Socratic question: what are the stages a spermatogonium passes through to become a mature spermatozoon, and why does the cell need to be so radically remodelled rather than just halving its chromosome number?
+
+The answer is that spermatogonia (diploid stem cells at the tubule wall) divide mitotically to renew themselves and produce primary spermatocytes, which undergo meiosis I to form secondary spermatocytes (haploid), which undergo meiosis II to form spermatids (haploid, four from each primary spermatocyte). Spermatids then undergo spermiogenesis — a remodelling process, not further division — in which the cell discards most cytoplasm, forms an acrosome (enzyme-filled cap for penetrating the egg) from the Golgi apparatus, condenses the nucleus, and grows a flagellum from the centriole, giving the streamlined shape needed for motility and fertilisation. The whole process, from spermatogonium to mature sperm, takes about 64-74 days in humans.
+
+Crucial insight: spermatogenesis = mitosis (renewal) → meiosis I and II (haploid spermatids) → spermiogenesis (remodelling into a motile, acrosome-bearing sperm). The radical remodelling is necessary because a round cell cannot swim or penetrate an egg.` },
+
+    { q: "What do Sertoli cells actually do, beyond forming the blood-testis barrier?",
+      body: `Sertoli cells are often summarised only as forming the blood-testis barrier, but they perform many other essential support functions for developing sperm.
+
+My Socratic question: developing sperm cells cannot feed themselves, cannot survive immune attack alone, and cannot control their own hormonal environment — so what does the Sertoli cell provide that a developing sperm cell cannot provide for itself?
+
+The answer is that Sertoli cells nurse developing germ cells by providing nutrients and structural support, secrete androgen-binding protein (ABP) to keep local testosterone concentrations high (essential for spermatogenesis), secrete inhibin (which suppresses FSH via negative feedback), phagocytose the residual cytoplasm shed during spermiogenesis, and (as covered already) form the blood-testis barrier via tight junctions. FSH acts on Sertoli cells (not directly on germ cells) to stimulate these support functions.
+
+Crucial insight: Sertoli cells are the "nurse cells" of spermatogenesis — nutritional support, ABP secretion (local testosterone concentration), inhibin secretion (FSH feedback), phagocytosis of debris, and the blood-testis barrier. FSH targets Sertoli cells, not sperm directly.` },
+
+    { q: "Why does LH act on Leydig cells while FSH acts on Sertoli cells, rather than both hormones doing the same thing?",
+      body: `Two pituitary gonadotropins, FSH and LH, act on two different testicular cell types rather than redundantly targeting the same cells.
+
+My Socratic question: testosterone production and sperm production both need to be regulated, but why does the body use two separate hormones acting on two separate cell types instead of one hormone controlling everything?
+
+The answer is that LH binds receptors on Leydig cells, stimulating testosterone synthesis from cholesterol, while FSH binds receptors on Sertoli cells, stimulating ABP secretion and support for spermatogenesis. Separating the two targets allows independent fine-tuning: testosterone output (needed for libido, secondary sex characteristics, and systemic effects) can be regulated somewhat independently of the local, tubule-specific process of sperm maturation, even though testosterone itself, once made by Leydig cells, diffuses into the tubules and is required there too. Negative feedback closes the loop: testosterone inhibits LH (and GnRH) release, while inhibin from Sertoli cells specifically inhibits FSH.
+
+Crucial insight: LH → Leydig cells → testosterone. FSH → Sertoli cells → spermatogenesis support. Testosterone feeds back on LH/GnRH; inhibin feeds back on FSH — two parallel, semi-independent control loops.` },
+
+    { q: "Erection and ejaculation: two different processes, two different nervous pathways.",
+      body: `Erection and ejaculation are often lumped together as "the male sexual response," but they are physiologically distinct events controlled by different branches of the autonomic nervous system.
+
+My Socratic question: erection is a vascular event and ejaculation is a muscular/emission event — so what different nerve signals must the body send to make each one happen, and why can they be affected independently (for example, in some spinal cord injuries)?
+
+The answer is that erection is primarily parasympathetic: parasympathetic fibres release nitric oxide, which relaxes smooth muscle in the arterioles of the corpus cavernosum, increasing blood flow in; the resulting engorgement compresses the veins (veno-occlusion), trapping blood and maintaining rigidity. Ejaculation is primarily sympathetic and has two components — emission (sympathetic contraction of the vas deferens, seminal vesicles, and prostate, moving semen into the urethra) followed by expulsion (rhythmic contraction of pelvic floor and bulbospongiosus muscles, a somatic reflex, expelling semen). Because different pathways are involved, spinal injuries can selectively impair one process while sparing the other (e.g. reflex erections can persist after upper cord injury, while ejaculation is often affected).
+
+Crucial insight: erection = parasympathetic, nitric oxide, vascular engorgement. Ejaculation = sympathetic emission + somatic expulsion. Distinct pathways explain why one can be disrupted independently of the other.` },
+
+    { q: "Clinical relevance: what actually goes wrong in erectile dysfunction, low testosterone, and varicocele?",
+      body: `Understanding the normal physiology above lets you predict where things break down clinically.
+
+My Socratic question: for each of these three common problems, which step in the physiology you have just learned is disrupted — erectile dysfunction, hypogonadism (low testosterone), and varicocele?
+
+The answer is that erectile dysfunction usually reflects impaired nitric-oxide-mediated smooth muscle relaxation or inadequate blood flow (vascular disease, diabetes, nerve damage, or psychological inhibition of the parasympathetic pathway); drugs such as sildenafil work by prolonging nitric oxide's downstream signal (blocking its breakdown), enhancing the vasodilation step. Hypogonadism reflects failure at the hypothalamus/pituitary (low GnRH/LH, "secondary") or failure at the testis itself (Leydig cell dysfunction despite adequate LH, "primary"), distinguished by measuring LH alongside testosterone. Varicocele is dilation of the pampiniform plexus veins, which impairs the countercurrent heat-exchange cooling mechanism, raising testicular temperature and reducing sperm quality — a mechanical disruption of the temperature-regulation physiology covered earlier.
+
+Crucial insight: erectile dysfunction → vascular/nitric oxide pathway; hypogonadism → HPG axis, primary vs secondary distinguished by LH; varicocele → disrupted pampiniform cooling, impairing spermatogenesis.` },
+
+    { q: "Consolidation: your cognitive map of the male reproductive system.",
+      body: `Your cognitive map for the male reproductive system.
+
+Anatomy and transit: seminiferous tubules (production) → epididymis (maturation, storage) → vas deferens (transport) → ejaculatory duct → urethra, with seminal vesicle and prostate secretions added along the way to form semen.
+
+Testicular cell types: Sertoli cells (nurse cells — nutrition, ABP, inhibin, blood-testis barrier, respond to FSH) and Leydig cells (testosterone synthesis, respond to LH), kept in separate compartments.
+
+Temperature regulation: scrotum, pampiniform plexus (countercurrent cooling), cremaster/dartos muscles keep testes below core body temperature for optimal spermatogenesis.
+
+Spermatogenesis: spermatogonia → (mitosis) → primary spermatocytes → (meiosis I) → secondary spermatocytes → (meiosis II) → spermatids → (spermiogenesis, remodelling) → spermatozoa. ~64-74 days.
+
+Hormonal axis: hypothalamus (GnRH) → anterior pituitary (LH, FSH) → LH→Leydig cells→testosterone; FSH→Sertoli cells→spermatogenesis support. Testosterone inhibits GnRH/LH; inhibin inhibits FSH.
+
+Sexual response: erection (parasympathetic, nitric oxide, vascular) and ejaculation (sympathetic emission + somatic expulsion) are separate pathways.
+
+Now your final test. A 35-year-old man and his partner have been trying to conceive for 14 months without success. Semen analysis shows a low sperm count and reduced motility. Examination reveals a soft, "bag-of-worms" swelling above the left testis that increases in size when he stands.
+
+Question one: what is the most likely diagnosis, and what is the underlying mechanism affecting fertility?
+Question two: why does the finding specifically affect sperm count and motility rather than testosterone levels?
+Question three: what treatment approach follows from the mechanism?
+
+Work them through before reading on.
+
+My answers. One: the most likely diagnosis is a varicocele — dilated, incompetent veins of the pampiniform plexus, classically on the left side because the left testicular vein drains at a right angle into the left renal vein, creating higher back-pressure. The mechanism is disrupted countercurrent heat exchange, raising testicular temperature and impairing spermatogenesis. Two: spermatogenesis (occurring in the seminiferous tubules) is exquisitely temperature-sensitive, while Leydig cell testosterone production is much less temperature-dependent, so sperm parameters suffer disproportionately while testosterone often remains near normal. Three: surgical or radiological correction (varicocelectomy or embolisation) to eliminate the abnormal venous reflux and restore normal testicular cooling, after which sperm parameters often improve.` }
+  ],
+  theory: [
+    { q: "Why are the testes located outside the abdominal cavity?", a: "Spermatogenesis requires a temperature about 2-3°C below core body temperature. The scrotum, together with the pampiniform plexus (countercurrent heat exchange) and cremaster/dartos muscles, keeps the testes cooler than the abdominal cavity, which is essential for normal sperm production." },
+    { q: "What is the blood-testis barrier and why is it needed?", a: "The blood-testis barrier is formed by tight junctions between Sertoli cells. It isolates developing sperm from the immune system (sperm proteins appear only after puberty and would otherwise be attacked as foreign) and shields sperm from bloodborne toxins." },
+    { q: "What is the role of Sertoli cells?", a: "Sertoli cells are the 'nurse cells' of the testis: they nourish and support developing sperm, secrete androgen-binding protein (maintaining high local testosterone), secrete inhibin (negative feedback on FSH), phagocytose residual cytoplasm, and form the blood-testis barrier. They respond to FSH." },
+    { q: "What is the role of Leydig cells?", a: "Leydig cells lie in the interstitium between seminiferous tubules and produce testosterone in response to LH stimulation." },
+    { q: "Outline the stages of spermatogenesis.", a: "Spermatogonia (mitosis, self-renewal) → primary spermatocytes → (meiosis I) → secondary spermatocytes → (meiosis II) → spermatids → (spermiogenesis, remodelling into motile, acrosome-bearing sperm) → spermatozoa. The full process takes roughly 64-74 days." },
+    { q: "What is spermiogenesis and how does it differ from the earlier meiotic stages?", a: "Spermiogenesis is the remodelling of round spermatids into streamlined spermatozoa — forming the acrosome, condensing the nucleus, discarding excess cytoplasm, and growing a flagellum. Unlike the earlier stages, it involves no further cell division, only structural transformation." },
+    { q: "Trace the path sperm take from production to ejaculation.", a: "Seminiferous tubules (production) → epididymis (maturation and storage) → vas deferens (transport) → ejaculatory duct, where seminal vesicle and prostate secretions are added → urethra → out. Bulbourethral gland fluid is added before ejaculation as a lubricant/buffer." },
+    { q: "What do the seminal vesicles and prostate gland each contribute to semen?", a: "The seminal vesicles contribute a fructose-rich, alkaline fluid providing energy and prostaglandins, making up most of semen volume. The prostate gland contributes a thin, alkaline, enzyme-containing fluid that helps protect sperm from the acidity of the vagina." },
+    { q: "Distinguish erection and ejaculation in terms of nervous control.", a: "Erection is primarily a parasympathetic response: nitric oxide relaxes corpus cavernosum smooth muscle, increasing blood inflow and, via veno-occlusion, maintaining rigidity. Ejaculation is primarily sympathetic (emission — moving semen into the urethra) followed by a somatic reflex (expulsion — rhythmic muscle contraction)." },
+    { q: "How does the hypothalamic-pituitary-testicular axis regulate male reproductive function, and what are the two negative feedback loops?", a: "The hypothalamus secretes GnRH, stimulating anterior pituitary release of LH and FSH. LH stimulates Leydig cells to produce testosterone; FSH stimulates Sertoli cells to support spermatogenesis. Testosterone feeds back to inhibit GnRH and LH; inhibin (from Sertoli cells) feeds back to inhibit FSH specifically." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Male Reproductive Anatomy and Sperm Transit", note: "From seminiferous tubules to ejaculation.", url: "" },
+    { channel: "Physiology", title: "Spermatogenesis and Sertoli Cell Function", note: "Meiosis, spermiogenesis, and the blood-testis barrier.", url: "" },
+    { channel: "Physiology", title: "Erection and Ejaculation Physiology", note: "Autonomic control of the male sexual response.", url: "" },
+  ],
+  mcqs: [
+    { q: "The blood-testis barrier is formed by:", o: ["Leydig cell gap junctions", "Tight junctions between Sertoli cells", "The tunica albuginea", "The epididymal epithelium"], a: 1, w: "Tight junctions between adjacent Sertoli cells form the blood-testis barrier." },
+    { q: "The blood-testis barrier exists primarily to:", o: ["Increase testosterone output", "Protect developing sperm from immune attack", "Speed up spermatogenesis", "Cool the testes"], a: 1, w: "Sperm antigens appear after immune tolerance is established, so the barrier prevents immune attack on developing sperm." },
+    { q: "Leydig cells respond to which hormone and produce what?", o: ["FSH; inhibin", "LH; testosterone", "FSH; testosterone", "LH; inhibin"], a: 1, w: "LH stimulates Leydig cells to produce testosterone." },
+    { q: "Sertoli cells respond to which hormone?", o: ["LH", "FSH", "hCG", "Oxytocin"], a: 1, w: "FSH acts on Sertoli cells to support spermatogenesis." },
+    { q: "Androgen-binding protein is secreted by:", o: ["Leydig cells", "Sertoli cells", "The epididymis", "The prostate"], a: 1, w: "Sertoli cells secrete androgen-binding protein to keep local testosterone concentrations high." },
+    { q: "Inhibin provides negative feedback on:", o: ["LH only", "FSH", "GnRH only", "Testosterone"], a: 1, w: "Inhibin, from Sertoli cells, selectively suppresses FSH release." },
+    { q: "The site of sperm maturation and motility acquisition is the:", o: ["Seminiferous tubules", "Epididymis", "Vas deferens", "Prostate"], a: 1, w: "Sperm gain motility and fertilising capacity during their ~2-3 week passage through the epididymis." },
+    { q: "Which structure propels sperm by peristaltic contraction during ejaculation?", o: ["Epididymis", "Vas deferens", "Urethra", "Seminiferous tubule"], a: 1, w: "The vas deferens is a muscular tube that propels sperm by peristalsis during ejaculation." },
+    { q: "Seminal vesicle secretions are characterised by:", o: ["Being acidic and sperm-poor", "Fructose-rich, alkaline fluid with prostaglandins", "Pure water", "High protein, no sugar"], a: 1, w: "Seminal vesicles secrete a fructose-rich, alkaline fluid containing prostaglandins, forming most of semen volume." },
+    { q: "Prostate gland secretions help protect sperm from:", o: ["Cold temperature", "Vaginal acidity", "Oxidative stress only", "Immune attack"], a: 1, w: "The prostate's alkaline secretion helps neutralise vaginal acidity, protecting sperm." },
+    { q: "The countercurrent heat-exchange mechanism that cools arterial blood entering the testis is the:", o: ["Vas deferens", "Pampiniform plexus", "Corpus spongiosum", "Epididymis"], a: 1, w: "The pampiniform plexus of veins cools incoming arterial blood via countercurrent exchange." },
+    { q: "Cryptorchidism refers to:", o: ["Inflammation of the prostate", "Undescended testes", "Varicose testicular veins", "Absence of the vas deferens"], a: 1, w: "Cryptorchidism is failure of testicular descent, leaving the testes at core body temperature and impairing fertility if uncorrected." },
+    { q: "The correct order of spermatogenesis is:", o: ["Spermatid → spermatocyte → spermatogonium → spermatozoon", "Spermatogonium → primary spermatocyte → secondary spermatocyte → spermatid → spermatozoon", "Spermatogonium → spermatozoon → spermatid", "Secondary spermatocyte → spermatogonium → spermatid"], a: 1, w: "Spermatogenesis proceeds spermatogonium → primary spermatocyte → secondary spermatocyte → spermatid → spermatozoon." },
+    { q: "Meiosis I converts:", o: ["Spermatogonia into primary spermatocytes", "Primary spermatocytes into secondary spermatocytes", "Spermatids into spermatozoa", "Secondary spermatocytes into spermatogonia"], a: 1, w: "Meiosis I converts primary spermatocytes into (haploid) secondary spermatocytes." },
+    { q: "Spermiogenesis refers to:", o: ["Meiotic division of spermatocytes", "Remodelling of spermatids into mature spermatozoa", "Mitotic renewal of spermatogonia", "Fusion of sperm and egg"], a: 1, w: "Spermiogenesis is the structural remodelling of spermatids into motile spermatozoa, without further division." },
+    { q: "The acrosome is derived from the:", o: ["Nucleus", "Golgi apparatus", "Mitochondria", "Flagellum"], a: 1, w: "The acrosome, containing enzymes for penetrating the egg, forms from the Golgi apparatus during spermiogenesis." },
+    { q: "The full process from spermatogonium to mature spermatozoon takes approximately:", o: ["24 hours", "10 days", "64-74 days", "1 year"], a: 2, w: "Spermatogenesis in humans takes approximately 64-74 days." },
+    { q: "Erection is primarily mediated by which branch of the autonomic nervous system?", o: ["Sympathetic", "Parasympathetic", "Somatic only", "Enteric"], a: 1, w: "Erection is primarily a parasympathetic response, mediated by nitric oxide-induced vasodilation." },
+    { q: "The vasodilator responsible for erection is:", o: ["Acetylcholine acting directly on smooth muscle", "Nitric oxide", "Norepinephrine", "Oxytocin"], a: 1, w: "Nitric oxide relaxes corpus cavernosum smooth muscle, increasing blood inflow and producing erection." },
+    { q: "Rigidity is maintained during erection by:", o: ["Continuous arterial inflow only", "Veno-occlusion (compression of draining veins)", "Sympathetic vasoconstriction", "Muscle relaxation of the pelvic floor"], a: 1, w: "Engorgement of the corpus cavernosum compresses the draining veins, trapping blood and maintaining rigidity." },
+    { q: "Emission, the first phase of ejaculation, is mediated by:", o: ["Parasympathetic fibres", "Sympathetic fibres", "Somatic motor fibres only", "The vagus nerve"], a: 1, w: "Emission — movement of semen into the urethra — is a sympathetic response." },
+    { q: "Expulsion, the second phase of ejaculation, involves:", o: ["Smooth muscle relaxation only", "Rhythmic contraction of pelvic floor/bulbospongiosus muscles (somatic reflex)", "Parasympathetic vasodilation", "Peristalsis of the epididymis"], a: 1, w: "Expulsion is a somatic reflex involving rhythmic contraction of the pelvic floor and bulbospongiosus muscles." },
+    { q: "Sildenafil (Viagra) works by:", o: ["Increasing LH secretion", "Prolonging nitric oxide's vasodilatory signal (inhibiting its breakdown)", "Blocking sympathetic nerves", "Increasing testosterone production"], a: 1, w: "Sildenafil inhibits the enzyme that breaks down the nitric oxide signalling pathway, prolonging vasodilation and supporting erection." },
+    { q: "A varicocele classically occurs on the left side because:", o: ["The left testicular vein drains at a right angle into the left renal vein, creating higher back-pressure", "The left testis is larger", "The left vas deferens is shorter", "The left testis has more Leydig cells"], a: 0, w: "The left testicular vein's right-angle drainage into the renal vein predisposes to higher venous pressure and varicocele." },
+    { q: "A varicocele impairs fertility mainly by:", o: ["Blocking the urethra", "Disrupting pampiniform plexus cooling, raising testicular temperature", "Destroying Leydig cells directly", "Blocking GnRH secretion"], a: 1, w: "Varicocele disrupts the countercurrent cooling mechanism, raising testicular temperature and impairing spermatogenesis." },
+    { q: "In primary hypogonadism, LH is typically:", o: ["Low, along with low testosterone", "High, with low testosterone (loss of negative feedback)", "Normal", "Undetectable"], a: 1, w: "Primary (testicular) hypogonadism shows high LH because low testosterone removes negative feedback, while the testis itself fails to respond." },
+    { q: "In secondary hypogonadism, the defect lies at the level of the:", o: ["Testis itself", "Hypothalamus or pituitary", "Epididymis", "Prostate"], a: 1, w: "Secondary hypogonadism arises from inadequate GnRH/LH secretion by the hypothalamus or pituitary." },
+    { q: "Testosterone's negative feedback acts mainly on:", o: ["Inhibin secretion", "GnRH and LH secretion", "FSH secretion only", "Sertoli cell tight junctions"], a: 1, w: "Rising testosterone inhibits GnRH release from the hypothalamus and LH release from the pituitary." },
+    { q: "Which testicular cell type is considered temperature-sensitive in a way that most affects fertility rather than hormone levels?", o: ["Leydig cells (testosterone)", "Sertoli cells/germ cells undergoing spermatogenesis", "Epididymal epithelium", "Vas deferens smooth muscle"], a: 1, w: "Spermatogenesis in the seminiferous tubules is highly temperature-sensitive, while Leydig cell testosterone output is comparatively temperature-resistant." },
+    { q: "The bulbourethral (Cowper's) glands contribute:", o: ["The bulk of semen volume", "A pre-ejaculatory lubricating and buffering fluid", "Sperm storage", "Testosterone"], a: 1, w: "The bulbourethral glands secrete a small volume of lubricating, alkaline fluid before ejaculation." },
+  ],
+};
+
+// ==================== PHYSIOLOGY TOPIC 17: FEMALE REPRODUCTIVE SYSTEM ====================
+const T_PHY_FEMALE_REPRODUCTIVE = {
+  courseId: "phy",
+  topicIndex: 16,
+  title: "Female Reproductive System",
+  minutes: 22,
+  note: [
+    { q: "Why does a woman have a finite, pre-determined supply of eggs, while a man makes sperm continuously?",
+      body: `Oogenesis and spermatogenesis look similar at first glance — both are gamete production — but they differ fundamentally in timing.
+
+My Socratic question: if spermatogenesis continues throughout adult male life, why does oogenesis instead front-load all egg formation before a woman is even born, then simply pause and later deplete that fixed supply?
+
+The answer is that oogonia proliferate by mitosis only during foetal life, reaching around 6-7 million by mid-gestation, then enter meiosis I and arrest at prophase I as primary oocytes — this arrest can last decades. A woman is born with all the primary oocytes she will ever have (roughly 1-2 million at birth, further reduced to ~300,000-400,000 by puberty through atresia). Each menstrual cycle, a cohort is recruited and typically one oocyte resumes meiosis I (completing it just before ovulation) and arrests again at metaphase II, only completing meiosis II if fertilised. This front-loaded, finite-supply strategy is why fertility declines with age (the oocyte pool depletes and ages) as opposed to the male pattern of ongoing renewal.
+
+Crucial insight: all oocytes form before birth and arrest at prophase I; meiosis is completed in two separate, widely spaced steps triggered by ovulation and fertilisation. The fixed, non-renewing supply explains age-related decline in fertility.` },
+
+    { q: "Why does the follicle need so many supporting layers (granulosa and theca cells) around a single oocyte?",
+      body: `A developing oocyte doesn't just sit alone in the ovary — it is surrounded by concentric layers of specialised cells that form the follicle.
+
+My Socratic question: an oocyte cannot make its own oestrogen, cannot feed itself, and cannot signal the pituitary on its own — so what do the surrounding follicular cells provide, and why does it take two cooperating cell types (theca and granulosa) rather than one?
+
+The answer is that theca cells, on the outside of the follicle, respond to LH and convert cholesterol into androgens. Granulosa cells, on the inside (closer to the oocyte), respond to FSH and contain aromatase, the enzyme that converts those androgens into oestrogen (the "two-cell, two-gonadotropin" model). Granulosa cells also nourish the oocyte, secrete follicular fluid, and later (as the corpus luteum) produce progesterone after ovulation. This division of labour parallels the Leydig/Sertoli division in the testis: one cell type responds to LH and makes precursor hormone, another responds to FSH and converts it into the active oestrogen, with direct communication (gap junctions) supporting the oocyte itself.
+
+Crucial insight: theca cells (LH → androgens) and granulosa cells (FSH → aromatise androgens to oestrogen, nourish oocyte) cooperate in the "two-cell, two-gonadotropin" model — directly analogous to Leydig and Sertoli cells in the male.` },
+
+    { q: "Why does only one follicle usually ovulate each month, when many start developing?",
+      body: `Each cycle, a whole cohort of follicles begins to grow, yet almost always only a single dominant follicle reaches ovulation.
+
+My Socratic question: if 15-20 follicles start developing in a given cycle, what determines which single one "wins" and goes on to ovulate, while the rest die off?
+
+The answer is that as follicles grow they secrete increasing oestrogen, which by mid-follicular phase produces negative feedback on FSH, causing circulating FSH levels to fall. The follicle that has developed the most FSH receptors and the best granulosa cell blood supply survives on this declining FSH level (it needs the least FSH per unit of oestrogen produced), while its less-developed competitors, more dependent on FSH, undergo atresia. This is called follicular selection, and it is a direct consequence of the same oestrogen-driven negative feedback loop that regulates the whole axis — the dominant follicle essentially starves out its rivals via its own hormone output.
+
+Crucial insight: rising oestrogen from growing follicles suppresses FSH; the follicle most sensitive to FSH (most receptors) survives this decline and becomes dominant, while others undergo atresia. One event (oestrogen negative feedback) both regulates the axis and selects the ovulating follicle.` },
+
+    { q: "Why does rising oestrogen switch from suppressing LH to triggering a massive LH surge in the same cycle?",
+      body: `For most of the follicular phase, oestrogen exerts negative feedback, keeping LH low — yet at the cycle's midpoint, oestrogen triggers the opposite: a sharp LH surge that causes ovulation.
+
+My Socratic question: how can the same hormone, oestrogen, produce opposite effects on LH secretion within a single cycle?
+
+The answer is that the direction of oestrogen's feedback depends on its concentration and duration. Moderate, fluctuating oestrogen levels (early-to-mid follicular phase) produce negative feedback on the hypothalamus and pituitary. But when the dominant follicle produces sustained high oestrogen (above a threshold, for roughly 36-48 hours, reflecting a large, mature follicle), the feedback switches to positive, triggering a surge of GnRH and a massive LH (and smaller FSH) surge from the pituitary. This LH surge triggers resumption of meiosis I in the oocyte, follicular rupture, and ovulation approximately 36 hours after the surge begins.
+
+Crucial insight: sustained high oestrogen from a mature dominant follicle flips feedback from negative to positive, producing the pre-ovulatory LH surge that triggers ovulation roughly 36 hours later.` },
+
+    { q: "What actually happens to the empty follicle after the egg is released, and why does it matter for early pregnancy?",
+      body: `After ovulation, the ruptured follicle does not simply disappear — it transforms into a new, temporary endocrine structure.
+
+My Socratic question: if fertilisation does not happen immediately, what keeps the uterine lining intact for those first two weeks afterward, and where does that signal come from?
+
+The answer is that after ovulation, the remaining granulosa and theca cells of the ruptured follicle transform (under continued LH influence) into the corpus luteum, which secretes large amounts of progesterone (and some oestrogen). Progesterone maintains the secretory endometrium, making it receptive for implantation, and suppresses further follicular development via negative feedback. If fertilisation and implantation do not occur, the corpus luteum has a fixed lifespan of about 14 days and then degenerates (into the corpus albicans), progesterone falls, and menstruation follows. If implantation does occur, the developing embryo secretes hCG, which rescues the corpus luteum by mimicking LH, keeping it producing progesterone until the placenta itself takes over progesterone production around 8-10 weeks.
+
+Crucial insight: the corpus luteum (from the ruptured follicle) secretes progesterone to sustain the endometrium for ~14 days; hCG from an implanting embryo rescues it, explaining why hCG is the basis of pregnancy tests and why the corpus luteum persists only in a successful pregnancy.` },
+
+    { q: "The menstrual cycle from the uterus's point of view: why does the endometrium go through such different phases?",
+      body: `While the ovary is running its follicular/luteal cycle, the uterus is running a parallel cycle in lockstep, driven entirely by the ovarian hormones.
+
+My Socratic question: the endometrium changes dramatically across the month — why does it need to proliferate, then transform, then shed, rather than staying in one steady, "always ready" state?
+
+The answer is that the endometrium's cycle is driven by, and mirrors, the ovarian hormone cycle. During the proliferative phase (paralleling the follicular phase), rising oestrogen from the growing follicle stimulates endometrial regrowth and thickening after the previous menstruation. During the secretory phase (paralleling the luteal phase), progesterone from the corpus luteum converts this thickened lining into a glandular, nutrient-secreting, receptive tissue optimised for implantation — a state that oestrogen alone cannot produce. If implantation does not occur, the sudden drop in progesterone (as the corpus luteum fails) causes spiral artery constriction, ischaemia, and shedding of the functional layer — the menstrual phase. A permanently "ready" endometrium would be metabolically costly and would not allow the deep transformation progesterone provides; the cyclical rebuild-transform-shed pattern lets the uterus regenerate a fresh, hormone-responsive lining each cycle.
+
+Crucial insight: proliferative phase (oestrogen-driven regrowth) → secretory phase (progesterone-driven transformation for implantation) → menstrual phase (progesterone withdrawal → shedding). The endometrial cycle directly tracks the ovarian cycle.` },
+
+    { q: "Fertilisation, implantation, and the earliest pregnancy signal: how does the embryo announce itself before it's even visible?",
+      body: `An embryo has no direct connection to the mother's bloodstream until implantation is well underway, yet the maternal corpus luteum must be "rescued" almost immediately to prevent menstruation from destroying the pregnancy.
+
+My Socratic question: fertilisation happens in the fallopian tube, but the embryo doesn't implant in the uterus for about a week afterward — so how does the corpus luteum know a pregnancy exists before implantation is complete, and why is timing so tight?
+
+The answer is that after fertilisation in the ampulla of the fallopian tube, the zygote undergoes cleavage divisions while being transported toward the uterus over about 3-4 days, reaching the blastocyst stage by the time it enters the uterine cavity, then implanting in the endometrium around day 6-10 post-fertilisation. Trophoblast cells of the implanting blastocyst begin secreting hCG almost as soon as implantation begins, and this hCG enters maternal circulation and reaches the corpus luteum in time to rescue it before its natural 14-day lifespan would otherwise cause it to regress. Timing is tight because the corpus luteum's progesterone is the only thing maintaining the endometrium at this stage — the placenta is not yet developed enough to take over — so any delay in the hCG signal risks luteal regression and loss of the pregnancy before it is established.
+
+Crucial insight: fertilisation (fallopian tube) → blastocyst formation during transport → implantation (~day 6-10) → trophoblastic hCG secretion rescues the corpus luteum just in time, before its fixed 14-day lifespan would otherwise end it.` },
+
+    { q: "Pregnancy and parturition: what switches the uterus from a quiet, pregnancy-maintaining organ to an actively contracting one at term?",
+      body: `For roughly nine months, high progesterone keeps the uterus quiescent (relaxed, non-contracting); at term, this must reverse.
+
+My Socratic question: progesterone actively suppresses uterine contractions throughout pregnancy — so what changes at term to overcome this suppression and initiate labour?
+
+The answer is that near term, the progesterone-to-oestrogen ratio shifts (relative oestrogen dominance increases), oestrogen upregulates oxytocin receptors and gap junctions between myometrial cells (improving coordinated contraction), and increasing mechanical stretch of the uterus and foetal signals (including foetal cortisol, which raises placental oestrogen production) all combine to overcome progesterone's inhibitory effect. Oxytocin (from the maternal posterior pituitary) then stimulates rhythmic, coordinated contractions, and prostaglandins soften and dilate the cervix. This is reinforced by a positive feedback loop: cervical stretch from the descending foetus triggers more oxytocin release (the Ferguson reflex), which increases contractions, which increases stretch, escalating until delivery.
+
+Crucial insight: term labour follows a shift favouring oestrogen over progesterone, oxytocin-driven coordinated myometrial contraction, prostaglandin-mediated cervical ripening, and a positive feedback loop (Ferguson reflex) that escalates contractions to delivery.` },
+
+    { q: "Clinical relevance: what actually goes wrong in PCOS, endometriosis, and menopause?",
+      body: `Understanding the normal physiology above lets you predict where things break down clinically.
+
+My Socratic question: for each of these three common conditions, which specific step in the physiology you have just learned is disrupted — polycystic ovary syndrome, endometriosis, and menopause?
+
+The answer is that PCOS reflects disrupted follicular selection: excess LH relative to FSH drives theca cells to overproduce androgens, while insulin resistance worsens this; without the normal FSH-driven dominant-follicle selection process, multiple small follicles accumulate without ovulating (polycystic ovaries), and chronic anovulation causes irregular periods. Endometriosis is growth of endometrial-like tissue outside the uterus (commonly via retrograde menstruation through the fallopian tubes); because this ectopic tissue still responds to the ovarian hormone cycle, it bleeds cyclically at these sites too, causing inflammation, scarring, and pain — a case of the normal endometrial cycle physiology occurring in the wrong location. Menopause reflects depletion of the finite oocyte/follicle supply discussed earlier: as follicles run out, oestrogen production falls, negative feedback is lost, and FSH/LH rise sharply (a direct, predictable consequence of the axis you have already learned) while the classic symptoms (hot flushes, vaginal atrophy) follow from oestrogen withdrawal itself.
+
+Crucial insight: PCOS → disrupted follicular selection/excess androgens; endometriosis → normal endometrial cycle physiology occurring ectopically; menopause → depletion of the fixed oocyte supply, loss of oestrogen negative feedback, rising FSH/LH.` },
+
+    { q: "Consolidation: your cognitive map of the female reproductive system.",
+      body: `Your cognitive map for the female reproductive system.
+
+Oogenesis: fixed, pre-birth supply of oocytes arrested at prophase I; one resumes meiosis I around ovulation, arrests again at metaphase II, completes meiosis II only if fertilised.
+
+Follicle structure: theca cells (LH → androgens) + granulosa cells (FSH → aromatise to oestrogen, nourish oocyte) — the "two-cell, two-gonadotropin" model.
+
+Follicular selection: rising oestrogen suppresses FSH; the most FSH-sensitive follicle survives and dominates, others undergo atresia.
+
+Ovulation trigger: sustained high oestrogen flips feedback from negative to positive → LH surge → ovulation ~36 hours later.
+
+Corpus luteum: forms from the ruptured follicle, secretes progesterone for ~14 days unless rescued by embryonic hCG (which mimics LH).
+
+Endometrial cycle (mirrors ovarian cycle): proliferative phase (oestrogen) → secretory phase (progesterone) → menstrual phase (progesterone withdrawal).
+
+Fertilisation to implantation: fallopian tube fertilisation → blastocyst formation during transport → implantation ~day 6-10 → trophoblastic hCG rescues corpus luteum.
+
+Parturition: oestrogen/progesterone ratio shift, oxytocin, prostaglandins, and the Ferguson reflex (positive feedback) drive labour.
+
+Now your final test. A 30-year-old woman with a history of regular 28-day cycles has been amenorrhoeic (no periods) for 4 months. Pregnancy test is negative. Blood tests show low oestrogen, and both FSH and LH are markedly elevated.
+
+Question one: given the hormone pattern, is the problem most likely at the level of the ovary or at the level of the hypothalamus/pituitary? Explain your reasoning using negative feedback.
+Question two: what specific ovarian process would explain this pattern in a woman this age?
+Question three: how would the hormone pattern differ if the problem were instead at the hypothalamus/pituitary level (for example, from severe stress or low body weight)?
+
+Work them through before reading on.
+
+My answers. One: the problem is most likely at the level of the ovary. High FSH and LH with low oestrogen indicates the pituitary is working normally and even overcompensating (releasing more gonadotropins) because it is not receiving the usual oestrogen negative feedback — meaning the ovary itself is not producing oestrogen, consistent with ovarian failure rather than a hypothalamic/pituitary problem. Two: this pattern, in a woman under 40, suggests premature ovarian insufficiency — accelerated depletion of the finite follicle pool, leaving too few follicles to produce oestrogen, mechanistically similar to physiological menopause but occurring early. Three: if the problem were instead hypothalamic/pituitary (hypogonadotropic hypogonadism, as from stress, low body weight, or excessive exercise suppressing GnRH), FSH and LH would be low or inappropriately normal rather than elevated, alongside the low oestrogen — because in that case the pituitary itself is under-stimulated, not appropriately compensating for ovarian failure.` }
+  ],
+  theory: [
+    { q: "Why is a woman's oocyte supply fixed rather than continuously renewed?", a: "Oogonia proliferate by mitosis only during foetal life; all oocytes then arrest at prophase I of meiosis before birth. No new oocytes are made after birth, so the supply is finite and depletes with age, which is why fertility declines as a woman ages." },
+    { q: "Explain the 'two-cell, two-gonadotropin' model of ovarian steroidogenesis.", a: "Theca cells respond to LH by converting cholesterol into androgens. Granulosa cells respond to FSH and contain aromatase, which converts those androgens into oestrogen. The two cell types cooperate to produce oestrogen, directly paralleling Leydig and Sertoli cells in the testis." },
+    { q: "What determines which single follicle becomes dominant and ovulates each cycle?", a: "As follicles grow, rising oestrogen suppresses FSH. The follicle with the most FSH receptors survives this falling FSH level and becomes dominant, while less FSH-sensitive follicles undergo atresia." },
+    { q: "What triggers the pre-ovulatory LH surge?", a: "Sustained high oestrogen from the mature dominant follicle switches feedback on the hypothalamus/pituitary from negative to positive, producing a large surge of GnRH and LH, which triggers ovulation roughly 36 hours later." },
+    { q: "What is the corpus luteum, and what happens to it if pregnancy does not occur?", a: "The corpus luteum forms from the ruptured follicle after ovulation and secretes progesterone to maintain the endometrium. If pregnancy does not occur, it has a fixed ~14-day lifespan, then degenerates, progesterone falls, and menstruation follows." },
+    { q: "How does hCG 'rescue' the corpus luteum in early pregnancy?", a: "The implanting embryo's trophoblast cells secrete hCG, which mimics LH and keeps the corpus luteum producing progesterone beyond its normal 14-day lifespan, until the placenta takes over progesterone production around 8-10 weeks." },
+    { q: "Describe the three phases of the endometrial cycle and their hormonal drivers.", a: "Proliferative phase: oestrogen-driven regrowth of the endometrium after menstruation. Secretory phase: progesterone from the corpus luteum transforms the endometrium into a glandular, receptive lining. Menstrual phase: progesterone withdrawal causes spiral artery constriction and shedding of the functional layer." },
+    { q: "Trace fertilisation and implantation from ovulation to embedding in the uterus.", a: "Ovulation releases the egg into the fallopian tube, where fertilisation typically occurs in the ampulla. The zygote undergoes cleavage divisions during transport (3-4 days), reaches the blastocyst stage, and implants in the endometrium around day 6-10 post-fertilisation." },
+    { q: "What hormonal and mechanical changes trigger the onset of labour?", a: "A shift toward relative oestrogen dominance increases oxytocin receptors and gap junctions in the myometrium; uterine stretch and foetal signals overcome progesterone's inhibitory effect; oxytocin drives coordinated contractions and prostaglandins ripen the cervix, reinforced by the positive-feedback Ferguson reflex." },
+    { q: "What causes the sharp rise in FSH and LH seen at menopause?", a: "The fixed supply of ovarian follicles becomes depleted, oestrogen production falls, and the normal negative feedback of oestrogen on the hypothalamus and pituitary is lost, causing FSH and LH to rise." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Oogenesis and Follicular Development", note: "From primordial follicle to ovulation.", url: "" },
+    { channel: "Physiology", title: "The Ovarian and Menstrual Cycles", note: "Follicular selection, ovulation, corpus luteum, and the endometrial cycle.", url: "" },
+    { channel: "Physiology", title: "Implantation, Pregnancy, and Labour", note: "hCG, corpus luteum rescue, and parturition physiology.", url: "" },
+  ],
+  mcqs: [
+    { q: "Oogonia complete their mitotic proliferation:", o: ["Throughout adult life", "During foetal life only", "At puberty", "During each menstrual cycle"], a: 1, w: "Oogonia proliferate by mitosis only during foetal development; no new oocytes are made after birth." },
+    { q: "Primary oocytes are arrested at which stage until ovulation?", o: ["Metaphase II", "Prophase I", "Anaphase I", "Telophase II"], a: 1, w: "Primary oocytes arrest at prophase I of meiosis, sometimes for decades, until resumption around ovulation." },
+    { q: "After the LH surge, the oocyte arrests again at:", o: ["Metaphase II, completing meiosis only if fertilised", "Prophase I", "Telophase I", "Interphase"], a: 0, w: "The oocyte completes meiosis I around ovulation and arrests at metaphase II, completing meiosis II only upon fertilisation." },
+    { q: "In the two-cell, two-gonadotropin model, theca cells respond to:", o: ["FSH, producing oestrogen", "LH, producing androgens", "FSH, producing progesterone", "LH, producing oestrogen directly"], a: 1, w: "Theca cells respond to LH and convert cholesterol into androgens, which granulosa cells then aromatise." },
+    { q: "Granulosa cells contain the enzyme that converts androgens to oestrogen; this enzyme is:", o: ["5-alpha reductase", "Aromatase", "17-hydroxylase", "Cholesterol desmolase"], a: 1, w: "Granulosa cells contain aromatase, converting theca-derived androgens into oestrogen." },
+    { q: "Follicular selection (choosing the single dominant follicle) results from:", o: ["Random chance", "Rising oestrogen suppressing FSH; the most FSH-sensitive follicle survives", "High progesterone early in the cycle", "LH acting directly on granulosa cells only"], a: 1, w: "As oestrogen rises and suppresses FSH, the follicle with the most FSH receptors survives the decline and becomes dominant." },
+    { q: "The pre-ovulatory LH surge is triggered by:", o: ["Falling oestrogen", "Sustained high oestrogen switching feedback from negative to positive", "Rising progesterone alone", "Falling FSH alone"], a: 1, w: "Sustained high oestrogen from the dominant follicle flips feedback to positive, triggering the LH surge." },
+    { q: "Ovulation occurs approximately how long after the LH surge begins?", o: ["1 hour", "36 hours", "7 days", "14 days"], a: 1, w: "Ovulation occurs approximately 36 hours after the onset of the LH surge." },
+    { q: "The corpus luteum forms from:", o: ["The endometrium", "The remaining granulosa and theca cells of the ruptured follicle", "The fallopian tube epithelium", "The cervix"], a: 1, w: "After ovulation, the ruptured follicle's granulosa and theca cells transform into the corpus luteum." },
+    { q: "Without pregnancy, the corpus luteum degenerates after approximately:", o: ["3 days", "14 days", "40 days", "6 months"], a: 1, w: "The corpus luteum has a fixed lifespan of about 14 days if pregnancy does not occur." },
+    { q: "hCG rescues the corpus luteum by:", o: ["Directly increasing FSH", "Mimicking LH", "Inhibiting progesterone breakdown", "Suppressing oestrogen"], a: 1, w: "hCG from the implanting trophoblast mimics LH, maintaining corpus luteum progesterone production." },
+    { q: "The proliferative phase of the endometrial cycle is driven mainly by:", o: ["Progesterone", "Oestrogen", "hCG", "Oxytocin"], a: 1, w: "Oestrogen from the growing follicle drives endometrial regrowth in the proliferative phase." },
+    { q: "The secretory phase of the endometrial cycle is driven mainly by:", o: ["Oestrogen", "Progesterone from the corpus luteum", "FSH", "GnRH"], a: 1, w: "Progesterone from the corpus luteum transforms the endometrium into a glandular, receptive tissue during the secretory phase." },
+    { q: "Menstruation is triggered by:", o: ["Rising oestrogen", "Withdrawal of progesterone as the corpus luteum degenerates", "The LH surge", "Rising hCG"], a: 1, w: "Falling progesterone as the corpus luteum regresses causes spiral artery constriction and shedding of the endometrium." },
+    { q: "Fertilisation normally occurs in the:", o: ["Uterus", "Ampulla of the fallopian tube", "Cervix", "Ovary"], a: 1, w: "Fertilisation typically occurs in the ampulla of the fallopian tube." },
+    { q: "Implantation typically occurs how many days after fertilisation?", o: ["1 day", "6-10 days", "30 days", "90 days"], a: 1, w: "The blastocyst implants in the endometrium approximately 6-10 days after fertilisation." },
+    { q: "hCG is first secreted by:", o: ["Maternal ovary", "Trophoblast cells of the implanting blastocyst", "Maternal pituitary", "Maternal adrenal gland"], a: 1, w: "Trophoblast cells of the implanting embryo begin secreting hCG, the basis of pregnancy testing." },
+    { q: "Around 8-10 weeks of pregnancy, progesterone production shifts mainly to the:", o: ["Corpus luteum permanently", "Placenta", "Maternal adrenal gland", "Maternal pituitary"], a: 1, w: "The placenta takes over progesterone production from the corpus luteum by around 8-10 weeks." },
+    { q: "At term, which hormonal shift favours the onset of labour?", o: ["Rising progesterone relative to oestrogen", "Rising oestrogen relative to progesterone", "Falling oxytocin", "Rising FSH"], a: 1, w: "A shift toward relative oestrogen dominance upregulates oxytocin receptors and myometrial gap junctions, promoting labour." },
+    { q: "Oxytocin during labour is released from the:", o: ["Anterior pituitary", "Posterior pituitary", "Ovary", "Placenta only"], a: 1, w: "Oxytocin is synthesised in the hypothalamus and released from the posterior pituitary." },
+    { q: "The Ferguson reflex describes:", o: ["Negative feedback limiting labour contractions", "Positive feedback where cervical stretch increases oxytocin release, escalating contractions", "Suppression of oxytocin by progesterone", "The mechanism of ovulation"], a: 1, w: "The Ferguson reflex is a positive feedback loop: cervical/uterine stretch triggers more oxytocin, increasing contractions." },
+    { q: "Prostaglandins contribute to labour mainly by:", o: ["Increasing progesterone", "Ripening (softening and dilating) the cervix", "Suppressing oxytocin receptors", "Inhibiting uterine contraction"], a: 1, w: "Prostaglandins soften and dilate the cervix, working alongside oxytocin-driven contractions." },
+    { q: "In PCOS, disrupted follicular selection results in:", o: ["A single dominant follicle every cycle", "Multiple small follicles accumulating without ovulating", "Premature depletion of all follicles", "Excess progesterone secretion"], a: 1, w: "Without normal FSH-driven selection, multiple small follicles persist without maturing to ovulation in PCOS." },
+    { q: "PCOS is associated with excess production of which hormone class by theca cells?", o: ["Progestogens", "Androgens", "Prostaglandins", "Oxytocin"], a: 1, w: "In PCOS, excess LH relative to FSH drives theca cells to overproduce androgens." },
+    { q: "Endometriosis is best described as:", o: ["Absence of the endometrium", "Endometrial-like tissue growing outside the uterus, responding to the normal hormone cycle", "A tumour of the ovary", "Failure of the corpus luteum"], a: 1, w: "Endometriosis is ectopic endometrial-like tissue that still responds cyclically to ovarian hormones, causing pain and inflammation." },
+    { q: "Menopause results from:", o: ["Excess follicle production", "Depletion of the finite ovarian follicle supply", "Chronic hCG elevation", "Pituitary tumour in all cases"], a: 1, w: "Menopause reflects depletion of the fixed follicle pool, falling oestrogen, and loss of negative feedback." },
+    { q: "At menopause, FSH and LH levels are typically:", o: ["Low", "Elevated, due to loss of oestrogen negative feedback", "Undetectable", "Unchanged from reproductive years"], a: 1, w: "Falling oestrogen removes negative feedback, so FSH and LH rise at menopause." },
+    { q: "Low oestrogen with markedly elevated FSH and LH in a woman under 40 most suggests:", o: ["Hypothalamic suppression from stress", "Premature ovarian insufficiency", "Pregnancy", "PCOS"], a: 1, w: "High gonadotropins with low oestrogen indicates ovarian failure (premature ovarian insufficiency), not a central (hypothalamic/pituitary) cause." },
+    { q: "Low oestrogen with low or inappropriately normal FSH/LH most suggests:", o: ["Ovarian failure", "Hypothalamic/pituitary suppression (e.g. from stress or low body weight)", "Premature ovarian insufficiency", "A normal cycle"], a: 1, w: "Low gonadotropins alongside low oestrogen point to inadequate central (GnRH/LH) drive rather than ovarian failure." },
+    { q: "The ovarian follicular phase corresponds to which endometrial phase?", o: ["Secretory phase", "Proliferative phase", "Menstrual phase", "Luteal phase"], a: 1, w: "The follicular (oestrogen-dominant) phase of the ovarian cycle corresponds to the proliferative phase of the endometrial cycle." },
+  ],
+};
+
+// ==================== PHYSIOLOGY TOPIC 18: INTEGUMENTARY SYSTEM ====================
+const T_PHY_INTEGUMENTARY = {
+  courseId: "phy",
+  topicIndex: 17,
   title: "Integumentary System",
   minutes: 20,
   note: [
@@ -17410,7 +17755,9 @@ const CONTENT = {
   "phy:12": T_PHY_ENDOCRINE,
   "phy:13": T_PHY_METABOLISM,
   "phy:14": T_PHY_REPRODUCTIVE,
-  "phy:15": T_PHY_INTEGUMENTARY,
+  "phy:15": T_PHY_MALE_REPRODUCTIVE,
+  "phy:16": T_PHY_FEMALE_REPRODUCTIVE,
+  "phy:17": T_PHY_INTEGUMENTARY,
   "lab:0": T_LAB_INSTRUMENTATION,
   "lab:1": T_MLS_SAFETY,
   "lab:2": T_LAB_ELECTRICAL,
@@ -23024,6 +23371,13 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
     if (app && typeof app.setPasscoXp === "function") {
       app.setPasscoXp(correctCount * 5, setKey, correctCount, questions.length);
     }
+    if (app && typeof app.addMissedToReview === "function") {
+      const missed = questions
+        .map((it, idx) => ({ it, chosen: picked[idx] }))
+        .filter(({ it, chosen }) => chosen !== undefined && chosen !== it.a)
+        .map(({ it }) => ({ q: it.q, o: it.o, a: it.a, w: it.w, topic: paper.title, courseId: paper.courseId }));
+      app.addMissedToReview(missed);
+    }
   };
 
   // Practice mode: award as soon as every question in the set has been answered.
@@ -26530,7 +26884,17 @@ export default function App() {
         }
         if (event === "SIGNED_OUT") {
           setSupaUid(null);
-          setAuth(null);
+          // Local username/password accounts never sign in through Supabase at all,
+          // so this event only ever legitimately applies to a Google/OTP session.
+          // Supabase fires SIGNED_OUT (or an equivalent startup event) on its own
+          // during the initial session check whenever no Supabase session exists -
+          // which is the normal, expected case for every local-login user. Clearing
+          // auth unconditionally here was wiping out the local session that the
+          // mount effect had just restored moments earlier, bouncing local-login
+          // users back to the login screen on every app reopen while Google-login
+          // users (whose session Supabase itself manages) were unaffected. Only
+          // clear auth if the currently-adopted session actually was a Supabase one.
+          setAuth((prev) => (prev && prev.supabase ? null : prev));
         }
       });
       sub = res.data ? res.data.subscription : null;
@@ -26751,6 +27115,26 @@ export default function App() {
       review: merged, 
       scores 
     });
+  };
+
+  // Passco sets award XP through setPasscoXp (a different formula from finishQuiz),
+  // so this pushes missed Passco questions into the review deck WITHOUT touching
+  // XP/streak/scores - keeping "every wrong answer lands in Review" true everywhere
+  // a quiz is taken, not just lesson/AI-practice quizzes that call finishQuiz.
+  const addMissedToReview = (missed = []) => {
+    if (!missed.length) return;
+    const prevReview = Array.isArray(progress.review) ? progress.review : [];
+    const seen = new Set(prevReview.map((m) => m.q));
+    const merged = [...prevReview];
+    for (const m of missed) {
+      if (m && m.q && !seen.has(m.q)) {
+        merged.push(m);
+        seen.add(m.q);
+      }
+    }
+    if (merged.length !== prevReview.length) {
+      persist({ ...progress, review: merged });
+    }
   };
 
   const toggleBookmark = (cid, tid) => {
@@ -26976,6 +27360,7 @@ export default function App() {
     go, 
     recordDaily, 
     finishQuiz, 
+    addMissedToReview,
     clearReviewItem,
     toggleBookmark, 
     supaUid, 
