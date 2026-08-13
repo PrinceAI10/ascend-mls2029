@@ -497,7 +497,9 @@ const TOPICS = {
     "Microscopy and its Principles", "pH Meter", "Spectrophotometer", "Centrifuge", "Autoclaving",
     "Biosafety Levels", "IPC (Infection Prevention and Control)", "Lab Equipments and Their Uses",
     "Operation and Design of Laboratory Equipment I", "Operation and Design of Laboratory Equipment II",
-    "Referencing", "Writing Lab Reports"
+    "Referencing", "Writing Lab Reports", "Healthcare Waste Management 1", "Healthcare Waste Management 2",
+    "Lab Safety 2: Chemical Hazards and Safety Symbols", "Standard Operating Procedures (SOPs)",
+    "First Aid Procedures", "Ovens and Incubators", "Water Bath"
   ]
 };
 
@@ -9580,6 +9582,1170 @@ If those came cleanly, you understand how a laboratory report's structure, secti
   ],
 };
 
+
+/* --------------------------- lab:18 --------------------------- */
+const T_LAB_HCWM_1 = {
+  courseId: "lab",
+  topicIndex: 18,
+  title: "Healthcare Waste Management 1",
+  minutes: 18,
+  note: [
+    { q: "Why can't laboratory waste just be thrown in a normal bin?",
+      body: `Every test you run leaves something behind - a used tube, a soiled swab, a spent reagent. That leftover material is healthcare waste, and how it is handled after the result is out is just as much a safety issue as how the sample was handled before.
+
+My Socratic question: if a used blood tube and an empty water bottle look almost identical in a bin, why must they never be treated the same way?
+
+The answer is that the blood tube may still carry live pathogens, while the water bottle carries none - the danger is invisible, not visual. Waste handlers, cleaners, and the public have no way of knowing what is inside a bag unless the laboratory has already sorted it correctly.
+
+Crucial insight: healthcare waste management is the system of identifying, segregating, and safely disposing of everything a laboratory generates so that danger is contained at the exact moment it is created - at the bench - not left for someone else to discover later.` },
+
+    { q: "The categories of healthcare waste.",
+      body: `Not all laboratory waste is equally dangerous, so it is sorted into recognised categories. Infectious (biohazardous) waste includes anything contaminated with blood or body fluids - swabs, cultures, gloves, used sample tubes. Sharps waste is anything that can pierce skin - needles, lancets, broken glass, blades. Chemical waste includes expired reagents, solvents, and stains. Pharmaceutical waste includes expired or discarded drugs and reagent kits. Radioactive waste, in labs that use isotopes, requires its own controls. General (non-hazardous) waste is everything else - paper, packaging, uncontaminated wrapping.
+
+My Socratic question: why does mixing infectious waste into general waste create a bigger problem than simply "using more bin bags"?
+
+The answer is that once infectious material is mixed in, the entire bag must now be treated as infectious - contaminating waste that would otherwise have been harmless, and multiplying the volume of material that needs costly special handling, while raising the risk to anyone who touches the bag.
+
+Crucial insight: correct segregation at the point of generation is what keeps the truly hazardous fraction small, safe to identify, and cheap to manage - once categories mix, that advantage is lost.` },
+
+    { q: "The colour-coding system.",
+      body: `To make segregation fast and foolproof even under pressure, healthcare waste uses an internationally recognised colour-coding system for bags and containers. Yellow is for infectious/biohazardous waste. Red or yellow puncture-proof containers (sharps boxes) are for sharps. Black or clear bags are for general, non-hazardous waste. Brown is commonly used for chemical or pharmaceutical waste.
+
+My Socratic question: why use colour rather than simply writing a label on each bag?
+
+The answer is that colour can be recognised instantly, from across a room, by anyone - including waste handlers who may not read the local language fluently - while a written label requires someone to stop, walk over, and read it. Colour-coding turns a literacy-dependent decision into an instant visual one.
+
+Crucial insight: the colour code is only useful if everyone in the facility, from the newest student to the cleaning staff, has been trained to recognise and respect it exactly the same way. A single mis-coloured bag anywhere breaks the whole system's reliability.` },
+
+    { q: "Segregation at the point of generation.",
+      body: `The single most important rule in healthcare waste management is that segregation happens at the point of generation - the exact bench or bedside where the waste is created - not later, and not by someone else.
+
+My Socratic question: why is it unsafe to simply throw everything into one bag and "sort it out later" at a central point?
+
+The answer is that sorting mixed waste later means someone must handle already-mixed, unidentified hazardous material by hand, searching through it - which is far more dangerous than dropping each item straight into its correct, clearly labelled container the moment it is produced.
+
+Crucial insight: the person who generates the waste is always in the best position to know exactly what it is and how dangerous it is. That knowledge is lost the moment items are mixed, so segregation must happen immediately, every time, by the person doing the work.` },
+
+    { q: "Handling and storage before collection.",
+      body: `Waste does not disappear the moment it goes into the correct bag - it must be safely handled and stored until it is collected for treatment. Bags should be filled to no more than about three-quarters full, then sealed securely (never stapled through in a way that could re-open, and never compacted by hand). Filled bags are moved to a designated, secure waste storage area away from patient and public areas, and are not left accumulating at the bench.
+
+My Socratic question: why is overfilling a waste bag a safety hazard, not just an untidiness problem?
+
+The answer is that an overfilled bag is more likely to split, tear, or spill during handling and transport, exposing whoever carries it - and anyone nearby - to its contents. A bag that is only three-quarters full still seals and handles safely.
+
+Crucial insight: safe waste management does not end at the bin - every step between the bench and final treatment (storage, handling, transport) is part of the chain, and a lapse at any single step can undo correct segregation done earlier.` },
+
+    { q: "Why waste segregation protects more than just the laboratory staff.",
+      body: `It is tempting to think of waste management as protecting only the person handling the bin. In reality, the chain of people affected is much longer.
+
+My Socratic question: beyond the laboratory scientist, who else is put at risk if infectious waste is not correctly segregated and contained?
+
+The answer is: cleaning and portering staff who move the bags, waste handlers and drivers who transport it, workers at the treatment or disposal site, and - if waste escapes containment entirely - the surrounding community and environment, for example through contaminated water or informal waste picking.
+
+Crucial insight: healthcare waste management is a chain of responsibility that extends from your gloved hands at the bench all the way to a community far from the hospital. Correct practice at your bench is the first and most important link in protecting everyone downstream.` },
+
+    { q: "The 3-bin minimum system in practice.",
+      body: `In a working laboratory, the practical minimum is three clearly labelled, colour-coded receptacles within reach of every bench: a yellow bag for infectious waste, a puncture-proof sharps container, and a general waste bin for non-contaminated items such as clean paper wrapping.
+
+My Socratic question: if a used specimen container, a used needle, and an empty reagent box all need to be discarded after the same test, why do they go into three different containers rather than one?
+
+The answer is that each carries a different type and level of risk - the specimen container is infectious but not sharp, the needle is both infectious and sharp (and needs puncture-proof containment specifically), and the empty reagent box may be entirely non-hazardous. Treating them identically would either under-protect against the sharp or over-burden the general waste stream.
+
+Crucial insight: matching each item to its correct receptacle, every single time, is what keeps the system trustworthy - anyone downstream can rely on a yellow bag containing only infectious waste and a sharps box containing only sharps, and act accordingly.` },
+
+    { q: "Consequences of poor waste management.",
+      body: `The purpose of all this structure becomes clear when you consider what happens without it. Poorly managed healthcare waste has been directly linked to needlestick injuries among waste handlers, outbreaks of infection in communities near dumping sites, environmental contamination of soil and water, and the illegal reuse of improperly discarded syringes and equipment.
+
+My Socratic question: why is "the waste already left my bench" not a safe stopping point for a laboratory scientist's responsibility?
+
+The answer is that the harm from poorly segregated waste often lands on people far removed from the original bench - a waste picker, a child in a nearby community, a transport worker - who had no part in generating it and no way to know it was dangerous, because the very system meant to warn them was broken at the source.
+
+Crucial insight: the consequences of poor waste management are real, documented, and often fall hardest on the people with the least power to protect themselves - which is precisely why correct segregation at the bench is treated as a professional and ethical duty, not an optional courtesy.` },
+
+    { q: "Waste minimisation - the first and best step.",
+      body: `Before any waste is even segregated, the best practice is to generate less of it in the first place - waste minimisation. This includes ordering only the quantities of reagents actually needed, using the smallest appropriate sample or reagent volume for a test, and avoiding unnecessary disposable items where a reusable, sterilisable alternative exists.
+
+My Socratic question: how does waste minimisation relate to the hierarchy of controls you learned in Lab Safety?
+
+The answer is that it mirrors elimination, the very top of the hierarchy - waste that is never generated cannot become a hazard, cannot be mishandled, and needs no disposal resources at all. It is the most effective form of waste management precisely because there is nothing left to manage.
+
+Crucial insight: segregation, colour-coding, and safe storage all manage waste that already exists - minimisation is the one step that prevents the problem before it starts, and the two approaches work together.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for healthcare waste management, part one.
+
+The categories: infectious, sharps, chemical, pharmaceutical, radioactive, and general waste - each carries a different risk and needs its own handling.
+
+The system: internationally recognised colour-coding (commonly yellow for infectious, puncture-proof containers for sharps, black/clear for general) makes correct sorting instant and language-independent.
+
+The core rule: segregation happens at the point of generation, by the person who made the waste, the moment it is produced - never sorted later.
+
+The chain: correct handling and storage (bags no more than three-quarters full, sealed, moved to secure storage) protects everyone downstream - cleaners, waste handlers, the community, and the environment.
+
+The best step of all: waste minimisation prevents the hazard from being created in the first place.
+
+Now your final test. A student generates a used blood collection needle, a blood-soaked cotton swab, and an empty, uncontaminated cardboard reagent box while processing one patient sample.
+
+Question one: into which three different receptacles should these three items go, and why not all into one?
+Question two: what is the maximum recommended fill level for a waste bag, and why does exceeding it matter?
+Question three: name two groups of people, beyond laboratory staff, who are protected by this student sorting correctly right now.
+
+Work them through before reading on.
+
+My answers. One: the needle goes into a puncture-proof sharps container (it is both infectious and sharp, needing containment against puncture specifically), the swab goes into the yellow infectious waste bag (contaminated but not sharp), and the empty cardboard box goes into general waste (uncontaminated) - because each carries a different risk that a single shared bin cannot correctly contain. Two: no more than about three-quarters full, because an overfilled bag is far more likely to split or spill during sealing, handling, and transport, exposing anyone who touches it. Three: cleaning/portering staff who move the waste, and waste handlers, transport workers, or nearby communities who could be exposed if infectious material were mixed into general waste and escaped identification.
+
+If those came cleanly, you have the foundation for the second half of this topic - the legal frameworks and treatment methods that finish the waste's journey safely.` },
+  ],
+  theory: [
+    { q: "Define healthcare waste management and explain why it matters beyond the laboratory bench.", a: "Healthcare waste management is the system of identifying, segregating, handling, storing, and disposing of everything a laboratory or healthcare facility generates, so that hazards are contained at the point they are created. It matters beyond the bench because poorly managed waste can expose cleaners, waste handlers, transport workers, and even surrounding communities to infection or contamination." },
+    { q: "List the main categories of healthcare waste.", a: "Infectious/biohazardous waste, sharps waste, chemical waste, pharmaceutical waste, radioactive waste, and general (non-hazardous) waste." },
+    { q: "Explain the purpose of the colour-coding system for waste bags and containers.", a: "Colour-coding (commonly yellow for infectious waste, puncture-proof containers for sharps, black/clear for general waste) allows instant, language-independent recognition of what a bag contains, so waste can be correctly and quickly sorted by anyone in the facility without needing to read a label." },
+    { q: "State the core rule of waste segregation and explain why it must happen where it does.", a: "Segregation must happen at the point of generation - the exact bench where the waste is created - by the person generating it, because that person is the only one who reliably knows what the item is and how hazardous it is. Delaying sorting means someone later must handle unidentified, already-mixed hazardous material." },
+    { q: "Explain why mixing infectious waste into general waste is a serious problem, not a minor one.", a: "Once infectious material is mixed in, the entire bag must be treated as infectious, contaminating waste that would otherwise be harmless, increasing the volume needing special handling, and raising the exposure risk for anyone handling the bag downstream." },
+    { q: "Describe the recommended handling and storage of a waste bag before collection.", a: "Bags should be filled no more than about three-quarters full, sealed securely without manual compaction, and moved promptly to a designated, secure waste storage area away from patient and public areas rather than left accumulating at the bench." },
+    { q: "Identify who, beyond laboratory staff, is protected by correct waste segregation.", a: "Cleaning and portering staff who move the waste, waste handlers and transport drivers, workers at the treatment/disposal site, and the wider community and environment if waste were to escape containment." },
+    { q: "Explain the minimum practical waste-sorting setup ('3-bin system') at a laboratory bench.", a: "A yellow bag for infectious waste, a puncture-proof sharps container for anything that can pierce skin, and a general waste bin for uncontaminated items - each matched to the specific risk level of what is being discarded." },
+    { q: "Give two documented consequences of poor healthcare waste management.", a: "Needlestick injuries among waste handlers from improperly discarded sharps, and community infection outbreaks or environmental contamination linked to unsafely dumped or unsegregated healthcare waste." },
+    { q: "Define waste minimisation and relate it to the hierarchy of controls.", a: "Waste minimisation means generating less waste in the first place - ordering only needed quantities, using minimum sample/reagent volumes, and favouring reusable over disposable items where safe. It mirrors elimination, the top of the hierarchy of controls, because waste that is never generated cannot become a hazard at all." },
+  ],
+  videos: [
+    { channel: "WHO / Healthcare Waste", title: "Healthcare Waste Management: Categories and Colour Coding", note: "Overview of waste categories and the international colour-coding system.", url: "" },
+    { channel: "Lab Safety", title: "Segregation of Waste at the Point of Generation", note: "Why sorting waste immediately at the bench is the core safety rule.", url: "" },
+    { channel: "Public Health", title: "Consequences of Poor Healthcare Waste Disposal", note: "Real-world impact of unsafe waste handling on communities.", url: "" },
+  ],
+  mcqs: [
+    { q: "Healthcare waste management is best defined as:", o: ["Filing waste disposal receipts", "The system of identifying, segregating, handling, and safely disposing of facility-generated waste", "Cleaning the laboratory floor", "Ordering new reagents"], a: 1, w: "It is the full system of identifying, segregating, handling, storing and disposing of waste safely." },
+    { q: "Which of the following is NOT a recognised category of healthcare waste?", o: ["Infectious waste", "Sharps waste", "Decorative waste", "Chemical waste"], a: 2, w: "'Decorative waste' is not a recognised healthcare waste category." },
+    { q: "Used blood collection tubes and soiled swabs are classified as:", o: ["Radioactive waste", "General waste", "Infectious/biohazardous waste", "Pharmaceutical waste"], a: 2, w: "Contaminated with blood/body fluids, these are infectious waste." },
+    { q: "Needles, lancets, and broken glass are classified as:", o: ["Sharps waste", "General waste", "Chemical waste", "Pharmaceutical waste"], a: 0, w: "Anything that can pierce the skin is sharps waste." },
+    { q: "The colour most commonly used for infectious/biohazardous waste bags is:", o: ["Blue", "Yellow", "Green", "White"], a: 1, w: "Yellow is internationally recognised for infectious waste." },
+    { q: "Colour-coding is preferred over written labels on waste bags mainly because it:", o: ["Costs less to print", "Is instantly recognisable regardless of language or reading speed", "Looks more professional", "Is required by fashion standards"], a: 1, w: "Colour can be recognised instantly by anyone, regardless of literacy or language." },
+    { q: "The core rule of waste segregation is that it must happen:", o: ["At the end of the week", "At the point of generation, by the person creating the waste", "At a central sorting station later", "Only by senior staff"], a: 1, w: "Segregation must happen immediately, at the bench, by the person who knows what the item is." },
+    { q: "Mixing infectious waste into general waste is a serious problem because it:", o: ["Saves storage space", "Contaminates the whole bag, increasing volume needing special handling", "Has no real consequence", "Is only a labelling inconvenience"], a: 1, w: "Once mixed, the entire bag must be treated as infectious, multiplying hazardous volume." },
+    { q: "A waste bag should be filled to no more than about:", o: ["Full to the very top", "One-quarter full", "Three-quarters full", "One-tenth full"], a: 2, w: "Filling only to about three-quarters reduces the risk of splitting or spilling." },
+    { q: "Overfilling a waste bag is dangerous mainly because it:", o: ["Increases collection cost only", "Is more likely to split, tear, or spill during handling", "Makes the bag heavier to lift", "Attracts more attention"], a: 1, w: "An overfilled bag is far more prone to splitting or spilling, exposing handlers." },
+    { q: "Filled waste bags should be:", o: ["Left at the bench indefinitely", "Sealed and moved promptly to a designated, secure storage area", "Left open for ventilation", "Compacted by hand to save space"], a: 1, w: "Bags are sealed securely and moved to secure storage, not left accumulating or hand-compacted." },
+    { q: "Beyond laboratory staff, who else is protected by correct waste segregation?", o: ["No one else is affected", "Cleaning staff, waste handlers, transport workers, and the community", "Only hospital administrators", "Only the patient whose sample it was"], a: 1, w: "The protective chain extends to everyone who later touches or is near the waste." },
+    { q: "The practical minimum waste-sorting setup at a bench includes:", o: ["One general bin only", "A yellow infectious bag, a puncture-proof sharps container, and a general waste bin", "Only a sharps container", "A single unmarked black bag"], a: 1, w: "This 3-bin minimum matches each item to its correct risk-appropriate receptacle." },
+    { q: "A used needle should be placed into:", o: ["The yellow infectious bag only", "A general waste bin", "A puncture-proof sharps container", "Any nearby bag"], a: 2, w: "Sharps need puncture-proof containment specifically, distinct from soft infectious waste." },
+    { q: "An empty, uncontaminated cardboard reagent box should go into:", o: ["The sharps container", "General waste", "The yellow infectious bag", "Chemical waste"], a: 1, w: "It carries no contamination risk, so it belongs in general waste." },
+    { q: "Poor healthcare waste management has been directly linked to:", o: ["Improved hospital efficiency", "Needlestick injuries among waste handlers and community infection outbreaks", "Reduced hospital costs", "No documented harm"], a: 1, w: "Documented harms include needlestick injuries and community-level infection risk." },
+    { q: "Illegal reuse of improperly discarded syringes is a risk primarily caused by:", o: ["Excessive segregation", "Sharps not being safely and permanently contained at disposal", "Using yellow bags", "Waste minimisation"], a: 1, w: "Sharps left accessible rather than safely, permanently contained can be scavenged and reused, spreading infection." },
+    { q: "Waste minimisation refers to:", o: ["Sorting waste after it is generated", "Generating less waste in the first place, e.g. using only needed quantities", "Burning all laboratory waste", "Ignoring small quantities of waste"], a: 1, w: "Minimisation prevents waste from being created at all, e.g. by using minimum needed volumes." },
+    { q: "Waste minimisation most closely mirrors which level of the hierarchy of controls?", o: ["PPE", "Administrative controls", "Elimination", "Substitution"], a: 2, w: "Preventing waste from existing at all mirrors elimination, the top of the hierarchy." },
+    { q: "Which of these is an example of waste minimisation in practice?", o: ["Using the smallest appropriate sample/reagent volume for a test", "Ordering excess reagent 'just in case'", "Mixing all waste into one bag", "Leaving bags open at the bench"], a: 0, w: "Using minimum needed volumes reduces the amount of waste generated." },
+    { q: "The person best positioned to correctly identify and segregate a piece of waste is:", o: ["The waste collection driver", "A supervisor reviewing records later", "The person who generated it, at the moment it was produced", "The cleaning staff at end of shift"], a: 2, w: "Only the generator reliably knows exactly what the item is and its hazard level at that moment." },
+    { q: "Radioactive waste in a laboratory that uses isotopes requires:", o: ["No special handling beyond general waste", "Disposal in the yellow infectious bag", "Its own dedicated controls separate from other waste streams", "Mixing with chemical waste for convenience"], a: 2, w: "Radioactive waste needs its own specific handling and controls, distinct from other categories." },
+    { q: "Pharmaceutical waste includes:", o: ["Only broken glass", "Expired or discarded drugs and reagent kits", "Only paper wrapping", "Only used gloves"], a: 1, w: "Expired/discarded drugs and reagent kits fall under pharmaceutical waste." },
+    { q: "A key reason the waste-handling chain matters is that:", o: ["Waste automatically becomes safe once it leaves the bench", "A lapse at any step (storage, handling, transport) can undo correct segregation done earlier", "Only the first step in the chain matters", "Later steps cannot affect earlier safe sorting"], a: 1, w: "Every link in the chain matters; a failure downstream can still cause harm even after correct initial sorting." },
+    { q: "Why can even literate, well-trained staff still benefit from colour-coding rather than text labels?", o: ["Colour is recognised faster, at a glance, under time pressure", "Text labels are always more accurate", "Colour is only for decoration", "Text is faster to read than colour"], a: 0, w: "Instant visual recognition under pressure is colour-coding's key practical advantage." },
+    { q: "If a facility trains only some staff to follow the colour-coding system correctly, the system becomes:", o: ["Still fully reliable", "Unreliable, since a single mis-sorted bag breaks trust in the whole system", "More efficient", "Irrelevant"], a: 1, w: "The system's reliability depends on universal, consistent training and adherence." },
+    { q: "The most effective way to reduce the burden of hazardous waste management overall is to:", o: ["Segregate more carefully after generation", "Generate less waste in the first place through minimisation", "Use larger sharps containers", "Increase the frequency of collection"], a: 1, w: "Preventing waste from being created is more effective than managing it after the fact." },
+    { q: "Segregating waste incorrectly primarily increases risk to:", o: ["No one, since it is corrected later", "Only the original sample's patient", "Everyone downstream in the waste-handling chain", "Only laboratory equipment"], a: 2, w: "Incorrect segregation creates risk for everyone who subsequently handles the mixed, mislabelled waste." },
+    { q: "A laboratory scientist's responsibility for waste they generate:", o: ["Ends the moment it leaves their hands", "Is fulfilled by correctly sorting it into the right receptacle at the point of generation", "Applies only to sharps", "Is optional if the lab is busy"], a: 1, w: "Correct sorting at the point of generation is how a scientist fulfils their part of the chain of responsibility." },
+    { q: "Overall, the purpose of the categories, colour-coding, and segregation rules covered in this topic is to:", o: ["Add unnecessary bureaucracy", "Contain hazards at the exact point they are created, protecting everyone downstream", "Slow down laboratory work for no benefit", "Replace the need for PPE entirely"], a: 1, w: "The whole system exists to contain hazards as early as possible and protect the entire downstream chain of people." },
+  ],
+};
+
+/* --------------------------- lab:19 --------------------------- */
+const T_LAB_HCWM_2 = {
+  courseId: "lab",
+  topicIndex: 19,
+  title: "Healthcare Waste Management 2",
+  minutes: 18,
+  note: [
+    { q: "From sorting to treatment: what happens after the bag is sealed?",
+      body: `In part one you learned to sort waste correctly at the bench. Now the question is: what happens to it after that?
+
+My Socratic question: if a yellow infectious bag is correctly filled and sealed, is the danger inside it now gone?
+
+The answer is no - the pathogens or hazards inside remain fully active until the waste is actually treated. Correct segregation only contains the danger; it does not remove it. Treatment is the step that finally neutralises the hazard.
+
+Crucial insight: healthcare waste management is a complete journey from generation to final treatment, and every step - segregation, storage, transport, and treatment - must hold for the system to be safe. This topic covers the treatment and regulatory half of that journey.` },
+
+    { q: "Autoclaving as a waste treatment method.",
+      body: `You already know the autoclave sterilises equipment with pressurised steam. The same principle treats infectious waste: placing yellow-bag waste into an autoclave exposes it to high-pressure steam that kills the pathogens inside, rendering the waste non-infectious before final disposal.
+
+My Socratic question: why is autoclaving especially suitable for infectious laboratory waste specifically, compared to chemical or pharmaceutical waste?
+
+The answer is that autoclaving works by destroying living organisms with heat and steam - it is ideal for biological hazards, but it does nothing to neutralise a toxic chemical or an expired drug, which need entirely different treatment methods.
+
+Crucial insight: no single treatment method handles every waste category - matching the treatment to the hazard is as important as matching the receptacle to the hazard was at the point of segregation.` },
+
+    { q: "Incineration.",
+      body: `Incineration burns waste at very high, controlled temperatures, destroying pathogens, reducing volume dramatically, and is commonly used for infectious waste, sharps, and some pharmaceutical waste where autoclaving is not suitable or available.
+
+My Socratic question: incineration is powerful, but why must it be done in a properly designed incinerator rather than an open fire?
+
+The answer is that uncontrolled open burning does not reach consistently high enough temperatures to fully destroy pathogens, and it releases toxic smoke and ash into the air, simply converting a contained hazard into an uncontained environmental and community one.
+
+Crucial insight: a treatment method is only as good as the equipment and conditions it is carried out under - the same process (burning) can either safely neutralise waste or create a new, worse hazard, depending entirely on how it is done.` },
+
+    { q: "Chemical disinfection and other treatment routes.",
+      body: `Chemical disinfection - typically using a strong disinfectant such as sodium hypochlorite (bleach) at the correct concentration and contact time - can decontaminate certain liquid or surface waste before disposal. Sharps are also commonly encapsulated: filled sharps containers are sealed permanently, sometimes set in cement or plastic, so the contents can never be accessed again.
+
+My Socratic question: why is a contact time, not just a concentration, essential information for chemical disinfection to actually work?
+
+The answer is that a disinfectant needs sufficient time in contact with the organisms to kill them - wiping a surface with the correct bleach concentration but removing it a second later leaves pathogens alive, because the chemical reaction that destroys them has not had time to complete.
+
+Crucial insight: every treatment method - heat, chemical, or physical encapsulation - has specific conditions (temperature, time, concentration) that must be met exactly, or the treatment is only theatre, not real decontamination.` },
+
+    { q: "Final disposal after treatment.",
+      body: `Once waste has been properly treated - autoclaved, incinerated, or chemically disinfected - it is rendered non-hazardous and can then go to final disposal, most often a sanitary landfill designed to contain and manage waste safely, separate from ordinary open dumping.
+
+My Socratic question: why is it dangerous to skip straight to landfill disposal without treatment first, even if the landfill itself is well-managed?
+
+The answer is that a well-managed landfill controls where waste goes, but it does not sterilise it - untreated infectious material buried or dumped there remains infectious, and can still expose waste pickers, contaminate groundwater, or attract disease vectors like rodents and insects.
+
+Crucial insight: treatment and disposal are two distinct steps, both necessary - treatment removes the hazard, disposal safely contains what remains. Skipping either one breaks the chain of safety.` },
+
+    { q: "Regulatory frameworks and responsibility.",
+      body: `Healthcare waste management is not left to individual discretion - it is governed by national and international regulatory frameworks (such as national Environmental Protection Agency guidelines and WHO healthcare waste guidance) that set legal requirements for segregation, storage, transport, treatment, and disposal, and typically require every facility to have a designated, trained waste management officer or committee.
+
+My Socratic question: why does healthcare waste need dedicated regulation, rather than being left to each facility's own judgement?
+
+The answer is that the consequences of poor waste management - disease outbreaks, environmental contamination, injury to waste handlers - extend far beyond any single facility, so consistent, enforceable standards are needed to protect the public interest, not just the facility's own convenience.
+
+Crucial insight: as a laboratory scientist, following your facility's waste protocol is not just good practice - it is compliance with a legal and public-health framework designed to protect people you will never personally meet.` },
+
+    { q: "Record-keeping and waste audits.",
+      body: `A well-run waste management system tracks how much waste of each category is generated, treated, and disposed of, often through waste manifests or logs, and is periodically audited to confirm the system is actually working as designed, not just on paper.
+
+My Socratic question: why would a facility need to keep records of waste quantities and treatment, beyond simply following the correct daily process?
+
+The answer is that records make the system verifiable and accountable - they allow a facility (or a regulator) to confirm that the amount of infectious waste generated actually matches the amount treated and disposed of, catching gaps, losses, or non-compliance that day-to-day observation alone would miss.
+
+Crucial insight: "we follow the process" and "we can prove we follow the process" are different claims - record-keeping is what turns good intentions into a system that can be checked, trusted, and improved.` },
+
+    { q: "Occupational health protection for waste handlers.",
+      body: `Waste handlers themselves - the staff who move, treat, and dispose of healthcare waste - are a distinct at-risk group requiring their own protection: appropriate PPE (heavy-duty gloves, boots, aprons), hepatitis B vaccination, training in safe lifting and handling of waste bags and sharps containers, and access to post-exposure care if an injury occurs.
+
+My Socratic question: why do waste handlers need many of the same protections (vaccination, PPE, post-exposure care) as the clinical and laboratory staff who generated the waste, even though they never touched a patient?
+
+The answer is that the pathogens in the waste do not become less dangerous just because they are now inside a bag rather than a syringe - a waste handler exposed to a needlestick from an improperly discarded sharp faces exactly the same infection risk as the person who originally used it.
+
+Crucial insight: the chain of protection must extend to everyone who touches the waste at any point, not only to those who generated it - a system that protects laboratory staff but neglects waste handlers has only solved half the problem.` },
+
+    { q: "Environmental impact and sustainability.",
+      body: `Beyond immediate human health, healthcare waste management has an environmental dimension: improperly treated waste can contaminate soil and groundwater, incineration without proper filtration releases harmful emissions, and single-use plastics generate large volumes of waste needing treatment. Facilities increasingly weigh sustainability alongside safety - for example, favouring autoclaving with steam over open incineration where feasible, and pursuing waste minimisation as covered in part one.
+
+My Socratic question: how does the environmental impact of waste treatment connect back to waste minimisation?
+
+The answer is that every treatment method - even a correctly run one - consumes resources and can have some environmental cost, so the waste that is never generated is also the waste that never needs treating, making minimisation the point where safety and sustainability goals reinforce each other rather than compete.
+
+Crucial insight: responsible waste management looks beyond the immediate bin to the full downstream consequence - human, environmental, and community - of every choice made at the bench.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for healthcare waste management, part two.
+
+Treatment methods: autoclaving (steam, ideal for infectious waste), incineration (high controlled heat, must use proper equipment, not open burning), chemical disinfection (correct concentration AND contact time), and sharps encapsulation (permanent sealing).
+
+Disposal: only after treatment, to a controlled site such as a sanitary landfill - treatment removes the hazard, disposal safely contains what remains.
+
+Governance: national/international regulatory frameworks require documented protocols and a designated waste officer, because consequences extend beyond any one facility.
+
+Accountability: record-keeping and audits make the system verifiable, not just assumed.
+
+Protection: waste handlers need the same category of protection (PPE, vaccination, post-exposure care) as the staff who generated the waste, because the hazard does not weaken once bagged.
+
+Now your final test. A batch of yellow-bag infectious waste from your laboratory is collected daily by a facility waste handler and taken for treatment.
+
+Question one: is the waste inside the sealed yellow bag already safe the moment it is sealed? Explain.
+Question two: name one treatment method suited to this waste, and the specific condition that must be met for it to actually work.
+Question three: name two protections the waste handler collecting this bag should have, and explain why they are needed despite never touching a patient.
+
+Work them through before reading on.
+
+My answers. One: no - sealing only contains the hazard, it does not neutralise it; the pathogens remain fully active until the waste undergoes actual treatment such as autoclaving or incineration. Two: autoclaving is well suited to infectious waste, and it only works if the load reaches and holds the correct steam temperature and pressure for the full required time - an incomplete cycle leaves pathogens alive. Three: appropriate heavy-duty PPE and hepatitis B vaccination (among others, such as safe-lifting training and post-exposure care access) - needed because the pathogens in the bag are exactly as dangerous to the handler as they were to the original patient sample, regardless of who is now touching it.
+
+If those came cleanly, you have the full picture of healthcare waste management, from the bench where waste is created to its final, safe treatment and disposal.` },
+  ],
+  theory: [
+    { q: "Explain why correct segregation alone does not make waste safe.", a: "Segregation only contains and identifies the hazard; the pathogens or hazardous properties inside remain fully active until the waste undergoes actual treatment, such as autoclaving, incineration, or chemical disinfection." },
+    { q: "Describe autoclaving as a waste treatment method and state which waste category it best suits.", a: "Autoclaving exposes waste to high-pressure steam that kills pathogens, rendering it non-infectious before disposal. It is best suited to infectious/biohazardous waste, as it destroys living organisms but does not neutralise chemical or pharmaceutical hazards." },
+    { q: "Explain why open burning is not an acceptable substitute for proper incineration.", a: "Open burning does not reliably reach the high, controlled temperatures needed to fully destroy pathogens, and it releases toxic smoke and ash, converting a contained hazard into an uncontained environmental and community hazard, unlike a properly designed incinerator." },
+    { q: "State why both concentration and contact time matter for chemical disinfection.", a: "A disinfectant needs sufficient time in contact with organisms, at the correct concentration, to actually kill them. Meeting the concentration but not the contact time leaves organisms alive, so the treatment fails even though the correct chemical was used." },
+    { q: "Explain why treatment and final disposal are two distinct, both-necessary steps.", a: "Treatment (e.g. autoclaving, incineration) removes the hazard by destroying pathogens; disposal (e.g. sanitary landfill) safely contains what remains afterward. Skipping treatment and going straight to disposal leaves genuinely infectious material in the environment, even in a well-managed landfill." },
+    { q: "Explain why healthcare waste management is governed by regulatory frameworks rather than left to individual facility discretion.", a: "The consequences of poor waste management - outbreaks, environmental contamination, injury to handlers - extend beyond any single facility, so consistent, enforceable national/international standards (e.g. WHO guidance, national EPA rules) are needed to protect the public interest." },
+    { q: "Explain the purpose of waste record-keeping and audits.", a: "Records and audits make the waste management system verifiable and accountable, allowing confirmation that the waste generated actually matches what was treated and disposed of, catching gaps or non-compliance that routine observation alone would miss." },
+    { q: "List protections that should be provided specifically to waste handlers, and explain why.", a: "Appropriate heavy-duty PPE, hepatitis B vaccination, safe lifting/handling training, and access to post-exposure care - needed because the pathogens in the waste are exactly as dangerous to the handler as to the person who generated it, regardless of who is now touching it." },
+    { q: "Describe the environmental risks associated with poorly managed healthcare waste treatment.", a: "Improperly treated waste can contaminate soil and groundwater; incineration without proper filtration releases harmful emissions; and high volumes of single-use plastic waste add to the treatment burden." },
+    { q: "Explain how waste minimisation connects safety and environmental sustainability.", a: "Every treatment method consumes resources and carries some environmental cost even when done correctly, so waste that is never generated in the first place is also waste that never needs treating - making minimisation beneficial for both safety and sustainability." },
+  ],
+  videos: [
+    { channel: "WHO / Healthcare Waste", title: "Treatment Methods for Healthcare Waste: Autoclaving and Incineration", note: "How steam and heat-based treatment neutralise infectious waste.", url: "" },
+    { channel: "Public Health", title: "Protecting Waste Handlers in Healthcare Facilities", note: "Occupational health measures for staff who manage waste after collection.", url: "" },
+    { channel: "Environmental Health", title: "Regulatory Frameworks for Healthcare Waste Disposal", note: "How national and international guidelines govern safe disposal.", url: "" },
+  ],
+  mcqs: [
+    { q: "Sealing a bag of infectious waste correctly means the hazard inside is:", o: ["Already fully neutralised", "Still fully active until the waste is actually treated", "Automatically sterile", "No longer a concern"], a: 1, w: "Sealing only contains the hazard; treatment is what neutralises it." },
+    { q: "Autoclaving treats infectious waste by:", o: ["Burning it at low temperature", "Exposing it to high-pressure steam that kills pathogens", "Diluting it with water", "Freezing it"], a: 1, w: "High-pressure steam destroys the living organisms in the waste." },
+    { q: "Autoclaving is best suited to which waste category?", o: ["Radioactive waste", "Chemical waste", "Infectious/biohazardous waste", "Pharmaceutical waste"], a: 2, w: "It destroys living organisms, making it ideal for biological hazards specifically." },
+    { q: "Open burning of healthcare waste is unsafe mainly because it:", o: ["Is too slow", "Does not reliably reach high enough temperatures and releases toxic smoke", "Uses too much water", "Requires special training"], a: 1, w: "Inconsistent temperatures leave pathogens alive while releasing harmful emissions." },
+    { q: "Proper incineration, unlike open burning, uses:", o: ["No temperature control", "A properly designed incinerator with controlled high temperatures", "Household fire", "Cold air only"], a: 1, w: "A designed incinerator reliably reaches and controls the temperatures needed." },
+    { q: "For chemical disinfection to actually kill organisms, the disinfectant needs the correct concentration AND:", o: ["A pleasant smell", "Sufficient contact time", "A colourful container", "Room lighting"], a: 1, w: "Contact time allows the chemical reaction that destroys organisms to complete." },
+    { q: "Sealing filled sharps containers permanently, sometimes in cement or plastic, is called:", o: ["Incineration", "Autoclaving", "Encapsulation", "Segregation"], a: 2, w: "Encapsulation permanently seals sharps so contents can never be accessed again." },
+    { q: "After treatment, non-hazardous waste is typically sent to:", o: ["A river", "An open dump", "A sanitary landfill", "A patient area"], a: 2, w: "A sanitary landfill is designed to safely contain treated, non-hazardous waste." },
+    { q: "Skipping treatment and sending infectious waste straight to a well-managed landfill is dangerous because:", o: ["Landfills sterilise waste automatically", "The waste remains infectious and can expose pickers or contaminate groundwater", "Landfills are always too small", "It is illegal everywhere"], a: 1, w: "A landfill controls location, not infectivity - untreated waste remains hazardous." },
+    { q: "Healthcare waste management is governed by:", o: ["No formal rules anywhere", "National and international regulatory frameworks", "Individual staff preference only", "Hospital marketing departments"], a: 1, w: "Frameworks such as WHO guidance and national EPA rules set legal requirements." },
+    { q: "Regulation of healthcare waste is necessary because its consequences:", o: ["Never leave the facility", "Extend beyond any single facility to the public and environment", "Only affect equipment", "Are always minor"], a: 1, w: "Outbreaks, contamination, and handler injuries can affect the wider public." },
+    { q: "Facilities are typically required to have a designated:", o: ["Marketing officer", "Trained waste management officer or committee", "Extra security guard", "Volunteer coordinator"], a: 1, w: "A designated trained officer/committee oversees compliance with waste protocols." },
+    { q: "The purpose of waste record-keeping and audits is to:", o: ["Slow down operations", "Make the system verifiable and catch gaps or non-compliance", "Increase paperwork for its own sake", "Replace segregation entirely"], a: 1, w: "Records allow confirmation that generated waste matches treated/disposed waste." },
+    { q: "Waste handlers should be protected with measures including:", o: ["No special measures, since they don't touch patients", "PPE, hepatitis B vaccination, and post-exposure care access", "Only a uniform", "A higher salary only"], a: 1, w: "They face the same infection risk as clinical staff and need equivalent protection." },
+    { q: "A waste handler injured by an improperly discarded needle faces:", o: ["No real risk since the sample is old", "The same infection risk as the person who originally used the needle", "Only a minor scratch with no consequence", "Risk only if the needle is brand new"], a: 1, w: "Pathogens in waste remain dangerous regardless of who is exposed or when." },
+    { q: "Incineration without proper filtration risks:", o: ["No environmental impact", "Harmful emissions released into the air", "Making waste heavier", "Increasing landfill space"], a: 1, w: "Unfiltered incineration releases harmful emissions into the environment." },
+    { q: "Single-use plastics in healthcare waste contribute to:", o: ["Reduced treatment burden", "Increased volume of waste needing treatment", "Zero environmental impact", "Automatic sterilisation"], a: 1, w: "High volumes of single-use plastic add to the overall treatment burden." },
+    { q: "Waste minimisation connects to sustainability because:", o: ["It has no relationship to environmental impact", "Waste never generated also never needs resource-consuming treatment", "It increases the need for incineration", "It is unrelated to safety"], a: 1, w: "Preventing waste generation reduces both hazard and environmental treatment cost." },
+    { q: "Which pairing of treatment method and waste type is most appropriate?", o: ["Autoclaving for chemical solvents", "Incineration for radioactive waste with no other controls", "Autoclaving for infectious/biohazardous waste", "Chemical disinfection for sharps disposal without encapsulation"], a: 2, w: "Autoclaving's steam-based mechanism is specifically effective against biological hazards." },
+    { q: "A treatment process that meets the correct chemical concentration but not the required contact time is:", o: ["Fully effective regardless", "Ineffective, since organisms are not given time to be destroyed", "More effective than usual", "Irrelevant to safety"], a: 1, w: "Without adequate contact time, the disinfection reaction cannot complete." },
+    { q: "The two distinct, both-necessary steps after correct segregation are:", o: ["Storage and re-segregation", "Treatment and final disposal", "Labelling and re-labelling", "Collection and collection again"], a: 1, w: "Treatment removes the hazard; disposal safely contains what remains." },
+    { q: "A key reason facilities conduct waste audits is to confirm that:", o: ["Staff enjoy their jobs", "The system works as designed, not just on paper", "Waste bags are colourful", "No waste was ever generated"], a: 1, w: "Audits verify actual practice matches the documented protocol." },
+    { q: "'The waste generated matches the waste treated and disposed of' is confirmed through:", o: ["Guesswork", "Waste manifests/logs and periodic audits", "Colour alone", "Staff memory"], a: 1, w: "Documented tracking (manifests/logs) plus audits provides verifiable accountability." },
+    { q: "Vaccination (e.g. hepatitis B) is recommended for waste handlers because:", o: ["It is a formality with no real benefit", "They face genuine exposure risk to bloodborne pathogens in the waste they handle", "It replaces the need for PPE entirely", "Only clinical staff need it"], a: 1, w: "Waste handlers are genuinely exposed to bloodborne pathogens through the waste they manage." },
+    { q: "Which best describes the relationship between treatment method and hazard type?", o: ["Any method works for any hazard equally well", "Treatment must be matched to the specific hazard, e.g. steam for biological, not chemical, hazards", "Only incineration is ever needed", "Matching is unnecessary if waste is segregated"], a: 1, w: "Different hazards require specifically matched treatment mechanisms to be neutralised." },
+    { q: "Environmental contamination from healthcare waste can occur through:", o: ["Properly treated, landfilled waste only", "Untreated waste contaminating soil or groundwater", "Waste minimisation efforts", "Correct autoclaving cycles"], a: 1, w: "It is specifically untreated or improperly treated waste that risks environmental contamination." },
+    { q: "Overall, the purpose of regulatory frameworks for healthcare waste is to:", o: ["Increase facility paperwork for its own sake", "Set consistent, enforceable standards protecting public health and the environment", "Replace the need for staff training", "Apply only to large hospitals"], a: 1, w: "Frameworks exist to protect the wider public interest with consistent, enforceable standards." },
+    { q: "A facility choosing autoclaving with steam over open incineration where feasible is an example of balancing:", o: ["Cost and marketing", "Safety with environmental sustainability", "Staff preference only", "Convenience over all other factors"], a: 1, w: "Steam-based treatment can be both effective and lower-impact than uncontrolled burning." },
+    { q: "The complete journey of healthcare waste, in correct order, is:", o: ["Disposal, generation, treatment, segregation", "Generation, segregation, storage/transport, treatment, disposal", "Treatment, generation, disposal, segregation", "Segregation, disposal, generation, treatment"], a: 1, w: "Waste is generated, segregated at the bench, safely stored/transported, treated, then disposed of." },
+  ],
+};
+
+/* --------------------------- lab:20 --------------------------- */
+const T_LAB_CHEM_HAZARDS = {
+  courseId: "lab",
+  topicIndex: 20,
+  title: "Lab Safety 2: Chemical Hazards and Safety Symbols",
+  minutes: 18,
+  note: [
+    { q: "Beyond biological danger: the chemical shelf.",
+      body: `You have already learned that the biological hazard is the most feared in the laboratory. But every reagent bottle on the shelf is also a potential hazard, and chemical harm can be just as severe - burns, poisoning, fire, and explosion.
+
+My Socratic question: why can two clear, colourless liquids in identical bottles pose completely different levels of danger?
+
+The answer is that appearance tells you nothing about chemical hazard - a bottle of water and a bottle of concentrated acid can look identical, and only correct labelling and knowledge of the chemical's properties protect you from a catastrophic mistake.
+
+Crucial insight: chemical safety in the laboratory depends entirely on identifying what a substance is and what it can do before you use it - never on how it looks.` },
+
+    { q: "Categories of chemical hazard.",
+      body: `Chemical hazards fall into recognisable categories. Corrosive substances (strong acids and bases) destroy living tissue and materials on contact. Toxic substances cause harm if inhaled, ingested, or absorbed through skin. Flammable substances catch fire easily, often from solvent vapours near a heat source. Oxidising substances can cause or intensify fire by supplying oxygen to a reaction. Irritants cause reversible inflammation of skin, eyes, or airways.
+
+My Socratic question: why is it important to know which category a chemical falls into, not just that it is "dangerous"?
+
+The answer is that each category demands a different protective response - a corrosive needs eye protection and immediate water-flushing if splashed, while a flammable needs to be kept away from heat sources entirely; treating every hazard the same way leaves some risks unaddressed.
+
+Crucial insight: correctly categorising a chemical hazard is what lets you choose the right control - the categories are not academic labels, they are practical instructions for how to stay safe.` },
+
+    { q: "The Globally Harmonised System (GHS) pictograms.",
+      body: `To communicate chemical hazards instantly and consistently worldwide, the Globally Harmonised System (GHS) uses a standard set of pictograms - a red diamond outline containing a black symbol on a white background - printed on every hazardous chemical's label.
+
+My Socratic question: why does the laboratory rely on standardised international symbols rather than each manufacturer writing its own hazard description?
+
+The answer is that a standardised symbol is instantly recognisable regardless of the label's language or the reader's familiarity with that specific product, meaning any trained person, anywhere in the world, can identify the hazard at a glance.
+
+Crucial insight: the GHS pictogram system exists for the same reason as waste colour-coding - to make hazard recognition instant, universal, and independent of language.` },
+
+    { q: "Learning the pictograms.",
+      body: `The core GHS pictograms you must recognise: the flame (flammable), the corrosion symbol showing a hand and surface being eaten away (corrosive), the skull and crossbones (acute toxicity - can kill), the exclamation mark (irritant or lower-level health hazard), the gas cylinder (gases under pressure), the flame over a circle (oxidiser), the exploding bomb (explosive), the health hazard symbol showing a starburst on a human chest (serious long-term health hazards such as carcinogens), and the environment symbol showing a dead tree and fish (hazardous to aquatic life).
+
+My Socratic question: if a bottle carries both the skull-and-crossbones and the flame pictograms, what does that combination tell you about how to handle it?
+
+The answer is that the chemical is both acutely toxic AND flammable - so you must protect against inhalation/ingestion/skin contact AND keep it away from any heat or ignition source at the same time, since a single-hazard mindset would leave one of these two real dangers unaddressed.
+
+Crucial insight: pictograms are often combined on a single label, and each one must be read and acted on - a bottle is exactly as dangerous as the sum of all its pictograms, not just the most obvious one.` },
+
+    { q: "Safety Data Sheets (SDS).",
+      body: `Every hazardous chemical in the laboratory must have an accompanying Safety Data Sheet (SDS, formerly called MSDS) - a detailed document covering the chemical's identity, hazards, safe handling and storage, first aid measures, and what to do in a spill or fire.
+
+My Socratic question: if the GHS pictogram already tells you a chemical is corrosive, why is the SDS still necessary?
+
+The answer is that the pictogram tells you the category of hazard at a glance, but the SDS gives the specific, actionable detail you need to actually respond correctly - the exact first aid steps, the compatible storage conditions, and the precise spill-response procedure for that particular chemical.
+
+Crucial insight: the pictogram is the headline; the SDS is the full article. A trained scientist recognises the pictogram instantly, then consults the SDS for the specific instructions before acting.` },
+
+    { q: "Safe storage principles: chemical incompatibility.",
+      body: `Not all chemicals can be stored together, because some react dangerously if they come into contact - a principle called chemical incompatibility. For example, oxidisers stored near flammables can trigger fire; strong acids stored near strong bases can react violently if a container fails.
+
+My Socratic question: why might storing chemicals alphabetically by name on a shelf actually be a dangerous system?
+
+The answer is that alphabetical order groups chemicals by name, not by hazard class or reactivity - it could easily place an incompatible pair (for example, an oxidiser next to a flammable solvent) directly beside each other purely by coincidence of spelling, creating a serious risk if a container leaks or breaks.
+
+Crucial insight: safe chemical storage is organised by hazard class and compatibility, never by convenience of alphabetical filing - the goal is to keep chemicals that could react dangerously physically separated.` },
+
+    { q: "Handling and using chemicals safely at the bench.",
+      body: `Safe chemical use includes always working in a fume hood when handling volatile or toxic chemicals, never pipetting by mouth, always adding acid to water (not water to acid) when diluting concentrated acid to control the exothermic reaction, and labelling every secondary container the moment a chemical is transferred into it.
+
+My Socratic question: why does the order matter - "acid to water," never "water to acid" - when diluting a concentrated acid?
+
+The answer is that dissolving concentrated acid in water releases a large, controlled amount of heat; adding acid slowly to a larger volume of water spreads that heat safely, whereas adding water to concentrated acid can cause the heat to boil and violently splash concentrated acid outward.
+
+Crucial insight: many chemical safety rules encode a specific physical reason, not an arbitrary convention - understanding the reason behind a rule (like acid-to-water) makes you far less likely to forget or break it under pressure.` },
+
+    { q: "Chemical spills.",
+      body: `A chemical spill requires an immediate, specific response: alert others in the area, consult the SDS for the specific chemical's spill procedure, use appropriate PPE before approaching, contain the spill using the correct absorbent or neutralising material for that chemical class, and never attempt to clean a spill you are not trained or equipped to handle.
+
+My Socratic question: why is grabbing the nearest paper towel to wipe up any chemical spill potentially dangerous?
+
+The answer is that different chemicals require different containment materials - some spill kits contain specific absorbents or neutralisers matched to acids, bases, or solvents, and using the wrong material (or simply wiping) can spread the hazard, generate dangerous fumes, or fail to actually neutralise a corrosive or toxic substance.
+
+Crucial insight: spill response, like every other part of chemical safety, depends on first identifying exactly what you are dealing with - the SDS and correct spill kit exist precisely so that response is never guesswork.` },
+
+    { q: "Chemical waste disposal.",
+      body: `Chemical waste is never poured down the sink or discarded in general waste - it is collected in labelled, compatible waste containers, segregated by chemical class exactly as during storage, and disposed of through approved chemical waste disposal routes, connecting directly back to the healthcare waste management principles you already learned.
+
+My Socratic question: why would pouring a small amount of "used" acid down the sink seem harmless but actually be a serious violation?
+
+The answer is that even dilute or "used" chemical waste can damage plumbing, disrupt water treatment processes, and ultimately contaminate the environment - the fact that a quantity looks small does not make its cumulative or chemical impact negligible, which is exactly why proper labelled collection and approved disposal routes exist.
+
+Crucial insight: chemical waste management follows the same core principle as biohazardous waste - contain and correctly route the hazard at its point of generation, never take a shortcut because a quantity seems too small to matter.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for chemical hazards and safety symbols.
+
+The categories: corrosive, toxic, flammable, oxidising, and irritant - each demands a different specific protective response.
+
+The symbols: GHS pictograms (flame, corrosion, skull and crossbones, exclamation mark, gas cylinder, oxidiser flame, exploding bomb, health hazard starburst, environment symbol) give instant, universal hazard recognition - and combine on a single label to show multiple hazards at once.
+
+The reference: the Safety Data Sheet (SDS) gives the specific, actionable detail behind every pictogram - identity, hazards, handling, storage, first aid, and spill response.
+
+The storage rule: chemicals are grouped by hazard class and compatibility, never alphabetically, to keep reactive pairs physically separated.
+
+The bench rules: fume hood for volatiles/toxics, never mouth-pipetting, acid to water (never the reverse), and label every secondary container.
+
+The response and disposal: spills are handled using the SDS-specified method and correct absorbent, never guesswork; chemical waste is always collected and disposed through approved, labelled routes - never down the sink.
+
+Now your final test. You find an unlabelled secondary container of clear liquid on a bench, and a spill of a known corrosive chemical happens nearby at the same time.
+
+Question one: what should you do about the unlabelled container, and why is its lack of a label itself a hazard?
+Question two: what is your first correct step in responding to the corrosive spill?
+Question three: name one bench rule that, if it had been followed for the secondary container, would have prevented this exact problem.
+
+Work them through before reading on.
+
+My answers. One: treat the unlabelled container as an unknown, potentially hazardous substance and do not use, taste, or dispose of it casually - it must be identified (or safely disposed of as unknown chemical waste) before further use, because an unlabelled container removes the very information (GHS pictogram, SDS reference) that chemical safety depends on. Two: alert others in the area and consult the SDS for that specific corrosive to identify the correct PPE and containment/absorbent material before approaching, rather than reaching for the nearest paper towel. Three: labelling every secondary container the moment a chemical is transferred into it - this single rule, followed consistently, would have prevented the container from ever becoming unidentifiable.
+
+If those came cleanly, you now read every chemical bottle and label the way a trained laboratory scientist does - never by appearance, always by what its symbols and documentation tell you.` },
+  ],
+  theory: [
+    { q: "Explain why the appearance of a chemical is not a reliable guide to its hazard.", a: "Two chemicals can look visually identical (e.g. clear, colourless liquids) while having completely different hazard levels - only correct labelling and knowledge of the chemical's actual properties, not its appearance, indicate real danger." },
+    { q: "List the main categories of chemical hazard and explain why categorising matters.", a: "Corrosive, toxic, flammable, oxidising, and irritant. Categorising matters because each category demands a different specific protective response - treating every hazard identically leaves some risks (e.g. fire risk from a flammable) unaddressed." },
+    { q: "Explain the purpose of the Globally Harmonised System (GHS) pictograms.", a: "GHS pictograms are standardised international symbols (red diamond outline, black symbol, white background) that communicate chemical hazards instantly and consistently worldwide, recognisable regardless of the label's language." },
+    { q: "Name at least five GHS pictograms and the hazard each represents.", a: "The flame (flammable), the corrosion symbol (corrosive), the skull and crossbones (acute toxicity), the exclamation mark (irritant), the gas cylinder (gases under pressure), the oxidiser flame-over-circle (oxidiser), the exploding bomb (explosive), the health hazard starburst (serious long-term hazards e.g. carcinogens), and the environment symbol (hazardous to aquatic life)." },
+    { q: "Explain the relationship between a GHS pictogram and a Safety Data Sheet (SDS).", a: "The pictogram gives an instant hazard category at a glance; the SDS provides the specific, actionable detail (identity, hazards, handling, storage, first aid, spill response) needed to actually respond correctly to that particular chemical." },
+    { q: "Define chemical incompatibility and explain why alphabetical storage can be dangerous.", a: "Chemical incompatibility means certain chemicals react dangerously if they contact each other (e.g. oxidisers near flammables, strong acids near strong bases). Alphabetical storage groups by name, not hazard class, and could coincidentally place incompatible chemicals right next to each other." },
+    { q: "Explain why acid must always be added to water, never water to acid, when diluting concentrated acid.", a: "Dissolving concentrated acid in water releases significant heat; adding acid slowly into a larger volume of water spreads that heat safely, whereas adding water to concentrated acid can cause violent boiling and splashing of the concentrated acid outward." },
+    { q: "Describe the correct general response to a chemical spill.", a: "Alert others in the area, consult the SDS for that specific chemical's spill procedure, don appropriate PPE, contain the spill using the correct absorbent or neutraliser for that chemical class, and never attempt to clean a spill without proper training or equipment." },
+    { q: "Explain why chemical waste must never be poured down the sink, even in small amounts.", a: "Even dilute or 'used' chemical waste can damage plumbing, disrupt water treatment, and contaminate the environment - the small apparent quantity does not make the cumulative or chemical impact negligible, which is why labelled, compatible collection and approved disposal routes are required." },
+    { q: "Explain why every secondary (transferred) container must be labelled immediately.", a: "An unlabelled container loses the identifying information (hazard category, SDS reference) that chemical safety depends on, turning a known, correctly handled chemical into an unidentified, potentially hazardous unknown for anyone who encounters it later." },
+  ],
+  videos: [
+    { channel: "Lab Safety", title: "GHS Pictograms Explained", note: "Recognising the nine standard hazard symbols found on chemical labels.", url: "" },
+    { channel: "Chemical Safety", title: "How to Read a Safety Data Sheet (SDS)", note: "Finding the specific handling, storage and first aid information you need.", url: "" },
+    { channel: "Lab Safety", title: "Safe Chemical Storage and Incompatibility", note: "Why chemicals are grouped by hazard class, not alphabetically.", url: "" },
+  ],
+  mcqs: [
+    { q: "The appearance of a chemical (e.g. clear and colourless) is:", o: ["A reliable guide to its hazard level", "Not a reliable guide to its hazard - labelling and knowledge are required", "Always identical for safe chemicals", "Irrelevant to laboratory work"], a: 1, w: "Two visually identical liquids can have completely different hazard levels." },
+    { q: "Corrosive substances are hazardous mainly because they:", o: ["Are always coloured", "Destroy living tissue and materials on contact", "Are odourless", "Are always solids"], a: 1, w: "Corrosives cause tissue and material damage on contact." },
+    { q: "A chemical that catches fire easily, often from solvent vapours near heat, is classified as:", o: ["Flammable", "Toxic", "Corrosive", "Irritant"], a: 0, w: "Flammable substances ignite readily, especially their vapours." },
+    { q: "An oxidising substance is hazardous because it can:", o: ["Neutralise all other chemicals", "Cause or intensify fire by supplying oxygen to a reaction", "Only cause mild skin irritation", "Never react with anything"], a: 1, w: "Oxidisers supply oxygen that can cause or worsen fires." },
+    { q: "The GHS pictogram system uses:", o: ["Random symbols chosen per manufacturer", "A standardised red diamond outline with a black symbol on white background", "Only text warnings, no symbols", "Colour alone with no symbol"], a: 1, w: "GHS pictograms follow a fixed international visual standard." },
+    { q: "The main reason for using standardised GHS pictograms is to:", o: ["Make labels look attractive", "Allow instant, universal hazard recognition regardless of language", "Reduce label printing cost", "Replace the need for training entirely"], a: 1, w: "Standard symbols are recognisable across languages and regions." },
+    { q: "The skull and crossbones pictogram indicates:", o: ["Flammability", "Acute toxicity - can kill", "Environmental hazard", "Gas under pressure"], a: 1, w: "The skull and crossbones warns of acute toxicity." },
+    { q: "The pictogram showing a hand and surface being eaten away indicates:", o: ["Explosive", "Corrosive", "Oxidiser", "Irritant"], a: 1, w: "This symbol represents corrosive hazards to skin and materials." },
+    { q: "A bottle carrying both the flame and skull-and-crossbones pictograms is:", o: ["Only flammable, ignore the other symbol", "Both flammable AND acutely toxic, requiring protection against both", "Only toxic, the flame is decorative", "Safe if either symbol is missing"], a: 1, w: "Combined pictograms mean the chemical carries all listed hazards simultaneously." },
+    { q: "The Safety Data Sheet (SDS) provides:", o: ["Marketing information only", "Detailed hazard, handling, storage, first aid, and spill-response information", "A photograph of the chemical only", "Only the chemical's price"], a: 1, w: "The SDS gives the specific actionable detail behind the pictogram's category." },
+    { q: "Compared to a GHS pictogram, the SDS is best described as:", o: ["Less detailed", "The full detailed reference behind the pictogram's quick-glance category", "Unrelated to the pictogram", "Only needed for non-hazardous chemicals"], a: 1, w: "The pictogram is the headline; the SDS is the full article." },
+    { q: "Chemical incompatibility refers to:", o: ["Chemicals that are always safe together", "Certain chemicals reacting dangerously if they contact each other", "Only chemicals from the same manufacturer", "Chemicals stored in different countries"], a: 1, w: "Incompatible chemicals can react dangerously on contact, e.g. leaks." },
+    { q: "Chemicals should be stored:", o: ["Alphabetically by name", "By hazard class and compatibility", "By bottle colour", "In no particular order"], a: 1, w: "Storage by hazard class keeps reactive pairs physically separated." },
+    { q: "Storing chemicals alphabetically can be dangerous because it:", o: ["Is always the safest method", "Could coincidentally place incompatible chemicals next to each other", "Prevents all chemical reactions", "Is required by GHS"], a: 1, w: "Alphabetical grouping ignores hazard class, risking incompatible neighbours." },
+    { q: "When diluting concentrated acid, the correct method is to:", o: ["Add water to acid", "Add acid slowly to water", "Mix both simultaneously with no order", "Heat the acid first"], a: 1, w: "Adding acid to water spreads the released heat safely." },
+    { q: "Adding water to concentrated acid (the wrong order) risks:", o: ["No effect at all", "Violent boiling and splashing of concentrated acid", "Making the acid weaker instantly and safely", "Cooling the mixture"], a: 1, w: "The heat released can cause violent boiling and dangerous splashing." },
+    { q: "Volatile or toxic chemicals should be handled:", o: ["On any open bench", "In a fume hood", "Only outdoors", "Without any containment"], a: 1, w: "A fume hood contains vapours and protects the user from inhalation." },
+    { q: "Mouth pipetting is:", o: ["An acceptable shortcut for small volumes", "Never acceptable, due to ingestion/aspiration risk", "Only unsafe for corrosive chemicals", "Required for accuracy"], a: 1, w: "Mouth pipetting risks ingestion or aspiration of hazardous or infectious material." },
+    { q: "Every secondary (transferred) container must be:", o: ["Left unlabelled to save time", "Labelled immediately upon transfer", "Labelled only at the end of the day", "Discarded after one use regardless of content"], a: 1, w: "Immediate labelling prevents the contents from becoming unidentifiable." },
+    { q: "The first step in responding to a chemical spill is to:", o: ["Clean it immediately with any material", "Alert others in the area and consult the SDS for that chemical", "Leave the area permanently", "Ignore it if it is small"], a: 1, w: "Alerting others and consulting the specific SDS guides a correct response." },
+    { q: "Using the wrong absorbent/neutraliser on a chemical spill can:", o: ["Always be harmless", "Spread the hazard or generate dangerous fumes", "Guarantee full neutralisation regardless of chemical", "Improve safety in every case"], a: 1, w: "Mismatched materials can worsen a spill rather than contain it." },
+    { q: "Chemical waste should be disposed of by:", o: ["Pouring down the sink if the amount is small", "Collecting it in labelled, compatible containers via approved disposal routes", "Discarding in general waste", "Leaving it at the bench indefinitely"], a: 1, w: "Chemical waste needs labelled, class-segregated collection and approved disposal." },
+    { q: "Pouring small amounts of used acid down the sink is a problem because it can:", o: ["Have no cumulative effect", "Damage plumbing and contaminate water treatment/environment", "Always be diluted to complete safety", "Improve water quality"], a: 1, w: "Even small quantities can damage infrastructure and the environment cumulatively." },
+    { q: "The exclamation mark GHS pictogram generally indicates:", o: ["Explosive hazard", "Irritant or lower-level health hazard", "Environmental hazard only", "Gas under pressure"], a: 1, w: "The exclamation mark covers irritants and similar lower-severity health hazards." },
+    { q: "The environment pictogram (dead tree and fish) indicates a substance is:", o: ["Explosive", "Hazardous to aquatic life", "Flammable", "An irritant only"], a: 1, w: "This symbol flags aquatic/environmental hazard specifically." },
+    { q: "An unlabelled secondary container found on a bench should be treated as:", o: ["Definitely safe since it's probably water", "An unknown, potentially hazardous substance", "Automatically the most common reagent in the lab", "Not a safety concern"], a: 1, w: "Without labelling, the substance's hazard cannot be confirmed and must be treated cautiously." },
+    { q: "Chemical waste management connects to healthcare waste management principles because both rely on:", o: ["Ignoring small quantities", "Containing and correctly routing hazards at the point of generation", "Pouring waste down drains", "Avoiding all documentation"], a: 1, w: "Both systems depend on correct segregation/containment at the source." },
+    { q: "The overall purpose of GHS pictograms and SDS documents together is to:", o: ["Add unnecessary paperwork", "Ensure hazards are identified at a glance and handled with specific correct actions", "Replace PPE entirely", "Apply only to explosive chemicals"], a: 1, w: "Together they give both instant recognition and detailed actionable guidance." },
+    { q: "A trained laboratory scientist identifies a chemical's hazard primarily by:", o: ["Its colour and smell alone", "Its label, GHS pictograms, and SDS - never by appearance", "Guessing based on the shelf it's stored on", "Asking a classmate informally"], a: 1, w: "Correct identification relies on documented labelling and reference information, not appearance." },
+    { q: "Overall, chemical hazard categories, GHS pictograms, and SDS documents together form a system whose purpose is to:", o: ["Make chemical use slower for no reason", "Let any trained person quickly and correctly identify and respond to a chemical hazard", "Apply only to explosive substances", "Replace the need for any storage rules"], a: 1, w: "The whole system exists to make hazard identification and response fast, correct, and universal." },
+  ],
+};
+
+/* --------------------------- lab:21 --------------------------- */
+const T_LAB_SOP = {
+  courseId: "lab",
+  topicIndex: 21,
+  title: "Standard Operating Procedures (SOPs)",
+  minutes: 16,
+  note: [
+    { q: "Why does every test need a written procedure, even for an experienced scientist?",
+      body: `You may perform the same test hundreds of times and know it by heart. So why does the laboratory still require a written Standard Operating Procedure (SOP) for it?
+
+My Socratic question: if two experienced scientists each perform the same test slightly differently from memory, what happens to the reliability of the result?
+
+The answer is that the result becomes dependent on who performed it, not on the test itself - and a diagnostic result whose accuracy depends on which scientist happened to be on shift is not trustworthy. An SOP removes that variability.
+
+Crucial insight: an SOP is a written, approved, step-by-step document describing exactly how a procedure must be performed, every time, by anyone authorised to perform it - it exists to make results reproducible regardless of who is at the bench.` },
+
+    { q: "What an SOP actually contains.",
+      body: `A complete SOP typically includes: the purpose and scope of the procedure, required materials/reagents/equipment, step-by-step instructions in the exact order to be followed, safety precautions specific to that procedure, quality control steps, and how to record and report results, along with document control information - a version number, effective date, and the name of who approved it.
+
+My Socratic question: why does an SOP need a version number and approval signature, not just the steps themselves?
+
+The answer is that procedures are updated over time as equipment, evidence, or best practice changes - the version number and approval ensure everyone is following the current, officially sanctioned method, not an outdated or informally modified one someone printed months ago.
+
+Crucial insight: an SOP is a controlled document, not just an instruction sheet - its authority comes from being the single, current, approved version that everyone in the laboratory follows.` },
+
+    { q: "Why SOPs matter for accreditation and quality.",
+      body: `Laboratory accreditation bodies require documented SOPs for every procedure performed, because a laboratory's credibility rests on being able to demonstrate that results are produced consistently and correctly, not from memory or improvisation.
+
+My Socratic question: if an inspector asks a laboratory to prove that a particular test is performed correctly every time, what single document answers that question?
+
+The answer is the SOP for that test, along with evidence (such as training records) that staff have been trained on and follow it - the SOP is the laboratory's documented proof of exactly how, and therefore how reliably, a result is produced.
+
+Crucial insight: SOPs are not bureaucratic paperwork for its own sake - they are the backbone of laboratory quality and the evidence a laboratory presents to prove its results can be trusted.` },
+
+    { q: "Deviation from an SOP.",
+      body: `Sometimes a real situation does not exactly match the SOP - a reagent is unavailable, or equipment behaves unexpectedly. Any deviation from an approved SOP must be documented, justified, and (where it could affect results) approved by a supervisor before or immediately after it happens.
+
+My Socratic question: why is silently improvising a small change to the procedure, without documenting it, dangerous even if it seems harmless in the moment?
+
+The answer is that an undocumented deviation breaks the very reproducibility the SOP exists to guarantee - if the result is later questioned, there is no record of what was actually done differently, making the result impossible to properly investigate or defend.
+
+Crucial insight: a documented, approved deviation preserves accountability and traceability; a silent, undocumented one destroys it - the difference is entirely in whether it was written down.` },
+
+    { q: "SOPs and training.",
+      body: `New staff are trained specifically against the current SOP for each procedure they will perform, and their competency is formally assessed and signed off before they are authorised to perform that procedure independently.
+
+My Socratic question: why is training "against the SOP" different from training "by watching an experienced colleague"?
+
+The answer is that an experienced colleague may have unconsciously picked up small habits or shortcuts that drift from the official procedure over time - training directly against the written SOP, with formal competency sign-off, ensures the new staff member learns the current approved method itself, not an informally evolved variant of it.
+
+Crucial insight: SOPs anchor training to a single, verifiable standard - without them, "how we do it" can slowly drift from person to person until no one is quite sure what the correct method actually is anymore.` },
+
+    { q: "Review and revision of SOPs.",
+      body: `SOPs are not written once and forgotten - they are periodically reviewed (often on a defined schedule such as annually) and revised whenever equipment, reagents, methods, or regulatory requirements change, with each revision creating a new controlled version.
+
+My Socratic question: what would happen to laboratory quality if an SOP were written once and never reviewed again, even as equipment and methods changed over the years?
+
+The answer is that the SOP would gradually become inaccurate - describing steps for equipment no longer in use, or missing safety information for a newly identified hazard - while staff continue to treat it as the authoritative procedure, creating a growing gap between the written instructions and safe, correct current practice.
+
+Crucial insight: an SOP's authority depends on it staying current - periodic review is what keeps the "approved procedure" and the "correct procedure" the same document.` },
+
+    { q: "SOPs for equipment operation specifically.",
+      body: `Every major piece of laboratory equipment - centrifuge, autoclave, spectrophotometer, and so on - has its own SOP covering startup, correct operation, shutdown, routine maintenance, and what to do if it malfunctions, kept at or near the equipment for quick reference.
+
+My Socratic question: why is it useful to have the equipment SOP physically near the equipment itself, rather than only filed in a central office?
+
+The answer is that the moment someone needs the SOP is usually the moment they are standing at the equipment, about to use it or facing an unexpected problem - a document that is hard to access in that moment provides little practical protection, no matter how well written it is.
+
+Crucial insight: an SOP only works if it is actually accessible and used at the point of need - written correctly but stored inaccessibly, it protects no one.` },
+
+    { q: "SOPs and patient safety.",
+      body: `Ultimately, every SOP traces back to patient safety - a correctly followed SOP for, say, sample handling ensures the specimen that reaches testing is the same specimen the patient provided, correctly identified, correctly stored, and correctly processed, so the result reported reflects that patient's true condition.
+
+My Socratic question: how does a small, seemingly administrative step - like an SOP requiring a second staff member to verify sample labelling - ultimately affect a patient's care?
+
+The answer is that a mislabelled or misidentified sample can lead to a result being reported for the wrong patient entirely, causing a missed diagnosis for one patient and a false diagnosis (and possibly wrong treatment) for another - the "administrative" verification step is actually a direct safeguard against a serious clinical harm.
+
+Crucial insight: SOPs can feel like procedural formality, but each one exists because a specific failure mode - often one that has caused real harm somewhere before - needed to be permanently closed off.` },
+
+    { q: "Reading and following an SOP correctly.",
+      body: `A trained scientist reads the full current SOP before performing an unfamiliar procedure - not skimming to the "important" steps - because a step that looks minor (a specific incubation time, a specific reagent order) is often exactly the step that determines whether the result is valid.
+
+My Socratic question: why can skipping a step you assume is "just a formality" invalidate an entire test result?
+
+The answer is that every step in a validated SOP was included because it was shown to affect the procedure's accuracy, reproducibility, or safety during the method's validation - a step that looks unnecessary to an unfamiliar eye may be exactly the one controlling for a specific source of error.
+
+Crucial insight: an SOP should be followed exactly as written, in full, every time - the authority to judge a step "unnecessary" belongs to the validation and review process that created the SOP, not to individual judgement in the moment.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for Standard Operating Procedures.
+
+The purpose: SOPs make results reproducible regardless of who performs the procedure.
+
+The contents: purpose/scope, materials, ordered steps, safety precautions, QC, recording/reporting, and document control (version, date, approval).
+
+The quality link: SOPs are a laboratory's documented proof, for accreditation, that results are produced consistently and correctly.
+
+Deviation: any departure from the SOP must be documented and approved - silent improvisation destroys traceability.
+
+Training and review: staff are trained directly against the current SOP with formal sign-off, and SOPs are periodically reviewed and revised to stay accurate.
+
+The stakes: every SOP step, however minor it looks, traces back to accuracy, safety, or patient safety.
+
+Now your final test. A new staff member is about to run a test for the first time and notices the SOP instructs a specific 10-minute incubation step that seems, to them, unnecessarily long.
+
+Question one: what should the staff member do about this step, and what should they NOT do?
+Question two: why might this specific step exist, even though it looks minor to someone unfamiliar with the method's validation?
+Question three: if the staff member genuinely believes the step should change, what is the correct route for that, rather than simply skipping it?
+
+Work them through before reading on.
+
+My answers. One: they should follow the step exactly as written; they should not skip or shorten it based on personal judgement, since the SOP is a controlled, approved document, not a suggestion. Two: incubation steps are frequently included because they were shown, during method validation, to be necessary for accuracy or reproducibility (e.g. allowing a reaction to reach completion) - a step that looks unnecessary to an unfamiliar eye is often exactly the one controlling a specific source of error. Three: raise the observation with a supervisor or through the facility's formal SOP review process, so any genuine improvement can be evaluated, documented, and - if justified - incorporated into a new approved, version-controlled revision, rather than being informally skipped at the bench.
+
+If those came cleanly, you now understand why "the SOP says so" is not laboratory bureaucracy - it is the mechanism that makes every result in the laboratory trustworthy.` },
+  ],
+  theory: [
+    { q: "Define a Standard Operating Procedure (SOP) and explain its main purpose.", a: "An SOP is a written, approved, step-by-step document describing exactly how a procedure must be performed. Its main purpose is to make results reproducible regardless of who performs the procedure, removing variability between individual operators." },
+    { q: "List the typical components of a complete SOP.", a: "Purpose and scope, required materials/reagents/equipment, step-by-step instructions in order, safety precautions, quality control steps, recording/reporting instructions, and document control information (version number, effective date, approver)." },
+    { q: "Explain why an SOP needs a version number and approval signature.", a: "Procedures are updated over time as equipment, evidence, or best practice changes; the version number and approval ensure everyone follows the current, officially sanctioned method rather than an outdated or informally modified one." },
+    { q: "Explain the role of SOPs in laboratory accreditation.", a: "Accreditation bodies require documented SOPs as evidence that a laboratory produces results consistently and correctly rather than from memory or improvisation - the SOP is documented proof of exactly how a result is produced." },
+    { q: "Explain why any deviation from an SOP must be documented, and the risk of an undocumented deviation.", a: "A documented, approved deviation preserves accountability and traceability. An undocumented deviation breaks the reproducibility the SOP exists to guarantee, leaving no record of what was actually done if the result is later questioned." },
+    { q: "Explain why training should occur directly against the SOP rather than solely by observing an experienced colleague.", a: "An experienced colleague may have unconsciously drifted from the official procedure with small habits or shortcuts over time; training directly against the written SOP, with formal competency sign-off, ensures the current approved method itself is learned." },
+    { q: "Explain why SOPs require periodic review and revision.", a: "Equipment, reagents, methods, and regulatory requirements change over time; periodic review keeps the SOP accurate and prevents a growing gap between the written 'approved' procedure and safe, correct current practice." },
+    { q: "Explain why equipment SOPs are typically kept physically near the equipment.", a: "The moment an SOP is needed is usually when someone is standing at the equipment, about to use it or facing a problem; a document that is hard to access at that moment provides little practical protection." },
+    { q: "Explain how a seemingly administrative SOP step can directly affect patient safety, using sample labelling verification as an example.", a: "A mislabelled or misidentified sample can cause a result to be reported for the wrong patient, causing a missed diagnosis for one patient and a false diagnosis for another; an SOP step requiring verification directly closes off this serious failure mode." },
+    { q: "Explain why a step in an SOP that looks unnecessary should still be followed exactly.", a: "Every step in a validated SOP was included because it was shown to affect the procedure's accuracy, reproducibility, or safety during method validation; the authority to judge a step unnecessary belongs to the validation/review process, not individual judgement at the bench." },
+  ],
+  videos: [
+    { channel: "Lab Quality", title: "What Is a Standard Operating Procedure (SOP)?", note: "Why SOPs make laboratory results reproducible and trustworthy.", url: "" },
+    { channel: "Lab Quality", title: "SOP Deviation and Documentation", note: "How to correctly handle and record a departure from an SOP.", url: "" },
+    { channel: "Lab Safety", title: "Training Staff Against Standard Operating Procedures", note: "Why formal SOP-based training and competency sign-off matter.", url: "" },
+  ],
+  mcqs: [
+    { q: "A Standard Operating Procedure (SOP) is best described as:", o: ["An informal tip shared between colleagues", "A written, approved, step-by-step document describing exactly how a procedure must be performed", "A marketing document", "An optional suggestion"], a: 1, w: "An SOP is a controlled, approved, exact procedural document." },
+    { q: "The main purpose of an SOP is to:", o: ["Make results reproducible regardless of who performs the procedure", "Save paper", "Slow down testing for no reason", "Replace the need for trained staff"], a: 0, w: "SOPs remove variability between individual operators to ensure reproducible results." },
+    { q: "If two scientists perform the same test slightly differently from memory, the result becomes:", o: ["More accurate", "Dependent on who performed it, undermining reliability", "Automatically standardised", "Unaffected"], a: 1, w: "Without an SOP, results depend on the individual, which undermines trust in the result." },
+    { q: "Which of these is NOT a typical component of an SOP?", o: ["Step-by-step instructions", "Document control information (version, date, approval)", "The scientist's personal opinion of the test", "Safety precautions"], a: 2, w: "Personal opinion has no place in a controlled procedural document." },
+    { q: "An SOP's version number and approval signature exist to ensure:", o: ["Everyone follows the current, officially sanctioned method", "The document looks official only", "Staff can ignore old versions freely without consequence", "Nothing important"], a: 0, w: "Version control ensures the current approved method is what is actually followed." },
+    { q: "Accreditation bodies require documented SOPs because they:", o: ["Are optional paperwork", "Are evidence that results are produced consistently and correctly", "Only apply to large laboratories", "Replace the need for equipment"], a: 1, w: "SOPs are documented proof of how, and how reliably, a result is produced." },
+    { q: "A deviation from an SOP should be:", o: ["Kept silent to avoid trouble", "Documented, justified, and approved where it could affect results", "Ignored entirely", "Only mentioned verbally, never in writing"], a: 1, w: "Documentation preserves accountability and traceability for any deviation." },
+    { q: "An undocumented deviation from an SOP is dangerous mainly because it:", o: ["Improves reproducibility", "Breaks traceability, leaving no record if the result is questioned later", "Is always harmless if the result seems fine", "Speeds up quality assurance"], a: 1, w: "Without documentation, an unusual result cannot be properly investigated." },
+    { q: "New staff should be trained:", o: ["Only by observing an experienced colleague informally", "Directly against the current SOP, with formal competency sign-off", "Without any reference document", "By trial and error alone"], a: 1, w: "Training against the SOP itself avoids inheriting informal drift from colleagues." },
+    { q: "SOPs are periodically reviewed and revised because:", o: ["Equipment, reagents, and methods change over time", "Reviewing is a legal formality with no real purpose", "SOPs never need to change once written", "Reviewing wastes laboratory time"], a: 0, w: "Ongoing changes require the SOP to be kept accurate through review." },
+    { q: "Without periodic review, an SOP risks:", o: ["Staying perfectly accurate forever", "Becoming inaccurate as equipment and methods change", "Improving automatically", "Becoming more detailed automatically"], a: 1, w: "Unreviewed SOPs can drift out of alignment with actual current practice and equipment." },
+    { q: "Equipment SOPs are typically kept:", o: ["Only in a central filed archive", "Physically near the equipment for quick reference", "Deleted after initial training", "In a locked office inaccessible during use"], a: 1, w: "Accessibility at the point of need is essential for the SOP to be practically useful." },
+    { q: "A well-written SOP stored somewhere inaccessible during actual use provides:", o: ["Full protection regardless of access", "Little practical protection, since it isn't available at the point of need", "More protection than an accessible SOP", "The same value as no SOP at all times"], a: 1, w: "An SOP must be accessible at the moment it's needed to be useful." },
+    { q: "A sample labelling verification step in an SOP ultimately protects against:", o: ["Excess paperwork only", "A result being reported for the wrong patient", "Equipment malfunction", "Reagent expiry"], a: 1, w: "Correct identification prevents misdiagnosis or wrong treatment from a mislabelled sample." },
+    { q: "SOP steps that appear minor to an unfamiliar reader are often:", o: ["Always safe to skip", "Included because they were shown to affect accuracy, reproducibility, or safety during validation", "Purely decorative", "Never actually necessary"], a: 1, w: "Validated procedures include steps specifically shown to matter for the result." },
+    { q: "The correct route for a staff member who believes an SOP step should change is to:", o: ["Simply skip the step going forward", "Raise it through the formal SOP review process with a supervisor", "Tell only colleagues informally and continue as usual", "Change the printed SOP by hand"], a: 1, w: "Formal review evaluates and, if justified, incorporates changes into a new approved version." },
+    { q: "SOPs anchor staff training to:", o: ["Whatever a colleague happens to do", "A single, verifiable, current standard", "No fixed reference at all", "Personal preference"], a: 1, w: "SOPs prevent the drift that can occur when training relies only on observation." },
+    { q: "A laboratory's proof, for an inspector, that a test is performed correctly every time is primarily:", o: ["Staff verbal assurance", "The SOP for that test plus training/competency records", "The equipment's price tag", "The laboratory's marketing brochure"], a: 1, w: "The SOP plus training evidence documents exactly how the result is produced." },
+    { q: "SOPs ultimately trace back to:", o: ["Bureaucratic tradition only", "Patient safety, by ensuring accurate, correctly handled results", "Cost reduction only", "Staff convenience only"], a: 1, w: "Every SOP step exists, ultimately, to protect the accuracy and safety of patient results." },
+    { q: "A trained scientist reading an unfamiliar SOP should:", o: ["Skim to only the steps that seem important", "Read the full current SOP before performing the procedure", "Rely entirely on memory of a similar procedure", "Skip document control information"], a: 1, w: "Full, careful reading avoids missing a step that determines result validity." },
+    { q: "The 'authority' to judge whether an SOP step is unnecessary belongs to:", o: ["Any individual staff member on the day", "The validation and formal review process that created/revises the SOP", "Whoever is fastest at the bench", "No one - all steps are permanently fixed"], a: 1, w: "Only the formal review/validation process can properly evaluate and change a step." },
+    { q: "A 10-minute incubation step in an SOP that seems unnecessarily long to a new staff member should be:", o: ["Shortened at their discretion", "Followed exactly as written", "Skipped entirely if time is short", "Replaced with a guess"], a: 1, w: "Steps are followed exactly as validated, regardless of individual time pressure or opinion." },
+    { q: "SOP document control information typically includes:", o: ["Version number, effective date, and approver", "Only the scientist's name who performed the last test", "Nothing beyond the steps themselves", "Marketing claims about the test"], a: 0, w: "This information confirms the SOP being used is the current, approved version." },
+    { q: "Which best explains why SOPs matter for laboratory quality overall?", o: ["They make procedures reproducible, documented, and continuously reviewed for accuracy and safety", "They exist purely to satisfy paperwork requirements", "They are unrelated to result accuracy", "They apply only to rare or unusual tests"], a: 0, w: "SOPs are the backbone connecting reproducibility, documentation, and ongoing accuracy/safety review." },
+    { q: "If an SOP instructs a specific reagent order and a staff member reverses it 'because it seems the same either way,' this is:", o: ["Always harmless", "A deviation that must be documented/justified, since the specified order may affect the result", "Encouraged good practice", "Irrelevant to result validity"], a: 1, w: "Reagent order can affect reaction outcomes; any change from the SOP must be documented and justified." },
+    { q: "SOPs help close off failure modes primarily by:", o: ["Removing individual judgement from steps shown to matter for accuracy or safety", "Increasing staff autonomy to change steps freely", "Eliminating the need for any documentation", "Making procedures less specific"], a: 0, w: "Standardising validated steps prevents individual variability from reintroducing known failure modes." },
+    { q: "A laboratory that allows staff to informally modify procedures without documentation risks:", o: ["Improved reproducibility", "Losing the reproducibility and traceability SOPs are designed to guarantee", "No real consequence", "Better accreditation outcomes"], a: 1, w: "Undocumented informal changes undermine the very purpose of having an SOP." },
+    { q: "Overall, an SOP should be understood as:", o: ["An optional guideline", "A controlled document whose exact, current, approved steps must be followed by everyone authorised to perform the procedure", "A historical record with no current relevance", "A document only relevant to inspectors"], a: 1, w: "SOPs are binding, controlled, current procedural documents for everyone performing that procedure." },
+    { q: "The single biggest risk of not having (or not following) SOPs in a laboratory is:", o: ["Slightly slower documentation", "Results becoming unreliable and unreproducible depending on who performs the test", "Reduced equipment cost", "Nothing significant"], a: 1, w: "Without SOPs, result reliability depends on the individual rather than a standardised, validated method." },
+  ],
+};
+
+/* --------------------------- lab:22 --------------------------- */
+const T_LAB_FIRST_AID = {
+  courseId: "lab",
+  topicIndex: 22,
+  title: "First Aid Procedures",
+  minutes: 18,
+  note: [
+    { q: "Why every laboratory scientist needs first aid knowledge, not just safety officers.",
+      body: `You have learned the hazards, the hierarchy of controls, and PPE. But even with every precaution, accidents can still happen - and when they do, the first minutes matter enormously.
+
+My Socratic question: why can't a laboratory simply rely on calling emergency services the moment any accident occurs, without staff knowing first aid themselves?
+
+The answer is that for many laboratory injuries - a chemical splash to the eye, a needlestick, a fire on clothing - the critical, harm-reducing action must happen in seconds, long before emergency services can physically arrive; the outcome depends on what is done immediately, by whoever is present.
+
+Crucial insight: first aid is the immediate, initial care given to a person before professional medical help arrives, and in the laboratory it can be the single biggest factor determining whether an incident becomes minor or severe.` },
+
+    { q: "The first aid kit and eyewash station.",
+      body: `Every laboratory must have an accessible, well-stocked first aid kit (dressings, bandages, antiseptic, gloves) and a functioning eyewash station and/or emergency shower, both clearly signed and never obstructed, with staff trained on their exact location and use before an emergency, not during one.
+
+My Socratic question: why is knowing the exact location of the eyewash station before an emergency far more valuable than knowing it during one?
+
+The answer is that a chemical splash to the eye causes damage within seconds, and someone experiencing it may have impaired vision and significant pain - searching for an unfamiliar eyewash station in that state wastes the very seconds that determine whether the injury is temporary or permanent.
+
+Crucial insight: first aid readiness means knowing where equipment is and how to use it before you ever need it - in an actual emergency, there is no time left to learn.` },
+
+    { q: "Chemical splash to the skin or eyes.",
+      body: `For a chemical splash, the immediate first aid is copious flushing with water - for skin, remove contaminated clothing and flush the area for at least 15-20 minutes; for eyes, use the eyewash station and flush continuously, holding the eyelids open, for at least 15-20 minutes, then seek medical attention.
+
+My Socratic question: why is 15-20 minutes of continuous flushing specified, rather than a quick rinse?
+
+The answer is that a brief rinse removes only surface chemical, while a corrosive or toxic substance can continue reacting with tissue for as long as any residue remains in contact - sustained flushing is what actually dilutes and removes the chemical fully enough to stop ongoing tissue damage.
+
+Crucial insight: first aid instructions like "flush for 15-20 minutes" are not arbitrary - they reflect how long it actually takes to stop the harm, and stopping early leaves the injury still actively occurring.` },
+
+    { q: "Needlestick and sharps injuries.",
+      body: `You already learned this from Lab Safety: for a needlestick or sharps injury, immediately wash the wound with soap and running water (do not scrub aggressively or suck the wound), allow it to bleed briefly if it is already bleeding, cover with a clean dressing, then report the incident immediately for formal post-exposure risk assessment.
+
+My Socratic question: why does the guidance specifically say not to scrub aggressively or suck the wound, when the instinct is to "get the contamination out" as forcefully as possible?
+
+The answer is that aggressive scrubbing or sucking can actually damage the tissue further and, in the case of sucking, risks introducing contamination through the mouth as well - gentle washing with soap and water removes contamination effectively without causing additional harm.
+
+Crucial insight: effective first aid sometimes goes against strong instinct - following the evidence-based procedure, not the most forceful-feeling action, produces the best outcome.` },
+
+    { q: "Chemical burns versus thermal burns.",
+      body: `A chemical burn is treated primarily by prolonged flushing with water to remove the causative agent, as above. A thermal burn (from a hot autoclave, oven, or flame) is treated by cooling the burn under cool (not ice-cold) running water for about 20 minutes, covering loosely with a clean, non-fluffy dressing, and never applying ice, butter, or other home remedies directly to the burn.
+
+My Socratic question: why is ice specifically discouraged for a thermal burn, even though it feels intuitively cooling and helpful?
+
+The answer is that ice can cause further tissue damage (a secondary cold injury) on top of the original burn, and can also cause the blood vessels to constrict in a way that worsens the injury - cool running water cools effectively without this additional harm.
+
+Crucial insight: first aid for burns is specifically about controlled, appropriate cooling - not the coldest or most dramatic intervention available, but the one shown to actually reduce harm.` },
+
+    { q: "Fire and clothing fires.",
+      body: `If clothing catches fire, the standard response is stop, drop, and roll - stop moving (which fans the flames), drop to the ground, and roll to smother the fire, or use a safety shower/fire blanket if immediately available; never run, as running feeds the fire with oxygen and spreads flames.
+
+My Socratic question: why does running away from a clothing fire make the situation worse rather than better, even though it feels like the natural instinct?
+
+The answer is that running moves air rapidly past the burning clothing, supplying more oxygen to the flame and causing it to burn more intensely and spread faster - stopping and rolling instead smothers the fire by cutting off its oxygen supply.
+
+Crucial insight: several first aid responses (stop-drop-roll, cool-not-ice for burns, gentle-not-aggressive washing for sharps) share a pattern - the correct action is often the deliberate, evidence-based response rather than the most instinctive, urgent-feeling one.` },
+
+    { q: "Inhalation exposure and fainting/collapse.",
+      body: `If someone inhales toxic fumes, move them to fresh air immediately (without putting yourself at risk of the same exposure), loosen tight clothing, keep them calm and seated or in the recovery position if they are unconscious but breathing, and seek medical help. If someone faints or collapses, check responsiveness and breathing, call for help, place them in the recovery position if breathing, and begin CPR only if trained and if they are not breathing normally.
+
+My Socratic question: why does the guidance specifically caution "without putting yourself at risk of the same exposure" before rescuing a colleague from a fume-filled area?
+
+The answer is that a rescuer who enters a hazardous atmosphere without protection can be overcome by the same fumes and become a second casualty, which not only fails to help the first person but now requires two rescues instead of one - assessing your own safety first is what allows you to actually help rather than add to the emergency.
+
+Crucial insight: real first aid response always begins with a scene safety check - helping effectively requires that the helper does not become a second victim.` },
+
+    { q: "When to call for emergency medical help.",
+      body: `First aid buys time and reduces harm, but it is not a substitute for professional medical care. Emergency medical help should be called immediately for: any significant chemical exposure to eyes or in quantity, any loss of consciousness, difficulty breathing, chest pain, uncontrolled bleeding, suspected fracture, or any injury the first aider is unsure how to manage.
+
+My Socratic question: why is "the first aider is unsure how to manage it" itself listed as a valid reason to call for emergency help, rather than only specific injury types?
+
+The answer is that first aid training covers common, predictable scenarios, but real incidents can be unclear or combine multiple problems - insisting on certainty before calling for help would delay care in exactly the ambiguous, potentially serious situations where speed matters most.
+
+Crucial insight: calling for professional help is never the "wrong" or "overreacting" choice - the threshold for escalating should be generous, because the cost of an unnecessary call is far lower than the cost of a delayed one.` },
+
+    { q: "Documentation and reporting after a first aid incident.",
+      body: `Every laboratory incident requiring first aid must be documented (what happened, what first aid was given, by whom, and outcome) and reported through the facility's formal incident reporting system, connecting first aid to the same accountability principles you learned for SOP deviations and waste management.
+
+My Socratic question: why does an incident that was successfully treated with first aid, with no lasting harm, still need to be formally documented and reported?
+
+The answer is that documented incidents reveal patterns - if the same type of injury keeps occurring, it points to an underlying hazard, training gap, or equipment problem that needs correcting, but that pattern is invisible unless each individual incident is actually recorded rather than simply "handled and forgotten."
+
+Crucial insight: first aid treats the individual injury; documentation and reporting are what prevent the next one - both are necessary parts of a complete safety response.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for first aid procedures.
+
+The principle: first aid is the immediate action taken before professional help arrives, and for many lab injuries the critical window is seconds, not minutes.
+
+Readiness: know the location and use of the first aid kit and eyewash/shower before an emergency, not during one.
+
+Chemical exposure: flush skin or eyes for a full 15-20 minutes - a brief rinse leaves ongoing damage.
+
+Sharps: gentle washing with soap and water, no aggressive scrubbing or sucking, then immediate reporting.
+
+Burns: cool running water for thermal burns (never ice), continued flushing for chemical burns.
+
+Fire: stop, drop, and roll - never run.
+
+Scene safety: check your own safety before rescuing someone from a hazardous atmosphere.
+
+Escalation: call for emergency help generously, including whenever you are simply unsure how to manage an injury.
+
+Documentation: every incident is recorded and reported, to catch patterns before they cause repeat harm.
+
+Now your final test. A colleague's sleeve catches fire from a bench burner, and after the flame is out, you notice a moderate burn on their forearm.
+
+Question one: what is the correct immediate response to the burning clothing itself, and what must you NOT do?
+Question two: what is the correct first aid for the resulting burn, and what should you specifically avoid applying to it?
+Question three: after providing first aid, what two things must still happen even though the immediate danger has passed?
+
+Work them through before reading on.
+
+My answers. One: stop, drop, and roll (or use a fire blanket/safety shower if immediately available) to smother the fire by cutting off its oxygen supply - you must not let them run, since running fans the flames and spreads them faster. Two: cool the burn under cool (not ice-cold) running water for about 20 minutes and cover loosely with a clean, non-fluffy dressing - avoid applying ice, butter, or other home remedies, since ice can cause additional cold-injury damage and other substances can worsen or contaminate the burn. Three: seek/arrange appropriate medical attention for the burn, and document and formally report the incident through the facility's incident reporting system, so the underlying cause (e.g. loose clothing near an open flame) can be identified and prevented from happening again.
+
+If those came cleanly, you now know not just the safety rules that prevent accidents, but the correct, evidence-based response for when prevention still isn't enough.` },
+  ],
+  theory: [
+    { q: "Define first aid and explain why its timing is especially critical in a laboratory setting.", a: "First aid is the immediate, initial care given to a person before professional medical help arrives. In the laboratory, injuries like chemical eye splashes or clothing fires cause ongoing harm within seconds, so the outcome often depends on what is done immediately by whoever is present, before emergency services can arrive." },
+    { q: "Explain why staff must know the location and use of the eyewash station before an emergency occurs.", a: "A chemical eye splash causes damage within seconds and can impair vision and cause significant pain; searching for an unfamiliar eyewash station in that state wastes the critical time needed to prevent permanent injury." },
+    { q: "Describe correct first aid for a chemical splash to the skin or eyes, including duration.", a: "Remove contaminated clothing (for skin) or use the eyewash station holding eyelids open (for eyes), and flush continuously with water for at least 15-20 minutes, then seek medical attention. The full duration is needed because a brief rinse leaves residual chemical still actively causing tissue damage." },
+    { q: "Describe correct first aid for a needlestick or sharps injury and explain what should be avoided.", a: "Wash the wound with soap and running water, allow brief bleeding if already occurring, cover with a clean dressing, and report immediately for post-exposure risk assessment. Aggressive scrubbing or sucking the wound should be avoided, as these can cause further tissue damage or introduce additional contamination." },
+    { q: "Explain why ice should never be applied directly to a thermal burn.", a: "Ice can cause a secondary cold injury on top of the original burn and can worsen injury through excessive vessel constriction. Cool (not ice-cold) running water cools the burn effectively without this additional harm." },
+    { q: "Describe the correct response to a clothing fire and explain why running is dangerous.", a: "Stop, drop, and roll (or use a safety shower/fire blanket if available) to smother the fire. Running is dangerous because it moves air rapidly past the burning clothing, supplying more oxygen and causing the fire to burn more intensely and spread faster." },
+    { q: "Explain why a rescuer should check their own safety before entering a fume-filled area to help a colleague.", a: "A rescuer who enters a hazardous atmosphere without protection can be overcome by the same fumes and become a second casualty, turning one emergency into two and reducing the chance either person is effectively helped." },
+    { q: "List situations where emergency medical help should be called immediately.", a: "Significant chemical exposure to the eyes or in quantity, loss of consciousness, difficulty breathing, chest pain, uncontrolled bleeding, suspected fracture, or any injury the first aider is unsure how to manage." },
+    { q: "Explain why 'being unsure how to manage an injury' is itself a valid reason to call for emergency help.", a: "First aid training covers common, predictable scenarios, but real incidents can be unclear or combine multiple problems; requiring certainty before calling for help would delay care in exactly the ambiguous situations where speed matters most." },
+    { q: "Explain why every first aid incident must be documented and formally reported, even if there is no lasting harm.", a: "Documented incidents reveal patterns - repeated occurrences of the same injury type point to an underlying hazard, training gap, or equipment problem that needs correcting, but this pattern is invisible unless each incident is actually recorded rather than simply handled and forgotten." },
+  ],
+  videos: [
+    { channel: "First Aid", title: "Chemical Splash First Aid: Eyes and Skin", note: "Why 15-20 minutes of flushing is the standard for chemical exposure.", url: "" },
+    { channel: "First Aid", title: "Clothing Fire: Stop, Drop, and Roll", note: "Why running spreads flames and how to correctly smother a fire.", url: "" },
+    { channel: "Lab Safety", title: "Scene Safety Before Rescue in Laboratory Emergencies", note: "Why checking your own safety comes first when helping a colleague.", url: "" },
+  ],
+  mcqs: [
+    { q: "First aid is best defined as:", o: ["A replacement for all medical care", "The immediate care given before professional medical help arrives", "Only needed for major injuries", "Optional training for laboratory staff"], a: 1, w: "First aid is immediate initial care given before professional help arrives." },
+    { q: "First aid is especially time-critical in the laboratory because:", o: ["Injuries never occur there", "Harm from injuries like chemical splashes can continue within seconds", "Emergency services always arrive instantly", "Laboratories have no real hazards"], a: 1, w: "Certain lab injuries cause ongoing harm that immediate action can limit." },
+    { q: "Staff should learn the location of the eyewash station:", o: ["Only during an actual emergency", "Before any emergency occurs", "Only if they work with chemicals daily", "It is not necessary to know in advance"], a: 1, w: "Knowing the location in advance saves critical time during an actual emergency." },
+    { q: "For a chemical splash to the eye, the recommended flushing duration is:", o: ["A quick 10-second rinse", "At least 15-20 minutes of continuous flushing", "No flushing needed if pain subsides", "Only until the eye feels normal"], a: 1, w: "Sustained flushing for 15-20 minutes is needed to fully dilute and remove the chemical." },
+    { q: "A brief rinse for a chemical splash is insufficient because it:", o: ["Removes only surface chemical, leaving residue that continues to cause damage", "Always fully removes the chemical", "Is more effective than prolonged flushing", "Has no relationship to injury severity"], a: 0, w: "Ongoing contact with residual chemical continues to cause tissue damage." },
+    { q: "For a needlestick injury, the wound should be:", o: ["Scrubbed vigorously and sucked to remove contamination", "Washed gently with soap and running water, without scrubbing or sucking", "Left completely untouched", "Squeezed forcefully for several minutes"], a: 1, w: "Gentle washing removes contamination without causing additional tissue damage." },
+    { q: "Aggressive scrubbing or sucking a needlestick wound is discouraged because it can:", o: ["Speed up healing", "Cause further tissue damage or introduce additional contamination", "Have no effect either way", "Always prevent infection completely"], a: 1, w: "These actions can worsen injury or add contamination rather than help." },
+    { q: "For a thermal burn, the recommended first aid is:", o: ["Apply ice directly to the burn", "Cool under cool (not ice-cold) running water for about 20 minutes", "Apply butter or a home remedy", "Leave the burn uncovered and untreated"], a: 1, w: "Cool running water cools the burn effectively without the harm ice or home remedies can cause." },
+    { q: "Ice is discouraged for burns because it can:", o: ["Always speed healing with no downside", "Cause a secondary cold injury on top of the original burn", "Have no physiological effect", "Only be used for chemical burns"], a: 1, w: "Ice can cause additional tissue damage layered onto the original burn." },
+    { q: "If clothing catches fire, the correct response is:", o: ["Run to find water", "Stop, drop, and roll", "Remove all clothing immediately regardless of location", "Wait for someone else to help first"], a: 1, w: "Stopping, dropping, and rolling smothers the fire by cutting off its oxygen supply." },
+    { q: "Running while clothing is on fire is dangerous because it:", o: ["Has no effect on the fire", "Supplies more oxygen to the flame, making it burn more intensely", "Always puts the fire out faster", "Cools the burning area"], a: 1, w: "Moving air past burning clothing feeds the flame with oxygen." },
+    { q: "Before rescuing a colleague from a fume-filled area, a rescuer should:", o: ["Enter immediately without any assessment", "Check their own safety first, to avoid becoming a second casualty", "Ignore their own risk entirely", "Wait indefinitely and do nothing"], a: 1, w: "A scene safety check prevents the rescuer from being overcome by the same hazard." },
+    { q: "A rescuer who enters a hazardous atmosphere unprotected risks:", o: ["No consequence to themselves", "Becoming a second casualty, turning one emergency into two", "Automatically neutralising the hazard", "Improving the original victim's outcome only"], a: 1, w: "An unprotected rescuer can be overcome by the same fumes, worsening the overall emergency." },
+    { q: "If someone collapses and is not breathing normally, and you are trained, you should:", o: ["Do nothing and wait", "Begin CPR while calling for help", "Only observe from a distance", "Move them repeatedly without assessment"], a: 1, w: "Trained responders should begin CPR for a person not breathing normally, alongside calling for help." },
+    { q: "Emergency medical help should be called for all of the following EXCEPT:", o: ["Loss of consciousness", "Difficulty breathing", "A minor, healed paper cut from days earlier", "Uncontrolled bleeding"], a: 2, w: "A minor, already-healed cut does not require emergency escalation, unlike the other listed situations." },
+    { q: "'The first aider is unsure how to manage the injury' is:", o: ["Never a valid reason to call for help", "A valid reason to call for emergency medical help", "Only relevant for chemical exposures", "Irrelevant to the decision to call for help"], a: 1, w: "Ambiguous situations are exactly when escalating to professional help is appropriate." },
+    { q: "The threshold for calling emergency services should generally be:", o: ["Very high, to avoid ever overreacting", "Generous, since an unnecessary call costs far less than a delayed one", "Zero, first aiders should never call for help", "Based only on visible blood"], a: 1, w: "The low cost of an unnecessary call is outweighed by the high cost of a delayed one." },
+    { q: "Every laboratory incident requiring first aid should be:", o: ["Forgotten once treated", "Documented and formally reported", "Kept strictly verbal with no record", "Reported only if the injury is severe"], a: 1, w: "Documentation and reporting apply to all incidents, not only severe ones." },
+    { q: "Documenting first aid incidents, even minor ones, helps because it:", o: ["Has no practical use", "Reveals patterns pointing to underlying hazards or training gaps", "Only serves legal purposes", "Slows down safety improvements"], a: 1, w: "Recorded patterns can reveal recurring hazards that need correction." },
+    { q: "A repeated type of injury occurring across multiple incidents most likely indicates:", o: ["Pure coincidence with no cause", "An underlying hazard, training gap, or equipment issue needing correction", "That documentation should stop", "Nothing worth investigating"], a: 1, w: "Recurring injury patterns typically signal a fixable underlying cause." },
+    { q: "The eyewash station and first aid kit should be:", o: ["Hidden to avoid misuse", "Clearly signed and never obstructed", "Locked and accessible only to supervisors", "Located far from work areas for safety"], a: 1, w: "Clear visibility and unobstructed access are essential for effective emergency use." },
+    { q: "For a chemical burn to the skin, first aid primarily involves:", o: ["Applying a bandage immediately without flushing", "Prolonged flushing with water to remove the causative chemical", "Applying ice directly", "Waiting for the burning sensation to pass on its own"], a: 1, w: "Removing the chemical through prolonged flushing addresses the ongoing cause of the burn." },
+    { q: "A non-fluffy dressing is recommended for burns because:", o: ["Fluffy material is always cheaper", "Fibres from fluffy dressings can stick to and contaminate the burn", "It has no relevance to burn care", "Fluffy dressings cool the burn faster"], a: 1, w: "Non-fluffy dressings avoid fibres sticking to and contaminating burned tissue." },
+    { q: "First aid response patterns such as 'stop, drop, roll' and 'cool, not ice' both illustrate that:", o: ["Correct first aid is always the most dramatic-feeling action", "The evidence-based response is sometimes different from the most instinctive one", "Instinct is always the safest guide", "These situations have no common principle"], a: 1, w: "Effective first aid often requires following evidence-based steps over pure instinct." },
+    { q: "After a fire is extinguished and a burn is treated, the incident should still be:", o: ["Considered fully resolved with no further action", "Documented and reported through the formal incident system", "Kept private from supervisors", "Ignored since first aid was already given"], a: 1, w: "Documentation and reporting remain necessary even after successful first aid treatment." },
+    { q: "First aid and documentation/reporting together serve which combined purpose?", o: ["Treating the individual injury and preventing recurrence", "Only satisfying paperwork requirements", "Replacing the need for safety training", "Only applicable to major incidents"], a: 0, w: "First aid addresses the immediate injury; documentation/reporting addresses future prevention." },
+    { q: "Recovery position is used for a person who is:", o: ["Fully conscious and walking normally", "Unconscious but breathing", "Not breathing at all", "Only mildly startled"], a: 1, w: "The recovery position helps maintain an open airway in an unconscious but breathing person." },
+    { q: "Loosening tight clothing and moving a person to fresh air is the correct response to:", o: ["A sharps injury", "Toxic fume inhalation", "A thermal burn", "A chemical eye splash"], a: 1, w: "This response addresses inhalation exposure specifically." },
+    { q: "Overall, the guiding principle behind laboratory first aid procedures is to:", o: ["Take the fastest-feeling action regardless of evidence", "Take the evidence-based immediate action that minimises harm before professional help arrives", "Wait for emergency services before doing anything", "Avoid documenting incidents to save time"], a: 1, w: "First aid procedures are specifically the evidence-based actions shown to minimise harm in the critical early window." },
+  ],
+};
+
+/* --------------------------- lab:23 --------------------------- */
+const T_LAB_OVENS_INCUBATORS = {
+  courseId: "lab",
+  topicIndex: 23,
+  title: "Ovens and Incubators",
+  minutes: 16,
+  note: [
+    { q: "Two boxes that both use heat, but for opposite purposes.",
+      body: `A laboratory oven and a laboratory incubator can look superficially similar - both are heated chambers - yet they are used for almost opposite purposes.
+
+My Socratic question: an oven commonly runs at 160-180°C while an incubator commonly runs at around 35-37°C. What does that huge temperature difference tell you about what each is actually for?
+
+The answer is that the oven's high temperature is meant to destroy or dry out biological material (sterilising glassware, drying samples), while the incubator's low, body-temperature-like heat is meant to support and encourage the growth of living microorganisms - one box kills or dries life, the other nurtures it.
+
+Crucial insight: an oven and an incubator are opposite tools that happen to share a heated-chamber design - confusing their purpose (for example, incubating a culture in an oven) would destroy the very organisms you meant to grow.` },
+
+    { q: "The laboratory oven: dry heat sterilisation and drying.",
+      body: `A hot air (dry heat) oven sterilises glassware and heat-stable equipment by maintaining a high temperature (commonly around 160-180°C) for a set holding time, using dry heat rather than steam - relying on prolonged high temperature to destroy microorganisms by oxidation rather than moisture.
+
+My Socratic question: why does dry heat sterilisation need a much higher temperature and longer time than the autoclave's moist heat (121°C, ~15-20 minutes) to achieve the same result?
+
+The answer is that moist heat (steam) transfers heat far more efficiently into microorganisms and destroys them faster through protein coagulation, while dry heat relies on a slower oxidation process that requires significantly higher temperatures and longer exposure times to achieve the same sterilising effect.
+
+Crucial insight: the "same job" - killing microorganisms - can be done by different mechanisms, and the mechanism determines the specific temperature and time required; dry heat and moist heat are not interchangeable settings on the same idea.` },
+
+    { q: "What the oven is used for, and what it must never be used for.",
+      body: `Ovens are used for sterilising glassware (pipettes, Petri dishes, glass containers) that can tolerate high dry heat, drying glassware after washing, and drying samples for gravimetric analysis. Ovens must never be used to sterilise liquids, plastics not rated for high heat, or anything that could melt, burn, or release toxic fumes at oven temperature.
+
+My Socratic question: why would placing a liquid reagent in a hot air oven, intending to "sterilise" it, actually be a dangerous mistake?
+
+The answer is that liquid in a sealed or narrow-necked container heated to 160-180°C without the pressure release of an autoclave can build up pressure and shatter the container violently, and an open liquid container would simply evaporate or boil over rather than sterilise safely.
+
+Crucial insight: matching the material to the correct sterilisation method matters as much as matching the treatment to a chemical hazard - dry heat suits dry, heat-stable solids; moist heat (autoclaving) suits liquids and heat-sensitive items.` },
+
+    { q: "Loading and operating the oven correctly.",
+      body: `Correct oven use includes not overloading the chamber (overcrowding blocks even heat circulation), leaving space between items for air to circulate, using appropriate heat-resistant containers, allowing the oven to reach its full holding temperature before timing the sterilisation period, and allowing glassware to cool before removal.
+
+My Socratic question: why does overloading the oven risk incomplete sterilisation even if the overall cycle time and temperature setting are correct?
+
+The answer is that overcrowded items block hot air circulation, meaning some items in the centre of a tightly packed load may never actually reach the required temperature for the full holding time, even though the oven's display shows the correct setting - the oven only sterilises what the hot air actually reaches evenly.
+
+Crucial insight: a correct setting on the equipment's display does not guarantee a correct outcome inside every item in the load - loading technique is as much a part of the procedure as the temperature dial.` },
+
+    { q: "The laboratory incubator: sustaining life at controlled temperature.",
+      body: `An incubator is a chamber that maintains a stable, controlled temperature (commonly 35-37°C to mimic human body temperature for clinical cultures, though other temperatures suit other organisms) along with, in some models, controlled humidity and CO2 levels, to support the growth of bacterial or cell cultures.
+
+My Socratic question: why would an incubator used for clinical bacterial cultures typically be set close to human body temperature, rather than, say, room temperature or oven temperature?
+
+The answer is that many clinically significant bacteria evolved to thrive inside the human body and grow optimally near 37°C - a temperature too low slows or stops their growth, while a temperature too high (oven-range) would kill them, so the incubator specifically recreates the temperature at which the organisms of clinical interest grow best.
+
+Crucial insight: an incubator's temperature is chosen to match the biology of what it is meant to grow, not simply set as "warm" - different organisms need different, specific incubation temperatures.` },
+
+    { q: "Temperature stability and monitoring.",
+      body: `Because incubators sustain living growth over hours or days, temperature stability matters enormously - most incubators are monitored with a continuous temperature log or chart recorder, and any significant fluctuation can be investigated, since a drift outside the validated range can produce false-negative culture results (organisms present but not grown enough to detect) or invalidate results entirely.
+
+My Socratic question: why is a brief, unnoticed temperature drop in an incubator overnight potentially more damaging to a result than a similar brief temperature swing in an oven?
+
+The answer is that an oven's sterilisation cycle is a defined, short event where a documented time-temperature record for that specific cycle is what matters, whereas an incubator sustains a culture continuously over an extended period - a drop anywhere in that period can slow or halt growth in a way that is invisible until the final read, by which point the culture time has already been lost.
+
+Crucial insight: continuous monitoring exists because incubation failure is often silent - unlike a visibly failed sterilisation cycle, a temperature-compromised culture can look normal until the delayed, and by-then irreversible, final result.` },
+
+    { q: "Contamination control in incubator use.",
+      body: `Because an incubator's job is to support microbial growth, it can itself become a source of cross-contamination between cultures if not properly managed - plates and containers must be sealed or covered appropriately, spills cleaned immediately, and the interior periodically disinfected according to the facility's SOP.
+
+My Socratic question: why is contamination control inside an incubator arguably more important than in most other laboratory equipment?
+
+The answer is that the incubator's very purpose is to create ideal growth conditions - so any contaminant introduced into it, whether from a leaking plate or an unclean interior, will also grow ideally, potentially compromising every other culture sharing that same warm, humid environment.
+
+Crucial insight: the same conditions that make an incubator useful (warmth, humidity, stability) make it an efficient environment for spreading contamination if hygiene discipline lapses - the two properties are two sides of the same design.` },
+
+    { q: "Calibration and quality control for both instruments.",
+      body: `Both ovens and incubators require regular temperature verification against a calibrated reference thermometer, since the equipment's own display can drift from true internal temperature over time; many laboratories log daily temperature checks for incubators specifically, given how sensitive culture growth is to small deviations.
+
+My Socratic question: why might a laboratory check and log incubator temperature daily, but check an oven's calibration on a longer periodic schedule instead?
+
+The answer is that the incubator sustains conditions continuously for extended, sensitive biological processes where even a small daily drift compounds over time and directly affects results, while the oven performs discrete, short sterilisation cycles where periodic calibration checks are sufficient to confirm the equipment reaches its stated temperature reliably cycle to cycle.
+
+Crucial insight: the frequency of quality checks should match how sensitive the process is to drift over time, not simply follow one fixed schedule for all equipment.` },
+
+    { q: "Safety considerations for ovens and incubators.",
+      body: `Both instruments carry their own safety considerations: ovens present a burn hazard from the chamber and glassware even after the heating element switches off, and must never be opened carelessly at full temperature; incubators, while cooler, still require care when handling cultures inside them (treating contents as potentially infectious) and their door should not be left open, both to protect temperature stability and to limit contamination exposure.
+
+My Socratic question: why does an oven remain a significant burn hazard even for some time after it has finished its cycle and switched off?
+
+The answer is that the chamber and its glass contents retain stored heat well after the heating element stops, and a hot air oven has no active cooling system, so items removed too soon are still at or near the sterilising temperature regardless of whether the element is currently powered.
+
+Crucial insight: "switched off" does not mean "safe to touch" for either instrument - the residual heat (oven) or biological contents (incubator) remain hazardous well beyond the moment the equipment's active cycle ends.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for ovens and incubators.
+
+The core contrast: ovens use high dry heat (commonly 160-180°C) to sterilise/dry heat-stable solids by destroying life; incubators use low, stable warmth (commonly 35-37°C) to support and grow living cultures - opposite purposes in a similar-looking box.
+
+Correct use: ovens for glassware/heat-stable items only, never liquids or unrated plastics; loading must allow air circulation or centre items may not reach true sterilising temperature.
+
+Incubator biology: temperature is chosen to match the organism of interest, most often mimicking human body temperature for clinical cultures.
+
+Monitoring: incubators need continuous/frequent temperature monitoring because drift is often silent and only visible in a delayed, compromised final result.
+
+Contamination: an incubator's ideal growth conditions apply equally to contaminants, making hygiene discipline essential.
+
+Calibration: check frequency should match process sensitivity - more frequent for continuous, sensitive incubation than for discrete oven cycles.
+
+Safety: both remain hazardous after their active cycle ends - residual heat in ovens, potentially infectious contents in incubators.
+
+Now your final test. A student needs to both sterilise a batch of glass Petri dishes and grow a bacterial culture from a patient swab on the same day.
+
+Question one: which instrument, oven or incubator, is correct for each task, and why would swapping them fail?
+Question two: what specific loading mistake could cause some Petri dishes to come out of the oven not actually sterile, even with the correct time and temperature set?
+Question three: why does the culture in the incubator need more frequent temperature monitoring than the oven cycle for the Petri dishes?
+
+Work them through before reading on.
+
+My answers. One: the oven is correct for sterilising the glass Petri dishes (high dry heat destroys microorganisms on a heat-stable solid), and the incubator is correct for growing the bacterial culture (low, body-temperature-like warmth supports living organism growth); swapping them would sterilise (kill) the intended culture in the oven, and fail to actually sterilise the dishes in the cooler incubator. Two: overloading or overcrowding the oven chamber, blocking hot air circulation so that dishes in the centre of the load never actually reach the full holding temperature for the required time, even though the display shows the correct setting. Three: the culture is sustained continuously over an extended period, and a silent temperature drift anywhere in that time can slow or halt growth invisibly until the final, delayed read - whereas the oven's sterilisation is a short, discrete cycle where periodic calibration checks are sufficient to confirm reliable performance.
+
+If those came cleanly, you can now correctly choose, load, and monitor two of the most commonly confused pieces of equipment in the laboratory.` },
+  ],
+  theory: [
+    { q: "Explain the fundamental difference in purpose between a laboratory oven and an incubator.", a: "An oven uses high dry heat (commonly 160-180°C) to sterilise or dry heat-stable materials by destroying microorganisms, while an incubator maintains low, stable warmth (commonly 35-37°C) to support and encourage the growth of living cultures - opposite purposes despite a similar heated-chamber design." },
+    { q: "Explain why dry heat sterilisation in an oven requires higher temperatures and longer times than moist heat (autoclave) sterilisation.", a: "Moist heat (steam) transfers heat efficiently and destroys microorganisms quickly through protein coagulation, while dry heat relies on a slower oxidation process, requiring significantly higher temperatures and longer exposure times to achieve the same sterilising effect." },
+    { q: "List what an oven should and should not be used for.", a: "Ovens should be used for sterilising or drying heat-stable glassware and drying samples for gravimetric analysis. They should never be used for liquids, plastics not rated for high heat, or materials that could melt, burn, or release toxic fumes at oven temperatures." },
+    { q: "Explain why overloading an oven can result in incomplete sterilisation even with correct time/temperature settings.", a: "Overcrowded items block hot air circulation, so items in the centre of a tightly packed load may not actually reach the required temperature for the full holding time, even though the oven's display shows the correct setting." },
+    { q: "Explain why clinical incubators are typically set near 35-37°C.", a: "Many clinically significant bacteria evolved to thrive inside the human body and grow optimally near human body temperature; too low a temperature slows or stops growth, while too high a temperature would kill the organisms." },
+    { q: "Explain why continuous or frequent temperature monitoring is especially important for incubators.", a: "Incubators sustain culture growth over an extended period, and a temperature drift can slow or halt growth silently, producing a compromised or false-negative result that is only visible at the final, delayed read - unlike a discrete, short oven cycle." },
+    { q: "Explain why incubators can become a source of cross-contamination if not properly managed.", a: "The incubator's warm, stable, humid conditions that support intended culture growth apply equally to any contaminant introduced (e.g. from a leaking plate or unclean interior), potentially compromising every culture sharing that environment." },
+    { q: "Explain why calibration check frequency differs between ovens and incubators.", a: "Incubators sustain sensitive biological processes continuously, where even small drift compounds over time and directly affects results, warranting frequent (often daily) checks; ovens perform discrete, short cycles, where periodic calibration checks are sufficient to confirm reliable performance." },
+    { q: "Explain why an oven remains a burn hazard even after its heating element switches off.", a: "The chamber and glass contents retain stored heat after the element stops, and a hot air oven has no active cooling system, so items removed too soon can still be at or near sterilising temperature." },
+    { q: "Explain why incubator contents should be treated as potentially infectious even though the equipment itself is not dangerously hot.", a: "The incubator's purpose is to grow cultures, including potentially pathogenic organisms from patient samples, so its contents carry biological hazard risk independent of temperature, and doors should be kept closed to protect both temperature stability and contamination control." },
+  ],
+  videos: [
+    { channel: "Lab Instrumentation", title: "Dry Heat Sterilisation: How Laboratory Ovens Work", note: "Why ovens need higher temperature and longer time than autoclaves.", url: "" },
+    { channel: "Microbiology", title: "Incubators and Optimal Growth Temperature", note: "Why 35-37°C is standard for clinical bacterial culture incubation.", url: "" },
+    { channel: "Lab Safety", title: "Contamination Control in Laboratory Incubators", note: "Keeping shared incubator space from cross-contaminating cultures.", url: "" },
+  ],
+  mcqs: [
+    { q: "A laboratory oven and an incubator can look similar because both are:", o: ["Heated chambers", "Used only for liquids", "Refrigeration units", "Sterile filtration devices"], a: 0, w: "Both are heated chambers, despite serving opposite purposes." },
+    { q: "An oven's high temperature (commonly 160-180°C) is designed to:", o: ["Grow bacterial cultures", "Destroy or dry out biological material", "Keep samples at body temperature", "Cool samples rapidly"], a: 1, w: "High dry heat destroys microorganisms and dries materials." },
+    { q: "An incubator's low, stable temperature (commonly 35-37°C) is designed to:", o: ["Sterilise glassware", "Support the growth of living microorganisms", "Dry samples for analysis", "Destroy all bacteria present"], a: 1, w: "This temperature mimics body temperature to support growth of clinically relevant organisms." },
+    { q: "Dry heat sterilisation needs higher temperature and longer time than moist heat because:", o: ["Dry heat is a myth", "Moist heat transfers heat more efficiently and destroys organisms faster", "Dry heat always works instantly", "Moist heat cannot sterilise anything"], a: 1, w: "Moist heat's efficient heat transfer allows lower temperature and shorter time for the same effect." },
+    { q: "Ovens should NEVER be used to sterilise:", o: ["Glass Petri dishes", "Glass pipettes", "Liquids in sealed containers", "Heat-stable glass containers"], a: 2, w: "Liquids in sealed containers can build dangerous pressure and shatter in dry heat." },
+    { q: "Overloading an oven chamber risks:", o: ["Faster sterilisation", "Blocked air circulation, leaving some items under-heated", "No effect on sterilisation outcome", "Automatic temperature correction"], a: 1, w: "Blocked circulation can leave centrally located items below the required sterilising temperature." },
+    { q: "A correct temperature setting on the oven's display:", o: ["Guarantees every item in an overloaded chamber is sterilised", "Does not guarantee correct outcome if the load is improperly arranged", "Is irrelevant to sterilisation success", "Only matters for incubators"], a: 1, w: "Loading technique affects whether hot air actually reaches every item evenly." },
+    { q: "Clinical bacterial culture incubators are commonly set near human body temperature because:", o: ["It is the coldest safe setting", "Many clinically significant bacteria grow optimally near that temperature", "It saves electricity", "It matches oven temperature"], a: 1, w: "Organisms adapted to the human body typically grow best near 37°C." },
+    { q: "A temperature too high (oven-range) inside an incubator would:", o: ["Improve bacterial growth", "Kill the organisms meant to be cultured", "Have no effect", "Only affect fungi"], a: 1, w: "Oven-range temperatures would destroy the very organisms an incubator is meant to grow." },
+    { q: "Continuous or frequent temperature monitoring is especially important for incubators because:", o: ["Drift can silently compromise growth until a delayed final result", "Incubators never experience temperature drift", "Ovens require more frequent monitoring instead", "It has no bearing on culture results"], a: 0, w: "A drift can slow or halt growth invisibly, only apparent at the final read." },
+    { q: "A brief, unnoticed temperature drop overnight in an incubator is potentially more damaging than a similar drop in an oven because:", o: ["Ovens have no cycles", "The incubator sustains a process continuously over time, unlike a discrete oven cycle", "Incubators are always more expensive", "Ovens are never monitored at all"], a: 1, w: "Continuous sustained processes are more vulnerable to undetected drift over time." },
+    { q: "Incubators can become a source of cross-contamination because:", o: ["Their ideal growth conditions favour contaminants equally", "They are never cleaned", "Contamination cannot survive warm environments", "They lack any biological content"], a: 0, w: "The same warm, stable conditions that support intended cultures also support unwanted contaminants." },
+    { q: "To limit cross-contamination in an incubator, plates and containers should be:", o: ["Left fully open", "Sealed or covered appropriately", "Stacked without regard to spacing", "Removed and returned frequently without cleaning"], a: 1, w: "Proper covering/sealing helps prevent contamination between cultures." },
+    { q: "Both ovens and incubators require regular:", o: ["Replacement every week", "Temperature verification against a calibrated reference thermometer", "Painting", "Relocation to a new room"], a: 1, w: "Regular calibration checks confirm the equipment's display matches true internal temperature." },
+    { q: "Incubators are often checked and logged more frequently than ovens because:", o: ["Incubators are cheaper", "Continuous, sensitive biological processes are more affected by small drift over time", "Ovens never need checking", "Incubators break down more often"], a: 1, w: "Sensitive, ongoing culture growth is more vulnerable to compounding drift than discrete oven cycles." },
+    { q: "An oven remains a burn hazard for some time after switching off because:", o: ["The chamber and glass retain stored heat with no active cooling", "Ovens cool instantly upon switching off", "The heating element stays visibly on", "There is no real risk once switched off"], a: 0, w: "Residual heat persists in the chamber and glassware after the element stops." },
+    { q: "Incubator contents should be treated as:", o: ["Always completely non-hazardous", "Potentially infectious, given they may contain cultures from patient samples", "Sterile by default", "Irrelevant to safety practice"], a: 1, w: "Cultures grown from patient material carry genuine biological hazard." },
+    { q: "Leaving an incubator door open unnecessarily risks:", o: ["Improved culture growth", "Compromised temperature stability and increased contamination exposure", "No real consequence", "Faster sterilisation"], a: 1, w: "Open doors disrupt the controlled environment and increase contamination risk." },
+    { q: "Using an incubator instead of an oven to sterilise glassware would fail because:", o: ["The incubator's low temperature would not sterilise heat-stable materials", "Incubators are always hotter than ovens", "Sterilisation does not require heat", "Incubators are designed for glassware sterilisation"], a: 0, w: "The incubator's much lower temperature cannot achieve sterilisation of solid materials." },
+    { q: "Using an oven instead of an incubator to grow a bacterial culture would fail because:", o: ["The oven's high heat would kill the organisms", "Ovens are too cold for culture growth", "Ovens are designed for growing cultures", "There is no meaningful temperature difference"], a: 0, w: "Oven temperatures far exceed what living organisms can survive." },
+    { q: "Gravimetric sample drying is a typical use of:", o: ["An incubator", "An oven", "A centrifuge", "A pH meter"], a: 1, w: "Ovens are used to dry samples for weight-based (gravimetric) analysis." },
+    { q: "The key safety message shared by ovens and incubators is that:", o: ["Both are completely safe once switched off", "'Switched off' or 'cooler' does not mean immediately safe to handle carelessly", "Neither instrument carries any hazard", "Only ovens require caution"], a: 1, w: "Residual heat (oven) or biological content (incubator) remain hazardous beyond the active cycle." },
+    { q: "Why might an incubator maintain controlled humidity and CO2 in addition to temperature?", o: ["To further mimic conditions favourable for specific organism growth", "To make the equipment louder", "To reduce equipment cost", "Humidity and CO2 are irrelevant to culture growth"], a: 0, w: "Some organisms require controlled humidity and CO2, alongside temperature, to grow optimally." },
+    { q: "The frequency of equipment quality checks should be matched to:", o: ["A single fixed universal schedule for all equipment", "How sensitive the process is to drift over time", "Equipment colour", "Equipment purchase price only"], a: 1, w: "More sensitive, continuous processes warrant more frequent checks than discrete, short cycles." },
+    { q: "A student who incubates a bacterial culture inside a hot air oven by mistake would most likely find:", o: ["Excellent bacterial growth", "The culture destroyed by the high temperature", "No effect on the culture at all", "The oven automatically switching to incubator mode"], a: 1, w: "Oven temperatures far exceed what the culture's organisms can survive." },
+    { q: "A key reason to allow an oven to reach full holding temperature before timing the sterilisation period is that:", o: ["Timing before reaching temperature would understate actual exposure time at true temperature", "It has no effect on the outcome", "It only matters for incubators", "It speeds up the cycle unnecessarily"], a: 0, w: "The sterilising holding time should be counted only once the true target temperature is reached." },
+    { q: "Overall, the correct choice between an oven and an incubator for a task depends on:", o: ["Which is available first", "Whether the goal is to destroy/dry material or to sustain and grow living organisms", "Room temperature outside the equipment", "Equipment brand name"], a: 1, w: "The choice depends entirely on the intended purpose - destruction/drying versus supporting living growth." },
+    { q: "A key difference in monitoring philosophy between the two instruments is:", o: ["Ovens need continuous monitoring, incubators need none", "Incubators typically need more frequent monitoring due to sustained sensitive biological processes", "Both require identical monitoring schedules always", "Neither requires monitoring"], a: 1, w: "Sustained, sensitive incubation processes generally warrant more frequent monitoring than discrete oven cycles." },
+    { q: "Ultimately, understanding both ovens and incubators as covered in this topic means recognising that:", o: ["They are interchangeable heated boxes", "Their similar appearance hides fundamentally different, sometimes opposite, intended uses", "Only one of the two is actually used in real laboratories", "Neither requires specific operating knowledge"], a: 1, w: "Despite a similar design, their purposes, correct use, and hazards are fundamentally different." },
+  ],
+};
+
+/* --------------------------- lab:24 --------------------------- */
+const T_LAB_WATERBATH = {
+  courseId: "lab",
+  topicIndex: 24,
+  title: "Water Bath",
+  minutes: 14,
+  note: [
+    { q: "A simple instrument with a precise purpose.",
+      body: `The water bath looks almost deceptively simple - a container of heated water - yet it is one of the most frequently used pieces of equipment in the laboratory, precisely because of what that simplicity offers.
+
+My Socratic question: for a reaction or reagent that must be held at a very specific, gentle temperature (say, exactly 37°C or exactly 56°C), why might a water bath be a better choice than a dry heat source like a hotplate?
+
+The answer is that water has a high heat capacity and transfers heat very evenly around whatever is immersed in it, avoiding the localised hot spots a dry surface or flame can create - the sample is surrounded by a stable, uniform temperature rather than heated from one side only.
+
+Crucial insight: a water bath is a temperature-controlled water container used to gently and evenly warm samples, reagents, or reactions to a precise, stable temperature - its core advantage is uniformity, not raw heating power.` },
+
+    { q: "What water baths are used for.",
+      body: `Common laboratory uses of a water bath include: thawing frozen samples or reagents gently, warming reagents to reaction temperature, incubating enzymatic or serological reactions at a specific temperature, inactivating complement in serum (commonly at 56°C), melting agar, and maintaining samples at body temperature during certain procedures.
+
+My Socratic question: why does gently thawing a frozen sample in a water bath, rather than at room temperature or with direct heat, matter for sample integrity?
+
+The answer is that controlled, even warming thaws the sample at a predictable, moderate rate without locally overheating any part of it - uncontrolled thawing (e.g. direct heat) risks damaging heat-sensitive components in the sample, while room-temperature thawing is slow, inconsistent, and harder to standardise across samples.
+
+Crucial insight: many water bath uses share a common thread - they need heat applied gently, evenly, and to an exact, reproducible temperature, which is exactly what still water immersion provides.` },
+
+    { q: "Types of water bath.",
+      body: `Water baths commonly come as circulating (with a pump that continuously moves the water for maximum temperature uniformity, useful for precise or sensitive applications) or non-circulating/static (simpler, relying on convection currents alone, adequate for less temperature-sensitive routine use), and can be digital (precise electronic temperature control and display) or analogue (dial-set, less precise).
+
+My Socratic question: for an application extremely sensitive to even small temperature variation across the bath (for example, a precise enzymatic assay), why would a circulating water bath be preferred over a static one?
+
+The answer is that a static bath relies purely on natural convection, which can leave small temperature gradients between different points in the bath (for example, corners versus the centre), while active circulation continuously mixes the water, minimising any such gradient and keeping every sample at a genuinely uniform temperature.
+
+Crucial insight: choosing the right type of water bath is about matching the equipment's precision to how sensitive the specific application actually is to temperature variation - not every use needs the most precise (and most expensive) option.` },
+
+    { q: "Correct water level and water quality.",
+      body: `A water bath must be filled to the correct level (enough to fully or adequately immerse the samples/containers as the procedure requires, without overflowing when items are added) and should use appropriate water quality - typically distilled or deionised water is recommended over tap water to reduce mineral scale buildup and microbial/algal growth inside the bath.
+
+My Socratic question: why would using ordinary tap water in a water bath, rather than distilled water, cause a gradual, long-term problem rather than an immediate one?
+
+The answer is that tap water contains dissolved minerals that slowly deposit as scale on the heating element and interior over repeated heating cycles, and its exposed, warm, standing surface encourages microbial or algal growth over time - neither problem appears on day one, but both accumulate with continued use until heating efficiency and hygiene are compromised.
+
+Crucial insight: water bath maintenance problems are often slow and cumulative rather than sudden - using the recommended water quality from the start avoids a problem that would otherwise creep in unnoticed over weeks or months.` },
+
+    { q: "Contamination and hygiene of the water bath.",
+      body: `Because a water bath holds standing water at a warm temperature for extended periods, it is a favourable environment for microbial and algal growth if not properly maintained - the water should be changed regularly, the bath cleaned and disinfected according to the facility's SOP, and a bath lid used where available to reduce evaporation and contamination from the air.
+
+My Socratic question: why is a warm water bath, of all pieces of "non-biological" equipment, actually a plausible site for microbial growth?
+
+The answer is that warmth, standing water, and time are exactly the conditions many microorganisms need to establish and grow - a water bath unintentionally recreates some of the same favourable growth conditions as an incubator, simply because it shares the same warm, static, moist environment, even though growing organisms was never its intended purpose.
+
+Crucial insight: any warm, standing water source in the laboratory carries a contamination risk by its physical nature, regardless of its intended use - hygiene discipline for a water bath is not optional housekeeping, it is a genuine safety and quality control measure.` },
+
+    { q: "Preventing contamination of samples within the bath.",
+      body: `Beyond the bath's own water hygiene, samples or reagent containers immersed in the bath must be adequately sealed or capped so bath water cannot enter the container itself, since bath water - especially if not regularly changed - could otherwise directly contaminate or dilute the sample it was meant only to warm.
+
+My Socratic question: why could a poorly sealed sample tube in a water bath produce a misleading result even if the water bath itself is scrupulously clean?
+
+The answer is that even clean water entering a tube can dilute the sample, altering its actual concentration, and any water is still a foreign substance being introduced into what should be a closed, controlled system - the problem is not necessarily contamination by pathogens, but the simple physical alteration of the sample's true composition.
+
+Crucial insight: correct water bath technique protects the sample in two separate ways - keeping the bath itself hygienic, and keeping each individual sample container sealed against the bath water - both are necessary, and neither substitutes for the other.` },
+
+    { q: "Calibration and temperature verification.",
+      body: `Like ovens and incubators, a water bath's displayed temperature should be periodically verified against a calibrated reference thermometer placed directly in the water, since the bath's internal sensor and display can drift from the true water temperature over time, and this is especially important for temperature-critical uses such as complement inactivation or precise enzymatic incubation.
+
+My Socratic question: why might a small, undetected calibration drift in a water bath used for complement inactivation (56°C) be a serious problem, even though the displayed temperature still reads 56°C?
+
+The answer is that if the true water temperature is actually somewhat lower than displayed, the serum may not reach the temperature genuinely required to inactivate complement, silently invalidating any test relying on that step, even though every visible indicator (the display) suggested the procedure was performed correctly.
+
+Crucial insight: a display reading the correct number is not proof the water has actually reached that temperature - only independent, periodic verification against a calibrated reference confirms that what the equipment reports matches physical reality.` },
+
+    { q: "Safety considerations when using a water bath.",
+      body: `A water bath presents a scald/burn hazard from hot water and heated containers, an electrical hazard given water and electricity are in close proximity (requiring the bath to be well-maintained with intact insulation and, ideally, on a circuit with appropriate protection), and a slip hazard if water is splashed or spilled onto the floor around it.
+
+My Socratic question: why does a water bath's combination of water and electricity require particular attention compared to a purely electrical instrument used on a dry bench?
+
+The answer is that any breach in the bath's electrical insulation, in the presence of standing water, creates a much more direct and dangerous pathway for electric shock than the same fault would in a dry environment - the two hazards (electrical and liquid) compound each other rather than remaining separate risks.
+
+Crucial insight: combined hazards (here, electrical plus liquid) are often more dangerous than either hazard alone, which is why water bath maintenance and inspection specifically include checking electrical integrity, not just water level or temperature.` },
+
+    { q: "Retrieving items from the bath safely.",
+      body: `Items should be removed from a water bath using appropriate tools (tongs, a rack, or heat-resistant gloves as needed) rather than bare hands, checking that containers are not slippery with condensation or water film before lifting, and the surrounding area kept clear so a hot container is never set down onto an unstable or cluttered surface.
+
+My Socratic question: why does a wet, warm sample tube present a specific handling risk that a dry, room-temperature tube does not?
+
+The answer is that a water film makes the tube's surface slippery, increasing the chance of it being dropped, while its warmth (and the warm water clinging to it) adds the possibility of a minor scald if grip is lost or it is handled carelessly - the combination of "wet" and "warm" compounds the handling risk beyond either factor alone.
+
+Crucial insight: safe retrieval technique closes the final gap between a correctly run water bath procedure and a genuinely safe outcome - the procedure is not finished, safely, until the sample is out of the bath and set down under control.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the water bath.
+
+The core advantage: even, uniform heat transfer to a precise, stable temperature - better for gentle, exact warming than a dry heat source.
+
+Common uses: thawing, warming reagents, enzymatic/serological incubation, complement inactivation (56°C), agar melting, and body-temperature maintenance.
+
+Types: circulating (most uniform, for sensitive uses) versus static (simpler, adequate for routine use); digital versus analogue control.
+
+Water quality: distilled/deionised water reduces scale and microbial growth compared to tap water - a slow, cumulative problem if ignored.
+
+Hygiene: warm standing water is a plausible site for microbial/algal growth, needing regular changing and cleaning; sample containers must be sealed so bath water cannot enter and dilute or alter them.
+
+Calibration: the display can silently drift from true water temperature - periodic verification against a reference thermometer is essential, especially for temperature-critical steps.
+
+Safety: scald, electrical (water plus electricity compounds risk), and slip hazards, plus careful, tool-assisted retrieval of wet, warm containers.
+
+Now your final test. A serum sample needs to be heated in a water bath at exactly 56°C to inactivate complement before testing.
+
+Question one: why is a water bath a better choice for this step than a dry heat source, given the precision required?
+Question two: what specific risk exists if the sample tube is not adequately sealed while immersed, even in perfectly clean bath water?
+Question three: what would you specifically need to check to be confident the bath is genuinely holding true 56°C, not just displaying it?
+
+Work them through before reading on.
+
+My answers. One: a water bath transfers heat evenly around the immersed tube via water's high heat capacity, avoiding the localised hot spots a dry heat source could create, giving a stable, uniform, precisely held temperature rather than uneven heating. Two: bath water entering a poorly sealed tube would dilute the serum, physically altering its true concentration and potentially invalidating the test, even though the water itself is clean - the problem is dilution, not necessarily contamination. Three: verify the actual water temperature against a calibrated reference thermometer placed directly in the water, since the bath's own display and sensor can drift from true temperature over time, and only independent verification confirms the water has genuinely reached 56°C.
+
+If those came cleanly, you now understand why a "simple container of warm water" is, in laboratory terms, a precision instrument that demands exactly the same disciplined attention as any other piece of equipment you have studied.` },
+  ],
+  theory: [
+    { q: "Define a water bath and explain its core advantage over a dry heat source.", a: "A water bath is a temperature-controlled water container used to gently and evenly warm samples, reagents, or reactions to a precise, stable temperature. Its core advantage is that water's high heat capacity transfers heat evenly around immersed items, avoiding the localised hot spots a dry heat source can create." },
+    { q: "List common laboratory uses of a water bath.", a: "Thawing frozen samples/reagents, warming reagents to reaction temperature, incubating enzymatic or serological reactions, inactivating complement in serum (commonly at 56°C), melting agar, and maintaining samples at body temperature during certain procedures." },
+    { q: "Compare circulating and static water baths and explain when a circulating bath is preferred.", a: "A circulating bath uses a pump to continuously move water for maximum temperature uniformity, while a static bath relies on convection currents alone. A circulating bath is preferred for applications highly sensitive to even small temperature variation, since active circulation minimises temperature gradients within the bath." },
+    { q: "Explain why distilled or deionised water is recommended over tap water in a water bath.", a: "Tap water contains dissolved minerals that gradually deposit as scale on the heating element and interior, and its standing warm surface encourages microbial/algal growth over time - distilled or deionised water reduces both problems." },
+    { q: "Explain why a water bath can become a site of microbial or algal growth despite not being a designated culture vessel.", a: "Warmth, standing water, and time are exactly the conditions many microorganisms need to establish and grow; a water bath unintentionally recreates similar favourable conditions to an incubator simply due to its physical environment." },
+    { q: "Explain why sample containers must be adequately sealed when immersed in a water bath.", a: "Bath water entering an inadequately sealed container can dilute the sample, altering its true concentration, and introduces a foreign substance into what should be a closed, controlled system - regardless of how clean the bath water itself is." },
+    { q: "Explain why periodic calibration verification of a water bath's temperature is important, using complement inactivation as an example.", a: "The bath's displayed temperature can drift from the true water temperature over time; for a temperature-critical step like complement inactivation at 56°C, an undetected drift could mean the true temperature never reached what was required, silently invalidating the test despite a correct-looking display." },
+    { q: "List the main safety hazards associated with water bath use.", a: "Scald/burn hazard from hot water and containers, electrical hazard from the close proximity of water and electricity, and slip hazard from splashed or spilled water around the bath." },
+    { q: "Explain why the combination of water and electricity in a water bath requires particular safety attention.", a: "Any breach in electrical insulation in the presence of standing water creates a much more direct and dangerous pathway for electric shock than the same fault would in a dry environment - the two hazards compound each other." },
+    { q: "Describe safe technique for retrieving items from a water bath.", a: "Use appropriate tools (tongs, a rack, or heat-resistant gloves) rather than bare hands, check that containers are not slippery with condensation before lifting, and ensure the surrounding area is clear so a hot, wet container is never set down onto an unstable or cluttered surface." },
+  ],
+  videos: [
+    { channel: "Lab Instrumentation", title: "How a Laboratory Water Bath Works", note: "Why even heat transfer makes water baths ideal for precise, gentle warming.", url: "" },
+    { channel: "Lab Safety", title: "Water Bath Hygiene and Contamination Control", note: "Preventing microbial growth in warm standing water.", url: "" },
+    { channel: "Lab Quality", title: "Calibrating a Water Bath for Temperature-Critical Procedures", note: "Why the display alone cannot be trusted without verification.", url: "" },
+  ],
+  mcqs: [
+    { q: "A water bath is best described as:", o: ["A dry heat sterilisation chamber", "A temperature-controlled water container for gentle, even warming", "A refrigeration unit", "A centrifugation device"], a: 1, w: "Water baths gently and evenly warm samples using heated water." },
+    { q: "The core advantage of a water bath over a dry heat source is:", o: ["Faster heating regardless of uniformity", "Even, uniform heat transfer to a precise, stable temperature", "Lower cost only", "It requires no maintenance"], a: 1, w: "Water's high heat capacity provides even, uniform heating around immersed items." },
+    { q: "Complement inactivation in serum is commonly performed at approximately:", o: ["100°C", "0°C", "56°C", "180°C"], a: 2, w: "Complement inactivation is a classic water bath application at 56°C." },
+    { q: "Compared to a static water bath, a circulating water bath provides:", o: ["Less temperature uniformity", "Greater temperature uniformity through continuous water movement", "No functional difference", "Higher maximum temperature only"], a: 1, w: "Active circulation minimises temperature gradients within the bath." },
+    { q: "A static water bath relies on:", o: ["An internal pump", "Natural convection currents alone", "Electrical circulation of air", "External refrigeration"], a: 1, w: "Static baths rely purely on convection rather than active circulation." },
+    { q: "Distilled or deionised water is recommended for water baths mainly to reduce:", o: ["Cost of electricity", "Scale buildup and microbial/algal growth", "Water bath size", "Heating speed"], a: 1, w: "Tap water minerals cause scale, and standing water promotes microbial growth over time." },
+    { q: "Using tap water instead of distilled water in a water bath typically causes problems that are:", o: ["Immediate and obvious", "Gradual and cumulative over time", "Nonexistent", "Only cosmetic"], a: 1, w: "Scale and microbial growth build up slowly with repeated use, not immediately." },
+    { q: "A water bath can become a favourable site for microbial growth because it shares which conditions with an incubator?", o: ["High temperature and dryness", "Warmth, standing water, and time", "Constant motion and cold", "Vacuum and darkness"], a: 1, w: "Warm, standing water over time recreates conditions favourable to microbial growth." },
+    { q: "Sample containers immersed in a water bath must be:", o: ["Left completely open", "Adequately sealed so bath water cannot enter", "Submerged without any covering at all times", "Filled to the very top with air"], a: 1, w: "Sealing prevents bath water from diluting or altering the sample." },
+    { q: "Bath water entering a poorly sealed sample tube can cause a misleading result by:", o: ["Improving sample accuracy", "Diluting the sample and altering its true concentration", "Having no effect on the sample", "Automatically correcting the result"], a: 1, w: "Even clean water entering the tube physically dilutes and alters the sample." },
+    { q: "A water bath's displayed temperature should be periodically checked against:", o: ["Nothing, the display is always accurate", "A calibrated reference thermometer placed in the water", "The operator's personal estimate", "The ambient room temperature only"], a: 1, w: "Independent verification confirms the true water temperature matches the display." },
+    { q: "An undetected calibration drift in a water bath used for complement inactivation risks:", o: ["No consequence since the display shows the correct number", "A test relying on that step being silently invalidated", "Improved test accuracy", "Faster sample processing"], a: 1, w: "If true temperature never reached the required level, the inactivation step may fail unnoticed." },
+    { q: "A water bath's electrical hazard is heightened compared to a dry-bench instrument because:", o: ["Water and electricity in close proximity compound the risk of shock", "Water baths never use electricity", "Electrical hazards are unrelated to water", "Dry-bench instruments are always more dangerous"], a: 0, w: "A breach in insulation near standing water creates a more direct shock pathway." },
+    { q: "Items should be removed from a water bath using:", o: ["Bare hands only", "Appropriate tools such as tongs, a rack, or heat-resistant gloves", "Whatever is nearest, regardless of suitability", "No precautions are necessary"], a: 1, w: "Proper tools reduce the risk of dropping or scalding from wet, warm containers." },
+    { q: "A wet, warm sample tube presents increased handling risk mainly because:", o: ["It becomes lighter", "It is slippery from water film and carries a scald risk if dropped or mishandled", "It becomes magnetic", "It has no additional risk compared to a dry tube"], a: 1, w: "Combined wetness and warmth compound the risk beyond either factor alone." },
+    { q: "A lid on a water bath, where available, helps to:", o: ["Increase evaporation and contamination", "Reduce evaporation and contamination from the air", "Prevent the bath from heating at all", "Replace the need for water changes"], a: 1, w: "A lid reduces both evaporation and airborne contamination entering the bath." },
+    { q: "Digital water baths, compared to analogue, generally offer:", o: ["Less precise temperature control", "More precise electronic temperature control and display", "No temperature display at all", "Identical precision to analogue"], a: 1, w: "Digital control typically provides more precise setting and monitoring than analogue dials." },
+    { q: "Melting agar is a recognised use of:", o: ["An oven", "A water bath", "A centrifuge", "A pH meter"], a: 1, w: "Water baths are commonly used to gently melt and hold agar at a workable temperature." },
+    { q: "Gentle thawing of a frozen sample in a water bath is preferred over direct heat because:", o: ["Direct heat is always faster and safer", "Even, moderate warming avoids locally overheating and damaging heat-sensitive components", "Thawing method has no effect on sample integrity", "Room temperature thawing is always superior"], a: 1, w: "Controlled, even warming protects heat-sensitive sample components from localised overheating." },
+    { q: "The water level in a bath should be sufficient to:", o: ["Overflow when items are added", "Adequately immerse samples as required, without overflowing", "Remain empty until needed", "Exceed the bath's rated capacity"], a: 1, w: "Correct fill level ensures proper immersion without overflow risk." },
+    { q: "Regular water changes in a water bath are important primarily to:", o: ["Increase heating cost unnecessarily", "Limit microbial/algal buildup in the standing warm water", "Change the bath's colour", "Reduce evaporation"], a: 1, w: "Fresh water limits the accumulation of microbial and algal growth over time." },
+    { q: "Choosing between a circulating and static water bath should be based on:", o: ["Personal preference only", "How sensitive the specific application is to temperature variation", "Bath colour", "Always choosing the cheapest option regardless of application"], a: 1, w: "Equipment precision should match the application's actual sensitivity to variation." },
+    { q: "A slip hazard around a water bath arises mainly from:", o: ["Splashed or spilled water on the floor", "The bath's electrical cord alone", "Its heating element", "Its digital display"], a: 0, w: "Water on the floor around the bath creates a slip hazard." },
+    { q: "The statement 'a display reading the correct number is not proof the water has reached that temperature' reflects the importance of:", o: ["Ignoring the display entirely", "Independent calibration verification against a reference thermometer", "Replacing the water bath immediately", "Using tap water instead of distilled"], a: 1, w: "Only independent verification confirms the displayed and true temperatures match." },
+    { q: "Water bath maintenance issues from tap water use are best described as:", o: ["Sudden and immediately obvious", "Slow and cumulative, appearing gradually with continued use", "Never a real problem", "Only relevant to circulating baths"], a: 1, w: "Scale and microbial growth accumulate gradually rather than appearing immediately." },
+    { q: "Two separate protections needed for a sample warmed in a water bath are:", o: ["Only bath hygiene, nothing else", "Bath water hygiene AND an adequately sealed sample container", "Only container sealing, bath hygiene is irrelevant", "Neither is actually necessary"], a: 1, w: "Both bath hygiene and container sealing are necessary; neither substitutes for the other." },
+    { q: "The relationship between a water bath and an incubator, in terms of contamination risk, is that:", o: ["They share no similarities", "Both create warm, standing conditions that can unintentionally favour microbial growth", "Only incubators carry any contamination risk", "Water baths are always sterile by design"], a: 1, w: "Both share warm, static, moist conditions that can favour unintended microbial growth." },
+    { q: "Overall, treating a water bath with the same disciplined attention as other precision equipment matters because:", o: ["It is purely decorative equipment", "Its apparent simplicity can mask genuine precision, hygiene, and safety requirements", "Water baths require no real oversight", "Only expensive equipment needs careful use"], a: 1, w: "Despite looking simple, a water bath has real precision, hygiene, and safety needs like any other instrument." },
+    { q: "A key theme connecting water bath use to other laboratory equipment covered in this course is that:", o: ["Each piece of equipment is unrelated to the others", "Correct use requires matching the equipment's specific mechanism to the specific task, with attention to calibration and hygiene", "Only sterilisation equipment requires calibration", "Safety only applies to chemical hazards, not equipment"], a: 1, w: "This theme - matching mechanism to task, verifying calibration, maintaining hygiene - runs through all the equipment topics in this course." },
+  ],
+};
+
 /* --------------------------- ana:4 --------------------------- */
 const T_ANA_GLAND = {
   courseId: "ana",
@@ -17799,6 +18965,13 @@ const CONTENT = {
   "lab:15": T_LAB_OPDESIGN_II,
   "lab:16": T_LAB_REFERENCING,
   "lab:17": T_LAB_REPORTS,
+  "lab:18": T_LAB_HCWM_1,
+  "lab:19": T_LAB_HCWM_2,
+  "lab:20": T_LAB_CHEM_HAZARDS,
+  "lab:21": T_LAB_SOP,
+  "lab:22": T_LAB_FIRST_AID,
+  "lab:23": T_LAB_OVENS_INCUBATORS,
+  "lab:24": T_LAB_WATERBATH,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
