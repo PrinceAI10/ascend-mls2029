@@ -422,6 +422,8 @@ const Ic = {
   menu: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M3 6h18M3 12h18M3 18h18" />} />,
   upload: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M12 16V4M8 8l4-4 4 4" /><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" /></>} />,
   chat: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.8A8 8 0 1 1 21 12z" />} />,
+  search: ({ p = 20, style }) => <I s={p} style={style} d={<><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></>} />,
+  textSize: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M4 7V5h11v2" /><path d="M9.5 5v14M7 19h5" /><path d="M15 13h6M18 10v6" /></>} />,
 };
 
 /* --------------------------- password input ----------------------------- */
@@ -19469,6 +19471,19 @@ function dailyQuestionsFor(courseId, dateKey, count = 5) {
 }
 
 const BOARD_SEED = [];
+// Spaced-repetition schedule for the Review deck (5-box Leitner system).
+// Index = box number; value = how far out the item's next due date is set
+// once it reaches that box. Box 0 is "due now" (a fresh miss, or one just
+// answered wrong again). Reaching past the final box means mastered.
+const SRS_INTERVALS_MS = [
+  0,                    // box 0: due immediately
+  10 * 60 * 1000,       // box 1: 10 minutes
+  24 * 60 * 60 * 1000,  // box 2: 1 day
+  3 * 24 * 60 * 60 * 1000,  // box 3: 3 days
+  7 * 24 * 60 * 60 * 1000,  // box 4: 7 days
+  14 * 24 * 60 * 60 * 1000, // box 5: 14 days (one more correct answer here = mastered)
+];
+
 const RANKS = [
   { name: "Bronze", min: 0, c: "#C08A5B" },
   { name: "Silver", min: 300, c: "#C6D2E0" },
@@ -20249,6 +20264,100 @@ async function downloadMindMapPDF(map) {
   doc.save(fname);
 }
 
+/* Renders a topic's full lesson (Socratic notes) plus its theory Q&A as a
+   clean, printable PDF for offline reading/revision, and triggers a
+   download. Mirrors downloadMindMapPDF's pagination approach above. */
+async function downloadTopicNotesPDF(t) {
+  const { jsPDF } = { jsPDF: await loadJsPDF() };
+  const doc = new jsPDF({ unit: "pt", format: "a4" });
+  const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
+  const margin = 48;
+  const maxW = pageW - margin * 2;
+  let y = margin;
+
+  const ensureRoom = (needed) => {
+    if (y + needed > pageH - margin) {
+      doc.addPage();
+      y = margin;
+    }
+  };
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(19);
+  const titleLines = doc.splitTextToSize(t.title || "Topic notes", maxW);
+  ensureRoom(titleLines.length * 24 + 10);
+  doc.text(titleLines, margin, y);
+  y += titleLines.length * 24 + 4;
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.setTextColor(120);
+  doc.text("ASCEND \u00b7 " + (t.courseId || "").toUpperCase() + " \u00b7 exported " + new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }), margin, y);
+  doc.setTextColor(0);
+  y += 18;
+  doc.setDrawColor(200);
+  doc.line(margin, y, pageW - margin, y);
+  y += 22;
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(14);
+  ensureRoom(20);
+  doc.text("The lesson", margin, y);
+  y += 20;
+
+  (t.note || []).forEach((n, i) => {
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    const qLines = doc.splitTextToSize(`${i + 1}. ${n.q}`, maxW);
+    ensureRoom(qLines.length * 15 + 8);
+    doc.text(qLines, margin, y);
+    y += qLines.length * 15 + 6;
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10.5);
+    const paras = String(n.body || "").split("\n\n");
+    paras.forEach((p) => {
+      const lines = doc.splitTextToSize(p, maxW);
+      ensureRoom(lines.length * 13 + 6);
+      doc.text(lines, margin, y);
+      y += lines.length * 13 + 6;
+    });
+    y += 8;
+  });
+
+  if ((t.theory || []).length > 0) {
+    ensureRoom(30);
+    doc.setDrawColor(200);
+    doc.line(margin, y, pageW - margin, y);
+    y += 22;
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    ensureRoom(20);
+    doc.text((t.theory.length) + " theory questions", margin, y);
+    y += 20;
+
+    t.theory.forEach((q, i) => {
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      const qLines = doc.splitTextToSize(`${i + 1}. ${q.q}`, maxW);
+      ensureRoom(qLines.length * 14 + 6);
+      doc.text(qLines, margin, y);
+      y += qLines.length * 14 + 4;
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10.5);
+      const aLines = doc.splitTextToSize(q.a, maxW);
+      ensureRoom(aLines.length * 13 + 10);
+      doc.text(aLines, margin, y);
+      y += aLines.length * 13 + 10;
+    });
+  }
+
+  const fname = (t.title || "topic").toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 50) + "-notes.pdf";
+  doc.save(fname);
+}
+
 
 function formatInline(text) {
   if (!text) return text;
@@ -20974,6 +21083,7 @@ function TopicView({ app }) {
   const [readingAwarded, setReadingAwarded] = useState(false);
   const [readingNotif, setReadingNotif] = useState(false);
   const timerRef = useRef(null);
+  const [downloadingPdf, setDownloadingPdf] = useState(false);
 
   // READING TIMER - Save state
   useEffect(() => {
@@ -21119,15 +21229,30 @@ function TopicView({ app }) {
         <div style={{ display: "flex", gap: 10, alignItems: "center", color: "var(--text-3)", fontSize: 13 }} className="mono">
           <span>{t.minutes || 15} MIN READ</span><span>·</span><span>{(t.theory || []).length} THEORY Q</span><span>·</span><span>{(t.mcqs || []).length} MCQ</span>
         </div>
-        {(() => {
-          const key = `${t.courseId}:${t.topicIndex}`;
-          const saved = (app.progress.bookmarks || []).includes(key);
-          return (
-            <button className="btn btn-sm" style={{ background: saved ? "var(--amber)" : "var(--bg-3)", color: saved ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6 }} onClick={() => app.toggleBookmark(t.courseId, t.topicIndex)}>
-              <Ic.star p={14} /> {saved ? "Saved" : "Save"}
-            </button>
-          );
-        })()}
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <button
+            className="btn btn-sm"
+            style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6 }}
+            disabled={downloadingPdf}
+            onClick={async () => {
+              setDownloadingPdf(true);
+              try { await downloadTopicNotesPDF(t); }
+              catch (e) { window.alert("Could not build the PDF - check your connection and try again."); }
+              finally { setDownloadingPdf(false); }
+            }}
+          >
+            <Ic.file p={14} /> {downloadingPdf ? "Building..." : "Download notes"}
+          </button>
+          {(() => {
+            const key = `${t.courseId}:${t.topicIndex}`;
+            const saved = (app.progress.bookmarks || []).includes(key);
+            return (
+              <button className="btn btn-sm" style={{ background: saved ? "var(--amber)" : "var(--bg-3)", color: saved ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6 }} onClick={() => app.toggleBookmark(t.courseId, t.topicIndex)}>
+                <Ic.star p={14} /> {saved ? "Saved" : "Save"}
+              </button>
+            );
+          })()}
+        </div>
       </div>
       <div className="divider" />
       <div className="eyebrow" style={{ marginBottom: 14 }}>The lesson</div>
@@ -21900,7 +22025,16 @@ function RanksView({ app }) {
    This is the single most powerful study feature - it makes students revisit
    exactly what they do not yet know, which is how real retention is built. */
 function ReviewView({ app }) {
-  const deck = Array.isArray(app.progress.review) ? app.progress.review : [];
+  const fullDeck = Array.isArray(app.progress.review) ? app.progress.review : [];
+  const now = Date.now();
+  // Spaced repetition: only items whose scheduled due date has arrived are
+  // shown today. Items scheduled further out (older mistakes you have
+  // already gotten right once or more) stay hidden until their turn comes,
+  // rather than cluttering every session with things you have already
+  // demonstrated you know.
+  const deck = fullDeck.filter((m) => (typeof m.due === "number" ? m.due <= now : true));
+  const upcoming = fullDeck.length - deck.length;
+  const nextDueAt = upcoming > 0 ? Math.min(...fullDeck.filter((m) => (m.due || 0) > now).map((m) => m.due)) : null;
   const [idx, setIdx] = useState(0);
   const [picked, setPicked] = useState(null);
 
@@ -21943,13 +22077,29 @@ function ReviewView({ app }) {
     );
   };
 
+  const UpcomingNote = () => {
+    if (upcoming === 0 || !nextDueAt) return null;
+    const hrs = Math.max(1, Math.round((nextDueAt - now) / (60 * 60 * 1000)));
+    const when = hrs < 24 ? `in about ${hrs} hour${hrs === 1 ? "" : "s"}` : `in about ${Math.round(hrs / 24)} day${Math.round(hrs / 24) === 1 ? "" : "s"}`;
+    return (
+      <p className="note-hint" style={{ marginTop: 12 }}>
+        {upcoming} more question{upcoming === 1 ? "" : "s"} scheduled for later - you already got {upcoming === 1 ? "it" : "them"} right at least once, so spaced repetition is spacing out the next check. Next one is due {when}.
+      </p>
+    );
+  };
+
   if (deck.length === 0) {
     return (
       <div className="view">
         <div className="eyebrow">Review and weak spots</div>
-        <h1 className="headline" style={{ marginTop: 6 }}>{scored.length === 0 ? "Nothing to review yet" : "Your progress so far"}</h1>
+        <h1 className="headline" style={{ marginTop: 6 }}>{fullDeck.length === 0 ? "Nothing to review yet" : "You're caught up"}</h1>
         <div className="card" style={{ marginTop: 16 }}>
-          <p style={{ color: "var(--text-2)", fontSize: 15, lineHeight: 1.6, margin: 0 }}>When you get a question wrong in any quiz, it lands here so you can drill it until it sticks. Right now your review deck is empty - so either you have not taken a quiz yet, or you have cleared every missed question. Either way, keep climbing.</p>
+          <p style={{ color: "var(--text-2)", fontSize: 15, lineHeight: 1.6, margin: 0 }}>
+            {fullDeck.length === 0
+              ? "When you get a question wrong in any quiz, it lands here so you can drill it on a spaced schedule until it sticks. Right now your review deck is empty - so either you have not taken a quiz yet, or you have mastered every missed question."
+              : "Nothing is due for review right now. Questions you have already answered correctly once are spaced further out so you are not re-drilling things you already know - they will resurface here when their scheduled time comes."}
+          </p>
+          <UpcomingNote />
         </div>
         <WeakSpots />
         <button className="btn btn-a" style={{ marginTop: 16 }} onClick={() => app.go("courses")}>Go to courses <Ic.chevR p={16} /></button>
@@ -21960,27 +22110,33 @@ function ReviewView({ app }) {
   const item = deck[Math.min(idx, deck.length - 1)];
   const answered = picked !== null;
   const correct = answered && picked === item.a;
+  const box = typeof item.box === "number" ? item.box : 0;
 
   const next = () => {
-    if (correct) {
-      // remove from the deck; it is learned for now
-      app.clearReviewItem(item.q);
-      setPicked(null);
-      setIdx(0); // deck shrank, restart at top of what remains
-    } else {
-      setPicked(null);
-      setIdx((idx + 1) % deck.length); // cycle to the next missed one
-    }
+    const result = app.gradeReviewItem(item.q, correct);
+    setPicked(null);
+    setIdx(0); // deck (due-today list) shrinks or reorders either way - restart at top
+    return result;
+  };
+
+  const intervalLabel = (ms) => {
+    if (!ms) return "immediately";
+    if (ms < 60 * 60 * 1000) return Math.round(ms / 60000) + " min";
+    if (ms < 24 * 60 * 60 * 1000) return Math.round(ms / 3600000) + " hr";
+    return Math.round(ms / 86400000) + " day" + (Math.round(ms / 86400000) === 1 ? "" : "s");
   };
 
   return (
     <div className="view">
       <div className="eyebrow">Review your mistakes</div>
-      <h1 className="headline" style={{ marginTop: 6 }}>{deck.length} to master</h1>
-      <p style={{ color: "var(--text-2)", fontSize: 14, margin: "6px 0 18px", lineHeight: 1.55 }}>These are questions you have missed. Answer one correctly and it leaves your deck. Get it wrong and it stays - keep drilling until they are all gone.</p>
+      <h1 className="headline" style={{ marginTop: 6 }}>{deck.length} due now{upcoming > 0 ? ` \u00b7 ${upcoming} scheduled later` : ""}</h1>
+      <p style={{ color: "var(--text-2)", fontSize: 14, margin: "6px 0 18px", lineHeight: 1.55 }}>Spaced repetition: get one right and it comes back later with a longer gap; get it wrong and it comes straight back around. Answer correctly enough times in a row and it's marked mastered and leaves the deck for good.</p>
 
       <div className="card">
-        <div className="mono" style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 8 }}>{(item.topic || "").toUpperCase()}</div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+          <div className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>{(item.topic || "").toUpperCase()}</div>
+          <div className="mono" style={{ fontSize: 10.5, color: "var(--text-3)" }}>BOX {box + 1} OF {SRS_INTERVALS_MS.length}</div>
+        </div>
         <div style={{ fontWeight: 650, fontSize: 16, lineHeight: 1.5, marginBottom: 16 }}>{item.q}</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {item.o.map((opt, k) => {
@@ -21996,13 +22152,130 @@ function ReviewView({ app }) {
         </div>
         {answered && (
           <div style={{ marginTop: 16 }}>
-            <div style={{ fontWeight: 650, color: correct ? "var(--good)" : "var(--bad)", marginBottom: 6 }}>{correct ? "Correct - removing from your deck" : "Not quite - this one stays for another round"}</div>
+            <div style={{ fontWeight: 650, color: correct ? "var(--good)" : "var(--bad)", marginBottom: 6 }}>
+              {correct
+                ? (box + 1 >= SRS_INTERVALS_MS.length ? "Correct - mastered! Leaving your deck for good." : `Correct - next check in ${intervalLabel(SRS_INTERVALS_MS[box + 1])}`)
+                : "Not quite - back to the top of the deck, due again right away"}
+            </div>
             <p style={{ color: "var(--text-2)", fontSize: 14, lineHeight: 1.6, margin: 0 }}>{item.w}</p>
             <button className="btn btn-a" style={{ marginTop: 14 }} onClick={next}>{correct ? "Next" : "Keep going"} <Ic.chevR p={16} /></button>
           </div>
         )}
       </div>
+      <UpcomingNote />
       <WeakSpots />
+    </div>
+  );
+}
+
+/* ---- global search: find any term across every course's notes, theory
+   Q&A, and MCQs, not just the current course's search boxes ---- */
+function highlightMatch(text, query) {
+  if (!query) return text;
+  const idx = text.toLowerCase().indexOf(query.toLowerCase());
+  if (idx < 0) return text;
+  const start = Math.max(0, idx - 50);
+  const end = Math.min(text.length, idx + query.length + 90);
+  const snippet = (start > 0 ? "\u2026" : "") + text.slice(start, end) + (end < text.length ? "\u2026" : "");
+  return snippet;
+}
+
+function SearchView({ app }) {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [searching, setSearching] = useState(false);
+
+  useEffect(() => {
+    const q = query.trim();
+    if (q.length < 2) { setResults([]); setSearching(false); return; }
+    setSearching(true);
+    const t = setTimeout(() => {
+      const needle = q.toLowerCase();
+      const found = [];
+      for (const course of COURSES) {
+        const titles = TOPICS[course.id] || [];
+        for (let tid = 0; tid < titles.length; tid++) {
+          const title = titles[tid];
+          const c = contentFor(course.id, tid);
+          const hits = [];
+
+          if (title.toLowerCase().includes(needle)) {
+            hits.push({ type: "Topic", snippet: title });
+          }
+          if (c) {
+            for (const n of (c.note || [])) {
+              if (n.q.toLowerCase().includes(needle)) { hits.push({ type: "Lesson", snippet: n.q }); break; }
+              if (n.body.toLowerCase().includes(needle)) { hits.push({ type: "Lesson", snippet: highlightMatch(n.body, q) }); break; }
+            }
+            for (const th of (c.theory || [])) {
+              if (th.q.toLowerCase().includes(needle) || th.a.toLowerCase().includes(needle)) {
+                hits.push({ type: "Theory Q&A", snippet: th.q });
+                break;
+              }
+            }
+            for (const m of (c.mcqs || [])) {
+              if (m.q.toLowerCase().includes(needle)) { hits.push({ type: "MCQ", snippet: m.q }); break; }
+            }
+          }
+
+          if (hits.length > 0) {
+            found.push({ courseId: course.id, courseName: course.name, topicId: tid, title, hits: hits.slice(0, 3) });
+          }
+          if (found.length >= 40) break;
+        }
+        if (found.length >= 40) break;
+      }
+      setResults(found);
+      setSearching(false);
+    }, 220); // small debounce so fast typing doesn't scan on every keystroke
+    return () => clearTimeout(t);
+  }, [query]);
+
+  return (
+    <div className="view">
+      <div className="eyebrow">Search</div>
+      <h1 className="headline" style={{ marginTop: 6 }}>Find anything, in any course</h1>
+      <p style={{ color: "var(--text-2)", fontSize: 14, margin: "6px 0 18px", lineHeight: 1.55 }}>Searches every topic's lesson notes, theory Q&A, and MCQs across all seven courses at once.</p>
+      <input
+        className="auth-input"
+        autoFocus
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search for a term, e.g. homeostasis, autoclave, SOAP note..."
+        style={{ width: "100%" }}
+      />
+      {query.trim().length >= 1 && query.trim().length < 2 && (
+        <p className="note-hint" style={{ marginTop: 10 }}>Keep typing - at least 2 characters.</p>
+      )}
+      {searching && <div style={{ marginTop: 16 }}><span className="dots"><span /><span /><span /></span></div>}
+      {!searching && query.trim().length >= 2 && results.length === 0 && (
+        <div className="card" style={{ marginTop: 16 }}>
+          <p style={{ color: "var(--text-2)", fontSize: 14.5, margin: 0 }}>No matches for "{query.trim()}". Try a shorter or more general term.</p>
+        </div>
+      )}
+      {results.length > 0 && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 16 }}>
+          {results.map((r) => (
+            <button
+              key={r.courseId + ":" + r.topicId}
+              className="card hover"
+              style={{ textAlign: "left", padding: 14 }}
+              onClick={() => app.go("topic", { courseId: r.courseId, topicId: r.topicId })}
+            >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                <div style={{ fontWeight: 700, fontSize: 15 }}>{r.title}</div>
+                <span className="mono" style={{ fontSize: 11, color: "var(--text-3)", flexShrink: 0 }}>{r.courseName}</span>
+              </div>
+              {r.hits.map((h, i) => (
+                <div key={i} style={{ fontSize: 13, color: "var(--text-2)", lineHeight: 1.5, marginTop: 4 }}>
+                  <span className="mono" style={{ fontSize: 10.5, color: "var(--text-3)", marginRight: 6 }}>{h.type.toUpperCase()}</span>
+                  {h.snippet}
+                </div>
+              ))}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -27873,6 +28146,11 @@ export default function App() {
   // exact page they left - see the resume/visibilitychange effect below.
   const [resuming, setResuming] = useState(false);
   const [theme, setTheme] = useState("dark");
+  // Accessibility: reading text size, independent of theme. Cycles small/normal/large
+  // and is applied as a zoom on the main content column (see rootCls/.main below).
+  const [fontScale, setFontScale] = useState(() => {
+    try { return window.localStorage.getItem("ascend_font_scale") || "normal"; } catch (e) { return "normal"; }
+  });
   // When theme === "system", the app follows the OS day/night setting live.
   const [systemDark, setSystemDark] = useState(() => {
     try { return !window.matchMedia || window.matchMedia("(prefers-color-scheme: dark)").matches; } catch (e) { return true; }
@@ -28593,6 +28871,14 @@ export default function App() {
     const t = order[(order.indexOf(theme) + 1) % order.length];
     setTheme(t); store.set("ascend_theme", t);
   };
+  // Accessibility: cycle reading text size. Small -> Normal -> Large -> Small ...
+  const toggleFontScale = () => {
+    const order = ["small", "normal", "large"];
+    const t = order[(order.indexOf(fontScale) + 1) % order.length];
+    setFontScale(t);
+    try { window.localStorage.setItem("ascend_font_scale", t); } catch (e) {}
+  };
+  const fontScaleZoom = fontScale === "small" ? 0.9 : fontScale === "large" ? 1.18 : 1;
   // The theme actually rendered. In "system" mode it tracks the OS setting.
   const effectiveTheme = theme === "system" ? (systemDark ? "dark" : "light") : theme;
   // Listen for OS day/night changes so "system" mode updates without a reload.
@@ -28688,7 +28974,9 @@ export default function App() {
     const merged = [...prevReview];
     for (const m of missed) { 
       if (!seen.has(m.q)) { 
-        merged.push(m); 
+        // box/due drive the spaced-repetition schedule in ReviewView - a fresh
+        // miss starts at box 0, due immediately (see SRS_INTERVALS_MS below).
+        merged.push({ ...m, box: 0, due: Date.now() }); 
         seen.add(m.q); 
       } 
     }
@@ -28735,7 +29023,7 @@ export default function App() {
     const merged = [...prevReview];
     for (const m of missed) {
       if (m && m.q && !seen.has(m.q)) {
-        merged.push(m);
+        merged.push({ ...m, box: 0, due: Date.now() });
         seen.add(m.q);
       }
     }
@@ -28754,6 +29042,27 @@ export default function App() {
   const clearReviewItem = (questionText) => {
     const prev = Array.isArray(progress.review) ? progress.review : [];
     persist({ ...progress, review: prev.filter((m) => m.q !== questionText) });
+  };
+
+  // Spaced repetition (5-box Leitner system) for the review deck. A right
+  // answer advances the item's box and pushes its next-due date further out;
+  // reaching past the last box means it is mastered and drops out of the
+  // deck entirely. A wrong answer resets it to box 0, due immediately, so it
+  // keeps resurfacing in the same session until it is actually learned.
+  const gradeReviewItem = (questionText, wasCorrect) => {
+    const prev = Array.isArray(progress.review) ? progress.review : [];
+    const now = Date.now();
+    let mastered = false;
+    const next = prev.map((m) => {
+      if (m.q !== questionText) return m;
+      const box = typeof m.box === "number" ? m.box : 0;
+      if (!wasCorrect) return { ...m, box: 0, due: now };
+      const newBox = box + 1;
+      if (newBox >= SRS_INTERVALS_MS.length) { mastered = true; return null; }
+      return { ...m, box: newBox, due: now + SRS_INTERVALS_MS[newBox] };
+    }).filter(Boolean);
+    persist({ ...progress, review: next });
+    return { mastered, nextIntervalMs: mastered ? null : SRS_INTERVALS_MS[(next.find((m) => m.q === questionText) || {}).box || 0] };
   };
 
   const setName = async () => {
@@ -28969,6 +29278,7 @@ export default function App() {
     finishQuiz, 
     addMissedToReview,
     clearReviewItem,
+    gradeReviewItem,
     toggleBookmark, 
     supaUid, 
     courseId: route.courseId, 
@@ -29005,6 +29315,7 @@ export default function App() {
       case "ranks": return <RanksView app={app} />;
       case "forum": return <ForumView app={app} />;
       case "review": return <ReviewView app={app} />;
+      case "search": return <SearchView app={app} />;
       case "tools": return <StudyToolsView />;
       case "papers": return <PapersView app={app} />;
       case "plan": return <PlanView />;
@@ -29135,7 +29446,7 @@ export default function App() {
           </div>
         </aside>
 
-        <div className="main">
+        <div className="main" style={fontScaleZoom !== 1 ? { zoom: fontScaleZoom } : undefined}>
           <header className="topbar">
             <div className="topbar-inner">
               <button 
@@ -29148,6 +29459,8 @@ export default function App() {
               <div className="onlymobile" style={{ flex: 1 }}><Wordmark /></div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
                 <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
+                <button className="iconbtn" onClick={() => go("search")} title="Search all courses"><Ic.search p={17} /></button>
+                <button className="iconbtn" onClick={toggleFontScale} title={"Text size: " + (fontScale === "small" ? "Small" : fontScale === "large" ? "Large" : "Normal") + " (tap to change)"}><Ic.textSize p={17} /></button>
                 <button className="iconbtn" onClick={toggleTheme} title={theme === "system" ? "Theme: System (follows day/night)" : theme === "light" ? "Theme: Light" : "Theme: Dark"}>{theme === "system" ? <Ic.monitor p={17} /> : theme === "light" ? <Ic.sun p={17} /> : <Ic.moon p={17} />}</button>
                 <button className="iconbtn" onClick={openNotif} title="Notifications"><Ic.bell p={18} />{unreadCount > 0 && <span className="notif-badge">{unreadCount > 9 ? "9+" : unreadCount}</span>}</button>
                 <span className="chip"><span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP</span>
