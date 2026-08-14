@@ -195,9 +195,10 @@ html, body {
 .brand{display:flex;align-items:center;gap:9px;flex-shrink:0}
 .brand-word{font-weight:800;letter-spacing:.02em;font-size:17px}
 .brand-hero{gap:12px}
-.brand-word-hero{font-family:Calibri,Candara,'Segoe UI',Optima,'Century Gothic',system-ui,sans-serif;
-  font-weight:700;font-size:clamp(28px,6.5vw,38px);letter-spacing:-0.01em;font-style:normal;
-  color:var(--amber);text-shadow:0 0 22px rgba(245,185,63,.35);
+.brand-word-hero{font-family:'Pacifico','Brush Script MT','Segoe Script',cursive,Calibri,system-ui,sans-serif;
+  font-weight:400;font-size:clamp(30px,7vw,42px);letter-spacing:.01em;font-style:normal;
+  background:linear-gradient(120deg,var(--text) 0%,var(--amber) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   line-height:1}
 .brand-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--text-3);
   text-transform:uppercase;margin-top:1px}
@@ -28661,7 +28662,7 @@ export default function App() {
   useEffect(() => {
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap";
+    link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Pacifico&display=swap";
     document.head.appendChild(link);
 
     let viewport = document.querySelector('meta[name="viewport"]');
