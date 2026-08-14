@@ -5,6 +5,32 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import Tesseract from 'tesseract.js';              
 import { supabase } from "./supabaseClient";
 
+// ============================================================
+// EARLY FONT LOAD (module scope - runs the instant this file is
+// evaluated, before App() even mounts). The Pacifico splash-screen
+// wordmark previously had its <link> injected inside a useEffect,
+// which only fires AFTER React's first paint. That meant the
+// font-display:block "hide text briefly" window was already
+// expired (or close to it) by the time the download even started,
+// so the fallback font would render first and then visibly swap to
+// Pacifico a moment later - the "2 fonts" flash. Starting the fetch
+// here, at parse time, gives it a multi-hundred-ms head start before
+// the splash screen is even painted, so by the time it's on screen
+// Pacifico is either already loaded or well within its block window.
+if (typeof document !== "undefined" && !document.getElementById("ascend-pacifico-font")) {
+  const preload = document.createElement("link");
+  preload.rel = "preload";
+  preload.as = "style";
+  preload.href = "https://fonts.googleapis.com/css2?family=Pacifico&display=block";
+  document.head.appendChild(preload);
+
+  const scriptLink = document.createElement("link");
+  scriptLink.id = "ascend-pacifico-font";
+  scriptLink.rel = "stylesheet";
+  scriptLink.href = "https://fonts.googleapis.com/css2?family=Pacifico&display=block";
+  document.head.appendChild(scriptLink);
+}
+
 // OCR Function for image text extraction
 // eslint-disable-next-line no-unused-vars
 async function extractTextFromImage(imageFile) {
@@ -202,7 +228,8 @@ html, body {
   line-height:1}
 .brand-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--text-3);
   text-transform:uppercase;margin-top:1px}
-.brand-sub-hero{font-size:clamp(13px,2.4vw,16px);letter-spacing:.32em;margin-top:4px}
+.brand-sub-hero{font-family:Calibri,system-ui,sans-serif;font-size:clamp(13px,2.4vw,16px);
+  letter-spacing:.32em;margin-top:4px}
 .navi{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:var(--r-sm);
   color:var(--text-2);font-weight:550;font-size:14.5px;transition:background .15s,color .15s;width:100%;text-align:left}
 .navi:hover{background:var(--bg-3);color:var(--text)}
@@ -28666,18 +28693,8 @@ export default function App() {
     link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap";
     document.head.appendChild(link);
 
-    // Pacifico (the splash-screen "ASCEND" wordmark) gets its own stylesheet
-    // with display=block instead of swap. On the shared Inter/JetBrains link,
-    // display=swap means the fallback font shows immediately and then swaps
-    // to the webfont once it loads - fine for body copy, but on the big
-    // one-word logo it reads as two different fonts flashing in sequence.
-    // display=block instead hides the text for a very brief moment (it's on
-    // screen for seconds anyway, during the loading spinner) so only Pacifico
-    // ever actually appears - no visible swap.
-    const scriptLink = document.createElement("link");
-    scriptLink.rel = "stylesheet";
-    scriptLink.href = "https://fonts.googleapis.com/css2?family=Pacifico&display=block";
-    document.head.appendChild(scriptLink);
+    // Pacifico is now preloaded + linked at module scope (top of file),
+    // before React's first paint - see the comment there for why.
 
     let viewport = document.querySelector('meta[name="viewport"]');
     if (!viewport) { viewport = document.createElement("meta"); viewport.name = "viewport"; document.head.appendChild(viewport); }
