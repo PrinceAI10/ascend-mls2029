@@ -202,6 +202,7 @@ html, body {
   line-height:1}
 .brand-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--text-3);
   text-transform:uppercase;margin-top:1px}
+.brand-sub-hero{font-size:clamp(13px,2.4vw,16px);letter-spacing:.32em;margin-top:4px}
 .navi{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:var(--r-sm);
   color:var(--text-2);font-weight:550;font-size:14.5px;transition:background .15s,color .15s;width:100%;text-align:left}
 .navi:hover{background:var(--bg-3);color:var(--text)}
@@ -19987,7 +19988,7 @@ const Wordmark = ({ hero = false }) => (
       <rect x="10.8" y="9" width="4.5" height="14" rx="1.4" fill="var(--amber)" opacity=".8" />
       <rect x="18.5" y="3" width="4.5" height="20" rx="1.4" fill="var(--amber)" />
     </svg>
-    <div><div className={hero ? "brand-word brand-word-hero" : "brand-word"}>ASCEND</div><div className="brand-sub">MLS 2029</div></div>
+    <div><div className={hero ? "brand-word brand-word-hero" : "brand-word"}>ASCEND</div><div className={hero ? "brand-sub brand-sub-hero" : "brand-sub"}>MLS 2029</div></div>
   </div>
 );
 
@@ -28662,8 +28663,21 @@ export default function App() {
   useEffect(() => {
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Pacifico&display=swap";
+    link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap";
     document.head.appendChild(link);
+
+    // Pacifico (the splash-screen "ASCEND" wordmark) gets its own stylesheet
+    // with display=block instead of swap. On the shared Inter/JetBrains link,
+    // display=swap means the fallback font shows immediately and then swaps
+    // to the webfont once it loads - fine for body copy, but on the big
+    // one-word logo it reads as two different fonts flashing in sequence.
+    // display=block instead hides the text for a very brief moment (it's on
+    // screen for seconds anyway, during the loading spinner) so only Pacifico
+    // ever actually appears - no visible swap.
+    const scriptLink = document.createElement("link");
+    scriptLink.rel = "stylesheet";
+    scriptLink.href = "https://fonts.googleapis.com/css2?family=Pacifico&display=block";
+    document.head.appendChild(scriptLink);
 
     let viewport = document.querySelector('meta[name="viewport"]');
     if (!viewport) { viewport = document.createElement("meta"); viewport.name = "viewport"; document.head.appendChild(viewport); }
