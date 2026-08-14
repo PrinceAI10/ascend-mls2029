@@ -140,7 +140,7 @@ html, body {
 .topbar{position:sticky;top:0;z-index:20;background:rgba(10,15,26,.82);
   backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:0}
 .topbar-inner{max-width:1080px;margin:0 auto;width:100%;
-  padding:13px 30px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  padding:13px 30px;display:flex;align-items:center;gap:14px;flex-wrap:nowrap}
 .content{padding:26px 30px 60px;max-width:100%;overflow-x:hidden}
 .content>.view{max-width:1080px;margin:0 auto;width:100%}
 .view{animation:fadeUp .32s cubic-bezier(.2,.7,.3,1) both;max-width:100%;overflow-x:hidden}
@@ -180,6 +180,8 @@ html, body {
   .qbox{width:46px}
   .topbar-inner .chip{display:none}
   .topbar-inner .iconbtn{width:34px;height:34px}
+  .topbar-inner .brand-sub{display:none}
+  .topbar-inner .brand{gap:6px}
   /* Badges: on phones there's no room to swipe sideways and nothing hints
      that you can, so wrap them onto new rows instead - everything is visible
      just by scrolling the page down, the way people already expect. */
@@ -187,9 +189,17 @@ html, body {
   .badge{width:72px}
   .badge-medal{width:56px;height:56px}
   .topbar-inner .avatar{width:30px;height:30px}
+  .topbar-inner .username{display:none}
+  .topbar-inner .topbar-icons{gap:6px}
 }
 .brand{display:flex;align-items:center;gap:9px;flex-shrink:0}
 .brand-word{font-weight:800;letter-spacing:.02em;font-size:17px}
+.brand-hero{gap:12px}
+.brand-word-hero{font-family:'Helvetica Neue',Arial,system-ui,sans-serif;font-weight:900;
+  font-size:clamp(26px,6vw,34px);letter-spacing:-0.04em;font-style:italic;
+  background:linear-gradient(120deg,var(--text) 0%,var(--amber) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1}
 .brand-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--text-3);
   text-transform:uppercase;margin-top:1px}
 .navi{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:var(--r-sm);
@@ -19613,6 +19623,45 @@ const rankOf = (xp) => {
 const courseById = (id) => COURSES.find((c) => c.id === id);
 const todayKey = () => new Date().toISOString().slice(0, 10);
 const shift = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+// ISO-week key (e.g. "2026-W07") so the weekly recap card shows once per
+// calendar week and naturally resets itself the following Monday - no
+// separate "last shown" timestamp to maintain.
+const weekKey = (date = new Date()) => {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNum = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return `${d.getUTCFullYear()}-W${String(weekNum).padStart(2, "0")}`;
+};
+// Builds the weekly recap: days studied in the last 7 days (from the
+// dailyDone calendar, which is already the source of truth for the streak),
+// XP earned in that span (from the timestamped ascend_xp_history log kept
+// per-user in localStorage - the only place XP is recorded with a
+// timestamp), and the current streak. Anything we can't derive accurately
+// (e.g. topics completed have no timestamp) is deliberately left out rather
+// than guessed.
+function buildWeeklyRecap(progress, uid) {
+  const done = progress?.dailyDone || {};
+  let daysActive = 0;
+  for (let i = 0; i < 7; i++) {
+    if (done[shift(-i)]) daysActive++;
+  }
+  let xpThisWeek = null;
+  try {
+    const hist = JSON.parse(localStorage.getItem("ascend_xp_history") || "{}");
+    const myId = uid || ("local-" + String(progress?.name || "").toLowerCase().replace(/[^a-z0-9]/g, ""));
+    const mine = (hist[myId] || []).slice().sort((a, b) => a.time - b.time);
+    if (mine.length) {
+      const weekAgo = Date.now() - 7 * 86400000;
+      let baseline = 0;
+      for (const h of mine) { if (h.time <= weekAgo) baseline = h.xp; else break; }
+      const latest = mine[mine.length - 1].xp;
+      xpThisWeek = Math.max(0, latest - baseline);
+    }
+  } catch {}
+  return { daysActive, xpThisWeek, streak: progress?.streak || 0 };
+}
 // Counts consecutive filled days in the study calendar, walking backward from
 // endDateKey (inclusive). This is the source of truth for "how long is the
 // real streak" - it reads the calendar itself rather than trusting a single
@@ -19928,14 +19977,17 @@ function Ring({ value, size = 46, stroke = 5, color = "var(--amber)" }) {
   );
 }
 
-const Wordmark = () => (
-  <div className="brand">
-    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden>
+// hero=true is used on the splash/loading screen (logo + spinner) - a bigger,
+// heavier "trending" treatment (tight tracking, extra-bold weight) instead of
+// the compact topbar wordmark.
+const Wordmark = ({ hero = false }) => (
+  <div className={hero ? "brand brand-hero" : "brand"}>
+    <svg width={hero ? 34 : 26} height={hero ? 34 : 26} viewBox="0 0 26 26" aria-hidden>
       <rect x="3" y="15" width="4.5" height="8" rx="1.4" fill="var(--amber)" opacity=".55" />
       <rect x="10.8" y="9" width="4.5" height="14" rx="1.4" fill="var(--amber)" opacity=".8" />
       <rect x="18.5" y="3" width="4.5" height="20" rx="1.4" fill="var(--amber)" />
     </svg>
-    <div><div className="brand-word">ASCEND</div><div className="brand-sub">MLS 2029</div></div>
+    <div><div className={hero ? "brand-word brand-word-hero" : "brand-word"}>ASCEND</div><div className="brand-sub">MLS 2029</div></div>
   </div>
 );
 
@@ -22204,17 +22256,18 @@ function SearchView({ app }) {
           }
           if (c) {
             for (const n of (c.note || [])) {
-              if (n.q.toLowerCase().includes(needle)) { hits.push({ type: "Lesson", snippet: n.q }); break; }
+              if (n.q.toLowerCase().includes(needle)) { hits.push({ type: "Lesson", snippet: highlightMatch(n.q, q) }); break; }
               if (n.body.toLowerCase().includes(needle)) { hits.push({ type: "Lesson", snippet: highlightMatch(n.body, q) }); break; }
             }
             for (const th of (c.theory || [])) {
-              if (th.q.toLowerCase().includes(needle) || th.a.toLowerCase().includes(needle)) {
-                hits.push({ type: "Theory Q&A", snippet: th.q });
-                break;
-              }
+              if (th.q.toLowerCase().includes(needle)) { hits.push({ type: "Theory Q&A", snippet: highlightMatch(th.q, q) }); break; }
+              if (th.a.toLowerCase().includes(needle)) { hits.push({ type: "Theory Q&A", snippet: highlightMatch(th.a, q) }); break; }
             }
             for (const m of (c.mcqs || [])) {
-              if (m.q.toLowerCase().includes(needle)) { hits.push({ type: "MCQ", snippet: m.q }); break; }
+              if (m.q.toLowerCase().includes(needle)) { hits.push({ type: "MCQ", snippet: highlightMatch(m.q, q) }); break; }
+              const optHit = (m.o || []).find((opt) => opt.toLowerCase().includes(needle));
+              if (optHit) { hits.push({ type: "MCQ option", snippet: highlightMatch(optHit, q) }); break; }
+              if (m.w && m.w.toLowerCase().includes(needle)) { hits.push({ type: "MCQ", snippet: highlightMatch(m.w, q) }); break; }
             }
           }
 
@@ -25964,6 +26017,55 @@ function motivationForToday() {
   return MOTIVATION_QUOTES[dayOfYear % MOTIVATION_QUOTES.length];
 }
 
+// Dismissible weekly summary shown on the home screen. Shows once per
+// calendar week per user (tracked via weekKey in localStorage), then stays
+// hidden until the following week rolls around - it never nags on every
+// resume the way a plain "always show" card would.
+function WeeklyRecapCard({ app }) {
+  const wk = weekKey();
+  const storageKey = "ascend_recap_dismissed_" + (app.supaUid || app.progress.name || "guest");
+  const [dismissed, setDismissed] = useState(() => {
+    try { return localStorage.getItem(storageKey) === wk; } catch { return false; }
+  });
+  const recap = buildWeeklyRecap(app.progress, app.supaUid);
+
+  if (dismissed || recap.daysActive === 0) return null;
+
+  const dismiss = () => {
+    setDismissed(true);
+    try { localStorage.setItem(storageKey, wk); } catch {}
+  };
+
+  return (
+    <div className="card" style={{ marginTop: 16, borderLeft: "3px solid var(--amber)", position: "relative" }}>
+      <button
+        onClick={dismiss}
+        aria-label="Dismiss weekly recap"
+        style={{ position: "absolute", top: 10, right: 10, background: "none", border: "none", cursor: "pointer", color: "var(--text-3)", padding: 4, display: "flex" }}
+      >
+        <Ic.x p={16} />
+      </button>
+      <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 10 }}>Your week</div>
+      <div style={{ display: "flex", gap: 22, flexWrap: "wrap" }}>
+        <div>
+          <div className="mono" style={{ fontWeight: 800, fontSize: 22, color: "var(--text)" }}>{recap.daysActive}<span style={{ fontSize: 13, color: "var(--text-3)", fontWeight: 600 }}> / 7</span></div>
+          <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 2 }}>days active</div>
+        </div>
+        {recap.xpThisWeek !== null && (
+          <div>
+            <div className="mono" style={{ fontWeight: 800, fontSize: 22, color: "var(--amber)" }}>+{recap.xpThisWeek}</div>
+            <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 2 }}>XP earned</div>
+          </div>
+        )}
+        <div>
+          <div className="mono" style={{ fontWeight: 800, fontSize: 22, color: "var(--text)" }}>{recap.streak}</div>
+          <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 2 }}>day streak</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function HomeView({ app }) {
   const jsDay = new Date().getDay();
   const todayCourse = courseById(DAILY[jsDay].courseId);
@@ -26037,6 +26139,8 @@ function HomeView({ app }) {
     }}>Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
   </div>
 </div>
+
+      <WeeklyRecapCard app={app} />
 
       {(() => {
         const mq = motivationForToday();
@@ -29362,7 +29466,7 @@ export default function App() {
     <div className={rootCls}>
       <style>{CSS}</style>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18, minHeight: "100vh" }}>
-        <Wordmark />
+        <Wordmark hero />
         <div className="spinner-ring" />
       </div>
     </div>
@@ -29456,8 +29560,8 @@ export default function App() {
               >
                 <Ic.menu p={18} />
               </button>
-              <div className="onlymobile" style={{ flex: 1 }}><Wordmark /></div>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
+              <div className="onlymobile" style={{ flex: 1, minWidth: 0 }}><Wordmark /></div>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }} className="topbar-icons">
                 <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
                 <button className="iconbtn" onClick={() => go("search")} title="Search all courses"><Ic.search p={17} /></button>
                 <button className="iconbtn" onClick={toggleFontScale} title={"Text size: " + (fontScale === "small" ? "Small" : fontScale === "large" ? "Large" : "Normal") + " (tap to change)"}><Ic.textSize p={17} /></button>
@@ -29465,7 +29569,7 @@ export default function App() {
                 <button className="iconbtn" onClick={openNotif} title="Notifications"><Ic.bell p={18} />{unreadCount > 0 && <span className="notif-badge">{unreadCount > 9 ? "9+" : unreadCount}</span>}</button>
                 <span className="chip"><span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP</span>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
+                  <span className="username" style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
                   <button className="avatar" onClick={setName} title="Click to change your username">{progress?.name?.[0]?.toUpperCase() || "?"}</button>
                 </div>
               </div>
