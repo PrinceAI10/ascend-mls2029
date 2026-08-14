@@ -20965,31 +20965,19 @@ function TopicFlowDiagram({ title, context }) {
 function TopicView({ app }) {
   const t = contentFor(app.courseId, app.topicId);
   const c = courseById(app.courseId);
-  if (!t) {
-    const title = (TOPICS[app.courseId] || [])[app.topicId] || "This topic";
-    return (
-      <div className="view">
-        <button className="back" onClick={() => app.go("course", { courseId: app.courseId })}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> {c ? c.name : "Back"}</button>
-        <div className="eyebrow">{c ? c.code : ""} · Preview</div>
-        <h1 style={{ fontSize: "clamp(22px,4vw,30px)", margin: "8px 0 12px" }}>{title}</h1>
-        <div className="card">
-          <div style={{ fontWeight: 700, marginBottom: 6, fontSize: 16 }}>This topic is being written.</div>
-          <p style={{ color: "var(--text-2)", margin: 0, fontSize: 14.5, lineHeight: 1.7 }}>Nothing in ASCEND is locked - every topic is open. This one is in the build queue and arrives with the full lesson, the AI tutor, theory questions and its MCQ bank.</p>
-        </div>
-      </div>
-    );
-  }
-  
-  const noteContext = (t.note || []).map((n) => n.q + " " + n.body).join("\n\n").slice(0, 5000);
-  
-      // READING TIMER
+
+  // READING TIMER - all hooks must run on every render, regardless of
+  // whether this topic has content yet (see the !t branch below), or React
+  // throws "rendered fewer hooks than expected" (error #310) when a user
+  // navigates between a written topic and an unwritten one.
   const [readTime, setReadTime] = useState(0);
   const [readingAwarded, setReadingAwarded] = useState(false);
   const [readingNotif, setReadingNotif] = useState(false);
   const timerRef = useRef(null);
-  
+
   // READING TIMER - Save state
   useEffect(() => {
+    if (!t) return;
     try {
       const state = {
         readTime: readTime,
@@ -21000,10 +20988,11 @@ function TopicView({ app }) {
     } catch (error) {
       // Silently fail
     }
-  }, [readTime, readingAwarded, readingNotif, app.courseId, app.topicId]);
+  }, [t, readTime, readingAwarded, readingNotif, app.courseId, app.topicId]);
 
   // READING TIMER - Restore state on mount
   useEffect(() => {
+    if (!t) return;
     try {
       const saved = sessionStorage.getItem('ascend_topic_read_' + app.courseId + '_' + app.topicId);
       if (saved) {
@@ -21021,10 +21010,11 @@ function TopicView({ app }) {
     } catch (error) {
       // Silently fail
     }
-  }, [app.courseId, app.topicId]);
+  }, [t, app.courseId, app.topicId]);
 
   // READING TIMER - Timer functionality
   useEffect(() => {
+    if (!t) return;
     // Reset when topic changes
     setReadTime(0);
     setReadingAwarded(false);
@@ -21054,8 +21044,25 @@ function TopicView({ app }) {
     return function cleanup() {
       clearInterval(timer);
     };
-  }, [app.courseId, app.topicId, app.progress?.streak, readingAwarded]);
-  
+  }, [t, app.courseId, app.topicId, app.progress?.streak, readingAwarded]);
+
+  if (!t) {
+    const title = (TOPICS[app.courseId] || [])[app.topicId] || "This topic";
+    return (
+      <div className="view">
+        <button className="back" onClick={() => app.go("course", { courseId: app.courseId })}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> {c ? c.name : "Back"}</button>
+        <div className="eyebrow">{c ? c.code : ""} · Preview</div>
+        <h1 style={{ fontSize: "clamp(22px,4vw,30px)", margin: "8px 0 12px" }}>{title}</h1>
+        <div className="card">
+          <div style={{ fontWeight: 700, marginBottom: 6, fontSize: 16 }}>This topic is being written.</div>
+          <p style={{ color: "var(--text-2)", margin: 0, fontSize: 14.5, lineHeight: 1.7 }}>Nothing in ASCEND is locked - every topic is open. This one is in the build queue and arrives with the full lesson, the AI tutor, theory questions and its MCQ bank.</p>
+        </div>
+      </div>
+    );
+  }
+
+  const noteContext = (t.note || []).map((n) => n.q + " " + n.body).join("\n\n").slice(0, 5000);
+
   return (
     <div className="view">
       <button className="back" onClick={() => app.go("course", { courseId: t.courseId })}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> {c.name}</button>
