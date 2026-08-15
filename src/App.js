@@ -21730,64 +21730,104 @@ var LockIcon = function(color) {
 /* Slim banner shown while offline. Notes, materials, and saved questions are
    cached by the service worker and keep working; this just says so plainly
    so nobody thinks the app is broken, and makes clear AI/diagrams are paused. */
-function WelcomeTour({ onDone }) {
-  const [step, setStep] = useState(0);
-  const cards = [
-    {
-      icon: "home",
-      title: "Welcome to ASCEND",
-      body: "Built by Prince, Ansah, Jeffery and Dacosta - the climb to First Class, together. This quick tour covers the basics in under a minute. Tap Next to move on, or Skip any time."
-    },
-    {
-      icon: "target",
-      title: "Earn XP as you learn",
-      body: "Every lesson, quiz, and daily question you complete earns XP. Watch your rank climb as XP adds up - it's a running record of the work you've put in."
-    },
-    {
-      icon: "flame",
-      title: "Keep your streak alive",
-      body: "Answer the Daily question correctly and your streak grows by one. Miss a day and it resets - so a quick daily visit is worth it, even on a busy day."
-    },
-    {
-      icon: "book",
-      title: "Find your way around",
-      body: "The sidebar is grouped into Learn (courses, daily, slides), Practice (review, study tools, passco), Community (ranks, forum), and More. Everything has a home."
-    },
-    {
-      icon: "star",
-      title: "Study Tools, on demand",
-      body: "Generate flashcards, mind maps, and flow diagrams for any topic - type one in, or paste your own notes, and let the AI build a study aid around it."
-    },
-    {
-      icon: "file",
-      title: "Drill real past questions with Passco",
-      body: "Passco holds real past exam papers, broken into manageable sets. Practice mode reveals answers instantly; Exam mode times you and reviews everything at the end."
-    }
+function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
+  const steps = [
+    { selector: null, title: "Welcome to ASCEND", body: "Built by Prince, Ansah, Jeffery and Dacosta - the climb to First Class, together. This quick tour points out the basics. Tap Next to move on, or Skip any time." },
+    { selector: '[data-tour="xp"]', title: "Earn XP as you learn", body: "Every lesson, quiz, and daily question you complete earns XP. Watch your rank climb as XP adds up." },
+    { selector: '[data-tour="streak"]', title: "Keep your streak alive", body: "Answer the Daily question correctly and your streak grows by one. Miss a day and it resets." },
+    { selector: '[data-tour="nav-tools"]', title: "Study Tools, on demand", body: "Generate flashcards, mind maps, and flow diagrams for any topic here - type one in, or paste your own notes." },
+    { selector: '[data-tour="nav-papers"]', title: "Drill real past questions", body: "Passco holds real past exam papers, broken into sets. Practice mode reveals answers instantly; Exam mode times you and reviews at the end." },
+    { selector: '[data-tour="quick-actions"]', title: "Jump back in fast", body: "These four buttons on Home get you straight to Continue studying, the Daily question, Passco, or Ranks." }
   ];
-  const c = cards[step];
-  const Icon = Ic[c.icon];
+  const [step, setStep] = useState(0);
+  const [rect, setRect] = useState(null);
+  const wasMenuOpenedByTour = useRef(false);
+
+  const s = steps[step];
   const isFirst = step === 0;
-  const isLast = step === cards.length - 1;
+  const isLast = step === steps.length - 1;
+
+  useEffect(() => {
+    let cancelled = false;
+    const isMobile = window.innerWidth < 900;
+    const needsSidebar = s.selector && s.selector.includes("nav-");
+    if (isMobile) {
+      if (needsSidebar && !menuOpen) {
+        wasMenuOpenedByTour.current = true;
+        setMenuOpen(true);
+      } else if (!needsSidebar && wasMenuOpenedByTour.current) {
+        wasMenuOpenedByTour.current = false;
+        setMenuOpen(false);
+      }
+    }
+    const measure = () => {
+      if (cancelled) return;
+      if (!s.selector) { setRect(null); return; }
+      const el = document.querySelector(s.selector);
+      if (el) {
+        el.scrollIntoView({ block: "center", behavior: "smooth" });
+        const r = el.getBoundingClientRect();
+        setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
+      } else {
+        setRect(null);
+      }
+    };
+    const t = setTimeout(measure, 260);
+    window.addEventListener("resize", measure);
+    window.addEventListener("scroll", measure, true);
+    return () => { cancelled = true; clearTimeout(t); window.removeEventListener("resize", measure); window.removeEventListener("scroll", measure, true); };
+  }, [step]);
+
+  const finish = () => {
+    if (wasMenuOpenedByTour.current) { setMenuOpen(false); wasMenuOpenedByTour.current = false; }
+    onDone();
+  };
+
+  const pad = 8;
+  const highlight = rect ? {
+    position: "fixed",
+    top: rect.top - pad, left: rect.left - pad,
+    width: rect.width + pad * 2, height: rect.height + pad * 2,
+    borderRadius: 12, border: "2px solid var(--amber)",
+    boxShadow: "0 0 0 4000px rgba(6,9,16,.72), 0 0 20px rgba(245,185,63,.35)",
+    zIndex: 201, pointerEvents: "none", transition: "top .25s, left .25s, width .25s, height .25s"
+  } : {
+    position: "fixed", inset: 0, background: "rgba(6,9,16,.72)", zIndex: 201, pointerEvents: "none"
+  };
+
+  // Position tooltip near the highlighted rect, flipping side if it would overflow.
+  let tipStyle = { position: "fixed", zIndex: 202, maxWidth: 340, width: "calc(100% - 40px)" };
+  if (rect) {
+    const spaceBelow = window.innerHeight - (rect.top + rect.height);
+    const below = spaceBelow > 220 || rect.top < 220;
+    if (below) tipStyle.top = rect.top + rect.height + pad + 14;
+    else tipStyle.bottom = window.innerHeight - (rect.top - pad) + 14;
+    let left = rect.left;
+    left = Math.max(16, Math.min(left, window.innerWidth - 356));
+    tipStyle.left = left;
+  } else {
+    tipStyle.top = "50%"; tipStyle.left = "50%"; tipStyle.transform = "translate(-50%,-50%)";
+  }
+
   return (
-    <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(6,9,16,.72)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
-      <div className="card" style={{ maxWidth: 380, width: "100%", padding: "28px 24px", textAlign: "center" }}>
-        <div style={{ width: 52, height: 52, borderRadius: 14, background: "var(--amber-dim)", color: "var(--amber)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
-          <Icon p={26} />
-        </div>
-        <h3 style={{ fontSize: 19, margin: "0 0 8px" }}>{c.title}</h3>
-        <p style={{ color: "var(--text-2)", fontSize: 14, lineHeight: 1.6, margin: "0 0 22px" }}>{c.body}</p>
-        <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 20 }}>
-          {cards.map((_, i) => (
-            <span key={i} style={{ width: i === step ? 18 : 6, height: 6, borderRadius: 3, background: i === step ? "var(--amber)" : "var(--line)", transition: "width .2s" }} />
+    <>
+      <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "transparent" }} onClick={(e) => e.stopPropagation()} />
+      <div style={highlight} />
+      <div className="card" style={{ ...tipStyle, padding: "20px 20px 16px" }}>
+        <h3 style={{ fontSize: 17, margin: "0 0 6px" }}>{s.title}</h3>
+        <p style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6, margin: "0 0 16px" }}>{s.body}</p>
+        <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 14 }}>
+          {steps.map((_, i) => (
+            <span key={i} style={{ width: i === step ? 16 : 6, height: 6, borderRadius: 3, background: i === step ? "var(--amber)" : "var(--line)", transition: "width .2s" }} />
           ))}
         </div>
         <div style={{ display: "flex", gap: 6 }}>
           {!isFirst && <button className="btn btn-g btn-sm" style={{ flex: 1 }} onClick={() => setStep(step - 1)}>Back</button>}
-          {!isLast && <button className="btn btn-g btn-sm" style={{ flex: 1 }} onClick={onDone}>Skip</button>}
-          <button className="btn btn-a btn-sm" style={{ flex: isLast ? 2 : 1.4 }} onClick={() => isLast ? onDone() : setStep(step + 1)}>{isLast ? "Let's go" : "Next"}</button>
+          {!isLast && <button className="btn btn-g btn-sm" style={{ flex: 1 }} onClick={finish}>Skip</button>}
+          <button className="btn btn-a btn-sm" style={{ flex: isLast ? 2 : 1.4 }} onClick={() => isLast ? finish() : setStep(step + 1)}>{isLast ? "Let's go" : "Next"}</button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -26263,7 +26303,7 @@ function HomeView({ app }) {
         </div>
       )}
 
-      <div className="grid g4" style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
+      <div className="grid g4" data-tour="quick-actions" style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
         <button className="card hover" style={{ textAlign: "center", padding: "14px 8px" }} onClick={() => resumeTopic && resumeCourse ? app.go("topic", { courseId: resumeTopic.courseId, topicId: resumeTopic.topicIndex }) : app.go("courses")}>
           <Ic.target p={20} />
           <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6 }}>Continue</div>
@@ -29563,7 +29603,7 @@ export default function App() {
         lastGroup = n.group;
       }
       const Icon = Ic[n.icon];
-      out.push(<button key={n.key} className={"navi " + (activeNav === n.key ? "on" : "")} onClick={() => onNav(n.key)}><Icon p={19} />{n.label}</button>);
+      out.push(<button key={n.key} data-tour={"nav-" + n.key} className={"navi " + (activeNav === n.key ? "on" : "")} onClick={() => onNav(n.key)}><Icon p={19} />{n.label}</button>);
     });
     return out;
   };
@@ -29699,7 +29739,7 @@ export default function App() {
       <style>{`@keyframes rankUpPop{0%{transform:scale(.75);opacity:0}60%{transform:scale(1.04);opacity:1}100%{transform:scale(1)}}`}</style>
       {resumeOverlay}
       {rankUpOverlay}
-      {showWelcomeTour && <WelcomeTour onDone={() => setShowWelcomeTour(false)} />}
+      {showWelcomeTour && <SpotlightTour onDone={() => setShowWelcomeTour(false)} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />}
       
       <div className="shell">
         <aside className="side">
@@ -29707,7 +29747,7 @@ export default function App() {
           {navButtons(go)}
           <div style={{ marginTop: "auto", padding: "14px 10px 0", borderTop: "1px solid var(--line)" }}>
             <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
-            <button className="btn btn-g btn-sm" style={{ width: "100%", marginBottom: 8 }} onClick={() => setShowWelcomeTour(true)}>Replay tour</button>
+            <button className="btn btn-g btn-sm" style={{ width: "100%", marginBottom: 8 }} onClick={() => { go("home"); setShowWelcomeTour(true); }}>Replay tour</button>
             <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
           </div>
         </aside>
@@ -29724,12 +29764,12 @@ export default function App() {
               </button>
               <div className="onlymobile" style={{ flex: 1, minWidth: 0 }}><Wordmark /></div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }} className="topbar-icons">
-                <span className="chip streakchip"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
+                <span className="chip streakchip" data-tour="streak"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
                 <button className="iconbtn" onClick={() => go("search")} title="Search all courses"><Ic.search p={17} /></button>
                 <button className="iconbtn" onClick={toggleFontScale} title={"Text size: " + (fontScale === "small" ? "Small" : fontScale === "large" ? "Large" : "Normal") + " (tap to change)"}><Ic.textSize p={17} /></button>
                 <button className="iconbtn" onClick={toggleTheme} title={theme === "system" ? "Theme: System (follows day/night)" : theme === "light" ? "Theme: Light" : "Theme: Dark"}>{theme === "system" ? <Ic.monitor p={17} /> : theme === "light" ? <Ic.sun p={17} /> : <Ic.moon p={17} />}</button>
                 <button className="iconbtn" onClick={openNotif} title="Notifications"><Ic.bell p={18} />{unreadCount > 0 && <span className="notif-badge">{unreadCount > 9 ? "9+" : unreadCount}</span>}</button>
-                <span className="chip"><span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP</span>
+                <span className="chip" data-tour="xp"><span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP</span>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <span className="username" style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
                   <button className="avatar" onClick={setName} title="Click to change your username">{progress?.name?.[0]?.toUpperCase() || "?"}</button>
@@ -29840,7 +29880,7 @@ export default function App() {
             {navButtons(go)}
             <div style={{ marginTop: "auto", padding: "14px 18px", borderTop: "1px solid var(--line)" }}>
               <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
-              <button className="btn btn-g btn-sm" style={{ width: "100%", marginBottom: 8 }} onClick={() => { setShowWelcomeTour(true); setMenuOpen(false); }}>Replay tour</button>
+              <button className="btn btn-g btn-sm" style={{ width: "100%", marginBottom: 8 }} onClick={() => { go("home"); setShowWelcomeTour(true); setMenuOpen(false); }}>Replay tour</button>
               <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
             </div>
           </div>
