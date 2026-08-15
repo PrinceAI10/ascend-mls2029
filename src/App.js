@@ -21792,14 +21792,14 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
     width: rect.width + pad * 2, height: rect.height + pad * 2,
     borderRadius: 12, border: "2px solid var(--amber)",
     boxShadow: "0 0 0 4000px rgba(6,9,16,.72), 0 0 20px rgba(245,185,63,.35)",
-    zIndex: 201, pointerEvents: "none",
+    zIndex: 1002, pointerEvents: "none",
     animation: "fadeUp .2s ease-out"
   } : {
-    position: "fixed", inset: 0, background: "rgba(6,9,16,.72)", zIndex: 201, pointerEvents: "none"
+    position: "fixed", inset: 0, background: "rgba(6,9,16,.72)", zIndex: 1002, pointerEvents: "none"
   };
 
   // Position tooltip near the highlighted rect, flipping side if it would overflow.
-  let tipStyle = { position: "fixed", zIndex: 202, maxWidth: 340, width: "calc(100% - 40px)" };
+  let tipStyle = { position: "fixed", zIndex: 1003, maxWidth: 340, width: "calc(100% - 40px)" };
   if (rect) {
     const spaceBelow = window.innerHeight - (rect.top + rect.height);
     const below = spaceBelow > 220 || rect.top < 220;
@@ -21814,7 +21814,7 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
 
   return (
     <>
-      <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "transparent" }} onClick={(e) => e.stopPropagation()} />
+      <div style={{ position: "fixed", inset: 0, zIndex: 1001, background: "transparent" }} onClick={(e) => e.stopPropagation()} />
       <div key={step} style={highlight} />
       <div className="card" style={{ ...tipStyle, padding: "20px 20px 16px" }}>
         <h3 style={{ fontSize: 17, margin: "0 0 6px" }}>{s.title}</h3>
