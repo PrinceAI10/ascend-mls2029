@@ -20977,6 +20977,11 @@ function QuizView({ app }) {
     else finish(); 
   };
   
+  const prevQ = () => {
+    setReveal(mode === "practice" && answers[i - 1] !== undefined);
+    if (i - 1 >= 0) setI(i - 1);
+  };
+
   const score = q.reduce((n, item, idx) => n + (answers[idx] === item.a ? 1 : 0), 0);
   const mm = String(Math.floor(left / 60)).padStart(2, "0"), ss = String(left % 60).padStart(2, "0");
   const emm = String(Math.floor(elapsed / 60)).padStart(2, "0"), ess = String(elapsed % 60).padStart(2, "0");
@@ -20994,12 +20999,12 @@ function QuizView({ app }) {
           <button className="card hover" style={{ textAlign: "left" }} onClick={() => startQuiz("practice")} disabled={building}>
             <Ic.target p={22} />
             <h3 style={{ fontSize: 17, margin: "10px 0 4px" }}>Practice mode</h3>
-            <p style={{ color: "var(--text-2)", fontSize: 14, margin: 0 }}>Instant feedback after every question.</p>
+            <p style={{ color: "var(--text-2)", fontSize: 14, margin: 0 }}>See the answer and explanation the instant you tap.</p>
           </button>
           <button className="card hover" style={{ textAlign: "left" }} onClick={() => startQuiz("exam")} disabled={building}>
             <Ic.clock p={22} />
             <h3 style={{ fontSize: 17, margin: "10px 0 4px" }}>Exam mode</h3>
-            <p style={{ color: "var(--text-2)", fontSize: 14, margin: 0 }}>Timed, graded, full review at the end.</p>
+            <p style={{ color: "var(--text-2)", fontSize: 14, margin: 0 }}>Timed and graded — explanations show together at the end.</p>
           </button>
         </div>
         {building && <div className="card" style={{ marginTop: 14, color: "var(--text-2)" }}>Preparing a unique {PRACTICE_QUESTION_COUNT}-question set for this topic...</div>}
@@ -21075,7 +21080,8 @@ function QuizView({ app }) {
           <div style={{ fontSize: 14, color: "var(--text-2)" }}><strong style={{ color: chosen === item.a ? "var(--good)" : "var(--bad)" }}>{chosen === item.a ? "Correct. " : "Not quite. "}</strong>{item.w}</div>
         </div>
       )}
-      <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 18 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", gap: 10, marginTop: 18 }}>
+        <button className="btn btn-g" onClick={prevQ} disabled={i === 0}>Previous</button>
         <button className="btn btn-a" disabled={(mode === "exam" && chosen === undefined) || (mode === "practice" && !reveal)} onClick={nextQ}>{i + 1 === bankLen ? "Submit" : "Next"}</button>
       </div>
     </div>
@@ -21724,6 +21730,67 @@ var LockIcon = function(color) {
 /* Slim banner shown while offline. Notes, materials, and saved questions are
    cached by the service worker and keep working; this just says so plainly
    so nobody thinks the app is broken, and makes clear AI/diagrams are paused. */
+function WelcomeTour({ onDone }) {
+  const [step, setStep] = useState(0);
+  const cards = [
+    {
+      icon: "home",
+      title: "Welcome to ASCEND",
+      body: "Built by Prince, Ansah, Jeffery and Dacosta - the climb to First Class, together. This quick tour covers the basics in under a minute. Tap Next to move on, or Skip any time."
+    },
+    {
+      icon: "target",
+      title: "Earn XP as you learn",
+      body: "Every lesson, quiz, and daily question you complete earns XP. Watch your rank climb as XP adds up - it's a running record of the work you've put in."
+    },
+    {
+      icon: "flame",
+      title: "Keep your streak alive",
+      body: "Answer the Daily question correctly and your streak grows by one. Miss a day and it resets - so a quick daily visit is worth it, even on a busy day."
+    },
+    {
+      icon: "book",
+      title: "Find your way around",
+      body: "The sidebar is grouped into Learn (courses, daily, slides), Practice (review, study tools, passco), Community (ranks, forum), and More. Everything has a home."
+    },
+    {
+      icon: "star",
+      title: "Study Tools, on demand",
+      body: "Generate flashcards, mind maps, and flow diagrams for any topic - type one in, or paste your own notes, and let the AI build a study aid around it."
+    },
+    {
+      icon: "file",
+      title: "Drill real past questions with Passco",
+      body: "Passco holds real past exam papers, broken into manageable sets. Practice mode reveals answers instantly; Exam mode times you and reviews everything at the end."
+    }
+  ];
+  const c = cards[step];
+  const Icon = Ic[c.icon];
+  const isFirst = step === 0;
+  const isLast = step === cards.length - 1;
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(6,9,16,.72)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
+      <div className="card" style={{ maxWidth: 380, width: "100%", padding: "28px 24px", textAlign: "center" }}>
+        <div style={{ width: 52, height: 52, borderRadius: 14, background: "var(--amber-dim)", color: "var(--amber)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+          <Icon p={26} />
+        </div>
+        <h3 style={{ fontSize: 19, margin: "0 0 8px" }}>{c.title}</h3>
+        <p style={{ color: "var(--text-2)", fontSize: 14, lineHeight: 1.6, margin: "0 0 22px" }}>{c.body}</p>
+        <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 20 }}>
+          {cards.map((_, i) => (
+            <span key={i} style={{ width: i === step ? 18 : 6, height: 6, borderRadius: 3, background: i === step ? "var(--amber)" : "var(--line)", transition: "width .2s" }} />
+          ))}
+        </div>
+        <div style={{ display: "flex", gap: 6 }}>
+          {!isFirst && <button className="btn btn-g btn-sm" style={{ flex: 1 }} onClick={() => setStep(step - 1)}>Back</button>}
+          {!isLast && <button className="btn btn-g btn-sm" style={{ flex: 1 }} onClick={onDone}>Skip</button>}
+          <button className="btn btn-a btn-sm" style={{ flex: isLast ? 2 : 1.4 }} onClick={() => isLast ? onDone() : setStep(step + 1)}>{isLast ? "Let's go" : "Next"}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function OfflineBanner() {
   return (
     <div style={{
@@ -25261,7 +25328,8 @@ function PasscoPicker({ onStart, chunk, passcoScores }) {
                     var sk = `${paper.id}_${start}_${end}_${mode}`;
                     var prevScore = scores[sk];
                     return (
-                      <button key={i} className="btn btn-sm" style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid " + (prevScore ? "var(--amber)" : "var(--line)"), display: "flex", flexDirection: "column", alignItems: "center", gap: 2, lineHeight: 1.2 }} onClick={function() { onStart(paper, start, end, mode); }}>
+                      <button key={i} className="btn btn-sm" style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid " + (prevScore ? "var(--amber)" : "var(--line)"), display: "flex", flexDirection: "column", alignItems: "center", gap: 2, lineHeight: 1.2, position: "relative" }} onClick={function() { onStart(paper, start, end, mode); }}>
+                        {prevScore && prevScore.pct >= 70 && <span style={{ position: "absolute", top: -6, right: -6, width: 14, height: 14, borderRadius: "50%", background: "var(--good)", color: "#08210F", fontSize: 9.5, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1 }}>✓</span>}
                         <span>Q{start + 1}-{end}</span>
                         {prevScore && <span className="mono" style={{ fontSize: 10.5, color: prevScore.pct >= 70 ? "var(--good)" : "var(--amber-2)" }}>{prevScore.pct}%</span>}
                       </button>
@@ -25941,6 +26009,16 @@ function StudyToolsView() {
       {err && <div className="card" style={{ marginTop: 14, borderColor: "var(--line-2)", color: "var(--text-2)", fontSize: 14 }}>{err}</div>}
       {busy && <div className="card" style={{ marginTop: 14 }}><span className="dots"><span /><span /><span /></span></div>}
 
+      {!busy && !err && tab === "cards" && !cards && (
+        <div className="card" style={{ marginTop: 14, color: "var(--text-2)", fontSize: 14 }}>No flashcards yet. Pick a topic or paste material above, then tap "Make flashcards".</div>
+      )}
+      {!busy && !err && tab === "map" && !map && (
+        <div className="card" style={{ marginTop: 14, color: "var(--text-2)", fontSize: 14 }}>No mind map yet. Pick a topic or paste material above, then tap "Build mind map".</div>
+      )}
+      {!busy && !err && tab === "flow" && !flowCode && (
+        <div className="card" style={{ marginTop: 14, color: "var(--text-2)", fontSize: 14 }}>No flow diagram yet. Pick a topic or paste material above, then tap "Build flow diagram".</div>
+      )}
+
       {tab === "cards" && cards && (
         <>
           <p className="note-hint" style={{ margin: "16px 0 10px" }}>Tap a card to flip it. Say the answer out loud before you flip - that is the recall that builds memory.</p>
@@ -26094,7 +26172,16 @@ function WeeklyRecapCard({ app }) {
   );
 }
 
+const WHATS_NEW = { id: "wn_2026_08_histology", text: "New: Histology question banks in Passco, plus flow-diagram and pop-up explanation fixes across the app." };
+
 function HomeView({ app }) {
+  const [whatsNewDismissed, setWhatsNewDismissed] = useState(() => {
+    try { return sessionStorage.getItem("ascend_whatsnew_dismissed") === WHATS_NEW.id; } catch { return false; }
+  });
+  const dismissWhatsNew = () => {
+    setWhatsNewDismissed(true);
+    try { sessionStorage.setItem("ascend_whatsnew_dismissed", WHATS_NEW.id); } catch {}
+  };
   const jsDay = new Date().getDay();
   const todayCourse = courseById(DAILY[jsDay].courseId);
   const doneToday = app.progress.dailyDone?.[todayKey()];
@@ -26167,6 +26254,33 @@ function HomeView({ app }) {
     }}>Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
   </div>
 </div>
+
+      {!whatsNewDismissed && (
+        <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", borderRadius: 10, background: "var(--amber-dim)", border: "1px solid var(--amber-2, var(--amber))", fontSize: 12.5 }}>
+          <Ic.star p={15} style={{ flexShrink: 0, color: "var(--amber)" }} />
+          <div style={{ flex: 1, color: "var(--text-2)" }}><strong style={{ color: "var(--text)" }}>What's new: </strong>{WHATS_NEW.text}</div>
+          <button className="iconbtn" style={{ flexShrink: 0 }} onClick={dismissWhatsNew} aria-label="Dismiss"><Ic.x p={14} /></button>
+        </div>
+      )}
+
+      <div className="grid g4" style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 8px" }} onClick={() => resumeTopic && resumeCourse ? app.go("topic", { courseId: resumeTopic.courseId, topicId: resumeTopic.topicIndex }) : app.go("courses")}>
+          <Ic.target p={20} />
+          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6 }}>Continue</div>
+        </button>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 8px" }} onClick={() => app.go("daily")}>
+          <Ic.flame p={20} />
+          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6 }}>Daily question</div>
+        </button>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 8px" }} onClick={() => app.go("papers")}>
+          <Ic.file p={20} />
+          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6 }}>Passco</div>
+        </button>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 8px" }} onClick={() => app.go("ranks")}>
+          <Ic.trophy p={20} />
+          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6 }}>Ranks</div>
+        </button>
+      </div>
 
       <WeeklyRecapCard app={app} />
 
@@ -28140,19 +28254,22 @@ function ForumView({ app }) {
 }
 
 const NAV = [
-  { key: "home", label: "Home", icon: "home" },
-  { key: "courses", label: "Courses", icon: "book" },
-  { key: "daily", label: "Daily", icon: "flame" },
-  { key: "review", label: "Review", icon: "target" },
-  { key: "tools", label: "Study Tools", icon: "star" },
-  { key: "ranks", label: "Ranks", icon: "trophy" },
-  { key: "forum", label: "Forum", icon: "chat" },
-  { key: "papers", label: "Passco", icon: "file" },
-  { key: "plan", label: "CWA", icon: "target" },
-  { key: "resources", label: "Resources", icon: "upload" },
-  { key: "slides", label: "Slides", icon: "slides" },
-  { key: "lamla", label: "LAMLA", icon: "clock" },
-  { key: "feedback", label: "Feedback", icon: "star" }
+  { key: "home", label: "Home", icon: "home", group: "Learn" },
+  { key: "courses", label: "Courses", icon: "book", group: "Learn" },
+  { key: "daily", label: "Daily", icon: "flame", group: "Learn" },
+  { key: "slides", label: "Slides", icon: "slides", group: "Learn" },
+  { key: "resources", label: "Resources", icon: "upload", group: "Learn" },
+
+  { key: "review", label: "Review", icon: "target", group: "Practice" },
+  { key: "tools", label: "Study Tools", icon: "star", group: "Practice" },
+  { key: "papers", label: "Passco", icon: "file", group: "Practice" },
+  { key: "lamla", label: "LAMLA", icon: "clock", group: "Practice" },
+
+  { key: "ranks", label: "Ranks", icon: "trophy", group: "Community" },
+  { key: "forum", label: "Forum", icon: "chat", group: "Community" },
+
+  { key: "plan", label: "CWA", icon: "target", group: "More" },
+  { key: "feedback", label: "Feedback", icon: "star", group: "More" }
 ];
 
 const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0, passcoScores: {}, achievements: [] };
@@ -28291,6 +28408,7 @@ export default function App() {
   const [rateStars, setRateStars] = useState(0);
   const [rateDismissed, setRateDismissed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showWelcomeTour, setShowWelcomeTour] = useState(false);
   const [lastTopic, setLastTopic] = useState(null);
   const [showTop, setShowTop] = useState(false);
   // App-wide online presence: tracked here at the root so a student counts as
@@ -28987,6 +29105,8 @@ export default function App() {
     } else {
       finalProgress = base;
     }
+    // Genuinely new account: no saved progress locally or in the cloud.
+    if (!localP && !cloudP) setShowWelcomeTour(true);
     setXpChange(finalProgress.xp || 0);
     setProgress(finalProgress);
     const savedLastTopic = (await store.get(lastTopicKey(acct.username))) || (await store.get(lastTopicKey("anon")));
@@ -29434,10 +29554,19 @@ export default function App() {
 
   const activeNav = ["course", "topic", "quiz"].includes(route.view) ? "courses" : route.view;
 
-  const navButtons = (onNav) => NAV.map((n) => {
-    const Icon = Ic[n.icon];
-    return <button key={n.key} className={"navi " + (activeNav === n.key ? "on" : "")} onClick={() => onNav(n.key)}><Icon p={19} />{n.label}</button>;
-  });
+  const navButtons = (onNav) => {
+    const out = [];
+    let lastGroup = null;
+    NAV.forEach((n) => {
+      if (n.group && n.group !== lastGroup) {
+        out.push(<div key={"g_" + n.group} className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-3)", padding: "12px 10px 4px", fontWeight: 700 }}>{n.group}</div>);
+        lastGroup = n.group;
+      }
+      const Icon = Ic[n.icon];
+      out.push(<button key={n.key} className={"navi " + (activeNav === n.key ? "on" : "")} onClick={() => onNav(n.key)}><Icon p={19} />{n.label}</button>);
+    });
+    return out;
+  };
 
   const render = () => {
     switch (route.view) {
@@ -29570,6 +29699,7 @@ export default function App() {
       <style>{`@keyframes rankUpPop{0%{transform:scale(.75);opacity:0}60%{transform:scale(1.04);opacity:1}100%{transform:scale(1)}}`}</style>
       {resumeOverlay}
       {rankUpOverlay}
+      {showWelcomeTour && <WelcomeTour onDone={() => setShowWelcomeTour(false)} />}
       
       <div className="shell">
         <aside className="side">
@@ -29577,6 +29707,7 @@ export default function App() {
           {navButtons(go)}
           <div style={{ marginTop: "auto", padding: "14px 10px 0", borderTop: "1px solid var(--line)" }}>
             <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
+            <button className="btn btn-g btn-sm" style={{ width: "100%", marginBottom: 8 }} onClick={() => setShowWelcomeTour(true)}>Replay tour</button>
             <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
           </div>
         </aside>
@@ -29607,6 +29738,22 @@ export default function App() {
             </div>
           </header>
           
+          {(() => {
+            const stickyTopic = lastTopic && contentFor(lastTopic.courseId, lastTopic.topicId);
+            const stickyCourse = stickyTopic ? courseById(stickyTopic.courseId) : null;
+            const onResumeTarget = route.view === "topic" && stickyTopic && route.courseId === stickyTopic.courseId && route.topicId === stickyTopic.topicIndex;
+            if (route.view === "home" || !stickyTopic || !stickyCourse || onResumeTarget) return null;
+            return (
+              <div style={{ position: "sticky", top: 0, zIndex: 15, background: "var(--bg-2)", borderBottom: "1px solid var(--line)", padding: "8px 16px", display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }} onClick={() => go("topic", { courseId: stickyTopic.courseId, topicId: stickyTopic.topicIndex })}>
+                <Ic.target p={15} style={{ flexShrink: 0, color: "var(--amber)" }} />
+                <div style={{ minWidth: 0, flex: 1, fontSize: 12.5, color: "var(--text-2)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  <strong style={{ color: "var(--text)" }}>Continue: </strong>{stickyCourse.name} · {stickyTopic.title}
+                </div>
+                <Ic.chevR p={13} style={{ flexShrink: 0, color: "var(--text-3)" }} />
+              </div>
+            );
+          })()}
+
           <div className="content">
             {isOffline && <OfflineBanner />}
             {render()}
@@ -29693,6 +29840,7 @@ export default function App() {
             {navButtons(go)}
             <div style={{ marginTop: "auto", padding: "14px 18px", borderTop: "1px solid var(--line)" }}>
               <div className="note-hint" style={{ lineHeight: 1.6, marginBottom: 10 }}>No gatekeeping.</div>
+              <button className="btn btn-g btn-sm" style={{ width: "100%", marginBottom: 8 }} onClick={() => { setShowWelcomeTour(true); setMenuOpen(false); }}>Replay tour</button>
               <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={logout}>Log out</button>
             </div>
           </div>
