@@ -21749,16 +21749,18 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
 
   useEffect(() => {
     let cancelled = false;
-    const isMobile = window.innerWidth < 900;
+    // The desktop <aside className="side"> is unconditionally display:none
+    // (see .side{display:none} in the stylesheet) - there is no width at
+    // which it's ever actually visible. Nav items only ever live in the
+    // drawer, so open it for nav-targeting steps at ANY viewport width,
+    // not just on narrow screens.
     const needsSidebar = s.selector && s.selector.includes("nav-");
-    if (isMobile) {
-      if (needsSidebar && !menuOpen) {
-        wasMenuOpenedByTour.current = true;
-        setMenuOpen(true);
-      } else if (!needsSidebar && wasMenuOpenedByTour.current) {
-        wasMenuOpenedByTour.current = false;
-        setMenuOpen(false);
-      }
+    if (needsSidebar && !menuOpen) {
+      wasMenuOpenedByTour.current = true;
+      setMenuOpen(true);
+    } else if (!needsSidebar && wasMenuOpenedByTour.current) {
+      wasMenuOpenedByTour.current = false;
+      setMenuOpen(false);
     }
     const measure = () => {
       if (cancelled) return;
