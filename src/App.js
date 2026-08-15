@@ -163,8 +163,8 @@ html, body {
 .shell{display:flex;min-height:100vh;max-width:1440px;margin:0 auto;width:100%}
 .side{display:none}
 .main{flex:1;min-width:0;display:flex;flex-direction:column;max-width:100%;overflow-x:hidden}
-.topbar{position:sticky;top:0;z-index:20;background:rgba(10,15,26,.82);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:0}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(10,15,26,.88);
+  -webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);border-bottom:1px solid var(--line);padding:0}
 .topbar-inner{max-width:1080px;margin:0 auto;width:100%;
   padding:13px 30px;display:flex;align-items:center;gap:14px;flex-wrap:nowrap}
 .content{padding:26px 30px 60px;max-width:100%;overflow-x:hidden}
@@ -337,7 +337,7 @@ textarea.pastebox:focus{border-color:var(--amber)}
   text-transform:uppercase;color:var(--good);font-weight:600}
 .tabs{display:inline-flex;gap:4px;background:var(--bg-3);border:1px solid var(--line);
   border-radius:11px;padding:4px;margin:16px 0 4px;flex-wrap:wrap}
-.tab{padding:8px 16px;border-radius:8px;font-weight:600;font-size:13.5px;color:var(--text-2);cursor:pointer;transition:all .15s}
+.tab{padding:8px 16px;border-radius:8px;font-weight:600;font-size:13.5px;color:var(--text-2);cursor:pointer;transition:background-color .15s,color .15s}
 .tab.on{background:var(--amber);color:#1B1405}
 .auth-wrap{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;
   justify-content:center;padding:30px 20px;max-width:460px;margin:0 auto;width:100%}
@@ -348,7 +348,7 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .auth-tag strong{color:var(--amber-2)}
 .auth-card{width:100%;background:var(--bg-2);border:1px solid var(--line);border-radius:18px;padding:22px}
 .seg{display:flex;background:var(--bg-3);border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:18px}
-.seg button{flex:1;padding:11px;border-radius:9px;font-weight:650;font-size:14px;color:var(--text-2);cursor:pointer;transition:all .15s}
+.seg button{flex:1;padding:11px;border-radius:9px;font-weight:650;font-size:14px;color:var(--text-2);cursor:pointer;transition:background-color .15s,color .15s}
 .seg button.on{background:var(--amber);color:#1B1405}
 .field{display:block;margin-bottom:13px}
 .field>span{display:block;font-size:12.5px;color:var(--text-3);margin-bottom:6px;font-weight:600}
@@ -361,7 +361,7 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .onb-q:first-of-type{border-top:none}
 .onb-q span{font-size:14.5px;color:var(--text);line-height:1.4}
 .yn{display:flex;gap:6px;flex-shrink:0}
-.yn button{padding:9px 16px;border-radius:9px;font-weight:650;font-size:13px;border:1px solid var(--line);background:var(--bg-3);color:var(--text-2);cursor:pointer;transition:all .15s}
+.yn button{padding:9px 16px;border-radius:9px;font-weight:650;font-size:13px;border:1px solid var(--line);background:var(--bg-3);color:var(--text-2);cursor:pointer;transition:background-color .15s,color .15s,border-color .15s}
 .yn button.on{background:var(--amber);color:#1B1405;border-color:var(--amber)}
 .notif-wrap{position:fixed;inset:0;z-index:60;display:flex;justify-content:flex-end;align-items:flex-start}
 .notif-scrim{position:absolute;inset:0;background:rgba(3,7,14,.5);cursor:pointer}
@@ -21790,7 +21790,8 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
     width: rect.width + pad * 2, height: rect.height + pad * 2,
     borderRadius: 12, border: "2px solid var(--amber)",
     boxShadow: "0 0 0 4000px rgba(6,9,16,.72), 0 0 20px rgba(245,185,63,.35)",
-    zIndex: 201, pointerEvents: "none", transition: "top .25s, left .25s, width .25s, height .25s"
+    zIndex: 201, pointerEvents: "none",
+    animation: "fadeUp .2s ease-out"
   } : {
     position: "fixed", inset: 0, background: "rgba(6,9,16,.72)", zIndex: 201, pointerEvents: "none"
   };
@@ -21812,7 +21813,7 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
   return (
     <>
       <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "transparent" }} onClick={(e) => e.stopPropagation()} />
-      <div style={highlight} />
+      <div key={step} style={highlight} />
       <div className="card" style={{ ...tipStyle, padding: "20px 20px 16px" }}>
         <h3 style={{ fontSize: 17, margin: "0 0 6px" }}>{s.title}</h3>
         <p style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6, margin: "0 0 16px" }}>{s.body}</p>
