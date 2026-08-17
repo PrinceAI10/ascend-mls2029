@@ -536,7 +536,7 @@ const TOPICS = {
     "Introduction to Lab Instrumentation", "Lab Safety", "Standard Operating Procedures (SOPs)", "First Aid Procedures", "Lab Electricals and Safety", "Taking Mass Measurements with an Electronic Balance", "Microscopy and its Principles", "pH Meter", "Spectrophotometer", "Centrifuge", "Water Bath", "Ovens and Incubators", "Autoclaving", "Biosafety Levels", "IPC (Infection Prevention and Control)", "Lab Equipments and Their Uses", "Operation and Design of Laboratory Equipment I", "Operation and Design of Laboratory Equipment II"
   ],
   bcp: [
-    "Pipetting", "Healthcare Waste Management 1", "Healthcare Waste Management 2", "Writing Lab Reports", "Referencing", "Metrics and Measurements", "Lab Safety 2: Chemical Hazards and Safety Symbols", "Lab Safety"
+    "Lab Safety", "Lab Safety 2: Chemical Hazards and Safety Symbols", "Pipetting", "Metrics and Measurements", "Healthcare Waste Management 1", "Healthcare Waste Management 2", "Referencing", "Writing Lab Reports"
   ]
 };
 
@@ -6377,7 +6377,7 @@ If those came cleanly, you have the foundation that keeps you alive and effectiv
 
 const T_BCP_SAFETY = {
   courseId: "bcp",
-  topicIndex: 7,
+  topicIndex: 0,
   title: "Lab Safety",
   minutes: 20,
   note: [
@@ -7109,7 +7109,7 @@ If those came cleanly, you understand electrical safety not as a list of rules b
 // ==================== LAB SAFETY TOPIC 04: METRICS AND MEASUREMENTS ====================
 const T_LAB_METRICS = {
   courseId: "bcp",
-  topicIndex: 5,
+  topicIndex: 3,
   title: "Metrics and Measurements",
   minutes: 22,
   note: [
@@ -7489,7 +7489,7 @@ My answers. One: the technician should use an analytical balance because it read
 /* --------------------------- lab:5 --------------------------- */
 const T_LAB_PIPETTING = {
   courseId: "bcp",
-  topicIndex: 0,
+  topicIndex: 2,
   title: "Pipetting",
   minutes: 20,
   note: [
@@ -9439,7 +9439,7 @@ If those came cleanly, you can now reason about laboratory equipment the way its
 /* --------------------------- lab:16 --------------------------- */
 const T_LAB_REFERENCING = {
   courseId: "bcp",
-  topicIndex: 4,
+  topicIndex: 6,
   title: "Referencing",
   minutes: 18,
   note: [
@@ -9621,7 +9621,7 @@ If those came cleanly, you understand how in-text citations and reference lists 
 /* --------------------------- lab:17 --------------------------- */
 const T_LAB_REPORTS = {
   courseId: "bcp",
-  topicIndex: 3,
+  topicIndex: 7,
   title: "Writing Lab Reports",
   minutes: 20,
   note: [
@@ -9802,7 +9802,7 @@ If those came cleanly, you understand how a laboratory report's structure, secti
 /* --------------------------- lab:18 --------------------------- */
 const T_LAB_HCWM_1 = {
   courseId: "bcp",
-  topicIndex: 1,
+  topicIndex: 4,
   title: "Healthcare Waste Management 1",
   minutes: 18,
   note: [
@@ -10018,7 +10018,7 @@ If those came cleanly, you have the foundation for the second half of this topic
 /* --------------------------- lab:19 --------------------------- */
 const T_LAB_HCWM_2 = {
   courseId: "bcp",
-  topicIndex: 2,
+  topicIndex: 5,
   title: "Healthcare Waste Management 2",
   minutes: 18,
   note: [
@@ -10236,7 +10236,7 @@ If those came cleanly, you have the full picture of healthcare waste management,
 /* --------------------------- lab:20 --------------------------- */
 const T_LAB_CHEM_HAZARDS = {
   courseId: "bcp",
-  topicIndex: 6,
+  topicIndex: 1,
   title: "Lab Safety 2: Chemical Hazards and Safety Symbols",
   minutes: 18,
   note: [
@@ -19566,14 +19566,14 @@ const CONTENT = {
   "lab:15": T_LAB_EQUIPMENT,
   "lab:16": T_LAB_OPDESIGN_I,
   "lab:17": T_LAB_OPDESIGN_II,
-  "bcp:0": T_LAB_PIPETTING,
-  "bcp:1": T_LAB_HCWM_1,
-  "bcp:2": T_LAB_HCWM_2,
-  "bcp:3": T_LAB_REPORTS,
-  "bcp:4": T_LAB_REFERENCING,
-  "bcp:5": T_LAB_METRICS,
-  "bcp:6": T_LAB_CHEM_HAZARDS,
-  "bcp:7": T_BCP_SAFETY,
+  "bcp:0": T_BCP_SAFETY,
+  "bcp:1": T_LAB_CHEM_HAZARDS,
+  "bcp:2": T_LAB_PIPETTING,
+  "bcp:3": T_LAB_METRICS,
+  "bcp:4": T_LAB_HCWM_1,
+  "bcp:5": T_LAB_HCWM_2,
+  "bcp:6": T_LAB_REFERENCING,
+  "bcp:7": T_LAB_REPORTS,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
