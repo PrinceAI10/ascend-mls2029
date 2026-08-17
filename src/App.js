@@ -19626,24 +19626,27 @@ const totalBuilt = () => Object.keys(CONTENT).length;
    easier to eyeball this way. A short list of exam-day tips per course lives
    in EXAM_TIPS below; edit freely per course. */
 const EXAM_TIMETABLE = [
-  { courseId: "ana", date: "2026-08-19", time: "9:00 AM", venue: "TBD" },
-  { courseId: "phy", date: "2026-08-21", time: "9:00 AM", venue: "TBD" },
-  { courseId: "bch", date: "2026-08-24", time: "9:00 AM", venue: "TBD" },
-  { courseId: "bio", date: "2026-08-26", time: "9:00 AM", venue: "TBD" },
-  { courseId: "psy", date: "2026-08-28", time: "9:00 AM", venue: "TBD" },
-  { courseId: "com", date: "2026-09-01", time: "9:00 AM", venue: "TBD" },
-  { courseId: "lab", date: "2026-09-04", time: "9:00 AM", venue: "TBD" },
+  { courseId: "bch", label: "Practical", date: "2026-08-19", time: "8:00 AM", venue: "G03, G01, 101, 201" },
+  { courseId: "bch", label: "Theory", date: "2026-08-20", time: "8:00 AM", venue: "Online (IT Labs)" },
+  { courseId: "phy", label: "Practical", date: "2026-08-25", time: "8:30 AM", venue: "201, 301, 401" },
+  { courseId: "bio", date: "2026-08-26", time: "12:00 PM", venue: "201, 301, 401" },
+  { courseId: "phy", label: "Theory", date: "2026-08-28", time: "12:00 PM", venue: "201, 301, 401" },
+  { courseId: "psy", date: "2026-08-31", time: "8:30 AM", venue: "G01, 101, 201" },
+  { courseId: "com", date: "2026-09-01", time: "8:30 AM", venue: "Online (IT Labs)" },
+  { courseId: "lab", date: "2026-09-02", time: "8:30 AM", venue: "G01, 101, 201" },
+  { courseId: "ana", label: "Practicals", date: "2026-09-03", time: "8:30 AM", venue: "201, 301, 401" },
+  { courseId: "ana", label: "Theory", date: "2026-09-04", time: "8:30 AM", venue: "201, 301, 401" },
 ];
 
 const EXAM_TIPS = {
-  ana: "Go through your labelled diagrams one more time - identification questions show up a lot. Nail the axial/appendicular skeleton and nervous system terminology.",
-  phy: "Focus on mechanisms, not just definitions - membrane transport, muscle physiology and homeostasis love \"explain why\" questions.",
-  bch: "Metabolic pathways (glycolysis, gluconeogenesis) and enzyme kinetics are high-yield. Redraw pathways from memory instead of just re-reading them.",
-  bio: "Biomolecule structure-function relationships come up constantly - carbohydrates, lipids, amino acids/proteins. Practice past MCQs under time pressure.",
-  psy: "Know your theorists and their core experiments cold (Pavlov, Skinner, Freud, Piaget) - matching-style questions are common.",
-  com: "Revise letter/memo/report formats and the Seven Cs - format and structure questions are easy marks if you know the layout.",
-  lab: "Safety protocols, SOPs and equipment operation principles are the bulk of this paper - know the \"why\" behind each procedure, not just the steps.",
-  bcp: "Pipetting technique, referencing style and lab report structure are practical/applied - review the actual steps, not just theory.",
+  ana: "You've put in the work - now walk in and take it. Read every question twice before you answer, don't let one hard question steal your calm, and if you blank, move on and come back. Finish strong.",
+  phy: "This is your paper to win. Manage your time from the first minute - don't marry a tough question, bank the easy marks first, then hunt down the rest. Trust your prep.",
+  bch: "Stay locked in. Skim the whole paper first so nothing surprises you, attack what you know cold, then grind the rest. You've done the reps - now execute.",
+  bio: "Go in calm and go in ready. Don't rush the first few questions just because you're nervous - settle in, find your rhythm, and let your preparation carry you through.",
+  psy: "Read carefully, answer deliberately, don't second-guess yourself into a wrong answer. You know this - trust the first instinct that comes from real preparation.",
+  com: "Structure first, then fill it in. Plan your answer for a beat before you write, keep it clean and organised, and watch your time so every section gets attention.",
+  lab: "Precision wins this paper. Read each question fully before choosing - don't answer the question you expected instead of the one that's actually there. Stay sharp to the last minute.",
+  bcp: "Practical thinking, not just memory. Picture the actual steps as you answer, don't rush the details, and finish every question - a blank answer is a guaranteed zero, a guess is a chance.",
 };
 
 // Returns the next not-yet-passed exam (by date, then time), or null if all
@@ -19707,7 +19710,7 @@ function NextExamCard() {
           <div className="mono" style={{ fontSize: 9.5, color: "var(--amber-2)", marginTop: 2 }}>{dayLabel}</div>
         </div>
         <div style={{ flex: 1, minWidth: 200 }}>
-          <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 4 }}>Next exam · {course ? course.name : next.courseId}</div>
+          <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 4 }}>Next exam · {course ? course.name : next.courseId}{next.label ? ` (${next.label})` : ""}</div>
           <div style={{ fontSize: 14.5, color: "var(--text)", fontWeight: 600, lineHeight: 1.4 }}>
             {course ? course.code : ""} · {dateLabel} · {next.time}{next.venue && next.venue !== "TBD" ? ` · ${next.venue}` : ""}
           </div>
@@ -22050,22 +22053,78 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
       wasMenuOpenedByTour.current = false;
       setMenuOpen(false);
     }
+
+    // measure() only reads element position - it never scrolls. Scrolling
+    // happens exactly once, separately, when the step changes (see below).
+    // Previously measure() itself called scrollIntoView on every call,
+    // including calls triggered BY the scroll/resize listeners it registers
+    // - a self-triggering loop (scroll -> re-measure -> scroll again -> ...)
+    // that produced visible jank on every device and was worst on weaker
+    // hardware (phones, PWA). Separating "scroll once" from "measure on any
+    // change" fixes that at the root.
+    const getViewport = () => {
+      // visualViewport tracks what's actually visible past mobile browser
+      // chrome/on-screen keyboard - falls back to window for older browsers.
+      const vv = window.visualViewport;
+      return vv
+        ? { width: vv.width, height: vv.height, offsetTop: vv.offsetTop, offsetLeft: vv.offsetLeft }
+        : { width: window.innerWidth, height: window.innerHeight, offsetTop: 0, offsetLeft: 0 };
+    };
+
     const measure = () => {
       if (cancelled) return;
       if (!s.selector) { setRect(null); return; }
       const el = document.querySelector(s.selector);
       if (el) {
-        el.scrollIntoView({ block: "center", behavior: "smooth" });
         const r = el.getBoundingClientRect();
         setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
       } else {
         setRect(null);
       }
     };
-    const t = setTimeout(measure, 260);
-    window.addEventListener("resize", measure);
-    window.addEventListener("scroll", measure, true);
-    return () => { cancelled = true; clearTimeout(t); window.removeEventListener("resize", measure); window.removeEventListener("scroll", measure, true); };
+
+    let raf = null;
+    const scheduleMeasure = () => {
+      // rAF-debounced: coalesces bursts of scroll/resize events (common on
+      // mobile when the keyboard or browser chrome animates in/out) into a
+      // single measurement per frame instead of a measurement per event.
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(measure);
+    };
+
+    // Scroll the target into view exactly once per step, then measure after
+    // the smooth-scroll animation has had time to settle.
+    let scrollTimer = null;
+    let settleTimer = null;
+    if (s.selector) {
+      scrollTimer = setTimeout(() => {
+        if (cancelled) return;
+        const el = document.querySelector(s.selector);
+        if (el) el.scrollIntoView({ block: "center", behavior: "smooth" });
+        settleTimer = setTimeout(measure, 320);
+      }, 60);
+    } else {
+      settleTimer = setTimeout(measure, 60);
+    }
+
+    window.addEventListener("resize", scheduleMeasure);
+    window.addEventListener("scroll", scheduleMeasure, true);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", scheduleMeasure);
+      window.visualViewport.addEventListener("scroll", scheduleMeasure);
+    }
+    return () => {
+      cancelled = true;
+      if (raf) cancelAnimationFrame(raf);
+      clearTimeout(scrollTimer);
+      clearTimeout(settleTimer);
+      window.removeEventListener("resize", scheduleMeasure);
+      window.removeEventListener("scroll", scheduleMeasure, true);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", scheduleMeasure);
+        window.visualViewport.removeEventListener("scroll", scheduleMeasure);
+      }
+    };
   }, [step]);
 
   const finish = () => {
@@ -22086,19 +22145,34 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
     position: "fixed", inset: 0, background: "rgba(6,9,16,.72)", zIndex: 1002, pointerEvents: "none"
   };
 
-  // Position tooltip near the highlighted rect, flipping side if it would overflow.
-  let tipStyle = { position: "fixed", zIndex: 1003, maxWidth: 340, width: "calc(100% - 40px)" };
+  // Position tooltip near the highlighted rect, flipping side if it would
+  // overflow. Uses visualViewport (accounts for mobile browser chrome / the
+  // on-screen keyboard) instead of window.innerHeight/innerWidth, which on
+  // phones can report a taller area than what's actually visible and push
+  // the tooltip off-screen or under the keyboard.
+  const vv = typeof window !== "undefined" && window.visualViewport;
+  const viewportW = vv ? vv.width : (typeof window !== "undefined" ? window.innerWidth : 360);
+  const viewportH = vv ? vv.height : (typeof window !== "undefined" ? window.innerHeight : 640);
+  let tipStyle = {
+    position: "fixed", zIndex: 1003,
+    maxWidth: 340, width: "calc(100% - 40px)",
+    maxHeight: "calc(100% - 32px)", overflowY: "auto",
+  };
   if (rect) {
-    const spaceBelow = window.innerHeight - (rect.top + rect.height);
+    const spaceBelow = viewportH - (rect.top + rect.height);
     const below = spaceBelow > 220 || rect.top < 220;
-    if (below) tipStyle.top = rect.top + rect.height + pad + 14;
-    else tipStyle.bottom = window.innerHeight - (rect.top - pad) + 14;
+    if (below) tipStyle.top = Math.max(12, rect.top + rect.height + pad + 14);
+    else tipStyle.bottom = Math.max(12, viewportH - (rect.top - pad) + 14);
     let left = rect.left;
-    left = Math.max(16, Math.min(left, window.innerWidth - 356));
+    left = Math.max(16, Math.min(left, viewportW - 356));
     tipStyle.left = left;
   } else {
     tipStyle.top = "50%"; tipStyle.left = "50%"; tipStyle.transform = "translate(-50%,-50%)";
   }
+  // Safe-area padding so the tooltip never sits under a notch or the
+  // home-indicator strip on iOS PWAs / full-screen mobile browsers.
+  tipStyle.marginBottom = "env(safe-area-inset-bottom, 0px)";
+  tipStyle.marginTop = "env(safe-area-inset-top, 0px)";
 
   return (
     <>
@@ -25686,6 +25760,38 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
   const setKey = `${paper.id}_${chunkStart}_${chunkEnd}_${mode}`;
   const doneFlagKey = "ascend_passco_done_" + setKey;
 
+  // Lets a student flag a specific Passco question whose stored correct
+  // answer looks wrong (e.g. the explanation clearly supports a different
+  // option than the one marked correct). Reports are deduped per-device per
+  // question (localStorage) and written to shared storage so they surface
+  // in the admin Feedback viewer for review and correction.
+  const questionReportKey = (it) => "ascend_qreport_sent_" + questionKey(it);
+  const [reportedIds, setReportedIds] = useState({});
+  const reportQuestionIssue = async (it, chosenIdx) => {
+    const localKey = questionReportKey(it);
+    let already = false;
+    try { already = !!localStorage.getItem(localKey); } catch {}
+    if (already) return;
+    try { localStorage.setItem(localKey, "true"); } catch {}
+    setReportedIds((r) => ({ ...r, [questionKey(it)]: true }));
+    try {
+      await store.setShared("ascend_qreport:" + Date.now() + "_" + Math.random().toString(36).slice(2, 8), {
+        type: "passco_answer",
+        courseId: paper.courseId,
+        courseCode: paper.courseCode,
+        paperTitle: paper.title,
+        question: it.q,
+        options: it.o,
+        storedAnswerIndex: it.a,
+        storedAnswerText: it.o[it.a],
+        studentChosenIndex: chosenIdx,
+        studentChosenText: chosenIdx !== undefined ? it.o[chosenIdx] : null,
+        explanation: it.w,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (e) { /* best-effort - don't block the student's flow on this */ }
+  };
+
   const [picked, setPicked] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [cur, setCur] = useState(0); // index of the current question being shown
@@ -25769,6 +25875,11 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
                 return <div className={cls} key={oi} style={{ cursor: "default" }}><span className="key">{letters[oi] || oi + 1}</span><span>{opt}</span></div>;
               })}
               <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 8 }}><strong style={{ color: chosen === it.a ? "var(--good)" : "var(--bad)" }}>{chosen === undefined ? "Not answered. " : (chosen === it.a ? "Correct. " : "Your answer: " + (letters[chosen] || "") + ". ")}</strong>{chosen !== it.a && "Answer: " + (letters[it.a] || "") + ". "}{it.w}</div>
+              {reportedIds[questionKey(it)] ? (
+                <div style={{ marginTop: 8, fontSize: 12, color: "var(--text-3)" }}>Thanks - flagged for review.</div>
+              ) : (
+                <button className="btn btn-g" style={{ marginTop: 8, padding: "6px 10px", fontSize: 12 }} onClick={() => reportQuestionIssue(it, chosen)}>Report wrong answer</button>
+              )}
             </div>
           );
         })}
@@ -25854,6 +25965,13 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
           <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 10 }}>
             <strong style={{ color: chosen === it.a ? "var(--good)" : "var(--bad)" }}>{chosen === it.a ? "Correct. " : "Answer: " + (letters[it.a] || "") + ". "}</strong>{it.w}
           </div>
+        )}
+        {revealHere && chosen !== undefined && (
+          reportedIds[questionKey(it)] ? (
+            <div style={{ marginTop: 8, fontSize: 12, color: "var(--text-3)" }}>Thanks - flagged for review.</div>
+          ) : (
+            <button className="btn btn-g" style={{ marginTop: 8, padding: "6px 10px", fontSize: 12 }} onClick={() => reportQuestionIssue(it, chosen)}>Report wrong answer</button>
+          )
         )}
       </div>
 
@@ -26503,7 +26621,18 @@ function WeeklyRecapCard({ app }) {
   );
 }
 
-const WHATS_NEW = { id: "wn_2026_08_nextexam", text: "New: Biochemistry Practicals tab added, plus a Next Exam card showing what's coming up next with tips for that course." };
+const WHATS_NEW = {
+  id: "wn_2026_08_18b",
+  version: "v2.5",
+  date: "18 Aug 2026",
+  items: [
+    { type: "new", text: "Biochemistry Practicals tab — Pipetting, Referencing, Lab Reports, Metrics & Measurements and more" },
+    { type: "new", text: "Next Exam card on the home screen — shows your next paper, date, time, venue and a tip to help you tackle it" },
+    { type: "new", text: "Report wrong answer button on every Passco question — flags it straight to the team for review" },
+    { type: "fixed", text: "Start tour no longer judders on phone/PWA — the highlight now scrolls once and settles instead of fighting itself" },
+    { type: "improved", text: "Exam countdown now tracks the full timetable instead of stopping at a single date" },
+  ],
+};
 
 function HomeView({ app }) {
   const [whatsNewDismissed, setWhatsNewDismissed] = useState(() => {
@@ -26587,10 +26716,31 @@ function HomeView({ app }) {
 </div>
 
       {!whatsNewDismissed && (
-        <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", borderRadius: 10, background: "var(--amber-dim)", border: "1px solid var(--amber-2, var(--amber))", fontSize: 12.5 }}>
-          <Ic.star p={15} style={{ flexShrink: 0, color: "var(--amber)" }} />
-          <div style={{ flex: 1, color: "var(--text-2)" }}><strong style={{ color: "var(--text)" }}>What's new: </strong>{WHATS_NEW.text}</div>
-          <button className="iconbtn" style={{ flexShrink: 0 }} onClick={dismissWhatsNew} aria-label="Dismiss"><Ic.x p={14} /></button>
+        <div style={{ marginTop: 14, padding: "12px 14px", borderRadius: 12, background: "var(--amber-dim)", border: "1px solid var(--amber-2, var(--amber))", fontSize: 12.5 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+            <Ic.star p={15} style={{ flexShrink: 0, color: "var(--amber)" }} />
+            <div style={{ flex: 1, color: "var(--text)", fontWeight: 700, fontSize: 13 }}>
+              What's new in {WHATS_NEW.version}
+              <span style={{ color: "var(--text-3)", fontWeight: 500, marginLeft: 6 }}>· {WHATS_NEW.date}</span>
+            </div>
+            <button className="iconbtn" style={{ flexShrink: 0 }} onClick={dismissWhatsNew} aria-label="Dismiss"><Ic.x p={14} /></button>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+            {WHATS_NEW.items.map((it, i) => {
+              const badge = it.type === "new" ? { label: "New", color: "var(--amber)" }
+                : it.type === "improved" ? { label: "Improved", color: "var(--text-2)" }
+                : { label: "Fixed", color: "var(--text-3)" };
+              return (
+                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+                  <span style={{
+                    flexShrink: 0, fontSize: 10, fontWeight: 700, letterSpacing: 0.3, textTransform: "uppercase",
+                    color: badge.color, border: `1px solid ${badge.color}`, borderRadius: 5, padding: "1px 5px", marginTop: 1
+                  }}>{badge.label}</span>
+                  <span style={{ color: "var(--text-2)", lineHeight: 1.5 }}>{it.text}</span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
 
@@ -28118,8 +28268,10 @@ function FeedbackView() {
 
 function ViewFeedbackView() {
   const [feedbacks, setFeedbacks] = useState([]);
+  const [qreports, setQreports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [authKey, setAuthKey] = useState('');
+  const [tab, setTab] = useState('feedback');
   
   useEffect(() => {
     const key = localStorage.getItem('ascend_feedback_key');
@@ -28156,6 +28308,18 @@ function ViewFeedbackView() {
     } catch (e) {
       console.error('Failed to load feedback:', e);
     }
+    try {
+      const qkeys = await store.listShared('ascend_qreport:');
+      const qitems = [];
+      for (const k of qkeys) {
+        const data = await store.get(k, true);
+        if (data) qitems.push({ id: k, ...data });
+      }
+      qitems.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      setQreports(qitems);
+    } catch (e) {
+      console.error('Failed to load question reports:', e);
+    }
     setLoading(false);
   };
   
@@ -28164,6 +28328,17 @@ function ViewFeedbackView() {
       try {
         await store.set(id, null);
         setFeedbacks(feedbacks.filter(f => f.id !== id));
+      } catch (e) {
+        alert('Failed to delete');
+      }
+    }
+  };
+
+  const deleteQreport = async (id) => {
+    if (window.confirm('Delete this report?')) {
+      try {
+        await store.set(id, null);
+        setQreports(qreports.filter(f => f.id !== id));
       } catch (e) {
         alert('Failed to delete');
       }
@@ -28214,16 +28389,21 @@ function ViewFeedbackView() {
         <Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Back
       </button>
       <div className="eyebrow">Feedback</div>
-      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Student Feedback ({feedbacks.length})</h1>
-      <p style={{ color: "var(--text-2)", marginTop: 0 }}>All feedback submitted by students through the Feedback page.</p>
-      
+      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Student Feedback</h1>
+      <p style={{ color: "var(--text-2)", marginTop: 0 }}>General feedback and Passco answer reports submitted by students.</p>
+
+      <div style={{ display: "flex", gap: 8, marginTop: 14, marginBottom: 14 }}>
+        <button className="btn btn-sm" onClick={() => setTab('feedback')} style={{ background: tab === 'feedback' ? "var(--amber)" : "var(--bg-3)", color: tab === 'feedback' ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }}>General ({feedbacks.length})</button>
+        <button className="btn btn-sm" onClick={() => setTab('qreports')} style={{ background: tab === 'qreports' ? "var(--amber)" : "var(--bg-3)", color: tab === 'qreports' ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }}>Passco answer reports ({qreports.length})</button>
+      </div>
+
       {loading && <div className="card"><span className="dots"><span /><span /><span /></span></div>}
-      
-      {!loading && feedbacks.length === 0 && (
+
+      {!loading && tab === 'feedback' && feedbacks.length === 0 && (
         <div className="card"><p style={{ color: "var(--text-2)", fontSize: 14 }}>No feedback submitted yet.</p></div>
       )}
-      
-      {feedbacks.map((f, i) => (
+
+      {!loading && tab === 'feedback' && feedbacks.map((f, i) => (
         <div className="card" key={f.id} style={{ marginBottom: 10 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
             <div style={{ flex: 1, minWidth: 0 }}>
@@ -28247,11 +28427,42 @@ function ViewFeedbackView() {
           </div>
         </div>
       ))}
-      
+
+      {!loading && tab === 'qreports' && qreports.length === 0 && (
+        <div className="card"><p style={{ color: "var(--text-2)", fontSize: 14 }}>No Passco answer reports yet.</p></div>
+      )}
+
+      {!loading && tab === 'qreports' && qreports.map((r) => (
+        <div className="card" key={r.id} style={{ marginBottom: 10 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 8, flexWrap: "wrap" }}>
+                <span style={{ fontSize: 10, padding: "2px 8px", borderRadius: 4, background: "var(--amber-dim)", color: "var(--amber)", fontWeight: 700 }}>{r.courseCode || r.courseId}</span>
+                <span className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>{r.timestamp ? new Date(r.timestamp).toLocaleString() : ""}</span>
+              </div>
+              <p style={{ color: "var(--text)", fontSize: 14, fontWeight: 600, margin: 0, lineHeight: 1.5 }}>{r.question}</p>
+              <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 3 }}>
+                {(r.options || []).map((opt, oi) => (
+                  <div key={oi} style={{ fontSize: 13, color: oi === r.storedAnswerIndex ? "var(--good)" : (oi === r.studentChosenIndex ? "var(--bad)" : "var(--text-2)") }}>
+                    <span className="mono" style={{ marginRight: 6 }}>{"ABCDE"[oi] || oi + 1}.</span>{opt}
+                    {oi === r.storedAnswerIndex && <span style={{ marginLeft: 6, fontSize: 11 }}>(stored as correct)</span>}
+                    {oi === r.studentChosenIndex && oi !== r.storedAnswerIndex && <span style={{ marginLeft: 6, fontSize: 11 }}>(student chose)</span>}
+                  </div>
+                ))}
+              </div>
+              {r.explanation && <p style={{ color: "var(--text-2)", fontSize: 13, marginTop: 8, lineHeight: 1.5 }}><strong style={{ color: "var(--text)" }}>Explanation on file: </strong>{r.explanation}</p>}
+            </div>
+            <button className="iconbtn" style={{ width: 30, height: 30, flexShrink: 0 }} onClick={() => deleteQreport(r.id)} aria-label="Delete report">
+              <Ic.x p={13} />
+            </button>
+          </div>
+        </div>
+      ))}
+
       <div className="card" style={{ marginTop: 16 }}>
         <p style={{ color: "var(--text-3)", fontSize: 12.5, lineHeight: 1.6, margin: 0 }}>
           Access key: <span className="mono" style={{ color: "var(--amber)" }}>ascend2026</span> · 
-          Total {feedbacks.length} feedback entries
+          {tab === 'feedback' ? ` Total ${feedbacks.length} feedback entries` : ` Total ${qreports.length} answer reports`}
         </p>
       </div>
     </div>
