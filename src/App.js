@@ -26621,27 +26621,7 @@ function WeeklyRecapCard({ app }) {
   );
 }
 
-const WHATS_NEW = {
-  id: "wn_2026_08_18b",
-  version: "v2.5",
-  date: "18 Aug 2026",
-  items: [
-    { type: "new", text: "Biochemistry Practicals tab — Pipetting, Referencing, Lab Reports, Metrics & Measurements and more" },
-    { type: "new", text: "Next Exam card on the home screen — shows your next paper, date, time, venue and a tip to help you tackle it" },
-    { type: "new", text: "Report wrong answer button on every Passco question — flags it straight to the team for review" },
-    { type: "fixed", text: "Start tour no longer judders on phone/PWA — the highlight now scrolls once and settles instead of fighting itself" },
-    { type: "improved", text: "Exam countdown now tracks the full timetable instead of stopping at a single date" },
-  ],
-};
-
 function HomeView({ app }) {
-  const [whatsNewDismissed, setWhatsNewDismissed] = useState(() => {
-    try { return sessionStorage.getItem("ascend_whatsnew_dismissed") === WHATS_NEW.id; } catch { return false; }
-  });
-  const dismissWhatsNew = () => {
-    setWhatsNewDismissed(true);
-    try { sessionStorage.setItem("ascend_whatsnew_dismissed", WHATS_NEW.id); } catch {}
-  };
   const jsDay = new Date().getDay();
   const todayCourse = courseById(DAILY[jsDay].courseId);
   const doneToday = app.progress.dailyDone?.[todayKey()];
@@ -26714,35 +26694,6 @@ function HomeView({ app }) {
     }}>Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
   </div>
 </div>
-
-      {!whatsNewDismissed && (
-        <div style={{ marginTop: 14, padding: "12px 14px", borderRadius: 12, background: "var(--amber-dim)", border: "1px solid var(--amber-2, var(--amber))", fontSize: 12.5 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-            <Ic.star p={15} style={{ flexShrink: 0, color: "var(--amber)" }} />
-            <div style={{ flex: 1, color: "var(--text)", fontWeight: 700, fontSize: 13 }}>
-              What's new in {WHATS_NEW.version}
-              <span style={{ color: "var(--text-3)", fontWeight: 500, marginLeft: 6 }}>· {WHATS_NEW.date}</span>
-            </div>
-            <button className="iconbtn" style={{ flexShrink: 0 }} onClick={dismissWhatsNew} aria-label="Dismiss"><Ic.x p={14} /></button>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            {WHATS_NEW.items.map((it, i) => {
-              const badge = it.type === "new" ? { label: "New", color: "var(--amber)" }
-                : it.type === "improved" ? { label: "Improved", color: "var(--text-2)" }
-                : { label: "Fixed", color: "var(--text-3)" };
-              return (
-                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-                  <span style={{
-                    flexShrink: 0, fontSize: 10, fontWeight: 700, letterSpacing: 0.3, textTransform: "uppercase",
-                    color: badge.color, border: `1px solid ${badge.color}`, borderRadius: 5, padding: "1px 5px", marginTop: 1
-                  }}>{badge.label}</span>
-                  <span style={{ color: "var(--text-2)", lineHeight: 1.5 }}>{it.text}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
 
       <div className="grid g4" data-tour="quick-actions" style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
         <button className="card hover" style={{ textAlign: "center", padding: "14px 8px" }} onClick={() => resumeTopic && resumeCourse ? app.go("topic", { courseId: resumeTopic.courseId, topicId: resumeTopic.topicIndex }) : app.go("courses")}>
@@ -27629,6 +27580,7 @@ function AuthScreen({ onAuthed }) {
 }
 
 const ANNOUNCEMENTS = [
+  { id: "wn_2026_08_18b", tag: "Update", title: "What's new in v2.5", body: "Biochemistry Practicals tab, a Next Exam card on the home screen, a report-wrong-answer button on Passco questions, a smoother start tour, and an exam countdown that now tracks the full timetable." },
   { id: "a3", tag: "Deadline", title: "AI 150 Course Completion", body: "All students are reminded to complete the AI 150: Fundamentals of Responsible AI for ALL course on or before Saturday, 15th August, 2026. This is a mandatory requirement for all students. Please ensure you have finished all modules and assessments before the deadline." },
   { id: "a2", tag: "Feature", title: "CWA planner, themes and resources", body: "Plan your target CWA under the CWA tab, switch light, dark, or system (auto day/night) with the toggle up top, and turn your own notes into lessons under Resources." },
   { id: "a1", tag: "Welcome", title: "Welcome to ASCEND", body: "The climb to First Class, together, built by Prince, Ansah, Jeffery and Dacosta. Do the daily question every day to build your streak and rise through the ranks." }
