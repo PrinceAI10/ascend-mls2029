@@ -29,6 +29,31 @@ if (typeof document !== "undefined" && !document.getElementById("ascend-pacifico
   scriptLink.rel = "stylesheet";
   scriptLink.href = "https://fonts.googleapis.com/css2?family=Pacifico&display=block";
   document.head.appendChild(scriptLink);
+
+  // The preload above gives Pacifico a head start, but on a slower
+  // connection (seen mainly on laptop/desktop first loads) the browser's
+  // 3s font-display:block window can still run out before the woff2
+  // finishes downloading - so the fallback script font (Brush Script MT /
+  // Segoe Script / cursive) paints for a moment and then visibly swaps to
+  // Pacifico once it lands. To kill that flash entirely, the wordmark text
+  // itself (.brand-word-hero) starts invisible via CSS and only becomes
+  // visible once we've confirmed Pacifico is actually loaded, using the
+  // Font Loading API. A short safety timeout guarantees it becomes visible
+  // regardless (e.g. offline, or a browser without document.fonts), so the
+  // logo can never get stuck hidden.
+  const revealWordmark = () => {
+    if (document.documentElement) document.documentElement.classList.add("ascend-pacifico-ready");
+  };
+  try {
+    if (document.fonts && document.fonts.load) {
+      document.fonts.load('400 40px Pacifico').then(revealWordmark).catch(revealWordmark);
+    } else {
+      revealWordmark();
+    }
+  } catch {
+    revealWordmark();
+  }
+  setTimeout(revealWordmark, 700);
 }
 
 // OCR Function for image text extraction
@@ -225,7 +250,8 @@ html, body {
   font-weight:400;font-size:clamp(30px,7vw,42px);letter-spacing:.01em;font-style:normal;
   background:linear-gradient(120deg,var(--text) 0%,var(--amber) 100%);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  line-height:1}
+  line-height:1;visibility:hidden}
+html.ascend-pacifico-ready .brand-word-hero{visibility:visible}
 .brand-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--text-3);
   text-transform:uppercase;margin-top:1px}
 .brand-sub-hero{font-family:Calibri,system-ui,sans-serif;font-size:clamp(13px,2.4vw,16px);
@@ -19962,8 +19988,13 @@ const weekKey = (date = new Date()) => {
 // than guessed.
 function buildWeeklyRecap(progress, uid) {
   const done = progress?.dailyDone || {};
+  // Count only days within the CURRENT calendar week (Monday to today),
+  // not a rolling trailing-7-days window - otherwise Monday would still
+  // show days credited from the previous week's tail end.
   let daysActive = 0;
-  for (let i = 0; i < 7; i++) {
+  const today = new Date();
+  const dayNum = today.getDay() || 7; // Monday=1 ... Sunday=7
+  for (let i = 0; i < dayNum; i++) {
     if (done[shift(-i)]) daysActive++;
   }
   let xpThisWeek = null;
@@ -19972,9 +20003,12 @@ function buildWeeklyRecap(progress, uid) {
     const myId = uid || ("local-" + String(progress?.name || "").toLowerCase().replace(/[^a-z0-9]/g, ""));
     const mine = (hist[myId] || []).slice().sort((a, b) => a.time - b.time);
     if (mine.length) {
-      const weekAgo = Date.now() - 7 * 86400000;
+      const weekStart = new Date();
+      weekStart.setHours(0, 0, 0, 0);
+      weekStart.setDate(weekStart.getDate() - (dayNum - 1));
+      const weekStartMs = weekStart.getTime();
       let baseline = 0;
-      for (const h of mine) { if (h.time <= weekAgo) baseline = h.xp; else break; }
+      for (const h of mine) { if (h.time <= weekStartMs) baseline = h.xp; else break; }
       const latest = mine[mine.length - 1].xp;
       xpThisWeek = Math.max(0, latest - baseline);
     }
@@ -25766,7 +25800,21 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
   // question (localStorage) and written to shared storage so they surface
   // in the admin Feedback viewer for review and correction.
   const questionReportKey = (it) => "ascend_qreport_sent_" + questionKey(it);
-  const [reportedIds, setReportedIds] = useState({});
+  // Hydrate from localStorage on mount so a question reported in an earlier
+  // session still shows "flagged for review" instead of the button again -
+  // reportQuestionIssue already no-ops on a re-click, but without this the
+  // UI would misleadingly imply nothing had been reported yet.
+  const [reportedIds, setReportedIds] = useState(() => {
+    const initial = {};
+    try {
+      for (const it of questions) {
+        if (localStorage.getItem("ascend_qreport_sent_" + questionKey(it))) {
+          initial[questionKey(it)] = true;
+        }
+      }
+    } catch {}
+    return initial;
+  });
   const reportQuestionIssue = async (it, chosenIdx) => {
     const localKey = questionReportKey(it);
     let already = false;
@@ -26584,7 +26632,7 @@ function WeeklyRecapCard({ app }) {
   });
   const recap = buildWeeklyRecap(app.progress, app.supaUid);
 
-  if (dismissed || recap.daysActive === 0) return null;
+  if (dismissed) return null;
 
   const dismiss = () => {
     setDismissed(true);
@@ -27579,12 +27627,21 @@ function AuthScreen({ onAuthed }) {
   );
 }
 
+// Hand-maintained announcements list, newest first. Nothing here expires
+// automatically - when shipping a new "what's new" entry, add it to the top
+// and remove (or archive elsewhere) any entries that are no longer relevant
+// (e.g. a past deadline once it's passed), so this doesn't grow forever.
+// MAX_VISIBLE_ANNOUNCEMENTS below is just a safety cap on what's rendered.
 const ANNOUNCEMENTS = [
   { id: "wn_2026_08_18b", tag: "Update", title: "What's new in v2.5", body: "Biochemistry Practicals tab, a Next Exam card on the home screen, a report-wrong-answer button on Passco questions, a smoother start tour, and an exam countdown that now tracks the full timetable." },
   { id: "a3", tag: "Deadline", title: "AI 150 Course Completion", body: "All students are reminded to complete the AI 150: Fundamentals of Responsible AI for ALL course on or before Saturday, 15th August, 2026. This is a mandatory requirement for all students. Please ensure you have finished all modules and assessments before the deadline." },
   { id: "a2", tag: "Feature", title: "CWA planner, themes and resources", body: "Plan your target CWA under the CWA tab, switch light, dark, or system (auto day/night) with the toggle up top, and turn your own notes into lessons under Resources." },
   { id: "a1", tag: "Welcome", title: "Welcome to ASCEND", body: "The climb to First Class, together, built by Prince, Ansah, Jeffery and Dacosta. Do the daily question every day to build your streak and rise through the ranks." }
 ];
+const MAX_VISIBLE_ANNOUNCEMENTS = 12;
+// What's actually shown/counted in the notifications panel - keeps the
+// panel and its unread badge in sync even if ANNOUNCEMENTS grows past the cap.
+const VISIBLE_ANNOUNCEMENTS = ANNOUNCEMENTS.slice(0, MAX_VISIBLE_ANNOUNCEMENTS);
 
 /* ------------------------------- plan (CWA) ----------------------------- */
 function PlanView() {
@@ -30071,20 +30128,20 @@ export default function App() {
   const legacySeen = progress?.seenAnn || 0;
   const isAnnRead = (id) => {
     if (readAnn.includes(id)) return true;
-    const idx = ANNOUNCEMENTS.findIndex((a) => a.id === id);
+    const idx = VISIBLE_ANNOUNCEMENTS.findIndex((a) => a.id === id);
     return idx >= 0 && idx < legacySeen;
   };
-  const unreadAnnCount = ANNOUNCEMENTS.filter((a) => !isAnnRead(a.id)).length;
+  const unreadAnnCount = VISIBLE_ANNOUNCEMENTS.filter((a) => !isAnnRead(a.id)).length;
   const unreadCount = unreadAnnCount + (dailyNotDone ? 1 : 0); // daily reminder counts as one
   const hasUnread = unreadCount > 0;
   const markAnnRead = (id) => {
     if (!progress || isAnnRead(id)) return;
-    const next = ANNOUNCEMENTS.filter((a) => isAnnRead(a.id) || a.id === id).map((a) => a.id);
+    const next = VISIBLE_ANNOUNCEMENTS.filter((a) => isAnnRead(a.id) || a.id === id).map((a) => a.id);
     persist({ ...progress, readAnn: next, seenAnn: Math.max(legacySeen, next.length) });
   };
   const markAllAnnRead = () => {
     if (!progress) return;
-    persist({ ...progress, readAnn: ANNOUNCEMENTS.map((a) => a.id), seenAnn: ANNOUNCEMENTS.length });
+    persist({ ...progress, readAnn: VISIBLE_ANNOUNCEMENTS.map((a) => a.id), seenAnn: VISIBLE_ANNOUNCEMENTS.length });
   };
   // Opening the panel no longer wipes the badge - the student marks items read
   // themselves (like an inbox), so the count reflects what they've actually seen.
@@ -30338,7 +30395,7 @@ export default function App() {
                 <button className="btn btn-a btn-sm" onClick={() => { setNotifOpen(false); go("daily"); }}>Go to daily</button>
               </div>
             )}
-            {ANNOUNCEMENTS.map((a) => {
+            {VISIBLE_ANNOUNCEMENTS.map((a) => {
               const read = isAnnRead(a.id);
               return (
                 <div className={"notif-item" + (read ? "" : " unread")} key={a.id} onClick={() => markAnnRead(a.id)} style={{ cursor: read ? "default" : "pointer" }}>
