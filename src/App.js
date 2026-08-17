@@ -493,6 +493,7 @@ const COURSES = [
   { id: "psy", name: "Medical Psychology", code: "SMS 154", day: "Friday" },
   { id: "com", name: "Communication Skills II", code: "ENGL 158", day: "Saturday" },
   { id: "lab", name: "Lab Safety & Instrumentation", code: "MLS 152", day: "Sunday" },
+  { id: "bcp", name: "Biochemistry Practicals", code: "MLS 158P", day: "Sunday" },
 ];
 
 const TOPICS = {
@@ -532,7 +533,10 @@ const TOPICS = {
     "Memorandum", "Report Writing", "Meeting and Minutes", "Presentation Skills", "CV Writing"
   ],
   lab: [
-    "Introduction to Lab Instrumentation", "Lab Safety", "Lab Safety 2: Chemical Hazards and Safety Symbols", "Standard Operating Procedures (SOPs)", "First Aid Procedures", "Lab Electricals and Safety", "Metrics and Measurements", "Taking Mass Measurements with an Electronic Balance", "Pipetting", "Microscopy and its Principles", "pH Meter", "Spectrophotometer", "Centrifuge", "Water Bath", "Ovens and Incubators", "Autoclaving", "Biosafety Levels", "IPC (Infection Prevention and Control)", "Healthcare Waste Management 1", "Healthcare Waste Management 2", "Lab Equipments and Their Uses", "Operation and Design of Laboratory Equipment I", "Operation and Design of Laboratory Equipment II", "Referencing", "Writing Lab Reports"
+    "Introduction to Lab Instrumentation", "Lab Safety", "Standard Operating Procedures (SOPs)", "First Aid Procedures", "Lab Electricals and Safety", "Taking Mass Measurements with an Electronic Balance", "Microscopy and its Principles", "pH Meter", "Spectrophotometer", "Centrifuge", "Water Bath", "Ovens and Incubators", "Autoclaving", "Biosafety Levels", "IPC (Infection Prevention and Control)", "Lab Equipments and Their Uses", "Operation and Design of Laboratory Equipment I", "Operation and Design of Laboratory Equipment II"
+  ],
+  bcp: [
+    "Pipetting", "Healthcare Waste Management 1", "Healthcare Waste Management 2", "Writing Lab Reports", "Referencing", "Metrics and Measurements", "Lab Safety 2: Chemical Hazards and Safety Symbols", "Lab Safety"
   ]
 };
 
@@ -6371,6 +6375,185 @@ If those came cleanly, you have the foundation that keeps you alive and effectiv
   ],
 };
 
+const T_BCP_SAFETY = {
+  courseId: "bcp",
+  topicIndex: 7,
+  title: "Lab Safety",
+  minutes: 20,
+  note: [
+    { q: "Why is safety the very first thing a lab scientist learns?",
+      body: `Before you run a single test, before you touch a single sample, you learn safety. This is not bureaucratic caution - it is because the medical laboratory is one of the most hazardous workplaces in healthcare.
+
+My Socratic question: a sample of blood arrives at your bench. It looks harmless - a small tube of red liquid. Why should you treat it as potentially deadly?
+
+The answer is that any sample may carry invisible, lethal pathogens - HIV, hepatitis B, tuberculosis - and you cannot tell by looking. The laboratory concentrates the very dangers medicine exists to fight: infectious agents, corrosive chemicals, sharp instruments, flammable reagents, electrical equipment. A single careless moment can cause a laboratory-acquired infection, a chemical burn, or a fire.
+
+Crucial insight: laboratory safety is the discipline of preventing harm to yourself, your colleagues, your patients and the environment while working with hazardous materials. It is the foundation of everything else, because a scientist who is injured, infected, or dead cannot help anyone. Safety is not the enemy of good work - it is the precondition for it. This is why every laboratory course, and every laboratory career, begins here.` },
+
+    { q: "The kinds of hazards you will face.",
+      body: `To control danger you must first recognise it. Laboratory hazards fall into several clear categories, and naming them is the first step to managing them.
+
+Biological hazards are infectious agents - bacteria, viruses, fungi, parasites - present in patient samples and cultures, capable of causing infection. Chemical hazards are the reagents, acids, bases, solvents and stains that can burn, poison, or react dangerously. Physical hazards include sharp objects, or "sharps" - needles, broken glass, blades - as well as heat, and moving equipment. Electrical hazards come from the many powered instruments. Fire hazards arise from flammable solvents and open flames. Ergonomic hazards come from repetitive work and poor posture over long shifts.
+
+My Socratic question: of all these, which single category is most characteristic of the medical laboratory and most feared?
+
+The answer is the biological hazard - the risk of infection from patient samples - because it is invisible, ever-present, and can be fatal. This is why so much of laboratory safety centres on containing and neutralising biological threats.
+
+Crucial insight: every hazard has its own controls, but the mindset is universal - identify the hazard, assess the risk, and apply the right protection. You cannot protect against a danger you have not recognised, so learning to see the hazards in every task is the first safety skill.` },
+
+    { q: "The hierarchy of controls: the smartest way to stay safe.",
+      body: `Here is a principle that separates real safety thinking from simply wearing gloves. Not all protections are equal, and there is a proper order to them called the hierarchy of controls.
+
+The hierarchy ranks safety measures from most effective to least. At the top is elimination - removing the hazard entirely, the best option of all. Next is substitution - replacing a dangerous material with a safer one, such as a less toxic stain. Then engineering controls - physical devices that contain the hazard, like a biosafety cabinet or a fume hood. Then administrative controls - rules, training, and procedures that change how people work. And only at the very bottom, as the last line of defence, is personal protective equipment, or PPE.
+
+My Socratic question: most people think of gloves and lab coats as the front line of safety. Why does the hierarchy place PPE at the very bottom?
+
+The answer is that PPE only protects the individual wearing it, and only if used perfectly - it fails if forgotten, torn, or removed. The higher controls protect everyone by removing or containing the hazard itself, before it ever reaches a person. PPE is the last resort, not the first.
+
+Crucial insight: good safety works from the top of the hierarchy down. Ask first whether a hazard can be eliminated, substituted, or engineered away, and rely on PPE only for what remains. A laboratory that depends on gloves alone is a laboratory waiting for an accident.` },
+
+    { q: "Personal Protective Equipment: your last line of defence.",
+      body: `Though it sits at the bottom of the hierarchy, PPE is what you wear every day, and using it correctly is essential.
+
+PPE is the protective clothing and equipment that shields you from hazards that could not be otherwise removed. The core items are: the laboratory coat, buttoned and worn over your clothes, protecting skin and clothing from splashes; gloves, protecting the hands from biological and chemical contact; eye protection - safety glasses or goggles - guarding against splashes to the eyes; and face protection or masks when there is a risk of aerosols or splashes to the face.
+
+My Socratic question: PPE only works if used correctly. When, in the sequence of a task, must PPE go on, and what is the most dangerous moment in its use?
+
+The answer is that PPE must be put on - donned - before you begin work with the hazard, and the most dangerous moment is taking it off - doffing - because contaminated gloves or a coat can spread the very material they caught. There is a correct order to remove PPE to avoid contaminating yourself, and hands must always be washed afterward.
+
+Crucial insight: PPE is only as good as its use. Wearing it after exposure is useless; removing it carelessly spreads contamination; a torn glove offers no protection. Treat PPE as a discipline, not a costume - the right equipment, worn at the right time, removed in the right order, every single time.` },
+
+    { q: "Biosafety levels: matching containment to danger.",
+      body: `Not all biological hazards are equal, so laboratories are graded by how much containment they provide. This grading is the system of biosafety levels, and it is a favourite of examiners.
+
+There are four biosafety levels, BSL-1 to BSL-4, rising with the danger of the agents handled. BSL-1 is for agents not known to cause disease in healthy adults, worked on an open bench with basic practices - a teaching lab. BSL-2 is for agents causing human disease that is rarely serious and usually treatable, such as much routine clinical work with blood and body fluids; it adds limited access, biohazard signs, sharps precautions, and a biosafety cabinet for aerosol-generating steps. BSL-3 is for serious or lethal agents that can spread by air, such as tuberculosis, requiring special ventilation and strict controls. BSL-4 is for the most dangerous agents - frequently fatal, with no treatment or vaccine, such as Ebola - requiring maximum containment, full-body suits, and the small number of specialised labs worldwide.
+
+My Socratic question: most routine clinical laboratory work, handling everyday blood and urine samples, takes place at which level?
+
+The answer is BSL-2, because clinical samples may contain bloodborne pathogens like HIV and hepatitis B - serious but treatable, transmitted by percutaneous or mucous-membrane exposure rather than air.
+
+Crucial insight: the biosafety level rises with the danger of the agent, matching the strength of containment to the threat. Knowing that routine clinical work is BSL-2 tells you the daily precautions your career demands: gloves, coat, eye protection, sharps care, and a biosafety cabinet for anything that splashes or aerosolises.` },
+
+    { q: "Universal precautions: the rule that keeps you alive.",
+      body: `Here is perhaps the single most important safety principle in the clinical laboratory, and it flows from one hard truth: you cannot tell an infectious sample from a safe one by looking.
+
+Universal precautions is the practice of treating every patient sample - all blood, body fluids, tissues and cells - as if it were infectious, regardless of the patient or the request. You never assume a sample is safe. Every tube of blood is handled as though it carries HIV, hepatitis B, and every other bloodborne pathogen.
+
+My Socratic question: why treat a sample from an apparently healthy young patient with the same caution as one from a known HIV case?
+
+The answer is that infection is invisible - a patient may be infected without knowing it, may be in a window period before tests turn positive, or the request may simply not mention it. If you only took precautions for samples labelled dangerous, you would be exposed by all the ones that were not labelled. Treating everything as infectious closes that gap entirely.
+
+Crucial insight: universal precautions - sometimes extended as "standard precautions" - is the safety net that does not depend on knowing which samples are dangerous. It removes the fatal assumption of safety. This one principle, applied without exception, prevents the majority of laboratory-acquired infections, and it must become second nature.` },
+
+    { q: "Sharps and the greatest daily danger.",
+      body: `Among all the hazards, one causes more laboratory-acquired infections than any other, and it deserves its own focus: the sharp.
+
+A sharp is any object that can pierce the skin - needles above all, but also lancets, blades, and broken glass. The danger is the needlestick injury: a contaminated needle piercing the skin injects pathogens directly into the bloodstream, bypassing every other defence. This is the classic route by which laboratory and healthcare workers acquire HIV and hepatitis B and C.
+
+My Socratic question: a used needle must be made safe. Recapping it by hand seems tidy - why is it in fact one of the most dangerous things you can do?
+
+The answer is that recapping brings your hand and the contaminated needle together, and most needlestick injuries happen exactly then, as the needle misses the cap and enters the hand. The rule is: never recap a needle by hand. Used sharps go immediately, uncapped, into a rigid, puncture-proof sharps container.
+
+Crucial insight: sharps demand a specific discipline - never recap, never overfill the sharps bin, dispose immediately into the proper puncture-proof container, and never reach into it. Because the needlestick delivers infection past all your PPE straight into your blood, sharps safety is not one rule among many - it is the rule that most directly stands between you and a life-changing infection.` },
+
+    { q: "When things go wrong: spills, exposures and emergencies.",
+      body: `Even with perfect precautions, accidents happen, and knowing how to respond turns a crisis into a manageable event.
+
+For a biological spill, the principle is contain and decontaminate: alert others, cover the spill to stop aerosols, and disinfect with an appropriate agent such as sodium hypochlorite (bleach) after allowing droplets to settle. For an exposure - a needlestick, or a splash to eyes or mucous membranes - immediate first aid comes first: wash the wound with soap and water, or flush the eyes at the eyewash station for many minutes, then report the incident at once so that post-exposure evaluation and, where needed, prophylaxis can begin quickly.
+
+My Socratic question: after a needlestick from a patient sample, why does the speed of reporting matter so much - why not simply wash it and carry on?
+
+The answer is that for some infections, such as HIV, post-exposure prophylaxis - preventive medication - is far more effective the sooner it is started, ideally within hours. Delaying to avoid embarrassment or paperwork can cost you that protection. Reporting is not blame; it is your own safety.
+
+Crucial insight: every laboratory has defined emergency procedures - spill kits, eyewash stations, safety showers, fire extinguishers, and reporting systems - and knowing them before you need them is essential. In an emergency there is no time to learn; the response must already be known. First aid, then report, always and immediately.` },
+
+    { q: "Waste, housekeeping and the culture of safety.",
+      body: `Safety does not end when the test is done. What you do with waste, and how you keep your space, protects the next person and the world outside the laboratory.
+
+Laboratory waste must be segregated by type: infectious or biohazardous waste - anything contaminated with blood or body fluids - goes into designated, often colour-coded biohazard bags and is decontaminated, typically by autoclaving, before disposal; sharps go into puncture-proof containers; chemical waste is collected separately according to its hazard. General housekeeping matters too: clean, uncluttered benches, no food or drink in the laboratory, no mouth-pipetting, tied-back hair, and closed shoes.
+
+My Socratic question: why is the simple rule "no eating or drinking in the laboratory" a genuine safety measure and not mere fussiness?
+
+The answer is that eating, drinking, or touching your face provides a direct route for pathogens and chemicals from contaminated surfaces or hands into your body by ingestion or mucous membrane. The rule closes an entire pathway of exposure.
+
+Crucial insight: beyond any single rule, laboratory safety is ultimately a culture - a shared, constant attention to doing things the safe way, every time, because everyone's safety depends on it. Proper waste disposal protects colleagues, waste handlers, and the community; good housekeeping prevents accidents before they start. Safety is not a set of chores but a professional habit of mind that defines a good laboratory scientist.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for laboratory safety, in five lines.
+
+The hazards: biological (infectious samples, the most feared), chemical, physical including sharps, electrical, and fire - identify the hazard before you can control it.
+
+The hierarchy of controls: from most to least effective - elimination, substitution, engineering controls, administrative controls, and last of all PPE; good safety works from the top down.
+
+The daily armour: PPE - lab coat, gloves, eye and face protection - donned before work, doffed carefully afterward, the last line of defence.
+
+The core principles: biosafety levels (routine clinical work is BSL-2) match containment to danger; and universal precautions treat every sample as infectious, closing the fatal assumption of safety.
+
+The greatest danger and the response: the needlestick injects infection past all defences, so never recap and dispose of sharps immediately; and when accidents happen, first aid then immediate reporting, especially for exposures where prophylaxis is time-critical.
+
+Now your final test. A laboratory scientist is about to process a routine blood sample from a patient whose infection status is unknown. Midway, they suffer a needlestick injury from the used needle.
+
+Question one: before the accident, what biosafety level and what overarching precaution principle should have governed how they handled this "routine" sample, and why?
+Question two: identify the specific unsafe act most likely to have caused the needlestick, and state the rule that forbids it.
+Question three: list, in order, the immediate steps the scientist should take after the injury, and explain why speed matters.
+
+Work them through before reading on.
+
+My answers. One: routine clinical blood work is handled at BSL-2, and under universal precautions the sample must be treated as infectious despite the unknown status - precisely because an unknown status could hide HIV or hepatitis, and assuming safety is the fatal error. Two: the most likely cause is recapping the needle by hand, which is forbidden by the rule never to recap - used sharps go straight, uncapped, into a puncture-proof container. Three: immediately wash the wound with soap and water, then report the incident at once so that post-exposure evaluation and, if indicated, prophylaxis can begin - speed matters because prophylaxis for infections like HIV is far more effective the sooner it starts, ideally within hours.
+
+If those came cleanly, you have the foundation that keeps you alive and effective at the bench. Every technique you learn from here rests on this safety base.` },
+  ],
+  theory: [
+    { q: "Define laboratory safety and explain why it is the foundation of laboratory work.", a: "Laboratory safety is the discipline of preventing harm to oneself, colleagues, patients and the environment while working with hazardous materials. It is foundational because the laboratory concentrates infectious, chemical, physical, electrical and fire hazards, and a scientist who is injured, infected or killed cannot help anyone - safety is the precondition for all good work." },
+    { q: "List the main categories of laboratory hazards and identify the most characteristic one.", a: "Biological (infectious agents in samples), chemical (reagents, acids, solvents), physical (sharps, heat, moving equipment), electrical, fire (flammable solvents), and ergonomic hazards. The biological hazard - infection from patient samples - is the most characteristic and feared, because it is invisible, ever-present and potentially fatal." },
+    { q: "State the hierarchy of controls in order and explain why PPE is placed last.", a: "From most to least effective: elimination, substitution, engineering controls, administrative controls, and personal protective equipment (PPE). PPE is last because it protects only the individual wearing it and only if used perfectly, whereas higher controls remove or contain the hazard itself before it reaches anyone." },
+    { q: "Name the core items of PPE and their functions.", a: "The lab coat (protects skin and clothing from splashes), gloves (protect hands from biological and chemical contact), eye protection such as safety glasses or goggles (guard against eye splashes), and face protection or masks (against aerosols and facial splashes)." },
+    { q: "Why is doffing (removing) PPE considered the most dangerous moment in its use?", a: "Because contaminated gloves or coat can spread the hazardous material they caught onto the wearer or surfaces. PPE must be removed in a correct order to avoid self-contamination, and hands must always be washed afterward." },
+    { q: "Describe the four biosafety levels and which one covers routine clinical work.", a: "BSL-1: agents not causing disease in healthy adults, open bench (teaching labs). BSL-2: agents causing usually treatable human disease, adding limited access, sharps precautions and a biosafety cabinet - this covers routine clinical work with blood and body fluids. BSL-3: serious or lethal airborne agents like TB, needing special ventilation. BSL-4: frequently fatal agents with no treatment like Ebola, needing maximum containment." },
+    { q: "Define universal precautions and explain the reasoning behind it.", a: "Universal precautions is the practice of treating every patient sample - all blood, body fluids and tissues - as if it were infectious, regardless of the patient. The reasoning is that infection is invisible: a patient may be infected unknowingly or be in a window period, so only by treating everything as infectious can the gap left by unlabelled dangerous samples be closed." },
+    { q: "What is a needlestick injury and why is it so dangerous?", a: "A needlestick injury is the piercing of the skin by a contaminated needle or sharp, injecting pathogens directly into the bloodstream and bypassing all other defences including PPE. It is the classic route by which laboratory workers acquire HIV and hepatitis B and C, making it the single greatest cause of laboratory-acquired infections." },
+    { q: "State the key rules for safe sharps handling.", a: "Never recap a needle by hand (most needlesticks occur during recapping); dispose of used sharps immediately and uncapped into a rigid, puncture-proof sharps container; never overfill the container; and never reach into it." },
+    { q: "Outline the immediate response to a needlestick exposure and explain why speed matters.", a: "Immediately wash the wound with soap and water (or flush a splashed eye at the eyewash station), then report the incident at once so post-exposure evaluation and prophylaxis can begin. Speed matters because post-exposure prophylaxis, for example against HIV, is far more effective the sooner it is started, ideally within hours." },
+  ],
+  videos: [
+    { channel: "Ninja Nerd / Microbiology", title: "Biosafety Levels BSL 1 to 4 Explained", note: "Clear overview of the four biosafety levels and what each requires.", url: "" },
+    { channel: "Lab Safety", title: "Personal Protective Equipment PPE in the Laboratory", note: "How to don and doff PPE correctly and in the right order.", url: "" },
+    { channel: "Microbiology", title: "Universal Standard Precautions and Sharps Safety", note: "Why every sample is treated as infectious, and safe needle handling.", url: "" },
+  ],
+  mcqs: [
+    { q: "Laboratory safety is best described as the discipline of:", o: ["Filing paperwork", "Making work slower", "Cleaning glassware", "Preventing harm while working with hazardous materials"], a: 3, w: "Safety prevents harm to people and environment from lab hazards." },
+    { q: "The most characteristic and feared hazard of the medical laboratory is the:", o: ["Biological hazard", "Lighting hazard", "Noise hazard", "Ergonomic hazard"], a: 0, w: "Infection from patient samples is invisible, ever-present and potentially fatal." },
+    { q: "Needles, broken glass and blades are examples of:", o: ["Chemical hazards", "Sharps (physical hazards)", "Biological agents", "Electrical hazards"], a: 1, w: "Sharps are physical hazards that can pierce the skin." },
+    { q: "In the hierarchy of controls, the MOST effective measure is:", o: ["PPE", "Administrative controls", "Elimination of the hazard", "Warning signs"], a: 2, w: "Removing the hazard entirely is the most effective control." },
+    { q: "In the hierarchy of controls, the LEAST effective measure is:", o: ["Substitution", "Elimination", "Engineering controls", "Personal protective equipment"], a: 3, w: "PPE protects only the individual and only if used perfectly." },
+    { q: "A biosafety cabinet or fume hood is an example of a(n):", o: ["Engineering control", "Elimination", "Administrative control", "PPE"], a: 0, w: "Physical devices that contain hazards are engineering controls." },
+    { q: "Replacing a toxic stain with a safer one is an example of:", o: ["Elimination", "Substitution", "PPE", "Administrative control"], a: 1, w: "Substitution swaps a dangerous material for a safer one." },
+    { q: "PPE is placed at the bottom of the hierarchy because it:", o: ["Is expensive", "Is uncomfortable", "Protects only the wearer and only if used perfectly", "Is optional"], a: 2, w: "Higher controls remove or contain the hazard for everyone." },
+    { q: "The core items of PPE include all EXCEPT:", o: ["Eye protection", "Lab coat", "Gloves", "A mobile phone"], a: 3, w: "Lab coat, gloves and eye protection are PPE; a phone is not." },
+    { q: "PPE should be put on (donned):", o: ["Before beginning work with the hazard", "At the end of the day", "After exposure", "Only if a splash occurs"], a: 0, w: "PPE must be worn before contact with the hazard to protect you." },
+    { q: "The most dangerous moment in PPE use is:", o: ["Storing it", "Taking it off (doffing)", "Buying it", "Putting it on"], a: 1, w: "Removing contaminated PPE can spread the material if done carelessly." },
+    { q: "There are how many biosafety levels?", o: ["Two", "Six", "Four", "Ten"], a: 2, w: "Biosafety levels run from BSL-1 to BSL-4." },
+    { q: "Biosafety levels rise with:", o: ["The number of staff", "The size of the lab", "The age of the equipment", "The danger of the agents handled"], a: 3, w: "Higher BSL means more dangerous agents and more containment." },
+    { q: "Routine clinical work with blood and body fluids is done at:", o: ["BSL-2", "BSL-1", "BSL-4", "BSL-3"], a: 0, w: "Clinical samples may carry bloodborne pathogens, requiring BSL-2." },
+    { q: "An open-bench teaching lab with harmless agents is:", o: ["BSL-3", "BSL-1", "BSL-2", "BSL-4"], a: 1, w: "BSL-1 handles agents not known to cause disease in healthy adults." },
+    { q: "Airborne lethal agents like tuberculosis require at least:", o: ["BSL-2", "BSL-1", "BSL-3", "None"], a: 2, w: "BSL-3 is for serious airborne agents needing special ventilation." },
+    { q: "The highest containment, for agents like Ebola, is:", o: ["BSL-3", "BSL-2", "BSL-5", "BSL-4"], a: 3, w: "BSL-4 is maximum containment for frequently fatal, untreatable agents." },
+    { q: "Universal precautions means treating every sample as:", o: ["Infectious regardless of the patient", "Safe unless labelled", "Chemical waste", "Requiring no gloves"], a: 0, w: "All samples are handled as potentially infectious." },
+    { q: "The reasoning behind universal precautions is that:", o: ["Labels are always wrong", "Infection is invisible and samples may be unknowingly infectious", "All patients are sick", "It saves money"], a: 1, w: "You cannot tell an infectious sample by looking, so treat all as infectious." },
+    { q: "A contaminated needle piercing the skin is a:", o: ["Splash exposure", "Chemical burn", "Needlestick injury", "Spill"], a: 2, w: "A needlestick injects pathogens directly into the bloodstream." },
+    { q: "Needlestick injuries are dangerous because they:", o: ["Cause only minor pain", "Damage the needle", "Are always harmless", "Inject pathogens past all other defences into the blood"], a: 3, w: "They bypass PPE and deliver infection straight into the bloodstream." },
+    { q: "The rule about recapping used needles by hand is:", o: ["Never recap by hand", "Recap only if busy", "Always recap tightly", "Recap twice"], a: 0, w: "Most needlesticks happen during hand recapping - never do it." },
+    { q: "Used sharps should be disposed of into a:", o: ["Biohazard bag", "Rigid, puncture-proof sharps container", "Normal bin", "Sink"], a: 1, w: "Sharps go immediately, uncapped, into a puncture-proof container." },
+    { q: "The first action after a needlestick injury is to:", o: ["Finish the test", "Go home", "Wash the wound with soap and water", "Recap the needle"], a: 2, w: "Immediate first aid - washing the wound - comes first." },
+    { q: "After first aid for a needlestick, the scientist must:", o: ["Wait a week", "Say nothing", "Continue working", "Report the incident immediately"], a: 3, w: "Prompt reporting enables timely post-exposure evaluation and prophylaxis." },
+    { q: "Speed of reporting an exposure matters because:", o: ["Post-exposure prophylaxis is more effective the sooner it starts", "Paperwork closes early", "It is a formality", "The lab closes"], a: 0, w: "Prophylaxis, e.g. for HIV, works best started within hours." },
+    { q: "A recommended disinfectant for a biological spill is:", o: ["Plain water", "Sodium hypochlorite (bleach)", "Alcohol only", "Cooking oil"], a: 1, w: "Bleach is an appropriate agent to decontaminate biological spills." },
+    { q: "Infectious (biohazardous) waste is typically decontaminated by:", o: ["Air drying", "Freezing", "Autoclaving", "Burying raw"], a: 2, w: "Autoclaving decontaminates biohazardous waste before disposal." },
+    { q: "Eating and drinking are forbidden in the laboratory because they:", o: ["Are messy", "Distract others", "Waste time", "Provide a route for pathogens and chemicals to enter the body"], a: 3, w: "Ingestion is a direct exposure pathway the rule closes." },
+    { q: "Ultimately, laboratory safety is best understood as:", o: ["A constant shared culture of working safely", "Only the supervisor's job", "A one-time training", "A set of forms"], a: 0, w: "Safety is an ongoing professional habit shared by everyone." },
+  ],
+};
+
 /* --------------------------- phy:1 --------------------------- */
 const T_PHY_HOMEO = {
   courseId: "phy",
@@ -6744,7 +6927,7 @@ My answers. One: the instrument is precise (the readings are consistently off by
 /* --------------------------- lab:1 --------------------------- */
 const T_LAB_ELECTRICAL = {
   courseId: "lab",
-  topicIndex: 5,
+  topicIndex: 4,
   title: "Lab Electricals and Safety",
   minutes: 16,
   note: [
@@ -6925,8 +7108,8 @@ If those came cleanly, you understand electrical safety not as a list of rules b
 
 // ==================== LAB SAFETY TOPIC 04: METRICS AND MEASUREMENTS ====================
 const T_LAB_METRICS = {
-  courseId: "lab",
-  topicIndex: 6,
+  courseId: "bcp",
+  topicIndex: 5,
   title: "Metrics and Measurements",
   minutes: 22,
   note: [
@@ -7112,7 +7295,7 @@ My answers. One: moles = mass / molar mass = 29.2 g / 58.44 g/mol = 0.5 moles. T
 // ==================== LAB SAFETY TOPIC 05: TAKING MASS MEASUREMENTS WITH AN ELECTRONIC BALANCE ====================
 const T_LAB_BALANCE = {
   courseId: "lab",
-  topicIndex: 7,
+  topicIndex: 5,
   title: "Taking Mass Measurements with an Electronic Balance",
   minutes: 20,
   note: [
@@ -7305,8 +7488,8 @@ My answers. One: the technician should use an analytical balance because it read
 
 /* --------------------------- lab:5 --------------------------- */
 const T_LAB_PIPETTING = {
-  courseId: "lab",
-  topicIndex: 8,
+  courseId: "bcp",
+  topicIndex: 0,
   title: "Pipetting",
   minutes: 20,
   note: [
@@ -7468,7 +7651,7 @@ If those came cleanly, you understand how pipette selection, aspiration and disp
 /* --------------------------- lab:6 --------------------------- */
 const T_LAB_MICROSCOPY = {
   courseId: "lab",
-  topicIndex: 9,
+  topicIndex: 6,
   title: "Microscopy and its Principles",
   minutes: 20,
   note: [
@@ -7632,7 +7815,7 @@ If those came cleanly, you understand how magnification, resolution, numerical a
 /* --------------------------- lab:7 --------------------------- */
 const T_LAB_PHMETER = {
   courseId: "lab",
-  topicIndex: 10,
+  topicIndex: 7,
   title: "pH Meter",
   minutes: 20,
   note: [
@@ -7816,7 +7999,7 @@ If those came cleanly, you understand how the glass electrode, calibration, elec
 /* --------------------------- lab:8 --------------------------- */
 const T_LAB_SPECTROPHOTOMETER = {
   courseId: "lab",
-  topicIndex: 11,
+  topicIndex: 8,
   title: "Spectrophotometer",
   minutes: 20,
   note: [
@@ -7998,7 +8181,7 @@ If those came cleanly, you understand how the Beer-Lambert law, correct waveleng
 /* --------------------------- lab:9 --------------------------- */
 const T_LAB_CENTRIFUGE = {
   courseId: "lab",
-  topicIndex: 12,
+  topicIndex: 9,
   title: "Centrifuge",
   minutes: 20,
   note: [
@@ -8180,7 +8363,7 @@ If those came cleanly, you understand how centrifugal force, RCF versus RPM, rot
 /* --------------------------- lab:10 --------------------------- */
 const T_LAB_AUTOCLAVING = {
   courseId: "lab",
-  topicIndex: 15,
+  topicIndex: 12,
   title: "Autoclaving",
   minutes: 20,
   note: [
@@ -8362,7 +8545,7 @@ If those came cleanly, you understand how the principle of moist heat sterilisat
 /* --------------------------- lab:11 --------------------------- */
 const T_LAB_BIOSAFETY = {
   courseId: "lab",
-  topicIndex: 16,
+  topicIndex: 13,
   title: "Biosafety Levels",
   minutes: 20,
   note: [
@@ -8544,7 +8727,7 @@ If those came cleanly, you understand how the tiered biosafety level framework, 
 /* --------------------------- lab:12 --------------------------- */
 const T_LAB_IPC = {
   courseId: "lab",
-  topicIndex: 17,
+  topicIndex: 14,
   title: "Infection Prevention and Control (IPC)",
   minutes: 20,
   note: [
@@ -8726,7 +8909,7 @@ If those came cleanly, you understand how standard and transmission-based precau
 /* --------------------------- lab:13 --------------------------- */
 const T_LAB_EQUIPMENT = {
   courseId: "lab",
-  topicIndex: 20,
+  topicIndex: 15,
   title: "Lab Equipments and Their Uses",
   minutes: 20,
   note: [
@@ -8906,7 +9089,7 @@ If those came cleanly, you understand how the everyday glassware, flame equipmen
 /* --------------------------- lab:14 --------------------------- */
 const T_LAB_OPDESIGN_I = {
   courseId: "lab",
-  topicIndex: 21,
+  topicIndex: 16,
   title: "Operation and Design of Laboratory Equipment I",
   minutes: 20,
   note: [
@@ -9086,7 +9269,7 @@ If those came cleanly, you have the foundation for reasoning about design genera
 /* --------------------------- lab:15 --------------------------- */
 const T_LAB_OPDESIGN_II = {
   courseId: "lab",
-  topicIndex: 22,
+  topicIndex: 17,
   title: "Operation and Design of Laboratory Equipment II",
   minutes: 20,
   note: [
@@ -9255,8 +9438,8 @@ If those came cleanly, you can now reason about laboratory equipment the way its
 
 /* --------------------------- lab:16 --------------------------- */
 const T_LAB_REFERENCING = {
-  courseId: "lab",
-  topicIndex: 23,
+  courseId: "bcp",
+  topicIndex: 4,
   title: "Referencing",
   minutes: 18,
   note: [
@@ -9437,8 +9620,8 @@ If those came cleanly, you understand how in-text citations and reference lists 
 
 /* --------------------------- lab:17 --------------------------- */
 const T_LAB_REPORTS = {
-  courseId: "lab",
-  topicIndex: 24,
+  courseId: "bcp",
+  topicIndex: 3,
   title: "Writing Lab Reports",
   minutes: 20,
   note: [
@@ -9618,8 +9801,8 @@ If those came cleanly, you understand how a laboratory report's structure, secti
 
 /* --------------------------- lab:18 --------------------------- */
 const T_LAB_HCWM_1 = {
-  courseId: "lab",
-  topicIndex: 18,
+  courseId: "bcp",
+  topicIndex: 1,
   title: "Healthcare Waste Management 1",
   minutes: 18,
   note: [
@@ -9834,8 +10017,8 @@ If those came cleanly, you have the foundation for the second half of this topic
 
 /* --------------------------- lab:19 --------------------------- */
 const T_LAB_HCWM_2 = {
-  courseId: "lab",
-  topicIndex: 19,
+  courseId: "bcp",
+  topicIndex: 2,
   title: "Healthcare Waste Management 2",
   minutes: 18,
   note: [
@@ -10052,8 +10235,8 @@ If those came cleanly, you have the full picture of healthcare waste management,
 
 /* --------------------------- lab:20 --------------------------- */
 const T_LAB_CHEM_HAZARDS = {
-  courseId: "lab",
-  topicIndex: 2,
+  courseId: "bcp",
+  topicIndex: 6,
   title: "Lab Safety 2: Chemical Hazards and Safety Symbols",
   minutes: 18,
   note: [
@@ -10277,7 +10460,7 @@ Bringing this topic together: hazard categories (corrosive, toxic, flammable, ox
 /* --------------------------- lab:21 --------------------------- */
 const T_LAB_SOP = {
   courseId: "lab",
-  topicIndex: 3,
+  topicIndex: 2,
   title: "Standard Operating Procedures (SOPs)",
   minutes: 16,
   note: [
@@ -10497,7 +10680,7 @@ If those came cleanly, you now understand why "the SOP says so" is not laborator
 /* --------------------------- lab:22 --------------------------- */
 const T_LAB_FIRST_AID = {
   courseId: "lab",
-  topicIndex: 4,
+  topicIndex: 3,
   title: "First Aid Procedures",
   minutes: 18,
   note: [
@@ -10723,7 +10906,7 @@ If those came cleanly, you now know not just the safety rules that prevent accid
 /* --------------------------- lab:23 --------------------------- */
 const T_LAB_OVENS_INCUBATORS = {
   courseId: "lab",
-  topicIndex: 14,
+  topicIndex: 11,
   title: "Ovens and Incubators",
   minutes: 16,
   note: [
@@ -10945,7 +11128,7 @@ If those came cleanly, you can now correctly choose, load, and monitor two of th
 /* --------------------------- lab:24 --------------------------- */
 const T_LAB_WATERBATH = {
   courseId: "lab",
-  topicIndex: 13,
+  topicIndex: 10,
   title: "Water Bath",
   minutes: 14,
   note: [
@@ -19367,29 +19550,30 @@ const CONTENT = {
   "phy:17": T_PHY_INTEGUMENTARY,
   "lab:0": T_LAB_INSTRUMENTATION,
   "lab:1": T_MLS_SAFETY,
-  "lab:2": T_LAB_CHEM_HAZARDS,
-  "lab:3": T_LAB_SOP,
-  "lab:4": T_LAB_FIRST_AID,
-  "lab:5": T_LAB_ELECTRICAL,
-  "lab:6": T_LAB_METRICS,
-  "lab:7": T_LAB_BALANCE,
-  "lab:8": T_LAB_PIPETTING,
-  "lab:9": T_LAB_MICROSCOPY,
-  "lab:10": T_LAB_PHMETER,
-  "lab:11": T_LAB_SPECTROPHOTOMETER,
-  "lab:12": T_LAB_CENTRIFUGE,
-  "lab:13": T_LAB_WATERBATH,
-  "lab:14": T_LAB_OVENS_INCUBATORS,
-  "lab:15": T_LAB_AUTOCLAVING,
-  "lab:16": T_LAB_BIOSAFETY,
-  "lab:17": T_LAB_IPC,
-  "lab:18": T_LAB_HCWM_1,
-  "lab:19": T_LAB_HCWM_2,
-  "lab:20": T_LAB_EQUIPMENT,
-  "lab:21": T_LAB_OPDESIGN_I,
-  "lab:22": T_LAB_OPDESIGN_II,
-  "lab:23": T_LAB_REFERENCING,
-  "lab:24": T_LAB_REPORTS,
+  "lab:2": T_LAB_SOP,
+  "lab:3": T_LAB_FIRST_AID,
+  "lab:4": T_LAB_ELECTRICAL,
+  "lab:5": T_LAB_BALANCE,
+  "lab:6": T_LAB_MICROSCOPY,
+  "lab:7": T_LAB_PHMETER,
+  "lab:8": T_LAB_SPECTROPHOTOMETER,
+  "lab:9": T_LAB_CENTRIFUGE,
+  "lab:10": T_LAB_WATERBATH,
+  "lab:11": T_LAB_OVENS_INCUBATORS,
+  "lab:12": T_LAB_AUTOCLAVING,
+  "lab:13": T_LAB_BIOSAFETY,
+  "lab:14": T_LAB_IPC,
+  "lab:15": T_LAB_EQUIPMENT,
+  "lab:16": T_LAB_OPDESIGN_I,
+  "lab:17": T_LAB_OPDESIGN_II,
+  "bcp:0": T_LAB_PIPETTING,
+  "bcp:1": T_LAB_HCWM_1,
+  "bcp:2": T_LAB_HCWM_2,
+  "bcp:3": T_LAB_REPORTS,
+  "bcp:4": T_LAB_REFERENCING,
+  "bcp:5": T_LAB_METRICS,
+  "bcp:6": T_LAB_CHEM_HAZARDS,
+  "bcp:7": T_BCP_SAFETY,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
@@ -19433,6 +19617,110 @@ const curriculumContextFor = (cid, topicName) => {
 };
 const builtInCourse = (cid) => Object.keys(CONTENT).filter((k) => k.startsWith(cid + ":")).length;
 const totalBuilt = () => Object.keys(CONTENT).length;
+
+/* ===================== END-OF-SEMESTER EXAM TIMETABLE =====================
+   PLACEHOLDER - replace date/time/venue below with the real KNUST MLS 2029
+   timetable. Each entry: courseId (must match a COURSES id), date "YYYY-MM-DD",
+   time "h:mm AM/PM" (start time), and optional venue. Keep entries sorted by
+   date - order doesn't matter functionally (NextExamCard sorts them) but it's
+   easier to eyeball this way. A short list of exam-day tips per course lives
+   in EXAM_TIPS below; edit freely per course. */
+const EXAM_TIMETABLE = [
+  { courseId: "ana", date: "2026-08-19", time: "9:00 AM", venue: "TBD" },
+  { courseId: "phy", date: "2026-08-21", time: "9:00 AM", venue: "TBD" },
+  { courseId: "bch", date: "2026-08-24", time: "9:00 AM", venue: "TBD" },
+  { courseId: "bio", date: "2026-08-26", time: "9:00 AM", venue: "TBD" },
+  { courseId: "psy", date: "2026-08-28", time: "9:00 AM", venue: "TBD" },
+  { courseId: "com", date: "2026-09-01", time: "9:00 AM", venue: "TBD" },
+  { courseId: "lab", date: "2026-09-04", time: "9:00 AM", venue: "TBD" },
+];
+
+const EXAM_TIPS = {
+  ana: "Go through your labelled diagrams one more time - identification questions show up a lot. Nail the axial/appendicular skeleton and nervous system terminology.",
+  phy: "Focus on mechanisms, not just definitions - membrane transport, muscle physiology and homeostasis love \"explain why\" questions.",
+  bch: "Metabolic pathways (glycolysis, gluconeogenesis) and enzyme kinetics are high-yield. Redraw pathways from memory instead of just re-reading them.",
+  bio: "Biomolecule structure-function relationships come up constantly - carbohydrates, lipids, amino acids/proteins. Practice past MCQs under time pressure.",
+  psy: "Know your theorists and their core experiments cold (Pavlov, Skinner, Freud, Piaget) - matching-style questions are common.",
+  com: "Revise letter/memo/report formats and the Seven Cs - format and structure questions are easy marks if you know the layout.",
+  lab: "Safety protocols, SOPs and equipment operation principles are the bulk of this paper - know the \"why\" behind each procedure, not just the steps.",
+  bcp: "Pipetting technique, referencing style and lab report structure are practical/applied - review the actual steps, not just theory.",
+};
+
+// Returns the next not-yet-passed exam (by date, then time), or null if all
+// exams in EXAM_TIMETABLE are in the past.
+function nextUpcomingExam() {
+  const now = new Date();
+  const upcoming = EXAM_TIMETABLE
+    .map((e) => ({ ...e, dt: new Date(`${e.date}T${to24h(e.time)}:00`) }))
+    .filter((e) => e.dt >= now)
+    .sort((a, b) => a.dt - b.dt);
+  return upcoming[0] || null;
+}
+
+function to24h(t) {
+  // "9:00 AM" -> "09:00", "1:30 PM" -> "13:30"
+  const m = /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i.exec(t.trim());
+  if (!m) return "09:00";
+  let [, h, min, ap] = m;
+  h = parseInt(h, 10);
+  if (/pm/i.test(ap) && h !== 12) h += 12;
+  if (/am/i.test(ap) && h === 12) h = 0;
+  return `${String(h).padStart(2, "0")}:${min}`;
+}
+
+function NextExamCard() {
+  const next = nextUpcomingExam();
+  if (!next) {
+    // All exams in EXAM_TIMETABLE have passed.
+    return (
+      <div className="card card-feature" style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+        <div style={{ flexShrink: 0, width: 72, height: 72, borderRadius: 16, background: "var(--amber-dim)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <Ic.flame p={30} />
+        </div>
+        <div style={{ flex: 1, minWidth: 200 }}>
+          <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 4 }}>Exams complete</div>
+          <div style={{ fontSize: 14.5, color: "var(--text-2)", lineHeight: 1.55 }}>
+            That's the last paper down. Great climb - rest up, and keep an eye out here for what's next.
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const course = COURSES.find((c) => c.id === next.courseId);
+  const msPerDay = 1000 * 60 * 60 * 24;
+  const daysLeft = Math.ceil((next.dt - new Date()) / msPerDay);
+  const tip = EXAM_TIPS[next.courseId];
+
+  let dayLabel;
+  if (daysLeft <= 0) dayLabel = "TODAY";
+  else if (daysLeft === 1) dayLabel = "DAY";
+  else dayLabel = "DAYS";
+
+  const dateLabel = next.dt.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+
+  return (
+    <div className="card card-feature" style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 12 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+        <div style={{ flexShrink: 0, width: 72, height: 72, borderRadius: 16, background: "var(--amber-dim)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ fontWeight: 800, fontSize: daysLeft <= 0 ? 15 : 26, color: "var(--amber)", lineHeight: 1 }}>{daysLeft > 0 ? daysLeft : "0"}</div>
+          <div className="mono" style={{ fontSize: 9.5, color: "var(--amber-2)", marginTop: 2 }}>{dayLabel}</div>
+        </div>
+        <div style={{ flex: 1, minWidth: 200 }}>
+          <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 4 }}>Next exam · {course ? course.name : next.courseId}</div>
+          <div style={{ fontSize: 14.5, color: "var(--text)", fontWeight: 600, lineHeight: 1.4 }}>
+            {course ? course.code : ""} · {dateLabel} · {next.time}{next.venue && next.venue !== "TBD" ? ` · ${next.venue}` : ""}
+          </div>
+        </div>
+      </div>
+      {tip && (
+        <div style={{ fontSize: 13.5, color: "var(--text-2)", lineHeight: 1.55, borderTop: "1px solid var(--line)", paddingTop: 10 }}>
+          <strong style={{ color: "var(--text)" }}>Tip: </strong>{tip}
+        </div>
+      )}
+    </div>
+  );
+}
 
 const DAILY = {
   1: { courseId: "ana", q: "The anatomical plane that separates anterior from posterior is the:", o: ["Sagittal", "Coronal (frontal)", "Transverse", "Median"], a: 1, w: "Coronal/frontal separates front from back." },
@@ -26215,7 +26503,7 @@ function WeeklyRecapCard({ app }) {
   );
 }
 
-const WHATS_NEW = { id: "wn_2026_08_histology", text: "New: Histology question banks in Passco, plus flow-diagram and pop-up explanation fixes across the app." };
+const WHATS_NEW = { id: "wn_2026_08_nextexam", text: "New: Biochemistry Practicals tab added, plus a Next Exam card showing what's coming up next with tips for that course." };
 
 function HomeView({ app }) {
   const [whatsNewDismissed, setWhatsNewDismissed] = useState(() => {
@@ -26341,32 +26629,7 @@ function HomeView({ app }) {
         );
       })()}
 
-      {(() => {
-        // Exam countdown - end-of-semester exams begin 17 August 2026.
-        const examStart = new Date("2026-08-17T00:00:00");
-        const now = new Date();
-        const msPerDay = 1000 * 60 * 60 * 24;
-        const daysLeft = Math.ceil((examStart - now) / msPerDay);
-        if (daysLeft < -30) return null; // hide well after exams
-        const built = Object.keys(CONTENT).length;
-        let line;
-        if (daysLeft > 1) line = `The end-of-semester exams begin in ${daysLeft} days. Some topics you will be examined on you may not have covered yet - ASCEND has you. Start climbing today.`;
-        else if (daysLeft === 1) line = `Exams begin tomorrow. One last climb - revise your weak spots in Review and lock it in. ASCEND has you.`;
-        else if (daysLeft === 0) line = `Exams begin today. Breathe, trust your preparation, and give it everything. ASCEND has you.`;
-        else line = `Exam season is here. Keep going - revise, review, and finish strong. ASCEND has you.`;
-        return (
-          <div className="card card-feature" style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
-            <div style={{ flexShrink: 0, width: 72, height: 72, borderRadius: 16, background: "var(--amber-dim)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-              <div style={{ fontWeight: 800, fontSize: 26, color: "var(--amber)", lineHeight: 1 }}>{daysLeft > 0 ? daysLeft : 0}</div>
-              <div className="mono" style={{ fontSize: 9.5, color: "var(--amber-2)", marginTop: 2 }}>{daysLeft === 1 ? "DAY" : "DAYS"}</div>
-            </div>
-            <div style={{ flex: 1, minWidth: 200 }}>
-              <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 4 }}>Countdown to exams · 17 Aug 2026</div>
-              <div style={{ fontSize: 14.5, color: "var(--text-2)", lineHeight: 1.55 }}>{line}</div>
-            </div>
-          </div>
-        );
-      })()}
+      <NextExamCard />
 
       {(() => {
         // GitHub-style contribution calendar: 7 rows (days of week) x week-columns,
