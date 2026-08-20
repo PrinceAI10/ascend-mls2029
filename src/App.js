@@ -20884,6 +20884,174 @@ function Ring({ value, size = 46, stroke = 5, color = "var(--amber)" }) {
   );
 }
 
+// Draws a shareable milestone card (rank-up, achievement, streak) onto an
+// offscreen canvas - a 4:5 portrait image sized for Instagram feed/story,
+// dark ASCEND-branded background, the milestone in big type, one stat line
+// underneath. This is the "proof, not features" card: something a student
+// actually wants to post, the way Duolingo/Strava/Spotify recaps work.
+function buildShareCardCanvas({ kind, title, subtitle, statLabel, statValue, color = "#F5B93F" }) {
+  const W = 1080, H = 1350;
+  const canvas = document.createElement("canvas");
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext("2d");
+
+  // Background
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, "#0A0F1A");
+  bg.addColorStop(1, "#121C2E");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Soft glow behind the badge
+  const glow = ctx.createRadialGradient(W / 2, 430, 40, W / 2, 430, 420);
+  glow.addColorStop(0, color + "40");
+  glow.addColorStop(1, color + "00");
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, W, H);
+
+  // Eyebrow: ASCEND wordmark
+  ctx.textAlign = "center";
+  ctx.fillStyle = color;
+  ctx.font = "700 34px Arial";
+  ctx.textBaseline = "alphabetic";
+  ctx.letterSpacing = "6px";
+  ctx.fillText("A S C E N D", W / 2, 130);
+  ctx.letterSpacing = "0px";
+
+  // Badge ring
+  ctx.beginPath();
+  ctx.arc(W / 2, 430, 190, 0, Math.PI * 2);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 10;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(W / 2, 430, 190, 0, Math.PI * 2);
+  ctx.strokeStyle = color + "33";
+  ctx.lineWidth = 26;
+  ctx.stroke();
+
+  // Kind label inside the ring (e.g. "RANK UP", "ACHIEVEMENT", "STREAK")
+  ctx.fillStyle = "rgba(255,255,255,0.55)";
+  ctx.font = "700 26px Arial";
+  ctx.fillText((kind || "MILESTONE").toUpperCase(), W / 2, 370);
+
+  // Title (rank name / achievement label / streak count) - shrink to fit
+  let titleSize = 84;
+  ctx.font = `800 ${titleSize}px Arial`;
+  while (ctx.measureText(title).width > 340 && titleSize > 40) {
+    titleSize -= 4;
+    ctx.font = `800 ${titleSize}px Arial`;
+  }
+  ctx.fillStyle = "#fff";
+  ctx.fillText(title, W / 2, 450);
+
+  // Subtitle under the badge
+  ctx.fillStyle = "rgba(255,255,255,0.65)";
+  ctx.font = "500 32px Arial";
+  wrapCanvasText(ctx, subtitle || "", W / 2, 700, 780, 42);
+
+  // Stat pill
+  if (statLabel && statValue) {
+    const pillY = 880, pillH = 110;
+    ctx.font = "800 46px Arial";
+    const statText = `${statValue}  ${statLabel}`;
+    const pillW = Math.min(860, ctx.measureText(statText).width + 100);
+    ctx.fillStyle = "rgba(255,255,255,0.06)";
+    roundRectPath(ctx, W / 2 - pillW / 2, pillY, pillW, pillH, 20);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,0.14)";
+    ctx.lineWidth = 2;
+    roundRectPath(ctx, W / 2 - pillW / 2, pillY, pillW, pillH, 20);
+    ctx.stroke();
+    ctx.fillStyle = "#fff";
+    ctx.fillText(statText, W / 2, pillY + 72);
+  }
+
+  // Footer
+  ctx.fillStyle = "rgba(255,255,255,0.4)";
+  ctx.font = "500 26px Arial";
+  ctx.fillText("Medical Laboratory Science · Class of 2029", W / 2, H - 90);
+  ctx.fillStyle = "rgba(255,255,255,0.25)";
+  ctx.font = "500 22px Arial";
+  ctx.fillText(new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }), W / 2, H - 54);
+
+  return canvas;
+}
+function roundRectPath(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+function wrapCanvasText(ctx, text, cx, y, maxWidth, lineHeight) {
+  const words = String(text).split(" ");
+  let line = "", lines = [];
+  for (const w of words) {
+    const test = line ? line + " " + w : w;
+    if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = w; }
+    else line = test;
+  }
+  if (line) lines.push(line);
+  lines = lines.slice(0, 3);
+  const startY = y - ((lines.length - 1) * lineHeight) / 2;
+  lines.forEach((l, i) => ctx.fillText(l, cx, startY + i * lineHeight));
+}
+
+// Exports the canvas as a PNG and either opens the native share sheet (if
+// the browser/device supports sharing files - most mobile browsers do) or
+// falls back to a plain download, which still lets the student save it and
+// post it themselves.
+function shareOrDownloadCanvas(canvas, filename, shareText) {
+  canvas.toBlob(async (blob) => {
+    if (!blob) return;
+    const file = new File([blob], filename, { type: "image/png" });
+    try {
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: "ASCEND", text: shareText });
+        return;
+      }
+    } catch (e) {
+      // user cancelled the share sheet, or share isn't actually usable here - fall through to download
+    }
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+  }, "image/png");
+}
+
+// Small reusable share button - builds the card from config and hands it to
+// shareOrDownloadCanvas. Kept as its own component so every milestone
+// surface (rank-up, achievement unlock, streak) can drop it in identically.
+function ShareCardButton({ config, label = "Share", style }) {
+  const [busy, setBusy] = useState(false);
+  return (
+    <button
+      className="btn btn-g"
+      disabled={busy}
+      style={{ display: "inline-flex", alignItems: "center", gap: 8, ...style }}
+      onClick={() => {
+        setBusy(true);
+        try {
+          const canvas = buildShareCardCanvas(config);
+          shareOrDownloadCanvas(canvas, `ascend-${config.kind || "milestone"}.png`, config.title);
+        } finally {
+          setTimeout(() => setBusy(false), 600);
+        }
+      }}
+    >
+      <Ic.send p={16} />
+      {busy ? "Preparing…" : label}
+    </button>
+  );
+}
+
 // hero=true is used on the splash/loading screen (logo + spinner) - a bigger,
 // heavier "trending" treatment (tight tracking, extra-bold weight) instead of
 // the compact topbar wordmark.
@@ -21703,6 +21871,10 @@ function QuizView({ app }) {
   });
 
   const [earnedXp, setEarnedXp] = useState(true);
+  // Previous best score on this topic, captured right before finishQuiz
+  // overwrites it - used to show "you improved" on the results screen,
+  // which is a number a student can actually explain, unlike raw XP.
+  const [prevBest, setPrevBest] = useState(null);
   const bankLen = mode ? q.length : PRACTICE_QUESTION_COUNT;
 
   const [left, setLeft] = useState(() => {
@@ -21820,6 +21992,7 @@ function QuizView({ app }) {
     if (t) {
       const already = !!app.progress.completed?.[`${t.courseId}:${t.topicIndex}`];
       setEarnedXp(!already);
+      setPrevBest(app.progress.scores?.[`${t.courseId}:${t.topicIndex}`] ?? null);
       const missed = q.filter((item, idx) => answers[idx] !== undefined && answers[idx] !== item.a)
         .map((item) => ({ q: item.q, o: item.o, a: item.a, w: item.w, topic: t.title, courseId: t.courseId }));
       app.finishQuiz(t.courseId, t.topicIndex, correct, missed, bankLen);
@@ -21895,12 +22068,22 @@ function QuizView({ app }) {
   if (done) {
     const pct = bankLen ? Math.round((score / bankLen) * 100) : 0;
     const g = gradeOf(pct);
+    // "Getting better" beats a raw XP number - if this attempt beat their
+    // prior best on this exact topic, lead with that instead. It's a
+    // one-sentence, self-explaining stat the way a faster 5k time is.
+    const improved = prevBest !== null && pct > prevBest;
     return (
       <div className="view">
         <div className="card" style={{ textAlign: "center", padding: "30px 20px" }}>
           <div className="eyebrow">Result</div>
           <div className="mono" style={{ fontSize: 46, fontWeight: 700, color: "var(--amber)", margin: "8px 0" }}>{score}/{bankLen}</div>
           <div style={{ color: "var(--text-2)" }}>{pct}% correct{earnedXp ? ` · +${score * 10} XP earned` : " · practice run, no new XP"}</div>
+          {improved && (
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 10, padding: "8px 16px", borderRadius: 12, background: "rgba(16,185,129,0.12)", border: "1px solid rgba(16,185,129,0.35)" }}>
+              <Ic.up p={16} style={{ color: "var(--good, #10B981)" }} />
+              <span style={{ color: "var(--good, #10B981)", fontWeight: 700, fontSize: 13.5 }}>Up from {prevBest}% - your best on this topic yet</span>
+            </div>
+          )}
           <div style={{ display: "inline-flex", alignItems: "center", gap: 12, marginTop: 16, padding: "10px 18px", borderRadius: 12, background: "var(--bg-3)", border: "1px solid var(--line)", maxWidth: "42ch" }}>
             {g.letter && <span style={{ fontSize: 30, fontWeight: 800, color: g.color, fontFamily: "var(--mono)" }}>{g.letter}</span>}
             <span style={{ color: g.letter ? "var(--text)" : "var(--text-2)", fontWeight: 600, textAlign: "left", fontSize: 14.5 }}>{g.remark}</span>
@@ -29652,6 +29835,11 @@ export default function App() {
     return () => clearTimeout(t);
   }, [rankUpNotif]);
   const [achNotif, setAchNotif] = useState(null);
+  useEffect(() => {
+    if (!achNotif) return;
+    const t = setTimeout(() => setAchNotif(null), 6000);
+    return () => clearTimeout(t);
+  }, [achNotif]);
   const [auth, setAuth] = useState(null);
   const [supaUid, setSupaUid] = useState(null);
   const supaUidRef = useRef(null);
@@ -29804,12 +29992,10 @@ export default function App() {
     if (p.streak >= 7) add('streak_7');
     if (p.streak >= 30) add('streak_30');
     if (newAchievement) {
-      sessionStorage.setItem('ascend_achievement_notif', JSON.stringify({
-        id: newAchievement.id,
-        label: newAchievement.label,
-        description: newAchievement.description,
-        icon: 'trophy'
-      }));
+      // Drive the unlock popup directly, same pattern as checkRankUp below -
+      // this used to only write to sessionStorage under a key nothing ever
+      // read back, so the popup (and its share card) never actually showed.
+      setAchNotif(newAchievement);
     }
     return unlocked;
   };
@@ -31015,13 +31201,80 @@ export default function App() {
         <div style={{ fontSize: 13, letterSpacing: ".08em", textTransform: "uppercase", color: "var(--text-2)", fontWeight: 700 }}>Rank up!</div>
         <div style={{ fontSize: 26, fontWeight: 800, color: rankUpNotif.color, margin: "6px 0 4px" }}>{rankUpNotif.newRank}</div>
         <p style={{ color: "var(--text-2)", fontSize: 14.5, margin: "0 0 22px" }}>{rankUpNotif.message}</p>
-        <button
-          className="btn btn-p"
-          style={{ width: "100%", justifyContent: "center", background: rankUpNotif.color, borderColor: rankUpNotif.color, color: "#0A0C10" }}
-          onClick={() => setRankUpNotif(null)}
-        >
-          Keep going
-        </button>
+        <div style={{ display: "flex", gap: 10 }}>
+          <ShareCardButton
+            style={{ flex: 1, justifyContent: "center" }}
+            config={{
+              kind: "Rank up",
+              title: rankUpNotif.newRank,
+              subtitle: `Reached ${rankUpNotif.newRank} on ASCEND.`,
+              statLabel: "XP",
+              statValue: (progress.xp || 0).toLocaleString(),
+              color: rankUpNotif.color,
+            }}
+          />
+          <button
+            className="btn btn-p"
+            style={{ flex: 1, justifyContent: "center", background: rankUpNotif.color, borderColor: rankUpNotif.color, color: "#0A0C10" }}
+            onClick={() => setRankUpNotif(null)}
+          >
+            Keep going
+          </button>
+        </div>
+      </div>
+    </div>
+  ) : null;
+
+  const achOverlay = achNotif ? (
+    <div
+      onClick={() => setAchNotif(null)}
+      style={{
+        position: "fixed", inset: 0, zIndex: 10000,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        background: "rgba(10,12,16,0.72)", backdropFilter: "blur(2px)",
+        padding: 20, cursor: "pointer",
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: "var(--bg-2)", border: "1px solid var(--amber)",
+          borderRadius: 22, padding: "36px 28px 28px", maxWidth: 340, width: "100%",
+          textAlign: "center", cursor: "default",
+          boxShadow: "0 0 60px rgba(245,185,63,0.33)",
+          animation: "rankUpPop .45s cubic-bezier(.2,1.4,.4,1)",
+        }}
+      >
+        <div style={{
+          width: 84, height: 84, margin: "0 auto 18px", borderRadius: "50%",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          background: "var(--amber-dim)", border: "2px solid var(--amber)", color: "var(--amber)",
+        }}>
+          <Ic.trophy p={38} />
+        </div>
+        <div style={{ fontSize: 13, letterSpacing: ".08em", textTransform: "uppercase", color: "var(--text-2)", fontWeight: 700 }}>Achievement unlocked</div>
+        <div style={{ fontSize: 24, fontWeight: 800, color: "var(--amber)", margin: "6px 0 4px" }}>{achNotif.label}</div>
+        <p style={{ color: "var(--text-2)", fontSize: 14.5, margin: "0 0 22px" }}>{achNotif.description}</p>
+        <div style={{ display: "flex", gap: 10 }}>
+          <ShareCardButton
+            style={{ flex: 1, justifyContent: "center" }}
+            config={{
+              kind: "Achievement",
+              title: achNotif.label,
+              subtitle: achNotif.description,
+              statLabel: "streak",
+              statValue: `${progress?.streak || 0}d`,
+              color: "#F5B93F",
+            }}
+          />
+          <button
+            className="btn btn-p"
+            style={{ flex: 1, justifyContent: "center" }}
+            onClick={() => setAchNotif(null)}
+          >
+            Nice
+          </button>
+        </div>
       </div>
     </div>
   ) : null;
@@ -31032,6 +31285,7 @@ export default function App() {
       <style>{`@keyframes rankUpPop{0%{transform:scale(.75);opacity:0}60%{transform:scale(1.04);opacity:1}100%{transform:scale(1)}}`}</style>
       {resumeOverlay}
       {rankUpOverlay}
+      {achOverlay}
       {showWelcomeTour && <SpotlightTour onDone={() => setShowWelcomeTour(false)} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />}
       
       <div className="shell">
