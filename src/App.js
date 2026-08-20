@@ -17640,8 +17640,8 @@ If those came cleanly, you understand why a muscle's length determines its stren
    Topics 0,1,2,4,5 reuse the existing General Physiology note/theory/mcq
    content verbatim (same underlying science, practical-course framing),
    just re-pointed to the phyp course/topic slots. Topics 3 (Refractory
-   Period), 6 (Measurement of Blood Glucose / Glycated Haemoglobin, bonus)
-   and 7 (Urinalysis, bonus) are newly written below.
+   Period), 6 (Measurement of Blood Glucose / Glycated Haemoglobin) and
+   7 (Urinalysis, bonus) are newly written below.
    Topics are ordered as a continuum: glucose transport -> ion transport ->
    resting membrane potential -> action potential/refractory period ->
    stimulus frequency -> length-tension -> clinical measurement (glucose,
@@ -17836,7 +17836,6 @@ const T_PHYP_GLUCOSE_HBA1C = {
   topicIndex: 6,
   title: "Measurement of Blood Glucose (Glycated Haemoglobin)",
   minutes: 20,
-  bonus: true,
   note: [
     { q: "Why a single blood glucose number is not the whole story.",
       body: `Back in the first topic of this course you met facilitated diffusion of glucose - how glucose gets from the blood into cells at all. This topic closes the loop: how do we actually measure blood glucose in practice, and why does one of the most useful measurements not measure "blood glucose" directly at all?
@@ -20094,7 +20093,7 @@ const EXAM_TIPS = {
   com: "Structure first, then fill it in. Plan your answer for a beat before you write, keep it clean and organised, and watch your time so every section gets attention.",
   lab: "Precision wins this paper. Read each question fully before choosing - don't answer the question you expected instead of the one that's actually there. Stay sharp to the last minute.",
   bcp: "Practical thinking, not just memory. Picture the actual steps as you answer, don't rush the details, and finish every question - a blank answer is a guaranteed zero, a guess is a chance.",
-  phyp: "Think mechanism, not just recall - picture the ions, channels, and steps as you answer. Cover the core six topics solidly; Blood Glucose (HbA1c) and Urinalysis are bonus extras, so don't let them steal time from the core paper.",
+  phyp: "Think mechanism, not just recall - picture the ions, channels, and steps as you answer. Cover the core seven topics solidly; Urinalysis is a bonus extra, so don't let it steal time from the core paper.",
 };
 
 // Returns the next not-yet-passed exam (by date, then time), or null if all
@@ -20278,6 +20277,17 @@ const RANKS = [
 ];
   // ACHIEVEMENT DEFINITIONS - SVG Icons only
   const ACHIEVEMENTS = [
+    {
+      id: 'get_started',
+      label: 'Get Started',
+      description: 'Created your ASCEND account',
+      icon: (color = '#F5B93F') => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+          <polyline points="22 4 12 14.01 9 11.01" />
+        </svg>
+      )
+    },
     { 
       id: 'first_quiz', 
       label: 'First Quiz', 
@@ -20451,6 +20461,35 @@ const countConsecutiveStreak = (dailyDone, endDateKey) => {
     d.setDate(d.getDate() - 1);
   }
   return count;
+};
+
+// ISO week key (e.g. "2026-W34") - stable for everyone for the same calendar
+// week regardless of timezone quirks, used to label the current weekly league.
+const isoWeekKey = (d = new Date()) => {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+  return date.getUTCFullYear() + "-W" + String(weekNo).padStart(2, "0");
+};
+// Split a leaderboard (already sorted, strongest first) into small weekly
+// leagues of roughly 20-30 people with similar activity, instead of one
+// giant global list where most people land somewhere in the middle or
+// bottom and have no realistic shot at climbing. Adjacent-XP grouping means
+// everyone in a league is genuinely competitive with everyone else in it.
+const LEAGUE_TARGET_SIZE = 25;
+const assignLeagues = (sortedBoard) => {
+  const n = sortedBoard.length;
+  if (n === 0) return { leagued: [], leagueSize: LEAGUE_TARGET_SIZE, totalLeagues: 1 };
+  const numLeagues = Math.max(1, Math.round(n / LEAGUE_TARGET_SIZE));
+  const leagueSize = Math.ceil(n / numLeagues);
+  const leagued = sortedBoard.map((p, i) => ({
+    ...p,
+    leagueIndex: Math.floor(i / leagueSize),
+    leaguePos: (i % leagueSize) + 1,
+  }));
+  return { leagued, leagueSize, totalLeagues: Math.ceil(n / leagueSize) };
 };
 
 /* Storage works in both places:
@@ -22619,9 +22658,10 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
   let tipStyle = {
     position: "fixed", zIndex: 1003,
     maxWidth: 340, width: "calc(100% - 40px)",
-    maxHeight: "calc(100% - 32px)", overflowY: "auto",
+    overflowY: "auto",
   };
   if (rect) {
+    tipStyle.maxHeight = Math.max(200, viewportH - 32);
     const spaceBelow = viewportH - (rect.top + rect.height);
     const below = spaceBelow > 220 || rect.top < 220;
     if (below) tipStyle.top = Math.max(12, rect.top + rect.height + pad + 14);
@@ -22630,7 +22670,19 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
     left = Math.max(16, Math.min(left, viewportW - 356));
     tipStyle.left = left;
   } else {
-    tipStyle.top = "50%"; tipStyle.left = "50%"; tipStyle.transform = "translate(-50%,-50%)";
+    // Centered welcome step: compute an explicit px position from the same
+    // visualViewport-aware width/height used above, instead of CSS "50%" +
+    // transform (which resolves against the full layout viewport, not what's
+    // actually visible past mobile browser chrome / an open keyboard - the
+    // same class of bug already fixed for the anchored steps below). This
+    // keeps the card fully on-screen and never taller than the visible area.
+    const cardW = Math.min(340, viewportW - 32);
+    const cardMaxH = Math.max(200, viewportH - 32);
+    tipStyle.width = cardW;
+    tipStyle.maxHeight = cardMaxH;
+    tipStyle.left = Math.max(16, (viewportW - cardW) / 2);
+    tipStyle.top = Math.max(16, (viewportH - Math.min(cardMaxH, 420)) / 2);
+    if (vv) { tipStyle.top += vv.offsetTop || 0; tipStyle.left += vv.offsetLeft || 0; }
   }
   // Safe-area padding so the tooltip never sits under a notch or the
   // home-indicator strip on iOS PWAs / full-screen mobile browsers.
@@ -22756,6 +22808,14 @@ function RanksView({ app }) {
   const [onlineOnly, setOnlineOnly] = useState(function() {
     try { return sessionStorage.getItem('ascend_ranks_online_only') === '1'; } catch (e) { return false; }
   });
+  // League vs global scope - defaults to League so a new/mid-pack student
+  // opens the board to a small, winnable group instead of a huge global list.
+  const [boardScope, setBoardScope] = useState(function() {
+    try { return sessionStorage.getItem('ascend_ranks_scope') || 'league'; } catch (e) { return 'league'; }
+  });
+  useEffect(function() {
+    try { sessionStorage.setItem('ascend_ranks_scope', boardScope); } catch (e) {}
+  }, [boardScope]);
   useEffect(function() {
     try { sessionStorage.setItem('ascend_ranks_online_only', onlineOnly ? '1' : '0'); } catch (e) {}
   }, [onlineOnly]);
@@ -22863,7 +22923,13 @@ function RanksView({ app }) {
   
   const q = search.trim().toLowerCase();
   const onlineCount = fullBoard.filter(function(p) { return p.online; }).length;
-  let board = fullBoard;
+  const weekKey = isoWeekKey();
+  const { leagued, leagueSize, totalLeagues } = assignLeagues(fullBoard);
+  const myLeagued = leagued.find(function(p) { return p.me; });
+  const myLeagueIndex = myLeagued ? myLeagued.leagueIndex : 0;
+  const myLeagueNo = myLeagueIndex + 1;
+  const inOnlyLeague = totalLeagues <= 1;
+  let board = boardScope === "league" ? leagued.filter(function(p) { return p.leagueIndex === myLeagueIndex; }) : leagued;
   if (onlineOnly) board = board.filter(function(p) { return p.online; });
   if (q) board = board.filter(function(p) { return String(p.name || "").toLowerCase().includes(q); });
   const r = rankOf(app.progress.xp);
@@ -22886,8 +22952,34 @@ function RanksView({ app }) {
   return (
     <div className="view">
       <div className="eyebrow">Leaderboard</div>
-      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>No one wants to be last</h1>
-      <p style={{ color: "var(--text-2)", marginTop: 0 }}>XP from daily questions and quizzes.</p>
+      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>
+        {boardScope === "league" ? "Your Weekly League" : "No one wants to be last"}
+      </h1>
+      <p style={{ color: "var(--text-2)", marginTop: 0 }}>
+        {boardScope === "league"
+          ? (inOnlyLeague
+              ? "Everyone currently active is in this one league."
+              : `League ${myLeagueNo} of ${totalLeagues} · about ${leagueSize} people with similar XP · resets weekly (${weekKey})`)
+          : "XP from daily questions and quizzes."}
+      </p>
+      {!inOnlyLeague && (
+        <div style={{ display: "flex", gap: 6, marginTop: 2, marginBottom: 10 }}>
+          <button
+            onClick={function() { setBoardScope("league"); }}
+            className={"btn btn-sm" + (boardScope === "league" ? " btn-a" : " btn-g")}
+            style={{ flex: 1 }}
+          >
+            My League
+          </button>
+          <button
+            onClick={function() { setBoardScope("global"); }}
+            className={"btn btn-sm" + (boardScope === "global" ? " btn-a" : " btn-g")}
+            style={{ flex: 1 }}
+          >
+            Global
+          </button>
+        </div>
+      )}
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: -4, marginBottom: 4, flexWrap: "wrap" }}>
         <button
           onClick={function() { setOnlineOnly(function(v) { return !v; }); }}
@@ -22955,10 +23047,11 @@ function RanksView({ app }) {
         {!loading && onlineOnly && !q && board.length <= 1 && <div style={{ padding: "20px", textAlign: "center", color: "var(--text-3)", fontSize: 13 }}>No classmates are online right now. Tap the blue pill above to show everyone.</div>}
         {board.map(function(p) {
           var demotion = !p.me ? getDemotionStatus(p.lastActive) : null;
+          var displayPos = boardScope === "league" ? p.leaguePos : p.pos;
           return (
             <div key={p.pos + "-" + p.name} className="card" style={{ marginBottom: 8, padding: "12px 15px", display: "flex", alignItems: "center", gap: 13, border: p.me ? "1px solid var(--amber)" : "1px solid var(--line)", background: p.me ? "var(--amber-dim)" : "var(--bg-2)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                <div className="mono" style={{ minWidth: 24, textAlign: "center", fontWeight: 700, color: p.pos <= 3 ? "#F5B93F" : "var(--text-3)", fontSize: 15, whiteSpace: "nowrap", flexShrink: 0 }}>{p.pos}</div>
+                <div className="mono" style={{ minWidth: 24, textAlign: "center", fontWeight: 700, color: displayPos <= 3 ? "#F5B93F" : "var(--text-3)", fontSize: 15, whiteSpace: "nowrap", flexShrink: 0 }}>{displayPos}</div>
                 {demotion && (
                   <span style={{
                     fontSize: 9,
@@ -27514,6 +27607,15 @@ const verifyAndMigratePw = async (acct, pw) => {
   return { ok: false, locked: false, retryAt: lockUntil, upgrade: null, failCount, lockUntil };
 };
 const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], achievements: [] });
+// New-user reward: never let someone land on the home screen seeing 0 XP,
+// a 0-day streak, and an empty achievement shelf. Signing up itself earns
+// 10 XP and unlocks the "Get Started" badge, applied before the app ever
+// shows the home screen (see handleAuthed / adoptSupabaseUser).
+const starterProgress = (name) => ({
+  ...freshProgress(name),
+  xp: 10,
+  achievements: [{ id: "get_started", earnedAt: Date.now() }],
+});
 const progKey = (u) => "ascend_progress:" + String(u).toLowerCase();
 // "Jump back in" needs to survive the user closing and reopening the app -
 // not just staying in the same tab. sessionStorage (used for in-session
@@ -27665,9 +27767,9 @@ function AuthScreen({ onAuthed }) {
         // ============================================================
         if (!isTestAccount(u)) {
           const boardKey = "ascend_board:" + u.toLowerCase().replace(/[^a-z0-9]/g, "");
-          await store.setShared(boardKey, { name: u, xp: 0, streak: 0 });
+          await store.setShared(boardKey, { name: u, xp: 10, streak: 0 });
           // Also publish to Supabase cloud leaderboard
-          await db.publishLocalUser(u, 0, 0);
+          await db.publishLocalUser(u, 10, 0);
         }
         
         setBusy(false);
@@ -29994,12 +30096,13 @@ export default function App() {
       (sUser.email ? sUser.email.split("@")[0] : "student");
     setSupaUid(uid);
     const cloud = await db.loadProgress(uid);
+    const isNewAccount = !cloud;
     let profileXp = 0, profileStreak = 0, profileName = null;
     try {
       const { data } = await supabase.from("profiles").select("name, xp, streak").eq("id", uid).maybeSingle();
       if (data) { profileXp = data.xp || 0; profileStreak = data.streak || 0; profileName = data.name; }
     } catch {}
-    const base = freshProgress(displayName);
+    const base = isNewAccount ? starterProgress(displayName) : freshProgress(displayName);
     const merged = cloud ? { ...base, ...cloud } : { ...base };
     merged.xp = Math.max(merged.xp || 0, profileXp);
     merged.streak = Math.max(merged.streak || 0, profileStreak);
@@ -30036,7 +30139,8 @@ export default function App() {
     // progress follows this account across devices/cleared storage too.
     const localP = await store.get(progKey(acct.username));
     const cloudP = await db.loadProgress(localSynthId(acct.username));
-    const base = freshProgress(acct.username);
+    const isNewAccount = !localP && !cloudP;
+    const base = isNewAccount ? starterProgress(acct.username) : freshProgress(acct.username);
     let finalProgress;
     if (localP || cloudP) {
       finalProgress = {
