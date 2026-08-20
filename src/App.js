@@ -568,7 +568,8 @@ const TOPICS = {
   phyp: [
     "Facilitated Diffusion of Glucose", "Active Transport of Sodium and Potassium Ions", "Resting Membrane Potential",
     "Refractory Period of an Action Potential", "Effects of Stimulus Frequency on Skeletal Muscle Contraction",
-    "Skeletal Muscle Length-Tension Relationship", "Urinalysis"
+    "Skeletal Muscle Length-Tension Relationship",
+    "Measurement of Blood Glucose (Glycated Haemoglobin)", "Urinalysis"
   ]
 };
 
@@ -17639,7 +17640,12 @@ If those came cleanly, you understand why a muscle's length determines its stren
    Topics 0,1,2,4,5 reuse the existing General Physiology note/theory/mcq
    content verbatim (same underlying science, practical-course framing),
    just re-pointed to the phyp course/topic slots. Topics 3 (Refractory
-   Period) and 6 (Urinalysis, bonus) are newly written below. */
+   Period), 6 (Measurement of Blood Glucose / Glycated Haemoglobin, bonus)
+   and 7 (Urinalysis, bonus) are newly written below.
+   Topics are ordered as a continuum: glucose transport -> ion transport ->
+   resting membrane potential -> action potential/refractory period ->
+   stimulus frequency -> length-tension -> clinical measurement (glucose,
+   then urine), so each topic builds on the one before it. */
 const T_PHYP_FACIL = { ...T_PHY_FACIL, courseId: "phyp", topicIndex: 0, title: "Facilitated Diffusion of Glucose" };
 const T_PHYP_ACTIVE = { ...T_PHY_ACTIVE, courseId: "phyp", topicIndex: 1, title: "Active Transport of Sodium and Potassium Ions" };
 const T_PHYP_RMP = { ...T_PHY_RMP, courseId: "phyp", topicIndex: 2 };
@@ -17825,15 +17831,172 @@ If those came cleanly, you understand why every nerve impulse travels one way, w
 };
 
 /* --------------------------- phyp:6 (new, bonus) --------------------------- */
-const T_PHYP_URINALYSIS = {
+const T_PHYP_GLUCOSE_HBA1C = {
   courseId: "phyp",
   topicIndex: 6,
+  title: "Measurement of Blood Glucose (Glycated Haemoglobin)",
+  minutes: 20,
+  bonus: true,
+  note: [
+    { q: "Why a single blood glucose number is not the whole story.",
+      body: `Back in the first topic of this course you met facilitated diffusion of glucose - how glucose gets from the blood into cells at all. This topic closes the loop: how do we actually measure blood glucose in practice, and why does one of the most useful measurements not measure "blood glucose" directly at all?
+
+My Socratic question: if you measure a patient's blood glucose right now and it happens to be normal, does that tell you the patient's glucose control has been good over the past few months?
+
+The answer is no. A single glucose reading is a snapshot - it reflects only the moment it was taken, and blood glucose naturally rises after meals and falls with fasting or exercise. A patient with generally poorly controlled diabetes could still have one normal reading if tested at the right moment, and a healthy person could have one high reading after a sugary meal. A single number cannot distinguish "occasionally high" from "consistently high."
+
+Crucial insight: direct blood glucose measurement (random or fasting) tells you glucose at one instant. Managing a chronic condition like diabetes requires knowing the trend over weeks to months - which is a fundamentally different kind of measurement.` },
+
+    { q: "Random and fasting blood glucose: the two direct measurements.",
+      body: `Before reaching for the long-term test, it helps to be clear on the direct ones. A random blood glucose is taken at any time regardless of when the person last ate; a fasting blood glucose is taken after at least eight hours without food, usually first thing in the morning.
+
+My Socratic question: why would a fasting sample generally be considered more informative than a random one for diagnosing diabetes?
+
+The answer is that fasting removes the variable of recent food intake, so the reading reflects the body's baseline ability to regulate glucose rather than its response to a specific meal. A high fasting glucose means the body cannot keep glucose within range even without a recent carbohydrate load, which is a stronger signal of impaired regulation than a high random reading, which could simply reflect a big meal an hour earlier.
+
+Crucial insight: fasting blood glucose controls for meal timing and gives a cleaner baseline reading than random glucose - but both are still single-moment snapshots, with all the limitations that implies.` },
+
+    { q: "What glycation actually is.",
+      body: `To understand how a longer-term test is even possible, you need to understand a simple chemical fact: glucose in the blood does not stay confined to plasma - it also reacts, slowly and continuously, with proteins it comes into contact with, including hemoglobin inside red blood cells.
+
+My Socratic question: hemoglobin's job is to carry oxygen, not to react with glucose. If glucose binds to it anyway, what kind of reaction must this be - one the body deliberately switches on and off, or something that just happens as a side effect of glucose being present?
+
+The answer is the latter. Glucose attaches to hemoglobin non-enzymatically - no enzyme controls it, turns it on, or turns it off. It is simply a slow chemical reaction between glucose and the hemoglobin molecule that proceeds continuously, at a rate that depends directly on how much glucose is around.
+
+Crucial insight: glycation is non-enzymatic and concentration-dependent - the higher the average blood glucose over time, the more hemoglobin becomes glycated. This single fact is what makes the whole test possible.` },
+
+    { q: "Why the red blood cell's lifespan is the key to the test.",
+      body: `Glycation happens continuously for as long as a hemoglobin molecule and glucose share the same red blood cell. Red blood cells live for about 120 days before they are broken down and replaced.
+
+My Socratic question: if glycation accumulates for as long as a red blood cell survives, and red blood cells survive for about 120 days, what does the amount of glycated hemoglobin in a blood sample taken today actually represent?
+
+The answer is that it represents a weighted average of the glucose exposure across the lifespan of the red blood cells currently in circulation - in practice, this is usually taken to reflect roughly the preceding two to three months, with more recent weeks contributing more (since red cells are constantly being replaced on a rolling basis, and the most recently formed cells make up a large share of the population).
+
+Crucial insight: glycated hemoglobin is not a snapshot - it is a rolling average, built into the red blood cell itself by ordinary chemistry, with no separate memory device or repeated sampling required.` },
+
+    { q: "Naming the test: HbA1c.", 
+      body: `The specific fraction of hemoglobin measured in this test has a name: glycated haemoglobin, abbreviated HbA1c (sometimes written A1C). "Hb" is hemoglobin, and "A1c" identifies the particular glycated subtype that laboratories measure.
+
+My Socratic question: given everything covered so far, in one sentence, what does an HbA1c result actually tell a clinician that a same-day glucose reading cannot?
+
+The answer is that it tells them the average blood glucose level over roughly the preceding two to three months, rather than the glucose level at a single moment - turning glucose control from a series of disconnected snapshots into one number that reflects a trend.
+
+Crucial insight: HbA1c = glycated haemoglobin = the laboratory marker of average blood glucose exposure over the red blood cell's recent lifespan, most commonly around 2-3 months.` },
+
+    { q: "How HbA1c is actually measured in the laboratory.",
+      body: `Knowing what HbA1c represents is one thing; measuring it is another. Laboratories separate and quantify the glycated fraction of hemoglobin using methods such as high-performance liquid chromatography (HPLC), which separates hemoglobin variants by their physical and chemical properties, or immunoassay methods, which use antibodies specific to the glycated portion of the molecule.
+
+My Socratic question: since glycation is a continuous, ongoing chemical process rather than an event that is switched on for a test, does the patient need to fast before an HbA1c sample is taken, the way they would for a fasting glucose?
+
+The answer is no. Because HbA1c reflects an average built up over months, a single meal shortly before the blood draw makes essentially no difference to the result. This is one of the practical advantages of the test - a random venous sample, taken at any time, gives a valid result.
+
+Crucial insight: HbA1c is measured by chromatographic or immunoassay techniques that quantify the glycated fraction of hemoglobin, and - unlike glucose testing - it requires no fasting, because it is not measuring a moment, it is measuring a trend.` },
+
+    { q: "Reading the result: units and reference ranges.",
+      body: `HbA1c is reported either as a percentage (the proportion of total hemoglobin that is glycated) or in mmol/mol (an alternative international unit); both describe the same underlying measurement. As a working guide, a result below about 5.7% is considered normal, 5.7-6.4% is consistent with prediabetes, and 6.5% or above on repeated testing is consistent with diabetes.
+
+My Socratic question: for someone already diagnosed with diabetes and being treated, what would a falling HbA1c over successive tests, spaced a few months apart, tell you about their glucose control?
+
+The answer is that it would indicate their average blood glucose has been improving over the preceding months - evidence that their current treatment (diet, medication, or both) is working, since HbA1c only moves when the average conditions inside red blood cells actually change over that timescale.
+
+Crucial insight: HbA1c thresholds are used both to diagnose diabetes and prediabetes and, once someone is diagnosed, to monitor whether treatment is actually shifting their average glucose control over time.` },
+
+    { q: "What can make an HbA1c result misleading.",
+      body: `Because HbA1c depends on red blood cells living out a normal lifespan and accumulating glycation at a steady rate, anything that disrupts that assumption can distort the result independently of true glucose control.
+
+My Socratic question: if a patient has a condition that destroys red blood cells faster than normal (haemolytic anaemia) so that cells survive only a fraction of their usual 120 days, would you expect their HbA1c to read falsely high, falsely low, or stay accurate?
+
+The answer is falsely low. Red blood cells are being replaced faster, so on average they have had less time to accumulate glycation before the sample is taken - the HbA1c looks better than the patient's true average glucose control actually is, purely because of the shortened cell lifespan, not because glucose is genuinely well controlled.
+
+Crucial insight: conditions that alter red blood cell lifespan or hemoglobin structure - haemolytic anaemia, recent significant blood loss or transfusion, and certain haemoglobinopathies - can make HbA1c unreliable, which is why it is interpreted alongside the clinical picture and, where relevant, direct glucose measurements rather than in isolation.` },
+
+    { q: "Bringing it together: why HbA1c and direct glucose are complementary, not competing, tests.",
+      body: `You have now covered two different but related tools: direct glucose measurement (random or fasting), which gives an accurate snapshot of glucose at one moment, and HbA1c, which gives a trend across roughly the preceding two to three months but says nothing about today.
+
+My Socratic question: a patient's HbA1c has been excellent for months, but today's random glucose reading is unexpectedly very high. Does the HbA1c result mean today's high reading can be dismissed as an error?
+
+The answer is no. The two tests answer different questions - HbA1c cannot rule out an acute, today-only problem (an infection, a missed medication dose, an unusually large meal), because averaging over months would dilute a single bad day almost to invisibility. Today's high reading is real information about today, even if the recent months, on average, have been well controlled.
+
+Crucial insight: direct glucose testing and HbA1c are complementary rather than interchangeable - one captures the present moment, the other captures the trend, and good clinical (and laboratory) practice uses both for the question each is actually suited to answer.` },
+
+    { q: "Consolidation and your final test.",
+      body: `You have now covered: why a single glucose reading is a snapshot rather than a trend; the difference between random and fasting glucose; what glycation is and why it is a non-enzymatic, concentration-dependent reaction; why the ~120-day red blood cell lifespan makes glycated hemoglobin a rolling ~2-3 month average; how HbA1c is measured (HPLC or immunoassay, no fasting required); how results are reported and interpreted (percentage or mmol/mol, with diagnostic thresholds); what can make an HbA1c result unreliable (altered red cell lifespan or haemoglobin structure); and why HbA1c and direct glucose measurement are complementary rather than competing tools.
+
+Now your final test. A patient with known diabetes has a random glucose of 14 mmol/L today, but their HbA1c taken at the same visit is 6.1% (within the prediabetes-to-controlled range).
+
+Question one: does today's high random glucose contradict the HbA1c result?
+
+Question two: what would explain both results being true at once?
+
+Question three: if this patient also has a haemolytic condition that shortens red blood cell survival, how might that affect how much you trust the HbA1c figure?
+
+Work them through before reading on.
+
+My answers. One: no, the two results do not contradict each other, because they measure different things on different timescales. Two: the HbA1c reflects that, on average, this patient's glucose control over the past two to three months has been reasonably good, while today's single elevated reading is an acute deviation on top of that otherwise-reasonable average - for example, a missed dose, illness, or an unusually large meal today - and averaging over months would not have erased a single high day even if it were sustained. Three: with a haemolytic condition shortening red blood cell survival, the HbA1c would tend to read falsely low, since the cells have had less time on average to accumulate glycation - so the true average control may actually be worse than 6.1% suggests, and the result should be interpreted with more caution, cross-checked against direct glucose readings.
+
+If those came cleanly, you understand why glycated haemoglobin is one of the most widely used tests in diabetes care, and why it works as a natural extension of the glucose transport physiology you met at the very start of this course.` },
+  ],
+  theory: [
+    { q: "Explain why a single blood glucose reading is insufficient for assessing long-term glucose control.", a: "A single reading only reflects glucose at the moment it was taken. Blood glucose naturally fluctuates with meals, fasting, and activity, so one normal or abnormal reading cannot distinguish consistently good control from consistently poor control - it only captures a snapshot, not a trend." },
+    { q: "Distinguish random and fasting blood glucose testing.", a: "Random blood glucose is measured at any time regardless of recent food intake. Fasting blood glucose is measured after at least eight hours without food, removing the variable of a recent meal and giving a cleaner baseline reading of the body's underlying glucose regulation." },
+    { q: "Define glycation and explain why it is described as non-enzymatic.", a: "Glycation is the chemical attachment of glucose to a protein, such as hemoglobin. It is non-enzymatic because no enzyme catalyses, regulates, or switches the reaction on or off - it proceeds continuously as an ordinary chemical reaction, at a rate that depends on how much glucose is present." },
+    { q: "Explain why the ~120-day lifespan of a red blood cell is central to the meaning of an HbA1c result.", a: "Glycation accumulates on hemoglobin for as long as the red blood cell survives. Since red blood cells live roughly 120 days and are continuously replaced, the measured HbA1c at any moment reflects a rolling weighted average of glucose exposure across that lifespan - approximately the preceding two to three months." },
+    { q: "What does HbA1c stand for, and what does it measure?", a: "HbA1c stands for glycated haemoglobin (haemoglobin A1c), the specific glycated subtype of hemoglobin that laboratories quantify. It measures the proportion of total hemoglobin that has become glycated, which reflects average blood glucose over roughly the preceding two to three months." },
+    { q: "Name two laboratory methods used to measure HbA1c.", a: "High-performance liquid chromatography (HPLC), which separates hemoglobin variants by their physical and chemical properties, and immunoassay methods, which use antibodies specific to the glycated fraction of hemoglobin." },
+    { q: "Does a patient need to fast before an HbA1c test? Explain why or why not.", a: "No. Because HbA1c reflects an average built up over roughly two to three months, a single recent meal has a negligible effect on the result, unlike direct glucose testing where recent food intake matters considerably." },
+    { q: "State the approximate HbA1c thresholds for normal, prediabetes, and diabetes.", a: "As a working guide: below about 5.7% is normal, 5.7-6.4% is consistent with prediabetes, and 6.5% or above (on repeated testing) is consistent with diabetes." },
+    { q: "Explain why a condition that shortens red blood cell lifespan (such as haemolytic anaemia) can cause a falsely low HbA1c.", a: "If red blood cells are destroyed and replaced faster than normal, they survive for less time on average before a sample is taken, so they have had less time to accumulate glycation. The HbA1c therefore reads lower than it would if red cells lived their normal ~120-day lifespan, even if true average glucose control is unchanged or worse." },
+    { q: "Explain why direct glucose testing and HbA1c are considered complementary rather than interchangeable.", a: "Direct glucose testing captures glucose at a single moment and can detect an acute, same-day problem. HbA1c captures an average trend over roughly two to three months and cannot reveal or rule out a single day's deviation, since that would be diluted almost to invisibility across the averaging period. Using both answers the two different clinical questions - 'what is happening right now' versus 'what has been happening on average.'" },
+  ],
+  videos: [
+    { channel: "Physiology", title: "HbA1c Explained: The Glycated Haemoglobin Test", note: "Why glycated haemoglobin reflects average blood glucose over months.", url: "" },
+    { channel: "Physiology", title: "Random vs Fasting Blood Glucose", note: "The two direct glucose tests and when each is used.", url: "" },
+    { channel: "Physiology", title: "Diagnosing Diabetes: Glucose and HbA1c Together", note: "How the two tests are used side by side in clinical practice.", url: "" },
+  ],
+  mcqs: [
+    { q: "A single blood glucose reading is best described as:", o: ["A long-term average", "A snapshot at one moment", "Always inaccurate", "A measure of red blood cell count"], a: 1, w: "A single reading only reflects glucose at that instant." },
+    { q: "Random blood glucose is measured:", o: ["Only after fasting", "At any time regardless of recent food intake", "Only before breakfast", "Only during exercise"], a: 1, w: "Random glucose can be taken at any time." },
+    { q: "Fasting blood glucose requires at least how many hours without food?", o: ["1 hour", "2 hours", "8 hours", "24 hours"], a: 2, w: "Fasting glucose testing requires at least about eight hours without food." },
+    { q: "Fasting glucose is often considered more informative than random glucose because it:", o: ["Is cheaper to run", "Removes the variable of a recent meal", "Requires no blood sample", "Is measured in urine"], a: 1, w: "Fasting controls for the effect of recent food intake." },
+    { q: "Glycation refers to:", o: ["Enzymatic breakdown of glucose", "Glucose attaching to a protein such as hemoglobin", "Glucose being filtered by the kidney", "Glucose converting to glycogen"], a: 1, w: "Glycation is glucose binding to a protein." },
+    { q: "Glycation is best described as:", o: ["Enzyme-catalysed and switchable", "Non-enzymatic and concentration-dependent", "Occurring only during exercise", "Reversible within minutes"], a: 1, w: "No enzyme controls glycation; its rate depends on glucose concentration." },
+    { q: "The higher the average blood glucose over time, the:", o: ["Less hemoglobin becomes glycated", "More hemoglobin becomes glycated", "Faster red blood cells are destroyed", "Lower the HbA1c will read"], a: 1, w: "Glycation increases with higher average glucose exposure." },
+    { q: "The average lifespan of a red blood cell is approximately:", o: ["10 days", "30 days", "120 days", "365 days"], a: 2, w: "Red blood cells live roughly 120 days." },
+    { q: "Because red blood cells live about 120 days, HbA1c reflects average glucose over roughly:", o: ["The past 24 hours", "The past 2-3 months", "The past year", "The next 2-3 months"], a: 1, w: "HbA1c reflects a rolling average over roughly 2-3 months." },
+    { q: "HbA1c stands for:", o: ["Haemoglobin A1c (glycated haemoglobin)", "High blood A1 count", "Haematocrit A1 correction", "Haemoglobin acid 1 complex"], a: 0, w: "HbA1c is glycated haemoglobin." },
+    { q: "HbA1c is best understood as measuring:", o: ["Glucose at one instant", "A rolling average of glucose exposure over recent months", "Kidney function", "Red blood cell count"], a: 1, w: "HbA1c is a rolling, months-long average, not a snapshot." },
+    { q: "Two laboratory methods commonly used to measure HbA1c are:", o: ["Urinalysis and centrifugation", "HPLC and immunoassay", "Spectrophotometry of urine and pH meter", "Gram stain and culture"], a: 1, w: "HPLC and immunoassay methods quantify the glycated fraction of hemoglobin." },
+    { q: "Does a patient need to fast before an HbA1c test?", o: ["Yes, exactly like fasting glucose", "No, because it reflects a months-long average", "Yes, for 24 hours", "Only if diabetic"], a: 1, w: "A recent meal has negligible effect on a months-long average." },
+    { q: "HbA1c results are reported as:", o: ["A percentage or mmol/mol", "Litres per minute", "A pH value", "Specific gravity"], a: 0, w: "HbA1c is reported as a percentage or in mmol/mol." },
+    { q: "An HbA1c below about 5.7% is generally considered:", o: ["Diabetes", "Prediabetes", "Normal", "Not measurable"], a: 2, w: "Below ~5.7% is in the normal range." },
+    { q: "An HbA1c of 5.7-6.4% is generally consistent with:", o: ["Normal control", "Prediabetes", "Severe diabetes", "Anaemia"], a: 1, w: "5.7-6.4% is the prediabetes range." },
+    { q: "An HbA1c of 6.5% or above, on repeated testing, is generally consistent with:", o: ["Normal control", "Prediabetes", "Diabetes", "Dehydration"], a: 2, w: "6.5% or above supports a diagnosis of diabetes." },
+    { q: "A falling HbA1c across successive tests in a treated diabetic patient generally indicates:", o: ["Worsening control", "No change in control", "Improving average glucose control", "A laboratory error"], a: 2, w: "A falling HbA1c reflects genuine improvement in average control over time." },
+    { q: "A condition that shortens red blood cell lifespan, such as haemolytic anaemia, tends to make HbA1c read:", o: ["Falsely high", "Falsely low", "Completely unaffected", "Impossible to measure"], a: 1, w: "Shorter cell survival means less time to accumulate glycation, giving a falsely low result." },
+    { q: "The reason a shortened red blood cell lifespan lowers HbA1c is that:", o: ["Less glucose is present in the blood", "Cells have less time to accumulate glycation before replacement", "Hemoglobin stops binding oxygen", "The kidney filters more glucose"], a: 1, w: "Less time in circulation means less accumulated glycation, not less glucose." },
+    { q: "Besides haemolytic anaemia, HbA1c reliability can also be affected by:", o: ["Recent significant blood loss or transfusion, and certain haemoglobinopathies", "Drinking more water", "Eating breakfast that morning", "Standing up before the test"], a: 0, w: "Anything altering red cell lifespan or hemoglobin structure can distort HbA1c." },
+    { q: "A patient's HbA1c is excellent, but today's random glucose is unexpectedly very high. The best interpretation is:", o: ["The HbA1c result must be wrong", "Today's reading can be safely ignored", "Both can be true - a good average with an acute deviation today", "Diabetes has been ruled out"], a: 2, w: "The two tests measure different things and are not contradictory." },
+    { q: "The main reason HbA1c cannot detect a single very high glucose day is that:", o: ["It is not measured often enough", "Averaging over months dilutes a single day almost to invisibility", "It only measures fasting glucose", "It measures urine, not blood"], a: 1, w: "A months-long average smooths out single-day spikes." },
+    { q: "Direct glucose testing and HbA1c are best described as:", o: ["Interchangeable and redundant", "Complementary tools answering different questions", "Competing tests where only one is ever needed", "Irrelevant to each other"], a: 1, w: "One captures the moment, the other captures the trend - both have value." },
+    { q: "Which test would best detect an acute, same-day problem such as a missed medication dose?", o: ["HbA1c", "Direct (random or fasting) glucose", "Urinalysis specific gravity", "Neither test"], a: 1, w: "A direct glucose reading reflects the current moment, unlike HbA1c." },
+    { q: "Which test would best reflect a patient's overall glucose control trend across the last few months?", o: ["Random glucose alone", "HbA1c", "Urine colour", "Specific gravity"], a: 1, w: "HbA1c reflects a rolling months-long average." },
+    { q: "This topic follows directly from the course's very first topic because:", o: ["They are unrelated", "It applies the physiology of glucose transport into cells to a real diagnostic measurement", "It replaces facilitated diffusion entirely", "Glucose transport has no clinical relevance"], a: 1, w: "HbA1c is a clinical application built on the glucose-handling physiology met earlier in the course." },
+    { q: "Glycated haemoglobin forms because glucose and hemoglobin:", o: ["Are actively transported together by a carrier", "Share the same red blood cell and react over time", "Are chemically identical", "Never come into contact"], a: 1, w: "Both are present in the same red blood cell, allowing the slow reaction to occur." },
+    { q: "Why is HbA1c particularly useful for monitoring long-term diabetes management rather than day-to-day dosing decisions?", o: ["It changes instantly with each meal", "It only changes meaningfully over weeks to months, reflecting sustained average control", "It cannot be repeated", "It measures kidney function instead of glucose"], a: 1, w: "HbA1c moves slowly, making it suited to tracking sustained control rather than moment-to-moment decisions." },
+    { q: "The overall clinical value of combining random/fasting glucose with HbA1c is that together they provide:", o: ["Redundant information", "Both a present-moment snapshot and a longer-term trend", "Only long-term information", "Only short-term information"], a: 1, w: "Together the two tests cover both the immediate and the longer-term picture of glucose control." },
+  ],
+};
+
+/* --------------------------- phyp:7 (new, bonus) --------------------------- */
+const T_PHYP_URINALYSIS = {
+  courseId: "phyp",
+  topicIndex: 7,
   title: "Urinalysis",
   minutes: 20,
   bonus: true,
   note: [
     { q: "Why urine is examined at all.",
-      body: `Urinalysis is not part of the core topics tied for you this term - it is included here as a bonus because its slide deck was shared with the class recently, and given how often it comes up in laboratory practice, it is safer to have worked through it than not.
+      body: `Note: urinalysis is one of the oldest diagnostic tests in medicine - clinicians were inspecting urine for colour, clarity, and even taste centuries before modern laboratory chemistry existed. It remains a core physiology and clinical-laboratory skill today because it is fast, cheap, non-invasive, and remarkably informative, which is why it belongs alongside transport, membrane, and muscle physiology in this course: it is where those underlying mechanisms (filtration, reabsorption, secretion) become something you can actually observe and measure at the bench.
 
 My Socratic question: the kidney filters blood and produces urine as its waste product. Why would examining that waste product tell you anything useful about the rest of the body?
 
@@ -17998,7 +18161,7 @@ If those came cleanly, you understand why urinalysis remains one of the fastest,
     { q: "An isolated abnormal finding (e.g. blood alone, everything else normal) should generally be treated with:", o: ["Immediate certainty of severe disease", "Caution, and often repeat testing", "No further consideration", "Automatic disregard"], a: 1, w: "Isolated findings could be artefacts and warrant confirmation." },
     { q: "The main reason to combine physical, chemical, and microscopic findings when interpreting urinalysis is:", o: ["To make the report longer", "Because each method has blind spots that the others help cover", "Because only one method is ever reliable", "Regulatory requirement with no clinical value"], a: 1, w: "The three methods cross-validate and complement each other's limitations." },
     { q: "Urobilinogen levels in urine are relevant mainly for assessing:", o: ["Bone health", "Liver function and haemolysis", "Lung function", "Muscle mass"], a: 1, w: "Urobilinogen changes with liver disease and increased red cell breakdown." },
-    { q: "As a topic in this practicals course, urinalysis is flagged as a bonus because:", o: ["It is more important than all core topics", "It is not part of the core topics but its slide deck was recently shared, so reviewing it is a safety measure", "It replaces resting membrane potential", "It has no clinical relevance"], a: 1, w: "It is supplementary, precautionary review rather than a core examinable topic." },
+    { q: "As a topic in this practicals course, urinalysis is flagged as a bonus mainly because:", o: ["It is more important than all core topics", "It is a supplementary clinical-skills topic rather than a core examinable one, valuable because it comes up so often in laboratory practice", "It replaces resting membrane potential", "It has no clinical relevance"], a: 1, w: "It is supplementary, practice-oriented review rather than a core examinable topic." },
     { q: "The overall value of urinalysis as a laboratory test lies mainly in being:", o: ["Expensive and invasive", "Fast, cheap, and non-invasive while still clinically informative", "Rarely useful in practice", "Only relevant to kidney transplant patients"], a: 1, w: "Its low cost and simplicity, combined with diagnostic value, make it widely used." },
   ],
 };
@@ -19856,7 +20019,8 @@ const CONTENT = {
   "phyp:3": T_PHYP_REFRACTORY,
   "phyp:4": T_PHYP_STIMFREQ,
   "phyp:5": T_PHYP_LENGTHTENSION,
-  "phyp:6": T_PHYP_URINALYSIS,
+  "phyp:6": T_PHYP_GLUCOSE_HBA1C,
+  "phyp:7": T_PHYP_URINALYSIS,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
@@ -19930,7 +20094,7 @@ const EXAM_TIPS = {
   com: "Structure first, then fill it in. Plan your answer for a beat before you write, keep it clean and organised, and watch your time so every section gets attention.",
   lab: "Precision wins this paper. Read each question fully before choosing - don't answer the question you expected instead of the one that's actually there. Stay sharp to the last minute.",
   bcp: "Practical thinking, not just memory. Picture the actual steps as you answer, don't rush the details, and finish every question - a blank answer is a guaranteed zero, a guess is a chance.",
-  phyp: "Think mechanism, not just recall - picture the ions, channels, and steps as you answer. Cover the core six topics solidly; Urinalysis is a bonus extra, so don't let it steal time from the core paper.",
+  phyp: "Think mechanism, not just recall - picture the ions, channels, and steps as you answer. Cover the core six topics solidly; Blood Glucose (HbA1c) and Urinalysis are bonus extras, so don't let them steal time from the core paper.",
 };
 
 // Returns the next not-yet-passed exam (by date, then time), or null if all
