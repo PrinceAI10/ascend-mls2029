@@ -22970,31 +22970,6 @@ function RanksView({ app }) {
     return () => document.removeEventListener("visibilitychange", onVis);
   }, [meKey, app.progress.xp, app.supaUid, refreshTick]);
 
-  // Frozen weekly league membership (Duolingo-style lock-in). Fetched once
-  // per week; if nothing has been locked yet, we compute it from current
-  // standings and write it, so the FIRST person to open the board that week
-  // sets it for everyone. null while unresolved/unavailable = live fallback.
-  const [leagueLock, setLeagueLock] = useState(null);
-  const lockAttempted = useRef(null);
-  useEffect(() => {
-    const wk = isoWeekKey();
-    if (lockAttempted.current === wk) return;
-    if (!fullBoard.length) return;
-    lockAttempted.current = wk;
-    (async () => {
-      let map = await db.getLeagueLock(wk);
-      if (!map) {
-        const { leagued: live } = assignLeagues(fullBoard);
-        const memberships = live.filter((p) => p.id != null).map((p) => ({ id: p.id, leagueIndex: p.leagueIndex }));
-        if (memberships.length) {
-          await db.lockLeagues(wk, memberships);
-          map = await db.getLeagueLock(wk);
-        }
-      }
-      if (map) setLeagueLock(map);
-    })();
-  }, [fullBoard.length]);
-
   const me = { name: app.progress.name, xp: app.progress.xp, streak: app.progress.streak, me: true, id: app.supaUid };
   
   // Parse XP-earned history once (not inside the sort comparator, which runs many
@@ -23019,6 +22994,31 @@ function RanksView({ app }) {
       online: p.me ? true : onlineKeys.has(presenceKeyFor(p.id, p.name))
     };
   });
+
+  // Frozen weekly league membership (Duolingo-style lock-in). Fetched once
+  // per week; if nothing has been locked yet, we compute it from current
+  // standings and write it, so the FIRST person to open the board that week
+  // sets it for everyone. null while unresolved/unavailable = live fallback.
+  const [leagueLock, setLeagueLock] = useState(null);
+  const lockAttempted = useRef(null);
+  useEffect(() => {
+    const wk = isoWeekKey();
+    if (lockAttempted.current === wk) return;
+    if (!fullBoard.length) return;
+    lockAttempted.current = wk;
+    (async () => {
+      let map = await db.getLeagueLock(wk);
+      if (!map) {
+        const { leagued: live } = assignLeagues(fullBoard);
+        const memberships = live.filter((p) => p.id != null).map((p) => ({ id: p.id, leagueIndex: p.leagueIndex }));
+        if (memberships.length) {
+          await db.lockLeagues(wk, memberships);
+          map = await db.getLeagueLock(wk);
+        }
+      }
+      if (map) setLeagueLock(map);
+    })();
+  }, [fullBoard.length]);
   
   const q = search.trim().toLowerCase();
   const onlineCount = fullBoard.filter(function(p) { return p.online; }).length;
