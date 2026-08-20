@@ -22811,7 +22811,7 @@ function RanksView({ app }) {
   // League vs global scope - defaults to League so a new/mid-pack student
   // opens the board to a small, winnable group instead of a huge global list.
   const [boardScope, setBoardScope] = useState(function() {
-    try { return sessionStorage.getItem('ascend_ranks_scope') || 'league'; } catch (e) { return 'league'; }
+    try { return sessionStorage.getItem('ascend_ranks_scope') || 'global'; } catch (e) { return 'global'; }
   });
   useEffect(function() {
     try { sessionStorage.setItem('ascend_ranks_scope', boardScope); } catch (e) {}
@@ -22963,21 +22963,36 @@ function RanksView({ app }) {
           : "XP from daily questions and quizzes."}
       </p>
       {!inOnlyLeague && (
-        <div style={{ display: "flex", gap: 6, marginTop: 2, marginBottom: 10 }}>
-          <button
-            onClick={function() { setBoardScope("league"); }}
-            className={"btn btn-sm" + (boardScope === "league" ? " btn-a" : " btn-g")}
-            style={{ flex: 1 }}
-          >
-            My League
-          </button>
-          <button
-            onClick={function() { setBoardScope("global"); }}
-            className={"btn btn-sm" + (boardScope === "global" ? " btn-a" : " btn-g")}
-            style={{ flex: 1 }}
-          >
-            Global
-          </button>
+        <div
+          role="tablist"
+          aria-label="Leaderboard scope"
+          style={{
+            display: "flex", gap: 3, marginTop: 2, marginBottom: 12,
+            padding: 3, borderRadius: 11,
+            background: "var(--bg-3)", border: "1px solid var(--line-2)",
+          }}
+        >
+          {[{ id: "league", label: "My League" }, { id: "global", label: "Global" }].map(function(t) {
+            var active = boardScope === t.id;
+            return (
+              <button
+                key={t.id}
+                role="tab"
+                aria-selected={active}
+                onClick={function() { setBoardScope(t.id); }}
+                style={{
+                  flex: 1, padding: "8px 10px", borderRadius: 8, border: "none",
+                  fontSize: 13.5, fontWeight: active ? 750 : 600, cursor: "pointer",
+                  background: active ? "var(--amber)" : "transparent",
+                  color: active ? "#1B1405" : "var(--text-1)",
+                  boxShadow: active ? "0 1px 4px rgba(0,0,0,0.18)" : "none",
+                  transition: "background .15s, color .15s",
+                }}
+              >
+                {t.label}
+              </button>
+            );
+          })}
         </div>
       )}
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: -4, marginBottom: 4, flexWrap: "wrap" }}>
