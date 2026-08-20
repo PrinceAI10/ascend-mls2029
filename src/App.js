@@ -478,6 +478,7 @@ const Ic = {
   target: ({ p = 20, style }) => <I s={p} style={style} d={<><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3.4" /></>} />,
   star: ({ p = 20, style, fill = "none" }) => <I s={p} style={style} fill={fill} d={<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z" />} />,
   bell: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6" /><path d="M10.5 20a2 2 0 0 0 3 0" /></>} />,
+  snow: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M12 2v20M4.5 6l15 12M19.5 6l-15 12" /><path d="M12 2l-2 2M12 2l2 2M12 22l-2-2M12 22l2-2M4.5 6l2.7-.3M4.5 6l.3 2.7M19.5 6l-2.7-.3M19.5 6l-.3 2.7M4.5 18l2.7.3M4.5 18l.3-2.7M19.5 18l-2.7.3M19.5 18l-.3-2.7" /></>} />,
   sun: ({ p = 20, style }) => <I s={p} style={style} d={<><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19" /></>} />,
   moon: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" />} />,
   monitor: ({ p = 20, style }) => <I s={p} style={style} d={<><rect x="3" y="4" width="18" height="12" rx="1.5" /><path d="M8 20h8M12 16v4" /></>} />,
@@ -20452,12 +20453,24 @@ function buildWeeklyRecap(progress, uid) {
 // real streak" - it reads the calendar itself rather than trusting a single
 // separately-stored streak counter, which is what let a corrupted lastActive
 // field silently reset a real 9-day streak down to 1.
-const countConsecutiveStreak = (dailyDone, endDateKey) => {
+// frozenDays (optional) marks dates covered by a streak freeze - a missed
+// day that was "paid for" so the streak keeps counting through it, the same
+// way a frozen day doesn't break a Duolingo streak. Frozen days aren't
+// study days (they don't light up the contribution calendar), they just
+// don't break the chain.
+const countConsecutiveStreak = (dailyDone, endDateKey, frozenDays) => {
   if (!dailyDone) return 0;
   let count = 0;
   let d = new Date(endDateKey + "T00:00:00");
-  while (dailyDone[d.toISOString().slice(0, 10)]) {
-    count++;
+  while (true) {
+    const key = d.toISOString().slice(0, 10);
+    if (dailyDone[key]) {
+      count++;
+    } else if (frozenDays && frozenDays[key]) {
+      // Frozen day: extends the chain without adding a "studied" day itself.
+    } else {
+      break;
+    }
     d.setDate(d.getDate() - 1);
   }
   return count;
@@ -20744,6 +20757,7 @@ const db = {
           const tk = new Date().toISOString().slice(0, 10);
           const incomingHasToday = !!(progress.dailyDone && progress.dailyDone[tk]);
           const mergedDailyDone = { ...(existing.dailyDone || {}), ...(progress.dailyDone || {}) };
+          const mergedFrozenDays = { ...(existing.frozenDays || {}), ...(progress.frozenDays || {}) };
           // Derive streak from the MERGED calendar itself rather than trusting
           // whatever number the client computed. The client's number can be
           // wrong/stale if its local `progress.dailyDone` hadn't fully synced
@@ -20752,7 +20766,7 @@ const db = {
           // so let it be the one source of truth for streak too, not just for
           // dailyDone itself.
           const calendarThroughKey = mergedDailyDone[tk] ? tk : new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-          const calendarStreak = countConsecutiveStreak(mergedDailyDone, calendarThroughKey);
+          const calendarStreak = countConsecutiveStreak(mergedDailyDone, calendarThroughKey, mergedFrozenDays);
           toSave = {
             ...progress,
             xp: Math.max(progress.xp || 0, existing.xp || 0),
@@ -20760,6 +20774,11 @@ const db = {
               ? Math.max(calendarStreak, existing.streak || 0)
               : Math.max(progress.streak || 0, existing.streak || 0),
             dailyDone: mergedDailyDone,
+            frozenDays: mergedFrozenDays,
+            // Streak freezes are a spendable resource, not additive across
+            // devices - trust whichever save is more recent (the incoming
+            // one), just never let a stale/blank payload wipe them to 0.
+            streakFreezes: progress.streakFreezes != null ? progress.streakFreezes : (existing.streakFreezes || 0),
             completed: { ...(existing.completed || {}), ...(progress.completed || {}) },
             scores: { ...(existing.scores || {}), ...(progress.scores || {}) },
             passcoScores: { ...(existing.passcoScores || {}), ...(progress.passcoScores || {}) },
@@ -27308,7 +27327,8 @@ function WeeklyRecapCard({ app }) {
 function HomeView({ app }) {
   const jsDay = new Date().getDay();
   const todayCourse = courseById(DAILY[jsDay].courseId);
-  const doneToday = app.progress.dailyDone?.[todayKey()];
+  const tk = todayKey();
+  const doneToday = app.progress.dailyDone?.[tk];
   const r = rankOf(app.progress.xp);
   const builtKeys = Object.keys(CONTENT);
   const nextKey = builtKeys.find((k) => !app.progress.completed?.[k]) || builtKeys[builtKeys.length - 1] || null;
@@ -27319,6 +27339,41 @@ function HomeView({ app }) {
   // opened any topic yet this session.
   const resumeTopic = (app.lastTopic && contentFor(app.lastTopic.courseId, app.lastTopic.topicId)) || nt;
   const resumeCourse = resumeTopic ? courseById(resumeTopic.courseId) : null;
+
+  // Today's ring: how far into today's 5-question daily set the student is.
+  // Read live from the same sessionStorage key the daily CBT itself writes
+  // to, so the ring fills in real time as they answer - and stays at 0/5
+  // instead of guessing if they haven't opened today's set yet. This is the
+  // "one unfinished thing" that's meant to keep pulling them back, the way
+  // Apple's Activity rings do - one clear number, not ten metrics.
+  const dailyProgress = (() => {
+    if (doneToday) return { answered: 5, total: 5 };
+    try {
+      const saved = JSON.parse(sessionStorage.getItem("ascend_daily_cbt") || "null");
+      if (saved && saved.tk === tk && Array.isArray(saved.answers)) {
+        const answered = saved.answers.filter((a) => a !== null).length;
+        return { answered, total: saved.answers.length || 5 };
+      }
+    } catch {}
+    return { answered: 0, total: 5 };
+  })();
+  const ringValue = dailyProgress.total ? dailyProgress.answered / dailyProgress.total : 0;
+
+  // One-off streak event banner (freeze used / freeze earned / comeback
+  // bonus), set by recordDaily right after today's daily set is submitted.
+  // Read once and cleared, same pattern as the xpChange toast elsewhere.
+  const [streakEvent, setStreakEvent] = useState(null);
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem("ascend_streak_event");
+      if (stored) {
+        setStreakEvent(JSON.parse(stored));
+        sessionStorage.removeItem("ascend_streak_event");
+      }
+    } catch {}
+  }, []);
+  const freezesAvailable = app.progress.streakFreezes || 0;
+
   return (
     <div className="view">
       <div className="hero" style={{ 
@@ -27378,6 +27433,65 @@ function HomeView({ app }) {
     }}>Built by Prince, Ansah, Jeffery and Dacosta so the Class of 2029 rises together.</p>
   </div>
 </div>
+
+      {streakEvent && (
+        <div className="card" style={{
+          marginTop: 16, display: "flex", alignItems: "center", gap: 12,
+          borderLeft: `3px solid ${streakEvent.type === "comeback" ? "var(--amber)" : "#2E9BFF"}`,
+        }}>
+          <div style={{ flexShrink: 0, width: 34, height: 34, borderRadius: 10, background: streakEvent.type === "comeback" ? "var(--amber-dim)" : "rgba(46,155,255,.15)", color: streakEvent.type === "comeback" ? "var(--amber)" : "#2E9BFF", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {streakEvent.type === "comeback" ? <Ic.flame p={18} /> : <Ic.snow p={18} />}
+          </div>
+          <div>
+            {streakEvent.type === "freeze_used" && (
+              <>
+                <div style={{ fontWeight: 700, fontSize: 14.5 }}>Streak freeze used</div>
+                <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 2 }}>You missed a day, so a freeze covered it - your streak is still intact. {streakEvent.freezesLeft} left.</div>
+              </>
+            )}
+            {streakEvent.type === "freeze_earned" && (
+              <>
+                <div style={{ fontWeight: 700, fontSize: 14.5 }}>New streak freeze earned</div>
+                <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 2 }}>Milestone reached - you now have {streakEvent.freezesLeft} freeze{streakEvent.freezesLeft === 1 ? "" : "s"} banked for a future missed day.</div>
+              </>
+            )}
+            {streakEvent.type === "comeback" && (
+              <>
+                <div style={{ fontWeight: 700, fontSize: 14.5 }}>Welcome back</div>
+                <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 2 }}>Your {streakEvent.prevStreak}-day streak reset, but showing up today still earned you a +10 XP comeback bonus.</div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div className="card" style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 16 }}>
+        <div style={{ position: "relative", flexShrink: 0 }}>
+          <Ring value={ringValue} size={58} stroke={6} color={doneToday ? "var(--good, #10B981)" : "var(--amber)"} />
+          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {doneToday ? <Ic.check p={20} style={{ color: "var(--good, #10B981)" }} /> : <span className="mono" style={{ fontSize: 13, fontWeight: 700 }}>{dailyProgress.answered}/{dailyProgress.total}</span>}
+          </div>
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontWeight: 700, fontSize: 15 }}>{doneToday ? "Today's goal complete" : "Today's goal"}</div>
+          <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 2 }}>
+            {doneToday
+              ? "Come back tomorrow to keep the ring going."
+              : `${dailyProgress.total - dailyProgress.answered} question${dailyProgress.total - dailyProgress.answered === 1 ? "" : "s"} left in today's set.`}
+          </div>
+          {freezesAvailable > 0 && (
+            <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 6, color: "#2E9BFF", fontSize: 12, fontWeight: 600 }}>
+              <Ic.snow p={13} />
+              <span>{freezesAvailable} streak freeze{freezesAvailable === 1 ? "" : "s"} banked</span>
+            </div>
+          )}
+        </div>
+        {!doneToday && (
+          <button className="btn btn-a" style={{ flexShrink: 0, padding: "9px 16px", fontSize: 13.5 }} onClick={() => app.go("daily")}>
+            {dailyProgress.answered > 0 ? "Continue" : "Start"}
+          </button>
+        )}
+      </div>
 
       <div className="grid g4" data-tour="quick-actions" style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
         <button className="card hover" style={{ textAlign: "center", padding: "14px 8px" }} onClick={() => resumeTopic && resumeCourse ? app.go("topic", { courseId: resumeTopic.courseId, topicId: resumeTopic.topicIndex }) : app.go("courses")}>
@@ -27720,7 +27834,7 @@ const verifyAndMigratePw = async (acct, pw) => {
   const lockUntil = failCount >= MAX_FAILED_ATTEMPTS ? now + LOCKOUT_MS : null;
   return { ok: false, locked: false, retryAt: lockUntil, upgrade: null, failCount, lockUntil };
 };
-const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], achievements: [] });
+const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], achievements: [], streakFreezes: 1, frozenDays: {} });
 // New-user reward: never let someone land on the home screen seeing 0 XP,
 // a 0-day streak, and an empty achievement shelf. Signing up itself earns
 // 10 XP and unlocks the "Get Started" badge, applied before the app ever
@@ -29443,7 +29557,7 @@ const NAV = [
   { key: "feedback", label: "Feedback", icon: "star", group: "More" }
 ];
 
-const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0, passcoScores: {}, achievements: [] };
+const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0, passcoScores: {}, achievements: [], streakFreezes: 1, frozenDays: {} };
 
 // ============================================
 // QUICK FLOW BUTTON - Paste this here
@@ -29878,12 +29992,12 @@ export default function App() {
     if (!progress || !progress.dailyDone) return;
     const tk = todayKey();
     const throughKey = progress.dailyDone[tk] ? tk : shift(-1);
-    const calendarStreak = countConsecutiveStreak(progress.dailyDone, throughKey);
+    const calendarStreak = countConsecutiveStreak(progress.dailyDone, throughKey, progress.frozenDays);
     if (calendarStreak > (progress.streak || 0)) {
       persist({ ...progress, streak: calendarStreak });
     }
     // eslint-disable-next-line
-  }, [progress?.dailyDone]);
+  }, [progress?.dailyDone, progress?.frozenDays]);
 
   // ============================================================
   // 4. STATE PERSISTENCE (Saves whenever state changes) - IMPROVED
@@ -30265,6 +30379,8 @@ export default function App() {
         xp: Math.max((cloudP && cloudP.xp) || 0, (localP && localP.xp) || 0),
         streak: Math.max((cloudP && cloudP.streak) || 0, (localP && localP.streak) || 0),
         dailyDone: { ...((cloudP && cloudP.dailyDone) || {}), ...((localP && localP.dailyDone) || {}) },
+        frozenDays: { ...((cloudP && cloudP.frozenDays) || {}), ...((localP && localP.frozenDays) || {}) },
+        streakFreezes: Math.max((cloudP && cloudP.streakFreezes) || 0, (localP && localP.streakFreezes) || 0),
         completed: { ...((cloudP && cloudP.completed) || {}), ...((localP && localP.completed) || {}) },
         scores: { ...((cloudP && cloudP.scores) || {}), ...((localP && localP.scores) || {}) },
         passcoScores: { ...((cloudP && cloudP.passcoScores) || {}), ...((localP && localP.passcoScores) || {}) },
@@ -30370,9 +30486,41 @@ export default function App() {
     // (e.g. from a past sync bug). The calendar itself is what's shown on
     // screen and what students count, so it's the authoritative source.
     const yesterdayKey = shift(-1);
-    const streakThroughYesterday = countConsecutiveStreak(progress.dailyDone, yesterdayKey);
+    const twoDaysAgoKey = shift(-2);
+    const frozenDays = progress.frozenDays || {};
+    const streakThroughYesterday = countConsecutiveStreak(progress.dailyDone, yesterdayKey, frozenDays);
     const continuing = progress.lastActive === yesterdayKey || streakThroughYesterday > 0;
-    const streak = continuing ? Math.max(progress.streak || 0, streakThroughYesterday) + 1 : 1;
+
+    let streak, newFrozenDays = frozenDays, freezesLeft = progress.streakFreezes || 0;
+    let event = null; // shown as a one-off banner on Home: { type, ... }
+
+    // Missed exactly one day (last studied two days ago, nothing yesterday) -
+    // spend a streak freeze to bridge the gap instead of resetting to 1, the
+    // same "comeback made easy" trick Duolingo/Snapchat use so one missed
+    // day doesn't erase real progress.
+    const missedExactlyOneDay = !continuing && progress.lastActive === twoDaysAgoKey;
+    if (missedExactlyOneDay && freezesLeft > 0) {
+      newFrozenDays = { ...frozenDays, [yesterdayKey]: true };
+      freezesLeft -= 1;
+      streak = (progress.streak || 0) + 1;
+      event = { type: "freeze_used", freezesLeft };
+    } else if (continuing) {
+      streak = Math.max(progress.streak || 0, streakThroughYesterday) + 1;
+    } else {
+      // A real break. If they had a real run going, coming back still earns
+      // something instead of just quietly starting over at 1.
+      const prevStreak = progress.streak || 0;
+      streak = 1;
+      if (prevStreak >= 3) event = { type: "comeback", prevStreak };
+    }
+
+    // Earn a new freeze every 7-day milestone, capped at 2 banked at once -
+    // so hitting a streak milestone also buys insurance against the next slip.
+    if (streak > 0 && streak % 7 === 0 && freezesLeft < 2) {
+      freezesLeft += 1;
+      if (!event) event = { type: "freeze_earned", freezesLeft };
+    }
+
     // 5 XP just for completing the set, plus 3 XP per correct answer out of
     // 5 - so a perfect run earns the same 20 XP the old single-question
     // daily used to award for a correct answer, and a clean sweep of zero
@@ -30380,10 +30528,22 @@ export default function App() {
     const safeTotal = total || 5;
     const baseXp = 5 + Math.round((15 * correctCount) / safeTotal);
     const multiplier = getStreakMultiplier(streak);
-    const gained = Math.round(baseXp * multiplier.multiplier);
+    const comebackBonus = event && event.type === "comeback" ? 10 : 0;
+    const gained = Math.round(baseXp * multiplier.multiplier) + comebackBonus;
     const newXp = progress.xp + gained;
     setXpChange(newXp);
-    persist({ ...progress, xp: newXp, streak, lastActive: tk, dailyDone: { ...progress.dailyDone, [tk]: true } });
+    if (event) {
+      try { sessionStorage.setItem("ascend_streak_event", JSON.stringify(event)); } catch {}
+    }
+    persist({
+      ...progress,
+      xp: newXp,
+      streak,
+      lastActive: tk,
+      dailyDone: { ...progress.dailyDone, [tk]: true },
+      frozenDays: newFrozenDays,
+      streakFreezes: freezesLeft,
+    });
   };
 
   const finishQuiz = (cid, tid, correct, missed = [], total = 0) => {
