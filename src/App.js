@@ -520,6 +520,7 @@ const COURSES = [
   { id: "com", name: "Communication Skills II", code: "ENGL 158", day: "Saturday" },
   { id: "lab", name: "Lab Safety & Instrumentation", code: "MLS 152", day: "Sunday" },
   { id: "bcp", name: "Biochemistry Practicals", code: "MLS 158P", day: "Sunday" },
+  { id: "phyp", name: "Physiology Practicals", code: "SMS 184P", day: "Sunday" },
 ];
 
 const TOPICS = {
@@ -563,6 +564,11 @@ const TOPICS = {
   ],
   bcp: [
     "Lab Safety", "Lab Safety 2: Chemical Hazards and Safety Symbols", "Pipetting", "Metrics and Measurements", "Healthcare Waste Management 1", "Healthcare Waste Management 2", "Referencing", "Writing Lab Reports"
+  ],
+  phyp: [
+    "Facilitated Diffusion of Glucose", "Active Transport of Sodium and Potassium Ions", "Resting Membrane Potential",
+    "Refractory Period of an Action Potential", "Effects of Stimulus Frequency on Skeletal Muscle Contraction",
+    "Skeletal Muscle Length-Tension Relationship", "Urinalysis"
   ]
 };
 
@@ -17629,6 +17635,374 @@ If those came cleanly, you understand why a muscle's length determines its stren
   ],
 };
 
+/* ===================== PHYSIOLOGY PRACTICALS (phyp) =====================
+   Topics 0,1,2,4,5 reuse the existing General Physiology note/theory/mcq
+   content verbatim (same underlying science, practical-course framing),
+   just re-pointed to the phyp course/topic slots. Topics 3 (Refractory
+   Period) and 6 (Urinalysis, bonus) are newly written below. */
+const T_PHYP_FACIL = { ...T_PHY_FACIL, courseId: "phyp", topicIndex: 0, title: "Facilitated Diffusion of Glucose" };
+const T_PHYP_ACTIVE = { ...T_PHY_ACTIVE, courseId: "phyp", topicIndex: 1, title: "Active Transport of Sodium and Potassium Ions" };
+const T_PHYP_RMP = { ...T_PHY_RMP, courseId: "phyp", topicIndex: 2 };
+const T_PHYP_STIMFREQ = { ...T_PHY_STIMFREQ, courseId: "phyp", topicIndex: 4 };
+const T_PHYP_LENGTHTENSION = { ...T_PHY_LENGTHTENSION, courseId: "phyp", topicIndex: 5 };
+
+/* --------------------------- phyp:3 (new) --------------------------- */
+const T_PHYP_REFRACTORY = {
+  courseId: "phyp",
+  topicIndex: 3,
+  title: "Refractory Period of an Action Potential",
+  minutes: 20,
+  note: [
+    { q: "Why a fired neuron cannot fire again immediately.",
+      body: `You have already met the resting membrane potential and the action potential it makes possible. Now we ask a practical question: once a neuron has fired, can it fire again straight away if a second strong stimulus arrives a moment later?
+
+My Socratic question: if the same channels that opened to produce one action potential are still available, why shouldn't a second identical stimulus produce a second action potential immediately afterward?
+
+The answer is that the channels are not simply "available again" the instant the spike ends. The voltage-gated sodium channels that drove the upstroke pass through a temporary inactivated state after opening, and they cannot be persuaded back open until the membrane has recovered toward rest. This built-in recovery window is the refractory period - the interval after an action potential during which the membrane is either unable, or only reluctantly able, to fire again.
+
+Crucial insight: the refractory period exists because voltage-gated Na+ channels do not simply close and reopen on demand - they pass through an inactivated state that blocks re-firing until the membrane resets. This is a property of the channels themselves, not a general fatigue of the cell.` },
+
+    { q: "The absolute refractory period.",
+      body: `The refractory period has two distinct phases, and the first is absolute - a period where no stimulus, however strong, can trigger a second action potential.
+
+During the absolute refractory period, which corresponds to depolarisation and most of repolarisation, the Na+ channels are inactivated - not simply closed, but locked in a state that will not reopen no matter how large the depolarising stimulus is. Since these are the very channels that must open to start a new action potential, a second spike is physically impossible during this window.
+
+My Socratic question: why does it matter that the block during this phase is total rather than just "harder to trigger"?
+
+The answer is that a truly absolute block guarantees each action potential is a discrete, separate event - it cannot merge with the next one no matter how intensely the neuron is stimulated. This caps the maximum firing rate of any neuron and ensures the signal travels as a clean series of distinct spikes rather than a smeared continuous change.
+
+Crucial insight: the absolute refractory period is a total block on a second action potential, caused by inactivated Na+ channels, and it sets the upper limit on how fast a cell can possibly fire - no stimulus strength can overcome it.` },
+
+    { q: "The relative refractory period.",
+      body: `Once the absolute block lifts, the membrane enters a second, gentler phase before it is fully back to normal.
+
+During the relative refractory period, which follows the absolute period and overlaps with the final part of repolarisation and the after-hyperpolarisation, some Na+ channels have recovered from inactivation, but K+ channels are still open, keeping the membrane more negative (closer to or below the normal resting potential) than usual. A second action potential CAN occur here, but only with a stronger-than-normal stimulus, because the membrane starts from a more negative baseline and has fewer available Na+ channels than a fully rested cell.
+
+My Socratic question: why would a stimulus that easily triggers a normal action potential fail during the relative refractory period?
+
+The answer is that with the membrane already hyperpolarised and fewer Na+ channels ready to open, the same stimulus current produces less depolarisation and recruits fewer channels - so it may not reach threshold. Only a stronger stimulus can supply enough extra depolarising current to reach threshold under these unfavourable starting conditions.
+
+Crucial insight: the relative refractory period is a phase of reduced (not zero) excitability - firing is possible but requires a stronger-than-normal stimulus, because of lingering K+ efflux and only partial recovery of Na+ channels.` },
+
+    { q: "What causes each phase, ion channel by ion channel.",
+      body: `Pinning the refractory period to specific channel behaviour makes the mechanism concrete rather than abstract.
+
+Absolute refractory period: caused by Na+ channel inactivation. These channels have two gates - an activation gate and an inactivation gate. During the spike, the inactivation gate closes and will not reopen until the membrane repolarises back toward rest; while it is closed, no amount of stimulus can open Na+ channels again. Relative refractory period: caused mainly by continued K+ channel opening (which keeps repolarising and then hyperpolarising the membrane) alongside the still-recovering Na+ channels. As K+ channels gradually close and Na+ channels finish resetting, excitability returns fully to normal.
+
+My Socratic question: why is it the inactivation gate, and not the activation gate, that is responsible for the absolute block?
+
+The answer is that the activation gate actually would be willing to open again if depolarised - it is the inactivation gate, triggered by the depolarisation itself, that stays shut and physically prevents current flow through the channel regardless of the activation gate's position. Both gates must be open simultaneously for Na+ to flow, and the stuck inactivation gate is the limiting one.
+
+Crucial insight: the absolute refractory period is a direct consequence of Na+ channel inactivation gates; the relative refractory period reflects lingering K+ channel opening plus partially recovered Na+ channels - two different channel behaviours producing two different degrees of block.` },
+
+    { q: "Why the refractory period matters: unidirectional propagation.",
+      body: `The refractory period is not just a limitation - it is what makes a nerve impulse a directional, one-way signal rather than a wave that sloshes back and forth.
+
+As an action potential travels along an axon, the patch of membrane just behind the moving impulse has just fired and is refractory - it cannot immediately re-fire even though the depolarising current from the active zone reaches it too. This forces the impulse to move only into fresh, non-refractory membrane ahead of it, giving the nerve impulse its one-way direction.
+
+My Socratic question: without a refractory period, what would happen to a nerve impulse once it started travelling down an axon?
+
+The answer is that the impulse could re-trigger the membrane it just left, since that patch would still be fully excitable - the signal could travel backward as well as forward, or bounce back and forth, destroying any orderly, directional communication. The refractory period prevents this by making the just-fired membrane briefly unresponsive.
+
+Crucial insight: the refractory period enforces one-way propagation of the nerve impulse by making recently active membrane briefly unable to re-fire, so the signal can only advance into fresh membrane ahead of it.` },
+
+    { q: "Why the refractory period matters: setting the speed limit on firing rate.",
+      body: `The refractory period also fixes the maximum frequency at which any neuron can fire, which has direct physiological consequences.
+
+Because a new action potential cannot begin until the absolute refractory period ends (and ideally not until full recovery), the total duration of the refractory period sets an upper ceiling on firing frequency - a neuron simply cannot fire faster than its refractory period allows, no matter how intense the stimulus. Neurons with shorter refractory periods can fire at higher maximum frequencies than those with longer ones.
+
+My Socratic question: two neurons receive the same very strong, continuous stimulus, but one has a longer refractory period than the other. Which one will produce more action potentials per second, and why?
+
+The answer is that the neuron with the SHORTER refractory period will fire more action potentials per second, because it recovers its excitability sooner and can be triggered again after a shorter interval, regardless of how strong the ongoing stimulus is. Stimulus strength beyond threshold does not shorten the refractory period.
+
+Crucial insight: the refractory period, not stimulus strength alone, sets the ceiling on a neuron's maximum possible firing rate - this is why stronger stimuli increase firing frequency only up to a point (a concept you will revisit when studying stimulus frequency and skeletal muscle).` },
+
+    { q: "The refractory period in cardiac muscle: a clinically vital example.",
+      body: `The refractory period is especially important - and especially long - in cardiac muscle, with direct clinical relevance.
+
+Cardiac muscle has an unusually long absolute refractory period, lasting almost as long as the mechanical contraction (twitch) itself. This is deliberately protective: it prevents the heart from being re-triggered into a second contraction before it has finished relaxing and refilling, which in turn prevents summation and tetanus of heart muscle - a sustained, unrelenting contraction that would stop the heart from pumping blood at all.
+
+My Socratic question: why would it be dangerous if cardiac muscle behaved like skeletal muscle and could be tetanised?
+
+The answer is that a tetanised heart would remain permanently contracted rather than alternating between contraction (systole) and relaxation with filling (diastole); a heart stuck in continuous contraction cannot fill with blood between beats and therefore cannot pump - this would be immediately fatal. The long cardiac refractory period is what keeps every heartbeat a distinct, separated event.
+
+Crucial insight: the unusually long absolute refractory period of cardiac muscle is a protective design feature that prevents tetanus of the heart, ensuring the alternating pump-and-fill rhythm essential for circulation - a direct link between this cellular property and a beating heart.` },
+
+    { q: "The refractory period and the all-or-none law.",
+      body: `The refractory period explains a puzzling feature of action potentials that you have likely already met: the all-or-none law, which states that an action potential either fires completely or not at all, always at the same size, never partially.
+
+Once threshold is reached, the Na+ channels that open do so fully and independently of how strong the triggering stimulus was - a barely-threshold stimulus and a massively-above-threshold stimulus produce identical action potentials in size and shape. The refractory period is what stops a stronger stimulus from producing a "bigger" or additional response instead: during the absolute refractory period the channels are inactivated regardless of stimulus strength, so the system cannot be pushed into a larger or a second response no matter how hard it is driven.
+
+My Socratic question: if a very strong stimulus cannot make a bigger action potential, how does the nervous system signal stimulus intensity at all - for example, the difference between a light touch and a hard pinch?
+
+The answer is that intensity is encoded not by the size of individual action potentials (which are fixed by the all-or-none law) but by their FREQUENCY - a stronger stimulus produces action potentials more often, not larger ones. This is only possible because the refractory period is brief enough to allow rapid, repeated firing while still keeping each individual spike a fixed, uniform event.
+
+Crucial insight: the refractory period enforces the all-or-none law by preventing a second or larger response during and immediately after a spike; because spike size cannot vary, the nervous system instead encodes stimulus strength as firing frequency, a concept that connects directly to how skeletal muscle force is graded by stimulus frequency.` },
+
+    { q: "Refractory period versus fatigue: a common confusion.",
+      body: `Students often confuse the refractory period with fatigue, but they are entirely different phenomena occurring on very different timescales and for different reasons - separating them clearly prevents a common exam error.
+
+The refractory period is a brief, automatic, channel-level property lasting only milliseconds, present in every single action potential regardless of how fresh or tired the cell is; it recovers fully after each spike, ready for the next one. Fatigue, by contrast, is a much slower decline in a cell's ability to respond effectively, developing over seconds to minutes of sustained activity, caused by factors such as depletion of energy reserves, accumulation of metabolic by-products, or disturbance of ion gradients that the pumps cannot keep up with.
+
+My Socratic question: a neuron has been firing rapidly for several minutes and its responses are now visibly weaker. Is this best explained by the refractory period, or by fatigue - and how could you tell the difference?
+
+The answer is that this is fatigue, not the refractory period - the refractory period only ever affects the few milliseconds immediately after each individual spike and does not accumulate or worsen with prolonged use, whereas a progressive decline over minutes of sustained firing reflects depletion of resources or accumulating disturbance that fatigue describes. You could confirm this by allowing brief rest: a cell limited only by its refractory period recovers instantly between spikes, while a fatigued cell needs a longer recovery period to restore its full responsiveness.
+
+Crucial insight: the refractory period is a brief, per-spike, channel-based limit that resets completely after each action potential, while fatigue is a slower, cumulative decline from sustained activity - conflating the two is a common error, but recognising their different timescales and causes keeps the concepts distinct.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for the refractory period, in five lines.
+
+Absolute refractory period: total block, caused by inactivated Na+ channels; corresponds to depolarisation and most of repolarisation; no stimulus, however strong, can trigger a second spike.
+
+Relative refractory period: partial block, caused by lingering K+ efflux (hyperpolarisation) plus still-recovering Na+ channels; a stronger-than-normal stimulus CAN trigger a second spike here.
+
+Why it matters functionally: it forces the nerve impulse to travel in one direction only (into fresh membrane) and sets the absolute ceiling on a neuron's maximum firing frequency.
+
+Clinical link: cardiac muscle has an unusually long absolute refractory period that prevents tetanus of the heart, protecting the alternating contract-and-fill rhythm that keeps blood circulating.
+
+Now your final test. A motor neuron has just fired an action potential and is now in its relative refractory period.
+
+Question one: could a second, unusually strong stimulus trigger another action potential right now - why or why not?
+Question two: what two channel-level events are responsible for this reduced (rather than zero) excitability?
+Question three: why does a long cardiac refractory period matter for how the heart actually pumps blood?
+
+Work them through before reading on.
+
+My answers. One: yes, it could - the relative refractory period is a partial, not total, block, so a stronger-than-normal stimulus can supply enough depolarising current to reach threshold despite the unfavourable starting conditions. Two: some Na+ channels have recovered from inactivation but not all, reducing the number available to open; and K+ channels are still open, keeping the membrane more negative than normal resting potential, both of which raise the effective threshold. Three: because the absolute refractory period in cardiac muscle lasts almost as long as the mechanical twitch, the heart cannot be re-triggered into a new contraction before it has relaxed and refilled, preventing tetanus and preserving the alternating systole-diastole cycle that circulation depends on.
+
+If those came cleanly, you understand why every nerve impulse travels one way, why neurons have a hard ceiling on firing speed, and why your heart never locks into a single, fatal, unrelenting contraction.` },
+  ],
+  theory: [
+    { q: "Define the refractory period of an action potential.", a: "The refractory period is the interval following an action potential during which the membrane is either completely unable (absolute refractory period) or only able with a stronger-than-normal stimulus (relative refractory period) to generate a further action potential." },
+    { q: "Distinguish the absolute refractory period from the relative refractory period.", a: "The absolute refractory period is a total block - no stimulus of any strength can trigger a second action potential, because Na+ channels are inactivated. The relative refractory period is a partial block - a second action potential is possible but requires a stronger-than-normal stimulus, because the membrane is hyperpolarised and Na+ channels are only partly recovered." },
+    { q: "What channel-level event underlies the absolute refractory period?", a: "Voltage-gated Na+ channels pass through an inactivated state after opening. The inactivation gate closes during the spike and will not reopen until the membrane has repolarised toward rest, so Na+ channels cannot be reopened by any stimulus during this window, regardless of the activation gate." },
+    { q: "What underlies the relative refractory period?", a: "K+ channels remain open, keeping the membrane more negative than the normal resting potential (after-hyperpolarisation), while only some Na+ channels have recovered from inactivation. Together these mean a stimulus must be stronger than usual to depolarise the membrane to threshold and recruit enough Na+ channels." },
+    { q: "Why can the absolute refractory period not be overcome by increasing stimulus strength?", a: "Because the block is due to inactivated Na+ channels being physically unable to open, not due to the stimulus being too weak. Since these are the specific channels required to initiate a new action potential, no amount of depolarising current can force them open until they have reset." },
+    { q: "Explain how the refractory period enforces one-way (unidirectional) propagation of a nerve impulse.", a: "As an action potential moves along an axon, the membrane immediately behind it has just fired and is in its refractory period, so it cannot be re-triggered even though depolarising current reaches it. This forces the impulse to advance only into fresh, non-refractory membrane ahead, preventing the signal from travelling backward or bouncing back and forth." },
+    { q: "How does the refractory period set a ceiling on a neuron's maximum firing frequency?", a: "A new action potential cannot begin until the refractory period of the previous one has ended, so the total duration of the refractory period fixes the shortest possible interval between spikes. A neuron cannot fire faster than this interval allows, no matter how strong or prolonged the stimulus." },
+    { q: "Why is the refractory period of cardiac muscle unusually long, and why does this matter?", a: "Cardiac muscle's absolute refractory period lasts almost as long as its mechanical twitch. This prevents a new contraction from being triggered before the heart has relaxed and refilled, which prevents tetanus of the heart - a sustained contraction that would stop it from pumping blood, which would be fatal." },
+    { q: "During which phases of the action potential does the absolute refractory period occur?", a: "It corresponds to depolarisation and most of repolarisation, the period during which Na+ channels are inactivated. It ends once enough Na+ channels have recovered from inactivation as the membrane repolarises." },
+    { q: "A patient's nerve is stimulated twice in rapid succession, and the second stimulus is stronger but still fails to produce a second action potential. What does this suggest about timing?", a: "It suggests the second stimulus arrived during the absolute refractory period, where the block is total and independent of stimulus strength, rather than the relative refractory period, where a strong enough stimulus would have succeeded." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "The Refractory Period Explained", note: "Absolute vs relative refractory period and their channel basis.", url: "" },
+    { channel: "Physiology", title: "Sodium Channel Inactivation", note: "Why Na+ channels cannot simply reopen on demand.", url: "" },
+    { channel: "Physiology", title: "Why Nerve Impulses Travel One Way", note: "How refractoriness enforces unidirectional propagation.", url: "" },
+  ],
+  mcqs: [
+    { q: "The refractory period is best defined as:", o: ["The resting state of an unstimulated cell", "The interval after an action potential when a further one is hard or impossible to trigger", "The time it takes ions to diffuse", "The peak of depolarisation"], a: 1, w: "It is the post-spike interval during which re-firing is blocked or hindered." },
+    { q: "During the absolute refractory period, a second action potential can be triggered by:", o: ["A moderate stimulus", "No stimulus, however strong", "Any stimulus at all", "Only a weak stimulus"], a: 1, w: "The absolute refractory period is a total block regardless of stimulus strength." },
+    { q: "The absolute refractory period is caused by:", o: ["Closed K+ channels", "Excess calcium", "Inactivated Na+ channels", "Open chloride channels"], a: 2, w: "Inactivated Na+ channels cannot reopen, causing the total block." },
+    { q: "During the relative refractory period, a second action potential:", o: ["Is impossible under any condition", "Can occur only with a stronger-than-normal stimulus", "Occurs spontaneously", "Requires no stimulus"], a: 1, w: "A stronger-than-normal stimulus can trigger a spike in this phase." },
+    { q: "The relative refractory period is associated with:", o: ["Total Na+ channel inactivation", "Continued K+ efflux and partial Na+ channel recovery", "Complete cellular rest", "No ion movement"], a: 1, w: "Lingering K+ efflux and partly recovered Na+ channels define this phase." },
+    { q: "During the relative refractory period, the membrane is generally:", o: ["Exactly at threshold", "More negative than normal resting potential", "More positive than at rest", "Unaffected"], a: 1, w: "After-hyperpolarisation makes the membrane more negative than usual." },
+    { q: "The Na+ channel gate responsible for the absolute block is the:", o: ["Activation gate", "Leak gate", "Inactivation gate", "Ligand gate"], a: 2, w: "The inactivation gate stays shut and blocks current flow." },
+    { q: "The absolute refractory period roughly corresponds to:", o: ["Only the resting phase", "Only hyperpolarisation", "Depolarisation and most of repolarisation", "The interval before any stimulus arrives"], a: 2, w: "It spans depolarisation through most of repolarisation." },
+    { q: "The relative refractory period ends when:", o: ["The neuron dies", "K+ channels close and Na+ channels fully recover, restoring normal excitability", "Depolarisation begins", "The action potential peaks"], a: 1, w: "Full recovery of channels restores normal excitability." },
+    { q: "The refractory period prevents a nerve impulse from:", o: ["Starting at all", "Reaching threshold", "Travelling backward along the axon it just left", "Using ATP"], a: 2, w: "It blocks re-triggering of just-fired membrane, forcing one-way travel." },
+    { q: "An action potential propagates in one direction mainly because:", o: ["Axons are physically one-way tubes", "Ion channels only exist at the far end", "The membrane just behind it is refractory and cannot re-fire", "Myelin blocks backward flow"], a: 2, w: "Refractoriness of recently active membrane enforces direction." },
+    { q: "The refractory period sets a ceiling on:", o: ["Resting membrane potential value", "A neuron's maximum possible firing frequency", "Axon diameter", "Synaptic vesicle number"], a: 1, w: "It fixes the shortest possible interval between spikes." },
+    { q: "Of two neurons under the same strong continuous stimulus, the one with a SHORTER refractory period will:", o: ["Fire less often", "Fire fewer action potentials only at first", "Fire more action potentials per second", "Fire at exactly the same rate"], a: 2, w: "A shorter refractory period allows faster recovery and more frequent firing." },
+    { q: "Increasing stimulus strength beyond threshold, during the absolute refractory period, will:", o: ["Shorten the refractory period", "Still fail to trigger an action potential", "Always trigger a second spike", "Reverse the resting potential"], a: 1, w: "The absolute block is independent of stimulus strength." },
+    { q: "Cardiac muscle's absolute refractory period is unusual because it:", o: ["Is shorter than skeletal muscle's", "Lasts almost as long as the mechanical twitch itself", "Does not exist", "Only occurs in disease"], a: 1, w: "Its long duration nearly matches the contraction's length." },
+    { q: "The long refractory period of cardiac muscle prevents:", o: ["Diastole", "Blood clotting", "Summation and tetanus of the heart", "Oxygen delivery"], a: 2, w: "It stops the heart from being re-triggered before it relaxes and refills." },
+    { q: "If cardiac muscle could be tetanised like skeletal muscle, the immediate danger would be:", o: ["Faster heart rate only", "The heart staying contracted and unable to fill or pump", "Improved circulation", "No clinical effect"], a: 1, w: "A permanently contracted heart cannot fill with blood between beats." },
+    { q: "The refractory period ensures each action potential is:", o: ["Identical in duration to the resting potential", "A merged, continuous event with the next", "A discrete, separate event", "Unrelated to ion channels"], a: 2, w: "It stops spikes from merging, keeping signals as distinct events." },
+    { q: "During the absolute refractory period, K+ channels are typically:", o: ["Still closed", "Open or opening, contributing to repolarisation", "Destroyed", "Irrelevant"], a: 1, w: "K+ channels are active during this window, driving repolarisation." },
+    { q: "A stimulus arriving during the relative refractory period needs to be stronger mainly because:", o: ["The membrane starts more negative and fewer Na+ channels are available", "Sodium is absent from the extracellular fluid", "The cell is dead", "ATP is depleted"], a: 0, w: "Both factors raise the effective threshold for firing." },
+    { q: "The refractory period is a property mainly of:", o: ["The extracellular fluid", "Voltage-gated ion channels in the membrane", "The cell nucleus", "Connective tissue"], a: 1, w: "It arises from the behaviour of voltage-gated channels." },
+    { q: "Without a refractory period, a nerve impulse would most likely:", o: ["Travel faster in both directions", "Be unable to start", "Potentially retrigger backward and lose directionality", "Require less energy"], a: 2, w: "Loss of refractoriness would let the impulse re-excite membrane behind it." },
+    { q: "The inactivation gate of the Na+ channel reopens only after:", o: ["A new stimulus of any strength arrives", "The membrane has repolarised back toward rest", "The cell divides", "Potassium is removed entirely"], a: 1, w: "Repolarisation resets the inactivation gate." },
+    { q: "Which best describes the transition from absolute to relative refractory period?", o: ["A sudden jump with no overlap", "A gradual shift as some Na+ channels recover while K+ channels remain open", "An instantaneous return to full excitability", "A period with no channel activity"], a: 1, w: "Recovery is gradual, with partial Na+ recovery and ongoing K+ efflux." },
+    { q: "The refractory period is clinically relevant to anti-arrhythmic cardiac drugs because they often:", o: ["Have no relation to refractory periods", "Increase or lengthen the refractory period to prevent abnormal re-triggering of heart tissue", "Eliminate the resting potential", "Remove K+ channels permanently"], a: 1, w: "Many anti-arrhythmics work by prolonging the refractory period." },
+    { q: "A motor neuron fires; 1 millisecond later a very strong stimulus arrives during the absolute refractory period. The outcome is:", o: ["A stronger-than-usual action potential", "No action potential, regardless of stimulus strength", "A guaranteed second action potential", "Immediate cell death"], a: 1, w: "The total block during this phase cannot be overcome." },
+    { q: "The refractory period differs between neuron types mainly because:", o: ["All neurons are identical", "Channel recovery kinetics vary between tissues", "Refractory periods do not actually vary", "Only muscle has a refractory period"], a: 1, w: "Different tissues' channels recover at different rates, changing duration." },
+    { q: "During the relative refractory period, threshold is:", o: ["Lower than normal", "Unchanged from normal", "Higher than normal (harder to reach)", "Undefined"], a: 2, w: "A more negative starting potential and fewer available channels raise effective threshold." },
+    { q: "The overall physiological purpose of the refractory period can be summarised as:", o: ["Wasting cellular energy", "Enforcing discrete, one-directional, rate-limited signalling", "Preventing any signalling at all", "Slowing diffusion of glucose"], a: 1, w: "It shapes signals into distinct, one-way, frequency-limited events." },
+    { q: "Which statement correctly links the refractory period to the topic of stimulus frequency and skeletal muscle?", o: ["Muscle fibres have no refractory period at all", "Because the refractory period is very brief in skeletal muscle fibres, rapid repeated stimuli can summate to increase contractile force", "The refractory period abolishes all muscle contraction", "Stimulus frequency has no relation to refractory periods"], a: 1, w: "A brief refractory period allows repeated firing that can summate mechanically." },
+  ],
+};
+
+/* --------------------------- phyp:6 (new, bonus) --------------------------- */
+const T_PHYP_URINALYSIS = {
+  courseId: "phyp",
+  topicIndex: 6,
+  title: "Urinalysis",
+  minutes: 20,
+  bonus: true,
+  note: [
+    { q: "Why urine is examined at all.",
+      body: `Urinalysis is not part of the core topics tied for you this term - it is included here as a bonus because its slide deck was shared with the class recently, and given how often it comes up in laboratory practice, it is safer to have worked through it than not.
+
+My Socratic question: the kidney filters blood and produces urine as its waste product. Why would examining that waste product tell you anything useful about the rest of the body?
+
+The answer is that urine composition reflects what the kidney has filtered, reabsorbed, and secreted - and by extension, what is circulating in the blood and how well the kidney, liver, and other organs are functioning. Abnormal substances or amounts in urine (glucose, protein, blood, ketones) point back to specific disturbances upstream, making urinalysis a cheap, non-invasive window into systemic health.
+
+Crucial insight: urinalysis is a laboratory examination of urine - physically, chemically, and microscopically - used to screen for and monitor disease, because urine's composition mirrors kidney function and, indirectly, the health of the whole body.` },
+
+    { q: "The three components of a routine urinalysis.",
+      body: `A routine urinalysis is built from three distinct types of examination, each answering a different question about the sample.
+
+Physical (macroscopic) examination assesses colour, clarity/turbidity, volume, odour and specific gravity - properties you can observe or measure without reagents. Chemical examination uses a reagent strip (dipstick) to test for substances such as glucose, protein, blood, ketones, bilirubin, urobilinogen, nitrites, leukocyte esterase, and pH. Microscopic examination looks at the centrifuged sediment under a microscope for cells, casts, crystals, and organisms.
+
+My Socratic question: why would a laboratory bother with all three, rather than just the dipstick, which already screens for most abnormal substances?
+
+The answer is that the dipstick alone can miss things it is not designed to detect - such as red or white blood cell casts, crystals, or specific organisms - and can also give false results in some conditions. The physical exam catches gross abnormalities (like visible blood or cloudiness) instantly, while microscopy confirms and characterises what the dipstick only flags chemically. Together the three methods cross-check each other and give a far more complete picture than any one alone.
+
+Crucial insight: routine urinalysis combines physical, chemical, and microscopic examination because each detects different abnormalities, and together they cross-validate findings that any single method might miss or misinterpret.` },
+
+    { q: "Specimen collection: why technique matters.",
+      body: `Before any testing happens, how the specimen is collected already shapes how trustworthy the results will be.
+
+The most common specimen is a clean-catch midstream urine, where the first part of the urine stream is allowed to pass (flushing out surface contaminants from the urethral opening) before the middle portion is collected in a sterile container - this reduces contamination from skin or genital flora. A first-morning specimen is often preferred for routine testing because it is more concentrated (having sat in the bladder overnight), making abnormal substances easier to detect. Specimens should ideally be examined within about an hour of collection, or refrigerated, because standing urine at room temperature allows bacteria to multiply, red and white cells to lyse, and casts to disintegrate - all of which distort the result.
+
+My Socratic question: why would a urine sample left at room temperature for several hours give a misleadingly abnormal result even if the patient is healthy?
+
+The answer is that bacterial growth in standing urine can raise pH, break down urea to produce ammonia, and consume glucose, while fragile elements like red cells, white cells, and casts degrade over time - so a delayed or improperly stored sample can show false leukocytes, false pH shifts, or falsely low glucose that have nothing to do with the patient's actual physiology.
+
+Crucial insight: proper collection (clean-catch, midstream, ideally first-morning) and prompt handling (tested within about an hour or refrigerated) are essential, because a poorly collected or delayed specimen can produce results that reflect handling artefacts rather than the patient's true condition.` },
+
+    { q: "Physical examination: colour, clarity, and specific gravity.",
+      body: `The physical exam is fast and reagent-free, yet it already flags several important abnormalities.
+
+Normal urine colour ranges from pale yellow to amber, due to the pigment urochrome; colour can shift with hydration status, diet, medications, or disease - for example, red or brown urine can indicate blood (haematuria) or myoglobin, while dark amber can suggest concentrated urine or excess bilirubin. Clarity is normally clear to slightly hazy; cloudiness (turbidity) can result from cells, bacteria, crystals, or mucus. Specific gravity measures how concentrated the urine is (how much dissolved solute relative to pure water) and reflects the kidney's ability to concentrate or dilute urine - a fixed specific gravity close to that of plasma, regardless of fluid intake, can indicate impaired renal concentrating ability.
+
+My Socratic question: a patient's urine is dark red. Why can you not immediately conclude they have blood in their urine just from colour alone?
+
+The answer is that several other things can also redden or darken urine - certain foods (like beetroot), medications, and the presence of myoglobin from muscle breakdown can all mimic the appearance of blood. Colour is a useful first clue, but it must be confirmed chemically (the dipstick blood test) and microscopically (looking for actual red blood cells) before blood is confirmed as the cause.
+
+Crucial insight: physical findings like colour, clarity, and specific gravity are valuable first clues about hydration, concentration, and possible abnormalities, but they are not diagnostic alone - they must be interpreted alongside chemical and microscopic findings.` },
+
+    { q: "Chemical (dipstick) examination: what each pad detects.",
+      body: `The reagent strip packs several separate chemical tests into one dip, each pad reacting with a specific substance.
+
+Key dipstick parameters include: glucose (normally absent or trace; present in diabetes when blood glucose exceeds the renal threshold), protein (normally absent or trace; present in kidney disease, e.g. proteinuria), blood/haemoglobin (detects red cells or free haemoglobin/myoglobin), ketones (present in states of fat breakdown, such as diabetic ketoacidosis or starvation), bilirubin (present in some liver and biliary disorders), urobilinogen (altered in liver disease and haemolysis), nitrites (suggest bacteria capable of converting nitrate to nitrite - a marker of possible urinary tract infection), leukocyte esterase (suggests white blood cells, another infection marker), and pH (normally around 4.5-8, reflecting diet and acid-base status).
+
+My Socratic question: why are nitrites and leukocyte esterase usually interpreted together rather than in isolation when screening for a urinary tract infection?
+
+The answer is that not all urinary bacteria convert nitrate to nitrite, so a negative nitrite result does not rule out infection, while leukocyte esterase reflects the body's white cell response and can be positive even without heavy bacteriuria. Using both together increases sensitivity - a positive result on either raises suspicion, and both positive together makes infection more likely - reducing the chance either test's individual blind spot causes a missed or false diagnosis.
+
+Crucial insight: the dipstick screens for glucose, protein, blood, ketones, bilirubin, urobilinogen, nitrites, leukocyte esterase, and pH in one step, but individual parameters have limitations, so results (especially infection markers) are best interpreted together and confirmed microscopically or by culture.` },
+
+    { q: "Microscopic examination: cells, casts, and crystals.",
+      body: `Microscopy examines the sediment left after centrifuging urine, and it is where the most specific diagnostic clues often appear.
+
+Cells: red blood cells suggest bleeding somewhere in the urinary tract; white blood cells suggest inflammation or infection; epithelial cells are often just normal shedding, though certain types can suggest contamination or specific pathology. Casts are cylindrical structures formed in the renal tubules that take the tubule's shape - hyaline casts can be a normal finding, while red cell casts, white cell casts, or granular casts point to specific kidney pathology (red cell casts, for instance, strongly suggest bleeding originating in the kidney itself rather than lower in the urinary tract). Crystals form when urine is supersaturated with certain solutes; some are normal depending on urine pH and diet, while others (in the right clinical context) can suggest stone-forming risk or particular metabolic or toxic conditions. Microscopy may also reveal bacteria, yeast, or parasites.
+
+My Socratic question: why does finding a red cell CAST (rather than just free red blood cells) point specifically to the kidney as the source of bleeding, rather than the bladder or urethra?
+
+The answer is that casts form only within the renal tubules, taking on the tubule's cylindrical shape as they pass through - so anything trapped inside a cast, including red blood cells, must have entered the urine at the level of the tubule itself. Free red blood cells alone could have entered anywhere along the urinary tract (kidney, ureter, bladder, urethra), but a red cell cast localises the bleeding specifically to the kidney.
+
+Crucial insight: microscopic findings - especially casts - can localise abnormalities to a specific part of the urinary tract in a way that physical or chemical findings alone cannot, making microscopy essential for confirming and characterising abnormalities the dipstick only flags.` },
+
+    { q: "Putting it together: interpreting a urinalysis as a whole picture.",
+      body: `A urinalysis is only powerful when its three parts are read together, each confirming or qualifying the others, rather than any one result being read in isolation.
+
+Consider a patient with cloudy, dark urine (physical), positive for blood, leukocyte esterase, and nitrites (chemical), and red blood cells, white blood cells, and bacteria on microscopy - together these consistently point toward a urinary tract infection with associated bleeding, rather than any single finding being ambiguous on its own. Conversely, a patient with clear, pale urine but a strongly positive glucose and ketones on the dipstick, with no abnormal microscopy, points toward a metabolic problem (such as poorly controlled diabetes) rather than a structural or infective urinary tract problem.
+
+My Socratic question: why is a single abnormal finding - say, blood alone on the dipstick, with everything else normal - usually treated with more caution than several abnormal findings that agree with each other?
+
+The answer is that an isolated abnormal result could be a false positive (from contamination, menstrual blood, or an artefact) or a minor, transient finding, whereas multiple concordant abnormalities across physical, chemical, and microscopic examination make a real underlying process far more likely, since it is unlikely that several independent tests would all be wrong in the same direction by coincidence.
+
+Crucial insight: interpreting a urinalysis means reading physical, chemical, and microscopic findings together as a coherent pattern rather than in isolation - concordant abnormalities across all three strengthen a diagnosis, while an isolated abnormal finding calls for caution and often repeat testing.` },
+
+    { q: "Urine pH: what it reflects and why it is measured.",
+      body: `Urine pH appears on the dipstick alongside the more dramatic findings like blood or glucose, but it carries its own diagnostic weight and deserves closer attention than a quick glance.
+
+Normal urine pH ranges roughly from 4.5 to 8, and it varies naturally with diet - a high-protein diet tends to produce more acidic urine, while a largely vegetarian diet tends to produce more alkaline urine. Beyond diet, urine pH reflects the kidney's role in whole-body acid-base balance: the kidney excretes excess acid or base to help keep blood pH within its narrow normal range, so urine pH shifts in predictable directions during acid-base disturbances (more acidic urine in metabolic acidosis, more alkaline urine in metabolic alkalosis, within the limits of the kidney's capacity). Urine pH is also relevant to certain infections and to the risk of forming particular types of urinary stones, since some crystals only precipitate at specific pH ranges.
+
+My Socratic question: if a patient has a systemic metabolic acidosis, why would you generally expect their urine to be more acidic rather than more alkaline?
+
+The answer is that the kidney's compensatory response to systemic acidosis is to excrete more hydrogen ions in the urine to help correct the blood's acid-base balance, so more acid ends up in the urine, lowering its pH. Urine pH here is not an isolated curiosity but a direct reflection of the kidney actively working to restore normal blood pH.
+
+Crucial insight: urine pH (normally about 4.5-8) is shaped by diet and, more importantly, by the kidney's role in systemic acid-base balance, making it a simple test with a direct window into whether - and how - the kidney is compensating for acid-base disturbances elsewhere in the body.` },
+
+    { q: "Sources of error: why urinalysis results can be misleading.",
+      body: `Because urinalysis is fast and technically simple, it is easy to forget how many things can distort a result before the laboratory ever sees a problem - awareness of these pitfalls is essential for a practical laboratory scientist.
+
+Common sources of error include: contamination during collection (skin flora, vaginal discharge, or improper technique introducing cells or bacteria that did not come from the urinary tract itself); a delayed or improperly stored specimen (as already discussed, allowing bacterial growth, cell lysis, or cast disintegration); dilute urine (from excessive fluid intake) masking genuinely abnormal substances by dropping their concentration below the detection threshold; and interfering substances such as certain medications, vitamin C in high doses (which can cause falsely negative results on some dipstick tests, notably blood and glucose), or highly pigmented foods altering colour interpretation.
+
+My Socratic question: a patient takes a very high dose of vitamin C and their urine dipstick shows no blood, even though they are known to have a urinary tract condition that usually causes haematuria. What should you suspect?
+
+The answer is that you should suspect a false negative caused by the vitamin C, since high-dose ascorbic acid is a well-recognised interferent that can suppress the chemical reaction underlying the dipstick's blood (and glucose) test - the correct response is not to conclude blood is absent, but to consider repeat testing, a different method, or correlating with microscopy, which is not affected by this interference in the same way.
+
+Crucial insight: urinalysis results are only as reliable as the specimen and technique behind them - contamination, delay, dilution, and interfering substances like high-dose vitamin C can all produce false results, which is exactly why proper collection, prompt handling, and cross-checking across physical, chemical, and microscopic findings all matter so much.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for urinalysis, in five lines.
+
+Collection: a clean-catch midstream, ideally first-morning specimen, examined within about an hour or refrigerated, since delayed or contaminated samples give misleading results.
+
+Physical exam: colour, clarity, and specific gravity give fast first clues about hydration, concentration, and gross abnormality, but are not diagnostic alone.
+
+Chemical exam: the dipstick screens glucose, protein, blood, ketones, bilirubin, urobilinogen, nitrites, leukocyte esterase, and pH - infection markers (nitrites, leukocyte esterase) are best read together.
+
+Microscopic exam: cells, casts, and crystals in the sediment can localise and characterise abnormalities - red cell casts, for example, specifically localise bleeding to the kidney.
+
+Now your final test. A urine sample is cloudy and has a strong odour. The dipstick is positive for leukocyte esterase and nitrites but negative for blood, glucose, and protein. Microscopy shows numerous white blood cells and bacteria, with no casts and no red blood cells.
+
+Question one: what is the most likely overall picture suggested by this combination of findings?
+Question two: why does the absence of casts matter here, in terms of localising the problem?
+Question three: if the nitrite result had been negative instead, would that alone rule out infection - why or why not?
+
+Work them through before reading on.
+
+My answers. One: the combination of cloudy urine, positive leukocyte esterase and nitrites, and numerous white cells and bacteria on microscopy, with no blood or protein, is most consistent with a urinary tract infection, likely limited to the lower urinary tract (such as the bladder) rather than involving the kidney itself. Two: the absence of casts is significant because casts only form in the renal tubules - their absence, together with no red cell casts and no blood, suggests the process has not (yet) involved the kidney itself, supporting a lower urinary tract rather than kidney-level infection. Three: no, a negative nitrite result would not rule out infection on its own, because not all urinary pathogens convert nitrate to nitrite; a negative nitrite alongside a positive leukocyte esterase and supporting microscopy would still raise strong suspicion of infection, which is exactly why the two chemical markers are interpreted together rather than individually.
+
+If those came cleanly, you understand why urinalysis remains one of the fastest, cheapest, and most informative tests in clinical laboratory science - a genuinely useful bonus to have under your belt going into the practical.` },
+  ],
+  theory: [
+    { q: "Define urinalysis and explain why it is a useful diagnostic tool.", a: "Urinalysis is the physical, chemical, and microscopic examination of urine. It is useful because urine composition reflects what the kidney has filtered, reabsorbed, and secreted, and therefore mirrors blood composition and organ function - making it a cheap, non-invasive way to screen for and monitor disease." },
+    { q: "List the three components of a routine urinalysis and state what each assesses.", a: "Physical (macroscopic) examination assesses colour, clarity, volume, odour, and specific gravity. Chemical examination uses a reagent strip to test substances such as glucose, protein, blood, ketones, bilirubin, urobilinogen, nitrites, leukocyte esterase, and pH. Microscopic examination examines centrifuged sediment for cells, casts, crystals, and organisms." },
+    { q: "Describe proper specimen collection and handling for urinalysis, and explain why they matter.", a: "A clean-catch midstream, ideally first-morning specimen is preferred, as this reduces contamination and gives a more concentrated sample. The specimen should be examined within about an hour of collection or refrigerated, because standing urine allows bacterial growth, cell lysis, and cast breakdown, which distort results." },
+    { q: "Explain why specific gravity is a useful physical parameter.", a: "Specific gravity reflects how concentrated the urine is and therefore the kidney's ability to concentrate or dilute urine in response to hydration status. A fixed specific gravity that does not vary with fluid intake can indicate impaired renal concentrating ability." },
+    { q: "Explain why nitrites and leukocyte esterase are usually interpreted together when screening for urinary tract infection.", a: "Not all urinary bacteria convert nitrate to nitrite, so a negative nitrite does not rule out infection, while leukocyte esterase reflects the white cell response and can be positive independently. Interpreting both together increases the sensitivity of infection screening compared with relying on either alone." },
+    { q: "What does the presence of a red blood cell cast in urine sediment specifically indicate, and why?", a: "A red blood cell cast specifically indicates bleeding originating in the kidney (renal tubules), because casts form only within the tubules and take on their cylindrical shape - anything trapped inside, including red cells, must have entered the urine at the tubular level, unlike free red blood cells which could originate anywhere in the urinary tract." },
+    { q: "Why might glucose appear in the urine of a person with diabetes?", a: "Glucose is normally almost entirely reabsorbed by the kidney tubules. When blood glucose exceeds the renal threshold, as in poorly controlled diabetes, the reabsorption capacity is exceeded and glucose spills into the urine, making glycosuria a chemical marker of hyperglycaemia." },
+    { q: "Why should a single abnormal urinalysis finding be interpreted cautiously if unsupported by other findings?", a: "An isolated abnormality could result from contamination, a transient or minor cause, or a testing artefact, whereas concordant abnormalities across physical, chemical, and microscopic findings make a genuine underlying condition far more likely, since several independent tests are unlikely to all be misleading in the same direction by chance." },
+    { q: "Give two possible causes of red or dark urine other than the presence of blood.", a: "Certain foods (such as beetroot) and certain medications can redden or darken urine, as can the presence of myoglobin from muscle breakdown - all of which can mimic the appearance of blood and must be distinguished from true haematuria using chemical and microscopic testing." },
+    { q: "Explain why urinalysis results must be interpreted as a combined pattern rather than parameter by parameter.", a: "Physical, chemical, and microscopic findings each provide a different type of information and cross-validate one another; reading them together (for example, cloudy urine plus positive nitrites and leukocyte esterase plus white cells and bacteria on microscopy) builds a coherent, more reliable diagnostic picture than any single finding taken in isolation." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "Urinalysis Overview: Physical, Chemical, Microscopic", note: "The three components of a routine urinalysis explained.", url: "" },
+    { channel: "Physiology", title: "Reading a Urine Dipstick", note: "What each reagent pad detects and common pitfalls.", url: "" },
+    { channel: "Physiology", title: "Urine Microscopy: Casts and Crystals", note: "How sediment findings localise urinary tract abnormalities.", url: "" },
+  ],
+  mcqs: [
+    { q: "Urinalysis is a useful diagnostic tool mainly because urine composition:", o: ["Is unrelated to blood composition", "Reflects kidney filtration, reabsorption, and secretion, and thus systemic health", "Only reflects diet", "Never changes with disease"], a: 1, w: "Urine mirrors what the kidney has processed from the blood." },
+    { q: "The three components of a routine urinalysis are:", o: ["Physical, chemical, microscopic", "Chemical, radiological, surgical", "Physical, genetic, microbiological", "Chemical, histological, physical only"], a: 0, w: "Routine urinalysis combines these three examination types." },
+    { q: "The preferred urine specimen for routine testing is generally:", o: ["A random evening sample", "A clean-catch, midstream, first-morning specimen", "Whatever is easiest to obtain", "A sample taken after heavy exercise only"], a: 1, w: "This reduces contamination and gives a concentrated, representative sample." },
+    { q: "A urine specimen should ideally be examined within about:", o: ["24 hours at room temperature", "One hour, or refrigerated if delayed", "One week", "It does not matter when"], a: 1, w: "Prompt testing or refrigeration prevents bacterial growth and cell breakdown." },
+    { q: "Leaving urine at room temperature for several hours can cause:", o: ["No change at all", "Bacterial multiplication, cell lysis, and cast breakdown", "Instant sterilisation", "Increased glucose only"], a: 1, w: "Standing urine degrades, producing misleading results." },
+    { q: "Normal urine colour is typically described as:", o: ["Pale yellow to amber", "Bright green", "Colourless always", "Deep red"], a: 0, w: "Urochrome gives normal urine its pale yellow to amber colour." },
+    { q: "Specific gravity in urinalysis measures:", o: ["Urine temperature", "How concentrated the urine is relative to water", "Urine colour intensity", "Bacterial count"], a: 1, w: "It reflects the kidney's ability to concentrate or dilute urine." },
+    { q: "A fixed specific gravity that does not change with fluid intake may suggest:", o: ["Normal kidney function", "Impaired renal concentrating ability", "Excess vitamin intake", "A dietary artefact only"], a: 1, w: "Inability to vary concentration suggests impaired renal function." },
+    { q: "Red or dark urine can be caused by all of the following EXCEPT:", o: ["Blood", "Myoglobin", "Certain foods like beetroot", "Pure water intake"], a: 3, w: "Drinking pure water does not redden or darken urine." },
+    { q: "The chemical (dipstick) examination is performed using:", o: ["A microscope slide", "A reagent strip with multiple test pads", "A centrifuge only", "A pH meter alone"], a: 1, w: "The dipstick is a multi-pad reagent strip." },
+    { q: "Glycosuria (glucose in urine) typically occurs when:", o: ["Blood glucose is below normal", "Blood glucose exceeds the renal threshold for reabsorption", "The kidney is completely healthy", "Protein is absent from the diet"], a: 1, w: "Exceeding the reabsorption threshold causes glucose to spill into urine." },
+    { q: "Ketones in urine are most associated with:", o: ["Excess protein reabsorption only", "States of fat breakdown, such as diabetic ketoacidosis or starvation", "Normal hydration", "Bacterial infection exclusively"], a: 1, w: "Ketones appear when the body breaks down fat for energy." },
+    { q: "Nitrites on a urine dipstick suggest:", o: ["Presence of bacteria capable of converting nitrate to nitrite", "Kidney stones only", "Normal urine always", "Excess glucose"], a: 0, w: "Nitrite conversion is performed by certain bacteria, suggesting infection." },
+    { q: "A negative nitrite result on a dipstick:", o: ["Definitively rules out urinary tract infection", "Does not rule out infection, since not all bacteria convert nitrate", "Means the kidney has failed", "Always indicates diabetes"], a: 1, w: "Some organisms do not produce nitrite, so infection is still possible." },
+    { q: "Leukocyte esterase on a dipstick reflects:", o: ["Red blood cell breakdown", "The presence of white blood cells / inflammatory response", "Glucose metabolism", "Bilirubin excretion"], a: 1, w: "It is a marker of white blood cell activity, suggesting inflammation/infection." },
+    { q: "Bilirubin appearing in urine is most associated with:", o: ["Normal renal filtration only", "Certain liver and biliary disorders", "Dehydration alone", "High-protein diets"], a: 1, w: "Bilirubin in urine points toward hepatobiliary disturbance." },
+    { q: "Microscopic examination of urine sediment is performed on:", o: ["Fresh unspun urine", "Centrifuged sediment", "Only the dipstick reading", "Blood plasma"], a: 1, w: "Sediment obtained by centrifugation is examined microscopically." },
+    { q: "Red blood cell CASTS in urine specifically suggest bleeding originating:", o: ["Anywhere along the urinary tract equally", "In the kidney (renal tubules)", "Only in the bladder", "Only in the urethra"], a: 1, w: "Casts form in renal tubules, localising the bleeding to the kidney." },
+    { q: "Free red blood cells (not in casts) in urine could originate from:", o: ["The kidney only", "Anywhere along the urinary tract", "Only the bladder", "Nowhere - they are always an artefact"], a: 1, w: "Unlike casts, free red cells do not localise the source of bleeding." },
+    { q: "Hyaline casts in urine are:", o: ["Always a sign of severe disease", "Can be a normal finding", "Impossible to find in healthy people", "Only seen in diabetes"], a: 1, w: "Hyaline casts can occur in healthy individuals under normal conditions." },
+    { q: "Crystals in urine sediment:", o: ["Are always pathological", "Can be normal depending on urine pH and diet, though some suggest risk of stone formation", "Never appear in healthy people", "Only form in the bladder"], a: 1, w: "Their significance depends on type, pH, and clinical context." },
+    { q: "A cloudy (turbid) urine sample may result from:", o: ["Pure water content only", "Cells, bacteria, crystals, or mucus", "Normal urochrome pigment", "Excess vitamin C alone"], a: 1, w: "These particulate materials scatter light, causing turbidity." },
+    { q: "Why are physical findings alone (like colour) considered insufficient for diagnosis?", o: ["They are always wrong", "Several unrelated causes can produce similar physical appearances", "Physical findings are never useful", "Colour never changes with disease"], a: 1, w: "Multiple causes can mimic the same physical appearance, so confirmation is needed." },
+    { q: "A urinalysis showing cloudy urine, positive leukocyte esterase and nitrites, and white cells plus bacteria on microscopy most strongly suggests:", o: ["A metabolic disorder like diabetes", "A urinary tract infection", "Liver disease", "Dehydration only"], a: 1, w: "These concordant findings together point clearly to infection." },
+    { q: "A urinalysis with clear urine but strongly positive glucose and ketones, and normal microscopy, most strongly suggests:", o: ["Urinary tract infection", "A metabolic problem such as poorly controlled diabetes", "Kidney stones", "Normal healthy findings"], a: 1, w: "Glucose and ketones without infection markers point to a metabolic cause." },
+    { q: "An isolated abnormal finding (e.g. blood alone, everything else normal) should generally be treated with:", o: ["Immediate certainty of severe disease", "Caution, and often repeat testing", "No further consideration", "Automatic disregard"], a: 1, w: "Isolated findings could be artefacts and warrant confirmation." },
+    { q: "The main reason to combine physical, chemical, and microscopic findings when interpreting urinalysis is:", o: ["To make the report longer", "Because each method has blind spots that the others help cover", "Because only one method is ever reliable", "Regulatory requirement with no clinical value"], a: 1, w: "The three methods cross-validate and complement each other's limitations." },
+    { q: "Urobilinogen levels in urine are relevant mainly for assessing:", o: ["Bone health", "Liver function and haemolysis", "Lung function", "Muscle mass"], a: 1, w: "Urobilinogen changes with liver disease and increased red cell breakdown." },
+    { q: "As a topic in this practicals course, urinalysis is flagged as a bonus because:", o: ["It is more important than all core topics", "It is not part of the core topics but its slide deck was recently shared, so reviewing it is a safety measure", "It replaces resting membrane potential", "It has no clinical relevance"], a: 1, w: "It is supplementary, precautionary review rather than a core examinable topic." },
+    { q: "The overall value of urinalysis as a laboratory test lies mainly in being:", o: ["Expensive and invasive", "Fast, cheap, and non-invasive while still clinically informative", "Rarely useful in practice", "Only relevant to kidney transplant patients"], a: 1, w: "Its low cost and simplicity, combined with diagnostic value, make it widely used." },
+  ],
+};
+
 /* --------------------------- phy:8 --------------------------- */
 const T_PHY_MUSCULAR = {
   courseId: "phy",
@@ -19476,6 +19850,13 @@ const CONTENT = {
   "bcp:5": T_LAB_HCWM_2,
   "bcp:6": T_LAB_REFERENCING,
   "bcp:7": T_LAB_REPORTS,
+  "phyp:0": T_PHYP_FACIL,
+  "phyp:1": T_PHYP_ACTIVE,
+  "phyp:2": T_PHYP_RMP,
+  "phyp:3": T_PHYP_REFRACTORY,
+  "phyp:4": T_PHYP_STIMFREQ,
+  "phyp:5": T_PHYP_LENGTHTENSION,
+  "phyp:6": T_PHYP_URINALYSIS,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
@@ -19549,6 +19930,7 @@ const EXAM_TIPS = {
   com: "Structure first, then fill it in. Plan your answer for a beat before you write, keep it clean and organised, and watch your time so every section gets attention.",
   lab: "Precision wins this paper. Read each question fully before choosing - don't answer the question you expected instead of the one that's actually there. Stay sharp to the last minute.",
   bcp: "Practical thinking, not just memory. Picture the actual steps as you answer, don't rush the details, and finish every question - a blank answer is a guaranteed zero, a guess is a chance.",
+  phyp: "Think mechanism, not just recall - picture the ions, channels, and steps as you answer. Cover the core six topics solidly; Urinalysis is a bonus extra, so don't let it steal time from the core paper.",
 };
 
 // Returns the next not-yet-passed exam (by date, then time), or null if all
@@ -21633,7 +22015,14 @@ function CourseView({ app }) {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
                   <div>
                     <div className="mono" style={{ fontSize: 11, color: done ? "var(--good)" : tc ? "var(--amber)" : "var(--text-3)" }}>TOPIC {String(idx + 1).padStart(2, "0")} · {done ? "DONE" : tc ? "READY" : "PREVIEW"}</div>
-                    <div style={{ fontWeight: 650, fontSize: 15.5, marginTop: 3 }}>{title}</div>
+                    <div style={{ fontWeight: 650, fontSize: 15.5, marginTop: 3, display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
+                      {title}
+                      {tc && tc.bonus && (
+                        <span className="mono" style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".03em", color: "var(--amber-2)", background: "var(--amber-dim)", border: "1px solid var(--amber)", borderRadius: 999, padding: "2px 8px", flexShrink: 0 }}>
+                          BONUS
+                        </span>
+                      )}
+                    </div>
                     <div style={{ color: "var(--text-3)", fontSize: 12.5, marginTop: 4 }}>{tc ? `Lesson · AI tutor · ${(tc.theory || []).length} theory Q · ${(tc.mcqs || []).length} MCQ` : "New lessons arrive weekly - tap for a preview."}</div>
                   </div>
                   <Ic.chevR p={20} />
