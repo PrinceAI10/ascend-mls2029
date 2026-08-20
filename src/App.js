@@ -20492,6 +20492,45 @@ const assignLeagues = (sortedBoard) => {
   return { leagued, leagueSize, totalLeagues: Math.ceil(n / leagueSize) };
 };
 
+// Merge frozen (locked) league membership with the live board. Anyone with
+// a locked assignment keeps it for the whole week, even if their XP moves
+// them past a league boundary. Anyone NOT in the lock (new signup mid-week,
+// or someone with only a local id who never synced a profile_id) falls back
+// to a live-computed slot appended after the locked leagues, so nobody is
+// ever left off the board. When lockMap is null (no lock exists / not
+// fetched yet), this degrades to the plain live grouping.
+const buildLockedLeagues = (sortedBoard, lockMap) => {
+  if (!lockMap) return assignLeagues(sortedBoard);
+
+  const locked = [];
+  const unlocked = [];
+  for (const p of sortedBoard) {
+    const idx = p.id != null ? lockMap[p.id] : undefined;
+    if (idx != null) locked.push({ ...p, leagueIndex: idx });
+    else unlocked.push(p);
+  }
+
+  // Live-group the leftovers (new signups this week) into leagues that
+  // continue on from the highest locked league index, so they get their
+  // own small competitive group instead of being dumped into league 0.
+  const maxLockedIndex = locked.reduce((m, p) => Math.max(m, p.leagueIndex), -1);
+  const { leagued: liveLeagued } = assignLeagues(unlocked);
+  const mergedUnlocked = liveLeagued.map((p) => ({ ...p, leagueIndex: p.leagueIndex + maxLockedIndex + 1 }));
+
+  const byLeague = {};
+  for (const p of [...locked, ...mergedUnlocked]) {
+    (byLeague[p.leagueIndex] = byLeague[p.leagueIndex] || []).push(p);
+  }
+  const totalLeagues = Object.keys(byLeague).length;
+  const leagued = [];
+  Object.keys(byLeague).sort((a, b) => a - b).forEach((k) => {
+    const group = byLeague[k].sort((a, b) => b.xp - a.xp);
+    group.forEach((p, i) => leagued.push({ ...p, leaguePos: i + 1 }));
+  });
+  const leagueSize = totalLeagues ? Math.round(sortedBoard.length / totalLeagues) : LEAGUE_TARGET_SIZE;
+  return { leagued, leagueSize, totalLeagues: Math.max(1, totalLeagues) };
+};
+
 /* Storage works in both places:
    - inside the Claude artifact preview, window.storage exists
    - on your deployed site (Netlify/Vercel) it does not, so we use localStorage
@@ -20777,6 +20816,41 @@ const db = {
       if (error || !data) return [];
       return data;
     } catch { return []; }
+  },
+
+  // Read this week's frozen league memberships (Duolingo-style: membership is
+  // locked at the start of the week so a burst of XP mid-week can't "promote"
+  // someone out of their league early). Returns null if the table doesn't
+  // exist yet or nothing has been locked for this week - callers fall back
+  // to the live-computed grouping in that case.
+  async getLeagueLock(weekKey) {
+    try {
+      const { data, error } = await supabase
+        .from("league_memberships")
+        .select("profile_id, league_index")
+        .eq("week_key", weekKey);
+      if (error || !data || !data.length) return null;
+      const map = {};
+      for (const row of data) map[row.profile_id] = row.league_index;
+      return map;
+    } catch { return null; }
+  },
+
+  // Lazily lock this week's leagues: called the first time anyone loads the
+  // board in a new week and no lock exists yet. Computes assignments from
+  // current standings and writes them once; if two people race to do this
+  // at the same moment, upsert on the (week_key, profile_id) primary key
+  // makes the second write a harmless no-op.
+  async lockLeagues(weekKey, memberships) {
+    try {
+      const rows = memberships.map((m) => ({
+        week_key: weekKey,
+        profile_id: m.id,
+        league_index: m.leagueIndex,
+      }));
+      const { error } = await supabase.from("league_memberships").upsert(rows, { onConflict: "week_key,profile_id" });
+      return !error;
+    } catch { return false; }
   },
 };
 
@@ -22896,6 +22970,31 @@ function RanksView({ app }) {
     return () => document.removeEventListener("visibilitychange", onVis);
   }, [meKey, app.progress.xp, app.supaUid, refreshTick]);
 
+  // Frozen weekly league membership (Duolingo-style lock-in). Fetched once
+  // per week; if nothing has been locked yet, we compute it from current
+  // standings and write it, so the FIRST person to open the board that week
+  // sets it for everyone. null while unresolved/unavailable = live fallback.
+  const [leagueLock, setLeagueLock] = useState(null);
+  const lockAttempted = useRef(null);
+  useEffect(() => {
+    const wk = isoWeekKey();
+    if (lockAttempted.current === wk) return;
+    if (!fullBoard.length) return;
+    lockAttempted.current = wk;
+    (async () => {
+      let map = await db.getLeagueLock(wk);
+      if (!map) {
+        const { leagued: live } = assignLeagues(fullBoard);
+        const memberships = live.filter((p) => p.id != null).map((p) => ({ id: p.id, leagueIndex: p.leagueIndex }));
+        if (memberships.length) {
+          await db.lockLeagues(wk, memberships);
+          map = await db.getLeagueLock(wk);
+        }
+      }
+      if (map) setLeagueLock(map);
+    })();
+  }, [fullBoard.length]);
+
   const me = { name: app.progress.name, xp: app.progress.xp, streak: app.progress.streak, me: true, id: app.supaUid };
   
   // Parse XP-earned history once (not inside the sort comparator, which runs many
@@ -22924,7 +23023,7 @@ function RanksView({ app }) {
   const q = search.trim().toLowerCase();
   const onlineCount = fullBoard.filter(function(p) { return p.online; }).length;
   const weekKey = isoWeekKey();
-  const { leagued, leagueSize, totalLeagues } = assignLeagues(fullBoard);
+  const { leagued, leagueSize, totalLeagues } = buildLockedLeagues(fullBoard, leagueLock);
   const myLeagued = leagued.find(function(p) { return p.me; });
   const myLeagueIndex = myLeagued ? myLeagued.leagueIndex : 0;
   const myLeagueNo = myLeagueIndex + 1;
@@ -22972,7 +23071,7 @@ function RanksView({ app }) {
             background: "var(--bg-3)", border: "1px solid var(--line-2)",
           }}
         >
-          {[{ id: "league", label: "My League" }, { id: "global", label: "Global" }].map(function(t) {
+          {[{ id: "global", label: "Global" }, { id: "league", label: "My League" }].map(function(t) {
             var active = boardScope === t.id;
             return (
               <button
