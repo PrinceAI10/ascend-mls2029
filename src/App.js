@@ -489,6 +489,7 @@ const Ic = {
   chat: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.8A8 8 0 1 1 21 12z" />} />,
   search: ({ p = 20, style }) => <I s={p} style={style} d={<><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></>} />,
   textSize: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M4 7V5h11v2" /><path d="M9.5 5v14M7 19h5" /><path d="M15 13h6M18 10v6" /></>} />,
+  users: ({ p = 20, style }) => <I s={p} style={style} d={<><circle cx="8.5" cy="8" r="3.2" /><path d="M2.5 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5" /><path d="M15.5 5.2a3.2 3.2 0 0 1 0 6M17.5 13.7c2.5.5 4 2.4 4 5.3" /></>} />,
 };
 
 /* --------------------------- password input ----------------------------- */
@@ -20837,6 +20838,93 @@ const db = {
     } catch { return []; }
   },
 
+  // ============================================================
+  // DUO STREAKS - opt-in, two-person accountability streak.
+  //
+  // Table: duo_streaks (id uuid pk default gen_random_uuid(), code text
+  // unique, user_a text, user_b text nullable, mode text 'either'|'both',
+  // streak int default 0, last_a text nullable, last_b text nullable,
+  // created_at timestamptz). RLS permissive (anon read/write), matching the
+  // trust model already used for profiles/progress.
+  //
+  // Pairing is by short invite code, not username lookup - one student
+  // creates a pair (picks either/both mode), shares the code, the other
+  // student joins with it. Nobody is ever auto-paired.
+  //
+  // "either" mode = Snapchat-style: one partner completing their daily set
+  // is enough to keep the shared streak alive that day.
+  // "both" mode = Duolingo-style: both partners must complete their daily
+  // set on the same day for the streak to advance.
+  async createDuoStreak(uid, mode) {
+    try {
+      const code = Math.random().toString(36).slice(2, 8).toUpperCase();
+      const { data, error } = await supabase.from("duo_streaks")
+        .insert({ code, user_a: uid, user_b: null, mode: mode === "both" ? "both" : "either", streak: 0 })
+        .select().maybeSingle();
+      if (error) return null;
+      return data;
+    } catch { return null; }
+  },
+  async joinDuoStreak(uid, code) {
+    try {
+      const clean = String(code).trim().toUpperCase();
+      const { data: row } = await supabase.from("duo_streaks").select("*").eq("code", clean).maybeSingle();
+      if (!row) return { error: "not_found" };
+      if (row.user_a === uid || row.user_b === uid) return { error: "already_in" };
+      if (row.user_b) return { error: "full" };
+      const { data, error } = await supabase.from("duo_streaks").update({ user_b: uid }).eq("id", row.id).select().maybeSingle();
+      if (error) return { error: "failed" };
+      return { data };
+    } catch { return { error: "failed" }; }
+  },
+  // Find the pair this uid belongs to (as user_a or user_b), if any.
+  async fetchMyDuoStreak(uid) {
+    try {
+      const { data: asA } = await supabase.from("duo_streaks").select("*").eq("user_a", uid).is("user_b", null).maybeSingle();
+      if (asA) return asA; // pending pair, waiting for a partner
+      const { data: rows } = await supabase.from("duo_streaks").select("*").or(`user_a.eq.${uid},user_b.eq.${uid}`).not("user_b", "is", null).limit(1);
+      return (rows && rows[0]) || null;
+    } catch { return null; }
+  },
+  // Look up the partner's display name for a paired duo streak, so the UI
+  // can show "You + Ansah" instead of a bare id.
+  async fetchProfileName(uid) {
+    try {
+      const { data } = await supabase.from("profiles").select("name").eq("id", uid).maybeSingle();
+      return (data && data.name) || null;
+    } catch { return null; }
+  },
+  // Called right after a student's own daily set is recorded. Marks today
+  // done for whichever side of the pair they are, and advances the shared
+  // streak only when the mode's condition is actually satisfied for today -
+  // "either" advances the moment one side is done, "both" waits for the
+  // second side to also mark today before incrementing.
+  async markDuoDayDone(uid, tk) {
+    try {
+      const pair = await db.fetchMyDuoStreak(uid);
+      if (!pair || !pair.user_b) return null; // no pair, or still waiting for a partner
+      const isA = pair.user_a === uid;
+      const patch = isA ? { last_a: tk } : { last_b: tk };
+      const otherDoneToday = isA ? pair.last_b === tk : pair.last_a === tk;
+      const selfAlreadyToday = isA ? pair.last_a === tk : pair.last_b === tk;
+      if (selfAlreadyToday) return pair; // already counted today, don't double-increment
+      const satisfied = pair.mode === "both" ? otherDoneToday : true;
+      if (satisfied) {
+        const yesterday = shift(-1);
+        const wasYesterday = pair.mode === "both"
+          ? (pair.last_a === yesterday || pair.last_b === yesterday)
+          : (pair.last_a === yesterday || pair.last_b === yesterday || (pair.streak || 0) === 0);
+        patch.streak = wasYesterday || (pair.streak || 0) === 0 ? (pair.streak || 0) + 1 : 1;
+      }
+      const { data, error } = await supabase.from("duo_streaks").update(patch).eq("id", pair.id).select().maybeSingle();
+      if (error) return null;
+      return data;
+    } catch { return null; }
+  },
+  async leaveDuoStreak(pairId) {
+    try { await supabase.from("duo_streaks").delete().eq("id", pairId); } catch {}
+  },
+
   // Read this week's frozen league memberships (Duolingo-style: membership is
   // locked at the start of the week so a burst of XP mid-week can't "promote"
   // someone out of their league early). Returns null if the table doesn't
@@ -27462,6 +27550,178 @@ function motivationForToday() {
 // calendar week per user (tracked via weekKey in localStorage), then stays
 // hidden until the following week rolls around - it never nags on every
 // resume the way a plain "always show" card would.
+// Opt-in duo streak card. Nobody is paired automatically - a student
+// creates a pair (picking either/both mode) and shares a short code, or
+// joins one someone shared with them. Shows nothing but a quiet "start a
+// duo streak" prompt until they actively opt in.
+function DuoStreakCard({ app }) {
+  const duoUid = app.supaUid || ("local-" + String(app.progress.name || "").toLowerCase().replace(/[^a-z0-9]/g, ""));
+  const [pair, setPair] = useState(null);
+  const [partnerName, setPartnerName] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [mode, setMode] = useState("choose"); // choose | create-mode | join
+  const [pickedMode, setPickedMode] = useState("either");
+  const [joinCode, setJoinCode] = useState("");
+  const [err, setErr] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const refresh = () => {
+    if (!duoUid) { setLoading(false); return; }
+    db.fetchMyDuoStreak(duoUid).then((p) => {
+      setPair(p);
+      setLoading(false);
+      if (p && p.user_b) {
+        const otherUid = p.user_a === duoUid ? p.user_b : p.user_a;
+        db.fetchProfileName(otherUid).then(setPartnerName);
+      } else {
+        setPartnerName(null);
+      }
+    });
+  };
+  useEffect(refresh, [duoUid]);
+
+  if (loading) return null;
+
+  const tk = todayKey();
+  const yesterday = shift(-1);
+
+  const cardStyle = { marginTop: 16 };
+
+  // No pair yet - quiet prompt to opt in.
+  if (!pair) {
+    return (
+      <div className="card" style={cardStyle}>
+        {mode === "choose" && (
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <div style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 10, background: "rgba(46,155,255,.12)", color: "#2E9BFF", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Ic.users p={19} />
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontWeight: 700, fontSize: 14.5 }}>Duo streak</div>
+              <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 2 }}>Pair up with a study partner and keep a shared streak alive together. Optional.</div>
+            </div>
+            <button className="btn btn-sm" style={{ flexShrink: 0, background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setMode("create-mode")}>Start</button>
+            <button className="btn btn-sm" style={{ flexShrink: 0, background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => { setMode("join"); setErr(""); }}>Join</button>
+          </div>
+        )}
+        {mode === "create-mode" && (
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 14.5, marginBottom: 8 }}>How should the streak count each day?</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <button className="card hover" style={{ textAlign: "left", padding: 12, border: pickedMode === "either" ? "1.5px solid #2E9BFF" : undefined }} onClick={() => setPickedMode("either")}>
+                <div style={{ fontWeight: 700, fontSize: 13.5 }}>Either of us</div>
+                <div style={{ color: "var(--text-2)", fontSize: 12.5, marginTop: 2 }}>One of us studying today keeps it alive - lower pressure.</div>
+              </button>
+              <button className="card hover" style={{ textAlign: "left", padding: 12, border: pickedMode === "both" ? "1.5px solid #2E9BFF" : undefined }} onClick={() => setPickedMode("both")}>
+                <div style={{ fontWeight: 700, fontSize: 13.5 }}>Both of us</div>
+                <div style={{ color: "var(--text-2)", fontSize: 12.5, marginTop: 2 }}>Both have to study today - stricter accountability.</div>
+              </button>
+            </div>
+            <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+              <button className="btn btn-a" style={{ padding: "8px 16px", fontSize: 13.5 }} disabled={busy} onClick={async () => {
+                setBusy(true);
+                const created = await db.createDuoStreak(duoUid, pickedMode);
+                setBusy(false);
+                if (created) { setPair(created); setMode("choose"); } else setErr("Couldn't create that - try again.");
+              }}>{busy ? "Creating..." : "Create"}</button>
+              <button className="btn btn-sm" style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setMode("choose")}>Back</button>
+            </div>
+          </div>
+        )}
+        {mode === "join" && (
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 14.5, marginBottom: 8 }}>Join with a code</div>
+            <div style={{ display: "flex", gap: 8 }}>
+              <input className="auth-input" style={{ flex: 1 }} placeholder="e.g. AB12CD" value={joinCode}
+                onChange={(e) => setJoinCode(e.target.value.toUpperCase())} maxLength={8} />
+              <button className="btn btn-a" style={{ padding: "8px 16px", fontSize: 13.5, flexShrink: 0 }} disabled={busy || !joinCode.trim()} onClick={async () => {
+                setBusy(true);
+                setErr("");
+                const res = await db.joinDuoStreak(duoUid, joinCode);
+                setBusy(false);
+                if (res && res.data) { setPair(res.data); setMode("choose"); }
+                else if (res && res.error === "not_found") setErr("No duo streak found with that code.");
+                else if (res && res.error === "already_in") setErr("You're already part of this one.");
+                else if (res && res.error === "full") setErr("That pair already has two people.");
+                else setErr("Couldn't join - try again.");
+              }}>{busy ? "Joining..." : "Join"}</button>
+            </div>
+            {err && <div style={{ color: "#E11D48", fontSize: 12.5, marginTop: 8 }}>{err}</div>}
+            <button className="btn btn-sm" style={{ marginTop: 8, background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => { setMode("choose"); setErr(""); }}>Back</button>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Pending - created but no partner has joined yet.
+  if (!pair.user_b) {
+    return (
+      <div className="card" style={cardStyle}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <div style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 10, background: "rgba(46,155,255,.12)", color: "#2E9BFF", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Ic.users p={19} />
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontWeight: 700, fontSize: 14.5 }}>Waiting for a partner</div>
+            <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 2 }}>Share this code so they can join:</div>
+          </div>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 12 }}>
+          <span className="mono" style={{ fontSize: 20, fontWeight: 750, letterSpacing: 2, background: "var(--bg-3)", padding: "8px 14px", borderRadius: 8 }}>{pair.code}</span>
+          <button className="btn btn-sm" style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => {
+            try { navigator.clipboard.writeText(pair.code); setCopied(true); setTimeout(() => setCopied(false), 1500); } catch {}
+          }}>{copied ? "Copied" : "Copy"}</button>
+          <button className="btn btn-sm" style={{ marginLeft: "auto", background: "none", color: "var(--text-3)", border: "none" }} onClick={async () => {
+            await db.leaveDuoStreak(pair.id); setPair(null);
+          }}>Cancel</button>
+        </div>
+      </div>
+    );
+  }
+
+  // Active pair.
+  const isA = pair.user_a === duoUid;
+  const myDoneToday = isA ? pair.last_a === tk : pair.last_b === tk;
+  const partnerDoneToday = isA ? pair.last_b === tk : pair.last_a === tk;
+  const atRisk = !myDoneToday && !partnerDoneToday && (pair.streak || 0) > 0 &&
+    (pair.last_a === yesterday || pair.last_b === yesterday);
+
+  return (
+    <div className="card" style={cardStyle}>
+      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+        <div style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 10, background: "rgba(46,155,255,.12)", color: "#2E9BFF", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <Ic.users p={19} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontWeight: 700, fontSize: 14.5 }}>You + {partnerName || "your partner"}</div>
+          <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 2 }}>
+            {pair.mode === "both" ? "Both of you need to study today." : "Either of you studying today keeps it alive."}
+            {atRisk && <span style={{ color: "var(--amber)", fontWeight: 600 }}> Not done yet today.</span>}
+          </div>
+        </div>
+        <div style={{ textAlign: "right", flexShrink: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 4, color: "#2E9BFF", fontWeight: 750, fontSize: 17 }}>
+            <Ic.flame p={16} /> {pair.streak || 0}
+          </div>
+        </div>
+      </div>
+      <div style={{ display: "flex", gap: 16, marginTop: 12, fontSize: 12.5 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 5, color: myDoneToday ? "#2E9BFF" : "var(--text-3)" }}>
+          {myDoneToday ? <Ic.check p={13} /> : <Ic.x p={13} />} You {myDoneToday ? "studied today" : "haven't studied today"}
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 5, color: partnerDoneToday ? "#2E9BFF" : "var(--text-3)" }}>
+          {partnerDoneToday ? <Ic.check p={13} /> : <Ic.x p={13} />} {partnerName || "Partner"} {partnerDoneToday ? "studied today" : "hasn't yet"}
+        </div>
+      </div>
+      <button className="btn btn-sm" style={{ marginTop: 10, background: "none", color: "var(--text-3)", border: "none", padding: 0 }} onClick={async () => {
+        await db.leaveDuoStreak(pair.id); setPair(null);
+      }}>Leave duo streak</button>
+    </div>
+  );
+}
+
 function WeeklyRecapCard({ app }) {
   const wk = weekKey();
   const storageKey = "ascend_recap_dismissed_" + (app.supaUid || app.progress.name || "guest");
@@ -27650,9 +27910,9 @@ function HomeView({ app }) {
 
       <div className="card" style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{ position: "relative", flexShrink: 0 }}>
-          <Ring value={ringValue} size={58} stroke={6} color={doneToday ? "var(--good, #10B981)" : "var(--amber)"} />
+          <Ring value={ringValue} size={58} stroke={6} color={doneToday ? "#3B82F6" : "var(--amber)"} />
           <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            {doneToday ? <Ic.check p={20} style={{ color: "var(--good, #10B981)" }} /> : <span className="mono" style={{ fontSize: 13, fontWeight: 700 }}>{dailyProgress.answered}/{dailyProgress.total}</span>}
+            {doneToday ? <Ic.check p={20} style={{ color: "#3B82F6" }} /> : <span className="mono" style={{ fontSize: 13, fontWeight: 700 }}>{dailyProgress.answered}/{dailyProgress.total}</span>}
           </div>
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -27694,6 +27954,8 @@ function HomeView({ app }) {
           <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6 }}>Ranks</div>
         </button>
       </div>
+
+      <DuoStreakCard app={app} />
 
       <WeeklyRecapCard app={app} />
 
@@ -30730,6 +30992,12 @@ export default function App() {
       frozenDays: newFrozenDays,
       streakFreezes: freezesLeft,
     });
+
+    // Opt-in duo streak: mark today done on whichever side of the pair this
+    // student is, if they're in one. Silent no-op if they aren't paired -
+    // this never blocks or affects the personal streak above.
+    const duoUid = supaUid || ("local-" + String(progress.name).toLowerCase().replace(/[^a-z0-9]/g, ""));
+    db.markDuoDayDone(duoUid, tk).catch(() => {});
   };
 
   const finishQuiz = (cid, tid, correct, missed = [], total = 0) => {
