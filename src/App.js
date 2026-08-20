@@ -20807,6 +20807,15 @@ const db = {
             toSave.xp = existing.xp;
             toSave.adminXpLocked = true;
           }
+          // Same lock, for streak. Without this, a manual Supabase edit (or
+          // ascendAdminSetStreak) gets silently overwritten right back up on
+          // the student's next save, because the merge above always takes
+          // the max of incoming/existing/calendar-derived streak. Locking
+          // pins the corrected number until an admin explicitly unlocks it.
+          if (existing.adminStreakLocked) {
+            toSave.streak = existing.streak;
+            toSave.adminStreakLocked = true;
+          }
         }
       } catch {} // if this safety read fails, fall through and save the payload as-is (unchanged behaviour)
       const r1 = await supabase.from("progress").upsert({ id: uid, data: toSave, updated_at: new Date().toISOString() });
@@ -30426,6 +30435,77 @@ export default function App() {
         if (!row) { console.warn("No user found matching:", usernameOrId); return; }
         return await writeXp(row, (row.xp || 0) + delta);
       } catch (e) { console.error("ascendAdminAddXp failed:", e); }
+    };
+
+    // Same idea as the XP tools above, for streak. This is the one to use
+    // when a student's streak is wrong (e.g. desynced by a bug) - it writes
+    // both the source of truth (progress.data.streak) and the leaderboard
+    // mirror (profiles.streak), and LOCKS the value the same way XP locks,
+    // so it survives their next save instead of getting silently pulled
+    // back up by the "streak only moves via a real daily save" merge logic.
+    //
+    //   ascendAdminSetStreak("kwame", 5)     // set kwame's streak to exactly 5
+    //   ascendAdminAddStreak("kwame", -2)    // subtract 2 from kwame's streak
+    //   ascendAdminUnlockStreak("kwame")     // let normal play affect it again
+    // IMPORTANT: streak isn't just a stored number - every save recomputes
+    // it from the dailyDone calendar (see countConsecutiveStreak / the
+    // saveProgress merge), and always keeps whichever is higher. That's
+    // exactly why a bare "set streak = 9" done by hand in the Supabase
+    // table editor looked frozen: the calendar underneath still showed
+    // their real, much shorter run, so every future save just re-picked
+    // the stored 9 and never moved past it - normal daily activity kept
+    // computing a lower number that got discarded. The fix is to backfill
+    // the calendar itself so it agrees with the corrected number, not
+    // just overwrite the number - then ordinary daily play extends it
+    // forward exactly like it does for everyone else, no lock needed.
+    const writeStreak = async (row, newStreak) => {
+      const clamped = Math.max(0, Math.round(newStreak));
+      const { data: progRow } = await supabase.from("progress").select("data").eq("id", row.id).maybeSingle();
+      const existingData = (progRow && progRow.data) || {};
+      const existingDailyDone = { ...(existingData.dailyDone || {}) };
+      // Mark `clamped` consecutive days as done, ending today, so the
+      // calendar-derived streak matches the number you're setting.
+      const tk = todayKey();
+      const backfilled = { ...existingDailyDone, [tk]: true };
+      for (let i = 1; i < clamped; i++) backfilled[shift(-i)] = true;
+      const data = { ...existingData, streak: clamped, dailyDone: backfilled };
+      delete data.adminStreakLocked; // no longer needed - calendar now backs the number up
+      await supabase.from("progress").upsert({ id: row.id, data, updated_at: new Date().toISOString() });
+      await supabase.from("profiles").upsert({ id: row.id, name: row.name, xp: row.xp || 0, streak: clamped, updated_at: new Date().toISOString() });
+      console.log(`Set ${row.name}'s streak to ${clamped}${row.streak !== undefined ? ` (was ${row.streak})` : ""}, and backfilled their calendar to match, so it will keep growing normally from here - no lock, no need to redo this tomorrow. They'll see it next time they reload/reopen the app.`);
+      return clamped;
+    };
+
+    window.ascendAdminUnlockStreak = async (usernameOrId) => {
+      if (!usernameOrId) { console.warn('Usage: ascendAdminUnlockStreak("username")'); return; }
+      try {
+        const row = await findProfileRow(usernameOrId);
+        if (!row) { console.warn("No user found matching:", usernameOrId); return; }
+        const { data: progRow } = await supabase.from("progress").select("data").eq("id", row.id).maybeSingle();
+        if (!progRow || !progRow.data) { console.warn("No progress row found for:", usernameOrId); return; }
+        const data = { ...progRow.data };
+        delete data.adminStreakLocked;
+        await supabase.from("progress").upsert({ id: row.id, data, updated_at: new Date().toISOString() });
+        console.log(`${row.name}'s streak is unlocked - normal play will affect it again.`);
+      } catch (e) { console.error("ascendAdminUnlockStreak failed:", e); }
+    };
+
+    window.ascendAdminSetStreak = async (usernameOrId, newStreak) => {
+      if (!usernameOrId || typeof newStreak !== "number" || isNaN(newStreak)) { console.warn("Usage: ascendAdminSetStreak('username', 5)"); return; }
+      try {
+        const row = await findProfileRow(usernameOrId);
+        if (!row) { console.warn("No user found matching:", usernameOrId); return; }
+        return await writeStreak(row, newStreak);
+      } catch (e) { console.error("ascendAdminSetStreak failed:", e); }
+    };
+
+    window.ascendAdminAddStreak = async (usernameOrId, delta) => {
+      if (!usernameOrId || typeof delta !== "number" || isNaN(delta)) { console.warn("Usage: ascendAdminAddStreak('username', -2)"); return; }
+      try {
+        const row = await findProfileRow(usernameOrId);
+        if (!row) { console.warn("No user found matching:", usernameOrId); return; }
+        return await writeStreak(row, (row.streak || 0) + delta);
+      } catch (e) { console.error("ascendAdminAddStreak failed:", e); }
     };
   }, []);
 
