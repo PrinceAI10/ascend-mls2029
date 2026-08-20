@@ -24137,6 +24137,24 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
   }
 
   if (phase === "result" || phase === "done") {
+    // "Reward improvement" for AI practice/similar sets, matching the topic-
+    // quiz results screen: on the final chunk, compare this run's overall
+    // accuracy to the best full-run accuracy this student has ever had on
+    // this exact course+topic+mode combo (kept in localStorage, since these
+    // sets are freshly AI-generated every time and have no fixed identity
+    // to key a synced score against). Read the prior best BEFORE writing
+    // this run's result, so the comparison is against what came before it.
+    const bestKey = "ascend_ai_run_best:" + course.id + ":" + (topicName || "all") + ":" + (sampleQuestion ? "similar" : "solve");
+    let improvedBadge = null;
+    if (phase === "done") {
+      const finalPct = runAnswered ? Math.round((runCorrect / runAnswered) * 100) : 0;
+      let prevBestPct = null;
+      try { const raw = localStorage.getItem(bestKey); prevBestPct = raw ? parseInt(raw, 10) : null; } catch {}
+      if (prevBestPct === null || finalPct > prevBestPct) {
+        try { localStorage.setItem(bestKey, String(finalPct)); } catch {}
+      }
+      if (prevBestPct !== null && finalPct > prevBestPct) improvedBadge = prevBestPct;
+    }
     return (
       <div className="card" style={{ marginTop: 16, textAlign: "center", padding: "26px 20px" }}>
         <div className="eyebrow">{phase === "done" ? "Practice run complete" : `Set ${chunkNum + 1} of ${totalChunks} complete`}</div>
@@ -24144,6 +24162,12 @@ function ChunkedPracticeSet({ course, topicName, requireMastery, onExit, finishQ
         {phase === "done" && (
           <div style={{ color: "var(--text-2)", fontSize: 14, marginTop: 4 }}>
             {runCorrect} / {runAnswered} correct overall{runMissed.length ? ` - ${runMissed.length} question${runMissed.length === 1 ? "" : "s"} added to your Review tab` : ""}.
+          </div>
+        )}
+        {improvedBadge !== null && (
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 10, padding: "8px 16px", borderRadius: 12, background: "rgba(16,185,129,0.12)", border: "1px solid rgba(16,185,129,0.35)" }}>
+            <Ic.up p={16} style={{ color: "var(--good, #10B981)" }} />
+            <span style={{ color: "var(--good, #10B981)", fontWeight: 700, fontSize: 13.5 }}>Up from {improvedBadge}% - your best run yet{topicName ? " on this topic" : " on this course"}</span>
           </div>
         )}
         <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 16, flexWrap: "wrap" }}>
@@ -26729,6 +26753,14 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
   const setKey = `${paper.id}_${chunkStart}_${chunkEnd}_${mode}`;
   const doneFlagKey = "ascend_passco_done_" + setKey;
 
+  // Prior best score on this exact set, captured once at mount before this
+  // attempt's award() call overwrites app.progress.passcoScores[setKey] -
+  // same "reward improvement" pattern as the topic-quiz results screen.
+  const [prevBest] = useState(() => {
+    const prior = app && app.progress && app.progress.passcoScores && app.progress.passcoScores[setKey];
+    return prior && typeof prior.pct === "number" ? prior.pct : null;
+  });
+
   // Lets a student flag a specific Passco question whose stored correct
   // answer looks wrong (e.g. the explanation clearly supports a different
   // option than the one marked correct). Reports are deduped per-device per
@@ -26838,6 +26870,7 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
   // ===== EXAM REVIEW SCREEN: after submit, show every question marked =====
   if (mode === "exam" && submitted) {
     const pct = questions.length ? Math.round((correctCount / questions.length) * 100) : 0;
+    const improved = prevBest !== null && pct > prevBest;
     return (
       <div style={{ marginTop: 12 }}>
         <button className="back" onClick={onExit}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> Back to sets</button>
@@ -26845,6 +26878,12 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
           <div className="eyebrow">Your score</div>
           <div style={{ fontSize: 36, fontWeight: 800, color: pct >= 50 ? "var(--good)" : "var(--bad)", margin: "4px 0" }}>{pct}%</div>
           <div style={{ color: "var(--text-2)", fontSize: 14 }}>{correctCount} out of {questions.length} correct · {paper.courseCode} · Q{chunkStart + 1}-{chunkEnd}</div>
+          {improved && (
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 10, padding: "8px 16px", borderRadius: 12, background: "rgba(16,185,129,0.12)", border: "1px solid rgba(16,185,129,0.35)" }}>
+              <Ic.up p={16} style={{ color: "var(--good, #10B981)" }} />
+              <span style={{ color: "var(--good, #10B981)", fontWeight: 700, fontSize: 13.5 }}>Up from {prevBest}% - your best on this set yet</span>
+            </div>
+          )}
         </div>
         {questions.map((it, idx) => {
           const chosen = picked[idx];
