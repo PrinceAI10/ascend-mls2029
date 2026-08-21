@@ -23158,6 +23158,13 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
     // affected every step with a duplicated target, on every device, not
     // just steps 3+. Fix: scan all matches and use the first one that's
     // actually visible (has real layout, not display:none/hidden).
+    // A selector can technically match a hidden element (e.g. the xp/streak
+    // chips are display:none on phone via `.topbar-inner .chip{display:none}`
+    // at <=480px - there's just no room for them there). Returning that
+    // hidden element instead of null used to make measure() report a real
+    // but all-zero rect, drawing a broken zero-size box pinned at (0,0)
+    // instead of falling back to the same clean full-screen dim the welcome
+    // step already uses when it has no target at all.
     const findVisible = (selector) => {
       const els = document.querySelectorAll(selector);
       for (const el of els) {
@@ -23166,7 +23173,7 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
           if (r.width > 0 && r.height > 0) return el;
         }
       }
-      return els[0] || null;
+      return null;
     };
 
     const measure = () => {
@@ -23175,10 +23182,12 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
       const el = findVisible(s.selector);
       if (el) {
         const r = el.getBoundingClientRect();
-        setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
-      } else {
-        setRect(null);
+        if (r.width > 0 && r.height > 0) {
+          setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
+          return;
+        }
       }
+      setRect(null);
     };
 
     let raf = null;
@@ -23231,7 +23240,26 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
           el.scrollIntoView({ block: "center", behavior: "smooth" });
           waitForSettle(el);
         } else {
-          measure();
+          // Target not there yet - e.g. Home's data (progress, resume
+          // topic) hasn't finished loading on a slower phone, so the
+          // quick-actions row hasn't rendered at all at the 60ms mark. Keep
+          // polling on rAF for the element to actually appear instead of
+          // giving up after one failed lookup, up to the same attempt cap
+          // used for settle-detection.
+          const pollForMount = () => {
+            if (cancelled) return;
+            const found = findVisible(s.selector);
+            if (found) {
+              found.scrollIntoView({ block: "center", behavior: "smooth" });
+              waitForSettle(found);
+            } else if (pollForMount.attempts++ < 90) {
+              settleFrame = requestAnimationFrame(pollForMount);
+            } else {
+              measure();
+            }
+          };
+          pollForMount.attempts = 0;
+          settleFrame = requestAnimationFrame(pollForMount);
         }
       }, 60);
     } else {
