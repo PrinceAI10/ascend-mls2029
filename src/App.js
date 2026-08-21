@@ -23148,10 +23148,31 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
         : { width: window.innerWidth, height: window.innerHeight, offsetTop: 0, offsetLeft: 0 };
     };
 
+    // Some data-tour targets (the nav items) are rendered twice - once
+    // inside the desktop <aside className="side"> (which is unconditionally
+    // display:none per the stylesheet, but still present in the DOM) and
+    // once inside the mobile drawer. querySelector() always returns the
+    // FIRST match in document order, which is the hidden aside copy - a
+    // display:none element's getBoundingClientRect() is all zeros, which is
+    // exactly the "highlight collapses to the top-left corner" symptom. This
+    // affected every step with a duplicated target, on every device, not
+    // just steps 3+. Fix: scan all matches and use the first one that's
+    // actually visible (has real layout, not display:none/hidden).
+    const findVisible = (selector) => {
+      const els = document.querySelectorAll(selector);
+      for (const el of els) {
+        if (el.offsetParent !== null && el.getClientRects().length) {
+          const r = el.getBoundingClientRect();
+          if (r.width > 0 && r.height > 0) return el;
+        }
+      }
+      return els[0] || null;
+    };
+
     const measure = () => {
       if (cancelled) return;
       if (!s.selector) { setRect(null); return; }
-      const el = document.querySelector(s.selector);
+      const el = findVisible(s.selector);
       if (el) {
         const r = el.getBoundingClientRect();
         setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
@@ -23176,7 +23197,7 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
     if (s.selector) {
       scrollTimer = setTimeout(() => {
         if (cancelled) return;
-        const el = document.querySelector(s.selector);
+        const el = findVisible(s.selector);
         if (el) el.scrollIntoView({ block: "center", behavior: "smooth" });
         settleTimer = setTimeout(measure, 320);
       }, 60);
