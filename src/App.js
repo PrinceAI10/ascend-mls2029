@@ -28241,22 +28241,22 @@ function HomeView({ app }) {
         )}
       </div>
 
-      <div className="grid g4" data-tour="quick-actions" style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 8px" }} onClick={() => resumeTopic && resumeCourse ? app.go("topic", { courseId: resumeTopic.courseId, topicId: resumeTopic.topicIndex }) : app.go("courses")}>
+      <div className="grid g4" data-tour="quick-actions" style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: 10 }}>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0 }} onClick={() => resumeTopic && resumeCourse ? app.go("topic", { courseId: resumeTopic.courseId, topicId: resumeTopic.topicIndex }) : app.go("courses")}>
           <Ic.target p={20} />
-          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6 }}>Continue</div>
+          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word" }}>Continue</div>
         </button>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 8px" }} onClick={() => app.go("daily")}>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0 }} onClick={() => app.go("daily")}>
           <Ic.flame p={20} />
-          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6 }}>Daily question</div>
+          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word" }}>Daily question</div>
         </button>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 8px" }} onClick={() => app.go("papers")}>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0 }} onClick={() => app.go("papers")}>
           <Ic.file p={20} />
-          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6 }}>Passco</div>
+          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word" }}>Passco</div>
         </button>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 8px" }} onClick={() => app.go("ranks")}>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0 }} onClick={() => app.go("ranks")}>
           <Ic.trophy p={20} />
-          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6 }}>Ranks</div>
+          <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word" }}>Ranks</div>
         </button>
       </div>
 
