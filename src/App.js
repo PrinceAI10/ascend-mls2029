@@ -198,7 +198,7 @@ html, body {
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.view{animation:none}}
 .mobile-sidebar-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.5);display:flex;align-items:flex-start}
-.mobile-sidebar{width:280px;max-width:80vw;height:100vh;background:var(--bg-2);
+.mobile-sidebar{width:280px;max-width:80vw;height:100vh;height:100dvh;background:var(--bg-2);
   border-right:1px solid var(--line);display:flex;flex-direction:column;padding:8px 0;overflow-y:auto}
 .mobile-sidebar .navi{padding:12px 18px;border-radius:0;width:100%;text-align:left;
   background:transparent;color:var(--text-2);font-size:15px;cursor:pointer;display:flex;align-items:center;gap:12px}
@@ -23190,19 +23190,52 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
       raf = requestAnimationFrame(measure);
     };
 
-    // Scroll the target into view exactly once per step, then measure after
-    // the smooth-scroll animation has had time to settle.
+    // Scroll the target into view exactly once per step, then wait for the
+    // scroll to actually finish before measuring. A fixed timeout here was
+    // tuned for desktop, where the sidebar is always fully visible and
+    // nothing scrolls - so it's a no-op there and looks "perfect". On
+    // phone/PWA, scrollIntoView runs inside the drawer's own small
+    // overflow-y:auto box, and smooth-scroll duration varies with device
+    // speed; a fixed 320ms can fire before the scroll truly stops, catching
+    // the target mid-motion. Poll rAF-to-rAF instead: once the target's
+    // rect stops moving between two consecutive frames, it's actually
+    // settled, regardless of how long that took on that specific device.
     let scrollTimer = null;
-    let settleTimer = null;
+    let settleFrame = null;
+    const waitForSettle = (el) => {
+      let last = null;
+      let stableFrames = 0;
+      const tick = () => {
+        if (cancelled) return;
+        const r = el.getBoundingClientRect();
+        const same = last && Math.abs(r.top - last.top) < 0.5 && Math.abs(r.left - last.left) < 0.5;
+        stableFrames = same ? stableFrames + 1 : 0;
+        last = r;
+        // Two consecutive stable frames = actually stopped, not just
+        // between animation ticks. Cap the wait so a target that never
+        // fully settles (e.g. continuous layout shift) still measures.
+        if (stableFrames >= 2 || tick.attempts++ > 90) {
+          measure();
+        } else {
+          settleFrame = requestAnimationFrame(tick);
+        }
+      };
+      tick.attempts = 0;
+      settleFrame = requestAnimationFrame(tick);
+    };
     if (s.selector) {
       scrollTimer = setTimeout(() => {
         if (cancelled) return;
         const el = findVisible(s.selector);
-        if (el) el.scrollIntoView({ block: "center", behavior: "smooth" });
-        settleTimer = setTimeout(measure, 320);
+        if (el) {
+          el.scrollIntoView({ block: "center", behavior: "smooth" });
+          waitForSettle(el);
+        } else {
+          measure();
+        }
       }, 60);
     } else {
-      settleTimer = setTimeout(measure, 60);
+      settleFrame = requestAnimationFrame(measure);
     }
 
     window.addEventListener("resize", scheduleMeasure);
@@ -23214,8 +23247,8 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
     return () => {
       cancelled = true;
       if (raf) cancelAnimationFrame(raf);
+      if (settleFrame) cancelAnimationFrame(settleFrame);
       clearTimeout(scrollTimer);
-      clearTimeout(settleTimer);
       window.removeEventListener("resize", scheduleMeasure);
       window.removeEventListener("scroll", scheduleMeasure, true);
       if (window.visualViewport) {
