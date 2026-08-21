@@ -30333,6 +30333,8 @@ export default function App() {
     return () => clearTimeout(t);
   }, [achNotif]);
   const [auth, setAuth] = useState(null);
+  const authRef = useRef(null);
+  useEffect(() => { authRef.current = auth; }, [auth]);
   const [supaUid, setSupaUid] = useState(null);
   const supaUidRef = useRef(null);
   useEffect(() => { supaUidRef.current = supaUid; }, [supaUid]);
@@ -30521,6 +30523,77 @@ export default function App() {
   // ============================================================
   // 3. PERSIST (AFTER helper functions)
   // ============================================================
+  // ============================================================
+  // CROSS-DEVICE SYNC: pull whatever changed on another device.
+  //
+  // persist() above only ever WRITES to the cloud. Nothing was pulling
+  // fresh cloud data back in once a session was already running - so if
+  // you did the daily quiz on a laptop, that write reached the cloud fine,
+  // but a phone that was already logged in (or that just silently resumed
+  // its session, e.g. an installed PWA coming back to the foreground)
+  // never re-fetched, and just sat on its own stale local state forever
+  // until you manually logged out and back in. This is the fix: pull the
+  // latest cloud progress and UNION it into whatever's on this device.
+  //
+  // It's deliberately a union merge, never a plain overwrite - that way,
+  // pulling can only ever ADD what happened elsewhere, and never erase
+  // something this device did that just hasn't reached the cloud yet
+  // (e.g. answering the daily question right as this pull fires).
+  const pullCloudProgress = async () => {
+    try {
+      const uid = supaUidRef.current || (authRef.current && !supaUidRef.current ? localSynthId(authRef.current.username) : null);
+      if (!uid) return;
+      const cloud = await db.loadProgress(uid);
+      if (!cloud) return;
+      let changed = false;
+      setProgress((cur) => {
+        if (!cur) return cur;
+        const merged = {
+          ...cur,
+          xp: Math.max(cur.xp || 0, cloud.xp || 0),
+          streak: Math.max(cur.streak || 0, cloud.streak || 0),
+          dailyDone: { ...(cloud.dailyDone || {}), ...(cur.dailyDone || {}) },
+          completed: { ...(cloud.completed || {}), ...(cur.completed || {}) },
+          scores: { ...(cloud.scores || {}), ...(cur.scores || {}) },
+          passcoScores: { ...(cloud.passcoScores || {}), ...(cur.passcoScores || {}) },
+          achievements: Array.from(new Set([...(cur.achievements || []), ...(cloud.achievements || [])])),
+          bookmarks: Array.from(new Set([...(cur.bookmarks || []), ...(cloud.bookmarks || [])])),
+          streakFreezes: Math.max(cur.streakFreezes || 0, cloud.streakFreezes || 0),
+          frozenDays: { ...(cloud.frozenDays || {}), ...(cur.frozenDays || {}) },
+          passcoCompleted: Math.max(cur.passcoCompleted || 0, cloud.passcoCompleted || 0),
+          readAnn: Array.from(new Set([...(cur.readAnn || []), ...(cloud.readAnn || [])])),
+          review: Array.isArray(cur.review) && cur.review.length >= (cloud.review || []).length ? cur.review : (cloud.review || cur.review),
+        };
+        if (JSON.stringify(merged) !== JSON.stringify(cur)) { changed = true; return merged; }
+        return cur;
+      });
+      // If the union produced something new, write it straight back so this
+      // device's cloud row (and the next device that pulls) sees the full
+      // picture too - otherwise two devices could keep bouncing partial
+      // updates back and forth instead of converging.
+      if (changed) {
+        setTimeout(() => { if (progressRef.current) db.saveProgress(uid, progressRef.current); }, 50);
+      }
+    } catch {}
+  };
+
+  // Pull on every resume (tab refocus / PWA foregrounded - the exact
+  // scenario in the bug report: phone app left open, laptop does the daily
+  // quiz, phone never saw it) and on a slow background interval so two
+  // devices open side-by-side at the same time still converge without
+  // needing a resume event at all.
+  useEffect(() => {
+    const onVis = () => { if (document.visibilityState === "visible") pullCloudProgress(); };
+    document.addEventListener("visibilitychange", onVis);
+    window.addEventListener("focus", onVis);
+    const interval = setInterval(pullCloudProgress, 90 * 1000);
+    return () => {
+      document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("focus", onVis);
+      clearInterval(interval);
+    };
+  }, []);
+
   const persist = (pIn) => {
     // Fold any newly-unlocked achievements into the SAME object being saved,
     // rather than tracking them in separate, never-persisted state (see
@@ -31000,8 +31073,14 @@ export default function App() {
         const acct = accounts[session];
         if (acct) {
           setAuth(acct);
-          const p = await store.get(progKey(acct.username));
-          setProgress(p ? { ...freshProgress(acct.username), ...p, name: acct.username } : freshProgress(acct.username));
+          // Merge local + cloud, same as an explicit login (see
+          // mergeLocalCloudProgress) - a silently-restored session (the
+          // normal case every time the app/PWA reopens) previously loaded
+          // ONLY this device's local storage and never checked the cloud,
+          // which is exactly why a phone that had been logged in for a
+          // while never picked up progress pushed from a laptop.
+          const { finalProgress } = await mergeLocalCloudProgress(acct.username);
+          setProgress(finalProgress);
           const savedLastTopic = (await store.get(lastTopicKey(acct.username))) || (await store.get(lastTopicKey("anon")));
           if (savedLastTopic) setLastTopic((prev) => prev || savedLastTopic);
         }
@@ -31110,21 +31189,26 @@ export default function App() {
     db.saveProgress(uid, merged);
   };
 
-  const handleAuthed = async (acct) => {
-    setAuth(acct);
-    // Merge local + cloud progress, same pattern as adoptSupabaseUser, so
-    // progress follows this account across devices/cleared storage too.
-    const localP = await store.get(progKey(acct.username));
-    const cloudP = await db.loadProgress(localSynthId(acct.username));
+  // Shared by handleAuthed (fresh login) and the silent mount-restore path
+  // below. Previously, reopening the app on a device that already had a
+  // saved local session skipped this merge entirely and just loaded
+  // whatever was in that device's own local storage - so a phone that had
+  // been logged in for a while would never pick up progress a laptop had
+  // pushed to the cloud in the meantime. Both paths now go through the
+  // exact same union-merge logic, so a silent reopen syncs exactly as
+  // correctly as an explicit login does.
+  const mergeLocalCloudProgress = async (username) => {
+    const localP = await store.get(progKey(username));
+    const cloudP = await db.loadProgress(localSynthId(username));
     const isNewAccount = !localP && !cloudP;
-    const base = isNewAccount ? starterProgress(acct.username) : freshProgress(acct.username);
+    const base = isNewAccount ? starterProgress(username) : freshProgress(username);
     let finalProgress;
     if (localP || cloudP) {
       finalProgress = {
         ...base,
         ...(cloudP || {}),
         ...(localP || {}),
-        name: acct.username,
+        name: username,
         xp: Math.max((cloudP && cloudP.xp) || 0, (localP && localP.xp) || 0),
         streak: Math.max((cloudP && cloudP.streak) || 0, (localP && localP.streak) || 0),
         dailyDone: { ...((cloudP && cloudP.dailyDone) || {}), ...((localP && localP.dailyDone) || {}) },
@@ -31143,8 +31227,16 @@ export default function App() {
     } else {
       finalProgress = base;
     }
+    return { finalProgress, isNewAccount };
+  };
+
+  const handleAuthed = async (acct) => {
+    setAuth(acct);
+    // Merge local + cloud progress, same pattern as adoptSupabaseUser, so
+    // progress follows this account across devices/cleared storage too.
+    const { finalProgress, isNewAccount } = await mergeLocalCloudProgress(acct.username);
     // Genuinely new account: no saved progress locally or in the cloud.
-    if (!localP && !cloudP) setShowWelcomeTour(true);
+    if (isNewAccount) setShowWelcomeTour(true);
     setXpChange(finalProgress.xp || 0);
     setProgress(finalProgress);
     const savedLastTopic = (await store.get(lastTopicKey(acct.username))) || (await store.get(lastTopicKey("anon")));
