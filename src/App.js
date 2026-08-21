@@ -21060,6 +21060,13 @@ const db = {
       const clean = String(code).trim().toUpperCase();
       const { data: row } = await supabase.from("duo_streaks").select("*").eq("code", clean).maybeSingle();
       if (!row) return { error: "not_found" };
+      // Distinct from "already_in" below - this is specifically "that's
+      // the code YOU generated", which needs its own message. It's the
+      // case that was actually being hit during self-testing: create a
+      // pair, then try to join the very code it just gave you with the
+      // same account - which can never work, since a pair needs two
+      // different accounts.
+      if (row.user_a === uid && !row.user_b) return { error: "own_code" };
       if (row.user_a === uid || row.user_b === uid) return { error: "already_in" };
       if (row.user_b) return { error: "full" };
       const { data, error } = await supabase.from("duo_streaks").update({ user_b: uid }).eq("id", row.id).select().maybeSingle();
@@ -21070,9 +21077,16 @@ const db = {
   // Find the pair this uid belongs to (as user_a or user_b), if any.
   async fetchMyDuoStreak(uid) {
     try {
-      const { data: asA } = await supabase.from("duo_streaks").select("*").eq("user_a", uid).is("user_b", null).maybeSingle();
-      if (asA) return asA; // pending pair, waiting for a partner
-      const { data: rows } = await supabase.from("duo_streaks").select("*").or(`user_a.eq.${uid},user_b.eq.${uid}`).not("user_b", "is", null).limit(1);
+      // .limit(1) here rather than .maybeSingle() deliberately: maybeSingle
+      // THROWS if more than one row matches, and a double-tapped "Create"
+      // (or leftover test rows) can leave more than one pending pair for
+      // the same account - that throw was getting silently swallowed by
+      // the catch below, making the app act as if the account had no pair
+      // at all, permanently, until someone cleaned it up by hand. Taking
+      // the most recent pending row instead is resilient to that.
+      const { data: asARows } = await supabase.from("duo_streaks").select("*").eq("user_a", uid).is("user_b", null).order("created_at", { ascending: false }).limit(1);
+      if (asARows && asARows[0]) return asARows[0]; // pending pair, waiting for a partner
+      const { data: rows } = await supabase.from("duo_streaks").select("*").or(`user_a.eq.${uid},user_b.eq.${uid}`).not("user_b", "is", null).order("created_at", { ascending: false }).limit(1);
       return (rows && rows[0]) || null;
     } catch { return null; }
   },
@@ -27870,7 +27884,8 @@ function DuoStreakCard({ app }) {
                 const res = await db.joinDuoStreak(duoUid, joinCode);
                 setBusy(false);
                 if (res && res.data) { setPair(res.data); setMode("choose"); }
-                else if (res && res.error === "not_found") setErr("No duo streak found with that code.");
+                else if (res && res.error === "own_code") setErr("That's the code you created - you can't join your own duo streak. Share it with a study partner instead, and they'll enter it on their own account.");
+                else if (res && res.error === "not_found") setErr("No active duo streak found with that code. It may be mistyped, or it was cancelled after being created.");
                 else if (res && res.error === "already_in") setErr("You're already part of this one.");
                 else if (res && res.error === "full") setErr("That pair already has two people.");
                 else setErr("Couldn't join - try again.");
