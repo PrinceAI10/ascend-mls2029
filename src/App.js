@@ -23202,7 +23202,7 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
         window.visualViewport.removeEventListener("scroll", scheduleMeasure);
       }
     };
-  }, [step]);
+  }, [step, menuOpen]);
 
   const finish = () => {
     if (wasMenuOpenedByTour.current) { setMenuOpen(false); wasMenuOpenedByTour.current = false; }
