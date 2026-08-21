@@ -29060,14 +29060,15 @@ function AuthScreen({ onAuthed }) {
   );
 }
 
-// Hand-maintained announcements list, newest first. Nothing here expires
-// automatically - when shipping a new "what's new" entry, add it to the top
-// and remove (or archive elsewhere) any entries that are no longer relevant
-// (e.g. a past deadline once it's passed), so this doesn't grow forever.
+// Hand-maintained announcements list, newest first. For "Update" (what's
+// new / version) entries specifically: REPLACE the previous one instead of
+// adding a new one alongside it - there should only ever be ONE "what's
+// new" entry live at a time, not a growing stack of every past version.
+// Other tags (Deadline, Feature, Welcome) aren't versioned the same way,
+// so those are just added/removed as they become relevant/stale.
 // MAX_VISIBLE_ANNOUNCEMENTS below is just a safety cap on what's rendered.
 const ANNOUNCEMENTS = [
   { id: "wn_2026_08_21", tag: "Update", title: "What's new in v2.6", body: "Duo streaks - pair up with a study partner and keep a shared streak alive together (fully optional). Plus: the home ring now matches ASCEND blue, a streak bug fix so corrected streaks actually keep growing, and \"beat your best\" score badges now show up on Passco and AI practice sets too, not just topic quizzes." },
-  { id: "wn_2026_08_18b", tag: "Update", title: "What's new in v2.5", body: "Biochemistry Practicals tab, a Next Exam card on the home screen, a report-wrong-answer button on Passco questions, a smoother start tour, and an exam countdown that now tracks the full timetable." },
   { id: "a3", tag: "Deadline", title: "AI 150 Course Completion", body: "All students are reminded to complete the AI 150: Fundamentals of Responsible AI for ALL course on or before Saturday, 15th August, 2026. This is a mandatory requirement for all students. Please ensure you have finished all modules and assessments before the deadline." },
   { id: "a2", tag: "Feature", title: "CWA planner, themes and resources", body: "Plan your target CWA under the CWA tab, switch light, dark, or system (auto day/night) with the toggle up top, and turn your own notes into lessons under Resources." },
   { id: "a1", tag: "Welcome", title: "Welcome to ASCEND", body: "The climb to First Class, together, built by Prince, Ansah, Jeffery and Dacosta. Do the daily question every day to build your streak and rise through the ranks." }
@@ -31800,6 +31801,29 @@ export default function App() {
   // Opening the panel no longer wipes the badge - the student marks items read
   // themselves (like an inbox), so the count reflects what they've actually seen.
   const openNotif = () => { setNotifOpen(true); };
+
+  // WhatsApp-style unread nudge: proactively surface the newest unread
+  // "Update" announcement as a small toast (not just a passive badge on the
+  // bell), so a student is actually prompted to go read it rather than
+  // having to notice the bell on their own. Shows once per app session,
+  // auto-dismisses after a few seconds, and tapping it opens the full
+  // notification panel with that update marked read.
+  const [updateToast, setUpdateToast] = useState(null);
+  useEffect(() => {
+    if (!progress || !loaded) return;
+    try { if (sessionStorage.getItem("ascend_update_toast_shown")) return; } catch {}
+    const latestUpdate = VISIBLE_ANNOUNCEMENTS.find((a) => a.tag === "Update" && !isAnnRead(a.id));
+    if (!latestUpdate) return;
+    try { sessionStorage.setItem("ascend_update_toast_shown", "true"); } catch {}
+    const showTimer = setTimeout(() => setUpdateToast(latestUpdate), 900);
+    return () => clearTimeout(showTimer);
+  }, [progress && progress.name, loaded]);
+  useEffect(() => {
+    if (!updateToast) return;
+    const t = setTimeout(() => setUpdateToast(null), 7000);
+    return () => clearTimeout(t);
+  }, [updateToast]);
+
   const showRate = !!auth && (progress?.xp || 0) >= 30 && !progress?.rated && !progress?.ratePromptSeen && !rateDismissed && route.view !== "feedback";
 
   if (!loaded) return (
@@ -31944,9 +31968,39 @@ export default function App() {
     <div className={rootCls}>
       <style>{CSS}</style>
       <style>{`@keyframes rankUpPop{0%{transform:scale(.75);opacity:0}60%{transform:scale(1.04);opacity:1}100%{transform:scale(1)}}`}</style>
+      <style>{`@keyframes updateToastIn{0%{transform:translateY(-16px);opacity:0}100%{transform:translateY(0);opacity:1}}`}</style>
       {resumeOverlay}
       {rankUpOverlay}
       {achOverlay}
+      {updateToast && (
+        <div
+          onClick={() => { markAnnRead(updateToast.id); setUpdateToast(null); setNotifOpen(true); }}
+          style={{
+            position: "fixed", top: "calc(env(safe-area-inset-top) + 14px)", right: 14, left: 14, maxWidth: 380, margin: "0 auto",
+            zIndex: 9500, cursor: "pointer",
+            background: "var(--bg-2)", border: "1px solid var(--amber)", borderRadius: 14,
+            padding: "12px 14px", display: "flex", alignItems: "flex-start", gap: 10,
+            boxShadow: "0 12px 32px rgba(0,0,0,0.35)",
+            animation: "updateToastIn .35s cubic-bezier(.2,1.4,.4,1)",
+          }}
+        >
+          <div style={{ flexShrink: 0, width: 34, height: 34, borderRadius: "50%", background: "var(--amber-dim)", color: "var(--amber)", display: "flex", alignItems: "center", justifyContent: "center", marginTop: 1 }}>
+            <Ic.bell p={16} />
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span className="mono" style={{ fontSize: 10.5, color: "var(--amber-2)", fontWeight: 700 }}>{updateToast.tag.toUpperCase()}</span>
+              <span className="unread-dot" />
+            </div>
+            <div style={{ fontWeight: 700, fontSize: 14, marginTop: 2 }}>{updateToast.title}</div>
+            <div style={{ color: "var(--text-2)", fontSize: 12.5, marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>{updateToast.body}</div>
+          </div>
+          <button
+            onClick={(e) => { e.stopPropagation(); setUpdateToast(null); }}
+            style={{ flexShrink: 0, background: "none", border: "none", color: "var(--text-3)", cursor: "pointer", padding: 2 }}
+          ><Ic.x p={13} /></button>
+        </div>
+      )}
       {showWelcomeTour && <SpotlightTour onDone={() => setShowWelcomeTour(false)} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />}
       
       <div className="shell">
