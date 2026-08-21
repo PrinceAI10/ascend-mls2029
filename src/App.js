@@ -571,7 +571,7 @@ const TOPICS = {
     "Facilitated Diffusion of Glucose", "Active Transport of Sodium and Potassium Ions", "Resting Membrane Potential",
     "Refractory Period of an Action Potential", "Effects of Stimulus Frequency on Skeletal Muscle Contraction",
     "Skeletal Muscle Length-Tension Relationship",
-    "Measurement of Blood Glucose (Glycated Haemoglobin)", "Urinalysis"
+    "Measurement of Blood Glucose (Glycated Haemoglobin)", "Urinalysis", "Blood Typing (ABO and Rh)"
   ]
 };
 
@@ -18167,6 +18167,186 @@ If those came cleanly, you understand why urinalysis remains one of the fastest,
   ],
 };
 
+/* --------------------------- phyp:8 (new) --------------------------- */
+const T_PHYP_BLOODTYPING = {
+  courseId: "phyp",
+  topicIndex: 8,
+  title: "Blood Typing (ABO and Rh)",
+  minutes: 20,
+  note: [
+    { q: "Why blood typing exists at all.",
+      body: `You have now covered transport, membrane, and muscle physiology, and closed out the renal side of things with urinalysis. Blood typing takes you into the immunohaematology corner of practicals - a skill that is not just academic, since a wrongly typed unit of blood can kill a patient within minutes.
+
+My Socratic question: red blood cells from two different people can look identical under a microscope, yet mixing the wrong two bloods together can be fatal. If they look the same, what is actually different between them?
+
+The answer is that red blood cells carry inherited surface molecules called antigens, and different people carry different combinations of these antigens. The immune system recognises antigens it does not carry as foreign, and plasma naturally contains antibodies against the antigens a person lacks - so mixing incompatible blood triggers an immune attack, even though nothing about the cells looks different visually.
+
+Crucial insight: blood typing exists because red blood cell surface antigens differ between individuals, and the immune system reacts to antigens it does not recognise as self - so knowing a person's blood type is what allows transfusion to be done safely rather than by chance.` },
+
+    { q: "The ABO system: antigens and antibodies.",
+      body: `The ABO system is the most clinically important blood group system, built on two antigens - A and B - that may or may not be present on the red cell surface.
+
+A person with only the A antigen is type A; only the B antigen, type B; both antigens, type AB; neither antigen, type O. Crucially, ABO carries a rule found in almost no other blood group system: plasma always contains antibodies against whichever ABO antigen is absent from that person's own cells, without ever having been exposed to foreign blood first - these are called naturally occurring antibodies. So type A plasma contains anti-B, type B plasma contains anti-A, type O plasma contains both anti-A and anti-B, and type AB plasma contains neither.
+
+My Socratic question: why is it dangerous to give type A blood to a type B patient, given that the patient has never been exposed to type A blood before?
+
+The answer is that the type B patient's plasma already contains anti-A antibodies naturally, without any prior exposure - so the moment type A red cells enter their circulation, the pre-existing anti-A antibodies bind the A antigen on the transfused cells and trigger an immediate immune attack (agglutination and haemolysis), even on a first-ever exposure.
+
+Crucial insight: the ABO system is defined by which of the A and B antigens are present on red cells, and uniquely, the corresponding antibody against whichever antigen is absent is always naturally present in the plasma - which is exactly why ABO mismatches cause severe reactions immediately, even without prior sensitisation.` },
+
+    { q: "The Rh system: the D antigen.",
+      body: `Alongside ABO, the Rh system is the second blood group routinely tested in practicals, built around a group of antigens of which D is by far the most clinically significant.
+
+A person who carries the D antigen on their red cells is Rh-positive; a person who lacks it is Rh-negative. Combined with ABO typing, this gives the familiar eight blood types you see on donor cards: A+, A-, B+, B-, AB+, AB-, O+, O-. Unlike ABO, Rh antibodies are NOT naturally occurring - an Rh-negative person only develops anti-D antibodies after being exposed to Rh-positive blood, such as through a mismatched transfusion or, importantly, through pregnancy with an Rh-positive fetus.
+
+My Socratic question: an Rh-negative person receives Rh-positive blood for the first time. Based on what you just learned about naturally occurring versus induced antibodies, would you expect an immediate severe reaction, the way you would with an ABO mismatch?
+
+The answer is no - because Rh antibodies are not naturally occurring, the first exposure to Rh-positive blood does not usually cause an immediate reaction. Instead, it sensitises the Rh-negative person, causing them to produce anti-D antibodies over the following weeks. It is a SECOND exposure to Rh-positive blood (or a second Rh-incompatible pregnancy) that triggers a dangerous, faster reaction, because anti-D is now already present and ready to respond.
+
+Crucial insight: Rh typing identifies whether the D antigen is present (Rh-positive) or absent (Rh-negative); unlike ABO, anti-D antibodies are only produced after exposure to Rh-positive blood, which is why Rh incompatibility becomes dangerous mainly on repeated exposure, not the first one.` },
+
+    { q: "Universal donors and recipients - and why the label is incomplete.",
+      body: `The terms \"universal donor\" and \"universal recipient\" get thrown around loosely, but they only hold under specific conditions worth being precise about.
+
+O-negative is often called the universal donor because O red cells carry neither A nor B antigen, and being Rh-negative means they also lack the D antigen - so, in an emergency, O-negative red cells are least likely to trigger an immediate ABO or Rh reaction in a recipient of unknown blood type. AB-positive is called the universal recipient because AB plasma contains neither anti-A nor anti-B antibodies, and being Rh-positive means an AB-positive person will not react to Rh-positive donor cells either.
+
+My Socratic question: if O-negative blood is given as whole blood (not just red cells) to a type A patient, why might this still cause a problem, even though the red cells themselves are \"universal\"?
+
+The answer is that whole blood also contains the donor's plasma, and O-type plasma naturally contains BOTH anti-A and anti-B antibodies. Given in large volume, that donor plasma can attack the recipient's own A or B antigens - so \"universal donor\" status strictly applies to O-negative red cells (with plasma removed), not necessarily to whole blood.
+
+Crucial insight: O-negative is the universal RED CELL donor and AB-positive is the universal PLASMA recipient (and vice versa for plasma donation/red cell reception) because of which antigens and antibodies are present or absent - but these labels describe red cells and plasma differently, and mixing up the two can still cause a reaction.` },
+
+    { q: "Cross-matching: why typing alone is not enough before a transfusion.",
+      body: `Knowing a patient's and a donor's ABO/Rh type is the first step, but in practice, an additional safety check is performed before any unit of blood is actually transfused.
+
+Cross-matching mixes the recipient's plasma with the donor's red cells (and sometimes the reverse) and observes for agglutination, confirming compatibility directly rather than relying only on the stated blood types. This catches problems that ABO/Rh typing alone would miss - such as antibodies against minor blood group antigens outside the ABO/Rh systems, which a person can develop after previous transfusions or pregnancies.
+
+My Socratic question: two patients are both confirmed type O-positive by typing. Why might a cross-match between them still show incompatibility?
+
+The answer is that ABO and Rh are only two of many blood group systems on the red cell surface (others include Kell, Duffy, Kidd, and more). A patient can be O-positive and yet have developed antibodies against a completely different, minor antigen from a prior transfusion or pregnancy - a cross-match directly tests for a reaction against the actual donor cells, catching this even when the ABO/Rh type matches perfectly.
+
+Crucial insight: cross-matching is a direct compatibility test performed in addition to ABO/Rh typing, because typing alone only accounts for the ABO and Rh systems and cannot detect antibodies against other minor blood group antigens that could still cause a transfusion reaction.` },
+
+    { q: "Forward typing vs reverse typing.",
+      body: `In the laboratory, ABO typing is actually performed two ways that should always agree - and when they do not, that mismatch itself is diagnostically important.
+
+Forward (cell) typing mixes the patient's red cells with known anti-A and anti-B antisera and observes for agglutination - this tells you which antigens are present on the cells. Reverse (serum) typing mixes the patient's own plasma/serum with known A cells and known B cells and observes for agglutination - this tells you which antibodies are present in the plasma, which should match the ABO type predicted by forward typing (since a type A person should have anti-B, a type B person anti-A, and so on).
+
+My Socratic question: a sample's forward typing suggests type A (agglutinates with anti-A only), but reverse typing shows agglutination with BOTH A cells and B cells - what should you suspect?
+
+The answer is that this is a discrepancy, since a true type A person's plasma should contain anti-B only, not anti-A. Possible explanations include a weak or subgroup antigen not fully detected in forward typing, an unexpected antibody present in the plasma, or a technical/sample error - any such mismatch must be investigated and resolved before the type is finalised, never simply reported as-is.
+
+Crucial insight: forward typing (testing antigens on cells) and reverse typing (testing antibodies in plasma) should always agree for a given ABO type, and performing both is a built-in cross-check - a discrepancy between them is a red flag requiring further investigation, not something to ignore.` },
+
+    { q: "The slide/tube agglutination technique, practically.",
+      body: `The actual bench technique for ABO/Rh typing is straightforward in principle, which is exactly why understanding what a positive versus negative result LOOKS like matters so much.
+
+A drop of the patient's blood is mixed separately with anti-A serum, anti-B serum, and anti-D (anti-Rh) serum, either on a slide or in test tubes. Agglutination - visible clumping of red cells - is a POSITIVE result, meaning the corresponding antigen is present on the cells (the antiserum's antibody has bound and cross-linked the antigen across multiple cells). No agglutination (the mixture stays smooth and uniform) is a NEGATIVE result, meaning that antigen is absent.
+
+My Socratic question: a sample agglutinates with anti-A and anti-D, but not with anti-B. What is this person's full blood type?
+
+The answer is A-positive (A+): agglutination with anti-A means the A antigen is present, no agglutination with anti-B means the B antigen is absent (so ABO type is A), and agglutination with anti-D means the D antigen is present (so Rh-positive) - together giving A-positive.
+
+Crucial insight: in slide/tube typing, agglutination = antigen present (positive), no agglutination = antigen absent (negative); reading all three antisera (anti-A, anti-B, anti-D) together is what lets you assign the complete ABO and Rh type in one test.` },
+
+    { q: "Sources of error in blood typing.",
+      body: `Because agglutination is read visually and the stakes of a wrong blood type are so high, awareness of what can produce a false result is essential laboratory practice.
+
+Common sources of error include: weak or subgroup antigens (some A or B subgroups react weakly and can be misread as negative if the reaction is not given enough time or is read too quickly); rouleaux formation (red cells stacking like coins, which can be mistaken for true agglutination, especially in patients with abnormal plasma proteins); poor antisera quality or expired reagents giving false negatives; incorrect cell-to-serum ratio (too much or too little of either reagent) weakening or masking a true reaction; and failure to include appropriate controls, which would otherwise flag an invalid run.
+
+My Socratic question: a technologist reports a patient as Rh-negative, but a repeat test on a fresh sample later shows Rh-positive. Besides a true change in the patient (which does not happen for Rh type), what is the most likely explanation?
+
+The answer is a technical error on the first test - most plausibly a weak D reaction that was under-read as negative, expired or weak anti-D antiserum, or an incorrect cell-to-serum ratio that masked a true positive reaction. Blood type does not change over a person's lifetime, so a discrepancy between two tests on the same patient always points to a testing error, not a biological change, and must be resolved by repeat testing with fresh reagents and controls.
+
+Crucial insight: agglutination-based typing is vulnerable to weak antigen reactions, rouleaux mimicking agglutination, reagent quality, and technique errors - which is why controls, fresh reagents, and careful timing are essential, and why a genuine discrepancy between two tests on the same person always points back to testing error rather than a true change in blood type.` },
+
+    { q: "Clinical significance: transfusion reactions and haemolytic disease of the newborn.",
+      body: `Blood typing is not an academic exercise - it exists to prevent two specific, serious clinical events that a laboratory scientist must understand the mechanism of.
+
+An acute haemolytic transfusion reaction occurs when ABO-incompatible blood is transfused: the recipient's pre-existing naturally occurring antibodies immediately attack the donor's red cells, causing rapid destruction (haemolysis), which can trigger fever, shock, kidney failure, and death within minutes to hours - this is why ABO mismatch is treated as a medical emergency. Haemolytic disease of the newborn (HDN) occurs in Rh incompatibility: an Rh-negative mother carrying an Rh-positive fetus can be sensitised (usually at delivery, when fetal blood mixes with maternal blood) and produce anti-D antibodies; in a SUBSEQUENT Rh-positive pregnancy, these maternal anti-D antibodies can cross the placenta and destroy the fetal red cells, causing severe anaemia in the newborn.
+
+My Socratic question: why is HDN typically a problem for a mother's second (or later) Rh-incompatible pregnancy rather than her first?
+
+The answer is the same naturally-occurring-versus-induced logic from Rh typing: the mother is not usually sensitised until fetal blood mixes with hers, most often around delivery of the FIRST Rh-positive baby - so her first pregnancy is usually unaffected, but by the time she carries a second Rh-positive fetus, her body already has anti-D antibodies ready to cross the placenta and attack.
+
+Crucial insight: ABO mismatch causes an immediate, severe transfusion reaction because the antibodies are already present; Rh incompatibility in pregnancy (HDN) instead causes a delayed threat that typically emerges in a SECOND or later Rh-incompatible pregnancy, once the mother has been sensitised - both are why blood typing is a genuine patient-safety practice, not just a laboratory exercise.` },
+
+    { q: "Consolidation and your final test.",
+      body: `Your cognitive map for blood typing, in five lines.
+
+ABO system: antigens A and/or B on red cells define the type; plasma naturally contains antibodies against whichever antigen is absent - no prior exposure needed, which is why ABO mismatch reacts immediately.
+
+Rh system: presence or absence of the D antigen defines Rh-positive/negative; anti-D is NOT naturally occurring - it only develops after exposure, so Rh problems typically emerge on a second exposure (transfusion or pregnancy).
+
+Technique: agglutination with an antiserum (anti-A, anti-B, anti-D) means that antigen is present (positive); no agglutination means absent (negative) - forward (cell) typing and reverse (serum) typing should always agree.
+
+Safety layer: cross-matching directly tests recipient plasma against donor cells, catching minor blood group incompatibilities that ABO/Rh typing alone would miss.
+
+Clinical stakes: ABO mismatch causes an immediate, severe transfusion reaction; Rh incompatibility causes HDN, typically threatening a second or later Rh-incompatible pregnancy rather than the first.
+
+Now your final test. A sample agglutinates with anti-B only (not anti-A), and does not agglutinate with anti-D. Reverse typing shows agglutination when mixed with known A cells, but not with known B cells.
+
+Question one: what is this patient's full ABO and Rh blood type?
+Question two: does the reverse typing result agree with what forward typing predicts - why or why not?
+Question three: if this patient urgently needs a transfusion and their exact type is not immediately available, which ABO/Rh red cell type would be the safest emergency choice, and why?
+
+Work them through before reading on.
+
+My answers. One: forward typing shows agglutination with anti-B only, meaning the B antigen is present and A is absent - so ABO type B; no agglutination with anti-D means Rh-negative. Full type: B-negative (B-). Two: yes, this agrees - a type B person's plasma should naturally contain anti-A (since A antigen is absent from their own cells) and NOT anti-B (since B antigen is their own antigen); reverse typing showing agglutination with A cells (anti-A present) but not B cells (no anti-B) is exactly what is expected for type B, confirming the forward typing result. Three: O-negative red cells would be the safest emergency choice, since O-negative red cells carry neither A, B, nor D antigen, making them least likely to trigger an immediate ABO or Rh reaction in a recipient of unknown or urgently needed type, pending full typing and cross-match.
+
+If those came cleanly, you understand why blood typing is one of the most safety-critical procedures in the entire laboratory - get the logic of antigens, antibodies, and which are naturally occurring versus induced, and the rest of transfusion medicine follows from it.` },
+  ],
+  theory: [
+    { q: "Define blood typing and explain why it is necessary before transfusion.", a: "Blood typing is the laboratory determination of the antigens present on a person's red blood cells (chiefly ABO and Rh). It is necessary because the immune system reacts against antigens it does not recognise as self, so mismatched blood can trigger a dangerous immune attack on transfusion." },
+    { q: "Explain the relationship between ABO antigens and ABO antibodies in a person's blood.", a: "A person's plasma naturally contains antibodies against whichever ABO antigen (A or B) is absent from their own red cells, without requiring prior exposure. Type A has anti-B, type B has anti-A, type O has both anti-A and anti-B, and type AB has neither." },
+    { q: "What defines Rh-positive versus Rh-negative status, and how do Rh antibodies differ from ABO antibodies?", a: "Rh-positive means the D antigen is present on red cells; Rh-negative means it is absent. Unlike ABO antibodies, anti-D is not naturally occurring - it only develops after exposure to Rh-positive blood, such as through transfusion or pregnancy." },
+    { q: "Explain why O-negative is called the universal red cell donor and AB-positive the universal recipient.", a: "O-negative red cells lack A, B, and D antigens, so they are least likely to trigger an immediate ABO or Rh reaction in any recipient. AB-positive plasma lacks anti-A and anti-B antibodies and the person carries the D antigen, so an AB-positive recipient will not react to A, B, or D antigens from donor cells." },
+    { q: "Describe the difference between forward (cell) typing and reverse (serum) typing.", a: "Forward typing mixes the patient's red cells with known anti-A, anti-B, and anti-D antisera to detect which antigens are present. Reverse typing mixes the patient's plasma with known A and B cells to detect which antibodies are present; the two results should always agree for a valid ABO type." },
+    { q: "What does agglutination indicate in a slide/tube blood typing test, and what does its absence indicate?", a: "Agglutination (visible clumping of red cells) indicates the corresponding antigen is present on the cells - a positive result. No agglutination indicates the antigen is absent - a negative result." },
+    { q: "Why is cross-matching performed in addition to ABO/Rh typing before a transfusion?", a: "ABO and Rh typing only account for those two blood group systems. Cross-matching directly mixes the recipient's plasma with the donor's red cells to detect incompatibility from other (minor) blood group antigens, such as those from prior transfusions or pregnancies, that typing alone would miss." },
+    { q: "Explain why an ABO-incompatible transfusion causes an immediate severe reaction, while Rh incompatibility usually does not on first exposure.", a: "ABO antibodies are naturally occurring, so they are already present and react immediately on first exposure to incompatible cells. Rh (anti-D) antibodies are not naturally occurring and only develop after exposure, so a first Rh-incompatible exposure usually sensitises rather than causing an immediate severe reaction." },
+    { q: "Explain the mechanism of haemolytic disease of the newborn (HDN) in Rh incompatibility, and why it typically affects a second pregnancy rather than the first.", a: "An Rh-negative mother can be sensitised by exposure to fetal Rh-positive blood, usually around delivery of her first Rh-positive baby, causing her to produce anti-D antibodies. In a subsequent Rh-positive pregnancy, these antibodies can cross the placenta and destroy fetal red cells, so HDN typically threatens the second or later pregnancy rather than the first." },
+    { q: "List two sources of technical error in blood typing and explain how each could produce a false result.", a: "Weak or subgroup antigens may react weakly and be misread as negative if not given enough time; rouleaux formation (red cells stacking) can mimic true agglutination, especially with abnormal plasma proteins. Other sources include expired antisera and an incorrect cell-to-serum ratio, both of which can mask a true reaction." },
+  ],
+  videos: [
+    { channel: "Physiology", title: "ABO and Rh Blood Typing Explained", note: "Antigens, antibodies, and why mismatches cause reactions.", url: "" },
+    { channel: "Physiology", title: "Slide Agglutination Technique for Blood Grouping", note: "Reading positive and negative results at the bench.", url: "" },
+    { channel: "Physiology", title: "Forward and Reverse Typing, Cross-Matching Explained", note: "Why ABO typing is confirmed two ways before transfusion.", url: "" },
+  ],
+  mcqs: [
+    { q: "Blood typing is necessary before transfusion mainly because:", o: ["Red cells look different under a microscope depending on type", "The immune system reacts against red cell surface antigens it does not recognise as self", "It has no real clinical importance", "All blood types are identical"], a: 1, w: "Antigen-antibody mismatch is what makes untyped transfusion dangerous." },
+    { q: "In the ABO system, a person with neither the A nor B antigen on their red cells is type:", o: ["AB", "A", "B", "O"], a: 3, w: "Type O red cells carry neither A nor B antigen." },
+    { q: "Type AB plasma contains:", o: ["Anti-A only", "Anti-B only", "Both anti-A and anti-B", "Neither anti-A nor anti-B"], a: 3, w: "AB red cells carry both antigens, so the plasma has neither antibody." },
+    { q: "Type O plasma contains:", o: ["Neither anti-A nor anti-B", "Anti-A only", "Anti-B only", "Both anti-A and anti-B"], a: 3, w: "O red cells lack both antigens, so plasma naturally has both antibodies." },
+    { q: "ABO antibodies are described as 'naturally occurring' because:", o: ["They only appear after multiple transfusions", "They are present without any prior exposure to foreign blood", "They never actually appear in plasma", "They require vaccination to develop"], a: 1, w: "Unlike most antibodies, ABO antibodies form without prior antigen exposure." },
+    { q: "The Rh antigen most routinely tested for in blood typing is:", o: ["C", "E", "D", "e"], a: 2, w: "The D antigen is the clinically most significant Rh antigen." },
+    { q: "A person who lacks the D antigen on their red cells is:", o: ["Rh-positive", "Rh-negative", "Type O automatically", "Type AB automatically"], a: 1, w: "Absence of the D antigen defines Rh-negative status." },
+    { q: "Unlike ABO antibodies, anti-D antibodies:", o: ["Are always present from birth", "Only develop after exposure to Rh-positive blood", "Never form under any circumstances", "Are present only in type O individuals"], a: 1, w: "Anti-D requires prior sensitisation through exposure, unlike naturally occurring ABO antibodies." },
+    { q: "O-negative blood is often called the universal donor mainly with respect to:", o: ["Plasma only", "Red cells, since they lack A, B, and D antigens", "White blood cells", "Platelets only"], a: 1, w: "O-negative red cells lack the antigens most likely to trigger a reaction." },
+    { q: "AB-positive is called the universal recipient because:", o: ["The plasma lacks anti-A and anti-B, and the person carries the D antigen", "AB-positive people have no red cells", "AB-positive blood is the rarest type", "AB-positive plasma contains all antibodies"], a: 0, w: "Lacking anti-A/anti-B antibodies means AB-positive recipients tolerate A, B, and D donor antigens." },
+    { q: "Giving O-type WHOLE BLOOD (not just red cells) to a type A patient can still cause a problem because:", o: ["O red cells carry hidden A antigen", "O plasma naturally contains anti-A and anti-B antibodies", "Whole blood has no plasma", "Type A patients reject all whole blood"], a: 1, w: "The donor plasma's anti-A can attack the recipient's own A antigen." },
+    { q: "Cross-matching is performed in addition to ABO/Rh typing mainly to:", o: ["Save time before transfusion", "Detect incompatibility from minor blood group antigens outside ABO/Rh", "Replace the need for ABO typing", "Determine the patient's Rh type only"], a: 1, w: "Cross-matching catches antibodies against non-ABO/Rh antigens that typing alone would miss." },
+    { q: "Two patients are both confirmed O-positive by ABO/Rh typing. A cross-match between them could still show incompatibility because:", o: ["ABO/Rh typing is always wrong", "They may differ in minor blood group antigens outside ABO/Rh", "O-positive patients cannot be cross-matched", "Cross-matching does not apply to O-positive blood"], a: 1, w: "Other blood group systems (e.g. Kell, Duffy, Kidd) are not covered by ABO/Rh typing alone." },
+    { q: "Forward (cell) typing detects:", o: ["Antibodies in the plasma", "Antigens present on the red cells", "White blood cell count", "Platelet function"], a: 1, w: "Forward typing mixes red cells with known antisera to detect antigens." },
+    { q: "Reverse (serum) typing detects:", o: ["Antigens on red cells", "Antibodies present in the plasma", "Haemoglobin concentration", "Blood glucose"], a: 1, w: "Reverse typing mixes plasma with known A and B cells to detect antibodies." },
+    { q: "A sample's forward typing suggests type A, but reverse typing shows agglutination with both A and B known cells. This result should be:", o: ["Reported as type A without further action", "Investigated further, since the two results disagree", "Ignored, since reverse typing is unreliable", "Automatically reported as type O"], a: 1, w: "A genuine type A person's plasma should contain anti-B only, not anti-A - any discrepancy needs investigation." },
+    { q: "In slide/tube ABO/Rh typing, agglutination with an antiserum indicates:", o: ["The corresponding antigen is absent", "The corresponding antigen is present", "A technical error has occurred", "The test must be repeated regardless"], a: 1, w: "Agglutination is a positive result, meaning the antigen is present." },
+    { q: "No agglutination with an antiserum in blood typing indicates:", o: ["The corresponding antigen is present", "The corresponding antigen is absent", "Contamination has occurred", "The sample is too old to use"], a: 1, w: "No clumping means that antigen is not present on the cells." },
+    { q: "A sample agglutinates with anti-A and anti-D but not anti-B. Its blood type is:", o: ["B-negative", "A-positive", "AB-positive", "O-negative"], a: 1, w: "Anti-A positive + anti-B negative = type A; anti-D positive = Rh-positive, giving A-positive." },
+    { q: "Rouleaux formation can be mistaken in blood typing for:", o: ["A negative result", "True agglutination", "Haemolysis", "A cross-match failure"], a: 1, w: "Red cells stacking like coins can visually resemble true agglutination clumping." },
+    { q: "A weak or subgroup antigen reaction in blood typing is most likely to be misread as:", o: ["A false positive", "A false negative if not given enough time to react", "An automatic AB result", "Always correctly identified"], a: 1, w: "Weak reactions can be under-read as negative if reading is rushed." },
+    { q: "A patient tests Rh-negative on one occasion and Rh-positive on a repeat test. The most likely explanation is:", o: ["The patient's Rh type genuinely changed", "A technical error on one of the tests, since Rh type does not change", "Both results are equally likely to be correct", "This is a normal, expected finding"], a: 1, w: "Blood type is fixed for life, so a discrepancy points to testing error." },
+    { q: "An acute haemolytic transfusion reaction from ABO-incompatible blood is dangerous mainly because:", o: ["It causes mild, delayed symptoms only", "Pre-existing antibodies immediately attack and destroy donor red cells", "It only affects white blood cells", "It has no effect on the kidneys"], a: 1, w: "Naturally occurring ABO antibodies react immediately, causing rapid haemolysis and systemic effects." },
+    { q: "Haemolytic disease of the newborn (HDN) in Rh incompatibility typically becomes a problem:", o: ["Only in the very first Rh-incompatible pregnancy", "In a second or later Rh-incompatible pregnancy, after the mother is sensitised", "Only if the mother is Rh-positive", "Only in male infants"], a: 1, w: "Sensitisation usually occurs around the first delivery, so subsequent pregnancies are at greater risk." },
+    { q: "An Rh-negative mother typically becomes sensitised to the D antigen:", o: ["Before she is ever pregnant", "Around delivery, when fetal Rh-positive blood mixes with her own", "Only through blood transfusion, never through pregnancy", "Automatically at birth"], a: 1, w: "Fetal-maternal blood mixing at delivery is the classic sensitising event." },
+    { q: "In HDN, maternal anti-D antibodies affect the fetus by:", o: ["Crossing the placenta and destroying fetal red cells", "Attacking the mother's own red cells only", "Causing no effect on the fetus at all", "Only affecting the fetal white blood cells"], a: 0, w: "Anti-D crosses the placenta and causes haemolysis of fetal Rh-positive red cells." },
+    { q: "Why is a strict cell-to-serum ratio important during blood typing?", o: ["It has no real effect on results", "An incorrect ratio can weaken or mask a true agglutination reaction", "It only affects the colour of the result", "It is only relevant for Rh testing"], a: 1, w: "Too much or too little serum or cells relative to each other can obscure a true reaction." },
+    { q: "Controls are included in blood typing procedures mainly to:", o: ["Make the procedure take longer", "Confirm the antisera and technique are working correctly, validating the run", "Replace the need for reading agglutination", "Determine the patient's diet"], a: 1, w: "Controls flag an invalid run before results are trusted and reported." },
+    { q: "A sample agglutinates with anti-B only and does not agglutinate with anti-D. Its blood type is:", o: ["A-positive", "B-negative", "AB-positive", "O-negative"], a: 1, w: "Anti-B positive + anti-A negative = type B; anti-D negative = Rh-negative, giving B-negative." },
+    { q: "The overall clinical purpose of blood typing and cross-matching together is to:", o: ["Add unnecessary steps before transfusion", "Ensure transfused blood is immunologically compatible with the recipient, preventing reactions", "Determine a patient's diet and lifestyle", "Replace the need for donor screening"], a: 1, w: "Together they confirm compatibility across ABO, Rh, and minor blood group systems before transfusion." },
+  ],
+};
+
 /* --------------------------- phy:8 --------------------------- */
 const T_PHY_MUSCULAR = {
   courseId: "phy",
@@ -20022,6 +20202,7 @@ const CONTENT = {
   "phyp:5": T_PHYP_LENGTHTENSION,
   "phyp:6": T_PHYP_GLUCOSE_HBA1C,
   "phyp:7": T_PHYP_URINALYSIS,
+  "phyp:8": T_PHYP_BLOODTYPING,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
@@ -28885,6 +29066,7 @@ function AuthScreen({ onAuthed }) {
 // (e.g. a past deadline once it's passed), so this doesn't grow forever.
 // MAX_VISIBLE_ANNOUNCEMENTS below is just a safety cap on what's rendered.
 const ANNOUNCEMENTS = [
+  { id: "wn_2026_08_21", tag: "Update", title: "What's new in v2.6", body: "Duo streaks - pair up with a study partner and keep a shared streak alive together (fully optional). Plus: the home ring now matches ASCEND blue, a streak bug fix so corrected streaks actually keep growing, and \"beat your best\" score badges now show up on Passco and AI practice sets too, not just topic quizzes." },
   { id: "wn_2026_08_18b", tag: "Update", title: "What's new in v2.5", body: "Biochemistry Practicals tab, a Next Exam card on the home screen, a report-wrong-answer button on Passco questions, a smoother start tour, and an exam countdown that now tracks the full timetable." },
   { id: "a3", tag: "Deadline", title: "AI 150 Course Completion", body: "All students are reminded to complete the AI 150: Fundamentals of Responsible AI for ALL course on or before Saturday, 15th August, 2026. This is a mandatory requirement for all students. Please ensure you have finished all modules and assessments before the deadline." },
   { id: "a2", tag: "Feature", title: "CWA planner, themes and resources", body: "Plan your target CWA under the CWA tab, switch light, dark, or system (auto day/night) with the toggle up top, and turn your own notes into lessons under Resources." },
