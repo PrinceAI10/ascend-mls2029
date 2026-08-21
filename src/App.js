@@ -21047,7 +21047,14 @@ const db = {
   // set on the same day for the streak to advance.
   async createDuoStreak(uid, mode) {
     try {
-      const code = Math.random().toString(36).slice(2, 8).toUpperCase();
+      // Deliberately excludes 0/O and 1/I/L - a base36 code mixing those
+      // in is nearly guaranteed to get mistyped the moment it's read off
+      // one phone and typed into another, which is exactly what was
+      // producing "no duo streak found" between two genuinely different
+      // accounts. This alphabet has no visually-confusable characters.
+      const SAFE_CHARS = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+      let code = "";
+      for (let i = 0; i < 6; i++) code += SAFE_CHARS[Math.floor(Math.random() * SAFE_CHARS.length)];
       const { data, error } = await supabase.from("duo_streaks")
         .insert({ code, user_a: uid, user_b: null, mode: mode === "both" ? "both" : "either", streak: 0 })
         .select().maybeSingle();
