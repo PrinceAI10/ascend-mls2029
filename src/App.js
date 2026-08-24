@@ -20581,8 +20581,19 @@ const rankOf = (xp) => {
   return { ...r, next };
 };
 const courseById = (id) => COURSES.find((c) => c.id === id);
-const todayKey = () => new Date().toISOString().slice(0, 10);
-const shift = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+// Local-calendar-day key (YYYY-MM-DD) - deliberately NOT toISOString(),
+// which converts to UTC first and silently shifts "today" for anyone not
+// in a UTC+0 timezone (it can already read as tomorrow in the evening for
+// timezones ahead of UTC, or still yesterday in the morning for timezones
+// behind it).
+const localDateKey = (d) => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+};
+const todayKey = () => localDateKey(new Date());
+const shift = (n) => { const d = new Date(); d.setDate(d.getDate() + n); return localDateKey(d); };
 // ISO-week key (e.g. "2026-W07") so the weekly recap card shows once per
 // calendar week and naturally resets itself the following Monday - no
 // separate "last shown" timestamp to maintain.
@@ -20645,7 +20656,7 @@ const countConsecutiveStreak = (dailyDone, endDateKey, frozenDays) => {
   let count = 0;
   let d = new Date(endDateKey + "T00:00:00");
   while (true) {
-    const key = d.toISOString().slice(0, 10);
+    const key = localDateKey(d);
     if (dailyDone[key]) {
       count++;
     } else if (frozenDays && frozenDays[key]) {
@@ -20936,7 +20947,7 @@ const db = {
         const { data: existingRow } = await supabase.from("progress").select("data").eq("id", uid).maybeSingle();
         const existing = existingRow ? existingRow.data : null;
         if (existing) {
-          const tk = new Date().toISOString().slice(0, 10);
+          const tk = localDateKey(new Date());
           const incomingHasToday = !!(progress.dailyDone && progress.dailyDone[tk]);
           const mergedDailyDone = { ...(existing.dailyDone || {}), ...(progress.dailyDone || {}) };
           const mergedFrozenDays = { ...(existing.frozenDays || {}), ...(progress.frozenDays || {}) };
@@ -20947,7 +20958,7 @@ const db = {
           // going offline) - the calendar merge above is what's actually safe,
           // so let it be the one source of truth for streak too, not just for
           // dailyDone itself.
-          const calendarThroughKey = mergedDailyDone[tk] ? tk : new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+          const calendarThroughKey = mergedDailyDone[tk] ? tk : localDateKey(new Date(Date.now() - 86400000));
           const calendarStreak = countConsecutiveStreak(mergedDailyDone, calendarThroughKey, mergedFrozenDays);
           toSave = {
             ...progress,
@@ -28543,7 +28554,7 @@ function HomeView({ app }) {
         // spanning from a few weeks back through the end of September 2026, so it
         // covers the whole study-and-exam period and fills the full width.
         const done = app.progress.dailyDone || {};
-        const todayStr = new Date().toISOString().slice(0, 10);
+        const todayStr = localDateKey(new Date());
         // start: the Sunday on/before 6 weeks ago; end: last day of September 2026
         const start = new Date();
         start.setDate(start.getDate() - 42);
@@ -28555,7 +28566,7 @@ function HomeView({ app }) {
         while (cur <= end) {
           const week = [];
           for (let dow = 0; dow < 7; dow++) {
-            const key = cur.toISOString().slice(0, 10);
+            const key = localDateKey(cur);
             week.push({
               key,
               active: !!done[key],
@@ -28571,7 +28582,9 @@ function HomeView({ app }) {
           // label a week-column with the month name if it contains the 1st of a month
           const first = wk.find((d) => d.key.slice(8, 10) === "01");
           if (!first) return "";
-          return new Date(first.key).toLocaleDateString("en-GB", { month: "short" });
+          // Parse as local midnight (not bare "YYYY-MM-DD", which parses as
+          // UTC and can render as the wrong month near a timezone boundary).
+          return new Date(first.key + "T00:00:00").toLocaleDateString("en-GB", { month: "short" });
         };
         return (
           <div className="card" style={{ marginTop: 16, overflowX: "auto" }}>
@@ -30972,7 +30985,7 @@ export default function App() {
       const dd = { ...(progress.dailyDone || {}) };
       let d = new Date();
       for (let i = 0; i < target; i++) {
-        dd[d.toISOString().slice(0, 10)] = true;
+        dd[localDateKey(d)] = true;
         d.setDate(d.getDate() - 1);
       }
       const fixed = { ...progress, streak: target, dailyDone: dd, lastActive: todayKey() };
