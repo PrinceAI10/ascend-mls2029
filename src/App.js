@@ -23183,7 +23183,21 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
       if (el) {
         const r = el.getBoundingClientRect();
         if (r.width > 0 && r.height > 0) {
-          setRect({ top: r.top, left: r.left, width: r.width, height: r.height });
+          // Outward-biased rounding: floor the top-left corner, ceil the
+          // bottom-right corner. At the Normal text size .main has no zoom
+          // applied and every value here lands on a whole pixel anyway, so
+          // this is a no-op there. At Small/Large text size .main renders
+          // with a CSS `zoom` scale, which produces fractional-pixel rects
+          // (e.g. 943.98px wide instead of 944px) - rounding those normally
+          // can round the box IN on one or more edges, shaving a sliver off
+          // the target it's supposed to fully enclose. Rounding outward
+          // instead guarantees the highlight always contains the whole
+          // element regardless of which text size is active.
+          const top = Math.floor(r.top);
+          const left = Math.floor(r.left);
+          const right = Math.ceil(r.left + r.width);
+          const bottom = Math.ceil(r.top + r.height);
+          setRect({ top, left, width: right - left, height: bottom - top });
           return;
         }
       }
@@ -23217,7 +23231,16 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
       const tick = () => {
         if (cancelled) return;
         const r = el.getBoundingClientRect();
-        const same = last && Math.abs(r.top - last.top) < 0.5 && Math.abs(r.left - last.left) < 0.5;
+        // Also require width/height to be stable, not just top/left. With the
+        // T-size (font scale) toggle set away from Normal, .main renders with
+        // a CSS zoom applied, and that reflow can still be settling its SIZE
+        // a frame or two after position already looks stable (position and
+        // size don't necessarily finish moving on the same frame) - measuring
+        // on position-only stability could grab a pre-settle width/height and
+        // draw a highlight box that doesn't fully cover the (now bigger or
+        // smaller, zoomed) target.
+        const same = last && Math.abs(r.top - last.top) < 0.5 && Math.abs(r.left - last.left) < 0.5
+          && Math.abs(r.width - last.width) < 0.5 && Math.abs(r.height - last.height) < 0.5;
         stableFrames = same ? stableFrames + 1 : 0;
         last = r;
         // Two consecutive stable frames = actually stopped, not just
@@ -32275,6 +32298,35 @@ export default function App() {
                 <button className="btn btn-a btn-sm" onClick={() => { setNotifOpen(false); go("daily"); }}>Go to daily</button>
               </div>
             )}
+            {/* TROPHY CASE - unlocked achievements are persisted on progress.achievements
+                (see computeAchievements), but the celebration popup (achOverlay) that shows
+                the share card fires ONCE, the moment it unlocks, then setAchNotif(null) on
+                dismiss throws that reference away for good - there was no other place in the
+                app that ever rendered progress.achievements, so "share to socials" only ever
+                worked in the few seconds before the popup was closed. Listing them here means
+                a student can always come back and grab a share card for any past unlock,
+                same as Duolingo lets you revisit old achievements. Not counted in unreadCount
+                since these aren't really "new" - it's a standing trophy case, not an inbox. */}
+            {(progress?.achievements || []).slice().reverse().map((a) => (
+              <div className="notif-item" key={"ach_" + a.id} style={{ cursor: "default" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                  <div className="mono" style={{ fontSize: 11, color: "var(--amber)" }}>ACHIEVEMENT</div>
+                </div>
+                <div style={{ fontWeight: 700, marginBottom: 3 }}>{a.label}</div>
+                <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6, marginBottom: 9 }}>{a.description}</div>
+                <ShareCardButton
+                  label="Share"
+                  config={{
+                    kind: "Achievement",
+                    title: a.label,
+                    subtitle: a.description,
+                    statLabel: "streak",
+                    statValue: `${progress?.streak || 0}d`,
+                    color: "#F5B93F",
+                  }}
+                />
+              </div>
+            ))}
             {VISIBLE_ANNOUNCEMENTS.map((a) => {
               const read = isAnnRead(a.id);
               return (
