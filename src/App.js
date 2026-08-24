@@ -21188,93 +21188,288 @@ function Ring({ value, size = 46, stroke = 5, color = "var(--amber)" }) {
 // dark ASCEND-branded background, the milestone in big type, one stat line
 // underneath. This is the "proof, not features" card: something a student
 // actually wants to post, the way Duolingo/Strava/Spotify recaps work.
+// Draws a subtle icon glyph matching the milestone kind into the badge medallion.
+// Keeps the canvas card visually tied to the same icon language as the app
+// (trophy for achievements, chevron-up for rank-ups, flame for streaks)
+// instead of every card looking identical regardless of what was earned.
+function drawShareCardGlyph(ctx, kind, cx, cy, size, color) {
+  const k = (kind || "").toLowerCase();
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = size * 0.09;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  const s = size / 2;
+  if (k.includes("rank")) {
+    // chevron-up ("leveled up")
+    ctx.beginPath();
+    ctx.moveTo(cx - s * 0.55, cy + s * 0.15);
+    ctx.lineTo(cx, cy - s * 0.5);
+    ctx.lineTo(cx + s * 0.55, cy + s * 0.15);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx - s * 0.55, cy + s * 0.62);
+    ctx.lineTo(cx, cy - s * 0.03);
+    ctx.lineTo(cx + s * 0.55, cy + s * 0.62);
+    ctx.stroke();
+  } else if (k.includes("streak")) {
+    // flame
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - s * 0.62);
+    ctx.bezierCurveTo(cx + s * 0.55, cy - s * 0.05, cx + s * 0.55, cy + s * 0.35, cx, cy + s * 0.62);
+    ctx.bezierCurveTo(cx - s * 0.55, cy + s * 0.35, cx - s * 0.55, cy - s * 0.05, cx, cy - s * 0.62);
+    ctx.closePath();
+    ctx.fill();
+  } else {
+    // trophy (default: achievement)
+    ctx.beginPath();
+    ctx.moveTo(cx - s * 0.42, cy - s * 0.55);
+    ctx.lineTo(cx + s * 0.42, cy - s * 0.55);
+    ctx.lineTo(cx + s * 0.32, cy + s * 0.05);
+    ctx.lineTo(cx - s * 0.32, cy + s * 0.05);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(cx - s * 0.14, cy + s * 0.05);
+    ctx.lineTo(cx - s * 0.14, cy + s * 0.32);
+    ctx.lineTo(cx + s * 0.14, cy + s * 0.32);
+    ctx.lineTo(cx + s * 0.14, cy + s * 0.05);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(cx - s * 0.3, cy + s * 0.32);
+    ctx.lineTo(cx + s * 0.3, cy + s * 0.32);
+    ctx.lineTo(cx + s * 0.36, cy + s * 0.55);
+    ctx.lineTo(cx - s * 0.36, cy + s * 0.55);
+    ctx.closePath();
+    ctx.fill();
+    // handles
+    ctx.beginPath();
+    ctx.arc(cx - s * 0.42 - s * 0.16, cy - s * 0.3, s * 0.2, Math.PI * 0.35, Math.PI * 1.65);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(cx + s * 0.42 + s * 0.16, cy - s * 0.3, s * 0.2, Math.PI * 1.35, Math.PI * 0.65, true);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
 function buildShareCardCanvas({ kind, title, subtitle, statLabel, statValue, color = "#F5B93F" }) {
+  // Rendered at 2x and scaled down via CSS-less canvas sizing (i.e. drawn at
+  // double the logical pixel count) so the exported PNG stays crisp on a
+  // high-DPI phone screen instead of looking soft/blurry when shared.
+  const DPR = 2;
   const W = 1080, H = 1350;
   const canvas = document.createElement("canvas");
-  canvas.width = W; canvas.height = H;
+  canvas.width = W * DPR; canvas.height = H * DPR;
+  canvas.style.width = W + "px"; canvas.style.height = H + "px";
   const ctx = canvas.getContext("2d");
+  ctx.scale(DPR, DPR);
+  ctx.textAlign = "center";
+  ctx.textBaseline = "alphabetic";
 
-  // Background
+  // ---- Full-bleed backdrop: deep navy with a soft color wash from the
+  // milestone's own color, so every card feels tied to its badge color
+  // rather than reading as one generic template repainted per event.
   const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, "#0A0F1A");
-  bg.addColorStop(1, "#121C2E");
+  bg.addColorStop(0, "#070A11");
+  bg.addColorStop(1, "#0D1420");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
-
-  // Soft glow behind the badge
-  const glow = ctx.createRadialGradient(W / 2, 430, 40, W / 2, 430, 420);
-  glow.addColorStop(0, color + "40");
-  glow.addColorStop(1, color + "00");
-  ctx.fillStyle = glow;
+  const wash = ctx.createRadialGradient(W / 2, 60, 40, W / 2, 60, 900);
+  wash.addColorStop(0, color + "26");
+  wash.addColorStop(1, color + "00");
+  ctx.fillStyle = wash;
   ctx.fillRect(0, 0, W, H);
 
-  // Eyebrow: ASCEND wordmark
-  ctx.textAlign = "center";
+  // Faint scattered "confetti" dots for a celebratory, non-static feel -
+  // seeded deterministically off the title so the same achievement always
+  // renders the same card (no jitter between shares of the same milestone).
+  let seed = 0;
+  for (let i = 0; i < String(title).length; i++) seed = (seed * 31 + String(title).charCodeAt(i)) >>> 0;
+  const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+  for (let i = 0; i < 26; i++) {
+    const x = rnd() * W, y = rnd() * 300 + 40;
+    const r = rnd() * 3.2 + 1.2;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = color + Math.floor(18 + rnd() * 40).toString(16).padStart(2, "0");
+    ctx.fill();
+  }
+
+  // ---- Floating card frame: gives the export real "poster" proportions
+  // (a card sitting on a background) rather than art bled edge-to-edge,
+  // which is what made the old version read as a plain export, not a
+  // designed asset.
+  const cardX = 64, cardY = 96, cardW = W - 128, cardH = H - 240;
+  ctx.save();
+  ctx.shadowColor = "rgba(0,0,0,0.45)";
+  ctx.shadowBlur = 60;
+  ctx.shadowOffsetY = 24;
+  ctx.fillStyle = "rgba(18,24,36,0.92)";
+  roundRectPath(ctx, cardX, cardY, cardW, cardH, 40);
+  ctx.fill();
+  ctx.restore();
+  // hairline border + top color accent bar (a small branded touch, like a
+  // ribbon along the top edge of the card)
+  roundRectPath(ctx, cardX, cardY, cardW, cardH, 40);
+  ctx.strokeStyle = "rgba(255,255,255,0.09)";
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.save();
+  roundRectPath(ctx, cardX, cardY, cardW, 8, 40);
+  ctx.clip();
   ctx.fillStyle = color;
-  ctx.font = "700 34px Arial";
-  ctx.textBaseline = "alphabetic";
-  ctx.letterSpacing = "6px";
-  ctx.fillText("A S C E N D", W / 2, 130);
+  ctx.fillRect(cardX, cardY, cardW, 8);
+  ctx.restore();
+
+  // ---- Header: wordmark left, kind pill right, both inset from the card edge.
+  const headY = cardY + 76;
+  ctx.textAlign = "left";
+  ctx.fillStyle = "#fff";
+  ctx.font = "800 30px Arial";
+  ctx.letterSpacing = "3px";
+  ctx.fillText("ASCEND", cardX + 48, headY);
   ctx.letterSpacing = "0px";
+  ctx.font = "600 20px Arial";
+  ctx.fillStyle = "rgba(255,255,255,0.4)";
+  ctx.fillText("MLS · Class of 2029", cardX + 48, headY + 28);
 
-  // Badge ring
-  ctx.beginPath();
-  ctx.arc(W / 2, 430, 190, 0, Math.PI * 2);
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 10;
+  ctx.textAlign = "right";
+  const pillLabel = (kind || "MILESTONE").toUpperCase();
+  ctx.font = "700 22px Arial";
+  const pillTextW = ctx.measureText(pillLabel).width;
+  const pillPad = 22, pillH = 44;
+  const pillW = pillTextW + pillPad * 2;
+  const pillX = cardX + cardW - 48 - pillW, pillY = headY - 30;
+  ctx.textAlign = "left";
+  ctx.fillStyle = color + "22";
+  roundRectPath(ctx, pillX, pillY, pillW, pillH, pillH / 2);
+  ctx.fill();
+  ctx.strokeStyle = color + "66";
+  ctx.lineWidth = 1.5;
+  roundRectPath(ctx, pillX, pillY, pillW, pillH, pillH / 2);
   ctx.stroke();
+  ctx.fillStyle = color;
+  ctx.fillText(pillLabel, pillX + pillPad, pillY + 30);
+
+  // ---- Badge medallion: layered rings + soft glow + a glyph matching the
+  // milestone kind, rather than an empty ring with only a text label in it.
+  const badgeCx = W / 2, badgeCy = cardY + 300, badgeR = 148;
+  const glow = ctx.createRadialGradient(badgeCx, badgeCy, 20, badgeCx, badgeCy, badgeR * 1.9);
+  glow.addColorStop(0, color + "55");
+  glow.addColorStop(1, color + "00");
+  ctx.fillStyle = glow;
   ctx.beginPath();
-  ctx.arc(W / 2, 430, 190, 0, Math.PI * 2);
-  ctx.strokeStyle = color + "33";
-  ctx.lineWidth = 26;
+  ctx.arc(badgeCx, badgeCy, badgeR * 1.9, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.arc(badgeCx, badgeCy, badgeR + 20, 0, Math.PI * 2);
+  ctx.strokeStyle = color + "2a";
+  ctx.lineWidth = 2;
   ctx.stroke();
 
-  // Kind label inside the ring (e.g. "RANK UP", "ACHIEVEMENT", "STREAK")
-  ctx.fillStyle = "rgba(255,255,255,0.55)";
-  ctx.font = "700 26px Arial";
-  ctx.fillText((kind || "MILESTONE").toUpperCase(), W / 2, 370);
+  const badgeFill = ctx.createLinearGradient(badgeCx, badgeCy - badgeR, badgeCx, badgeCy + badgeR);
+  badgeFill.addColorStop(0, color);
+  badgeFill.addColorStop(1, shadeColor(color, -28));
+  ctx.beginPath();
+  ctx.arc(badgeCx, badgeCy, badgeR, 0, Math.PI * 2);
+  ctx.fillStyle = badgeFill;
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(badgeCx, badgeCy, badgeR, 0, Math.PI * 2);
+  ctx.strokeStyle = "rgba(255,255,255,0.35)";
+  ctx.lineWidth = 3;
+  ctx.stroke();
 
-  // Title (rank name / achievement label / streak count) - shrink to fit
-  let titleSize = 84;
+  drawShareCardGlyph(ctx, kind, badgeCx, badgeCy, badgeR * 1.05, "#0A0C10");
+
+  // small sparkle accents flanking the badge for a celebratory touch
+  const sparkle = (x, y, r, a) => {
+    ctx.save();
+    ctx.globalAlpha = a;
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(x, y - r); ctx.lineTo(x + r * 0.28, y - r * 0.28);
+    ctx.lineTo(x + r, y); ctx.lineTo(x + r * 0.28, y + r * 0.28);
+    ctx.lineTo(x, y + r); ctx.lineTo(x - r * 0.28, y + r * 0.28);
+    ctx.lineTo(x - r, y); ctx.lineTo(x - r * 0.28, y - r * 0.28);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  };
+  sparkle(badgeCx - badgeR - 46, badgeCy - badgeR + 10, 16, 0.85);
+  sparkle(badgeCx + badgeR + 40, badgeCy + badgeR - 30, 12, 0.6);
+
+  // ---- Title + subtitle, generously spaced below the badge.
+  ctx.textAlign = "center";
+  let titleSize = 76;
   ctx.font = `800 ${titleSize}px Arial`;
-  while (ctx.measureText(title).width > 340 && titleSize > 40) {
+  while (ctx.measureText(title).width > cardW - 160 && titleSize > 40) {
     titleSize -= 4;
     ctx.font = `800 ${titleSize}px Arial`;
   }
   ctx.fillStyle = "#fff";
-  ctx.fillText(title, W / 2, 450);
+  ctx.fillText(title, W / 2, badgeCy + badgeR + 96);
 
-  // Subtitle under the badge
-  ctx.fillStyle = "rgba(255,255,255,0.65)";
-  ctx.font = "500 32px Arial";
-  wrapCanvasText(ctx, subtitle || "", W / 2, 700, 780, 42);
+  ctx.font = "500 30px Arial";
+  ctx.fillStyle = "rgba(255,255,255,0.62)";
+  wrapCanvasText(ctx, subtitle || "", W / 2, badgeCy + badgeR + 170, cardW - 200, 40);
 
-  // Stat pill
+  // ---- Stat pill, bottom of the card.
   if (statLabel && statValue) {
-    const pillY = 880, pillH = 110;
-    ctx.font = "800 46px Arial";
-    const statText = `${statValue}  ${statLabel}`;
-    const pillW = Math.min(860, ctx.measureText(statText).width + 100);
+    const pillY2 = cardY + cardH - 150, pillH2 = 100;
+    ctx.font = "800 42px Arial";
+    const statNum = String(statValue);
+    ctx.font = "600 26px Arial";
+    const statLabelText = String(statLabel).toUpperCase();
+    ctx.font = "800 42px Arial";
+    const numW = ctx.measureText(statNum).width;
+    ctx.font = "600 26px Arial";
+    const labelW = ctx.measureText(statLabelText).width;
+    const innerGap = 14;
+    const contentW = numW + innerGap + labelW;
+    const pillW2 = Math.min(cardW - 96, contentW + 100);
+    const pillX2 = W / 2 - pillW2 / 2;
     ctx.fillStyle = "rgba(255,255,255,0.06)";
-    roundRectPath(ctx, W / 2 - pillW / 2, pillY, pillW, pillH, 20);
+    roundRectPath(ctx, pillX2, pillY2, pillW2, pillH2, pillH2 / 2);
     ctx.fill();
     ctx.strokeStyle = "rgba(255,255,255,0.14)";
     ctx.lineWidth = 2;
-    roundRectPath(ctx, W / 2 - pillW / 2, pillY, pillW, pillH, 20);
+    roundRectPath(ctx, pillX2, pillY2, pillW2, pillH2, pillH2 / 2);
     ctx.stroke();
-    ctx.fillStyle = "#fff";
-    ctx.fillText(statText, W / 2, pillY + 72);
+    const startX = W / 2 - contentW / 2;
+    ctx.textAlign = "left";
+    ctx.font = "800 42px Arial";
+    ctx.fillStyle = color;
+    ctx.fillText(statNum, startX, pillY2 + 65);
+    ctx.font = "600 26px Arial";
+    ctx.fillStyle = "rgba(255,255,255,0.75)";
+    ctx.fillText(statLabelText, startX + numW + innerGap, pillY2 + 62);
+    ctx.textAlign = "center";
   }
 
-  // Footer
-  ctx.fillStyle = "rgba(255,255,255,0.4)";
-  ctx.font = "500 26px Arial";
-  ctx.fillText("Medical Laboratory Science · Class of 2029", W / 2, H - 90);
-  ctx.fillStyle = "rgba(255,255,255,0.25)";
-  ctx.font = "500 22px Arial";
-  ctx.fillText(new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }), W / 2, H - 54);
+  // ---- Footer, below the card, on the full-bleed backdrop.
+  ctx.fillStyle = "rgba(255,255,255,0.32)";
+  ctx.font = "500 24px Arial";
+  ctx.fillText(new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }), W / 2, H - 60);
 
   return canvas;
+}
+// Darkens (negative percent) or lightens (positive) a #rrggbb color - used
+// to build a subtle top-to-bottom gradient on the badge medallion instead
+// of a single flat fill, which reads as noticeably more "designed."
+function shadeColor(hex, percent) {
+  const h = hex.replace("#", "");
+  const num = parseInt(h.length === 3 ? h.split("").map(c => c + c).join("") : h, 16);
+  let r = (num >> 16) + Math.round((percent / 100) * 255);
+  let g = ((num >> 8) & 0x00ff) + Math.round((percent / 100) * 255);
+  let b = (num & 0x0000ff) + Math.round((percent / 100) * 255);
+  r = Math.max(0, Math.min(255, r));
+  g = Math.max(0, Math.min(255, g));
+  b = Math.max(0, Math.min(255, b));
+  return "#" + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
 }
 function roundRectPath(ctx, x, y, w, h, r) {
   ctx.beginPath();
@@ -28293,19 +28488,31 @@ function HomeView({ app }) {
       </div>
 
       <div className="grid g4" data-tour="quick-actions" style={{ marginTop: 16, display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: 10 }}>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0 }} onClick={() => resumeTopic && resumeCourse ? app.go("topic", { courseId: resumeTopic.courseId, topicId: resumeTopic.topicIndex }) : app.go("courses")}>
+        {/* FIX: the shared .card class sets overflow:hidden (needed elsewhere
+            to clip other card content), and these buttons had no minHeight -
+            at Normal text size a one-line label like "Continue" fits inside
+            the box's natural height so this never showed up. At the Small
+            and Large text sizes (the "T" toggle) longer labels like "Daily
+            question" wrap onto a 2nd line, but the box's height was still
+            only ever sized for the shortest label in the row (grid stretches
+            all 4 to match each other) - so overflow:hidden silently cropped
+            the wrapped second line instead of visibly overflowing. Giving
+            every button a fixed minHeight tall enough for icon + 2 lines of
+            label, and switching to overflow:visible, means the label always
+            has room regardless of which text size is active. */}
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={() => resumeTopic && resumeCourse ? app.go("topic", { courseId: resumeTopic.courseId, topicId: resumeTopic.topicIndex }) : app.go("courses")}>
           <Ic.target p={20} />
           <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word" }}>Continue</div>
         </button>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0 }} onClick={() => app.go("daily")}>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={() => app.go("daily")}>
           <Ic.flame p={20} />
           <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word" }}>Daily question</div>
         </button>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0 }} onClick={() => app.go("papers")}>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={() => app.go("papers")}>
           <Ic.file p={20} />
           <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word" }}>Passco</div>
         </button>
-        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0 }} onClick={() => app.go("ranks")}>
+        <button className="card hover" style={{ textAlign: "center", padding: "14px 6px", minWidth: 0, minHeight: 92, overflow: "visible", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={() => app.go("ranks")}>
           <Ic.trophy p={20} />
           <div style={{ fontSize: 12, fontWeight: 600, marginTop: 6, overflowWrap: "break-word" }}>Ranks</div>
         </button>
@@ -31927,7 +32134,46 @@ export default function App() {
   };
   // Opening the panel no longer wipes the badge - the student marks items read
   // themselves (like an inbox), so the count reflects what they've actually seen.
-  const openNotif = () => { setNotifOpen(true); };
+  const openNotif = () => {
+    setNotifOpen(true);
+    // Mark the Trophy Case as "seen" the moment the panel is opened, same
+    // spirit as an inbox - the New dot is just meant to pull attention to a
+    // fresh unlock, not linger forever once they've actually looked.
+    const achCount = (progress?.achievements || []).length;
+    if (progress && achCount > (progress.trophySeenCount || 0)) {
+      persist({ ...progress, trophySeenCount: achCount });
+    }
+  };
+
+  // TROPHY CASE HELPERS
+  // Dismissing an achievement card only hides it from the Trophy Case list -
+  // it does NOT delete the unlock itself (progress.achievements is untouched),
+  // so a long-time student can declutter old badges without losing them; the
+  // achievement stays "earned", it's just not cluttering the notif panel.
+  const dismissedAch = Array.isArray(progress?.dismissedAch) ? progress.dismissedAch : [];
+  const visibleAchievements = (progress?.achievements || []).filter((a) => !dismissedAch.includes(a.id));
+  const dismissAch = (id) => {
+    if (!progress) return;
+    persist({ ...progress, dismissedAch: [...dismissedAch, id] });
+  };
+  // New-since-last-open indicator for the Trophy Case section header.
+  const hasNewTrophy = (progress?.achievements || []).length > (progress?.trophySeenCount || 0);
+  // Per-achievement stat for its share card - showing streak on every card
+  // regardless of what was actually unlocked was redundant for quiz/XP/passco
+  // achievements (the title already says "Quiz Master", repeating "7d streak"
+  // under it added nothing). Pull the metric that's actually relevant to
+  // each achievement instead.
+  const achievementStat = (a) => {
+    const quizzesDone = Object.keys(progress?.completed || {}).length;
+    switch (a.id) {
+      case "first_quiz": return { statLabel: "quiz completed", statValue: String(quizzesDone) };
+      case "quiz_master": return { statLabel: "quizzes done", statValue: String(quizzesDone) };
+      case "passco_10": return { statLabel: "papers done", statValue: String(progress?.passcoCompleted || 0) };
+      case "xp_500": case "xp_1000": return { statLabel: "XP", statValue: (progress?.xp || 0).toLocaleString() };
+      case "streak_7": case "streak_30": return { statLabel: "day streak", statValue: `${progress?.streak || 0}` };
+      default: return { statLabel: "day streak", statValue: `${progress?.streak || 0}` };
+    }
+  };
 
   // WhatsApp-style unread nudge: proactively surface the newest unread
   // "Update" announcement as a small toast (not just a passive badge on the
@@ -32074,9 +32320,8 @@ export default function App() {
               kind: "Achievement",
               title: achNotif.label,
               subtitle: achNotif.description,
-              statLabel: "streak",
-              statValue: `${progress?.streak || 0}d`,
               color: "#F5B93F",
+              ...achievementStat(achNotif),
             }}
           />
           <button
@@ -32298,38 +32543,28 @@ export default function App() {
                 <button className="btn btn-a btn-sm" onClick={() => { setNotifOpen(false); go("daily"); }}>Go to daily</button>
               </div>
             )}
-            {/* TROPHY CASE - unlocked achievements are persisted on progress.achievements
-                (see computeAchievements), but the celebration popup (achOverlay) that shows
-                the share card fires ONCE, the moment it unlocks, then setAchNotif(null) on
-                dismiss throws that reference away for good - there was no other place in the
-                app that ever rendered progress.achievements, so "share to socials" only ever
-                worked in the few seconds before the popup was closed. Listing them here means
-                a student can always come back and grab a share card for any past unlock,
-                same as Duolingo lets you revisit old achievements. Not counted in unreadCount
-                since these aren't really "new" - it's a standing trophy case, not an inbox. */}
-            {(progress?.achievements || []).slice().reverse().map((a) => (
-              <div className="notif-item" key={"ach_" + a.id} style={{ cursor: "default" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                  <div className="mono" style={{ fontSize: 11, color: "var(--amber)" }}>ACHIEVEMENT</div>
-                </div>
-                <div style={{ fontWeight: 700, marginBottom: 3 }}>{a.label}</div>
-                <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6, marginBottom: 9 }}>{a.description}</div>
-                <ShareCardButton
-                  label="Share"
-                  config={{
-                    kind: "Achievement",
-                    title: a.label,
-                    subtitle: a.description,
-                    statLabel: "streak",
-                    statValue: `${progress?.streak || 0}d`,
-                    color: "#F5B93F",
-                  }}
-                />
-              </div>
-            ))}
-            {VISIBLE_ANNOUNCEMENTS.map((a) => {
-              const read = isAnnRead(a.id);
-              return (
+            {/* PRIORITY ORDER, top to bottom:
+                1. Daily streak reminder (above, when applicable) - time-critical,
+                   miss it today and it's gone for good.
+                2. Unread announcements, most urgent tag first (Deadline before
+                   Update/Feature/Welcome), newest first within each tag - these
+                   are things the student was never shown before.
+                3. Already-read announcements - reference material, not new.
+                4. Trophy case (past achievements) - nothing here is time-sensitive
+                   or new information the student hasn't already seen the moment
+                   it unlocked, so it sits below everything actionable, purely
+                   for revisiting/sharing on demand. */}
+            {(() => {
+              const TAG_PRIORITY = { Deadline: 0, Update: 1, Feature: 2, Welcome: 3 };
+              const sorted = VISIBLE_ANNOUNCEMENTS
+                .map((a, i) => ({ a, i, read: isAnnRead(a.id) }))
+                .sort((x, y) => {
+                  if (x.read !== y.read) return x.read ? 1 : -1; // unread first
+                  const px = TAG_PRIORITY[x.a.tag] ?? 9, py = TAG_PRIORITY[y.a.tag] ?? 9;
+                  if (px !== py) return px - py;
+                  return x.i - y.i; // stable: preserves the authored newest-first order
+                });
+              return sorted.map(({ a, read }) => (
                 <div className={"notif-item" + (read ? "" : " unread")} key={a.id} onClick={() => markAnnRead(a.id)} style={{ cursor: read ? "default" : "pointer" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
                     {!read && <span className="unread-dot" />}
@@ -32339,8 +32574,40 @@ export default function App() {
                   <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6 }}>{a.body}</div>
                   {!read && <div style={{ marginTop: 6, fontSize: 11.5, color: "var(--amber-2)", fontWeight: 600 }}>Tap to mark as read</div>}
                 </div>
-              );
-            })}
+              ));
+            })()}
+            {visibleAchievements.length > 0 && (
+              <div style={{ padding: "12px 18px 4px", display: "flex", alignItems: "center", gap: 6 }}>
+                <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".04em", color: "var(--text-3)", textTransform: "uppercase" }}>Trophy case</span>
+                {hasNewTrophy && <span className="unread-dot" title="New achievement" />}
+              </div>
+            )}
+            {visibleAchievements.slice().reverse().map((a) => (
+              <div className="notif-item" key={"ach_" + a.id} style={{ cursor: "default", position: "relative" }}>
+                <button
+                  onClick={() => dismissAch(a.id)}
+                  title="Dismiss (the achievement stays earned, this just hides the card)"
+                  style={{ position: "absolute", top: 10, right: 10, background: "none", border: "none", color: "var(--text-3)", cursor: "pointer", padding: 4 }}
+                >
+                  <Ic.x p={13} />
+                </button>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                  <div className="mono" style={{ fontSize: 11, color: "var(--amber)" }}>ACHIEVEMENT</div>
+                </div>
+                <div style={{ fontWeight: 700, marginBottom: 3, paddingRight: 20 }}>{a.label}</div>
+                <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6, marginBottom: 9 }}>{a.description}</div>
+                <ShareCardButton
+                  label="Share"
+                  config={{
+                    kind: "Achievement",
+                    title: a.label,
+                    subtitle: a.description,
+                    color: "#F5B93F",
+                    ...achievementStat(a),
+                  }}
+                />
+              </div>
+            ))}
             <div style={{ padding: "14px 18px" }}>
               <button className="btn btn-g btn-sm" style={{ width: "100%" }} onClick={() => { setNotifOpen(false); go("feedback"); }}>Send feedback</button>
             </div>
