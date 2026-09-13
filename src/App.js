@@ -244,14 +244,16 @@ html, body {
   .topbar-inner .topbar-icons{gap:6px}
 }
 .brand{display:flex;align-items:center;gap:9px;flex-shrink:0}
-.brand-word{font-weight:800;letter-spacing:.02em;font-size:17px}
+.brand-word{font-weight:800;letter-spacing:.02em;font-size:17px;
+  font-family:'Pacifico','Brush Script MT','Segoe Script',cursive,Calibri,system-ui,sans-serif;
+  visibility:hidden}
 .brand-hero{gap:12px}
 .brand-word-hero{font-family:'Pacifico','Brush Script MT','Segoe Script',cursive,Calibri,system-ui,sans-serif;
   font-weight:400;font-size:clamp(30px,7vw,42px);letter-spacing:.01em;font-style:normal;
   background:linear-gradient(120deg,var(--text) 0%,var(--amber) 100%);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   line-height:1;visibility:hidden}
-html.ascend-pacifico-ready .brand-word-hero{visibility:visible}
+html.ascend-pacifico-ready .brand-word,html.ascend-pacifico-ready .brand-word-hero{visibility:visible}
 .brand-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--text-3);
   text-transform:uppercase;margin-top:1px}
 .brand-sub-hero{font-family:Calibri,system-ui,sans-serif;font-size:clamp(13px,2.4vw,16px);
@@ -395,7 +397,7 @@ textarea.pastebox:focus{border-color:var(--amber)}
   overflow:auto;background:var(--bg-2);border:1px solid var(--line-2);border-radius:16px;
   box-shadow:0 24px 60px rgba(0,0,0,.4)}
 .notif-head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;
-  border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg-2)}
+  border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5;background:var(--bg-2)}
 .notif-item{padding:15px 18px;border-bottom:1px solid var(--line)}
 .notif-item:last-child{border-bottom:none}
 .notif-dot{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;
@@ -23436,6 +23438,10 @@ function CourseView({ app }) {
 /* ------------------------------- courses -------------------------------- */
 function CoursesView({ app }) {
   const [query, setQuery] = useState("");
+  // Small popup for changing level/semester, opened from the compact bar
+  // below - moved off Home (was making that page too long) and into
+  // Courses instead, since that's the screen it actually affects.
+  const [lvPickerOpen, setLvPickerOpen] = useState(false);
   // Build a searchable index of every LIVE topic across all courses.
   const allLive = [];
   Object.keys(CONTENT).forEach((k) => {
@@ -23468,6 +23474,40 @@ function CoursesView({ app }) {
     <div className="view">
       <div className="eyebrow">This semester</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Seven courses, one climb</h1>
+
+      {/* Compact level/semester bar - tap to open the switcher popup. Lives
+          here instead of a full card on Home, per feedback that Home was
+          getting too long. */}
+      <button
+        onClick={() => setLvPickerOpen(true)}
+        className="card hover"
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", textAlign: "left", padding: "10px 14px", marginTop: 12, marginBottom: 2 }}
+      >
+        <span style={{ fontSize: 13.5, color: "var(--text-2)" }}>
+          Level <b style={{ color: "var(--text)" }}>{eff.level}</b>, Semester <b style={{ color: "var(--text)" }}>{eff.semester}</b>
+        </span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--amber-2)", fontWeight: 700 }}>SWITCH</span>
+      </button>
+      {lvPickerOpen && (
+        <div className="notif-wrap" style={{ justifyContent: "center", alignItems: "center" }}>
+          <div className="notif-scrim" onClick={() => setLvPickerOpen(false)} />
+          <div className="notif-panel" style={{ margin: 0, width: "min(420px, calc(100vw - 32px))", maxHeight: "none" }}>
+            <div className="notif-head">
+              <div style={{ fontWeight: 700, fontSize: 15 }}>Level & semester</div>
+              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setLvPickerOpen(false)}><Ic.x p={15} /></button>
+            </div>
+            <div style={{ padding: 18 }}>
+              <p style={{ color: "var(--text-3)", fontSize: 13, marginTop: 0, marginBottom: 14 }}>
+                Retaking a course? Switch back to that level/semester and you'll see only that combo's materials, nothing else.
+              </p>
+              <LevelSemesterPicker
+                value={{ level: eff.level, semester: eff.semester }}
+                onPick={(lv, sem) => { app.setLevelSemester(lv, sem); setLvPickerOpen(false); }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       <input className="auth-input" style={{ marginTop: 14 }} value={query} placeholder="Search any topic - e.g. homeostasis, amino acids..." onChange={(e) => setQuery(e.target.value)} />
       {q && (
@@ -29181,21 +29221,6 @@ function HomeView({ app }) {
   </button>
 </div>
 
-{/* LEVEL & SEMESTER - fixes existing accounts stuck showing every course
-    (progress.level was never set for them), and lets anyone switch anytime
-    (e.g. retaking a course: switch back to that level/semester and you'll
-    see only that combo's materials, nothing else). */}
-<div className="card" style={{ marginTop: 12, background: "var(--bg-2)", border: "1px solid var(--line)", borderRadius: "var(--r)", padding: "20px" }}>
-  <div style={{ fontWeight: 600, fontSize: 15, color: "var(--text)", marginBottom: 2 }}>Level & semester</div>
-  <div style={{ color: "var(--text-3)", fontSize: 13, marginBottom: 12 }}>
-    Controls which courses show up under Courses. {app.progress.level ? `Currently Level ${app.progress.level}, Semester ${app.progress.semester || 1}.` : "Not set yet - pick yours below."}
-  </div>
-  <LevelSemesterPicker
-    value={app.progress.level ? { level: app.progress.level, semester: app.progress.semester || 1 } : null}
-    onPick={(lv, sem) => app.setLevelSemester(lv, sem)}
-  />
-</div>
-
 <div className="card card-feature" style={{ marginTop: 26, textAlign: "center" }}>
   <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 10 }}>Built by the ASCEND team</div>
   <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8 }}>
@@ -32148,6 +32173,20 @@ export default function App() {
     } else {
       finalProgress = base;
     }
+    // One-time XP reset for every existing account, requested directly -
+    // everyone's XP goes back to 0 exactly once. Gated on a flag, persisted
+    // immediately (not just held in memory) so it doesn't quietly re-fire
+    // every time this account's progress gets reloaded. Never touches
+    // lifetimeStreak, which is a separate, deliberately-persistent number -
+    // see the lifetime-streak/Hall-of-Fame section near coursesForStudent.
+    if (!finalProgress.xpResetV1) {
+      finalProgress.xp = 0;
+      finalProgress.xpResetV1 = true;
+      try {
+        await store.set(progKey(username), finalProgress);
+        await db.saveProgress(localSynthId(username), finalProgress);
+      } catch {}
+    }
     return { finalProgress, isNewAccount };
   };
 
@@ -32182,9 +32221,20 @@ export default function App() {
   };
   
   const logout = async () => {
-    if (supaUid) { try { await supabase.auth.signOut(); } catch {} setSupaUid(null); }
-    await store.set("ascend_session", "");
-    setAuth(null); setMenuOpen(false); setRoute({ view: "home" });
+    // try/finally so a Supabase network hiccup or a storage-write failure
+    // can never leave the user stuck still "logged in" looking at a dead
+    // session - the local sign-out always completes regardless.
+    try {
+      if (supaUid) { try { await supabase.auth.signOut(); } catch {} }
+      try { await store.set("ascend_session", ""); } catch {}
+    } finally {
+      setSupaUid(null);
+      setAuth(null);
+      setProgress(null);
+      setMenuOpen(false);
+      setNotifOpen(false);
+      setRoute({ view: "home" });
+    }
   };
 
   // Cycle: Dark -> Light -> System (follow OS day/night) -> Dark ...
@@ -33058,44 +33108,52 @@ export default function App() {
             © 2026 ASCEND · Built by Prince, Ansah, Jeffery &amp; Dacosta for the MLS Class of 2029. All rights reserved.
           </footer>
           
-          {showTop && (
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              style={{
-                position: "fixed",
-                bottom: "clamp(70px, 10vh, 100px)",
-                right: "clamp(16px, 3vw, 30px)",
-                width: "48px",
-                height: "48px",
-                borderRadius: "50%",
-                background: "var(--amber)",
-                color: "#1B1405",
-                border: "none",
-                fontSize: "22px",
-                fontWeight: 700,
-                cursor: "pointer",
-                boxShadow: "0 4px 16px rgba(245,185,63,0.3)",
-                zIndex: 50,
-                transition: "all 0.3s ease",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontFamily: "var(--mono)"
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = "scale(1.1)";
-                e.target.style.boxShadow = "0 6px 24px rgba(245,185,63,0.5)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = "scale(1)";
-                e.target.style.boxShadow = "0 4px 16px rgba(245,185,63,0.3)";
-              }}
-            >
-              ↑
-            </button>
-          )}
         </div>
       </div>
+
+      {/* Moved outside .main (which gets CSS `zoom` applied for the text-size
+          toggle) - a `position:fixed` descendant of a zoomed ancestor gets
+          its fixed-positioning math computed relative to the zoomed box in
+          some browsers, not the real viewport, causing this button to drift
+          and overlap other UI whenever the font-size toggle isn't at 100%.
+          Living here as a sibling of .shell, it's never inside anything
+          zoomed, so it's positioned correctly at every text size. */}
+      {showTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          style={{
+            position: "fixed",
+            bottom: "clamp(70px, 10vh, 100px)",
+            right: "clamp(16px, 3vw, 30px)",
+            width: "48px",
+            height: "48px",
+            borderRadius: "50%",
+            background: "var(--amber)",
+            color: "#1B1405",
+            border: "none",
+            fontSize: "22px",
+            fontWeight: 700,
+            cursor: "pointer",
+            boxShadow: "0 4px 16px rgba(245,185,63,0.3)",
+            zIndex: 50,
+            transition: "all 0.3s ease",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontFamily: "var(--mono)"
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.transform = "scale(1.1)";
+            e.target.style.boxShadow = "0 6px 24px rgba(245,185,63,0.5)";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.transform = "scale(1)";
+            e.target.style.boxShadow = "0 4px 16px rgba(245,185,63,0.3)";
+          }}
+        >
+          ↑
+        </button>
+      )}
 
       {menuOpen && (
         <div 
