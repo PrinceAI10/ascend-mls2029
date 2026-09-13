@@ -2,6 +2,7 @@
 // TOP OF App.js - FIXED IMPORTS
 // ============================================================
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { createPortal } from "react-dom";
 import Tesseract from 'tesseract.js';              
 import { supabase } from "./supabaseClient";
 
@@ -232,7 +233,8 @@ html, body {
   .topbar-inner .chip{display:none}
   .topbar-inner .iconbtn{width:34px;height:34px}
   .topbar-inner .brand-sub{display:none}
-  .topbar-inner .brand{gap:6px}
+  .topbar-inner .brand{gap:6px;flex-shrink:1;min-width:0}
+  .topbar-inner .brand-word{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
   /* Badges: on phones there's no room to swipe sideways and nothing hints
      that you can, so wrap them onto new rows instead - everything is visible
      just by scrolling the page down, the way people already expect. */
@@ -243,10 +245,10 @@ html, body {
   .topbar-inner .username{display:none}
   .topbar-inner .topbar-icons{gap:6px}
 }
-.brand{display:flex;align-items:center;gap:9px;flex-shrink:0}
+.brand{display:flex;align-items:center;gap:9px;flex-shrink:1;min-width:0}
 .brand-word{font-weight:800;letter-spacing:.02em;font-size:17px;
   font-family:'Pacifico','Brush Script MT','Segoe Script',cursive,Calibri,system-ui,sans-serif;
-  visibility:hidden}
+  visibility:hidden;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .brand-hero{gap:12px}
 .brand-word-hero{font-family:'Pacifico','Brush Script MT','Segoe Script',cursive,Calibri,system-ui,sans-serif;
   font-weight:400;font-size:clamp(30px,7vw,42px);letter-spacing:.01em;font-style:normal;
@@ -537,14 +539,14 @@ const COURSES_L100_S2 = [
 
 // ---- Level 100, Semester 1 (incoming freshmen) ----
 const COURSES_L100_S1 = [
-  { id: "bc1", name: "Biological Chemistry I", code: "", level: 100, semester: 1 },
-  { id: "bph", name: "Biophysics", code: "", level: 100, semester: 1 },
-  { id: "cm1", name: "Communication Skills I", code: "", level: 100, semester: 1 },
-  { id: "alg", name: "Algebra", code: "", level: 100, semester: 1 },
-  { id: "mgn", name: "Medical Genetics", code: "", level: 100, semester: 1 },
-  { id: "stm", name: "Statistical Methods", code: "", level: 100, semester: 1 },
-  { id: "cap", name: "Computer Appreciation", code: "", level: 100, semester: 1 },
-  { id: "csf", name: "Cell Structure and Function", code: "", level: 100, semester: 1 },
+  { id: "bc1", name: "Biological Chemistry I", code: "BIOL 157", level: 100, semester: 1 },
+  { id: "bph", name: "Biophysics", code: "MLS 155", level: 100, semester: 1 },
+  { id: "cm1", name: "Communication Skills I", code: "ENGL 157", level: 100, semester: 1 },
+  { id: "alg", name: "Algebra", code: "MATH 157", level: 100, semester: 1 },
+  { id: "mgn", name: "Medical Genetics", code: "BIOL 153", level: 100, semester: 1 },
+  { id: "stm", name: "Statistical Methods", code: "STAT 153", level: 100, semester: 1 },
+  { id: "cap", name: "Computer Appreciation", code: "CSM 177", level: 100, semester: 1 },
+  { id: "csf", name: "Cell Structure and Function", code: "BIOL 151", level: 100, semester: 1 },
 ];
 
 // ---- Level 200, Semester 1 ----
@@ -23438,10 +23440,6 @@ function CourseView({ app }) {
 /* ------------------------------- courses -------------------------------- */
 function CoursesView({ app }) {
   const [query, setQuery] = useState("");
-  // Small popup for changing level/semester, opened from the compact bar
-  // below - moved off Home (was making that page too long) and into
-  // Courses instead, since that's the screen it actually affects.
-  const [lvPickerOpen, setLvPickerOpen] = useState(false);
   // Build a searchable index of every LIVE topic across all courses.
   const allLive = [];
   Object.keys(CONTENT).forEach((k) => {
@@ -23475,39 +23473,25 @@ function CoursesView({ app }) {
       <div className="eyebrow">This semester</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Seven courses, one climb</h1>
 
-      {/* Compact level/semester bar - tap to open the switcher popup. Lives
-          here instead of a full card on Home, per feedback that Home was
-          getting too long. */}
+      {/* Compact level/semester bar - tap to open the switcher popup
+          (rendered at the App root - see openLevelPicker). Styled distinctly
+          (amber border + icon + "Switch" label) so it clearly reads as a
+          tappable control, not just another info card. Lives here instead
+          of a full card on Home, per feedback that Home was getting too
+          long. */}
       <button
-        onClick={() => setLvPickerOpen(true)}
-        className="card hover"
-        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", textAlign: "left", padding: "10px 14px", marginTop: 12, marginBottom: 2 }}
+        onClick={() => app.openLevelPicker()}
+        className="hover"
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", textAlign: "left", padding: "10px 14px", marginTop: 12, marginBottom: 2, background: "var(--amber-dim)", border: "1px solid var(--amber)", borderRadius: "var(--r-sm)", cursor: "pointer" }}
       >
-        <span style={{ fontSize: 13.5, color: "var(--text-2)" }}>
-          Level <b style={{ color: "var(--text)" }}>{eff.level}</b>, Semester <b style={{ color: "var(--text)" }}>{eff.semester}</b>
+        <span style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13.5, color: "var(--text)" }}>
+          <Ic.book p={15} style={{ color: "var(--amber)", flexShrink: 0 }} />
+          Level <b>{eff.level}</b>, Semester <b>{eff.semester}</b>
         </span>
-        <span className="mono" style={{ fontSize: 11, color: "var(--amber-2)", fontWeight: 700 }}>SWITCH</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--amber-2)", fontWeight: 700, display: "flex", alignItems: "center", gap: 3 }}>
+          SWITCH <Ic.chevR p={12} />
+        </span>
       </button>
-      {lvPickerOpen && (
-        <div className="notif-wrap" style={{ justifyContent: "center", alignItems: "center" }}>
-          <div className="notif-scrim" onClick={() => setLvPickerOpen(false)} />
-          <div className="notif-panel" style={{ margin: 0, width: "min(420px, calc(100vw - 32px))", maxHeight: "none" }}>
-            <div className="notif-head">
-              <div style={{ fontWeight: 700, fontSize: 15 }}>Level & semester</div>
-              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setLvPickerOpen(false)}><Ic.x p={15} /></button>
-            </div>
-            <div style={{ padding: 18 }}>
-              <p style={{ color: "var(--text-3)", fontSize: 13, marginTop: 0, marginBottom: 14 }}>
-                Retaking a course? Switch back to that level/semester and you'll see only that combo's materials, nothing else.
-              </p>
-              <LevelSemesterPicker
-                value={{ level: eff.level, semester: eff.semester }}
-                onPick={(lv, sem) => { app.setLevelSemester(lv, sem); setLvPickerOpen(false); }}
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
       <input className="auth-input" style={{ marginTop: 14 }} value={query} placeholder="Search any topic - e.g. homeostasis, amino acids..." onChange={(e) => setQuery(e.target.value)} />
       {q && (
@@ -31297,6 +31281,15 @@ export default function App() {
     try { return !window.matchMedia || window.matchMedia("(prefers-color-scheme: dark)").matches; } catch (e) { return true; }
   });
   const [notifOpen, setNotifOpen] = useState(false);
+  // Level/semester switcher popup, opened from the small bar on Courses.
+  // Rendered at the App root (below, alongside notifOpen's panel) rather
+  // than nested inside CoursesView - CoursesView lives deep inside .main,
+  // and a `position:fixed` popup nested that deep was appearing below the
+  // visible screen instead of centered over it. Every OTHER modal in this
+  // app (notifOpen, menuOpen, achOverlay, etc.) already lives at this root
+  // level for exactly that reason - this just brings the new one in line
+  // with the pattern that was already proven to work correctly.
+  const [levelPickerOpen, setLevelPickerOpen] = useState(false);
   const [rateStars, setRateStars] = useState(0);
   const [rateDismissed, setRateDismissed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -32715,6 +32708,7 @@ export default function App() {
     topicId: route.topicId, 
     setName,
     setLevelSemester,
+    openLevelPicker: () => setLevelPickerOpen(true),
     setReadingXp,
     setPasscoXp,
     awardForumXp,
@@ -33314,6 +33308,37 @@ export default function App() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Rendered via a portal straight to document.body, deliberately -
+          this used to live inside CoursesView, nested inside the zoomed
+          `.main` container. `position:fixed` computed relative to a zoomed
+          ancestor doesn't line up with the real viewport in some browsers,
+          which is exactly why it was popping up below the visible screen
+          instead of centered in front of the student. Portal-ing it out
+          from under `.main` entirely fixes that regardless of zoom level or
+          scroll position - `position:fixed` then does what it's supposed to
+          and centers in whatever's currently on screen. */}
+      {levelPickerOpen && createPortal(
+        <div className="notif-wrap" style={{ justifyContent: "center", alignItems: "center" }}>
+          <div className="notif-scrim" onClick={() => setLevelPickerOpen(false)} />
+          <div className="notif-panel" style={{ margin: 0, width: "min(420px, calc(100vw - 32px))", maxHeight: "none" }}>
+            <div className="notif-head">
+              <div style={{ fontWeight: 700, fontSize: 15 }}>Level & semester</div>
+              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setLevelPickerOpen(false)}><Ic.x p={15} /></button>
+            </div>
+            <div style={{ padding: 18 }}>
+              <p style={{ color: "var(--text-3)", fontSize: 13, marginTop: 0, marginBottom: 14 }}>
+                Retaking a course? Switch back to that level/semester and you'll see only that combo's materials, nothing else.
+              </p>
+              <LevelSemesterPicker
+                value={progress && progress.level ? { level: progress.level, semester: progress.semester || 1 } : null}
+                onPick={(lv, sem) => { setLevelSemester(lv, sem); setLevelPickerOpen(false); }}
+              />
+            </div>
+          </div>
+        </div>,
+        document.body
       )}
     </div>
   );
