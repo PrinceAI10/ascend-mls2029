@@ -513,17 +513,70 @@ function PasswordInput({ value, onChange, placeholder, label, id, autoComplete =
 }
 
 /* ------------------------------- data ----------------------------------- */
-const COURSES = [
-  { id: "ana", name: "Human Anatomy", code: "SMS 186", day: "Monday" },
-  { id: "phy", name: "General Physiology", code: "SMS 184", day: "Tuesday" },
-  { id: "bch", name: "Biochemistry", code: "MLS 158", day: "Wednesday" },
-  { id: "bio", name: "Biological Chemistry", code: "BIOL 158", day: "Thursday" },
-  { id: "psy", name: "Medical Psychology", code: "SMS 154", day: "Friday" },
-  { id: "com", name: "Communication Skills II", code: "ENGL 158", day: "Saturday" },
-  { id: "lab", name: "Lab Safety & Instrumentation", code: "MLS 152", day: "Sunday" },
-  { id: "bcp", name: "Biochemistry Practicals", code: "MLS 158P", day: "Sunday" },
-  { id: "phyp", name: "Physiology Practicals", code: "SMS 184P", day: "Sunday" },
+// ===================== LEVEL / SEMESTER MODEL =====================
+// Every course now carries a `level` and `semester` tag. The 9 courses below
+// are the ORIGINAL set (previously untagged) - they are explicitly pinned to
+// level 100 / semester 2 so nothing about their existing CONTENT keys,
+// slide-matching, PasCo, or quiz history changes for any student already
+// using the app. New level/semester course lists are defined further down
+// and merged in via COURSES / TOPICS at the bottom of this block, so this
+// array itself never needs to change again once tagged.
+const COURSES_L100_S2 = [
+  { id: "ana", name: "Human Anatomy", code: "SMS 186", day: "Monday", level: 100, semester: 2 },
+  { id: "phy", name: "General Physiology", code: "SMS 184", day: "Tuesday", level: 100, semester: 2 },
+  { id: "bch", name: "Biochemistry", code: "MLS 158", day: "Wednesday", level: 100, semester: 2 },
+  { id: "bio", name: "Biological Chemistry", code: "BIOL 158", day: "Thursday", level: 100, semester: 2 },
+  { id: "psy", name: "Medical Psychology", code: "SMS 154", day: "Friday", level: 100, semester: 2 },
+  { id: "com", name: "Communication Skills II", code: "ENGL 158", day: "Saturday", level: 100, semester: 2 },
+  { id: "lab", name: "Lab Safety & Instrumentation", code: "MLS 152", day: "Sunday", level: 100, semester: 2 },
+  { id: "bcp", name: "Biochemistry Practicals", code: "MLS 158P", day: "Sunday", level: 100, semester: 2 },
+  { id: "phyp", name: "Physiology Practicals", code: "SMS 184P", day: "Sunday", level: 100, semester: 2 },
 ];
+
+// ---- Level 100, Semester 1 (incoming freshmen) ----
+const COURSES_L100_S1 = [
+  { id: "bc1", name: "Biological Chemistry I", code: "", level: 100, semester: 1 },
+  { id: "bph", name: "Biophysics", code: "", level: 100, semester: 1 },
+  { id: "cm1", name: "Communication Skills I", code: "", level: 100, semester: 1 },
+  { id: "alg", name: "Algebra", code: "", level: 100, semester: 1 },
+  { id: "mgn", name: "Medical Genetics", code: "", level: 100, semester: 1 },
+  { id: "stm", name: "Statistical Methods", code: "", level: 100, semester: 1 },
+  { id: "cap", name: "Computer Appreciation", code: "", level: 100, semester: 1 },
+  { id: "csf", name: "Cell Structure and Function", code: "", level: 100, semester: 1 },
+];
+
+// ---- Level 200, Semester 1 ----
+const COURSES_L200_S1 = [
+  { id: "ph2", name: "Physiology II", code: "", level: 200, semester: 1 },
+  { id: "ph2p", name: "Physiology II Practicals", code: "", level: 200, semester: 1 },
+  { id: "micp", name: "Microbiology I Practicals", code: "", level: 200, semester: 1, contentMode: "practical-application", sourceCourseId: "mic" },
+  { id: "hemp", name: "Hematology I Practicals", code: "", level: 200, semester: 1, contentMode: "practical-application", sourceCourseId: "hem" },
+  { id: "bc2p", name: "Biochemistry II Practicals", code: "", level: 200, semester: 1 },
+  { id: "gpa", name: "General Pathology", code: "", level: 200, semester: 1 },
+  { id: "mic", name: "Microbiology I", code: "", level: 200, semester: 1 },
+  { id: "bc2", name: "Biochemistry 2", code: "", level: 200, semester: 1 },
+  { id: "hem", name: "Hematology I", code: "", level: 200, semester: 1 },
+  { id: "pha", name: "Pharmacology I", code: "", level: 200, semester: 1 },
+  { id: "an2", name: "Anatomy II", code: "", level: 200, semester: 1 },
+];
+
+// Master course list. Order matters only for display fallbacks; everywhere
+// else courses are looked up by id or filtered by level/semester.
+const COURSES = [...COURSES_L100_S2, ...COURSES_L100_S1, ...COURSES_L200_S1];
+
+// A course "exists" on the site skeleton the moment it's in COURSES above,
+// even before a single topic/note has been authored for it - that's what
+// lets us show the course tile immediately (per the "deploy the skeleton
+// first" plan) while content is filled in behind the scenes.
+const courseLevel = (cid) => { const c = COURSES.find((x) => x.id === cid); return c ? c.level : null; };
+const courseSemester = (cid) => { const c = COURSES.find((x) => x.id === cid); return c ? c.semester : null; };
+const coursesFor = (level, semester) => COURSES.filter((c) => c.level === level && c.semester === semester);
+
+// A course is "ready" once it has at least one topic AND at least one
+// authored CONTENT entry for that topic. Until then, CoursesView/CourseView
+// should render the "materials are being prepared" placeholder instead of
+// an empty topic list - see isCourseReady() near CONTENT below.
+
 
 const TOPICS = {
   ana: [
@@ -572,6 +625,158 @@ const TOPICS = {
     "Refractory Period of an Action Potential", "Effects of Stimulus Frequency on Skeletal Muscle Contraction",
     "Skeletal Muscle Length-Tension Relationship",
     "Measurement of Blood Glucose (Glycated Haemoglobin)", "Urinalysis", "Blood Typing (ABO and Rh)"
+  ],
+
+  // ===================== LEVEL 100, SEMESTER 1 =====================
+  bc1: [
+    "Elemental Composition of a Cell", "Atomic Structure",
+    "Chemical Bonding I (why bonding, formation and types of bonds)", "Chemical Bonding II", "Chemical Bonding III",
+    "Thermodynamics I", "Thermodynamics II",
+    "Chemical Kinetics I", "Chemical Kinetics II",
+    "Chemical Equilibrium I", "Chemical Equilibrium II"
+  ],
+  bph: [
+    "Introduction to Biophysics and Energy Expenditure", "Human Mechanics", "Physics of the Eyes and Vision",
+    "Homeostasis", "Physics of Hearing I", "Physics of Hearing II", "Hemodynamics", "Bioelectricity"
+  ],
+  cm1: [
+    "Punctuation in English", "Ambiguity and Dangling Modifiers",
+    "Parts of Speech and Word Class in Academic and Professional Purposes",
+    "Concord", "Sentence and Its Types", "Paragraph in Academic and Professional Writing"
+  ],
+  alg: [
+    "Sigma Notation", "Equations", "Functions and Limits", "Differentiation", "Integration", "Trigonometry",
+    "Indices, Logarithms and Exponential Equations", "Permutations and Combinations", "Matrices",
+    "Sequence and Series", "Coordinate Geometry", "Applications of Differentiation and Integration"
+  ],
+  mgn: [
+    "Introduction to Medical Genetics", "Cellular Basics of Inheritance", "Chromosomal Aberrations",
+    "Multiple Allelism", "Gene Interactions", "Probability Calculations in Genetics", "Types of Genetic Crosses",
+    "DNA Structure and Function", "Chi Square Analysis", "Variations in Chromosomal Number",
+    "Sex Determination and Sex Linkage", "Pedigree Analysis"
+  ],
+  stm: [
+    "Introduction to Statistics & Uses of Statistics", "Basic Terms of Statistics & Variable and Data",
+    "Measurement Scales & Stages of Statistical Investigations",
+    "Data Collection (Primary and Secondary Data) & Questionnaire Design",
+    "Summarising and Describing Data", "Using Numerical Summaries to Characterize Sample Data",
+    "Using Graphical Summaries to Characterize Sample Data", "Introduction to Probability",
+    "Axioms, Sets, Sample Space, Measure of Probability of Events",
+    "Mutually Exclusive & Independent Events", "Conditional Probability, Bayes' Theorem",
+    "Counting Techniques: Combination and Permutation",
+    "Random Variables and Some Discrete Probability Distributions", "Some Continuous Probability Distributions"
+  ],
+  cap: [
+    "Introduction to Spreadsheets & Getting Started with Excel",
+    "Editing, Data Entry & Efficiency in Excel",
+    "Formulas, Cell Referencing, Operators & Naming Ranges",
+    "Excel Functions I — Date, Math & Statistical",
+    "Excel Functions II — Text & Financial",
+    "Excel Logical & Lookup/Reference Functions",
+    "Formatting & Printing Worksheets",
+    "Working with Excel Files, Charts, Sorting & Filtering",
+    "Introduction to PowerPoint, Creating Presentations & Slide Basics",
+    "Text Basics, Formatting, Alignment, Themes & Backgrounds",
+    "Text Boxes, Lists, Tables, Pictures, Sounds & Movies",
+    "Viewing, Printing, Animating & Transitions",
+    "Keyboard Shortcuts Reference"
+  ],
+  csf: [
+    "Introduction to the Cell — Definition, History, Cell Theory & Diversity",
+    "Microscopy — Units of Measurement & Simple/Compound Microscopes",
+    "Bright-Field and Darkfield Microscopy",
+    "Phase-Contrast, UV and Fluorescence Microscopy",
+    "Electron Microscopy & Specimen Preparation/Staining",
+    "Cellular Organization and Overview of Cell Structure",
+    "Mitochondria & Endoplasmic Reticulum",
+    "Golgi Apparatus & Chloroplast",
+    "Cell Wall, Peroxisomes & Lysosomes (incl. Tay-Sachs)",
+    "The Nucleus, Nucleolus & Protein Synthesis",
+    "Centrosome & Cytoskeleton — Microfilaments and Intermediate Filaments",
+    "Cytoskeleton — Microtubules and Motor Proteins",
+    "Cell Membrane — Structure, Proteins & Carbohydrates",
+    "Cell Fractionation, Homogenization & Centrifugation Techniques"
+  ],
+
+  // ===================== LEVEL 200, SEMESTER 1 =====================
+  ph2: [
+    "Respiratory Physiology", "The Cardiovascular System", "Lymphatic System", "Immune System",
+    "Renal Physiology (Kidney & Urine Formation)", "Renal Physiology (Acid-Base Balance)", "The Digestive System"
+  ],
+  ph2p: [
+    "Blood Pressure Measurement", "Pulmonary/Lung Function Tests — Explanation",
+    "Estimation of Packed Cell Volume (Haematocrit)",
+    "Pulmonary Activity of the Heart (Effect of Stroke Volume on Pump Activity)",
+    "Pulmonary Function Tests (Spirometry): Using the Vitalograph",
+    "Urinalysis (Practical)", "Blood Typing (Practical)"
+  ],
+  mic: [
+    "Introduction to Microbiology", "Microbial Nutrition I", "Microbial Nutrition II", "Gram Positive Cocci",
+    "Gram Negative Cocci", "Enterobacteriaceae", "Pseudomonas Species", "Mycobacterial Pathogenesis and Diagnosis"
+  ],
+  // micp mirrors mic's topic names 1:1 (practical-application mode - see
+  // COURSES_L200_S1). Kept as a separate array, not a reference, so the two
+  // can diverge later if real practical slides ever arrive for this course.
+  micp: [
+    "Introduction to Microbiology — Practical Approach", "Microbial Nutrition I — Practical Approach",
+    "Microbial Nutrition II — Practical Approach", "Gram Positive Cocci — Practical Approach",
+    "Gram Negative Cocci — Practical Approach", "Enterobacteriaceae — Practical Approach",
+    "Pseudomonas Species — Practical Approach", "Mycobacterial Pathogenesis and Diagnosis — Practical Approach"
+  ],
+  hem: [
+    "Introduction to Haematology", "Haematopoiesis", "Erythropoiesis", "Leukopoiesis",
+    "Blood Anticoagulants, Mechanism of Action and Effects on Blood Cells",
+    "Blood Sample Collection (Phlebotomy), Handling and Storage of Blood",
+    "Types of Haematological Stains, Principles of Staining and Staining Techniques",
+    "Blood Smears/Films Preparation & Examination (Thick and Thin Blood Smears)",
+    "Manual Estimation of Total Leukocyte Counts of Blood (Using Turk's Fluid)",
+    "Microscopy (Types, Uses and Care of Microscopes in Haematology)",
+    "Quality Assurance in Haematological Testing, Principles of Total Quality Management"
+  ],
+  // hemp mirrors hem's topic names 1:1 - same "different lens, separate
+  // array" reasoning as micp above.
+  hemp: [
+    "Introduction to Haematology — Practical Approach", "Haematopoiesis — Practical Approach",
+    "Erythropoiesis — Practical Approach", "Leukopoiesis — Practical Approach",
+    "Blood Anticoagulants, Mechanism of Action and Effects on Blood Cells — Practical Approach",
+    "Blood Sample Collection (Phlebotomy), Handling and Storage of Blood",
+    "Types of Haematological Stains, Principles of Staining and Staining Techniques",
+    "Blood Smears/Films Preparation & Examination (Thick and Thin Blood Smears)",
+    "Manual Estimation of Total Leukocyte Counts of Blood (Using Turk's Fluid)",
+    "Microscopy (Types, Uses and Care of Microscopes in Haematology)",
+    "Quality Assurance in Haematological Testing, Principles of Total Quality Management"
+  ],
+  bc2p: [
+    "Estimation of Plasma Glucose", "Sampling Techniques", "Order of Draw", "Phases of Analysis",
+    "Spectrophotometry", "Dilution of Solutions"
+  ],
+  gpa: [
+    "Introduction to General Pathology", "Cellular Adaptation, Cell Injury and Cell Death",
+    "Haemodynamic Disorders", "Cell Cycle, Control and Applications", "Acute Inflammation",
+    "Chemical Mediators of Inflammation", "Wound Healing — Tissue Repair/Regeneration",
+    "Chronic Inflammation", "Acquired Immune Response", "Cell Cycle and Neoplasia"
+  ],
+  bc2: [
+    "Lipid Metabolism",
+    "Bile Salts, Lipoprotein and Cholesterol Biosynthesis I (bile salts, bile pigments, bile acid, gall bladder secretion regulation, cholelithiasis)",
+    "Bile Salts, Lipoprotein and Cholesterol Biosynthesis II (cholesterol biosynthesis, disorders of cholesterol biosynthesis)",
+    "Free Radicals and Reactive Oxygen Species", "Nitrogen and Amino Acid Metabolism", "Structural Proteins",
+    "Biosynthesis of Haem & Bilirubin", "Haemoglobinopathies / Oxygen Carriers",
+    "Biochemical Basis of Inheritable Diseases"
+  ],
+  pha: [
+    "Principles of Drug Action: General Introduction", "Principles of Drug Action: Targets of Drug Action",
+    "Principles of Drug Action: How Drugs Act — Signal Transduction",
+    "Principles of Drug Action: Quantitative Drug-Receptor Interactions",
+    "General/Introductory Pharmacology: Pharmacokinetics", "Adrenergic Pharmacology", "Cholinergic Pharmacology"
+  ],
+  an2: [
+    "The Abdomen & Abdominal Walls", "Peritoneum and Peritoneal Cavity",
+    "Gastrointestinal Tract and Accessory Organs", "Neurovasculature of the GI Tract", "Pelvis and Perineum",
+    "Microscopic Anatomy — Histology of the Cardiovascular System",
+    "Microscopic Anatomy — Histology of the Respiratory System",
+    "Microscopic Anatomy — Histology of the GI Tract",
+    "Microscopic Anatomy — Histology of the Urinary System"
   ]
 };
 
@@ -20206,6 +20411,77 @@ const CONTENT = {
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
+
+// A course is "ready" the moment at least one of its topics has authored
+// CONTENT. Courses with a non-empty TOPICS list but zero CONTENT entries
+// (e.g. cap/csf/bc1/... right after skeleton deploy, before topics are
+// filled in) are "coming soon" - CoursesView/CourseView should check this
+// and render the placeholder instead of an empty topic list.
+const isCourseReady = (cid) => {
+  const topics = TOPICS[cid] || [];
+  if (!topics.length) return false;
+  return topics.some((_, i) => !!contentFor(cid, i));
+};
+const courseReadyCount = (cid) => (TOPICS[cid] || []).filter((_, i) => !!contentFor(cid, i)).length;
+
+// ===================== COHORT / LEVEL MODEL =====================
+// A student's level is COMPUTED from when they entered (entryYear), never
+// stored directly - this is what makes promotion automatic and generational
+// (see planning discussion): nobody's account needs to be touched by hand
+// for a cohort to move from Level 100 to Level 200 next year.
+//
+// ACADEMIC_CALENDAR holds one small, yearly-maintained entry per academic
+// year. `rollover` is the real "students depart" date that ends that
+// cohort's final semester of the year - promotion fires on that date, not
+// on KNUST's official year-start or next semester's teaching-start date
+// (confirmed: this cohort's own Sem 2 vacation date, not a guess).
+const ACADEMIC_CALENDAR = {
+  // Level 100 Sem 2 cohort's actual vacation date this year - hardcoded
+  // because it's the real, confirmed date, not a provisional one.
+  2025: { rollover: "2026-09-04" },
+  // 2026/2027 KNUST calendar - Sem 2 "Students Depart" is published as
+  // provisional (26 Jun 2027); update this once the real date is confirmed
+  // closer to the time, same as 2025 was hardcoded above once it was known.
+  2026: { rollover: "2027-06-26", provisional: true },
+};
+// Ceiling for the MLS program - nobody's computed level should climb past
+// this even if the calendar keeps rolling forward.
+const MAX_LEVEL = 400;
+
+// entryYear = the academic year (e.g. 2025) a student entered Level 100 in.
+// Returns their current level today, capped at MAX_LEVEL. `overrideLevel`
+// (from the manual-override field, e.g. for repeats/deferrals) always wins
+// when set, per the edge-case plan.
+function computeCurrentLevel(entryYear, today = new Date(), overrideLevel = null) {
+  if (overrideLevel != null) return overrideLevel;
+  if (!entryYear) return null;
+  let level = 100;
+  let year = entryYear;
+  while (ACADEMIC_CALENDAR[year] && today >= new Date(ACADEMIC_CALENDAR[year].rollover + "T00:00:00")) {
+    level += 100;
+    year += 1;
+    if (level >= MAX_LEVEL) { level = MAX_LEVEL; break; }
+  }
+  return level;
+}
+
+// Access = entryLevel..currentLevel inclusive (a student keeps everything
+// they've already passed through), never just the current level alone.
+function accessibleLevels(entryYear, today = new Date(), overrideLevel = null) {
+  const current = computeCurrentLevel(entryYear, today, overrideLevel);
+  const levels = [];
+  for (let lv = 100; lv <= current; lv += 100) levels.push(lv);
+  return levels;
+}
+
+// All courses a student can currently open: every level they've passed
+// through, both semesters (semester itself is just a display filter/tab,
+// not an access gate - a student can review last semester's material too).
+const coursesForStudent = (entryYear, today = new Date(), overrideLevel = null) => {
+  const levels = accessibleLevels(entryYear, today, overrideLevel);
+  return COURSES.filter((c) => levels.includes(c.level));
+};
+
 
 // Builds a grounding block listing the real syllabus topics (and a sample of
 // key concepts) for a course, so every AI question generator - Practice set
