@@ -23471,7 +23471,7 @@ function CoursesView({ app }) {
   return (
     <div className="view">
       <div className="eyebrow">This semester</div>
-      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Seven courses, one climb</h1>
+      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>{numberWord(visibleCourses.length)} course{visibleCourses.length === 1 ? "" : "s"}, one climb</h1>
 
       {/* Compact level/semester bar - tap to open the switcher popup
           (rendered at the App root - see openLevelPicker). Styled distinctly
@@ -29374,6 +29374,9 @@ const lastTopicKey = (u) => "ascend_lasttopic:" + String(u).toLowerCase();
 // login) and AuthScreen's signup step so both ask it the exact same way.
 const LEVEL_SEMESTER_OPTIONS = [100, 200, 300, 400].flatMap((lv) => [1, 2].map((sem) => ({ level: lv, semester: sem })));
 
+const NUMBER_WORDS = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen"];
+const numberWord = (n) => NUMBER_WORDS[n] || String(n);
+
 function LevelSemesterPicker({ value, onPick }) {
   const letters = "abcdefgh";
   return (
@@ -29383,11 +29386,12 @@ function LevelSemesterPicker({ value, onPick }) {
         return (
           <button key={i} type="button" className="btn btn-g btn-sm" style={{
               justifyContent: "flex-start", textAlign: "left",
-              background: on ? "var(--amber)" : undefined,
-              color: on ? "#1a1200" : undefined,
+              background: on ? "var(--amber)" : "var(--bg-3)",
+              color: on ? "#1a1200" : "var(--text)",
+              border: on ? "1px solid var(--amber)" : "1px solid var(--line-2)",
               fontWeight: on ? 700 : 500,
             }} onClick={() => onPick(opt.level, opt.semester)}>
-            <span className="mono" style={{ opacity: 0.7, marginRight: 6 }}>{letters[i]}.</span>
+            <span className="mono" style={{ color: on ? "#1a1200" : "var(--amber-2)", marginRight: 6, fontWeight: 700 }}>{letters[i]}.</span>
             Level {opt.level}, Sem {opt.semester}
           </button>
         );
@@ -33324,11 +33328,11 @@ export default function App() {
           <div className="notif-scrim" onClick={() => setLevelPickerOpen(false)} />
           <div className="notif-panel" style={{ margin: 0, width: "min(420px, calc(100vw - 32px))", maxHeight: "none" }}>
             <div className="notif-head">
-              <div style={{ fontWeight: 700, fontSize: 15 }}>Level & semester</div>
+              <div style={{ fontWeight: 700, fontSize: 15, color: "var(--text)", fontFamily: "inherit" }}>Level & semester</div>
               <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setLevelPickerOpen(false)}><Ic.x p={15} /></button>
             </div>
             <div style={{ padding: 18 }}>
-              <p style={{ color: "var(--text-3)", fontSize: 13, marginTop: 0, marginBottom: 14 }}>
+              <p style={{ color: "var(--text-2)", fontSize: 13, marginTop: 0, marginBottom: 14, fontFamily: "inherit" }}>
                 Retaking a course? Switch back to that level/semester and you'll see only that combo's materials, nothing else.
               </p>
               <LevelSemesterPicker
