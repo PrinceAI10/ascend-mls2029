@@ -23546,7 +23546,7 @@ function CoursesView({ app }) {
           return (
             <button className="card hover" key={c.id} style={{ textAlign: "left" }} onClick={() => app.go("course", { courseId: c.id })}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
-                <span className="day-tag">{(c.day || "").slice(0, 3)}</span>
+                <span className="day-tag">{live ? `${Math.round(prog * 100)}%` : "SOON"}</span>
                 <Ring value={prog} size={38} stroke={4} />
               </div>
               <h3 style={{ fontSize: 16.5, margin: "0 0 3px" }}>{c.name}</h3>
