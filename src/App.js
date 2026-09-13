@@ -23452,25 +23452,17 @@ function CoursesView({ app }) {
   }).filter(Boolean);
 
   // Gate by level AND semester, both picked at signup (not the calendar -
-  // the student told us directly). A student sees every course from
-  // (level, semester) combos strictly below their effective one - that's
-  // completed material, still worth reviewing - plus ONLY their exact
-  // effective combo's courses, never a semester or level ahead of it.
-  // effectiveLevelSemester clamps anyone who picked further than what's
-  // been built (Level 200 Sem 2+, or 300/400) down to Level 200 Sem 1 - the
-  // most advanced materials that actually exist - instead of showing them
-  // nothing. A student with no level set yet (existing accounts from before
-  // this field existed, or a skipped signup) sees the full course list,
-  // same as before this change - no regression.
-  const myLevel = app.progress.level || null;
-  const eff = myLevel ? effectiveLevelSemester(myLevel, app.progress.semester || 1) : null;
-  const visibleCourses = eff
-    ? COURSES.filter((c) => {
-        const lvl = c.level || 100, sem = c.semester || 1;
-        const key = levelSemesterKey(lvl, sem), effKey = levelSemesterKey(eff.level, eff.semester);
-        return key <= effKey;
-      })
-    : COURSES;
+  // the student told us directly). A student sees ONLY their exact
+  // effective (level, semester) combo's courses - nothing from other
+  // levels or the other semester, own or otherwise. effectiveLevelSemester
+  // clamps anyone who picked further than what's been built (Level 200
+  // Sem 2+, or 300/400) down to Level 200 Sem 1 - the most advanced
+  // materials that actually exist - instead of showing them nothing.
+  // (No "no level set" fallback anymore either - LevelSemesterGate on the
+  // App root blocks Home from ever rendering until level+semester are set,
+  // so app.progress.level is always populated by the time this runs.)
+  const eff = effectiveLevelSemester(app.progress.level || 100, app.progress.semester || 1);
+  const visibleCourses = COURSES.filter((c) => (c.level || 100) === eff.level && (c.semester || 1) === eff.semester);
 
   return (
     <div className="view">
@@ -29190,39 +29182,18 @@ function HomeView({ app }) {
 </div>
 
 {/* LEVEL & SEMESTER - fixes existing accounts stuck showing every course
-    (progress.level was never set for them), and lets anyone update it as
-    they move up a level/semester. */}
+    (progress.level was never set for them), and lets anyone switch anytime
+    (e.g. retaking a course: switch back to that level/semester and you'll
+    see only that combo's materials, nothing else). */}
 <div className="card" style={{ marginTop: 12, background: "var(--bg-2)", border: "1px solid var(--line)", borderRadius: "var(--r)", padding: "20px" }}>
   <div style={{ fontWeight: 600, fontSize: 15, color: "var(--text)", marginBottom: 2 }}>Level & semester</div>
   <div style={{ color: "var(--text-3)", fontSize: 13, marginBottom: 12 }}>
     Controls which courses show up under Courses. {app.progress.level ? `Currently Level ${app.progress.level}, Semester ${app.progress.semester || 1}.` : "Not set yet - pick yours below."}
   </div>
-  <div style={{ display: "flex", gap: 8, marginBottom: 8, flexWrap: "wrap" }}>
-    {[100, 200, 300, 400].map((lv) => (
-      <button key={lv} className="btn btn-g btn-sm" style={{
-          flex: "1 1 70px",
-          background: app.progress.level === lv ? "var(--amber)" : undefined,
-          color: app.progress.level === lv ? "#1a1200" : undefined,
-          fontWeight: app.progress.level === lv ? 700 : 500,
-        }}
-        onClick={() => app.setLevelSemester(lv, app.progress.semester || 1)}>
-        Level {lv}
-      </button>
-    ))}
-  </div>
-  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-    {[1, 2].map((sem) => (
-      <button key={sem} className="btn btn-g btn-sm" style={{
-          flex: "1 1 70px",
-          background: app.progress.semester === sem ? "var(--amber)" : undefined,
-          color: app.progress.semester === sem ? "#1a1200" : undefined,
-          fontWeight: app.progress.semester === sem ? 700 : 500,
-        }}
-        onClick={() => app.setLevelSemester(app.progress.level || 100, sem)}>
-        Semester {sem}
-      </button>
-    ))}
-  </div>
+  <LevelSemesterPicker
+    value={app.progress.level ? { level: app.progress.level, semester: app.progress.semester || 1 } : null}
+    onPick={(lv, sem) => app.setLevelSemester(lv, sem)}
+  />
 </div>
 
 <div className="card card-feature" style={{ marginTop: 26, textAlign: "center" }}>
@@ -29383,6 +29354,52 @@ const progKey = (u) => "ascend_progress:" + String(u).toLowerCase();
 // why a topic visited last session stopped showing up. This key persists
 // durably via the same localStorage-backed `store` used for progress.
 const lastTopicKey = (u) => "ascend_lasttopic:" + String(u).toLowerCase();
+// Blocking full-screen gate for any student whose account has no
+// level/semester recorded yet. No skip button - answering is the only way
+// through. Mirrors the same two-question flow from AuthScreen's signup, just
+// standalone so it can run post-login too, for accounts that predate that
+// field or otherwise slipped through without answering.
+// The full set of (level, semester) combos a student can pick, as ONE
+// lettered question - "a. Level 100, Semester 1", "b. Level 100, Semester 2",
+// ... up through Level 400, Semester 2. Shared by LevelSemesterGate (post-
+// login) and AuthScreen's signup step so both ask it the exact same way.
+const LEVEL_SEMESTER_OPTIONS = [100, 200, 300, 400].flatMap((lv) => [1, 2].map((sem) => ({ level: lv, semester: sem })));
+
+function LevelSemesterPicker({ value, onPick }) {
+  const letters = "abcdefgh";
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+      {LEVEL_SEMESTER_OPTIONS.map((opt, i) => {
+        const on = value && value.level === opt.level && value.semester === opt.semester;
+        return (
+          <button key={i} type="button" className="btn btn-g btn-sm" style={{
+              justifyContent: "flex-start", textAlign: "left",
+              background: on ? "var(--amber)" : undefined,
+              color: on ? "#1a1200" : undefined,
+              fontWeight: on ? 700 : 500,
+            }} onClick={() => onPick(opt.level, opt.semester)}>
+            <span className="mono" style={{ opacity: 0.7, marginRight: 6 }}>{letters[i]}.</span>
+            Level {opt.level}, Sem {opt.semester}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function LevelSemesterGate({ onDone, name }) {
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
+      <div className="card" style={{ maxWidth: 460, width: "100%", padding: 28 }}>
+        <div className="eyebrow" style={{ marginBottom: 6 }}>{name ? `Welcome back, ${name}` : "One quick thing"}</div>
+        <h2 style={{ fontSize: 20, margin: "0 0 4px" }}>Which level & semester are you in?</h2>
+        <p style={{ color: "var(--text-3)", fontSize: 13.5, marginTop: 0, marginBottom: 18 }}>This decides which courses you'll see. You can switch it anytime from Home - handy if you're retaking a course from an earlier semester.</p>
+        <LevelSemesterPicker value={null} onPick={onDone} />
+      </div>
+    </div>
+  );
+}
+
 function AuthScreen({ onAuthed }) {
   const [tab, setTab] = useState("login");        // login | signup | forgot
   const [username, setUsername] = useState("");
@@ -29921,49 +29938,14 @@ function AuthScreen({ onAuthed }) {
               <input className="auth-input" type="email" name="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@gmail.com" autoCapitalize="none" autoCorrect="off" />
             </label>
             <label className="field">
-              <span>Your current level</span>
-              <div style={{ display: "flex", gap: 8, marginTop: 2 }}>
-                {[100, 200, 300, 400].map((lv) => (
-                  <button
-                    key={lv}
-                    type="button"
-                    onClick={() => setSignupLevel(lv)}
-                    className="btn btn-g btn-sm"
-                    style={{
-                      flex: 1,
-                      background: signupLevel === lv ? "var(--amber)" : undefined,
-                      color: signupLevel === lv ? "#1a1200" : undefined,
-                      fontWeight: signupLevel === lv ? 700 : 500,
-                    }}
-                  >
-                    Level {lv}
-                  </button>
-                ))}
+              <span>Which level & semester are you in?</span>
+              <div style={{ marginTop: 6 }}>
+                <LevelSemesterPicker
+                  value={signupLevel ? { level: signupLevel, semester: signupSemester } : null}
+                  onPick={(lv, sem) => { setSignupLevel(lv); setSignupSemester(sem); }}
+                />
               </div>
             </label>
-            {signupLevel && (
-              <label className="field">
-                <span>Your current semester</span>
-                <div style={{ display: "flex", gap: 8, marginTop: 2 }}>
-                  {[1, 2].map((sem) => (
-                    <button
-                      key={sem}
-                      type="button"
-                      onClick={() => setSignupSemester(sem)}
-                      className="btn btn-g btn-sm"
-                      style={{
-                        flex: 1,
-                        background: signupSemester === sem ? "var(--amber)" : undefined,
-                        color: signupSemester === sem ? "#1a1200" : undefined,
-                        fontWeight: signupSemester === sem ? 700 : 500,
-                      }}
-                    >
-                      Semester {sem}
-                    </button>
-                  ))}
-                </div>
-              </label>
-            )}
           </>
         )}
         {!otpOpen && err && <div className="auth-err">{err}</div>}
@@ -32839,6 +32821,16 @@ export default function App() {
   );
 
   if (!auth) return <div className={rootCls}><style>{CSS}</style><AuthScreen onAuthed={handleAuthed} /></div>;
+
+  // Blocking gate: any account without a level+semester set (existing
+  // accounts from before this field existed, or anyone who somehow got
+  // through without answering) hits this the moment they'd otherwise see
+  // Home - nothing else renders until they answer, then it drops straight
+  // into Home already filtered correctly. No dismiss/skip option, matching
+  // "the question pops up, then redirects" - it isn't optional.
+  if (progress && !progress.level) {
+    return <div className={rootCls}><style>{CSS}</style><LevelSemesterGate onDone={setLevelSemester} name={progress.name} /></div>;
+  }
 
   const resumeOverlay = resuming ? (
     <div style={{
