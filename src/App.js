@@ -551,17 +551,17 @@ const COURSES_L100_S1 = [
 
 // ---- Level 200, Semester 1 ----
 const COURSES_L200_S1 = [
-  { id: "ph2", name: "Physiology II", code: "", level: 200, semester: 1 },
-  { id: "ph2p", name: "Physiology II Practicals", code: "", level: 200, semester: 1 },
-  { id: "micp", name: "Microbiology I Practicals", code: "", level: 200, semester: 1, contentMode: "practical-application", sourceCourseId: "mic" },
-  { id: "hemp", name: "Hematology I Practicals", code: "", level: 200, semester: 1, contentMode: "practical-application", sourceCourseId: "hem" },
-  { id: "bc2p", name: "Biochemistry II Practicals", code: "", level: 200, semester: 1 },
-  { id: "gpa", name: "General Pathology", code: "", level: 200, semester: 1 },
-  { id: "mic", name: "Microbiology I", code: "", level: 200, semester: 1 },
-  { id: "bc2", name: "Biochemistry 2", code: "", level: 200, semester: 1 },
-  { id: "hem", name: "Hematology I", code: "", level: 200, semester: 1 },
-  { id: "pha", name: "Pharmacology I", code: "", level: 200, semester: 1 },
-  { id: "an2", name: "Anatomy II", code: "", level: 200, semester: 1 },
+  { id: "ph2", name: "Physiology II", code: "SMS 283", level: 200, semester: 1 },
+  { id: "ph2p", name: "Physiology II Practicals", code: "SMS 283P", level: 200, semester: 1 },
+  { id: "micp", name: "Microbiology I Practicals", code: "SMS 293P", level: 200, semester: 1, contentMode: "practical-application", sourceCourseId: "mic" },
+  { id: "hemp", name: "Hematology I Practicals", code: "SMS 287P", level: 200, semester: 1, contentMode: "practical-application", sourceCourseId: "hem" },
+  { id: "bc2p", name: "Biochemistry II Practicals", code: "SMS 281P", level: 200, semester: 1 },
+  { id: "gpa", name: "General Pathology", code: "SMS 291", level: 200, semester: 1 },
+  { id: "mic", name: "Microbiology I", code: "SMS 293", level: 200, semester: 1 },
+  { id: "bc2", name: "Biochemistry 2", code: "SMS 281", level: 200, semester: 1 },
+  { id: "hem", name: "Hematology I", code: "SMS 287", level: 200, semester: 1 },
+  { id: "pha", name: "Pharmacology I", code: "SMS 295", level: 200, semester: 1 },
+  { id: "an2", name: "Anatomy II", code: "SMS 285", level: 200, semester: 1 },
 ];
 
 // Master course list. Order matters only for display fallbacks; everywhere
@@ -1037,7 +1037,7 @@ function SlidesView({ app }) {
           {loading ? "Loading slide library..." : `${files.length} file${files.length === 1 ? "" : "s"} in the shared Drive folder`}
         </div>
         <div style={{ display: "grid", gap: 10 }}>
-          {COURSES.map((c) => {
+          {visibleCoursesFor(app.progress).map((c) => {
             const count = loading ? null : (TOPICS[c.id] || []).reduce(
               (sum, _, i) => sum + slideCountForTopic(files, c.id, i), 0
             );
@@ -20512,6 +20512,19 @@ function effectiveLevelSemester(level, semester) {
   return best;
 }
 
+// Single shared source of truth for "which courses should this student see
+// right now" - CoursesView's own gating logic, factored out so every OTHER
+// view that lists/pickers courses (Slides, PASSCO/Papers, the AI tutor,
+// Forum, etc.) applies the exact same level+semester rule instead of each
+// independently showing the unfiltered COURSES array. Anything that lists
+// courses for a logged-in student should call this, not COURSES directly -
+// that's what "adapts to level/semester everywhere" actually means in code.
+function visibleCoursesFor(progress) {
+  if (!progress || !progress.level) return COURSES;
+  const eff = effectiveLevelSemester(progress.level, progress.semester || 1);
+  return COURSES.filter((c) => (c.level || 100) === eff.level && (c.semester || 1) === eff.semester);
+}
+
 /* ===================== LIFETIME STREAK / HALL OF FAME =====================
    Suggested design (implemented below):
    - `streak` (existing field) is the CURRENT semester's streak - unchanged.
@@ -27288,7 +27301,15 @@ function PapersView({ app }) {
   const [courseId, setCourseId] = useState(() => {
     try {
       const saved = sessionStorage.getItem('ascend_papers_course');
-      return saved || "ana";
+      // Was hardcoded to "ana" as the ultimate fallback - a Level 100 Sem 2
+      // course - meaning a student who never explicitly clicked a course
+      // pill would silently get AI-generated practice questions for a
+      // course that may have nothing to do with their actual level/
+      // semester. Fall back to the first course actually visible to them
+      // instead, so the default is adaptive too, not just the picker UI.
+      if (saved) return saved;
+      const first = visibleCoursesFor(app.progress)[0];
+      return first ? first.id : "ana";
     } catch { return "ana"; }
   });
   
@@ -27550,7 +27571,7 @@ function PapersView({ app }) {
 
       {tab === "passco" && (active
         ? <PasscoSet paper={active.paper} chunkStart={active.chunkStart} chunkEnd={active.chunkEnd} mode={active.mode} onExit={function() { setActive(null); }} app={app} />
-        : <PasscoPicker onStart={function(paper, chunkStart, chunkEnd, mode) { setActive({ paper: paper, chunkStart: chunkStart, chunkEnd: chunkEnd, mode: mode }); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (error) {} }} chunk={CHUNK} passcoScores={app.progress.passcoScores} />
+        : <PasscoPicker onStart={function(paper, chunkStart, chunkEnd, mode) { setActive({ paper: paper, chunkStart: chunkStart, chunkEnd: chunkEnd, mode: mode }); try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (error) {} }} chunk={CHUNK} passcoScores={app.progress.passcoScores} progress={app.progress} />
       )}
 
       {tab === "youtube" && (
@@ -27561,7 +27582,7 @@ function PapersView({ app }) {
         <div className="card" style={{ marginTop: 12 }}>
           <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Course</label>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: tab === "similar" ? 16 : 4 }}>
-            {COURSES.map(function(c) {
+            {visibleCoursesFor(app.progress).map(function(c) {
               return (
                 <button key={c.id} className="btn btn-sm" style={{ background: courseId === c.id ? "var(--amber)" : "var(--bg-3)", color: courseId === c.id ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={function() { setCourseId(c.id); setPracticeTopicIdx(""); }}>{c.code}</button>
               );
@@ -27649,17 +27670,27 @@ function PapersView({ app }) {
 /* PasscoPicker: lists real past papers (grouped by course), and lets the student
    pick a 50-question chunk and a mode (practice or exam). Chunking keeps sets to
    50 so a 100+ question paper never overwhelms - you solve 50, then the next 50. */
-function PasscoPicker({ onStart, chunk, passcoScores }) {
+function PasscoPicker({ onStart, chunk, passcoScores, progress }) {
   const scores = passcoScores || {};
   const [openPaper, setOpenPaper] = useState(null);
   const [mode, setMode] = useState("practice");
-  if (!PAST_PAPERS.length) {
-    return <div className="card" style={{ marginTop: 12, color: "var(--text-2)", fontSize: 14 }}>No passco papers uploaded yet. They will appear here as they are added.</div>;
+  // Every passco paper currently uploaded is for Level 100 Sem 2 courses -
+  // there's nothing yet for the other levels/semesters this app now
+  // supports. Rather than showing L100S2 papers to a student who's viewing
+  // a different level (which would be actively wrong - those questions
+  // don't match what they're studying), only show a paper if its course
+  // code belongs to the student's currently-selected level+semester. As
+  // papers get added for other combos, they'll appear automatically the
+  // moment their courseCode matches a visible course - no extra wiring.
+  const visibleCodes = new Set(visibleCoursesFor(progress).map((c) => c.code));
+  const papers = PAST_PAPERS.filter((p) => visibleCodes.has(p.courseCode));
+  if (!papers.length) {
+    return <div className="card" style={{ marginTop: 12, color: "var(--text-2)", fontSize: 14 }}>No passco papers for this level/semester yet. They will appear here as they are added.</div>;
   }
   return (
     <div style={{ marginTop: 12 }}>
       <p style={{ color: "var(--text-2)", fontSize: 14, marginTop: 0 }}>Real passco papers, worked out and turned into tap-to-answer questions. Long papers are split into sets of {chunk} so you never burn out - finish one set, then the next.</p>
-      {PAST_PAPERS.map(function(paper) {
+      {papers.map(function(paper) {
         var nChunks = Math.ceil(paper.questions.length / chunk);
         var isOpen = openPaper === paper.id;
         return (
@@ -28272,9 +28303,15 @@ function ResourcesView() {
 // ============================================================
 // StudyToolsView - Fully Debugged
 // ============================================================
-function StudyToolsView() {
+function StudyToolsView({ app }) {
   const [tab, setTab] = useState("cards");
-  const [courseId, setCourseId] = useState("ana");
+  // Was hardcoded to "ana" (a Level 100 Sem 2 course) - defaulted every
+  // student, regardless of their actual level/semester, into generating
+  // flashcards/mind maps against a course they may not even be able to see
+  // in the filtered picker above. Empty default forces an explicit pick
+  // from whatever's actually visible to them, same pattern as LAMLA's own
+  // course selector.
+  const [courseId, setCourseId] = useState("");
   const [topic, setTopic] = useState("");
   const [material, setMaterial] = useState("");
   const [source, setSource] = useState("topic");
@@ -28289,7 +28326,7 @@ function StudyToolsView() {
 
   const subject = source === "paste"
     ? `the following material:\n\n${material}`
-    : `the topic "${topic || "this subject"}" in ${courseById(courseId).name} (${courseById(courseId).code}) for a KNUST first-year medical laboratory science student`;
+    : `the topic "${topic || "this subject"}"${courseById(courseId) ? ` in ${courseById(courseId).name} (${courseById(courseId).code})` : ""} for a KNUST first-year medical laboratory science student`;
 
   const genCards = async () => {
     if (busy) return;
@@ -28417,7 +28454,7 @@ function StudyToolsView() {
           <>
             <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Course</label>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 14 }}>
-              {COURSES.map((c) => (
+              {visibleCoursesFor(app.progress).map((c) => (
                 <button key={c.id} className="btn btn-sm" style={{ background: courseId === c.id ? "var(--amber)" : "var(--bg-3)", color: courseId === c.id ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setCourseId(c.id)}>{c.code}</button>
               ))}
             </div>
@@ -30450,7 +30487,7 @@ Return ONLY compact JSON, no markdown, no trailing commas, all strings short: {"
           <label className="field"><span>Which course?</span>
             <select className="auth-input" value={courseId} onChange={(e) => { setCourseId(e.target.value); setTopicIndex(""); }}>
               <option value="">Select a course</option>
-              {COURSES.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+              {visibleCoursesFor(app.progress).map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
             </select>
           </label>
           
@@ -30862,7 +30899,13 @@ function ForumView({ app }) {
   // ask form
   const [aTitle, setATitle] = useState("");
   const [aBody, setABody] = useState("");
-  const [aCourse, setACourse] = useState(app.forumCourse || (COURSES[0] && COURSES[0].id));
+  // Was defaulting to COURSES[0] (Human Anatomy, Level 100 Sem 2) globally,
+  // regardless of the asking student's actual level/semester - fall back to
+  // their first currently-visible course instead.
+  const [aCourse, setACourse] = useState(() => {
+    const vis = visibleCoursesFor(app.progress);
+    return app.forumCourse || (vis[0] && vis[0].id) || (COURSES[0] && COURSES[0].id);
+  });
   const [aTopicIdx, setATopicIdx] = useState(app.forumTopic != null ? String(app.forumTopic) : "");
   const [reply, setReply] = useState("");
 
@@ -31014,7 +31057,7 @@ function ForumView({ app }) {
           <div className="card" style={{ marginTop: 12 }}>
             <label className="eyebrow" style={{ display: "block", marginBottom: 6 }}>Course</label>
             <select className="auth-input" value={aCourse} onChange={(e) => { setACourse(e.target.value); setATopicIdx(""); }} style={{ width: "100%", marginBottom: 12 }}>
-              {COURSES.map((c) => <option key={c.id} value={c.id}>{c.code} · {c.name}</option>)}
+              {visibleCoursesFor(app.progress).map((c) => <option key={c.id} value={c.id}>{c.code} · {c.name}</option>)}
             </select>
             <label className="eyebrow" style={{ display: "block", marginBottom: 6 }}>Topic</label>
             <select className="auth-input" value={aTopicIdx} onChange={(e) => setATopicIdx(e.target.value)} style={{ width: "100%", marginBottom: 12 }}>
@@ -32754,7 +32797,7 @@ export default function App() {
       case "forum": return <ForumView app={app} />;
       case "review": return <ReviewView app={app} />;
       case "search": return <SearchView app={app} />;
-      case "tools": return <StudyToolsView />;
+      case "tools": return <StudyToolsView app={app} />;
       case "papers": return <PapersView app={app} />;
       case "plan": return <PlanView />;
       case "resources": return <ResourcesView />;
