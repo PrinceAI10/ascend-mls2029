@@ -20482,6 +20482,107 @@ const coursesForStudent = (entryYear, today = new Date(), overrideLevel = null) 
   return COURSES.filter((c) => levels.includes(c.level));
 };
 
+/* ===================== LIFETIME STREAK / HALL OF FAME =====================
+   Suggested design (implemented below):
+   - `streak` (existing field) is the CURRENT semester's streak - unchanged.
+   - `lifetimeStreak` is a running total: every time a semester closes, that
+     semester's final streak is ADDED to lifetimeStreak, then `streak` resets
+     to 0 for the new semester. Lifetime never goes down - it's the "career
+     total" the way Duolingo's total XP never resets even though daily/weekly
+     numbers do.
+   - The first 3 students by that semester's final streak get locked into a
+     shared Hall of Fame record for that semester, so the achievement is
+     preserved even though the leaderboard itself moves on to the new term.
+
+   Both boundaries are now real, confirmed dates from KNUST's 2026/2027
+   Provisional Academic Calendar:
+   - Sem1 -> Sem2 (this year): "Students Depart" Sat, Feb 13, 2027.
+   - Sem2 -> next year's Sem1: "Students Depart" Sat, Jun 26, 2027 - already
+     covered by ACADEMIC_CALENDAR's 2026 entry above, so it's not repeated
+     here (that one drives the level-100->200-style yearly rollover too).
+   This needs one line added to SEMESTER_BOUNDARIES every year once KNUST
+   publishes that year's Sem1->Sem2 "Students Depart" date - same yearly
+   upkeep ACADEMIC_CALENDAR already requires. */
+const SEMESTER_BOUNDARIES = [
+  // First Semester 2026/2027 "Students Depart" (confirmed, KNUST calendar
+  // item 1.21) -> Second Semester begins. `forYear: 2026` ties this to the
+  // 2026/2027 academic-year window specifically (the window ACADEMIC_CALENDAR
+  // resolves as yearKey === 2026), so it stops applying once the next annual
+  // rollover (Jun 26, 2027) moves yearKey to 2027 - it won't wrongly persist
+  // into next year's Sem1.
+  { date: "2027-02-13", forYear: 2026, key: "S2" },
+];
+
+// A stable id for "the semester currently in progress", changes exactly on
+// the dates configured above. Used purely to detect "a boundary has been
+// crossed since I last checked", not to compute level.
+function semesterKeyFor(today = new Date()) {
+  const t = today.getTime();
+  const years = Object.keys(ACADEMIC_CALENDAR).map(Number).sort((a, b) => a - b);
+  let yearKey = years.length ? years[0] : today.getFullYear();
+  for (const y of years) {
+    if (t >= new Date(ACADEMIC_CALENDAR[y].rollover + "T00:00:00").getTime()) yearKey = y + 1;
+  }
+  // Only a boundary tagged for THIS academic-year window can apply, so a
+  // mid-year marker never bleeds into the following year once yearKey moves
+  // past it (see SEMESTER_BOUNDARIES comment above).
+  const extra = SEMESTER_BOUNDARIES
+    .filter((b) => b.forYear === yearKey && t >= new Date(b.date + "T00:00:00").getTime())
+    .sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+  return extra ? `${yearKey}:${extra.key}` : `${yearKey}`;
+}
+
+// Pure function: given a progress object, decides whether a semester
+// boundary was crossed since progress.lastSemesterKey was last recorded.
+// Returns the SAME object (no-op) if nothing changed, or a new object with
+// streak banked into lifetimeStreak and reset. The caller is responsible for
+// persisting the result and (if `closed` is set) publishing it to the Hall
+// of Fame board - see closeSemesterAndPersist in the App component.
+function closeSemesterIfNeeded(progress, today = new Date()) {
+  const key = semesterKeyFor(today);
+  if (!progress.lastSemesterKey) {
+    // First time this field is ever populated for this student - just start
+    // tracking from here, don't treat "never set before" as a closure.
+    return { ...progress, lastSemesterKey: key, closed: null };
+  }
+  if (progress.lastSemesterKey === key) return { ...progress, closed: null };
+  const closedKey = progress.lastSemesterKey;
+  const closedStreak = progress.streak || 0;
+  return {
+    ...progress,
+    lifetimeStreak: (progress.lifetimeStreak || 0) + closedStreak,
+    streak: 0,
+    lastSemesterKey: key,
+    closed: { key: closedKey, streak: closedStreak },
+  };
+}
+
+const hofSlug = (name) => String(name || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+
+// Publishes this student's final streak for a semester that just closed for
+// them. Every student who logs in right after the boundary publishes their
+// own entry (first-write-wins per student, since the key is per-student) -
+// there's no central "close the semester" job to run, it happens organically
+// as students open the app. Safe to call more than once; last value wins.
+async function publishHallOfFameEntry(semesterKey, name, streak) {
+  if (!semesterKey || !name || !streak) return;
+  try { await store.setShared(`ascend_hof:${semesterKey}:${hofSlug(name)}`, { name, streak }); } catch {}
+}
+
+// Reads back the top 3 (by streak) published for a given closed semester.
+async function topStreaksForSemester(semesterKey, n = 3) {
+  try {
+    const keys = await store.listShared(`ascend_hof:${semesterKey}:`);
+    const rows = [];
+    for (const k of keys) {
+      const v = await store.get(k, true);
+      if (v && v.name && typeof v.streak === "number") rows.push(v);
+    }
+    return rows.sort((a, b) => b.streak - a.streak).slice(0, n);
+  } catch { return []; }
+}
+
+
 
 // Builds a grounding block listing the real syllabus topics (and a sample of
 // key concepts) for a course, so every AI question generator - Practice set
@@ -23314,6 +23415,14 @@ function CoursesView({ app }) {
     return t ? { cid, tid: parseInt(tid, 10), title: t.title, course: courseById(cid) } : null;
   }).filter(Boolean);
 
+  // Gate by the level picked at signup: a student sees their current level's
+  // courses plus everything below it (levels already passed through), never
+  // just their current level in isolation. A student with no level set yet
+  // (existing accounts from before this field existed, or a skipped signup)
+  // sees the full course list, same as before this change - no regression.
+  const myLevel = app.progress.level || null;
+  const visibleCourses = myLevel ? COURSES.filter((c) => (c.level || 100) <= myLevel) : COURSES;
+
   return (
     <div className="view">
       <div className="eyebrow">This semester</div>
@@ -23354,7 +23463,7 @@ function CoursesView({ app }) {
       <div className="card" style={{ marginTop: 16, marginBottom: 18 }}>
         <div style={{ fontWeight: 650, fontSize: 14.5, marginBottom: 10 }}>Course code key</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 8 }}>
-          {COURSES.map((c) => (
+          {visibleCourses.map((c) => (
             <div key={c.id} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 14 }}>
               <span className="mono" style={{ color: "var(--amber-2)", fontWeight: 600, minWidth: 76 }}>{c.code}</span>
               <span style={{ color: "var(--text)" }}>{c.name}</span>
@@ -23363,7 +23472,7 @@ function CoursesView({ app }) {
         </div>
       </div>
       <div className="grid g2">
-        {COURSES.map((c) => {
+        {visibleCourses.map((c) => {
           const count = (TOPICS[c.id] || []).length;
           const live = builtInCourse(c.id);
           const done = Object.keys(app.progress.completed || {}).filter((k) => k.startsWith(c.id + ":")).length;
@@ -23372,7 +23481,7 @@ function CoursesView({ app }) {
           return (
             <button className="card hover" key={c.id} style={{ textAlign: "left" }} onClick={() => app.go("course", { courseId: c.id })}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
-                <span className="day-tag">{c.day.slice(0, 3)}</span>
+                <span className="day-tag">{(c.day || "").slice(0, 3)}</span>
                 <Ring value={prog} size={38} stroke={4} />
               </div>
               <h3 style={{ fontSize: 16.5, margin: "0 0 3px" }}>{c.name}</h3>
@@ -28605,6 +28714,38 @@ function WeeklyRecapCard({ app }) {
   );
 }
 
+// Shows the top 3 streaks from the most recently CLOSED semester (not the
+// live one in progress). Reads via topStreaksForSemester - see the Hall of
+// Fame data layer near coursesForStudent for how entries get published.
+// Renders nothing until at least one entry has been published for the prior
+// key, so this stays invisible until the first semester boundary actually
+// fires (see the SEMESTER_BOUNDARIES / ACADEMIC_CALENDAR note there).
+function HallOfFameStrip({ app }) {
+  const [top, setTop] = useState([]);
+  useEffect(() => {
+    let alive = true;
+    const prevKey = app.progress.lastSemesterKey;
+    if (!prevKey) return;
+    topStreaksForSemester(prevKey).then((rows) => { if (alive) setTop(rows); });
+    return () => { alive = false; };
+  }, [app.progress.lastSemesterKey]);
+  if (!top.length) return null;
+  return (
+    <div className="card" style={{ marginTop: 16 }}>
+      <div className="eyebrow" style={{ marginBottom: 10 }}>Last semester's top streaks</div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {top.map((row, i) => (
+          <div key={row.name + i} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 14 }}>
+            <span className="mono" style={{ width: 18, color: "var(--amber-2)", fontWeight: 700 }}>{i + 1}</span>
+            <span style={{ flex: 1, color: "var(--text)" }}>{row.name}</span>
+            <span className="chip streakchip"><Ic.flame p={13} /><span className="val">{row.streak}</span></span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function HomeView({ app }) {
   const jsDay = new Date().getDay();
   const todayCourse = courseById(DAILY[jsDay].courseId);
@@ -28897,6 +29038,9 @@ function HomeView({ app }) {
             <span className="eyebrow">Streak</span>
           </div>
           <div style={{ marginTop: 12, fontSize: 14, color: "var(--text-2)" }}>{doneToday ? "Logged today." : "Answer today's question."}</div>
+          {app.progress.lifetimeStreak > 0 && (
+            <div className="mono" style={{ marginTop: 6, fontSize: 11.5, color: "var(--text-3)" }}>Lifetime: {app.progress.lifetimeStreak}</div>
+          )}
         </div>
         <div className="card">
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -28912,6 +29056,7 @@ function HomeView({ app }) {
           <div style={{ marginTop: 12, fontSize: 14, color: "var(--text-2)" }}>7 courses · {totalBuilt()} topics live</div>
         </div>
       </div>
+      <HallOfFameStrip app={app} />
       <button className="card card-feature hover" style={{ width: "100%", textAlign: "left", marginTop: 16 }} onClick={() => app.go("daily")}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 14 }}>
           <div>
@@ -29131,7 +29276,12 @@ const verifyAndMigratePw = async (acct, pw) => {
   const lockUntil = failCount >= MAX_FAILED_ATTEMPTS ? now + LOCKOUT_MS : null;
   return { ok: false, locked: false, retryAt: lockUntil, upgrade: null, failCount, lockUntil };
 };
-const freshProgress = (name) => ({ name, xp: 0, streak: 0, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], achievements: [], streakFreezes: 1, frozenDays: {} });
+// `level` is the student's self-reported current level (100, 200, ...),
+// collected once at signup (see AuthScreen). It rides along inside the same
+// progress JSON blob already synced to Supabase/local storage, so no schema
+// migration is needed. null means "not asked yet / skipped" - CoursesView
+// treats null as "show everything" so existing accounts see no regression.
+const freshProgress = (name) => ({ name, xp: 0, streak: 0, lifetimeStreak: 0, lastSemesterKey: null, level: null, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], achievements: [], streakFreezes: 1, frozenDays: {} });
 // New-user reward: never let someone land on the home screen seeing 0 XP,
 // a 0-day streak, and an empty achievement shelf. Signing up itself earns
 // 10 XP and unlocks the "Get Started" badge, applied before the app ever
@@ -29154,6 +29304,11 @@ function AuthScreen({ onAuthed }) {
   const [pw, setPw] = useState("");
   const [pw2, setPw2] = useState("");
   const [email, setEmail] = useState("");
+  // Which level a new student is entering at - asked once at signup so
+  // CoursesView can show only the right materials from the very first login.
+  // Options are the levels that currently have any content planned; extend
+  // this list as higher levels get built out.
+  const [signupLevel, setSignupLevel] = useState(null);
   const [err, setErr] = useState("");
   const [ok, setOk] = useState("");
   const [busy, setBusy] = useState(false);
@@ -29266,6 +29421,7 @@ function AuthScreen({ onAuthed }) {
     if (tab === "signup") {
       if (pw !== pw2) { setErr("The two passwords do not match."); return; }
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) { setErr("Enter a valid email so you can reset your password later."); return; }
+      if (!signupLevel) { setErr("Select your current level so we can show you the right materials."); return; }
     }
     setBusy(true);
     const key = u.toLowerCase();
@@ -29278,7 +29434,10 @@ function AuthScreen({ onAuthed }) {
           return;
         }
         const { salt, hash, algo } = await hashNewPw(pw);
-        const acct = { username: u, email: email.trim().toLowerCase(), salt, hash, algo, createdAt: Date.now() };
+        // `level` isn't persisted on the account record itself (accounts are
+        // just credentials) - it's carried separately into this student's
+        // fresh progress object by handleAuthed, right below.
+        const acct = { username: u, email: email.trim().toLowerCase(), salt, hash, algo, createdAt: Date.now(), level: signupLevel };
         accounts[key] = acct;
         await store.set("ascend_accounts", accounts);
         await store.set("ascend_session", key);
@@ -29669,6 +29828,27 @@ function AuthScreen({ onAuthed }) {
             <PasswordInput id="password2" autoComplete="new-password" label="Confirm password" value={pw2} onChange={(e) => setPw2(e.target.value)} placeholder="Type it again" />
             <label className="field"><span>Email (so you can reset your password if you forget it)</span>
               <input className="auth-input" type="email" name="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@gmail.com" autoCapitalize="none" autoCorrect="off" />
+            </label>
+            <label className="field">
+              <span>Your current level</span>
+              <div style={{ display: "flex", gap: 8, marginTop: 2 }}>
+                {[100, 200].map((lv) => (
+                  <button
+                    key={lv}
+                    type="button"
+                    onClick={() => setSignupLevel(lv)}
+                    className="btn btn-g btn-sm"
+                    style={{
+                      flex: 1,
+                      background: signupLevel === lv ? "var(--amber)" : undefined,
+                      color: signupLevel === lv ? "#1a1200" : undefined,
+                      fontWeight: signupLevel === lv ? 700 : 500,
+                    }}
+                  >
+                    Level {lv}
+                  </button>
+                ))}
+              </div>
             </label>
           </>
         )}
@@ -30856,7 +31036,7 @@ const NAV = [
   { key: "feedback", label: "Feedback", icon: "star", group: "More" }
 ];
 
-const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0, passcoScores: {}, achievements: [], streakFreezes: 1, frozenDays: {} };
+const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lifetimeStreak: 0, lastSemesterKey: null, level: null, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0, passcoScores: {}, achievements: [], streakFreezes: 1, frozenDays: {} };
 
 // ============================================
 // QUICK FLOW BUTTON - Paste this here
@@ -31207,7 +31387,7 @@ export default function App() {
   // devices open side-by-side at the same time still converge without
   // needing a resume event at all.
   useEffect(() => {
-    const onVis = () => { if (document.visibilityState === "visible") pullCloudProgress(); };
+    const onVis = () => { if (document.visibilityState === "visible") { pullCloudProgress(); checkSemesterClose(); } };
     document.addEventListener("visibilitychange", onVis);
     window.addEventListener("focus", onVis);
     const interval = setInterval(pullCloudProgress, 90 * 1000);
@@ -31217,6 +31397,27 @@ export default function App() {
       clearInterval(interval);
     };
   }, []);
+
+  // Checks whether a semester boundary was crossed since we last recorded
+  // progress.lastSemesterKey. If so: banks the just-ended streak into
+  // lifetimeStreak, resets the current streak, publishes this student's
+  // final streak to the shared Hall of Fame board for that closed semester,
+  // and persists all of it. No-op (and cheap) the vast majority of the time,
+  // since the key only changes on a real calendar boundary.
+  const checkSemesterClose = () => {
+    setProgress((cur) => {
+      if (!cur) return cur;
+      const next = closeSemesterIfNeeded(cur);
+      if (next.closed) {
+        publishHallOfFameEntry(next.closed.key, cur.name, next.closed.streak);
+      }
+      const { closed, ...clean } = next;
+      if (JSON.stringify(clean) === JSON.stringify(cur)) return cur;
+      if (supaUid) db.saveProgress(supaUid, clean);
+      else if (auth) { store.set(progKey(auth.username), clean); db.saveProgress(localSynthId(clean.name), clean); }
+      return clean;
+    });
+  };
 
   const persist = (pIn) => {
     // Fold any newly-unlocked achievements into the SAME object being saved,
@@ -31861,11 +32062,25 @@ export default function App() {
     const { finalProgress, isNewAccount } = await mergeLocalCloudProgress(acct.username);
     // Genuinely new account: no saved progress locally or in the cloud.
     if (isNewAccount) setShowWelcomeTour(true);
+    // Carry the level picked at signup (acct.level) into this student's very
+    // first progress record, and persist it immediately - otherwise it only
+    // lives in AuthScreen's local state and is lost as soon as this screen
+    // unmounts. Never overwrites an existing account's already-saved level.
+    if (isNewAccount && acct.level && !finalProgress.level) {
+      finalProgress.level = acct.level;
+      try {
+        await store.set(progKey(acct.username), finalProgress);
+        await db.saveProgress(localSynthId(acct.username), finalProgress);
+      } catch {}
+    }
     setXpChange(finalProgress.xp || 0);
     setProgress(finalProgress);
     const savedLastTopic = (await store.get(lastTopicKey(acct.username))) || (await store.get(lastTopicKey("anon")));
     if (savedLastTopic) setLastTopic((prev) => prev || savedLastTopic);
     setRoute({ view: "home" });
+    // Check for a semester boundary crossed while this student was away
+    // (e.g. logging back in after the break) right after progress lands.
+    setTimeout(checkSemesterClose, 0);
   };
   
   const logout = async () => {
