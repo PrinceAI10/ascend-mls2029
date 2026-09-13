@@ -23453,10 +23453,17 @@ function CourseView({ app }) {
 /* ------------------------------- courses -------------------------------- */
 function CoursesView({ app }) {
   const [query, setQuery] = useState("");
-  // Build a searchable index of every LIVE topic across all courses.
+  // Build a searchable index of every LIVE topic - scoped to courses
+  // actually visible at the student's current level/semester, same rule as
+  // everywhere else. All authored content right now happens to be Level
+  // 100 Sem 2, so this doesn't change today's results, but it stops this
+  // search from surfacing another level's notes once those get authored
+  // too - it should behave exactly like PASSCO/YouTube/everything else.
+  const visibleIds = new Set(visibleCoursesFor(app.progress).map((c) => c.id));
   const allLive = [];
   Object.keys(CONTENT).forEach((k) => {
     const [cid, tid] = k.split(":");
+    if (!visibleIds.has(cid)) return;
     const t = CONTENT[k];
     allLive.push({ cid, tid: parseInt(tid, 10), title: t.title, course: courseById(cid) });
   });
@@ -27095,13 +27102,22 @@ const YOUTUBE_VIDEOS = [
 // ============================================================
 // YOUTUBE VIEW COMPONENT
 // ============================================================
-function YouTubeView() {
+function YouTubeView({ app }) {
   const [filterCourse, setFilterCourse] = useState("all");
   const [filterPriority, setFilterPriority] = useState("all");
+
+  // Every video currently uploaded is tagged to a Level 100 Sem 2 course -
+  // same situation as passco. Only show a video if its courseId belongs to
+  // a course actually visible at the student's current level/semester, so
+  // switching away makes L100S2 videos vanish (matching passco's behavior)
+  // until videos get added for other levels - at which point they'll
+  // appear automatically the moment their courseId matches what's visible.
+  const visibleIds = new Set(visibleCoursesFor(app.progress).map((c) => c.id));
+  const VISIBLE_VIDEOS = YOUTUBE_VIDEOS.filter((v) => visibleIds.has(v.courseId));
+
+  const courses = [...new Set(VISIBLE_VIDEOS.map(v => v.courseId))];
   
-  const courses = [...new Set(YOUTUBE_VIDEOS.map(v => v.courseId))];
-  
-  let filteredVideos = YOUTUBE_VIDEOS;
+  let filteredVideos = VISIBLE_VIDEOS;
   if (filterCourse !== "all") {
     filteredVideos = filteredVideos.filter(v => v.courseId === filterCourse);
   }
@@ -27177,6 +27193,9 @@ function YouTubeView() {
       </div>
       
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
+        {filteredVideos.length === 0 && (
+          <div className="card" style={{ color: "var(--text-2)", fontSize: 14 }}>No videos for this level/semester yet. They will appear here as they are added.</div>
+        )}
         {filteredVideos.map((v) => {
           const course = courseById(v.courseId);
           const videoId = getVideoId(v.url);
@@ -27575,7 +27594,7 @@ function PapersView({ app }) {
       )}
 
       {tab === "youtube" && (
-        <YouTubeView />
+        <YouTubeView app={app} />
       )}
 
       {(tab !== "passco" && tab !== "youtube" && !(tab === "solve" && practiceActive) && !(tab === "similar" && similarActive)) && (
