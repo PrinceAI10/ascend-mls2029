@@ -20482,6 +20482,32 @@ const coursesForStudent = (entryYear, today = new Date(), overrideLevel = null) 
   return COURSES.filter((c) => levels.includes(c.level));
 };
 
+// Every (level, semester) combo that actually has courses defined, in
+// chronological/progression order. Extend this the moment a new combo gets
+// added to COURSES (e.g. once Level 200 Sem 2 is authored) - everything
+// below reads from this list, nothing else needs to change.
+const LEVEL_SEMESTER_CONTENT = [
+  { level: 100, semester: 1 },
+  { level: 100, semester: 2 },
+  { level: 200, semester: 1 },
+];
+const levelSemesterKey = (lv, sem) => lv * 10 + sem;
+
+// A student picks their real level/semester at signup, which may be AHEAD
+// of what's actually been built (e.g. Level 200 Sem 2, or Level 300/400 -
+// none of which have courses yet). Rather than showing them nothing, this
+// clamps down to the most advanced combo that actually exists - "if you
+// picked further than we've built, here's as far as we've got." Returns the
+// exact combo picked if it exists.
+function effectiveLevelSemester(level, semester) {
+  const wanted = levelSemesterKey(level || 100, semester || 1);
+  let best = LEVEL_SEMESTER_CONTENT[0];
+  for (const c of LEVEL_SEMESTER_CONTENT) {
+    if (levelSemesterKey(c.level, c.semester) <= wanted) best = c;
+  }
+  return best;
+}
+
 /* ===================== LIFETIME STREAK / HALL OF FAME =====================
    Suggested design (implemented below):
    - `streak` (existing field) is the CURRENT semester's streak - unchanged.
@@ -20533,10 +20559,11 @@ function semesterKeyFor(today = new Date()) {
 }
 
 // Which semester (1 or 2) is actually running right now, per the same
-// SEMESTER_BOUNDARIES data semesterKeyFor uses - no need to ask the student,
-// the calendar already answers it. Before the year's Sem1->Sem2 boundary
-// (or if no boundary is configured for the current academic-year window
-// yet - see the yearly-upkeep note above), we're in Sem1 by default.
+// SEMESTER_BOUNDARIES data semesterKeyFor uses. Not currently used for
+// course gating (CoursesView uses what the student picked at signup
+// instead - see effectiveLevelSemester), kept as a utility for the
+// lifetime-streak/Hall-of-Fame semester-close logic and any future move to
+// auto-advancing a student's semester off the calendar instead of asking.
 function currentSemesterNumber(today = new Date()) {
   return semesterKeyFor(today).endsWith(":S2") ? 2 : 1;
 }
@@ -23424,23 +23451,24 @@ function CoursesView({ app }) {
     return t ? { cid, tid: parseInt(tid, 10), title: t.title, course: courseById(cid) } : null;
   }).filter(Boolean);
 
-  // Gate by level AND semester: a student sees every course from levels
-  // already fully passed through (both semesters - that's completed
-  // material, still worth reviewing), plus ONLY the current semester's
-  // courses at their current level (the semester ahead isn't relevant yet,
-  // and at level 100 semester 2 doesn't exist for a semester-1 student to
-  // jump into early). Current semester is read off the real calendar dates,
-  // not asked - see currentSemesterNumber. A student with no level set yet
-  // (existing accounts from before this field existed, or a skipped signup)
-  // sees the full course list, same as before this change - no regression.
+  // Gate by level AND semester, both picked at signup (not the calendar -
+  // the student told us directly). A student sees every course from
+  // (level, semester) combos strictly below their effective one - that's
+  // completed material, still worth reviewing - plus ONLY their exact
+  // effective combo's courses, never a semester or level ahead of it.
+  // effectiveLevelSemester clamps anyone who picked further than what's
+  // been built (Level 200 Sem 2+, or 300/400) down to Level 200 Sem 1 - the
+  // most advanced materials that actually exist - instead of showing them
+  // nothing. A student with no level set yet (existing accounts from before
+  // this field existed, or a skipped signup) sees the full course list,
+  // same as before this change - no regression.
   const myLevel = app.progress.level || null;
-  const curSem = currentSemesterNumber();
-  const visibleCourses = myLevel
+  const eff = myLevel ? effectiveLevelSemester(myLevel, app.progress.semester || 1) : null;
+  const visibleCourses = eff
     ? COURSES.filter((c) => {
-        const lvl = c.level || 100;
-        if (lvl > myLevel) return false;         // haven't reached this level yet
-        if (lvl < myLevel) return true;           // fully passed level - keep both semesters
-        return (c.semester || 1) === curSem;       // current level - current semester only
+        const lvl = c.level || 100, sem = c.semester || 1;
+        const key = levelSemesterKey(lvl, sem), effKey = levelSemesterKey(eff.level, eff.semester);
+        return key <= effKey;
       })
     : COURSES;
 
@@ -29161,6 +29189,42 @@ function HomeView({ app }) {
   </button>
 </div>
 
+{/* LEVEL & SEMESTER - fixes existing accounts stuck showing every course
+    (progress.level was never set for them), and lets anyone update it as
+    they move up a level/semester. */}
+<div className="card" style={{ marginTop: 12, background: "var(--bg-2)", border: "1px solid var(--line)", borderRadius: "var(--r)", padding: "20px" }}>
+  <div style={{ fontWeight: 600, fontSize: 15, color: "var(--text)", marginBottom: 2 }}>Level & semester</div>
+  <div style={{ color: "var(--text-3)", fontSize: 13, marginBottom: 12 }}>
+    Controls which courses show up under Courses. {app.progress.level ? `Currently Level ${app.progress.level}, Semester ${app.progress.semester || 1}.` : "Not set yet - pick yours below."}
+  </div>
+  <div style={{ display: "flex", gap: 8, marginBottom: 8, flexWrap: "wrap" }}>
+    {[100, 200, 300, 400].map((lv) => (
+      <button key={lv} className="btn btn-g btn-sm" style={{
+          flex: "1 1 70px",
+          background: app.progress.level === lv ? "var(--amber)" : undefined,
+          color: app.progress.level === lv ? "#1a1200" : undefined,
+          fontWeight: app.progress.level === lv ? 700 : 500,
+        }}
+        onClick={() => app.setLevelSemester(lv, app.progress.semester || 1)}>
+        Level {lv}
+      </button>
+    ))}
+  </div>
+  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+    {[1, 2].map((sem) => (
+      <button key={sem} className="btn btn-g btn-sm" style={{
+          flex: "1 1 70px",
+          background: app.progress.semester === sem ? "var(--amber)" : undefined,
+          color: app.progress.semester === sem ? "#1a1200" : undefined,
+          fontWeight: app.progress.semester === sem ? 700 : 500,
+        }}
+        onClick={() => app.setLevelSemester(app.progress.level || 100, sem)}>
+        Semester {sem}
+      </button>
+    ))}
+  </div>
+</div>
+
 <div className="card card-feature" style={{ marginTop: 26, textAlign: "center" }}>
   <div className="eyebrow" style={{ color: "var(--amber)", marginBottom: 10 }}>Built by the ASCEND team</div>
   <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8 }}>
@@ -29302,7 +29366,7 @@ const verifyAndMigratePw = async (acct, pw) => {
 // progress JSON blob already synced to Supabase/local storage, so no schema
 // migration is needed. null means "not asked yet / skipped" - CoursesView
 // treats null as "show everything" so existing accounts see no regression.
-const freshProgress = (name) => ({ name, xp: 0, streak: 0, lifetimeStreak: 0, lastSemesterKey: null, level: null, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], achievements: [], streakFreezes: 1, frozenDays: {} });
+const freshProgress = (name) => ({ name, xp: 0, streak: 0, lifetimeStreak: 0, lastSemesterKey: null, level: null, semester: null, lastActive: null, dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], achievements: [], streakFreezes: 1, frozenDays: {} });
 // New-user reward: never let someone land on the home screen seeing 0 XP,
 // a 0-day streak, and an empty achievement shelf. Signing up itself earns
 // 10 XP and unlocks the "Get Started" badge, applied before the app ever
@@ -29325,11 +29389,16 @@ function AuthScreen({ onAuthed }) {
   const [pw, setPw] = useState("");
   const [pw2, setPw2] = useState("");
   const [email, setEmail] = useState("");
-  // Which level a new student is entering at - asked once at signup so
-  // CoursesView can show only the right materials from the very first login.
-  // Options are the levels that currently have any content planned; extend
-  // this list as higher levels get built out.
+  // Which level + semester a new student is currently in - asked once at
+  // signup, as two follow-on questions, so CoursesView can show only the
+  // right materials from the very first login. Level offers every level the
+  // program has (100-400) even though content only currently goes up to
+  // Level 200 Sem 1 - see effectiveLevelSemester(), which clamps anyone who
+  // picks beyond what's built (e.g. Level 200 Sem 2, or 300/400) down to the
+  // most advanced materials that actually exist, rather than showing them
+  // nothing. Extend LEVEL_SEMESTER_CONTENT as higher levels get authored.
   const [signupLevel, setSignupLevel] = useState(null);
+  const [signupSemester, setSignupSemester] = useState(null);
   const [err, setErr] = useState("");
   const [ok, setOk] = useState("");
   const [busy, setBusy] = useState(false);
@@ -29443,6 +29512,7 @@ function AuthScreen({ onAuthed }) {
       if (pw !== pw2) { setErr("The two passwords do not match."); return; }
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) { setErr("Enter a valid email so you can reset your password later."); return; }
       if (!signupLevel) { setErr("Select your current level so we can show you the right materials."); return; }
+      if (!signupSemester) { setErr("Select your current semester too."); return; }
     }
     setBusy(true);
     const key = u.toLowerCase();
@@ -29458,7 +29528,7 @@ function AuthScreen({ onAuthed }) {
         // `level` isn't persisted on the account record itself (accounts are
         // just credentials) - it's carried separately into this student's
         // fresh progress object by handleAuthed, right below.
-        const acct = { username: u, email: email.trim().toLowerCase(), salt, hash, algo, createdAt: Date.now(), level: signupLevel };
+        const acct = { username: u, email: email.trim().toLowerCase(), salt, hash, algo, createdAt: Date.now(), level: signupLevel, semester: signupSemester };
         accounts[key] = acct;
         await store.set("ascend_accounts", accounts);
         await store.set("ascend_session", key);
@@ -29853,7 +29923,7 @@ function AuthScreen({ onAuthed }) {
             <label className="field">
               <span>Your current level</span>
               <div style={{ display: "flex", gap: 8, marginTop: 2 }}>
-                {[100, 200].map((lv) => (
+                {[100, 200, 300, 400].map((lv) => (
                   <button
                     key={lv}
                     type="button"
@@ -29871,6 +29941,29 @@ function AuthScreen({ onAuthed }) {
                 ))}
               </div>
             </label>
+            {signupLevel && (
+              <label className="field">
+                <span>Your current semester</span>
+                <div style={{ display: "flex", gap: 8, marginTop: 2 }}>
+                  {[1, 2].map((sem) => (
+                    <button
+                      key={sem}
+                      type="button"
+                      onClick={() => setSignupSemester(sem)}
+                      className="btn btn-g btn-sm"
+                      style={{
+                        flex: 1,
+                        background: signupSemester === sem ? "var(--amber)" : undefined,
+                        color: signupSemester === sem ? "#1a1200" : undefined,
+                        fontWeight: signupSemester === sem ? 700 : 500,
+                      }}
+                    >
+                      Semester {sem}
+                    </button>
+                  ))}
+                </div>
+              </label>
+            )}
           </>
         )}
         {!otpOpen && err && <div className="auth-err">{err}</div>}
@@ -31057,7 +31150,7 @@ const NAV = [
   { key: "feedback", label: "Feedback", icon: "star", group: "More" }
 ];
 
-const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lifetimeStreak: 0, lastSemesterKey: null, level: null, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0, passcoScores: {}, achievements: [], streakFreezes: 1, frozenDays: {} };
+const DEFAULT_PROGRESS = { name: "", xp: 0, streak: 0, lifetimeStreak: 0, lastSemesterKey: null, level: null, semester: null, lastActive: shift(-1), dailyDone: {}, completed: {}, review: [], scores: {}, bookmarks: [], passcoCompleted: 0, passcoScores: {}, achievements: [], streakFreezes: 1, frozenDays: {} };
 
 // ============================================
 // QUICK FLOW BUTTON - Paste this here
@@ -32083,12 +32176,14 @@ export default function App() {
     const { finalProgress, isNewAccount } = await mergeLocalCloudProgress(acct.username);
     // Genuinely new account: no saved progress locally or in the cloud.
     if (isNewAccount) setShowWelcomeTour(true);
-    // Carry the level picked at signup (acct.level) into this student's very
-    // first progress record, and persist it immediately - otherwise it only
-    // lives in AuthScreen's local state and is lost as soon as this screen
-    // unmounts. Never overwrites an existing account's already-saved level.
+    // Carry the level + semester picked at signup (acct.level/acct.semester)
+    // into this student's very first progress record, and persist it
+    // immediately - otherwise it only lives in AuthScreen's local state and
+    // is lost as soon as this screen unmounts. Never overwrites an existing
+    // account's already-saved values.
     if (isNewAccount && acct.level && !finalProgress.level) {
       finalProgress.level = acct.level;
+      finalProgress.semester = acct.semester || 1;
       try {
         await store.set(progKey(acct.username), finalProgress);
         await db.saveProgress(localSynthId(acct.username), finalProgress);
@@ -32360,6 +32455,14 @@ export default function App() {
     return { mastered, nextIntervalMs: mastered ? null : SRS_INTERVALS_MS[(next.find((m) => m.q === questionText) || {}).box || 0] };
   };
 
+  // Lets a student set/change their level+semester after signup - covers
+  // both existing accounts created before this field existed (progress.level
+  // is null, so CoursesView falls back to showing everything - this is what
+  // fixes that) and anyone who just needs to correct/update it later.
+  const setLevelSemester = (level, semester) => {
+    persist({ ...progress, level, semester });
+  };
+
   const setName = async () => {
     if (typeof window === "undefined") return;
     const raw = window.prompt("Change your username (this is your name on the leaderboard)", progress.name);
@@ -32579,6 +32682,7 @@ export default function App() {
     courseId: route.courseId, 
     topicId: route.topicId, 
     setName,
+    setLevelSemester,
     setReadingXp,
     setPasscoXp,
     awardForumXp,
