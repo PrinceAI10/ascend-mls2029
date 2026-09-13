@@ -20532,6 +20532,15 @@ function semesterKeyFor(today = new Date()) {
   return extra ? `${yearKey}:${extra.key}` : `${yearKey}`;
 }
 
+// Which semester (1 or 2) is actually running right now, per the same
+// SEMESTER_BOUNDARIES data semesterKeyFor uses - no need to ask the student,
+// the calendar already answers it. Before the year's Sem1->Sem2 boundary
+// (or if no boundary is configured for the current academic-year window
+// yet - see the yearly-upkeep note above), we're in Sem1 by default.
+function currentSemesterNumber(today = new Date()) {
+  return semesterKeyFor(today).endsWith(":S2") ? 2 : 1;
+}
+
 // Pure function: given a progress object, decides whether a semester
 // boundary was crossed since progress.lastSemesterKey was last recorded.
 // Returns the SAME object (no-op) if nothing changed, or a new object with
@@ -23415,13 +23424,25 @@ function CoursesView({ app }) {
     return t ? { cid, tid: parseInt(tid, 10), title: t.title, course: courseById(cid) } : null;
   }).filter(Boolean);
 
-  // Gate by the level picked at signup: a student sees their current level's
-  // courses plus everything below it (levels already passed through), never
-  // just their current level in isolation. A student with no level set yet
+  // Gate by level AND semester: a student sees every course from levels
+  // already fully passed through (both semesters - that's completed
+  // material, still worth reviewing), plus ONLY the current semester's
+  // courses at their current level (the semester ahead isn't relevant yet,
+  // and at level 100 semester 2 doesn't exist for a semester-1 student to
+  // jump into early). Current semester is read off the real calendar dates,
+  // not asked - see currentSemesterNumber. A student with no level set yet
   // (existing accounts from before this field existed, or a skipped signup)
   // sees the full course list, same as before this change - no regression.
   const myLevel = app.progress.level || null;
-  const visibleCourses = myLevel ? COURSES.filter((c) => (c.level || 100) <= myLevel) : COURSES;
+  const curSem = currentSemesterNumber();
+  const visibleCourses = myLevel
+    ? COURSES.filter((c) => {
+        const lvl = c.level || 100;
+        if (lvl > myLevel) return false;         // haven't reached this level yet
+        if (lvl < myLevel) return true;           // fully passed level - keep both semesters
+        return (c.semester || 1) === curSem;       // current level - current semester only
+      })
+    : COURSES;
 
   return (
     <div className="view">
