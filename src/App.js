@@ -715,20 +715,31 @@ const TOPICS = {
     "Urinalysis (Practical)", "Blood Typing (Practical)"
   ],
   mic: [
-    "Introduction to Microbiology", "Microbial Nutrition I", "Microbial Nutrition II", "Gram Positive Cocci",
-    "Gram Negative Cocci", "Enterobacteriaceae", "Pseudomonas Species", "Mycobacterial Pathogenesis and Diagnosis"
+    "Introduction to Microbiology", "Microbial Nutrition I", "Microbial Nutrition II", "Bacterial Genetics",
+    "Gram Positive Cocci", "Gram Negative Cocci",
+    "Gram Positive Rods: Bacillus, Corynebacterium and Listeria",
+    "Gram Positive Rods: Clostridium",
+    "Enterobacteriaceae", "Pseudomonas Species",
+    "Gram Negative Rods: Parvobacteria",
+    "Mycobacterial Pathogenesis and Diagnosis"
   ],
   // micp mirrors mic's topic names 1:1 (practical-application mode - see
   // COURSES_L200_S1). Kept as a separate array, not a reference, so the two
   // can diverge later if real practical slides ever arrive for this course.
   micp: [
     "Introduction to Microbiology — Practical Approach", "Microbial Nutrition I — Practical Approach",
-    "Microbial Nutrition II — Practical Approach", "Gram Positive Cocci — Practical Approach",
-    "Gram Negative Cocci — Practical Approach", "Enterobacteriaceae — Practical Approach",
-    "Pseudomonas Species — Practical Approach", "Mycobacterial Pathogenesis and Diagnosis — Practical Approach"
+    "Microbial Nutrition II — Practical Approach", "Bacterial Genetics — Practical Approach",
+    "Gram Positive Cocci — Practical Approach",
+    "Gram Negative Cocci — Practical Approach",
+    "Gram Positive Rods: Bacillus, Corynebacterium and Listeria — Practical Approach",
+    "Gram Positive Rods: Clostridium — Practical Approach",
+    "Enterobacteriaceae — Practical Approach",
+    "Pseudomonas Species — Practical Approach",
+    "Gram Negative Rods: Parvobacteria — Practical Approach",
+    "Mycobacterial Pathogenesis and Diagnosis — Practical Approach"
   ],
   hem: [
-    "Introduction to Haematology", "Haematopoiesis", "Erythropoiesis", "Leukopoiesis",
+    "Introduction to Haematology", "Haematopoiesis", "Erythropoiesis", "Leukopoiesis", "Thrombopoiesis",
     "Blood Anticoagulants, Mechanism of Action and Effects on Blood Cells",
     "Blood Sample Collection (Phlebotomy), Handling and Storage of Blood",
     "Types of Haematological Stains, Principles of Staining and Staining Techniques",
@@ -742,6 +753,7 @@ const TOPICS = {
   hemp: [
     "Introduction to Haematology — Practical Approach", "Haematopoiesis — Practical Approach",
     "Erythropoiesis — Practical Approach", "Leukopoiesis — Practical Approach",
+    "Thrombopoiesis — Practical Approach",
     "Blood Anticoagulants, Mechanism of Action and Effects on Blood Cells — Practical Approach",
     "Blood Sample Collection (Phlebotomy), Handling and Storage of Blood",
     "Types of Haematological Stains, Principles of Staining and Staining Techniques",
@@ -762,10 +774,18 @@ const TOPICS = {
   ],
   bc2: [
     "Lipid Metabolism",
+    "Lipid Metabolism, Synthesis and De Novo Synthesis of Fatty Acids",
     "Bile Salts, Lipoprotein and Cholesterol Biosynthesis I (bile salts, bile pigments, bile acid, gall bladder secretion regulation, cholelithiasis)",
     "Bile Salts, Lipoprotein and Cholesterol Biosynthesis II (cholesterol biosynthesis, disorders of cholesterol biosynthesis)",
-    "Free Radicals and Reactive Oxygen Species", "Nitrogen and Amino Acid Metabolism", "Structural Proteins",
+    "Lipid Transport",
+    "Amino Acid Synthesis",
+    "Nitrogen and Amino Acid Metabolism",
+    "Fate of the Carbon Skeleton (Amino Acids)",
+    "Transport of Ammonia",
+    "Catabolism of Sulfur-Containing Amino Acids",
+    "Free Radicals and Reactive Oxygen Species", "Structural Proteins",
     "Biosynthesis of Haem & Bilirubin", "Haemoglobinopathies / Oxygen Carriers",
+    "Applications of Molecular Techniques in Food Industry, Agriculture and Genetic Engineering",
     "Biochemical Basis of Inheritable Diseases"
   ],
   pha: [
@@ -776,7 +796,9 @@ const TOPICS = {
   ],
   an2: [
     "The Abdomen & Abdominal Walls", "Peritoneum and Peritoneal Cavity",
-    "Gastrointestinal Tract and Accessory Organs", "Neurovasculature of the GI Tract", "Pelvis and Perineum",
+    "Gastrointestinal Tract and Accessory Organs", "Neurovasculature of the GI Tract",
+    "Reproductive System", "Pelvis and Perineum", "Thorax", "Circulatory System",
+    "Cardiovascular System", "Respiratory System", "Digestive System", "Urinary System",
     "Microscopic Anatomy — Histology of the Cardiovascular System",
     "Microscopic Anatomy — Histology of the Respiratory System",
     "Microscopic Anatomy — Histology of the GI Tract",
@@ -20302,6 +20324,448 @@ My answers. One: melanoma is the most concerning diagnosis. Features suspicious 
   ]
 };
 
+/* --------------------------- an2:0 --------------------------- */
+const T_AN2_ABDWALL = {
+  courseId: "an2",
+  topicIndex: 0,
+  title: "The Abdomen & Abdominal Walls",
+  minutes: 32,
+  note: [
+    { q: "Where does 'the abdomen' actually start and end?",
+      body: `Most people think the abdomen is just "the belly area between the ribs and the hips." That's close, but not quite right, and getting it right matters.
+
+Step 1: The top of the abdomen is not a flat line. It's a dome. That dome is the diaphragm — the breathing muscle. It curves upward, so high that it reaches almost up to nipple level when you breathe out.
+
+Step 2: Because of that dome shape, organs like the liver, stomach, and spleen sit tucked up under your lower ribs, not down near your belly button.
+
+Step 3: The bottom of the abdomen has no wall at all. It just flows straight into the pelvis. Same open space, just a different bony frame around it (ribs and hips up top, pelvic bones down low).
+
+My Socratic question: if the top of your abdomen bulges up under your ribs almost to nipple level, what does that mean for something like a knife wound to the lower chest?
+
+Answer it yourself: it means a wound at the nipple line, not just the belly, can actually go into the abdomen. The danger zone is bigger than people expect.
+
+Crucial insight: "abdomen" = a dome-shaped space from about nipple level down to the pelvis. Not just "the visible belly."` },
+
+    { q: "Why is the belly wall built in layers instead of one thick slab?",
+      body: `Step 1: Think about what this wall has to survive. It stretches a lot (big meal, pregnancy). It gets squeezed hard (coughing, straining). And doctors need to be able to cut it open and sew it back safely.
+
+Step 2: A single thick slab can't do all that well. Layers can slide against each other and heal one at a time. So the body uses layers.
+
+Step 3: Going from outside to inside, the wall has: skin → a fatty layer under the skin → 3 sheets of muscle stacked on top of each other → a thin fibrous layer → a thin layer of fat → the lining of the belly cavity (called the peritoneum).
+
+Step 4: The 3 muscle sheets are the important part. Each one runs in a different direction — like 3 layers of a basket weave. One runs diagonally one way, the next runs diagonally the other way, the third runs straight across. That crisscross is what makes the wall strong in every direction, not just one.
+
+My Socratic question: if you only had ONE muscle sheet running in ONE direction, would your belly wall be equally strong when you twist, bend, and cough?
+
+Answer it yourself: no — one direction only protects you well in one direction of movement. Three crossing directions protect you from almost everything.
+
+Crucial insight: layers = flexibility + repairable strength. Three crossing muscle directions = strength in every direction, like plywood.` },
+
+    { q: "What is that strip of tissue running down the middle of your belly, and why do surgeons love cutting through it?",
+      body: `Step 1: Down the exact center of your belly, from your breastbone to your pubic bone, there's a tough white line made of fibrous tissue, not muscle. It's called the linea alba (just means "white line" in Latin).
+
+Step 2: It's formed because the muscle sheets from the LEFT side and the RIGHT side of your body meet in the middle and blend together into this strip.
+
+Step 3: Because it's fibrous tissue and not muscle, it has almost no blood vessels running through it.
+
+My Socratic question: if a surgeon needs to open your belly fast in an emergency, and wants the least bleeding and the fastest, most flexible cut — where would they cut?
+
+Answer it yourself: straight down the middle, through that white line. Little bleeding, no muscle damage, and they can extend the cut up or down instantly if they need more room.
+
+Step 4: Your belly button sits right inside this white line. It's just a scar — left over from where your umbilical cord attached before you were born.
+
+Crucial insight: the midline of your belly is the weakest-in-a-good-way spot — easiest and safest place to cut open, but also (because it's a gap in the muscle) a common spot for a hernia (a bulge where something pushes through a weak point).` },
+
+    { q: "The rectus sheath — why does the six-pack muscle need its own wrapper, and why does that wrapper change halfway down?",
+      body: `Step 1: The "six-pack" muscle (rectus abdominis) runs vertically on each side of the midline. It sits inside a wrapper made from the same 3 muscle sheets we already met — this wrapper is called the rectus sheath.
+
+Step 2: For the TOP two-thirds of your belly, that wrapper goes both in FRONT of the six-pack muscle AND behind it. Front and back coverage.
+
+Step 3: For the BOTTOM third of your belly (below a point called the arcuate line), the wrapper only goes in FRONT. There's nothing wrapping the back — just a thin fascia layer.
+
+My Socratic question: if the back wall of that wrapper just disappears below a certain point, what would you expect to happen at that exact spot over time, especially under strain?
+
+Answer it yourself: that's a weak spot — a place where a hernia (bulge) is more likely to form, because there's less structural backup there.
+
+Crucial insight: same muscle, but stronger packaging up high, weaker packaging down low. The switch-over point (arcuate line) is a known weak spot doctors watch for.` },
+
+    { q: "Why does appendicitis pain start near the belly button before moving to the right side?",
+      body: `Step 1: Nerves that supply the skin of your trunk run in horizontal stripes, like stacked rings, one stripe per spinal level. Your belly button skin belongs to one specific stripe/level.
+
+Step 2: Your appendix, even though it's deep inside, is connected to nerves from that SAME level (because of how it develops before birth). So your brain gets a confusing signal.
+
+Step 3: Early on, when the appendix first gets irritated, your brain can't tell exactly where the pain is — it just knows "somewhere in that nerve level," so you feel a dull ache around your belly button.
+
+Step 4: Later, when the inflammation spreads outward and touches the belly's inner lining (the peritoneum) right where the appendix actually sits — lower right side — a DIFFERENT, more precise set of nerves picks it up. Now the pain becomes sharp and moves to exactly where the appendix is.
+
+My Socratic question: why does the pain "move" instead of just starting in the right place to begin with?
+
+Answer it yourself: because two different nerve systems are reporting at two different times — a vague, shared-signal system first, then a precise, direct-contact system second.
+
+Crucial insight: dull pain in the middle = an early, vague signal. Sharp pain that moves to one side = the real trouble spot being directly touched. This pattern isn't random, it's rewired nerve confusion.` },
+
+    { q: "How does blood get to the belly wall, and why does that matter for surgery and disease?",
+      body: `Step 1: The belly wall doesn't get its blood from just one artery. It gets blood from several arteries at once, coming from both above (near your chest) and below (near your groin), that meet in the middle.
+
+Step 2: One artery comes down from up top, one artery comes up from down low, and they connect (anastomose) inside the six-pack muscle. So even if one supply route gets blocked, the wall still gets blood from the other direction.
+
+Step 3: There are also tiny veins around your belly button that quietly connect two totally different blood systems: the one that drains your gut (portal system) and the one that drains the rest of your body (systemic system). Normally these tiny veins are almost invisible.
+
+My Socratic question: if something blocks blood flow through the liver (raising pressure in the gut's blood system), what do you think happens to those tiny, normally-invisible veins around the belly button?
+
+Answer it yourself: they get forced to carry more blood than usual and swell up, becoming visible — you can literally see bulging veins radiating out from the belly button. This is a real sign doctors look for in liver disease.
+
+Crucial insight: redundant blood supply = a built-in backup system. The belly button's hidden vein connections are a "pressure valve" that reveals internal problems, like liver disease.` },
+
+    { q: "Quadrants vs. the 9-box grid — why do doctors use two different maps for the same belly?",
+      body: `Step 1: The simplest map: draw one line down the middle and one line across the belly button. Now you have 4 boxes — upper right, upper left, lower right, lower left. Fast and easy, good for quick descriptions.
+
+Step 2: The detailed map: draw 2 more vertical lines and 2 more horizontal lines, and you get 9 smaller boxes instead of 4. This lets you point to a much more specific spot.
+
+Step 3: Each of those 9 boxes generally sits over specific organs. For example: the box just under your ribs on the right usually means liver or gallbladder trouble. The box in the lower right usually means appendix trouble. The box in the upper middle usually means stomach trouble.
+
+My Socratic question: if a patient says "it hurts in my upper right," which map — 4 boxes or 9 boxes — tells you more about which specific organ to worry about?
+
+Answer it yourself: the 9-box map, because "right hypochondrium" (one of the 9) points almost directly at liver/gallbladder, while "upper right quadrant" (one of the 4) is a much bigger, vaguer area.
+
+Crucial insight: 4 boxes = fast first guess. 9 boxes = precise organ targeting. Doctors use whichever one the situation needs.` },
+
+    { q: "Why do surgeons choose different cuts (incisions) for different operations?",
+      body: `Step 1: We already know 2 key facts: the midline has almost no blood vessels and no muscle to cut through, and the muscle sheets run in 3 different directions with nerves running between some of them.
+
+Step 2: A surgeon uses those facts to choose exactly where and how to cut, depending on what they need:
+
+— Need speed and don't know exactly what's wrong yet? Cut straight down the midline. Fast, low blood loss, can be extended easily.
+
+— Doing a C-section or pelvic surgery? Use a low, curved, side-to-side cut just above the pubic bone. Heals with a better-looking scar and avoids some nerves.
+
+— Removing an appendix the old-fashioned open way? Use a small diagonal cut, and instead of slicing straight through the muscles, gently SEPARATE each muscle layer along the direction its fibers already run — like parting hair instead of cutting it. This keeps the muscle strong and keeps the nerves intact, but gives limited space to work in.
+
+— Operating on the gallbladder or liver? Cut below and parallel to the ribs. This DOES cut across muscle and sometimes nerves, but gives wide, direct access to that area.
+
+My Socratic question: if "separating along the fibers" protects the muscle and nerves, why doesn't every surgeon just always do that instead of cutting straight through?
+
+Answer it yourself: because separating along fibers only gives a small, limited opening — it can't be stretched wide or extended easily, so it's only good for small, well-defined jobs, not big emergencies.
+
+Crucial insight: every cut is a trade-off between speed/size of the opening versus how much muscle and nerve function you preserve. There's no single "best" cut — only the best cut for that specific job.` },
+
+    { q: "Groin hernias — what's actually different between the two main types?",
+      body: `Step 1: Both types push out through the groin area, and both can look and feel similar from outside. But they take completely different paths internally.
+
+Step 2: One type (called indirect) follows the same tunnel that a baby boy's testicle traveled through before birth, on its way down into the scrotum. This tunnel is called the deep ring. This hernia is something you're basically born with the setup for (a tunnel that didn't fully close).
+
+Step 3: The other type (called direct) doesn't use that tunnel at all. It just pushes straight through a weak patch of tissue in the groin wall, more directly forward. This type develops later in life, usually from years of strain or aging tissue.
+
+Step 4: There's a simple physical test: press a finger over that internal tunnel opening (the deep ring), then have the patient cough. If the bulge stays pushed in — it's the tunnel type (indirect), because you're blocking its only path. If the bulge pops out anyway — it's the direct-push type, because it was never using that tunnel to begin with.
+
+My Socratic question: if you know a hernia is blocked from bulging when you press on the internal tunnel opening, what does that tell you about which path it normally takes?
+
+Answer it yourself: it tells you it MUST be going through that exact opening — meaning it's the tunnel/indirect type.
+
+Crucial insight: same general area, two different doors. One is a tunnel present since birth; the other is a weak patch that gives way later in life. A simple pressure test tells them apart.` },
+
+    { q: "Beyond the groin — where else do hernias happen, and what holds up the back of your belly?",
+      body: `Step 1: Hernias happen wherever there's a natural weak spot. We already found several: the belly button (a natural gap), the area below the arcuate line (missing back wrapper), and the groin tunnel.
+
+Step 2: There's one more nearby weak spot below the groin ligament, where blood vessels pass through to the leg. A hernia here is more common in women because their pelvis is wider, making that passage bigger. This one is especially dangerous because the space is tight and rigid — if tissue gets stuck there, it can lose its blood supply quickly.
+
+Step 3: A hernia can also happen through an old surgery scar if it never fully healed back to full strength.
+
+Step 4: Now, the BACK of your belly (behind your organs, in front of your spine) is built differently — not sheets of muscle, but thick vertical muscle columns running alongside your lower spine. One of these connects your spine down to your hip/thigh bone and is used for bending your hip. Nerves that go on to supply your hip, groin, and thigh region thread through and around these back muscles on their way out to the leg.
+
+My Socratic question: if nearly every hernia we've studied happens at a "natural weak point," what's the fastest way to predict where a new one might occur, without memorizing each one separately?
+
+Answer it yourself: find the gaps — anywhere muscle coverage is thin, missing, or interrupted (natural openings, old scars, places where structures pass through) is a candidate weak spot.
+
+Crucial insight: you don't need to memorize every hernia type as a separate fact. Once you understand "weak spot = hernia risk," you can predict most of them yourself just by knowing the structure.` },
+  ],
+  theory: [
+    { q: "State the boundaries of the abdominal cavity and explain why the diaphragm's shape means the cavity extends higher than the visible waistline.", a: "The abdominal cavity is bounded superiorly by the diaphragm, which domes up as high as the xiphisternum/T9 level anteriorly on full expiration; inferiorly it is continuous with the pelvic cavity at the pelvic inlet; posteriorly by the lumbar vertebrae, posterior abdominal wall muscles and twelfth ribs; and anterolaterally by the muscular abdominal wall. Because the diaphragm domes upward under the lower ribs, upper abdominal organs sit protected within the rib cage, so penetrating trauma from the nipple line downward can enter the abdominal cavity." },
+    { q: "List the nine layers of the anterior abdominal wall from superficial to deep.", a: "Skin; superficial fascia (Camper's fatty layer and Scarpa's membranous layer below the umbilicus); external oblique muscle/aponeurosis; internal oblique muscle/aponeurosis; transversus abdominis muscle/aponeurosis; transversalis fascia; extraperitoneal fat; parietal peritoneum." },
+    { q: "Describe how the composition of the rectus sheath differs above and below the arcuate line, and state the clinical significance of this line.", a: "Above the arcuate line, the external oblique aponeurosis and half of internal oblique pass anterior to rectus abdominis, while the other half of internal oblique and transversus abdominis pass posterior to it, giving a complete anterior and posterior sheath. Below the arcuate line, all three aponeuroses pass anterior to rectus abdominis, so only transversalis fascia lies behind the muscle. This absence of posterior sheath below the line makes it a site of structural weakness, associated with spigelian hernias." },
+    { q: "What is the linea alba, and why is it surgically favoured for emergency laparotomy?", a: "The linea alba is a midline fibrous raphe formed by fusion of the aponeuroses of the external oblique, internal oblique and transversus abdominis from both sides, running from the xiphoid process to the pubic symphysis. Because it is avascular fibrous tissue, a midline incision through it causes minimal bleeding, requires no muscle cutting, and can be extended quickly, making it ideal when rapid, extensile access is needed and the diagnosis is uncertain." },
+    { q: "Explain, in terms of dermatomes, why appendicitis pain begins periumbilically before localising to the right iliac fossa.", a: "The midgut, including the appendix, shares visceral afferent innervation with the T10 spinal segment, which also supplies the skin around the umbilicus, so early visceral inflammation is felt as poorly localised periumbilical pain. Once inflammation reaches the parietal peritoneum overlying the appendix in the right iliac fossa, which is supplied directly by somatic nerves at that site, the pain becomes sharp and localises precisely to McBurney's point." },
+    { q: "Trace the arterial supply of the rectus abdominis region above and below the umbilicus and name the collateral pathway it creates.", a: "Above the umbilicus, the superior epigastric artery (a terminal branch of the internal thoracic artery) runs down within the rectus sheath deep to rectus abdominis. Below the umbilicus, the inferior epigastric artery (a branch of the external iliac artery) runs up to meet it. Their anastomosis within rectus abdominis forms a continuous collateral channel linking the internal thoracic and external iliac (subclavian and iliac systemic) circulations." },
+    { q: "Differentiate the four abdominal quadrants from the nine abdominal regions and state which lines are used to construct the nine regions.", a: "The four quadrants are formed by one vertical and one horizontal line through the umbilicus, used for quick clinical description. The nine regions use two mid-clavicular vertical lines plus the subcostal line (joining the lowest points of the costal margins) and the intertubercular line (joining the iliac tubercles), producing a precise 3x3 grid: hypochondrium/epigastrium/hypochondrium, lumbar/umbilical/lumbar, and iliac/hypogastric/iliac regions." },
+    { q: "State the key anatomical distinction between direct and indirect inguinal hernias and explain the clinical test used to differentiate them.", a: "An indirect inguinal hernia passes lateral to the inferior epigastric vessels, through the deep inguinal ring, following the path of testicular descent and potentially reaching the scrotum; it is congenital, from a patent processus vaginalis. A direct inguinal hernia passes medial to the inferior epigastric vessels, bulging through Hesselbach's triangle without entering the deep ring; it is acquired, from transversalis fascia weakness. Clinically, occluding the deep inguinal ring after reduction and asking the patient to cough keeps an indirect hernia reduced but not a direct one, since the direct hernia never passed through the deep ring." },
+    { q: "Name the boundaries of Hesselbach's triangle and the anatomical basis of a femoral hernia.", a: "Hesselbach's triangle is bounded laterally by the inferior epigastric vessels, medially by the lateral border of rectus abdominis (linea semilunaris), and inferiorly by the inguinal ligament. A femoral hernia pushes through the femoral canal, medial to the femoral vein below the inguinal ligament; it is more common in women due to a wider pelvis and carries a high strangulation risk because the canal is narrow and rigid-walled." },
+    { q: "Describe the lymphatic watershed of the anterior abdominal wall and name the muscles of the posterior abdominal wall.", a: "Skin and superficial tissue above the umbilicus drain to the axillary lymph nodes, while tissue below the umbilicus drains to the superficial inguinal lymph nodes, with the umbilicus marking the watershed line. The posterior abdominal wall muscles are psoas major, quadratus lumborum and iliacus, together with the crura of the diaphragm, with the lumbar plexus (T12-L4) running through and behind them." },
+  ],
+  videos: [
+    { channel: "Institute of Human Anatomy", title: "Anterior Abdominal Wall Layers Explained", note: "Real dissection walk-through of all nine layers and the rectus sheath, superior to inferior.", url: "https://www.youtube.com/results?search_query=Anterior+abdominal+wall+layers+Institute+of+Human+Anatomy" },
+    { channel: "Armando Hasudungan", title: "Inguinal Canal and Inguinal Hernias", note: "Clear hand-drawn build-up of the inguinal canal, Hesselbach's triangle, and direct vs indirect hernias.", url: "https://www.youtube.com/results?search_query=Armando+Hasudungan+inguinal+canal+hernia" },
+    { channel: "Ninja Nerd", title: "Abdominal Wall Anatomy and Surgical Incisions", note: "Systematic run-through of quadrants, regions and the rationale behind each named incision.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+abdominal+wall+anatomy+surgical+incisions" },
+  ],
+  mcqs: [
+    { q: "The abdominal cavity extends superiorly as high as:", o: ["The umbilicus", "The costal margin only", "The xiphisternum/T9 level, due to the diaphragm's dome", "The anterior superior iliac spine"], a: 2, w: "The diaphragm domes up to about the xiphisternum/T9 level on expiration, extending the cavity well under the rib cage." },
+    { q: "The abdominal cavity is continuous inferiorly with the:", o: ["Thoracic cavity", "Pelvic cavity, at the pelvic inlet", "Perineum directly", "Retropubic space only"], a: 1, w: "There is no wall separating the abdominal and pelvic cavities; they are continuous at the pelvic inlet." },
+    { q: "Which structure forms the posterior boundary of the abdominal cavity?", o: ["The sacrum alone", "The lumbar vertebrae, posterior wall muscles and twelfth ribs", "The iliac crests", "The diaphragm"], a: 1, w: "The posterior wall is formed by the lumbar vertebral column, the posterior abdominal wall muscles, and the twelfth ribs." },
+    { q: "Penetrating trauma from which level downward can potentially enter the abdominal cavity?", o: ["The umbilicus", "The costal margin", "The nipple line", "The iliac crest"], a: 2, w: "Because the diaphragm domes high under the ribs, injuries from the nipple line down can reach the abdominal cavity." },
+    { q: "Which layer of the anterior abdominal wall lies immediately deep to the skin?", o: ["Transversalis fascia", "External oblique aponeurosis", "Superficial fascia", "Parietal peritoneum"], a: 2, w: "Superficial fascia lies directly beneath the skin, splitting below the umbilicus into Camper's and Scarpa's layers." },
+    { q: "Below the umbilicus, the superficial fascia splits into:", o: ["Camper's (fatty) and Scarpa's (membranous) layers", "Transversalis and endoabdominal fascia", "Colles' and Buck's fascia only", "Two identical fatty layers"], a: 0, w: "Below the umbilicus superficial fascia divides into a superficial fatty Camper's layer and a deeper membranous Scarpa's layer." },
+    { q: "The three flat muscles of the anterior abdominal wall, from superficial to deep, are:", o: ["Rectus abdominis, pyramidalis, transversus abdominis", "External oblique, internal oblique, transversus abdominis", "Internal oblique, external oblique, rectus abdominis", "Transversus abdominis, internal oblique, external oblique"], a: 1, w: "From superficial to deep the flat muscles are external oblique, internal oblique, then transversus abdominis." },
+    { q: "The crossing fibre directions of the three flat abdominal muscles primarily provide:", o: ["Increased flexibility only", "Strength in multiple directions, like plywood", "Faster contraction speed", "Additional blood supply"], a: 1, w: "The alternating fibre directions give the wall strength in multiple directions, similar to plywood construction." },
+    { q: "Deep to the transversus abdominis muscle lies the:", o: ["Parietal peritoneum directly", "Transversalis fascia", "Extraperitoneal fat directly", "Rectus sheath posterior layer only"], a: 1, w: "Transversalis fascia lies immediately deep to transversus abdominis, superficial to the extraperitoneal fat and peritoneum." },
+    { q: "Above the arcuate line, the posterior wall of the rectus sheath is formed by:", o: ["External oblique aponeurosis only", "Half of internal oblique aponeurosis and transversus abdominis aponeurosis", "Transversalis fascia only", "All three aponeuroses"], a: 1, w: "Above the arcuate line, half of internal oblique and all of transversus abdominis aponeuroses pass posterior to rectus abdominis." },
+    { q: "Below the arcuate line, all three flat muscle aponeuroses pass:", o: ["Posterior to rectus abdominis", "Anterior to rectus abdominis", "Through rectus abdominis", "Lateral to rectus abdominis only"], a: 1, w: "Below the arcuate line all three aponeuroses pass anterior to rectus abdominis, leaving only transversalis fascia posteriorly." },
+    { q: "The arcuate line is located approximately:", o: ["At the xiphoid process", "Midway between the umbilicus and the pubis", "At the costal margin", "At the level of the iliac crest"], a: 1, w: "The arcuate line lies roughly midway between the umbilicus and the pubic symphysis." },
+    { q: "A hernia occurring through the linea semilunaris, often near the arcuate line, is called a:", o: ["Femoral hernia", "Direct inguinal hernia", "Spigelian hernia", "Umbilical hernia"], a: 2, w: "A spigelian hernia occurs through the linea semilunaris, a site of weakness related to the absent posterior sheath below the arcuate line." },
+    { q: "The linea alba extends from the xiphoid process to the:", o: ["Iliac crest", "Pubic symphysis", "Inguinal ligament", "Arcuate line"], a: 1, w: "The linea alba is a midline fibrous band running from the xiphoid process down to the pubic symphysis." },
+    { q: "The linea alba is favoured for emergency midline incisions mainly because it is:", o: ["Highly vascular, aiding healing", "Avascular, allowing rapid, low-bleeding access", "Composed of skeletal muscle", "The strongest part of the wall"], a: 1, w: "Being avascular fibrous tissue, the linea alba allows fast entry with minimal bleeding and no muscle cutting." },
+    { q: "The umbilicus corresponds approximately to which vertebral level?", o: ["T12", "L1", "L3-L4", "S1"], a: 2, w: "The umbilicus lies at approximately the L3-L4 vertebral level, near the aortic bifurcation." },
+    { q: "In the adult, the obliterated umbilical vein persists as the:", o: ["Median umbilical ligament", "Ligamentum teres, within the falciform ligament", "Medial umbilical ligament", "Urachus"], a: 1, w: "The umbilical vein becomes the ligamentum teres (round ligament of the liver), carried within the falciform ligament." },
+    { q: "Which spinal nerve segment predominantly supplies the skin at the level of the umbilicus?", o: ["T6", "T10", "L1", "T12"], a: 1, w: "The T10 dermatome corresponds to the skin at the level of the umbilicus." },
+    { q: "The thoraco-abdominal nerves (T7-T11) run in which plane before piercing the rectus sheath?", o: ["Between skin and superficial fascia", "Between internal oblique and transversus abdominis", "Between external and internal oblique", "Deep to the peritoneum"], a: 1, w: "These nerves run in the plane between internal oblique and transversus abdominis, the same plane used for TAP blocks." },
+    { q: "The referred periumbilical pain of early appendicitis reflects shared innervation of the appendix and umbilical skin at which spinal level?", o: ["T6", "T10", "L1", "S2"], a: 1, w: "Both the midgut-derived appendix and the umbilical skin share T10 innervation, producing early referred periumbilical pain." },
+    { q: "Once appendiceal inflammation involves the parietal peritoneum, pain becomes localised to the right iliac fossa because:", o: ["Visceral pain fibres increase in number", "The parietal peritoneum is supplied by somatic nerves at that exact site", "The appendix moves position", "T10 innervation ceases"], a: 1, w: "Parietal peritoneum is somatically innervated at the precise site of irritation, allowing precise localisation, unlike visceral pain." },
+    { q: "The superior epigastric artery is a terminal branch of the:", o: ["External iliac artery", "Internal thoracic (internal mammary) artery", "Femoral artery", "Aorta directly"], a: 1, w: "The superior epigastric artery arises as a terminal branch of the internal thoracic artery." },
+    { q: "The inferior epigastric artery arises from the:", o: ["External iliac artery", "Internal iliac artery", "Femoral artery", "Superior mesenteric artery"], a: 0, w: "The inferior epigastric artery is a branch of the external iliac artery, arising just above the inguinal ligament." },
+    { q: "The superior and inferior epigastric arteries anastomose within which muscle?", o: ["External oblique", "Transversus abdominis", "Rectus abdominis", "Quadratus lumborum"], a: 2, w: "These two arteries anastomose within the substance of rectus abdominis, forming a vertical collateral channel." },
+    { q: "Paraumbilical veins connect the portal venous system to the systemic circulation via the:", o: ["Superior epigastric vein only", "Ligamentum teres/umbilicus", "Inferior mesenteric vein directly", "Splenic vein"], a: 1, w: "Paraumbilical veins run in the ligamentum teres to reach the umbilicus, forming a portosystemic anastomosis." },
+    { q: "The four abdominal quadrants are formed by lines intersecting at the:", o: ["Xiphoid process", "Umbilicus", "Pubic symphysis", "Anterior superior iliac spine"], a: 1, w: "A vertical and a horizontal line crossing at the umbilicus create the four abdominal quadrants." },
+    { q: "The nine abdominal regions are constructed using vertical lines through the:", o: ["Anterior superior iliac spines", "Mid-clavicular points", "Nipples", "Xiphoid process"], a: 1, w: "Two vertical mid-clavicular lines, combined with two horizontal lines, create the nine-region grid." },
+    { q: "The subcostal line, used to build the nine abdominal regions, joins:", o: ["The two iliac tubercles", "The lowest points of the costal margins", "The two anterior superior iliac spines", "The xiphoid process to the umbilicus"], a: 1, w: "The subcostal line joins the lowest points of the costal margins on each side." },
+    { q: "The epigastric region typically overlies the:", o: ["Bladder", "Stomach, duodenum and pancreas", "Sigmoid colon", "Appendix"], a: 1, w: "The epigastric region overlies the stomach, duodenum and pancreas." },
+    { q: "The appendix and caecum are typically located in the:", o: ["Left iliac region", "Right iliac region", "Hypogastric region", "Umbilical region"], a: 1, w: "The right iliac (inguinal) region overlies the caecum and appendix." },
+    { q: "The midline incision is preferred in emergency exploratory laparotomy chiefly because it:", o: ["Gives the best cosmetic result", "Passes through the avascular linea alba and is rapidly extensile", "Avoids the peritoneum entirely", "Requires no closure"], a: 1, w: "The midline incision uses the avascular linea alba, allowing fast, low-bleeding, extensile access when the diagnosis is uncertain." },
+    { q: "A paramedian incision differs from a midline incision in that it:", o: ["Cuts through the linea alba only", "Splits the rectus sheath and retracts rectus abdominis medially", "Is always transverse", "Avoids the rectus sheath entirely"], a: 1, w: "The paramedian incision is vertical but lateral to the midline, opening the rectus sheath and retracting rectus abdominis medially." },
+    { q: "The Pfannenstiel incision is a low transverse incision typically used for:", o: ["Open appendicectomy", "Caesarean section and pelvic surgery", "Emergency laparotomy", "Gallbladder surgery"], a: 1, w: "The Pfannenstiel incision, following Langer's lines above the pubis, is standard for caesarean sections and pelvic procedures." },
+    { q: "The gridiron (McBurney's) incision is described as 'muscle-splitting' because it:", o: ["Cuts across all three flat muscles", "Splits each muscle's fibres in the direction they run", "Avoids the abdominal wall entirely", "Only involves skin and fascia"], a: 1, w: "The gridiron incision splits, rather than cuts, each flat muscle's fibres along their natural direction, preserving nerve supply." },
+    { q: "The Kocher (subcostal) incision is used mainly for:", o: ["Open gallbladder or liver surgery", "Caesarean section", "Appendicectomy", "Umbilical hernia repair"], a: 0, w: "The subcostal (Kocher's) incision, running below the costal margin, provides access to the gallbladder and liver." },
+    { q: "An indirect inguinal hernia passes through the deep inguinal ring and is located relative to the inferior epigastric vessels:", o: ["Medial to them", "Lateral to them", "Directly through them", "Posterior to them only"], a: 1, w: "Indirect inguinal hernias pass lateral to the inferior epigastric vessels, entering through the deep inguinal ring." },
+    { q: "A direct inguinal hernia bulges through which structure?", o: ["The deep inguinal ring", "Hesselbach's triangle", "The femoral canal", "The obturator canal"], a: 1, w: "Direct inguinal hernias push through the weak transversalis fascia of Hesselbach's triangle." },
+    { q: "Hesselbach's triangle is bounded laterally by the:", o: ["Inguinal ligament", "Inferior epigastric vessels", "Linea semilunaris", "Femoral vein"], a: 1, w: "The inferior epigastric vessels form the lateral boundary of Hesselbach's triangle." },
+    { q: "An indirect inguinal hernia is congenital in origin, arising from a persistent:", o: ["Urachus", "Processus vaginalis", "Vitellointestinal duct", "Umbilical vein"], a: 1, w: "Indirect inguinal hernias arise from a patent processus vaginalis, following the path of testicular descent." },
+    { q: "On the deep ring occlusion test, an indirect hernia:", o: ["Bulges out despite occlusion", "Stays reduced while the deep ring is occluded", "Cannot be reduced at all", "Is unaffected by coughing"], a: 1, w: "Occluding the deep inguinal ring keeps an indirect hernia reduced, since its path is blocked; a direct hernia still bulges." },
+    { q: "A femoral hernia passes through the femoral canal, located:", o: ["Lateral to the femoral artery", "Medial to the femoral vein, below the inguinal ligament", "Above the inguinal ligament", "Through the deep inguinal ring"], a: 1, w: "The femoral canal lies medial to the femoral vein, below the inguinal ligament." },
+    { q: "Femoral hernias are more common in women mainly because of:", o: ["Weaker abdominal muscles", "A wider female pelvis, giving a larger femoral canal", "Hormonal effects on the peritoneum", "More frequent pregnancies affecting the inguinal canal only"], a: 1, w: "The wider female pelvis produces a comparatively larger femoral canal, predisposing to femoral hernia." },
+    { q: "Femoral hernias carry a high risk of strangulation chiefly because the femoral canal is:", o: ["Very wide and mobile", "Narrow and rigid-walled", "Lined by muscle that stretches easily", "Absent of any boundary"], a: 1, w: "The narrow, rigid boundaries of the femoral canal make trapped bowel prone to strangulation." },
+    { q: "An umbilical hernia in an infant occurs due to:", o: ["A previous surgical scar", "A congenital gap in the linea alba at the umbilicus", "Weakness of the femoral canal", "Weakness of the linea semilunaris"], a: 1, w: "Congenital umbilical hernias arise from the natural embryological gap in the linea alba at the umbilicus." },
+    { q: "An incisional hernia occurs through:", o: ["The femoral canal", "A previous surgical scar that has not regained full strength", "Hesselbach's triangle", "The deep inguinal ring"], a: 1, w: "Incisional hernias develop at the site of a prior surgical incision that failed to heal with full structural strength." },
+    { q: "Which muscle of the posterior abdominal wall is a classic site for a tuberculous 'cold' abscess to track along, presenting in the groin?", o: ["Quadratus lumborum", "Psoas major", "Iliacus", "Transversus abdominis"], a: 1, w: "Psoas major provides a track along which a tuberculous cold abscess of the spine can extend down into the groin." },
+    { q: "The femoral nerve emerges at the lateral border of which posterior abdominal wall muscle?", o: ["Quadratus lumborum", "Psoas major", "Iliacus", "Rectus abdominis"], a: 1, w: "The femoral nerve, from the lumbar plexus, emerges at the lateral border of psoas major." },
+    { q: "The lumbar plexus is formed from the anterior rami of which spinal segments?", o: ["T12-L4", "L1-S1", "T6-T12", "S1-S4"], a: 0, w: "The lumbar plexus arises from the anterior rami of T12 to L4." },
+    { q: "Skin and tissue above the umbilicus drain lymphatically to the:", o: ["Superficial inguinal nodes", "Axillary lymph nodes", "Deep inguinal nodes", "Para-aortic nodes only"], a: 1, w: "Above the umbilical watershed, lymphatic drainage of the abdominal wall passes to the axillary nodes." },
+    { q: "Skin and tissue below the umbilicus drain lymphatically to the:", o: ["Axillary lymph nodes", "Superficial inguinal lymph nodes", "Mediastinal nodes", "Cervical nodes"], a: 1, w: "Below the umbilical watershed, lymphatic drainage passes to the superficial inguinal lymph nodes." },
+  ],
+};
+
+/* --------------------------- an2:1 --------------------------- */
+const T_AN2_PERITONEUM = {
+  courseId: "an2",
+  topicIndex: 1,
+  title: "Peritoneum and Peritoneal Cavity",
+  minutes: 30,
+  note: [
+    { q: "What actually IS the peritoneum, and why does the belly need it at all?",
+      body: `Step 1: Imagine all your abdominal organs just sitting loose inside your belly, rubbing directly against each other and against the inside of the abdominal wall every time you move, breathe, or digest food. That would cause constant friction and damage.
+
+Step 2: The body's solution is a thin, slippery sheet called the peritoneum. It's a "serous membrane" — which just means a membrane that produces a small amount of watery, lubricating fluid, like the oil between two moving machine parts.
+
+Step 3: This sheet doesn't just sit in one place. It's actually ONE continuous sheet that lines the inside of the belly wall, then folds inward and wraps around many of the organs too — like a fitted sheet that also wraps around pillows placed on the bed.
+
+My Socratic question: if it's really just one continuous sheet, why do we still give it two different names — "parietal" and "visceral"?
+
+Answer it yourself: because it's the same material, just named by WHERE it is — "parietal" (lining the wall) and "visceral" (wrapping an organ) — the same way you might call one road "Main Street uptown" and "Main Street downtown," same road, different location names.
+
+Crucial insight: peritoneum = one continuous, slippery, lubricating sheet, named differently depending on whether it's touching the wall (parietal) or touching an organ (visceral).` },
+
+    { q: "Parietal vs. visceral peritoneum — why does this naming difference actually matter for how pain feels?",
+      body: `Step 1: Parietal peritoneum (the part lining the wall) is supplied by the same nerves that supply your skin and body wall — nerves that are very good at pinpointing exact locations.
+
+Step 2: Visceral peritoneum (the part wrapping your organs) is supplied by different nerves — the same nerves that supply the organs themselves. These nerves are old, simple, and bad at pinpointing location. They can basically only say "something's wrong in the upper belly" or "something's wrong in the lower belly," not exactly where.
+
+Step 3: So when an organ itself is inflamed or stretched (say, early appendicitis), you get vague, dull, hard-to-locate pain, because only the visceral peritoneum (bad-at-locating nerves) is irritated.
+
+Step 4: When the inflammation spreads far enough to actually touch the parietal peritoneum lining the wall nearby, the pain suddenly becomes sharp and easy to point to exactly, because now the good-at-locating nerves are involved.
+
+My Socratic question: if you press on a patient's belly and it hurts more when you suddenly RELEASE your hand than when you pressed down (called rebound tenderness), which layer does that tell you is irritated — visceral or parietal?
+
+Answer it yourself: parietal — because rebound tenderness is a sharp, precisely-triggered pain response, which is exactly the kind of pain parietal (wall-lining) nerves produce.
+
+Crucial insight: vague pain = visceral peritoneum talking. Sharp, exact-location pain = parietal peritoneum talking. Same membrane, two very different pain "languages."` },
+
+    { q: "Intraperitoneal vs. retroperitoneal — why are some organs 'inside' the peritoneal wrap and others 'behind' it?",
+      body: `Step 1: Picture the peritoneum as a big, loose plastic bag draped inside your belly. Some organs sit fully INSIDE that bag, almost completely wrapped by it on all sides — these are called intraperitoneal organs (stomach, liver, spleen, most of the small intestine, and parts of the large intestine).
+
+Step 2: Other organs sit BEHIND that bag, against the back wall of the belly, with the peritoneum only covering their FRONT surface, like a poster stuck on a wall — not wrapped, just covered on one side. These are called retroperitoneal organs (kidneys, pancreas, most of the duodenum, ascending and descending colon, aorta, and the big veins).
+
+Step 3: Why does this matter? Organs fully wrapped inside the "bag" (intraperitoneal) are usually more mobile — they can shift around a bit. Organs stuck to the back wall (retroperitoneal) are fixed in place and don't move much.
+
+My Socratic question: if a retroperitoneal organ like the pancreas becomes inflamed (pancreatitis), would you expect the pain to move around as the patient changes position, the way a mobile intraperitoneal organ's pain might?
+
+Answer it yourself: no — because it's fixed to the back wall, pancreatitis pain classically stays put and often goes straight through to the back, since the organ itself is right up against the back wall of the body.
+
+Crucial insight: "inside the bag" = intraperitoneal = more mobile. "Behind the bag, stuck to the back wall" = retroperitoneal = fixed in place. This one distinction predicts how an organ's disease will behave.` },
+
+    { q: "What are mesenteries, and why do some intraperitoneal organs 'hang' while others don't?",
+      body: `Step 1: Remember the "bag" analogy — some organs sit fully inside that peritoneal wrap. But something has to hold them in place and also carry their blood vessels and nerves to them. That's the job of the mesentery.
+
+Step 2: A mesentery is simply a double-layered fold of peritoneum — think of it like a sling or a hammock — that connects an organ back to the body wall. Blood vessels, nerves, and lymphatics travel inside this double-layered fold to reach the organ.
+
+Step 3: Because it's like a hammock strap, an organ hanging from a mesentery has some freedom to swing and move — which is exactly why small intestine loops can shift around inside the belly.
+
+Step 4: Different organs have their own named mesentery-like folds — for example, the fold connecting the small intestine back to the body wall is simply called "the mesentery," the one for part of the large intestine is the "transverse mesocolon," and there's a special double-layered fold connecting the stomach and liver to other structures too.
+
+My Socratic question: if a mesentery is really just a delivery tube (blood vessels/nerves) built into a hanging strap, what would happen to an organ if its mesentery got twisted?
+
+Answer it yourself: the twisting could pinch off the blood vessels running inside it, cutting off the organ's blood supply — this actual event is called volvulus, and it's a surgical emergency.
+
+Crucial insight: a mesentery is a two-layered peritoneal sling that both suspends an organ AND delivers its blood supply — which is exactly why twisting one is dangerous.` },
+
+    { q: "The greater sac and lesser sac — why does the peritoneal cavity have a 'hidden room'?",
+      body: `Step 1: The whole peritoneal cavity (the space between the parietal and visceral layers) isn't just one simple open space. It's divided into two connected parts: a big main space (the greater sac) and a smaller, tucked-away space behind the stomach (the lesser sac, also called the omental bursa).
+
+Step 2: Think of the lesser sac like a small pocket sewn onto the back of a jacket — it's connected to the main space, but it's mostly hidden behind the stomach.
+
+Step 3: These two spaces are NOT sealed off from each other — they connect through one small doorway called the omental foramen (or epiploic foramen). Fluid, and even a surgeon's finger, can pass through this doorway from the greater sac into the lesser sac.
+
+My Socratic question: if the lesser sac only has ONE narrow doorway connecting it to the rest of the peritoneal cavity, what would happen to fluid or infection that gets trapped inside it?
+
+Answer it yourself: it could get stuck there, forming a walled-off collection, because there's only one narrow way in or out — unlike the wide-open greater sac where fluid can spread more freely.
+
+Crucial insight: the peritoneal cavity has a "back room" (lesser sac) tucked behind the stomach, connected to the "main room" (greater sac) through exactly one narrow doorway — a detail that matters when fluid or infection needs somewhere to go, or get trapped.` },
+
+    { q: "What are the greater and lesser omentum, and why does the body wrap the stomach in an 'apron'?",
+      body: `Step 1: Picture the stomach. Hanging off its lower curve, like an apron draped down over the intestines, is a large double-layered fold of peritoneum called the greater omentum. It's full of fat.
+
+Step 2: This "apron" isn't just decoration. It contains immune cells and can physically move toward areas of infection or injury inside the belly — earning it the nickname "the abdominal policeman." If your appendix bursts, the greater omentum can literally wrap around and wall off the area to stop infection spreading.
+
+Step 3: There's also a smaller fold connecting the top of the stomach and the start of the small intestine up to the liver — this is the lesser omentum. It's much smaller but contains an important structure: the free edge of the lesser omentum is where three important vessels travel together to reach the liver (the portal vein, the hepatic artery, and the bile duct).
+
+My Socratic question: given that the greater omentum can move toward and wrap around infected areas, why do you think surgeons sometimes deliberately find it already wrapped around an inflamed appendix during surgery?
+
+Answer it yourself: because the body used it exactly the way it's designed to — walling off the infection on its own, before the surgeon even got there.
+
+Crucial insight: the greater omentum = a mobile, fatty "apron" that helps fight infection inside the belly. The lesser omentum = a smaller fold carrying the main vessels into the liver.` },
+
+    { q: "Peritoneal gutters and spaces — why does fluid in the belly always end up in the same few places?",
+      body: `Step 1: When fluid — blood, pus, digestive juices, whatever — leaks into the peritoneal cavity, it doesn't just float randomly. It flows downhill, following gravity, along specific channels formed by the folds and shape of the peritoneum, the same way water flows along the lowest paths in a landscape.
+
+Step 2: Along both sides of the large intestine, there are two long vertical channels called the paracolic gutters — one on the right, one on the left. Fluid from anywhere in the upper belly can drain down through these gutters toward the pelvis.
+
+Step 3: Up near the diaphragm, on both sides of the liver, there are recess spaces called the subphrenic spaces (right and left). Fluid or pus from infections near the liver often pools here.
+
+Step 4: Because a standing or sitting person's pelvis is the lowest point in the abdominal cavity, fluid that flows all the way down through the gutters usually ends up pooling in specific pelvic spaces at the very bottom.
+
+My Socratic question: if you know fluid always drains toward the lowest points because of gravity, and you know infections tend to pool wherever fluid pools, what does that tell you about where to look first for a hidden abscess after abdominal surgery?
+
+Answer it yourself: check the lowest points first — the pelvis, and the gutters and subphrenic spaces along the way — because that's where gravity naturally carries any leaking fluid or infection.
+
+Crucial insight: the peritoneal cavity isn't a random open space — it has built-in channels and low points, and fluid always follows them, which is why doctors check the exact same handful of spots every time they're looking for fluid or infection.` },
+
+    { q: "Morison's pouch — why is this one specific space so important in emergency medicine?",
+      body: `Step 1: We just learned fluid follows gravity toward the lowest points. But "lowest point" actually depends on the patient's POSITION, not just their pelvis.
+
+Step 2: When a patient is lying flat on their back (the position trauma patients are usually in), the single lowest point in the entire upper abdominal cavity turns out to be a small pocket between the liver and the right kidney. This pocket is called Morison's pouch (or the hepatorenal recess).
+
+Step 3: Because it's the lowest point when lying flat, any free fluid — most importantly, blood from internal bleeding after trauma — tends to collect here first, before it even reaches the pelvis.
+
+Step 4: This is exactly why, in a trauma emergency, doctors perform a quick ultrasound scan (called a FAST scan) and check Morison's pouch first — it's often the very first place internal bleeding becomes visible.
+
+My Socratic question: if Morison's pouch is the lowest point only when a patient is lying flat on their back, would you expect the same pouch to still be the "first place fluid collects" if the patient were standing upright instead?
+
+Answer it yourself: no — standing upright, gravity would pull fluid further down toward the pelvis instead, since the pelvis would then be the lowest point of the whole cavity.
+
+Crucial insight: Morison's pouch is the "first stop" for free fluid specifically because of how gravity acts on a person lying flat — which is exactly the position trauma patients are scanned in, making it one of the most important single spots in emergency abdominal imaging.` },
+
+    { q: "What about the pelvis itself — what are the important peritoneal pouches down there?",
+      body: `Step 1: Just like the upper abdomen has its own special low-point spaces (Morison's pouch, subphrenic spaces), the pelvis — the true lowest point of the whole peritoneal cavity in an upright or sitting person — has its own important pouches.
+
+Step 2: In women, there are two pelvic pouches: one between the bladder and the uterus (called the vesico-uterine pouch), and a deeper one between the uterus and the rectum (called the recto-uterine pouch, or "pouch of Douglas"). Because the pouch of Douglas is the deepest, lowest point in the entire female pelvis, it's the single most common place for fluid, blood, or pus to collect.
+
+Step 3: In men, since there's no uterus in the way, there's just one pouch between the bladder and the rectum, called the recto-vesical pouch — and it plays the same "lowest point, fluid collects here" role that the pouch of Douglas plays in women.
+
+My Socratic question: if the pouch of Douglas is the lowest point in the female pelvis, and we already learned that doctors check the lowest points first when looking for fluid, how do you think doctors might physically examine or sample fluid from this exact pouch?
+
+Answer it yourself: they can access it through the top of the vagina (a technique called culdocentesis) or see it clearly on a pelvic ultrasound, precisely because it sits right behind the top of the vaginal wall.
+
+Crucial insight: the same "lowest point = fluid collects here" rule that gave us Morison's pouch up top also gives us the pouch of Douglas (or recto-vesical pouch in men) down in the pelvis — same physics, different location.` },
+
+    { q: "How do doctors actually use all this peritoneal anatomy in real procedures?",
+      body: `Step 1: Paracentesis is a procedure where a needle is inserted through the abdominal wall to drain excess fluid that has built up in the peritoneal cavity (called ascites — often from liver disease). Doctors deliberately avoid certain areas (like directly over the inferior epigastric vessels we learned about in the abdominal wall topic) and often use ultrasound to find a fluid pocket first — frequently guided by knowing where fluid naturally pools, like the gutters and pelvis we just covered.
+
+Step 2: A ventriculoperitoneal (VP) shunt is a thin tube surgeons place to treat excess fluid buildup around the brain (hydrocephalus). Instead of draining that fluid outside the body, the tube is tunnled all the way down under the skin and its far end is placed inside the peritoneal cavity — because the peritoneum is excellent at quietly absorbing extra fluid into the bloodstream over time, without needing an external bag.
+
+Step 3: This only works because the peritoneal cavity is a large, safe, absorbent space — exactly the properties we've been building up this whole lesson: a slippery lining, good blood supply nearby for absorption, and enough room to handle extra fluid without immediate harm.
+
+My Socratic question: knowing that the peritoneum can quietly absorb fluid placed into it (which is why VP shunts work), why do you think doctors don't worry about "overfilling" the belly with the extra brain fluid a shunt delivers over months or years?
+
+Answer it yourself: because the peritoneal lining continuously reabsorbs fluid into the bloodstream over time, rather than the fluid just sitting there and building up — it acts like a natural drainage system.
+
+Crucial insight: the peritoneum isn't just a passive lining — it's absorbent enough that doctors deliberately drain fluid INTO it (VP shunts) and OUT of it (paracentesis), using the exact same membrane for opposite jobs.` },
+  ],
+  theory: [
+    { q: "Define the peritoneum and explain the functional difference between its parietal and visceral layers.", a: "The peritoneum is a serous membrane lining the abdominopelvic cavity and covering many of its organs; it produces lubricating fluid to reduce friction. The parietal layer lines the body wall and is supplied by somatic nerves capable of precise localisation, while the visceral layer covers the organs and is supplied by autonomic (visceral) nerves that produce poorly localised pain." },
+    { q: "Explain why early visceral organ pain is felt as dull and poorly localised, while later peritoneal involvement produces sharp, localised pain.", a: "Early organ inflammation irritates only the visceral peritoneum, which shares poorly-localising visceral nerve pathways with the organ itself, producing vague pain. As inflammation spreads to touch the nearby parietal peritoneum, which is supplied by precise somatic nerves, the pain becomes sharp and can be pinpointed exactly to that site." },
+    { q: "Differentiate intraperitoneal from retroperitoneal organs and give two examples of each.", a: "Intraperitoneal organs are almost completely surrounded by peritoneum and tend to be more mobile, e.g. the stomach and spleen. Retroperitoneal organs lie against the posterior body wall with peritoneum covering only their anterior surface, and are relatively fixed, e.g. the kidneys and pancreas." },
+    { q: "What is a mesentery, and why is mesenteric twisting (volvulus) dangerous?", a: "A mesentery is a double layer of peritoneum connecting an intraperitoneal organ to the body wall, carrying its blood vessels, nerves and lymphatics. Because these vessels run within the mesentery, twisting it (volvulus) can compress and cut off the organ's blood supply, making it a surgical emergency." },
+    { q: "Describe the relationship between the greater sac and the lesser sac (omental bursa), and name the structure connecting them.", a: "The greater sac is the main peritoneal cavity space, while the lesser sac is a smaller space located behind the stomach. They communicate through a single narrow opening called the omental foramen (epiploic foramen of Winslow)." },
+    { q: "Distinguish the greater omentum from the lesser omentum in terms of location and function.", a: "The greater omentum is a large, fatty, double-layered peritoneal fold hanging from the greater curvature of the stomach over the intestines; it contains immune cells and can migrate to wall off sites of infection, earning the nickname 'abdominal policeman'. The lesser omentum is a smaller fold connecting the lesser curvature of the stomach and proximal duodenum to the liver, and its free edge carries the portal vein, hepatic artery and bile duct." },
+    { q: "Explain how gravity and the paracolic gutters influence the spread of peritoneal fluid or infection.", a: "Free fluid or infection in the peritoneal cavity flows downhill under gravity along predictable channels, including the right and left paracolic gutters alongside the ascending and descending colon, ultimately tending to collect in the most dependent (lowest) parts of the cavity, such as the pelvis." },
+    { q: "What is Morison's pouch, where is it located, and why is it clinically significant in trauma?", a: "Morison's pouch (hepatorenal recess) lies between the liver and the right kidney. In a supine patient it is the most dependent point of the upper peritoneal cavity, so free fluid such as blood from internal bleeding tends to collect there first, making it a key site checked during FAST ultrasound scans in trauma." },
+    { q: "Name the peritoneal pouches found in the female and male pelvis and state which is the most dependent in each sex.", a: "In females, the vesico-uterine pouch lies between the bladder and uterus, and the recto-uterine pouch (pouch of Douglas) lies between the uterus and rectum; the pouch of Douglas is the most dependent point of the female pelvis. In males, the single recto-vesical pouch lies between the bladder and rectum and serves the same most-dependent role." },
+    { q: "Explain the anatomical basis for paracentesis and for placing a ventriculoperitoneal shunt in the peritoneal cavity.", a: "Paracentesis uses a needle through the abdominal wall to drain excess peritoneal fluid (ascites), often guided toward dependent spaces where fluid naturally collects. A ventriculoperitoneal shunt drains excess cerebrospinal fluid into the peritoneal cavity because the peritoneum can continuously reabsorb fluid into the bloodstream, making it a safe long-term drainage site." },
+  ],
+  videos: [
+    { channel: "Armando Hasudungan", title: "Peritoneum: Parietal and Visceral Layers", note: "Hand-drawn build-up of the peritoneal layers, greater and lesser sac, and omentum.", url: "https://www.youtube.com/results?search_query=Armando+Hasudungan+peritoneum+greater+lesser+sac" },
+    { channel: "Institute of Human Anatomy", title: "Intraperitoneal vs Retroperitoneal Organs", note: "Real dissection showing which organs are wrapped by peritoneum versus fixed behind it.", url: "https://www.youtube.com/results?search_query=Institute+of+Human+Anatomy+intraperitoneal+retroperitoneal+organs" },
+    { channel: "Ninja Nerd", title: "Peritoneal Cavity, Morison's Pouch and Pelvic Spaces", note: "Systematic walkthrough of peritoneal spaces and their clinical relevance in trauma and infection.", url: "https://www.youtube.com/results?search_query=Ninja+Nerd+peritoneal+cavity+Morison+pouch" },
+  ],
+  mcqs: [
+    { q: "The peritoneum is best classified as a:", o: ["Mucous membrane", "Serous membrane", "Synovial membrane", "Cutaneous membrane"], a: 1, w: "The peritoneum is a serous membrane, producing lubricating fluid to reduce friction between organs." },
+    { q: "Peritoneum lining the inner surface of the abdominal wall is called:", o: ["Visceral peritoneum", "Mesenteric peritoneum", "Parietal peritoneum", "Omental peritoneum"], a: 2, w: "Parietal peritoneum lines the body wall itself." },
+    { q: "Peritoneum covering the surface of an organ such as the stomach is called:", o: ["Parietal peritoneum", "Visceral peritoneum", "Retroperitoneal fascia", "Mesothelial capsule"], a: 1, w: "Visceral peritoneum wraps around the organs themselves." },
+    { q: "Which peritoneal layer is supplied by nerves capable of precisely localising pain?", o: ["Visceral peritoneum", "Parietal peritoneum", "Both equally", "Neither has nerve supply"], a: 1, w: "Parietal peritoneum shares somatic nerve supply with the body wall, allowing precise pain localisation." },
+    { q: "Dull, poorly localised abdominal pain from early organ inflammation is typically due to irritation of the:", o: ["Parietal peritoneum", "Visceral peritoneum", "Skin", "Retroperitoneal fascia"], a: 1, w: "Visceral peritoneum shares poorly-localising autonomic nerve pathways with the organ, producing vague pain." },
+    { q: "Rebound tenderness on abdominal examination suggests irritation of the:", o: ["Visceral peritoneum only", "Parietal peritoneum", "Mesentery only", "Retroperitoneum only"], a: 1, w: "Sharp, precisely-triggered rebound tenderness reflects parietal peritoneal irritation." },
+    { q: "An organ almost completely surrounded by peritoneum, such as the stomach, is described as:", o: ["Retroperitoneal", "Extraperitoneal", "Intraperitoneal", "Subperitoneal"], a: 2, w: "Intraperitoneal organs are nearly fully wrapped by peritoneum." },
+    { q: "An organ such as the kidney, covered by peritoneum only on its anterior surface, is described as:", o: ["Intraperitoneal", "Retroperitoneal", "Mesenteric", "Omental"], a: 1, w: "Retroperitoneal organs lie against the posterior wall with peritoneum covering only their front surface." },
+    { q: "Which of the following is a retroperitoneal organ?", o: ["Stomach", "Spleen", "Pancreas", "Liver"], a: 2, w: "The pancreas is a classic retroperitoneal organ." },
+    { q: "Which of the following is an intraperitoneal organ?", o: ["Kidney", "Pancreas", "Stomach", "Ascending colon"], a: 2, w: "The stomach is intraperitoneal, almost fully wrapped in peritoneum." },
+    { q: "Compared to retroperitoneal organs, intraperitoneal organs tend to be:", o: ["More fixed in position", "More mobile", "Without any blood supply", "Always larger"], a: 1, w: "Being wrapped rather than fixed to the back wall, intraperitoneal organs tend to have more mobility." },
+    { q: "Pain from an inflamed retroperitoneal organ such as the pancreas classically:", o: ["Moves around with patient position", "Radiates straight through to the back", "Is never felt", "Only affects the skin"], a: 1, w: "Because the pancreas is fixed against the posterior wall, its pain classically radiates straight through to the back." },
+    { q: "A mesentery is best described as a:", o: ["Single layer of peritoneum with no function", "Double layer of peritoneum connecting an organ to the body wall", "Type of muscle", "Retroperitoneal fascia only"], a: 1, w: "A mesentery is a double-layered peritoneal fold suspending an organ and carrying its vessels and nerves." },
+    { q: "Structures typically found running within a mesentery include:", o: ["Blood vessels, nerves and lymphatics", "Bone marrow only", "Muscle fibres only", "Cerebrospinal fluid"], a: 0, w: "Mesenteries carry the blood vessels, nerves and lymphatics supplying the organ they suspend." },
+    { q: "Twisting of a mesentery, known as volvulus, is dangerous chiefly because it can:", o: ["Increase organ mobility", "Cut off the organ's blood supply", "Improve lymphatic drainage", "Strengthen the mesentery"], a: 1, w: "Twisting compresses the vessels running within the mesentery, potentially cutting off blood supply to the organ." },
+    { q: "The peritoneal cavity is divided into the greater sac and the:", o: ["Lesser sac (omental bursa)", "Subphrenic sac", "Pelvic sac", "Retroperitoneal sac"], a: 0, w: "The peritoneal cavity is divided into the greater sac and the lesser sac, also called the omental bursa." },
+    { q: "The lesser sac is located primarily:", o: ["In front of the stomach", "Behind the stomach", "Within the liver", "Within the spleen"], a: 1, w: "The lesser sac (omental bursa) is a small space located behind the stomach." },
+    { q: "The greater sac and lesser sac communicate through the:", o: ["Umbilicus", "Omental (epiploic) foramen", "Arcuate line", "Inguinal canal"], a: 1, w: "The omental foramen (epiploic foramen of Winslow) is the sole opening connecting the two sacs." },
+    { q: "Because the lesser sac has only one narrow opening, fluid or infection trapped there tends to:", o: ["Drain instantly into the pelvis", "Become walled off and collect locally", "Disappear without consequence", "Spread evenly through the whole abdomen"], a: 1, w: "With only one narrow connection to the rest of the cavity, fluid can become trapped and collect within the lesser sac." },
+    { q: "The greater omentum hangs from the greater curvature of the stomach and is notable for its role in:", o: ["Hormone production", "Migrating to and walling off sites of infection", "Absorbing dietary fat directly", "Producing bile"], a: 1, w: "The greater omentum can move toward inflamed or infected areas and wall them off, earning the nickname 'abdominal policeman'." },
+    { q: "The lesser omentum connects the stomach and proximal duodenum to the:", o: ["Spleen", "Liver", "Pancreas", "Kidney"], a: 1, w: "The lesser omentum runs from the lesser curvature of the stomach and duodenum up to the liver." },
+    { q: "The free edge of the lesser omentum carries which three structures?", o: ["Portal vein, hepatic artery, bile duct", "Aorta, IVC, splenic vein", "Superior mesenteric artery, vein and nerve", "Renal artery, vein and ureter"], a: 0, w: "The portal vein, hepatic artery and bile duct travel together within the free edge of the lesser omentum." },
+    { q: "Fluid or infection in the peritoneal cavity tends to spread according to:", o: ["Random distribution", "Gravity, following peritoneal channels and low points", "Air pressure only", "Body temperature"], a: 1, w: "Peritoneal fluid follows gravity along predictable channels toward the lowest points of the cavity." },
+    { q: "The paracolic gutters run alongside the:", o: ["Stomach", "Ascending and descending colon", "Spleen", "Liver"], a: 1, w: "The paracolic gutters are vertical channels running alongside the ascending and descending colon." },
+    { q: "Recess spaces located on either side of the liver, near the diaphragm, are called the:", o: ["Paracolic gutters", "Subphrenic spaces", "Pouch of Douglas", "Omental bursa"], a: 1, w: "The subphrenic spaces lie on either side of the liver, just beneath the diaphragm." },
+    { q: "In a standing or sitting person, the lowest point of the entire peritoneal cavity is typically the:", o: ["Subphrenic space", "Pelvis", "Lesser sac", "Paracolic gutter"], a: 1, w: "In an upright person, the pelvis is the most dependent (lowest) region of the peritoneal cavity." },
+    { q: "Morison's pouch is located between the:", o: ["Liver and right kidney", "Spleen and left kidney", "Bladder and rectum", "Stomach and pancreas"], a: 0, w: "Morison's pouch, or hepatorenal recess, lies between the liver and the right kidney." },
+    { q: "Morison's pouch is clinically significant mainly because it is the most dependent space:", o: ["When a patient is standing", "When a patient is lying supine", "Only during pregnancy", "Only in children"], a: 1, w: "In a supine patient, Morison's pouch becomes the most dependent point of the upper abdominal cavity." },
+    { q: "The FAST ultrasound scan in trauma specifically checks Morison's pouch first mainly to detect:", o: ["Gallstones", "Free fluid such as internal bleeding", "Kidney stones", "Bowel obstruction"], a: 1, w: "Morison's pouch is a key site checked on FAST scans because free fluid, especially blood, tends to pool there first in a supine patient." },
+    { q: "In females, the peritoneal pouch located between the bladder and the uterus is the:", o: ["Recto-uterine pouch", "Vesico-uterine pouch", "Recto-vesical pouch", "Omental bursa"], a: 1, w: "The vesico-uterine pouch lies between the bladder and the uterus." },
+    { q: "The pouch of Douglas lies between the uterus and the:", o: ["Bladder", "Rectum", "Spleen", "Liver"], a: 1, w: "The recto-uterine pouch (pouch of Douglas) lies between the uterus and the rectum." },
+    { q: "The pouch of Douglas is clinically important because it is the:", o: ["Least dependent point of the female pelvis", "Most dependent point of the female pelvis", "Site of the lesser sac", "Location of the greater omentum"], a: 1, w: "As the deepest, most dependent point of the female pelvis, the pouch of Douglas is a common site for fluid collection." },
+    { q: "In males, the peritoneal pouch between the bladder and rectum is the:", o: ["Vesico-uterine pouch", "Recto-uterine pouch", "Recto-vesical pouch", "Hepatorenal pouch"], a: 2, w: "Males lack a uterus, so the single recto-vesical pouch lies between the bladder and rectum, serving the same dependent role." },
+    { q: "Culdocentesis is a procedure that samples fluid from the:", o: ["Morison's pouch", "Pouch of Douglas, via the vaginal wall", "Lesser sac", "Subphrenic space"], a: 1, w: "Culdocentesis accesses the pouch of Douglas through the posterior vaginal wall to sample pelvic fluid." },
+    { q: "Paracentesis is a procedure used to:", o: ["Insert a shunt into the brain", "Drain excess fluid from the peritoneal cavity", "Remove the appendix", "Repair a hernia"], a: 1, w: "Paracentesis drains excess peritoneal fluid, commonly ascites, using a needle through the abdominal wall." },
+    { q: "Excess fluid accumulation in the peritoneal cavity, often due to liver disease, is called:", o: ["Oedema", "Ascites", "Effusion", "Empyema"], a: 1, w: "Ascites refers to abnormal fluid accumulation within the peritoneal cavity." },
+    { q: "A ventriculoperitoneal (VP) shunt drains excess fluid from around the brain into the:", o: ["Pleural cavity", "Peritoneal cavity", "Bladder", "Stomach"], a: 1, w: "VP shunts route excess cerebrospinal fluid into the peritoneal cavity for absorption." },
+    { q: "VP shunts work long-term mainly because the peritoneum:", o: ["Stores fluid permanently without issue", "Continuously reabsorbs fluid into the bloodstream", "Converts fluid into bile", "Blocks all fluid absorption"], a: 1, w: "The peritoneal lining continuously reabsorbs fluid into the bloodstream, allowing ongoing shunt drainage." },
+    { q: "When performing paracentesis, doctors often use ultrasound guidance partly because:", o: ["Fluid pools predictably in dependent spaces", "Fluid is evenly distributed everywhere", "Ultrasound is required by law only", "The peritoneum cannot be visualised otherwise"], a: 0, w: "Knowing fluid pools in predictable dependent spaces helps guide needle placement during paracentesis." },
+    { q: "The greater omentum's fat content and immune cells contribute to its nickname as the:", o: ["Abdominal policeman", "Second liver", "Peritoneal filter", "Digestive apron only"], a: 0, w: "Because it can migrate and wall off infection, the greater omentum is nicknamed the 'abdominal policeman'." },
+    { q: "A surgeon finding the greater omentum already wrapped around a ruptured appendix demonstrates:", o: ["A surgical error", "The omentum's natural infection-walling function", "An unrelated coincidence", "Failure of the peritoneum"], a: 1, w: "This finding reflects the greater omentum's natural tendency to migrate toward and contain sites of infection." },
+    { q: "Which statement about the peritoneum's continuity is correct?", o: ["Parietal and visceral peritoneum are separate, unconnected membranes", "Parietal and visceral peritoneum are one continuous sheet named by location", "Only visceral peritoneum exists in the pelvis", "Parietal peritoneum does not exist in the abdomen"], a: 1, w: "The peritoneum is one continuous membrane, simply named 'parietal' or 'visceral' depending on what it is covering." },
+    { q: "Which of the following best distinguishes retroperitoneal organs on a structural level?", o: ["They are entirely free-floating", "Peritoneum covers only their anterior surface, fixing them to the posterior wall", "They lack any peritoneal contact", "They are suspended by a long mesentery"], a: 1, w: "Retroperitoneal organs are covered by peritoneum on their anterior surface only, fixing them against the posterior wall." },
+    { q: "The transverse mesocolon is the mesentery-like fold suspending part of the:", o: ["Small intestine", "Large intestine (transverse colon)", "Stomach", "Liver"], a: 1, w: "The transverse mesocolon suspends the transverse colon and carries its vessels." },
+    { q: "A key reason doctors examine dependent peritoneal spaces first when searching for an abscess is:", o: ["These spaces are easiest to access surgically only", "Gravity causes fluid and infection to naturally collect there", "These spaces have no clinical relevance", "Abscesses only form in dependent spaces by law of anatomy, never elsewhere"], a: 1, w: "Gravity drives fluid and infection toward dependent spaces, making them the most likely collection sites to check first." },
+    { q: "Compared to the greater sac, the lesser sac is best described as a:", o: ["Larger, more open space", "Smaller, more enclosed space behind the stomach", "Space located in the pelvis", "Space with no connection to the greater sac"], a: 1, w: "The lesser sac is a smaller, more enclosed space tucked behind the stomach, connected to the greater sac by one narrow opening." },
+    { q: "A patient with early, vague, midline abdominal pain that later becomes sharp and localised to one side is demonstrating a transition from:", o: ["Parietal to visceral peritoneal involvement", "Visceral to parietal peritoneal involvement", "No peritoneal involvement to full involvement", "Retroperitoneal to intraperitoneal disease"], a: 1, w: "This classic pattern reflects irritation moving from the poorly-localising visceral peritoneum to the precisely-localising parietal peritoneum." },
+    { q: "Which space is most analogous in function to Morison's pouch, but located in the pelvis instead of the upper abdomen?", o: ["Subphrenic space", "Pouch of Douglas / recto-vesical pouch", "Lesser sac", "Paracolic gutter"], a: 1, w: "Like Morison's pouch, the pouch of Douglas (or recto-vesical pouch in males) is a dependent space where fluid characteristically collects, but in the pelvis." },
+    { q: "The overall clinical usefulness of understanding peritoneal spaces and gutters lies mainly in predicting:", o: ["Where fluid, blood or infection is likely to collect", "The colour of abdominal organs", "The strength of abdominal wall muscles", "The rate of digestion"], a: 0, w: "Knowing the peritoneal spaces and gutters allows prediction of where free fluid, blood, or infection will most likely accumulate." },
+    { q: "The main functional purpose of the thin fluid produced by the peritoneum is to:", o: ["Digest food", "Reduce friction between organs and the body wall", "Produce hormones", "Filter blood"], a: 1, w: "The peritoneum's serous fluid lubricates the space between organs and the body wall, reducing friction during movement." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -20412,6 +20876,8 @@ const CONTENT = {
   "phyp:6": T_PHYP_GLUCOSE_HBA1C,
   "phyp:7": T_PHYP_URINALYSIS,
   "phyp:8": T_PHYP_BLOODTYPING,
+  "an2:0": T_AN2_ABDWALL,
+  "an2:1": T_AN2_PERITONEUM,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
@@ -20676,6 +21142,13 @@ const curriculumContextFor = (cid, topicName) => {
 };
 const builtInCourse = (cid) => Object.keys(CONTENT).filter((k) => k.startsWith(cid + ":")).length;
 const totalBuilt = () => Object.keys(CONTENT).length;
+// Same count, but scoped to whatever's actually visible at the student's
+// current level/semester - used anywhere a stat needs to adapt/sync with
+// the level/semester switch instead of counting across the whole app.
+const totalBuiltFor = (progress) => {
+  const visibleIds = new Set(visibleCoursesFor(progress).map((c) => c.id));
+  return Object.keys(CONTENT).filter((k) => visibleIds.has(k.split(":")[0])).length;
+};
 
 /* ===================== END-OF-SEMESTER EXAM TIMETABLE =====================
    PLACEHOLDER - replace date/time/venue below with the real KNUST MLS 2029
@@ -23586,7 +24059,13 @@ function CoursesView({ app }) {
 /* ------------------------------- daily ---------------------------------- */
  function DailyView({ app }) {
   const jsDay = new Date().getDay();
-  const dayMeta = DAILY[jsDay];
+  // Same fix as HomeView's todayCourse: rotate through the student's
+  // currently-visible courses instead of a fixed weekday map hardcoded to
+  // Level 100 Sem 2 course ids. Was independently reading DAILY[jsDay]
+  // directly, so it stayed stuck on the wrong course even after HomeView's
+  // own card got this fix - both needed it, not just one.
+  const visList = visibleCoursesFor(app.progress);
+  const dayMeta = visList.length ? { courseId: visList[jsDay % visList.length].id } : DAILY[jsDay];
   const c = courseById(dayMeta.courseId);
   const tk = todayKey();
   const alreadyDone = app.progress?.dailyDone?.[tk] || false;
@@ -28869,11 +29348,26 @@ function HallOfFameStrip({ app }) {
 
 function HomeView({ app }) {
   const jsDay = new Date().getDay();
-  const todayCourse = courseById(DAILY[jsDay].courseId);
+  // Which of the student's currently-visible courses is "today's" course,
+  // for both the Daily CBT and the weekday-question fallback below. Used to
+  // rotate through DAILY_COURSE_IDS - a course id list scoped to visible
+  // courses - not simply DAILY[jsDay].courseId, which was a fixed weekday
+  // map hardcoded to Level 100 Sem 2 course ids regardless of what level/
+  // semester is actually selected.
+  const visList = visibleCoursesFor(app.progress);
+  const dailyCourseId = visList.length ? visList[jsDay % visList.length].id : DAILY[jsDay].courseId;
+  const todayCourse = courseById(dailyCourseId) || courseById(DAILY[jsDay].courseId);
   const tk = todayKey();
   const doneToday = app.progress.dailyDone?.[tk];
   const r = rankOf(app.progress.xp);
-  const builtKeys = Object.keys(CONTENT);
+  // Scoped to visible courses only - was Object.keys(CONTENT) globally,
+  // meaning the "Jump back in" card could suggest continuing a course from
+  // a completely different level/semester than the one currently selected.
+  // All authored notes happen to be Level 100 Sem 2 today, so a student on
+  // any other level now correctly gets no suggestion here (falls through to
+  // resumeTopic below) instead of a wrong one.
+  const visibleIds = new Set(visList.map((c) => c.id));
+  const builtKeys = Object.keys(CONTENT).filter((k) => visibleIds.has(k.split(":")[0]));
   const nextKey = builtKeys.find((k) => !app.progress.completed?.[k]) || builtKeys[builtKeys.length - 1] || null;
   const nt = nextKey ? CONTENT[nextKey] : null;
   const ntCourse = nt ? courseById(nt.courseId) : null;
@@ -29174,7 +29668,7 @@ function HomeView({ app }) {
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <Ic.book p={20} /><span className="eyebrow">Courses</span>
           </div>
-          <div style={{ marginTop: 12, fontSize: 14, color: "var(--text-2)" }}>7 courses · {totalBuilt()} topics live</div>
+          <div style={{ marginTop: 12, fontSize: 14, color: "var(--text-2)" }}>{numberWord(visibleCoursesFor(app.progress).length)} course{visibleCoursesFor(app.progress).length === 1 ? "" : "s"} · {totalBuiltFor(app.progress)} topics live</div>
         </div>
       </div>
       <HallOfFameStrip app={app} />
@@ -33386,21 +33880,30 @@ export default function App() {
           scroll position - `position:fixed` then does what it's supposed to
           and centers in whatever's currently on screen. */}
       {levelPickerOpen && createPortal(
-        <div className="notif-wrap" style={{ justifyContent: "center", alignItems: "center" }}>
-          <div className="notif-scrim" onClick={() => setLevelPickerOpen(false)} />
-          <div className="notif-panel" style={{ margin: 0, width: "min(420px, calc(100vw - 32px))", maxHeight: "none" }}>
-            <div className="notif-head">
-              <div style={{ fontWeight: 700, fontSize: 15, color: "var(--text)", fontFamily: "inherit" }}>Level & semester</div>
-              <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setLevelPickerOpen(false)}><Ic.x p={15} /></button>
-            </div>
-            <div style={{ padding: 18 }}>
-              <p style={{ color: "var(--text-2)", fontSize: 13, marginTop: 0, marginBottom: 14, fontFamily: "inherit" }}>
-                Retaking a course? Switch back to that level/semester and you'll see only that combo's materials, nothing else.
-              </p>
-              <LevelSemesterPicker
-                value={progress && progress.level ? { level: progress.level, semester: progress.semester || 1 } : null}
-                onPick={(lv, sem) => { setLevelSemester(lv, sem); setLevelPickerOpen(false); }}
-              />
+        // Wrapped in the same theme class (rootCls) the main app wrapper
+        // uses - without it, this portal (rendered straight to document.body
+        // to escape the zoomed .main container - see the comment above)
+        // sits outside the element that defines --bg-2/--text/etc. for the
+        // current theme, so it wasn't picking up dark/light/system at all.
+        // Re-applying the class here restores that inheritance regardless
+        // of where in the DOM this actually renders.
+        <div className={rootCls}>
+          <div className="notif-wrap" style={{ justifyContent: "center", alignItems: "center" }}>
+            <div className="notif-scrim" onClick={() => setLevelPickerOpen(false)} />
+            <div className="notif-panel" style={{ margin: 0, width: "min(420px, calc(100vw - 32px))", maxHeight: "none" }}>
+              <div className="notif-head">
+                <div style={{ fontWeight: 700, fontSize: 15, color: "var(--text)", fontFamily: "inherit" }}>Level & semester</div>
+                <button className="iconbtn" style={{ width: 30, height: 30 }} onClick={() => setLevelPickerOpen(false)}><Ic.x p={15} /></button>
+              </div>
+              <div style={{ padding: 18 }}>
+                <p style={{ color: "var(--text-2)", fontSize: 13, marginTop: 0, marginBottom: 14, fontFamily: "inherit" }}>
+                  Retaking a course? Switch back to that level/semester and you'll see only that combo's materials, nothing else.
+                </p>
+                <LevelSemesterPicker
+                  value={progress && progress.level ? { level: progress.level, semester: progress.semester || 1 } : null}
+                  onPick={(lv, sem) => { setLevelSemester(lv, sem); setLevelPickerOpen(false); }}
+                />
+              </div>
             </div>
           </div>
         </div>,
