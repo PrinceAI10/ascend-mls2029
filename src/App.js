@@ -20888,6 +20888,244 @@ Crucial insight: UTIs are among the most common specimens you will process. The 
   ]
 };
 
+/* --------------------------- an2:13 --------------------------- */
+const T_AN2_RESP_HISTO = {
+  courseId: "an2",
+  topicIndex: 13,
+  title: "Microscopic Anatomy — Histology of the Respiratory System",
+  minutes: 24,
+  note: [
+    {
+      q: "Every breath pulls in dust, pollen, and bacteria. Why does the airway lining not simply let them through?",
+      body: `Air is not clean. Every breath you take carries dust, pollen, smoke particles, and bacteria deep toward the lungs. The airway has to let oxygen through while stopping everything else - and it has no immune cells patrolling the surface the way the bloodstream does.
+
+My Socratic question: if the airway is just a tube for air, what stops the particles that come with it?
+
+The answer is that the airway lining is not a passive tube. It is an active, self-cleaning epithelium with three built-in defences.
+
+First, the surface cells are ciliated. Each cell carries hundreds of tiny hair-like projections that beat in coordinated waves, always in one direction - upward, toward the throat. Second, goblet cells sit wedged among the ciliated cells, secreting mucus that traps incoming particles. Third, beneath the epithelium, in the connective tissue, sit immune cells ready to act if anything breaches the surface.
+
+The epithelium that carries out this job has a specific name: pseudostratified ciliated columnar epithelium. "Pseudostratified" because it looks layered - the nuclei sit at different heights - but every cell actually rests on the basement membrane. It is a single layer wearing the disguise of many.
+
+Crucial insight: this epithelium is the first line of defence of the lung, and it is one of the most heavily damaged tissues in smokers. The cilia are paralysed and destroyed by cigarette smoke, so the escalator stops, and mucus accumulates - which is why the smoker's cough exists.`
+    },
+
+    {
+      q: "The airway narrows dramatically from trachea to alveolus. Does the lining change with it?",
+      body: `Follow the air on its way down. The trachea is roughly 2 cm wide. The bronchi are narrower. The bronchioles are narrower still - under 1 mm. The alveolar ducts open into sacs so small that a single red blood cell barely fits through them.
+
+My Socratic question: the diameter drops by a factor of thousands, and the wall gets thinner and thinner. Does the same epithelium line the whole way?
+
+The answer is no - the lining changes step by step, and each change solves a problem the previous lining cannot.
+
+The trachea and bronchi are lined by pseudostratified ciliated columnar epithelium with goblet cells - the mucociliary escalator. This is the cleaning crew of the upper airway.
+
+As the tubes narrow into bronchioles, the epithelium thins to simple ciliated cuboidal or columnar epithelium, and goblet cells disappear. The mucociliary escalator is replaced by a simpler ciliated lining, because the airway is now too narrow to need bulk mucus clearance - the cilia alone suffice.
+
+In the alveoli, the epithelium becomes a single flat layer, simple squamous. There is no cilia, no mucus, no escalator. This is because the alveolus is not in the cleaning business. It is in the gas exchange business, and any tissue between the air and the blood slows diffusion.
+
+Crucial insight: the epithelium is not chosen for the whole respiratory tract. It is chosen for each segment, because each segment has a different job - clean, then cilia, then exchange. This is form following function, segment by segment.`
+    },
+
+    {
+      q: "If the alveolus is only a single flat layer of cells, how does it survive the constant stretch of breathing?",
+      body: `The alveolus is the thinnest barrier in the body. Its wall is a single layer of squamous cells, thinner than a red blood cell is wide. Yet this same wall stretches and recoils roughly 20,000 times a day for an entire lifetime.
+
+My Socratic question: a single flat sheet of cells cannot survive that much mechanical stress. So how does the alveolar wall hold together?
+
+The answer is that the alveolar epithelium is not one cell type. It is two, working together.
+
+Type I pneumocytes are the flat, thin cells that cover roughly 95 percent of the alveolar surface. They are so thin that their cytoplasm is barely visible under the microscope - just a nucleus bulging into the air space. Their only job is to be a barrier thin enough for gas to cross.
+
+Type II pneumocytes are the opposite. They are rounded, cuboidal cells with prominent nuclei, and they cover only about 5 percent of the surface. They do three jobs. First, they secrete surfactant - a mixture of lipids and proteins that lowers surface tension inside the alveolus and prevents it from collapsing on itself. Second, they can divide to replace damaged Type I cells. Third, they help regulate fluid movement across the alveolar wall.
+
+Crucial insight: the two pneumocytes are not equals. Type I does the work; Type II does the maintenance and the protection. Lose Type II, and the alveoli collapse - which is exactly what happens in respiratory distress syndrome of the newborn, where immature Type II cells cannot make enough surfactant.`
+    },
+
+    {
+      q: "Blood and air are separated by less than a micrometre. Why does the barrier not leak?",
+      body: `The blood-air barrier is the thinnest barrier in the human body. It separates air in the alveolus from blood in the capillary, and it is less than one micrometre thick - one fiftieth of the width of a human hair.
+
+My Socratic question: a barrier that thin should leak. Why does it not?
+
+The answer is that the barrier has three layers, each doing a different job.
+
+The first layer is the alveolar epithelium - the Type I pneumocyte. It stops fluid, cells, and large molecules from passing.
+
+The second layer is a fused basement membrane. In most of the body, the alveolar epithelium and the capillary endothelium each have their own basement membrane, and these fuse where the two are in closest contact. The fused membrane acts as a molecular sieve - it filters by size and by charge, keeping large proteins out and letting small gases through.
+
+The third layer is the capillary endothelium - the cells lining the blood vessel. It stops blood cells and plasma proteins from leaking into the alveolus.
+
+Together, these three layers let oxygen and carbon dioxide diffuse freely, while holding back everything larger. This is why the alveolus can be bathed in air without drowning - the barrier is thin enough for gas but tight enough for fluid.
+
+Crucial insight: when this barrier breaks down - as in ARDS - protein-rich fluid floods the alveoli, and gas exchange collapses. The barrier's thinness is both its strength and its vulnerability.`
+    },
+
+    {
+      q: "The alveoli are lined by fluid. Why does that fluid not collapse under surface tension?",
+      body: `Water lines the inner surface of every alveolus. Water has high surface tension - the molecules pull on each other, and the result is that a bubble of water tends to shrink to the smallest possible surface area. That is exactly what would happen in the alveolus if nothing interfered.
+
+My Socratic question: an alveolus lined with water would collapse on itself, and the lung would not be able to inflate. So how does the alveolus stay open?
+
+The answer is surfactant - a mixture secreted by Type II pneumocytes that lowers surface tension and stabilises the alveolus.
+
+Surfactant is a mixture of phospholipids (mainly dipalmitoyl phosphatidylcholine), neutral lipids, and four surfactant proteins. It works by inserting itself into the water layer and disrupting the cohesive forces between water molecules. The result is a drop in surface tension, which means the alveolus resists collapse.
+
+The genius of surfactant is that it works *more* where the alveolus is *smaller*. In a small alveolus, surfactant is more concentrated, so surface tension is lower, so the pressure needed to keep it open is less. This means small alveoli do not collapse into large ones - the lungs inflate evenly and smoothly.
+
+Crucial insight: newborn babies who cannot produce enough surfactant develop respiratory distress syndrome (RDS), which is why premature babies are treated with artificial surfactant. Adults whose Type II cells are damaged - by infection, smoke, or aspiration - develop the adult form, ARDS.`
+    },
+
+    {
+      q: "Alveolar macrophages live in the airspaces. What do they do that the epithelium cannot?",
+      body: `The alveolus has no immune barrier of its own - no lymph nodes, no antibody-secreting cells, no resident lymphocytes. Yet pathogens that reach the alveolus do not usually cause infection.
+
+My Socratic question: what protects the alveolus when the epithelium itself has no immune system?
+
+The answer is that the airspace is patrolled by alveolar macrophages - large, wandering phagocytes that live inside the alveoli themselves.
+
+Alveolar macrophages have three functions. First, they phagocytose any bacteria or fungi that evade the mucus layer and reach the alveolus. Second, they engulf particles - dust, pollen, smoke particles, asbestos fibres - that the mucociliary escalator failed to clear. Third, they act as immune sentinels: when they meet a pathogen they cannot destroy alone, they release signals that recruit other immune cells.
+
+Under the microscope, alveolar macrophages look distinctly different from the epithelial cells. They are large, irregular, and often contain dark, granular material - phagocytosed debris. In histology textbooks they are sometimes called "dust cells" because of what they carry.
+
+Crucial insight: the alveolar macrophage is the last line of defence of the lung. It works silently and constantly, and most infections never develop because the macrophage destroys the invader before symptoms appear. In smokers, macrophages are loaded with tar and lose much of their killing power - which is why smokers are more vulnerable to pneumonia.`
+    },
+
+    {
+      q: "How does the structure of a bronchiole differ from that of a bronchus, and why does the difference matter?",
+      body: `Bronchi and bronchioles look similar to the naked eye - both are tubes for air - but under the microscope, they are quite different tissues with different jobs.
+
+My Socratic question: the bronchi must stay open. The bronchioles must be able to change diameter. How does their structure differ to allow each?
+
+The answer comes down to cartilage and smooth muscle.
+
+Bronchi have plates of hyaline cartilage in their walls. The cartilage is a rigid scaffold, so the airway cannot collapse even under pressure. Bronchi also have cartilage because they are the first branches of the trachea and must maintain a stable, wide diameter.
+
+Bronchioles have no cartilage at all. Instead, they have a thick layer of smooth muscle in the wall - much more prominent than in the bronchi. The smooth muscle contracts and relaxes, changing the diameter of the airway in response to signals. This is what allows the body to control airflow to different regions of the lung - directing air to well-ventilated alveoli and away from those that are not working well.
+
+Crucial insight: the loss of cartilage and gain of smooth muscle is what makes the bronchioles the target of asthma. When the smooth muscle contracts excessively - which is exactly what happens in an asthma attack - the airway narrows so much that breathing out becomes very hard. In the bronchi, this could not happen, because cartilage would hold the airway open.`
+    },
+
+    {
+      q: "The pleura is a thin membrane. Why does the lung need it at all?",
+      body: `The lung is a delicate organ, wrapped in a thin, slippery membrane called the pleura. The pleura comes in two layers - visceral pleura, which covers the lung surface, and parietal pleura, which lines the inside of the chest wall. Between them is a thin film of fluid.
+
+My Socratic question: the pleura is thin, transparent, and holds no obvious function of its own. So why does the lung need it?
+
+The answer is that the pleura solves three problems at once.
+
+First, it allows frictionless movement. The lung changes shape with every breath, sliding against the chest wall thousands of times a day. Without a lubricating film between the two surfaces, this friction would damage the delicate lung tissue. The pleura provides that lubrication.
+
+Second, it holds the lung open. The intrapleural space is under slight negative pressure - the pressure between the two pleural layers is slightly less than atmospheric. This negative pressure keeps the visceral pleura (and therefore the lung) pulled outward against the chest wall. Without it, the lung would collapse to a fraction of its size.
+
+Third, it lets the two surfaces slide but never separate. The pleural fluid is cohesive - it sticks the two layers together like two wet glass slides. This coupling allows the lung to follow the chest wall's movements precisely.
+
+Crucial insight: when air enters the pleural cavity - a condition called pneumothorax - the negative pressure is lost, and the lung collapses on that side. When fluid accumulates - pleural effusion - the coupling still works but the lung is compressed. Both conditions are understood from the pleura's fundamental role.`
+    },
+
+    {
+      q: "The nose conditions air before it reaches the lung. How does its lining differ from the trachea's?",
+      body: `Air enters through the nose and exits toward the lungs. Along the way, it must be warmed, humidified, and cleaned. Each of these jobs requires a different lining - and the nose is built to do all three at once.
+
+My Socratic question: how can one lining warm, humidify, and clean air simultaneously?
+
+The answer is that the nasal lining is built with multiple tissue features layered together.
+
+The epithelium is pseudostratified ciliated columnar, like the trachea - but the cilia here are even denser, and the goblet cells more numerous. The mucus traps particles; the cilia sweep them back toward the pharynx to be swallowed.
+
+Beneath the epithelium lies a rich vascular plexus - a network of veins that dilate and constrict to regulate heat exchange. When cold air enters, the plexus dilates and warms it. When hot dry air enters, the plexus constricts, and the mucus and serous glands add moisture, humidifying the air before it moves further down.
+
+The serous glands in the submucosa add fluid, while the vascular plexus adds heat. Together they warm, humidify, and partially filter the air before it reaches the trachea.
+
+Crucial insight: the nose is not a passive passage - it is a conditioning chamber. By the time air reaches the trachea, it has been warmed to near body temperature, humidified to nearly 100 percent saturation, and largely stripped of particles. This is why mouth breathing is inefficient - it bypasses this conditioning and dries the airway, one reason breathing through the nose matters in cold weather.`
+    },
+
+    {
+      q: "Why does the olfactory epithelium differ so sharply from the rest of the airway lining?",
+      body: `Most of the nasal cavity is lined by respiratory epithelium, whose job is to warm, humidify, and clean. But the roof of the nasal cavity contains a patch of a completely different epithelium - the olfactory epithelium - whose job is to detect odours.
+
+My Socratic question: the rest of the airway is built for mechanics. Why is the olfactory patch built for something entirely different?
+
+The answer is that the olfactory epithelium has structural features the rest of the airway lacks, because its job is not mechanical - it is neural.
+
+The olfactory epithelium is pseudostratified, but with three distinct cell types. Olfactory receptor cells are bipolar neurons that extend cilia into the mucus and send axons directly to the olfactory bulb of the brain. Supporting (sustentacular) cells are columnar cells that secrete mucus and support the olfactory neurons. Basal cells are stem cells that replace the receptor neurons - which is unusual, because most neurons in the adult body cannot divide.
+
+The olfactory epithelium is unique in the body because it contains neurons directly exposed to the external environment. It is the only place where the nervous system touches the air.
+
+Crucial insight: because olfactory receptor neurons are exposed, they are vulnerable - and being replaceable stem cells, they regenerate continually throughout life. This is why the sense of smell can recover after damage, unlike most neural tissues. The olfactory epithelium is also the only region of the airway where smell is transduced - the respiratory epithelium has no such function, which is why an inflamed nose (rhinitis) blocks smell: the swollen lining blocks access of odorants to the olfactory patch.`
+    }
+  ],
+  theory: [
+    { q: "Name the four histological layers of the tracheal wall from lumen outward, and give the tissue of each.", a: "Mucosa - pseudostratified ciliated columnar epithelium with goblet cells, resting on a basement membrane with underlying lamina propria of loose connective tissue. Submucosa - loose connective tissue with seromucous glands. Cartilage layer - C-shaped hyaline cartilage rings (and the trachealis muscle posteriorly). Adventitia - outer fibrous connective tissue anchoring the trachea to surrounding structures." },
+    { q: "Describe the histological changes in epithelium from the trachea to the alveolus.", a: "Trachea and bronchi: pseudostratified ciliated columnar epithelium with goblet cells. Bronchioles: simple ciliated columnar or cuboidal epithelium, goblet cells largely absent. Respiratory bronchioles: simple cuboidal or squamous epithelium, cilia becoming sparse. Alveolar ducts and alveoli: simple squamous epithelium (Type I pneumocytes) with scattered Type II pneumocytes. Cartilage is present in trachea and bronchi, absent in bronchioles and below." },
+    { q: "Distinguish Type I from Type II pneumocytes.", a: "Type I pneumocytes are flat squamous cells covering about 95 percent of the alveolar surface; they are extremely thin and form the main barrier for gas exchange. Type II pneumocytes are rounded, cuboidal cells with prominent nuclei covering about 5 percent of the surface; they secrete surfactant, act as progenitor cells able to divide and replace Type I cells, and help regulate alveolar fluid balance." },
+    { q: "Describe the blood-air barrier and name its three layers.", a: "The blood-air barrier is the membrane between alveolar air and capillary blood, less than one micrometre thick. Its three layers are the alveolar epithelium (Type I pneumocyte and its basement membrane), the fused basement membrane of the alveolar epithelium and capillary endothelium, and the capillary endothelium." },
+    { q: "What is surfactant, which cells produce it, and why is it essential?", a: "Surfactant is a mixture of phospholipids (mainly dipalmitoyl phosphatidylcholine), neutral lipids, and surfactant proteins. It is produced by Type II pneumocytes. It lowers surface tension inside the alveolus, preventing alveolar collapse during expiration and equalising inflation of small and large alveoli. Its absence causes respiratory distress syndrome." },
+    { q: "Describe the structure and function of alveolar macrophages.", a: "Alveolar macrophages are large, irregular phagocytic cells that live inside the alveoli. They phagocytose bacteria, fungi, and inhaled particles that evade the mucociliary escalator; they are often called 'dust cells' because of the granular material they accumulate. They act as immune sentinels, releasing signals to recruit other immune cells when needed." },
+    { q: "What is the mucociliary escalator and how does it work?", a: "The mucociliary escalator is the combined action of goblet-cell mucus and ciliated epithelial cells in the airway. Mucus traps inhaled particles; the cilia beat in coordinated waves toward the pharynx, moving the mucus upward. The mucus is then swallowed or coughed up. Cigarette smoke paralyses and destroys the cilia, halting the escalator." },
+    { q: "How does the structure of bronchi differ from bronchioles, and why does it matter clinically?", a: "Bronchi have hyaline cartilage plates that keep them open, with relatively less smooth muscle. Bronchioles have no cartilage but a thick layer of smooth muscle, allowing them to change diameter. Clinically, because bronchioles are dominated by smooth muscle, they are the site of the airway narrowing in asthma - the bronchi cannot narrow the same way because cartilage resists." },
+    { q: "Describe the two layers of the pleura and the significance of the intrapleural space.", a: "The visceral pleura covers the lung surface; the parietal pleura lines the inner chest wall. Between them is the intrapleural space, containing a thin film of fluid and held at slightly negative pressure. The negative pressure keeps the lung expanded and coupled to the chest wall; the fluid provides lubrication. Loss of negative pressure (pneumothorax) causes lung collapse." },
+    { q: "Compare the lining of the nasal cavity with that of the trachea, in both structure and function.", a: "Both are pseudostratified ciliated columnar epithelium with goblet cells. However, the nasal lining has a much richer vascular plexus and more seromucous glands in the lamina propria, allowing it to warm, humidify, and filter air before it reaches the trachea. The trachea has less vascular plexus and simpler submucosal glands, as air arriving there is already conditioned." }
+  ],
+  videos: [
+    { channel: "The Noted Anatomist", title: "Histology of the Respiratory System", note: "Detailed tour of the airway lining from nasal cavity to alveoli, with real slide footage.", url: "" },
+    { channel: "Kenhub", title: "Lung Histology — Alveoli and Blood-Air Barrier", note: "Close-up of pneumocytes, alveolar macrophages, and the blood-air barrier.", url: "" },
+    { channel: "Osmosis", title: "Respiratory Histology and Surfactant", note: "Clear explanation of Type II pneumocytes, surfactant, and RDS.", url: "" }
+  ],
+  mcqs: [
+    { q: "The trachea is lined by which type of epithelium?", o: ["Simple squamous epithelium", "Simple cuboidal epithelium", "Pseudostratified ciliated columnar epithelium", "Stratified squamous epithelium"], a: 2, w: "The trachea is lined by pseudostratified ciliated columnar epithelium with goblet cells." },
+    { q: "The main function of goblet cells in the airway is to:", o: ["Secrete mucus", "Secrete surfactant", "Detect odours", "Phagocytose bacteria"], a: 0, w: "Goblet cells secrete mucus, which traps inhaled particles for removal by the cilia." },
+    { q: "Which cells are responsible for sweeping the mucus layer upward?", o: ["Type I pneumocytes", "Ciliated epithelial cells", "Type II pneumocytes", "Goblet cells"], a: 1, w: "Ciliated cells beat in coordinated waves, driving the mucus layer toward the pharynx." },
+    { q: "Pseudostratified epithelium is described as such because:", o: ["Every cell reaches the basement membrane", "The cells are arranged in two distinct layers", "Only the basal cells touch the basement membrane", "It is only found in the alveoli"], a: 0, w: "In pseudostratified epithelium, every cell contacts the basement membrane despite appearing layered." },
+    { q: "Which is NOT part of the mucociliary escalator?", o: ["Cilia", "Goblet cells", "Mucus", "Type I pneumocytes"], a: 3, w: "Type I pneumocytes are alveolar cells for gas exchange and play no part in the escalator." },
+    { q: "Cigarette smoke damages the airway primarily by:", o: ["Destroying alveolar cartilage", "Paralysing and destroying cilia", "Reducing mucus secretion", "Destroying red blood cells"], a: 1, w: "Smoke paralyses and destroys the cilia, halting the mucociliary escalator." },
+    { q: "The epithelium of the alveolus is classified as:", o: ["Simple cuboidal epithelium", "Stratified squamous epithelium", "Simple squamous epithelium", "Pseudostratified columnar epithelium"], a: 2, w: "Alveoli are lined by simple squamous epithelium - the thinnest barrier for gas exchange." },
+    { q: "The cells that cover about 95 percent of the alveolar surface are:", o: ["Type I pneumocytes", "Alveolar macrophages", "Goblet cells", "Type II pneumocytes"], a: 0, w: "Type I pneumocytes are the flat squamous cells that dominate the alveolar surface." },
+    { q: "Type II pneumocytes are primarily responsible for:", o: ["Phagocytosing bacteria", "Secreting surfactant", "Detecting odours", "Producing mucus"], a: 1, w: "Type II pneumocytes secrete surfactant, which lowers alveolar surface tension." },
+    { q: "Surfactant reduces alveolar surface tension and therefore:", o: ["Promotes alveolar collapse", "Prevents alveolar collapse", "Blocks gas exchange", "Increases mucus viscosity"], a: 1, w: "By lowering surface tension, surfactant prevents the alveoli from collapsing at the end of expiration." },
+    { q: "Which cells are the progenitor cells for alveolar epithelium?", o: ["Type I pneumocytes", "Alveolar macrophages", "Type II pneumocytes", "Basal cells"], a: 2, w: "Type II pneumocytes can divide and differentiate into Type I pneumocytes to repair the epithelium." },
+    { q: "The three layers of the blood-air barrier are:", o: ["Alveolar epithelium, fused basement membrane, capillary endothelium", "Mucus, cilia, plasma", "Type I pneumocyte, Type II pneumocyte, macrophage", "Surfactant, glycocalyx, plasma"], a: 0, w: "The barrier is the alveolar epithelium, the fused basement membrane, and the capillary endothelium." },
+    { q: "The approximate thickness of the blood-air barrier is:", o: ["Less than one micrometre", "About ten micrometres", "About one hundred micrometres", "About one millimetre"], a: 0, w: "The barrier is less than one micrometre thick - one of the thinnest barriers in the body." },
+    { q: "Which cell is most responsible for removing inhaled dust from the alveoli?", o: ["Type I pneumocyte", "Type II pneumocyte", "Alveolar macrophage", "Goblet cell"], a: 2, w: "Alveolar macrophages phagocytose inhaled particles that reach the alveoli." },
+    { q: "Alveolar macrophages are often called:", o: ["Ciliated cells", "Dust cells", "Goblet cells", "Basal cells"], a: 1, w: "They are called dust cells because of the phagocytosed debris they carry." },
+    { q: "Which feature distinguishes bronchi from bronchioles?", o: ["Presence of hyaline cartilage in bronchi", "Presence of cilia in bronchioles only", "Absence of smooth muscle in bronchi", "Presence of alveoli in bronchi"], a: 0, w: "Bronchi contain hyaline cartilage plates; bronchioles do not, having a dominant smooth muscle layer instead." },
+    { q: "Which feature characterises bronchioles?", o: ["C-shaped cartilage rings", "Abundant goblet cells", "Thick smooth muscle layer", "Alveolar sacs"], a: 2, w: "Bronchioles have a thick smooth muscle layer that controls airway diameter." },
+    { q: "Because bronchioles are dominated by smooth muscle, they are the primary site of:", o: ["Airway narrowing in asthma", "Gas exchange", "Surfactant secretion", "Mucus clearance"], a: 0, w: "Smooth muscle contraction in bronchioles is the mechanism of airway narrowing in asthma." },
+    { q: "The intrapleural space normally contains:", o: ["A thin film of fluid at negative pressure", "Air at atmospheric pressure", "Cartilage", "Alveoli"], a: 0, w: "The intrapleural space has a thin fluid film held at slightly negative pressure." },
+    { q: "Loss of negative pressure in the pleural space leads to:", o: ["Lung hyperinflation", "Pneumothorax and lung collapse", "Increased surfactant", "Improved gas exchange"], a: 1, w: "Loss of negative pressure causes pneumothorax and lung collapse on the affected side." },
+    { q: "The function of the vascular plexus in the nasal lining is to:", o: ["Warm incoming air", "Secrete surfactant", "Produce olfactory neurons", "Filter alveolar blood"], a: 0, w: "The nasal vascular plexus warms incoming air before it reaches the lower airway." },
+    { q: "The three cell types of the olfactory epithelium are:", o: ["Type I, Type II, and goblet cells", "Basal, ciliated, and goblet cells", "Olfactory receptor, supporting, and basal cells", "Pneumocytes, macrophages, and ciliated cells"], a: 2, w: "Olfactory epithelium contains olfactory receptor cells, supporting cells, and basal stem cells." },
+    { q: "Olfactory receptor cells are unusual among neurons because they:", o: ["Do not have axons", "Cannot fire action potentials", "Can regenerate from basal cells", "Are the largest neurons in the body"], a: 2, w: "Olfactory receptor neurons are replaced continually from basal stem cells - unusual for adult neurons." },
+    { q: "The submucosa of the trachea contains:", o: ["Seromucous glands", "Type I pneumocytes", "Alveolar macrophages", "Olfactory receptor cells"], a: 0, w: "The submucosa contains seromucous glands that contribute to the mucus layer." },
+    { q: "The tracheal cartilage rings are:", o: ["C-shaped", "Complete circles", "Absent", "Only in the posterior wall"], a: 0, w: "The trachea has C-shaped hyaline cartilage rings, open posteriorly where the trachealis muscle sits." },
+    { q: "The posterior gap in the tracheal cartilage rings is filled by:", o: ["Trachealis smooth muscle", "Adipose tissue", "Cartilage plates", "Ciliated epithelium"], a: 0, w: "The trachealis muscle fills the posterior gap and can contract to narrow the trachea slightly." },
+    { q: "Which epithelium lines the respiratory bronchioles?", o: ["Stratified squamous epithelium", "Simple squamous epithelium only", "Simple ciliated cuboidal to columnar epithelium", "Pseudostratified columnar epithelium"], a: 2, w: "Respiratory bronchioles have simple ciliated cuboidal to columnar epithelium, thinner than that of the bronchi." },
+    { q: "Terminal bronchioles differ from respiratory bronchioles in that terminal bronchioles:", o: ["Participate in gas exchange", "Contain alveoli in their walls", "Do not participate in gas exchange", "Are lined by stratified squamous epithelium"], a: 2, w: "Terminal bronchioles are the last purely conducting airways and do not participate in gas exchange." },
+    { q: "Alveolar pores (pores of Kohn) function to:", o: ["Provide collateral ventilation between adjacent alveoli", "Secrete surfactant", "Anchor the pleura", "Drain lymph from alveoli"], a: 0, w: "Pores of Kohn provide collateral air movement between neighbouring alveoli." },
+    { q: "Type I pneumocytes are best described as:", o: ["Cuboidal cells with prominent nuclei", "Flat cells with extremely thin cytoplasm", "Ciliated cells", "Phagocytic cells"], a: 1, w: "Type I pneumocytes are flat squamous cells with cytoplasm so thin it is barely visible under the microscope." },
+    { q: "Surfactant is mainly composed of:", o: ["Proteins and glucose", "Phospholipids and surfactant proteins", "Water and electrolytes", "Mucopolysaccharides"], a: 1, w: "Surfactant is primarily phospholipids, mainly dipalmitoyl phosphatidylcholine, plus surfactant proteins." },
+    { q: "Respiratory distress syndrome of the newborn is caused by:", o: ["Impaired surfactant production by immature Type II pneumocytes", "Excess surfactant production", "Destruction of Type I pneumocytes", "Loss of alveolar macrophages"], a: 0, w: "Immature Type II pneumocytes cannot produce enough surfactant, causing alveolar collapse." },
+    { q: "Which structure directly follows a terminal bronchiole?", o: ["Alveolar sac", "Respiratory bronchiole", "Bronchus", "Trachea"], a: 1, w: "The terminal bronchiole leads into a respiratory bronchiole, the first airway with alveoli." },
+    { q: "The epithelium lining the nasal cavity, trachea, and bronchi is essentially:", o: ["Stratified squamous", "Simple cuboidal", "Pseudostratified ciliated columnar", "Simple squamous"], a: 2, w: "All three regions are lined by pseudostratified ciliated columnar epithelium with goblet cells." },
+    { q: "The connective tissue immediately deep to the airway epithelium is called:", o: ["Adventitia", "Lamina propria", "Submucosa", "Perichondrium"], a: 1, w: "The lamina propria lies directly beneath the epithelium, part of the mucosa." },
+    { q: "The main difference between the mucosa and submucosa of the airway is:", o: ["Mucosa is cartilage; submucosa is muscle", "Mucosa contains glands; submucosa does not", "Submucosa contains glands; mucosa does not", "Mucosa is the outer layer"], a: 2, w: "Seromucous glands sit in the submucosa, not in the mucosa itself." },
+    { q: "Alveolar macrophages are derived from:", o: ["Monocytes", "Type II pneumocytes", "Ciliated cells", "Goblet cells"], a: 0, w: "Alveolar macrophages are derived from circulating monocytes." },
+    { q: "In smokers, the accumulation of tar in alveolar macrophages leads to:", o: ["Enhanced bacterial killing", "Reduced phagocytic and killing capacity", "Increased surfactant production", "Enhanced ciliary beating"], a: 1, w: "Tar-laden macrophages lose much of their ability to kill pathogens, making smokers more prone to pneumonia." },
+    { q: "Which of the following is NOT a function of the pleura?", o: ["Allowing frictionless movement of the lung", "Maintaining negative intrapleural pressure", "Secreting surfactant", "Coupling the lung to the chest wall"], a: 2, w: "Surfactant is secreted by Type II pneumocytes inside the alveoli, not by the pleura." },
+    { q: "The pressure in the intrapleural space compared to atmospheric pressure is:", o: ["Equal", "Higher", "Lower (negative)", "Zero"], a: 2, w: "Intrapleural pressure is slightly lower than atmospheric pressure, keeping the lung expanded." },
+    { q: "Which of the following contains no cartilage?", o: ["Trachea", "Primary bronchus", "Bronchiole", "Secondary bronchus"], a: 2, w: "Bronchioles lack cartilage entirely, relying on smooth muscle for tone." },
+    { q: "The transition from pseudostratified ciliated columnar to simple ciliated cuboidal epithelium occurs mainly at the level of the:", o: ["Alveolus", "Bronchiole", "Trachea", "Primary bronchus"], a: 1, w: "Bronchioles are the region where the epithelium thins to simple ciliated cuboidal to columnar." },
+    { q: "The Type II pneumocyte is a progenitor cell because it can:", o: ["Secrete mucus", "Divide and replace Type I cells", "Phagocytose bacteria", "Beat as a cilium"], a: 1, w: "Type II pneumocytes divide and differentiate into Type I cells to repair the alveolar lining." },
+    { q: "Goblet cells are most abundant in which part of the airway?", o: ["Alveolar sacs", "Trachea and bronchi", "Respiratory bronchioles", "Alveolar ducts"], a: 1, w: "Goblet cells are most abundant in the trachea and bronchi, decreasing in number further down." },
+    { q: "Which is the correct sequence of airway segments from top to bottom?", o: ["Trachea, bronchus, bronchiole, respiratory bronchiole, alveolar duct, alveolus", "Alveolus, trachea, bronchus, bronchiole", "Bronchiole, bronchus, trachea, alveolus", "Trachea, bronchiole, bronchus, alveolus"], a: 0, w: "The correct order is trachea, bronchus, bronchiole, respiratory bronchiole, alveolar duct, alveolus." },
+    { q: "The alveolar epithelium rests on which structure?", o: ["Cartilage", "Smooth muscle", "Basement membrane", "Mucus layer"], a: 2, w: "Every epithelium rests on a basement membrane, including the alveolar epithelium." },
+    { q: "The olfactory epithelium is unique in the body because:", o: ["It contains neurons exposed to the environment", "It has no basement membrane", "It is avascular", "It contains no cilia"], a: 0, w: "Olfactory receptor neurons are exposed to the air - the only place where the nervous system contacts the environment." },
+    { q: "Which sensory modality depends on the roof of the nasal cavity?", o: ["Vision", "Taste", "Smell", "Hearing"], a: 2, w: "Olfactory receptors in the roof of the nasal cavity transduce smell." },
+    { q: "Chronic obstructive pulmonary disease (COPD) is characterised histologically by:", o: ["Loss of goblet cells", "Destruction of alveolar walls and airway remodelling", "Thickening of the pleura only", "Increased surfactant"], a: 1, w: "COPD involves destruction of alveolar walls (emphysema) and airway remodelling (chronic bronchitis)." },
+    { q: "Which histological finding is characteristic of chronic bronchitis?", o: ["Loss of alveolar walls", "Hyperplasia of submucosal glands and goblet cells", "Absent cilia", "Decreased mucus production"], a: 1, w: "Chronic bronchitis is marked by mucous gland hypertrophy and goblet cell hyperplasia, producing excess mucus." }
+  ]
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -21001,6 +21239,7 @@ const CONTENT = {
   "an2:0": T_AN2_ABDWALL,
   "an2:1": T_AN2_PERITONEUM,
   "an2:11": T_AN2_URINARY,
+  "an2:13": T_AN2_RESP_HISTO,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
