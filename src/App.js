@@ -21126,6 +21126,231 @@ Crucial insight: because olfactory receptor neurons are exposed, they are vulner
   ]
 };
 
+/* --------------------------- an2:2 --------------------------- */
+const T_AN2_GI = {
+  courseId: "an2",
+  topicIndex: 2,
+  title: "Gastrointestinal Tract and Accessory Organs",
+  minutes: 28,
+  note: [
+    {
+      q: "Why does the gut need a sphincter at every junction, when a simple tube would work?",
+      body: `The gut is a single tube, roughly nine metres long, running from mouth to anus. Food has to travel in one direction, at a controlled speed, with each segment given time to do its job. If the tube were continuous with no gates, contents would slosh back and forth, and the digestive process would fail.
+
+My Socratic question: what stops the contents from moving backward, given that peristalsis pushes them forward against gravity as often as with it?
+
+The answer is sphincters - rings of thickened smooth muscle that act as one-way valves. Where the oesophagus meets the stomach sits the lower oesophageal sphincter. At the stomach's exit sits the pyloric sphincter. Where the small intestine meets the large sits the ileocaecal valve. At the anus sit the internal and external anal sphincters.
+
+Each sphincter has a specific job. The lower oesophageal sphincter stays closed to prevent stomach acid from climbing back up - when it fails, the result is gastro-oesophageal reflux disease. The pyloric sphincter controls how fast chyme leaves the stomach, giving the small intestine time to process it. The ileocaecal valve prevents colonic contents from flowing back into the small intestine. And the anal sphincters coordinate voluntary and involuntary control of defecation.
+
+Crucial insight: without sphincters, the gut is not a digestive tract - it is just a tube. Each sphincter is a precise gate that gives the segment above it control over the segment below. When one fails, the failure produces a specific, named clinical condition.`
+    },
+    {
+      q: "The oesophagus is a straight tube for food. Why does its lower end need a special anti-reflux barrier?",
+      body: `The oesophagus carries food from the pharynx to the stomach, a distance of roughly 25 centimetres. It has no digestive function of its own - its job is pure transport, driven by peristaltic waves of smooth muscle.
+
+At its lower end, the oesophagus meets the stomach, where acid and digestive enzymes are waiting. If those contents were free to move back up, they would burn the oesophageal lining, which has no protective mucus layer like the stomach does.
+
+My Socratic question: the lower oesophageal sphincter is only one muscle. Why is a single muscle enough to stop the stomach's contents?
+
+The answer is that the anti-reflux barrier is not just the sphincter. It is four structures working together.
+
+First, the lower oesophageal sphincter itself - a physiological high-pressure zone, not a distinct anatomical ring. Second, the right crus of the diaphragm, which wraps around the oesophagus as it passes through the oesophageal hiatus - this acts as an external pinch valve. Third, the acute angle at which the oesophagus enters the stomach - the angle of His - creates a flap-valve effect when gastric pressure rises. Fourth, the mucosal rosette at the gastro-oesophageal junction adds a plug-like seal.
+
+Crucial insight: when these four structures fail - most often because of a hiatus hernia, where the stomach slides up through the diaphragm - the result is gastro-oesophageal reflux disease. Chronic reflux can lead to Barrett's oesophagus, a premalignant change. This is why the anatomy of the anti-reflux barrier matters clinically, not just academically.`
+    },
+    {
+      q: "The stomach is a muscular bag. Why do its muscle layers run in three directions instead of just one?",
+      body: `The stomach is a J-shaped organ whose job is not just to store food but to churn it into a semi-liquid paste called chyme. To churn effectively, the stomach has to squeeze its contents in every direction at once.
+
+My Socratic question: most of the gut has two muscle layers, running in perpendicular directions. Why does the stomach need a third?
+
+The answer is mechanical. The rest of the gut needs only to push contents forward, so an inner circular layer and an outer longitudinal layer suffice. The stomach needs to grind, so it adds an innermost oblique layer. The three layers together allow the stomach to twist and churn in every direction, breaking food into ever-smaller particles and mixing them with acid and enzymes.
+
+The stomach has four regions, each with a different job. The cardia surrounds the oesophageal opening. The fundus is the dome above the cardia, storing swallowed air and food. The body is the largest region, the site of acid and pepsinogen secretion. The pylorus is the funnel-shaped exit, controlling gastric emptying via the pyloric sphincter.
+
+Crucial insight: the three-layer muscularis is what makes the stomach a blender, not just a bag. When the pyloric sphincter fails to open - a condition called pyloric stenosis, common in infants - the stomach cannot empty, and the classic sign is projectile vomiting.`
+    },
+    {
+      q: "The small intestine is six metres long. Why such length, when the stomach already broke food down?",
+      body: `By the time chyme leaves the stomach, the food is a semi-liquid paste. But it is not yet absorbed. The small intestine has to finish digestion, absorb nutrients, and reclaim water - all in the roughly four hours chyme spends inside it.
+
+My Socratic question: the small intestine is the longest part of the gut. Why does absorption require so much length?
+
+The answer is surface area. The small intestine's job is to bring a huge amount of surface into contact with the food passing through, so that digestion products and nutrients can cross into the blood.
+
+The small intestine achieves this with three levels of folding. First, the macroscopic folds called plicae circulares - visible ridges that spiral around the inner surface. Second, the microscopic villi - finger-like projections of the mucosa covering the entire surface. Third, the microvilli - tiny projections on the surface of each absorptive cell, giving the brush border. Together, these three levels increase the surface area by roughly 600-fold.
+
+The small intestine has three regions. The duodenum is short and C-shaped, receiving bile and pancreatic juice. The jejunum is the middle section, where most absorption occurs. The ileum is the final section, specialised for absorbing vitamin B12, bile salts, and the remaining nutrients.
+
+Crucial insight: the surface area of the small intestine is roughly the size of a tennis court. If it were a smooth tube, the length required to achieve the same absorption would be impossible to fit inside the abdomen. The three levels of folding are what make absorption practical.`
+    },
+    {
+      q: "The large intestine reclaims water but has no villi. How does it absorb at all?",
+      body: `By the time contents reach the large intestine, most nutrients are gone. What remains is water, electrolytes, and undigested fibre. The colon's job is to reclaim most of that water - roughly 1.5 litres per day - and to host the gut microbiome.
+
+My Socratic question: the small intestine uses villi to absorb. The colon has no villi. So how does it absorb water?
+
+The answer is that water absorption does not need villi. Villi increase surface area for absorbing nutrients, which require transporter proteins. Water moves passively by osmosis, and the colon does not need to amplify its surface for that. Instead, the colon absorbs sodium actively, and water follows osmotically.
+
+The colon has four regions. The caecum is a blind pouch receiving contents from the ileum via the ileocaecal valve. The ascending, transverse, and descending colon wrap around the abdomen. The sigmoid colon is an S-shaped segment leading to the rectum. The rectum stores faeces before defecation. The anus is the exit, guarded by internal and external sphincters.
+
+The colon also houses the gut microbiome - trillions of bacteria that ferment undigested fibre, produce vitamin K and some B vitamins, and shape immune function.
+
+Crucial insight: the colon is not a passive drain. It is an active organ that reclaims water, hosts a microbial ecosystem, and shapes whole-body health. When it fails - as in ulcerative colitis - the loss of water reabsorption produces diarrhoea, and the loss of barrier function can allow bacteria into the bloodstream.`
+    },
+    {
+      q: "The liver is one organ, but its functional anatomy reads like four. Why?",
+      body: `The liver is the largest internal organ, weighing about 1.5 kilograms. Functionally, it does hundreds of jobs at once - metabolism, detoxification, bile production, protein synthesis, immune defence. Yet anatomically, it is organised into four lobes.
+
+My Socratic question: the liver looks like a single organ. Why does its internal anatomy matter enough to be divided into lobes and segments?
+
+The answer is that the liver's functional divisions do not match its surface appearance. The surface shows a large right lobe and a smaller left lobe, separated by the falciform ligament. But internally, the liver is organised by its blood supply and bile drainage - the Couinaud segments - and each segment has its own portal vein branch, hepatic artery branch, and bile duct.
+
+The surface landmarks matter clinically because surgeons use them to plan resections. The falciform ligament separates the right and left lobes. The ligamentum teres runs in its free edge - the obliterated umbilical vein. On the visceral surface, the gallbladder marks the division between the right and left functional lobes. The porta hepatis is the gateway where the portal vein, hepatic artery, and bile duct enter and leave.
+
+The liver also has a dual blood supply. The portal vein brings nutrient-rich blood from the gut, roughly 75 percent of the liver's blood flow. The hepatic artery brings oxygenated blood, roughly 25 percent.
+
+Crucial insight: the liver has two blood supplies and two drains - the hepatic veins drain into the inferior vena cava, and the bile ducts drain into the gut. This organisation is what allows the liver to filter everything absorbed from the gut before it reaches the rest of the body - the first-pass effect.`
+    },
+    {
+      q: "The gallbladder stores bile but does not produce it. Why store bile at all when the liver makes it continuously?",
+      body: `The liver produces bile continuously - roughly 600 to 1000 millilitres per day. But the body only needs bile when fatty food arrives in the duodenum, which happens a few times a day, not continuously.
+
+My Socratic question: if the liver makes bile continuously and the gut needs it intermittently, what bridges the gap?
+
+The answer is the gallbladder - a pear-shaped sac on the visceral surface of the liver that stores and concentrates bile between meals.
+
+The gallbladder has three parts. The fundus is the rounded upper end, projecting beyond the liver's inferior border. The body is the main storage region. The neck tapers into the cystic duct, which joins the common hepatic duct to form the common bile duct.
+
+Between meals, bile flows backward into the gallbladder and is stored. The gallbladder mucosa absorbs water and electrolytes, concentrating the bile up to tenfold. When fatty food enters the duodenum, the hormone cholecystokinin (CCK) is released and stimulates the gallbladder to contract and the sphincter of Oddi to relax, releasing bile into the duodenum.
+
+Crucial insight: the gallbladder is a concentrator, not just a reservoir. If the gallbladder is removed - which is common treatment for gallstones - the liver's continuous bile still enters the gut, but the patient loses the ability to release a large bolus of concentrated bile when fat arrives, which can cause difficulty digesting very fatty meals.`
+    },
+    {
+      q: "The pancreas has both endocrine and exocrine functions in the same organ. Why does this not cause problems?",
+      body: `The pancreas sits behind the stomach, nestled against the duodenum. It has two very different jobs. As an exocrine gland, it produces digestive enzymes - about 1.5 litres of alkaline enzyme-rich fluid per day, delivered to the duodenum. As an endocrine gland, it produces insulin and glucagon, delivered to the bloodstream.
+
+My Socratic question: two very different functions in one organ. Why does the digestive fluid not destroy the pancreas from the inside?
+
+The answer is that the pancreas is built to keep those two functions physically separate and chemically safe.
+
+The exocrine tissue is arranged in acini - clusters of cells that secrete enzyme precursors into a duct system. The enzymes are secreted as inactive zymogens, not as active enzymes. They only become active when they reach the duodenum. Trypsinogen is activated by enterokinase on the duodenal brush border; other zymogens are then activated by trypsin. This prevents the pancreas from digesting itself.
+
+The endocrine tissue is arranged in islets of Langerhans, clusters of cells scattered through the pancreas. The islets are separated from the acini by connective tissue and drain their hormones directly into the bloodstream rather than into the ducts.
+
+Crucial insight: the separation of exocrine and endocrine functions, combined with the zymogen activation system, is what makes the pancreas safe. When these defences fail - as in acute pancreatitis, often triggered by gallstones or alcohol - the enzymes activate inside the pancreas, and the organ begins to digest itself.`
+    },
+    {
+      q: "The spleen is a lymphoid organ, not a digestive one. Why is it grouped with the GI tract?",
+      body: `The spleen sits in the upper left abdomen, tucked behind the stomach and above the left kidney. Anatomically, it is separated from the gut. Yet in any anatomy course on the GI tract, the spleen appears alongside the liver, gallbladder, and pancreas.
+
+My Socratic question: the spleen has no role in digestion. Why is it grouped with the accessory organs of the GI tract?
+
+The answer is anatomical relations, not functional role. The spleen shares a peritoneal connection to the stomach - the gastrosplenic ligament - and sits in the same retroperitoneal region as the pancreas. It is surgically relevant to the GI tract because the blood supply to the spleen and the blood supply to the stomach, pancreas, and left colon come from the same arterial trunk - the splenic artery arises from the coeliac trunk.
+
+The spleen has two functions. First, it filters the blood - removing old red blood cells, recycling iron, and removing antibody-coated bacteria. Second, it mounts immune responses - it is the site where B and T cells meet antigens and where antibody production is initiated.
+
+Crucial insight: the spleen is grouped with the GI organs because the surgeon who operates on the stomach or pancreas needs to know the spleen's position, blood supply, and ligaments. Splenic injury is a common complication of left upper abdominal trauma, and splenectomy is sometimes required - which is followed by an increased risk of encapsulated bacterial infections, since the spleen's immune filtering role is lost.`
+    },
+    {
+      q: "The gut has its own nervous system. Why does it need one, when the brain already controls the body?",
+      body: `The gut is the only internal organ with its own complete nervous system - the enteric nervous system, sometimes called the second brain. It contains roughly 500 million neurons, more than the spinal cord.
+
+My Socratic question: the brain and spinal cord control the whole body. Why does the gut need its own nervous system?
+
+The answer is that the gut has to run autonomously to survive. Digestion does not stop when you sleep, when you are unconscious, or when the brain's control is cut off. If the gut depended entirely on the brain, digestion would stop the moment you lost consciousness.
+
+The enteric nervous system has two plexuses. The submucosal plexus (Meissner's) controls secretion and blood flow. The myenteric plexus (Auerbach's) controls motility. Together they can run the entire gut independently - they coordinate peristalsis, secretion, and blood flow.
+
+The brain does not control the gut directly. It modulates it, through the vagus nerve and sympathetic nerves. The brain can speed the gut up or slow it down, but it cannot make it work from scratch. The enteric nervous system is what actually makes it work.
+
+Crucial insight: the second brain is why gut function survives even severe brain injury. It is also why conditions like irritable bowel syndrome, where the gut's own nerves malfunction, are treated as neurological disorders - not just digestive ones. The gut is autonomous, and its autonomy has clinical consequences.`
+    }
+  ],
+  theory: [
+    { q: "Outline the gross structures and functional significance of the major parts of the GI tract.", a: "Mouth - ingestion, mastication, initial digestion of starch by salivary amylase. Oesophagus - muscular tube conducting food to the stomach; the lower oesophageal sphincter and diaphragm prevent reflux. Stomach - storage, churning, and chemical digestion via acid and pepsinogen; three muscle layers churn, pyloric sphincter controls emptying. Small intestine (duodenum, jejunum, ileum) - final digestion and absorption; plicae, villi, and microvilli increase surface area ~600-fold. Large intestine (caecum, ascending, transverse, descending, sigmoid, rectum) - water and electrolyte absorption, faecal storage, microbiome host. Anal canal and sphincters - voluntary and involuntary control of defecation." },
+    { q: "Name the accessory organs of the GI tract and their functions.", a: "Liver - metabolism, detoxification, protein synthesis, bile production, immune defence. Gallbladder - stores and concentrates bile; releases it under CCK when fat enters the duodenum. Pancreas - exocrine secretion of digestive enzymes and bicarbonate; endocrine secretion of insulin, glucagon, and other hormones. Spleen - not a digestive organ but grouped anatomically; filters blood and mounts immune responses." },
+    { q: "Describe the anti-reflux barrier at the gastro-oesophageal junction.", a: "Four components: the lower oesophageal sphincter (physiological high-pressure zone), the right crus of the diaphragm pinching the oesophagus at the hiatus, the acute angle of His (flap-valve effect), and the mucosal rosette at the junction. Failure (commonly due to hiatus hernia) causes gastro-oesophageal reflux disease." },
+    { q: "Describe the four regions of the stomach and their functions.", a: "Cardia - surrounds the oesophageal opening. Fundus - dome above the cardia; stores swallowed air and food. Body - the largest region; site of acid and pepsinogen secretion. Pylorus - funnel-shaped exit; the pyloric sphincter controls gastric emptying." },
+    { q: "Why does the stomach have three muscle layers rather than two?", a: "Two layers (circular and longitudinal) push contents forward, but churning requires squeezing in every direction. The third, innermost oblique layer allows the stomach to twist and grind food into chyme." },
+    { q: "Describe the three levels of folding in the small intestine and their role.", a: "Plicae circulares - macroscopic folds of the mucosa and submucosa. Villi - microscopic finger-like projections of the mucosa. Microvilli - apical projections on the surface of enterocytes forming the brush border. Together they increase absorptive surface area roughly 600-fold." },
+    { q: "Describe the functional anatomy of the liver.", a: "Four lobes - right, left, caudate, quadrate. Functionally divided into eight Couinaud segments, each with its own portal vein, hepatic artery, and bile duct branches. Dual blood supply - portal vein (~75 percent) and hepatic artery (~25 percent). Dual drainage - hepatic veins to IVC, bile ducts to the gut. Porta hepatis is the gateway for the portal triad." },
+    { q: "Explain the role of the gallbladder and CCK in fat digestion.", a: "The gallbladder stores and concentrates bile between meals, absorbing water and electrolytes. When fatty food enters the duodenum, CCK is released and stimulates the gallbladder to contract and the sphincter of Oddi to relax, releasing a bolus of concentrated bile into the duodenum to emulsify fat." },
+    { q: "How does the pancreas avoid digesting itself?", a: "Exocrine enzymes are secreted as inactive zymogens, not as active enzymes. Trypsinogen is activated only in the duodenum by enterokinase; trypsin then activates other zymogens. The endocrine tissue is separated in islets and secretes hormones directly into the blood. Failure of this system causes acute pancreatitis." },
+    { q: "Describe the two plexuses of the enteric nervous system and their roles.", a: "Submucosal plexus (Meissner's) - controls glandular secretion and local blood flow. Myenteric plexus (Auerbach's) - controls gut motility by coordinating contraction of the muscle layers. Together they allow the gut to function autonomously from the CNS." }
+  ],
+  videos: [
+    { channel: "CrashCourse", title: "The Digestive System", note: "Overview of the whole GI tract and how its parts work together.", url: "" },
+    { channel: "Kenhub", title: "Stomach Anatomy and Function", note: "Detailed tour of the stomach regions, muscle layers, and sphincters.", url: "" },
+    { channel: "Armando Hasudungan", title: "Liver, Gallbladder, and Pancreas — Anatomy and Function", note: "Hand-drawn explanation of the accessory organs and their clinical relations.", url: "" }
+  ],
+  mcqs: [
+    { q: "Which structure prevents stomach contents from refluxing into the oesophagus?", o: ["Pyloric sphincter", "Lower oesophageal sphincter", "Ileocaecal valve", "Sphincter of Oddi"], a: 1, w: "The lower oesophageal sphincter forms the main anti-reflux barrier at the gastro-oesophageal junction." },
+    { q: "The longest part of the GI tract is the:", o: ["Oesophagus", "Small intestine", "Large intestine", "Stomach"], a: 1, w: "The small intestine is about 6 metres long, the longest part of the GI tract." },
+    { q: "Which of the following is NOT an accessory organ of the GI tract?", o: ["Liver", "Pancreas", "Kidney", "Gallbladder"], a: 2, w: "The kidney is part of the urinary system, not the GI accessory organs." },
+    { q: "The three levels of folding in the small intestine are:", o: ["Rugae, villi, crypts", "Plicae, villi, microvilli", "Haustra, taeniae, omenta", "Villi, microvilli, fimbriae"], a: 1, w: "Plicae circulares, villi, and microvilli are the three levels of folding that increase surface area." },
+    { q: "The pyloric sphincter controls:", o: ["Reflux into the oesophagus", "Flow from stomach to duodenum", "Flow from ileum to caecum", "Flow from colon to rectum"], a: 1, w: "The pyloric sphincter is the muscular gate between the stomach and the duodenum." },
+    { q: "The fundus of the stomach is best described as:", o: ["The dome above the cardia", "The pyloric region", "The greater curvature", "The site of the pyloric sphincter"], a: 0, w: "The fundus is the dome-shaped region above the cardia." },
+    { q: "The three muscle layers of the stomach are:", o: ["Circular, oblique, longitudinal", "Inner circular, outer longitudinal only", "Two circular layers and one oblique layer", "Longitudinal, radial, and circular"], a: 0, w: "The stomach has inner oblique, middle circular, and outer longitudinal muscle layers." },
+    { q: "Which part of the small intestine receives bile and pancreatic juice?", o: ["Ileum", "Jejunum", "Duodenum", "Caecum"], a: 2, w: "The duodenum receives bile from the gallbladder and pancreatic juice from the pancreas." },
+    { q: "Vitamin B12 is primarily absorbed in the:", o: ["Duodenum", "Jejunum", "Ileum", "Stomach"], a: 2, w: "The ileum is specialised for absorbing vitamin B12, bile salts, and remaining nutrients." },
+    { q: "The ileocaecal valve functions to:", o: ["Prevent backward flow from the colon", "Control gastric emptying", "Allow reflux into the ileum", "Secrete bile"], a: 0, w: "The ileocaecal valve prevents colonic contents from flowing back into the small intestine." },
+    { q: "Which region of the large intestine is a blind pouch?", o: ["Sigmoid colon", "Caecum", "Transverse colon", "Rectum"], a: 1, w: "The caecum is the blind pouch that receives contents from the ileum." },
+    { q: "The primary function of the large intestine is:", o: ["Protein digestion", "Water and electrolyte absorption", "Fat emulsification", "Enzyme secretion"], a: 1, w: "The colon reabsorbs water and electrolytes and hosts the gut microbiome." },
+    { q: "The liver's dual blood supply consists of the:", o: ["Hepatic artery and portal vein", "Renal artery and hepatic vein", "Splenic artery and hepatic artery", "Portal vein and hepatic vein"], a: 0, w: "The liver receives blood from the hepatic artery (~25 percent) and portal vein (~75 percent)." },
+    { q: "The porta hepatis is the gateway for:", o: ["Only the hepatic vein", "The portal triad", "Only the bile duct", "The inferior vena cava"], a: 1, w: "The portal triad (portal vein, hepatic artery, bile duct) enters and leaves at the porta hepatis." },
+    { q: "The falciform ligament separates which two lobes of the liver?", o: ["Left and caudate", "Right and left", "Right and quadrate", "Caudate and quadrate"], a: 1, w: "The falciform ligament separates the right and left lobes of the liver on the anterior surface." },
+    { q: "The ligamentum teres is the remnant of which fetal vessel?", o: ["Umbilical artery", "Umbilical vein", "Ductus arteriosus", "Ductus venosus"], a: 1, w: "The ligamentum teres is the obliterated umbilical vein, running in the free edge of the falciform ligament." },
+    { q: "Bile is produced by the:", o: ["Gallbladder", "Liver", "Pancreas", "Spleen"], a: 1, w: "Bile is produced by the liver and stored in the gallbladder." },
+    { q: "The gallbladder concentrates bile by absorbing:", o: ["Bile salts", "Water and electrolytes", "Cholesterol", "Bilirubin"], a: 1, w: "The gallbladder mucosa absorbs water and electrolytes, concentrating bile up to tenfold." },
+    { q: "CCK (cholecystokinin) stimulates:", o: ["Gallbladder contraction and sphincter of Oddi relaxation", "Bile production by the liver", "Gastric acid secretion", "Colonic water absorption"], a: 0, w: "CCK causes the gallbladder to contract and the sphincter of Oddi to relax, releasing bile." },
+    { q: "The sphincter of Oddi controls the flow of bile and pancreatic juice into the:", o: ["Stomach", "Jejunum", "Ileum", "Duodenum"], a: 3, w: "The sphincter of Oddi is at the opening of the common bile duct into the duodenum." },
+    { q: "Which part of the pancreas produces insulin and glucagon?", o: ["Acinar cells", "Ductal cells", "Islets of Langerhans", "Centroacinar cells"], a: 2, w: "Islets of Langerhans are the endocrine tissue of the pancreas, producing insulin and glucagon." },
+    { q: "Pancreatic enzymes are secreted as inactive zymogens to:", o: ["Reduce energy cost", "Prevent self-digestion of the pancreas", "Slow digestion", "Increase enzyme activity"], a: 1, w: "Zymogens prevent the pancreas from digesting itself; they are activated in the duodenum." },
+    { q: "Trypsinogen is activated in the duodenum by:", o: ["Enterokinase", "Chymotrypsin", "Pepsin", "Amylase"], a: 0, w: "Enterokinase on the duodenal brush border converts trypsinogen to active trypsin." },
+    { q: "The spleen is grouped with GI organs because of:", o: ["Its role in digestion", "Its peritoneal connections and shared blood supply", "Its enzyme secretion", "Its location in the pelvis"], a: 1, w: "The spleen shares peritoneal connections and arterial supply with the GI tract." },
+    { q: "The gastrosplenic ligament connects the spleen to the:", o: ["Liver", "Stomach", "Pancreas", "Kidney"], a: 1, w: "The gastrosplenic ligament is a peritoneal fold connecting the greater curvature of the stomach to the spleen." },
+    { q: "The enteric nervous system is best described as:", o: ["Part of the somatic nervous system", "A separate nervous system controlling the gut", "Part of the sympathetic chain", "A branch of the vagus nerve only"], a: 1, w: "The enteric nervous system is a distinct nervous system that controls the gut autonomously." },
+    { q: "The myenteric (Auerbach's) plexus primarily controls:", o: ["Secretion and blood flow", "Gut motility", "Absorption", "Immune response"], a: 1, w: "The myenteric plexus coordinates contraction of the muscle layers and gut motility." },
+    { q: "The submucosal (Meissner's) plexus primarily controls:", o: ["Secretion and local blood flow", "Motility", "Villus contraction", "Sphincter tone"], a: 0, w: "The submucosal plexus controls glandular secretion and local blood flow." },
+    { q: "The vagus nerve influences the gut by:", o: ["Directly controlling every muscle cell", "Modulating the enteric nervous system", "Replacing the enteric nervous system", "Inhibiting all gut activity"], a: 1, w: "The vagus modulates the enteric nervous system rather than replacing it." },
+    { q: "Gastro-oesophageal reflux disease (GORD) is most often caused by:", o: ["Excess gastric acid alone", "Failure of the anti-reflux barrier", "Delayed gastric emptying", "Duodenal ulcer"], a: 1, w: "GORD results from failure of the anti-reflux barrier, often due to hiatus hernia." },
+    { q: "A hiatus hernia occurs when:", o: ["Part of the stomach slides through the oesophageal hiatus of the diaphragm", "The pyloric sphincter fails", "The ileocaecal valve prolapses", "The gallbladder herniates"], a: 0, w: "In a hiatus hernia, part of the stomach moves up through the diaphragm's oesophageal hiatus." },
+    { q: "Barrett's oesophagus is:", o: ["A benign tumour of the oesophagus", "A premalignant change in the oesophageal lining", "Inflammation of the oesophageal muscle", "A congenital anomaly"], a: 1, w: "Barrett's oesophagus is a premalignant change caused by chronic reflux, where squamous epithelium is replaced by columnar." },
+    { q: "Which of the following is NOT part of the anti-reflux barrier?", o: ["Lower oesophageal sphincter", "Right crus of the diaphragm", "Pyloric sphincter", "Angle of His"], a: 2, w: "The pyloric sphincter controls gastric emptying; it is not part of the anti-reflux barrier." },
+    { q: "The angle of His contributes to the anti-reflux barrier by:", o: ["Creating a flap-valve effect at the gastro-oesophageal junction", "Sealing the pylorus", "Wrapping around the oesophagus", "Contracting with each swallow"], a: 0, w: "The acute angle at which the oesophagus enters the stomach creates a flap-valve that resists reflux." },
+    { q: "Acute pancreatitis is most often caused by:", o: ["Viral infection", "Gallstones or alcohol", "Pancreatic cancer", "Autoimmune disease"], a: 1, w: "Gallstones and alcohol account for the majority of acute pancreatitis cases." },
+    { q: "Pyloric stenosis in infants classically presents with:", o: ["Projectile vomiting", "Bloody stool", "Constipation only", "Rectal bleeding"], a: 0, w: "Pyloric stenosis prevents gastric emptying, causing projectile vomiting after feeds." },
+    { q: "Which of the following best describes the first-pass effect?", o: ["Nutrients absorbed from the gut pass through the liver before reaching the systemic circulation", "Blood from the heart passes through the lungs once per cycle", "Bile is recycled through the ileum", "Pancreatic enzymes act once per meal"], a: 0, w: "The portal vein carries absorbed substances to the liver, where they are metabolised before entering the systemic circulation." },
+    { q: "Portal hypertension is a complication of:", o: ["Renal failure", "Chronic liver disease", "Gastric ulcer", "Pancreatitis"], a: 1, w: "Portal hypertension is a common complication of cirrhosis and other chronic liver diseases." },
+    { q: "The colon absorbs water primarily by:", o: ["Active transport of water", "Osmosis following active sodium absorption", "Facilitated diffusion of water", "Pinocytosis"], a: 1, w: "Sodium is actively absorbed in the colon, and water follows osmotically." },
+    { q: "The gut microbiome contributes to the body by:", o: ["Producing insulin", "Producing vitamin K and some B vitamins", "Secreting bile", "Storing fat"], a: 1, w: "Gut bacteria synthesise vitamin K and some B vitamins, and shape immune function." },
+    { q: "Which segment of the colon lies between the transverse and sigmoid colon?", o: ["Ascending colon", "Descending colon", "Caecum", "Rectum"], a: 1, w: "The descending colon lies between the transverse colon and the sigmoid colon." },
+    { q: "The rectum functions primarily to:", o: ["Absorb nutrients", "Store faeces before defecation", "Secrete digestive enzymes", "Produce bile"], a: 1, w: "The rectum is the temporary storage site for faeces before defecation." },
+    { q: "The internal anal sphincter is composed of:", o: ["Skeletal muscle", "Smooth muscle", "Elastic cartilage", "Dense connective tissue"], a: 1, w: "The internal anal sphincter is smooth muscle and is under involuntary control." },
+    { q: "The external anal sphincter is composed of:", o: ["Skeletal muscle under voluntary control", "Smooth muscle under involuntary control", "Elastic tissue", "Fibrous tissue"], a: 0, w: "The external anal sphincter is skeletal muscle and is under voluntary control." },
+    { q: "Which statement about the mucosa of the colon is correct?", o: ["It has numerous villi for absorption", "It has crypts but no villi", "It has a brush border throughout", "It has no goblet cells"], a: 1, w: "The colon has crypts containing goblet cells but no villi, unlike the small intestine." },
+    { q: "The taeniae coli are:", o: ["Three longitudinal muscle bands of the colon", "Folds of the colonic mucosa", "Sphincters of the colon", "Glands of the colon"], a: 0, w: "The taeniae coli are three bands of longitudinal smooth muscle on the outer surface of the colon." },
+    { q: "Haustra are best described as:", o: ["Longitudinal folds of the colon", "Sacculations of the colon", "Glands of the colon", "Sphincters of the colon"], a: 1, w: "Haustra are the sacculations (bulges) of the colon wall between the taeniae coli." },
+    { q: "The appendix is attached to the:", o: ["Ascending colon", "Caecum", "Transverse colon", "Sigmoid colon"], a: 1, w: "The appendix is a blind tube attached to the caecum." },
+    { q: "Meckel's diverticulum is a remnant of the:", o: ["Urachus", "Vitellointestinal duct", "Umbilical vein", "Ductus arteriosus"], a: 1, w: "Meckel's diverticulum is a remnant of the vitellointestinal (omphalomesenteric) duct." },
+    { q: "The portal triad consists of the:", o: ["Portal vein, hepatic artery, bile duct", "Hepatic vein, hepatic artery, bile duct", "Portal vein, hepatic vein, bile duct", "Portal vein, splenic artery, bile duct"], a: 0, w: "The portal triad is the portal vein, hepatic artery proper, and bile duct." },
+    { q: "The hepatic veins drain into the:", o: ["Portal vein", "Inferior vena cava", "Superior vena cava", "Aorta"], a: 1, w: "Hepatic veins drain directly into the inferior vena cava." },
+    { q: "The liver is divided functionally into eight:", o: ["Lobes", "Couinaud segments", "Lobules", "Acini"], a: 1, w: "The liver is functionally divided into eight Couinaud segments, each with its own vessels and duct." },
+    { q: "Which of the following is a consequence of splenectomy?", o: ["Increased risk of encapsulated bacterial infection", "Loss of bile production", "Loss of pancreatic function", "Loss of water absorption"], a: 0, w: "After splenectomy, the risk of infection by encapsulated bacteria (e.g. pneumococcus) is increased." },
+    { q: "The splenic artery arises from the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Renal artery"], a: 0, w: "The splenic artery is a branch of the coeliac trunk." },
+    { q: "The epiploic foramen (of Winslow) is:", o: ["A passage between the greater and lesser sacs", "The opening of the bile duct", "The opening of the pancreatic duct", "The entrance to the pelvis"], a: 0, w: "The epiploic foramen is the opening between the greater and lesser sacs of the peritoneal cavity." },
+    { q: "The lesser sac (omental bursa) lies:", o: ["Anterior to the stomach", "Posterior to the stomach", "Below the liver", "In the pelvis"], a: 1, w: "The lesser sac lies posterior to the stomach and lesser omentum." },
+    { q: "The foregut is supplied by the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Internal iliac artery"], a: 0, w: "The foregut (up to the duodenum) is supplied by the coeliac trunk." },
+    { q: "The midgut is supplied by the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Splenic artery"], a: 1, w: "The midgut (from the duodenum to the proximal transverse colon) is supplied by the superior mesenteric artery." },
+    { q: "The hindgut is supplied by the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Hepatic artery"], a: 2, w: "The hindgut (distal transverse colon to the anal canal) is supplied by the inferior mesenteric artery." },
+    { q: "Haemorrhoids are dilated veins of the:", o: ["Portal vein", "Haemorrhoidal plexus", "Splenic vein", "Hepatic vein"], a: 1, w: "Haemorrhoids are dilated veins of the internal or external haemorrhoidal plexuses." },
+    { q: "Which part of the GI tract has villi?", o: ["Stomach", "Small intestine", "Large intestine", "Oesophagus"], a: 1, w: "Villi are found in the small intestine, not the stomach or large intestine." },
+    { q: "Peyer's patches are aggregations of lymphoid tissue found in the:", o: ["Stomach", "Ileum", "Duodenum", "Colon"], a: 1, w: "Peyer's patches are found in the ileum, forming part of the gut-associated lymphoid tissue (GALT)." }
+  ]
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -21240,6 +21465,8 @@ const CONTENT = {
   "an2:1": T_AN2_PERITONEUM,
   "an2:11": T_AN2_URINARY,
   "an2:13": T_AN2_RESP_HISTO,
+  "an2:2": T_AN2_GI,
+
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
