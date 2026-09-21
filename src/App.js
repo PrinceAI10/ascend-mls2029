@@ -23577,7 +23577,7 @@ function QuizView({ app }) {
         </button>
         <div className="eyebrow">Question bank</div>
         <h2 style={{ fontSize: 24, margin: "6px 0 4px" }}>{t.title}</h2>
-        <p style={{ color: "var(--text-2)", marginTop: 0 }}>{bankLen} MCQs - single best answer, options shuffled every attempt.</p>
+        <p style={{ color: "var(--text-2)", marginTop: 0 }}>{mcqs.length} MCQs - single best answer, options shuffled every attempt.</p>
         <div className="grid g2" style={{ marginTop: 18 }}>
           <button className="card hover" style={{ textAlign: "left" }} onClick={() => startQuiz("practice")} disabled={building}>
             <Ic.target p={22} />
