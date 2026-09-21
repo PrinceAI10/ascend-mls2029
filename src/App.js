@@ -21351,6 +21351,837 @@ Crucial insight: the second brain is why gut function survives even severe brain
   ]
 };
 
+/* --------------------------- an2:3 --------------------------- */
+const T_AN2_NEUROVASC = {
+  courseId: "an2",
+  topicIndex: 3,
+  title: "Neurovasculature of the GI Tract",
+  minutes: 28,
+  note: [
+    {
+      q: "Why is the gut's blood supply divided into three separate arterial territories, rather than one vessel feeding the whole tract?",
+      body: `The gut is a single continuous tube, roughly nine metres long, from oesophagus to rectum. Its blood supply, however, comes from three separate arteries arising from the abdominal aorta at three different levels.
+
+My Socratic question: why would the body route blood to one continuous tube through three different arteries instead of one?
+
+The answer is embryology. The gut forms from three separate embryological segments, and each retains its own arterial supply into adult life. The foregut - from the oesophagus down to the second part of the duodenum - is supplied by the coeliac trunk. The midgut - from the second part of the duodenum to the proximal two-thirds of the transverse colon - is supplied by the superior mesenteric artery. The hindgut - from the distal one-third of the transverse colon to the upper anal canal - is supplied by the inferior mesenteric artery.
+
+Each of these three arteries branches further, and the branches connect with each other at the boundaries - the foregut-midgut and midgut-hindgut junctions - through small anastomotic vessels. These connections are a safety feature: if one artery is blocked, blood can still reach the segment from the neighbouring territory.
+
+Crucial insight: the three-artery pattern is a fossil of our embryological development, preserved into adult anatomy. Knowing which segment belongs to which artery tells you which vessel is blocked when a segment of bowel is ischaemic - and the anastomoses at the boundaries usually protect the gut from a single-vessel blockage, unless the blockage is sudden or the anastomoses are too small to compensate.`
+    },
+    {
+      q: "The foregut, midgut and hindgut each have their own artery - but does the venous drainage follow the same pattern?",
+      body: `Arteries carry blood into the gut from the aorta. Veins carry it back out - but not directly to the heart. Instead, the venous blood from the entire gut passes first through the liver.
+
+My Socratic question: why would the body route all the gut's venous blood through the liver before it reaches the heart?
+
+The answer is the first-pass effect. Everything absorbed from the gut - nutrients, drugs, toxins, bacteria - enters the blood and would reach the entire body unfiltered if the veins drained straight to the heart. Instead, all of it flows through the portal vein to the liver, where the liver processes it first: storing or releasing nutrients, detoxifying harmful substances, and killing bacteria before they spread.
+
+The venous drainage follows the arterial pattern, with one important twist. The superior mesenteric vein drains the midgut. The splenic vein drains the spleen, and picks up the inferior mesenteric vein, which drains the hindgut. These combine with the superior mesenteric vein to form the portal vein, which enters the liver at the porta hepatis. The foregut's venous blood drains through the gastric veins into the portal system too.
+
+Crucial insight: the portal system is a second capillary bed between the gut capillaries and the liver sinusoids, separated by the portal vein. There is no other place in the body where blood passes through two capillary beds in series before returning to the heart - and that unusual anatomy is what makes the liver the body's metabolic gatekeeper.`
+    },
+    {
+      q: "The portal vein has no valves. What happens when blood backs up in it?",
+      body: `The portal vein drains blood from the gut into the liver, and it has no valves to prevent blood from flowing backward. In a healthy person, this is not a problem, because the pressure is low and blood always flows from the gut towards the liver.
+
+My Socratic question: what happens when the liver becomes diseased and blood can no longer flow through it easily?
+
+The answer is portal hypertension. When the liver is scarred - as in cirrhosis - blood cannot pass through it freely. Pressure rises in the portal vein, and blood backs up. But because the portal system has no valves, that backed-up blood does not simply stop; it finds alternative routes to reach the heart.
+
+These alternative routes are called portocaval anastomoses - places where the portal system connects to the systemic venous system. When portal pressure rises, these connections dilate and become visible. Four are clinically important: at the lower oesophagus (oesophageal varices, which can bleed catastrophically), around the umbilicus (caput medusae - dilated veins radiating from the navel), in the rectum (anorectal varices), and on the posterior abdominal wall (retroperitoneal varices).
+
+Crucial insight: portocaval anastomoses are silent in a healthy person and life-threatening in a patient with cirrhosis. Oesophageal varices in particular can rupture and cause massive haematemesis - one of the most feared emergencies in gastroenterology - and the anatomy of these four sites is exactly why bleeding can occur at each.`
+    },
+    {
+      q: "If portal blood backs up into the oesophageal veins, why is that particular site so dangerous compared to the others?",
+      body: `Of the four portocaval anastomoses, the oesophageal one is by far the most dangerous. Understanding why requires knowing its anatomy.
+
+My Socratic question: oesophageal varices and anorectal varices are both dilated veins caused by the same problem. Why does only one of them regularly kill people?
+
+The answer is pressure and wall thickness. The oesophageal varices sit in the submucosa of the lower oesophagus, just beneath a thin mucosa, in a high-pressure zone where portal pressure is transmitted almost directly. Their walls are thin, and they are constantly exposed to the friction of swallowed food. The combination of high pressure, thin walls, and mechanical trauma makes them prone to rupture.
+
+Anorectal varices, by contrast, sit in a thicker submucosa, in a lower-pressure zone further from the liver, and are not repeatedly scraped by passing food. They can bleed, but usually less catastrophically.
+
+The clinical consequence is that any patient with cirrhosis must be screened for oesophageal varices by endoscopy, and if found, treated prophylactically - usually with beta-blockers to lower portal pressure, or with band ligation of the veins.
+
+Crucial insight: the anatomy of the oesophageal varices - thin-walled, high-pressure, exposed to friction - is what makes them lethal. The same portal hypertension that causes mild anorectal varices can cause fatal haematemesis at the oesophagus. This is why the four portocaval anastomoses are not equally important in practice.`
+    },
+    {
+      q: "The gut has both an extrinsic nerve supply from the brain and its own enteric nervous system. Why does it need both?",
+      body: `The gut is unusual among internal organs in having two separate nervous systems working together. An extrinsic system - sympathetic and parasympathetic nerves arriving from outside the gut - and an intrinsic system - the enteric nervous system embedded in the gut wall itself.
+
+My Socratic question: if the enteric nervous system can run the gut on its own, why does the brain need to be connected to it at all?
+
+The answer is modulation. The enteric nervous system handles moment-to-moment gut function - peristalsis, secretion, blood flow - without conscious input. But the gut also has to respond to the state of the whole body. When you are frightened, digestion should slow so blood can go to the muscles. When you have just eaten, digestion should speed up. The extrinsic nerves carry these whole-body signals.
+
+The parasympathetic supply - mostly the vagus nerve for the foregut and midgut, and the pelvic splanchnic nerves for the hindgut - generally stimulates gut activity: it increases motility and secretion. The sympathetic supply - from the thoracic and upper lumbar spinal cord, via the coeliac and mesenteric ganglia - generally inhibits gut activity and constricts blood vessels. The two systems are usually in balance.
+
+Crucial insight: the extrinsic nerves are not the gut's operators - they are its supervisors. They tune the enteric nervous system's activity up or down based on the body's overall state. Cut the extrinsic nerves and the gut still digests food; cut the enteric nervous system and the gut stops working. That hierarchy explains why gut function survives even severe spinal cord injury.`
+    },
+    {
+      q: "Sympathetic nerves to the gut arise from the thoracic and lumbar cord, but the gut is in the abdomen. How does the signal get there?",
+      body: `The sympathetic nerves to the abdominal organs do not travel directly from the spinal cord to their targets. They take a detour through a chain of ganglia, and the anatomy of that detour has clinical consequences.
+
+My Socratic question: the sympathetic fibres leave the spinal cord in the thoracolumbar region, but the gut sits much lower. What route do they take?
+
+The answer is the sympathetic chain and the splanchnic nerves. Preganglionic sympathetic fibres leave the spinal cord, enter the sympathetic chain running alongside the vertebral column, and either synapse there or pass through without synapsing. Those that pass through continue as the splanchnic nerves - greater, lesser, and least from the thorax, and lumbar splanchnic from the abdomen.
+
+These splanchnic nerves then synapse in three great prevertebral ganglia: the coeliac ganglion (for the foregut), the superior mesenteric ganglion (for the midgut), and the inferior mesenteric ganglion (for the hindgut). From these ganglia, postganglionic fibres travel along the arteries to reach the gut.
+
+Crucial insight: the three prevertebral ganglia mirror the three arterial territories, so the sympathetic supply and the blood supply share the same map. This is also why a surgeon operating on the coeliac plexus can control pain from pancreatic cancer - the same ganglion carries both the sympathetic supply and the visceral pain fibres from the foregut.`
+    },
+    {
+      q: "Visceral pain from the gut is felt in the midline and is hard to localise. Why is that different from pain from the skin?",
+      body: `Pain from the skin is sharp, immediate, and easy to point to. Pain from the gut is dull, slow, and felt somewhere vague in the midline. Both are real pain, but they behave completely differently.
+
+My Socratic question: why is the gut so poor at telling the brain exactly where it hurts?
+
+The answer is the difference between somatic and visceral innervation. The skin has a dense, precise sensory supply - each small patch of skin is wired to a specific spinal segment, so the brain knows exactly where a signal came from. The gut has a sparse sensory supply, and the pain fibres travel back along the sympathetic nerves to the same spinal segments that supply the skin at the body's embryological origin.
+
+When those visceral signals arrive at the spinal cord, the brain cannot tell whether they came from the gut or from the skin at the same segment. The result is referred pain - pain felt in the skin, not in the organ itself.
+
+Each gut segment has its own referred pain pattern. Foregut pain (stomach, duodenum, pancreas, biliary tree) is felt in the epigastrium, around T6-T9. Midgut pain (small intestine, appendix, proximal colon) is felt around the umbilicus, at T10. Hindgut pain (distal colon, rectum) is felt in the suprapubic region, at L1-L2.
+
+Crucial insight: referred pain is not random - it follows the embryological segment. This is why appendicitis begins with periumbilical pain (midgut, T10) before localising to the right iliac fossa when the parietal peritoneum is irritated. It is why gallbladder pain is felt in the right shoulder tip (phrenic nerve, C3-C5). And it is why a heart attack can present as pain in the left arm. The referred pattern is the diagnostic clue.`
+    },
+    {
+      q: "The gut has extensive lymphatic drainage. Why does it need its own lymphatic system, separate from the rest of the body?",
+      body: `The gut absorbs nutrients into the blood, but it also absorbs fats into a separate system - the lacteals of the gut's lymphatic drainage. This is one of the most distinctive features of gut anatomy.
+
+My Socratic question: why would the body route fats through the lymphatics instead of directly through the blood like every other nutrient?
+
+The answer is chemistry. Fats are insoluble in water, and blood is water-based. To travel in blood, fats must first be packaged into water-soluble carriers - lipoproteins. But the gut does not have the machinery to package fats before they leave the intestinal cell. Instead, the intestinal cell packages fats into large droplets called chylomicrons, which are too big to enter the blood capillaries of the villus. They enter the lacteals instead, and travel through the lymphatic system until they reach the thoracic duct, which empties them into the bloodstream at the left subclavian vein.
+
+The lymphatic drainage of the gut follows the arterial territories. Foregut and midgut lymph drains into the coeliac and superior mesenteric lymph nodes respectively, then to the cisterna chyli at the level of L1-L2. Hindgut lymph drains into the inferior mesenteric nodes, then up to the same cisterna chyli. From there, all gut lymph ascends through the thoracic duct to the left venous angle.
+
+Crucial insight: the lymphatic route is why a fatty meal can make the blood plasma milky (lipaemia) hours later, and why damage to the thoracic duct can cause fat malabsorption. It also explains why cancer spreading from the gut goes to the liver (via portal blood) or to the lymph nodes (via lymphatics) - two different routes for two different cancer patterns.`
+    },
+    {
+      q: "If the gut's blood supply is so rich, why can a segment of bowel still die from ischaemia?",
+      body: `The gut receives about twenty percent of the cardiac output at rest - one of the highest blood flows of any organ system. With such rich supply, it might seem that ischaemia should be impossible.
+
+My Socratic question: if the gut is so well supplied with blood, how does a section of bowel ever die?
+
+The answer is that the gut is vulnerable for two reasons - one anatomical, one physiological. Anatomically, the anastomoses between the three arterial territories are small and can only carry a limited amount of blood. If the superior mesenteric artery is suddenly blocked - as in an embolus from the heart, or a thrombus in a patient with atrial fibrillation - the midgut loses its blood supply faster than the small anastomoses can compensate. The result is acute mesenteric ischaemia, a surgical emergency with a mortality rate above fifty percent.
+
+Physiologically, the gut's blood flow is not uniformly distributed. The mucosa, which is metabolically very active, receives most of the blood flow, while the muscle layers receive much less. When total gut blood flow falls - as in shock or heart failure - the body sacrifices the gut to preserve the brain and heart, and the mucosa is the first to suffer. This is why critically ill patients often develop mucosal ischaemia and bacterial translocation, even without a blocked artery.
+
+Crucial insight: the gut is a victim of its own physiology. The same rich blood supply that supports digestion makes the gut a low-priority organ in a whole-body crisis, and the same three-artery pattern that protects against slow blockages fails catastrophically when the blockage is sudden. Knowing the anatomy of the mesenteric vessels is what lets a clinician recognise and act on mesenteric ischaemia before the bowel is unsalvageable.`
+    }
+  ],
+  theory: [
+    { q: "Name the three arteries that supply the GI tract and the embryological segments each supplies.", a: "Coeliac trunk - foregut (oesophagus to the second part of the duodenum). Superior mesenteric artery - midgut (second part of the duodenum to the proximal two-thirds of the transverse colon). Inferior mesenteric artery - hindgut (distal one-third of the transverse colon to the upper anal canal). All three arise from the abdominal aorta." },
+    { q: "Describe the venous drainage of the GI tract, and name the vein that carries blood to the liver.", a: "Venous blood from the gut drains via the superior mesenteric vein (midgut), splenic vein (spleen and hindgut, via the inferior mesenteric vein), and gastric veins (foregut). These combine to form the portal vein, which enters the liver at the porta hepatis. The portal vein has no valves." },
+    { q: "What is the first-pass effect, and why does it matter?", a: "The first-pass effect is the metabolism of absorbed substances by the liver before they reach the systemic circulation. Because all gut venous blood passes through the portal vein to the liver, nutrients, drugs, and toxins are processed by the liver first. This is why some drugs must be given parenterally (to bypass the liver) and why the liver is described as the body's metabolic gatekeeper." },
+    { q: "Define portal hypertension and list its main causes.", a: "Portal hypertension is raised pressure in the portal venous system, usually above 10-12 mmHg (normal is 5-10 mmHg). The most common cause is cirrhosis of the liver, which increases resistance to portal blood flow. Other causes include portal vein thrombosis, schistosomiasis, and right heart failure." },
+    { q: "List the four clinically important portocaval anastomoses and the clinical sign associated with each.", a: "Lower oesophagus - oesophageal varices (may cause haematemesis). Umbilicus - caput medusae (dilated veins radiating from the navel). Rectum - anorectal varices (may cause rectal bleeding). Posterior abdominal wall - retroperitoneal varices (usually silent)." },
+    { q: "Why are oesophageal varices more dangerous than anorectal varices?", a: "Oesophageal varices sit in the submucosa of the lower oesophagus, in a high-pressure zone just above the liver, with thin walls and constant mechanical trauma from swallowed food. Anorectal varices sit in a thicker submucosa, in a lower-pressure zone further from the liver. Oesophageal varices are therefore much more likely to rupture and bleed catastrophically." },
+    { q: "Describe the extrinsic nerve supply of the GI tract, and state the general effect of each division.", a: "The parasympathetic supply (vagus nerve for the foregut and midgut; pelvic splanchnic nerves for the hindgut) generally stimulates gut activity - increasing motility and secretion. The sympathetic supply (from the thoracolumbar cord via the splanchnic nerves and prevertebral ganglia) generally inhibits gut activity and constricts blood vessels. The two divisions are normally in balance." },
+    { q: "Name the three prevertebral ganglia of the sympathetic supply, and state which gut segment each serves.", a: "The coeliac ganglion serves the foregut. The superior mesenteric ganglion serves the midgut. The inferior mesenteric ganglion serves the hindgut. From these ganglia, postganglionic fibres travel along the arteries to reach the gut." },
+    { q: "Explain the mechanism of visceral referred pain.", a: "Visceral pain fibres travel back along sympathetic nerves to the same spinal segments that supply the skin at the body's embryological origin. Because the brain cannot distinguish visceral from somatic signals arriving at the same segment, the pain is felt in the skin at that segment - referred pain. Foregut pain is referred to the epigastrium (T6-T9), midgut pain to the umbilicus (T10), and hindgut pain to the suprapubic region (L1-L2)." },
+    { q: "Describe the lymphatic drainage of the GI tract, and explain why fats are absorbed into lymph rather than blood.", a: "Foregut and midgut lymph drains into the coeliac and superior mesenteric lymph nodes; hindgut lymph drains into the inferior mesenteric nodes. All drain into the cisterna chyli, then ascend through the thoracic duct to the left subclavian vein. Fats are absorbed into lacteals (gut lymphatics) rather than blood because they are packaged as chylomicrons, which are too large to enter blood capillaries, and the gut does not package fats into lipoproteins before they leave the intestinal cell." }
+  ],
+  videos: [
+    { channel: "Armando Hasudungan", title: "Blood Supply to the Gut", note: "Hand-drawn explanation of the coeliac trunk, SMA, and IMA territories.", url: "" },
+    { channel: "Kenhub", title: "Portal Venous System and Portocaval Anastomoses", note: "Detailed tour of the portal vein and the sites where portal blood can bypass the liver.", url: "" },
+    { channel: "Ninja Nerd", title: "Enteric Nervous System and Referred Pain", note: "Explanation of the two plexuses and the segmental pattern of visceral pain.", url: "" }
+  ],
+  mcqs: [
+    { q: "The foregut is supplied by the:", o: ["Superior mesenteric artery", "Coeliac trunk", "Inferior mesenteric artery", "Renal artery"], a: 1, w: "The foregut (from the oesophagus to the second part of the duodenum) is supplied by the coeliac trunk." },
+    { q: "The midgut is supplied by the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Splenic artery"], a: 1, w: "The midgut (second part of duodenum to proximal two-thirds of transverse colon) is supplied by the superior mesenteric artery." },
+    { q: "The hindgut is supplied by the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Hepatic artery"], a: 2, w: "The hindgut (distal transverse colon to upper anal canal) is supplied by the inferior mesenteric artery." },
+    { q: "Which of the following is NOT a branch of the coeliac trunk?", o: ["Left gastric artery", "Splenic artery", "Common hepatic artery", "Superior mesenteric artery"], a: 3, w: "The superior mesenteric artery arises separately from the aorta, not from the coeliac trunk." },
+    { q: "The portal vein is formed by the union of the:", o: ["Splenic vein and inferior mesenteric vein", "Superior mesenteric vein and splenic vein", "Hepatic vein and portal vein", "Left and right gastric veins"], a: 1, w: "The portal vein is formed by the union of the superior mesenteric vein and the splenic vein behind the neck of the pancreas." },
+    { q: "The portal vein drains blood to the:", o: ["Inferior vena cava", "Liver", "Heart directly", "Spleen"], a: 1, w: "The portal vein carries blood from the gut to the liver (hepatic portal system)." },
+    { q: "Which of the following is NOT a function of the portal system?", o: ["First-pass metabolism of drugs", "Delivery of nutrients to the liver", "Filtration of bacteria from the gut", "Direct return of gut blood to the heart"], a: 3, w: "The portal system routes gut blood to the liver first, not directly to the heart." },
+    { q: "The first-pass effect refers to:", o: ["The liver processing absorbed substances before they reach the systemic circulation", "The heart beating once per cycle", "Blood passing through the lungs twice", "The gut absorbing nutrients twice"], a: 0, w: "The first-pass effect is the metabolism of substances by the liver before they reach the rest of the body." },
+    { q: "Portal hypertension is most commonly caused by:", o: ["Portal vein thrombosis", "Cirrhosis of the liver", "Right heart failure", "Splenic artery aneurysm"], a: 1, w: "Cirrhosis is the most common cause of portal hypertension, increasing resistance to portal blood flow." },
+    { q: "Which of the following is a portocaval anastomosis site?", o: ["Lower oesophagus", "Coronary arteries", "Renal hilum", "Splenic capsule"], a: 0, w: "The lower oesophagus is one of the four clinically important portocaval anastomoses." },
+    { q: "Caput medusae refers to dilated veins around the:", o: ["Oesophagus", "Umbilicus", "Rectum", "Spleen"], a: 1, w: "Caput medusae is the dilated venous pattern around the umbilicus in portal hypertension." },
+    { q: "Oesophageal varices are dangerous mainly because they:", o: ["Cause pain when eating", "Can rupture and bleed catastrophically", "Block the oesophagus", "Interfere with swallowing"], a: 1, w: "Oesophageal varices can rupture and cause massive haematemesis, a life-threatening emergency." },
+    { q: "Oesophageal varices are more dangerous than anorectal varices mainly because of:", o: ["Higher pressure and thinner walls", "Lower pressure but thicker walls", "Less blood flow", "Different blood supply"], a: 0, w: "The oesophageal varices sit in a high-pressure zone with thin walls and constant mechanical trauma." },
+    { q: "The parasympathetic nerve supply to the foregut and midgut is mainly from the:", o: ["Vagus nerve", "Pelvic splanchnic nerves", "Sympathetic chain", "Phrenic nerve"], a: 0, w: "The vagus nerve supplies parasympathetic fibres to the foregut and midgut." },
+    { q: "The parasympathetic supply to the hindgut is mainly from the:", o: ["Vagus nerve", "Pelvic splanchnic nerves", "Sympathetic chain", "Coeliac ganglion"], a: 1, w: "The pelvic splanchnic nerves (S2-S4) supply parasympathetic fibres to the hindgut." },
+    { q: "The sympathetic supply to the gut generally:", o: ["Stimulates motility and secretion", "Inhibits motility and constricts vessels", "Has no effect", "Increases blood flow"], a: 1, w: "The sympathetic supply generally inhibits gut activity and constricts blood vessels." },
+    { q: "The three prevertebral ganglia of the sympathetic supply are the:", o: ["Coeliac, superior mesenteric, and inferior mesenteric ganglia", "Cervical, thoracic, and lumbar ganglia", "Stellate, coeliac, and renal ganglia", "Aortic, renal, and iliac ganglia"], a: 0, w: "The three prevertebral ganglia are the coeliac, superior mesenteric, and inferior mesenteric ganglia, mirroring the three arterial territories." },
+    { q: "The coeliac ganglion primarily serves the:", o: ["Foregut", "Midgut", "Hindgut", "Kidney"], a: 0, w: "The coeliac ganglion supplies the foregut." },
+    { q: "The superior mesenteric ganglion primarily serves the:", o: ["Foregut", "Midgut", "Hindgut", "Spleen"], a: 1, w: "The superior mesenteric ganglion supplies the midgut." },
+    { q: "The inferior mesenteric ganglion primarily serves the:", o: ["Foregut", "Midgut", "Hindgut", "Liver"], a: 2, w: "The inferior mesenteric ganglion supplies the hindgut." },
+    { q: "Visceral pain from the midgut is typically referred to the:", o: ["Epigastrium", "Umbilicus", "Suprapubic region", "Right shoulder"], a: 1, w: "Midgut pain (T10) is referred around the umbilicus." },
+    { q: "Visceral pain from the foregut is typically referred to the:", o: ["Umbilicus", "Suprapubic region", "Epigastrium", "Left shoulder"], a: 2, w: "Foregut pain (T6-T9) is referred to the epigastrium." },
+    { q: "Visceral pain from the hindgut is typically referred to the:", o: ["Epigastrium", "Umbilicus", "Suprapubic region", "Right iliac fossa"], a: 2, w: "Hindgut pain (L1-L2) is referred to the suprapubic region." },
+    { q: "Appendicitis begins with periumbilical pain because the appendix is derived from the:", o: ["Foregut", "Midgut", "Hindgut", "Hindbrain"], a: 1, w: "The appendix is a midgut structure, so its pain (T10) is referred to the umbilicus before localising to the RIF." },
+    { q: "Gallbladder pain is often referred to the right shoulder tip because of the:", o: ["Vagus nerve", "Phrenic nerve (C3-C5)", "Sympathetic chain", "Coeliac ganglion"], a: 1, w: "The phrenic nerve supplies the diaphragm and shares spinal segments with the shoulder tip (C3-C5)." },
+    { q: "Fat absorption in the gut occurs mainly via the:", o: ["Blood capillaries of the villus", "Lacteals of the villus", "Portal vein", "Hepatic artery"], a: 1, w: "Fats are absorbed into the lacteals (gut lymphatics) as chylomicrons." },
+    { q: "Chylomicrons are too large to enter blood capillaries because:", o: ["They are insoluble in water", "They are too large to pass through capillary pores", "They are too small to be seen", "They are repelled by blood"], a: 1, w: "Chylomicrons are too large to enter blood capillaries and enter the lacteals instead." },
+    { q: "The thoracic duct empties lymph into the venous system at the:", o: ["Right subclavian vein", "Left subclavian vein (left venous angle)", "Superior vena cava", "Inferior vena cava"], a: 1, w: "The thoracic duct empties into the left venous angle at the junction of the left subclavian and internal jugular veins." },
+    { q: "The cisterna chyli lies at the level of:", o: ["T12-L1", "L1-L2", "L4-L5", "C7"], a: 1, w: "The cisterna chyli lies at the level of L1-L2, at the lower end of the thoracic duct." },
+    { q: "Acute mesenteric ischaemia is most often caused by:", o: ["Venous thrombosis", "Embolus or thrombus in the superior mesenteric artery", "Coeliac trunk compression", "Inferior mesenteric artery aneurysm"], a: 1, w: "The superior mesenteric artery is the most commonly affected vessel, often by an embolus from the heart." },
+    { q: "The mortality rate of acute mesenteric ischaemia is:", o: ["Less than 5 percent", "About 20 percent", "Above 50 percent", "Zero"], a: 2, w: "Acute mesenteric ischaemia is a surgical emergency with a mortality rate above 50 percent." },
+    { q: "During shock, the gut mucosa is especially vulnerable because:", o: ["It has no blood supply", "It has the highest metabolic demand of the gut layers", "It does not use oxygen", "It is protected from reduced blood flow"], a: 1, w: "The mucosa is metabolically very active and receives most of the gut's blood flow, so it suffers first when total gut flow falls." },
+    { q: "Which layer of the gut is most vulnerable to reduced blood flow?", o: ["Serosa", "Mucosa", "Muscularis externa", "Adventitia"], a: 1, w: "The mucosa is the most metabolically active layer and suffers first in reduced blood flow." },
+    { q: "The gastrosplenic ligament connects the spleen to the:", o: ["Liver", "Stomach", "Pancreas", "Left kidney"], a: 1, w: "The gastrosplenic ligament connects the greater curvature of the stomach to the spleen." },
+    { q: "The splenic artery arises from the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Left gastric artery"], a: 0, w: "The splenic artery is a branch of the coeliac trunk." },
+    { q: "The inferior mesenteric vein drains into the:", o: ["Portal vein directly", "Splenic vein", "Superior mesenteric vein", "Left renal vein"], a: 1, w: "The inferior mesenteric vein drains into the splenic vein, which then joins the superior mesenteric vein to form the portal vein." },
+    { q: "Portal hypertension most commonly presents with which of the following?", o: ["Left-sided heart failure", "Ascites and oesophageal varices", "Peripheral oedema only", "Polycythaemia"], a: 1, w: "Portal hypertension commonly presents with ascites, splenomegaly, and oesophageal varices." },
+    { q: "The clinical sign of dilated veins radiating from the umbilicus in portal hypertension is:", o: ["Caput medusae", "Oesophageal varices", "Anorectal varices", "Ascites"], a: 0, w: "Caput medusae is the sign of dilated paraumbilical veins." },
+    { q: "Which of the following is NOT a portocaval anastomosis site?", o: ["Lower oesophagus", "Umbilicus", "Rectum", "Left kidney"], a: 3, w: "The left kidney is not a portocaval anastomosis site; the four sites are oesophagus, umbilicus, rectum, and retroperitoneum." },
+    { q: "Which of the following statements about the portal vein is TRUE?", o: ["It has valves", "It has no valves", "It drains into the aorta", "It drains into the pulmonary vein"], a: 1, w: "The portal vein has no valves, which is why portal hypertension causes blood to back up and find alternative routes." },
+    { q: "The direction of blood flow in the portal vein normally is:", o: ["From the liver to the gut", "From the gut to the liver", "From the gut to the heart", "From the liver to the heart"], a: 1, w: "Portal blood flows from the gut to the liver, where it is processed before entering the systemic circulation." },
+    { q: "The enterohepatic circulation refers to:", o: ["The circulation of blood between the gut and liver", "The recycling of bile salts from the ileum to the liver", "The circulation of lymph through the gut", "The movement of food through the gut"], a: 1, w: "The enterohepatic circulation is the recycling of bile salts from the ileum back to the liver via the portal vein." },
+    { q: "Bile salts are absorbed in the:", o: ["Duodenum", "Jejunum", "Ileum", "Colon"], a: 2, w: "Bile salts are absorbed in the terminal ileum and returned to the liver via the portal vein." },
+    { q: "Which part of the gut is most sensitive to ischaemia?", o: ["Oesophagus", "Stomach", "Small intestine", "Colon"], a: 2, w: "The small intestine has the highest metabolic rate and is the most sensitive to ischaemia, especially the mucosa." },
+    { q: "The coeliac trunk arises from the aorta at the level of:", o: ["T8", "T12", "L3", "L5"], a: 1, w: "The coeliac trunk arises from the aorta at the level of T12." },
+    { q: "The superior mesenteric artery arises at the level of:", o: ["T12", "L1", "L3", "T8"], a: 1, w: "The superior mesenteric artery arises at the level of L1." },
+    { q: "The inferior mesenteric artery arises at the level of:", o: ["T12", "L1", "L3", "L5"], a: 2, w: "The inferior mesenteric artery arises at the level of L3." },
+    { q: "The anastomosis between the superior mesenteric artery and the inferior mesenteric artery at the splenic flexure is called:", o: ["The marginal artery of Drummond", "The arc of Riolan", "The artery of Griffiths", "The artery of Sudeck"], a: 1, w: "The arc of Riolan (or meandering mesenteric artery) connects the SMA and IMA territories at the splenic flexure." },
+    { q: "The anastomosis between the inferior mesenteric artery and the internal iliac artery is at:", o: ["The splenic flexure", "The rectosigmoid junction", "The ileocaecal junction", "The pylorus"], a: 1, w: "The superior rectal artery (from IMA) anastomoses with the middle and inferior rectal arteries (from the internal iliac) at the rectosigmoid junction." },
+    { q: "Watershed areas of the colon are clinically important because they are:", o: ["Richly vascularised", "Most prone to ischaemia", "Free from anastomoses", "Always supplied by one artery"], a: 1, w: "Watershed areas (splenic flexure, rectosigmoid junction) have the weakest blood supply and are the most prone to ischaemia." },
+    { q: "The lymphatic drainage of the midgut goes to the:", o: ["Coeliac nodes", "Superior mesenteric nodes", "Inferior mesenteric nodes", "Inguinal nodes"], a: 1, w: "Midgut lymph drains into the superior mesenteric lymph nodes." },
+    { q: "The lymphatic drainage of the hindgut goes to the:", o: ["Coeliac nodes", "Superior mesenteric nodes", "Inferior mesenteric nodes", "Axillary nodes"], a: 2, w: "Hindgut lymph drains into the inferior mesenteric lymph nodes." },
+    { q: "The lymphatic drainage of the foregut goes to the:", o: ["Coeliac nodes", "Superior mesenteric nodes", "Inferior mesenteric nodes", "Inguinal nodes"], a: 0, w: "Foregut lymph drains into the coeliac lymph nodes." },
+    { q: "Metastasis from a colon cancer typically spreads first to the:", o: ["Lungs", "Liver", "Brain", "Bone"], a: 1, w: "Colon cancer spreads via the portal vein to the liver first, making the liver the most common site of metastasis." },
+    { q: "Injury to the spleen during abdominal trauma is significant because splenectomy increases risk of:", o: ["Anaemia", "Encapsulated bacterial infection", "Bleeding disorders", "Liver failure"], a: 1, w: "Post-splenectomy patients have increased risk of infection by encapsulated organisms such as Streptococcus pneumoniae." },
+    { q: "The enteric nervous system contains approximately how many neurons?", o: ["500", "5,000", "500,000", "500 million"], a: 3, w: "The enteric nervous system contains roughly 500 million neurons, more than the spinal cord." },
+    { q: "The myenteric plexus (Auerbach's) is located between:", o: ["The mucosa and submucosa", "The circular and longitudinal muscle layers", "The serosa and muscularis", "The epithelium and lamina propria"], a: 1, w: "The myenteric plexus lies between the circular and longitudinal layers of the muscularis externa." },
+    { q: "The submucosal plexus (Meissner's) is located in the:", o: ["Submucosa", "Mucosa", "Muscularis externa", "Serosa"], a: 0, w: "The submucosal plexus lies in the submucosa." },
+    { q: "The vagus nerve supplies parasympathetic fibres to:", o: ["Only the foregut", "Foregut and midgut", "Only the hindgut", "The entire gut"], a: 1, w: "The vagus supplies the foregut and midgut; the hindgut is supplied by pelvic splanchnic nerves." }
+  ]
+};
+
+/* --------------------------- an2:5 --------------------------- */
+const T_AN2_PELVIS = {
+  courseId: "an2",
+  topicIndex: 5,
+  title: "Pelvis and Perineum",
+  minutes: 30,
+  note: [
+    {
+      q: "Why does the body build the pelvis as a bony ring, when most of the abdomen has only muscle for a wall?",
+      body: `The abdomen is enclosed by muscle. The pelvic cavity is enclosed by bone. That difference is not accidental.
+
+My Socratic question: the abdominal contents need protection, and the pelvic contents need protection too. So why is one enclosed by muscle and the other by bone?
+
+The answer is the weight the pelvis must carry. Above the pelvis, the abdominal wall only has to contain pressure - it never has to transmit the entire weight of the body. Below the pelvis, the pelvic girdle has to do exactly that: it takes the full weight of the trunk and the upper limbs and passes it through the hip joints into the legs during every step. Muscle alone cannot do that. Bone can.
+
+The bony pelvis is a ring made of the two hip bones (each itself a fusion of ilium, ischium, and pubis), the sacrum, and the coccyx. The ring closes at three joints - the two sacroiliac joints at the back, and the pubic symphysis at the front. Together, they form a stable arch that carries the spine's weight outward and downward to the legs.
+
+Crucial insight: the pelvis is a weight-transmitting arch, not just a cavity. That is why it is bone, why it is shaped like a ring, and why its joints are strong and largely immobile. When these joints are disrupted - by trauma or in late pregnancy when they soften - the whole weight-bearing mechanism fails.`
+    },
+    {
+      q: "The pelvic inlet and pelvic outlet are two different openings with different shapes. Why does the body need both?",
+      body: `The pelvis is not one hole but two, stacked vertically. The pelvic inlet is the upper opening through which the abdominal contents pass into the pelvis. The pelvic outlet is the lower opening through which the pelvic contents pass into the perineum.
+
+My Socratic question: if the pelvis is a continuous cavity, why does it need to be defined by two separate openings rather than simply having a top and bottom?
+
+The answer is that the two openings have different jobs, and their shapes reflect those jobs. The pelvic inlet (the pelvic brim) is a rounded opening outlined by the sacral promontory, the arcuate lines of the ilium, the pectineal lines, and the pubic crest. It separates the greater pelvis (part of the abdomen) from the lesser pelvis (true pelvic cavity). Its shape determines how easily the fetus enters the pelvis during birth - in the female it is typically wider and rounder.
+
+The pelvic outlet is smaller and more complex. It is bounded by the pubic arch in front, the ischial tuberosities at the sides, and the coccyx behind. It is closed by the pelvic floor muscles, through which the urethra, vagina (in females), and anal canal pass.
+
+Crucial insight: inlet and outlet shapes are clinical parameters. An obstetrician measures them to predict whether a vaginal delivery is possible. A too-narrow inlet prevents the fetal head from engaging; a too-narrow outlet prevents it from descending. This is why pelvic shape - not just size - is a critical variable in obstetrics.`
+    },
+    {
+      q: "The pelvic floor is made of muscle, yet it must support the weight of the abdominal contents. How does it not collapse?",
+      body: `Above the pelvic floor sits the entire weight of the abdominal and pelvic contents - organs, fat, and the pressure generated by breathing and coughing. The pelvic floor is a thin muscular sheet. By intuition, it should not be able to hold all of that.
+
+My Socratic question: what is it about the pelvic floor's structure that allows it to bear that load?
+
+The answer is that the pelvic floor is not a flat sheet - it is a bowl, and it is oriented at an angle. The main muscle is the levator ani, which forms a funnel-shaped sheet sloping downward and forward from the pelvic side walls to the midline. Because it slopes rather than sits horizontally, the pressure from above is directed against a slanted surface, and the muscle fibres transmit the load to the bone rather than having to resist it all directly.
+
+The levator ani has three named parts - pubococcygeus, iliococcygeus, and puborectalis. The puborectalis slings around the anorectal junction and pulls it forward, creating the anorectal angle that contributes to faecal continence. The coccygeus muscle lies behind levator ani.
+
+The floor is reinforced by the perineal membrane and the perineal body - a fibromuscular node between the vagina and the anus in females, into which several muscles insert.
+
+Crucial insight: the pelvic floor is a dynamic sling, not a static plate. It maintains resting tone continuously, and it contracts reflexively when intra-abdominal pressure rises - during coughing, lifting, or laughing. When these muscles are damaged - most commonly during childbirth - the sling fails and pelvic organ prolapse or stress incontinence follows. This is why pelvic floor muscle training is the first-line treatment for these conditions.`
+    },
+    {
+      q: "Why does the perineum need its own separate anatomical region, when it is just the lower part of the pelvis?",
+      body: `The perineum is the diamond-shaped region below the pelvic floor, bounded by the pubic symphysis in front, the ischial tuberosities at the sides, and the coccyx behind. It contains the external genitalia and the terminal parts of the urethra, vagina, and anal canal.
+
+My Socratic question: the perineum is continuous with the pelvic cavity above. Why does it need its own named region with its own muscles, fascia, and blood supply?
+
+The answer is that the perineum has a different job from the pelvis, and therefore a different architecture. The pelvis contains organs and transmits weight. The perineum provides the exit route for the urogenital and gastrointestinal systems, and it has to do two things the pelvis does not: control those exits voluntarily, and protect them from the outside environment.
+
+The perineum is divided into two triangles by a line joining the ischial tuberosities. The urogenital triangle (front) contains the external genitalia and the openings of the urethra (and vagina in females). The anal triangle (back) contains the anal canal and the ischioanal fossae.
+
+Each triangle has its own muscles (superficial and deep perineal muscles in the urogenital triangle; external anal sphincter and levator ani in the anal triangle) and its own blood and nerve supply (from the pudendal nerve and internal pudendal vessels).
+
+Crucial insight: the perineum is where anatomy meets function most directly. The muscles of the perineum control urination, defecation, and sexual function. Damage to the pudendal nerve during childbirth - or during prolonged sitting - can cause perineal numbness, incontinence, and sexual dysfunction. The perineum is small, but it carries enormous clinical weight.`
+    },
+    {
+      q: "The pudendal nerve supplies the perineum. Why is it vulnerable to injury in a way most nerves are not?",
+      body: `The pudendal nerve arises from S2, S3, and S4, and supplies sensation and motor control to the perineum - the external anal and urethral sphincters, the perineal muscles, and the skin of the external genitalia. It is a small nerve, but it is unusually vulnerable to compression.
+
+My Socratic question: the pudendal nerve is deep within the pelvis. What is it about its course that makes it prone to injury?
+
+The answer is that the pudendal nerve takes a peculiar path. It leaves the pelvis through the greater sciatic foramen, hooks around the ischial spine (the sacrospinous ligament), and re-enters the pelvis through the lesser sciatic foramen. From there it runs through the pudendal canal (Alcock's canal) along the lateral wall of the ischioanal fossa.
+
+That hook around the ischial spine and the passage through the pudendal canal are the vulnerable points. Prolonged sitting on a hard surface compresses the nerve against the ischial tuberosity. Childbirth stretches and compresses it. Cycling for long hours compresses it repeatedly. All of these cause pudendal neuralgia - pain, numbness, and dysfunction in the perineum.
+
+Crucial insight: pudendal nerve entrapment is a recognisable clinical syndrome, sometimes called "cyclist's syndrome" or "Alcock's canal syndrome." The anatomy of the nerve's course - specifically its relation to the ischial spine and the pudendal canal - explains both why it happens and why pudendal nerve blocks (injections at the ischial spine) can relieve it.`
+    },
+    {
+      q: "The pelvic organs sit in a cavity surrounded by bone. Why do they not simply fall out through the pelvic floor?",
+      body: `The pelvic organs - bladder, rectum, and in females the uterus and vagina - are suspended in the pelvic cavity by a complex set of ligaments, fascia, and muscles. There is no bone floor below them; the floor is muscular.
+
+My Socratic question: gravity is constantly pulling the pelvic organs downward. What holds them up?
+
+The answer is a coordinated support system, not a single structure. Three layers work together.
+
+First, the pelvic floor muscles (mainly levator ani), which form the muscular bowl beneath the organs. Second, the endopelvic fascia and its condensations - the ligaments that suspend each organ to the pelvic side wall: the cardinal and uterosacral ligaments for the uterus, the pubocervical fascia for the bladder, and the rectovaginal fascia for the rectum. Third, the perineal body, which anchors the lower end of the support system.
+
+These structures do not act alone. The support is dynamic - the pelvic floor muscles contract reflexively whenever intra-abdominal pressure rises, tightening the whole system at the moment it is needed.
+
+Crucial insight: pelvic organ prolapse occurs when this support system fails - usually from a combination of childbirth injury, chronic straining, and loss of oestrogen after menopause. The organ descends into or through the vagina. Understanding which structure has failed - muscle, fascia, or both - determines the surgical repair. The anatomy is not abstract; it is the surgical blueprint.`
+    },
+    {
+      q: "The pelvic autonomic nerves are complex. Why does the pelvis need such an elaborate autonomic supply, when the gut already has its own nervous system?",
+      body: `The pelvis contains a dense network of autonomic nerves - the superior and inferior hypogastric plexuses, the pelvic splanchnic nerves, and the pelvic plexus. This is one of the most complex autonomic regions in the body.
+
+My Socratic question: the gut's enteric nervous system can run the gut on its own. Why does the pelvis need such an elaborate extrinsic autonomic supply?
+
+The answer is that the pelvic organs have functions the enteric nervous system cannot handle alone. The bladder must store urine for hours and then empty on command. The internal anal sphincter must remain closed except during defecation. The reproductive organs must respond to sexual arousal and, in females, to the hormonal cycle. These are not gut functions; they are pelvic organ functions, and they require coordination from the autonomic nervous system.
+
+The pelvic autonomic supply is a mix of sympathetic and parasympathetic. Sympathetic fibres come from the lumbar splanchnic nerves and the superior hypogastric plexus; they generally promote storage - relaxing the detrusor muscle of the bladder and contracting the internal urethral sphincter. Parasympathetic fibres come from the pelvic splanchnic nerves (S2-S4); they generally promote emptying - contracting the detrusor and relaxing the internal sphincter.
+
+Crucial insight: the interplay between sympathetic and parasympathetic is what makes bladder and bowel control possible. Damage to the pelvic splanchnic nerves - as in pelvic surgery or spinal cord injury - causes urinary retention and constipation. Damage to the sympathetic supply causes incontinence. The pelvic autonomic system is what translates higher-level commands (like "hold it in" or "let go") into coordinated organ responses.`
+    },
+    {
+      q: "The pelvic bones fuse into one structure in adults, yet they start as separate bones in children. Why does the body fuse them?",
+      body: `In children, the pelvis is made of separate bones - ilium, ischium, and pubis - joined by cartilage. In adults, they have fused into a single hip bone on each side, with no visible seam where they once met.
+
+My Socratic question: why does the body fuse these bones, when keeping them separate would allow more flexibility?
+
+The answer is the same reason the pelvis is made of bone at all - weight transmission. Separately articulated bones would not reliably transmit the enormous forces the pelvis must handle during walking, running, and jumping. By fusing, the three bones form a single rigid arch that distributes weight reliably across the hip joints.
+
+The fusion happens at the acetabulum (the hip socket) in the region called the triradiate cartilage, which closes around puberty. After fusion, only the three joints of the pelvis remain - the two sacroiliac joints and the pubic symphysis - and each of these is designed to be strong and largely immobile.
+
+Crucial insight: the fusion point - the triradiate cartilage - is clinically significant. In children, before fusion, a fracture through the pelvis can injure this growth centre and produce long-term deformity. After fusion, the bone is one piece and behaves accordingly. Knowing the developmental timeline explains why paediatric pelvic fractures are managed differently from adult ones.`
+    },
+    {
+      q: "The pelvic floor must relax during childbirth, but also maintain continence the rest of the time. How can one structure do both?",
+      body: `The pelvic floor muscles are among the most impressive in the body. They hold the abdominal contents in place for decades, and then, during childbirth, they stretch to allow a baby to pass through.
+
+My Socratic question: how can the same muscles be strong enough for continence and flexible enough for birth?
+
+The answer is a combination of muscle fibre types, hormonal effects, and the mechanics of stretching. The levator ani contains a mix of slow-twitch (type I) fibres, which maintain continuous resting tone for continence, and fast-twitch (type II) fibres, which contract quickly when intra-abdominal pressure rises suddenly. It is a muscle built for both endurance and speed.
+
+During pregnancy, hormones (especially relaxin) soften the pelvic ligaments and fascia, increasing the compliance of the whole support system. During labour, the pelvic floor muscles stretch enormously - the levator hiatus can expand from about 3 cm to over 10 cm in diameter. The stretch is possible because the muscles are not stretched beyond their physiological limit in a normal delivery; but when the stretch is excessive or the delivery is difficult, the muscle fibres tear.
+
+Crucial insight: pelvic floor injury during childbirth is common - especially in first deliveries and instrumental deliveries. The most typical injury is an avulsion of the pubovisceral portion of levator ani from its attachment to the pubic bone. This injury is invisible on the outside but has long-term consequences: pelvic organ prolapse, urinary incontinence, and faecal incontinence. The anatomy of the pelvic floor is what makes these consequences predictable.`
+    },
+    {
+      q: "The pelvis and perineum are often taught as separate topics. Why is that division partly artificial?",
+      body: `In many anatomy courses, "pelvis" and "perineum" are taught as two distinct regions, with separate lectures, separate examinations, and separate diagrams. But the body does not recognise this boundary.
+
+My Socratic question: is the division between pelvis and perineum a real anatomical boundary, or an artificial one?
+
+The answer is that it is partly artificial - a teaching convenience, not a fundamental division. The pelvic cavity and perineum are continuous. The pelvic floor muscles (levator ani, coccygeus) have parts above and parts below the pelvic floor line. The pudendal nerve supplies structures in both regions. The pelvic organs exit through the perineum. The pelvic fascia becomes the perineal fascia.
+
+The line that divides them - a horizontal plane through the pelvic floor - is a functional boundary, not an embryological or structural one. The pelvis contains the organs and transmits weight; the perineum is the exit region with voluntary sphincters and external genitalia. But the two work as one system.
+
+Crucial insight: this continuity matters clinically. Pelvic organ prolapse is a disease of both regions - the support system fails in the pelvis, and the consequences appear in the perineum. Pelvic floor muscle training strengthens the whole system, not just one part. And surgical approaches to pelvic organs - vaginal, perineal, abdominal - depend on understanding how the two regions connect. The division is a teaching tool; the patient's body works as a whole.`
+    }
+  ],
+  theory: [
+    { q: "Name the bones that form the pelvic girdle and the joints that unite them.", a: "The pelvic girdle is formed by the two hip bones (each a fusion of ilium, ischium, and pubis), the sacrum, and the coccyx. The joints are: the two sacroiliac joints (between the ilium and sacrum), the pubic symphysis (between the two pubic bones), and the sacrococcygeal joint." },
+    { q: "Define the pelvic inlet and pelvic outlet, and state the clinical importance of each.", a: "The pelvic inlet (pelvic brim) is the upper opening from the greater to the lesser pelvis, bounded by the sacral promontory, arcuate lines, pectineal lines, and pubic crest. The pelvic outlet is the lower opening from the lesser pelvis to the perineum, bounded by the pubic arch, ischial tuberosities, and coccyx. Their shapes determine the feasibility of vaginal delivery in obstetrics." },
+    { q: "Name the muscles of the pelvic floor and describe their arrangement.", a: "The pelvic floor is formed mainly by the levator ani (with three parts: pubococcygeus, iliococcygeus, and puborectalis) and the coccygeus. The levator ani forms a funnel-shaped muscular bowl, sloping downward and forward from the pelvic side walls. The puborectalis slings around the anorectal junction to maintain the anorectal angle." },
+    { q: "Describe the divisions of the perineum and the contents of each.", a: "The perineum is divided by a line joining the ischial tuberosities into two triangles. The urogenital triangle (anterior) contains the external genitalia and the openings of the urethra (and vagina in females), along with the superficial and deep perineal muscles. The anal triangle (posterior) contains the anal canal and the ischioanal fossae." },
+    { q: "Describe the course of the pudendal nerve and explain its vulnerability to injury.", a: "The pudendal nerve arises from S2-S4, leaves the pelvis through the greater sciatic foramen, hooks around the ischial spine (sacrospinous ligament), and re-enters through the lesser sciatic foramen to run through the pudendal canal. It is vulnerable to compression at the ischial spine (prolonged sitting, cycling) and in the pudendal canal (childbirth), causing pudendal neuralgia." },
+    { q: "Describe the support system of the pelvic organs.", a: "Support is provided by three layers: the pelvic floor muscles (levator ani), the endopelvic fascia and its condensations (cardinal and uterosacral ligaments for the uterus, pubocervical fascia for the bladder, rectovaginal fascia for the rectum), and the perineal body. The support is dynamic, with the muscles contracting reflexively when intra-abdominal pressure rises." },
+    { q: "Explain the autonomic nerve supply of the pelvis and its effects on bladder function.", a: "Sympathetic fibres (from lumbar splanchnic nerves and superior hypogastric plexus) promote storage - relaxing the detrusor and contracting the internal urethral sphincter. Parasympathetic fibres (from pelvic splanchnic nerves, S2-S4) promote emptying - contracting the detrusor and relaxing the internal sphincter. The balance between them controls bladder function." },
+    { q: "Describe the arterial supply of the pelvis.", a: "The pelvic organs are supplied mainly by branches of the internal iliac artery: the superior and inferior vesical arteries (bladder), the uterine artery (uterus), the middle rectal artery (rectum), the internal pudendal artery (perineum), and the obturator artery (medial thigh). The rectum also receives supply from the superior rectal artery (from the inferior mesenteric artery) and the middle and inferior rectal arteries." },
+    { q: "Explain the clinical significance of pelvic fractures.", a: "Pelvic fractures can be life-threatening because the pelvis is rich in blood vessels and contains major venous plexuses. A fracture can tear these vessels and cause massive retroperitoneal haemorrhage. Fractures can also injure the bladder, urethra, rectum, and pelvic nerves. The mechanism of injury and the pattern of fracture determine the structures at risk." },
+    { q: "Describe the lymphatic drainage of the pelvis.", a: "Lymph from the pelvic organs drains primarily to the internal iliac nodes, then to the common iliac nodes and the para-aortic nodes. The rectum drains to the inferior mesenteric nodes (upper rectum), internal iliac nodes (middle rectum), and superficial inguinal nodes (lower rectum and anal canal). The external genitalia drain to the superficial inguinal nodes." }
+  ],
+  videos: [
+    { channel: "Armando Hasudungan", title: "Anatomy of the Pelvis", note: "Hand-drawn explanation of the bony pelvis and its joints.", url: "" },
+    { channel: "Kenhub", title: "Pelvic Floor Muscles and Perineum", note: "Detailed tour of levator ani, the perineal triangles, and their clinical relations.", url: "" },
+    { channel: "Ninja Nerd", title: "Pelvic Autonomic Nervous System", note: "Explanation of the sympathetic and parasympathetic supply to pelvic organs.", url: "" }
+  ],
+  mcqs: [
+    { q: "The pelvic girdle consists of the two hip bones, the sacrum, and the:", o: ["Coccyx", "Lumbar vertebrae", "Femur", "Ilium"], a: 0, w: "The pelvic girdle includes the sacrum and coccyx along with the two hip bones." },
+    { q: "The hip bone is formed by the fusion of the:", o: ["Ilium, ischium, and pubis", "Ilium, sacrum, and pubis", "Ischium, sacrum, and coccyx", "Pubis, sacrum, and coccyx"], a: 0, w: "The hip bone is formed by fusion of the ilium, ischium, and pubis." },
+    { q: "The joint between the two pubic bones is the:", o: ["Sacroiliac joint", "Pubic symphysis", "Hip joint", "Sacrococcygeal joint"], a: 1, w: "The pubic symphysis is the cartilaginous joint between the two pubic bones." },
+    { q: "The pelvic inlet is also called the:", o: ["Pelvic outlet", "Pelvic brim", "Pelvic floor", "Pubic arch"], a: 1, w: "The pelvic inlet is also called the pelvic brim." },
+    { q: "Which structure is NOT part of the pelvic inlet boundary?", o: ["Sacral promontory", "Arcuate line", "Ischial tuberosity", "Pubic crest"], a: 2, w: "The ischial tuberosity is part of the pelvic outlet, not the pelvic inlet." },
+    { q: "The pelvic outlet is bounded posteriorly by the:", o: ["Coccyx", "Sacral promontory", "Pubic symphysis", "Arcuate line"], a: 0, w: "The coccyx forms the posterior boundary of the pelvic outlet." },
+    { q: "The main muscle of the pelvic floor is the:", o: ["Coccygeus", "Levator ani", "Obturator internus", "Piriformis"], a: 1, w: "The levator ani is the main muscle of the pelvic floor." },
+    { q: "The levator ani has three parts: pubococcygeus, iliococcygeus, and:", o: ["Puborectalis", "Ischiococcygeus", "Piriformis", "Obturator"], a: 0, w: "The three parts are pubococcygeus, iliococcygeus, and puborectalis." },
+    { q: "The muscle that slings around the anorectal junction to maintain the anorectal angle is the:", o: ["Pubococcygeus", "Iliococcygeus", "Puborectalis", "Coccygeus"], a: 2, w: "The puborectalis sling maintains the anorectal angle, contributing to faecal continence." },
+    { q: "The perineum is divided into two triangles by a line joining the:", o: ["Ischial spines", "Ischial tuberosities", "Pubic tubercles", "Sacroiliac joints"], a: 1, w: "A line joining the ischial tuberosities divides the perineum into urogenital and anal triangles." },
+    { q: "The urogenital triangle contains all of the following EXCEPT the:", o: ["External genitalia", "Urethral opening", "Vaginal opening", "Anal canal"], a: 3, w: "The anal canal is in the anal triangle, not the urogenital triangle." },
+    { q: "The pudendal nerve arises from which spinal segments?", o: ["L1-L3", "S2-S4", "T10-T12", "C3-C5"], a: 1, w: "The pudendal nerve arises from S2, S3, and S4." },
+    { q: "The pudendal nerve hooks around which structure?", o: ["Ischial spine", "Ischial tuberosity", "Pubic symphysis", "Sacral promontory"], a: 0, w: "The pudendal nerve hooks around the ischial spine as it leaves and re-enters the pelvis." },
+    { q: "Pudendal neuralgia is most commonly associated with prolonged:", o: ["Standing", "Sitting on a hard surface", "Walking", "Running"], a: 1, w: "Prolonged sitting compresses the pudendal nerve against the ischial tuberosity." },
+    { q: "The pelvic organ support system includes all of the following EXCEPT the:", o: ["Levator ani", "Endopelvic fascia", "Perineal body", "Obturator internus"], a: 3, w: "The obturator internus is not part of the pelvic organ support system." },
+    { q: "The ligament that suspends the uterus to the pelvic side wall is the:", o: ["Round ligament", "Cardinal ligament", "Ovarian ligament", "Broad ligament"], a: 1, w: "The cardinal (transverse cervical) ligament suspends the uterus and cervix to the pelvic side wall." },
+    { q: "The perineal body lies between the:", o: ["Vagina and anus in females", "Bladder and rectum in males", "Ureter and bladder", "Sacrum and coccyx"], a: 0, w: "The perineal body lies between the vagina and the anal canal in females, and between the urethra and anal canal in males." },
+    { q: "Pelvic organ prolapse most commonly occurs after:", o: ["Strenuous exercise", "Childbirth and menopause", "A single episode of constipation", "Menstruation"], a: 1, w: "Prolapse is most common after childbirth injury compounded by menopausal loss of oestrogen." },
+    { q: "The sympathetic nerve supply to the bladder promotes:", o: ["Emptying", "Storage", "Contraction of the detrusor", "Relaxation of the internal sphincter"], a: 1, w: "Sympathetic supply promotes storage, relaxing the detrusor and contracting the internal sphincter." },
+    { q: "The parasympathetic nerve supply to the bladder promotes:", o: ["Storage", "Emptying", "Relaxation of the detrusor", "Contraction of the internal sphincter"], a: 1, w: "Parasympathetic supply promotes emptying, contracting the detrusor and relaxing the internal sphincter." },
+    { q: "The pelvic splanchnic nerves arise from:", o: ["S2-S4", "L1-L2", "T10-T12", "C3-C5"], a: 0, w: "The pelvic splanchnic nerves arise from S2-S4 and provide parasympathetic supply to the pelvis." },
+    { q: "The superior hypogastric plexus is formed mainly by:", o: ["Parasympathetic fibres", "Sympathetic fibres", "Somatic motor fibres", "Sensory fibres"], a: 1, w: "The superior hypogastric plexus carries mainly sympathetic fibres to the pelvis." },
+    { q: "The internal iliac artery supplies all of the following EXCEPT the:", o: ["Superior rectal artery", "Uterine artery", "Vesical arteries", "Internal pudendal artery"], a: 0, w: "The superior rectal artery arises from the inferior mesenteric artery, not the internal iliac." },
+    { q: "The middle rectal artery arises from the:", o: ["Inferior mesenteric artery", "Internal iliac artery", "Superior mesenteric artery", "External iliac artery"], a: 1, w: "The middle rectal artery is a branch of the internal iliac artery." },
+    { q: "The inferior rectal artery arises from the:", o: ["Internal pudendal artery", "Superior rectal artery", "Middle rectal artery", "Inferior mesenteric artery"], a: 0, w: "The inferior rectal artery arises from the internal pudendal artery, a branch of the internal iliac." },
+    { q: "The rectum receives blood supply from all of the following EXCEPT the:", o: ["Superior rectal artery", "Middle rectal artery", "Inferior rectal artery", "Superior mesenteric artery"], a: 3, w: "The superior mesenteric artery does not supply the rectum; it supplies the midgut." },
+    { q: "The lymphatic drainage of the upper rectum is mainly to the:", o: ["Superficial inguinal nodes", "Inferior mesenteric nodes", "Internal iliac nodes", "Para-aortic nodes only"], a: 1, w: "The upper rectum drains to the inferior mesenteric nodes, following its embryological origin from the hindgut." },
+    { q: "The lymphatic drainage of the lower rectum and anal canal is mainly to the:", o: ["Inferior mesenteric nodes", "Internal iliac nodes", "Superficial inguinal nodes", "Para-aortic nodes"], a: 2, w: "The lower rectum and anal canal drain to the superficial inguinal nodes." },
+    { q: "The external genitalia drain lymph to the:", o: ["Internal iliac nodes", "Superficial inguinal nodes", "Para-aortic nodes", "Deep inguinal nodes only"], a: 1, w: "The external genitalia drain to the superficial inguinal nodes." },
+    { q: "A pelvic fracture can be life-threatening mainly because of:", o: ["Damage to the spinal cord", "Massive retroperitoneal haemorrhage", "Loss of cerebrospinal fluid", "Fracture of the femur"], a: 1, w: "Pelvic fractures can tear the rich venous plexuses and cause massive retroperitoneal bleeding." },
+    { q: "Which structures are at risk in a pelvic fracture?", o: ["Bladder, urethra, rectum, and pelvic nerves", "Heart and lungs", "Brain and spinal cord only", "Liver and spleen"], a: 0, w: "Pelvic fractures can injure the bladder, urethra, rectum, and pelvic nerves." },
+    { q: "A straddle injury classically damages the:", o: ["Membranous urethra", "Prostatic urethra", "Bladder dome", "Ureter"], a: 0, w: "Straddle injuries typically rupture the membranous urethra below the pubic symphysis." },
+    { q: "The pelvic diaphragm is formed by the:", o: ["Levator ani and coccygeus", "Obturator internus and piriformis", "External anal sphincter only", "Perineal membrane"], a: 0, w: "The pelvic diaphragm is formed by levator ani and coccygeus." },
+    { q: "The perineal membrane lies in the:", o: ["Anal triangle", "Urogenital triangle", "Pelvic cavity", "Ischioanal fossa"], a: 1, w: "The perineal membrane lies in the urogenital triangle." },
+    { q: "The ischioanal fossa lies in the:", o: ["Urogenital triangle", "Anal triangle", "Pelvic cavity", "Rectovesical pouch"], a: 1, w: "The ischioanal fossa lies in the anal triangle, on either side of the anal canal." },
+    { q: "The pudendal canal is also called:", o: ["Alcock's canal", "Hunter's canal", "Adductor canal", "Inguinal canal"], a: 0, w: "The pudendal canal is also called Alcock's canal." },
+    { q: "The external anal sphincter is composed of:", o: ["Smooth muscle under involuntary control", "Skeletal muscle under voluntary control", "Elastic tissue", "Fibrous tissue"], a: 1, w: "The external anal sphincter is skeletal muscle and under voluntary control." },
+    { q: "The internal anal sphincter is composed of:", o: ["Skeletal muscle", "Smooth muscle under involuntary control", "Elastic cartilage", "Dense connective tissue"], a: 1, w: "The internal anal sphincter is smooth muscle and involuntary." },
+    { q: "The urogenital diaphragm is formed mainly by the:", o: ["Deep transverse perineal muscle and sphincter urethrae", "Levator ani and coccygeus", "Obturator internus and piriformis", "Bulbospongiosus and ischiocavernosus"], a: 0, w: "The urogenital diaphragm consists of the deep transverse perineal muscle and the sphincter urethrae." },
+    { q: "The bulbospongiosus and ischiocavernosus muscles are found in the:", o: ["Anal triangle", "Urogenital triangle", "Pelvic cavity", "Ischioanal fossa"], a: 1, w: "These superficial perineal muscles are in the urogenital triangle." },
+    { q: "Episiotomy is a surgical incision made in the:", o: ["Perineal body", "Ischioanal fossa", "Levator ani", "Pudendal canal"], a: 0, w: "Episiotomy is an incision in the perineal body to enlarge the vaginal opening during delivery." },
+    { q: "The most common pelvic floor injury during childbirth is:", o: ["Avulsion of the pubovisceral muscle from the pubic bone", "Fracture of the pubic symphysis", "Rupture of the sacroiliac joint", "Tear of the obturator internus"], a: 0, w: "The most common injury is avulsion of the pubovisceral portion of levator ani from the pubic bone." },
+    { q: "The nerve most commonly injured during childbirth is the:", o: ["Obturator nerve", "Pudendal nerve", "Sciatic nerve", "Femoral nerve"], a: 1, w: "The pudendal nerve is most commonly injured during childbirth because of its course through the pelvis." },
+    { q: "The chief artery of the perineum is the:", o: ["Internal pudendal artery", "External pudendal artery", "Obturator artery", "Inferior epigastric artery"], a: 0, w: "The internal pudendal artery is the chief artery of the perineum." },
+    { q: "The pudendal nerve and internal pudendal artery travel together through the:", o: ["Pudendal canal", "Inguinal canal", "Adductor canal", "Femoral canal"], a: 0, w: "Both run through the pudendal (Alcock's) canal." },
+    { q: "The sacrospinous ligament separates the greater sciatic foramen from the:", o: ["Lesser sciatic foramen", "Obturator foramen", "Inguinal canal", "Femoral canal"], a: 0, w: "The sacrospinous ligament separates the greater and lesser sciatic foramina." },
+    { q: "The sacrotuberous ligament separates the lesser sciatic foramen from the:", o: ["Obturator foramen", "Ischioanal fossa", "Pudendal canal", "Pelvic inlet"], a: 1, w: "The sacrotuberous ligament helps enclose the lesser sciatic foramen, which lies above the ischioanal fossa." },
+    { q: "The nerve to obturator internus and the pudendal nerve both pass through the:", o: ["Greater sciatic foramen", "Obturator foramen", "Lesser sciatic foramen", "Inguinal canal"], a: 0, w: "Both pass through the greater sciatic foramen; the pudendal nerve re-enters via the lesser sciatic foramen." },
+    { q: "The pelvic inlet in the female is typically:", o: ["Wider and rounder than in the male", "Narrower and heart-shaped", "Identical to the male", "Larger in the male"], a: 0, w: "The female pelvic inlet is wider and rounder, adapted for childbirth." },
+    { q: "The subpubic angle in the female is typically:", o: ["Less than 70 degrees", "Between 80 and 100 degrees", "Identical to the male", "More than 120 degrees"], a: 1, w: "The female subpubic angle is typically 80-100 degrees, wider than the male's (about 70 degrees)." },
+    { q: "The pelvis in the male is typically:", o: ["Wider and shallower", "Narrower, deeper, and more heart-shaped", "Identical to the female", "Wider at the outlet"], a: 1, w: "The male pelvis is narrower, deeper, and more heart-shaped at the inlet." },
+    { q: "The obturator canal transmits the:", o: ["Obturator nerve and vessels", "Femoral nerve", "Sciatic nerve", "Pudendal nerve"], a: 0, w: "The obturator canal transmits the obturator nerve and vessels." },
+    { q: "The greater sciatic foramen transmits all of the following EXCEPT the:", o: ["Piriformis muscle", "Sciatic nerve", "Obturator internus nerve", "Obturator nerve"], a: 3, w: "The obturator nerve passes through the obturator canal, not the greater sciatic foramen." },
+    { q: "The lesser sciatic foramen transmits the:", o: ["Pudendal nerve and internal pudendal vessels", "Sciatic nerve", "Superior gluteal nerve", "Obturator nerve"], a: 0, w: "The pudendal nerve and internal pudendal vessels pass through the lesser sciatic foramen." },
+    { q: "The pelvic splanchnic nerves provide parasympathetic supply to the:", o: ["Foregut", "Midgut", "Hindgut and pelvic organs", "Heart"], a: 2, w: "Pelvic splanchnic nerves supply the hindgut and pelvic organs." },
+    { q: "The sympathetic supply to the pelvic organs comes mainly from the:", o: ["Superior hypogastric plexus", "Pelvic splanchnic nerves", "Vagus nerve", "Pudendal nerve"], a: 0, w: "The superior hypogastric plexus carries sympathetic fibres to the pelvis." },
+    { q: "The inferior hypogastric plexus is located:", o: ["On the pelvic side wall, lateral to the rectum", "In the abdomen", "In the thorax", "In the perineum"], a: 0, w: "The inferior hypogastric plexus lies on the pelvic side wall." },
+    { q: "Preservation of the pelvic autonomic nerves during surgery is important to prevent:", o: ["Urinary and sexual dysfunction", "Loss of sensation in the leg", "Weakness of the leg", "Foot drop"], a: 0, w: "Damage to pelvic autonomic nerves causes urinary and sexual dysfunction." }
+  ]
+};
+
+/* --------------------------- an2:4 --------------------------- */
+const T_AN2_REPRO = {
+  courseId: "an2",
+  topicIndex: 4,
+  title: "Reproductive System",
+  minutes: 30,
+  note: [
+    {
+      q: "Why does the male reproductive system need so many ducts, when the female system seems to get by with fewer?",
+      body: `Follow the sperm from where it is made to where it leaves the body. It is produced in the seminiferous tubules of the testis, then travels through the epididymis, the vas deferens, the ejaculatory duct, and the urethra - four named ducts in sequence before it even leaves the body. The egg, by contrast, travels from the ovary into the fallopian tube and then into the uterus - and that is the whole journey.
+
+My Socratic question: why does sperm need a duct system this elaborate, when the egg travels through a single tube?
+
+The answer is that sperm need to mature. When they leave the testis, they are immotile and cannot fertilise anything - they are structurally complete but functionally useless. The epididymis, a coiled tube six metres long packed into a few centimetres, is where they spend two to three weeks maturing, acquiring motility and the ability to bind and penetrate an egg. The vas deferens then stores and transports them; the ejaculatory duct delivers them into the urethra; and the urethra carries them out.
+
+The egg, by contrast, is already mature when it is released. It has been developing in the ovary for months, and ovulation simply releases it. It needs no maturation duct because its maturation happened before release.
+
+Crucial insight: the male duct system exists because sperm are delivered immature and must be finished on the way out. This is why a blockage anywhere along the duct - epididymitis, vasectomy, ejaculatory duct obstruction - prevents fertility even though the testis is producing sperm normally. The ducts are not plumbing; they are a maturation assembly line.`
+    },
+    {
+      q: "The testis develops in the abdomen but ends up in the scrotum. Why does it leave the body?",
+      body: `In early fetal life, the testis develops high in the abdomen, near the kidney. By birth, it has descended through the abdominal wall, through the inguinal canal, and into the scrotum. It is the only organ that migrates this far in normal development.
+
+My Socratic question: the abdomen is safe, warm, and well-protected. Why does the testis leave it?
+
+The answer is temperature. Spermatogenesis - the process that produces sperm - requires a temperature about two to three degrees below core body temperature. At 37 degrees, the enzymes of meiosis function poorly, and sperm production is impaired or halted. The scrotum, sitting outside the body wall, keeps the testis cooler, and its specialised muscles (the cremaster and dartos) adjust the testis's position to regulate temperature further.
+
+The descent is guided by the gubernaculum, a ligament that pulls the testis down through the inguinal canal. When this process fails - a condition called cryptorchidism - the testis remains in the abdomen, and because of the higher temperature, spermatogenesis fails and the risk of testicular cancer rises significantly.
+
+Crucial insight: the anatomical cost of external testes - vulnerability to trauma, the risk of torsion, the need for a passage through the abdominal wall - is the price paid for temperature control. Cryptorchidism is a failure of this system, and it is one of the most common congenital anomalies in males, affecting roughly three percent of full-term births.`
+    },
+    {
+      q: "The prostate surrounds the urethra. Why would an organ wrap itself around a tube?",
+      body: `The prostate sits below the bladder and surrounds the first part of the urethra, the prostatic urethra. It is not beside the urethra; it is wrapped around it, like a doughnut with the urethra passing through the hole.
+
+My Socratic question: why is the prostate arranged around the urethra rather than beside it?
+
+The answer is function. The prostate secretes about thirty percent of the seminal fluid, an alkaline fluid that neutralises the acidity of the vagina and helps sperm survive. To deliver this fluid into the ejaculatory stream, the prostate's ducts must open directly into the urethra. Wrapping around the urethra puts the prostatic ducts in the ideal position to empty their secretion directly into the outgoing semen.
+
+The prostate has five lobes (anterior, posterior, two lateral, and median) and a dense fibromuscular capsule. The median lobe, sitting directly behind the urethra, is the one most commonly affected by benign prostatic hyperplasia (BPH) - it enlarges inward and presses on the urethra, obstructing urine flow.
+
+Crucial insight: the prostate's position explains its symptoms. Because it surrounds the urethra, any enlargement - benign or malignant - obstructs urine flow. BPH causes hesitancy, weak stream, and incomplete emptying. Prostate cancer typically arises in the posterior lobe, which is why it can be detected by digital rectal examination (the posterior lobe is palpable through the rectal wall).`
+    },
+    {
+      q: "The uterus is a muscular organ that must stay closed for nine months and then open completely. How can it do both?",
+      body: `The uterus is a thick-walled muscular organ, roughly the size and shape of a pear when non-pregnant. Over pregnancy, it stretches to hold a fetus, placenta, and amniotic fluid - expanding to twenty times its normal size. Then, during labour, its muscle contracts forcefully to push the fetus out, and its cervix dilates from a few millimetres to ten centimetres.
+
+My Socratic question: how does a muscle that stays firm and closed throughout pregnancy suddenly become an organ that opens and contracts?
+
+The answer is a combination of muscle architecture, hormonal change, and a barrier system. The uterine muscle (myometrium) is arranged in interlocking spiral bundles that can stretch enormously without tearing - the fibres simply unfold. Throughout pregnancy, high progesterone keeps the muscle quiescent, preventing contractions.
+
+At term, three things happen. First, the progesterone-to-oestrogen ratio changes, removing the brake. Second, the muscle cells develop gap junctions, allowing them to contract in coordination as a single unit. Third, oxytocin receptors are upregulated - and oxytocin released from the posterior pituitary triggers rhythmic contractions. The cervix simultaneously softens and dilates, driven partly by prostaglandins.
+
+Crucial insight: the uterus's ability to do both jobs - hold and release - comes from being under continuous hormonal control. This is why premature labour (progesterone withdrawal too early) or post-term pregnancy (failure of hormonal transition) are both dangerous. The uterus is not a passive bag; it is an organ whose behaviour is tuned by hormones, and clinical management of labour is largely about managing that tuning.`
+    },
+    {
+      q: "The vagina is a muscular tube lined by stratified squamous epithelium. Why that epithelium, and not something more delicate?",
+      body: `The vagina has to withstand friction during intercourse, stretch during childbirth, and defend against infection - all without the protection of skin or mucus glands.
+
+My Socratic question: why is the vagina lined by stratified squamous epithelium rather than a more delicate single layer?
+
+The answer is protection. Stratified squamous epithelium is the body's abrasion-resistant lining - the same tissue that lines the mouth, oesophagus, and skin. It has multiple layers so the surface cells can be worn away and replaced without breaching the barrier. A single-layer epithelium - simple columnar or simple squamous - would be too fragile for the mechanical stresses the vagina faces.
+
+The epithelium is also hormonally responsive. Under oestrogen, it thickens and produces glycogen, which is broken down by Lactobacillus bacteria into lactic acid, maintaining the vagina's acidic pH (around 4.0) and protecting against pathogens. After menopause, when oestrogen falls, the epithelium thins, the pH rises, and the vagina becomes more vulnerable to infection and atrophy.
+
+Crucial insight: vaginal health is oestrogen-dependent, which is why the lining changes through the life cycle. Before puberty, the epithelium is thin and the pH is high. In reproductive years, it is thick and acidic. After menopause, it thins again. This cycle is not incidental - it explains why the vaginal microbiome, the risk of infection, and the symptoms of vaginal atrophy all shift with hormonal status.`
+    },
+    {
+      q: "The ovaries release eggs, but they also produce hormones. Why is the same organ responsible for both?",
+      body: `Every other endocrine gland is separate from its target organ. The thyroid makes hormones, but the thyroid is not the thyroid of any other system. The ovary is different - it is both the site of egg production and the source of the hormones that control the reproductive cycle.
+
+My Socratic question: why is the ovary both a gamete-producing organ and a hormone-producing organ?
+
+The answer is that the two functions are inseparable. The hormones oestrogen and progesterone are produced by the follicle that surrounds the developing egg and by the corpus luteum that forms after ovulation. If the egg production stopped, the hormone production would stop too - they share the same anatomical structures.
+
+The ovarian cycle has two phases. In the follicular phase, the follicle grows around the egg and produces oestrogen. When the egg is released at ovulation, the remains of the follicle become the corpus luteum, which produces progesterone in the luteal phase. If pregnancy does not occur, the corpus luteum degenerates, progesterone falls, and menstruation follows.
+
+Crucial insight: this coupling of gamete and hormone production is why ovarian function can be assessed by measuring hormones. A woman's fertility and her hormone profile are two sides of the same coin. When the ovary fails - through premature ovarian failure, chemotherapy, or menopause - both egg production and hormone production fail together. This is why menopause is not just the end of fertility; it is a whole-body endocrine change.`
+    },
+    {
+      q: "The fetal circulation has three special shunts that close at birth. Why are they needed in the womb, and why do they disappear?",
+      body: `The fetus does not use its lungs to breathe - oxygen comes from the placenta. This means the fetal circulatory system has to route blood in a way that bypasses the lungs and directs oxygenated blood to the brain and body.
+
+My Socratic question: the newborn baby has the same heart as the fetus, but it suddenly uses lungs. How does the same organ handle both jobs?
+
+The answer is three shunts, present only in fetal life. The ductus venosus bypasses the liver, carrying oxygenated blood from the umbilical vein directly to the inferior vena cava. The foramen ovale is a hole between the right and left atria that allows blood to bypass the lungs. The ductus arteriosus connects the pulmonary artery to the aorta, also bypassing the lungs.
+
+At birth, everything changes. With the first breath, the lungs expand, pulmonary resistance falls, and pulmonary blood flow increases. Pressure in the left atrium rises, closing the foramen ovale. Rising oxygen levels cause the ductus arteriosus to constrict. The umbilical vessels close, and the ductus venosus closes with them. Within days, all three shunts have permanently closed.
+
+Crucial insight: the shunts are a temporary adaptation to life in the womb. When they fail to close - patent ductus arteriosus, patent foramen ovale - the newborn is left with a circulation that is trying to do both jobs. Understanding the fetal shunts is essential for understanding neonatal cardiology, and the closure signals are part of the Apgar assessment and newborn examination.`
+    },
+    {
+      q: "The female reproductive system has its own cycle, while the male system is constant. Why the difference?",
+      body: `A man produces sperm continuously from puberty to old age. A woman releases one egg roughly every twenty-eight days, and only for a defined reproductive window. The difference is fundamental.
+
+My Socratic question: why does the female system cycle while the male system does not?
+
+The answer is the cost of reproduction. In males, the cost of producing sperm is relatively low - millions of gametes are made daily, and each one is small. In females, the cost is very high - each egg is enormous compared to a sperm, and pregnancy involves nine months of investment. The female system has to time everything carefully, which requires a cycle.
+
+The menstrual cycle is controlled by the hypothalamic-pituitary-ovarian axis. The hypothalamus releases GnRH in pulses, stimulating the pituitary to release FSH and LH. FSH drives follicle development; oestrogen from the growing follicle prepares the uterus and, at high levels, triggers the LH surge that causes ovulation. The corpus luteum then produces progesterone, which maintains the uterine lining until pregnancy is established or the cycle restarts.
+
+Crucial insight: the female cycle is not just a reproductive convenience; it is a whole-body event. Hormonal changes affect the breasts, the bones, the brain, and the cardiovascular system. This is why menstrual disorders can present with symptoms far from the reproductive system, and why pregnancy affects every organ. The male system is simpler because the reproductive investment is simpler.`
+    },
+    {
+      q: "The pelvic floor supports the pelvic organs. Why is it especially important in the female?",
+      body: `The pelvic floor is a muscular and fascial support system, and it exists in both sexes. But the consequences of its failure are much more common and more severe in females.
+
+My Socratic question: both males and females have a pelvic floor. Why is its function so much more critical in females?
+
+The answer is the vagina. The vagina passes through the pelvic floor, creating a gap in the muscular support that does not exist in the male. This gap is the weak point through which pelvic organs can descend - the bladder into the anterior vaginal wall (cystocele), the uterus into the vaginal canal (uterine prolapse), or the rectum into the posterior wall (rectocele). The male has no comparable vaginal opening, so the same muscles provide stronger support.
+
+The problem is compounded by childbirth. Vaginal delivery stretches the pelvic floor enormously, and injuries - especially avulsion of the levator ani from the pubic bone - are common. Combined with the menopausal loss of oestrogen (which thins the tissues), this creates a lifelong risk of prolapse and incontinence.
+
+Crucial insight: pelvic floor dysfunction is a disease of female anatomy, not female weakness. The vagina creates a structural vulnerability that no amount of exercise can entirely overcome. This is why pelvic floor muscle training, pessaries, and surgical repair are the standard treatments - and why understanding the anatomy of the female pelvic floor is essential for anyone managing women's health.`
+    },
+    {
+      q: "The male and female reproductive systems are often taught as two separate topics. Why should they be understood together?",
+      body: `Most anatomy courses treat the male and female reproductive systems as parallel topics - one lecture on male, one on female, with occasional comparisons. But the two systems are deeply interconnected, both embryologically and clinically.
+
+My Socratic question: what do the male and female reproductive systems share that makes them worth studying together?
+
+The answer is threefold. First, they share embryological origins: both develop from the same indifferent gonadal ridge, and male and female structures are homologous - the penis and clitoris, the scrotum and labia majora, the testes and ovaries, the prostate and Skene's glands. A defect in one often has a corresponding defect in the other. Second, they share hormonal control: the same hypothalamic-pituitary axis drives both systems, with the same hormones (GnRH, FSH, LH) and the same feedback mechanisms. Third, they share clinical territory: fertility, contraception, and sexually transmitted infections are all problems of both systems, and treatments often affect both partners.
+
+Crucial insight: the male and female reproductive systems are not mirror opposites; they are two variations on the same theme. Learning them together reveals the homology and the shared control systems - and makes both easier to remember than learning them as separate lists of unrelated structures.`
+    }
+  ],
+  theory: [
+    { q: "Name the male reproductive organs and state the function of each.", a: "Testes - produce sperm and testosterone. Epididymis - maturation and storage of sperm. Vas deferens - transports sperm from epididymis to ejaculatory duct. Seminal vesicles - secrete fructose-rich fluid (energy for sperm). Prostate gland - secretes alkaline fluid that neutralises vaginal acidity. Bulbourethral glands - secrete lubricating pre-ejaculatory fluid. Urethra - carries urine and semen out. Penis - delivers semen." },
+    { q: "Describe the descent of the testis and the clinical significance of cryptorchidism.", a: "The testis develops in the abdomen, descends through the inguinal canal guided by the gubernaculum, and reaches the scrotum before birth. Cryptorchidism is failure of descent - the testis remains in the abdomen or inguinal canal - and causes impaired spermatogenesis due to higher temperature, plus increased risk of testicular cancer." },
+    { q: "Name the parts of the prostate and describe the function of the prostate.", a: "The prostate has five lobes (anterior, posterior, two lateral, median). It secretes about thirty percent of seminal fluid - an alkaline fluid that neutralises vaginal acidity and helps sperm survive. Its position around the prostatic urethra means any enlargement obstructs urine flow." },
+    { q: "Name the female reproductive organs and state the function of each.", a: "Ovaries - produce eggs, oestrogen, and progesterone. Fallopian tubes - site of fertilisation; transport egg. Uterus - supports fetal development during pregnancy. Cervix - lower part of uterus; dilates during labour. Vagina - receives sperm, serves as birth canal. External genitalia (vulva) - protect the internal organs." },
+    { q: "Describe the layers of the uterus and their functions.", a: "Endometrium - inner lining; thickens under oestrogen and is shed during menstruation. Myometrium - thick muscular layer; stretches during pregnancy and contracts during labour. Perimetrium - outer serous layer. The endometrium has two layers: the functional layer (shed during menstruation) and the basal layer (retained for regeneration)." },
+    { q: "Describe the blood supply of the uterus.", a: "The uterine artery arises from the internal iliac artery and travels in the broad ligament to supply the uterus. It anastomoses with the ovarian artery (from the aorta) along the side of the uterus, providing a dual blood supply. The uterine artery is the main supply, but the ovarian artery contributes." },
+    { q: "Describe the ovarian cycle and the hormones involved.", a: "Follicular phase - FSH drives follicle development; the follicle secretes oestrogen. Ovulation - a surge of LH (triggered by high oestrogen) releases the egg. Luteal phase - the ruptured follicle becomes the corpus luteum, which secretes progesterone. If pregnancy does not occur, the corpus luteum degenerates, progesterone falls, and menstruation follows." },
+    { q: "Describe the fetal circulatory shunts and their fate at birth.", a: "Ductus venosus - bypasses the liver (carries umbilical blood to IVC). Foramen ovale - bypasses the lungs (right to left atrial shunt). Ductus arteriosus - bypasses the lungs (pulmonary artery to aorta). At birth, they close: ductus venosus becomes the ligamentum venosum, foramen ovale becomes the fossa ovalis, and ductus arteriosus becomes the ligamentum arteriosum." },
+    { q: "Describe the pelvic floor and its role in supporting female pelvic organs.", a: "The pelvic floor is formed by levator ani and coccygeus, supported by the endopelvic fascia and perineal body. In females, the vagina passes through the pelvic floor, creating a structural weak point. Failure of support - from childbirth injury, chronic straining, or menopausal tissue thinning - leads to pelvic organ prolapse and incontinence." },
+    { q: "List the common clinical conditions affecting the reproductive system.", a: "Male: cryptorchidism, testicular torsion, epididymitis, benign prostatic hyperplasia (BPH), prostate cancer, testicular cancer. Female: polycystic ovary syndrome (PCOS), endometriosis, uterine fibroids, pelvic inflammatory disease, ectopic pregnancy, cervical cancer, ovarian cancer, pelvic organ prolapse, infertility. Both: sexually transmitted infections, infertility." }
+  ],
+  videos: [
+    { channel: "Armando Hasudungan", title: "Male Reproductive System", note: "Hand-drawn explanation of the testis, duct system, and prostate.", url: "" },
+    { channel: "Kenhub", title: "Female Reproductive System", note: "Detailed tour of the uterus, ovaries, and vagina with clinical relations.", url: "" },
+    { channel: "Ninja Nerd", title: "Reproductive Embryology and Fetal Circulation", note: "Explanation of gonadal development and the fetal shunts.", url: "" }
+  ],
+  mcqs: [
+    { q: "Sperm are produced in the:", o: ["Epididymis", "Seminiferous tubules", "Vas deferens", "Prostate"], a: 1, w: "Sperm are produced in the seminiferous tubules of the testis." },
+    { q: "Sperm acquire motility in the:", o: ["Testis", "Epididymis", "Vas deferens", "Urethra"], a: 1, w: "Sperm mature and acquire motility during their passage through the epididymis." },
+    { q: "The vas deferens transports sperm from the epididymis to the:", o: ["Urethra directly", "Ejaculatory duct", "Seminal vesicle", "Prostate"], a: 1, w: "The vas deferens carries sperm to the ejaculatory duct, which opens into the urethra." },
+    { q: "Which gland secretes the majority of seminal fluid?", o: ["Testis", "Seminal vesicles", "Prostate", "Bulbourethral glands"], a: 1, w: "The seminal vesicles secrete about sixty percent of seminal fluid." },
+    { q: "The prostate gland secretes:", o: ["An acidic fluid", "An alkaline fluid that neutralises vaginal acidity", "Fructose-rich fluid", "Lubricating pre-ejaculatory fluid"], a: 1, w: "The prostate secretes alkaline fluid that helps protect sperm from vaginal acidity." },
+    { q: "Cryptorchidism refers to:", o: ["Undescended testis", "Testicular torsion", "Testicular cancer", "Epididymitis"], a: 0, w: "Cryptorchidism is failure of the testis to descend into the scrotum." },
+    { q: "Cryptorchidism increases the risk of:", o: ["Prostate cancer", "Testicular cancer", "Kidney stones", "Bladder cancer"], a: 1, w: "Undescended testes are at significantly increased risk of testicular cancer." },
+    { q: "Benign prostatic hyperplasia most commonly affects which lobe?", o: ["Anterior lobe", "Posterior lobe", "Median lobe", "Lateral lobes"], a: 2, w: "The median lobe typically enlarges inward and obstructs urine flow." },
+    { q: "The posterior lobe of the prostate is clinically important because:", o: ["It is the site of BPH", "It is palpable on digital rectal examination", "It is the site of the urethra", "It produces semen"], a: 1, w: "The posterior lobe is palpable through the rectal wall, allowing detection of prostate cancer." },
+    { q: "Eggs are produced in the:", o: ["Uterus", "Ovary", "Fallopian tube", "Vagina"], a: 1, w: "Eggs (ova) are produced in the ovaries." },
+    { q: "Fertilisation normally occurs in the:", o: ["Uterus", "Cervix", "Fallopian tube", "Ovary"], a: 2, w: "Fertilisation typically occurs in the fallopian tube (ampulla)." },
+    { q: "The layer of the uterus that is shed during menstruation is the:", o: ["Myometrium", "Endometrium (functional layer)", "Perimetrium", "Serosa"], a: 1, w: "The functional layer of the endometrium is shed during menstruation." },
+    { q: "The muscular layer of the uterus is the:", o: ["Endometrium", "Myometrium", "Perimetrium", "Serosa"], a: 1, w: "The myometrium is the thick muscular layer of the uterus." },
+    { q: "The uterine artery arises from the:", o: ["External iliac artery", "Internal iliac artery", "Aorta", "Ovarian artery"], a: 1, w: "The uterine artery arises from the internal iliac artery." },
+    { q: "The ovarian artery arises from the:", o: ["Internal iliac artery", "External iliac artery", "Aorta", "Uterine artery"], a: 2, w: "The ovarian artery arises directly from the abdominal aorta." },
+    { q: "Which hormone triggers ovulation?", o: ["FSH", "Oestrogen", "LH surge", "Progesterone"], a: 2, w: "The LH surge triggers ovulation around mid-cycle." },
+    { q: "The corpus luteum secretes:", o: ["Oestrogen only", "Progesterone", "FSH", "LH"], a: 1, w: "The corpus luteum secretes progesterone to prepare the uterus for pregnancy." },
+    { q: "If pregnancy does not occur, the corpus luteum:", o: ["Persists indefinitely", "Degenerates, causing progesterone to fall", "Secretes more progesterone", "Becomes the placenta"], a: 1, w: "The corpus luteum degenerates after about fourteen days, causing progesterone to fall and menstruation to follow." },
+    { q: "The vaginal epithelium is:", o: ["Simple columnar", "Simple squamous", "Stratified squamous", "Transitional"], a: 2, w: "The vagina is lined by stratified squamous epithelium, which resists abrasion." },
+    { q: "Vaginal acidity is maintained by:", o: ["Mucus secretion", "Lactobacillus bacteria producing lactic acid", "Progesterone", "FSH"], a: 1, w: "Lactobacillus breaks down glycogen to lactic acid, keeping the vaginal pH acidic." },
+    { q: "The ductus venosus in the fetus:", o: ["Connects the pulmonary artery to the aorta", "Connects the right and left atria", "Bypasses the liver", "Connects the umbilical arteries to the placenta"], a: 2, w: "The ductus venosus bypasses the liver, carrying blood from the umbilical vein to the IVC." },
+    { q: "The foramen ovale in the fetus:", o: ["Connects the right and left atria", "Connects the pulmonary artery to the aorta", "Bypasses the liver", "Connects the umbilical vein to the IVC"], a: 0, w: "The foramen ovale is a shunt between the right and left atria." },
+    { q: "The ductus arteriosus in the fetus:", o: ["Bypasses the liver", "Connects the pulmonary artery to the aorta", "Connects the two atria", "Carries blood to the placenta"], a: 1, w: "The ductus arteriosus shunts blood from the pulmonary artery to the aorta." },
+    { q: "The ductus arteriosus becomes which structure after birth?", o: ["Ligamentum teres", "Ligamentum venosum", "Ligamentum arteriosum", "Fossa ovalis"], a: 2, w: "The ductus arteriosus becomes the ligamentum arteriosum after closure." },
+    { q: "The foramen ovale becomes which structure after birth?", o: ["Fossa ovalis", "Ligamentum arteriosum", "Ligamentum venosum", "Ligamentum teres"], a: 0, w: "The foramen ovale closes to become the fossa ovalis." },
+    { q: "The ductus venosus becomes which structure after birth?", o: ["Ligamentum arteriosum", "Ligamentum teres", "Ligamentum venosum", "Fossa ovalis"], a: 2, w: "The ductus venosus closes to become the ligamentum venosum." },
+    { q: "Pelvic organ prolapse is most common in:", o: ["Males", "Females after childbirth and menopause", "Children", "Adolescents"], a: 1, w: "Prolapse is most common in females after childbirth, compounded by menopausal loss of oestrogen." },
+    { q: "The most common pelvic floor injury during childbirth is:", o: ["Fracture of the pubic symphysis", "Avulsion of the puborectalis/levator ani from the pubic bone", "Tear of the obturator internus", "Rupture of the sacroiliac joint"], a: 1, w: "Avulsion of the pubovisceral portion of levator ani from the pubic bone is the most common injury." },
+    { q: "Polycystic ovary syndrome (PCOS) is characterised by:", o: ["Low androgens and regular cycles", "High androgens, irregular cycles, and polycystic ovaries", "Low oestrogen and high FSH", "Normal ovaries with no symptoms"], a: 1, w: "PCOS involves excess androgens, irregular ovulation, and multiple small ovarian cysts." },
+    { q: "Endometriosis is defined as:", o: ["Growth of endometrial tissue outside the uterus", "Inflammation of the endometrium", "Cancer of the endometrium", "Thinning of the endometrium"], a: 0, w: "Endometriosis is the presence of endometrial-like tissue outside the uterine cavity." },
+    { q: "An ectopic pregnancy most commonly occurs in the:", o: ["Ovary", "Fallopian tube", "Cervix", "Abdominal cavity"], a: 1, w: "Over 95 percent of ectopic pregnancies occur in the fallopian tube." },
+    { q: "Uterine fibroids are:", o: ["Malignant tumours of the uterus", "Benign smooth muscle tumours of the uterus", "Cysts of the ovary", "Infections of the cervix"], a: 1, w: "Fibroids (leiomyomas) are benign tumours of the myometrium." },
+    { q: "The cervix is lined by:", o: ["Stratified squamous epithelium only", "Simple columnar epithelium only", "Both stratified squamous and simple columnar (transformation zone)", "Transitional epithelium"], a: 2, w: "The cervix has a transformation zone where stratified squamous meets simple columnar epithelium." },
+    { q: "Cervical cancer most commonly arises from:", o: ["The vaginal wall", "The transformation zone of the cervix", "The endometrium", "The ovary"], a: 1, w: "Cervical cancer most commonly arises at the transformation zone, where squamous and columnar epithelia meet." },
+    { q: "The most common cause of cervical cancer is:", o: ["Human papillomavirus (HPV) infection", "Bacterial infection", "Fungal infection", "Genetic mutation only"], a: 0, w: "HPV infection is the primary cause of cervical cancer." },
+    { q: "The prostate gland is located:", o: ["Above the bladder", "Below the bladder, surrounding the prostatic urethra", "Behind the rectum", "In the scrotum"], a: 1, w: "The prostate sits below the bladder and surrounds the first part of the urethra." },
+    { q: "The seminal vesicles are located:", o: ["Above the bladder", "Posterior to the bladder, above the prostate", "Below the prostate", "In the scrotum"], a: 1, w: "The seminal vesicles lie posterior to the bladder and above the prostate." },
+    { q: "The bulbourethral glands are also called:", o: ["Cowper's glands", "Skene's glands", "Bartholin's glands", "Littre's glands"], a: 0, w: "The bulbourethral glands are also called Cowper's glands." },
+    { q: "Bartholin's glands are located:", o: ["In the male urethra", "At the vaginal opening", "In the uterus", "In the ovary"], a: 1, w: "Bartholin's glands are located at the vaginal opening, secreting lubricating fluid." },
+    { q: "The male and female external genitalia are embryologically:", o: ["Unrelated", "Homologous structures", "Identical", "Functionally identical"], a: 1, w: "Male and female external genitalia develop from the same embryonic structures - they are homologous." },
+    { q: "The scrotum is homologous to which female structure?", o: ["Labia majora", "Labia minora", "Clitoris", "Vagina"], a: 0, w: "The scrotum is homologous to the labia majora." },
+    { q: "The penis is homologous to which female structure?", o: ["Labia majora", "Clitoris", "Vagina", "Uterus"], a: 1, w: "The penis is homologous to the clitoris." },
+    { q: "Testicular torsion is a surgical emergency because:", o: ["It causes pain only", "It cuts off the blood supply to the testis, leading to necrosis if untreated", "It causes infertility only", "It is a cosmetic issue"], a: 1, w: "Testicular torsion cuts off the blood supply and requires urgent surgery to save the testis." },
+    { q: "The most common site of testicular cancer in young men is:", o: ["Seminoma", "Leydig cell tumour", "Sertoli cell tumour", "Lymphoma"], a: 0, w: "Seminoma is the most common testicular germ cell tumour in young men." },
+    { q: "Pelvic inflammatory disease (PID) most commonly results from:", o: ["Viral infection", "Ascending bacterial infection from the vagina/cervix", "Autoimmune disease", "Trauma"], a: 1, w: "PID is usually caused by ascending infection, often by Chlamydia or Gonorrhoea." },
+    { q: "Which of the following is a risk factor for ectopic pregnancy?", o: ["Previous PID or tubal surgery", "Regular menstruation", "Nulliparity only", "Mild anaemia"], a: 0, w: "Previous PID or tubal surgery damages the fallopian tube and increases ectopic risk." },
+    { q: "The ovarian ligament connects the ovary to the:", o: ["Uterus", "Pelvic side wall", "Fallopian tube", "Bladder"], a: 0, w: "The ovarian ligament connects the ovary to the uterus." },
+    { q: "The suspensory ligament of the ovary contains the:", o: ["Ovarian vessels", "Round ligament", "Uterine artery", "Ureter"], a: 0, w: "The suspensory ligament contains the ovarian vessels." },
+    { q: "The round ligament of the uterus passes through the:", o: ["Inguinal canal", "Obturator canal", "Femoral canal", "Pudendal canal"], a: 0, w: "The round ligament passes through the inguinal canal to reach the labia majora." },
+    { q: "The ureter is at risk of injury during pelvic surgery because it:", o: ["Passes close to the uterine artery and the cervix", "Is very thin", "Has no blood supply", "Is mobile"], a: 0, w: "The ureter passes close to the uterine artery ('water under the bridge') and is at risk during hysterectomy." },
+    { q: "In females, the ureter passes under which structure?", o: ["The uterine artery", "The round ligament", "The ovarian ligament", "The fallopian tube"], a: 0, w: "The ureter passes under the uterine artery - 'water under the bridge' - a key surgical relationship." },
+    { q: "The most common type of female pelvic organ prolapse is:", o: ["Cystocele", "Rectocele", "Enterocele", "Uterine prolapse"], a: 0, w: "Cystocele (bladder prolapse into the anterior vaginal wall) is the most common type." },
+    { q: "Which muscle forms the bulk of the pelvic floor?", o: ["Levator ani", "Obturator internus", "Piriformis", "Coccygeus"], a: 0, w: "The levator ani forms the bulk of the pelvic floor." },
+    { q: "The perineal body is important because:", o: ["It is a key support structure for the pelvic floor", "It produces hormones", "It is a site of sperm production", "It is the site of ovulation"], a: 0, w: "The perineal body is a fibromuscular node that anchors several muscles of the pelvic floor." }
+  ]
+};
+
+/* --------------------------- an2:12 --------------------------- */
+const T_AN2_CIRC_HISTO = {
+  courseId: "an2",
+  topicIndex: 12,
+  title: "Microscopic Anatomy — Histology of the Cardiovascular System",
+  minutes: 26,
+  note: [
+    {
+      q: "Every blood vessel is a tube, but they are built very differently. Why does the body need three distinct vessel types instead of one all-purpose tube?",
+      body: `Blood leaves the heart at high pressure, travels to the tissues, exchanges substances in the capillary beds, and returns to the heart at low pressure. One tube cannot do all of that efficiently. A tube that can withstand the heart's pressure would be too thick to allow exchange; a tube thin enough for exchange would burst under pressure.
+
+My Socratic question: the body needs to both withstand pressure and allow exchange. Why not build one tube that does a compromise of both?
+
+The answer is that the compromise would fail at both jobs. So instead the body builds three specialised tubes in series. Arteries are thick-walled, muscular, and elastic - built to carry blood away from the heart under high pressure without bursting. Capillaries are one cell thick - built to allow substances to diffuse across their wall. Veins are thin-walled and compliant - built to carry blood back to the heart at low pressure, and to hold most of the body's blood volume as a reservoir.
+
+Each type is a different answer to a different pressure problem. The differences between them are not cosmetic; they are the physical requirements of the job.
+
+Crucial insight: the structure of each vessel type is dictated by the physics of its location. Arteries face pressure, so they have muscle and elastic tissue. Capillaries face the need for exchange, so they are minimal. Veins face low pressure and large volume, so they are floppy and valved. Understanding the physics explains the histology.`
+    },
+    {
+      q: "Arteries have three layers in their wall. Why three, and what does each layer do?",
+      body: `Every artery, from the aorta to the smallest arteriole, has a wall made of three concentric layers: the tunica intima (innermost), the tunica media (middle), and the tunica adventitia (outermost).
+
+My Socratic question: why three layers rather than one strong wall?
+
+The answer is that each layer solves a different problem. The tunica intima is the smooth lining - a single layer of endothelium on a basement membrane, with a thin layer of connective tissue. Its job is to provide a non-thrombogenic surface so blood can flow without clotting. Its smoothness is essential: damage to the intima is the starting point of atherosclerosis.
+
+The tunica media is the muscular and elastic layer - the thickest layer in arteries, made of smooth muscle and elastic fibres. Its job is to withstand the pressure of each heartbeat and to regulate the vessel's diameter. In muscular arteries it is mostly smooth muscle; in elastic arteries (like the aorta) it is packed with elastic lamellae that stretch with each pulse and recoil to keep blood moving between beats.
+
+The tunica adventitia is the outer connective tissue layer - mostly collagen with some elastic fibres and small vessels (the vasa vasorum) that supply the vessel wall itself. Its job is to anchor the vessel to surrounding tissue and to prevent it from over-stretching.
+
+Crucial insight: the three-layer plan is the universal architecture of arteries, but the relative thickness of each layer varies with the artery's function. Aorta: thick elastic media. Muscular artery: thick muscular media. Arteriole: one or two layers of smooth muscle. The pattern is constant; the proportions change with the pressure.`
+    },
+    {
+      q: "Capillaries are only one cell thick. How can such a thin wall do so much - feeding every tissue in the body?",
+      body: `A capillary is the smallest blood vessel in the body, and its wall is a single layer of endothelial cells on a basement membrane. There is no muscle, no elastic tissue, no connective tissue layer. It is the thinnest possible tube.
+
+My Socratic question: with no muscle and no supporting structure, what keeps the capillary from collapsing or bursting?
+
+The answer is that it does not need to withstand pressure. By the time blood reaches the capillaries, the pressure has been reduced by the arterioles to a low, steady level - enough to keep blood moving, but not enough to threaten a one-cell-thick wall. The capillary's job is not to contain pressure; its job is to allow diffusion. And for diffusion, thinner is better.
+
+The three types of capillary reflect three different exchange needs. Continuous capillaries have a complete endothelial lining with tight junctions between cells - they are the most common type, found in muscle, skin, and connective tissue, and they allow exchange only of small molecules. Fenestrated capillaries have pores (fenestrations) in their walls - found in the kidney, intestines, and endocrine glands - and they allow faster exchange of larger molecules. Sinusoidal capillaries are the leakiest type, with large gaps between cells - found in the liver, spleen, and bone marrow - and they allow even cells and large proteins to pass through.
+
+Crucial insight: the three capillary types show that "one cell thick" is not a limitation but a design feature with variants. The body chooses the appropriate degree of leakiness for each tissue's needs - tight in muscle, fenestrated in the kidney, wide-open in the liver.`
+    },
+    {
+      q: "Veins carry the same blood as arteries, but they look completely different. Why?",
+      body: `A vein has the same three layers as an artery, but in very different proportions. The tunica media is thin, the adventitia is the thickest layer, and the whole wall is floppier and more irregular than an artery's.
+
+My Socratic question: the blood is the same; why is the vein built so differently?
+
+The answer is pressure. By the time blood reaches the venous side of the circulation, the pressure has fallen to almost nothing. A thin wall is enough to contain that pressure - building a thick muscular wall would be wasteful, and it would also make the vein stiff and unable to expand.
+
+The floppiness is not a defect; it is the design. Because veins can expand, they can hold about seventy percent of the body's total blood volume at any moment, acting as a blood reservoir. When the body needs more blood (during exercise, or after haemorrhage), the sympathetic nervous system constricts the veins and shifts blood into the arterial circulation.
+
+Veins also have a feature the arteries lack: valves. Because venous pressure is so low, blood would tend to pool in the legs under gravity. Valves - folds of the tunica intima - prevent backflow, ensuring blood moves only towards the heart.
+
+Crucial insight: veins are low-pressure, high-volume, valved tubes. The thin wall is enough for the pressure; the compliance allows them to act as a reservoir; the valves ensure one-way flow. Each feature solves a problem the low-pressure venous system creates.`
+    },
+    {
+      q: "The endothelium is a single layer of cells, but it does far more than just line the vessel. What exactly does it do?",
+      body: `The endothelium is a single layer of flattened cells lining every blood vessel in the body. It weighs less than two grams in total. Yet it is one of the most metabolically active and functionally important tissues in the body.
+
+My Socratic question: a single layer of cells that weighs two grams - why is it considered an organ in its own right?
+
+The answer is that the endothelium performs a long list of functions, all essential to life. It is:
+
+- A barrier - controlling what passes between blood and tissues.
+- A non-thrombogenic surface - preventing blood from clotting inside healthy vessels (by producing heparan sulphate, prostacyclin, and tissue plasminogen activator).
+- A regulator of vascular tone - producing nitric oxide (vasodilator) and endothelin (vasoconstrictor), which control the diameter of the vessel.
+- A regulator of inflammation - expressing adhesion molecules that let white blood cells enter the tissues, but only when needed.
+- A regulator of angiogenesis - releasing growth factors that promote new vessel formation.
+- A metabolic organ - inactivating hormones and drugs, and converting angiotensin I to angiotensin II in the lung.
+
+No other single layer of cells does all of this. The endothelium is not just a lining; it is a continuously active regulatory interface between blood and tissue.
+
+Crucial insight: the endothelium is the body's primary vascular sensor and effector. Damage to it - from smoking, hypertension, diabetes, or high cholesterol - is the first step in atherosclerosis. Endothelial dysfunction is now considered the earliest stage of cardiovascular disease, and it can be detected before any plaque is visible.`
+    },
+    {
+      q: "Atherosclerosis begins with a single event - damage to the endothelium. Why does that one event lead to a whole disease?",
+      body: `Atherosclerosis is the disease of arteries that underlies heart attacks, strokes, and peripheral vascular disease. It is the leading cause of death in the developed world. And its starting point is a single microscopic event: injury to the endothelium.
+
+My Socratic question: why does damage to one thin layer of cells cause a disease that kills millions?
+
+The answer is that the endothelium is the boundary that keeps the vessel wall protected from the blood. Once it is damaged, everything that is normally kept out gets in. LDL cholesterol enters the wall. Monocytes (a type of white blood cell) also enter, become macrophages, and engorge themselves with the trapped LDL. These lipid-laden macrophages (foam cells) accumulate under the endothelium and form a fatty streak - the earliest visible lesion of atherosclerosis.
+
+The fatty streak then grows. Smooth muscle cells migrate from the media into the intima. A fibrous cap forms over the lipid core. The vessel narrows (stenosis). Calcium deposits stiffen the plaque. Eventually, the plaque can rupture - exposing the thrombogenic core to the blood - and a clot forms on top, blocking the vessel completely. This is a heart attack or a stroke.
+
+Crucial insight: atherosclerosis is a disease of the vessel wall's innermost layer. The endothelium is not a passive liner; it is the barrier whose failure starts the whole process. Understanding endothelial biology is the key to understanding cardiovascular disease - and to the treatments (statins, blood pressure control, smoking cessation) that reduce its risk.`
+    },
+    {
+      q: "Arteries and veins are often shown running side by side. How does the body ensure they exchange correctly with the tissues they serve?",
+      body: `In any tissue that needs a blood supply, an artery and a vein typically run together, with a capillary bed between them. The arrangement is not random; it is precisely matched to the tissue's needs.
+
+My Socratic question: an artery and a vein run side by side - what ensures that the blood actually reaches the tissue between them?
+
+The answer is the capillary bed. The artery branches into arterioles, the arterioles into capillaries, and the capillaries into venules, which join into veins. The capillary bed is the site where the artery's blood meets the tissue and the vein's blood departs. The arterial and venous sides are connected only through this intervening bed.
+
+The precise arrangement varies with tissue. In skeletal muscle, capillaries run parallel to the muscle fibres they supply. In the liver, sinusoidal capillaries run between rows of hepatocytes. In the kidney, the arrangement is highly specialised, with a portal system - capillaries drain into a vein which splits into a second capillary bed. And in the lung, the arrangement is a capillary bed sandwiched between two air spaces.
+
+Crucial insight: the capillary bed is the functional unit of the circulation. The artery brings blood in; the vein carries it out; the capillary bed is where the actual job of the tissue happens. Any pathology that damages the capillary bed - inflammation, ischaemia, fibrosis - affects the tissue directly, no matter how healthy the larger vessels are.`
+    },
+    {
+      q: "Varicose veins are a common condition, especially in the legs. Why does a vein become varicose?",
+      body: `A varicose vein is a vein that has become permanently dilated, twisted, and elongated - most commonly in the superficial veins of the legs. It is a visible and often painful condition, and it is common - roughly a third of adults develop them at some point.
+
+My Socratic question: the veins of the leg are surrounded by muscle and have valves. Why do they fail?
+
+The answer is a combination of anatomy and physics. The veins of the leg are working against gravity. When you stand, blood in the leg veins has to be pushed upward against gravity towards the heart. Two mechanisms help: the calf muscles act as a pump when you walk, and the venous valves prevent backflow. If either mechanism fails, blood pools in the veins.
+
+Two things commonly go wrong. First, valves can become incompetent - they no longer seal properly - and this can be primary (a genetic weakness of the valve or vein wall) or secondary (after deep vein thrombosis damages the valves). Second, the vein wall itself can weaken, losing the elastic tissue that keeps it toned. When blood pools under the force of gravity against a weakened wall, the vein dilates. Dilation pulls the valve leaflets apart and makes them leak further, which causes more pooling - a vicious cycle.
+
+Risk factors include female sex (oestrogen affects vein wall compliance), pregnancy, prolonged standing, obesity, and age.
+
+Crucial insight: varicose veins are a mechanical failure of a low-pressure system working against gravity. Understanding the anatomy and physiology of the venous system - valves, muscle pumps, and wall compliance - explains why they occur where they do, and why compression and elevation help.`
+    },
+    {
+      q: "Anastomoses between arteries are common in some parts of the body but absent in others. Why does the body arrange its vascular supply this way?",
+      body: `An anastomosis is a connection between two blood vessels - usually between two arteries, or between an artery and a vein. Some regions of the body (the hand, the intestine, the joints, the brain) have rich anastomoses. Others (the kidney, the spleen, the retina, parts of the brain) have almost none.
+
+My Socratic question: if anastomoses are useful - providing backup blood supply - why does the body not have them everywhere?
+
+The answer is that anastomoses have a cost. They take up space, complicate blood flow, and in some tissues (like the kidney's glomerulus) they would defeat the whole purpose of the tissue's structure. So they occur where the tissue can afford them and needs them, and are absent where they would be harmful or unnecessary.
+
+Anastomoses provide crucial redundancy. The brain's circle of Willis is the most famous example - if one of the arteries supplying the brain is blocked, blood can reach the same territory from another route. The palmar arches of the hand provide the same backup, which is why the hand survives when the radial or ulnar artery is cut. In the gut, the arcades between the mesenteric arteries allow a segment of bowel to survive partial arterial occlusion.
+
+Crucial insight: the pattern of anastomoses in the body is a map of where redundancy is needed and affordable. Clinical conditions reflect this. A blockage of the renal artery causes kidney infarction because there is no collateral. A blockage of the mesenteric artery may or may not cause bowel infarction depending on whether the anastomoses can compensate. Understanding which tissues have backup and which do not is the key to predicting the consequences of any vascular occlusion.`
+    },
+    {
+      q: "The cardiovascular system spans the entire body, from the heart to the smallest capillary. Why is it taught first as histology, and then as gross anatomy?",
+      body: `Every medical school teaches the cardiovascular system twice: once as histology (the microscopic structure of the vessels) and once as gross anatomy (the macroscopic arrangement of the heart and major vessels). The two views are not redundant; they answer different questions.
+
+My Socratic question: why does the body need both a microscopic and a macroscopic understanding of the same system?
+
+The answer is that the heart and vessels operate at both scales, and each scale explains different things. The microscopic view explains how a vessel functions - why the aorta does not burst, why capillaries allow exchange, why veins act as reservoirs, why the endothelium prevents clotting. The macroscopic view explains where the vessels run - why a heart attack can also cause jaw or arm pain (referred pain), why a surgeon must be careful around the ureter during pelvic surgery, why a tumour in the lung can block the superior vena cava.
+
+Both views are needed for the same reasons: a clinician thinking about a patient with chest pain needs the gross anatomy of the coronary arteries and the microscopic understanding of how a plaque ruptures; a vascular surgeon planning a bypass needs the gross anatomy of the vessels and the microscopic understanding of how the endothelium will respond to the graft.
+
+Crucial insight: histology and gross anatomy are two scales of the same truth. A blocked artery is a macroscopic event caused by a microscopic process. Understanding cardiovascular medicine requires moving fluently between the two scales - and that is why this topic sits alongside the gross anatomy of the circulatory system.`
+    }
+  ],
+  theory: [
+    { q: "Name the three layers of a blood vessel wall, from innermost to outermost, and state the main component of each.", a: "Tunica intima - endothelium on a basement membrane with a thin layer of connective tissue. Tunica media - smooth muscle and elastic fibres (thickest layer in arteries). Tunica adventitia - collagenous connective tissue with elastic fibres and vasa vasorum, anchoring the vessel to surrounding tissue." },
+    { q: "State the structural differences between arteries, veins, and capillaries.", a: "Arteries have a thick tunica media (muscular/elastic) to withstand high pressure; veins have a thin media and thick adventitia, with valves to prevent backflow; capillaries have only an endothelium and basement membrane, one cell thick, for exchange." },
+    { q: "Describe the three types of capillaries and give an example of a location for each.", a: "Continuous capillaries - complete endothelial lining with tight junctions; found in muscle, skin, and connective tissue. Fenestrated capillaries - have pores (fenestrations); found in kidney, intestines, and endocrine glands. Sinusoidal capillaries - large gaps between cells; found in liver, spleen, and bone marrow." },
+    { q: "What is the function of venous valves, and where are they most common?", a: "Venous valves are folds of tunica intima that prevent backflow of blood, ensuring one-way flow towards the heart. They are most common in the veins of the legs, where blood must travel against gravity." },
+    { q: "List the functions of the endothelium.", a: "Barrier between blood and tissues; non-thrombogenic surface (prevents clotting); regulator of vascular tone (produces nitric oxide and endothelin); regulator of inflammation (controls leukocyte adhesion); regulator of angiogenesis; metabolic organ (inactivates hormones and drugs, converts angiotensin I to angiotensin II in the lung)." },
+    { q: "Describe the process of atherosclerosis, starting from the earliest event.", a: "Endothelial injury (from smoking, hypertension, diabetes, high cholesterol). LDL enters the vessel wall. Monocytes enter and become macrophages, engorging on LDL to form foam cells (fatty streak). Smooth muscle cells migrate into the intima. Fibrous cap forms over the lipid core. Plaque grows and narrows the vessel. Plaque may rupture, exposing the thrombogenic core and causing a clot." },
+    { q: "Explain why varicose veins occur, and list the risk factors.", a: "Varicose veins occur when venous valves become incompetent and/or the vein wall weakens. Blood pools under gravity against a weakened wall, causing the vein to dilate. Dilation pulls the valve leaflets apart, worsening the leak - a vicious cycle. Risk factors: female sex, pregnancy, prolonged standing, obesity, age." },
+    { q: "Define an anastomosis, and give two examples of clinically important anastomoses.", a: "An anastomosis is a connection between two blood vessels. Examples: the circle of Willis at the base of the brain (redundant arterial supply), and the palmar arches of the hand (redundant supply to the hand)." },
+    { q: "Explain why some tissues have rich anastomoses while others have none.", a: "Anastomoses provide redundant blood supply, protecting tissues from ischaemia. They occur where the tissue can afford them and needs them (hand, gut, brain, joints). They are absent where they would defeat the tissue's structure (kidney glomerulus) or are unnecessary (spleen, retina)." },
+    { q: "Describe the relationship between endothelium and cardiovascular disease.", a: "The endothelium is the body's primary vascular sensor and effector. Endothelial dysfunction - caused by smoking, hypertension, diabetes, or high cholesterol - is the earliest stage of atherosclerosis. Damage to the endothelium allows LDL and monocytes into the vessel wall, initiating the disease." }
+  ],
+  videos: [
+    { channel: "Kenhub", title: "Histology of Blood Vessels", note: "Detailed tour of the three layers of arteries and veins, with real histology images.", url: "" },
+    { channel: "Armando Hasudungan", title: "Atherosclerosis", note: "Hand-drawn explanation of the pathogenesis of atherosclerosis from endothelial injury to plaque rupture.", url: "" },
+    { channel: "Ninja Nerd", title: "Capillary Types and Function", note: "Explanation of continuous, fenestrated, and sinusoidal capillaries and their locations.", url: "" }
+  ],
+  mcqs: [
+    { q: "The innermost layer of a blood vessel wall is the:", o: ["Tunica media", "Tunica adventitia", "Tunica intima", "Tunica externa"], a: 2, w: "The tunica intima is the innermost layer, consisting of endothelium, basement membrane, and thin connective tissue." },
+    { q: "The thickest layer in an artery wall is the:", o: ["Tunica intima", "Tunica media", "Tunica adventitia", "Endothelium"], a: 1, w: "The tunica media (muscular/elastic layer) is the thickest in arteries." },
+    { q: "The layer of a blood vessel wall that contains vasa vasorum is the:", o: ["Tunica intima", "Tunica media", "Tunica adventitia", "Endothelium"], a: 2, w: "Vasa vasorum (vessels of the vessel) are found in the tunica adventitia." },
+    { q: "The tunica media of an artery is composed mainly of:", o: ["Collagen", "Smooth muscle and elastic fibres", "Endothelium", "Fibroblasts"], a: 1, w: "The tunica media contains smooth muscle and elastic fibres, which give it strength and elasticity." },
+    { q: "Which of the following is NOT a function of the endothelium?", o: ["Preventing blood clotting", "Regulating vascular tone", "Producing red blood cells", "Regulating inflammation"], a: 2, w: "Red blood cell production is a function of the bone marrow, not the endothelium." },
+    { q: "Nitric oxide produced by the endothelium causes:", o: ["Vasoconstriction", "Vasodilation", "Clotting", "Inflammation"], a: 1, w: "Nitric oxide is a vasodilator produced by the endothelium." },
+    { q: "Endothelin produced by the endothelium causes:", o: ["Vasodilation", "Vasoconstriction", "Clotting", "Angiogenesis"], a: 1, w: "Endothelin is a vasoconstrictor produced by the endothelium." },
+    { q: "The conversion of angiotensin I to angiotensin II occurs mainly in the:", o: ["Kidney", "Liver", "Lung", "Heart"], a: 2, w: "Angiotensin-converting enzyme (ACE) is found mainly in the pulmonary endothelium." },
+    { q: "Which type of capillary has pores (fenestrations)?", o: ["Continuous", "Fenestrated", "Sinusoidal", "Discontinuous"], a: 1, w: "Fenestrated capillaries have pores that allow faster exchange of larger molecules." },
+    { q: "Sinusoidal capillaries are found in:", o: ["Skeletal muscle", "Skin", "Liver and spleen", "Lung"], a: 2, w: "Sinusoidal capillaries have large gaps between cells and are found in liver, spleen, and bone marrow." },
+    { q: "Continuous capillaries are found in:", o: ["Kidney", "Liver", "Muscle and skin", "Bone marrow"], a: 2, w: "Continuous capillaries are the most common type, found in muscle, skin, and connective tissue." },
+    { q: "Fenestrated capillaries are found in:", o: ["Skeletal muscle", "Kidney and intestines", "Liver", "Skin"], a: 1, w: "Fenestrated capillaries are found in kidney, intestines, and endocrine glands." },
+    { q: "Veins differ from arteries in that veins have:", o: ["A thicker media", "Valves", "More elastic tissue", "A thicker intima"], a: 1, w: "Veins have valves to prevent backflow of blood." },
+    { q: "The largest blood reservoir in the body is the:", o: ["Arterial system", "Venous system", "Capillary bed", "Heart"], a: 1, w: "The venous system holds about seventy percent of the body's blood volume." },
+    { q: "Venous valves are most common in the veins of the:", o: ["Head", "Arms", "Legs", "Abdomen"], a: 2, w: "Venous valves are most common in the leg veins, where blood must travel against gravity." },
+    { q: "Which of the following does NOT help return blood from the legs to the heart?", o: ["Venous valves", "Calf muscle pump", "Sympathetic venoconstriction", "Gravity"], a: 3, w: "Gravity opposes venous return from the legs; the other three mechanisms assist it." },
+    { q: "Atherosclerosis begins with:", o: ["Damage to the endothelium", "Damage to the tunica media", "Damage to the adventitia", "Blockage of the capillary bed"], a: 0, w: "Atherosclerosis begins with injury to the endothelium." },
+    { q: "The earliest visible lesion of atherosclerosis is the:", o: ["Fibrous plaque", "Fatty streak", "Calcified plaque", "Thrombus"], a: 1, w: "The fatty streak is the earliest visible lesion of atherosclerosis." },
+    { q: "Foam cells in atherosclerosis are derived from:", o: ["Endothelial cells", "Smooth muscle cells", "Macrophages that have engulfed LDL", "Fibroblasts"], a: 2, w: "Foam cells are macrophages that have engulfed LDL cholesterol in the vessel wall." },
+    { q: "Atherosclerosis can lead to all of the following EXCEPT:", o: ["Myocardial infarction", "Stroke", "Peripheral vascular disease", "Increased vessel diameter"], a: 3, w: "Atherosclerosis narrows the vessel, not dilates it." },
+    { q: "Varicose veins most commonly occur in the:", o: ["Arms", "Legs", "Abdomen", "Head"], a: 1, w: "Varicose veins most commonly occur in the superficial veins of the legs." },
+    { q: "Varicose veins are caused by:", o: ["Incompetent venous valves and weakened vein walls", "Endothelial damage", "Atherosclerosis", "Hypertension"], a: 0, w: "Varicose veins result from valve incompetence and vein wall weakening, allowing blood to pool." },
+    { q: "A risk factor for varicose veins is:", o: ["Male sex", "Prolonged standing", "Regular exercise", "Low blood pressure"], a: 1, w: "Prolonged standing increases venous pooling and is a risk factor for varicose veins." },
+    { q: "An anastomosis is:", o: ["A blockage of a blood vessel", "A connection between two blood vessels", "An inflammation of a vessel", "A rupture of a vessel"], a: 1, w: "An anastomosis is a connection between two blood vessels (usually arteries)." },
+    { q: "The circle of Willis is an example of:", o: ["A portal system", "An arterial anastomosis in the brain", "A venous valve", "A capillary bed"], a: 1, w: "The circle of Willis is an anastomotic ring of arteries at the base of the brain." },
+    { q: "Anastomoses are important because they:", o: ["Increase blood pressure", "Provide redundant blood supply to tissues", "Prevent clotting", "Reduce blood volume"], a: 1, w: "Anastomoses provide alternate routes for blood flow if one artery is blocked." },
+    { q: "Which organ has the LEAST arterial anastomosis?", o: ["Hand", "Brain", "Kidney", "Stomach"], a: 2, w: "The kidney has minimal arterial anastomosis; a blockage of the renal artery causes infarction." },
+    { q: "The 'vasa vasorum' are:", o: ["Valves in veins", "Nerves to the vessels", "Small blood vessels that supply the vessel wall itself", "Lymphatic vessels"], a: 2, w: "Vasa vasorum are small vessels that supply the walls of larger blood vessels." },
+    { q: "The tunica intima is lined by:", o: ["Smooth muscle", "Endothelium", "Fibroblasts", "Elastic fibres"], a: 1, w: "The tunica intima is lined by a single layer of endothelium." },
+    { q: "The endothelium is described as non-thrombogenic because it:", o: ["Prevents blood from clotting inside healthy vessels", "Promotes clotting", "Prevents blood flow", "Causes vasoconstriction"], a: 0, w: "The endothelium produces substances (heparan sulphate, prostacyclin, tPA) that prevent clotting." },
+    { q: "In the lung, the endothelium converts:", o: ["Angiotensin II to angiotensin I", "Angiotensin I to angiotensin II", "Renin to angiotensin", "Aldosterone to cortisol"], a: 1, w: "Pulmonary endothelium converts angiotensin I to angiotensin II via ACE." },
+    { q: "The three types of capillaries are:", o: ["Continuous, fenestrated, sinusoidal", "Simple, stratified, compound", "Muscular, elastic, fibrous", "Arterial, venous, lymphatic"], a: 0, w: "The three types are continuous, fenestrated, and sinusoidal capillaries." },
+    { q: "Continuous capillaries allow exchange of:", o: ["Cells and large proteins", "Small molecules only", "No molecules", "Only water"], a: 1, w: "Continuous capillaries have tight junctions that allow only small molecules to pass." },
+    { q: "Sinusoidal capillaries are the leakiest because they:", o: ["Have tight junctions", "Have large gaps between cells", "Have no endothelium", "Have thick walls"], a: 1, w: "Sinusoidal capillaries have large gaps between endothelial cells, allowing cells and large proteins through." },
+    { q: "The main artery of the body is the:", o: ["Pulmonary artery", "Aorta", "Carotid artery", "Femoral artery"], a: 1, w: "The aorta is the main artery of the body, arising from the left ventricle." },
+    { q: "The elastic tissue in the aorta allows it to:", o: ["Constrict permanently", "Stretch during systole and recoil during diastole", "Prevent clotting", "Absorb nutrients"], a: 1, w: "The elastic recoil of the aorta keeps blood moving during diastole." },
+    { q: "Muscular arteries distribute blood to:", o: ["The lungs", "Organs and tissues", "The heart only", "The kidneys only"], a: 1, w: "Muscular (distributing) arteries carry blood to organs and tissues." },
+    { q: "Arterioles are important in regulating:", o: ["Blood pressure and tissue blood flow", "Red blood cell production", "Clotting", "Lymphatic drainage"], a: 0, w: "Arterioles are the primary resistance vessels, regulating blood pressure and tissue perfusion." },
+    { q: "The exchange of substances between blood and tissue occurs in the:", o: ["Arteries", "Veins", "Capillaries", "Heart"], a: 2, w: "Capillaries are the site of exchange between blood and tissues." },
+    { q: "The pulmonary circulation carries:", o: ["Oxygenated blood to the body", "Deoxygenated blood to the lungs", "Oxygenated blood to the lungs", "Deoxygenated blood to the body"], a: 1, w: "The pulmonary circulation carries deoxygenated blood from the right heart to the lungs for oxygenation." },
+    { q: "Which of the following is NOT a function of the endothelium?", o: ["Regulating angiogenesis", "Modulating inflammation", "Producing digestive enzymes", "Metabolising drugs"], a: 2, w: "Digestive enzymes are produced by the pancreas and gut, not the endothelium." },
+    { q: "Endothelial dysfunction is considered:", o: ["A late stage of cardiovascular disease", "The earliest stage of cardiovascular disease", "Unrelated to cardiovascular disease", "A normal ageing change"], a: 1, w: "Endothelial dysfunction is now recognised as the earliest stage of atherosclerosis." },
+    { q: "Which layer of the vessel wall is damaged first in atherosclerosis?", o: ["Tunica intima", "Tunica media", "Tunica adventitia", "Vasa vasorum"], a: 0, w: "The endothelium of the tunica intima is damaged first in atherosclerosis." },
+    { q: "A venous valve is a fold of the:", o: ["Tunica media", "Tunica adventitia", "Tunica intima", "Endothelium only"], a: 2, w: "Venous valves are folds of the tunica intima." },
+    { q: "Blood in veins is under:", o: ["High pressure", "Low pressure", "Same pressure as arteries", "No pressure at all"], a: 1, w: "Blood in veins is under low pressure, which is why veins have thin walls and valves." },
+    { q: "The 'calf muscle pump' assists:", o: ["Arterial blood flow to the leg", "Venous return from the leg", "Lymphatic drainage from the leg", "Capillary exchange in the leg"], a: 1, w: "The calf muscle pump compresses leg veins during walking, pushing blood towards the heart." },
+    { q: "Which of the following is NOT a risk factor for atherosclerosis?", o: ["Smoking", "Hypertension", "Regular exercise", "Diabetes mellitus"], a: 2, w: "Regular exercise reduces the risk of atherosclerosis." },
+    { q: "The endothelium prevents clotting by producing:", o: ["Thrombin", "Tissue plasminogen activator and prostacyclin", "Fibrinogen", "Platelets"], a: 1, w: "The endothelium produces tPA and prostacyclin, which prevent clotting." },
+    { q: "Which structure connects an artery directly to a vein without a capillary bed?", o: ["An anastomosis", "A portal system", "A capillary bed", "A shunt"], a: 0, w: "An anastomosis connects vessels; if it connects an artery directly to a vein it is an arteriovenous anastomosis." },
+    { q: "An arteriovenous anastomosis is important in:", o: ["Thermoregulation", "Oxygenation", "Clotting", "Excretion"], a: 0, w: "Arteriovenous anastomoses allow blood to bypass capillary beds and are important in temperature regulation." },
+    { q: "The hepatic portal system is an example of:", o: ["An arterial anastomosis", "A capillary bed between two capillary beds", "A venous valve system", "An arteriovenous anastomosis"], a: 1, w: "The hepatic portal system has a capillary bed in the gut and a second capillary bed (sinusoids) in the liver, connected by the portal vein." },
+    { q: "Which of the following is NOT a function of the capillary bed?", o: ["Exchange of gases", "Exchange of nutrients", "Exchange of wastes", "Production of red blood cells"], a: 3, w: "Red blood cell production occurs in the bone marrow, not the capillary bed." },
+    { q: "The main site of resistance to blood flow is the:", o: ["Aorta", "Arterioles", "Capillaries", "Veins"], a: 1, w: "Arterioles are the main resistance vessels, controlling blood pressure and tissue blood flow." },
+    { q: "Which vessel type has the highest proportion of smooth muscle in its wall?", o: ["Aorta", "Muscular artery", "Vein", "Capillary"], a: 1, w: "Muscular arteries have the highest proportion of smooth muscle in their walls." },
+    { q: "The endothelium of the glomerulus is:", o: ["Continuous", "Fenestrated", "Sinusoidal", "Absent"], a: 1, w: "The glomerular endothelium is fenestrated, allowing rapid filtration of plasma." }
+  ]
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -21466,6 +22297,10 @@ const CONTENT = {
   "an2:11": T_AN2_URINARY,
   "an2:13": T_AN2_RESP_HISTO,
   "an2:2": T_AN2_GI,
+  "an2:3": T_AN2_NEUROVASC,
+  "an2:5": T_AN2_PELVIS,
+  "an2:4": T_AN2_REPRO,
+  "an2:12": T_AN2_CIRC_HISTO,
 
 };
 
