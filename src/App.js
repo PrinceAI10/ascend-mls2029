@@ -25247,7 +25247,7 @@ Crucial insight: signal transduction is the mechanism behind a huge proportion o
 };
 
 /* --------------------------- pha:3 --------------------------- */
-const T_PHA_QUANT = {
+const T_PHA_QUANTITATIVE = {
   courseId: "pha",
   topicIndex: 3,
   title: "Principles of Drug Action: Quantitative Drug-Receptor Interactions",
@@ -26306,6 +26306,463 @@ Crucial insight: adrenergic pharmacology is the practical application of recepto
     { q: "Which drug is used to treat benign prostatic hyperplasia (BPH)?", o: ["Atenolol", "Salbutamol", "Tamsulosin (α1 blocker)", "Adrenaline"], a: 2, w: "Tamsulosin is an α1 blocker used for BPH; it relaxes the prostate and bladder neck." },
     { q: "Which β-blocker is used in heart failure with proven mortality benefit?", o: ["Bisoprolol", "Propranolol", "Esmolol", "Nadolol"], a: 0, w: "Bisoprolol, carvedilol and metoprolol succinate have proven mortality benefit in heart failure." },
     { q: "The key takeaway from this topic is:", o: ["Adrenergic pharmacology is only about hypertension", "Adrenergic pharmacology applies receptor theory to clinical medicine across many specialties", "Only β-blockers matter clinically", "Adrenergic drugs have no side effects"], a: 1, w: "Adrenergic pharmacology applies receptor theory to clinical medicine across many specialties - from asthma to heart failure to BPH." },
+  ],
+};
+
+/* --------------------------- pha:6 --------------------------- */
+const T_PHA_CHOLINERGIC = {
+  courseId: "pha",
+  topicIndex: 6,
+  title: "Cholinergic Pharmacology",
+  minutes: 30,
+  note: [
+    {
+      q: "The parasympathetic nervous system controls rest and digestion. How does one neurotransmitter manage so many different effects?",
+      body: `In the last topic you studied the sympathetic nervous system - the branch that mediates fight or flight. Now we turn to its partner: the parasympathetic nervous system, the branch that mediates rest and digest. Its main neurotransmitter is acetylcholine, and the drugs that act on it - cholinergic drugs - are among the most clinically important in pharmacology.
+
+My Socratic question: acetylcholine slows the heart, constricts the pupils, stimulates digestion, contracts the bladder, and increases salivation. How can one molecule produce such varied effects in so many different organs?
+
+The answer is that acetylcholine acts on two different families of receptor - muscarinic and nicotinic - and these receptors are distributed across many tissues. Acetylcholine binds both, but the effect depends on which receptor is present in that tissue. The same molecule can slow the heart (muscarinic receptors on the heart), stimulate the gut (muscarinic receptors in the gut), and contract skeletal muscle (nicotinic receptors at the neuromuscular junction). The distribution of receptors determines the range of effects.
+
+The two cholinergic receptor families:
+
+- Muscarinic receptors (mAChR) - G-protein coupled receptors found on smooth muscle, cardiac muscle, glands, and the CNS. They mediate the parasympathetic effects: slowing the heart, constricting the pupils, stimulating secretions, contracting the gut and bladder. Subtypes: M1 (neural), M2 (cardiac), M3 (glandular and smooth muscle), M4 and M5 (CNS).
+- Nicotinic receptors (nAChR) - ligand-gated ion channels found at the neuromuscular junction, autonomic ganglia, and the CNS. They mediate fast synaptic transmission: skeletal muscle contraction (NMJ), ganglionic transmission (autonomic ganglia), and CNS effects.
+
+Crucial insight: cholinergic pharmacology is the study of drugs that act on acetylcholine - its receptors, its synthesis, its release, and its breakdown. Because acetylcholine is involved in almost every parasympathetic function and in skeletal muscle contraction, cholinergic drugs have a wide range of clinical uses and a wide range of toxicities. Understanding them is essential for understanding both the parasympathetic nervous system and the pharmacology of the neuromuscular junction.`
+    },
+    {
+      q: "Acetylcholine is not stored in vesicles the way noradrenaline is. How is it synthesised and released?",
+      body: `Acetylcholine differs from noradrenaline in several important ways: its synthesis is simpler, its storage is different, and its breakdown is faster. Understanding these differences is essential for understanding how cholinergic drugs work.
+
+My Socratic question: acetylcholine is made from two simple precursors and broken down by a single enzyme. Why is it designed this way?
+
+The answer is speed. Acetylcholine is used for rapid signalling - at the neuromuscular junction, in the autonomic ganglia, and in the parasympathetic nervous system. A simple synthesis pathway and a fast breakdown enzyme allow the signal to be turned on and off quickly.
+
+The synthesis of acetylcholine:
+
+- Choline is taken up into the nerve terminal from the extracellular fluid by a specific transporter (the choline transporter).
+- Choline is acetylated by the enzyme choline acetyltransferase (ChAT), using acetyl-CoA as the acetyl donor.
+- The product is acetylcholine, which is immediately stored in synaptic vesicles.
+- On stimulation, vesicles fuse with the membrane and release acetylcholine into the synaptic cleft (exocytosis).
+
+The breakdown of acetylcholine:
+
+- Acetylcholine is broken down in the synaptic cleft by the enzyme acetylcholinesterase (AChE).
+- AChE hydrolyses acetylcholine into choline and acetate - a very fast reaction.
+- The choline is taken back up into the nerve terminal and reused for synthesis.
+
+Key differences from noradrenaline:
+
+- Acetylcholine has one breakdown enzyme (AChE); noradrenaline has two (MAO and COMT).
+- Acetylcholine's breakdown is extremely fast; noradrenaline's is slower.
+- Acetylcholine is not taken back up into the nerve terminal as a whole molecule; it is broken down first, and the choline is recycled.
+- Acetylcholine acts on two completely different receptor families (muscarinic and nicotinic); noradrenaline acts on one family with several subtypes.
+
+Crucial insight: acetylcholine's fast synthesis and fast breakdown make it ideal for rapid, precise signalling. This is why the neuromuscular junction can fire hundreds of times per second, and why the parasympathetic system can adjust heart rate and glandular secretion moment to moment. The enzyme acetylcholinesterase is one of the most efficient enzymes in the body - and it is the target of some of the most important drugs and toxins in pharmacology.`
+    },
+    {
+      q: "Acetylcholine binds two different families of receptor. What are they, and what does each one do?",
+      body: `The two families of cholinergic receptors - muscarinic and nicotinic - are not just different in structure; they are different in mechanism, location, and the effects they produce. Understanding them is the foundation of cholinergic pharmacology.
+
+My Socratic question: if acetylcholine is the same molecule everywhere, how does the body ensure that the heart slows but the skeletal muscle contracts?
+
+The answer is that different tissues express different receptor families. The heart has muscarinic receptors (M2); the skeletal muscle has nicotinic receptors. When acetylcholine is released, it binds whichever receptor is present in that tissue, producing the response that receptor mediates.
+
+Muscarinic receptors (mAChR):
+
+- G-protein coupled receptors - seven-transmembrane structure.
+- Slower, longer-lasting effects - seconds.
+- Located on: cardiac muscle (M2 - slows heart rate), smooth muscle (M3 - contracts gut and bladder, relaxes sphincters), glands (M3 - stimulates secretion), pupils (M3 - constricts), and the CNS (M1, M4, M5).
+- Subtypes: M1 (neural, gastric secretion), M2 (cardiac, slows heart), M3 (glandular, smooth muscle), M4 and M5 (CNS).
+- Signalling: M1, M3, M5 are Gq-coupled (IP3/DAG, calcium); M2 and M4 are Gi-coupled (decrease cAMP).
+
+Nicotinic receptors (nAChR):
+
+- Ligand-gated ion channels - five subunits surrounding a central pore.
+- Fast, brief effects - milliseconds.
+- Located on: the neuromuscular junction (skeletal muscle contraction), autonomic ganglia (sympathetic and parasympathetic transmission), and the CNS.
+- Subtypes: Nm (muscle-type, at the NMJ) and Nn (neuronal-type, at ganglia and CNS).
+- Signalling: binding of acetylcholine opens the channel, allowing sodium (and potassium) to flow through, causing depolarisation.
+
+Crucial insight: the division of cholinergic receptors into muscarinic and nicotinic is the key to understanding cholinergic drugs. Muscarinic receptors mediate the parasympathetic effects (slowing the heart, stimulating secretions, contracting the gut and bladder). Nicotinic receptors mediate fast synaptic transmission (skeletal muscle contraction, ganglionic transmission). A drug that acts on muscarinic receptors will have parasympathetic effects; a drug that acts on nicotinic receptors will affect skeletal muscle or ganglia. Understanding the difference is the foundation of safe prescribing.`
+    },
+    {
+      q: "Cholinergic agonists mimic acetylcholine. Why would we want to do that, and what are the clinical uses?",
+      body: `Cholinergic agonists (parasympathomimetics) are drugs that mimic the effects of acetylcholine - either by binding cholinergic receptors directly (direct-acting) or by increasing the amount of acetylcholine at the synapse (indirect-acting). They are used to treat a wide range of conditions, from glaucoma to postoperative ileus to myasthenia gravis.
+
+My Socratic question: if the parasympathetic nervous system is already active, why would we need drugs that mimic acetylcholine?
+
+The answer is that the body's own supply is not always sufficient or appropriately targeted. In glaucoma, the drainage of aqueous humour is blocked and needs to be opened. In postoperative ileus, the gut is not moving and needs to be stimulated. In myasthenia gravis, the neuromuscular junction is failing and needs more acetylcholine. In each case, a cholinergic agonist provides the missing signal.
+
+The two main classes of cholinergic agonists:
+
+- Direct-acting agonists - bind muscarinic or nicotinic receptors directly.
+  - Muscarinic agonists: pilocarpine (glaucoma), bethanechol (urinary retention, postoperative ileus), methacholine (diagnostic).
+  - Nicotinic agonists: nicotine (smoking cessation, research), varenicline (smoking cessation).
+- Indirect-acting agonists (anticholinesterases) - inhibit acetylcholinesterase, increasing acetylcholine at the synapse.
+  - Reversible: neostigmine (myasthenia gravis, reversal of neuromuscular blockade), physostigmine (glaucoma, anticholinergic overdose), edrophonium (diagnostic for myasthenia), donepezil, rivastigmine, galantamine (Alzheimer's disease).
+  - Irreversible: organophosphates (insecticides, nerve agents), echothiophate (glaucoma).
+
+Clinical uses of cholinergic agonists:
+
+- Glaucoma - pilocarpine, physostigmine, echothiophate (constrict the pupil, open drainage).
+- Urinary retention - bethanechol (contracts the bladder).
+- Postoperative ileus - bethanechol (stimulates gut motility).
+- Myasthenia gravis - neostigmine, pyridostigmine (increase acetylcholine at the NMJ).
+- Alzheimer's disease - donepezil, rivastigmine, galantamine (increase acetylcholine in the brain).
+- Reversal of neuromuscular blockade - neostigmine (after surgery).
+- Anticholinergic overdose - physostigmine (crosses the blood-brain barrier).
+- Smoking cessation - nicotine, varenicline.
+- Diagnosis of myasthenia gravis - edrophonium (short-acting).
+
+Crucial insight: cholinergic agonists are used wherever the parasympathetic nervous system's effects are needed but the body's own supply is insufficient. Direct-acting agonists bind the receptor; indirect-acting agonists increase acetylcholine at the synapse. By choosing the right drug, the right route, and the right dose, we can target the effect to the tissue we want - pilocarpine for the eye, bethanechol for the bladder, neostigmine for the neuromuscular junction. Understanding the receptor types and the drug mechanisms is the key to using them safely.`
+    },
+    {
+      q: "Cholinergic antagonists block acetylcholine. Why would we want to do that, and what are the clinical uses?",
+      body: `Cholinergic antagonists (anticholinergics or parasympatholytics) are drugs that block cholinergic receptors, reducing the effects of acetylcholine. They are used to treat a wide range of conditions - from overactive bladder to COPD to Parkinson's disease - and their side effects are a direct consequence of blocking parasympathetic activity.
+
+My Socratic question: if the parasympathetic nervous system is responsible for rest and digestion, what happens when you block it?
+
+The answer is that you get the opposite effects - dry mouth, dilated pupils, increased heart rate, reduced gut motility, urinary retention. These are the classic side effects of anticholinergic drugs, and they are predictable from the physiology. But in some conditions, blocking the parasympathetic system is exactly what is needed - for example, in overactive bladder where the bladder contracts too often, or in COPD where the airways are constricted.
+
+The two main classes of cholinergic antagonists:
+
+- Muscarinic antagonists (antimuscarinics) - block muscarinic receptors.
+  - Atropine - the classic antimuscarinic; used for bradycardia, preoperative drying of secretions, anticholinesterase poisoning, and ophthalmic examination.
+  - Hyoscine (scopolamine) - used for motion sickness and as a preoperative sedative.
+  - Tropicamide, cyclopentolate - used for pupil dilation in eye examinations.
+  - Oxybutynin, tolterodine, solifenacin - used for overactive bladder.
+  - Ipratropium, tiotropium - inhaled for COPD and asthma (bronchodilation).
+  - Benztropine, trihexyphenidyl - used for Parkinson's disease and drug-induced extrapyramidal symptoms.
+- Nicotinic antagonists - block nicotinic receptors.
+  - Neuromuscular blockers (Nm) - used in anaesthesia to produce muscle relaxation. Depolarising (suxamethonium) and non-depolarising (tubocurarine, vecuronium, atracurium).
+  - Ganglionic blockers (Nn) - block autonomic ganglia; rarely used clinically now (e.g. hexamethonium, trimethaphan).
+
+Clinical uses of cholinergic antagonists:
+
+- Bradycardia - atropine.
+- Preoperative - atropine or hyoscine (dry secretions, prevent vagal reflexes).
+- Motion sickness - hyoscine.
+- Overactive bladder - oxybutynin, tolterodine, solifenacin.
+- COPD and asthma - ipratropium, tiotropium (inhaled).
+- Parkinson's disease - benztropine, trihexyph​enidyl.
+- Eye examination - tropicamide, cyclopentolate.
+- Organophosphate poisoning - atropine (blocks muscarinic effects).
+- Muscle relaxation in anaesthesia - neuromuscular blockers.
+- Anticholinergic overdose - physostigmine (crosses BBB).
+
+Crucial insight: cholinergic antagonists block the effects of acetylcholine, producing effects opposite to parasympathetic activation. Muscarinic antagonists cause dry mouth, dilated pupils, tachycardia, urinary retention and constipation - the classic anticholinergic side effects. Nicotinic antagonists cause muscle relaxation (NMJ blockers) or ganglionic blockade. By choosing the right drug and the right route, we can target the effect to the tissue we want - atropine for the heart, oxybutynin for the bladder, tiotropium for the lungs. Understanding the receptor types and the drug mechanisms is the key to using them safely.`
+    },
+    {
+      q: "Anticholinesterases are a special class of cholinergic drug. Why are they so important, and how do they work?",
+      body: `Anticholinesterases (cholinesterase inhibitors) are drugs that inhibit acetylcholinesterase, the enzyme that breaks down acetylcholine. By inhibiting this enzyme, they increase the amount of acetylcholine at the synapse, indirectly producing cholinergic effects. They are among the most clinically important drugs in cholinergic pharmacology, with uses ranging from myasthenia gravis to Alzheimer's disease to nerve agent poisoning.
+
+My Socratic question: if you want to increase acetylcholine at a synapse, why not just give more acetylcholine directly?
+
+The answer is that acetylcholine is broken down too quickly to be given systemically - it would be destroyed before it reached the target. Inhibiting the enzyme that breaks it down is a more practical way to increase its concentration at the synapse, and it allows the body's own acetylcholine to act for longer.
+
+The two classes of anticholinesterases:
+
+- Reversible inhibitors - bind reversibly to acetylcholinesterase, temporarily blocking it. The enzyme recovers when the drug is cleared.
+  - Carbamates: neostigmine, physostigmine, pyridostigmine, edrophonium, donepezil, rivastigmine, galantamine.
+  - Clinical uses: myasthenia gravis (neostigmine, pyridostigmine), reversal of neuromuscular blockade (neostigmine), glaucoma (physostigmine), anticholinergic overdose (physostigmine - crosses BBB), Alzheimer's disease (donepezil, rivastigmine, galantamine), diagnosis of myasthenia (edrophonium - short-acting).
+- Irreversible inhibitors - form a covalent bond with acetylcholinesterase, permanently inactivating it. The enzyme must be resynthesised for activity to return.
+  - Organophosphates: insecticides (parathion, malathion), nerve agents (sarin, soman, tabun, VX), echothiophate (glaucoma).
+  - Clinical uses: glaucoma (echothiophate). Toxicity: organophosphate poisoning.
+
+Clinical uses of anticholinesterases:
+
+- Myasthenia gravis - neostigmine, pyridostigmine (increase acetylcholine at the NMJ).
+- Reversal of neuromuscular blockade - neostigmine (after surgery).
+- Glaucoma - physostigmine, echothiophate (constrict the pupil).
+- Alzheimer's disease - donepezil, rivastigmine, galantamine (increase acetylcholine in the brain).
+- Anticholinergic overdose - physostigmine (crosses the blood-brain barrier).
+- Diagnosis of myasthenia gravis - edrophonium (short-acting).
+- Organophosphate poisoning - pralidoxime (reactivates the enzyme) + atropine (blocks muscarinic effects).
+
+Crucial insight: anticholinesterases are drugs that amplify the body's own acetylcholine signal by preventing its breakdown. Reversible inhibitors are used therapeutically for a range of conditions; irreversible inhibitors (organophosphates) are used as insecticides and nerve agents, and their toxicity is a medical emergency. Understanding the mechanism - inhibition of acetylcholinesterase - explains both the therapeutic effects and the toxic effects, and it explains why pralidoxime and atropine are the antidotes for organophosphate poisoning.`
+    },
+    {
+      q: "The neuromuscular junction is where nerve meets muscle. Why is it such an important drug target?",
+      body: `The neuromuscular junction (NMJ) is the synapse between a motor neuron and a skeletal muscle fibre. It is the point at which the nervous system commands movement, and it is the target of some of the most important drugs in anaesthesia and emergency medicine.
+
+My Socratic question: if the neuromuscular junction is just one synapse among millions, why do we need drugs that act specifically on it?
+
+The answer is that the NMJ is the final common pathway for all voluntary movement. Blocking it causes muscle paralysis, which is essential for surgery (to relax muscles), for intubation (to allow passage of a tube through the vocal cords), and for treating certain conditions (e.g. tetanus, where muscle spasms are dangerous). Conversely, increasing activity at the NMJ is the treatment for myasthenia gravis, where the junction is failing. The NMJ is a critical control point for movement.
+
+The structure of the neuromuscular junction:
+
+- The presynaptic terminal - the end of the motor neuron, containing vesicles of acetylcholine.
+- The synaptic cleft - a small gap between nerve and muscle.
+- The postsynaptic membrane - the muscle fibre membrane, containing nicotinic acetylcholine receptors (Nm).
+- Acetylcholinesterase - the enzyme in the cleft that breaks down acetylcholine.
+
+Drugs acting on the NMJ:
+
+- Neuromuscular blockers (NMJ blockers) - block nicotinic receptors at the NMJ, causing muscle paralysis.
+  - Non-depolarising blockers (competitive antagonists): tubocurarine, vecuronium, atracurium, rocuronium, pancuronium. They compete with acetylcholine for the receptor. Effects last 30-60 minutes; reversed by neostigmine.
+  - Depolarising blockers (agonists that cause persistent depolarisation): suxamethonium (succinylcholine). It binds the receptor and causes prolonged depolarisation, so the muscle initially fasciculates then relaxes. Effects last 5-10 minutes; not reversed by neostigmine (which worsens the block).
+- Anticholinesterases - increase acetylcholine at the NMJ, improving transmission.
+  - Neostigmine, pyridostigmine - used for myasthenia gravis and reversal of non-depolarising blockade.
+  - Edrophonium - short-acting, used diagnostically.
+- Drugs that impair NMJ transmission (cause weakness) - aminoglycosides, tetracyclines, magnesium, botulinum toxin.
+- Drugs that improve NMJ transmission - calcium, aminopyridines.
+
+Clinical uses of NMJ drugs:
+
+- Muscle relaxation in anaesthesia - non-depolarising blockers (vecuronium, rocuronium) and suxamethonium (for rapid intubation).
+- Myasthenia gravis - anticholinesterases (neostigmine, pyridostigmine).
+- Reversal of neuromuscular blockade - neostigmine (with atropine to prevent bradycardia).
+- Tetanus - muscle relaxants to control spasms.
+- Malignant hyperthermia - dantrolene (acts on the muscle itself, not the NMJ).
+
+Crucial insight: the neuromuscular junction is the final common pathway for voluntary movement, and drugs that act on it can produce complete muscle paralysis. This makes them essential for anaesthesia and intubation, but also dangerous - a patient who is paralysed but not adequately anaesthetised would be conscious but unable to move. Understanding the NMJ and the drugs that act on it is essential for safe anaesthesia and for the management of conditions like myasthenia gravis.`
+    },
+    {
+      q: "Organophosphate poisoning is a medical emergency. What happens, and how is it treated?",
+      body: `Organophosphates are a class of chemicals used as insecticides and, in some cases, as nerve agents. They are irreversible inhibitors of acetylcholinesterase, and their toxicity is a medical emergency with a high mortality rate if not treated promptly.
+
+My Socratic question: if organophosphates inhibit acetylcholinesterase, what happens to acetylcholine at the synapse?
+
+The answer is that acetylcholine accumulates. The enzyme that normally breaks it down is permanently inactivated, so acetylcholine builds up at every cholinergic synapse - muscarinic, nicotinic, and in the CNS. The result is a cholinergic crisis: overstimulation of every cholinergic pathway in the body.
+
+The clinical features of organophosphate poisoning:
+
+- Muscarinic effects - SLUDGE: Salivation, Lacrimation, Urination, Defecation, Gastrointestinal upset, Emesis. Also: miosis (pinpoint pupils), bradycardia, bronchorrhoea, bronchospasm, sweating.
+- Nicotinic effects - muscle fasciculations, weakness, paralysis, tachycardia, hypertension (from ganglionic stimulation).
+- CNS effects - anxiety, restlessness, confusion, seizures, coma, respiratory depression.
+- Cause of death - respiratory failure (from bronchorrhoea, bronchospasm, and paralysis of respiratory muscles).
+
+The treatment of organophosphate poisoning:
+
+- Atropine - blocks muscarinic receptors, reversing the muscarinic effects (bradycardia, secretions, bronchospasm). Given in large doses, repeated as needed. Atropine does not reverse nicotinic effects (muscle weakness, paralysis).
+- Pralidoxime (2-PAM) - reactivates acetylcholinesterase if given before ageing occurs. It must be given early (within hours) because the enzyme-inhibitor complex ages (becomes permanently inactivated). Pralidoxime reverses both muscarinic and nicotinic effects.
+- Benzodiazepines - for seizures.
+- Supportive care - airway management, ventilation, fluids.
+
+Other uses of organophosphates:
+
+- Insecticides - parathion, malathion. Toxicity is common in agricultural workers.
+- Nerve agents - sarin, soman, tabun, VX. Used in chemical warfare and terrorism.
+- Echothiophate - used in ophthalmology for glaucoma (now rarely used).
+
+Crucial insight: organophosphate poisoning is a cholinergic crisis caused by irreversible inhibition of acetylcholinesterase. Acetylcholine accumulates at every cholinergic synapse, producing muscarinic, nicotinic and CNS effects. The treatment is atropine (blocks muscarinic effects) plus pralidoxime (reactivates the enzyme if given early). Understanding the mechanism - inhibition of acetylcholinesterase - explains both the toxicity and the treatment. The same enzyme that is the target of therapeutic anticholinesterases is the target of some of the most toxic chemicals known.`
+    },
+    {
+      q: "Myasthenia gravis is a disease of the neuromuscular junction. How do cholinergic drugs treat it?",
+      body: `Myasthenia gravis is an autoimmune disease in which antibodies attack the nicotinic acetylcholine receptors at the neuromuscular junction. The receptors are destroyed or blocked, so the signal from nerve to muscle fails, producing muscle weakness and fatigue. Understanding the disease is understanding how cholinergic drugs can help.
+
+My Socratic question: if the problem is that the receptors are being destroyed, how can a drug that increases acetylcholine help?
+
+The answer is that the remaining receptors are still functional, and increasing the amount of acetylcholine at the synapse can compensate for the loss. The acetylcholine competes with the antibodies for the remaining receptors, and by increasing its concentration, more of the remaining receptors are activated. The result is improved muscle strength.
+
+The pathophysiology of myasthenia gravis:
+
+- Autoantibodies against the nicotinic acetylcholine receptor (Nm) at the NMJ.
+- The antibodies cause receptor destruction, blockade, and complement-mediated damage.
+- The result is a reduced number of functional receptors.
+- The signal from nerve to muscle is impaired, producing weakness and fatigue.
+- The weakness typically worsens with activity (fatigable weakness) and improves with rest.
+
+The treatment of myasthenia gravis:
+
+- Anticholinesterases - neostigmine, pyridostigmine. They inhibit acetylcholinesterase, increasing acetylcholine at the NMJ, improving transmission. They provide symptomatic relief but do not treat the underlying autoimmune process.
+- Immunosuppression - corticosteroids, azathioprine, mycophenolate. They reduce antibody production.
+- Thymectomy - removal of the thymus, which is often abnormal in myasthenia gravis.
+- Monoclonal antibodies - rituximab, eculizumab, ravulizumab. They target specific components of the immune response.
+- Plasmapheresis / IVIG - for acute severe exacerbations.
+
+Cholinergic crisis vs myasthenic crisis:
+
+- Myasthenic crisis - worsening of myasthenia due to insufficient treatment. Weakness, difficulty breathing, difficulty swallowing.
+- Cholinergic crisis - over-treatment with anticholinesterases. SLUDGE, muscle fasciculations, weakness, respiratory failure.
+- Distinguishing the two is clinically important: myasthenic crisis needs more anticholinesterase, cholinergic crisis needs less (and atropine).
+- Edrophonium test - a short-acting anticholinesterase was historically used to distinguish the two (improvement suggests myasthenic crisis; worsening suggests cholinergic crisis).
+
+Crucial insight: myasthenia gravis is a disease of the neuromuscular junction, and cholinergic drugs are the mainstay of symptomatic treatment. Anticholinesterases increase acetylcholine at the NMJ, compensating for the lost receptors. But the disease is autoimmune, so immunosuppression is also needed. The distinction between myasthenic and cholinergic crisis is critical - both present with weakness, but the treatment is opposite. Understanding the NMJ and the drugs that act on it is essential for managing this condition.`
+    },
+    {
+      q: "Cholinergic drugs have many side effects. How do we predict and manage them?",
+      body: `Every drug that affects the cholinergic system has side effects, and those side effects are predictable from the physiology. Understanding them is essential for safe prescribing.
+
+My Socratic question: if a patient is given a muscarinic agonist, what side effects would you expect?
+
+The answer is that you would expect the effects of parasympathetic activation - the same effects the body produces during rest and digest. They are predictable, and they are the same side effects you see with any drug that increases cholinergic activity.
+
+The side effects of cholinergic agonists (muscarinic effects):
+
+- Cardiovascular - bradycardia, hypotension, syncope.
+- Gastrointestinal - nausea, vomiting, diarrhoea, abdominal cramps, increased salivation.
+- Genitourinary - urinary urgency, incontinence.
+- Respiratory - bronchorrhoea, bronchospasm, dyspnoea.
+- Ocular - miosis, blurred vision, lacrimation.
+- CNS - confusion, seizures, coma (with severe toxicity).
+- Sweating - increased sweating.
+
+The side effects of cholinergic antagonists (anticholinergic effects):
+
+- Cardiovascular - tachycardia, palpitations.
+- Gastrointestinal - dry mouth, constipation, nausea, bloating.
+- Genitourinary - urinary retention, difficulty urinating.
+- Respiratory - dry airways, thickened secretions.
+- Ocular - mydriasis (dilated pupils), blurred vision, photophobia, dry eyes.
+- CNS - confusion, memory impairment, delirium (especially in the elderly), drowsiness, hallucinations.
+- Skin - dry skin, decreased sweating, flushing.
+
+The classic mnemonic for anticholinergic effects:
+
+- "Dry as a bone" - dry mouth, dry skin, dry eyes.
+- "Red as a beet" - flushing.
+- "Hot as a hare" - hyperthermia (decreased sweating).
+- "Blind as a bat" - mydriasis, blurred vision.
+- "Mad as a hatter" - confusion, delirium.
+- "Full as a flask" - urinary retention.
+
+Managing side effects:
+
+- Use the lowest effective dose.
+- Choose a selective drug (e.g. inhaled antimuscarinics for COPD to minimise systemic effects).
+- Monitor for side effects and adjust the dose.
+- Use an antidote if necessary (e.g. physostigmine for anticholinergic overdose).
+- Caution in the elderly (who are more sensitive to anticholinergic effects).
+- Caution in patients with glaucoma, BPH, or cardiac disease.
+
+Crucial insight: cholinergic drugs have side effects that are predictable from the physiology of the parasympathetic nervous system. Cholinergic agonists cause SLUDGE (salivation, lacrimation, urination, defecation, gastrointestinal upset, emesis) and bradycardia. Cholinergic antagonists cause the classic anticholinergic effects (dry mouth, blurred vision, urinary retention, constipation, confusion). Understanding these effects lets you predict what a drug will do, choose the right drug for the patient, and manage side effects when they occur.`
+    },
+    {
+      q: "Now put it all together. How does a doctor use cholinergic pharmacology in clinical practice?",
+      body: `Cholinergic pharmacology is one of the most clinically applied topics in pharmacology. The drugs are used across many specialties - ophthalmology, urology, anaesthesia, neurology, emergency medicine, and psychiatry. Understanding how to choose and use them is a core clinical skill.
+
+My Socratic question: a patient presents with difficulty urinating after surgery, and another presents with acute angle-closure glaucoma. What cholinergic drugs would you consider, and why?
+
+The answer is that each problem points to a different cholinergic target.
+
+- Postoperative urinary retention - give bethanechol (a direct-acting muscarinic agonist). It contracts the bladder and relaxes the sphincter, helping the patient urinate.
+- Acute angle-closure glaucoma - give pilocarpine (a direct-acting muscarinic agonist) or physostigmine (an anticholinesterase). They constrict the pupil (miosis), which opens the drainage angle and reduces intraocular pressure.
+
+The clinical applications of cholinergic pharmacology:
+
+- Glaucoma - pilocarpine, physostigmine, echothiophate (constrict the pupil).
+- Urinary retention - bethanechol (contracts the bladder).
+- Postoperative ileus - bethanechol (stimulates gut motility).
+- Myasthenia gravis - neostigmine, pyridostigmine (increase acetylcholine at the NMJ).
+- Alzheimer's disease - donepezil, rivastigmine, galantamine (increase acetylcholine in the brain).
+- Reversal of neuromuscular blockade - neostigmine (after surgery).
+- Anticholinergic overdose - physostigmine (crosses the blood-brain barrier).
+- Organophosphate poisoning - atropine (blocks muscarinic effects) + pralidoxime (reactivates the enzyme).
+- Bradycardia - atropine (blocks muscarinic effects on the heart).
+- Preoperative - atropine or hyoscine (dry secretions).
+- Motion sickness - hyoscine.
+- Overactive bladder - oxybutynin, tolterodine, solifenacin.
+- COPD and asthma - ipratropium, tiotropium (inhaled antimuscarinics).
+- Parkinson's disease - benztropine, trihexyphenidyl.
+- Eye examination - tropicamide, cyclopentolate.
+- Muscle relaxation in anaesthesia - neuromuscular blockers.
+
+Choosing the right drug means:
+
+- Knowing the receptor types (muscarinic vs nicotinic).
+- Matching the drug's selectivity to the patient's needs.
+- Considering side effects (cholinergic vs anticholinergic).
+- Considering drug interactions (e.g. anticholinesterases and neuromuscular blockers).
+- Adjusting for renal or hepatic impairment.
+- Using the right route (topical for eye, inhaled for lungs, oral for systemic).
+
+Crucial insight: cholinergic pharmacology is the practical application of receptor theory to clinical medicine. By understanding the cholinergic receptors, their distribution, and the drugs that act on them, a doctor can choose the right drug for the right patient - bethanechol for urinary retention, pilocarpine for glaucoma, neostigmine for myasthenia, atropine for bradycardia, tiotropium for COPD. The same principles apply across every specialty, and the same receptor selectivity that determines efficacy also determines side effects. This is why cholinergic pharmacology is one of the most important topics in the entire course.`
+    },
+  ],
+  theory: [
+    { q: "Describe the synthesis and breakdown of acetylcholine.", a: "Acetylcholine is synthesised in the nerve terminal from choline and acetyl-CoA by the enzyme choline acetyltransferase (ChAT). It is stored in synaptic vesicles and released by exocytosis on stimulation. It is broken down in the synaptic cleft by acetylcholinesterase (AChE) into choline and acetate; the choline is recycled back into the nerve terminal." },
+    { q: "Name the two families of cholinergic receptors and give a location and effect of each.", a: "Muscarinic receptors (mAChR) are G-protein coupled receptors found on cardiac muscle (M2 - slows heart rate), smooth muscle (M3 - contracts gut and bladder), glands (M3 - stimulates secretion) and the CNS. Nicotinic receptors (nAChR) are ligand-gated ion channels found at the neuromuscular junction (Nm - skeletal muscle contraction), autonomic ganglia (Nn - ganglionic transmission) and the CNS." },
+    { q: "Distinguish direct-acting and indirect-acting cholinergic agonists.", a: "Direct-acting agonists bind cholinergic receptors directly (e.g. pilocarpine, bethanechol). Indirect-acting agonists (anticholinesterases) inhibit acetylcholinesterase, increasing acetylcholine at the synapse (e.g. neostigmine, donepezil). Both produce cholinergic effects, but by different mechanisms." },
+    { q: "List the clinical uses of cholinergic agonists with examples.", a: "Glaucoma - pilocarpine, physostigmine. Urinary retention - bethanechol. Postoperative ileus - bethanechol. Myasthenia gravis - neostigmine, pyridostigmine. Alzheimer's disease - donepezil, rivastigmine, galantamine. Reversal of neuromuscular blockade - neostigmine. Anticholinergic overdose - physostigmine. Smoking cessation - nicotine, varenicline." },
+    { q: "Distinguish muscarinic and nicotinic antagonists with examples.", a: "Muscarinic antagonists (antimuscarinics) block muscarinic receptors: atropine, hyoscine, oxybutynin, tolterodine, ipratropium, tiotropium, benztropine. Nicotinic antagonists block nicotinic receptors: neuromuscular blockers (vecuronium, suxamethonium) and ganglionic blockers (hexamethonium, rarely used)." },
+    { q: "List the clinical uses of cholinergic antagonists with examples.", a: "Bradycardia - atropine. Preoperative - atropine, hyoscine. Motion sickness - hyoscine. Overactive bladder - oxybutynin, tolterodine, solifenacin. COPD and asthma - ipratropium, tiotropium (inhaled). Parkinson's disease - benztropine, trihexyphenidyl. Eye examination - tropicamide, cyclopentolate. Muscle relaxation in anaesthesia - neuromuscular blockers." },
+    { q: "Explain the mechanism and clinical uses of anticholinesterases.", a: "Anticholinesterases inhibit acetylcholinesterase, increasing acetylcholine at the synapse. Reversible inhibitors (neostigmine, physostigmine, donepezil) are used for myasthenia gravis, reversal of neuromuscular blockade, glaucoma, Alzheimer's disease, and anticholinergic overdose. Irreversible inhibitors (organophosphates) are used as insecticides and nerve agents; toxicity causes cholinergic crisis." },
+    { q: "Describe the clinical features and treatment of organophosphate poisoning.", a: "Organophosphates irreversibly inhibit acetylcholinesterase, causing acetylcholine accumulation. Features: muscarinic effects (SLUDGE - salivation, lacrimation, urination, defecation, GI upset, emesis; miosis; bradycardia; bronchorrhoea; bronchospasm), nicotinic effects (fasciculations, weakness, paralysis), and CNS effects (confusion, seizures, coma, respiratory depression). Treatment: atropine (blocks muscarinic effects) + pralidoxime (reactivates the enzyme if given early) + benzodiazepines for seizures + supportive care." },
+    { q: "Explain the role of the neuromuscular junction in cholinergic pharmacology.", a: "The neuromuscular junction (NMJ) is the synapse between a motor neuron and a skeletal muscle fibre. It uses acetylcholine and nicotinic receptors (Nm). Drugs that block the NMJ cause muscle paralysis (used in anaesthesia); drugs that increase acetylcholine at the NMJ (anticholinesterases) improve transmission (used in myasthenia gravis). The NMJ is the final common pathway for all voluntary movement." },
+    { q: "Distinguish depolarising and non-depolarising neuromuscular blockers.", a: "Non-depolarising blockers (vecuronium, rocuronium, atracurium, pancuronium) are competitive antagonists at the nicotinic receptor. They cause flaccid paralysis, lasting 30-60 minutes, reversed by neostigmine. Depolarising blockers (suxamethonium) are agonists that cause persistent depolarisation. They cause initial fasciculations then flaccid paralysis, lasting 5-10 minutes, not reversed by neostigmine (which worsens the block)." },
+    { q: "Explain the pathophysiology and treatment of myasthenia gravis.", a: "Myasthenia gravis is an autoimmune disease in which antibodies attack the nicotinic acetylcholine receptors at the NMJ. The result is reduced receptor number and impaired transmission, causing fatigable muscle weakness. Treatment: anticholinesterases (neostigmine, pyridostigmine) for symptomatic relief; immunosuppression (corticosteroids, azathioprine) to reduce antibody production; thymectomy; monoclonal antibodies (rituximab, eculizumab); plasmapheresis/IVIG for acute exacerbations." },
+    { q: "Distinguish myasthenic crisis from cholinergic crisis.", a: "Myasthenic crisis is worsening of myasthenia due to insufficient treatment - weakness, difficulty breathing and swallowing. Cholinergic crisis is over-treatment with anticholinesterases - SLUDGE, fasciculations, weakness, respiratory failure. Both present with weakness, but the treatment is opposite: myasthenic crisis needs more anticholinesterase; cholinergic crisis needs less (and atropine)." },
+    { q: "List the classic side effects of anticholinergic drugs.", a: "The classic anticholinergic effects: dry mouth, dry eyes, dry skin (dry as a bone); flushing (red as a beet); hyperthermia (hot as a hare); mydriasis and blurred vision (blind as a bat); confusion and delirium (mad as a hatter); urinary retention and constipation (full as a flask). These are predictable from the physiology of muscarinic blockade." },
+    { q: "Explain how a doctor chooses the right cholinergic drug for a patient.", a: "The doctor considers: the receptor type that needs to be activated or blocked (muscarinic vs nicotinic); the drug's selectivity; the patient's other conditions (glaucoma, BPH, asthma, cardiac disease); the patient's renal and hepatic function; the duration of action needed; and potential drug interactions. Matching the drug's properties to the patient's needs is the essence of safe and effective prescribing." },
+  ],
+  videos: [
+    { channel: "Pharmacology", title: "Cholinergic Receptors - Muscarinic and Nicotinic Explained", note: "Overview of the cholinergic receptor families and their locations.", url: "https://www.youtube.com/results?search_query=cholinergic+receptors+muscarinic+nicotinic+pharmacology" },
+    { channel: "Pharmacology", title: "Cholinergic Agonists and Antagonists - Parasympathomimetics and Anticholinergics", note: "The drugs that act on the cholinergic system and their clinical uses.", url: "https://www.youtube.com/results?search_query=cholinergic+agonists+antagonists+parasympathomimetics+anticholinergics" },
+    { channel: "Pharmacology", title: "Neuromuscular Blockers and Myasthenia Gravis", note: "How drugs act on the neuromuscular junction, and the treatment of myasthenia gravis.", url: "https://www.youtube.com/results?search_query=neuromuscular+blockers+myasthenia+gravis+pharmacology" },
+  ],
+  mcqs: [
+    // ===== Note 1: nervous system and cholinergic pharmacology (Q1-5) =====
+    { q: "The parasympathetic nervous system mediates which response?", o: ["Fight or flight", "Rest and digest", "Sleep and repair", "Stress and arousal"], a: 1, w: "The parasympathetic nervous system mediates the rest and digest response." },
+    { q: "The main neurotransmitter of the parasympathetic nervous system is:", o: ["Noradrenaline", "Acetylcholine", "Dopamine", "Serotonin"], a: 1, w: "Acetylcholine is the main neurotransmitter of the parasympathetic nervous system." },
+    { q: "Acetylcholine acts on which two families of receptor?", o: ["Alpha and beta", "Muscarinic and nicotinic", "Dopamine and serotonin", "GABA and glutamate"], a: 1, w: "Acetylcholine acts on muscarinic and nicotinic receptors." },
+    { q: "Muscarinic receptors are found on all of the following EXCEPT:", o: ["Cardiac muscle", "Smooth muscle", "Skeletal muscle", "Glands"], a: 2, w: "Skeletal muscle has nicotinic receptors, not muscarinic receptors." },
+    { q: "Cholinergic pharmacology is the study of drugs that act on:", o: ["The sympathetic nervous system", "The parasympathetic nervous system and the neuromuscular junction", "The central nervous system only", "The endocrine system"], a: 1, w: "Cholinergic pharmacology studies drugs acting on acetylcholine - in the parasympathetic nervous system and at the neuromuscular junction." },
+
+    // ===== Note 2: acetylcholine synthesis and release (Q6-10) =====
+    { q: "Acetylcholine is synthesised from choline and:", o: ["Acetyl-CoA", "Tyrosine", "Serine", "Glutamate"], a: 0, w: "Acetylcholine is synthesised from choline and acetyl-CoA by choline acetyltransferase." },
+    { q: "The enzyme that synthesises acetylcholine is:", o: ["Acetylcholinesterase", "Choline acetyltransferase (ChAT)", "MAO", "COMT"], a: 1, w: "Choline acetyltransferase (ChAT) synthesises acetylcholine." },
+    { q: "Acetylcholine is broken down by:", o: ["MAO", "COMT", "Acetylcholinesterase (AChE)", "PNMT"], a: 2, w: "Acetylcholinesterase (AChE) breaks down acetylcholine into choline and acetate." },
+    { q: "Compared with noradrenaline, acetylcholine is broken down:", o: ["More slowly", "More rapidly", "By two enzymes", "Not at all"], a: 1, w: "Acetylcholine is broken down extremely rapidly by acetylcholinesterase." },
+    { q: "After acetylcholinesterase breaks down acetylcholine, which product is recycled?", o: ["Acetate", "Choline", "Acetyl-CoA", "Both"], a: 1, w: "Choline is taken back up into the nerve terminal and reused for acetylcholine synthesis." },
+
+    // ===== Note 3: receptor classification (Q11-15) =====
+    { q: "Muscarinic receptors are best described as:", o: ["Ligand-gated ion channels", "G-protein coupled receptors", "Nuclear receptors", "Enzyme-linked receptors"], a: 1, w: "Muscarinic receptors are G-protein coupled receptors." },
+    { q: "Nicotinic receptors are best described as:", o: ["G-protein coupled receptors", "Ligand-gated ion channels", "Nuclear receptors", "Enzyme-linked receptors"], a: 1, w: "Nicotinic receptors are ligand-gated ion channels." },
+    { q: "The muscarinic receptor subtype responsible for slowing the heart is:", o: ["M1", "M2", "M3", "M4"], a: 1, w: "M2 receptors are on the heart and slow heart rate." },
+    { q: "The muscarinic receptor subtype responsible for glandular secretion and smooth muscle contraction is:", o: ["M1", "M2", "M3", "M5"], a: 2, w: "M3 receptors are on glands and smooth muscle, mediating secretion and contraction." },
+    { q: "Nicotinic receptors at the neuromuscular junction are of which subtype?", o: ["Nm", "Nn", "M1", "M2"], a: 0, w: "Nm receptors are the muscle-type nicotinic receptors at the neuromuscular junction." },
+
+    // ===== Note 4: cholinergic agonists (Q16-20) =====
+    { q: "A cholinergic agonist is a drug that:", o: ["Blocks cholinergic receptors", "Mimics acetylcholine", "Inhibits acetylcholinesterase only", "Depletes acetylcholine"], a: 1, w: "A cholinergic agonist mimics acetylcholine, either by binding receptors directly or by increasing acetylcholine at the synapse." },
+    { q: "Pilocarpine is used to treat:", o: ["Glaucoma", "Asthma", "Hypertension", "Myasthenia gravis"], a: 0, w: "Pilocarpine is a direct-acting muscarinic agonist used to treat glaucoma by constricting the pupil." },
+    { q: "Bethanechol is used to treat:", o: ["Glaucoma", "Urinary retention and postoperative ileus", "Asthma", "Hypertension"], a: 1, w: "Bethanechol is a direct-acting muscarinic agonist used to treat urinary retention and postoperative ileus." },
+    { q: "Which drug is used to treat myasthenia gravis by increasing acetylcholine at the NMJ?", o: ["Pilocarpine", "Bethanechol", "Neostigmine", "Atropine"], a: 2, w: "Neostigmine is an anticholinesterase used to treat myasthenia gravis by increasing acetylcholine at the NMJ." },
+    { q: "Which drug is used to treat Alzheimer's disease by increasing acetylcholine in the brain?", o: ["Donepezil", "Pilocarpine", "Bethanechol", "Atropine"], a: 0, w: "Donepezil is an anticholinesterase used to treat Alzheimer's disease by increasing acetylcholine in the brain." },
+
+    // ===== Note 5: cholinergic antagonists (Q21-25) =====
+    { q: "A cholinergic antagonist is a drug that:", o: ["Mimics acetylcholine", "Blocks cholinergic receptors", "Increases acetylcholine release", "Inhibits acetylcholinesterase"], a: 1, w: "A cholinergic antagonist blocks cholinergic receptors." },
+    { q: "Atropine is a muscarinic antagonist used to treat:", o: ["Bradycardia", "Asthma", "Urinary retention", "Myasthenia gravis"], a: 0, w: "Atropine is used to treat bradycardia by blocking muscarinic receptors on the heart." },
+    { q: "Ipratropium is an inhaled muscarinic antagonist used to treat:", o: ["Glaucoma", "COPD and asthma", "Hypertension", "Myasthenia gravis"], a: 1, w: "Ipratropium is an inhaled muscarinic antagonist used for bronchodilation in COPD and asthma." },
+    { q: "Oxybutynin is a muscarinic antagonist used to treat:", o: ["Overactive bladder", "Bradycardia", "Glaucoma", "Myasthenia gravis"], a: 0, w: "Oxybutynin is a muscarinic antagonist used to treat overactive bladder." },
+    { q: "Which drug is a non-depolarising neuromuscular blocker?", o: ["Suxamethonium", "Vecuronium", "Atropine", "Neostigmine"], a: 1, w: "Vecuronium is a non-depolarising neuromuscular blocker used in anaesthesia." },
+
+    // ===== Note 6: anticholinesterases (Q26-30) =====
+    { q: "Anticholinesterases work by:", o: ["Blocking cholinergic receptors", "Inhibiting acetylcholinesterase, increasing acetylcholine at the synapse", "Increasing acetylcholine synthesis", "Blocking nicotinic receptors only"], a: 1, w: "Anticholinesterases inhibit acetylcholinesterase, increasing acetylcholine at the synapse." },
+    { q: "Which anticholinesterase is used to reverse non-depolarising neuromuscular blockade?", o: ["Edrophonium", "Donepezil", "Neostigmine", "Pilocarpine"], a: 2, w: "Neostigmine is used to reverse non-depolarising neuromuscular blockade after surgery." },
+    { q: "Physostigmine is used to treat anticholinergic overdose because it:", o: ["Crosses the blood-brain barrier", "Is a muscarinic antagonist", "Is a nicotinic agonist", "Is an irreversible inhibitor"], a: 0, w: "Physostigmine crosses the blood-brain barrier, reversing both peripheral and central anticholinergic effects." },
+    { q: "Which class of anticholinesterase is used as an insecticide and nerve agent?", o: ["Carbamates", "Organophosphates", "Benzodiazepines", "Beta-blockers"], a: 1, w: "Organophosphates are irreversible anticholinesterases used as insecticides and nerve agents." },
+    { q: "Pralidoxime is used in organophosphate poisoning because it:", o: ["Blocks muscarinic receptors", "Reactivates acetylcholinesterase if given early", "Blocks nicotinic receptors", "Inhibits acetylcholinesterase"], a: 1, w: "Pralidoxime reactivates acetylcholinesterase if given before ageing occurs." },
+
+    // ===== Note 7: neuromuscular junction (Q31-35) =====
+    { q: "The neuromuscular junction is the synapse between:", o: ["Two neurons", "A motor neuron and a skeletal muscle fibre", "A neuron and a gland", "Two muscle fibres"], a: 1, w: "The neuromuscular junction is the synapse between a motor neuron and a skeletal muscle fibre." },
+    { q: "The neurotransmitter at the neuromuscular junction is:", o: ["Noradrenaline", "Acetylcholine", "Dopamine", "GABA"], a: 1, w: "Acetylcholine is the neurotransmitter at the neuromuscular junction." },
+    { q: "The receptor at the neuromuscular junction is:", o: ["Muscarinic", "Nicotinic (Nm)", "Alpha-adrenergic", "Beta-adrenergic"], a: 1, w: "The receptor at the NMJ is the nicotinic (Nm) receptor." },
+    { q: "Non-depolarising neuromuscular blockers work by:", o: ["Competitively blocking nicotinic receptors", "Causing persistent depolarisation", "Blocking muscarinic receptors", "Inhibiting acetylcholinesterase"], a: 0, w: "Non-depolarising blockers competitively block nicotinic receptors at the NMJ." },
+    { q: "Suxamethonium is a depolarising neuromuscular blocker. Its effect is:", o: ["Prolonged paralysis (hours)", "Initial fasciculations then brief paralysis (minutes)", "No effect on muscle", "Reversed by neostigmine"], a: 1, w: "Suxamethonium causes initial fasciculations then brief flaccid paralysis (5-10 minutes)." },
+
+    // ===== Note 8: organophosphate poisoning (Q36-40) =====
+    { q: "Organophosphate poisoning causes acetylcholine to:", o: ["Decrease", "Accumulate at the synapse", "Remain unchanged", "Be destroyed"], a: 1, w: "Organophosphates irreversibly inhibit acetylcholinesterase, so acetylcholine accumulates." },
+    { q: "The mnemonic SLUDGE stands for:", o: ["Salivation, Lacrimation, Urination, Defecation, Gastrointestinal upset, Emesis", "Sleeping, Lethargy, Unconsciousness, Dizziness, Giddiness, Emesis", "Sweating, Lacrimation, Urination, Diarrhoea, GI upset, Edema", "None of the above"], a: 0, w: "SLUDGE describes the muscarinic effects of organophosphate poisoning." },
+    { q: "The treatment of organophosphate poisoning includes:", o: ["Atropine and pralidoxime", "Neostigmine and atropine", "Pilocarpine and physostigmine", "Adrenaline and noradrenaline"], a: 0, w: "Atropine blocks muscarinic effects; pralidoxime reactivates the enzyme." },
+    { q: "Atropine does NOT reverse which effects of organophosphate poisoning?", o: ["Bradycardia", "Bronchorrhoea", "Muscle weakness and paralysis", "Miosis"], a: 2, w: "Atropine blocks muscarinic effects but not nicotinic effects (muscle weakness and paralysis)." },
+    { q: "Which nerve agent is an organophosphate?", o: ["Sarin", "Atropine", "Pralidoxime", "Neostigmine"], a: 0, w: "Sarin is an organophosphate nerve agent." },
+
+    // ===== Note 9: myasthenia gravis (Q41-45) =====
+    { q: "Myasthenia gravis is caused by:", o: ["Antibodies attacking the nicotinic acetylcholine receptor", "Excess acetylcholine", "Loss of acetylcholinesterase", "Loss of muscarinic receptors"], a: 0, w: "Myasthenia gravis is an autoimmune disease in which antibodies attack the nicotinic acetylcholine receptor at the NMJ." },
+    { q: "The main symptomatic treatment for myasthenia gravis is:", o: ["Anticholinesterases (neostigmine, pyridostigmine)", "Beta-blockers", "Calcium channel blockers", "Diuretics"], a: 0, w: "Anticholinesterases increase acetylcholine at the NMJ, improving transmission." },
+    { q: "Which other treatment is used for myasthenia gravis?", o: ["Immunosuppression", "Beta-agonists", "Alpha-blockers", "Diuretics"], a: 0, w: "Immunosuppression (corticosteroids, azathioprine) reduces antibody production in myasthenia gravis." },
+    { q: "Cholinergic crisis differs from myasthenic crisis because:", o: ["Cholinergic crisis is caused by over-treatment with anticholinesterases", "Cholinergic crisis is caused by under-treatment", "Both require more anticholinesterase", "Both are treated the same way"], a: 0, w: "Cholinergic crisis is caused by over-treatment with anticholinesterases - SLUDGE, fasciculations, weakness, respiratory failure." },
+    { q: "The edrophonium test was historically used to:", o: ["Diagnose myasthenia gravis", "Treat myasthenia gravis", "Diagnose cholinergic crisis", "Treat organophosphate poisoning"], a: 0, w: "Edrophonium, a short-acting anticholinesterase, was used diagnostically to distinguish myasthenic from cholinergic crisis." },
+
+    // ===== Note 10: clinical applications (Q46-50) =====
+    { q: "Which drug is used to treat bradycardia?", o: ["Atropine", "Pilocarpine", "Neostigmine", "Bethanechol"], a: 0, w: "Atropine is a muscarinic antagonist used to treat bradycardia." },
+    { q: "Which drug is used to treat overactive bladder?", o: ["Bethanechol", "Oxybutynin", "Pilocarpine", "Neostigmine"], a: 1, w: "Oxybutynin is a muscarinic antagonist used to treat overactive bladder." },
+    { q: "Which drug is used to treat glaucoma?", o: ["Atropine", "Tropicamide", "Pilocarpine", "Ipratropium"], a: 2, w: "Pilocarpine is a muscarinic agonist used to treat glaucoma by constricting the pupil." },
+    { q: "Which drug is used to reverse non-depolarising neuromuscular blockade after surgery?", o: ["Suxamethonium", "Neostigmine", "Atropine", "Vecuronium"], a: 1, w: "Neostigmine is used to reverse non-depolarising neuromuscular blockade after surgery." },
+    { q: "The key takeaway from this topic is:", o: ["Cholinergic pharmacology is only about the eye", "Cholinergic pharmacology applies receptor theory to clinical medicine across many specialties", "Only anticholinesterases matter clinically", "Cholinergic drugs have no side effects"], a: 1, w: "Cholinergic pharmacology applies receptor theory to clinical medicine across many specialties - from glaucoma to myasthenia gravis to anaesthesia." },
   ],
 };
 
