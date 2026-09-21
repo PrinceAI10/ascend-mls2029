@@ -25578,7 +25578,7 @@ Crucial insight: quantitative drug-receptor interactions are not abstract theory
 };
 
 /* --------------------------- pha:4 --------------------------- */
-const T_PHA_PK = {
+const T_PHA_PHARMACOKINETICS = {
   courseId: "pha",
   topicIndex: 4,
   title: "General/Introductory Pharmacology: Pharmacokinetics",
