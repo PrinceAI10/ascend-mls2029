@@ -21331,6 +21331,7 @@ Crucial insight: the second brain is why gut function survives even severe brain
     { q: "The internal anal sphincter is composed of:", o: ["Skeletal muscle", "Smooth muscle", "Elastic cartilage", "Dense connective tissue"], a: 1, w: "The internal anal sphincter is smooth muscle and is under involuntary control." },
     { q: "The external anal sphincter is composed of:", o: ["Skeletal muscle under voluntary control", "Smooth muscle under involuntary control", "Elastic tissue", "Fibrous tissue"], a: 0, w: "The external anal sphincter is skeletal muscle and is under voluntary control." },
     { q: "Which statement about the mucosa of the colon is correct?", o: ["It has numerous villi for absorption", "It has crypts but no villi", "It has a brush border throughout", "It has no goblet cells"], a: 1, w: "The colon has crypts containing goblet cells but no villi, unlike the small intestine." },
+    { q: "A patient with chronic liver disease develops dilated veins around the umbilicus. Which underlying mechanism best explains this finding?", o: ["Portal hypertension causing portocaval anastomoses to open", "Infection of the umbilical cord remnant", "Direct invasion of the umbilicus by liver tumour", "Congenital absence of the umbilical vein"], a: 0, w: "Portal hypertension from liver disease forces blood through portocaval anastomoses, including the paraumbilical veins, producing the dilated veins known as caput medusae." },
     { q: "The taeniae coli are:", o: ["Three longitudinal muscle bands of the colon", "Folds of the colonic mucosa", "Sphincters of the colon", "Glands of the colon"], a: 0, w: "The taeniae coli are three bands of longitudinal smooth muscle on the outer surface of the colon." },
     { q: "Haustra are best described as:", o: ["Longitudinal folds of the colon", "Sacculations of the colon", "Glands of the colon", "Sphincters of the colon"], a: 1, w: "Haustra are the sacculations (bulges) of the colon wall between the taeniae coli." },
     { q: "The appendix is attached to the:", o: ["Ascending colon", "Caecum", "Transverse colon", "Sigmoid colon"], a: 1, w: "The appendix is a blind tube attached to the caecum." },
@@ -24298,6 +24299,2016 @@ Crucial insight: the histology of the urinary system is not just an academic exe
   ],
 };
 
+/* --------------------------- pha:0 --------------------------- */
+const T_PHA_INTRO = {
+  courseId: "pha",
+  topicIndex: 0,
+  title: "Principles of Drug Action: General Introduction",
+  minutes: 30,
+  note: [
+    {
+      q: "Why does pharmacology need its own science, when chemistry already tells us what drugs are made of?",
+      body: `You have studied biochemistry, physiology and histology. You know what molecules are made of, how the body works, and what its tissues look like. Pharmacology asks a different question: what happens when a foreign molecule enters that system, and how can we make it do something useful?
+
+My Socratic question: a drug is just a chemical. Its structure is fixed. Its formula is fixed. So why do we need an entire science to understand it?
+
+The answer is that a drug's behaviour depends entirely on the body it enters. The same molecule can lower blood pressure in one patient and do nothing in another, because the effect depends not on the drug alone but on the interaction between the drug and the living system - its receptors, its enzymes, its transport proteins, its metabolism, its excretion. Pharmacology is the science of that interaction.
+
+Pharmacology has two great concerns:
+
+- Pharmacodynamics - what the drug does to the body. The mechanism of action, the target it hits, the effect it produces. What happens when the drug binds its receptor.
+- Pharmacokinetics - what the body does to the drug. How it is absorbed, distributed to tissues, metabolised, and excreted. How it moves through the body over time.
+
+Everything you will ever learn in pharmacology belongs to one of those two categories.
+
+Crucial insight: pharmacology is not the study of drugs in isolation - it is the study of how drugs interact with living systems. Structure matters, but it is only half the story. The body's response to the drug is the other half, and that response is what pharmacology exists to explain.`
+    },
+    {
+      q: "Pharmacodynamics and pharmacokinetics sound like Greek. What do they actually mean, and why do we separate them?",
+      body: `The words look intimidating, but they map onto a simple split. Pharmacodynamics - "what the drug does to the body". Pharmacokinetics - "what the body does to the drug". That single sentence is the divide.
+
+My Socratic question: if a drug is injected into a patient, the drug both acts on the body and moves through it. Why would we ever need to study those two things separately?
+
+The answer is that the two processes happen at different timescales and are governed by completely different rules.
+
+Pharmacodynamics is about affinity and efficacy - whether the drug binds its target, how strongly, and what happens when it does. It answers: what is the mechanism? What effect? How much effect at a given concentration? This is the science of the receptor, the ion channel, the enzyme.
+
+Pharmacokinetics is about absorption, distribution, metabolism and excretion - the famous ADME. It answers: how much drug reaches the target? How long does it stay there? How is it cleared? This is the science of the body's handling of the drug, and it determines the dose and the dosing interval.
+
+They interact constantly. A drug with excellent pharmacodynamics (it binds its target perfectly) can fail in the clinic if its pharmacokinetics are poor (it is destroyed in the gut, or cleared before it can act). A drug with mediocre pharmacodynamics can still be a blockbuster if its pharmacokinetics are ideal.
+
+Crucial insight: pharmacodynamics tells you what the drug can do; pharmacokinetics tells you whether it will actually get there. Neither alone is enough. Every drug on the market has had both properties optimised, and every pharmacological decision a doctor makes - what to prescribe, at what dose, how often, by what route - comes down to balancing the two.`
+    },
+    {
+      q: "What is a drug, really? And what is the difference between a drug, a medicine, and a poison?",
+      body: `Most people use the words "drug" and "medicine" interchangeably. Pharmacology needs precision, because the vocabulary determines what you are studying and how you think about it.
+
+My Socratic question: if a substance becomes useful at one dose and lethal at another, what separates a drug from a poison?
+
+The answer is dose. Every drug is a poison at the wrong dose, and every poison is a potential drug at the right one. Paracelsus put it most bluntly in the sixteenth century: the dose makes the poison. There is no substance that is inherently one or the other - it is always a question of amount, of route, and of the body it enters.
+
+Some working definitions:
+
+- A drug is any chemical substance that, when introduced into a living system, produces a biological effect. That effect may be therapeutic, harmful, or neutral. The definition is by effect, not by intent.
+- A medicine (or pharmaceutical) is a drug that has been formulated for therapeutic use - prepared in a specific dose form, tested for safety and efficacy, and approved for clinical use. All medicines are drugs, but not all drugs are medicines.
+- A poison (or toxin) is a substance that produces harmful effects at doses that can be realistically encountered. It sits at one end of the dose spectrum of a drug.
+- A prodrug is an inactive compound that the body converts into an active drug. The body itself performs the last synthetic step.
+
+There is also a naming distinction. Every drug has at least three names: a chemical name (its full structural description), a generic name or INN (the internationally agreed non-proprietary name used in prescribing), and one or more brand names (the proprietary names under which a manufacturer sells it). Doctors are trained to prescribe by generic name, because brands vary between countries and between manufacturers, while the drug inside is the same.
+
+Crucial insight: a drug is defined by what it does, not by what it is. The same molecule can be a medicine or a poison depending on dose, route, and patient - which is why pharmacology insists on precise definitions and why every dose is carefully calculated. Understanding this also means understanding why the same active ingredient appears under many names, and why generic prescribing is the standard in medicine.`
+    },
+    {
+      q: "Where do drugs come from? Plants, animals, minerals, laboratories?",
+      body: `Walk into a pharmacy and every box looks manufactured. But the history of pharmacology is largely a history of natural products - the willow bark that gave us aspirin, the foxglove that gave us digoxin, the opium poppy that gave us morphine. Understanding where drugs come from tells you how they were discovered and how new ones are still being found.
+
+My Socratic question: if you had to find a new drug today, would you look in a chemistry lab or in a rainforest?
+
+The answer is both - and the answer has changed over time, but the older routes are still alive.
+
+The four historical sources of drugs:
+
+- Plants - the oldest source. Morphine from the opium poppy (Papaver somniferum), digoxin from the foxglove (Digitalis purpurea), quinine from the cinchona tree, aspirin from willow bark (via salicylic acid), vincristine from the Madagascar periwinkle. Roughly a quarter of modern medicines are still derived from or inspired by plant compounds.
+- Animals - insulin from pig and cow pancreas before recombinant human insulin was developed; heparin from pig intestine; some hormones and vaccines.
+- Minerals - lithium salts for bipolar disorder, iron salts for anaemia, magnesium sulphate for eclampsia, and various metal-based compounds.
+- Synthetic and semisynthetic - the modern default. Most new drugs are now synthesised or modified in the laboratory, based on an understanding of the target they must hit.
+
+The modern source is a fourth category that has grown explosively: biologics. These are drugs produced by living cells through biotechnology - monoclonal antibodies, recombinant proteins, vaccines, and gene therapies. They cannot be made by traditional chemistry.
+
+Crucial insight: the source of a drug shapes its properties. Plant-derived drugs tend to be complex natural products with specific biological activities; synthetic drugs can be designed to hit precise targets; biologics are large, often given by injection, and cannot be swallowed. Knowing where a drug came from tells you something about how it works, how it is made, and how it must be given.`
+    },
+    {
+      q: "Drugs do not act on the body in general - they act on specific molecular targets. What are those targets?",
+      body: `A drug floats through the bloodstream, encounters millions of different molecules in every tissue it passes through, and yet produces one specific effect. It does not act on the whole body - it acts on a specific molecular target, and that target determines everything.
+
+My Socratic question: if a drug must act on one specific molecule to work, what kinds of molecules are common enough to be drug targets?
+
+The answer is that almost every drug in use today acts on one of four classes of protein target.
+
+The four great classes of drug target:
+
+- Receptors - the largest and most important class. These are proteins that normally bind endogenous signalling molecules (hormones, neurotransmitters), and drugs can mimic or block them. They include G-protein coupled receptors, ion channel receptors, enzyme-linked receptors, and nuclear receptors.
+- Ion channels - proteins that allow ions to cross membranes. Drugs can open them (agonists) or block them (antagonists). Local anaesthetics block sodium channels; some antihypertensives block calcium channels.
+- Enzymes - proteins that catalyse chemical reactions. Drugs can inhibit them (most common) or activate them. Aspirin inhibits cyclooxygenase; statins inhibit HMG-CoA reductase; ACE inhibitors inhibit angiotensin-converting enzyme.
+- Transporters (carrier proteins) - proteins that move substances across membranes. Drugs can block them. Selective serotonin reuptake inhibitors block serotonin transporters; proton pump inhibitors block the gastric proton pump.
+
+Some drugs also act on non-protein targets - DNA (cancer chemotherapy agents), cell membranes (some antifungals), or the immune system generally (biologics). But the four protein classes above cover the vast majority of clinical medicines.
+
+Crucial insight: a drug's target determines its effect, its side effects, and its therapeutic usefulness. If the drug binds a receptor that only exists in the heart, its effects will be limited to the heart. If it binds a target found throughout the body, its effects will be widespread - which is often why side effects occur. Selecting a target is the first step in designing any drug.`
+    },
+    {
+      q: "Receptors are the most common drug target. What is a receptor, and why does binding it change what a cell does?",
+      body: `When a drug binds a receptor, the cell responds. That seems obvious in pharmacology, but why does it happen? A receptor is not just a docking site - it is a signalling protein, and binding to it sets off a chain of events inside the cell.
+
+My Socratic question: a hormone binds its receptor on the outside of a cell, yet the cell's response happens inside. How does information cross the membrane?
+
+The answer is that the receptor itself changes shape when it binds its natural ligand. That shape change is the signal. The receptor then passes the signal on - by opening an ion channel, by activating an enzyme, by recruiting a G-protein, or by moving into the nucleus. The drug exploits that system by mimicking or blocking the natural ligand.
+
+The four main classes of receptor, by mechanism:
+
+- G-protein coupled receptors (GPCRs) - seven-transmembrane receptors that work through a G-protein. When activated, the G-protein triggers a second messenger cascade inside the cell. These are the largest receptor family and the target of roughly a third of all prescription drugs.
+- Ion channel receptors (ligand-gated ion channels) - receptors that are themselves ion channels. When the ligand binds, the channel opens and ions flow through. The nicotinic acetylcholine receptor is the classic example.
+- Enzyme-linked receptors - receptors that are themselves enzymes, or are attached to one. Most are tyrosine kinases. When the ligand binds, the enzyme is activated and phosphorylates downstream proteins. The insulin receptor is an example.
+- Nuclear receptors - receptors inside the cell that bind lipid-soluble ligands (steroid hormones, thyroid hormone). When activated, they move to the nucleus and change gene expression directly. The oestrogen receptor and glucocorticoid receptor are examples.
+
+Crucial insight: a receptor is a signalling protein, not just a binding site. When a drug binds a receptor, it does not act on the cell directly - it hijacks the cell's own signalling system to produce an effect. Understanding receptor class is essential for understanding drug mechanism, because each class produces its effect in a different way and on a different timescale.`
+    },
+    {
+      q: "Some drugs make things happen. Others stop things from happening. What is the difference?",
+      body: `Give one patient a drug and their heart rate rises. Give another patient a drug and their heart rate falls. Both drugs act on the same receptor system, and yet their effects are opposite. The explanation is the most fundamental distinction in pharmacology: agonists versus antagonists.
+
+My Socratic question: if a drug binds a receptor, why would some drugs activate it and others block it?
+
+The answer is that receptors are proteins, and proteins have two separable properties: whether a molecule binds to them (affinity), and whether that binding changes their behaviour (efficacy).
+
+- Agonists are drugs that bind the receptor and activate it - they have both affinity and efficacy. They mimic the natural ligand and produce the natural response.
+- Antagonists are drugs that bind the receptor but do not activate it - they have affinity but zero efficacy. They occupy the receptor and prevent the natural ligand (or an agonist drug) from binding. They produce no effect themselves; they only block the effect of others.
+
+There is also a middle ground:
+
+- Partial agonists bind and activate the receptor, but produce less than the maximum effect a full agonist would. They can act as agonists when no full agonist is present, or as antagonists when a full agonist is present.
+- Inverse agonists bind the receptor and produce the opposite effect to the natural agonist. They are only possible for receptors that have some baseline activity even without a ligand (constitutive activity).
+
+Antagonists come in two flavours:
+
+- Competitive antagonists bind reversibly at the same site as the agonist and can be overcome by increasing the agonist concentration.
+- Non-competitive (or irreversible) antagonists bind at a different site, or bind irreversibly, and cannot be overcome by increasing the agonist.
+
+Crucial insight: the agonist/antagonist distinction is the fundamental language of pharmacology. Every drug is either an agonist, an antagonist, or something in between - and knowing which one it is tells you what it will do at the receptor, and what will happen if you change the dose. This single framework organises how you think about every drug you will ever prescribe.`
+    },
+    {
+      q: "You increase the dose of a drug. The effect increases. But by how much, and up to what point?",
+      body: `Give a patient 1 mg of a drug and the effect is small. Give 10 mg and the effect is much larger. Give 100 mg and the effect is only slightly larger than at 10 mg. That pattern is universal, and understanding it tells you how any drug behaves.
+
+My Socratic question: the effect of a drug increases with dose, but only up to a point. What is that point, and why does the curve look the way it does?
+
+The answer is that the relationship between dose and effect follows a specific curve - the dose-response curve - which rises steeply in the middle and flattens at the top. The flattening happens because the target is saturated: once every receptor is occupied, giving more drug cannot produce more effect.
+
+The key features of the dose-response curve:
+
+- Threshold - the minimum dose at which any effect is seen.
+- Slope - how steeply the effect rises with dose. A steep slope means small dose changes produce large effect changes; a shallow slope means the opposite.
+- Maximum effect (Emax) - the greatest effect the drug can produce, no matter how much more you give. Reached when the target is fully saturated.
+- EC50 (or ED50) - the dose that produces 50% of the maximum effect. It is a measure of potency: a drug with a lower EC50 is more potent.
+
+Two drugs can have the same maximum effect but very different potencies. Morphine and codeine both relieve pain, but morphine is far more potent - a smaller dose produces the same effect. Conversely, two drugs can have the same potency but different maximum effects.
+
+Crucial insight: the dose-response curve is the fundamental tool of pharmacology. It tells you how potent a drug is (its EC50), how effective it can be (its Emax), and how sensitive the effect is to dose changes (its slope). Every clinical decision about dose - starting dose, maintenance dose, maximum dose - comes back to this curve.`
+    },
+    {
+      q: "Two drugs both work. One needs a wide safety margin, the other can be dosed close to the edge. What determines the difference?",
+      body: `Some drugs are forgiving - you can double the dose and nothing much happens. Others are dangerous - doubling the dose can kill a patient. The difference comes down to a single number: the therapeutic index.
+
+My Socratic question: if every drug has a dose-response curve, what would you compare to work out how safe a drug is?
+
+The answer is that you compare the dose that produces the therapeutic effect with the dose that produces a toxic effect. The ratio of the two is the therapeutic index (TI).
+
+The therapeutic index is calculated as:
+
+TI = TD50 (median toxic dose) / ED50 (median effective dose)
+
+A high TI means the toxic dose is much larger than the effective dose, so there is a wide safety margin. Penicillin has a very high TI - you can give enormous doses before toxicity appears. A low TI means the toxic dose is close to the effective dose, so the drug must be dosed carefully. Digoxin, warfarin, lithium and phenytoin all have low TIs - they are the drugs where small errors in dose can produce serious harm.
+
+The same idea can be expressed as the margin of safety, which accounts for the steepness of the curve, or as the therapeutic window, which describes the range of plasma concentrations between the minimum effective concentration and the minimum toxic concentration.
+
+Crucial insight: the therapeutic index is what separates a safe drug from a dangerous one. It determines how carefully a drug must be dosed, whether plasma monitoring is needed, and how much room there is for error. A doctor prescribing digoxin or warfarin knows they are working with a narrow margin - which is why regular blood tests are needed to make sure the dose stays in the therapeutic window.`
+    },
+    {
+      q: "Bringing it together — how does a doctor actually use all of this, and where do specific drugs like digoxin and morphine fit in?",
+      body: `Everything you have learned in this topic is now applied, in order, every time a doctor prescribes. The science is not abstract - it is a decision process that runs from molecule to patient in a series of steps.
+
+My Socratic question: a patient comes into the clinic with a heart condition. What steps does a doctor take, from diagnosis to prescription, and how does each step use the principles you have just learned?
+
+The answer is that the doctor runs through the same sequence every time:
+
+- Diagnose the problem - what process is failing? Which signalling system needs to be altered?
+- Identify the target - which receptor, ion channel, enzyme or transporter would change that process? This uses the four target classes you learned in Note 5.
+- Choose the drug - which available molecule hits that target? Is it an agonist or an antagonist? This uses the agonist/antagonist distinction from Note 7.
+- Choose the dose - what dose-response curve does that drug have, and where does the patient's situation sit on it? This uses the quantitative principles from Note 8.
+- Check the safety margin - what is the therapeutic index, and does the patient have any factor (renal impairment, liver disease, age) that narrows it? This uses Note 9.
+- Choose the route and schedule - how is the drug absorbed, distributed, metabolised and excreted? This is the pharmacokinetics from Note 10 and beyond.
+
+Two useful clinical examples:
+
+- Digoxin - a plant-derived drug (from the foxglove) that inhibits the sodium-potassium ATPase in cardiac muscle. It is a positive inotropic agent - it increases the force of heart contraction. It has a narrow therapeutic index, which is why plasma levels must be monitored. It is a textbook example of how a drug with a specific target, a specific mechanism, and a narrow safety margin is used clinically.
+- Morphine - a plant-derived opioid (from the opium poppy) that acts as an agonist at the mu-opioid receptor. It relieves severe pain but also suppresses respiration, causes constipation and produces dependence. Its use requires careful dose titration and monitoring. It illustrates why agonist drugs require an understanding of both intended and side effects.
+
+Crucial insight: the principles of drug action you have learned in this topic are the framework behind every prescription. Diagnosis, target selection, drug selection, dose selection, safety assessment and route planning all depend on the concepts introduced here. Everything else in pharmacology - the specific drugs, the specific receptors, the specific clinical situations - is built on this foundation.`
+    },
+  ],
+  theory: [
+    { q: "Define pharmacology and distinguish it from pharmacy and pharmacognosy.", a: "Pharmacology is the science of how drugs interact with living systems - what they do to the body (pharmacodynamics) and what the body does to them (pharmacokinetics). Pharmacy is the health profession concerned with the preparation, dispensing and appropriate use of medicines. Pharmacognosy is the study of drugs derived from natural sources, particularly plants." },
+    { q: "Distinguish pharmacodynamics from pharmacokinetics with examples.", a: "Pharmacodynamics is what the drug does to the body - its mechanism of action, its target, and the effect it produces (e.g. beta-blockers slowing the heart by blocking beta-adrenergic receptors). Pharmacokinetics is what the body does to the drug - its absorption, distribution, metabolism and excretion (e.g. how long a drug stays in the blood and how it is cleared by the liver and kidneys)." },
+    { q: "State the four components of pharmacokinetics (ADME).", a: "Absorption - how the drug enters the bloodstream. Distribution - how it moves from the blood into tissues. Metabolism - how it is chemically modified, mainly by the liver. Excretion - how it is removed from the body, mainly by the kidneys." },
+    { q: "Define the terms drug, medicine, poison and prodrug.", a: "A drug is any chemical substance that, when introduced into a living system, produces a biological effect. A medicine is a drug formulated for therapeutic use. A poison is a substance that produces harmful effects at realistically encountered doses. A prodrug is an inactive compound converted into an active drug by the body." },
+    { q: "Explain the four main sources of drugs with examples.", a: "Plants - morphine (opium poppy), digoxin (foxglove), quinine (cinchona tree), aspirin (willow bark). Animals - insulin (historically from pig pancreas), heparin (pig intestine). Minerals - lithium salts, iron salts, magnesium sulphate. Synthetic/semisynthetic - most modern drugs, designed in the laboratory. A fifth source is biologics, produced by living cells (monoclonal antibodies, recombinant proteins, vaccines)." },
+    { q: "Explain why the same molecule can be both a medicine and a poison.", a: "Because the effect of a drug depends on dose. Paracelsus stated that the dose makes the poison - the same compound can be therapeutic at one dose and lethal at another. Route, patient factors and duration of exposure also matter. No substance is inherently a medicine or a poison; it depends entirely on context." },
+    { q: "Name the four main classes of drug target with examples.", a: "Receptors (G-protein coupled receptors, ion channel receptors, enzyme-linked receptors, nuclear receptors) - the largest class. Ion channels (voltage-gated sodium channels blocked by local anaesthetics, calcium channels blocked by calcium channel blockers). Enzymes (cyclooxygenase inhibited by aspirin, HMG-CoA reductase inhibited by statins, ACE inhibited by ACE inhibitors). Transporters (serotonin transporters blocked by SSRIs, proton pump blocked by PPIs)." },
+    { q: "Distinguish agonists, antagonists and partial agonists.", a: "Agonists bind a receptor and activate it - they have both affinity and efficacy. Antagonists bind a receptor but do not activate it - they have affinity but no efficacy, and block the effects of agonists. Partial agonists bind and activate, but produce less than the full maximal effect, and can act as either agonists or antagonists depending on context." },
+    { q: "Define affinity and efficacy.", a: "Affinity is the tendency of a drug to bind to its receptor - the strength of the drug-receptor interaction. Efficacy (or intrinsic activity) is the ability of a bound drug to activate the receptor and produce a response. An agonist has both affinity and efficacy; an antagonist has affinity but no efficacy." },
+    { q: "Explain the dose-response curve and its key features.", a: "The dose-response curve plots drug effect against drug dose. It rises steeply in the middle and flattens at the top when the receptors are saturated. Key features: threshold (minimum dose producing effect), slope (how sensitive effect is to dose changes), Emax (maximum effect), and EC50 or ED50 (dose producing 50% of maximum effect, a measure of potency)." },
+    { q: "Define potency and efficacy in pharmacology.", a: "Potency is the amount of drug needed to produce a given effect - a more potent drug achieves the same effect at a lower dose (lower EC50). Efficacy is the maximum effect a drug can produce, regardless of dose (Emax). A drug can be highly potent but have low efficacy, or less potent but with high efficacy." },
+    { q: "Define therapeutic index and explain why it matters clinically.", a: "Therapeutic index (TI) = TD50 / ED50, where TD50 is the median toxic dose and ED50 is the median effective dose. A high TI means a wide safety margin (e.g. penicillin). A low TI means the toxic dose is close to the effective dose (e.g. digoxin, warfarin, lithium), which is why such drugs require careful dosing and often plasma monitoring." },
+    { q: "Explain how digoxin and morphine illustrate different drug principles.", a: "Digoxin is a plant-derived positive inotrope that inhibits the sodium-potassium ATPase in the heart. Its narrow therapeutic index requires plasma monitoring - it illustrates the concept of a low-TI drug. Morphine is a plant-derived opioid agonist at the mu-opioid receptor. It relieves severe pain but also causes respiratory depression, constipation and dependence - it illustrates the agonist/antagonist principle and the need to weigh intended effects against side effects." },
+    { q: "What is a receptor, and why is it the most important drug target class?", a: "A receptor is a protein that binds endogenous signalling molecules (hormones, neurotransmitters) and, on binding, changes cell behaviour. It is the most important target class because roughly a third of all prescription drugs act on receptors, and because receptors mediate the body's own signalling - so drugs acting on them can mimic or block physiological processes precisely." },
+  ],
+  videos: [
+    { channel: "Pharmacology", title: "Introduction to Pharmacology - What Drugs Do to the Body", note: "Full overview of pharmacodynamics, pharmacokinetics and drug targets.", url: "https://www.youtube.com/results?search_query=introduction+to+pharmacology+pharmacodynamics+pharmacokinetics" },
+    { channel: "Pharmacology", title: "Drug Targets - Receptors, Channels, Enzymes and Transporters", note: "The four great classes of drug target explained with examples.", url: "https://www.youtube.com/results?search_query=drug+targets+receptors+channels+enzymes+transporters" },
+    { channel: "Pharmacology", title: "Agonists, Antagonists and Dose-Response Curves", note: "The fundamental pharmacology of drug-receptor interaction.", url: "https://www.youtube.com/results?search_query=agonists+antagonists+dose+response+curves+pharmacology" },
+  ],
+  mcqs: [
+    // ===== Note 1: what pharmacology is (Q1-5) =====
+    { q: "Pharmacology is best defined as the science of:", o: ["Preparing and dispensing medicines", "How drugs interact with living systems", "Classifying diseases", "Diagnosing illnesses"], a: 1, w: "Pharmacology studies how drugs interact with living systems - what they do to the body and what the body does to them." },
+    { q: "Pharmacology's two great divisions are:", o: ["Diagnosis and treatment", "Pharmacodynamics and pharmacokinetics", "Chemistry and biology", "Prescribing and dispensing"], a: 1, w: "The two divisions are pharmacodynamics and pharmacokinetics." },
+    { q: "Pharmacodynamics asks what:", o: ["The drug does to the body", "The body does to the drug", "The drug costs", "The patient wants"], a: 0, w: "Pharmacodynamics is what the drug does to the body - its mechanism and effect." },
+    { q: "Pharmacokinetics asks what:", o: ["The drug does to the body", "The drug costs", "The body does to the drug", "The drug tastes like"], a: 2, w: "Pharmacokinetics is what the body does to the drug - how it is absorbed, distributed, metabolised and excreted." },
+    { q: "The relationship between the two divisions is that:", o: ["They are unrelated", "Pharmacodynamics determines the effect; pharmacokinetics determines whether the drug reaches its target", "They are the same subject", "Only pharmacokinetics matters clinically"], a: 1, w: "Both must be satisfied - the drug needs the right mechanism (PD) and must reach its target (PK)." },
+
+    // ===== Note 2: PD vs PK deeper (Q6-10) =====
+    { q: "The four components of pharmacokinetics, remembered by ADME, are:", o: ["Absorption, distribution, metabolism, elimination", "Antagonism, diffusion, modulation, excretion", "Activation, distribution, metabolism, elimination", "Absorption, dilution, metabolism, excretion"], a: 0, w: "ADME stands for absorption, distribution, metabolism and excretion (or elimination)." },
+    { q: "A drug with excellent pharmacodynamics but poor pharmacokinetics will:", o: ["Always work well clinically", "Often fail clinically because it does not reach its target in sufficient amounts", "Have no side effects", "Be more potent"], a: 1, w: "Poor pharmacokinetics means the drug does not reach its target adequately - it will fail even if its mechanism is perfect." },
+    { q: "Which of these is a pharmacodynamic property?", o: ["Absorption rate", "Plasma half-life", "Affinity for a receptor", "Volume of distribution"], a: 2, w: "Affinity for a receptor is pharmacodynamic - it concerns the drug-receptor interaction." },
+    { q: "Which of these is a pharmacokinetic property?", o: ["Receptor affinity", "Intrinsic activity", "Mechanism of action", "Plasma half-life"], a: 3, w: "Plasma half-life is pharmacokinetic - it describes how long the drug stays in the body." },
+    { q: "The essential difference between pharmacodynamics and pharmacokinetics is:", o: ["Pharmacodynamics is about mechanism; pharmacokinetics is about movement and clearance", "Pharmacodynamics is about excretion; pharmacokinetics is about receptors", "They are identical", "Pharmacodynamics only applies to agonists"], a: 0, w: "Pharmacodynamics covers mechanism and effect; pharmacokinetics covers how the drug moves through and is cleared from the body." },
+
+    // ===== Note 3: what a drug is (Q11-15) =====
+    { q: "A drug is best defined as:", o: ["Any therapeutic substance sold in a pharmacy", "Any chemical substance that produces a biological effect when introduced into a living system", "Only synthetic compounds", "Only compounds found in nature"], a: 1, w: "A drug is any chemical substance producing a biological effect on a living system." },
+    { q: "The difference between a drug and a medicine is that:", o: ["They are the same", "A medicine is a drug formulated for therapeutic use", "A drug is always natural; a medicine is always synthetic", "Only medicines have side effects"], a: 1, w: "A medicine is a drug prepared and approved for therapeutic use." },
+    { q: "The statement 'the dose makes the poison' means:", o: ["All drugs are poisonous", "The same substance can be therapeutic or harmful depending on dose", "Only poisons exist", "Dose does not matter"], a: 1, w: "Any substance can be therapeutic or harmful - it depends on the dose." },
+    { q: "A prodrug is best described as:", o: ["A drug sold without prescription", "An inactive compound the body converts into an active drug", "A drug with no side effects", "A drug that is naturally occurring"], a: 1, w: "A prodrug is inactive until the body metabolically converts it into the active form." },
+    { q: "A drug's generic name is:", o: ["The brand name used by one manufacturer", "The full chemical description of the molecule", "The internationally agreed non-proprietary name used in prescribing", "The name given by the pharmacy"], a: 2, w: "The generic (INN) name is the standard non-proprietary name used in prescribing and pharmacology." },
+
+    // ===== Note 4: drug sources (Q16-20) =====
+    { q: "Morphine is derived from:", o: ["Willow bark", "The opium poppy", "The foxglove plant", "The cinchona tree"], a: 1, w: "Morphine is derived from the opium poppy (Papaver somniferum)." },
+    { q: "Digoxin is derived from:", o: ["The foxglove plant (Digitalis purpurea)", "The cinchona tree", "The opium poppy", "Willow bark"], a: 0, w: "Digoxin is derived from the foxglove plant." },
+    { q: "Aspirin was historically derived from:", o: ["The opium poppy", "The foxglove", "Willow bark (salicylic acid)", "The cinchona tree"], a: 2, w: "Aspirin was historically derived from salicylic acid found in willow bark." },
+    { q: "Lithium salts used in psychiatry come from which source?", o: ["Plants", "Animals", "Minerals", "Synthetic chemistry only"], a: 2, w: "Lithium salts are mineral-derived drugs." },
+    { q: "Biologics are drugs that:", o: ["Are made by living cells (e.g. monoclonal antibodies, recombinant proteins)", "Are extracted from plants", "Are purely synthetic chemicals", "Are only used in animals"], a: 0, w: "Biologics are produced by living cells - they include monoclonal antibodies, recombinant proteins and vaccines." },
+
+    // ===== Note 5: targets of drug action (Q21-25) =====
+    { q: "The four great classes of drug target are:", o: ["Receptors, ion channels, enzymes, transporters", "Lipids, carbohydrates, proteins, nucleic acids", "Agonists, antagonists, partial agonists, inverse agonists", "Blood, tissue, bone, cartilage"], a: 0, w: "The four protein target classes are receptors, ion channels, enzymes and transporters." },
+    { q: "The largest class of drug target is:", o: ["Ion channels", "Enzymes", "Receptors", "Transporters"], a: 2, w: "Receptors are the largest class of drug target - roughly a third of prescription drugs act on them." },
+    { q: "Local anaesthetics act by blocking:", o: ["Potassium channels", "Voltage-gated sodium channels", "Calcium channels", "Chloride channels"], a: 1, w: "Local anaesthetics block voltage-gated sodium channels, preventing nerve conduction." },
+    { q: "Statins lower cholesterol by inhibiting which enzyme?", o: ["Cyclooxygenase", "HMG-CoA reductase", "ACE", "Lipase"], a: 1, w: "Statins inhibit HMG-CoA reductase, the rate-limiting enzyme in cholesterol synthesis." },
+    { q: "Selective serotonin reuptake inhibitors (SSRIs) act on:", o: ["A receptor", "A transporter protein", "An ion channel", "A nuclear receptor"], a: 1, w: "SSRIs block the serotonin transporter, increasing serotonin in the synapse." },
+
+    // ===== Note 6: receptors (Q26-30) =====
+    { q: "A receptor is best described as:", o: ["A passive binding site", "A signalling protein that changes cell behaviour when activated", "An ion channel only", "A type of enzyme only"], a: 1, w: "A receptor is a signalling protein - binding changes the cell's behaviour." },
+    { q: "The largest receptor family, targeted by about a third of drugs, is:", o: ["Ion channel receptors", "Nuclear receptors", "G-protein coupled receptors", "Enzyme-linked receptors"], a: 2, w: "G-protein coupled receptors (GPCRs) are the largest receptor family." },
+    { q: "An example of an ion channel receptor is:", o: ["The nicotinic acetylcholine receptor", "The insulin receptor", "The oestrogen receptor", "The beta-adrenergic receptor"], a: 0, w: "The nicotinic acetylcholine receptor is a ligand-gated ion channel." },
+    { q: "Enzyme-linked receptors typically work by:", o: ["Opening an ion channel", "Activating a G-protein", "Phosphorylating downstream proteins via tyrosine kinase activity", "Entering the nucleus directly"], a: 2, w: "Enzyme-linked receptors often have intrinsic tyrosine kinase activity." },
+    { q: "Nuclear receptors are activated by:", o: ["Lipid-soluble ligands such as steroid hormones", "Charged ions", "Only neurotransmitters", "Only peptides"], a: 0, w: "Nuclear receptors bind lipid-soluble ligands (e.g. steroids, thyroid hormone) and change gene expression directly." },
+
+    // ===== Note 7: agonists and antagonists (Q31-35) =====
+    { q: "An agonist is a drug that:", o: ["Blocks a receptor without activating it", "Binds a receptor and activates it", "Only binds enzymes", "Has no affinity for receptors"], a: 1, w: "An agonist binds and activates the receptor - it has both affinity and efficacy." },
+    { q: "An antagonist is a drug that:", o: ["Binds a receptor but does not activate it", "Always activates the receptor", "Is always irreversible", "Is always a partial agonist"], a: 0, w: "An antagonist has affinity but no efficacy - it binds but does not activate, blocking the effects of agonists." },
+    { q: "Affinity refers to:", o: ["The ability of a drug to activate a receptor", "The tendency of a drug to bind to its receptor", "The speed of drug metabolism", "The dose of a drug"], a: 1, w: "Affinity is the tendency of a drug to bind its receptor." },
+    { q: "Efficacy (or intrinsic activity) refers to:", o: ["The ability of a bound drug to activate a receptor and produce a response", "The tendency of a drug to bind", "The rate of absorption", "The plasma half-life"], a: 0, w: "Efficacy is the ability of a bound drug to activate the receptor and produce a response." },
+    { q: "A partial agonist:", o: ["Always produces the maximal effect", "Produces less than the maximal effect of a full agonist", "Has no affinity", "Only blocks receptors"], a: 1, w: "A partial agonist produces less than full maximal effect and can act as agonist or antagonist depending on context." },
+
+    // ===== Note 8: dose-response (Q36-40) =====
+    { q: "On a dose-response curve, the maximum effect a drug can produce is called:", o: ["EC50", "Threshold", "Emax", "Slope"], a: 2, w: "Emax is the maximum effect, reached when the target is saturated." },
+    { q: "The EC50 (or ED50) of a drug is:", o: ["The maximum effect", "The dose producing 50% of the maximum effect", "The dose producing no effect", "The toxic dose"], a: 1, w: "EC50/ED50 is the dose producing 50% of the maximum effect, a measure of potency." },
+    { q: "A drug with a lower EC50 than another is:", o: ["Less potent", "More potent", "Less efficacious", "More toxic"], a: 1, w: "A lower EC50 means a smaller dose produces 50% of the maximal effect - the drug is more potent." },
+    { q: "The dose-response curve flattens at the top because:", o: ["The drug stops working", "The receptors are saturated", "The patient develops tolerance", "The drug is metabolised"], a: 1, w: "Once every receptor is occupied, additional drug cannot produce additional effect." },
+    { q: "Two drugs with the same Emax but different EC50 values differ in:", o: ["Efficacy", "Potency", "Safety", "Mechanism"], a: 1, w: "Same Emax means same maximum effect; different EC50 means different potency." },
+
+    // ===== Note 9: therapeutic index (Q41-45) =====
+    { q: "Therapeutic index (TI) is calculated as:", o: ["ED50 / TD50", "Emax / EC50", "TD50 / ED50", "EC50 x Emax"], a: 2, w: "TI = TD50 / ED50 - the toxic dose divided by the effective dose." },
+    { q: "A high therapeutic index means:", o: ["The drug is very dangerous", "The toxic dose is much higher than the effective dose - a wide safety margin", "The drug is very potent", "The drug is very efficacious"], a: 1, w: "A high TI means a wide safety margin - the drug is relatively safe." },
+    { q: "Digoxin and warfarin are clinically important because they have:", o: ["High therapeutic indices", "Narrow therapeutic indices", "No side effects", "No receptor targets"], a: 1, w: "Digoxin and warfarin have narrow therapeutic indices and require careful dosing and monitoring." },
+    { q: "Therapeutic window describes:", o: ["The range of plasma concentrations between minimum effective and minimum toxic concentrations", "The drug's absorption rate", "The drug's chemical structure", "The half-life of the drug"], a: 0, w: "Therapeutic window is the range of plasma concentrations between the minimum effective and minimum toxic concentrations." },
+    { q: "Which drug has the widest safety margin of those listed?", o: ["Digoxin", "Warfarin", "Penicillin", "Lithium"], a: 2, w: "Penicillin has an extremely high therapeutic index - very high doses are tolerated." },
+
+    // ===== Note 10: clinical applications and examples (Q46-50) =====
+    { q: "Digoxin's main mechanism of action is:", o: ["Blocking beta-adrenergic receptors", "Inhibiting the sodium-potassium ATPase in cardiac muscle", "Blocking calcium channels", "Inhibiting ACE"], a: 1, w: "Digoxin inhibits the sodium-potassium ATPase in cardiac muscle, increasing intracellular calcium and the force of contraction." },
+    { q: "Morphine produces its effects by acting as an agonist at:", o: ["The mu-opioid receptor", "The beta-adrenergic receptor", "The GABA-A receptor", "The sodium-potassium ATPase"], a: 0, w: "Morphine is an agonist at the mu-opioid receptor." },
+    { q: "A dangerous side effect of morphine is:", o: ["Increased heart rate", "Respiratory depression", "Hypertension", "Diarrhoea"], a: 1, w: "Morphine can suppress respiration - a dangerous side effect that requires monitoring." },
+    { q: "The main sequence a doctor follows when prescribing is:", o: ["Diagnose, identify target, choose drug, choose dose, assess safety, plan route", "Choose dose, choose drug, diagnose", "Choose drug, diagnose, prescribe", "Prescribe, diagnose, adjust"], a: 0, w: "The clinical prescribing sequence runs from diagnosis through target selection, drug and dose choice, safety assessment and route planning." },
+    { q: "Understanding the principles of drug action matters clinically because:", o: ["It is only relevant for research", "It underlies every prescription decision about target, drug, dose, safety and route", "Only pharmacology students need it", "It has no practical use"], a: 1, w: "The principles of drug action underpin every prescription decision a doctor makes." },
+  ],
+};
+
+/* --------------------------- pha:1 --------------------------- */
+const T_PHA_TARGETS = {
+  courseId: "pha",
+  topicIndex: 1,
+  title: "Principles of Drug Action: Targets of Drug Action",
+  minutes: 30,
+  note: [
+    {
+      q: "A drug floats through the bloodstream, passing through millions of molecules. Why does it produce one specific effect?",
+      body: `When a drug enters the body, it does not act everywhere at once. It circulates through every tissue, is filtered by the kidneys, metabolised by the liver, and yet it produces one specific effect - lowering blood pressure, blocking pain, killing bacteria - while leaving most of the body untouched. Something must be selecting it.
+
+My Socratic question: a drug is just a molecule. What stops it from acting randomly on every cell it meets?
+
+The answer is that a drug needs a target. It produces its effect only where a specific molecular structure binds it - a receptor, an ion channel, an enzyme or a transporter. If a tissue does not express the target, the drug has no effect there. Everything a drug does, and everything it does not do, comes down to whether the tissue carries a molecular target the drug can bind.
+
+Four protein classes make up nearly every drug target in clinical use:
+
+- Receptors - cell surface or intracellular proteins that normally respond to hormones and neurotransmitters. Drugs can mimic or block them.
+- Ion channels - proteins that allow specific ions to cross membranes. Drugs can open or block them.
+- Enzymes - proteins that catalyse biochemical reactions. Drugs usually inhibit them.
+- Transporters - proteins that move substances across membranes. Drugs can block them.
+
+Crucial insight: a drug's target is the source of its specificity. Every drug has a target, and the location and function of that target determine what the drug does. When you prescribe a drug, you are not acting on "the body" - you are acting on one specific protein in one specific set of tissues. Understanding this is the foundation of rational drug therapy.`
+    },
+    {
+      q: "Receptors are the largest drug target class. What makes them so useful for pharmacology?",
+      body: `Roughly a third of all prescription drugs act on receptors. They are the largest and most important target class in pharmacology, and the reason is that they are the body's own signalling molecules. A drug that acts on a receptor is not introducing a new signal - it is hijacking the body's existing communication system.
+
+My Socratic question: receptors exist for the body's own hormones and neurotransmitters. Why does that make them such good drug targets?
+
+The answer is that drugs acting on receptors can be exquisitely specific. If a receptor is found only in the heart, a drug acting on it will affect only the heart. If a receptor is found in the gut, a drug acting on it will affect only the gut. The receptor's natural selectivity becomes the drug's selectivity.
+
+The key features of receptors as drug targets:
+
+- They are proteins - so they have a specific shape and chemistry that can be bound selectively.
+- They are signalling molecules - binding them produces a biological response, not just a passive interaction.
+- They have natural ligands - so drugs can be designed to mimic the ligand (agonists) or block it (antagonists).
+- They are often tissue-specific - so a drug's effects can be limited to specific organs.
+
+Types of receptor-based drug action:
+
+- Agonists mimic the natural ligand and activate the receptor.
+- Antagonists bind but do not activate, blocking the natural ligand.
+- Partial agonists bind and activate weakly, producing a lesser response.
+- Inverse agonists produce the opposite effect to the natural ligand by suppressing baseline receptor activity.
+
+Crucial insight: receptors are powerful drug targets because they are the body's own signalling molecules. They allow drugs to be selective, effective and predictable. This is why pharmacology focuses so heavily on receptors, and why so much of the rest of this course is about receptor pharmacology - from signal transduction to dose-response, and from adrenergic to cholinergic drugs later on.`
+    },
+    {
+      q: "Not all receptors work the same way. How would you classify them, and what does each family do?",
+      body: `The word "receptor" suggests a single kind of molecule, but there are four distinct families, each with its own structure, its own signalling mechanism and its own timescale. Understanding the differences is essential because each family responds to drugs in a different way.
+
+My Socratic question: if all receptors bind ligands and produce effects, why would the body need four different families?
+
+The answer is that different signals require different timescales, mechanisms and locations, and each family is suited to a different one.
+
+The four receptor families:
+
+- G-protein coupled receptors (GPCRs) - seven-transmembrane proteins that work through a G-protein. When the ligand binds, the G-protein is activated and triggers a second messenger cascade inside the cell. They act in seconds. Around a third of prescription drugs target GPCRs.
+- Ion channel receptors (ligand-gated ion channels) - receptors that are themselves ion channels. When the ligand binds, the channel opens and ions flow through, changing the cell's membrane potential. They act in milliseconds - the fastest receptor family. The nicotinic acetylcholine receptor is an example.
+- Enzyme-linked receptors - receptors with intrinsic enzymatic activity, most commonly tyrosine kinase. When the ligand binds, the receptor phosphorylates downstream proteins, triggering a signalling cascade. They act in minutes to hours, and are important in growth and metabolism. The insulin receptor is an example.
+- Nuclear receptors - intracellular receptors that bind lipid-soluble ligands such as steroid hormones. When activated, they move to the nucleus and directly change gene expression. They act in hours to days - the slowest family. The oestrogen and glucocorticoid receptors are examples.
+
+Crucial insight: the four receptor families correspond to four different signalling speeds and mechanisms. Fast responses (milliseconds) use ion channels; rapid responses (seconds) use GPCRs; medium responses (minutes to hours) use enzyme-linked receptors; slow responses (hours to days) use nuclear receptors. Choosing which family a drug should target depends entirely on how fast and how long the drug's effect needs to be.`
+    },
+    {
+      q: "Not every drug target is a receptor. What are ion channels, and how do drugs act on them?",
+      body: `Receptors are the biggest target class, but they are not the only one. Ion channels are the second great family of drug targets, and they are essential for every electrical signal in the body - nerve conduction, muscle contraction, heartbeat, hormone secretion. When an ion channel goes wrong, the whole system can fail.
+
+My Socratic question: an ion channel is a protein with a hole through it. Why would a drug want to block a hole?
+
+The answer is that ion channels control the movement of charged particles across membranes, and this movement is what generates electrical signals. Block the channel and you block the signal. This is why ion channel drugs are among the most important in medicine - local anaesthetics, antiarrhythmics, antiepileptics and antihypertensives all work this way.
+
+The main types of ion channel drugs:
+
+- Blockers - drugs that plug the channel and prevent ions from passing. Sodium channel blockers (local anaesthetics like lidocaine), calcium channel blockers (nifedipine, verapamil), potassium channel blockers (amiodarone).
+- Openers (activators) - drugs that keep the channel open longer than usual. Potassium channel openers (minoxidil for hypertension), some vasodilators.
+- Modulators - drugs that change the channel's gating behaviour, making it more or less likely to open in response to its usual trigger.
+
+Ion channels also differ in how they are gated:
+
+- Voltage-gated - open in response to changes in membrane potential (sodium, potassium, calcium channels).
+- Ligand-gated - open when a chemical binds (the nicotinic acetylcholine receptor).
+- Mechanically gated - open in response to physical force (stretch receptors in the gut, bladder, and blood vessels).
+
+Crucial insight: ion channels are fast, precise and electrically important. Drugs acting on them produce rapid, reversible effects that can be tuned by dose. They are the reason local anaesthetics work within seconds, calcium channel blockers lower blood pressure, and antiarrhythmics stabilise the heart. Understanding ion channels is essential for understanding any drug that affects nerve or muscle function.`
+    },
+    {
+      q: "Enzymes are the third target class. Why would blocking an enzyme be a useful way to treat disease?",
+      body: `Enzymes drive almost every chemical reaction in the body. Some are essential to life; some are part of disease processes. Drugs that block enzymes are among the most useful and specific drugs in medicine, and understanding how they work is essential for clinical practice.
+
+My Socratic question: if an enzyme catalyses a reaction the body needs, why would blocking it ever help?
+
+The answer is that enzymes come in two kinds: enzymes we want to suppress (those driving disease) and enzymes we want to leave alone (those maintaining health). Drug design aims for selectivity - blocking the disease-driving enzyme while leaving others untouched.
+
+The main mechanisms of enzyme inhibition by drugs:
+
+- Competitive inhibition - the drug binds at the active site, competing with the natural substrate. It can be overcome by increasing substrate concentration.
+- Non-competitive inhibition - the drug binds elsewhere on the enzyme and changes its shape, so the active site no longer works properly.
+- Irreversible inhibition - the drug forms a covalent bond with the enzyme, permanently inactivating it. New enzyme must be synthesised to restore activity.
+
+Key examples of enzyme inhibitor drugs:
+
+- Aspirin - irreversibly inhibits cyclooxygenase (COX), reducing pain, inflammation and fever.
+- Statins - competitively inhibit HMG-CoA reductase, lowering cholesterol synthesis.
+- ACE inhibitors - inhibit angiotensin-converting enzyme, lowering blood pressure.
+- Penicillin - irreversibly inhibits bacterial transpeptidase, blocking cell wall synthesis.
+- Methotrexate - inhibits dihydrofolate reductase, used in cancer and autoimmune disease.
+- Allopurinol - inhibits xanthine oxidase, lowering uric acid in gout.
+
+Crucial insight: enzyme inhibition is one of the most precise forms of drug action. Because enzymes are specific for their substrates, drugs that inhibit them can be specific for one biochemical pathway and produce effects limited to that pathway. This is why enzyme inhibitors are the backbone of modern therapy - from antibiotics to antihypertensives to cancer drugs.`
+    },
+    {
+      q: "Transporters are the fourth target class. Why would a drug want to block a transporter rather than a receptor or an enzyme?",
+      body: `Transporters are the least known of the four target classes, but they are increasingly important in pharmacology. A transporter is a protein that moves substances across a membrane - it is a molecular door. Drugs that block transporters prevent specific molecules from crossing, and this can have powerful therapeutic effects.
+
+My Socratic question: if a transporter normally moves a substance into or out of a cell, why would blocking it be useful?
+
+The answer is that blocking a transporter allows you to control the concentration of a substance at a specific site. If you prevent reuptake of a neurotransmitter, its concentration in the synapse rises; if you prevent reabsorption of a molecule in the kidney, it is excreted in the urine.
+
+Key examples of transporter-targeting drugs:
+
+- Selective serotonin reuptake inhibitors (SSRIs) - block the serotonin transporter, increasing serotonin in the synapse. Used for depression and anxiety.
+- Tricyclic antidepressants - block serotonin and noradrenaline transporters.
+- Selective noradrenaline reuptake inhibitors (SNRIs) - block noradrenaline and serotonin transporters.
+- Sodium-glucose cotransporter-2 (SGLT2) inhibitors - block glucose reabsorption in the kidney, so glucose is excreted in the urine. Used for diabetes.
+- Proton pump inhibitors (PPIs) - block the gastric H+/K+ ATPase, reducing stomach acid. Used for GORD and peptic ulcer disease.
+- Digoxin - inhibits the sodium-potassium ATPase in cardiac muscle, which is both a pump and a transporter.
+- Cocaine - blocks the dopamine transporter, increasing dopamine in the synapse.
+
+Crucial insight: transporters control what enters and leaves cells, and blocking them changes the concentration of a substance at a specific site. They are the target of some of the most commonly prescribed drugs - antidepressants, diabetes drugs, and acid-suppressing drugs. Understanding transporters is essential for understanding how these drugs work.`
+    },
+    {
+      q: "A drug binds its target. But what makes it bind, and what makes it bind selectively?",
+      body: `A drug does not bind its target by accident. Binding depends on shape, chemistry and the laws of physical attraction between molecules. And, crucially, binding must be selective - a drug that binds everything would act everywhere, producing chaos.
+
+My Socratic question: what makes a drug bind one protein but not another?
+
+The answer is affinity and specificity. Affinity is how strongly the drug binds its target; specificity (or selectivity) is how well it distinguishes that target from others.
+
+The forces that hold a drug to its target:
+
+- Ionic bonds - attractions between oppositely charged groups.
+- Hydrogen bonds - between polar groups.
+- Hydrophobic interactions - between non-polar regions, driven by water exclusion.
+- Van der Waals forces - weak attractions between close atoms.
+
+None of these bonds is individually strong, but together - and multiplied across many atoms in the drug and the binding site - they add up to significant binding energy. The stronger the fit and the more bonds, the higher the affinity.
+
+Selectivity depends on shape complementarity:
+
+- The drug's shape must match the binding site's shape.
+- The chemical groups on the drug must match the chemical groups in the site.
+- Any mismatch - in size, shape or charge - reduces binding.
+
+Drug selectivity is rarely perfect. Most drugs bind their intended target with high affinity and other targets with lower affinity. The ratio between the two determines the drug's therapeutic window and its side-effect profile.
+
+Crucial insight: drug binding is a physical interaction between a specific molecule and a specific site. Affinity determines how tightly, and selectivity determines how precisely. Understanding these principles is what lets pharmacology predict which drugs will work, how specific they will be, and what their side effects will be.`
+    },
+    {
+      q: "When a drug binds a receptor, does anything physically change? Or is binding purely a chemical event?",
+      body: `Binding is often drawn as a static picture - a drug sitting neatly in a receptor. But the reality is dynamic. When a drug binds a receptor, the receptor changes shape. That shape change is the whole point of the interaction; without it, binding would do nothing.
+
+My Socratic question: if a receptor binds a drug but does not change shape, would anything happen inside the cell?
+
+The answer is no. Binding alone is not enough - the receptor must change conformation to signal. That is why pharmacology distinguishes between affinity (binding) and efficacy (the ability to produce a conformational change that leads to a response).
+
+What happens at the molecular level when a drug binds:
+
+- The drug approaches the binding site through random diffusion.
+- It forms weak bonds with complementary groups in the site.
+- As more bonds form, the drug is held more tightly.
+- The receptor undergoes a conformational change - it shifts from an inactive to an active shape (agonists) or locks in an inactive shape (antagonists).
+- The changed receptor interacts with downstream molecules - a G-protein, an enzyme, an ion channel, another protein.
+- A signal is generated inside the cell.
+
+Two important distinctions:
+
+- Binding without activation - an antagonist binds the receptor and holds it in an inactive shape. Binding occurs, but no downstream signal is produced.
+- Binding with activation - an agonist binds and stabilises the active shape, triggering the downstream signal.
+
+Crucial insight: drug action is a conformational event. The drug's real job is not to sit in a binding site but to change the shape of the receptor - to switch it on or lock it off. Understanding this is essential because it explains why two drugs can bind the same receptor with the same affinity but produce opposite effects: one stabilises the active shape, and the other stabilises the inactive shape.`
+    },
+    {
+      q: "A drug binds its target and produces an effect. How does the binding become a response?",
+      body: `The final link in the chain of drug action is the conversion of a binding event into a biological response. A drug changes the shape of a receptor, but the receptor does not produce the response by itself. The response comes from a chain of events downstream - a signalling pathway that runs from the receptor to the effector.
+
+My Socratic question: the drug binds a receptor on the cell surface. The cellular response happens deep inside the cell. How does the signal travel?
+
+The answer is that the receptor activates a cascade of intracellular signalling molecules. Depending on the receptor family, the cascade may be short (a single ion channel opening) or long (a sequence of enzymes activating each other). Each step amplifies the signal, so a small amount of drug binding can produce a large cellular response.
+
+The main downstream signalling mechanisms:
+
+- G-protein coupled receptors - activate G-proteins, which regulate enzymes (adenylyl cyclase, phospholipase C) that produce second messengers (cAMP, IP3, DAG). These second messengers trigger the response.
+- Ion channel receptors - open the channel, allowing ions to flow through and change the cell's electrical state. This triggers nerve or muscle activity.
+- Enzyme-linked receptors - autophosphorylate and recruit downstream proteins through phosphorylation cascades. This changes gene expression, cell growth or metabolism.
+- Nuclear receptors - move to the nucleus and directly change gene transcription. This produces slow, long-lasting effects.
+
+Where drug effects come from:
+
+- Amplification - a small number of drug-receptor complexes can activate a large number of downstream molecules, so even partial receptor occupancy can produce a large response.
+- Specificity - the pathway activated depends on the receptor, so the effect is limited to the tissues and processes that receptor controls.
+- Side effects - off-target binding, or binding to the same receptor in the wrong tissue, produces unintended effects.
+
+Crucial insight: the response to a drug is not produced by the binding itself but by the signalling cascade that binding triggers. Understanding the cascade is what allows pharmacology to predict what a drug will do, why it produces side effects, and how to design better drugs that activate or block only the pathways you want.`
+    },
+    {
+      q: "Now apply everything. How does a doctor think about targets when choosing drugs, and how do specific examples like beta-blockers or SGLT2 inhibitors illustrate this?",
+      body: `All the concepts in this topic come together in clinical practice. When a doctor decides which drug to prescribe, they are thinking through the same chain: what is the process failing? Which target would correct it? Which drug hits that target? How does binding produce the effect? What side effects should be expected?
+
+My Socratic question: a patient has high blood pressure. What does the doctor actually consider when choosing a drug?
+
+The answer is that the doctor chooses a target first, then a drug.
+
+Take beta-blockers as an example. Blood pressure is regulated in part by the sympathetic nervous system, which uses noradrenaline to increase heart rate and constrict blood vessels. The target is beta-adrenergic receptors (GPCRs) on the heart and vessels. The drug class is beta-blockers (e.g. atenolol, metoprolol). They bind the receptor and act as antagonists, blocking noradrenaline's effect. The downstream result is that the heart beats more slowly and with less force, lowering blood pressure. Side effects (fatigue, cold extremities, bronchospasm in asthmatics) come from blocking beta receptors in other tissues.
+
+Take SGLT2 inhibitors as a second example. In diabetes, the kidney reabsorbs glucose from the filtrate, preventing its excretion. The target is SGLT2 - a transporter in the proximal tubule of the kidney. The drug (e.g. empagliflozin) blocks SGLT2, so glucose is not reabsorbed and is excreted in the urine, lowering blood glucose. Side effects (urinary infections, dehydration) come from the increased glucose in the urine.
+
+Take digoxin as a third example. In heart failure, the heart cannot pump enough blood. The target is the sodium-potassium ATPase in cardiac muscle. The drug inhibits the pump, which raises intracellular sodium and, indirectly, intracellular calcium. This increases the force of contraction. Its narrow therapeutic index (from Topic 1) means careful dosing is required.
+
+Crucial insight: clinical pharmacology is target-based thinking. Every drug decision starts with the target, then the drug, then the mechanism, then the effect, then the side effects. If you understand the four target classes, you can reason through any drug a patient is prescribed, understand why it works, predict what might go wrong, and know why certain side effects occur. The whole of pharmacology is built on this foundation.`
+    },
+  ],
+  theory: [
+    { q: "What is a drug target, and why does a drug need one?", a: "A drug target is a specific molecular structure in the body that a drug binds to produce its effect - usually a protein. A drug needs a target because binding that specific molecule is what produces the biological response. Without a target, a drug would have no specific effect." },
+    { q: "Name the four main classes of drug target and give an example of each.", a: "Receptors (beta-adrenergic receptor, targeted by beta-blockers); ion channels (voltage-gated sodium channels, blocked by local anaesthetics); enzymes (cyclooxygenase, inhibited by aspirin); transporters (serotonin transporter, blocked by SSRIs)." },
+    { q: "Why are receptors the largest and most important drug target class?", a: "Receptors are the body's own signalling molecules, so drugs acting on them can mimic or block natural signals with high specificity. They are widely distributed, tissue-specific in some cases, and produce biological responses when bound - making them ideal targets for both agonists and antagonists." },
+    { q: "Describe the four receptor families and their signalling timescales.", a: "G-protein coupled receptors (seconds) - activate a G-protein and second messenger cascade. Ion channel receptors (milliseconds) - open an ion channel and change membrane potential. Enzyme-linked receptors (minutes to hours) - have intrinsic enzyme activity, usually tyrosine kinase. Nuclear receptors (hours to days) - bind lipid-soluble ligands and change gene expression directly." },
+    { q: "Describe the mechanisms of ion channel drug action with examples.", a: "Blockers plug the channel (local anaesthetics block sodium channels; calcium channel blockers like nifedipine lower blood pressure). Openers keep the channel open longer (potassium channel openers like minoxidil). Modulators change the channel's gating behaviour. Ion channels can be voltage-gated, ligand-gated or mechanically gated." },
+    { q: "Describe the three mechanisms of enzyme inhibition and give an example of each.", a: "Competitive inhibition - drug competes with substrate at the active site (statins inhibit HMG-CoA reductase). Non-competitive inhibition - drug binds elsewhere and changes the enzyme's shape. Irreversible inhibition - drug forms a covalent bond and permanently inactivates the enzyme (aspirin inhibits cyclooxygenase)." },
+    { q: "Why are transporters useful drug targets? Give two examples.", a: "Transporters control the movement of substances into and out of cells, so blocking them changes the concentration of a substance at a specific site. SSRIs block the serotonin transporter to raise serotonin in the synapse; SGLT2 inhibitors block glucose reabsorption in the kidney to excrete glucose in urine." },
+    { q: "Define affinity and selectivity, and explain why they matter.", a: "Affinity is the strength with which a drug binds its target. Selectivity (specificity) is how well the drug distinguishes its intended target from others. High affinity means a lower dose is needed; high selectivity means fewer side effects. Both are essential properties for a useful drug." },
+    { q: "Explain what happens at the molecular level when a drug binds its receptor.", a: "The drug approaches the binding site by random diffusion, forms weak bonds (ionic, hydrogen, hydrophobic, van der Waals) with complementary groups in the site, and the receptor undergoes a conformational change. Agonists stabilise the active shape; antagonists lock the inactive shape." },
+    { q: "Why does binding alone not produce a drug effect?", a: "Binding alone is not enough - the receptor must change conformation to signal. A drug that binds without changing the receptor's shape (an antagonist) produces no response of its own. Efficacy - the ability to produce a conformational change that leads to a downstream signal - is what converts binding into a biological effect." },
+    { q: "Describe how the signal from a receptor becomes a cellular response.", a: "Binding triggers a conformational change in the receptor, which activates a downstream signalling pathway. GPCRs activate G-proteins that produce second messengers (cAMP, IP3, DAG); ion channel receptors allow ions through; enzyme-linked receptors phosphorylate downstream proteins; nuclear receptors alter gene transcription directly. Each cascade amplifies the original signal." },
+    { q: "Explain how beta-blockers illustrate target-based thinking in clinical prescribing.", a: "Beta-blockers are antagonists at beta-adrenergic receptors (GPCRs). They bind the receptor without activating it, blocking noradrenaline's effect. The downstream result is a slower, weaker heartbeat and lower blood pressure. Side effects occur because beta receptors exist in other tissues too (lungs, vessels)." },
+    { q: "Explain how SGLT2 inhibitors illustrate transporter-based drug action.", a: "SGLT2 is a sodium-glucose cotransporter in the proximal tubule of the kidney that reabsorbs glucose from the filtrate. SGLT2 inhibitors (e.g. empagliflozin) block this transporter so glucose is not reabsorbed but excreted in the urine, lowering blood glucose. Side effects come from the increased glucose in the urine (urinary infections, dehydration)." },
+    { q: "Why does understanding drug targets matter for predicting side effects?", a: "Side effects often arise from a drug binding its target in the wrong tissue (e.g. beta-blockers causing bronchospasm in asthma, because beta receptors are in the lungs too), or from the drug binding related targets with lower selectivity. Understanding the target's distribution across tissues is what allows the doctor to predict and manage side effects." },
+  ],
+  videos: [
+    { channel: "Pharmacology", title: "Drug Targets - Receptors, Channels, Enzymes and Transporters", note: "Overview of the four drug target classes with clinical examples.", url: "https://www.youtube.com/results?search_query=drug+targets+receptors+channels+enzymes+transporters+pharmacology" },
+    { channel: "Pharmacology", title: "Receptor Families and Signal Transduction", note: "The four receptor families and their downstream signalling mechanisms.", url: "https://www.youtube.com/results?search_query=receptor+families+signal+transduction+pharmacology" },
+    { channel: "Pharmacology", title: "Drug-Receptor Binding - Affinity, Specificity and Conformational Change", note: "What happens at the molecular level when a drug binds its target.", url: "https://www.youtube.com/results?search_query=drug+receptor+binding+affinity+specificity" },
+  ],
+  mcqs: [
+    // ===== Note 1: why a drug needs a target (Q1-5) =====
+    { q: "A drug's specificity comes mainly from:", o: ["Its molecular weight", "Whether the tissue expresses its molecular target", "Its colour", "Its taste"], a: 1, w: "A drug only acts where its target is expressed; tissues without the target are unaffected." },
+    { q: "The four main classes of drug target are:", o: ["Receptors, ion channels, enzymes, transporters", "DNA, RNA, protein, lipid", "Blood, bone, muscle, nerve", "Agonists, antagonists, partial agonists, inverse agonists"], a: 0, w: "The four protein target classes are receptors, ion channels, enzymes and transporters." },
+    { q: "Which is the largest drug target class?", o: ["Enzymes", "Receptors", "Ion channels", "Transporters"], a: 1, w: "Receptors are the largest target class, accounting for around a third of prescription drugs." },
+    { q: "A drug can only produce an effect if:", o: ["It is a large molecule", "Its specific molecular target is present in the tissue", "It is given intravenously", "It is coloured"], a: 1, w: "A drug's effect requires the presence of its molecular target in the tissue." },
+    { q: "The concept of a drug target explains why:", o: ["Drugs act everywhere at once", "Drugs produce one specific effect and leave most tissues untouched", "All drugs are the same", "Drugs are dangerous"], a: 1, w: "The target determines where the drug acts; tissues without the target are unaffected." },
+
+    // ===== Note 2: receptors (Q6-10) =====
+    { q: "A receptor is best described as:", o: ["A passive binding site", "A signalling protein that changes cell behaviour when activated", "A small molecule", "A type of sugar"], a: 1, w: "A receptor is a signalling protein - binding changes cell behaviour." },
+    { q: "Which receptor family is targeted by around a third of prescription drugs?", o: ["Nuclear receptors", "Enzyme-linked receptors", "G-protein coupled receptors", "Ion channel receptors"], a: 2, w: "G-protein coupled receptors (GPCRs) are the largest receptor family." },
+    { q: "Which drug behaviour involves binding but no activation?", o: ["Agonist", "Antagonist", "Partial agonist", "Inverse agonist"], a: 1, w: "An antagonist has affinity but no efficacy - it binds without activating the receptor." },
+    { q: "An inverse agonist is a drug that:", o: ["Produces the opposite effect to the natural ligand by suppressing baseline activity", "Always activates the receptor", "Has no affinity", "Is always irreversible"], a: 0, w: "An inverse agonist produces the opposite effect by suppressing constitutive receptor activity." },
+    { q: "Receptors are useful drug targets partly because they are:", o: ["Found only in one organ", "Tissue-specific, so drug effects can be limited to specific organs", "Always harmful", "Synthetic"], a: 1, w: "Their tissue-specificity means drug effects can be limited to specific organs." },
+
+    // ===== Note 3: four receptor families (Q11-15) =====
+    { q: "Which receptor family acts on a millisecond timescale?", o: ["Ion channel receptors", "Nuclear receptors", "Enzyme-linked receptors", "G-protein coupled receptors"], a: 0, w: "Ion channel receptors act fastest - within milliseconds." },
+    { q: "Nuclear receptors produce effects on what timescale?", o: ["Milliseconds", "Seconds", "Hours to days", "Only seconds"], a: 2, w: "Nuclear receptors change gene expression, producing slow effects over hours to days." },
+    { q: "The insulin receptor is an example of which family?", o: ["Nuclear receptor", "Ion channel receptor", "Enzyme-linked receptor", "G-protein coupled receptor"], a: 2, w: "The insulin receptor is an enzyme-linked (tyrosine kinase) receptor." },
+    { q: "The nicotinic acetylcholine receptor belongs to which family?", o: ["Ion channel receptors", "Nuclear receptors", "Enzyme-linked receptors", "G-protein coupled receptors"], a: 0, w: "The nicotinic acetylcholine receptor is a ligand-gated ion channel." },
+    { q: "Which receptor family binds lipid-soluble ligands and directly changes gene expression?", o: ["GPCRs", "Ion channel receptors", "Enzyme-linked receptors", "Nuclear receptors"], a: 3, w: "Nuclear receptors bind lipid-soluble ligands and alter gene transcription." },
+
+    // ===== Note 4: ion channels (Q16-20) =====
+    { q: "Local anaesthetics produce their effect by:", o: ["Blocking potassium channels", "Blocking voltage-gated sodium channels", "Opening calcium channels", "Blocking chloride channels"], a: 1, w: "Local anaesthetics block voltage-gated sodium channels, preventing nerve conduction." },
+    { q: "Calcium channel blockers are used clinically to:", o: ["Lower blood pressure", "Raise blood pressure", "Increase heart rate", "Treat infections"], a: 0, w: "Calcium channel blockers lower blood pressure by relaxing vascular smooth muscle." },
+    { q: "Voltage-gated ion channels open in response to:", o: ["A chemical ligand binding", "Mechanical stretch", "Changes in membrane potential", "Temperature"], a: 2, w: "Voltage-gated channels open in response to changes in membrane potential." },
+    { q: "A drug that keeps an ion channel open longer than usual is called a(n):", o: ["Blocker", "Opener (activator)", "Modulator", "Antagonist"], a: 1, w: "Openers (activators) keep channels open longer, increasing ion flow." },
+    { q: "Which of the following is NOT a common method of ion channel gating?", o: ["Voltage-gated", "Light-gated", "Ligand-gated", "Mechanically gated"], a: 1, w: "Light-gated channels exist in some specialised systems but are not a common gating mechanism in human pharmacology." },
+
+    // ===== Note 5: enzymes (Q21-25) =====
+    { q: "Aspirin produces its effects by:", o: ["Reversibly inhibiting cyclooxygenase", "Irreversibly inhibiting cyclooxygenase", "Blocking sodium channels", "Activating COX"], a: 1, w: "Aspirin irreversibly acetylates cyclooxygenase, permanently inactivating it." },
+    { q: "Statins lower cholesterol by inhibiting:", o: ["Cyclooxygenase", "HMG-CoA reductase", "ACE", "Amylase"], a: 1, w: "Statins inhibit HMG-CoA reductase, the rate-limiting enzyme in cholesterol synthesis." },
+    { q: "A competitive enzyme inhibitor:", o: ["Binds the active site and can be overcome by raising substrate concentration", "Binds irreversibly", "Binds away from the active site", "Cannot be overcome"], a: 0, w: "Competitive inhibitors compete at the active site and can be overcome by excess substrate." },
+    { q: "Penicillin kills bacteria by:", o: ["Blocking protein synthesis", "Inhibiting transpeptidase and blocking cell wall synthesis", "Inhibiting DNA synthesis", "Blocking the bacterial membrane"], a: 1, w: "Penicillin irreversibly inhibits transpeptidase, preventing cell wall cross-linking." },
+    { q: "Allopurinol treats gout by inhibiting:", o: ["Xanthine oxidase", "COX", "ACE", "HMG-CoA reductase"], a: 0, w: "Allopurinol inhibits xanthine oxidase, lowering uric acid production." },
+
+    // ===== Note 6: transporters (Q26-30) =====
+    { q: "SSRIs work by blocking:", o: ["The serotonin transporter", "A serotonin receptor", "Serotonin synthesis", "Serotonin breakdown"], a: 0, w: "SSRIs block the serotonin transporter, raising serotonin in the synapse." },
+    { q: "SGLT2 inhibitors lower blood glucose by:", o: ["Increasing insulin secretion", "Blocking glucose reabsorption in the kidney, causing glucose excretion", "Blocking glucose absorption in the gut", "Blocking glucagon"], a: 1, w: "SGLT2 inhibitors block glucose reabsorption in the proximal tubule, so glucose is excreted in urine." },
+    { q: "Proton pump inhibitors block:", o: ["H+/K+ ATPase in the stomach", "Sodium channels", "Serotonin transporters", "Dopamine receptors"], a: 0, w: "PPIs block the gastric proton pump (H+/K+ ATPase), reducing acid secretion." },
+    { q: "Digoxin inhibits which transporter in cardiac muscle?", o: ["Serotonin transporter", "Sodium-potassium ATPase", "SGLT2", "Proton pump"], a: 1, w: "Digoxin inhibits the sodium-potassium ATPase in cardiac muscle." },
+    { q: "Cocaine produces its effects partly by blocking:", o: ["The serotonin transporter only", "The dopamine transporter", "The GABA transporter only", "The norepinephrine transporter only"], a: 1, w: "Cocaine blocks the dopamine transporter, increasing dopamine in the synapse." },
+
+    // ===== Note 7: drug-receptor binding (Q31-35) =====
+    { q: "Affinity refers to:", o: ["The strength of binding between a drug and its target", "The ability to activate the receptor", "The speed of metabolism", "The plasma half-life"], a: 0, w: "Affinity is how strongly a drug binds its target." },
+    { q: "Selectivity refers to:", o: ["The drug's colour", "How well a drug distinguishes its intended target from others", "The drug's half-life", "The drug's dose"], a: 1, w: "Selectivity is the drug's ability to bind one target preferentially over others." },
+    { q: "Which of these is NOT a common bond between a drug and its target?", o: ["Ionic", "Hydrogen", "Covalent metallic", "Van der Waals"], a: 2, w: "Covalent metallic bonds do not occur in drug-receptor interactions." },
+    { q: "Drug binding selectivity depends mainly on:", o: ["The drug's molecular weight", "Shape and chemical complementarity between drug and binding site", "The drug's colour", "The route of administration"], a: 1, w: "Selective binding requires shape and chemical complementarity between the drug and the site." },
+    { q: "Most drugs are:", o: ["Perfectly selective", "Selective for their intended target but also bind other targets with lower affinity", "Nonselective", "Only active on one target"], a: 1, w: "Most drugs bind their primary target with high affinity and other targets with lower affinity - producing side effects." },
+
+    // ===== Note 8: conformational change (Q36-40) =====
+    { q: "The main event after a drug binds a receptor is:", o: ["A change in the receptor's conformation", "A change in the drug's colour", "Movement into the nucleus", "Dissociation"], a: 0, w: "Receptor conformational change is what converts binding into a signal." },
+    { q: "An agonist produces its effect by:", o: ["Stabilising the inactive shape of the receptor", "Stabilising the active shape of the receptor", "Blocking the receptor without effect", "Removing the receptor"], a: 1, w: "Agonists stabilise the active conformation, triggering downstream signalling." },
+    { q: "An antagonist produces its effect by:", o: ["Stabilising the active shape of the receptor", "Activating the receptor weakly", "Stabilising the inactive shape of the receptor", "Removing the receptor"], a: 2, w: "Antagonists lock the receptor in an inactive shape, blocking the effects of agonists." },
+    { q: "If a drug binds a receptor but does not change its shape:", o: ["The effect is stronger", "Nothing happens - binding alone does not produce a signal", "The receptor is destroyed", "The cell dies"], a: 1, w: "Binding without conformational change produces no downstream signal - the essence of antagonism." },
+    { q: "The key difference between affinity and efficacy is that:", o: ["Affinity is binding; efficacy is the ability to produce a conformational change that leads to a response", "They are the same", "Efficacy is binding; affinity is the effect", "Both describe metabolism"], a: 0, w: "Affinity is binding; efficacy is the ability to activate the receptor." },
+
+    // ===== Note 9: downstream consequences (Q41-45) =====
+    { q: "The signal from a GPCR is carried by:", o: ["G-proteins and second messengers", "Direct ion flow", "Phosphorylation only", "DNA directly"], a: 0, w: "GPCRs activate G-proteins that generate second messengers like cAMP and IP3." },
+    { q: "Ion channel receptors produce their effect by:", o: ["Opening the channel and changing membrane potential", "Phosphorylating proteins", "Changing gene transcription", "Producing second messengers"], a: 0, w: "Ion channel receptors open on binding and change the cell's electrical state." },
+    { q: "Enzyme-linked receptors typically signal by:", o: ["Phosphorylation cascades", "Direct ion flow", "Producing cAMP", "Entering the nucleus"], a: 0, w: "Enzyme-linked receptors phosphorylate downstream proteins, generating a signalling cascade." },
+    { q: "A key feature of receptor signalling that makes drugs effective at low doses is:", o: ["Signal amplification at each step of the cascade", "Immediate degradation of the drug", "No amplification", "Slow receptor binding"], a: 0, w: "Amplification means a small number of drug-receptor complexes can produce a large response." },
+    { q: "Side effects of drugs often arise from:", o: ["The drug binding its target in unintended tissues", "The drug having no target", "The drug being metabolised", "The drug being too potent"], a: 0, w: "Side effects commonly result from the same target being present in unintended tissues." },
+
+    // ===== Note 10: clinical applications (Q46-50) =====
+    { q: "Beta-blockers produce their main effects by:", o: ["Acting as antagonists at beta-adrenergic receptors", "Activating beta-adrenergic receptors", "Blocking sodium channels", "Inhibiting ACE"], a: 0, w: "Beta-blockers antagonise beta-adrenergic receptors, slowing the heart and lowering blood pressure." },
+    { q: "A common side effect of beta-blockers in asthmatics is:", o: ["Hypertension", "Bronchospasm", "Hyperglycaemia", "Diarrhoea"], a: 1, w: "Beta receptors exist in the lungs, so blocking them can cause bronchospasm in asthmatics." },
+    { q: "A common side effect of SGLT2 inhibitors is:", o: ["Urinary tract infections", "Bradycardia", "Hypertension", "Bronchospasm"], a: 0, w: "SGLT2 inhibitors increase glucose in the urine, which predisposes to urinary tract infections." },
+    { q: "Digoxin requires careful dosing because:", o: ["It has a wide therapeutic index", "It has a narrow therapeutic index", "It has no side effects", "It has no receptor target"], a: 1, w: "Digoxin has a narrow therapeutic index, requiring plasma monitoring to avoid toxicity." },
+    { q: "Clinical pharmacology is best described as:", o: ["Memorising drug names", "Target-based reasoning - target, drug, mechanism, effect, side effects", "Studying only pharmacokinetics", "Prescribing without thought"], a: 1, w: "Clinical pharmacology is target-based reasoning from target to drug to mechanism to effect to side effects." },
+  ],
+};
+
+/* --------------------------- pha:2 --------------------------- */
+const T_PHA_SIGNAL = {
+  courseId: "pha",
+  topicIndex: 2,
+  title: "Principles of Drug Action: How Drugs Act — Signal Transduction",
+  minutes: 30,
+  note: [
+    {
+      q: "A drug binds its receptor. So what? Why does that binding actually change anything inside the cell?",
+      body: `In the last topic you learned that a drug produces its effect by binding a target - usually a receptor. But binding alone is not magic. A drug sitting in a receptor, doing nothing else, would be as useless as a key resting in a lock without being turned. Something has to happen after binding. That something is signal transduction.
+
+My Socratic question: the drug is on the outside of the cell, bound to a receptor in the membrane. The cellular response - a change in heart rate, a change in secretion, a change in gene expression - happens deep inside the cell. How does information cross that distance?
+
+The answer is that the receptor does not simply bind the drug - it converts the binding event into an intracellular signal. This conversion is signal transduction. The receptor changes shape when the drug binds, and that shape change triggers a chain of events inside the cell that ultimately produces the response. Without transduction, binding would be silent.
+
+Signal transduction is the link between pharmacodynamics (what the drug does to the body) and cell biology (how the cell responds). It explains why the same receptor can produce different effects in different tissues - because the downstream machinery differs. It explains why some drugs act in milliseconds while others take hours. And it explains why diseases of signalling - cancer, myasthenia gravis, diabetes - can be so devastating.
+
+Crucial insight: signal transduction is the conversion of an extracellular binding event into an intracellular response. A drug's effect is never produced by binding alone - it is produced by the signalling cascade that binding triggers. Understanding transduction is what turns "the drug binds a receptor" into "the drug produces this specific effect, in this tissue, over this timescale."`
+    },
+    {
+      q: "Some drugs work in milliseconds. What kind of receptor makes that possible?",
+      body: `Consider two experiences: the sharp withdrawal of your hand from a hot surface, and the slow build-up of thyroid hormone over days. Both are receptor-mediated, yet their speeds differ by a factor of millions. The difference comes down to which family of receptor is doing the work - and the fastest family is the ligand-gated ion channel.
+
+My Socratic question: if a signalling molecule binds a receptor and the effect happens in less than a millisecond, what must the receptor do to avoid any delay?
+
+The answer is that the receptor must itself be the effector. There is no time for a cascade of enzymes or second messengers. The ligand-gated ion channel is a receptor and an ion channel in one protein - when the ligand binds, the channel opens directly. Ions flow through, the membrane potential changes, and the cell responds. No intermediate steps.
+
+The key features of ligand-gated ion channels:
+
+- They are fast - effects occur within milliseconds.
+- They are direct - binding opens the channel, no second messenger required.
+- They are usually excitatory or inhibitory - the ion that flows determines the effect.
+- They are found where speed matters - at synapses, at the neuromuscular junction, in the retina.
+
+The classic example is the nicotinic acetylcholine receptor at the neuromuscular junction. When acetylcholine binds, the channel opens, sodium ions flow in, the muscle fibre depolarises, and contraction follows. Every voluntary movement you make depends on this receptor.
+
+Crucial insight: ligand-gated ion channels are the fastest signalling mechanism in the body because they eliminate every intermediate step. The receptor is the ion channel, and binding is the only event needed to open it. This is why drugs that act on these receptors - such as muscle relaxants used in anaesthesia, or nicotine itself - have effects that are immediate and dramatic.`
+    },
+    {
+      q: "The largest receptor family is the GPCR. What makes it so versatile, and why do so many drugs target it?",
+      body: `Around a third of all prescription drugs act on G-protein coupled receptors. They are the largest receptor family in the human genome - over 800 members - and they respond to an astonishing variety of signals: light, odours, hormones, neurotransmitters. If one family dominates pharmacology, it is this one.
+
+My Socratic question: a GPCR is a single protein that crosses the membrane seven times. How can one structural motif respond to so many different signals and produce so many different effects?
+
+The answer is that the GPCR is not a fixed switch - it is a scaffold that couples to many different G-proteins and many different downstream effectors. The receptor itself is specific for its ligand, but the signal it produces depends on which G-protein it activates, which enzyme that G-protein regulates, and which second messenger that enzyme produces. The same receptor can even couple to different G-proteins in different tissues, producing different effects.
+
+The structure of a GPCR:
+
+- Seven transmembrane alpha-helices, connected by intracellular and extracellular loops.
+- An extracellular ligand-binding site.
+- An intracellular site that binds and activates a G-protein.
+- The third intracellular loop is often the key region for G-protein specificity.
+
+What makes GPCRs so druggable:
+
+- They sit on the cell surface, so drugs do not need to enter the cell to reach them.
+- They have a defined binding pocket that can be targeted with high specificity.
+- They mediate almost every major physiological process - so almost every disease has a GPCR-based treatment option.
+- Their activity can be tuned up or down with agonists, antagonists, and allosteric modulators.
+
+Crucial insight: GPCRs dominate pharmacology because they are the body's most versatile signalling platform. They are accessible, specific, and involved in nearly every physiological process. When you study beta-blockers, antihistamines, opioids, dopamine agonists and antipsychotics, you are studying drugs that act on GPCRs. Understanding the GPCR is understanding the majority of clinical pharmacology.`
+    },
+    {
+      q: "A GPCR binds its ligand, but the signal has to be carried inside the cell. What does that job?",
+      body: `The GPCR does not produce the intracellular signal itself - it activates a helper protein inside the cell. That helper is the G-protein, and understanding how it works is essential for understanding how GPCR drugs act.
+
+My Socratic question: the GPCR is a receptor in the membrane. The effector - an enzyme or an ion channel - is also in the membrane or nearby. Why does the signal need to pass through a third protein in between?
+
+The answer is that the G-protein is the amplifier and the switch. When the GPCR binds its ligand, it changes shape and activates the G-protein. The activated G-protein then dissociates into subunits that can each interact with effectors. This allows a single receptor-ligand interaction to produce multiple downstream effects, and it allows the system to be turned off when the ligand leaves.
+
+The cycle of G-protein activation:
+
+- Resting state - the G-protein exists as a trimer: alpha, beta and gamma subunits. The alpha subunit is bound to GDP and is inactive.
+- Receptor activation - the ligand binds the GPCR, which changes shape and interacts with the G-protein.
+- GDP-GTP exchange - the alpha subunit releases GDP and binds GTP. This is the activation step.
+- Subunit dissociation - the alpha subunit (now GTP-bound) separates from the beta-gamma dimer.
+- Effector modulation - both the alpha subunit and the beta-gamma dimer can interact with effector proteins (enzymes, ion channels), producing the cellular signal.
+- Signal termination - the alpha subunit has intrinsic GTPase activity and eventually hydrolyses GTP to GDP, returning to the resting state.
+
+The main G-protein families:
+
+- Gs - stimulates adenylyl cyclase, increasing cAMP.
+- Gi - inhibits adenylyl cyclase, decreasing cAMP.
+- Gq - activates phospholipase C, producing IP3 and DAG.
+- G12/13 - regulates Rho GTPases and cytoskeletal changes.
+
+Crucial insight: the G-protein is the molecular switch that links the receptor to the effector. It amplifies the signal (one receptor activates many G-proteins), it provides a point of regulation (the GTPase cycle), and it determines what kind of signal the receptor produces (Gs, Gi, Gq, etc.). Many drugs and toxins act on G-proteins directly - cholera toxin and pertussis toxin both disrupt G-protein function, which is how they cause disease.`
+    },
+    {
+      q: "The signal is inside the cell, but the response has to reach the whole cell. How does the message get amplified and spread?",
+      body: `When a G-protein is activated, the signal so far is tiny - a handful of molecules in a microscopic region of the cell. Yet the response that follows can affect the entire cell, and can be enormous compared to the original signal. The reason is the second messenger system: a cascade of molecules that amplifies the original signal and carries it to the cell's interior.
+
+My Socratic question: if a single molecule of a hormone can trigger a cell-wide response, what kind of intermediate messenger would need to be produced to make that possible?
+
+The answer is an enzyme-activated second messenger - a small molecule produced in large quantities by an enzyme the G-protein controls. The second messenger diffuses through the cell, activates other enzymes, and triggers the response. Because each enzyme molecule can produce many second messenger molecules, the signal is amplified at each step.
+
+The main second messengers:
+
+- cAMP (cyclic AMP) - produced by adenylyl cyclase (which Gs activates). Activates protein kinase A (PKA), which phosphorylates many target proteins. Affects metabolism, secretion, ion channel activity, and gene transcription.
+- IP3 (inositol trisphosphate) - produced by phospholipase C (which Gq activates). Diffuses to the endoplasmic reticulum, binds IP3 receptors, and triggers release of calcium into the cytoplasm.
+- DAG (diacylglycerol) - also produced by phospholipase C. Remains in the membrane and activates protein kinase C (PKC), which phosphorylates many targets.
+- Calcium (Ca2+) - released from intracellular stores by IP3. Binds calmodulin and other calcium-binding proteins, triggering muscle contraction, secretion, and gene expression.
+- cGMP (cyclic GMP) - produced by guanylyl cyclase. Activates protein kinase G. Important in smooth muscle relaxation (nitric oxide signalling).
+
+Crucial insight: second messengers are the amplifiers and broadcasters of the signal. They turn a tiny binding event into a large, cell-wide response. This is why drug doses can be so small and effects so large - and why drugs that interfere with second messengers (like theophylline, which inhibits cAMP breakdown, or sildenafil, which inhibits cGMP breakdown) can have such widespread effects.`
+    },
+    {
+      q: "A drug binds a receptor and produces a response. But the drug is at a very low concentration. How can such a tiny amount produce such a large effect?",
+      body: `You take a 5 mg tablet of a drug. That is a tiny amount - roughly one hundredth of a gram. Yet the effect on your body can be enormous, affecting millions of cells at once. The reason is amplification: each step of the signalling cascade multiplies the signal.
+
+My Socratic question: if a single drug molecule binds a single receptor, what kind of cascade would allow that one binding event to produce a whole-body response?
+
+The answer is a cascade of enzymes activating enzymes. At each step, one molecule activates many. By the time the signal reaches the final effector, the amplification can be a million-fold or more.
+
+How amplification works in a GPCR cascade:
+
+- One ligand binds one receptor.
+- The activated receptor activates many G-proteins (amplification step 1).
+- Each activated G-protein activates one adenylyl cyclase enzyme.
+- Each adenylyl cyclase produces many cAMP molecules (amplification step 2 - each enzyme makes many products).
+- Each cAMP activates one protein kinase A.
+- Each protein kinase A phosphorylates many target proteins (amplification step 3).
+- Each phosphorylated target protein produces a cellular effect.
+
+The overall amplification can be enormous - a single ligand molecule can trigger the release of millions of product molecules. This is why drug doses can be so low and effects so large, and why even a small number of receptors can produce a maximal response (the "spare receptor" phenomenon).
+
+Amplification has clinical consequences:
+
+- Low doses can produce large effects - good for dosing.
+- But side effects can also be amplified - a small off-target binding event can produce widespread effects.
+- Amplification can also create toxicity - some drugs produce effects far greater than expected because their signal is amplified more than predicted.
+
+Crucial insight: signal amplification is why pharmacology can be so powerful - and so dangerous. A small amount of drug can produce a large effect, which is why dose calculations are so critical, why narrow therapeutic index drugs require monitoring, and why understanding the cascade matters for predicting both efficacy and toxicity.`
+    },
+    {
+      q: "Cells are constantly receiving multiple signals at once. How does a cell decide what to do when several pathways are active?",
+      body: `A cell in the body is never receiving just one signal. At any moment, it is bathed in hormones, growth factors, neurotransmitters, and drugs - each binding its own receptor and triggering its own cascade. Yet the cell produces a coherent response, not chaos. This coordination happens through receptor crosstalk: the ability of signalling pathways to interact with and modify each other.
+
+My Socratic question: two different receptors, each with its own ligand, activate two different G-proteins that affect the same second messenger. What happens to the signal?
+
+The answer depends on whether the pathways converge or oppose each other. If both activate adenylyl cyclase, the cAMP signal is stronger than either alone. If one activates adenylyl cyclase (Gs) and the other inhibits it (Gi), the effect is a balance of the two. Crosstalk is how the cell integrates multiple inputs into a single decision.
+
+Forms of crosstalk:
+
+- Convergence - two pathways activate the same effector, producing a combined effect.
+- Divergence - one receptor activates multiple effectors, producing multiple effects.
+- Antagonism - one pathway inhibits another, allowing the cell to balance opposing signals.
+- Synergy - two pathways together produce an effect greater than either alone.
+- Feedback - a downstream component of a pathway inhibits an upstream component, preventing overstimulation.
+
+Examples of crosstalk in medicine:
+
+- Cardiac myocytes receive both sympathetic (Gs) and parasympathetic (Gi) input. The balance determines the heart rate - which is why drugs that affect either pathway can change heart rate.
+- Growth factor receptors (tyrosine kinase) and GPCRs can activate shared downstream pathways (MAPK, PI3K). This crosstalk is important in cancer - a tumour may become resistant to one drug because another pathway compensates.
+- Insulin signalling and glucagon signalling both act on hepatocytes, and their balance determines whether the liver stores or releases glucose.
+
+Crucial insight: crosstalk is what makes cell signalling so complex and so responsive. It allows the cell to integrate many inputs at once, producing a coherent response. But it also means that drugs acting on one pathway can have unexpected effects on another - a fact that underlies many drug interactions and side effects.`
+    },
+    {
+      q: "A drug is given repeatedly. The effect gets weaker. Why?",
+      body: `Some drugs produce a large effect the first time, then a smaller effect the second time, and eventually the response fades. This is desensitisation (or tachyphylaxis). It is one of the most important concepts in clinical pharmacology, because it affects how drugs are dosed, how tolerance develops, and why some patients stop responding to treatment.
+
+My Socratic question: if the drug is still present and still binds its receptor, why does the effect decrease?
+
+The answer is that the cell has mechanisms to protect itself from overstimulation. When a receptor is repeatedly activated, the cell responds by desensitising it - either temporarily (by phosphorylation) or long-term (by downregulation).
+
+Mechanisms of desensitisation:
+
+- Phosphorylation - a kinase phosphorylates the receptor, reducing its ability to activate its G-protein. This happens within seconds to minutes. The receptor is still on the surface but is functionally uncoupled.
+- Arrestin binding - after phosphorylation, arrestin binds the receptor, further blocking G-protein coupling and targeting the receptor for internalisation.
+- Internalisation - the receptor is pulled into the cell by endocytosis, removing it from the surface. It may be recycled back to the surface (resensitisation) or degraded.
+- Downregulation - if stimulation continues for hours to days, the cell reduces the number of receptors it produces. This is a slower, longer-lasting form of desensitisation.
+
+Clinical examples:
+
+- Beta-agonists used in asthma - repeated use can cause desensitisation of beta-adrenergic receptors, reducing bronchodilation. This is why long-acting beta-agonists are used with corticosteroids.
+- Opioids - repeated use causes desensitisation and downregulation of mu-opioid receptors, which contributes to tolerance and the need for dose escalation.
+- Dopamine agonists in Parkinson's disease - long-term use can cause desensitisation and the "on-off" phenomenon.
+
+Crucial insight: desensitisation is the cell's protective response to overstimulation. It is a form of homeostasis at the receptor level. Understanding it explains why drugs must sometimes be given in pulses rather than continuously, why tolerance develops, and why some drugs lose effectiveness over time. It is also the mechanism behind drug withdrawal - when the drug is removed, the desensitised receptors recover, producing an exaggerated response to endogenous ligands.`
+    },
+    {
+      q: "When signalling goes wrong, disease follows. How does malfunction of signal transduction cause cancer and myasthenia gravis?",
+      body: `Signal transduction is essential for normal cell function - growth, division, differentiation, secretion, contraction. When the signalling machinery breaks down, the consequences range from autoimmune disease to cancer. Two examples will show the range.
+
+My Socratic question: cancer cells grow and divide without the normal controls. If signal transduction controls cell growth, what kind of signalling defect would cause uncontrolled division?
+
+The answer is a signalling pathway that is stuck in the "on" state - a receptor that is constitutively active, a G-protein that cannot hydrolyse GTP, or a kinase that is overactive. The cell receives a continuous "grow" signal, even when no growth factor is present.
+
+**Cancer and signalling:**
+
+- RAS mutations - RAS is a small G-protein that relays growth signals. In many cancers, mutations lock RAS in the GTP-bound (active) form, so it signals continuously. Around 30% of all human cancers have a RAS mutation.
+- BCR-ABL fusion - in chronic myeloid leukaemia, a chromosomal translocation creates a fusion protein with constitutive tyrosine kinase activity. Imatinib (Gleevec) was designed to inhibit this kinase and is one of the first targeted cancer therapies.
+- HER2 amplification - in some breast cancers, the HER2 receptor (an enzyme-linked receptor) is overexpressed, driving excessive growth signalling. Trastuzumab (Herceptin) targets HER2.
+- GPCR mutations - some tumours have mutations in GPCRs that cause constitutive activation.
+
+**Myasthenia gravis and signalling:**
+
+Myasthenia gravis is an autoimmune disease in which antibodies attack the nicotinic acetylcholine receptor at the neuromuscular junction. The receptor is destroyed or blocked, so the signal from nerve to muscle fails. The result is muscle weakness and fatigue. Treatment includes acetylcholinesterase inhibitors (which increase acetylcholine at the synapse) and immunosuppression.
+
+Other examples of signalling disease:
+
+- Cholera - the cholera toxin modifies the Gs alpha subunit so it cannot hydrolyse GTP. Adenylyl cyclase is permanently active, cAMP is high, and the intestinal cells secrete massive amounts of fluid.
+- Whooping cough - the pertussis toxin modifies the Gi alpha subunit so it cannot be activated, removing an inhibitory signal and increasing cAMP.
+- Diabetes - insulin signalling is defective (in type 2) or absent (in type 1), so glucose uptake by cells is impaired.
+
+Crucial insight: signal transduction is a chain, and a defect in any link can cause disease. Cancer often results from a signalling pathway stuck "on"; autoimmune disease can result from a receptor being attacked; toxins can disrupt G-protein cycling; metabolic disease can result from impaired insulin signalling. Understanding signal transduction is understanding the molecular basis of many of the most important diseases in medicine.`
+    },
+    {
+      q: "Now apply everything. Which drugs act on signal transduction, and how do they produce their clinical effects?",
+      body: `Signal transduction is the target of some of the most commonly prescribed drugs in medicine. Understanding the pathways makes their clinical effects predictable and their side effects understandable.
+
+My Socratic question: a patient is prescribed a beta-blocker for high blood pressure, a corticosteroid for asthma, and an SSRI for depression. Each drug acts on a different signalling pathway. What are those pathways, and how do the drugs modify them?
+
+The answer is that each drug acts on a distinct part of the signalling cascade - a receptor, a second messenger, or a downstream kinase.
+
+Drugs that act on GPCR signalling:
+
+- Beta-blockers (atenolol, metoprolol) - antagonists at beta-adrenergic receptors (Gs-coupled). They block noradrenaline's effect, reducing heart rate and blood pressure.
+- Beta-agonists (salbutamol) - agonists at beta-2 adrenergic receptors (Gs-coupled). They increase cAMP in airway smooth muscle, causing bronchodilation.
+- Antihistamines - antagonists at H1 receptors (Gq-coupled). They block histamine's effects, reducing allergy symptoms.
+- Opioids (morphine) - agonists at mu-opioid receptors (Gi-coupled). They reduce cAMP and hyperpolarise neurons, producing analgesia.
+
+Drugs that act on second messengers:
+
+- Theophylline - inhibits phosphodiesterase, the enzyme that breaks down cAMP. Used in asthma and COPD.
+- Sildenafil (Viagra) - inhibits phosphodiesterase type 5, the enzyme that breaks down cGMP. Used in erectile dysfunction and pulmonary hypertension.
+- Caffeine - inhibits phosphodiesterase, increasing cAMP. This contributes to its stimulant effect.
+
+Drugs that act on enzyme-linked receptors:
+
+- Insulin - agonist at the insulin receptor (tyrosine kinase). Used in diabetes.
+- Imatinib - inhibits the BCR-ABL tyrosine kinase. Used in chronic myeloid leukaemia.
+- Trastuzumab - monoclonal antibody against HER2. Used in HER2-positive breast cancer.
+
+Drugs that act on nuclear receptors:
+
+- Corticosteroids (prednisolone, dexamethasone) - agonists at the glucocorticoid receptor. They change gene expression, reducing inflammation.
+- Oestrogen and progesterone - agonists at their respective nuclear receptors. Used in contraception and hormone replacement.
+- Thyroid hormone - agonist at the thyroid hormone receptor.
+
+Crucial insight: signal transduction is the mechanism behind a huge proportion of clinical drugs. Whether the drug acts on a receptor, a G-protein, a second messenger, or a downstream kinase, it is modifying a signalling cascade. Understanding the cascade lets you predict what the drug will do, why it causes the side effects it does, and how it interacts with other drugs that affect the same pathway. This is why signal transduction is one of the most important topics in pharmacology.`
+    },
+  ],
+  theory: [
+    { q: "Define signal transduction and explain why it matters in pharmacology.", a: "Signal transduction is the process by which an extracellular binding event (a drug or hormone binding a receptor) is converted into an intracellular response. It matters because a drug's effect is never produced by binding alone - it is produced by the signalling cascade that binding triggers. Understanding signal transduction explains why drugs produce specific effects, why some act fast and others slowly, and why side effects occur." },
+    { q: "Describe the structure and function of ligand-gated ion channels.", a: "Ligand-gated ion channels are receptors that are themselves ion channels. They consist of multiple subunits surrounding a central pore. When the ligand binds, the channel opens directly, allowing specific ions to flow through. This is the fastest signalling mechanism in the body, with effects occurring in milliseconds. They are found at synapses and the neuromuscular junction. Example: the nicotinic acetylcholine receptor." },
+    { q: "Describe the structure and function of G-protein coupled receptors (GPCRs).", a: "GPCRs are seven-transmembrane receptors that activate a G-protein when the ligand binds. They have an extracellular ligand-binding site and an intracellular G-protein binding site. When activated, the G-protein dissociates into subunits that modulate effector proteins (enzymes or ion channels). GPCRs are the largest receptor family and the target of around a third of prescription drugs." },
+    { q: "Describe the structure and function of enzyme-linked receptors.", a: "Enzyme-linked receptors have intrinsic enzymatic activity, most commonly tyrosine kinase. When the ligand binds, the receptor autophosphorylates and phosphorylates downstream proteins, triggering a signalling cascade. They act on a timescale of minutes to hours and are important in growth, metabolism and differentiation. Example: the insulin receptor." },
+    { q: "Describe the structure and function of nuclear receptors.", a: "Nuclear receptors are intracellular receptors that bind lipid-soluble ligands (steroid hormones, thyroid hormone). When activated, they move to the nucleus and directly change gene transcription. They act on a timescale of hours to days and produce long-lasting effects. Examples: the oestrogen receptor and glucocorticoid receptor." },
+    { q: "Explain the G-protein cycle and the roles of GDP and GTP.", a: "The G-protein cycle: the G-protein exists as a trimer (alpha, beta, gamma) with GDP bound to the alpha subunit in the resting state. When a GPCR is activated by its ligand, it interacts with the G-protein, causing the alpha subunit to release GDP and bind GTP. The GTP-bound alpha subunit dissociates from the beta-gamma dimer and can interact with effectors. The intrinsic GTPase activity of the alpha subunit eventually hydrolyses GTP to GDP, returning the G-protein to the resting state." },
+    { q: "Name the four main G-protein families and the signalling pathways they activate.", a: "Gs - stimulates adenylyl cyclase, increasing cAMP. Gi - inhibits adenylyl cyclase, decreasing cAMP. Gq - activates phospholipase C, producing IP3 and DAG. G12/13 - regulates Rho GTPases and cytoskeletal changes." },
+    { q: "Describe cAMP and its role as a second messenger.", a: "cAMP (cyclic AMP) is produced by adenylyl cyclase when activated by Gs. It activates protein kinase A (PKA), which phosphorylates many target proteins, affecting metabolism, secretion, ion channel activity and gene transcription. cAMP is broken down by phosphodiesterase. Drugs that inhibit phosphodiesterase (e.g. theophylline) increase cAMP and prolong its effects." },
+    { q: "Describe the roles of IP3, DAG and calcium as second messengers.", a: "IP3 (inositol trisphosphate) is produced by phospholipase C when activated by Gq. It diffuses to the endoplasmic reticulum and triggers calcium release. DAG (diacylglycerol) remains in the membrane and activates protein kinase C (PKC). Calcium binds calmodulin and other proteins, triggering muscle contraction, secretion, and gene expression." },
+    { q: "Explain signal amplification and why it matters clinically.", a: "Signal amplification is the process by which each step of a signalling cascade multiplies the signal. One ligand can activate many G-proteins; one G-protein can activate an enzyme that produces many second messenger molecules; one second messenger can activate a kinase that phosphorylates many targets. Amplification allows a very small drug dose to produce a large effect, but it also means that small off-target effects can be magnified, contributing to side effects and toxicity." },
+    { q: "Define receptor crosstalk and give a clinical example.", a: "Receptor crosstalk is the interaction between different signalling pathways, allowing the cell to integrate multiple inputs into a single response. Forms include convergence, divergence, antagonism, synergy and feedback. Example: cardiac myocytes receive both sympathetic (Gs) and parasympathetic (Gi) input, and the balance determines heart rate. Another example: crosstalk between growth factor receptors and GPCRs can cause resistance to cancer drugs." },
+    { q: "Define desensitisation and explain the mechanisms involved.", a: "Desensitisation (tachyphylaxis) is the reduced response to a drug after repeated or continuous administration. Mechanisms include: phosphorylation of the receptor (reducing G-protein coupling); arrestin binding (further blocking and targeting for internalisation); internalisation (receptor endocytosis); and downregulation (reduced receptor synthesis). These mechanisms protect the cell from overstimulation and explain tolerance and withdrawal." },
+    { q: "How do signalling defects cause cancer? Give two examples.", a: "Cancer often results from a signalling pathway stuck in the 'on' state, driving continuous growth. Examples: RAS mutations lock the RAS G-protein in the active GTP-bound form, so growth signals are continuous (found in about 30% of cancers). BCR-ABL fusion in chronic myeloid leukaemia creates a constitutively active tyrosine kinase - treated with imatinib." },
+    { q: "How does myasthenia gravis illustrate a defect in signal transduction?", a: "Myasthenia gravis is an autoimmune disease in which antibodies attack the nicotinic acetylcholine receptor at the neuromuscular junction. The receptor is destroyed or blocked, so the signal from nerve to muscle fails, causing muscle weakness and fatigue. Treatment includes acetylcholinesterase inhibitors (increasing acetylcholine at the synapse) and immunosuppression." },
+    { q: "Name three classes of drug that act on signal transduction, with examples and mechanisms.", a: "Beta-blockers (e.g. atenolol) - antagonists at beta-adrenergic GPCRs, reducing heart rate and blood pressure. Sildenafil - inhibits phosphodiesterase type 5, increasing cGMP and causing smooth muscle relaxation. Corticosteroids (e.g. prednisolone) - agonists at the glucocorticoid nuclear receptor, changing gene expression to reduce inflammation." },
+  ],
+  videos: [
+    { channel: "Pharmacology", title: "Signal Transduction - GPCRs, Ion Channels, Second Messengers", note: "Overview of the main signal transduction pathways and their drug targets.", url: "https://www.youtube.com/results?search_query=signal+transduction+GPCRs+ion+channels+second+messengers+pharmacology" },
+    { channel: "Pharmacology", title: "G-Protein Coupled Receptors and G-Protein Cycling", note: "The GPCR structure, G-protein cycle and effector regulation.", url: "https://www.youtube.com/results?search_query=G+protein+coupled+receptors+G+protein+cycling+pharmacology" },
+    { channel: "Pharmacology", title: "Signal Transduction in Disease - Cancer and Myasthenia Gravis", note: "How signalling defects cause disease, with clinical examples.", url: "https://www.youtube.com/results?search_query=signal+transduction+disease+cancer+myasthenia+gravis" },
+  ],
+  mcqs: [
+    // ===== Note 1: what signal transduction is (Q1-5) =====
+    { q: "Signal transduction is best defined as:", o: ["The binding of a drug to a receptor", "The conversion of an extracellular binding event into an intracellular response", "The metabolism of a drug by the liver", "The excretion of a drug by the kidney"], a: 1, w: "Signal transduction converts binding into an intracellular signal and a cellular response." },
+    { q: "Binding alone does not produce a drug effect because:", o: ["The drug must be metabolised first", "The receptor must change shape and trigger a signalling cascade", "The drug must enter the nucleus", "Binding is irrelevant"], a: 1, w: "The receptor must undergo a conformational change to signal; binding without signalling does nothing." },
+    { q: "Signal transduction explains why the same receptor can produce different effects in different tissues because:", o: ["Receptors are identical in every tissue", "The downstream machinery differs between tissues", "Only one tissue has the receptor", "Signalling is random"], a: 1, w: "Different tissues express different downstream effectors, so the same receptor can produce different responses." },
+    { q: "Which of the following best describes the role of a receptor in signal transduction?", o: ["A passive binding site", "A converter of binding into a signal", "A storage protein", "An enzyme that degrades the drug"], a: 1, w: "The receptor converts the binding event into an intracellular signal - it is the transducer." },
+    { q: "Signal transduction is important in pharmacology because:", o: ["It explains how drugs produce their effects", "It explains why some drugs act fast and others slowly", "It explains side effects and drug interactions", "All of the above"], a: 3, w: "Signal transduction underpins drug effect, timescale, side effects and interactions." },
+
+    // ===== Note 2: ligand-gated ion channels (Q6-10) =====
+    { q: "Ligand-gated ion channels are best described as:", o: ["Receptors that are themselves ion channels", "Receptors that activate G-proteins", "Enzymes that phosphorylate proteins", "Nuclear receptors"], a: 0, w: "Ligand-gated ion channels are receptors that open an ion channel directly when the ligand binds." },
+    { q: "The speed of signalling through ligand-gated ion channels is:", o: ["Milliseconds", "Seconds", "Minutes", "Hours"], a: 0, w: "Ligand-gated ion channels are the fastest signalling mechanism, acting in milliseconds." },
+    { q: "The classic example of a ligand-gated ion channel is:", o: ["The insulin receptor", "The nicotinic acetylcholine receptor", "The oestrogen receptor", "The beta-adrenergic receptor"], a: 1, w: "The nicotinic acetylcholine receptor at the neuromuscular junction is the classic example." },
+    { q: "The nicotinic acetylcholine receptor opens to allow which ion to flow?", o: ["Calcium", "Chloride", "Sodium", "Potassium only"], a: 2, w: "The nicotinic receptor opens to allow sodium (and potassium) to flow, depolarising the muscle fibre." },
+    { q: "A drug that blocks a ligand-gated ion channel would:", o: ["Prevent the ion from flowing and block the signal", "Increase ion flow", "Activate the channel", "Have no effect"], a: 0, w: "Blocking the channel prevents ion flow and blocks the signal - this is how muscle relaxants work." },
+
+    // ===== Note 3: GPCRs (Q11-15) =====
+    { q: "G-protein coupled receptors (GPCRs) are characterised by:", o: ["Seven transmembrane alpha-helices", "A single transmembrane domain", "Being enzymes themselves", "Being inside the nucleus"], a: 0, w: "GPCRs have seven transmembrane alpha-helices - the defining structural feature." },
+    { q: "Approximately what fraction of prescription drugs target GPCRs?", o: ["One tenth", "One quarter", "One third", "One half"], a: 2, w: "Around a third of prescription drugs act on GPCRs." },
+    { q: "The intracellular region of a GPCR that determines G-protein specificity is often the:", o: ["First extracellular loop", "Third intracellular loop", "Ligand-binding site", "Transmembrane helix 1"], a: 1, w: "The third intracellular loop is often the key region for G-protein specificity." },
+    { q: "Which of the following is NOT a reason GPCRs are good drug targets?", o: ["They are on the cell surface", "They have a defined binding pocket", "They mediate almost every major physiological process", "They are inside the nucleus and inaccessible"], a: 3, w: "GPCRs are on the cell surface, not inside the nucleus - this makes them accessible to drugs." },
+    { q: "Beta-blockers act on which type of receptor?", o: ["A GPCR", "An ion channel receptor", "A nuclear receptor", "An enzyme-linked receptor"], a: 0, w: "Beta-adrenergic receptors are GPCRs - beta-blockers are antagonists at these receptors." },
+
+    // ===== Note 4: G-proteins (Q16-20) =====
+    { q: "The G-protein is a trimer consisting of which subunits?", o: ["Alpha, beta and gamma", "Alpha, beta and delta", "Alpha and beta only", "A single subunit"], a: 0, w: "The G-protein consists of alpha, beta and gamma subunits." },
+    { q: "In the resting state, the alpha subunit of a G-protein is bound to:", o: ["ATP", "GTP", "GDP", "cAMP"], a: 2, w: "In the resting state, the alpha subunit is bound to GDP and is inactive." },
+    { q: "Activation of a G-protein involves:", o: ["Hydrolysis of GTP to GDP", "Exchange of GDP for GTP on the alpha subunit", "Removal of the beta-gamma dimer", "Phosphorylation of the receptor"], a: 1, w: "Activation involves GDP-GTP exchange on the alpha subunit." },
+    { q: "The G-protein that stimulates adenylyl cyclase is:", o: ["Gi", "Gq", "Gs", "G12/13"], a: 2, w: "Gs stimulates adenylyl cyclase, increasing cAMP." },
+    { q: "Cholera toxin causes disease by:", o: ["Modifying the Gs alpha subunit so it cannot hydrolyse GTP", "Blocking the receptor", "Destroying the G-protein", "Inhibiting adenylyl cyclase"], a: 0, w: "Cholera toxin locks Gs in the active state, so adenylyl cyclase is permanently active and cAMP is high." },
+
+    // ===== Note 5: second messengers (Q21-25) =====
+    { q: "cAMP is produced by which enzyme?", o: ["Phospholipase C", "Adenylyl cyclase", "Guanylyl cyclase", "Protein kinase A"], a: 1, w: "Adenylyl cyclase produces cAMP from ATP." },
+    { q: "cAMP activates which enzyme?", o: ["Protein kinase A (PKA)", "Protein kinase C (PKC)", "Phospholipase C", "Adenylyl cyclase"], a: 0, w: "cAMP activates protein kinase A, which phosphorylates many target proteins." },
+    { q: "IP3 and DAG are produced by:", o: ["Adenylyl cyclase", "Phospholipase C", "Guanylyl cyclase", "Protein kinase A"], a: 1, w: "Phospholipase C produces IP3 and DAG from PIP2." },
+    { q: "IP3 triggers the release of which ion from intracellular stores?", o: ["Sodium", "Potassium", "Calcium", "Chloride"], a: 2, w: "IP3 triggers calcium release from the endoplasmic reticulum." },
+    { q: "Sildenafil (Viagra) works by inhibiting:", o: ["Adenylyl cyclase", "Phosphodiesterase type 5", "Guanylyl cyclase", "Protein kinase A"], a: 1, w: "Sildenafil inhibits phosphodiesterase type 5, increasing cGMP and causing smooth muscle relaxation." },
+
+    // ===== Note 6: amplification (Q26-30) =====
+    { q: "Signal amplification in a GPCR cascade occurs because:", o: ["Each step activates many molecules at the next step", "The drug is metabolised slowly", "The receptor stays active forever", "The cell has no other signals"], a: 0, w: "Amplification occurs because one molecule activates many at each step of the cascade." },
+    { q: "The clinical consequence of signal amplification is that:", o: ["Very small drug doses can produce large effects", "Large drug doses are always needed", "Drugs have no side effects", "Doses are irrelevant"], a: 0, w: "Amplification means even a small dose can produce a large effect." },
+    { q: "Amplification can also contribute to:", o: ["Increased drug specificity", "Toxicity from amplified off-target effects", "Reduced drug absorption", "Decreased receptor number"], a: 1, w: "Amplified off-target effects can cause toxicity even from small doses." },
+    { q: "The 'spare receptor' phenomenon is best explained by:", o: ["Signal amplification", "Receptor downregulation", "Drug metabolism", "Renal excretion"], a: 0, w: "Because of amplification, only a fraction of receptors need to be occupied to produce a maximal response." },
+    { q: "Why do narrow therapeutic index drugs need careful monitoring?", o: ["Because amplification can produce toxicity with small dose changes", "Because they have no target", "Because they are always safe", "Because they have no side effects"], a: 0, w: "Amplification can turn a small dose change into a large toxic effect, making monitoring essential." },
+
+    // ===== Note 7: crosstalk (Q31-35) =====
+    { q: "Receptor crosstalk is best defined as:", o: ["The interaction between different signalling pathways", "The binding of a drug to a receptor", "The metabolism of a drug", "The excretion of a drug"], a: 0, w: "Crosstalk is the interaction between different signalling pathways, allowing integration of multiple inputs." },
+    { q: "Convergence in crosstalk means:", o: ["One pathway inhibits another", "Two pathways activate the same effector", "Two pathways are independent", "One receptor activates many effectors"], a: 1, w: "Convergence means two pathways activate the same effector, producing a combined effect." },
+    { q: "An example of crosstalk in the heart is:", o: ["The balance between sympathetic (Gs) and parasympathetic (Gi) input determining heart rate", "The heart has only one receptor type", "The heart does not receive neural input", "Only one pathway is active at a time"], a: 0, w: "Cardiac myocytes receive both Gs (sympathetic) and Gi (parasympathetic) input; the balance determines heart rate." },
+    { q: "Crosstalk can cause cancer drug resistance because:", o: ["One pathway compensates for the inhibition of another", "Only one pathway is active", "Drugs are metabolised too quickly", "Receptors are destroyed"], a: 0, w: "Crosstalk can allow another pathway to compensate when one is inhibited, causing resistance." },
+    { q: "The clinical importance of crosstalk is that:", o: ["Drugs acting on one pathway can have unexpected effects on another", "Drugs never interact", "Pathways are independent", "Only one pathway matters clinically"], a: 0, w: "Crosstalk underlies many drug interactions and unexpected side effects." },
+
+    // ===== Note 8: desensitisation and downregulation (Q36-40) =====
+    { q: "Desensitisation is best defined as:", o: ["The increased response to a drug after repeated use", "The reduced response to a drug after repeated use", "The permanent loss of a receptor", "The metabolism of a drug"], a: 1, w: "Desensitisation is the reduced response to a drug after repeated or continuous administration." },
+    { q: "One of the fastest mechanisms of desensitisation is:", o: ["Phosphorylation of the receptor", "Receptor synthesis", "Increased blood flow", "Renal excretion"], a: 0, w: "Phosphorylation of the receptor (by a kinase) rapidly reduces its ability to activate its G-protein." },
+    { q: "Arrestin binding to a receptor:", o: ["Activates the receptor", "Blocks G-protein coupling and targets the receptor for internalisation", "Increases receptor synthesis", "Has no effect"], a: 1, w: "Arrestin blocks G-protein coupling and targets the receptor for internalisation." },
+    { q: "Downregulation is best described as:", o: ["Increased receptor number", "Reduced receptor synthesis after prolonged stimulation", "Increased receptor affinity", "Loss of drug from the body"], a: 1, w: "Downregulation is the reduced receptor synthesis in response to prolonged stimulation." },
+    { q: "Which clinical phenomenon is best explained by desensitisation?", o: ["Tolerance to opioids requiring dose escalation", "Improved drug response over time", "No change in drug response", "Immediate drug effect"], a: 0, w: "Tolerance to opioids is partly due to desensitisation and downregulation of mu-opioid receptors." },
+
+    // ===== Note 9: disease and signalling (Q41-45) =====
+    { q: "RAS mutations contribute to cancer by:", o: ["Locking RAS in the active GTP-bound form, driving continuous growth signals", "Blocking all growth signals", "Destroying the receptor", "Reducing cell division"], a: 0, w: "RAS mutations lock RAS in the active form, so growth signals are continuous." },
+    { q: "BCR-ABL is a fusion protein that:", o: ["Has constitutive tyrosine kinase activity", "Has no kinase activity", "Is a receptor for insulin", "Is a G-protein"], a: 0, w: "BCR-ABL has constitutive tyrosine kinase activity, driving chronic myeloid leukaemia." },
+    { q: "Imatinib (Gleevec) is used to treat CML because it:", o: ["Inhibits the BCR-ABL tyrosine kinase", "Activates RAS", "Blocks acetylcholine receptors", "Inhibits phosphodiesterase"], a: 0, w: "Imatinib inhibits the BCR-ABL kinase - one of the first targeted cancer therapies." },
+    { q: "Myasthenia gravis is caused by:", o: ["Antibodies attacking the nicotinic acetylcholine receptor", "Overproduction of acetylcholine", "Excess calcium in the muscle", "Loss of the sodium-potassium pump"], a: 0, w: "Myasthenia gravis is an autoimmune disease in which antibodies attack the nicotinic acetylcholine receptor." },
+    { q: "Cholera toxin causes disease by:", o: ["Modifying Gs so it cannot hydrolyse GTP, producing continuous cAMP signalling", "Blocking the receptor", "Destroying the G-protein", "Inhibiting adenylyl cyclase"], a: 0, w: "Cholera toxin locks Gs in the active state, producing continuous cAMP signalling and massive fluid secretion." },
+
+    // ===== Note 10: clinical applications (Q46-50) =====
+    { q: "Beta-blockers (e.g. atenolol) work by:", o: ["Acting as antagonists at beta-adrenergic GPCRs", "Acting as agonists at beta-adrenergic receptors", "Blocking sodium channels", "Inhibiting phosphodiesterase"], a: 0, w: "Beta-blockers are antagonists at beta-adrenergic receptors, reducing heart rate and blood pressure." },
+    { q: "Salbutamol (a beta-agonist) works by:", o: ["Blocking beta receptors", "Activating beta-2 adrenergic receptors, increasing cAMP and causing bronchodilation", "Inhibiting phosphodiesterase", "Blocking calcium channels"], a: 1, w: "Salbutamol activates beta-2 receptors, increasing cAMP in airway smooth muscle and causing bronchodilation." },
+    { q: "Theophylline works by:", o: ["Inhibiting phosphodiesterase, increasing cAMP", "Blocking beta receptors", "Inhibiting adenylyl cyclase", "Activating Gi"], a: 0, w: "Theophylline inhibits phosphodiesterase, the enzyme that breaks down cAMP - used in asthma and COPD." },
+    { q: "Corticosteroids (e.g. prednisolone) work by:", o: ["Acting as agonists at the glucocorticoid nuclear receptor, changing gene expression", "Blocking GPCRs", "Inhibiting phosphodiesterase", "Blocking sodium channels"], a: 0, w: "Corticosteroids bind the glucocorticoid receptor (a nuclear receptor), changing gene expression and reducing inflammation." },
+    { q: "Understanding signal transduction is important for clinical practice because:", o: ["Most drugs act on some part of a signalling pathway", "It has no clinical relevance", "Only some drugs act on signalling", "It only applies to cancer drugs"], a: 0, w: "Most drugs act on a receptor, G-protein, second messenger, or downstream kinase - understanding signalling underpins clinical pharmacology." },
+  ],
+};
+
+/* --------------------------- pha:3 --------------------------- */
+const T_PHA_QUANT = {
+  courseId: "pha",
+  topicIndex: 3,
+  title: "Principles of Drug Action: Quantitative Drug-Receptor Interactions",
+  minutes: 30,
+  note: [
+    {
+      q: "A drug produces an effect. Can we actually predict how much effect, from how much drug?",
+      body: `In the last topic you learned how a drug binding its receptor triggers a signalling cascade. But pharmacology is not just about whether a drug works - it is about how much it works, and at what dose. This is where quantitative drug-receptor interactions come in. They turn "the drug binds the receptor" into "this dose produces this effect, in this patient, at this time."
+
+My Socratic question: if you double the dose of a drug, does the effect double? If not, why not, and what relationship actually holds?
+
+The answer is that the relationship between dose and effect is not linear - it follows a specific curve, and understanding that curve is the basis of rational prescribing. The dose-response relationship is the single most important quantitative tool in pharmacology. It tells you how potent a drug is, how effective it can be, and how sensitive the effect is to changes in dose.
+
+The core concepts:
+
+- Dose (or concentration) - the amount of drug administered or present at the target.
+- Response (or effect) - the measurable biological change produced.
+- Dose-response curve - a graph plotting response against dose, which typically takes a sigmoid (S-shaped) form.
+- Potency - how much drug is needed to produce a given effect.
+- Efficacy - the maximum effect a drug can produce.
+
+Crucial insight: quantitative drug-receptor interactions turn pharmacology from a descriptive science into a predictive one. Once you know a drug's dose-response curve, you can predict what a given dose will do - and you can compare drugs on a level playing field. This topic gives you the tools to do exactly that.`
+    },
+    {
+      q: "The dose-response curve looks like an S. Why that shape, and what does each part of it mean?",
+      body: `Plot drug dose on the x-axis and effect on the y-axis and you get a characteristic sigmoid, or S-shaped, curve. It is not a straight line, and it is not a simple hyperbola either. Its shape encodes almost everything you need to know about a drug.
+
+My Socratic question: the curve rises steeply in the middle and flattens at the top. What is happening at the level of the receptor to produce that shape?
+
+The answer is receptor occupancy. At low doses, few receptors are occupied, so the effect is small. As the dose rises, more receptors are occupied and the effect rises steeply. At the top, all receptors are occupied (saturated), so increasing the dose further produces no additional effect. The flat top of the curve is the saturation point.
+
+The three key features of the curve:
+
+- Threshold dose - the minimum dose at which any effect is detectable.
+- Slope - how steeply the response rises with dose. A steep slope means the effect is very sensitive to small dose changes (common with narrow therapeutic index drugs). A shallow slope means the opposite.
+- Maximum effect (Emax) - the greatest effect the drug can produce, reached when the receptors are saturated.
+
+The curve is often plotted as log dose versus response, which converts the sigmoid into a more symmetric shape that is easier to analyse. This log-dose plot is the standard in pharmacology.
+
+Crucial insight: the sigmoid dose-response curve is the fingerprint of a drug. Its shape, position and height tell you how potent the drug is, how effective it is, and how sensitive its effect is to dose. Every clinical decision about starting dose, maintenance dose and maximum dose is anchored in this curve.`
+    },
+    {
+      q: "Two drugs both relieve pain. One works at 10 mg, the other at 100 mg. What does that difference actually mean?",
+      body: `Potency is one of the most misused words in pharmacology. It does not mean "stronger" or "better" - it means "you need less of it to get the same effect." A more potent drug is not necessarily a more effective one. Understanding the difference is essential for comparing drugs rationally.
+
+My Socratic question: if drug A produces the same pain relief as drug B at one-tenth the dose, is drug A "better"?
+
+The answer is not necessarily. Potency is a measure of the dose required, not of the maximum effect. Drug A is more potent - you need less of it - but it may have the same maximum effect as drug B, or even less. Potency determines how much drug you give; efficacy determines what the drug can achieve.
+
+Potency is quantified by the EC50 (or ED50) - the dose that produces 50% of the maximum effect.
+
+- A lower EC50 means the drug achieves half its maximum effect at a lower dose - it is more potent.
+- A higher EC50 means more drug is needed - it is less potent.
+
+Potency matters clinically because:
+
+- A more potent drug allows a smaller dose, which can reduce side effects related to dose (e.g. pill burden, injection volume).
+- But a more potent drug is not necessarily safer - it may have a narrower therapeutic index.
+- Potency is also important in drug development, because a more potent drug requires less manufacturing cost per dose.
+
+Crucial insight: potency is about how much drug you need, not what the drug can do. It is measured by EC50. A more potent drug is not automatically better - it just requires a smaller dose to produce a given effect. Efficacy - the maximum effect - is what determines clinical usefulness. Confusing the two is one of the most common errors in pharmacology.`
+    },
+    {
+      q: "Two drugs both lower blood pressure. One can lower it by 40 mmHg at best; the other by only 20 mmHg. Which is better?",
+      body: `Efficacy is the second great quantitative property of a drug. Where potency is about how much drug you need, efficacy is about how much effect you can get. A drug with high efficacy can produce a large maximal response; a drug with low efficacy cannot, no matter how much you give.
+
+My Socratic question: if a drug is very potent but can only produce a small maximum effect, what is it useful for?
+
+The answer is that it may still be useful - but only in situations where a small effect is all that is needed. A drug with low efficacy can be ideal for a mild condition (e.g. mild pain, mild hypertension) where you want a gentle effect. But it may be useless for a severe condition where a large effect is required. Efficacy determines the ceiling of what the drug can achieve.
+
+Efficacy is quantified by the Emax - the maximum effect the drug can produce.
+
+- A high Emax means the drug can produce a large maximal response.
+- A low Emax means the drug can only produce a small maximal response.
+
+Full agonists versus partial agonists:
+
+- A full agonist has high efficacy - it produces the full maximal response.
+- A partial agonist has lower efficacy - it produces a smaller maximal response even when all receptors are occupied.
+- This is why a partial agonist can act as an antagonist when a full agonist is present - it occupies the receptor but produces less effect, effectively reducing the overall response.
+
+Crucial insight: efficacy is what determines the ceiling of a drug's usefulness. Potency tells you how much drug you need; efficacy tells you how much effect you can get. A high-efficacy drug can be used for severe conditions; a low-efficacy drug may be useful for mild ones but is limited by its ceiling. Understanding both - potency and efficacy - is essential for choosing the right drug for the right patient.`
+    },
+    {
+      q: "A patient takes a drug and the effect is weak. Give them more of the same drug and the effect is strong. But some drugs do not respond this way. Why?",
+      body: `The relationship between dose and effect is not always a simple one. For some drugs, increasing the dose increases the effect steadily, up to a plateau. For others, the drug produces a maximal effect at a certain dose, and increasing the dose beyond that produces no additional benefit - only side effects. Understanding this ceiling is crucial for safe prescribing.
+
+My Socratic question: if a drug produces its maximum effect at 100 mg, what happens if you give 200 mg?
+
+The answer is that the effect does not increase further - it has reached its ceiling (Emax). The extra 100 mg produces no additional therapeutic benefit, but it does increase the risk of side effects. This is why the maximum therapeutic dose of a drug is usually the dose that produces the maximum effect with acceptable side effects, not the highest dose that can be given.
+
+The concept of the ceiling has several implications:
+
+- Ceiling effect - once the maximum effect is reached, increasing the dose does not increase the effect.
+- Therapeutic ceiling - the maximum dose that produces additional benefit without unacceptable side effects.
+- Dose-limiting toxicity - side effects that limit how much drug can be given before the therapeutic ceiling is reached.
+- Narrow therapeutic index - drugs where the therapeutic ceiling is close to the toxic dose, requiring careful monitoring.
+
+A related concept is the "ceiling effect" of agonist efficacy. A partial agonist has a lower ceiling than a full agonist - it produces a smaller maximum effect. This is why partial agonists can be useful: they produce a moderate effect without the full risks of a full agonist (e.g. buprenorphine, a partial opioid agonist, produces analgesia with less respiratory depression than morphine).
+
+Crucial insight: the ceiling effect is the reason more drug is not always better. Every drug has a maximum effect, and beyond a certain dose, additional drug only adds side effects. Understanding the ceiling lets you prescribe the right dose - enough to reach the desired effect, but not so much that you invite unnecessary toxicity.`
+    },
+    {
+      q: "Some drugs block the effect of others. But they do not all block in the same way. What are the different types of antagonism?",
+      body: `Antagonism is the ability of one drug to reduce or abolish the effect of another. It is the basis of many clinical drugs - beta-blockers antagonise noradrenaline, antihistamines antagonise histamine, antipsychotics antagonise dopamine. But not all antagonism is the same, and understanding the differences matters clinically.
+
+My Socratic question: if two drugs both reduce the effect of an agonist, what could be different about their mechanisms?
+
+The answer is that there are four main types of antagonism, and they work in different ways.
+
+The four types of antagonism:
+
+- Competitive antagonism - the antagonist binds reversibly at the same site as the agonist, competing with it. Increasing the agonist concentration can overcome the block. The antagonist shifts the dose-response curve to the right, without reducing the maximum effect. Example: beta-blockers at beta-adrenergic receptors.
+- Non-competitive antagonism - the antagonist binds at a different site, or binds irreversibly, so that increasing the agonist concentration cannot overcome the block. The antagonist reduces the maximum effect. Example: phenoxybenzamine at alpha-adrenergic receptors (irreversible).
+- Uncompetitive antagonism - the antagonist binds only to the agonist-receptor complex, not to the free receptor. It reduces both the potency and the maximum effect. This is rare in clinical pharmacology but important in theory.
+- Functional (physiological) antagonism - the antagonist acts on a different receptor to produce the opposite effect. It does not compete at the same receptor at all. Example: adrenaline (beta-agonist) and histamine (H1-agonist) have opposing effects on blood pressure - each is a functional antagonist of the other.
+
+Chemical antagonism - a special case where the antagonist chemically inactivates the agonist before it reaches the receptor. Example: protamine sulphate binds heparin and neutralises it.
+
+Crucial insight: antagonism is not a single mechanism - it is a family of mechanisms. Competitive antagonists shift the curve; non-competitive antagonists lower the ceiling; functional antagonists work on a different receptor entirely. Knowing which type a drug belongs to tells you how it will behave clinically, whether increasing the agonist dose will help, and what the interaction with other drugs will be.`
+    },
+    {
+      q: "A patient is given a drug that blocks one receptor. But it also causes side effects at a different receptor. Why does that happen?",
+      body: `No drug is perfectly selective. Even the most carefully designed drug binds its intended target with high affinity - but it also binds other targets with lower affinity. These off-target interactions are the source of side effects. Understanding selectivity is understanding why drugs have side effects at all.
+
+My Socratic question: if a drug binds its target receptor with high affinity, why does it bind other receptors at all?
+
+The answer is that binding is a physical interaction, and no drug fits only one binding site perfectly. Receptors with similar structures (e.g. the beta-1 and beta-2 adrenergic receptors) have similar binding pockets, so a drug designed for one may bind the other with somewhat lower affinity. At therapeutic doses, the drug occupies both, and the off-target binding produces side effects.
+
+The key concepts:
+
+- Selectivity (or specificity) - how well a drug distinguishes its intended target from other targets.
+- Off-target binding - binding to a receptor other than the intended one.
+- Side effects - effects produced by off-target binding or by the drug's action on its intended target in an unintended tissue.
+- Therapeutic window - the range of drug concentrations that produces the desired effect without unacceptable side effects.
+
+Selectivity is rarely absolute. Most drugs have a "selectivity profile" - they bind their intended target with the highest affinity, and other targets with lower affinity. The clinical usefulness of a drug depends on the ratio between its intended and unintended effects.
+
+Selectivity can be improved by:
+
+- Drug design - making the drug fit the target more specifically.
+- Dose selection - using the lowest effective dose.
+- Route of administration - targeting the drug to the tissue where it is needed.
+- Combining drugs - using lower doses of multiple drugs to reduce side effects.
+
+Crucial insight: side effects are not an accident - they are the direct consequence of the drug binding targets it was not designed for. Understanding the selectivity profile of a drug explains why beta-blockers cause bronchospasm in asthmatics (beta-2 receptors in the lungs), why antihistamines cause drowsiness (H1 receptors in the brain), and why tricyclic antidepressants cause dry mouth and constipation (muscarinic receptors in the gut and salivary glands). Every side effect has a mechanism, and every mechanism is a target.`
+    },
+    {
+      q: "How do we know if a drug is safe? What number tells us whether a drug has a wide or narrow margin?",
+      body: `Some drugs are safe at almost any dose. Others are dangerous - a small overdose can be fatal. The difference comes down to a single quantitative measure: the therapeutic index. It is the most important number for assessing drug safety.
+
+My Socratic question: if a drug produces its therapeutic effect at 10 mg and a toxic effect at 100 mg, what would you say about its safety?
+
+The answer is that the ratio between the two is the therapeutic index (TI). It is calculated as:
+
+TI = TD50 (median toxic dose) / ED50 (median effective dose)
+
+A high TI means the toxic dose is much higher than the effective dose - a wide safety margin. A low TI means the toxic dose is close to the effective dose - a narrow safety margin.
+
+Interpreting the TI:
+
+- TI > 10 - a wide margin, relatively safe. Penicillin has a very high TI - you can give enormous doses before toxicity appears.
+- TI between 2 and 10 - a moderate margin, requiring some caution.
+- TI < 2 - a narrow margin, dangerous. Small errors in dose can cause toxicity. Digoxin, warfarin, lithium and phenytoin all have low TIs.
+
+Related concepts:
+
+- Therapeutic window - the range of plasma concentrations between the minimum effective concentration and the minimum toxic concentration.
+- Margin of safety - a related measure that accounts for the slope of the dose-response curves.
+- Monitoring - many low-TI drugs require regular blood tests to ensure the plasma concentration remains within the therapeutic window.
+
+Crucial insight: the therapeutic index is the safety metric of pharmacology. It determines how carefully a drug must be dosed, whether plasma monitoring is required, and how much room there is for error. A doctor prescribing digoxin or warfarin knows they are working with a narrow margin - which is why regular blood tests are required to keep the dose in the therapeutic window. The TI is the reason why some drugs are available over the counter and others require intensive monitoring.`
+    },
+    {
+      q: "A patient has been taking a drug for months and it no longer works as well. What has happened?",
+      body: `Many drugs lose effectiveness when taken repeatedly over time. The patient who needed 10 mg for pain relief now needs 20 mg - or finds that even 20 mg does not work the way it used to. This is decreased responsiveness to drugs, and it takes several forms. Understanding it is essential for managing long-term therapy.
+
+My Socratic question: if the drug is still present and still binds its receptor, why would the effect get smaller?
+
+The answer is that the body adapts to the continued presence of the drug. There are several mechanisms, and they operate on different timescales.
+
+The main forms of decreased responsiveness:
+
+- Tolerance - a reduced response to a drug after repeated administration, requiring higher doses to produce the same effect. It can develop over days to weeks. Example: tolerance to opioids.
+- Tachyphylaxis - rapid tolerance, developing within minutes to hours after repeated administration. Example: tolerance to indirect sympathomimetics like ephedrine.
+- Desensitisation - reduced receptor responsiveness due to receptor phosphorylation, arrestin binding, or internalisation. Occurs within seconds to minutes.
+- Downregulation - a reduction in the number of receptors due to prolonged stimulation, occurring over hours to days.
+- Physiological adaptation - the body compensates through homeostatic mechanisms. Example: the kidney retains sodium in response to vasodilators, reducing their antihypertensive effect.
+
+Mechanisms of tolerance:
+
+- Pharmacokinetic tolerance - the body metabolises the drug faster (e.g. enzyme induction by alcohol).
+- Pharmacodynamic tolerance - the target tissue becomes less responsive (e.g. receptor desensitisation).
+- Learned tolerance - the patient adapts behaviourally to the drug's effects.
+
+Clinical consequences of decreased responsiveness:
+
+- Dose escalation may be needed - but this increases the risk of side effects.
+- Cross-tolerance - tolerance to one drug reduces the response to another in the same class (e.g. tolerance to one opioid reduces the response to another).
+- Withdrawal - when the drug is stopped, the adapted system overreacts, producing withdrawal symptoms.
+
+Crucial insight: decreased responsiveness is the body's adaptation to the continued presence of a drug. It is not a failure of the drug - it is a response of the body. Understanding it explains why long-term therapy requires careful dose adjustment, why some drugs are given in pulses or at the lowest effective dose, and why withdrawal symptoms occur when treatment is stopped abruptly.`
+    },
+    {
+      q: "Now put it all together. How does a doctor use all of this quantitative information to prescribe safely and effectively?",
+      body: `Every concept in this topic converges in the act of prescribing. A doctor does not simply choose a drug and a dose - they apply quantitative reasoning at every step, using dose-response curves, potency, efficacy, selectivity, therapeutic index, and the potential for decreased responsiveness.
+
+My Socratic question: a patient needs treatment for high blood pressure. What quantitative information does the doctor need to make the right decision?
+
+The answer is a whole framework of information - and each piece corresponds to a concept from this topic.
+
+The prescribing framework:
+
+- Diagnosis and goal - what process is failing, and what effect does the doctor want to achieve? This sets the target for the drug.
+- Drug selection - which drug acts on the relevant target? This uses the target classes from Topic 1.
+- Potency - how much drug is needed for the effect? This uses EC50. A more potent drug requires a smaller dose.
+- Efficacy - how much effect can the drug produce? This uses Emax. A high-efficacy drug may be needed for severe conditions.
+- Dose-response curve - what is the relationship between dose and effect? This tells the doctor how to adjust the dose and what to expect at different doses.
+- Therapeutic index - how safe is the drug? This determines whether monitoring is needed and how much room there is for error.
+- Selectivity - what side effects are expected? This uses the drug's off-target binding profile.
+- Decreased responsiveness - will the drug lose effectiveness over time? This informs long-term planning and the need for dose adjustment.
+- Antagonism - will other drugs the patient takes interfere? This uses the principles of competitive and non-competitive antagonism.
+
+A practical example - treating hypertension:
+
+- The doctor chooses a beta-blocker (e.g. atenolol) because it acts on beta-adrenergic receptors in the heart to reduce heart rate and cardiac output.
+- The doctor knows the drug's potency - starting dose is typically 25-50 mg, adjusted according to response.
+- The doctor knows the drug's efficacy - beta-blockers can lower blood pressure significantly, but not infinitely (Emax).
+- The doctor knows the therapeutic index - beta-blockers have a moderate TI and require monitoring for bradycardia and bronchospasm.
+- The doctor knows the selectivity profile - beta-1 selective blockers cause fewer respiratory side effects than non-selective ones.
+- The doctor knows tolerance can develop, and may need to adjust the dose over time.
+- The doctor checks for drug interactions - other drugs that affect the same pathway (e.g. verapamil) can cause excessive bradycardia.
+
+Crucial insight: quantitative drug-receptor interactions are not abstract theory - they are the tools a doctor uses every day to prescribe safely and effectively. Potency, efficacy, dose-response, therapeutic index, selectivity, antagonism and decreased responsiveness all come together in the clinical decision. Understanding them is what separates a doctor who prescribes by habit from one who prescribes by reasoning.`
+    },
+  ],
+  theory: [
+    { q: "Define the dose-response relationship and explain its importance.", a: "The dose-response relationship is the quantitative relationship between the dose of a drug and the magnitude of the effect it produces. It is typically plotted as a sigmoid curve. Its importance is that it allows pharmacology to be predictive: once the curve is known, the effect of any dose can be estimated, drugs can be compared, and safe dose ranges can be determined." },
+    { q: "Describe the shape and key features of a dose-response curve.", a: "The dose-response curve is sigmoid (S-shaped) when plotted as dose vs response, or more symmetric when plotted as log dose vs response. Key features: threshold dose (minimum dose producing a detectable effect); slope (how steeply the response rises with dose); Emax (maximum effect, reached when receptors are saturated); and EC50/ED50 (dose producing 50% of Emax, a measure of potency)." },
+    { q: "Define potency and efficacy, and explain the difference.", a: "Potency is the amount of drug required to produce a given effect - a more potent drug achieves the same effect at a lower dose (lower EC50). Efficacy is the maximum effect a drug can produce, regardless of dose (Emax). Potency determines how much drug you need; efficacy determines the ceiling of what the drug can achieve. They are independent properties." },
+    { q: "What is the difference between a full agonist and a partial agonist?", a: "A full agonist has high efficacy - it produces the full maximal response when all receptors are occupied. A partial agonist has lower efficacy - it produces a smaller maximal response even at full receptor occupancy. Because of this, a partial agonist can act as an agonist when no full agonist is present, and as an antagonist when a full agonist is present." },
+    { q: "Explain the ceiling effect and its clinical implications.", a: "The ceiling effect is the maximum effect a drug can produce, reached when its receptors are saturated. Increasing the dose beyond this point produces no additional therapeutic effect, only side effects. Clinically, this means: the maximum therapeutic dose should be the dose producing the maximum benefit with acceptable side effects; and partial agonists have a lower ceiling than full agonists (which is why they can be useful when a moderate effect is preferred)." },
+    { q: "Describe the four main types of antagonism.", a: "Competitive antagonism - the antagonist binds reversibly at the agonist's binding site; increasing the agonist dose can overcome the block; Emax is unchanged, but the curve shifts to the right. Non-competitive antagonism - the antagonist binds at a different site or irreversibly; increasing the agonist dose cannot overcome the block; Emax is reduced. Uncompetitive antagonism - the antagonist binds only to the agonist-receptor complex; both potency and Emax are reduced. Functional (physiological) antagonism - the antagonist acts on a different receptor to produce the opposite effect." },
+    { q: "Explain how a competitive antagonist affects the dose-response curve.", a: "A competitive antagonist shifts the dose-response curve to the right, without reducing the maximum effect (Emax). This means more agonist is needed to produce the same effect, but the maximum effect is still achievable if enough agonist is given. This is because the antagonist and agonist compete for the same binding site, and increasing the agonist concentration can outcompete the antagonist." },
+    { q: "Explain how a non-competitive antagonist affects the dose-response curve.", a: "A non-competitive antagonist reduces the maximum effect (Emax) without shifting the curve to the right. This is because the antagonist blocks the receptor in a way that cannot be overcome by increasing the agonist concentration - usually by binding irreversibly or at a site other than the agonist binding site. The result is a lower ceiling of effect, no matter how much agonist is present." },
+    { q: "Define selectivity (specificity) and explain its relationship to side effects.", a: "Selectivity is how well a drug distinguishes its intended target from other targets. No drug is perfectly selective - most bind their intended target with high affinity and other targets with lower affinity. Off-target binding produces side effects. Understanding a drug's selectivity profile explains why beta-blockers cause bronchospasm in asthmatics (beta-2 receptors in the lungs), why antihistamines cause drowsiness (H1 receptors in the brain), and why tricyclic antidepressants cause dry mouth (muscarinic receptors)." },
+    { q: "Define therapeutic index and explain its clinical significance.", a: "Therapeutic index (TI) = TD50 / ED50, where TD50 is the median toxic dose and ED50 is the median effective dose. A high TI (e.g. penicillin) means a wide safety margin; a low TI (e.g. digoxin, warfarin, lithium) means the toxic dose is close to the effective dose, requiring careful dosing and often plasma monitoring. The TI determines how carefully a drug must be dosed and whether monitoring is needed." },
+    { q: "Describe the main forms of decreased responsiveness to drugs.", a: "Tolerance - reduced response after repeated administration, developing over days to weeks (e.g. opioids). Tachyphylaxis - rapid tolerance developing within minutes to hours (e.g. ephedrine). Desensitisation - reduced receptor responsiveness due to phosphorylation, arrestin binding, or internalisation (seconds to minutes). Downregulation - reduced receptor number due to prolonged stimulation (hours to days). Physiological adaptation - homeostatic compensation by the body." },
+    { q: "Explain the mechanisms of tolerance.", a: "Pharmacokinetic tolerance - the body metabolises the drug faster (e.g. enzyme induction). Pharmacodynamic tolerance - the target tissue becomes less responsive (e.g. receptor desensitisation or downregulation). Learned tolerance - the patient adapts behaviourally to the drug's effects. All three can contribute to the need for dose escalation during long-term therapy." },
+    { q: "How does understanding quantitative drug-receptor interactions guide clinical prescribing?", a: "It provides the framework for every prescribing decision: choosing the target, selecting the drug (using target classes), assessing potency (how much drug is needed), assessing efficacy (how much effect can be achieved), interpreting the dose-response curve (how to adjust dose), assessing safety (therapeutic index), predicting side effects (selectivity profile), planning for long-term therapy (decreased responsiveness), and checking for interactions (antagonism). All of these concepts come together in the act of prescribing." },
+  ],
+  videos: [
+    { channel: "Pharmacology", title: "Dose-Response Curves - Potency, Efficacy and the Sigmoid Curve", note: "How to read and interpret dose-response curves in pharmacology.", url: "https://www.youtube.com/results?search_query=dose+response+curves+potency+efficacy+pharmacology" },
+    { channel: "Pharmacology", title: "Agonists, Partial Agonists and Antagonists - Quantitative Pharmacology", note: "The quantitative differences between drug types at the receptor.", url: "https://www.youtube.com/results?search_query=agonists+partial+agonists+antagonists+quantitative+pharmacology" },
+    { channel: "Pharmacology", title: "Therapeutic Index and Drug Safety - How to Assess Drug Safety", note: "Understanding the therapeutic index and its clinical use.", url: "https://www.youtube.com/results?search_query=therapeutic+index+drug+safety+pharmacology" },
+  ],
+  mcqs: [
+    // ===== Note 1: what quantitative drug-receptor interactions are (Q1-5) =====
+    { q: "Quantitative drug-receptor interactions are best defined as:", o: ["The study of drug chemistry alone", "The study of how much drug produces how much effect", "The study of drug metabolism only", "The study of drug excretion only"], a: 1, w: "Quantitative drug-receptor interactions study the relationship between dose and effect." },
+    { q: "The most important quantitative tool in pharmacology is the:", o: ["Microscope", "Dose-response curve", "Centrifuge", "pH meter"], a: 1, w: "The dose-response curve is the most important quantitative tool for understanding drug action." },
+    { q: "The dose-response relationship is important because it allows pharmacology to be:", o: ["Descriptive only", "Predictive", "Irrelevant", "Random"], a: 1, w: "The dose-response relationship makes pharmacology predictive - it allows the effect of a given dose to be estimated." },
+    { q: "Potency is best defined as:", o: ["The maximum effect a drug can produce", "The amount of drug needed to produce a given effect", "The selectivity of the drug", "The therapeutic index"], a: 1, w: "Potency is the amount of drug needed to produce a given effect - a more potent drug requires a smaller dose." },
+    { q: "Efficacy is best defined as:", o: ["The amount of drug needed to produce a given effect", "The maximum effect a drug can produce", "The selectivity of the drug", "The therapeutic index"], a: 1, w: "Efficacy is the maximum effect a drug can produce, regardless of dose." },
+
+    // ===== Note 2: dose-response curve shape (Q6-10) =====
+    { q: "A dose-response curve plotted as dose versus response typically has which shape?", o: ["Linear", "Sigmoid (S-shaped)", "Exponential", "Flat"], a: 1, w: "A dose-response curve plotted as dose vs response is typically sigmoid (S-shaped)." },
+    { q: "When plotted as log dose versus response, the dose-response curve becomes:", o: ["More symmetric", "More asymmetric", "A straight line", "A circle"], a: 0, w: "Log-dose plotting converts the sigmoid into a more symmetric shape, easier to analyse." },
+    { q: "The maximum effect a drug can produce (Emax) is reached when:", o: ["Only a few receptors are occupied", "All available receptors are occupied (saturated)", "The dose is zero", "The drug is metabolised"], a: 1, w: "Emax is reached when the receptors are saturated - no additional effect can be produced by more drug." },
+    { q: "The threshold dose of a drug is:", o: ["The dose at which maximum effect is reached", "The minimum dose at which any effect is detectable", "The toxic dose", "The dose that causes side effects"], a: 1, w: "The threshold dose is the minimum dose at which any effect is detectable." },
+    { q: "A steep dose-response slope means:", o: ["Small dose changes produce large effect changes", "The drug is safe", "The drug has no side effects", "The drug has no efficacy"], a: 0, w: "A steep slope means the effect is very sensitive to changes in dose - common with narrow therapeutic index drugs." },
+
+    // ===== Note 3: potency (Q11-15) =====
+    { q: "Potency is quantified by which parameter?", o: ["Emax", "EC50 (or ED50)", "Therapeutic index", "Selectivity"], a: 1, w: "Potency is quantified by EC50/ED50 - the dose producing 50% of the maximum effect." },
+    { q: "A lower EC50 means the drug is:", o: ["Less potent", "More potent", "Less efficacious", "More toxic"], a: 1, w: "A lower EC50 means the drug produces half its maximum effect at a lower dose - it is more potent." },
+    { q: "A more potent drug:", o: ["Always has a higher maximum effect", "Requires a smaller dose to produce a given effect", "Always has a better safety profile", "Always has fewer side effects"], a: 1, w: "A more potent drug requires a smaller dose to produce a given effect, but potency does not determine maximum effect or safety." },
+    { q: "Which statement about potency is TRUE?", o: ["A more potent drug is always better", "Potency determines how much drug you need, not what the drug can achieve", "Potency and efficacy are the same", "Potency is a measure of toxicity"], a: 1, w: "Potency determines how much drug is needed; efficacy determines what the drug can achieve." },
+    { q: "Potency matters clinically because:", o: ["It determines the maximum effect", "A smaller dose can reduce side effects related to dose", "It guarantees safety", "It replaces the need for efficacy"], a: 1, w: "A more potent drug requires a smaller dose, which can reduce side effects related to dose (pill burden, injection volume)." },
+
+    // ===== Note 4: efficacy (Q16-20) =====
+    { q: "Efficacy is quantified by which parameter?", o: ["EC50", "Emax", "Therapeutic index", "Selectivity"], a: 1, w: "Efficacy is quantified by Emax - the maximum effect the drug can produce." },
+    { q: "A drug with high efficacy:", o: ["Requires a small dose", "Can produce a large maximum effect", "Always has a narrow therapeutic index", "Always has many side effects"], a: 1, w: "High efficacy means the drug can produce a large maximum effect." },
+    { q: "A partial agonist has:", o: ["High efficacy", "Lower efficacy than a full agonist", "No affinity", "No effect at all"], a: 1, w: "A partial agonist has lower efficacy - it produces a smaller maximal response even when all receptors are occupied." },
+    { q: "A partial agonist can act as an antagonist when:", o: ["No full agonist is present", "A full agonist is present", "The drug is metabolised", "The drug is excreted"], a: 1, w: "A partial agonist can act as an antagonist when a full agonist is present - it occupies the receptor but produces less effect, reducing the overall response." },
+    { q: "Efficacy matters clinically because:", o: ["It determines the ceiling of what the drug can achieve", "It determines the dose", "It determines the route", "It determines the half-life"], a: 0, w: "Efficacy determines the ceiling of what the drug can achieve - a high-efficacy drug can be used for severe conditions." },
+
+    // ===== Note 5: ceiling effect (Q21-25) =====
+    { q: "The ceiling effect is best described as:", o: ["The maximum effect a drug can produce, reached when receptors are saturated", "The minimum effect a drug can produce", "The toxic effect of a drug", "The side effect of a drug"], a: 0, w: "The ceiling effect is the maximum effect a drug can produce, reached when its receptors are saturated." },
+    { q: "If a drug produces its maximum effect at 100 mg, giving 200 mg will:", o: ["Double the effect", "Produce no additional therapeutic effect", "Produce a smaller effect", "Reverse the effect"], a: 1, w: "Once the ceiling is reached, additional drug produces no additional therapeutic effect - only side effects." },
+    { q: "The therapeutic ceiling is:", o: ["The dose at which side effects start", "The maximum dose producing additional benefit without unacceptable side effects", "The dose that produces toxicity", "The dose that produces no effect"], a: 1, w: "The therapeutic ceiling is the maximum dose producing additional benefit without unacceptable side effects." },
+    { q: "Why can a partial agonist be useful clinically?", o: ["It produces a moderate effect with fewer risks than a full agonist", "It produces a larger effect than a full agonist", "It has no effect", "It has no side effects"], a: 0, w: "A partial agonist produces a moderate effect, which can be useful when a full agonist's effects (and risks) are unnecessary." },
+    { q: "Which drug is a partial agonist used clinically?", o: ["Morphine", "Buprenorphine", "Atenolol", "Aspirin"], a: 1, w: "Buprenorphine is a partial opioid agonist used for analgesia and opioid dependence - it produces less respiratory depression than full agonists." },
+
+    // ===== Note 6: antagonism (Q26-30) =====
+    { q: "The four main types of antagonism are:", o: ["Competitive, non-competitive, uncompetitive, functional", "Direct, indirect, reversible, irreversible", "Agonist, antagonist, partial agonist, inverse agonist", "Local, systemic, topical, oral"], a: 0, w: "The four types are competitive, non-competitive, uncompetitive and functional antagonism." },
+    { q: "A competitive antagonist:", o: ["Binds reversibly at the agonist's binding site", "Binds irreversibly at a different site", "Binds only the agonist-receptor complex", "Acts on a different receptor"], a: 0, w: "A competitive antagonist binds reversibly at the same site as the agonist." },
+    { q: "A competitive antagonist shifts the dose-response curve:", o: ["To the left", "To the right without reducing Emax", "Downward", "Upward"], a: 1, w: "A competitive antagonist shifts the curve to the right without reducing the maximum effect (Emax is unchanged)." },
+    { q: "A non-competitive antagonist:", o: ["Reduces the maximum effect (Emax)", "Shifts the curve to the right only", "Has no effect", "Increases Emax"], a: 0, w: "A non-competitive antagonist reduces Emax because the block cannot be overcome by increasing the agonist concentration." },
+    { q: "Functional antagonism means:", o: ["The antagonist acts on a different receptor to produce the opposite effect", "The antagonist binds the same receptor", "The antagonist destroys the agonist", "The antagonist is irreversible"], a: 0, w: "Functional (physiological) antagonism means the antagonist acts on a different receptor to produce the opposite effect." },
+
+    // ===== Note 7: selectivity (Q31-35) =====
+    { q: "Selectivity is best defined as:", o: ["The maximum effect a drug can produce", "The dose needed for effect", "How well a drug distinguishes its intended target from other targets", "The rate of drug metabolism"], a: 2, w: "Selectivity is how well a drug distinguishes its intended target from other targets." },
+    { q: "Side effects occur because:", o: ["Drugs are always toxic", "Drugs bind off-target receptors with lower affinity", "Drugs have no target", "Drugs are metabolised too quickly"], a: 1, w: "Side effects occur because drugs bind off-target receptors with lower affinity - no drug is perfectly selective." },
+    { q: "Why do beta-blockers cause bronchospasm in asthmatics?", o: ["Because they block beta-2 receptors in the lungs", "Because they block beta-1 receptors in the heart", "Because they block sodium channels", "Because they inhibit phosphodiesterase"], a: 0, w: "Beta-blockers block beta-2 receptors in the lungs, causing bronchospasm in asthmatics." },
+    { q: "Why do first-generation antihistamines cause drowsiness?", o: ["Because they block H1 receptors in the brain", "Because they block H2 receptors in the stomach", "Because they block beta receptors", "Because they block sodium channels"], a: 0, w: "First-generation antihistamines cross the blood-brain barrier and block H1 receptors in the brain, causing drowsiness." },
+    { q: "Which of the following would improve a drug's selectivity?", o: ["Using higher doses", "Designing the drug to fit the target more specifically", "Using the drug for longer", "Combining it with other drugs"], a: 1, w: "Drug design that makes the drug fit the target more specifically improves selectivity." },
+
+    // ===== Note 8: therapeutic index (Q36-40) =====
+    { q: "Therapeutic index (TI) is calculated as:", o: ["ED50 / TD50", "Emax / EC50", "TD50 / ED50", "EC50 x Emax"], a: 2, w: "TI = TD50 / ED50 - the median toxic dose divided by the median effective dose." },
+    { q: "A high therapeutic index means:", o: ["The drug is very dangerous", "The toxic dose is much higher than the effective dose - a wide safety margin", "The drug is very potent", "The drug is very efficacious"], a: 1, w: "A high TI means a wide safety margin - the drug is relatively safe." },
+    { q: "A low therapeutic index means:", o: ["The drug is very safe", "The toxic dose is close to the effective dose - a narrow safety margin", "The drug has no effect", "The drug has no side effects"], a: 1, w: "A low TI means the toxic dose is close to the effective dose - careful dosing and monitoring are needed." },
+    { q: "Which of the following drugs has a low therapeutic index?", o: ["Penicillin", "Digoxin", "Aspirin", "Paracetamol"], a: 1, w: "Digoxin has a narrow therapeutic index - plasma levels must be monitored." },
+    { q: "Therapeutic window is best described as:", o: ["The range of plasma concentrations between minimum effective and minimum toxic concentrations", "The range of doses producing side effects", "The time a drug stays in the body", "The difference between ED50 and TD50"], a: 0, w: "Therapeutic window is the range of plasma concentrations between the minimum effective and minimum toxic concentrations." },
+
+    // ===== Note 9: decreased responsiveness (Q41-45) =====
+    { q: "Tolerance is best defined as:", o: ["An increased response to a drug after repeated use", "A reduced response to a drug after repeated use, requiring higher doses", "A permanent loss of receptors", "An allergic reaction"], a: 1, w: "Tolerance is a reduced response to a drug after repeated use, requiring higher doses to produce the same effect." },
+    { q: "Tachyphylaxis differs from tolerance in that tachyphylaxis:", o: ["Develops more rapidly (minutes to hours)", "Develops over weeks", "Never occurs", "Is always permanent"], a: 0, w: "Tachyphylaxis is rapid tolerance, developing within minutes to hours after repeated administration." },
+    { q: "Desensitisation of a receptor often involves:", o: ["Phosphorylation of the receptor, arrestin binding, and internalisation", "Increased receptor synthesis", "Increased receptor affinity", "Increased G-protein activation"], a: 0, w: "Desensitisation involves receptor phosphorylation, arrestin binding and internalisation." },
+    { q: "Downregulation is best described as:", o: ["Increased receptor number", "Reduced receptor synthesis in response to prolonged stimulation", "Reduced receptor affinity", "Loss of drug from the body"], a: 1, w: "Downregulation is the reduced receptor synthesis in response to prolonged stimulation." },
+    { q: "Cross-tolerance means:", o: ["Tolerance to one drug reduces the response to another drug in the same class", "Tolerance never develops", "Tolerance is permanent", "Tolerance is reversed by another drug"], a: 0, w: "Cross-tolerance is tolerance to one drug reducing the response to another drug in the same class." },
+
+    // ===== Note 10: clinical application (Q46-50) =====
+    { q: "Which of the following is NOT part of the prescribing framework based on quantitative pharmacology?", o: ["Choosing the target", "Assessing potency and efficacy", "Checking the therapeutic index", "Ignoring the patient's other drugs"], a: 3, w: "Checking for drug interactions is essential - ignoring other drugs is not part of safe prescribing." },
+    { q: "When choosing a drug for a severe condition, the doctor should prioritise:", o: ["High potency only", "High efficacy", "Low therapeutic index", "Low selectivity"], a: 1, w: "High efficacy is needed for severe conditions - the drug must be able to produce a large maximum effect." },
+    { q: "For a patient with asthma, a doctor would avoid non-selective beta-blockers because:", o: ["They have a narrow therapeutic index", "They block beta-2 receptors in the lungs, causing bronchospasm", "They have low potency", "They have low efficacy"], a: 1, w: "Non-selective beta-blockers block beta-2 receptors in the lungs, which can cause bronchospasm in asthmatics." },
+    { q: "The quantitative information needed to prescribe a drug safely includes:", o: ["Potency, efficacy, therapeutic index, selectivity, and potential for decreased responsiveness", "Only the drug name", "Only the dose", "Only the route"], a: 0, w: "Safe prescribing requires potency, efficacy, TI, selectivity and an understanding of decreased responsiveness." },
+    { q: "The key takeaway from this topic is:", o: ["Drugs act by magic", "Quantitative pharmacology is only for researchers", "Potency, efficacy, dose-response, therapeutic index, selectivity, antagonism and decreased responsiveness all come together in clinical prescribing", "Only one of these concepts matters"], a: 2, w: "All the quantitative concepts come together in the act of prescribing - they are the tools a doctor uses to prescribe safely and effectively." },
+  ],
+};
+
+/* --------------------------- pha:4 --------------------------- */
+const T_PHA_PK = {
+  courseId: "pha",
+  topicIndex: 4,
+  title: "General/Introductory Pharmacology: Pharmacokinetics",
+  minutes: 30,
+  note: [
+    {
+      q: "A drug enters the body. Where does it go, and how does it eventually leave?",
+      body: `You have learned how a drug acts on its target - pharmacodynamics. But there is an earlier and equally important question: how does the drug get to the target in the first place, and what happens to it afterwards? That is pharmacokinetics - the study of what the body does to the drug.
+
+My Socratic question: a patient swallows a tablet. The drug must reach its target in the heart, or the brain, or the kidney. What has to happen to that tablet before the drug can act, and what happens to the drug after it has done its job?
+
+The answer is that the drug must pass through a series of stages. It is absorbed from the gut into the bloodstream; it is distributed from the blood to the tissues; it is metabolised (chemically modified, usually in the liver); and it is excreted (removed from the body, usually by the kidneys). Together these stages are summarised by the acronym ADME.
+
+The four components of pharmacokinetics:
+
+- Absorption - how the drug moves from its site of administration into the bloodstream.
+- Distribution - how the drug moves from the blood into the tissues and organs.
+- Metabolism - how the drug is chemically modified, primarily in the liver.
+- Excretion - how the drug and its metabolites are removed from the body, primarily by the kidneys.
+
+Crucial insight: pharmacokinetics determines whether a drug reaches its target, how long it stays there, and how quickly it is cleared. A drug with excellent pharmacodynamics but poor pharmacokinetics will fail in the clinic - it may never reach the target in sufficient concentration, or it may be eliminated before it can act. Pharmacokinetics is therefore the foundation of rational dosing: it tells you how much to give, how often, and by what route.`
+    },
+    {
+      q: "A drug can be given by mouth, by injection, by inhalation, or by many other routes. Why does the route matter so much?",
+      body: `The route of administration is not a matter of convenience - it determines how fast the drug is absorbed, how much reaches the bloodstream, and how much is lost along the way. A drug given orally may be destroyed by stomach acid or metabolised by the liver before it ever reaches the target. A drug given intravenously bypasses all of that and enters the bloodstream directly.
+
+My Socratic question: if the same drug is given by two different routes, why would the effect be different?
+
+The answer is that the route determines absorption. Different routes have different absorption profiles, different speeds, and different amounts of drug reaching the systemic circulation.
+
+The main routes of administration:
+
+- Oral (PO) - swallowed. The most common route. Absorption occurs mainly in the small intestine. The drug must survive stomach acid, cross the gut wall, and pass through the liver before reaching the systemic circulation (first-pass metabolism). Slower onset, variable absorption.
+- Intravenous (IV) - injected directly into a vein. The drug enters the bloodstream immediately, with 100% bioavailability. Fast onset, precise control, but requires sterile technique and carries a risk of infection or embolism.
+- Intramuscular (IM) - injected into muscle. Absorption is rapid but not instantaneous; the drug is absorbed from the muscle into the blood. Used for vaccines, some antibiotics, and depot preparations.
+- Subcutaneous (SC) - injected under the skin. Similar to IM but slower absorption. Used for insulin, heparin, and some vaccines.
+- Sublingual (SL) - placed under the tongue. The drug is absorbed directly into the bloodstream, bypassing the liver. Fast onset. Used for nitroglycerin and some hormones.
+- Rectal - inserted into the rectum. Absorption is variable but useful when the patient is vomiting or unconscious.
+- Inhalation - breathed into the lungs. Rapid absorption because the lungs have a large surface area and rich blood supply. Used for anaesthetics and bronchodilators.
+- Topical - applied to the skin or mucous membranes. Absorption is usually local, though some drugs can be absorbed systemically.
+
+Crucial insight: the route of administration shapes everything about a drug's behaviour - how fast it acts, how much reaches the target, and how much is lost along the way. Choosing the right route is as important as choosing the right drug. A drug that is effective orally may be useless intravenously if it is not formulated for injection; a drug that needs to act within seconds must be given intravenously; a drug that would be destroyed by stomach acid must be given by another route.`
+    },
+    {
+      q: "A drug must cross cell membranes to be absorbed, distributed, and excreted. What determines whether it can cross?",
+      body: `Every movement of a drug through the body involves crossing a membrane. From the gut into the blood, from the blood into the tissues, from the blood into the liver, from the liver into the bile, from the blood into the kidney tubules - each step requires the drug to pass through a lipid bilayer. Understanding what determines this passage is essential for understanding pharmacokinetics.
+
+My Socratic question: a drug molecule sits outside a cell membrane. What properties would allow it to cross, and what would prevent it from crossing?
+
+The answer is that crossing a membrane depends on the drug's physicochemical properties - its lipid solubility, its size, its charge, and its shape - and on the membrane itself.
+
+The main factors determining membrane passage:
+
+- Lipid solubility (lipophilicity) - lipid-soluble (lipophilic) drugs cross membranes easily; water-soluble (hydrophilic) drugs do not. The membrane is a lipid bilayer, so lipophilic drugs dissolve through it.
+- Molecular size - small molecules cross more easily than large ones.
+- Charge (ionisation) - uncharged (unionised) drugs cross membranes more easily than charged (ionised) drugs. The ionised form is repelled by the lipid core.
+- pH and pKa - whether a drug is ionised depends on the pH of the environment and the drug's pKa. A weak acid is more unionised in an acidic environment; a weak base is more unionised in an alkaline environment.
+- Concentration gradient - drugs move from high concentration to low concentration (passive diffusion).
+- Presence of transporters - some drugs are moved across membranes by specific carrier proteins (facilitated diffusion or active transport).
+
+The pH-partition hypothesis:
+
+- Weak acids (e.g. aspirin) are unionised in acidic environments (stomach), so they are absorbed in the stomach.
+- Weak bases (e.g. morphine) are unionised in alkaline environments (intestine), so they are absorbed in the intestine.
+- This explains why drug absorption varies with the pH of the environment.
+
+Crucial insight: a drug's physicochemical properties determine where and how well it is absorbed, distributed, metabolised and excreted. Lipid-soluble drugs cross membranes easily but accumulate in fat and are hard to excrete; water-soluble drugs stay in the blood and are easily excreted but do not cross membranes well. Charge, size and pH all modulate this. Understanding these properties is essential for predicting how a drug will behave in the body.`
+    },
+    {
+      q: "A drug is absorbed into the blood. But not all of it reaches the circulation. Where does the rest go?",
+      body: `When a drug is given orally, only a fraction of the dose reaches the systemic circulation. Some is lost in the gut, some is metabolised by the gut wall, and some is metabolised by the liver before the drug ever reaches the general circulation. This is the first-pass effect, and it determines how much drug is actually available to act.
+
+My Socratic question: if a drug is completely absorbed from the gut into the portal vein, why would its concentration in the systemic circulation be lower than expected?
+
+The answer is that blood from the gut does not go directly to the heart - it goes through the liver first via the hepatic portal vein. The liver is the body's main metabolising organ, and it removes a fraction of the drug before it reaches the systemic circulation. This is the first-pass effect (or presystemic metabolism).
+
+Key concepts:
+
+- Bioavailability (F) - the fraction of an administered dose that reaches the systemic circulation unchanged. For intravenous administration, F = 100% (by definition). For oral administration, F is usually less than 100%, sometimes much less.
+- First-pass metabolism - the metabolism of a drug in the gut wall and liver before it reaches the systemic circulation. It reduces bioavailability.
+- Factors affecting bioavailability - drug formulation, food, gastric emptying time, intestinal motility, and liver function.
+
+Examples:
+
+- Nitroglycerin - almost completely destroyed by first-pass metabolism if swallowed, which is why it is given sublingually or as a spray.
+- Morphine - has significant first-pass metabolism, so the oral dose is several times higher than the parenteral dose.
+- Propranolol - extensively metabolised by the liver, so its oral bioavailability is low and variable.
+- Lidocaine - completely destroyed by first-pass metabolism, which is why it is never given orally for systemic effects.
+
+Crucial insight: bioavailability determines how much drug actually reaches the systemic circulation to produce its effect. The first-pass effect can dramatically reduce bioavailability, which is why some drugs are given by routes that bypass the liver (sublingual, intravenous, rectal, transdermal) and why the oral dose of a highly extracted drug is much higher than the intravenous dose. Understanding bioavailability is essential for choosing the right route and dose.`
+    },
+    {
+      q: "A drug enters the blood. Where does it go next, and how much of it stays in the blood?",
+      body: `Once a drug is in the bloodstream, it does not stay there. It distributes into tissues - the brain, the fat, the muscle, the organs. How much of it goes where depends on the drug's properties and the tissue's characteristics. Understanding distribution is essential for understanding where a drug acts, how long it lasts, and what its side effects will be.
+
+My Socratic question: some drugs stay mostly in the blood, while others distribute widely into tissues. What determines how widely a drug distributes?
+
+The answer is the drug's properties and the tissue's properties. Lipophilic drugs distribute widely into fat and cell membranes; hydrophilic drugs stay in the extracellular fluid; drugs bound to plasma proteins stay in the blood. The volume of distribution (Vd) quantifies this.
+
+Key concepts:
+
+- Volume of distribution (Vd) - the theoretical volume of fluid into which the total amount of drug in the body would need to be diluted to produce the observed plasma concentration. Vd = total amount of drug in body / plasma concentration.
+- High Vd - the drug distributes widely into tissues, so plasma concentration is low. Example: digoxin (Vd ~ 500 L).
+- Low Vd - the drug stays in the blood, so plasma concentration is high. Example: warfarin (Vd ~ 8 L).
+- Plasma protein binding - many drugs bind to plasma proteins, especially albumin. Only the unbound (free) fraction is pharmacologically active and can distribute to tissues.
+- Tissue binding - some drugs bind to tissue components, which can increase Vd and prolong the drug's presence in the body.
+- Barriers - the blood-brain barrier limits distribution of many drugs to the brain; the placental barrier limits distribution to the fetus (though many drugs cross it).
+
+Factors affecting distribution:
+
+- Lipid solubility - lipophilic drugs distribute widely.
+- Protein binding - highly bound drugs stay in the blood.
+- Tissue perfusion - well-perfused organs (heart, brain, liver, kidneys) receive the drug first.
+- Tissue affinity - some drugs have high affinity for specific tissues.
+- Barriers - the blood-brain barrier and placental barrier.
+
+Crucial insight: the volume of distribution tells you where a drug goes and how much of it is available to act. A drug with a high Vd is widely distributed in the body and its plasma concentration will be low; a drug with a low Vd stays in the blood and its plasma concentration will be high. Vd also determines the loading dose needed to achieve a therapeutic plasma concentration quickly, and it affects how easily the drug can be removed by dialysis in overdose.`
+    },
+    {
+      q: "The body must eventually eliminate the drug. How does it chemically modify a drug to make it easier to excrete?",
+      body: `Most drugs are not excreted unchanged - they are first chemically modified by the body, primarily in the liver. This is metabolism (or biotransformation), and it usually converts a lipid-soluble drug into a water-soluble metabolite that can be excreted by the kidneys. Without metabolism, many drugs would accumulate in the body and never be eliminated.
+
+My Socratic question: a drug is lipid-soluble, which is why it was absorbed well. But lipid-soluble drugs are hard to excrete. How does the body solve this problem?
+
+The answer is that metabolism converts the drug into a more water-soluble form. This is called biotransformation, and it happens in two phases.
+
+The two phases of drug metabolism:
+
+- Phase I reactions - these introduce or expose a functional group (such as -OH, -NH2, -COOH, -SH) on the drug molecule. This is usually done by oxidation, reduction or hydrolysis. The most important enzyme system is the cytochrome P450 (CYP) family, which catalyses oxidation reactions. Phase I reactions often (but not always) inactivate the drug. They can also convert a prodrug into its active form.
+- Phase II reactions - these conjugate the drug (or its Phase I metabolite) with a large, water-soluble molecule such as glucuronic acid, sulfate, glycine or glutathione. The conjugate is almost always pharmacologically inactive and highly water-soluble, so it can be excreted by the kidneys or in bile. The most common Phase II reaction is glucuronidation.
+
+Key points about metabolism:
+
+- The liver is the main site of metabolism, but other tissues (gut wall, lungs, kidneys, skin) also contribute.
+- Metabolism can inactivate the drug, activate a prodrug, or convert the drug into a toxic metabolite.
+- Enzyme induction (increased enzyme synthesis) accelerates metabolism, reducing drug effect.
+- Enzyme inhibition (decreased enzyme activity) slows metabolism, increasing drug effect and risk of toxicity.
+- Genetic variation (pharmacogenomics) affects enzyme activity between individuals.
+- Age, disease and other drugs all affect metabolism.
+
+Crucial insight: metabolism is the body's way of converting drugs into forms that can be excreted. Without it, many drugs would accumulate to toxic levels. The liver's cytochrome P450 system is central to this process - which is why liver disease, drug interactions affecting CYP enzymes, and genetic differences in enzyme activity all have major clinical consequences.`
+    },
+    {
+      q: "Once the drug has been metabolised, how does the body get rid of it?",
+      body: `After metabolism, the drug and its metabolites must be removed from the body. This is excretion. The kidneys are the main excretory organ, but the biliary system, lungs, sweat, saliva and breast milk can also contribute. Understanding excretion is essential for understanding how long a drug lasts and how it is affected by kidney disease.
+
+My Socratic question: the kidney is the main excretory organ. How does it remove drugs and their metabolites from the blood?
+
+The answer is through the same processes that produce urine: glomerular filtration, tubular secretion, and tubular reabsorption.
+
+The three renal processes:
+
+- Glomerular filtration - drugs and metabolites that are small enough (and not bound to plasma proteins) are filtered from the blood into the tubular fluid. The filtration rate depends on renal blood flow and glomerular function. Protein-bound drugs are not filtered.
+- Tubular secretion - drugs and metabolites are actively transported from the blood into the tubular fluid by carrier proteins. This is an active process that can be saturated (transport maximum). It is the main mechanism for removing protein-bound drugs, since they are not filtered.
+- Tubular reabsorption - some drugs and metabolites are reabsorbed from the tubular fluid back into the blood. This is usually passive and depends on the drug's lipid solubility and the pH of the urine. Lipid-soluble, unionised drugs are reabsorbed; water-soluble, ionised drugs are not.
+
+Factors affecting renal excretion:
+
+- Renal function - kidney disease reduces excretion, causing drug accumulation. Dose reduction is often needed.
+- Urine pH - acidic urine promotes excretion of weak bases; alkaline urine promotes excretion of weak acids. This can be manipulated clinically (e.g. alkalinising urine with sodium bicarbonate to treat aspirin overdose).
+- Protein binding - highly protein-bound drugs are poorly filtered.
+- Drug interactions - drugs competing for the same transporters can reduce each other's excretion.
+
+Other routes of excretion:
+
+- Biliary excretion - the liver secretes some drugs and metabolites into bile, which is then excreted in faeces. Some drugs undergo enterohepatic recirculation (they are reabsorbed from the gut after biliary excretion).
+- Pulmonary excretion - volatile drugs (e.g. anaesthetics) are excreted through the lungs.
+- Minor routes - sweat, saliva, tears and breast milk.
+
+Crucial insight: renal excretion is the main route by which drugs leave the body, and it depends on kidney function. Patients with kidney disease need dose adjustment to prevent drug accumulation and toxicity. Urine pH can be manipulated to enhance excretion in overdose. And drugs that are excreted in breast milk can affect nursing infants - an important clinical consideration.`
+    },
+    {
+      q: "A drug's effect wears off over time. What determines how quickly?",
+      body: `Some drugs act for minutes; others for days. The difference is largely determined by how quickly the body eliminates the drug. The key parameter is the half-life - the time it takes for the plasma concentration to fall by half. Understanding half-life is essential for determining dosing intervals and predicting how long a drug will act.
+
+My Socratic question: if a drug has a half-life of 4 hours, how long will it take for the drug to be almost completely eliminated from the body?
+
+The answer is that it depends on how many half-lives have passed. After 1 half-life, 50% remains; after 2, 25%; after 3, 12.5%; after 4, 6.25%; after 5, 3.125%; after about 5 half-lives, less than 5% remains - effectively complete elimination. So a drug with a 4-hour half-life is essentially gone after about 20 hours.
+
+Key concepts:
+
+- Half-life (t½) - the time required for the plasma concentration of a drug to fall by 50%.
+- Steady state - the state in which drug input equals drug elimination, so plasma concentration remains constant. Reached after about 4-5 half-lives of continuous dosing.
+- Loading dose - a larger initial dose given to achieve a therapeutic plasma concentration quickly.
+- Maintenance dose - the regular dose given to maintain the therapeutic plasma concentration.
+- Clearance - the volume of plasma cleared of drug per unit time. It determines the maintenance dose.
+
+Clinical implications of half-life:
+
+- Dosing interval - drugs with short half-lives need frequent dosing (or sustained-release formulations); drugs with long half-lives can be dosed less often.
+- Time to steady state - after starting a drug (or changing the dose), it takes about 4-5 half-lives to reach steady state. This determines how long before the full effect is seen.
+- Time to elimination - after stopping a drug, it takes about 4-5 half-lives for the drug to be essentially eliminated. This determines how long side effects or withdrawal symptoms may last.
+- Fluctuations in plasma concentration - drugs with short half-lives produce larger peaks and troughs between doses; drugs with long half-lives produce smoother plasma concentrations.
+
+Crucial insight: half-life is the single most useful pharmacokinetic parameter for clinical practice. It tells you how often to dose, how long before the drug starts working, how long it will keep working, and how long after stopping it will take to be eliminated. Half-life is affected by liver and kidney function, so dose adjustment is often needed in patients with hepatic or renal impairment.`
+    },
+    {
+      q: "Two drugs are given together and the effect of one changes. Why do drug interactions happen?",
+      body: `Patients often take several drugs at once. When two drugs are given together, one may change the behaviour of the other - increasing its effect, decreasing it, or producing a new effect. These are drug interactions, and they are one of the most important causes of preventable harm in medicine.
+
+My Socratic question: if drug A and drug B each act on different targets, why would giving them together change the effect of either?
+
+The answer is that drugs interact through two main mechanisms: pharmacokinetic and pharmacodynamic.
+
+Pharmacokinetic interactions:
+
+- Absorption - one drug may change the absorption of another (e.g. antacids reduce the absorption of some antibiotics; food can change the absorption of many drugs).
+- Distribution - one drug may displace another from plasma proteins, increasing the free (active) concentration of the displaced drug (e.g. warfarin displaced by aspirin).
+- Metabolism - one drug may induce (speed up) or inhibit (slow down) the enzymes that metabolise another. This is the most common and clinically important type of interaction. Enzyme inducers (e.g. rifampicin, carbamazepine, phenytoin) reduce the effect of drugs metabolised by the same enzymes; enzyme inhibitors (e.g. ketoconazole, erythromycin, cimetidine) increase the effect and risk of toxicity.
+- Excretion - one drug may change the renal excretion of another (e.g. probenecid reduces penicillin excretion; diuretics reduce lithium excretion).
+
+Pharmacodynamic interactions:
+
+- Additive - two drugs with similar effects produce a combined effect equal to the sum of their individual effects (e.g. two antihypertensives).
+- Synergistic - two drugs together produce an effect greater than the sum of their individual effects (e.g. alcohol + benzodiazepines).
+- Antagonistic - two drugs have opposing effects, reducing the effect of one or both (e.g. beta-blocker + beta-agonist).
+
+Examples of clinically important drug interactions:
+
+- Warfarin + aspirin - increased bleeding risk (pharmacodynamic + pharmacokinetic).
+- Warfarin + erythromycin - increased warfarin effect due to CYP inhibition.
+- Digoxin + diuretics - increased digoxin toxicity due to low potassium.
+- SSRIs + MAOIs - serotonin syndrome (potentially fatal).
+- Alcohol + paracetamol - increased risk of liver toxicity.
+
+Crucial insight: drug interactions are a major cause of preventable harm, and most are predictable from the pharmacokinetic and pharmacodynamic properties of the drugs involved. Understanding how drugs are absorbed, distributed, metabolised and excreted lets you predict which combinations are safe and which require dose adjustment or monitoring. Every prescriber needs to consider drug interactions with every new prescription.`
+    },
+    {
+      q: "Bringing it all together. How does a doctor use pharmacokinetics to prescribe safely and effectively?",
+      body: `Everything you have learned in this topic converges in the act of prescribing. Pharmacokinetics is not an academic exercise - it is the framework a doctor uses every day to decide what dose to give, by what route, and how often.
+
+My Socratic question: a patient needs a drug. What pharmacokinetic information does the doctor need to prescribe safely and effectively?
+
+The answer is a complete pharmacokinetic profile - each component of ADME, plus half-life and bioavailability.
+
+The prescribing framework:
+
+- Route of administration - choose based on the required speed of onset, the patient's condition, and the drug's bioavailability. Oral is convenient but slower; intravenous is fastest but requires access; sublingual bypasses the liver.
+- Absorption and bioavailability - determine the fraction of the dose that reaches the systemic circulation. If bioavailability is low or variable, adjust the dose or choose another route.
+- Distribution - determine where the drug goes and how much reaches the target. Consider the volume of distribution, protein binding, and barriers (blood-brain, placental).
+- Metabolism - determine how the drug is inactivated and eliminated. Consider liver function, genetic variation, and drug interactions.
+- Excretion - determine how the drug leaves the body. Consider kidney function, urine pH, and drug interactions.
+- Half-life - determine how often to dose and how long the drug will act. Choose a dosing interval based on half-life.
+- Loading dose - if a rapid therapeutic concentration is needed, give a larger initial dose based on volume of distribution.
+- Maintenance dose - to maintain the therapeutic concentration, give regular doses based on clearance.
+- Patient factors - age, weight, liver and kidney function, pregnancy, and other drugs all affect pharmacokinetics. Adjust the dose accordingly.
+- Monitoring - for drugs with a narrow therapeutic index, measure plasma concentrations to ensure they remain in the therapeutic window.
+
+A practical example - starting a patient on digoxin:
+
+- Route - oral (convenient, adequate bioavailability).
+- Absorption - about 70-80% bioavailable; adjust dose accordingly.
+- Distribution - large volume of distribution (500 L); concentrates in heart, skeletal muscle and kidney.
+- Metabolism - minimal; most is excreted unchanged by the kidney.
+- Excretion - renal; dose must be reduced in kidney disease.
+- Half-life - about 36-48 hours; once-daily dosing is sufficient.
+- Loading dose - given if rapid effect is needed; calculated from volume of distribution.
+- Maintenance dose - calculated from clearance.
+- Monitoring - plasma levels monitored regularly due to narrow therapeutic index.
+
+Crucial insight: pharmacokinetics is the science that makes rational prescribing possible. It tells you what dose to give, by what route, and how often - and how to adjust for the individual patient. Without pharmacokinetics, prescribing would be guesswork; with it, it becomes a quantitative, predictable, safe process. Every drug decision a doctor makes is grounded in the principles of absorption, distribution, metabolism, excretion, bioavailability and half-life.`
+    },
+  ],
+  theory: [
+    { q: "Define pharmacokinetics and explain its four components.", a: "Pharmacokinetics is the study of what the body does to a drug. Its four components (ADME) are: absorption - how the drug enters the bloodstream; distribution - how it moves from blood into tissues; metabolism - how it is chemically modified, mainly by the liver; and excretion - how it and its metabolites are removed, mainly by the kidneys." },
+    { q: "Name the main routes of drug administration and give one advantage of each.", a: "Oral (PO) - convenient, safe, economical. Intravenous (IV) - immediate onset, 100% bioavailability. Intramuscular (IM) - rapid absorption, suitable for depot preparations. Subcutaneous (SC) - slow, sustained absorption (e.g. insulin). Sublingual (SL) - bypasses first-pass metabolism, rapid onset. Rectal - useful if vomiting or unconscious. Inhalation - rapid absorption due to large surface area. Topical - local effect, minimises systemic side effects." },
+    { q: "Explain the pH-partition hypothesis and give an example.", a: "The pH-partition hypothesis states that a weak acid is more unionised in an acidic environment and a weak base is more unionised in an alkaline environment. Unionised drugs cross membranes more easily, so weak acids are absorbed in the stomach and weak bases in the intestine. Example: aspirin (a weak acid) is absorbed partly in the stomach; morphine (a weak base) is absorbed mainly in the intestine." },
+    { q: "Define bioavailability and explain the first-pass effect.", a: "Bioavailability (F) is the fraction of an administered dose that reaches the systemic circulation unchanged. The first-pass effect is the metabolism of a drug by the gut wall and liver before it reaches the systemic circulation, which reduces bioavailability. It is bypassed by routes such as sublingual, intravenous, and rectal administration." },
+    { q: "Define volume of distribution and explain what a high or low Vd means.", a: "Volume of distribution (Vd) is the theoretical volume into which the total amount of drug in the body would need to be diluted to produce the observed plasma concentration. A high Vd means the drug distributes widely into tissues (e.g. digoxin); a low Vd means it stays mostly in the blood (e.g. warfarin). Vd determines the loading dose needed." },
+    { q: "Explain the two phases of drug metabolism and give an example of each.", a: "Phase I reactions introduce or expose a functional group on the drug (oxidation, reduction or hydrolysis), usually via cytochrome P450 enzymes (e.g. oxidation of diazepam). Phase II reactions conjugate the drug or its Phase I metabolite with a large water-soluble molecule such as glucuronic acid (e.g. glucuronidation of paracetamol). Phase II products are usually inactive and easily excreted." },
+    { q: "Distinguish enzyme induction from enzyme inhibition and give a clinical example of each.", a: "Enzyme induction is an increase in enzyme synthesis, which speeds up drug metabolism and reduces drug effect. Example: rifampicin induces CYP enzymes and reduces the effect of warfarin. Enzyme inhibition is a decrease in enzyme activity, which slows drug metabolism and increases drug effect and risk of toxicity. Example: erythromycin inhibits CYP enzymes and increases the effect of warfarin." },
+    { q: "Describe the three renal processes involved in drug excretion.", a: "Glomerular filtration - drugs that are small and not protein-bound are filtered into the tubular fluid. Tubular secretion - drugs are actively transported from blood into tubular fluid by carrier proteins (the main route for protein-bound drugs). Tubular reabsorption - lipid-soluble, unionised drugs are reabsorbed back into the blood; water-soluble, ionised drugs remain in the urine and are excreted." },
+    { q: "Define half-life and explain its clinical significance.", a: "Half-life (t½) is the time required for the plasma concentration of a drug to fall by 50%. It determines the dosing interval (short half-life = frequent dosing), the time to steady state (about 4-5 half-lives), the time to elimination after stopping (about 4-5 half-lives), and the degree of fluctuation in plasma concentration between doses." },
+    { q: "Explain the difference between a loading dose and a maintenance dose.", a: "A loading dose is a larger initial dose given to achieve a therapeutic plasma concentration quickly; it is calculated from the volume of distribution. A maintenance dose is the regular dose given to maintain the therapeutic concentration; it is calculated from the clearance of the drug." },
+    { q: "Describe the two main mechanisms of drug interactions.", a: "Pharmacokinetic interactions affect absorption, distribution, metabolism or excretion of a drug - for example, one drug inducing or inhibiting the metabolism of another. Pharmacodynamic interactions affect the drug's effect at its target - additive, synergistic or antagonistic effects when two drugs act on the same system." },
+    { q: "Explain how kidney disease affects drug dosing.", a: "Kidney disease reduces the renal excretion of drugs and their metabolites, causing accumulation and risk of toxicity. Drugs that are excreted unchanged by the kidney (e.g. digoxin) require dose reduction. Drugs with active metabolites that are renally excreted also require caution. Monitoring plasma concentrations is often necessary." },
+    { q: "Explain how liver disease affects drug dosing.", a: "Liver disease reduces the metabolism of many drugs, prolonging their half-life and increasing the risk of toxicity. The first-pass effect is reduced, which can increase the bioavailability of orally administered drugs. Drugs that are extensively metabolised by the liver (e.g. propranolol, lidocaine) require dose reduction in liver disease." },
+    { q: "How do pharmacogenomic differences affect pharmacokinetics?", a: "Genetic variations in drug-metabolising enzymes (especially CYP enzymes) can affect how quickly an individual metabolises a drug. Poor metabolisers accumulate the drug and risk toxicity; ultrarapid metabolisers eliminate the drug quickly and may not achieve therapeutic concentrations. Pharmacogenomics allows personalised dosing based on genotype." },
+  ],
+  videos: [
+    { channel: "Pharmacology", title: "Pharmacokinetics - Absorption, Distribution, Metabolism and Excretion (ADME)", note: "Full walkthrough of the four components of pharmacokinetics.", url: "https://www.youtube.com/results?search_query=pharmacokinetics+ADME+absorption+distribution+metabolism+excretion" },
+    { channel: "Pharmacology", title: "Half-Life, Steady State and Dosing Regimens", note: "How half-life determines dosing intervals and time to steady state.", url: "https://www.youtube.com/results?search_query=half+life+steady+state+dosing+regimens+pharmacokinetics" },
+    { channel: "Pharmacology", title: "Drug Metabolism - Phase I and Phase II Reactions", note: "Cytochrome P450 enzymes, conjugation reactions and their clinical significance.", url: "https://www.youtube.com/results?search_query=drug+metabolism+phase+I+phase+II+cytochrome+P450" },
+  ],
+  mcqs: [
+    // ===== Note 1: what pharmacokinetics is (Q1-5) =====
+    { q: "Pharmacokinetics is best defined as the study of:", o: ["What the drug does to the body", "What the body does to the drug", "How drugs are manufactured", "How drugs are prescribed"], a: 1, w: "Pharmacokinetics is the study of what the body does to the drug." },
+    { q: "The four components of pharmacokinetics, remembered by ADME, are:", o: ["Absorption, distribution, metabolism, excretion", "Activation, distribution, metabolism, elimination", "Absorption, dilution, metabolism, excretion", "Antagonism, distribution, modulation, elimination"], a: 0, w: "ADME stands for absorption, distribution, metabolism and excretion." },
+    { q: "Absorption refers to:", o: ["The movement of drug from the site of administration into the bloodstream", "The movement of drug from blood into tissues", "The chemical modification of the drug", "The removal of drug from the body"], a: 0, w: "Absorption is the movement of drug from the site of administration into the bloodstream." },
+    { q: "Distribution refers to:", o: ["The movement of drug from the site of administration into the blood", "The movement of drug from blood into tissues and organs", "The chemical modification of the drug", "The removal of drug from the body"], a: 1, w: "Distribution is the movement of drug from blood into tissues and organs." },
+    { q: "Excretion refers to:", o: ["The movement of drug from the site of administration into the blood", "The movement of drug from blood into tissues", "The chemical modification of the drug", "The removal of drug and its metabolites from the body"], a: 3, w: "Excretion is the removal of drug and its metabolites from the body." },
+
+    // ===== Note 2: routes of administration (Q6-10) =====
+    { q: "The route of administration affects:", o: ["The speed of absorption and the amount of drug reaching the systemic circulation", "Only the cost of the drug", "Only the colour of the drug", "Nothing important"], a: 0, w: "The route affects the speed of absorption and the bioavailability of the drug." },
+    { q: "Intravenous administration has which advantage?", o: ["It is the slowest route", "It has 100% bioavailability and immediate onset", "It bypasses the liver only", "It is always safest"], a: 1, w: "Intravenous administration gives immediate onset and 100% bioavailability - the drug enters the bloodstream directly." },
+    { q: "Sublingual administration bypasses:", o: ["The stomach only", "First-pass metabolism in the liver", "Renal excretion", "The bloodstream entirely"], a: 1, w: "Sublingual absorption goes directly into the systemic circulation, bypassing the liver's first-pass metabolism." },
+    { q: "Inhalation provides rapid absorption because:", o: ["The lungs have a small surface area", "The lungs have a large surface area and rich blood supply", "The drug is metabolised quickly", "The drug is injected"], a: 1, w: "The lungs have a very large surface area and rich blood supply, allowing rapid absorption." },
+    { q: "Which route is most appropriate when a patient is vomiting and cannot swallow?", o: ["Oral", "Sublingual", "Rectal", "Topical"], a: 2, w: "The rectal route is useful when a patient is vomiting or unconscious and cannot take oral medication." },
+
+    // ===== Note 3: physicochemical factors affecting membrane transport (Q11-15) =====
+    { q: "Lipid-soluble drugs cross membranes easily because:", o: ["They are large", "They dissolve through the lipid bilayer", "They are charged", "They bind to proteins"], a: 1, w: "Lipid-soluble drugs dissolve through the lipid bilayer of the membrane." },
+    { q: "Ionised (charged) drugs cross membranes:", o: ["Easily", "Poorly, because they are repelled by the lipid core", "As fast as unionised drugs", "By active transport only"], a: 1, w: "Ionised drugs are repelled by the lipid core and cross membranes poorly." },
+    { q: "According to the pH-partition hypothesis, a weak acid is best absorbed in:", o: ["An acidic environment such as the stomach", "An alkaline environment such as the intestine", "A neutral environment", "Any environment equally"], a: 0, w: "Weak acids are more unionised in acidic environments and are absorbed in the stomach." },
+    { q: "A weak base is best absorbed in:", o: ["The stomach", "An alkaline environment such as the intestine", "A neutral environment only", "No environment"], a: 1, w: "Weak bases are more unionised in alkaline environments and are absorbed in the intestine." },
+    { q: "Which of the following is NOT a factor determining membrane passage of a drug?", o: ["Lipid solubility", "Molecular size", "Charge (ionisation)", "The colour of the drug"], a: 3, w: "Colour is irrelevant to membrane passage - lipid solubility, size and charge all matter." },
+
+    // ===== Note 4: bioavailability and first-pass metabolism (Q16-20) =====
+    { q: "Bioavailability (F) is best defined as:", o: ["The fraction of an administered dose that reaches the systemic circulation unchanged", "The total amount of drug in the body", "The rate of drug metabolism", "The rate of drug excretion"], a: 0, w: "Bioavailability is the fraction of the dose reaching the systemic circulation unchanged." },
+    { q: "The first-pass effect reduces bioavailability because:", o: ["The drug is destroyed in the stomach", "The drug is metabolised by the gut wall and liver before reaching the systemic circulation", "The drug is excreted by the kidneys", "The drug is too large to absorb"], a: 1, w: "First-pass metabolism in the gut wall and liver reduces the amount of drug reaching the systemic circulation." },
+    { q: "Nitroglycerin is given sublingually because:", o: ["It is destroyed by first-pass metabolism if swallowed", "It is too large to swallow", "It tastes better", "It is more potent when swallowed"], a: 0, w: "Nitroglycerin is almost completely destroyed by first-pass metabolism, so it is given sublingually to bypass the liver." },
+    { q: "Which of the following would increase the oral bioavailability of a drug?", o: ["Enzyme induction of CYP enzymes by another drug", "Enzyme inhibition of CYP enzymes by another drug", "Increased first-pass metabolism", "Increased renal excretion"], a: 1, w: "Enzyme inhibition slows first-pass metabolism, increasing the oral bioavailability of drugs metabolised by that enzyme." },
+    { q: "Why is the oral dose of morphine higher than the parenteral dose?", o: ["Morphine is poorly absorbed", "Morphine undergoes significant first-pass metabolism", "Morphine is destroyed by stomach acid", "Morphine is excreted rapidly"], a: 1, w: "Morphine has significant first-pass metabolism, so the oral dose must be higher to achieve the same systemic concentration." },
+
+    // ===== Note 5: volume of distribution and distribution (Q21-25) =====
+    { q: "Volume of distribution (Vd) is best defined as:", o: ["The volume of the blood", "The volume of the body", "The theoretical volume into which the total drug in the body would need to be diluted to give the observed plasma concentration", "The volume of urine produced"], a: 2, w: "Vd is the theoretical volume relating total drug in the body to plasma concentration." },
+    { q: "A high volume of distribution means:", o: ["The drug stays mostly in the blood", "The drug distributes widely into tissues", "The drug is excreted rapidly", "The drug has no effect"], a: 1, w: "A high Vd means the drug is widely distributed into tissues, so plasma concentration is low." },
+    { q: "A low volume of distribution means:", o: ["The drug stays mostly in the blood", "The drug distributes widely into tissues", "The drug is highly lipid-soluble", "The drug is poorly absorbed"], a: 0, w: "A low Vd means the drug stays mostly in the blood, so plasma concentration is high." },
+    { q: "Which of the following affects drug distribution?", o: ["Plasma protein binding", "Tissue perfusion", "Barriers such as the blood-brain barrier", "All of the above"], a: 3, w: "Protein binding, tissue perfusion and barriers all affect how a drug distributes." },
+    { q: "Only which fraction of a drug is pharmacologically active?", o: ["The protein-bound fraction", "The unbound (free) fraction", "The total plasma concentration", "The metabolite fraction"], a: 1, w: "Only the unbound (free) fraction of a drug is pharmacologically active and able to reach tissues." },
+
+    // ===== Note 6: metabolism (Q26-30) =====
+    { q: "Metabolism of drugs primarily occurs in the:", o: ["Kidney", "Liver", "Lung", "Stomach"], a: 1, w: "The liver is the main site of drug metabolism." },
+    { q: "Phase I reactions typically involve:", o: ["Conjugation with glucuronic acid", "Oxidation, reduction or hydrolysis, often by cytochrome P450", "Excretion by the kidney", "Binding to plasma proteins"], a: 1, w: "Phase I reactions introduce or expose a functional group, usually by oxidation (via CYP), reduction, or hydrolysis." },
+    { q: "Phase II reactions typically involve:", o: ["Oxidation by CYP enzymes", "Conjugation with a large water-soluble molecule such as glucuronic acid", "Reduction of the drug", "Hydrolysis of the drug"], a: 1, w: "Phase II reactions conjugate the drug with a water-soluble molecule, most commonly glucuronic acid." },
+    { q: "Enzyme induction by one drug causes:", o: ["Reduced metabolism of another drug", "Increased metabolism of another drug, reducing its effect", "No change in metabolism", "Increased plasma protein binding"], a: 1, w: "Enzyme induction increases the metabolism of drugs metabolised by that enzyme, reducing their effect." },
+    { q: "Enzyme inhibition by one drug causes:", o: ["Increased metabolism of another drug", "Reduced metabolism of another drug, increasing its effect and risk of toxicity", "No change", "Reduced plasma protein binding"], a: 1, w: "Enzyme inhibition slows the metabolism of drugs metabolised by that enzyme, increasing their effect and risk of toxicity." },
+
+    // ===== Note 7: excretion (Q31-35) =====
+    { q: "The main organ of drug excretion is the:", o: ["Liver", "Kidney", "Lung", "Intestine"], a: 1, w: "The kidneys are the main organs of drug excretion." },
+    { q: "Which renal process is the main route for excreting protein-bound drugs?", o: ["Glomerular filtration", "Tubular secretion", "Tubular reabsorption", "Passive diffusion"], a: 1, w: "Tubular secretion actively transports drugs from blood into tubular fluid and is the main route for protein-bound drugs." },
+    { q: "Which drugs are reabsorbed from the renal tubule?", o: ["Water-soluble, ionised drugs", "Lipid-soluble, unionised drugs", "Protein-bound drugs", "Large drugs"], a: 1, w: "Lipid-soluble, unionised drugs are reabsorbed; water-soluble, ionised drugs are excreted." },
+    { q: "Alkalinising the urine with sodium bicarbonate would enhance the excretion of:", o: ["Weak bases", "Weak acids", "Neutral drugs", "Protein-bound drugs"], a: 1, w: "Alkaline urine promotes the excretion of weak acids (e.g. aspirin) by keeping them ionised." },
+    { q: "Which of the following is NOT a route of drug excretion?", o: ["Biliary excretion", "Pulmonary excretion", "Renal excretion", "Gastric absorption"], a: 3, w: "Gastric absorption is part of absorption, not excretion." },
+
+    // ===== Note 8: half-life and dosing (Q36-40) =====
+    { q: "Half-life (t½) is best defined as:", o: ["The time to reach steady state", "The time for the plasma concentration to fall by 50%", "The time to eliminate the drug completely", "The time to absorb the drug"], a: 1, w: "Half-life is the time for the plasma concentration of a drug to fall by 50%." },
+    { q: "Steady state is reached after approximately how many half-lives?", o: ["1", "2", "4-5", "10"], a: 2, w: "Steady state is reached after about 4-5 half-lives of continuous dosing." },
+    { q: "A drug with a short half-life:", o: ["Requires less frequent dosing", "Requires more frequent dosing", "Has no effect", "Cannot be given orally"], a: 1, w: "A drug with a short half-life is eliminated quickly, requiring more frequent dosing (or a sustained-release formulation)." },
+    { q: "A loading dose is given to:", o: ["Maintain the therapeutic concentration", "Achieve a therapeutic concentration quickly", "Reduce the half-life", "Increase the volume of distribution"], a: 1, w: "A loading dose achieves a therapeutic plasma concentration quickly." },
+    { q: "A maintenance dose is calculated from the:", o: ["Volume of distribution", "Clearance", "Half-life only", "Bioavailability only"], a: 1, w: "The maintenance dose is calculated from the clearance of the drug." },
+
+    // ===== Note 9: drug interactions (Q41-45) =====
+    { q: "The most common and clinically important pharmacokinetic drug interaction involves:", o: ["Absorption", "Distribution", "Metabolism", "Excretion only"], a: 2, w: "Metabolism (via CYP induction or inhibition) is the most common and clinically important pharmacokinetic interaction." },
+    { q: "Rifampicin reduces the effect of warfarin because:", o: ["It inhibits CYP enzymes", "It induces CYP enzymes, increasing warfarin metabolism", "It displaces warfarin from plasma proteins", "It increases warfarin absorption"], a: 1, w: "Rifampicin induces CYP enzymes, increasing warfarin metabolism and reducing its anticoagulant effect." },
+    { q: "Erythromycin increases the effect of warfarin because:", o: ["It induces CYP enzymes", "It inhibits CYP enzymes, reducing warfarin metabolism", "It displaces warfarin from plasma proteins", "It reduces warfarin absorption"], a: 1, w: "Erythromycin inhibits CYP enzymes, reducing warfarin metabolism and increasing its anticoagulant effect." },
+    { q: "Two antihypertensives producing a combined effect equal to the sum of their individual effects is an example of:", o: ["Synergism", "Additivity", "Antagonism", "Chemical antagonism"], a: 1, w: "Additivity means the combined effect equals the sum of the individual effects." },
+    { q: "Which combination is potentially fatal due to serotonin syndrome?", o: ["SSRIs + MAOIs", "Beta-blockers + beta-agonists", "Warfarin + vitamin K", "Aspirin + paracetamol"], a: 0, w: "Combining SSRIs with MAOIs can cause serotonin syndrome, which is potentially fatal." },
+
+    // ===== Note 10: clinical application (Q46-50) =====
+    { q: "Which of the following is NOT part of the pharmacokinetic prescribing framework?", o: ["Choosing the route", "Assessing bioavailability", "Calculating the loading dose", "Ignoring patient kidney function"], a: 3, w: "Patient kidney function must be considered - ignoring it is not safe prescribing." },
+    { q: "For a patient with kidney disease, which drug requires dose reduction?", o: ["Digoxin", "Paracetamol", "Aspirin", "Penicillin"], a: 0, w: "Digoxin is excreted unchanged by the kidney and requires dose reduction in kidney disease." },
+    { q: "For a patient with liver disease, which drug requires dose reduction?", o: ["Gentamicin", "Propranolol", "Penicillin", "Digoxin"], a: 1, w: "Propranolol is extensively metabolised by the liver and requires dose reduction in liver disease." },
+    { q: "The half-life of digoxin is approximately:", o: ["36-48 hours", "4 hours", "10 minutes", "1 week"], a: 0, w: "The half-life of digoxin is about 36-48 hours, which is why once-daily dosing is used." },
+    { q: "The key takeaway from this topic is:", o: ["Pharmacokinetics is only for researchers", "Pharmacokinetics is the science that makes rational prescribing possible", "Pharmacokinetics has no clinical relevance", "Only pharmacodynamics matters"], a: 1, w: "Pharmacokinetics is the science that makes rational prescribing possible - it tells you what dose to give, by what route, and how often." },
+  ],
+};
+
+/* --------------------------- pha:5 --------------------------- */
+const T_PHA_ADRENERGIC = {
+  courseId: "pha",
+  topicIndex: 5,
+  title: "Adrenergic Pharmacology",
+  minutes: 30,
+  note: [
+    {
+      q: "Your body has two great control systems: the nervous system and the endocrine system. Why does it need both, and where does adrenergic pharmacology fit in?",
+      body: `The nervous system is the body's fast communication network - it uses electrical signals and neurotransmitters to send messages within milliseconds. The endocrine system is slower - it uses hormones released into the blood to produce long-lasting effects. Adrenergic pharmacology sits at the intersection: it studies the drugs that act on the sympathetic branch of the autonomic nervous system, the branch that mediates the body's "fight or flight" response.
+
+My Socratic question: when you are startled, your heart races, your pupils widen, your airways open, and digestion stops. How does one system produce all of these effects at once?
+
+The answer is that the sympathetic nervous system releases noradrenaline (norepinephrine) and adrenaline (epinephrine) throughout the body, and these chemicals act on adrenergic receptors found on many different tissues. A single signal - the release of noradrenaline - can produce widespread, coordinated effects because the receptors are distributed across the body. Adrenergic pharmacology studies the drugs that mimic, block, or modify these effects.
+
+The two divisions of the autonomic nervous system:
+
+- Sympathetic nervous system - "fight or flight". Activated during stress, exercise, or danger. Increases heart rate and blood pressure, dilates airways and pupils, mobilises glucose, diverts blood from the gut to the muscles. Its main neurotransmitters are noradrenaline (at most synapses) and adrenaline (from the adrenal medulla).
+- Parasympathetic nervous system - "rest and digest". Activated during rest, digestion, and recovery. Slows heart rate, constricts pupils, stimulates digestion and salivation. Its main neurotransmitter is acetylcholine.
+
+This topic focuses on the sympathetic branch - its neurotransmitters, its receptors, and the drugs that act on them.
+
+Crucial insight: adrenergic pharmacology is the study of drugs that act on the sympathetic nervous system - the system that mediates the body's response to stress. Because the sympathetic system is involved in so many physiological processes, adrenergic drugs have a wide range of clinical uses and side effects. Understanding them requires understanding the receptors, the neurotransmitters, and the tissues they act on.`
+    },
+    {
+      q: "Noradrenaline does not appear from nowhere. How does the body make it, store it, and release it?",
+      body: `Noradrenaline (norepinephrine) is the main neurotransmitter of the sympathetic nervous system. It is synthesised inside nerve terminals, stored in vesicles, and released on demand. Understanding its life cycle is essential for understanding the drugs that act on it.
+
+My Socratic question: if the body can make noradrenaline, where does it start, and what are the steps in the pathway?
+
+The answer is that noradrenaline is synthesised from the amino acid tyrosine in a sequence of enzymatic steps. Each step uses a specific enzyme, and each enzyme is a potential target for drugs.
+
+The synthesis pathway (in order):
+
+- Tyrosine is taken up into the nerve terminal from the blood.
+- Tyrosine is converted to L-DOPA by the enzyme tyrosine hydroxylase (the rate-limiting step).
+- L-DOPA is converted to dopamine by aromatic amino acid decarboxylase (also called DOPA decarboxylase).
+- Dopamine is taken up into storage vesicles.
+- Inside the vesicle, dopamine is converted to noradrenaline by dopamine beta-hydroxylase.
+
+What happens after synthesis:
+
+- Noradrenaline is stored in vesicles in the nerve terminal.
+- On stimulation, vesicles fuse with the membrane and release noradrenaline into the synaptic cleft (exocytosis).
+- Noradrenaline binds adrenergic receptors on the postsynaptic membrane (and presynaptic autoreceptors).
+- Noradrenaline is removed from the cleft by three mechanisms: reuptake into the nerve terminal (uptake 1, the main mechanism), reuptake into non-neuronal tissue (uptake 2), and metabolism by monoamine oxidase (MAO) and catechol-O-methyltransferase (COMT).
+
+Adrenaline (epinephrine) differs from noradrenaline:
+
+- Adrenaline is synthesised in the adrenal medulla, not in nerve terminals.
+- It is synthesised from noradrenaline by phenylethanolamine N-methyltransferase (PNMT).
+- It is released into the bloodstream as a hormone, not as a local neurotransmitter.
+- It acts on the same adrenergic receptors as noradrenaline but has a wider distribution of effects.
+
+Crucial insight: the noradrenaline life cycle - synthesis, storage, release, receptor binding, reuptake, metabolism - gives pharmacology many points at which drugs can act. Drugs can block synthesis (e.g. methyldopa), block storage (e.g. reserpine), block release (e.g. guanethidine), mimic noradrenaline at the receptor (agonists), block the receptor (antagonists), block reuptake (e.g. tricyclic antidepressants, cocaine), or block metabolism (e.g. MAO inhibitors). Understanding this cycle is essential for understanding how adrenergic drugs work.`
+    },
+    {
+      q: "Noradrenaline binds receptors. But not all receptors are the same. How do we classify them?",
+      body: `Adrenergic receptors are not all identical. Different tissues have different subtypes, and each subtype responds to noradrenaline (and to drugs) in a different way. Understanding this classification is the key to understanding adrenergic pharmacology.
+
+My Socratic question: if noradrenaline is the same molecule everywhere in the body, how can it produce different effects in different tissues?
+
+The answer is that the receptors are different. Noradrenaline binds different receptor subtypes, and each subtype triggers a different intracellular response. This is why the same neurotransmitter can excite the heart, relax the airways, constrict some blood vessels, dilate others, and stimulate the liver to release glucose - all at the same time.
+
+The two main families:
+
+- Alpha (α) adrenergic receptors - subdivided into α1 and α2.
+- Beta (β) adrenergic receptors - subdivided into β1, β2 and β3.
+
+Alpha receptors:
+
+- α1 receptors - located on vascular smooth muscle (causing vasoconstriction), on the iris (causing pupil dilation), on the bladder sphincter (causing contraction), and on the liver (causing glycogenolysis). Their main effect is contraction of smooth muscle. Signalling: Gq-coupled, IP3/DAG pathway.
+- α2 receptors - located on presynaptic nerve terminals (autoreceptors that inhibit noradrenaline release), on platelets (causing aggregation), and on some blood vessels. Their main effect is inhibition of neurotransmitter release. Signalling: Gi-coupled, decreasing cAMP.
+
+Beta receptors:
+
+- β1 receptors - located mainly on the heart (increasing heart rate, force of contraction and conduction velocity) and on the kidney (stimulating renin release). Their main effect is cardiac stimulation. Signalling: Gs-coupled, increasing cAMP.
+- β2 receptors - located on bronchial smooth muscle (causing bronchodilation), on vascular smooth muscle (causing vasodilation), on the uterus (causing relaxation), on skeletal muscle (causing tremor and glycogenolysis), and on the liver (causing glycogenolysis). Their main effect is relaxation of smooth muscle. Signalling: Gs-coupled, increasing cAMP.
+- β3 receptors - located mainly on adipose tissue (causing lipolysis) and on the bladder (causing relaxation). Signalling: Gs-coupled.
+
+Crucial insight: the adrenergic receptor subtypes are the key to the specificity of adrenergic drugs. A drug that selectively activates β1 receptors will mainly affect the heart; a drug that selectively activates β2 receptors will mainly affect the airways. A drug that blocks β1 receptors will slow the heart; a drug that blocks α1 receptors will lower blood pressure by causing vasodilation. Understanding the receptor subtypes explains both the therapeutic effects and the side effects of every adrenergic drug.`
+    },
+    {
+      q: "Adrenergic agonists are drugs that mimic noradrenaline. Why would we want to do that?",
+      body: `An adrenergic agonist (sympathomimetic) is a drug that binds adrenergic receptors and activates them, mimicking the effects of noradrenaline and adrenaline. These drugs are used to treat a wide range of conditions - asthma, heart failure, shock, nasal congestion, and more.
+
+My Socratic question: if the body already makes its own noradrenaline and adrenaline, why would we need drugs that mimic them?
+
+The answer is that the body's own supply is not always enough, or not always in the right place. In shock, the blood pressure is too low and the heart needs to be stimulated. In asthma, the airways are constricted and need to be relaxed. In heart failure, the heart is not pumping strongly enough. In each case, an adrenergic agonist can provide a boost where the body's own supply is failing.
+
+The main classes of adrenergic agonists:
+
+- Direct-acting agonists - bind directly to adrenergic receptors and activate them. Example: phenylephrine (α1 agonist) for nasal congestion; salbutamol (β2 agonist) for asthma; dobutamine (β1 agonist) for heart failure.
+- Indirect-acting agonists - increase the amount of noradrenaline available at the synapse, rather than binding the receptor themselves. Example: amphetamine (releases noradrenaline from nerve terminals); cocaine (blocks reuptake of noradrenaline); tricyclic antidepressants (block reuptake).
+- Mixed-acting agonists - both bind receptors directly and increase noradrenaline release. Example: ephedrine.
+
+Therapeutic uses of adrenergic agonists:
+
+- Asthma - β2 agonists (salbutamol, salmeterol) relax bronchial smooth muscle and dilate the airways.
+- Heart failure - β1 agonists (dobutamine) and adrenaline increase cardiac output.
+- Shock - adrenaline and noradrenaline raise blood pressure by vasoconstriction and cardiac stimulation.
+- Nasal congestion - α1 agonists (phenylephrine, oxymetazoline) constrict nasal blood vessels and reduce swelling.
+- Premature labour - β2 agonists (ritodrine) relax the uterus and delay labour.
+- Anaphylaxis - adrenaline is the drug of choice; it reverses bronchospasm, raises blood pressure, and reduces swelling.
+
+Crucial insight: adrenergic agonists are used wherever the sympathetic nervous system's effects are needed but the body's own supply is insufficient. By choosing the right receptor subtype (α1, α2, β1, β2), we can target the effect to the tissue we want - β2 for the airways, β1 for the heart, α1 for the vessels. Understanding receptor selectivity is the key to using these drugs safely and effectively.`
+    },
+    {
+      q: "Sometimes the problem is too much sympathetic activity, not too little. What kind of drug reduces it?",
+      body: `Adrenergic antagonists (sympatholytics or blockers) are drugs that block adrenergic receptors. They are used to reduce sympathetic activity - slowing the heart, lowering blood pressure, relaxing the prostate, and treating many other conditions.
+
+My Socratic question: if the sympathetic system is overactive, causing high blood pressure and a fast heart rate, what kind of drug would you use to calm it down?
+
+The answer is an adrenergic antagonist that blocks the receptor responsible for the overactivity. If the problem is a fast heart rate, block the β1 receptors on the heart. If the problem is high blood pressure from vasoconstriction, block the α1 receptors on the blood vessels. Different receptors, different drugs, different effects.
+
+The main classes of adrenergic antagonists:
+
+- Alpha-blockers (α1 antagonists) - block α1 receptors, causing vasodilation, lowering blood pressure, and relaxing the prostate and bladder neck. Examples: prazosin, doxazosin, tamsulosin. Used for hypertension and benign prostatic hyperplasia (BPH). Side effect: first-dose hypotension.
+- Beta-blockers (β antagonists) - block β receptors, slowing the heart, lowering blood pressure, reducing cardiac output, and reducing renin release. Examples: atenolol (β1-selective), metoprolol (β1-selective), propranolol (non-selective). Used for hypertension, angina, heart failure, arrhythmias, and after myocardial infarction.
+- Alpha-2 agonists - these are technically agonists, not antagonists, but they reduce sympathetic outflow by activating presynaptic α2 autoreceptors. Examples: clonidine, methyldopa. Used for hypertension.
+- Mixed alpha/beta blockers - block both receptor types. Example: labetalol, carvedilol. Used for hypertension, especially in pregnancy.
+
+Beta-blocker selectivity:
+
+- β1-selective (cardioselective) - atenolol, metoprolol, bisoprolol. At low doses, they mainly block β1 receptors in the heart, so they cause less bronchospasm than non-selective blockers.
+- Non-selective - propranolol, nadolol. Block both β1 and β2 receptors, so they can cause bronchospasm (β2 in the lungs) and mask hypoglycaemia (β2 in the liver).
+- β1-selective blockers are preferred in patients with asthma or COPD, though even they can cause bronchospasm at high doses.
+
+Crucial insight: adrenergic antagonists reduce the effects of the sympathetic nervous system. By choosing the right receptor subtype, we can target the effect to the tissue we want - β1 blockers for the heart, α1 blockers for the blood vessels and prostate. The selectivity of the blocker determines its clinical usefulness and its side effect profile. Understanding receptor selectivity is the key to choosing the right blocker for the right patient.`
+    },
+    {
+      q: "A patient with asthma needs a drug. Why would a β2 agonist work, but a β-blocker be dangerous?",
+      body: `Receptor subtype selectivity is not an abstract concept - it has direct clinical consequences. The same receptor family (beta) can be the target of a life-saving drug in one context and a dangerous drug in another, depending on which subtype is affected.
+
+My Socratic question: the airways are lined with β2 receptors that cause bronchodilation. The heart is lined with β1 receptors that increase heart rate. If you give a drug that blocks all beta receptors, what happens?
+
+The answer is that you block both. The heart slows (β1 blockade - good if the patient has angina or hypertension), but the airways constrict (β2 blockade - dangerous if the patient has asthma). This is why a non-selective β-blocker such as propranolol is contraindicated in asthma, while a β1-selective blocker such as atenolol may be safer - but only at low doses.
+
+The clinical scenario:
+
+- A patient with asthma and hypertension needs treatment for both. The doctor must choose a drug that lowers blood pressure without causing bronchospasm.
+- β2 agonists (e.g. salbutamol) are used for asthma; they relax the airways by activating β2 receptors.
+- β-blockers are used for hypertension; they lower blood pressure by blocking β1 receptors on the heart and kidneys.
+- Non-selective β-blockers (propranolol) block both β1 and β2, so they can cause bronchospasm in asthmatics.
+- β1-selective blockers (atenolol, metoprolol, bisoprolol) at low doses mainly block β1, so they are safer in asthma - though caution is still needed.
+
+The same principle applies elsewhere:
+
+- β2 agonists can cause tremor and tachycardia, because β2 receptors are also found in skeletal muscle and some blood vessels.
+- β1 agonists (dobutamine) can cause arrhythmias, because β1 receptors are in the heart.
+- α1 agonists (phenylephrine) can cause hypertension and reflex bradycardia, because α1 receptors are on blood vessels.
+
+Crucial insight: the therapeutic and side effects of adrenergic drugs are determined by their receptor subtype selectivity. A drug that selectively activates or blocks one subtype will have predictable effects on the tissues where that subtype is found. The clinical skill is to match the drug's selectivity to the patient's needs - choosing a β1-selective blocker for a patient with asthma, or a β2-selective agonist for a patient with heart disease. Understanding selectivity is the key to safe and effective prescribing.`
+    },
+    {
+      q: "A patient is given a drug that blocks α1 receptors. Why do they sometimes feel dizzy when they stand up?",
+      body: `Adrenergic drugs affect blood pressure, and blood pressure regulation is a finely balanced system. When you interfere with it - especially with a drug that dilates blood vessels - the body's compensatory mechanisms can cause side effects.
+
+My Socratic question: α1 receptors on blood vessels cause vasoconstriction. If you block them, the blood vessels dilate, and blood pressure falls. But why would this cause dizziness when standing up?
+
+The answer is orthostatic hypotension. When you stand up, gravity pulls blood into your legs. Normally, the sympathetic nervous system compensates by constricting blood vessels and increasing heart rate, so blood pressure stays stable. But if α1 receptors are blocked, this compensatory vasoconstriction cannot occur, so blood pressure falls when you stand - causing dizziness, light-headedness, or even fainting.
+
+Orthostatic hypotension is a common side effect of:
+
+- α1-blockers - prazosin, doxazosin, terazosin. First-dose hypotension is particularly common; the first dose should be taken at bedtime.
+- Other vasodilators - nitrates, calcium channel blockers, ACE inhibitors, angiotensin receptor blockers.
+- Diuretics - by reducing blood volume.
+
+How to manage orthostatic hypotension:
+
+- Start with a low dose and titrate slowly.
+- Take the first dose at bedtime to reduce the risk of first-dose hypotension.
+- Warn the patient to rise slowly from sitting or lying.
+- Monitor blood pressure regularly, especially after starting or changing the dose.
+
+Other side effects of α1-blockers:
+
+- Nasal congestion - because α1 receptors in the nasal mucosa cause vasoconstriction; blocking them causes swelling.
+- Dizziness and fainting - from orthostatic hypotension.
+- Retrograde ejaculation - because α1 receptors in the bladder neck and prostate are needed for normal ejaculation.
+
+Crucial insight: adrenergic drugs affect blood pressure, and any drug that changes blood pressure can cause orthostatic hypotension. Understanding the mechanism - loss of compensatory vasoconstriction - explains both the side effect and how to manage it. When a patient starts an α1-blocker, the doctor should warn them about dizziness and advise them to rise slowly. The same principle applies to many other drugs that affect blood pressure.`
+    },
+    {
+      q: "What is the cheese reaction, and why does it happen?",
+      body: `The cheese reaction is a classic example of a drug-food interaction that can be dangerous. It occurs when a patient taking a monoamine oxidase inhibitor (MAOI) eats food rich in tyramine - such as aged cheese, cured meats, or fermented products. The result is a sudden, severe rise in blood pressure (hypertensive crisis).
+
+My Socratic question: tyramine is found in cheese. Why would it cause a hypertensive crisis only in patients taking an MAOI?
+
+The answer is that tyramine is normally broken down by monoamine oxidase (MAO) in the gut and liver. This prevents tyramine from entering the systemic circulation in significant amounts. When MAO is inhibited by a drug, tyramine from food is not broken down, so it enters the bloodstream. There, tyramine displaces noradrenaline from nerve terminals, causing a massive release of noradrenaline and a sudden, severe rise in blood pressure.
+
+The cheese reaction, step by step:
+
+- The patient takes an MAOI (e.g. phenelzine, tranylcypromine) for depression.
+- The MAOI inhibits MAO in the gut and liver.
+- The patient eats a tyramine-rich food (aged cheese, cured meats, fermented soy products, tap beer).
+- Tyramine is not broken down in the gut and liver.
+- Tyramine enters the systemic circulation.
+- Tyramine displaces noradrenaline from nerve terminals (it is taken up into the nerve terminal and displaces noradrenaline from vesicles).
+- Noradrenaline floods the synapse.
+- Blood pressure rises rapidly and severely - a hypertensive crisis.
+
+Management and prevention:
+
+- MAOIs are rarely used now because of the cheese reaction risk. When they are used, patients must follow a strict low-tyramine diet.
+- Foods to avoid: aged cheese, cured meats, fermented soy products, tap beer, fava beans, yeast extracts.
+- If a hypertensive crisis occurs, treat with a fast-acting vasodilator such as phentolamine or nifedipine.
+
+Other drug interactions with MAOIs:
+
+- MAOIs + SSRIs - serotonin syndrome.
+- MAOIs + sympathomimetics (e.g. pseudoephedrine) - hypertensive crisis.
+- MAOIs + tricyclic antidepressants - hypertensive crisis or serotonin syndrome.
+
+Crucial insight: the cheese reaction is a direct consequence of the mechanism of MAOIs - they inhibit the enzyme that breaks down tyramine, allowing it to enter the circulation and release noradrenaline. The reaction is entirely preventable by avoiding tyramine-rich foods. It is a reminder that drug interactions are not just with other drugs - food can interact with drugs too, sometimes dangerously.`
+    },
+    {
+      q: "Not all adrenergic agonists and antagonists are the same. How do we compare them, and how do we choose the right one?",
+      body: `Adrenergic pharmacology has a rich formulary - dozens of drugs, each with its own selectivity, duration of action, and clinical niche. Choosing the right drug for the right patient requires comparing them on a set of key properties.
+
+My Socratic question: if a patient needs a β-blocker, why would a doctor choose atenolol over propranolol, or metoprolol over both?
+
+The answer is that the drugs differ in receptor selectivity, duration of action, lipid solubility, and route of elimination - and each of these matters for the individual patient.
+
+The key comparative properties:
+
+- Receptor selectivity - β1-selective vs non-selective. β1-selective blockers (atenolol, metoprolol, bisoprolol) are safer in patients with asthma or COPD. Non-selective blockers (propranolol, nadolol) are preferred for some conditions (e.g. migraine prophylaxis, thyrotoxicosis) but carry a higher risk of bronchospasm and masking hypoglycaemia.
+- Lipid solubility - lipid-soluble blockers (propranolol, metoprolol) cross the blood-brain barrier and can cause central side effects (e.g. nightmares, fatigue). Water-soluble blockers (atenolol) do not and are less likely to cause these effects.
+- Duration of action - some blockers are short-acting (e.g. esmolol, used intravenously for rapid control) and some are long-acting (e.g. nadolol, taken once daily). The choice depends on the clinical setting.
+- Route of elimination - some blockers are metabolised by the liver (propranolol, metoprolol) and require dose reduction in liver disease; others are excreted by the kidney (atenolol) and require dose reduction in kidney disease.
+- Intrinsic sympathomimetic activity (ISA) - some blockers (e.g. pindolol, acebutolol) have partial agonist activity, meaning they produce a small amount of stimulation. They are useful in patients who cannot tolerate the full bradycardia of a standard β-blocker.
+
+Clinical examples of choosing the right drug:
+
+- Asthma + hypertension - choose a β1-selective blocker (atenolol, bisoprolol) at a low dose, or avoid β-blockers altogether and use another antihypertensive.
+- Angina + hypertension - choose a β1-selective blocker (atenolol, metoprolol) to reduce cardiac work and lower blood pressure.
+- Heart failure - choose a β1-selective blocker with proven benefit (bisoprolol, carvedilol, metoprolol succinate) at a low starting dose, titrated slowly.
+- Anxiety + palpitations - propranolol is sometimes used for performance anxiety because it blocks the peripheral symptoms of anxiety (tremor, tachycardia).
+- BPH + hypertension - an α1-blocker (tamsulosin, doxazosin) can treat both conditions.
+
+Crucial insight: adrenergic drugs are not interchangeable - they differ in selectivity, duration, lipid solubility and route of elimination. The clinical skill is to choose the drug whose properties match the patient's needs. A β1-selective, water-soluble blocker for a patient with asthma and liver disease; a short-acting, intravenous blocker for a patient in an acute setting; a long-acting blocker for a patient who struggles with adherence. Understanding the comparative pharmacology of these drugs is what makes prescribing safe and effective.`
+    },
+    {
+      q: "Now put it all together. How does a doctor use adrenergic pharmacology in clinical practice?",
+      body: `Adrenergic pharmacology is one of the most clinically applied topics in pharmacology. The drugs are used across almost every specialty - cardiology, respiratory medicine, urology, psychiatry, anaesthesia, and emergency medicine. Understanding how to choose and use them is a core clinical skill.
+
+My Socratic question: a patient presents with acute severe asthma, a rapid heart rate, and low blood pressure. What adrenergic drugs would you consider, and why?
+
+The answer is that each problem points to a different adrenergic target.
+
+- Acute severe asthma - give a β2 agonist (salbutamol) by inhalation or nebuliser. β2 receptors are on bronchial smooth muscle; activating them causes bronchodilation and relieves the asthma.
+- Rapid heart rate - if the patient is also given a β2 agonist, the β2 receptors on the heart (and reflex tachycardia from vasodilation) can worsen the heart rate. If β1-blockade is needed, choose a β1-selective blocker (but be cautious in acute asthma).
+- Low blood pressure - give a vasoconstrictor such as adrenaline or noradrenaline. α1 receptors on blood vessels cause vasoconstriction; β1 receptors on the heart increase cardiac output. In anaphylaxis, adrenaline is the drug of choice because it addresses both.
+
+The clinical applications of adrenergic pharmacology:
+
+- Asthma - β2 agonists (salbutamol, salmeterol) for bronchodilation.
+- Anaphylaxis - adrenaline (epinephrine) for bronchodilation, vasoconstriction and cardiac stimulation.
+- Hypertension - β1 blockers (atenolol, metoprolol), α1 blockers (prazosin, doxazosin), mixed blockers (labetalol, carvedilol).
+- Heart failure - β1 blockers (bisoprolol, carvedilol) at low doses, titrated slowly.
+- Angina - β1 blockers reduce cardiac work and oxygen demand.
+- Arrhythmias - β1 blockers slow conduction and suppress abnormal rhythms.
+- Myocardial infarction - β1 blockers reduce mortality and reinfarction.
+- Benign prostatic hyperplasia - α1 blockers relax the prostate and bladder neck.
+- Glaucoma - β2 blockers (timolol eye drops) reduce aqueous humour production.
+- Nasal congestion - α1 agonists (phenylephrine, oxymetazoline) constrict nasal vessels.
+- Premature labour - β2 agonists (ritodrine) relax the uterus.
+- Shock - adrenaline, noradrenaline, dobutamine to raise blood pressure and cardiac output.
+
+Choosing the right drug means:
+
+- Knowing the receptor subtypes and their distribution.
+- Matching the drug's selectivity to the patient's needs.
+- Considering side effects (β2 blockade in asthma, α1 blockade causing orthostatic hypotension).
+- Considering drug interactions (MAOIs and tyramine, β-blockers and β-agonists).
+- Adjusting for renal or hepatic impairment.
+
+Crucial insight: adrenergic pharmacology is the practical application of receptor theory to clinical medicine. By understanding the receptor subtypes, their distribution, and the drugs that act on them, a doctor can choose the right drug for the right patient - a β2 agonist for asthma, a β1 blocker for heart failure, an α1 blocker for BPH, adrenaline for anaphylaxis. The same principles apply across every specialty, and the same receptor selectivity that determines efficacy also determines side effects. This is why adrenergic pharmacology is one of the most important topics in the entire course.`
+    },
+  ],
+  theory: [
+    { q: "Distinguish the sympathetic and parasympathetic nervous systems.", a: "The sympathetic nervous system mediates 'fight or flight' - it increases heart rate and blood pressure, dilates airways and pupils, mobilises glucose and diverts blood to the muscles. Its neurotransmitters are noradrenaline and adrenaline. The parasympathetic nervous system mediates 'rest and digest' - it slows the heart, constricts pupils, and stimulates digestion. Its neurotransmitter is acetylcholine." },
+    { q: "Describe the synthesis pathway of noradrenaline.", a: "Tyrosine is taken up into the nerve terminal and converted to L-DOPA by tyrosine hydroxylase (the rate-limiting step). L-DOPA is converted to dopamine by aromatic amino acid decarboxylase. Dopamine is taken up into storage vesicles and converted to noradrenaline by dopamine beta-hydroxylase. Noradrenaline is stored in vesicles and released by exocytosis on stimulation." },
+    { q: "Explain how noradrenaline is removed from the synaptic cleft.", a: "Noradrenaline is removed by three mechanisms: reuptake into the nerve terminal via the noradrenaline transporter (uptake 1 - the main mechanism); reuptake into non-neuronal tissue (uptake 2); and metabolism by monoamine oxidase (MAO) and catechol-O-methyltransferase (COMT)." },
+    { q: "Name the main adrenergic receptor subtypes and give a location and effect of each.", a: "α1 - vascular smooth muscle (vasoconstriction), iris (pupil dilation), bladder sphincter (contraction). α2 - presynaptic nerve terminals (inhibition of noradrenaline release), platelets (aggregation). β1 - heart (increased rate, force and conduction), kidney (renin release). β2 - bronchial smooth muscle (bronchodilation), vascular smooth muscle (vasodilation), uterus (relaxation), skeletal muscle (tremor, glycogenolysis). β3 - adipose tissue (lipolysis), bladder (relaxation)." },
+    { q: "Distinguish direct-acting, indirect-acting and mixed-acting adrenergic agonists.", a: "Direct-acting agonists bind directly to adrenergic receptors and activate them (e.g. phenylephrine, salbutamol, dobutamine). Indirect-acting agonists increase the amount of noradrenaline available at the synapse (e.g. amphetamine releases noradrenaline; cocaine blocks reuptake). Mixed-acting agonists both bind receptors and increase noradrenaline release (e.g. ephedrine)." },
+    { q: "Describe the therapeutic uses of adrenergic agonists with examples.", a: "Asthma - β2 agonists (salbutamol). Anaphylaxis - adrenaline. Shock - adrenaline, noradrenaline, dobutamine. Nasal congestion - α1 agonists (phenylephrine). Premature labour - β2 agonists (ritodrine). Heart failure - β1 agonists (dobutamine). Each drug is chosen based on its receptor selectivity and the tissue where the effect is needed." },
+    { q: "Name the main classes of adrenergic antagonists and give an example of each.", a: "α1-blockers - prazosin, doxazosin, tamsulosin (used for hypertension and BPH). β-blockers - atenolol, metoprolol, propranolol (used for hypertension, angina, heart failure, arrhythmias). Mixed α/β blockers - labetalol, carvedilol. α2-agonists (which reduce sympathetic outflow) - clonidine, methyldopa." },
+    { q: "Explain the difference between β1-selective and non-selective β-blockers.", a: "β1-selective (cardioselective) blockers such as atenolol, metoprolol and bisoprolol mainly block β1 receptors in the heart and kidney. Non-selective blockers such as propranolol and nadolol block both β1 and β2 receptors. β1-selective blockers are safer in patients with asthma or COPD because they cause less bronchospasm, but they can still cause bronchospasm at high doses." },
+    { q: "Explain the mechanism of the cheese reaction.", a: "Monoamine oxidase inhibitors (MAOIs) inhibit the enzyme MAO in the gut and liver, which normally breaks down dietary tyramine. When a patient on an MAOI eats tyramine-rich food (aged cheese, cured meats, fermented soy), tyramine is not broken down and enters the systemic circulation. It displaces noradrenaline from nerve terminals, causing a massive release of noradrenaline and a hypertensive crisis." },
+    { q: "List the clinical uses of β-blockers.", a: "Hypertension, angina, heart failure (bisoprolol, carvedilol, metoprolol succinate), arrhythmias, post-myocardial infarction, migraine prophylaxis, thyrotoxicosis, performance anxiety, and glaucoma (timolol eye drops). The choice of β-blocker depends on its selectivity, duration, lipid solubility and route of elimination." },
+    { q: "Explain the mechanism of orthostatic hypotension caused by α1-blockers.", a: "α1 receptors on blood vessels cause vasoconstriction, which helps maintain blood pressure when standing. Blocking these receptors prevents compensatory vasoconstriction, so blood pressure falls when the patient stands - causing orthostatic hypotension. First-dose hypotension is particularly common; the first dose is often taken at bedtime." },
+    { q: "Explain how receptor selectivity determines the clinical usefulness of adrenergic drugs.", a: "A drug that selectively activates or blocks one receptor subtype will have predictable effects on the tissues where that subtype is found. β2 agonists (salbutamol) relax the airways with less cardiac effect. β1 blockers (atenolol) slow the heart with less bronchospasm. α1 blockers (prazosin) dilate blood vessels with less cardiac effect. Selectivity is the key to both efficacy and safety." },
+    { q: "Describe how a doctor chooses the right adrenergic drug for a patient.", a: "The doctor considers: the receptor subtype that needs to be activated or blocked; the drug's selectivity; the patient's other conditions (asthma, heart failure, BPH); the patient's renal and hepatic function; the duration of action needed; and potential drug interactions. Matching the drug's properties to the patient's needs is the essence of safe and effective prescribing." },
+  ],
+  videos: [
+    { channel: "Pharmacology", title: "Adrenergic Receptors - Alpha and Beta Subtypes Explained", note: "Overview of the adrenergic receptor subtypes and their locations.", url: "https://www.youtube.com/results?search_query=adrenergic+receptors+alpha+beta+subtypes+pharmacology" },
+    { channel: "Pharmacology", title: "Adrenergic Agonists and Antagonists - Sympathomimetics and Blockers", note: "The drugs that act on the sympathetic nervous system and their clinical uses.", url: "https://www.youtube.com/results?search_query=adrenergic+agonists+antagonists+sympathomimetics+blockers" },
+    { channel: "Pharmacology", title: "Beta-Blockers - Selectivity, Uses and Side Effects", note: "How beta-blockers work, how they differ, and why selectivity matters.", url: "https://www.youtube.com/results?search_query=beta+blockers+selectivity+uses+side+effects+pharmacology" },
+  ],
+  mcqs: [
+    // ===== Note 1: nervous system and adrenergic pharmacology (Q1-5) =====
+    { q: "The sympathetic nervous system mediates which response?", o: ["Rest and digest", "Fight or flight", "Sleep and repair", "Digestion and absorption"], a: 1, w: "The sympathetic nervous system mediates the fight or flight response." },
+    { q: "The main neurotransmitter of the sympathetic nervous system at most synapses is:", o: ["Acetylcholine", "Noradrenaline", "Dopamine", "Serotonin"], a: 1, w: "Noradrenaline is the main neurotransmitter of the sympathetic nervous system at most synapses." },
+    { q: "Adrenaline is released mainly from the:", o: ["Adrenal cortex", "Adrenal medulla", "Pituitary gland", "Thyroid gland"], a: 1, w: "Adrenaline is released from the adrenal medulla as a hormone." },
+    { q: "Which of the following is NOT an effect of sympathetic activation?", o: ["Increased heart rate", "Bronchodilation", "Increased digestion", "Pupil dilation"], a: 2, w: "Sympathetic activation reduces digestion; parasympathetic activation increases it." },
+    { q: "Adrenergic pharmacology is the study of drugs that act on:", o: ["The parasympathetic nervous system", "The sympathetic nervous system", "The somatic nervous system", "The enteric nervous system"], a: 1, w: "Adrenergic pharmacology studies drugs acting on the sympathetic nervous system." },
+
+    // ===== Note 2: catecholamine synthesis and neurotransmission (Q6-10) =====
+    { q: "The rate-limiting enzyme in noradrenaline synthesis is:", o: ["Tyrosine hydroxylase", "DOPA decarboxylase", "Dopamine beta-hydroxylase", "PNMT"], a: 0, w: "Tyrosine hydroxylase catalyses the rate-limiting step in noradrenaline synthesis." },
+    { q: "Dopamine is converted to noradrenaline by:", o: ["Tyrosine hydroxylase", "DOPA decarboxylase", "Dopamine beta-hydroxylase", "MAO"], a: 2, w: "Dopamine beta-hydroxylase converts dopamine to noradrenaline inside storage vesicles." },
+    { q: "The main mechanism for removing noradrenaline from the synaptic cleft is:", o: ["Reuptake into the nerve terminal (uptake 1)", "Reuptake into non-neuronal tissue (uptake 2)", "Metabolism by MAO", "Metabolism by COMT"], a: 0, w: "Reuptake into the nerve terminal (uptake 1) is the main mechanism for terminating noradrenaline's action." },
+    { q: "Adrenaline is synthesised from noradrenaline by:", o: ["Tyrosine hydroxylase", "DOPA decarboxylase", "PNMT", "MAO"], a: 2, w: "Phenylethanolamine N-methyltransferase (PNMT) converts noradrenaline to adrenaline in the adrenal medulla." },
+    { q: "Which enzyme metabolises noradrenaline in the nerve terminal?", o: ["Monoamine oxidase (MAO)", "Acetylcholinesterase", "COMT only", "PNMT"], a: 0, w: "MAO metabolises noradrenaline in the nerve terminal; COMT metabolises it in the synaptic cleft." },
+
+    // ===== Note 3: receptor classification (Q11-15) =====
+    { q: "α1 receptors are located mainly on:", o: ["Vascular smooth muscle", "The heart", "Bronchial smooth muscle", "Adipose tissue"], a: 0, w: "α1 receptors are on vascular smooth muscle and cause vasoconstriction." },
+    { q: "β1 receptors are located mainly on:", o: ["Vascular smooth muscle", "The heart", "Bronchial smooth muscle", "The uterus"], a: 1, w: "β1 receptors are on the heart and cause increased heart rate, force and conduction." },
+    { q: "β2 receptors are located mainly on:", o: ["The heart", "Vascular smooth muscle only", "Bronchial smooth muscle", "Platelets"], a: 2, w: "β2 receptors are on bronchial smooth muscle and cause bronchodilation." },
+    { q: "Activation of α2 receptors causes:", o: ["Vasoconstriction", "Inhibition of noradrenaline release", "Bronchodilation", "Increased heart rate"], a: 1, w: "α2 receptors are presynaptic autoreceptors that inhibit noradrenaline release." },
+    { q: "β3 receptors are located mainly on:", o: ["The heart", "Bronchial smooth muscle", "Vascular smooth muscle", "Adipose tissue and the bladder"], a: 3, w: "β3 receptors are on adipose tissue (causing lipolysis) and the bladder (causing relaxation)." },
+
+    // ===== Note 4: adrenergic agonists (Q16-20) =====
+    { q: "An adrenergic agonist is a drug that:", o: ["Blocks adrenergic receptors", "Activates adrenergic receptors", "Inhibits noradrenaline synthesis", "Depletes noradrenaline stores"], a: 1, w: "An adrenergic agonist activates adrenergic receptors, mimicking noradrenaline." },
+    { q: "Salbutamol is a β2 agonist used to treat:", o: ["Hypertension", "Asthma", "Heart failure", "Shock"], a: 1, w: "Salbutamol is a β2 agonist used for bronchodilation in asthma." },
+    { q: "Phenylephrine is an α1 agonist used to treat:", o: ["Nasal congestion", "Asthma", "Heart failure", "Hypertension"], a: 0, w: "Phenylephrine constricts nasal blood vessels and is used for nasal congestion." },
+    { q: "Dobutamine is a β1 agonist used to treat:", o: ["Asthma", "Nasal congestion", "Heart failure", "Hypertension"], a: 2, w: "Dobutamine is a β1 agonist used to increase cardiac output in heart failure." },
+    { q: "Adrenaline is the drug of choice for:", o: ["Hypertension", "Anaphylaxis", "Asthma prophylaxis", "Depression"], a: 1, w: "Adrenaline is the drug of choice for anaphylaxis - it reverses bronchospasm, raises blood pressure and reduces swelling." },
+
+    // ===== Note 5: adrenergic antagonists (Q21-25) =====
+    { q: "An adrenergic antagonist is a drug that:", o: ["Activates adrenergic receptors", "Blocks adrenergic receptors", "Increases noradrenaline release", "Inhibits MAO"], a: 1, w: "An adrenergic antagonist blocks adrenergic receptors." },
+    { q: "Prazosin is an α1 blocker used to treat:", o: ["Asthma", "Hypertension and BPH", "Heart failure", "Anaphylaxis"], a: 1, w: "Prazosin is an α1 blocker used for hypertension and benign prostatic hyperplasia (BPH)." },
+    { q: "Atenolol is a β1-selective blocker used to treat:", o: ["Asthma", "Hypertension", "Anaphylaxis", "Nasal congestion"], a: 1, w: "Atenolol is a β1-selective blocker used for hypertension and angina." },
+    { q: "Propranolol is a non-selective β-blocker. Why is it avoided in asthmatics?", o: ["It causes bronchospasm by blocking β2 receptors in the lungs", "It causes hypertension", "It has no effect on the lungs", "It is too potent"], a: 0, w: "Propranolol blocks β2 receptors in the lungs, which can cause bronchospasm in asthmatics." },
+    { q: "Clonidine is an α2 agonist used to treat:", o: ["Asthma", "Hypertension", "Heart failure", "Anaphylaxis"], a: 1, w: "Clonidine is an α2 agonist used for hypertension; it reduces sympathetic outflow by activating presynaptic α2 autoreceptors." },
+
+    // ===== Note 6: receptor selectivity and clinical consequences (Q26-30) =====
+    { q: "Receptor subtype selectivity is important clinically because:", o: ["It determines both therapeutic effects and side effects", "It has no clinical relevance", "All adrenergic drugs are identical", "It only matters for research"], a: 0, w: "Receptor selectivity determines both the therapeutic effects and the side effects of adrenergic drugs." },
+    { q: "A patient with asthma and hypertension should be given:", o: ["A non-selective β-blocker", "A β1-selective blocker at low dose", "A β2 agonist only", "No treatment"], a: 1, w: "A β1-selective blocker at low dose is safer in asthma because it causes less bronchospasm than a non-selective blocker." },
+    { q: "A β2 agonist such as salbutamol can cause which side effect?", o: ["Tremor and tachycardia", "Bronchospasm", "Orthostatic hypotension", "Sedation"], a: 0, w: "β2 receptors are also found in skeletal muscle and some blood vessels, so β2 agonists can cause tremor and tachycardia." },
+    { q: "A β1 agonist such as dobutamine can cause which side effect?", o: ["Arrhythmias", "Bronchospasm", "Sedation", "Nasal congestion"], a: 0, w: "β1 receptors are in the heart, so β1 agonists can cause arrhythmias." },
+    { q: "An α1 agonist such as phenylephrine can cause:", o: ["Hypertension and reflex bradycardia", "Bronchospasm", "Orthostatic hypotension", "Sedation"], a: 0, w: "α1 agonists constrict blood vessels, causing hypertension and reflex bradycardia." },
+
+    // ===== Note 7: orthostatic hypotension and side effects of α1 blockers (Q31-35) =====
+    { q: "Orthostatic hypotension is best defined as:", o: ["A fall in blood pressure when standing up", "A rise in blood pressure when standing up", "A fall in heart rate when standing up", "A rise in heart rate when standing up"], a: 0, w: "Orthostatic hypotension is a fall in blood pressure when standing up." },
+    { q: "α1-blockers cause orthostatic hypotension because:", o: ["They prevent compensatory vasoconstriction when standing", "They increase heart rate", "They block β1 receptors", "They increase blood volume"], a: 0, w: "α1-blockers prevent compensatory vasoconstriction, so blood pressure falls when standing." },
+    { q: "To reduce the risk of first-dose hypotension with an α1-blocker, the first dose should be:", o: ["Taken in the morning", "Taken at bedtime", "Doubled", "Given intravenously"], a: 1, w: "Taking the first dose at bedtime reduces the risk of first-dose hypotension." },
+    { q: "Which of the following is a side effect of α1-blockers?", o: ["Nasal congestion", "Bronchospasm", "Bradycardia", "Hypoglycaemia"], a: 0, w: "Blocking α1 receptors in the nasal mucosa causes nasal congestion." },
+    { q: "Retrograde ejaculation is a side effect of:", o: ["β-blockers", "α1-blockers", "β2 agonists", "α2 agonists"], a: 1, w: "α1-blockers can cause retrograde ejaculation by relaxing the bladder neck and prostate." },
+
+    // ===== Note 8: cheese reaction and MAOIs (Q36-40) =====
+    { q: "The cheese reaction occurs in patients taking:", o: ["Beta-blockers", "Monoamine oxidase inhibitors (MAOIs)", "Alpha-blockers", "Calcium channel blockers"], a: 1, w: "The cheese reaction occurs in patients taking MAOIs." },
+    { q: "The cheese reaction is caused by:", o: ["Tyramine in food displacing noradrenaline", "Histamine in food", "Excess acetylcholine", "Serotonin in food"], a: 0, w: "Tyramine in food displaces noradrenaline from nerve terminals, causing a hypertensive crisis." },
+    { q: "Which food is most associated with the cheese reaction?", o: ["Fresh milk", "Aged cheese", "White bread", "Rice"], a: 1, w: "Aged cheese is rich in tyramine and is strongly associated with the cheese reaction." },
+    { q: "MAOIs + SSRIs can cause:", o: ["Hypertensive crisis", "Serotonin syndrome", "Hypoglycaemia", "Bradycardia"], a: 1, w: "MAOIs + SSRIs can cause serotonin syndrome, which is potentially fatal." },
+    { q: "The cheese reaction is prevented by:", o: ["Avoiding tyramine-rich foods", "Taking more MAOI", "Taking a β-blocker", "Taking a diuretic"], a: 0, w: "Avoiding tyramine-rich foods prevents the cheese reaction in patients on MAOIs." },
+
+    // ===== Note 9: comparing adrenergic drugs (Q41-45) =====
+    { q: "Which β-blocker is β1-selective?", o: ["Propranolol", "Atenolol", "Nadolol", "Timolol"], a: 1, w: "Atenolol is a β1-selective (cardioselective) blocker." },
+    { q: "Which β-blocker is non-selective?", o: ["Metoprolol", "Bisoprolol", "Propranolol", "Atenolol"], a: 2, w: "Propranolol is a non-selective β-blocker - it blocks both β1 and β2 receptors." },
+    { q: "A lipid-soluble β-blocker such as propranolol:", o: ["Crosses the blood-brain barrier and can cause central side effects", "Does not cross the blood-brain barrier", "Is excreted unchanged by the kidney", "Has no side effects"], a: 0, w: "Lipid-soluble blockers cross the blood-brain barrier and can cause central side effects such as nightmares and fatigue." },
+    { q: "Which β-blocker is used intravenously for rapid control of heart rate?", o: ["Esmolol", "Atenolol", "Propranolol", "Nadolol"], a: 0, w: "Esmolol is a short-acting, intravenous β-blocker used for rapid control of heart rate." },
+    { q: "A patient with both hypertension and BPH would benefit from:", o: ["A β1-selective blocker", "An α1-blocker", "A β2 agonist", "An MAOI"], a: 1, w: "An α1-blocker (e.g. tamsulosin, doxazosin) treats both hypertension and BPH." },
+
+    // ===== Note 10: clinical applications (Q46-50) =====
+    { q: "Which drug is used to treat anaphylaxis?", o: ["Salbutamol", "Adrenaline", "Atenolol", "Prazosin"], a: 1, w: "Adrenaline is the drug of choice for anaphylaxis." },
+    { q: "Which drug class is used to treat acute severe asthma?", o: ["β1 blockers", "β2 agonists", "α1 blockers", "MAOIs"], a: 1, w: "β2 agonists (e.g. salbutamol) are used to treat acute severe asthma by causing bronchodilation." },
+    { q: "Which drug is used to treat benign prostatic hyperplasia (BPH)?", o: ["Atenolol", "Salbutamol", "Tamsulosin (α1 blocker)", "Adrenaline"], a: 2, w: "Tamsulosin is an α1 blocker used for BPH; it relaxes the prostate and bladder neck." },
+    { q: "Which β-blocker is used in heart failure with proven mortality benefit?", o: ["Bisoprolol", "Propranolol", "Esmolol", "Nadolol"], a: 0, w: "Bisoprolol, carvedilol and metoprolol succinate have proven mortality benefit in heart failure." },
+    { q: "The key takeaway from this topic is:", o: ["Adrenergic pharmacology is only about hypertension", "Adrenergic pharmacology applies receptor theory to clinical medicine across many specialties", "Only β-blockers matter clinically", "Adrenergic drugs have no side effects"], a: 1, w: "Adrenergic pharmacology applies receptor theory to clinical medicine across many specialties - from asthma to heart failure to BPH." },
+  ],
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -24424,6 +26435,13 @@ const CONTENT = {
   "an2:10": T_AN2_DIGESTIVE,
   "an2:14": T_AN2_GI_HISTO,
   "an2:15": T_AN2_URINARY_HISTO,
+  "pha:0": T_PHA_INTRO,
+  "pha:1": T_PHA_TARGETS,
+  "pha:2": T_PHA_SIGNAL,
+  "pha:3": T_PHA_QUANTITATIVE,
+  "pha:4": T_PHA_PHARMACOKINETICS,
+  "pha:5": T_PHA_ADRENERGIC,
+  "pha:6": T_PHA_CHOLINERGIC,
 
 };
 
