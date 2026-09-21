@@ -21285,7 +21285,7 @@ Crucial insight: the second brain is why gut function survives even severe brain
     { channel: "Kenhub", title: "Stomach Anatomy and Function", note: "Detailed tour of the stomach regions, muscle layers, and sphincters.", url: "" },
     { channel: "Armando Hasudungan", title: "Liver, Gallbladder, and Pancreas — Anatomy and Function", note: "Hand-drawn explanation of the accessory organs and their clinical relations.", url: "" }
   ],
-  mcqs: [
+    mcqs: [
     { q: "Which structure prevents stomach contents from refluxing into the oesophagus?", o: ["Pyloric sphincter", "Lower oesophageal sphincter", "Ileocaecal valve", "Sphincter of Oddi"], a: 1, w: "The lower oesophageal sphincter forms the main anti-reflux barrier at the gastro-oesophageal junction." },
     { q: "The longest part of the GI tract is the:", o: ["Oesophagus", "Small intestine", "Large intestine", "Stomach"], a: 1, w: "The small intestine is about 6 metres long, the longest part of the GI tract." },
     { q: "Which of the following is NOT an accessory organ of the GI tract?", o: ["Liver", "Pancreas", "Kidney", "Gallbladder"], a: 2, w: "The kidney is part of the urinary system, not the GI accessory organs." },
@@ -21334,19 +21334,6 @@ Crucial insight: the second brain is why gut function survives even severe brain
     { q: "The taeniae coli are:", o: ["Three longitudinal muscle bands of the colon", "Folds of the colonic mucosa", "Sphincters of the colon", "Glands of the colon"], a: 0, w: "The taeniae coli are three bands of longitudinal smooth muscle on the outer surface of the colon." },
     { q: "Haustra are best described as:", o: ["Longitudinal folds of the colon", "Sacculations of the colon", "Glands of the colon", "Sphincters of the colon"], a: 1, w: "Haustra are the sacculations (bulges) of the colon wall between the taeniae coli." },
     { q: "The appendix is attached to the:", o: ["Ascending colon", "Caecum", "Transverse colon", "Sigmoid colon"], a: 1, w: "The appendix is a blind tube attached to the caecum." },
-    { q: "Meckel's diverticulum is a remnant of the:", o: ["Urachus", "Vitellointestinal duct", "Umbilical vein", "Ductus arteriosus"], a: 1, w: "Meckel's diverticulum is a remnant of the vitellointestinal (omphalomesenteric) duct." },
-    { q: "The portal triad consists of the:", o: ["Portal vein, hepatic artery, bile duct", "Hepatic vein, hepatic artery, bile duct", "Portal vein, hepatic vein, bile duct", "Portal vein, splenic artery, bile duct"], a: 0, w: "The portal triad is the portal vein, hepatic artery proper, and bile duct." },
-    { q: "The hepatic veins drain into the:", o: ["Portal vein", "Inferior vena cava", "Superior vena cava", "Aorta"], a: 1, w: "Hepatic veins drain directly into the inferior vena cava." },
-    { q: "The liver is divided functionally into eight:", o: ["Lobes", "Couinaud segments", "Lobules", "Acini"], a: 1, w: "The liver is functionally divided into eight Couinaud segments, each with its own vessels and duct." },
-    { q: "Which of the following is a consequence of splenectomy?", o: ["Increased risk of encapsulated bacterial infection", "Loss of bile production", "Loss of pancreatic function", "Loss of water absorption"], a: 0, w: "After splenectomy, the risk of infection by encapsulated bacteria (e.g. pneumococcus) is increased." },
-    { q: "The splenic artery arises from the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Renal artery"], a: 0, w: "The splenic artery is a branch of the coeliac trunk." },
-    { q: "The epiploic foramen (of Winslow) is:", o: ["A passage between the greater and lesser sacs", "The opening of the bile duct", "The opening of the pancreatic duct", "The entrance to the pelvis"], a: 0, w: "The epiploic foramen is the opening between the greater and lesser sacs of the peritoneal cavity." },
-    { q: "The lesser sac (omental bursa) lies:", o: ["Anterior to the stomach", "Posterior to the stomach", "Below the liver", "In the pelvis"], a: 1, w: "The lesser sac lies posterior to the stomach and lesser omentum." },
-    { q: "The foregut is supplied by the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Internal iliac artery"], a: 0, w: "The foregut (up to the duodenum) is supplied by the coeliac trunk." },
-    { q: "The midgut is supplied by the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Splenic artery"], a: 1, w: "The midgut (from the duodenum to the proximal transverse colon) is supplied by the superior mesenteric artery." },
-    { q: "The hindgut is supplied by the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Hepatic artery"], a: 2, w: "The hindgut (distal transverse colon to the anal canal) is supplied by the inferior mesenteric artery." },
-    { q: "Haemorrhoids are dilated veins of the:", o: ["Portal vein", "Haemorrhoidal plexus", "Splenic vein", "Hepatic vein"], a: 1, w: "Haemorrhoids are dilated veins of the internal or external haemorrhoidal plexuses." },
-    { q: "Which part of the GI tract has villi?", o: ["Stomach", "Small intestine", "Large intestine", "Oesophagus"], a: 1, w: "Villi are found in the small intestine, not the stomach or large intestine." },
     { q: "Peyer's patches are aggregations of lymphoid tissue found in the:", o: ["Stomach", "Ileum", "Duodenum", "Colon"], a: 1, w: "Peyer's patches are found in the ileum, forming part of the gut-associated lymphoid tissue (GALT)." }
   ]
 };
@@ -21488,67 +21475,77 @@ Crucial insight: the gut is a victim of its own physiology. The same rich blood 
     { channel: "Kenhub", title: "Portal Venous System and Portocaval Anastomoses", note: "Detailed tour of the portal vein and the sites where portal blood can bypass the liver.", url: "" },
     { channel: "Ninja Nerd", title: "Enteric Nervous System and Referred Pain", note: "Explanation of the two plexuses and the segmental pattern of visceral pain.", url: "" }
   ],
-  mcqs: [
-    { q: "The foregut is supplied by the:", o: ["Superior mesenteric artery", "Coeliac trunk", "Inferior mesenteric artery", "Renal artery"], a: 1, w: "The foregut (from the oesophagus to the second part of the duodenum) is supplied by the coeliac trunk." },
-    { q: "The midgut is supplied by the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Splenic artery"], a: 1, w: "The midgut (second part of duodenum to proximal two-thirds of transverse colon) is supplied by the superior mesenteric artery." },
-    { q: "The hindgut is supplied by the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Hepatic artery"], a: 2, w: "The hindgut (distal transverse colon to upper anal canal) is supplied by the inferior mesenteric artery." },
-    { q: "Which of the following is NOT a branch of the coeliac trunk?", o: ["Left gastric artery", "Splenic artery", "Common hepatic artery", "Superior mesenteric artery"], a: 3, w: "The superior mesenteric artery arises separately from the aorta, not from the coeliac trunk." },
-    { q: "The portal vein is formed by the union of the:", o: ["Splenic vein and inferior mesenteric vein", "Superior mesenteric vein and splenic vein", "Hepatic vein and portal vein", "Left and right gastric veins"], a: 1, w: "The portal vein is formed by the union of the superior mesenteric vein and the splenic vein behind the neck of the pancreas." },
-    { q: "The portal vein drains blood to the:", o: ["Inferior vena cava", "Liver", "Heart directly", "Spleen"], a: 1, w: "The portal vein carries blood from the gut to the liver (hepatic portal system)." },
-    { q: "Which of the following is NOT a function of the portal system?", o: ["First-pass metabolism of drugs", "Delivery of nutrients to the liver", "Filtration of bacteria from the gut", "Direct return of gut blood to the heart"], a: 3, w: "The portal system routes gut blood to the liver first, not directly to the heart." },
-    { q: "The first-pass effect refers to:", o: ["The liver processing absorbed substances before they reach the systemic circulation", "The heart beating once per cycle", "Blood passing through the lungs twice", "The gut absorbing nutrients twice"], a: 0, w: "The first-pass effect is the metabolism of substances by the liver before they reach the rest of the body." },
-    { q: "Portal hypertension is most commonly caused by:", o: ["Portal vein thrombosis", "Cirrhosis of the liver", "Right heart failure", "Splenic artery aneurysm"], a: 1, w: "Cirrhosis is the most common cause of portal hypertension, increasing resistance to portal blood flow." },
-    { q: "Which of the following is a portocaval anastomosis site?", o: ["Lower oesophagus", "Coronary arteries", "Renal hilum", "Splenic capsule"], a: 0, w: "The lower oesophagus is one of the four clinically important portocaval anastomoses." },
-    { q: "Caput medusae refers to dilated veins around the:", o: ["Oesophagus", "Umbilicus", "Rectum", "Spleen"], a: 1, w: "Caput medusae is the dilated venous pattern around the umbilicus in portal hypertension." },
-    { q: "Oesophageal varices are dangerous mainly because they:", o: ["Cause pain when eating", "Can rupture and bleed catastrophically", "Block the oesophagus", "Interfere with swallowing"], a: 1, w: "Oesophageal varices can rupture and cause massive haematemesis, a life-threatening emergency." },
-    { q: "Oesophageal varices are more dangerous than anorectal varices mainly because of:", o: ["Higher pressure and thinner walls", "Lower pressure but thicker walls", "Less blood flow", "Different blood supply"], a: 0, w: "The oesophageal varices sit in a high-pressure zone with thin walls and constant mechanical trauma." },
-    { q: "The parasympathetic nerve supply to the foregut and midgut is mainly from the:", o: ["Vagus nerve", "Pelvic splanchnic nerves", "Sympathetic chain", "Phrenic nerve"], a: 0, w: "The vagus nerve supplies parasympathetic fibres to the foregut and midgut." },
-    { q: "The parasympathetic supply to the hindgut is mainly from the:", o: ["Vagus nerve", "Pelvic splanchnic nerves", "Sympathetic chain", "Coeliac ganglion"], a: 1, w: "The pelvic splanchnic nerves (S2-S4) supply parasympathetic fibres to the hindgut." },
-    { q: "The sympathetic supply to the gut generally:", o: ["Stimulates motility and secretion", "Inhibits motility and constricts vessels", "Has no effect", "Increases blood flow"], a: 1, w: "The sympathetic supply generally inhibits gut activity and constricts blood vessels." },
-    { q: "The three prevertebral ganglia of the sympathetic supply are the:", o: ["Coeliac, superior mesenteric, and inferior mesenteric ganglia", "Cervical, thoracic, and lumbar ganglia", "Stellate, coeliac, and renal ganglia", "Aortic, renal, and iliac ganglia"], a: 0, w: "The three prevertebral ganglia are the coeliac, superior mesenteric, and inferior mesenteric ganglia, mirroring the three arterial territories." },
-    { q: "The coeliac ganglion primarily serves the:", o: ["Foregut", "Midgut", "Hindgut", "Kidney"], a: 0, w: "The coeliac ganglion supplies the foregut." },
-    { q: "The superior mesenteric ganglion primarily serves the:", o: ["Foregut", "Midgut", "Hindgut", "Spleen"], a: 1, w: "The superior mesenteric ganglion supplies the midgut." },
-    { q: "The inferior mesenteric ganglion primarily serves the:", o: ["Foregut", "Midgut", "Hindgut", "Liver"], a: 2, w: "The inferior mesenteric ganglion supplies the hindgut." },
-    { q: "Visceral pain from the midgut is typically referred to the:", o: ["Epigastrium", "Umbilicus", "Suprapubic region", "Right shoulder"], a: 1, w: "Midgut pain (T10) is referred around the umbilicus." },
-    { q: "Visceral pain from the foregut is typically referred to the:", o: ["Umbilicus", "Suprapubic region", "Epigastrium", "Left shoulder"], a: 2, w: "Foregut pain (T6-T9) is referred to the epigastrium." },
-    { q: "Visceral pain from the hindgut is typically referred to the:", o: ["Epigastrium", "Umbilicus", "Suprapubic region", "Right iliac fossa"], a: 2, w: "Hindgut pain (L1-L2) is referred to the suprapubic region." },
-    { q: "Appendicitis begins with periumbilical pain because the appendix is derived from the:", o: ["Foregut", "Midgut", "Hindgut", "Hindbrain"], a: 1, w: "The appendix is a midgut structure, so its pain (T10) is referred to the umbilicus before localising to the RIF." },
-    { q: "Gallbladder pain is often referred to the right shoulder tip because of the:", o: ["Vagus nerve", "Phrenic nerve (C3-C5)", "Sympathetic chain", "Coeliac ganglion"], a: 1, w: "The phrenic nerve supplies the diaphragm and shares spinal segments with the shoulder tip (C3-C5)." },
-    { q: "Fat absorption in the gut occurs mainly via the:", o: ["Blood capillaries of the villus", "Lacteals of the villus", "Portal vein", "Hepatic artery"], a: 1, w: "Fats are absorbed into the lacteals (gut lymphatics) as chylomicrons." },
-    { q: "Chylomicrons are too large to enter blood capillaries because:", o: ["They are insoluble in water", "They are too large to pass through capillary pores", "They are too small to be seen", "They are repelled by blood"], a: 1, w: "Chylomicrons are too large to enter blood capillaries and enter the lacteals instead." },
-    { q: "The thoracic duct empties lymph into the venous system at the:", o: ["Right subclavian vein", "Left subclavian vein (left venous angle)", "Superior vena cava", "Inferior vena cava"], a: 1, w: "The thoracic duct empties into the left venous angle at the junction of the left subclavian and internal jugular veins." },
-    { q: "The cisterna chyli lies at the level of:", o: ["T12-L1", "L1-L2", "L4-L5", "C7"], a: 1, w: "The cisterna chyli lies at the level of L1-L2, at the lower end of the thoracic duct." },
-    { q: "Acute mesenteric ischaemia is most often caused by:", o: ["Venous thrombosis", "Embolus or thrombus in the superior mesenteric artery", "Coeliac trunk compression", "Inferior mesenteric artery aneurysm"], a: 1, w: "The superior mesenteric artery is the most commonly affected vessel, often by an embolus from the heart." },
-    { q: "The mortality rate of acute mesenteric ischaemia is:", o: ["Less than 5 percent", "About 20 percent", "Above 50 percent", "Zero"], a: 2, w: "Acute mesenteric ischaemia is a surgical emergency with a mortality rate above 50 percent." },
-    { q: "During shock, the gut mucosa is especially vulnerable because:", o: ["It has no blood supply", "It has the highest metabolic demand of the gut layers", "It does not use oxygen", "It is protected from reduced blood flow"], a: 1, w: "The mucosa is metabolically very active and receives most of the gut's blood flow, so it suffers first when total gut flow falls." },
-    { q: "Which layer of the gut is most vulnerable to reduced blood flow?", o: ["Serosa", "Mucosa", "Muscularis externa", "Adventitia"], a: 1, w: "The mucosa is the most metabolically active layer and suffers first in reduced blood flow." },
-    { q: "The gastrosplenic ligament connects the spleen to the:", o: ["Liver", "Stomach", "Pancreas", "Left kidney"], a: 1, w: "The gastrosplenic ligament connects the greater curvature of the stomach to the spleen." },
-    { q: "The splenic artery arises from the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Left gastric artery"], a: 0, w: "The splenic artery is a branch of the coeliac trunk." },
-    { q: "The inferior mesenteric vein drains into the:", o: ["Portal vein directly", "Splenic vein", "Superior mesenteric vein", "Left renal vein"], a: 1, w: "The inferior mesenteric vein drains into the splenic vein, which then joins the superior mesenteric vein to form the portal vein." },
-    { q: "Portal hypertension most commonly presents with which of the following?", o: ["Left-sided heart failure", "Ascites and oesophageal varices", "Peripheral oedema only", "Polycythaemia"], a: 1, w: "Portal hypertension commonly presents with ascites, splenomegaly, and oesophageal varices." },
-    { q: "The clinical sign of dilated veins radiating from the umbilicus in portal hypertension is:", o: ["Caput medusae", "Oesophageal varices", "Anorectal varices", "Ascites"], a: 0, w: "Caput medusae is the sign of dilated paraumbilical veins." },
-    { q: "Which of the following is NOT a portocaval anastomosis site?", o: ["Lower oesophagus", "Umbilicus", "Rectum", "Left kidney"], a: 3, w: "The left kidney is not a portocaval anastomosis site; the four sites are oesophagus, umbilicus, rectum, and retroperitoneum." },
-    { q: "Which of the following statements about the portal vein is TRUE?", o: ["It has valves", "It has no valves", "It drains into the aorta", "It drains into the pulmonary vein"], a: 1, w: "The portal vein has no valves, which is why portal hypertension causes blood to back up and find alternative routes." },
-    { q: "The direction of blood flow in the portal vein normally is:", o: ["From the liver to the gut", "From the gut to the liver", "From the gut to the heart", "From the liver to the heart"], a: 1, w: "Portal blood flows from the gut to the liver, where it is processed before entering the systemic circulation." },
-    { q: "The enterohepatic circulation refers to:", o: ["The circulation of blood between the gut and liver", "The recycling of bile salts from the ileum to the liver", "The circulation of lymph through the gut", "The movement of food through the gut"], a: 1, w: "The enterohepatic circulation is the recycling of bile salts from the ileum back to the liver via the portal vein." },
-    { q: "Bile salts are absorbed in the:", o: ["Duodenum", "Jejunum", "Ileum", "Colon"], a: 2, w: "Bile salts are absorbed in the terminal ileum and returned to the liver via the portal vein." },
-    { q: "Which part of the gut is most sensitive to ischaemia?", o: ["Oesophagus", "Stomach", "Small intestine", "Colon"], a: 2, w: "The small intestine has the highest metabolic rate and is the most sensitive to ischaemia, especially the mucosa." },
-    { q: "The coeliac trunk arises from the aorta at the level of:", o: ["T8", "T12", "L3", "L5"], a: 1, w: "The coeliac trunk arises from the aorta at the level of T12." },
-    { q: "The superior mesenteric artery arises at the level of:", o: ["T12", "L1", "L3", "T8"], a: 1, w: "The superior mesenteric artery arises at the level of L1." },
-    { q: "The inferior mesenteric artery arises at the level of:", o: ["T12", "L1", "L3", "L5"], a: 2, w: "The inferior mesenteric artery arises at the level of L3." },
-    { q: "The anastomosis between the superior mesenteric artery and the inferior mesenteric artery at the splenic flexure is called:", o: ["The marginal artery of Drummond", "The arc of Riolan", "The artery of Griffiths", "The artery of Sudeck"], a: 1, w: "The arc of Riolan (or meandering mesenteric artery) connects the SMA and IMA territories at the splenic flexure." },
-    { q: "The anastomosis between the inferior mesenteric artery and the internal iliac artery is at:", o: ["The splenic flexure", "The rectosigmoid junction", "The ileocaecal junction", "The pylorus"], a: 1, w: "The superior rectal artery (from IMA) anastomoses with the middle and inferior rectal arteries (from the internal iliac) at the rectosigmoid junction." },
-    { q: "Watershed areas of the colon are clinically important because they are:", o: ["Richly vascularised", "Most prone to ischaemia", "Free from anastomoses", "Always supplied by one artery"], a: 1, w: "Watershed areas (splenic flexure, rectosigmoid junction) have the weakest blood supply and are the most prone to ischaemia." },
-    { q: "The lymphatic drainage of the midgut goes to the:", o: ["Coeliac nodes", "Superior mesenteric nodes", "Inferior mesenteric nodes", "Inguinal nodes"], a: 1, w: "Midgut lymph drains into the superior mesenteric lymph nodes." },
-    { q: "The lymphatic drainage of the hindgut goes to the:", o: ["Coeliac nodes", "Superior mesenteric nodes", "Inferior mesenteric nodes", "Axillary nodes"], a: 2, w: "Hindgut lymph drains into the inferior mesenteric lymph nodes." },
-    { q: "The lymphatic drainage of the foregut goes to the:", o: ["Coeliac nodes", "Superior mesenteric nodes", "Inferior mesenteric nodes", "Inguinal nodes"], a: 0, w: "Foregut lymph drains into the coeliac lymph nodes." },
-    { q: "Metastasis from a colon cancer typically spreads first to the:", o: ["Lungs", "Liver", "Brain", "Bone"], a: 1, w: "Colon cancer spreads via the portal vein to the liver first, making the liver the most common site of metastasis." },
-    { q: "Injury to the spleen during abdominal trauma is significant because splenectomy increases risk of:", o: ["Anaemia", "Encapsulated bacterial infection", "Bleeding disorders", "Liver failure"], a: 1, w: "Post-splenectomy patients have increased risk of infection by encapsulated organisms such as Streptococcus pneumoniae." },
-    { q: "The enteric nervous system contains approximately how many neurons?", o: ["500", "5,000", "500,000", "500 million"], a: 3, w: "The enteric nervous system contains roughly 500 million neurons, more than the spinal cord." },
-    { q: "The myenteric plexus (Auerbach's) is located between:", o: ["The mucosa and submucosa", "The circular and longitudinal muscle layers", "The serosa and muscularis", "The epithelium and lamina propria"], a: 1, w: "The myenteric plexus lies between the circular and longitudinal layers of the muscularis externa." },
-    { q: "The submucosal plexus (Meissner's) is located in the:", o: ["Submucosa", "Mucosa", "Muscularis externa", "Serosa"], a: 0, w: "The submucosal plexus lies in the submucosa." },
-    { q: "The vagus nerve supplies parasympathetic fibres to:", o: ["Only the foregut", "Foregut and midgut", "Only the hindgut", "The entire gut"], a: 1, w: "The vagus supplies the foregut and midgut; the hindgut is supplied by pelvic splanchnic nerves." }
-  ]
+    mcqs: [
+    // ===== Header 1: three arterial territories / embryology (Q1-5) =====
+    { q: "The foregut is supplied by which artery?", o: ["Inferior mesenteric artery", "Superior mesenteric artery", "Coeliac trunk", "Internal iliac artery"], a: 2, w: "The coeliac trunk supplies the foregut, from the oesophagus to the second part of the duodenum." },
+    { q: "The midgut is supplied by the:", o: ["Superior mesenteric artery", "Coeliac trunk", "Inferior mesenteric artery", "Gastroduodenal artery"], a: 0, w: "The superior mesenteric artery supplies the midgut, from the second part of the duodenum to the proximal two-thirds of the transverse colon." },
+    { q: "The hindgut is supplied by the:", o: ["Coeliac trunk", "Superior mesenteric artery", "Inferior mesenteric artery", "Middle rectal artery only"], a: 2, w: "The inferior mesenteric artery supplies the hindgut, from the distal one-third of the transverse colon to the upper anal canal." },
+    { q: "The three-artery pattern of gut blood supply is best explained by:", o: ["Random variation", "Embryological origin from foregut, midgut and hindgut", "Lymphatic drainage routes", "Body weight distribution"], a: 1, w: "The three arteries exist because the gut develops from three embryological segments, each retaining its own arterial supply." },
+    { q: "The anastomoses between the three arterial territories:", o: ["Prevent all infarction under every circumstance", "Provide a safety route if one artery is slowly blocked", "Carry only venous blood", "Are absent in humans"], a: 1, w: "These boundary anastomoses give a backup supply, but may not fully compensate for a sudden arterial blockage." },
+
+    // ===== Header 2: venous drainage / portal pattern (Q6-10) =====
+    { q: "Venous blood from the gut drains first into the:", o: ["Systemic circulation directly", "Portal vein to the liver", "Inferior vena cava directly", "Azygos vein"], a: 1, w: "All gut venous blood passes through the portal vein to the liver before reaching the systemic circulation." },
+    { q: "The portal vein is formed by the union of the:", o: ["Splenic vein and inferior mesenteric vein only", "Superior mesenteric vein and splenic vein", "Hepatic vein and inferior vena cava", "Gastric vein and oesophageal vein"], a: 1, w: "The portal vein forms from the union of the superior mesenteric vein and the splenic vein (which has already received the inferior mesenteric vein)." },
+    { q: "The functional reason gut venous blood passes through the liver first is:", o: ["To warm the blood", "First-pass metabolism of absorbed substances", "To add oxygen", "To produce red blood cells"], a: 1, w: "The first-pass effect lets the liver process nutrients, drugs, toxins and bacteria from the gut before they reach the rest of the body." },
+    { q: "Blood passes through two capillary beds in series in the:", o: ["Pulmonary circulation", "Hepatic portal system", "Coronary circulation", "Renal circulation"], a: 1, w: "The hepatic portal system is unique: gut capillaries drain into the portal vein, which splits again into liver sinusoids before returning to the heart." },
+    { q: "The portal vein enters the liver at the:", o: ["Porta hepatis", "Falciform ligament", "Ligamentum teres", "Gallbladder fossa"], a: 0, w: "The portal vein enters the liver at the porta hepatis, along with the hepatic artery proper and the bile ducts." },
+
+    // ===== Header 3: portal vein has no valves / portal hypertension (Q11-15) =====
+    { q: "A key structural feature of the portal vein is that it:", o: ["Has many valves preventing backflow", "Has no valves", "Is a muscular artery", "Carries oxygenated blood"], a: 1, w: "The portal vein has no valves, so if pressure rises, blood can back up into portocaval anastomoses." },
+    { q: "Portal hypertension is most commonly caused by:", o: ["Cirrhosis of the liver", "Renal failure", "Pulmonary embolism", "Anaemia"], a: 0, w: "Cirrhosis increases resistance to portal blood flow, causing pressure to rise in the portal vein." },
+    { q: "Caput medusae is a clinical sign of portal hypertension caused by dilated veins at the:", o: ["Oesophagus", "Umbilicus", "Rectum", "Kidney"], a: 1, w: "Caput medusae refers to the dilated paraumbilical veins radiating from the umbilicus in portal hypertension." },
+    { q: "The four clinically important portocaval anastomoses include all of the following EXCEPT the:", o: ["Lower oesophagus", "Umbilicus", "Rectum", "Spleen"], a: 3, w: "The four sites are lower oesophagus, umbilicus, rectum and posterior abdominal wall; the spleen is not one of them." },
+    { q: "The clinical significance of portocaval anastomoses is that:", o: ["They are normally large and obvious", "They become dilated and dangerous when portal pressure rises", "They carry arterial blood only", "They drain into the renal vein"], a: 1, w: "These anastomoses are silent in health but dilate and can bleed when portal hypertension develops." },
+
+    // ===== Header 4: oesophageal varices most dangerous (Q16-20) =====
+    { q: "Oesophageal varices are more dangerous than anorectal varices mainly because:", o: ["They are closer to the heart", "They are thin-walled, in a high-pressure zone, and exposed to friction from swallowed food", "They drain arterial blood", "They contain valves"], a: 1, w: "High portal pressure, thin submucosal walls and constant mechanical trauma from swallowed food make oesophageal varices prone to rupture." },
+    { q: "A feared emergency caused by ruptured oesophageal varices is:", o: ["Massive haematemesis", "Painless jaundice", "Kidney failure", "Pancreatitis"], a: 0, w: "Ruptured oesophageal varices cause catastrophic upper GI bleeding - massive haematemesis - and are a gastroenterology emergency." },
+    { q: "Anorectal varices are usually less catastrophic than oesophageal varices because they:", o: ["Are always thrombosed", "Sit in thicker submucosa in a lower-pressure zone", "Are not connected to the portal system", "Carry arterial blood"], a: 1, w: "The thicker submucosa and lower pressure at the rectum make anorectal varices less prone to life-threatening rupture." },
+    { q: "Management of known oesophageal varices in cirrhosis typically includes:", o: ["Beta-blockers and band ligation", "Warfarin therapy", "Iron supplementation alone", "Nephrectomy"], a: 0, w: "Non-selective beta-blockers lower portal pressure, and endoscopic band ligation treats existing varices prophylactically." },
+    { q: "The most likely reason a patient with cirrhosis presents with vomiting of fresh blood is:", o: ["Peptic ulcer alone", "Ruptured oesophageal varices", "Mallory-Weiss tear from coughing only", "Haemorrhoids"], a: 1, w: "In cirrhosis, portal hypertension leads to oesophageal varices, which may rupture and bleed massively." },
+
+    // ===== Header 5: extrinsic nerves + enteric nervous system (Q21-25) =====
+    { q: "The gut's intrinsic nervous system is called the:", o: ["Enteric nervous system", "Sympathetic chain", "Limbic system", "Somatic nervous system"], a: 0, w: "The enteric nervous system is the gut's own nervous network, capable of running the gut autonomously." },
+    { q: "The two plexuses of the enteric nervous system are the:", o: ["Brachial and lumbar plexuses", "Submucosal (Meissner's) and myenteric (Auerbach's)", "Coeliac and mesenteric plexuses", "Cardiac and pulmonary plexuses"], a: 1, w: "The submucosal plexus controls secretion and blood flow; the myenteric plexus controls motility." },
+    { q: "The extrinsic nerves to the gut mainly function to:", o: ["Replace the enteric nervous system entirely", "Modulate the activity of the enteric nervous system", "Only carry sensory information", "Only carry motor information"], a: 1, w: "Extrinsic nerves are not the gut's operators; they tune the enteric nervous system up or down according to body-wide state." },
+    { q: "Cutting the extrinsic nerves to a segment of gut would:", o: ["Stop all digestion instantly", "Allow the gut to keep working via the enteric nervous system", "Cause immediate necrosis", "Have no effect on secretion"], a: 1, w: "The enteric nervous system can run the gut autonomously; extrinsic nerves only modulate it." },
+    { q: "The enteric nervous system is described as a 'second brain' because it:", o: ["Can think independently", "Contains about 500 million neurons and can function autonomously", "Produces cerebrospinal fluid", "Controls voluntary movement"], a: 1, w: "With roughly 500 million neurons, the enteric nervous system can run digestion independently of the CNS." },
+
+    // ===== Header 6: sympathetic route via splanchnic nerves + ganglia (Q26-30) =====
+    { q: "Sympathetic preganglionic fibres reach the gut via the:", o: ["Vagus nerve", "Splanchnic nerves and prevertebral ganglia", "Pelvic splanchnic nerves only", "Phrenic nerve"], a: 1, w: "Sympathetic fibres travel via the splanchnic nerves to the prevertebral ganglia, which then send fibres along the arteries to the gut." },
+    { q: "The prevertebral ganglion that serves the foregut is the:", o: ["Superior mesenteric ganglion", "Coeliac ganglion", "Inferior mesenteric ganglion", "Stellate ganglion"], a: 1, w: "The coeliac ganglion serves the foregut, mirroring the coeliac trunk's arterial territory." },
+    { q: "The three prevertebral ganglia of the gut mirror:", o: ["The three arterial territories (foregut, midgut, hindgut)", "The venous drainage", "The lymphatic drainage", "The enteric plexuses"], a: 0, w: "Coeliac, superior mesenteric and inferior mesenteric ganglia match the three arterial territories." },
+    { q: "The parasympathetic supply to the foregut and midgut is mainly via the:", o: ["Pelvic splanchnic nerves", "Vagus nerve", "Phrenic nerve", "Hypogastric nerve"], a: 1, w: "The vagus nerve provides parasympathetic supply to the foregut and midgut; the hindgut is supplied by pelvic splanchnic nerves." },
+    { q: "The coeliac plexus is clinically important because it:", o: ["Contains no nerve fibres", "Carries the sympathetic supply and visceral pain fibres of the foregut, making it a target for pain relief in pancreatic cancer", "Only carries motor fibres", "Only carries parasympathetic fibres"], a: 1, w: "The coeliac plexus carries sympathetic and visceral pain fibres from the foregut; a coeliac plexus block can relieve pain from pancreatic cancer." },
+
+    // ===== Header 7: visceral vs somatic pain / referred pain (Q31-35) =====
+    { q: "Visceral pain from the gut is characteristically:", o: ["Sharp and well-localised", "Dull, poorly localised, and felt in the midline", "Radiating to the limbs", "Always referred to the shoulder"], a: 1, w: "Visceral afferents produce dull, midline pain that the brain cannot precisely localise." },
+    { q: "Early appendicitis pain is felt around the umbilicus because:", o: ["The appendix lies there", "The appendix and umbilical skin share T10 innervation", "The appendix secretes a local anaesthetic", "Umbilical skin is more sensitive"], a: 1, w: "The midgut-derived appendix and the umbilical skin share T10 innervation, so early visceral pain is referred periumbilically." },
+    { q: "Foregut visceral pain is typically referred to the:", o: ["Epigastrium (around T6-T9)", "Perineum", "Left arm", "Suprapubic region"], a: 0, w: "Foregut visceral pain is referred to the epigastrium, corresponding to T6-T9." },
+    { q: "Hindgut visceral pain is typically referred to the:", o: ["Epigastrium", "Umbilicus", "Suprapubic region", "Left shoulder"], a: 2, w: "Hindgut visceral pain is referred to the suprapubic region, corresponding to L1-L2." },
+    { q: "Once inflammation reaches the parietal peritoneum, pain becomes:", o: ["More diffuse and dull", "Sharp and well-localised to the site of irritation", "Referred to the shoulder", "Completely absent"], a: 1, w: "The parietal peritoneum has precise somatic innervation, so pain becomes sharp and localised to the exact site." },
+
+    // ===== Header 8: gut's own lymphatic system / chylomicrons (Q36-40) =====
+    { q: "Fats are absorbed into which structure in the intestinal villus?", o: ["Blood capillaries", "Lacteals (lymphatic vessels)", "Goblet cells", "Crypts of Lieberkuhn"], a: 1, w: "Fats are packaged as chylomicrons, too large for blood capillaries, and enter the lacteals instead." },
+    { q: "Fats are absorbed into lymph rather than blood because:", o: ["Lymph is faster", "Chylomicrons are too large to enter blood capillaries and the gut cannot package them as lipoproteins before absorption", "Blood is too acidic", "Lymph has more oxygen"], a: 1, w: "Chylomicrons are large droplets absorbed via lacteals; the gut lacks the machinery to package fats as lipoproteins before they leave the enterocyte." },
+    { q: "Foregut and midgut lymph drains into which lymph nodes?", o: ["Coeliac and superior mesenteric lymph nodes", "Inguinal lymph nodes only", "Cervical lymph nodes", "Axillary lymph nodes"], a: 0, w: "Foregut lymph drains to coeliac nodes; midgut lymph drains to superior mesenteric nodes." },
+    { q: "All gut lymph eventually drains into the:", o: ["Inferior vena cava directly", "Cisterna chyli, then thoracic duct to the left subclavian vein", "Portal vein", "Right atrium directly"], a: 1, w: "Gut lymph drains via the cisterna chyli and thoracic duct into the left venous angle at the subclavian vein." },
+    { q: "A fatty meal causing milky plasma (lipaemia) reflects:", o: ["Kidney failure", "Chylomicrons entering the bloodstream via the thoracic duct", "Liver disease only", "Excess protein in the diet"], a: 1, w: "After a fatty meal, chylomicrons enter the blood via the thoracic duct, giving the plasma a milky appearance." },
+
+    // ===== Header 9: rich supply yet ischaemia possible (Q41-45) =====
+    { q: "The gut receives roughly what fraction of resting cardiac output?", o: ["About 5%", "About 20%", "About 50%", "About 75%"], a: 1, w: "The gut receives roughly 20% of resting cardiac output, one of the highest of any organ system." },
+    { q: "Acute mesenteric ischaemia most commonly results from:", o: ["A sudden embolus or thrombus blocking the superior mesenteric artery", "Eating too much fat", "A kidney stone", "Long-term constipation"], a: 0, w: "An embolus (often from the heart) or a thrombus blocking the SMA can cause acute mesenteric ischaemia." },
+    { q: "Even with rich blood supply, the gut is vulnerable because:", o: ["Boundary anastomoses are small and cannot always compensate for a sudden arterial blockage", "Its vessels have many valves", "It lacks capillaries", "Blood flow is always steady"], a: 0, w: "The anastomoses between arterial territories are small; a sudden blockage may outstrip their capacity to compensate." },
+    { q: "In shock or heart failure, the gut sacrifices blood flow to preserve the brain and heart, meaning which layer suffers first?", o: ["The serosa", "The mucosa", "The muscularis externa", "The adventitia"], a: 1, w: "The metabolically active mucosa is the first to suffer when gut blood flow falls, leading to mucosal ischaemia and bacterial translocation." },
+    { q: "Bacterial translocation in critically ill patients is most directly caused by:", o: ["Excess bile secretion", "Mucosal ischaemia weakening the gut barrier", "Lymphatic obstruction alone", "Portal vein valves"], a: 1, w: "Mucosal ischaemia in critically ill patients weakens the gut barrier, allowing bacteria to translocate." },
+
+    // ===== Consolidation across the whole note (Q46-50) =====
+    { q: "The foregut, midgut and hindgut are demarcated at:", o: ["The pylorus and ileocaecal valve", "The second part of the duodenum and the distal one-third of the transverse colon", "The oesophagus and rectum only", "The spleen and gallbladder"], a: 1, w: "The foregut/midgut boundary is at the second part of the duodenum; the midgut/hindgut boundary is at the distal one-third of the transverse colon." },
+    { q: "Parasympathetic supply to the hindgut is via the:", o: ["Vagus nerve", "Pelvic splanchnic nerves (S2-S4)", "Phrenic nerve", "Sympathetic chain"], a: 1, w: "The vagus supplies the foregut and midgut; the hindgut is supplied by pelvic splanchnic nerves from S2-S4." },
+    { q: "Which best describes the effect of sympathetic stimulation on the gut?", o: ["Increases motility and secretion", "Inhibits motility and secretion, and constricts blood vessels", "Has no effect", "Only affects blood flow"], a: 1, w: "Sympathetic stimulation generally inhibits gut motility and secretion and constricts gut blood vessels." },
+    { q: "The portal triad entering the liver at the porta hepatis consists of:", o: ["Portal vein, hepatic artery proper, and bile duct", "Hepatic vein, portal vein, and inferior vena cava", "Gastric artery, splenic vein, and cystic duct", "Aorta, inferior vena cava, and thoracic duct"], a: 0, w: "The portal triad is the portal vein, the hepatic artery proper, and the common bile duct." },
+    { q: "Which statement best summarises the functional arrangement of gut neurovasculature?", o: ["Arteries, veins, nerves and lymphatics each use unrelated routes", "Arterial territories, venous portal drainage, sympathetic ganglia and visceral pain referral all share the same three embryological segments as their organising principle", "Only the arterial supply follows embryological segments", "Lymphatic drainage is independent of embryological origin"], a: 1, w: "Arteries, veins, sympathetic ganglia and visceral pain referral all organise around the foregut/midgut/hindgut embryological plan - the unifying theme of the whole topic." },
+  ],
 };
 
 /* --------------------------- an2:5 --------------------------- */
@@ -21702,66 +21699,77 @@ Crucial insight: this continuity matters clinically. Pelvic organ prolapse is a 
     { channel: "Kenhub", title: "Pelvic Floor Muscles and Perineum", note: "Detailed tour of levator ani, the perineal triangles, and their clinical relations.", url: "" },
     { channel: "Ninja Nerd", title: "Pelvic Autonomic Nervous System", note: "Explanation of the sympathetic and parasympathetic supply to pelvic organs.", url: "" }
   ],
-  mcqs: [
-    { q: "The pelvic girdle consists of the two hip bones, the sacrum, and the:", o: ["Coccyx", "Lumbar vertebrae", "Femur", "Ilium"], a: 0, w: "The pelvic girdle includes the sacrum and coccyx along with the two hip bones." },
-    { q: "The hip bone is formed by the fusion of the:", o: ["Ilium, ischium, and pubis", "Ilium, sacrum, and pubis", "Ischium, sacrum, and coccyx", "Pubis, sacrum, and coccyx"], a: 0, w: "The hip bone is formed by fusion of the ilium, ischium, and pubis." },
-    { q: "The joint between the two pubic bones is the:", o: ["Sacroiliac joint", "Pubic symphysis", "Hip joint", "Sacrococcygeal joint"], a: 1, w: "The pubic symphysis is the cartilaginous joint between the two pubic bones." },
+    mcqs: [
+    // ===== Header 1: pelvic ring / weight transmission (Q1-5) =====
+    { q: "The pelvis is built as a bony ring rather than a muscular wall mainly because it must:", o: ["Store fat", "Transmit the weight of the trunk and upper limbs to the legs", "Protect the kidneys", "Allow free movement of the trunk"], a: 1, w: "The bony pelvic ring transmits the entire weight of the upper body through the hip joints into the legs." },
+    { q: "The pelvic girdle is formed by:", o: ["Two hip bones, the sacrum, and the coccyx", "Two femurs and the sacrum", "Two hip bones and the lumbar vertebrae", "The sacrum and the coccyx only"], a: 0, w: "The pelvic girdle consists of two hip bones, the sacrum and the coccyx." },
+    { q: "Each hip bone is formed by the fusion of the:", o: ["Ilium, sacrum and pubis", "Ilium, ischium and pubis", "Ischium, sacrum and coccyx", "Pubis, sacrum and coccyx"], a: 1, w: "Each hip bone fuses from the ilium, ischium and pubis." },
+    { q: "The pelvis closes into a ring at which three joints?", o: ["Two sacroiliac joints and the pubic symphysis", "Two hip joints and the sacrococcygeal joint", "Two sacroiliac joints and the hip joint", "The pubic symphysis and two hip joints"], a: 0, w: "The two sacroiliac joints and the pubic symphysis close the pelvic ring." },
+    { q: "The pelvic joints are strong and largely immobile because:", o: ["They have no ligaments", "They must reliably transmit the body's weight during walking and running", "They are lined by synovial fluid only", "They are made of cartilage"], a: 1, w: "Strength and near-immobility of the pelvic joints allow reliable weight transmission during movement." },
+
+    // ===== Header 2: inlet vs outlet (Q6-10) =====
     { q: "The pelvic inlet is also called the:", o: ["Pelvic outlet", "Pelvic brim", "Pelvic floor", "Pubic arch"], a: 1, w: "The pelvic inlet is also called the pelvic brim." },
-    { q: "Which structure is NOT part of the pelvic inlet boundary?", o: ["Sacral promontory", "Arcuate line", "Ischial tuberosity", "Pubic crest"], a: 2, w: "The ischial tuberosity is part of the pelvic outlet, not the pelvic inlet." },
-    { q: "The pelvic outlet is bounded posteriorly by the:", o: ["Coccyx", "Sacral promontory", "Pubic symphysis", "Arcuate line"], a: 0, w: "The coccyx forms the posterior boundary of the pelvic outlet." },
-    { q: "The main muscle of the pelvic floor is the:", o: ["Coccygeus", "Levator ani", "Obturator internus", "Piriformis"], a: 1, w: "The levator ani is the main muscle of the pelvic floor." },
-    { q: "The levator ani has three parts: pubococcygeus, iliococcygeus, and:", o: ["Puborectalis", "Ischiococcygeus", "Piriformis", "Obturator"], a: 0, w: "The three parts are pubococcygeus, iliococcygeus, and puborectalis." },
-    { q: "The muscle that slings around the anorectal junction to maintain the anorectal angle is the:", o: ["Pubococcygeus", "Iliococcygeus", "Puborectalis", "Coccygeus"], a: 2, w: "The puborectalis sling maintains the anorectal angle, contributing to faecal continence." },
+    { q: "The pelvic inlet separates the:", o: ["Greater pelvis from the lesser pelvis", "Abdominal cavity from the thoracic cavity", "Two hip bones", "Sacrum from the coccyx"], a: 0, w: "The pelvic inlet separates the greater pelvis (part of the abdomen) from the lesser pelvis (true pelvic cavity)." },
+    { q: "The pelvic outlet is bounded posteriorly by the:", o: ["Sacral promontory", "Coccyx", "Pubic symphysis", "Arcuate line"], a: 1, w: "The coccyx forms the posterior boundary of the pelvic outlet." },
+    { q: "In the female, the pelvic inlet is typically:", o: ["Wider and rounder than in the male", "Narrower and heart-shaped", "Identical to the male", "Larger than the pelvic outlet"], a: 0, w: "The female pelvic inlet is wider and rounder, adapted for childbirth." },
+    { q: "An obstetrician measures the pelvic inlet and outlet mainly to:", o: ["Diagnose kidney disease", "Predict whether a vaginal delivery is possible", "Assess posture", "Determine blood type"], a: 1, w: "Inlet and outlet diameters help predict whether the fetal head can pass through the pelvis." },
+
+    // ===== Header 3: pelvic floor as a bowl / levator ani (Q11-15) =====
+    { q: "The main muscle of the pelvic floor is the:", o: ["Obturator internus", "Levator ani", "Piriformis", "Bulbospongiosus"], a: 1, w: "The levator ani forms the main muscular bowl of the pelvic floor." },
+    { q: "The three named parts of the levator ani are:", o: ["Pubococcygeus, iliococcygeus and puborectalis", "Pubococcygeus, piriformis and coccygeus", "Bulbospongiosus, ischiocavernosus and transversus perinei", "Iliacus, psoas and quadratus lumborum"], a: 0, w: "The three parts of levator ani are pubococcygeus, iliococcygeus and puborectalis." },
+    { q: "The pelvic floor does not collapse under the weight of abdominal contents because:", o: ["It is made of cartilage", "It is a slanted bowl that transmits load to the bones", "It has no resting tone", "It rests on bone directly"], a: 1, w: "Its funnel-shaped, slanted orientation directs load against the pelvic bones rather than resisting it directly." },
+    { q: "The part of levator ani that slings around the anorectal junction, helping maintain faecal continence, is the:", o: ["Iliococcygeus", "Puborectalis", "Coccygeus", "Piriformis"], a: 1, w: "The puborectalis sling maintains the anorectal angle and contributes to faecal continence." },
+    { q: "When intra-abdominal pressure rises suddenly, the pelvic floor muscles:", o: ["Relax", "Contract reflexively to maintain support", "Stop working", "Stretch passively without contracting"], a: 1, w: "The pelvic floor contracts reflexively during coughing, lifting or laughing to reinforce the support system." },
+
+    // ===== Header 4: perineum as a separate region (Q16-20) =====
     { q: "The perineum is divided into two triangles by a line joining the:", o: ["Ischial spines", "Ischial tuberosities", "Pubic tubercles", "Sacroiliac joints"], a: 1, w: "A line joining the ischial tuberosities divides the perineum into urogenital and anal triangles." },
-    { q: "The urogenital triangle contains all of the following EXCEPT the:", o: ["External genitalia", "Urethral opening", "Vaginal opening", "Anal canal"], a: 3, w: "The anal canal is in the anal triangle, not the urogenital triangle." },
-    { q: "The pudendal nerve arises from which spinal segments?", o: ["L1-L3", "S2-S4", "T10-T12", "C3-C5"], a: 1, w: "The pudendal nerve arises from S2, S3, and S4." },
-    { q: "The pudendal nerve hooks around which structure?", o: ["Ischial spine", "Ischial tuberosity", "Pubic symphysis", "Sacral promontory"], a: 0, w: "The pudendal nerve hooks around the ischial spine as it leaves and re-enters the pelvis." },
-    { q: "Pudendal neuralgia is most commonly associated with prolonged:", o: ["Standing", "Sitting on a hard surface", "Walking", "Running"], a: 1, w: "Prolonged sitting compresses the pudendal nerve against the ischial tuberosity." },
-    { q: "The pelvic organ support system includes all of the following EXCEPT the:", o: ["Levator ani", "Endopelvic fascia", "Perineal body", "Obturator internus"], a: 3, w: "The obturator internus is not part of the pelvic organ support system." },
-    { q: "The ligament that suspends the uterus to the pelvic side wall is the:", o: ["Round ligament", "Cardinal ligament", "Ovarian ligament", "Broad ligament"], a: 1, w: "The cardinal (transverse cervical) ligament suspends the uterus and cervix to the pelvic side wall." },
-    { q: "The perineal body lies between the:", o: ["Vagina and anus in females", "Bladder and rectum in males", "Ureter and bladder", "Sacrum and coccyx"], a: 0, w: "The perineal body lies between the vagina and the anal canal in females, and between the urethra and anal canal in males." },
-    { q: "Pelvic organ prolapse most commonly occurs after:", o: ["Strenuous exercise", "Childbirth and menopause", "A single episode of constipation", "Menstruation"], a: 1, w: "Prolapse is most common after childbirth injury compounded by menopausal loss of oestrogen." },
-    { q: "The sympathetic nerve supply to the bladder promotes:", o: ["Emptying", "Storage", "Contraction of the detrusor", "Relaxation of the internal sphincter"], a: 1, w: "Sympathetic supply promotes storage, relaxing the detrusor and contracting the internal sphincter." },
-    { q: "The parasympathetic nerve supply to the bladder promotes:", o: ["Storage", "Emptying", "Relaxation of the detrusor", "Contraction of the internal sphincter"], a: 1, w: "Parasympathetic supply promotes emptying, contracting the detrusor and relaxing the internal sphincter." },
-    { q: "The pelvic splanchnic nerves arise from:", o: ["S2-S4", "L1-L2", "T10-T12", "C3-C5"], a: 0, w: "The pelvic splanchnic nerves arise from S2-S4 and provide parasympathetic supply to the pelvis." },
+    { q: "The anterior triangle of the perineum is called the:", o: ["Anal triangle", "Urogenital triangle", "Ischioanal triangle", "Pelvic triangle"], a: 1, w: "The anterior triangle is the urogenital triangle." },
+    { q: "The perineum's main difference from the pelvic cavity above is that it:", o: ["Contains no muscles", "Contains the exit routes for urogenital and gastrointestinal systems, with voluntary sphincters", "Has no nerve supply", "Contains only bone"], a: 1, w: "The perineum provides the voluntary sphincter control and external openings absent from the pelvic cavity itself." },
+    { q: "The perineal body is best described as:", o: ["A piece of bone", "A fibromuscular node into which several perineal muscles insert", "A nerve plexus", "A cartilage ring"], a: 1, w: "The perineal body is a fibromuscular node between the vagina and anus in females (and urethra and anus in males) anchoring several muscles." },
+    { q: "The chief artery supplying the perineum is the:", o: ["Internal pudendal artery", "External pudendal artery only", "Obturator artery", "Inferior epigastric artery"], a: 0, w: "The internal pudendal artery is the chief artery of the perineum." },
+
+    // ===== Header 5: pudendal nerve vulnerability (Q21-25) =====
+    { q: "The pudendal nerve arises from which spinal segments?", o: ["L1-L3", "S2-S4", "T10-T12", "C3-C5"], a: 1, w: "The pudendal nerve arises from the anterior rami of S2, S3 and S4." },
+    { q: "The pudendal nerve hooks around which structure in its course?", o: ["The ischial spine", "The pubic symphysis", "The sacral promontory", "The coccyx"], a: 0, w: "The pudendal nerve leaves the pelvis through the greater sciatic foramen, hooks around the ischial spine, and re-enters via the lesser sciatic foramen." },
+    { q: "Pudendal neuralgia is commonly associated with:", o: ["Prolonged standing", "Prolonged sitting on a hard surface", "Walking", "Running"], a: 1, w: "Prolonged sitting compresses the pudendal nerve against the ischial tuberosity or within the pudendal canal." },
+    { q: "The pudendal nerve runs through which named canal?", o: ["Inguinal canal", "Pudendal (Alcock's) canal", "Adductor canal", "Femoral canal"], a: 1, w: "The pudendal canal (Alcock's canal) lies along the lateral wall of the ischioanal fossa." },
+    { q: "Pudendal nerve injury during childbirth can cause:", o: ["Vision loss", "Perineal numbness, incontinence and sexual dysfunction", "Foot drop", "Hearing loss"], a: 1, w: "The pudendal nerve supplies the perineum; its injury can cause perineal sensory loss and sphincter dysfunction." },
+
+    // ===== Header 6: pelvic organ support system (Q26-30) =====
+    { q: "Pelvic organ support is provided by three layers. These include all of the following EXCEPT:", o: ["Levator ani", "Endopelvic fascia and its condensations", "The perineal body", "The obturator internus"], a: 3, w: "The obturator internus is not part of the pelvic organ support system." },
+    { q: "The ligament that suspends the uterus and cervix to the pelvic side wall is the:", o: ["Round ligament", "Cardinal (transverse cervical) ligament", "Ovarian ligament", "Broad ligament only"], a: 1, w: "The cardinal ligament suspends the uterus and cervix to the pelvic side wall." },
+    { q: "Pelvic organ prolapse is caused most commonly by:", o: ["Ageing alone", "Childbirth injury combined with menopausal loss of oestrogen", "Chronic diarrhoea only", "High-protein diet"], a: 1, w: "The combination of childbirth-related injury and menopausal oestrogen loss is the main cause of prolapse." },
+    { q: "A cystocele is best described as:", o: ["Prolapse of the bladder into the anterior vaginal wall", "Prolapse of the rectum into the posterior vaginal wall", "Prolapse of the uterus through the introitus", "Prolapse of the small bowel"], a: 0, w: "A cystocele is bladder prolapse into the anterior vaginal wall." },
+    { q: "The first-line non-surgical treatment for pelvic organ prolapse is:", o: ["Hormone replacement only", "Pelvic floor muscle training", "Immediate hysterectomy", "Bed rest"], a: 1, w: "Pelvic floor muscle training is the first-line non-surgical treatment for prolapse and stress incontinence." },
+
+    // ===== Header 7: pelvic autonomic supply / bladder (Q31-35) =====
+    { q: "The sympathetic nerve supply to the bladder promotes:", o: ["Emptying", "Storage", "Detrusor contraction only", "Relaxation of the internal urethral sphincter only"], a: 1, w: "Sympathetic supply promotes storage, relaxing the detrusor and contracting the internal urethral sphincter." },
+    { q: "The parasympathetic nerve supply to the bladder promotes:", o: ["Storage only", "Emptying, contracting the detrusor and relaxing the internal sphincter", "Contraction of the external sphincter", "Relaxation of the detrusor only"], a: 1, w: "Parasympathetic supply promotes emptying by contracting the detrusor and relaxing the internal urethral sphincter." },
+    { q: "The pelvic splanchnic nerves provide which type of supply to the pelvic organs?", o: ["Sympathetic", "Parasympathetic", "Somatic motor", "Somatic sensory"], a: 1, w: "Pelvic splanchnic nerves (S2-S4) provide parasympathetic supply to the hindgut and pelvic organs." },
     { q: "The superior hypogastric plexus is formed mainly by:", o: ["Parasympathetic fibres", "Sympathetic fibres", "Somatic motor fibres", "Sensory fibres"], a: 1, w: "The superior hypogastric plexus carries mainly sympathetic fibres to the pelvis." },
-    { q: "The internal iliac artery supplies all of the following EXCEPT the:", o: ["Superior rectal artery", "Uterine artery", "Vesical arteries", "Internal pudendal artery"], a: 0, w: "The superior rectal artery arises from the inferior mesenteric artery, not the internal iliac." },
-    { q: "The middle rectal artery arises from the:", o: ["Inferior mesenteric artery", "Internal iliac artery", "Superior mesenteric artery", "External iliac artery"], a: 1, w: "The middle rectal artery is a branch of the internal iliac artery." },
-    { q: "The inferior rectal artery arises from the:", o: ["Internal pudendal artery", "Superior rectal artery", "Middle rectal artery", "Inferior mesenteric artery"], a: 0, w: "The inferior rectal artery arises from the internal pudendal artery, a branch of the internal iliac." },
-    { q: "The rectum receives blood supply from all of the following EXCEPT the:", o: ["Superior rectal artery", "Middle rectal artery", "Inferior rectal artery", "Superior mesenteric artery"], a: 3, w: "The superior mesenteric artery does not supply the rectum; it supplies the midgut." },
-    { q: "The lymphatic drainage of the upper rectum is mainly to the:", o: ["Superficial inguinal nodes", "Inferior mesenteric nodes", "Internal iliac nodes", "Para-aortic nodes only"], a: 1, w: "The upper rectum drains to the inferior mesenteric nodes, following its embryological origin from the hindgut." },
-    { q: "The lymphatic drainage of the lower rectum and anal canal is mainly to the:", o: ["Inferior mesenteric nodes", "Internal iliac nodes", "Superficial inguinal nodes", "Para-aortic nodes"], a: 2, w: "The lower rectum and anal canal drain to the superficial inguinal nodes." },
-    { q: "The external genitalia drain lymph to the:", o: ["Internal iliac nodes", "Superficial inguinal nodes", "Para-aortic nodes", "Deep inguinal nodes only"], a: 1, w: "The external genitalia drain to the superficial inguinal nodes." },
-    { q: "A pelvic fracture can be life-threatening mainly because of:", o: ["Damage to the spinal cord", "Massive retroperitoneal haemorrhage", "Loss of cerebrospinal fluid", "Fracture of the femur"], a: 1, w: "Pelvic fractures can tear the rich venous plexuses and cause massive retroperitoneal bleeding." },
-    { q: "Which structures are at risk in a pelvic fracture?", o: ["Bladder, urethra, rectum, and pelvic nerves", "Heart and lungs", "Brain and spinal cord only", "Liver and spleen"], a: 0, w: "Pelvic fractures can injure the bladder, urethra, rectum, and pelvic nerves." },
-    { q: "A straddle injury classically damages the:", o: ["Membranous urethra", "Prostatic urethra", "Bladder dome", "Ureter"], a: 0, w: "Straddle injuries typically rupture the membranous urethra below the pubic symphysis." },
-    { q: "The pelvic diaphragm is formed by the:", o: ["Levator ani and coccygeus", "Obturator internus and piriformis", "External anal sphincter only", "Perineal membrane"], a: 0, w: "The pelvic diaphragm is formed by levator ani and coccygeus." },
-    { q: "The perineal membrane lies in the:", o: ["Anal triangle", "Urogenital triangle", "Pelvic cavity", "Ischioanal fossa"], a: 1, w: "The perineal membrane lies in the urogenital triangle." },
-    { q: "The ischioanal fossa lies in the:", o: ["Urogenital triangle", "Anal triangle", "Pelvic cavity", "Rectovesical pouch"], a: 1, w: "The ischioanal fossa lies in the anal triangle, on either side of the anal canal." },
-    { q: "The pudendal canal is also called:", o: ["Alcock's canal", "Hunter's canal", "Adductor canal", "Inguinal canal"], a: 0, w: "The pudendal canal is also called Alcock's canal." },
-    { q: "The external anal sphincter is composed of:", o: ["Smooth muscle under involuntary control", "Skeletal muscle under voluntary control", "Elastic tissue", "Fibrous tissue"], a: 1, w: "The external anal sphincter is skeletal muscle and under voluntary control." },
-    { q: "The internal anal sphincter is composed of:", o: ["Skeletal muscle", "Smooth muscle under involuntary control", "Elastic cartilage", "Dense connective tissue"], a: 1, w: "The internal anal sphincter is smooth muscle and involuntary." },
-    { q: "The urogenital diaphragm is formed mainly by the:", o: ["Deep transverse perineal muscle and sphincter urethrae", "Levator ani and coccygeus", "Obturator internus and piriformis", "Bulbospongiosus and ischiocavernosus"], a: 0, w: "The urogenital diaphragm consists of the deep transverse perineal muscle and the sphincter urethrae." },
-    { q: "The bulbospongiosus and ischiocavernosus muscles are found in the:", o: ["Anal triangle", "Urogenital triangle", "Pelvic cavity", "Ischioanal fossa"], a: 1, w: "These superficial perineal muscles are in the urogenital triangle." },
-    { q: "Episiotomy is a surgical incision made in the:", o: ["Perineal body", "Ischioanal fossa", "Levator ani", "Pudendal canal"], a: 0, w: "Episiotomy is an incision in the perineal body to enlarge the vaginal opening during delivery." },
-    { q: "The most common pelvic floor injury during childbirth is:", o: ["Avulsion of the pubovisceral muscle from the pubic bone", "Fracture of the pubic symphysis", "Rupture of the sacroiliac joint", "Tear of the obturator internus"], a: 0, w: "The most common injury is avulsion of the pubovisceral portion of levator ani from the pubic bone." },
-    { q: "The nerve most commonly injured during childbirth is the:", o: ["Obturator nerve", "Pudendal nerve", "Sciatic nerve", "Femoral nerve"], a: 1, w: "The pudendal nerve is most commonly injured during childbirth because of its course through the pelvis." },
-    { q: "The chief artery of the perineum is the:", o: ["Internal pudendal artery", "External pudendal artery", "Obturator artery", "Inferior epigastric artery"], a: 0, w: "The internal pudendal artery is the chief artery of the perineum." },
-    { q: "The pudendal nerve and internal pudendal artery travel together through the:", o: ["Pudendal canal", "Inguinal canal", "Adductor canal", "Femoral canal"], a: 0, w: "Both run through the pudendal (Alcock's) canal." },
-    { q: "The sacrospinous ligament separates the greater sciatic foramen from the:", o: ["Lesser sciatic foramen", "Obturator foramen", "Inguinal canal", "Femoral canal"], a: 0, w: "The sacrospinous ligament separates the greater and lesser sciatic foramina." },
-    { q: "The sacrotuberous ligament separates the lesser sciatic foramen from the:", o: ["Obturator foramen", "Ischioanal fossa", "Pudendal canal", "Pelvic inlet"], a: 1, w: "The sacrotuberous ligament helps enclose the lesser sciatic foramen, which lies above the ischioanal fossa." },
-    { q: "The nerve to obturator internus and the pudendal nerve both pass through the:", o: ["Greater sciatic foramen", "Obturator foramen", "Lesser sciatic foramen", "Inguinal canal"], a: 0, w: "Both pass through the greater sciatic foramen; the pudendal nerve re-enters via the lesser sciatic foramen." },
-    { q: "The pelvic inlet in the female is typically:", o: ["Wider and rounder than in the male", "Narrower and heart-shaped", "Identical to the male", "Larger in the male"], a: 0, w: "The female pelvic inlet is wider and rounder, adapted for childbirth." },
-    { q: "The subpubic angle in the female is typically:", o: ["Less than 70 degrees", "Between 80 and 100 degrees", "Identical to the male", "More than 120 degrees"], a: 1, w: "The female subpubic angle is typically 80-100 degrees, wider than the male's (about 70 degrees)." },
-    { q: "The pelvis in the male is typically:", o: ["Wider and shallower", "Narrower, deeper, and more heart-shaped", "Identical to the female", "Wider at the outlet"], a: 1, w: "The male pelvis is narrower, deeper, and more heart-shaped at the inlet." },
-    { q: "The obturator canal transmits the:", o: ["Obturator nerve and vessels", "Femoral nerve", "Sciatic nerve", "Pudendal nerve"], a: 0, w: "The obturator canal transmits the obturator nerve and vessels." },
-    { q: "The greater sciatic foramen transmits all of the following EXCEPT the:", o: ["Piriformis muscle", "Sciatic nerve", "Obturator internus nerve", "Obturator nerve"], a: 3, w: "The obturator nerve passes through the obturator canal, not the greater sciatic foramen." },
-    { q: "The lesser sciatic foramen transmits the:", o: ["Pudendal nerve and internal pudendal vessels", "Sciatic nerve", "Superior gluteal nerve", "Obturator nerve"], a: 0, w: "The pudendal nerve and internal pudendal vessels pass through the lesser sciatic foramen." },
-    { q: "The pelvic splanchnic nerves provide parasympathetic supply to the:", o: ["Foregut", "Midgut", "Hindgut and pelvic organs", "Heart"], a: 2, w: "Pelvic splanchnic nerves supply the hindgut and pelvic organs." },
-    { q: "The sympathetic supply to the pelvic organs comes mainly from the:", o: ["Superior hypogastric plexus", "Pelvic splanchnic nerves", "Vagus nerve", "Pudendal nerve"], a: 0, w: "The superior hypogastric plexus carries sympathetic fibres to the pelvis." },
-    { q: "The inferior hypogastric plexus is located:", o: ["On the pelvic side wall, lateral to the rectum", "In the abdomen", "In the thorax", "In the perineum"], a: 0, w: "The inferior hypogastric plexus lies on the pelvic side wall." },
-    { q: "Preservation of the pelvic autonomic nerves during surgery is important to prevent:", o: ["Urinary and sexual dysfunction", "Loss of sensation in the leg", "Weakness of the leg", "Foot drop"], a: 0, w: "Damage to pelvic autonomic nerves causes urinary and sexual dysfunction." }
-  ]
+    { q: "Damage to the pelvic splanchnic nerves during pelvic surgery can cause:", o: ["Increased urine output", "Urinary retention and constipation", "Better bladder control", "No change in function"], a: 1, w: "Loss of parasympathetic supply from pelvic splanchnic nerves impairs bladder emptying and hindgut motility." },
+
+    // ===== Header 8: fusion of hip bones / triradiate cartilage (Q36-40) =====
+    { q: "In children, the hip bone exists as separate bones joined by:", o: ["Fibrous tissue", "Cartilage", "Bone", "Synovial membrane"], a: 1, w: "In children, the ilium, ischium and pubis are joined by cartilage before fusing." },
+    { q: "The three bones of the hip fuse at the:", o: ["Acetabulum (triradiate cartilage)", "Sacral promontory", "Pubic symphysis", "Ischial spine"], a: 0, w: "Fusion of the ilium, ischium and pubis occurs at the acetabulum, through the triradiate cartilage." },
+    { q: "The triradiate cartilage typically closes:", o: ["In the first year of life", "Around puberty", "In old age", "At birth"], a: 1, w: "The triradiate cartilage closes around puberty, when the hip bone becomes one." },
+    { q: "In a child, a fracture through the triradiate cartilage can cause:", o: ["No long-term problem", "Long-term pelvic deformity", "Only temporary pain", "Immediate paralysis"], a: 1, w: "Before fusion, injury to the triradiate growth centre can produce lasting pelvic deformity." },
+    { q: "After fusion, the pelvis behaves:", o: ["As three separate bones", "As a single rigid hip bone on each side", "As a fully mobile joint", "As cartilage"], a: 1, w: "After fusion, each hip bone behaves as one rigid unit, which is why adult pelvic fractures are managed differently from paediatric ones." },
+
+    // ===== Header 9: childbirth stretch / pelvic floor injury (Q41-45) =====
+    { q: "The levator ani contains both slow-twitch and fast-twitch fibres so that it can:", o: ["Only contract briefly", "Maintain resting tone and respond quickly to sudden pressure rises", "Store fat", "Absorb nutrients"], a: 1, w: "Slow-twitch fibres maintain continuous tone; fast-twitch fibres respond rapidly to sudden increases in intra-abdominal pressure." },
+    { q: "During pregnancy, the pelvic ligaments and fascia soften due to:", o: ["Increased calcitonin", "Relaxin and other pregnancy hormones", "Reduced blood flow", "Increased bone mass"], a: 1, w: "Relaxin and other pregnancy hormones soften the pelvic ligaments and fascia, increasing compliance of the support system." },
+    { q: "The most common pelvic floor injury during childbirth is:", o: ["Fracture of the pubic symphysis", "Avulsion of the pubovisceral portion of levator ani from the pubic bone", "Rupture of the sacroiliac joint", "Tear of the obturator internus"], a: 1, w: "Avulsion of the pubovisceral portion of levator ani from the pubic bone is the most common pelvic floor injury in childbirth." },
+    { q: "Long-term consequences of pelvic floor injury during childbirth include:", o: ["Improved continence", "Pelvic organ prolapse and incontinence", "Faster recovery of strength", "Reduced need for pelvic floor training"], a: 1, w: "Pelvic floor injury can lead to pelvic organ prolapse and urinary or faecal incontinence later in life." },
+    { q: "A first vaginal delivery is a risk factor for pelvic floor injury because:", o: ["The levator hiatus expands from about 3 cm to over 10 cm in diameter", "The pelvic floor relaxes permanently", "The pubic symphysis fuses", "The coccyx dislocates"], a: 0, w: "The levator hiatus can stretch from about 3 cm to over 10 cm during delivery, which is a major mechanical stress on the muscles." },
+
+    // ===== Header 10: pelvis + perineum continuity (Q46-50) =====
+    { q: "The boundary between the pelvis and perineum is:", o: ["A horizontal plane through the pelvic floor", "A vertical plane through the mid-clavicular line", "A diagonal plane through the sacrum", "The pubic symphysis"], a: 0, w: "The pelvic floor divides pelvis from perineum - a functional boundary, not a structural or embryological one." },
+    { q: "Which muscle has parts both above and below the pelvic floor line?", o: ["Levator ani", "Obturator externus", "Rectus abdominis", "Psoas major"], a: 0, w: "The levator ani has parts above and below the pelvic floor line, showing its continuity with the perineum." },
+    { q: "Pelvic organ prolapse is best understood as a disease of:", o: ["The pelvis only", "Both the pelvis and perineum together", "The perineum only", "The urinary system only"], a: 1, w: "Prolapse is a failure of the support system that involves both regions - the pelvic support structures fail and the consequences appear in the perineum." },
+    { q: "The pelvic fascia becomes the perineal fascia, illustrating that:", o: ["The two regions have completely separate fascia", "The two regions are anatomically continuous", "Perineal fascia comes from the abdomen only", "Fascia does not cross regions"], a: 1, w: "The continuity of fascia from pelvis to perineum illustrates that the two are anatomically one system." },
+    { q: "The 'pelvis vs perineum' division in textbooks is best described as:", o: ["A rigid anatomical barrier", "A teaching convenience rather than a fundamental division", "A pathological state", "An embryological reality only"], a: 1, w: "The division is a teaching tool; clinically the pelvis and perineum work as one continuous system." },
+  ],
 };
 
 /* --------------------------- an2:4 --------------------------- */
@@ -21907,62 +21915,77 @@ Crucial insight: the male and female reproductive systems are not mirror opposit
     { channel: "Kenhub", title: "Female Reproductive System", note: "Detailed tour of the uterus, ovaries, and vagina with clinical relations.", url: "" },
     { channel: "Ninja Nerd", title: "Reproductive Embryology and Fetal Circulation", note: "Explanation of gonadal development and the fetal shunts.", url: "" }
   ],
-  mcqs: [
-    { q: "Sperm are produced in the:", o: ["Epididymis", "Seminiferous tubules", "Vas deferens", "Prostate"], a: 1, w: "Sperm are produced in the seminiferous tubules of the testis." },
-    { q: "Sperm acquire motility in the:", o: ["Testis", "Epididymis", "Vas deferens", "Urethra"], a: 1, w: "Sperm mature and acquire motility during their passage through the epididymis." },
-    { q: "The vas deferens transports sperm from the epididymis to the:", o: ["Urethra directly", "Ejaculatory duct", "Seminal vesicle", "Prostate"], a: 1, w: "The vas deferens carries sperm to the ejaculatory duct, which opens into the urethra." },
-    { q: "Which gland secretes the majority of seminal fluid?", o: ["Testis", "Seminal vesicles", "Prostate", "Bulbourethral glands"], a: 1, w: "The seminal vesicles secrete about sixty percent of seminal fluid." },
-    { q: "The prostate gland secretes:", o: ["An acidic fluid", "An alkaline fluid that neutralises vaginal acidity", "Fructose-rich fluid", "Lubricating pre-ejaculatory fluid"], a: 1, w: "The prostate secretes alkaline fluid that helps protect sperm from vaginal acidity." },
-    { q: "Cryptorchidism refers to:", o: ["Undescended testis", "Testicular torsion", "Testicular cancer", "Epididymitis"], a: 0, w: "Cryptorchidism is failure of the testis to descend into the scrotum." },
-    { q: "Cryptorchidism increases the risk of:", o: ["Prostate cancer", "Testicular cancer", "Kidney stones", "Bladder cancer"], a: 1, w: "Undescended testes are at significantly increased risk of testicular cancer." },
-    { q: "Benign prostatic hyperplasia most commonly affects which lobe?", o: ["Anterior lobe", "Posterior lobe", "Median lobe", "Lateral lobes"], a: 2, w: "The median lobe typically enlarges inward and obstructs urine flow." },
-    { q: "The posterior lobe of the prostate is clinically important because:", o: ["It is the site of BPH", "It is palpable on digital rectal examination", "It is the site of the urethra", "It produces semen"], a: 1, w: "The posterior lobe is palpable through the rectal wall, allowing detection of prostate cancer." },
-    { q: "Eggs are produced in the:", o: ["Uterus", "Ovary", "Fallopian tube", "Vagina"], a: 1, w: "Eggs (ova) are produced in the ovaries." },
-    { q: "Fertilisation normally occurs in the:", o: ["Uterus", "Cervix", "Fallopian tube", "Ovary"], a: 2, w: "Fertilisation typically occurs in the fallopian tube (ampulla)." },
-    { q: "The layer of the uterus that is shed during menstruation is the:", o: ["Myometrium", "Endometrium (functional layer)", "Perimetrium", "Serosa"], a: 1, w: "The functional layer of the endometrium is shed during menstruation." },
-    { q: "The muscular layer of the uterus is the:", o: ["Endometrium", "Myometrium", "Perimetrium", "Serosa"], a: 1, w: "The myometrium is the thick muscular layer of the uterus." },
-    { q: "The uterine artery arises from the:", o: ["External iliac artery", "Internal iliac artery", "Aorta", "Ovarian artery"], a: 1, w: "The uterine artery arises from the internal iliac artery." },
-    { q: "The ovarian artery arises from the:", o: ["Internal iliac artery", "External iliac artery", "Aorta", "Uterine artery"], a: 2, w: "The ovarian artery arises directly from the abdominal aorta." },
-    { q: "Which hormone triggers ovulation?", o: ["FSH", "Oestrogen", "LH surge", "Progesterone"], a: 2, w: "The LH surge triggers ovulation around mid-cycle." },
-    { q: "The corpus luteum secretes:", o: ["Oestrogen only", "Progesterone", "FSH", "LH"], a: 1, w: "The corpus luteum secretes progesterone to prepare the uterus for pregnancy." },
-    { q: "If pregnancy does not occur, the corpus luteum:", o: ["Persists indefinitely", "Degenerates, causing progesterone to fall", "Secretes more progesterone", "Becomes the placenta"], a: 1, w: "The corpus luteum degenerates after about fourteen days, causing progesterone to fall and menstruation to follow." },
-    { q: "The vaginal epithelium is:", o: ["Simple columnar", "Simple squamous", "Stratified squamous", "Transitional"], a: 2, w: "The vagina is lined by stratified squamous epithelium, which resists abrasion." },
-    { q: "Vaginal acidity is maintained by:", o: ["Mucus secretion", "Lactobacillus bacteria producing lactic acid", "Progesterone", "FSH"], a: 1, w: "Lactobacillus breaks down glycogen to lactic acid, keeping the vaginal pH acidic." },
-    { q: "The ductus venosus in the fetus:", o: ["Connects the pulmonary artery to the aorta", "Connects the right and left atria", "Bypasses the liver", "Connects the umbilical arteries to the placenta"], a: 2, w: "The ductus venosus bypasses the liver, carrying blood from the umbilical vein to the IVC." },
-    { q: "The foramen ovale in the fetus:", o: ["Connects the right and left atria", "Connects the pulmonary artery to the aorta", "Bypasses the liver", "Connects the umbilical vein to the IVC"], a: 0, w: "The foramen ovale is a shunt between the right and left atria." },
-    { q: "The ductus arteriosus in the fetus:", o: ["Bypasses the liver", "Connects the pulmonary artery to the aorta", "Connects the two atria", "Carries blood to the placenta"], a: 1, w: "The ductus arteriosus shunts blood from the pulmonary artery to the aorta." },
-    { q: "The ductus arteriosus becomes which structure after birth?", o: ["Ligamentum teres", "Ligamentum venosum", "Ligamentum arteriosum", "Fossa ovalis"], a: 2, w: "The ductus arteriosus becomes the ligamentum arteriosum after closure." },
-    { q: "The foramen ovale becomes which structure after birth?", o: ["Fossa ovalis", "Ligamentum arteriosum", "Ligamentum venosum", "Ligamentum teres"], a: 0, w: "The foramen ovale closes to become the fossa ovalis." },
-    { q: "The ductus venosus becomes which structure after birth?", o: ["Ligamentum arteriosum", "Ligamentum teres", "Ligamentum venosum", "Fossa ovalis"], a: 2, w: "The ductus venosus closes to become the ligamentum venosum." },
-    { q: "Pelvic organ prolapse is most common in:", o: ["Males", "Females after childbirth and menopause", "Children", "Adolescents"], a: 1, w: "Prolapse is most common in females after childbirth, compounded by menopausal loss of oestrogen." },
-    { q: "The most common pelvic floor injury during childbirth is:", o: ["Fracture of the pubic symphysis", "Avulsion of the puborectalis/levator ani from the pubic bone", "Tear of the obturator internus", "Rupture of the sacroiliac joint"], a: 1, w: "Avulsion of the pubovisceral portion of levator ani from the pubic bone is the most common injury." },
-    { q: "Polycystic ovary syndrome (PCOS) is characterised by:", o: ["Low androgens and regular cycles", "High androgens, irregular cycles, and polycystic ovaries", "Low oestrogen and high FSH", "Normal ovaries with no symptoms"], a: 1, w: "PCOS involves excess androgens, irregular ovulation, and multiple small ovarian cysts." },
-    { q: "Endometriosis is defined as:", o: ["Growth of endometrial tissue outside the uterus", "Inflammation of the endometrium", "Cancer of the endometrium", "Thinning of the endometrium"], a: 0, w: "Endometriosis is the presence of endometrial-like tissue outside the uterine cavity." },
-    { q: "An ectopic pregnancy most commonly occurs in the:", o: ["Ovary", "Fallopian tube", "Cervix", "Abdominal cavity"], a: 1, w: "Over 95 percent of ectopic pregnancies occur in the fallopian tube." },
-    { q: "Uterine fibroids are:", o: ["Malignant tumours of the uterus", "Benign smooth muscle tumours of the uterus", "Cysts of the ovary", "Infections of the cervix"], a: 1, w: "Fibroids (leiomyomas) are benign tumours of the myometrium." },
-    { q: "The cervix is lined by:", o: ["Stratified squamous epithelium only", "Simple columnar epithelium only", "Both stratified squamous and simple columnar (transformation zone)", "Transitional epithelium"], a: 2, w: "The cervix has a transformation zone where stratified squamous meets simple columnar epithelium." },
-    { q: "Cervical cancer most commonly arises from:", o: ["The vaginal wall", "The transformation zone of the cervix", "The endometrium", "The ovary"], a: 1, w: "Cervical cancer most commonly arises at the transformation zone, where squamous and columnar epithelia meet." },
-    { q: "The most common cause of cervical cancer is:", o: ["Human papillomavirus (HPV) infection", "Bacterial infection", "Fungal infection", "Genetic mutation only"], a: 0, w: "HPV infection is the primary cause of cervical cancer." },
-    { q: "The prostate gland is located:", o: ["Above the bladder", "Below the bladder, surrounding the prostatic urethra", "Behind the rectum", "In the scrotum"], a: 1, w: "The prostate sits below the bladder and surrounds the first part of the urethra." },
-    { q: "The seminal vesicles are located:", o: ["Above the bladder", "Posterior to the bladder, above the prostate", "Below the prostate", "In the scrotum"], a: 1, w: "The seminal vesicles lie posterior to the bladder and above the prostate." },
-    { q: "The bulbourethral glands are also called:", o: ["Cowper's glands", "Skene's glands", "Bartholin's glands", "Littre's glands"], a: 0, w: "The bulbourethral glands are also called Cowper's glands." },
-    { q: "Bartholin's glands are located:", o: ["In the male urethra", "At the vaginal opening", "In the uterus", "In the ovary"], a: 1, w: "Bartholin's glands are located at the vaginal opening, secreting lubricating fluid." },
-    { q: "The male and female external genitalia are embryologically:", o: ["Unrelated", "Homologous structures", "Identical", "Functionally identical"], a: 1, w: "Male and female external genitalia develop from the same embryonic structures - they are homologous." },
-    { q: "The scrotum is homologous to which female structure?", o: ["Labia majora", "Labia minora", "Clitoris", "Vagina"], a: 0, w: "The scrotum is homologous to the labia majora." },
-    { q: "The penis is homologous to which female structure?", o: ["Labia majora", "Clitoris", "Vagina", "Uterus"], a: 1, w: "The penis is homologous to the clitoris." },
-    { q: "Testicular torsion is a surgical emergency because:", o: ["It causes pain only", "It cuts off the blood supply to the testis, leading to necrosis if untreated", "It causes infertility only", "It is a cosmetic issue"], a: 1, w: "Testicular torsion cuts off the blood supply and requires urgent surgery to save the testis." },
-    { q: "The most common site of testicular cancer in young men is:", o: ["Seminoma", "Leydig cell tumour", "Sertoli cell tumour", "Lymphoma"], a: 0, w: "Seminoma is the most common testicular germ cell tumour in young men." },
-    { q: "Pelvic inflammatory disease (PID) most commonly results from:", o: ["Viral infection", "Ascending bacterial infection from the vagina/cervix", "Autoimmune disease", "Trauma"], a: 1, w: "PID is usually caused by ascending infection, often by Chlamydia or Gonorrhoea." },
-    { q: "Which of the following is a risk factor for ectopic pregnancy?", o: ["Previous PID or tubal surgery", "Regular menstruation", "Nulliparity only", "Mild anaemia"], a: 0, w: "Previous PID or tubal surgery damages the fallopian tube and increases ectopic risk." },
-    { q: "The ovarian ligament connects the ovary to the:", o: ["Uterus", "Pelvic side wall", "Fallopian tube", "Bladder"], a: 0, w: "The ovarian ligament connects the ovary to the uterus." },
-    { q: "The suspensory ligament of the ovary contains the:", o: ["Ovarian vessels", "Round ligament", "Uterine artery", "Ureter"], a: 0, w: "The suspensory ligament contains the ovarian vessels." },
-    { q: "The round ligament of the uterus passes through the:", o: ["Inguinal canal", "Obturator canal", "Femoral canal", "Pudendal canal"], a: 0, w: "The round ligament passes through the inguinal canal to reach the labia majora." },
-    { q: "The ureter is at risk of injury during pelvic surgery because it:", o: ["Passes close to the uterine artery and the cervix", "Is very thin", "Has no blood supply", "Is mobile"], a: 0, w: "The ureter passes close to the uterine artery ('water under the bridge') and is at risk during hysterectomy." },
-    { q: "In females, the ureter passes under which structure?", o: ["The uterine artery", "The round ligament", "The ovarian ligament", "The fallopian tube"], a: 0, w: "The ureter passes under the uterine artery - 'water under the bridge' - a key surgical relationship." },
-    { q: "The most common type of female pelvic organ prolapse is:", o: ["Cystocele", "Rectocele", "Enterocele", "Uterine prolapse"], a: 0, w: "Cystocele (bladder prolapse into the anterior vaginal wall) is the most common type." },
-    { q: "Which muscle forms the bulk of the pelvic floor?", o: ["Levator ani", "Obturator internus", "Piriformis", "Coccygeus"], a: 0, w: "The levator ani forms the bulk of the pelvic floor." },
-    { q: "The perineal body is important because:", o: ["It is a key support structure for the pelvic floor", "It produces hormones", "It is a site of sperm production", "It is the site of ovulation"], a: 0, w: "The perineal body is a fibromuscular node that anchors several muscles of the pelvic floor." }
-  ]
+    mcqs: [
+    // ===== Header 1: male ducts - why so many (Q1-5) =====
+    { q: "Sperm are produced in the:", o: ["Epididymis", "Seminiferous tubules of the testis", "Vas deferens", "Prostate gland"], a: 1, w: "Sperm are produced in the seminiferous tubules of the testis, then pass through the duct system to mature." },
+    { q: "The main function of the epididymis is:", o: ["To produce sperm", "To store and mature sperm, giving them motility and fertilising ability", "To secrete seminal fluid", "To produce testosterone"], a: 1, w: "Sperm mature and acquire motility during their roughly 2-3 week passage through the epididymis." },
+    { q: "The vas deferens transports sperm from the epididymis to the:", o: ["Urethra directly", "Ejaculatory duct", "Seminal vesicle", "Prostate only"], a: 1, w: "The vas deferens carries sperm to the ejaculatory duct, which opens into the prostatic urethra." },
+    { q: "The male duct system exists as a maturation assembly line mainly because:", o: ["Sperm are produced fully mature", "Sperm leave the testis immature and must complete maturation during transit", "The testes cannot store sperm", "Sperm are made in the epididymis"], a: 1, w: "Sperm leave the testis structurally complete but functionally immature, requiring the epididymis and ducts to finish the process." },
+    { q: "A blockage anywhere along the male duct system (epididymis, vas deferens, or ejaculatory duct) will:", o: ["Prevent fertility even if the testis produces sperm normally", "Increase sperm production", "Only affect testosterone", "Have no effect on fertility"], a: 0, w: "Because sperm must travel the full duct system to mature and be delivered, a blockage causes infertility despite normal testicular sperm production." },
+
+    // ===== Header 2: testis descent / scrotum (Q6-10) =====
+    { q: "The testes develop in the abdomen but descend into the scrotum because:", o: ["There is more space", "Spermatogenesis requires a temperature about 2-3 degrees below core body temperature", "The scrotum has a better blood supply", "They must avoid the kidneys"], a: 1, w: "Spermatogenesis is temperature-sensitive and proceeds optimally at a temperature lower than core body temperature." },
+    { q: "The structure that guides testicular descent is the:", o: ["Gubernaculum", "Processus vaginalis", "Inguinal ligament", "Tunica vaginalis"], a: 0, w: "The gubernaculum guides the testis through the inguinal canal into the scrotum." },
+    { q: "Cryptorchidism refers to:", o: ["An undescended testis", "Testicular torsion", "Testicular cancer", "Epididymitis"], a: 0, w: "Cryptorchidism is failure of the testis to descend into the scrotum." },
+    { q: "Cryptorchidism increases the risk of:", o: ["Prostate cancer", "Impaired spermatogenesis and testicular cancer", "Kidney stones", "Bladder cancer"], a: 1, w: "The higher abdominal temperature impairs spermatogenesis and significantly increases the risk of testicular germ cell tumours." },
+    { q: "The scrotum regulates testicular temperature via:", o: ["Rigid fixation of the testes", "The cremaster and dartos muscles adjusting testicular position and scrotal surface area", "Continuous sweating only", "The pampiniform plexus only"], a: 1, w: "The cremaster and dartos muscles adjust the position of the testis and surface area of the scrotum to regulate temperature." },
+
+    // ===== Header 3: prostate around urethra (Q11-15) =====
+    { q: "The prostate is positioned:", o: ["Above the bladder", "Below the bladder, surrounding the prostatic urethra", "Behind the rectum only", "Inside the scrotum"], a: 1, w: "The prostate sits below the bladder and surrounds the first part of the urethra." },
+    { q: "The prostate is arranged around the urethra mainly because:", o: ["Its ducts open directly into the urethra, delivering secretion into the ejaculate", "It stores sperm", "It produces testosterone", "It filters blood"], a: 0, w: "Prostatic ducts open into the prostatic urethra, allowing prostate secretion to be added to the ejaculate." },
+    { q: "The prostate contributes to semen by secreting:", o: ["An acidic fluid", "An alkaline fluid that helps protect sperm from vaginal acidity", "Only fructose", "Only prostaglandins"], a: 1, w: "Prostatic secretion is alkaline, helping to neutralise the acidity of the vagina and support sperm survival." },
+    { q: "Benign prostatic hyperplasia (BPH) most commonly affects which lobe of the prostate?", o: ["Anterior lobe", "Posterior lobe", "Median lobe", "Lateral lobes only"], a: 2, w: "The median lobe typically enlarges inward and obstructs urine flow." },
+    { q: "The posterior lobe of the prostate is clinically important because:", o: ["It is the site of most BPH", "It is palpable on digital rectal examination, allowing detection of prostate cancer", "It contains the urethra", "It secretes most semen"], a: 1, w: "The posterior lobe lies against the rectum and is palpable on DRE, allowing detection of prostate cancer." },
+
+    // ===== Header 4: uterus holds & opens (Q16-20) =====
+    { q: "The uterus remains quiescent through most of pregnancy because:", o: ["It has no muscle", "High progesterone keeps the myometrium relaxed", "The cervix is sealed by cartilage", "There is no blood supply"], a: 1, w: "High progesterone levels throughout pregnancy suppress uterine contractions, keeping the uterus quiet." },
+    { q: "At term, the uterus begins to contract because:", o: ["Progesterone rises further", "The progesterone-to-oestrogen ratio shifts toward oestrogen, removing the brake", "The uterus loses its blood supply", "The cervix closes"], a: 1, w: "The shift toward relative oestrogen dominance removes progesterone's inhibitory effect and permits contractions." },
+    { q: "Coordinated uterine contractions at term depend on:", o: ["Individual muscle cells contracting independently", "Gap junctions forming between myometrial cells", "Loss of oxytocin receptors", "Decreased blood flow"], a: 1, w: "Gap junctions allow the myometrial cells to contract as a coordinated unit." },
+    { q: "Oxytocin triggers labour by:", o: ["Relaxing the myometrium", "Stimulating rhythmic uterine contractions via upregulated oxytocin receptors", "Softening the pubic symphysis", "Blocking prostaglandins"], a: 1, w: "Oxytocin acts on upregulated receptors in the myometrium to trigger rhythmic contractions." },
+    { q: "The uterus's ability to both hold a fetus and then open at term depends on:", o: ["Continuous hormonal control, especially progesterone and oestrogen balance", "Rigid connective tissue", "Passive stretching only", "Absence of muscle"], a: 0, w: "Continuous hormonal control, particularly the progesterone-oestrogen balance, allows the uterus to hold during pregnancy and then contract at term." },
+
+    // ===== Header 5: vaginal stratified squamous / oestrogen (Q21-25) =====
+    { q: "The vagina is lined by:", o: ["Simple squamous epithelium", "Stratified squamous epithelium", "Transitional epithelium", "Simple columnar epithelium"], a: 1, w: "Stratified squamous epithelium resists the friction and abrasion the vagina faces." },
+    { q: "The vagina is lined by stratified squamous epithelium rather than a thinner single layer because:", o: ["It is more permeable", "It must resist mechanical abrasion and friction", "It absorbs nutrients faster", "It produces hormones"], a: 1, w: "Multiple layers allow surface cells to be worn away and replaced without breaching the barrier." },
+    { q: "Vaginal acidity (around pH 4) is maintained by:", o: ["Progesterone", "Lactobacillus bacteria breaking down glycogen to lactic acid", "Mucus secretion from goblet cells", "FSH"], a: 1, w: "Under oestrogen, the epithelium produces glycogen that Lactobacillus converts to lactic acid, maintaining the acidic pH." },
+    { q: "After menopause, the vaginal epithelium thins because:", o: ["Oestrogen falls", "Progesterone rises", "The Lactobacillus population expands", "Blood flow increases"], a: 0, w: "Loss of oestrogen after menopause thins the epithelium, raises the pH, and increases vulnerability to infection and atrophy." },
+    { q: "Which statement about the vaginal epithelium through the life cycle is TRUE?", o: ["The epithelium is thick and acidic throughout life", "It is thin before puberty, thick and acidic during reproductive years, and thin again after menopause", "It stays the same from birth to old age", "It is thickest in infancy"], a: 1, w: "The epithelium is oestrogen-dependent - thin before puberty, thick and acidic during reproductive years, and thin again after menopause." },
+
+    // ===== Header 6: ovary gametes + hormones (Q26-30) =====
+    { q: "The ovary is unique among endocrine glands because:", o: ["It produces only hormones", "It both produces gametes (eggs) and secretes hormones", "It has no blood supply", "It produces only gametes"], a: 1, w: "The ovary is both a gamete-producing organ and an endocrine gland - the two functions share the same anatomical structures." },
+    { q: "During the follicular phase of the ovarian cycle, the growing follicle secretes mainly:", o: ["Progesterone", "Oestrogen", "LH", "FSH"], a: 1, w: "The developing follicle secretes oestrogen during the follicular phase." },
+    { q: "After ovulation, the ruptured follicle becomes the:", o: ["Corpus albicans immediately", "Corpus luteum", "Graafian follicle", "Zona pellucida"], a: 1, w: "The ruptured follicle transforms into the corpus luteum, which secretes progesterone." },
+    { q: "The corpus luteum secretes mainly:", o: ["Oestrogen only", "Progesterone", "FSH", "LH"], a: 1, w: "The corpus luteum secretes progesterone in the luteal phase, maintaining the endometrium." },
+    { q: "If pregnancy does not occur, the corpus luteum:", o: ["Persists indefinitely", "Degenerates, progesterone falls, and menstruation follows", "Converts into a new follicle", "Produces more progesterone"], a: 1, w: "Without hCG rescue, the corpus luteum degenerates after about 14 days, causing progesterone to fall and menstruation to start." },
+
+    // ===== Header 7: fetal shunts (Q31-35) =====
+    { q: "The ductus venosus in the fetus functions to:", o: ["Connect the pulmonary artery to the aorta", "Bypass the liver, carrying blood from the umbilical vein to the inferior vena cava", "Connect the right and left atria", "Carry blood to the placenta"], a: 1, w: "The ductus venosus bypasses the liver, delivering oxygenated umbilical blood directly to the IVC." },
+    { q: "The foramen ovale in the fetus functions to:", o: ["Bypass the lungs by shunting blood from the right atrium to the left atrium", "Bypass the liver", "Connect the pulmonary artery to the aorta", "Carry blood to the placenta"], a: 0, w: "The foramen ovale shunts blood from the right atrium directly to the left atrium, bypassing the lungs." },
+    { q: "The ductus arteriosus in the fetus functions to:", o: ["Bypass the liver", "Connect the pulmonary artery to the aorta, bypassing the lungs", "Connect the two atria", "Carry oxygenated blood to the head"], a: 1, w: "The ductus arteriosus shunts blood from the pulmonary artery to the descending aorta." },
+    { q: "At birth, the foramen ovale closes because:", o: ["Oxygen levels fall", "Left atrial pressure rises with increased pulmonary blood flow, closing the flap", "Progesterone falls", "The umbilical cord is cut only"], a: 1, w: "With the first breath, pulmonary blood flow rises, left atrial pressure exceeds right, and the flap closes." },
+    { q: "The ductus arteriosus becomes which structure after birth?", o: ["Ligamentum teres", "Ligamentum venosum", "Ligamentum arteriosum", "Fossa ovalis"], a: 2, w: "The closed ductus arteriosus becomes the ligamentum arteriosum." },
+
+    // ===== Header 8: female cycle vs male constant (Q36-40) =====
+    { q: "The main reason the female reproductive system cycles while the male system is constant is:", o: ["Hormonal differences alone", "The much higher cost of reproduction in females", "Females have no hormones", "Males lack gametes"], a: 1, w: "The high cost of egg production and pregnancy in females requires careful timing (a cycle); the male's low-cost continuous sperm production does not." },
+    { q: "The menstrual cycle is controlled by which axis?", o: ["Adrenal-pituitary axis", "Hypothalamic-pituitary-ovarian axis", "Thyroid-parathyroid axis", "Renal-adrenal axis"], a: 1, w: "The cycle is controlled by the hypothalamic-pituitary-ovarian (HPO) axis." },
+    { q: "Which hormone surge triggers ovulation?", o: ["FSH surge", "LH surge", "Oestrogen decline", "Progesterone peak"], a: 1, w: "A surge of LH at mid-cycle triggers ovulation." },
+    { q: "Which statement about the female cycle is TRUE?", o: ["It only affects the reproductive organs", "Hormonal changes affect breasts, bones, brain and cardiovascular system", "It has no effect outside the uterus", "It is entirely local to the ovary"], a: 1, w: "The female cycle is a whole-body event, affecting breasts, bones, brain and the cardiovascular system." },
+    { q: "The male reproductive system differs from the female in that:", o: ["It has no hormonal control", "It produces sperm continuously from puberty onward rather than in cycles", "It produces no gametes", "It is inactive until middle age"], a: 1, w: "The male reproductive system produces sperm continuously from puberty, with no cyclical pattern." },
+
+    // ===== Header 9: female pelvic floor / vagina weak point (Q41-45) =====
+    { q: "The pelvic floor is more critical in females than males mainly because:", o: ["Females have a weaker pelvic floor by nature", "The vagina passes through the pelvic floor, creating a structural gap", "Females have larger organs", "Females have no pelvic floor"], a: 1, w: "The vagina creates a gap in the muscular support that does not exist in the male, making the female pelvic floor more vulnerable." },
+    { q: "Which of the following is NOT a common form of pelvic organ prolapse in females?", o: ["Cystocele", "Rectocele", "Uterine prolapse", "Hydrocele"], a: 3, w: "A hydrocele is a collection of fluid around the testis in males; it is not a pelvic organ prolapse." },
+    { q: "Pelvic floor muscle training is used in females to:", o: ["Prevent ovulation", "Strengthen the support system for prolapse and incontinence", "Replace hormonal therapy", "Reduce fertility"], a: 1, w: "Pelvic floor muscle training strengthens the support system, benefiting prolapse and incontinence." },
+    { q: "A pessary is used in female pelvic floor dysfunction to:", o: ["Replace the uterus", "Provide mechanical support to prolapsed organs", "Block hormones", "Prevent pregnancy"], a: 1, w: "A pessary is a device inserted into the vagina to provide mechanical support for prolapsed organs." },
+    { q: "The female pelvic floor's vulnerability to prolapse is best described as:", o: ["A weakness of character", "A structural vulnerability created by the vagina", "Purely a disease of ageing", "Easily reversible with exercise alone"], a: 1, w: "The vagina creates a structural vulnerability that no amount of exercise can fully overcome - it is an anatomical, not a moral, issue." },
+
+    // ===== Header 10: male + female understood together (Q46-50) =====
+    { q: "The male and female reproductive systems share which of the following?", o: ["Nothing in common", "The same hypothalamic-pituitary hormonal control (GnRH, FSH, LH)", "The same anatomy", "No homology"], a: 1, w: "Both systems are controlled by the same hypothalamic-pituitary-gonadal axis with GnRH, FSH and LH." },
+    { q: "The penis is homologous to which female structure?", o: ["Labia majora", "Clitoris", "Vagina", "Uterus"], a: 1, w: "The penis and clitoris develop from the same embryonic tissue - they are homologous." },
+    { q: "The scrotum is homologous to which female structure?", o: ["Labia majora", "Labia minora", "Clitoris", "Vagina"], a: 0, w: "The scrotum and labia majora develop from the same embryonic tissue." },
+    { q: "The testes and ovaries are homologous because:", o: ["They develop from the same indifferent gonadal ridge", "They look identical", "They produce the same hormones", "They are located in the same place"], a: 0, w: "Both develop from the same indifferent gonadal ridge during embryological development." },
+    { q: "The most useful way to study the two reproductive systems is:", o: ["As completely separate topics", "Together, recognising their homology and shared hormonal control", "Only as they relate to disease", "By ignoring their embryology"], a: 1, w: "Studying them together reveals their homology and shared control systems, making both easier to remember." },
+  ],
 };
 
 /* --------------------------- an2:12 --------------------------- */
@@ -22123,63 +22146,2156 @@ Crucial insight: histology and gross anatomy are two scales of the same truth. A
     { channel: "Armando Hasudungan", title: "Atherosclerosis", note: "Hand-drawn explanation of the pathogenesis of atherosclerosis from endothelial injury to plaque rupture.", url: "" },
     { channel: "Ninja Nerd", title: "Capillary Types and Function", note: "Explanation of continuous, fenestrated, and sinusoidal capillaries and their locations.", url: "" }
   ],
-  mcqs: [
-    { q: "The innermost layer of a blood vessel wall is the:", o: ["Tunica media", "Tunica adventitia", "Tunica intima", "Tunica externa"], a: 2, w: "The tunica intima is the innermost layer, consisting of endothelium, basement membrane, and thin connective tissue." },
-    { q: "The thickest layer in an artery wall is the:", o: ["Tunica intima", "Tunica media", "Tunica adventitia", "Endothelium"], a: 1, w: "The tunica media (muscular/elastic layer) is the thickest in arteries." },
-    { q: "The layer of a blood vessel wall that contains vasa vasorum is the:", o: ["Tunica intima", "Tunica media", "Tunica adventitia", "Endothelium"], a: 2, w: "Vasa vasorum (vessels of the vessel) are found in the tunica adventitia." },
-    { q: "The tunica media of an artery is composed mainly of:", o: ["Collagen", "Smooth muscle and elastic fibres", "Endothelium", "Fibroblasts"], a: 1, w: "The tunica media contains smooth muscle and elastic fibres, which give it strength and elasticity." },
-    { q: "Which of the following is NOT a function of the endothelium?", o: ["Preventing blood clotting", "Regulating vascular tone", "Producing red blood cells", "Regulating inflammation"], a: 2, w: "Red blood cell production is a function of the bone marrow, not the endothelium." },
-    { q: "Nitric oxide produced by the endothelium causes:", o: ["Vasoconstriction", "Vasodilation", "Clotting", "Inflammation"], a: 1, w: "Nitric oxide is a vasodilator produced by the endothelium." },
-    { q: "Endothelin produced by the endothelium causes:", o: ["Vasodilation", "Vasoconstriction", "Clotting", "Angiogenesis"], a: 1, w: "Endothelin is a vasoconstrictor produced by the endothelium." },
-    { q: "The conversion of angiotensin I to angiotensin II occurs mainly in the:", o: ["Kidney", "Liver", "Lung", "Heart"], a: 2, w: "Angiotensin-converting enzyme (ACE) is found mainly in the pulmonary endothelium." },
-    { q: "Which type of capillary has pores (fenestrations)?", o: ["Continuous", "Fenestrated", "Sinusoidal", "Discontinuous"], a: 1, w: "Fenestrated capillaries have pores that allow faster exchange of larger molecules." },
-    { q: "Sinusoidal capillaries are found in:", o: ["Skeletal muscle", "Skin", "Liver and spleen", "Lung"], a: 2, w: "Sinusoidal capillaries have large gaps between cells and are found in liver, spleen, and bone marrow." },
-    { q: "Continuous capillaries are found in:", o: ["Kidney", "Liver", "Muscle and skin", "Bone marrow"], a: 2, w: "Continuous capillaries are the most common type, found in muscle, skin, and connective tissue." },
-    { q: "Fenestrated capillaries are found in:", o: ["Skeletal muscle", "Kidney and intestines", "Liver", "Skin"], a: 1, w: "Fenestrated capillaries are found in kidney, intestines, and endocrine glands." },
-    { q: "Veins differ from arteries in that veins have:", o: ["A thicker media", "Valves", "More elastic tissue", "A thicker intima"], a: 1, w: "Veins have valves to prevent backflow of blood." },
-    { q: "The largest blood reservoir in the body is the:", o: ["Arterial system", "Venous system", "Capillary bed", "Heart"], a: 1, w: "The venous system holds about seventy percent of the body's blood volume." },
-    { q: "Venous valves are most common in the veins of the:", o: ["Head", "Arms", "Legs", "Abdomen"], a: 2, w: "Venous valves are most common in the leg veins, where blood must travel against gravity." },
-    { q: "Which of the following does NOT help return blood from the legs to the heart?", o: ["Venous valves", "Calf muscle pump", "Sympathetic venoconstriction", "Gravity"], a: 3, w: "Gravity opposes venous return from the legs; the other three mechanisms assist it." },
-    { q: "Atherosclerosis begins with:", o: ["Damage to the endothelium", "Damage to the tunica media", "Damage to the adventitia", "Blockage of the capillary bed"], a: 0, w: "Atherosclerosis begins with injury to the endothelium." },
-    { q: "The earliest visible lesion of atherosclerosis is the:", o: ["Fibrous plaque", "Fatty streak", "Calcified plaque", "Thrombus"], a: 1, w: "The fatty streak is the earliest visible lesion of atherosclerosis." },
-    { q: "Foam cells in atherosclerosis are derived from:", o: ["Endothelial cells", "Smooth muscle cells", "Macrophages that have engulfed LDL", "Fibroblasts"], a: 2, w: "Foam cells are macrophages that have engulfed LDL cholesterol in the vessel wall." },
-    { q: "Atherosclerosis can lead to all of the following EXCEPT:", o: ["Myocardial infarction", "Stroke", "Peripheral vascular disease", "Increased vessel diameter"], a: 3, w: "Atherosclerosis narrows the vessel, not dilates it." },
-    { q: "Varicose veins most commonly occur in the:", o: ["Arms", "Legs", "Abdomen", "Head"], a: 1, w: "Varicose veins most commonly occur in the superficial veins of the legs." },
-    { q: "Varicose veins are caused by:", o: ["Incompetent venous valves and weakened vein walls", "Endothelial damage", "Atherosclerosis", "Hypertension"], a: 0, w: "Varicose veins result from valve incompetence and vein wall weakening, allowing blood to pool." },
-    { q: "A risk factor for varicose veins is:", o: ["Male sex", "Prolonged standing", "Regular exercise", "Low blood pressure"], a: 1, w: "Prolonged standing increases venous pooling and is a risk factor for varicose veins." },
-    { q: "An anastomosis is:", o: ["A blockage of a blood vessel", "A connection between two blood vessels", "An inflammation of a vessel", "A rupture of a vessel"], a: 1, w: "An anastomosis is a connection between two blood vessels (usually arteries)." },
-    { q: "The circle of Willis is an example of:", o: ["A portal system", "An arterial anastomosis in the brain", "A venous valve", "A capillary bed"], a: 1, w: "The circle of Willis is an anastomotic ring of arteries at the base of the brain." },
-    { q: "Anastomoses are important because they:", o: ["Increase blood pressure", "Provide redundant blood supply to tissues", "Prevent clotting", "Reduce blood volume"], a: 1, w: "Anastomoses provide alternate routes for blood flow if one artery is blocked." },
+    mcqs: [
+    // ===== Header 1: three vessel types / three pressure problems (Q1-5) =====
+    { q: "The body has three distinct vessel types rather than one all-purpose tube because:", o: ["One tube would be cheaper to build", "Different segments face different physical problems: pressure, exchange, and low-pressure return", "The heart only supplies arteries", "Evolution was random"], a: 1, w: "Arteries must resist high pressure, capillaries must allow exchange, and veins must hold large volume at low pressure - each requires a different structure." },
+    { q: "Arteries are structurally specialised to:", o: ["Allow rapid diffusion", "Withstand high pressure and carry blood away from the heart", "Store large volumes of blood", "Absorb nutrients"], a: 1, w: "Arteries have thick muscular/elastic walls to carry blood away from the heart under high pressure." },
+    { q: "Capillaries are structurally specialised to:", o: ["Withstand high pressure", "Allow exchange of substances between blood and tissues", "Store blood volume", "Generate heart contractions"], a: 1, w: "Capillaries are one cell thick, ideal for exchange." },
+    { q: "Veins are structurally specialised to:", o: ["Resist high pressure", "Carry blood back to the heart at low pressure and act as a blood reservoir", "Exchange gases", "Produce red blood cells"], a: 1, w: "Thin-walled, compliant veins return blood at low pressure and hold about 70% of blood volume." },
+    { q: "The structure of each vessel type is dictated primarily by:", o: ["Random variation", "The physics of its location - the pressures and demands it must withstand", "Blood type", "Body weight"], a: 1, w: "The structure of each vessel is dictated by the physics of pressure and exchange at its particular position in the circulation." },
+
+    // ===== Header 2: artery three-layer wall (Q6-10) =====
+    { q: "The three layers of an artery wall, from innermost to outermost, are:", o: ["Adventitia, media, intima", "Intima, media, adventitia", "Media, intima, adventitia", "Intima, adventitia, media"], a: 1, w: "From innermost to outermost: tunica intima, tunica media, tunica adventitia." },
+    { q: "The tunica intima is composed of:", o: ["Smooth muscle and elastic fibres", "A single layer of endothelium on a basement membrane", "Collagenous connective tissue", "Cartilage"], a: 1, w: "The intima is a single endothelial layer on a basement membrane with a thin layer of subendothelial connective tissue." },
+    { q: "The thickest layer of a typical artery wall is the:", o: ["Tunica adventitia", "Tunica intima", "Tunica media", "Endothelium"], a: 2, w: "The tunica media (muscular/elastic layer) is the thickest layer in most arteries." },
+    { q: "The tunica media of the aorta is predominantly:", o: ["Smooth muscle", "Elastic lamellae that stretch with each pulse and recoil between beats", "Collagenous connective tissue", "Cartilage"], a: 1, w: "The aorta is an elastic artery - its media is packed with elastic lamellae for pressure buffering." },
+    { q: "The tunica adventitia of a large artery:", o: ["Lines the lumen", "Provides the main contraction force", "Contains vasa vasorum and anchors the vessel to surrounding tissue", "Contains the endothelium"], a: 2, w: "The adventitia is the outer connective tissue layer with vasa vasorum that supplies the vessel wall itself." },
+
+    // ===== Header 3: capillaries one cell thick / three types (Q11-15) =====
+    { q: "A capillary wall consists of:", o: ["Smooth muscle and endothelium", "A single layer of endothelial cells on a basement membrane", "Three layers like an artery", "Elastic fibres and cartilage"], a: 1, w: "Capillaries have only an endothelium and basement membrane - the thinnest possible vessel wall." },
+    { q: "The three types of capillary are:", o: ["Continuous, fenestrated, sinusoidal", "Simple, stratified, transitional", "Arterial, venous, lymphatic", "Elastic, muscular, fibrous"], a: 0, w: "The three types are continuous, fenestrated and sinusoidal." },
+    { q: "Continuous capillaries are found in:", o: ["Liver and spleen", "Muscle, skin, and connective tissue", "Kidney and intestines", "Bone marrow only"], a: 1, w: "Continuous capillaries are the most common type, present in muscle, skin, and connective tissue." },
+    { q: "Fenestrated capillaries are found in:", o: ["Skeletal muscle", "Kidney, intestines and endocrine glands", "Liver and spleen", "Bone marrow only"], a: 1, w: "Fenestrated capillaries have pores, allowing rapid exchange in the kidney, intestines and endocrine glands." },
+    { q: "Sinusoidal capillaries are found in:", o: ["Skin", "Liver, spleen, and bone marrow", "Skeletal muscle only", "Lung alveoli"], a: 1, w: "Sinusoidal capillaries have large gaps allowing cells and large proteins to pass - found in liver, spleen and bone marrow." },
+
+    // ===== Header 4: veins different from arteries (Q16-20) =====
+    { q: "The thickest layer in a vein wall is usually the:", o: ["Tunica intima", "Tunica media", "Tunica adventitia", "Endothelium"], a: 2, w: "In veins the adventitia is the thickest layer, in contrast to arteries where the media is thickest." },
+    { q: "Venous valves are formed from:", o: ["Tunica media", "Tunica adventitia", "Folds of the tunica intima", "Cartilage"], a: 2, w: "Venous valves are folds of the tunica intima that prevent backflow." },
+    { q: "Veins can hold about what fraction of the body's total blood volume?", o: ["10%", "30%", "50%", "70%"], a: 3, w: "Veins hold about 70% of the body's total blood volume, acting as a blood reservoir." },
+    { q: "Venous valves are most abundant in the veins of the:", o: ["Head and neck", "Legs", "Abdomen", "Upper arm"], a: 1, w: "Valves are most abundant in the leg veins, where blood must return against gravity." },
+    { q: "The compliance of veins allows them to:", o: ["Resist high pressure", "Expand and act as a blood reservoir, shifting volume when needed", "Absorb nutrients directly", "Generate blood pressure"], a: 1, w: "Their compliance lets veins expand to store blood and shift volume into the arterial circulation when needed." },
+
+    // ===== Header 5: endothelium as an organ (Q21-25) =====
+    { q: "The endothelium weighs less than 2 grams yet is considered an organ because:", o: ["It contains neurons", "It performs a long list of essential regulatory functions", "It is made of bone", "It has its own blood supply"], a: 1, w: "The endothelium is a continuously active regulatory interface, performing barrier, antithrombotic, vasoactive, inflammatory and metabolic roles." },
+    { q: "The endothelium prevents clotting inside healthy vessels by producing:", o: ["Thrombin", "Heparan sulphate, prostacyclin and tissue plasminogen activator", "Fibrinogen", "Platelets"], a: 1, w: "The endothelium produces several antithrombotic substances, including heparan sulphate, prostacyclin and tPA." },
+    { q: "The endothelium regulates vascular tone by producing:", o: ["Nitric oxide (vasodilator) and endothelin (vasoconstrictor)", "Only nitric oxide", "Only endothelin", "Only adrenaline"], a: 0, w: "Nitric oxide dilates, and endothelin constricts - together they control vessel diameter." },
+    { q: "In the lung, the endothelium converts:", o: ["Angiotensin II to angiotensin I", "Angiotensin I to angiotensin II via ACE", "Renin to angiotensinogen", "Aldosterone to cortisol"], a: 1, w: "Pulmonary endothelium carries ACE, converting angiotensin I to the active angiotensin II." },
+    { q: "Endothelial dysfunction is now considered:", o: ["A late stage of disease", "The earliest stage of cardiovascular disease", "Unrelated to atherosclerosis", "A normal ageing change only"], a: 1, w: "Endothelial dysfunction is now recognised as the earliest stage of atherosclerosis." },
+
+    // ===== Header 6: atherosclerosis single event (Q26-30) =====
+    { q: "Atherosclerosis begins with:", o: ["Damage to the tunica media", "Injury to the endothelium", "Blockage of the capillary bed", "Calcification of the adventitia"], a: 1, w: "Endothelial injury is the initiating event of atherosclerosis." },
+    { q: "After endothelial injury, what enters the vessel wall?", o: ["Only red blood cells", "LDL cholesterol and monocytes", "Only platelets", "Only oxygen"], a: 1, w: "LDL cholesterol and monocytes enter the wall after endothelial injury." },
+    { q: "Foam cells in atherosclerosis are derived from:", o: ["Endothelial cells", "Macrophages that have engulfed LDL", "Smooth muscle cells", "Fibroblasts"], a: 1, w: "Foam cells are macrophages loaded with engulfed LDL cholesterol." },
+    { q: "The earliest visible lesion of atherosclerosis is the:", o: ["Fibrous plaque", "Fatty streak", "Calcified plaque", "Thrombus"], a: 1, w: "The fatty streak - clusters of foam cells under the endothelium - is the earliest visible lesion." },
+    { q: "A heart attack or stroke most often follows which change in an atherosclerotic plaque?", o: ["Gradual enlargement only", "Plaque rupture, exposing the thrombogenic core and forming a clot", "Regression of the plaque", "Conversion to a fatty streak"], a: 1, w: "Plaque rupture exposes the thrombogenic core to blood, causing clot formation and vessel occlusion." },
+
+    // ===== Header 7: artery + vein side by side (Q31-35) =====
+    { q: "In most tissues, the artery and vein run together with a:", o: ["Capillary bed between them", "Lymph node between them", "Cartilage plate between them", "Direct arteriovenous shunt only"], a: 0, w: "The artery and vein are connected only through the intervening capillary bed." },
+    { q: "The functional unit of the circulation is the:", o: ["Artery alone", "Vein alone", "Capillary bed between artery and vein", "Heart"], a: 2, w: "The capillary bed is where the actual job of the tissue happens - exchange between blood and tissue." },
+    { q: "In the liver, the specialised capillary bed is:", o: ["Fenestrated only", "Sinusoidal, between rows of hepatocytes", "Continuous", "Absent"], a: 1, w: "The liver has sinusoidal capillaries running between rows of hepatocytes." },
+    { q: "In skeletal muscle, capillaries typically:", o: ["Run parallel to the muscle fibres they supply", "Loop around the fibres", "Do not exist", "Form a single large sinus"], a: 0, w: "In skeletal muscle, capillaries run parallel to the fibres they supply." },
+    { q: "Which of the following is a portal system (capillary bed between two capillary beds)?", o: ["Coronary circulation", "Hepatic portal system", "Pulmonary circulation", "Renal circulation only"], a: 1, w: "The hepatic portal system has a capillary bed in the gut and a second capillary bed (sinusoids) in the liver, connected by the portal vein." },
+
+    // ===== Header 8: varicose veins (Q36-40) =====
+    { q: "Varicose veins most commonly occur in the:", o: ["Arms", "Legs", "Head", "Abdomen"], a: 1, w: "Varicose veins most commonly affect the superficial veins of the legs." },
+    { q: "Varicose veins are caused by:", o: ["Incompetent venous valves and weakened vein walls, causing pooling", "Endothelial damage only", "Atherosclerosis", "Hypertension"], a: 0, w: "Valve incompetence plus vein wall weakening leads to pooling and dilation." },
+    { q: "Which of the following is a risk factor for varicose veins?", o: ["Male sex", "Prolonged standing", "Low blood pressure", "Regular exercise"], a: 1, w: "Prolonged standing increases venous pooling, one of the risk factors for varicose veins." },
+    { q: "A varicose vein dilates because:", o: ["Blood pools under gravity against a weakened wall", "The wall thickens", "Valves multiply", "The artery dilates"], a: 0, w: "Blood pools against a weakened, non-compliant wall under gravity, causing the vein to dilate." },
+    { q: "Why does dilation of a varicose vein worsen the condition?", o: ["It has no effect", "Dilation pulls the valve leaflets apart, worsening the leak", "It stimulates healing", "It converts to an artery"], a: 1, w: "Dilation pulls valve leaflets apart and increases pooling - a vicious cycle." },
+
+    // ===== Header 9: anastomoses present/absent (Q41-45) =====
+    { q: "An anastomosis is:", o: ["A blockage of a vessel", "A connection between two blood vessels", "A tear in a vessel wall", "A nerve plexus"], a: 1, w: "An anastomosis is a connection between two blood vessels, usually arteries." },
+    { q: "The circle of Willis at the base of the brain is an example of:", o: ["A portal system", "An arterial anastomosis", "A venous valve", "A capillary bed only"], a: 1, w: "The circle of Willis is an anastomotic ring of arteries providing redundancy for the brain." },
+    { q: "Anastomoses are clinically important because they:", o: ["Increase blood pressure", "Provide redundant blood supply if one artery is blocked", "Prevent all ischaemia", "Reduce blood volume"], a: 1, w: "Anastomoses provide backup routes for blood flow if one artery is blocked." },
     { q: "Which organ has the LEAST arterial anastomosis?", o: ["Hand", "Brain", "Kidney", "Stomach"], a: 2, w: "The kidney has minimal arterial anastomosis; a blockage of the renal artery causes infarction." },
-    { q: "The 'vasa vasorum' are:", o: ["Valves in veins", "Nerves to the vessels", "Small blood vessels that supply the vessel wall itself", "Lymphatic vessels"], a: 2, w: "Vasa vasorum are small vessels that supply the walls of larger blood vessels." },
-    { q: "The tunica intima is lined by:", o: ["Smooth muscle", "Endothelium", "Fibroblasts", "Elastic fibres"], a: 1, w: "The tunica intima is lined by a single layer of endothelium." },
-    { q: "The endothelium is described as non-thrombogenic because it:", o: ["Prevents blood from clotting inside healthy vessels", "Promotes clotting", "Prevents blood flow", "Causes vasoconstriction"], a: 0, w: "The endothelium produces substances (heparan sulphate, prostacyclin, tPA) that prevent clotting." },
-    { q: "In the lung, the endothelium converts:", o: ["Angiotensin II to angiotensin I", "Angiotensin I to angiotensin II", "Renin to angiotensin", "Aldosterone to cortisol"], a: 1, w: "Pulmonary endothelium converts angiotensin I to angiotensin II via ACE." },
-    { q: "The three types of capillaries are:", o: ["Continuous, fenestrated, sinusoidal", "Simple, stratified, compound", "Muscular, elastic, fibrous", "Arterial, venous, lymphatic"], a: 0, w: "The three types are continuous, fenestrated, and sinusoidal capillaries." },
-    { q: "Continuous capillaries allow exchange of:", o: ["Cells and large proteins", "Small molecules only", "No molecules", "Only water"], a: 1, w: "Continuous capillaries have tight junctions that allow only small molecules to pass." },
-    { q: "Sinusoidal capillaries are the leakiest because they:", o: ["Have tight junctions", "Have large gaps between cells", "Have no endothelium", "Have thick walls"], a: 1, w: "Sinusoidal capillaries have large gaps between endothelial cells, allowing cells and large proteins through." },
-    { q: "The main artery of the body is the:", o: ["Pulmonary artery", "Aorta", "Carotid artery", "Femoral artery"], a: 1, w: "The aorta is the main artery of the body, arising from the left ventricle." },
-    { q: "The elastic tissue in the aorta allows it to:", o: ["Constrict permanently", "Stretch during systole and recoil during diastole", "Prevent clotting", "Absorb nutrients"], a: 1, w: "The elastic recoil of the aorta keeps blood moving during diastole." },
-    { q: "Muscular arteries distribute blood to:", o: ["The lungs", "Organs and tissues", "The heart only", "The kidneys only"], a: 1, w: "Muscular (distributing) arteries carry blood to organs and tissues." },
-    { q: "Arterioles are important in regulating:", o: ["Blood pressure and tissue blood flow", "Red blood cell production", "Clotting", "Lymphatic drainage"], a: 0, w: "Arterioles are the primary resistance vessels, regulating blood pressure and tissue perfusion." },
-    { q: "The exchange of substances between blood and tissue occurs in the:", o: ["Arteries", "Veins", "Capillaries", "Heart"], a: 2, w: "Capillaries are the site of exchange between blood and tissues." },
-    { q: "The pulmonary circulation carries:", o: ["Oxygenated blood to the body", "Deoxygenated blood to the lungs", "Oxygenated blood to the lungs", "Deoxygenated blood to the body"], a: 1, w: "The pulmonary circulation carries deoxygenated blood from the right heart to the lungs for oxygenation." },
-    { q: "Which of the following is NOT a function of the endothelium?", o: ["Regulating angiogenesis", "Modulating inflammation", "Producing digestive enzymes", "Metabolising drugs"], a: 2, w: "Digestive enzymes are produced by the pancreas and gut, not the endothelium." },
-    { q: "Endothelial dysfunction is considered:", o: ["A late stage of cardiovascular disease", "The earliest stage of cardiovascular disease", "Unrelated to cardiovascular disease", "A normal ageing change"], a: 1, w: "Endothelial dysfunction is now recognised as the earliest stage of atherosclerosis." },
-    { q: "Which layer of the vessel wall is damaged first in atherosclerosis?", o: ["Tunica intima", "Tunica media", "Tunica adventitia", "Vasa vasorum"], a: 0, w: "The endothelium of the tunica intima is damaged first in atherosclerosis." },
-    { q: "A venous valve is a fold of the:", o: ["Tunica media", "Tunica adventitia", "Tunica intima", "Endothelium only"], a: 2, w: "Venous valves are folds of the tunica intima." },
-    { q: "Blood in veins is under:", o: ["High pressure", "Low pressure", "Same pressure as arteries", "No pressure at all"], a: 1, w: "Blood in veins is under low pressure, which is why veins have thin walls and valves." },
-    { q: "The 'calf muscle pump' assists:", o: ["Arterial blood flow to the leg", "Venous return from the leg", "Lymphatic drainage from the leg", "Capillary exchange in the leg"], a: 1, w: "The calf muscle pump compresses leg veins during walking, pushing blood towards the heart." },
-    { q: "Which of the following is NOT a risk factor for atherosclerosis?", o: ["Smoking", "Hypertension", "Regular exercise", "Diabetes mellitus"], a: 2, w: "Regular exercise reduces the risk of atherosclerosis." },
-    { q: "The endothelium prevents clotting by producing:", o: ["Thrombin", "Tissue plasminogen activator and prostacyclin", "Fibrinogen", "Platelets"], a: 1, w: "The endothelium produces tPA and prostacyclin, which prevent clotting." },
-    { q: "Which structure connects an artery directly to a vein without a capillary bed?", o: ["An anastomosis", "A portal system", "A capillary bed", "A shunt"], a: 0, w: "An anastomosis connects vessels; if it connects an artery directly to a vein it is an arteriovenous anastomosis." },
-    { q: "An arteriovenous anastomosis is important in:", o: ["Thermoregulation", "Oxygenation", "Clotting", "Excretion"], a: 0, w: "Arteriovenous anastomoses allow blood to bypass capillary beds and are important in temperature regulation." },
-    { q: "The hepatic portal system is an example of:", o: ["An arterial anastomosis", "A capillary bed between two capillary beds", "A venous valve system", "An arteriovenous anastomosis"], a: 1, w: "The hepatic portal system has a capillary bed in the gut and a second capillary bed (sinusoids) in the liver, connected by the portal vein." },
-    { q: "Which of the following is NOT a function of the capillary bed?", o: ["Exchange of gases", "Exchange of nutrients", "Exchange of wastes", "Production of red blood cells"], a: 3, w: "Red blood cell production occurs in the bone marrow, not the capillary bed." },
-    { q: "The main site of resistance to blood flow is the:", o: ["Aorta", "Arterioles", "Capillaries", "Veins"], a: 1, w: "Arterioles are the main resistance vessels, controlling blood pressure and tissue blood flow." },
-    { q: "Which vessel type has the highest proportion of smooth muscle in its wall?", o: ["Aorta", "Muscular artery", "Vein", "Capillary"], a: 1, w: "Muscular arteries have the highest proportion of smooth muscle in their walls." },
-    { q: "The endothelium of the glomerulus is:", o: ["Continuous", "Fenestrated", "Sinusoidal", "Absent"], a: 1, w: "The glomerular endothelium is fenestrated, allowing rapid filtration of plasma." }
-  ]
+    { q: "A blockage of the renal artery causes kidney infarction because:", o: ["The kidney has no collateral supply", "The kidney has extra anastomoses", "The kidney is drained by the portal vein", "The kidney has no capillaries"], a: 0, w: "The kidney lacks significant arterial anastomosis, so a blocked renal artery causes infarction." },
+
+    // ===== Header 10: histology then gross anatomy (Q46-50) =====
+    { q: "The histology of the cardiovascular system explains:", o: ["Where the vessels run in the body", "How a vessel functions - why the aorta does not burst, why capillaries allow exchange", "Only the heart's position", "Only the size of vessels"], a: 1, w: "Histology explains function: how each vessel type meets its physical demands." },
+    { q: "The gross anatomy of the cardiovascular system explains:", o: ["Why the aorta does not burst", "Where the vessels run and which structures are at risk", "How capillaries exchange gases", "Why veins have valves"], a: 1, w: "Gross anatomy explains the routes of vessels and their relations to other structures." },
+    { q: "A clinician investigating chest pain needs to understand both:", o: ["Only histology", "Only gross anatomy", "Gross anatomy (coronary arteries) and histology (plaque rupture)", "Neither"], a: 2, w: "Chest pain requires both - the gross anatomy of the coronary arteries and the histological mechanism of plaque rupture." },
+    { q: "A vascular surgeon planning a bypass graft needs to know:", o: ["Gross anatomy of the vessels and histology of how the endothelium will respond to the graft", "Only the size of the vessels", "Only blood type", "Only lymphatics"], a: 0, w: "Both the gross anatomy of the vessels and how the endothelium will respond to the graft are needed for successful bypass planning." },
+    { q: "Which statement best summarises the relationship between histology and gross anatomy?", o: ["They are redundant", "They are two scales of the same truth; a blocked artery is a macroscopic event caused by a microscopic process", "Only histology matters", "Only gross anatomy matters"], a: 1, w: "The two scales give one truth: a macroscopic blockage has a microscopic cause, so both must be understood fluently." },
+  ],
+};
+
+/* --------------------------- an2:6 --------------------------- */
+// Objectives covered: surface anatomy of the chest wall, joints of the
+// thoracic cage, muscles of the anterior chest wall, intercostal muscles
+// and ribs, organisation and clinical significance of the intercostal
+// space, and the mammary gland (location, blood supply, innervation,
+// lymphatic drainage).
+// 10 note headers -> 5 MCQs each -> exactly 50 MCQs.
+const T_AN2_THORAX = {
+  courseId: "an2",
+  topicIndex: 6,
+  title: "Thorax",
+  minutes: 30,
+  note: [
+    {
+      q: "Why does a doctor press a stethoscope against specific spots on your chest, and not just anywhere?",
+      body: `Place your hand on your chest and you feel a smooth, unbroken wall. But underneath that wall sits a carefully engineered bony cage, and the sounds your heart and lungs make can only be heard clearly where the cage lets them through. Surface anatomy is the map of where that cage is, and where its openings are.
+
+My Socratic question: if the chest wall is a solid barrier, why can a doctor hear your heart valves from one specific spot on the left of your sternum, and your lung bases from a completely different spot at the back?
+
+The answer is that the chest wall is not uniform. Certain landmarks - the sternal angle, the costal margin, the mid-clavicular line, the mid-axillary line - are reference points on the surface that correspond to fixed underlying structures. Between the ribs there are gaps (the intercostal spaces), and behind the sternum and the heart the cage is thin enough for sound to pass through. Surface anatomy is how a clinician navigates the body without an X-ray.
+
+The key landmarks you must know:
+- The suprasternal notch (jugular notch) - the dip at the top of the sternum, level with T2.
+- The sternal angle (angle of Louis) - the ridge where the manubrium meets the body of the sternum, level with T4/T5. It is the single most useful landmark on the chest: the second costal cartilage articulates here, and it marks the level of the aortic arch, the bifurcation of the trachea, and the beginning and end of the aortic arch.
+- The costal margin - the lower edge of the rib cage, formed by the seventh to tenth costal cartilages.
+- The xiphisternal joint - where the xiphoid process meets the body of the sternum, level with T9.
+- Vertical lines: mid-clavicular, anterior axillary, mid-axillary, posterior axillary, scapular, and paravertebral.
+
+Crucial insight: surface anatomy is the clinician's coordinate system. Every examination, every injection, every chest drain is placed using these landmarks. If you know the sternal angle, you know where the second rib is; if you know the second rib, you can count down to any intercostal space - which is exactly what you do before inserting a needle into the chest.`
+    },
+    {
+      q: "The thoracic cage is a box that must move with every breath. How can a rigid bony structure move?",
+      body: `A rib cage sounds like it should be stiff and immobile. Yet every time you breathe, the entire cage expands and relaxes - around 20,000 times a day, for a lifetime. How does rigid bone allow that?
+
+My Socratic question: bones cannot bend, and the ribs must move. What kind of joint would you need between the ribs and the sternum and between the ribs and the spine?
+
+The answer is that the thoracic cage has three sets of joints, each allowing a specific kind of movement.
+
+First, the costovertebral joints - where each rib meets the vertebral column. Each typical rib articulates with the body of its own vertebra and the one above (the costal facet), and with the transverse process of its own vertebra (the costotransverse joint). These joints allow rotation of the rib, which is how the rib swings up and forward during inspiration.
+
+Second, the costochondral joints - where each rib meets its costal cartilage. These are primary cartilaginous joints, and they are immobile - the rib and its cartilage behave as a single unit.
+
+Third, the sternocostal joints - where the costal cartilages meet the sternum. The first rib's cartilage fuses directly with the manubrium (a synchondrosis, immobile). Ribs 2 to 7 articulate with the sternum through small synovial joints that allow a slight gliding movement, which is how the whole cage swings up and out during inspiration.
+
+Crucial insight: the thoracic cage is not a rigid box - it is a mechanism built from immobile and slightly mobile joints working together. The first rib is nearly immobile (which is why it is the most commonly fractured rib in severe trauma), while ribs 2 to 7 do most of the swinging. Everything below the sternal angle - including the joints, the diaphragm, and the neurovascular bundles - is designed to accommodate movement.`
+    },
+    {
+      q: "Why is the anterior chest wall built from three layers of muscle, when the rib cage is already a bony barrier?",
+      body: `The ribs already protect the heart and lungs. So why is there a layer of muscle over the front of the chest at all - and why three layers?
+
+My Socratic question: if the ribs are the wall, what would muscles on top of the ribs be for?
+
+The answer is that these muscles move the upper limb, not the chest. The anterior chest wall is where the arm attaches to the trunk, and the muscles crossing this region are the ones that position the shoulder and upper arm. The three layers, from superficial to deep, are:
+
+- Pectoralis major - a large fan-shaped muscle from the clavicle, sternum and upper six costal cartilages to the lateral lip of the intertubercular sulcus of the humerus. Action: adducts and medially rotates the arm (and flexes the extended arm). Innervation: medial and lateral pectoral nerves.
+- Pectoralis minor - a smaller triangular muscle from ribs 3-5 to the coracoid process of the scapula. Action: stabilises the scapula, drawing it forward and down. Innervation: medial pectoral nerve.
+- Subclavius - a small muscle from the first rib to the underside of the clavicle. Action: depresses the clavicle. Innervation: nerve to subclavius.
+
+Deep to these, the serratus anterior wraps around the side of the chest - a large muscle from the outer surfaces of the upper eight or nine ribs to the medial border of the scapula. It protracts the scapula and holds it against the thoracic wall. Its long thoracic nerve is famously vulnerable during axillary surgery - injury produces "winged scapula."
+
+Crucial insight: the anterior chest wall is really the upper-limb attachment zone. This is why the pectoral muscles show up in every anatomy exam - they are the muscles that move the arm, and they are also the landmarks for the axilla, the breast, and the pathways of the axillary vessels and nerves.`
+    },
+    {
+      q: "A rib looks like a simple curved bar. Why does it have so many distinct parts with their own names?",
+      body: `Pick up a single rib and look at it closely. It is not a smooth arc - it has a head, a neck, a tubercle, an angle, a shaft with a costal groove, and a pointed front end. Every one of those features exists for a reason.
+
+My Socratic question: a bone that only needs to curve around the chest could be a simple rod. Why the extra features?
+
+The answer is that each feature is a joint, a muscle attachment, or a passageway for the neurovascular bundle.
+
+- Head - the expanded end that articulates with the vertebral body (its own vertebra and the one above), forming the costovertebral joint.
+- Neck - the narrow segment between the head and the tubercle, where the rib's costotransverse ligament attaches.
+- Tubercle - a small bump that articulates with the transverse process of its own vertebra (the costotransverse joint) and provides an attachment for the costotransverse ligament.
+- Angle - the point of maximum curvature, where the rib turns from its posterior course to its anterior course. It is here that the rib is most likely to fracture under direct trauma.
+- Shaft - the main body of the rib, with a rounded outer surface and a grooved inner surface.
+- Costal groove - a groove on the inner, inferior surface that houses the intercostal nerve, artery and vein. This is the neurovascular bundle of the intercostal space.
+- Costal cartilage - the bar of hyaline cartilage at the front of the rib, joining the rib to the sternum or to the rib above.
+
+The ribs themselves fall into three groups: true ribs (1-7), which reach the sternum through their own costal cartilage; false ribs (8-10), whose cartilages join the cartilage of the rib above; and floating ribs (11-12), which have no anterior attachment at all.
+
+Crucial insight: the anatomy of a single rib encodes the whole organisation of the thoracic wall. The head and tubercle tell you where the rib articulates; the angle tells you where it is likely to break; and the costal groove tells you where the neurovascular bundle travels. Once you know the parts of one typical rib, you know the parts of every rib.`
+    },
+    {
+      q: "What is a typical intercostal space, and why is its organisation so important?",
+      body: `Between any two ribs lies an intercostal space. Looked at from the outside, it looks empty. Looked at from inside, it contains three layers of muscle, two sets of blood vessels, a nerve, and lymphatics - all organised in a strict pattern that every medical student must learn, because it is the space that needles, drains and surgeons enter.
+
+My Socratic question: the intercostal space is only a centimetre or two wide. Why does it need three layers of muscle, and how can all the structures fit?
+
+The answer is that the three muscle layers form a multilayered wall that keeps the space rigid and moves the ribs. From superficial to deep:
+
+- External intercostal - fibres run downwards and forwards (like putting your hands in your pockets). It extends from the tubercle of the rib to the costochondral junction, where it becomes the anterior intercostal membrane. It elevates the ribs during inspiration.
+- Internal intercostal - fibres run downwards and backwards (like putting your hands in your back pockets). It extends from the sternum to the angle of the rib, where it becomes the posterior intercostal membrane. It depresses the ribs during forced expiration.
+- Innermost intercostal - the deepest layer, with fibres running in the same direction as the internal intercostals. It is separated from the internal layer by the neurovascular bundle. It also depresses the ribs.
+
+The neurovascular bundle runs in the costal groove on the underside of each rib, in a strict order from above downwards: intercostal vein, artery, nerve (remembered as VAN - vein, artery, nerve). Because the bundle sits in the groove, the safest point to insert a needle into an intercostal space is just above the rib below - well below the groove and away from the bundle.
+
+Crucial insight: the organisation of the intercostal space exists to protect the neurovascular bundle while allowing the ribs to move. The fact that the bundle sits in the costal groove - tucked under the rib above - is why every chest drain, every pleural tap and every thoracocentesis is done with a needle aimed just above the lower rib of the space. That single rule prevents the most common complication of thoracic procedures.`
+    },
+    {
+      q: "What goes wrong if a chest needle or drain is inserted incorrectly? Why do the intercostal contents matter clinically?",
+      body: `Inserting a needle into the chest sounds simple. Yet thoracic procedures carry a real risk of complications, and almost all of those complications come from one of two mistakes: hitting the wrong structure, or entering the wrong space.
+
+My Socratic question: the intercostal space is a narrow corridor with a nerve, an artery and a vein inside it. What would happen if a needle went through the nerve, or through the artery just below it?
+
+The answer is that a needle placed too low in an intercostal space can pierce the intercostal nerve (causing chronic neuralgic pain along the dermatome) or the intercostal artery (causing bleeding into the pleural cavity or the chest wall). Because the neurovascular bundle is tucked into the costal groove on the underside of the rib above, the safest route is always just above the lower rib of the intercostal space.
+
+Two more clinical considerations:
+- The intercostal arteries can be large, especially posteriorly, where they arise from the descending thoracic aorta. Posterior intercostal vessel injury can cause significant haemorrhage, and a patient on anticoagulants is at even greater risk.
+- The pleura is a thin membrane on the inner surface of the chest wall and the outer surface of the lung. Every thoracic procedure crosses the pleura, and any damage to the lung surface behind it can cause a pneumothorax.
+
+Crucial insight: the intercostal space is not an abstract anatomical diagram - it is the corridor every physician, surgeon and emergency doctor must navigate through to reach the pleural cavity. Knowing exactly where the nerve and vessels sit in that corridor, and following the rule of "always above the rib below," is what makes thoracic procedures safe. This is why the intercostal space is one of the most clinically tested topics in all of thoracic anatomy.`
+    },
+    {
+      q: "The diaphragm is the floor of the chest and the roof of the abdomen. How does one muscle separate two whole cavities?",
+      body: `The diaphragm is a thin, dome-shaped sheet of muscle that separates the thoracic cavity above from the abdominal cavity below. It is the principal muscle of inspiration. It is pierced by three major structures, it has several named parts, and it is innervated entirely by the phrenic nerve - which arises high in the neck.
+
+My Socratic question: the phrenic nerve arises from C3, C4 and C5 - at the base of the neck. The diaphragm sits far below, in the lower chest. Why does its nerve supply come from so far above?
+
+The answer is embryology. The diaphragm develops from the septum transversum, which forms in the cervical region of the early embryo and then migrates downwards to its final position. As it migrates, it drags its nerve supply with it - so the phrenic nerve remains a cervical nerve, even though the muscle it supplies now sits at the level of the lower ribs. This is why irritation of the diaphragm (by blood, pus, or air) refers pain to the shoulder tip - the phrenic nerve shares spinal segments (C3-C5) with the skin of the shoulder.
+
+The diaphragm has three main parts:
+- The sternal part - small, attached to the back of the xiphoid process.
+- The costal part - large, attached to the inner surfaces of the lower six ribs and their costal cartilages.
+- The lumbar part - attached to the lumbar vertebrae via the right and left crura, and to the arcuate ligaments.
+
+Three major structures pierce the diaphragm at three named openings:
+- The aortic opening (T12) - transmits the aorta, the thoracic duct and the azygos vein.
+- The oesophageal opening (T10) - transmits the oesophagus, the vagus nerves, and the oesophageal branches of the left gastric vessels.
+- The caval opening (T8) - transmits the inferior vena cava and the right phrenic nerve.
+
+Crucial insight: the diaphragm is the single most important muscle in the thorax, and its anatomy explains a long list of clinical facts - the cervical origin of the phrenic nerve, the referred shoulder-tip pain of diaphragmatic irritation, the three openings and their vertebral levels (remember "I 8 ten EGGs at 10, and the aorta at 12"), and the fact that any paralysis of one half of the diaphragm (from phrenic nerve injury) causes the paralysed side to rise paradoxically during inspiration.`
+    },
+    {
+      q: "The mediastinum is the space between the lungs. What actually sits in it, and why does it matter?",
+      body: `Between the two lungs lies a central compartment called the mediastinum - the middle of the chest. It is bounded in front by the sternum, behind by the vertebral column, above by the thoracic inlet, and below by the diaphragm. Almost every structure in the chest that is not lung sits here.
+
+My Socratic question: the mediastinum looks like a single space in a diagram, but surgeons and radiologists divide it into parts. Why would you divide a single space?
+
+The answer is that the mediastinum is divided into compartments, and each compartment contains a different set of structures - which is how a radiologist, seeing a mass on a chest X-ray, can narrow the diagnosis down to a handful of possibilities just by knowing which compartment the mass is in.
+
+The mediastinum is divided into superior and inferior parts by a plane passing from the sternal angle to the intervertebral disc between T4 and T5. The inferior part is further divided into:
+- Anterior mediastinum - in front of the heart. Contains the thymus (in children), fat, and lymph nodes. A mass here in a young adult is classically a thymoma or lymphoma.
+- Middle mediastinum - contains the heart, the pericardium, the ascending aorta, the pulmonary trunk, the superior and inferior vena cavae, the phrenic nerves, and the main bronchi. A mass here is usually cardiac, pericardial, or nodal.
+- Posterior mediastinum - behind the heart. Contains the descending thoracic aorta, the oesophagus, the thoracic duct, the azygos and hemiazygos veins, and the sympathetic trunks. A mass here is classically neurogenic or oesophageal.
+
+Crucial insight: the mediastinum is a diagnostic map. When a chest X-ray shows a widened mediastinum or a mediastinal mass, the compartment it sits in immediately narrows the differential diagnosis. The divisions are not academic - they are the framework of thoracic radiology and thoracic surgery, and every chest CT report is organised around them.`
+    },
+    {
+      q: "The mammary gland sits on the chest wall. Why does its anatomy matter so much in medicine?",
+      body: `The mammary gland - the breast - is a modified sweat gland that sits on the anterior chest wall. Its anatomy is examined in every medical course, not because it is complex, but because breast cancer is one of the most common cancers in women, and the anatomy of the breast determines how the cancer spreads, how it is detected, and how it is treated.
+
+My Socratic question: the breast sits on top of the pectoral muscles. Why does breast cancer spread so predictably to the axilla and the internal mammary nodes, and not to random distant sites first?
+
+The answer is that the lymphatic drainage of the breast follows specific anatomical routes, and the first lymph nodes the lymph reaches are the ones most likely to catch early cancer cells.
+
+The breast sits on the deep fascia over the pectoralis major, extending from the second to the sixth rib, from the sternum to the mid-axillary line. It is a compound tubuloalveolar gland whose ducts open at the nipple. It is supported by suspensory ligaments - the ligaments of Cooper - which run from the skin to the deep fascia, and which become invaded and shortened in advanced breast cancer, producing the characteristic skin dimpling.
+
+The glandular tissue is divided into 15 to 20 lobes, each drained by its own lactiferous duct, and each lobe further divided into lobules. Between the lobes sits fat and connective tissue - which is why breast size varies so much between individuals without any difference in glandular function.
+
+Crucial insight: the anatomy of the breast is the anatomy of breast cancer. The lobes and ducts are where cancer arises; the lymphatic drainage is where it first spreads; and the ligaments of Cooper explain the physical signs. Every part of the breast's structure has a clinical consequence, and this is why the breast is one of the most clinically examined structures in the entire body.`
+    },
+    {
+      q: "Where does lymph from the breast actually go, and why does that route decide a patient's surgery?",
+      body: `When a woman is diagnosed with breast cancer, one of the first questions is whether the cancer has spread to the lymph nodes. The answer determines the stage of the disease and the extent of the surgery. And the answer depends entirely on the lymphatic drainage of the breast.
+
+My Socratic question: the breast sits in front of the chest, but the lymph nodes that most commonly show cancer spread are in the armpit. Why?
+
+The answer is that the lymphatic drainage of the breast is dominated by one route - to the axillary lymph nodes - and this is the route through which most breast cancers spread first.
+
+The lymphatic drainage of the breast has several routes, in order of clinical importance:
+
+- Axillary nodes (about 75 percent of lymph) - the dominant route. The lymph travels from the breast to the axillary nodes, which are divided into five groups: anterior (pectoral), posterior (subscapular), lateral (humeral), central, and apical. Almost all breast cancer surgery involves sampling or removing some of these nodes.
+- Internal mammary (parasternal) nodes (about 20 percent) - especially from the medial part of the breast and the deep parts of the gland. These are not clinically palpable but may be involved in medial tumours.
+- Supraclavicular nodes - involved in advanced disease.
+- Abdominal (subdiaphragmatic) nodes - rare, from the lower part of the breast.
+- The opposite breast and axilla - rare, via the superficial lymphatic plexus.
+
+The sentinel lymph node is the first node that lymph from the tumour drains to. A sentinel lymph node biopsy - injecting a dye or a radioactive tracer near the tumour and identifying the first node it reaches - has replaced routine axillary dissection for many patients, sparing them the long-term complication of lymphoedema.
+
+Crucial insight: the drainage of the breast is the roadmap of its cancer. Knowing where lymph goes tells you where to look for spread, which nodes to sample, and what surgery is appropriate. This is why the lymphatic anatomy of the breast is the single most important section of this whole topic for a practising clinician.`
+    },
+  ],
+  theory: [
+    { q: "Identify the major surface landmarks of the chest wall.", a: "Suprasternal (jugular) notch at T2; sternal angle (angle of Louis) at T4/T5, marking the second costal cartilage and key structural levels; xiphisternal joint at T9; costal margin formed by costal cartilages 7-10; and the vertical lines - mid-clavicular, anterior/mid/posterior axillary, scapular and paravertebral." },
+    { q: "Describe the joints of the thoracic cage.", a: "Costovertebral joints (head of rib with vertebral bodies, and costotransverse joint with transverse process) - allow rotation; costochondral joints - primary cartilaginous, immobile; sternocostal joints - first rib fuses directly (synchondrosis), ribs 2-7 form small synovial joints allowing slight gliding; and the manubriosternal joint (secondary cartilaginous)." },
+    { q: "Name the muscles of the anterior chest wall, with attachments, actions and innervation.", a: "Pectoralis major - clavicle, sternum, upper six costal cartilages to lateral lip of intertubercular sulcus; adducts and medially rotates the arm; medial and lateral pectoral nerves. Pectoralis minor - ribs 3-5 to coracoid process; stabilises scapula; medial pectoral nerve. Subclavius - first rib to clavicle; depresses clavicle; nerve to subclavius. Serratus anterior - ribs 1-8/9 to medial border of scapula; protracts scapula; long thoracic nerve." },
+    { q: "Name the parts of a typical rib.", a: "Head, neck, tubercle, angle, shaft with costal groove on its inner inferior surface, and costal cartilage at the front." },
+    { q: "Classify the ribs into true, false and floating ribs.", a: "True ribs (1-7) - each reaches the sternum through its own costal cartilage. False ribs (8-10) - their costal cartilages join the cartilage of the rib above. Floating ribs (11-12) - no anterior attachment." },
+    { q: "Describe the organisation of a typical intercostal space.", a: "Three muscle layers - external intercostal (down and forward, elevates ribs, becomes anterior intercostal membrane at the costochondral junction), internal intercostal (down and back, depresses ribs, becomes posterior intercostal membrane at the angle), and innermost intercostal (same direction as internal, deepest). The neurovascular bundle (vein, artery, nerve - VAN from above down) runs in the costal groove on the underside of the rib above." },
+    { q: "Explain the clinical significance of the intercostal neurovascular bundle's position.", a: "Because the bundle (vein, artery, nerve) lies in the costal groove of the rib above, a needle or chest drain should always be inserted just above the lower rib of the space - below the costal groove - to avoid the intercostal nerve (chronic neuralgic pain) and artery (haemorrhage). This rule prevents the most common complication of thoracic procedures." },
+    { q: "Describe the diaphragm: its parts, its three openings and its nerve supply.", a: "Three parts - sternal (from xiphoid), costal (from lower six ribs and cartilages), and lumbar (via crura and arcuate ligaments). Three openings - aortic (T12, transmits aorta, thoracic duct, azygos vein), oesophageal (T10, transmits oesophagus and vagi), caval (T8, transmits inferior vena cava). Innervated entirely by the phrenic nerve (C3-C5), whose cervical origin is explained by the diaphragm's development from the septum transversum." },
+    { q: "Describe the subdivisions of the mediastinum and the key contents of each.", a: "Divided into superior and inferior by a plane from the sternal angle to the T4/T5 disc. Inferior is subdivided into: anterior (thymus, fat, lymph nodes), middle (heart, pericardium, ascending aorta, pulmonary trunk, SVC, IVC, phrenic nerves, main bronchi), posterior (descending thoracic aorta, oesophagus, thoracic duct, azygos and hemiazygos veins, sympathetic trunks)." },
+    { q: "Describe the location, structure and lymphatic drainage of the mammary gland.", a: "Sits on deep fascia over pectoralis major from rib 2 to rib 6, between sternum and mid-axillary line; is a compound tubuloalveolar gland with 15-20 lobes, each drained by its own lactiferous duct opening at the nipple; supported by suspensory ligaments of Cooper. Lymphatic drainage - about 75% to axillary nodes (anterior, posterior, lateral, central, apical groups), about 20% to internal mammary (parasternal) nodes, remainder to supraclavicular, abdominal and rarely contralateral nodes." },
+  ],
+  videos: [
+    { channel: "Anatomy", title: "Thorax Overview - Thoracic Cage and Surface Anatomy", note: "Walks through the chest wall, landmarks and the bony cage.", url: "https://www.youtube.com/results?search_query=thorax+overview+thoracic+cage+surface+anatomy" },
+    { channel: "Anatomy", title: "Intercostal Space and Neurovascular Bundle", note: "Layer-by-layer tour of a typical intercostal space, and why the needle goes just above the lower rib.", url: "https://www.youtube.com/results?search_query=intercostal+space+neurovascular+bundle+anatomy" },
+    { channel: "Anatomy", title: "Breast Anatomy and Lymphatic Drainage", note: "Structure of the mammary gland, Cooper's ligaments, and the axillary drainage route.", url: "https://www.youtube.com/results?search_query=breast+anatomy+lymphatic+drainage+axillary+nodes" },
+  ],
+  mcqs: [
+    // ===== Note 1: surface anatomy of the chest wall (Q1-5) =====
+    { q: "The sternal angle (angle of Louis) lies at which vertebral level?", o: ["T2", "T4/T5", "T9", "T12"], a: 1, w: "The sternal angle lies at the level of T4/T5, marking the second costal cartilage and many key structural levels." },
+    { q: "The suprasternal (jugular) notch lies at which vertebral level?", o: ["T1", "T2", "T4", "C7"], a: 1, w: "The suprasternal notch lies at the level of T2." },
+    { q: "The xiphisternal joint lies at which vertebral level?", o: ["T4", "T7", "T9", "T12"], a: 2, w: "The xiphisternal joint lies at the level of T9." },
+    { q: "The costal margin is formed by which costal cartilages?", o: ["1-6", "7-10", "8-12", "11-12"], a: 1, w: "The costal margin is formed by the seventh to tenth costal cartilages." },
+    { q: "Which surface landmark is the single most useful reference point on the chest?", o: ["The xiphisternal joint", "The sternal angle (angle of Louis)", "The suprasternal notch", "The costal margin"], a: 1, w: "The sternal angle is the most useful chest landmark - the second costal cartilage articulates here, and it marks several important structural levels." },
+
+    // ===== Note 2: joints of the thoracic cage (Q6-10) =====
+    { q: "The costovertebral joint is formed between the head of a rib and the:", o: ["Transverse process of the vertebra only", "Body of its own vertebra and the one above", "Sternum", "Adjacent rib"], a: 1, w: "Each typical rib's head articulates with the body of its own vertebra and the vertebra above." },
+    { q: "The costotransverse joint is formed between the tubercle of a rib and the:", o: ["Transverse process of its own vertebra", "Body of the vertebra above", "Sternum", "Costal cartilage of the rib below"], a: 0, w: "The costotransverse joint is between the rib's tubercle and its own vertebra's transverse process." },
+    { q: "The costochondral joint is best described as:", o: ["A synovial joint", "A primary cartilaginous joint (immobile)", "A secondary cartilaginous joint", "A fibrous joint"], a: 1, w: "The costochondral joint is a primary cartilaginous joint - immobile." },
+    { q: "The first costal cartilage articulates with the sternum via:", o: ["A synovial joint", "A synchondrosis (fusion)", "A fibrous joint", "No joint at all"], a: 1, w: "The first costal cartilage fuses directly with the manubrium - a synchondrosis, immobile." },
+    { q: "Which ribs form small synovial joints with the sternum?", o: ["Ribs 1 only", "Ribs 2 to 7", "Ribs 8 to 10", "Ribs 11 and 12"], a: 1, w: "Ribs 2 to 7 form small synovial joints with the sternum, allowing slight gliding during breathing." },
+
+    // ===== Note 3: muscles of the anterior chest wall (Q11-15) =====
+    { q: "Pectoralis major inserts into the:", o: ["Coracoid process", "Lateral lip of the intertubercular sulcus of the humerus", "Medial border of the scapula", "Clavicle"], a: 1, w: "Pectoralis major inserts into the lateral lip of the intertubercular sulcus of the humerus." },
+    { q: "The action of pectoralis major is to:", o: ["Protract the scapula", "Adduct and medially rotate the arm", "Elevate the ribs", "Depress the clavicle"], a: 1, w: "Pectoralis major adducts and medially rotates the arm (and flexes the extended arm)." },
+    { q: "Pectoralis minor inserts into the:", o: ["Coracoid process of the scapula", "Lateral lip of the intertubercular sulcus", "First rib", "Clavicle"], a: 0, w: "Pectoralis minor runs from ribs 3-5 to the coracoid process of the scapula." },
+    { q: "Serratus anterior is innervated by the:", o: ["Medial pectoral nerve", "Long thoracic nerve", "Nerve to subclavius", "Thoracodorsal nerve"], a: 1, w: "Serratus anterior is supplied by the long thoracic nerve; injury causes winged scapula." },
+    { q: "Subclavius is innervated by the:", o: ["Nerve to subclavius (from the upper trunk of the brachial plexus)", "Medial pectoral nerve", "Long thoracic nerve", "Phrenic nerve"], a: 0, w: "Subclavius is supplied by the nerve to subclavius, from the upper trunk of the brachial plexus." },
+
+    // ===== Note 4: intercostal muscles, ribs and their parts (Q16-20) =====
+    { q: "The parts of a typical rib, from posterior to anterior, are:", o: ["Head, neck, tubercle, angle, shaft, costal cartilage", "Head, shaft, neck, angle, costal cartilage", "Tubercle, head, neck, angle, costal cartilage", "Angle, head, neck, tubercle, costal cartilage"], a: 0, w: "Head, neck, tubercle, angle, shaft (with costal groove), then costal cartilage." },
+    { q: "The costal groove runs on which surface of a rib?", o: ["Outer, superior surface", "Inner, inferior surface", "Anterior surface", "Posterior surface"], a: 1, w: "The costal groove runs along the inner, inferior surface of the rib and houses the intercostal neurovascular bundle." },
+    { q: "The rib feature most likely to fracture under direct trauma is the:", o: ["Head", "Neck", "Angle", "Costal cartilage"], a: 2, w: "The angle is the point of maximum curvature and is the most common site of rib fracture." },
+    { q: "True ribs are ribs:", o: ["1-7", "8-10", "11-12", "1-12"], a: 0, w: "True ribs (1-7) reach the sternum through their own costal cartilages." },
+    { q: "Floating ribs are ribs:", o: ["7-8", "8-10", "11-12", "1-2"], a: 2, w: "Floating ribs (11-12) have no anterior attachment." },
+
+    // ===== Note 5: organisation of a typical intercostal space (Q21-25) =====
+    { q: "The three muscle layers of an intercostal space, from superficial to deep, are:", o: ["External, internal, innermost intercostal", "Innermost, internal, external intercostal", "Internal, external, innermost intercostal", "External, innermost, internal intercostal"], a: 0, w: "External, internal, innermost intercostal - in that order from superficial to deep." },
+    { q: "The external intercostal muscle fibres run:", o: ["Downward and forward (like hands in pockets)", "Downward and backward (like hands in back pockets)", "Horizontally", "Vertically"], a: 0, w: "External intercostal fibres run downward and forward, like putting your hands in your pockets." },
+    { q: "The internal intercostal muscle fibres run:", o: ["Downward and forward", "Downward and backward (like hands in back pockets)", "Horizontally", "Vertically"], a: 1, w: "Internal intercostal fibres run downward and backward, like putting your hands in your back pockets." },
+    { q: "The external intercostal muscle elevates the ribs during:", o: ["Forced expiration", "Inspiration", "Coughing", "Swallowing"], a: 1, w: "The external intercostals elevate the ribs during inspiration." },
+    { q: "The internal and innermost intercostal muscles primarily:", o: ["Elevate the ribs", "Depress the ribs during forced expiration", "Have no action", "Move the shoulder"], a: 1, w: "The internal and innermost intercostals depress the ribs during forced expiration." },
+
+    // ===== Note 6: clinical significance of intercostal contents (Q26-30) =====
+    { q: "The intercostal neurovascular bundle lies:", o: ["In the costal groove of the rib above the space", "In the costal groove of the rib below the space", "In the centre of the intercostal space", "Outside the thoracic wall"], a: 0, w: "The bundle runs in the costal groove on the underside of the rib above the space." },
+    { q: "The correct order of structures in the intercostal neurovascular bundle, from above down, is:", o: ["Nerve, artery, vein", "Vein, artery, nerve (VAN)", "Artery, vein, nerve", "Nerve, vein, artery"], a: 1, w: "From above down: vein, artery, nerve (VAN)." },
+    { q: "To avoid the intercostal neurovascular bundle, a needle should be inserted:", o: ["Just below the upper rib of the space", "Just above the lower rib of the space", "In the middle of the space", "Through the rib itself"], a: 1, w: "Inserting just above the lower rib of the space keeps the needle away from the costal groove of the rib above." },
+    { q: "Damage to the intercostal nerve during a chest procedure can cause:", o: ["Immediate paralysis", "Chronic neuralgic pain along the dermatome", "Loss of vision", "Nothing at all"], a: 1, w: "Intercostal nerve injury causes chronic neuralgic pain along the affected dermatome." },
+    { q: "Damage to the intercostal artery during a chest procedure can cause:", o: ["Significant haemorrhage into the pleural cavity or chest wall", "Chronic pain only", "Pneumothorax only", "No consequences"], a: 0, w: "Intercostal artery injury can cause significant haemorrhage, especially in patients on anticoagulants." },
+
+    // ===== Note 7: the diaphragm (Q31-35) =====
+    { q: "The diaphragm is innervated by the:", o: ["Intercostal nerves", "Phrenic nerve (C3-C5)", "Vagus nerve", "Sympathetic trunk"], a: 1, w: "The diaphragm is innervated entirely by the phrenic nerve, arising from C3, C4 and C5." },
+    { q: "The cervical origin of the phrenic nerve is explained by:", o: ["Random development", "The diaphragm's development from the septum transversum in the cervical region", "The nerve's function", "The position of the heart"], a: 1, w: "The septum transversum forms in the cervical region and migrates downwards, dragging the phrenic nerve with it." },
+    { q: "The aortic opening of the diaphragm lies at which vertebral level?", o: ["T8", "T10", "T12", "L1"], a: 2, w: "The aortic opening is at T12 and transmits the aorta, thoracic duct and azygos vein." },
+    { q: "The oesophageal opening of the diaphragm lies at which vertebral level?", o: ["T8", "T10", "T12", "L1"], a: 1, w: "The oesophageal opening is at T10 and transmits the oesophagus, vagus nerves and oesophageal vessels." },
+    { q: "The caval opening of the diaphragm lies at which vertebral level?", o: ["T8", "T10", "T12", "L1"], a: 0, w: "The caval opening is at T8 and transmits the inferior vena cava and the right phrenic nerve." },
+
+    // ===== Note 8: the mediastinum (Q36-40) =====
+    { q: "The mediastinum is divided into superior and inferior parts by a plane passing from the sternal angle to the:", o: ["T2/T3 disc", "T4/T5 disc", "T9/T10 disc", "T12/L1 disc"], a: 1, w: "The plane passes from the sternal angle to the intervertebral disc between T4 and T5." },
+    { q: "The anterior mediastinum contains all of the following EXCEPT the:", o: ["Thymus", "Fat", "Lymph nodes", "Descending thoracic aorta"], a: 3, w: "The descending thoracic aorta lies in the posterior mediastinum, not the anterior." },
+    { q: "The middle mediastinum contains the:", o: ["Oesophagus", "Heart and pericardium", "Descending thoracic aorta", "Sympathetic trunks"], a: 1, w: "The middle mediastinum contains the heart, pericardium, great vessels, phrenic nerves and main bronchi." },
+    { q: "The posterior mediastinum contains:", o: ["Thymus", "Heart", "Descending thoracic aorta and oesophagus", "Ascending aorta"], a: 2, w: "The posterior mediastinum contains the descending thoracic aorta, oesophagus, thoracic duct, azygos and hemiazygos veins, and sympathetic trunks." },
+    { q: "A mediastinal mass in a young adult, located in the anterior mediastinum, is classically a:", o: ["Neurogenic tumour", "Thymoma or lymphoma", "Oesophageal tumour", "Cardiac tumour"], a: 1, w: "An anterior mediastinal mass in a young adult is classically a thymoma or lymphoma." },
+
+    // ===== Note 9: mammary gland location and structure (Q41-45) =====
+    { q: "The mammary gland extends vertically from which ribs?", o: ["Ribs 1 to 4", "Ribs 2 to 6", "Ribs 4 to 8", "Ribs 6 to 10"], a: 1, w: "The breast extends from the second to the sixth rib." },
+    { q: "The breast extends horizontally between which boundaries?", o: ["Sternum and mid-axillary line", "Mid-clavicular line and mid-axillary line", "Sternum and anterior axillary line", "Mid-clavicular line and posterior axillary line"], a: 0, w: "The breast extends from the sternum to the mid-axillary line." },
+    { q: "The breast is a modified:", o: ["Lymph node", "Sweat gland", "Sebaceous gland", "Muscle"], a: 1, w: "The mammary gland is a modified sweat gland." },
+    { q: "The suspensory ligaments of the breast are called:", o: ["Ligaments of Cooper", "Ligaments of Treitz", "Ligaments of Henle", "Ligaments of Winslow"], a: 0, w: "The suspensory ligaments of the breast are the ligaments of Cooper, running from skin to deep fascia." },
+    { q: "In advanced breast cancer, invasion of the ligaments of Cooper produces:", o: ["Nipple discharge", "Skin dimpling", "Lymphoedema of the arm", "Jaundice"], a: 1, w: "Invasion and shortening of Cooper's ligaments produces characteristic skin dimpling." },
+
+    // ===== Note 10: breast blood supply, innervation and lymphatic drainage (Q46-50) =====
+    { q: "The dominant lymphatic drainage route of the breast is to the:", o: ["Internal mammary nodes", "Axillary nodes (about 75 percent)", "Supraclavicular nodes", "Abdominal nodes"], a: 1, w: "About 75 percent of breast lymph drains to the axillary nodes." },
+    { q: "The internal mammary (parasternal) nodes drain about what percentage of breast lymph?", o: ["5 percent", "20 percent", "50 percent", "75 percent"], a: 1, w: "About 20 percent of breast lymph drains to the internal mammary nodes, especially from the medial part of the breast." },
+    { q: "The five groups of axillary lymph nodes are:", o: ["Anterior (pectoral), posterior (subscapular), lateral (humeral), central, and apical", "Superficial, deep, medial, lateral, and central", "Upper, middle, lower, anterior, and posterior", "Cervical, supraclavicular, infraclavicular, axillary, and parasternal"], a: 0, w: "The five groups are anterior (pectoral), posterior (subscapular), lateral (humeral), central and apical." },
+    { q: "The sentinel lymph node is defined as:", o: ["The largest axillary node", "The first node that lymph from the tumour drains to", "The last node in the chain", "The node nearest the sternum"], a: 1, w: "The sentinel node is the first node that lymph from the tumour drains to." },
+    { q: "The main advantage of sentinel lymph node biopsy over routine axillary dissection is:", o: ["It is faster", "It reduces the risk of lymphoedema by sparing uninvolved nodes", "It eliminates the need for surgery", "It has no clinical benefit"], a: 1, w: "Sentinel node biopsy spares most uninvolved nodes, reducing the long-term risk of lymphoedema." },
+  ],
+};
+
+/* --------------------------- an2:7 --------------------------- */
+const T_AN2_CIRCULATORY = {
+  courseId: "an2",
+  topicIndex: 7,
+  title: "Circulatory System",
+  minutes: 30,
+  note: [
+    {
+      q: "Why does the body need a circulatory system at all, when every cell is already surrounded by fluid?",
+      body: `Every cell in your body sits in a thin film of fluid. If that were enough, you would not need a heart at all - and some very simple animals do not have one. But you do, and it is roughly the size of your closed fist, beating about 100,000 times a day.
+
+My Socratic question: if every cell is already bathed in fluid, why does the body need to keep that fluid moving with such force?
+
+The answer is distance. In a tiny organism, every cell is close enough to the outside world that oxygen and nutrients can simply diffuse in, and waste can diffuse out. But in a body made of trillions of cells, diffusion alone would be far too slow - oxygen would take hours to reach the cells in your toes, and they would die long before it arrived. Diffusion works only over very short distances.
+
+So the body solves the distance problem with a pump and a set of pipes. The pump is the heart. The pipes are the blood vessels. The fluid is blood. Together they form the circulatory system, whose job is to move blood quickly to every tissue and back again.
+
+The circulatory system has three components:
+- The heart - a muscular pump with four chambers that drives blood around the body.
+- The blood vessels - arteries, capillaries and veins - the pipes that carry the blood.
+- The blood - the fluid itself, which carries oxygen, nutrients, hormones and waste.
+
+Crucial insight: the circulatory system exists to defeat distance. Diffusion can only work across fractions of a millimetre, and the body is nearly two metres tall - so a pump and a network of vessels are needed to keep every cell supplied. Every feature you will learn in this topic exists to serve that single purpose.`
+    },
+    {
+      q: "The heart sits in the middle of the chest. Why is it tilted, and what are its chambers for?",
+      body: `Most people picture the heart as sitting straight up in the centre of the chest, like a soldier at attention. In reality it is tilted - its pointed lower end (the apex) leans down and to the left, which is why you feel your heartbeat on the left side of your chest even though the heart is nearly central.
+
+My Socratic question: the heart has four chambers. Why four, and not one big bag or two?
+
+The answer is that blood must be pumped twice - once to the lungs, and once to the whole body. Those are two very different journeys, and they need two different pumps working in series. Each pump has two chambers: one to receive blood, and one to push it out.
+
+The four chambers:
+- Right atrium - receives deoxygenated blood from the body via the superior and inferior vena cavae.
+- Right ventricle - pumps deoxygenated blood to the lungs via the pulmonary trunk.
+- Left atrium - receives oxygenated blood from the lungs via the pulmonary veins.
+- Left ventricle - pumps oxygenated blood to the whole body via the aorta.
+
+The left ventricle has the thickest muscular wall of all four chambers because it must push blood around the entire body, while the right ventricle only needs to push it a short distance to the lungs.
+
+The heart sits in the middle mediastinum, behind the sternum, tilted so that its base (the upper, wider part) is towards the right shoulder and its apex points to the left hip. It rests on the central tendon of the diaphragm and is enclosed in a sac called the pericardium.
+
+Crucial insight: the four-chamber design is a direct consequence of there being two separate circuits - pulmonary and systemic. The right side serves the lungs, the left side serves the body, and the thick left ventricular wall reflects the enormous difference in the work each side must do.`
+    },
+    {
+      q: "The heart has four valves. Why so many, and how does each one keep blood flowing the right way?",
+      body: `Blood must move through the heart in one direction only. If it could flow backward, the pump would be useless - blood would slosh back and forth with each beat instead of being pushed forward. Four valves prevent that, and each one has a specific job.
+
+My Socratic question: a valve is essentially a one-way door. Why does the heart need four separate one-way doors, and where is each one?
+
+The answer is that the heart has four natural places where blood could backflow, and each needs its own valve. They fall into two groups.
+
+The atrioventricular (AV) valves sit between the atria and the ventricles:
+- Tricuspid valve - between the right atrium and right ventricle. It has three cusps (flaps).
+- Mitral valve - between the left atrium and left ventricle. It has two cusps, and it is the only valve with two cusps.
+
+The semilunar valves sit between the ventricles and the great arteries leaving the heart:
+- Pulmonary valve - between the right ventricle and the pulmonary trunk.
+- Aortic valve - between the left ventricle and the aorta.
+
+The AV valves are anchored to the ventricular wall by strong tendinous cords (the chordae tendineae) attached to muscular pillars (the papillary muscles). When the ventricle contracts, the pressure would normally blow the AV valve cusps back up into the atrium - but the chordae tendineae and papillary muscles hold them shut, so blood can only go out through the semilunar valves.
+
+The semilunar valves work differently. They are shaped like three shallow cups. When blood flows out of the ventricle, the cups are pushed flat against the artery wall, allowing flow. When the ventricle relaxes and the blood tries to fall back, the cups fill with blood and snap shut.
+
+Crucial insight: the four valves exist to enforce the one-way flow that makes the heart a pump rather than a bag. Each valve's design fits its job - AV valves are anchored by cords to resist high ventricular pressure, while semilunar valves are passive cups that snap shut when flow reverses. Every heart sound you hear through a stethoscope is the sound of these valves closing.`
+    },
+    {
+      q: "The heart is a muscle that never stops moving. What protects it from damage as it moves inside the chest?",
+      body: `The heart contracts about 100,000 times a day, and with every beat it changes shape - it twists, it squeezes, it recoils. Yet it must slide smoothly inside the chest, and its surface must stay protected from friction. Two structures solve both problems: the pericardium and the layered wall of the heart itself.
+
+My Socratic question: if a beating heart rubbed directly against the lungs and the chest wall thousands of times a day, what would happen to it?
+
+The answer is friction damage - the same thing that would happen to a wheel if its bearings were gone. So the heart is enclosed in a protective sac called the pericardium.
+
+The pericardium has two layers:
+- The fibrous pericardium - a tough outer sac of dense connective tissue. It anchors the heart in place and prevents it from overfilling with blood.
+- The serous pericardium - a thinner, double-layered membrane inside the fibrous layer. Its outer layer (parietal) lines the fibrous pericardium, and its inner layer (visceral, also called the epicardium) sticks to the heart's surface. Between the two serous layers sits a thin film of pericardial fluid, which lubricates the surfaces so they slide smoothly with each beat.
+
+The wall of the heart itself has three layers:
+- Epicardium - the outer layer, the same as the visceral serous pericardium.
+- Myocardium - the thick muscular middle layer that does the actual pumping. Its thickness varies; it is thickest in the left ventricle.
+- Endocardium - the smooth inner lining that sits in contact with the blood. It is continuous with the lining of the blood vessels.
+
+Crucial insight: the heart is protected at two levels - externally by the pericardium, and structurally by its own three-layered wall. The pericardial fluid prevents friction, the fibrous layer stops the heart from over-expanding, and the myocardium is thickest where the work is hardest. Every layer has a specific protective or mechanical job.`
+    },
+    {
+      q: "The heart is filled with blood every second. Why does it need its own private blood supply?",
+      body: `This is one of the most surprising facts in all of anatomy. The inside of the heart is packed with blood from the moment it starts beating. Yet that blood cannot nourish the heart itself. The heart needs its own dedicated blood supply - the coronary circulation - or it dies.
+
+My Socratic question: the heart's chambers are full of blood. Why can the heart not simply feed off that blood directly?
+
+The answer is that the endocardium (the inner lining of the heart) is a sealed barrier. The blood inside the chambers is travelling past a smooth, non-absorbing surface, and the muscular wall of the heart cannot reach through to take oxygen from it. The muscle cells of the myocardium are too far from the chamber's blood to receive oxygen by diffusion.
+
+So the heart has its own arteries - the coronary arteries - which arise from the very first part of the aorta, just above the aortic valve. As the aortic valve closes, blood fills the two small openings called the coronary ostia, and passes into:
+
+- The left coronary artery - which quickly divides into the left anterior descending (LAD) artery, running down the front of the heart, and the left circumflex artery, curving around the left side of the heart. Between them, they supply the left ventricle, the left atrium, and the interventricular septum.
+- The right coronary artery - which runs around the right side of the heart and supplies the right atrium and right ventricle, and, in most people, the sinoatrial node and the atrioventricular node.
+
+The blood then drains into the coronary sinus, a large vein on the back of the heart, which empties directly into the right atrium.
+
+Crucial insight: the heart's own blood supply is the reason a heart attack happens. If a coronary artery is blocked by a clot, the muscle it supplies is starved of oxygen and begins to die - a myocardial infarction. The fact that the coronary arteries are the first branches off the aorta, and that the heart cannot feed itself from its own chambers, is what makes the coronary circulation both so essential and so vulnerable.`
+    },
+    {
+      q: "The heart beats on its own, without any conscious input. Where does the signal come from?",
+      body: `Cut the heart out of a body and put it in a dish of warm, oxygenated fluid, and it will keep beating. This is one of the most remarkable facts in all of physiology, and it means the heartbeat is not commanded by the brain - it is generated inside the heart itself.
+
+My Socratic question: if the brain is not telling the heart to beat, what is?
+
+The answer is a small patch of specialised muscle in the wall of the right atrium called the sinoatrial (SA) node. The SA node is the heart's natural pacemaker. Its cells spontaneously and rhythmically generate electrical impulses, usually about 60 to 100 times a minute, without needing any external signal.
+
+The impulse then travels through a defined pathway:
+- From the SA node, the signal spreads across the atria, causing them to contract.
+- It reaches the atrioventricular (AV) node, located at the junction of the atria and ventricles. Here the signal is briefly delayed, which lets the atria finish emptying before the ventricles contract.
+- From the AV node, the signal travels down the bundle of His, into the right and left bundle branches, and then into the Purkinje fibres that spread through the ventricular walls.
+- The ventricles contract, pushing blood out through the semilunar valves.
+
+The SA node sets the basic rhythm, and the AV node acts as a gateway that coordinates atrial and ventricular contraction. Both are modified by the autonomic nervous system - the sympathetic nerves speed the heart up, and the parasympathetic (vagus) nerves slow it down - but neither is needed to make the heart beat.
+
+Crucial insight: the heart has its own built-in electrical system, so it can beat on its own. The brain does not start the heartbeat; it only tunes the rate. This is why a transplanted heart still beats - because the SA node is transplanted with it, and the nervous connections are not needed. Every ECG you will ever see is a picture of this electrical signal travelling through the heart.`
+    },
+    {
+      q: "Blood leaves the heart through two huge arteries. Why does the body need both a pulmonary and a systemic circuit?",
+      body: `Follow a single red blood cell on its journey. It leaves the right side of the heart, goes to the lungs, comes back, leaves the left side of the heart, travels to some distant tissue, comes back again, and starts over. That round trip is the entire story of the circulatory system, and it has two distinct halves.
+
+My Socratic question: why two circuits? Why not just send blood from the heart to the body once and back?
+
+The answer is that blood must collect oxygen in the lungs before it can deliver oxygen to the body. Those are two separate journeys and two separate jobs. If blood only went around the body, it would quickly run out of oxygen. It has to be recharged in the lungs between each delivery.
+
+So there are two circuits in series:
+
+- The pulmonary circuit - the shorter, low-pressure circuit that takes deoxygenated blood from the right ventricle to the lungs via the pulmonary trunk, where it picks up oxygen and dumps carbon dioxide, then returns as oxygenated blood to the left atrium via the pulmonary veins.
+- The systemic circuit - the longer, high-pressure circuit that takes oxygenated blood from the left ventricle to every tissue in the body via the aorta, delivers oxygen and nutrients, picks up carbon dioxide and waste, and returns as deoxygenated blood to the right atrium via the superior and inferior vena cavae.
+
+The two circuits share the same blood and the same heart. The right side of the heart serves the pulmonary circuit; the left side serves the systemic circuit.
+
+Crucial insight: the two-circuit design is what makes the heart's four-chamber arrangement necessary. Blood passes through the heart twice in one full circulation - once on its way to the lungs, once on its way to the body. The two circuits are functionally separate but physically joined at the heart. This is why left heart failure causes breathlessness (back-pressure into the lungs) and right heart failure causes leg swelling (back-pressure into the body).`
+    },
+    {
+      q: "There is a third circuit in the body, hidden in the abdomen. What is it, and why does it matter?",
+      body: `If you think of the circulatory system as just a pump and two loops, you will be caught off guard by a third circuit that runs entirely within the abdomen. This is the hepatic portal system - a second capillary bed that sits between the gut and the liver, and it changes everything about how the body handles nutrients, drugs and toxins.
+
+My Socratic question: when you eat a meal, nutrients are absorbed from your gut into the blood. Where do they go first?
+
+The answer is the liver. Instead of the gut's venous blood draining directly into the general circulation, it goes through a dedicated set of veins that empties into the liver first, before the blood reaches the heart.
+
+The hepatic portal system has three components:
+- The gut capillaries, where nutrients are absorbed.
+- The portal vein, which collects blood from the gut, the spleen and the pancreas and carries it to the liver.
+- The liver sinusoids, a second capillary bed inside the liver, where the nutrients, drugs and toxins are processed before the blood continues into the general circulation via the hepatic veins and the inferior vena cava.
+
+The main tributaries of the portal vein are the superior mesenteric vein (draining the midgut), the splenic vein (draining the spleen and receiving the inferior mesenteric vein from the hindgut), and the gastric veins (from the stomach).
+
+Because the portal vein has no valves, if the liver becomes scarred (as in cirrhosis), blood backs up and finds alternative routes to reach the heart. Those routes are the portocaval anastomoses, and the most dangerous of them is at the lower oesophagus, where the veins can rupture and bleed catastrophically.
+
+Crucial insight: the portal system is the body's metabolic checkpoint. Every nutrient, drug and toxin absorbed from the gut is processed by the liver before it can reach the rest of the body. This is why the liver is called the body's gatekeeper, why oral drugs are often inactivated by first-pass metabolism, and why liver disease affects so many organs at once. The portal system is the anatomical reason for all of it.`
+    },
+    {
+      q: "A baby's circulation is different from an adult's. What are the differences, and why do they disappear at birth?",
+      body: `A fetus does not breathe. Its lungs are full of fluid, not air. Oxygen comes to it from the placenta through the umbilical cord. This means the fetal circulation must be arranged very differently from an adult's - blood must be routed away from the useless lungs and directed towards the brain and body.
+
+My Socratic question: if the fetal lungs cannot deliver oxygen, how does the fetus keep its brain supplied, and how does that change at birth?
+
+The answer is that the fetus has three special shunts - shortcuts that route blood around the lungs and liver.
+
+- The ductus venosus - a blood vessel that bypasses the liver, taking oxygenated blood from the umbilical vein directly to the inferior vena cava.
+- The foramen ovale - a hole between the right atrium and left atrium that allows oxygenated blood to skip the right ventricle and the lungs entirely.
+- The ductus arteriosus - a vessel connecting the pulmonary trunk to the aorta, letting blood bypass the lungs when it leaves the right ventricle.
+
+At the moment of birth, three things happen at once. The baby takes its first breath, the lungs expand, and pulmonary resistance drops dramatically. Blood rushes into the lungs, the pressure in the left atrium rises above the pressure in the right atrium, and the foramen ovale snaps shut. Rising oxygen levels cause the ductus arteriosus to constrict. The umbilical cord is cut, and the umbilical vessels and ductus venosus close with them.
+
+Within days, all three shunts have permanently closed, leaving behind remnants with new names:
+- The ductus venosus becomes the ligamentum venosum.
+- The foramen ovale becomes the fossa ovalis.
+- The ductus arteriosus becomes the ligamentum arteriosum.
+
+Crucial insight: the fetal shunts are a temporary, beautifully engineered adaptation to life inside the womb. They exist because the fetal lungs are not usable, and they disappear because they would be harmful in a newborn. When a shunt fails to close, the result is a congenital heart defect - a patent ductus arteriosus or patent foramen ovale - where the child is left with a circulation that tries to do both jobs at once. This is why every newborn is examined for these signs.`
+    },
+    {
+      q: "What actually goes wrong in the circulatory system, and how does a doctor find it?",
+      body: `The circulatory system is so essential and so finely tuned that almost any disruption is serious. Understanding what can go wrong is not just academic - it is the reason every part of the anatomy you have just learned is clinically tested.
+
+My Socratic question: given that the heart is a pump, the vessels are pipes, and the blood is the fluid, what are the main categories of problems that could arise?
+
+The answer is four, and each one maps onto a specific part of the anatomy.
+
+- Problems with the pump - heart failure, where the heart cannot pump enough blood; arrhythmias, where the conducting system misfires; and valve disease, where a valve leaks (regurgitation) or narrows (stenosis).
+- Problems with the pipes - atherosclerosis, where arteries narrow with fatty plaques; aneurysms, where a vessel wall weakens and bulges; and varicose veins, where valves fail and veins pool.
+- Problems with the blood supply to the heart itself - myocardial infarction (heart attack), where a coronary artery is blocked and heart muscle dies.
+- Problems with the circuits - congenital heart defects (patent ductus arteriosus, septal defects), pulmonary embolism, and portal hypertension.
+
+Doctors detect these problems through a set of standard techniques:
+- Auscultation - listening with a stethoscope for heart sounds and murmurs, which reflect valve function.
+- Electrocardiogram (ECG) - recording the heart's electrical activity to detect arrhythmias and infarction.
+- Echocardiography - ultrasound imaging of the heart's chambers, valves and motion.
+- Cardiac catheterisation and angiography - injecting dye into the coronary arteries to look for blockages.
+- Blood tests - measuring cardiac troponin, which rises when heart muscle is damaged.
+
+Crucial insight: every clinical test in cardiology is a direct application of the anatomy you have just learned. An ECG is a picture of the conducting system; a murmur is the sound of a valve; a blocked coronary artery is the reason troponin rises. When you understand the anatomy, you understand the tests - and that is exactly why this topic is examined so heavily in every medical course.`
+    },
+  ],
+  theory: [
+    { q: "Why does the body need a circulatory system?", a: "Because diffusion alone is far too slow over the distances involved in a body made of trillions of cells. The circulatory system uses a pump (the heart) and a network of vessels (arteries, capillaries, veins) to move blood quickly to every tissue and back, delivering oxygen and nutrients and removing waste." },
+    { q: "Describe the position and orientation of the heart.", a: "The heart lies in the middle mediastinum, behind the sternum, tilted so that its base points towards the right shoulder and its apex points down and to the left, resting on the central tendon of the diaphragm. It is enclosed in the pericardium." },
+    { q: "Name the four chambers of the heart and describe what each does.", a: "Right atrium - receives deoxygenated blood from the body via the superior and inferior vena cavae. Right ventricle - pumps deoxygenated blood to the lungs via the pulmonary trunk. Left atrium - receives oxygenated blood from the lungs via the pulmonary veins. Left ventricle - pumps oxygenated blood to the body via the aorta. The left ventricle has the thickest wall because it pumps against the higher systemic pressure." },
+    { q: "Name the four heart valves and state what each separates.", a: "Tricuspid valve (right atrium and right ventricle); mitral valve (left atrium and left ventricle); pulmonary valve (right ventricle and pulmonary trunk); aortic valve (left ventricle and aorta). The AV valves are anchored by chordae tendineae and papillary muscles; the semilunar valves close passively when flow reverses." },
+    { q: "Describe the pericardium and its function.", a: "The pericardium is a double-layered sac around the heart. The outer fibrous layer is tough and anchors the heart, preventing overfilling. The inner serous layer is double: the parietal layer lines the fibrous pericardium and the visceral layer (epicardium) sticks to the heart. Between them, a thin film of pericardial fluid lubricates the surfaces so they slide smoothly with each beat." },
+    { q: "Name the three layers of the heart wall and state the function of each.", a: "Epicardium - outer layer, same as the visceral serous pericardium. Myocardium - thick middle muscular layer that does the pumping; thickest in the left ventricle. Endocardium - smooth inner lining in contact with blood, continuous with the lining of the blood vessels." },
+    { q: "Describe the coronary circulation.", a: "The coronary arteries arise from the first part of the aorta, just above the aortic valve. The left coronary artery divides into the left anterior descending and left circumflex arteries, supplying the left side of the heart. The right coronary artery supplies the right side and usually the SA and AV nodes. Blood drains into the coronary sinus and empties into the right atrium." },
+    { q: "Describe the conducting system of the heart.", a: "The sinoatrial (SA) node in the right atrium is the natural pacemaker, generating impulses about 60-100 times per minute. The impulse spreads through the atria to the atrioventricular (AV) node, where it is briefly delayed. It then travels down the bundle of His, the right and left bundle branches, and the Purkinje fibres, causing the ventricles to contract. The autonomic nervous system can speed the heart (sympathetic) or slow it (parasympathetic)." },
+    { q: "Distinguish the pulmonary circuit from the systemic circuit.", a: "The pulmonary circuit carries deoxygenated blood from the right ventricle to the lungs via the pulmonary trunk, where it is oxygenated, and returns to the left atrium via the pulmonary veins. The systemic circuit carries oxygenated blood from the left ventricle to every tissue via the aorta, delivers oxygen and nutrients, picks up carbon dioxide and waste, and returns to the right atrium via the superior and inferior vena cavae." },
+    { q: "Describe the hepatic portal system and its clinical importance.", a: "The hepatic portal system is a second capillary bed between the gut capillaries and the liver sinusoids. Blood from the gut, spleen and pancreas drains via the portal vein to the liver, where nutrients, drugs and toxins are processed before the blood continues to the general circulation. Because the portal vein has no valves, liver disease such as cirrhosis causes portal hypertension, and blood backs up into portocaval anastomoses (especially at the lower oesophagus), which can rupture and bleed." },
+    { q: "Describe the three fetal circulatory shunts and their fate at birth.", a: "The ductus venosus bypasses the liver (umbilical vein to inferior vena cava). The foramen ovale bypasses the lungs (right to left atrial shunt). The ductus arteriosus bypasses the lungs (pulmonary trunk to aorta). At birth, all three close: ductus venosus becomes the ligamentum venosum, foramen ovale becomes the fossa ovalis, and ductus arteriosus becomes the ligamentum arteriosum." },
+    { q: "Name two major clinical conditions affecting the circulatory system and how each is detected.", a: "Myocardial infarction (heart attack) - a coronary artery is blocked and heart muscle dies; detected by ECG and by raised cardiac troponin in the blood. Valvular heart disease - a valve leaks or narrows; detected by auscultation (murmur) and echocardiography." },
+  ],
+  videos: [
+    { channel: "Anatomy", title: "The Heart - Chambers, Valves and Blood Flow", note: "Chamber-by-chamber walkthrough of the heart with the valves and the direction of blood flow.", url: "https://www.youtube.com/results?search_query=heart+chambers+valves+blood+flow+anatomy" },
+    { channel: "Anatomy", title: "Coronary Circulation and Conducting System", note: "The heart's own blood supply and its built-in electrical pacemaker.", url: "https://www.youtube.com/results?search_query=coronary+circulation+conducting+system+heart+anatomy" },
+    { channel: "Anatomy", title: "Fetal Circulation and Changes at Birth", note: "The three fetal shunts explained, and what they become after birth.", url: "https://www.youtube.com/results?search_query=fetal+circulation+shunts+changes+at+birth" },
+  ],
+  mcqs: [
+    // ===== Note 1: what the circulatory system is and why it exists (Q1-5) =====
+    { q: "The main reason the body needs a circulatory system is:", o: ["To produce hormones", "Because diffusion alone is far too slow over the body's distances", "To store oxygen", "To make blood cells"], a: 1, w: "Diffusion only works over very short distances, so a pump and vessels are needed to move blood quickly to every cell." },
+    { q: "The three components of the circulatory system are:", o: ["Heart, blood vessels and blood", "Heart, lungs and kidneys", "Arteries, veins and nerves", "Blood, lymph and tissue fluid"], a: 0, w: "The circulatory system consists of the heart (pump), blood vessels (pipes) and blood (fluid)." },
+    { q: "The heart is best described as:", o: ["A bag of blood", "A muscular pump with four chambers", "A valve", "A hormone gland"], a: 1, w: "The heart is a four-chambered muscular pump that drives blood around the body." },
+    { q: "The main function of the blood vessels is to:", o: ["Produce blood cells", "Carry blood to and from the tissues", "Store oxygen", "Produce hormones"], a: 1, w: "Arteries, capillaries and veins carry blood between the heart and the tissues." },
+    { q: "The main function of blood in the circulatory system is to:", o: ["Carry oxygen, nutrients, hormones and waste", "Produce hormones", "Store fat", "Make new vessels"], a: 0, w: "Blood is the transport fluid that carries oxygen, nutrients, hormones and waste around the body." },
+
+    // ===== Note 2: the heart - position, chambers and orientation (Q6-10) =====
+    { q: "The apex of the heart points:", o: ["Up and to the right", "Down and to the left", "Straight forward", "Straight backward"], a: 1, w: "The apex of the heart points down and to the left, which is why the heartbeat is felt on the left side of the chest." },
+    { q: "The heart lies in which part of the mediastinum?", o: ["Anterior mediastinum", "Middle mediastinum", "Posterior mediastinum", "Superior mediastinum"], a: 1, w: "The heart lies in the middle mediastinum, behind the sternum." },
+    { q: "The chamber of the heart that receives deoxygenated blood from the body is the:", o: ["Right atrium", "Right ventricle", "Left atrium", "Left ventricle"], a: 0, w: "The right atrium receives deoxygenated blood from the superior and inferior vena cavae." },
+    { q: "Which chamber of the heart has the thickest muscular wall?", o: ["Right atrium", "Right ventricle", "Left atrium", "Left ventricle"], a: 3, w: "The left ventricle has the thickest wall because it must pump blood around the entire body." },
+    { q: "The base of the heart is:", o: ["The pointed lower end", "The upper, wider part", "The left side only", "The back of the heart only"], a: 1, w: "The base is the upper, wider part of the heart, from which the great vessels emerge." },
+
+    // ===== Note 3: heart valves and the direction of blood flow (Q11-15) =====
+    { q: "The valve between the right atrium and right ventricle is the:", o: ["Mitral valve", "Tricuspid valve", "Pulmonary valve", "Aortic valve"], a: 1, w: "The tricuspid valve has three cusps and sits between the right atrium and right ventricle." },
+    { q: "The valve between the left atrium and left ventricle is the:", o: ["Mitral valve", "Tricuspid valve", "Pulmonary valve", "Aortic valve"], a: 0, w: "The mitral valve has two cusps and sits between the left atrium and left ventricle." },
+    { q: "The semilunar valve between the right ventricle and pulmonary trunk is the:", o: ["Aortic valve", "Mitral valve", "Pulmonary valve", "Tricuspid valve"], a: 2, w: "The pulmonary valve is between the right ventricle and the pulmonary trunk." },
+    { q: "The AV valves are held shut during ventricular contraction by:", o: ["The chordae tendineae and papillary muscles", "The semilunar cusps", "The fibrous pericardium", "The coronary arteries"], a: 0, w: "The chordae tendineae anchor the AV valve cusps to papillary muscles, preventing backflow into the atria." },
+    { q: "Heart sounds heard through a stethoscope are produced by:", o: ["Blood flowing through the aorta", "The closing of heart valves", "Contraction of the myocardium", "The coronary arteries filling"], a: 1, w: "The heart sounds are the sounds of valves closing as blood flow reverses at the end of each phase." },
+
+    // ===== Note 4: the pericardium and heart wall (Q16-20) =====
+    { q: "The tough outer layer of the pericardium is the:", o: ["Serous pericardium", "Fibrous pericardium", "Epicardium", "Myocardium"], a: 1, w: "The fibrous pericardium is the tough outer sac that anchors the heart and prevents overfilling." },
+    { q: "The function of pericardial fluid is to:", o: ["Lubricate the surfaces so they slide smoothly", "Supply oxygen to the heart muscle", "Anchor the heart in place", "Prevent clot formation"], a: 0, w: "Pericardial fluid lubricates the serous layers, allowing them to slide smoothly with each beat." },
+    { q: "The three layers of the heart wall, from outside to inside, are:", o: ["Myocardium, endocardium, epicardium", "Endocardium, myocardium, epicardium", "Epicardium, myocardium, endocardium", "Epicardium, endocardium, myocardium"], a: 2, w: "Epicardium (outer), myocardium (middle muscular), endocardium (inner lining)." },
+    { q: "The layer of the heart wall that does the pumping is the:", o: ["Epicardium", "Myocardium", "Endocardium", "Pericardium"], a: 1, w: "The myocardium is the muscular layer responsible for contraction." },
+    { q: "The endocardium is continuous with:", o: ["The pericardial sac", "The lining of the blood vessels", "The pleural cavity", "The diaphragm"], a: 1, w: "The endocardium lines the heart chambers and is continuous with the lining (endothelium) of the blood vessels." },
+
+    // ===== Note 5: coronary circulation (Q21-25) =====
+    { q: "The coronary arteries arise from:", o: ["The pulmonary trunk", "The first part of the aorta, just above the aortic valve", "The superior vena cava", "The pulmonary veins"], a: 1, w: "The coronary arteries arise from the first part of the aorta, just above the aortic valve." },
+    { q: "The left coronary artery divides into:", o: ["The left anterior descending and left circumflex arteries", "The right coronary and left circumflex arteries", "The anterior and posterior interventricular arteries only", "The marginal and posterior descending arteries"], a: 0, w: "The left coronary artery divides into the left anterior descending (LAD) and left circumflex arteries." },
+    { q: "The right coronary artery typically supplies:", o: ["The left ventricle only", "The right atrium and right ventricle, and usually the SA and AV nodes", "The interventricular septum only", "The whole heart"], a: 1, w: "The right coronary artery supplies the right side of the heart and usually the SA and AV nodes." },
+    { q: "Coronary venous blood drains into the:", o: ["Inferior vena cava directly", "Coronary sinus, which empties into the right atrium", "Pulmonary veins", "Left atrium directly"], a: 1, w: "Coronary venous blood drains into the coronary sinus, which empties into the right atrium." },
+    { q: "The reason the heart needs its own coronary blood supply is that:", o: ["The endocardium prevents the heart muscle from absorbing oxygen from the blood in the chambers", "The blood in the chambers is too thick", "The heart chambers have no blood inside them", "The heart pumps too fast"], a: 0, w: "The endocardium is a smooth, non-absorbing lining, so the heart muscle must be supplied by the coronary arteries." },
+
+    // ===== Note 6: conducting system and heartbeat (Q26-30) =====
+    { q: "The natural pacemaker of the heart is the:", o: ["AV node", "SA node", "Bundle of His", "Purkinje fibres"], a: 1, w: "The sinoatrial (SA) node in the right atrium is the heart's natural pacemaker." },
+    { q: "The SA node generates impulses at a rate of about:", o: ["20-40 per minute", "60-100 per minute", "120-160 per minute", "200 per minute"], a: 1, w: "The SA node fires about 60-100 times per minute at rest." },
+    { q: "The AV node's main function is to:", o: ["Initiate the heartbeat", "Delay the impulse so the atria finish emptying before the ventricles contract", "Speed up the heart rate", "Send blood to the lungs"], a: 1, w: "The AV node delays the impulse, coordinating atrial and ventricular contraction." },
+    { q: "From the AV node, the impulse travels to the ventricles via the:", o: ["Bundle of His, bundle branches and Purkinje fibres", "Coronary sinus", "Pulmonary veins", "Vagus nerve"], a: 0, w: "The impulse travels down the bundle of His, into the bundle branches, then the Purkinje fibres." },
+    { q: "The autonomic nervous system affects the heartbeat by:", o: ["Speeding it up (sympathetic) or slowing it down (parasympathetic)", "Only slowing it down", "Only speeding it up", "Having no effect"], a: 0, w: "Sympathetic nerves speed up the heart; parasympathetic (vagus) nerves slow it down." },
+
+    // ===== Note 7: the great vessels and the two circuits (Q31-35) =====
+    { q: "The pulmonary circuit carries blood:", o: ["From the left ventricle to the body", "From the right ventricle to the lungs and back to the left atrium", "From the body to the right atrium only", "From the aorta to the coronary arteries"], a: 1, w: "The pulmonary circuit takes deoxygenated blood from the right ventricle to the lungs and returns oxygenated blood to the left atrium." },
+    { q: "The systemic circuit carries blood:", o: ["From the left ventricle to the body and back to the right atrium", "From the right ventricle to the lungs", "From the right atrium to the left atrium", "From the aorta to the pulmonary trunk"], a: 0, w: "The systemic circuit takes oxygenated blood from the left ventricle to the body and returns deoxygenated blood to the right atrium." },
+    { q: "Blood is carried from the heart to the lungs by the:", o: ["Aorta", "Pulmonary trunk", "Superior vena cava", "Pulmonary veins"], a: 1, w: "The pulmonary trunk carries deoxygenated blood from the right ventricle to the lungs." },
+    { q: "Oxygenated blood returns from the lungs to the heart via the:", o: ["Pulmonary veins", "Pulmonary trunk", "Aorta", "Superior vena cava"], a: 0, w: "The pulmonary veins carry oxygenated blood from the lungs to the left atrium." },
+    { q: "Deoxygenated blood returns from the body to the heart via the:", o: ["Aorta", "Pulmonary veins", "Superior and inferior vena cavae", "Coronary sinus only"], a: 2, w: "Deoxygenated blood returns from the body via the superior and inferior vena cavae to the right atrium." },
+
+    // ===== Note 8: systemic, pulmonary and portal circulation (Q36-40) =====
+    { q: "The hepatic portal vein carries blood from:", o: ["The heart to the liver", "The gut, spleen and pancreas to the liver", "The liver to the heart", "The kidney to the liver"], a: 1, w: "The portal vein carries blood from the gut, spleen and pancreas to the liver." },
+    { q: "The main tributaries that form the portal vein are:", o: ["The superior mesenteric, splenic and gastric veins", "The hepatic and renal veins", "The pulmonary and azygos veins", "The iliac and femoral veins"], a: 0, w: "The portal vein is formed mainly by the superior mesenteric vein and the splenic vein, with gastric tributaries." },
+    { q: "The portal system has no valves, which means:", o: ["Blood can only flow one way", "Backed-up blood can find alternative routes when portal pressure rises", "Blood cannot enter the liver", "The portal vein is the same as the hepatic vein"], a: 1, w: "Because the portal vein has no valves, when liver disease raises portal pressure, blood backs up into portocaval anastomoses." },
+    { q: "The most dangerous portocaval anastomosis site is the:", o: ["Umbilicus", "Lower oesophagus", "Rectum", "Posterior abdominal wall"], a: 1, w: "Oesophageal varices are the most dangerous because they can rupture and cause massive haematemesis." },
+    { q: "The main purpose of the portal system is to:", o: ["Carry oxygen to the liver", "Ensure absorbed nutrients, drugs and toxins are processed by the liver before they reach the general circulation", "Remove waste from the liver", "Store fat in the liver"], a: 1, w: "The portal system routes absorbed substances through the liver first, making the liver the body's gatekeeper." },
+
+    // ===== Note 9: fetal circulation and changes at birth (Q41-45) =====
+    { q: "The fetal shunt that bypasses the liver is the:", o: ["Foramen ovale", "Ductus arteriosus", "Ductus venosus", "Umbilical artery"], a: 2, w: "The ductus venosus bypasses the liver, carrying blood from the umbilical vein to the inferior vena cava." },
+    { q: "The fetal shunt that bypasses the lungs by connecting the right and left atria is the:", o: ["Foramen ovale", "Ductus arteriosus", "Ductus venosus", "Umbilical vein"], a: 0, w: "The foramen ovale is a hole between the right and left atria, bypassing the lungs." },
+    { q: "The fetal shunt that connects the pulmonary trunk to the aorta is the:", o: ["Ductus venosus", "Foramen ovale", "Ductus arteriosus", "Umbilical artery"], a: 2, w: "The ductus arteriosus connects the pulmonary trunk to the descending aorta, bypassing the lungs." },
+    { q: "After birth, the ductus arteriosus becomes the:", o: ["Ligamentum teres", "Ligamentum venosum", "Ligamentum arteriosum", "Fossa ovalis"], a: 2, w: "The closed ductus arteriosus becomes the ligamentum arteriosum." },
+    { q: "The foramen ovale closes at birth because:", o: ["Oxygen levels fall", "Left atrial pressure rises as pulmonary blood flow increases", "The umbilical cord is cut only", "The ductus venosus closes"], a: 1, w: "With the first breath, pulmonary blood flow rises, left atrial pressure exceeds right, and the flap of the foramen ovale closes." },
+
+    // ===== Note 10: clinical anatomy (Q46-50) =====
+    { q: "A myocardial infarction (heart attack) is most commonly caused by:", o: ["A blocked coronary artery", "A blocked pulmonary vein", "A leaking heart valve", "A defect in the SA node"], a: 0, w: "A heart attack happens when a coronary artery is blocked and heart muscle is starved of oxygen." },
+    { q: "A heart murmur heard on auscultation most likely reflects:", o: ["Normal heart sounds", "A problem with a heart valve", "A heart attack", "An arrhythmia"], a: 1, w: "Heart murmurs are sounds produced by turbulent blood flow, usually from a valve problem." },
+    { q: "An electrocardiogram (ECG) records:", o: ["The heart's electrical activity", "The heart's size", "The heart's blood supply", "The blood pressure"], a: 0, w: "An ECG records the electrical activity of the heart, revealing arrhythmias and patterns of infarction." },
+    { q: "The blood test used to detect heart muscle damage is:", o: ["Blood glucose", "Cardiac troponin", "Urea and electrolytes", "Full blood count"], a: 1, w: "Cardiac troponin rises in the blood when heart muscle is damaged, and is used to diagnose a heart attack." },
+    { q: "Left heart failure typically causes:", o: ["Leg swelling", "Breathlessness from back-pressure into the lungs", "Abdominal swelling only", "No symptoms"], a: 1, w: "Left heart failure causes back-pressure into the pulmonary circulation, leading to breathlessness." },
+  ],
+};
+
+/* --------------------------- an2:8 --------------------------- */
+const T_AN2_CARDIOVASCULAR = {
+  courseId: "an2",
+  topicIndex: 8,
+  title: "Cardiovascular System",
+  minutes: 30,
+  note: [
+    {
+      q: "We have already met the heart and the two circuits. So what does the cardiovascular system add?",
+      body: `The previous topic gave you the pump and the two loops. It showed you the heart, its chambers, its valves, its own blood supply, and its pacemaker. That topic was about the engine. This one is about the pipe network.
+
+My Socratic question: if the heart is the pump that pushes blood around the body, what has to happen to that blood once it leaves the heart? What kind of pipes does it travel through, and how does it get to every cell in your body?
+
+The answer is that the heart is only half the story. The blood must be delivered - through large arteries, then smaller arteries, then arterioles, then microscopic capillaries, then venules, then veins, and finally back to the heart. This is the vascular tree. The cardiovascular system is the study of that whole network - how the vessels are built, how they behave, how the blood flows through them, and how the body adjusts that flow from moment to moment.
+
+The cardiovascular system has three functional parts:
+- The pump - the heart, which you studied in the last topic.
+- The distribution and collection network - arteries, capillaries and veins.
+- The control systems - the mechanisms that adjust vessel diameter, blood pressure and blood flow to match the body's needs at any given moment.
+
+Crucial insight: the cardiovascular system is the whole transport network - the pump, the pipes and the controls that keep them working together. Every cell in your body depends on it, and every clinical problem in cardiology comes down to one of three things going wrong: the pump, the pipes or the controls. Understanding the vessels is therefore just as important as understanding the heart itself.`
+    },
+    {
+      q: "The body has three main types of blood vessel. Why three, and what is each one for?",
+      body: `If you designed a plumbing system to serve an entire city, you would not use the same pipe everywhere. You would use thick pipes to carry water at high pressure from the reservoir, fine pipes to deliver it to every home, and larger pipes to carry the used water away. The body does exactly the same thing, with three types of vessel.
+
+My Socratic question: the same fluid - blood - has to travel through very different parts of the body. Why not use one universal type of tube?
+
+The answer is that the demands change. Blood leaves the heart at high pressure and must be carried quickly to the tissues. Then it must move slowly enough through the tissues to exchange oxygen and nutrients. Then it must return to the heart at low pressure without falling backward. No single tube can do all three jobs efficiently.
+
+So there are three vessel types:
+
+- Arteries - thick-walled, muscular and elastic tubes that carry blood away from the heart under high pressure. They branch into smaller and smaller vessels, eventually forming arterioles.
+- Capillaries - microscopic, thin-walled vessels, only one cell thick, where the actual exchange of gases, nutrients and waste takes place between blood and tissue.
+- Veins - thin-walled, floppy tubes that carry blood back to the heart at low pressure. They contain valves to prevent backflow and act as a reservoir of blood.
+
+The progression from artery to arteriole to capillary to venule to vein is called the vascular tree, and it is a smooth transition from high pressure to low, from thick walls to thin, from fast flow to slow.
+
+Crucial insight: each vessel type is specialised for a specific job, and the whole network works because the design changes as the demands change. Arteries withstand pressure, capillaries allow exchange, and veins return blood at low pressure. This is the foundation of everything else in this topic.`
+    },
+    {
+      q: "Arteries come in three sizes - elastic, muscular and arterioles. Why do they need all three?",
+      body: `Not all arteries are the same. The aorta looks and behaves completely differently from a small artery in the forearm, and both behave differently again from an arteriole - the microscopic vessel just before the capillary. Each of the three is built for a specific purpose.
+
+My Socratic question: if all three carry blood away from the heart, why does the body need three different types?
+
+The answer is that they do three different jobs. Some arteries must withstand the huge pressure pulse of each heartbeat. Others must distribute blood to specific organs. Others must fine-tune the flow to individual tissues by changing their diameter moment to moment.
+
+The three types:
+
+- Elastic arteries - the largest arteries, closest to the heart. Their walls are packed with elastic fibres, which stretch when the heart pumps and recoil when it relaxes. This is what smooths out the pulse into a continuous flow. Examples: the aorta, the pulmonary trunk, the common carotid arteries.
+- Muscular arteries - medium-sized vessels that distribute blood to specific organs. Their walls have a thick middle layer of smooth muscle, which allows them to partially control blood flow to their target organ. Examples: the brachial artery, the femoral artery, the coronary arteries.
+- Arterioles - the smallest arteries, immediately before capillaries. They have thin walls but a rich supply of smooth muscle, allowing them to change diameter constantly. They are the main resistance vessels of the body, and they are the primary site where blood flow is controlled.
+
+Crucial insight: the three sizes of artery reflect three roles - conductance (elastic), distribution (muscular) and resistance (arterioles). The arterioles are the most important for day-to-day control, because they are where the body decides, second by second, which tissues get blood and how much.`
+    },
+    {
+      q: "Capillaries are only one cell thick. How can such a thin vessel do so much?",
+      body: `A capillary is the smallest blood vessel in the body. Its wall is a single layer of endothelial cells sitting on a thin basement membrane - there is no muscle, no elastic tissue, no outer connective sheath. Yet capillaries are where the entire purpose of the cardiovascular system actually happens: the exchange of oxygen, nutrients, carbon dioxide and waste between blood and tissue.
+
+My Socratic question: a vessel this thin would burst under any real pressure. How does a capillary survive?
+
+The answer is that by the time blood reaches a capillary, the pressure has already been reduced by the arterioles to a low, safe level - enough to keep blood moving, but nowhere near enough to threaten a one-cell-thick wall. The capillary is not built to resist pressure; it is built to permit exchange, and thinness is exactly what that demands.
+
+The three types of capillary reflect three different exchange needs:
+
+- Continuous capillaries - the endothelial cells are joined by tight junctions, allowing only small molecules through. Found in muscle, skin, connective tissue, and the central nervous system (where they form part of the blood-brain barrier).
+- Fenestrated capillaries - have small pores called fenestrations that let larger molecules through. Found in the kidney, intestines and endocrine glands, where rapid exchange is needed.
+- Sinusoidal capillaries - have large gaps between the cells, allowing even whole cells and large proteins to pass through. Found in the liver, spleen and bone marrow.
+
+Crucial insight: capillaries are the "business end" of the cardiovascular system. Every other vessel exists to get blood to and from them, and every other vessel is designed with the pressures and speeds that capillaries cannot tolerate. Thinness is the capillary's design feature, not its weakness.`
+    },
+    {
+      q: "Veins have to return blood to the heart from the feet. How does blood flow back upward against gravity?",
+      body: `Blood leaves the heart at high pressure, but by the time it has passed through the capillaries it is almost at zero pressure. It must then travel back up to the heart - from your feet, often over a metre upward - through vessels that have no pump of their own. Yet it manages.
+
+My Socratic question: blood in the veins of the leg must go up against gravity, with no pressure to push it. What could possibly keep it moving?
+
+The answer is a combination of four mechanisms working together.
+
+- Valves - veins contain one-way valves, formed from folds of the inner lining. These prevent blood from falling back down when the vein is squeezed. Valves are most numerous in the leg veins, exactly where the gravitational problem is greatest.
+- The skeletal muscle pump - when you walk, the muscles of your legs contract and squeeze the deep veins running between them. This squeezes blood upward, and the valves stop it falling back. This is why walking helps circulation and standing still does not.
+- The respiratory pump - when you breathe in, the pressure in your chest falls relative to your abdomen. This pressure difference pulls blood from the abdominal veins into the thoracic veins, helping it return to the heart.
+- The heart's suction - when the ventricles relax, the pressure in the atria falls, drawing blood into the heart from the great veins.
+
+The veins also act as a reservoir. Because they are floppy and compliant, they can hold about 70 percent of the body's total blood volume at any moment. When the body needs more blood in the arteries - during exercise, or after haemorrhage - the sympathetic nervous system constricts the veins and shifts that stored blood into the active circulation.
+
+Crucial insight: venous return is a mechanical problem solved by valves, muscle pumps, breathing and suction. When any of these fail - as when valves are damaged and become varicose, or when a person is immobile for long periods - the blood pools in the legs. This is why hospital patients are encouraged to move, and why long-haul flights advise walking up and down the aisle.`
+    },
+    {
+      q: "Blood pressure is one of the most basic measurements in medicine. What actually is it, and what controls it?",
+      body: `Every time you visit a doctor, one of the first things measured is your blood pressure - a pair of numbers like 120 over 80. It is the single most measured physiological variable in all of medicine, and yet most people do not know what the numbers actually mean.
+
+My Socratic question: blood pressure is written as two numbers - 120/80. What are those two numbers measuring?
+
+The answer is that blood pressure is the force blood exerts on the walls of the arteries, expressed in millimetres of mercury. The higher number, called the systolic pressure, is the peak pressure when the heart contracts. The lower number, called the diastolic pressure, is the pressure when the heart relaxes. So 120/80 means a systolic of 120 mmHg and a diastolic of 80 mmHg.
+
+Blood pressure is generated by three factors working together:
+- Cardiac output - how much blood the heart pumps out each minute. This depends on heart rate and stroke volume.
+- Peripheral resistance - how much the arterioles resist the flow of blood. Wider arterioles mean less resistance and lower pressure; narrower arterioles mean more resistance and higher pressure.
+- Blood volume - how much blood there is in the circulation. More blood means higher pressure.
+
+The formula is simple: blood pressure = cardiac output × peripheral resistance.
+
+The body controls blood pressure through three systems that act on different timescales:
+- The nervous system, which acts within seconds. Baroreceptors in the aorta and carotid arteries sense changes in blood pressure and trigger reflex adjustments in heart rate and vessel diameter.
+- The endocrine system, which acts within minutes. Adrenaline and noradrenaline raise blood pressure; the renin-angiotensin-aldosterone system regulates blood volume and vessel tone.
+- The kidneys, which act over hours to days. They adjust blood volume by controlling how much salt and water they retain or excrete.
+
+Crucial insight: blood pressure is the product of how much blood is pumped and how strongly the vessels resist it. Every medication for high blood pressure works on one of these three factors - slowing the heart, relaxing the arterioles, or removing fluid. Every part of the cardiovascular anatomy you are learning exists to keep these three factors in balance.`
+    },
+    {
+      q: "The body can send more blood to one organ and less to another at the same moment. How?",
+      body: `During exercise, your muscles get far more blood than usual. During digestion, your gut does. When you are frightened, blood is diverted to your muscles and away from your gut. The heart's total output does not change that much moment to moment - yet the distribution changes dramatically. How is that possible?
+
+My Socratic question: the body's total blood supply is fixed at any given moment. If one tissue is going to get more, another must get less. How does the body decide?
+
+The answer is by controlling the diameter of the arterioles, the resistance vessels. The arterioles leading into a tissue can narrow (vasoconstriction) or widen (vasodilation). When they narrow, less blood flows into that tissue; when they widen, more blood flows in. This is how the body redistributes its fixed blood supply.
+
+Two principles govern this redistribution:
+
+- Blood flows from high pressure to low pressure. At every fork in the arterial tree, blood goes preferentially down the branch where the pressure drop is greatest. If one branch's arterioles widen and the other's narrow, more blood will flow down the wide branch.
+- Resistance depends on the fourth power of the radius. This is the surprising part: if you halve the diameter of an arteriole, the resistance does not double - it goes up 16 times. This means small changes in arteriole diameter have huge effects on blood flow, which is exactly why the body uses them as its main control point.
+
+Local control happens through metabolic signals. When a tissue works harder, it produces more carbon dioxide, more acid, and more adenosine, all of which dilate the local arterioles. This is called autoregulation - the tissue decides its own blood flow based on its own needs.
+
+Central control happens through the sympathetic nervous system. Sympathetic nerves can constrict arterioles in one part of the body while leaving others alone. During exercise, sympathetic outflow to the muscles is reduced (dilation) while sympathetic outflow to the gut is increased (constriction), which is exactly how the blood shifts to where it is needed.
+
+Crucial insight: the body does not choose which organ gets blood - the arterioles do, by widening and narrowing in response to local and central signals. This is why the arterioles are called the body's resistance vessels, and why almost every cardiovascular drug acts on them.`
+    },
+    {
+      q: "How does blood actually exchange substances with the tissues at the capillary level?",
+      body: `The whole cardiovascular system exists to serve one event - the moment when blood and tissue exchange substances across a capillary wall. This is called the microcirculation, and it is where the actual business of the body happens.
+
+My Socratic question: blood flows through a capillary in about a second. In that brief moment, how does oxygen, glucose, hormones and waste all manage to cross from blood to tissue, and back?
+
+The answer is a combination of four physical forces, all acting at once. The exchange happens in two directions: outward at the arterial end of the capillary, inward at the venous end.
+
+- Capillary hydrostatic pressure pushes fluid out. This is the blood pressure inside the capillary. At the arterial end it is higher (about 35 mmHg), pushing fluid out into the tissue. At the venous end it is lower (about 15 mmHg), so it no longer pushes outward.
+- Blood colloid osmotic pressure pulls fluid in. This is the pulling force of proteins in the plasma, especially albumin, which cannot cross the capillary wall. It stays roughly constant at about 25 mmHg, and always pulls fluid inward.
+- Interstitial hydrostatic pressure and interstitial osmotic pressure are the corresponding forces on the tissue side. In most tissues these are close to zero, so they usually do not affect the calculation much.
+
+The net effect: at the arterial end of the capillary, outward pressure is higher than inward pull, so fluid and small dissolved substances leak out into the tissue. At the venous end, outward pressure has fallen below the inward pull, so fluid is drawn back in. The small volume of fluid that is left in the tissue is collected by the lymphatic vessels and returned to the circulation - which is the subject of the next note.
+
+Different tissues have different capillary arrangements. In the lungs, capillaries are wrapped around alveoli for gas exchange. In the liver, they are sinusoidal and leaky, allowing large molecules to pass. In the kidney, glomerular capillaries are specialised for filtration. In the gut, they are fenestrated to absorb nutrients.
+
+Crucial insight: capillary exchange is a tug-of-war between pressure pushing out and protein pulling in. The two forces balance differently at the two ends of the capillary, and the small leakage that remains is drained by the lymphatics. When this balance is disturbed - for example, when plasma protein is low in liver disease or malnutrition - fluid accumulates in the tissues, producing oedema.`
+    },
+    {
+      q: "There is a whole parallel system of vessels next to the cardiovascular system that most students forget. What is it, and why does it matter?",
+      body: `Alongside every artery and vein runs a third set of vessels that most anatomy courses treat as a footnote. They are the lymphatic vessels. But they are essential - without them, the cardiovascular system itself would fail within hours.
+
+My Socratic question: the capillary exchange leaves a small amount of fluid in the tissues every minute. Over a day, that adds up to several litres. Where does that fluid go, and what would happen if it did not go anywhere?
+
+The answer is that the lymphatic system returns it to the blood. Without lymphatics, the tissue fluid would accumulate, and the body would swell up within hours. This is why the lymphatic system is sometimes called the second circulatory system.
+
+The lymphatic system has three components:
+
+- Lymphatic capillaries - blind-ended tubes that start in the tissues and collect the excess fluid. They are more permeable than blood capillaries, so they can also pick up large molecules, cellular debris and even bacteria that blood capillaries cannot.
+- Lymphatic vessels and nodes - the capillaries drain into larger lymphatic vessels, which carry the lymph through lymph nodes. The nodes filter the lymph, removing pathogens and debris, and they are also where immune cells meet foreign antigens and mount a response.
+- The thoracic duct and right lymphatic duct - the two great trunks that empty lymph back into the venous system at the base of the neck, at the left and right subclavian veins respectively.
+
+The lymphatic system also has two other important jobs:
+- It absorbs fats from the small intestine. Dietary fats are packaged into chylomicrons that are too large for blood capillaries, so they enter the lacteals (specialised lymphatic vessels in the villi) and are carried by the lymph to the thoracic duct before entering the blood.
+- It is a major part of the immune system. Lymph nodes are packed with lymphocytes, and lymph is filtered through them before returning to the blood.
+
+Crucial insight: the lymphatic system is the cardiovascular system's quiet partner. It drains the excess tissue fluid that capillaries leave behind, absorbs fats from the gut, and provides the highways along which the immune system patrols the body. When it fails - from blockage by tumour, surgical removal, or infection - the result is lymphoedema, the swelling of a limb, which is why every breast cancer patient is monitored for swelling in the arm after lymph node removal.`
+    },
+    {
+      q: "What actually goes wrong when the cardiovascular system fails, and how do doctors recognise it?",
+      body: `The cardiovascular system is so central to life that almost any problem with it is serious. Understanding the clinical consequences is the reason this anatomy matters - and it is exactly what examiners test.
+
+My Socratic question: the cardiovascular system has a pump, pipes and controls. Given that structure, what kinds of failures would you expect - and how would each show up clinically?
+
+The answer is that each part can fail in its own characteristic way, and each failure produces a recognisable clinical picture.
+
+- Failure of the pipes - atherosclerosis is the classic. Fatty plaques build up inside the arteries, narrowing them and stiffening their walls. When a plaque ruptures, a clot forms on top, blocking the vessel entirely. In the heart, this is a myocardial infarction. In the brain, a stroke. In the legs, peripheral arterial disease, which causes pain on walking that stops at rest (intermittent claudication). Treatment includes lifestyle changes, statins, blood thinners and surgical bypass.
+- Failure of venous return - varicose veins from valve incompetence, and deep vein thrombosis (DVT) when a clot forms in a deep vein of the leg. A DVT is dangerous because a piece of the clot can break off and travel to the lungs, causing a pulmonary embolism. This is why immobile patients are given blood thinners.
+- Failure of blood pressure control - hypertension (high blood pressure) is the most common cardiovascular disease worldwide, and it silently damages the vessels, heart, kidneys and brain over years. Hypertension causes strokes, heart attacks, kidney failure and blindness. Hypotension (low blood pressure) causes fainting and, in severe cases, shock.
+- Failure of the microcirculation - oedema when capillary exchange is unbalanced, as in heart failure, liver disease or kidney disease.
+- Failure of the lymphatics - lymphoedema when lymph cannot drain, and increased infection risk because the lymph nodes cannot filter pathogens.
+
+Doctors detect these problems through standard tools:
+- Physical examination - feeling pulses, listening to the heart and lungs, and checking for oedema.
+- Blood pressure measurement - to detect hypertension.
+- Blood tests - cholesterol, glucose, D-dimer (for clots), BNP (for heart failure).
+- Imaging - Doppler ultrasound for DVT and peripheral arterial disease; CT angiography for the coronary arteries.
+- Invasive procedures - cardiac catheterisation, angioplasty and stenting for blocked coronary arteries.
+
+Crucial insight: every clinical problem in the cardiovascular system maps onto a specific part of the anatomy you have just learned. Atherosclerosis is a disease of arteries; varicose veins are a disease of venous valves; lymphoedema is a disease of the lymphatic system. When you understand the anatomy, you understand the disease, and you understand the treatment.`
+    },
+  ],
+  theory: [
+    { q: "How does the cardiovascular system differ from the circulatory system topic?", a: "The circulatory system topic covered the heart and the two circuits (pulmonary and systemic). The cardiovascular system topic focuses on the whole blood vessel network - arteries, capillaries and veins - how they are built, how blood flows through them, how blood pressure is generated and controlled, the microcirculation, and the lymphatic system that runs alongside." },
+    { q: "Name the three types of blood vessel and state the function of each.", a: "Arteries carry blood away from the heart under high pressure, with thick muscular and elastic walls. Capillaries are microscopic, one-cell-thick vessels where exchange of gases, nutrients and waste takes place. Veins carry blood back to the heart at low pressure, have thin walls and valves, and act as a blood reservoir." },
+    { q: "Describe the three types of artery and give an example of each.", a: "Elastic arteries are the largest, closest to the heart, with walls packed with elastic fibres (aorta, pulmonary trunk, common carotid). Muscular arteries are medium-sized distribution vessels with a thick middle muscular layer (brachial, femoral, coronary). Arterioles are the smallest arteries, immediately before capillaries, and are the main resistance vessels that control blood flow." },
+    { q: "Describe the three types of capillary and give an example of each.", a: "Continuous capillaries have tight junctions between endothelial cells and allow only small molecules through - found in muscle, skin and connective tissue (and forming the blood-brain barrier). Fenestrated capillaries have pores and allow larger molecules through - found in kidney, intestines and endocrine glands. Sinusoidal capillaries have large gaps allowing cells and proteins through - found in liver, spleen and bone marrow." },
+    { q: "Describe the four mechanisms that help venous return.", a: "One-way valves prevent backflow. The skeletal muscle pump squeezes veins during movement. The respiratory pump uses pressure changes in the chest during breathing to draw blood toward the heart. The heart itself provides suction when the ventricles relax. Veins also act as a blood reservoir holding about 70 percent of blood volume." },
+    { q: "What is blood pressure and what three factors determine it?", a: "Blood pressure is the force blood exerts on artery walls, measured in mmHg and written as systolic/diastolic. It is determined by cardiac output (heart rate × stroke volume), peripheral resistance (mainly determined by arteriole diameter), and blood volume. The formula is: blood pressure = cardiac output × peripheral resistance." },
+    { q: "How does the body redistribute blood between different organs?", a: "By adjusting the diameter of arterioles - vasoconstriction narrows them and reduces flow, vasodilation widens them and increases flow. Local metabolic signals (carbon dioxide, acid, adenosine) dilate arterioles in active tissues, while the sympathetic nervous system can constrict arterioles in one region while dilating them in another. Resistance varies with the fourth power of the radius, so small diameter changes produce large flow changes." },
+    { q: "Describe the four forces involved in capillary exchange.", a: "Capillary hydrostatic pressure pushes fluid out (higher at the arterial end, lower at the venous end). Blood colloid osmotic pressure pulls fluid in (constant, from plasma proteins). Interstitial hydrostatic pressure and interstitial osmotic pressure are the corresponding forces on the tissue side, usually close to zero. The net effect is that fluid exits at the arterial end and re-enters at the venous end, with the small residual collected by lymphatics." },
+    { q: "Describe the lymphatic system and its three main functions.", a: "The lymphatic system consists of lymphatic capillaries, lymphatic vessels and nodes, and the thoracic and right lymphatic ducts that empty into the subclavian veins. Its three functions are: (1) to return excess tissue fluid to the blood, (2) to absorb fats from the small intestine via the lacteals, and (3) to filter lymph through lymph nodes as part of the immune system." },
+    { q: "Explain why capillary exchange and lymphatic drainage are linked.", a: "Capillary exchange leaves a small amount of fluid in the tissues at every heartbeat, since the outward push at the arterial end is slightly greater than the inward pull at the venous end. This excess fluid is collected by lymphatic capillaries and returned to the blood. If lymphatic drainage is blocked, or capillary exchange becomes unbalanced (e.g. low plasma protein), the fluid accumulates in the tissues and causes oedema." },
+    { q: "List four clinical conditions affecting the cardiovascular system, and how each is detected.", a: "Atherosclerosis - detected by Doppler ultrasound or angiography. Deep vein thrombosis - detected by Doppler ultrasound and D-dimer blood test. Hypertension - detected by blood pressure measurement. Lymphoedema - detected by physical examination and history (e.g. after lymph node surgery). Each condition maps to a specific part of the anatomy." },
+    { q: "Explain the relationship between arteriole diameter and blood flow.", a: "Blood flow through a vessel is inversely proportional to resistance, and resistance depends on the fourth power of the radius. This means small changes in arteriole diameter produce very large changes in flow: halving the diameter increases resistance 16 times. This is why arterioles are the body's main control point for blood distribution." },
+  ],
+  videos: [
+    { channel: "Anatomy", title: "Structure and Function of Blood Vessels", note: "Arteries, capillaries and veins compared, with their wall layers and specialised features.", url: "https://www.youtube.com/results?search_query=structure+function+blood+vessels+arteries+capillaries+veins" },
+    { channel: "Anatomy", title: "Blood Pressure Regulation and Microcirculation", note: "How the body controls blood pressure, and how capillary exchange works at the tissue level.", url: "https://www.youtube.com/results?search_query=blood+pressure+regulation+microcirculation+capillary+exchange" },
+    { channel: "Anatomy", title: "The Lymphatic System and Lymphatic Drainage", note: "How lymph is formed, filtered through lymph nodes, and returned to the venous circulation.", url: "https://www.youtube.com/results?search_query=lymphatic+system+drainage+lymph+nodes+anatomy" },
+  ],
+  mcqs: [
+    // ===== Note 1: what the cardiovascular system is (Q1-5) =====
+    { q: "The cardiovascular system topic differs from the circulatory system topic mainly because it focuses on:", o: ["The whole blood vessel network and how blood flows through it", "The heart alone", "Only the pulmonary circuit", "Only the kidney"], a: 0, w: "The circulatory system topic covered the heart and two circuits; the cardiovascular system topic covers the whole vessel network." },
+    { q: "The three functional parts of the cardiovascular system are:", o: ["Pump, distribution and collection network, and control systems", "Heart, lungs and kidneys", "Arteries, veins and nerves", "Blood, bones and muscles"], a: 0, w: "The cardiovascular system consists of the pump (heart), the vessels, and the control systems that adjust them." },
+    { q: "The main role of the vessels in the cardiovascular system is to:", o: ["Produce hormones", "Carry blood between the heart and every tissue", "Filter waste from blood", "Store blood cells"], a: 1, w: "Vessels carry blood from the heart to the tissues (via arteries and capillaries) and back (via veins)." },
+    { q: "Every clinical problem in the cardiovascular system comes down to a failure of one of three things:", o: ["Pump, pipes or controls", "Heart, lungs or kidneys", "Blood, water or salt", "Nerves, muscles or bones"], a: 0, w: "Cardiovascular disease can be classified as failure of the pump, the vessels, or the control systems." },
+    { q: "The progression from artery to capillary to vein is called the:", o: ["Pulmonary circuit", "Vascular tree", "Portal system", "Systemic loop"], a: 1, w: "The vascular tree describes the branching progression from arteries down to capillaries and back through veins." },
+
+    // ===== Note 2: three types of blood vessel (Q6-10) =====
+    { q: "The three main types of blood vessel are:", o: ["Arteries, capillaries and veins", "Arteries, lymphatics and veins", "Capillaries, ducts and sinuses", "Arterioles, venules and nerves"], a: 0, w: "The three main vessel types are arteries, capillaries and veins." },
+    { q: "Arteries are specially built to:", o: ["Allow rapid diffusion", "Carry blood away from the heart under high pressure", "Store large volumes of blood", "Filter blood"], a: 1, w: "Arteries have thick muscular and elastic walls to withstand the high pressure of blood leaving the heart." },
+    { q: "Capillaries are specially built to:", o: ["Permit exchange between blood and tissue", "Withstand high pressure", "Store blood", "Prevent clotting"], a: 0, w: "Capillaries are one cell thick, allowing exchange of gases, nutrients and waste." },
+    { q: "Veins are specially built to:", o: ["Resist high pressure", "Return blood to the heart at low pressure and act as a reservoir", "Exchange gases", "Carry oxygenated blood away from the heart"], a: 1, w: "Veins have thin walls, valves and act as a blood reservoir that holds about 70% of total blood volume." },
+    { q: "The transition from high-pressure to low-pressure flow in the cardiovascular system happens across the:", o: ["Heart", "Capillary bed", "Arterioles only", "Vena cava"], a: 1, w: "The main drop in pressure happens across the arterioles and capillary bed." },
+
+    // ===== Note 3: arteries - elastic, muscular, arterioles (Q11-15) =====
+    { q: "Elastic arteries are found:", o: ["In the smallest branches of the arterial tree", "Close to the heart, such as the aorta and pulmonary trunk", "Only in the limbs", "Only in the lungs"], a: 1, w: "Elastic arteries are the largest arteries, closest to the heart, such as the aorta and pulmonary trunk." },
+    { q: "The walls of elastic arteries are packed with elastic fibres, which:", o: ["Absorb the pressure pulse and smooth it into continuous flow", "Block blood flow", "Prevent the arteries from stretching", "Filter blood"], a: 0, w: "Elastic arteries stretch with each heartbeat and recoil between beats, smoothing the pulse into continuous flow." },
+    { q: "Muscular arteries are specialised for:", o: ["Withstanding the highest pressure in the body", "Distributing blood to specific organs", "Filtering the blood", "Storing blood"], a: 1, w: "Muscular arteries distribute blood to specific organs and have a thick middle layer of smooth muscle." },
+    { q: "Arterioles are the main resistance vessels because they:", o: ["Have no smooth muscle", "Are the largest arteries", "Contain a rich supply of smooth muscle and can change diameter", "Do not carry blood"], a: 2, w: "Arterioles have thin walls but abundant smooth muscle, letting them constantly change diameter and control flow." },
+    { q: "Which artery type provides the main site of day-to-day blood flow control?", o: ["Elastic arteries", "Muscular arteries", "Arterioles", "Veins"], a: 2, w: "Arterioles are the main site where blood flow is controlled moment to moment." },
+
+    // ===== Note 4: capillaries - types, exchange, capillary bed (Q16-20) =====
+    { q: "The capillary wall is composed of:", o: ["Smooth muscle and endothelium", "A single layer of endothelial cells on a thin basement membrane", "Three layers of connective tissue", "Elastic fibres and cartilage"], a: 1, w: "Capillary walls are a single layer of endothelial cells on a basement membrane - the thinnest possible vessel wall." },
+    { q: "Continuous capillaries are found in:", o: ["Liver and spleen", "Muscle, skin and connective tissue", "Kidney and intestines", "Bone marrow only"], a: 1, w: "Continuous capillaries are the most common type and are found in muscle, skin and connective tissue." },
+    { q: "Fenestrated capillaries are found in:", o: ["Muscle", "Kidney, intestines and endocrine glands", "Skin", "Bone"], a: 1, w: "Fenestrated capillaries have pores and are found where rapid exchange is needed, such as in the kidney and intestines." },
+    { q: "Sinusoidal capillaries are found in:", o: ["Skeletal muscle", "Skin", "Liver, spleen and bone marrow", "Lung alveoli"], a: 2, w: "Sinusoidal capillaries have large gaps allowing cells and proteins through - found in liver, spleen and bone marrow." },
+    { q: "The three types of capillary differ mainly in:", o: ["The thickness of their muscle layer", "How leaky their walls are", "Their colour", "How many valves they contain"], a: 1, w: "The three capillary types differ in the tightness of the junctions between their endothelial cells." },
+
+    // ===== Note 5: veins - valves, reservoirs, venous return (Q21-25) =====
+    { q: "Venous valves are formed from:", o: ["The tunica media", "Folds of the tunica intima", "The tunica adventitia", "Cartilage"], a: 1, w: "Venous valves are folds of the tunica intima that prevent backflow of blood." },
+    { q: "The skeletal muscle pump helps venous return by:", o: ["Widening the veins", "Squeezing deep veins during movement so blood is pushed upward", "Slowing the heart", "Preventing clotting"], a: 1, w: "When muscles contract they squeeze the deep veins and push blood upward, while valves prevent it falling back." },
+    { q: "The respiratory pump assists venous return by:", o: ["Compressing the heart", "Producing a pressure difference between chest and abdomen during breathing", "Closing the valves in the leg veins", "Increasing heart rate"], a: 1, w: "During inspiration, thoracic pressure falls relative to abdominal pressure, helping draw blood toward the heart." },
+    { q: "Veins act as a blood reservoir by holding approximately what fraction of total blood volume?", o: ["10%", "30%", "50%", "70%"], a: 3, w: "Veins hold about 70% of total blood volume because of their compliant, floppy walls." },
+    { q: "Sympathetic constriction of veins does what during exercise or haemorrhage?", o: ["Shifts stored blood into the active circulation", "Reduces blood volume", "Stops the heart", "Dilates the arterioles only"], a: 0, w: "Sympathetic venoconstriction shifts blood from the venous reservoir into the arterial circulation when it is needed." },
+
+    // ===== Note 6: blood pressure and its control (Q26-30) =====
+    { q: "Blood pressure is measured in:", o: ["Litres per minute", "Millimetres of mercury (mmHg)", "Beats per minute", "Degrees Celsius"], a: 1, w: "Blood pressure is measured in millimetres of mercury (mmHg)." },
+    { q: "The higher number in a blood pressure reading (e.g. 120 in 120/80) is the:", o: ["Systolic pressure", "Diastolic pressure", "Mean arterial pressure", "Pulse pressure"], a: 0, w: "The systolic pressure is the peak pressure when the heart contracts." },
+    { q: "The formula for blood pressure is:", o: ["Cardiac output × peripheral resistance", "Heart rate × stroke volume", "Cardiac output + blood volume", "Peripheral resistance ÷ blood volume"], a: 0, w: "Blood pressure equals cardiac output multiplied by peripheral resistance." },
+    { q: "Baroreceptors that detect changes in blood pressure are located in the:", o: ["Kidney and liver", "Aorta and carotid arteries", "Lungs only", "Coronary arteries"], a: 1, w: "Baroreceptors in the aortic arch and carotid sinuses sense blood pressure and trigger reflex adjustments." },
+    { q: "The kidney controls blood pressure over hours to days mainly by:", o: ["Slowing the heart rate", "Adjusting blood volume through salt and water retention or excretion", "Closing the arterioles", "Producing adrenaline"], a: 1, w: "The kidney regulates blood pressure over the longer term by controlling salt and water balance." },
+
+    // ===== Note 7: blood flow, resistance, redistribution (Q31-35) =====
+    { q: "Blood flow to a tissue is controlled mainly by:", o: ["The diameter of its arterioles", "The heart rate", "The size of the vein", "The number of capillaries"], a: 0, w: "The arterioles are the main control point for blood flow to a tissue." },
+    { q: "When an arteriole narrows, blood flow to its tissue:", o: ["Increases", "Decreases", "Stays the same", "Reverses"], a: 1, w: "Narrowing the arteriole (vasoconstriction) reduces blood flow to the tissue it supplies." },
+    { q: "Resistance in a vessel is related to its radius by:", o: ["A direct linear relationship", "The square of the radius", "The fourth power of the radius", "No relationship"], a: 2, w: "Resistance is inversely proportional to the fourth power of the radius, so small diameter changes cause large flow changes." },
+    { q: "Local autoregulation of blood flow in a tissue is controlled by:", o: ["Metabolic signals such as carbon dioxide, acid and adenosine", "Only sympathetic nerves", "Only hormones", "Only the heart"], a: 0, w: "Active tissues produce metabolic signals that dilate their own arterioles, matching blood flow to local demand." },
+    { q: "During exercise, blood is redirected to the muscles mainly by:", o: ["Sympathetic dilation of gut arterioles", "Sympathetic constriction of muscle arterioles", "Reduced sympathetic outflow to muscles and increased outflow to the gut", "Closing the aorta"], a: 2, w: "During exercise, sympathetic outflow to muscles falls (dilation) while outflow to the gut rises (constriction), shifting blood to the muscles." },
+
+    // ===== Note 8: microcirculation and tissue exchange (Q36-40) =====
+    { q: "At the arterial end of a capillary, fluid normally moves:", o: ["Out of the capillary into the tissue", "Into the capillary from the tissue", "Neither in nor out", "Both directions equally"], a: 0, w: "At the arterial end, capillary hydrostatic pressure is higher than the inward osmotic pull, so fluid moves out." },
+    { q: "At the venous end of a capillary, fluid normally moves:", o: ["Out of the capillary", "Into the capillary from the tissue", "Neither in nor out", "Only through lymphatic vessels"], a: 1, w: "At the venous end, pressure has fallen below the inward osmotic pull, so fluid returns to the capillary." },
+    { q: "Blood colloid osmotic pressure is generated by:", o: ["Sodium ions", "Plasma proteins, especially albumin", "Glucose", "Red blood cells"], a: 1, w: "Plasma proteins, especially albumin, cannot cross the capillary wall and create the osmotic pull that draws fluid back in." },
+    { q: "The small amount of fluid left in the tissue after capillary exchange is:", o: ["Absorbed by lymph capillaries", "Lost through the skin", "Reabsorbed by arteries", "Stored as fat"], a: 0, w: "Lymphatic capillaries collect the excess tissue fluid and return it to the venous circulation." },
+    { q: "Oedema occurs when capillary exchange is disturbed - for example in:", o: ["Scurvy", "Liver disease with low plasma protein", "Diabetes insipidus", "Hyperthyroidism"], a: 1, w: "Low plasma protein in liver disease reduces the osmotic pull, so fluid accumulates in the tissues as oedema." },
+
+    // ===== Note 9: the lymphatic system (Q41-45) =====
+    { q: "Lymphatic capillaries are best described as:", o: ["Blind-ended tubes that collect excess tissue fluid", "Loops connected to arteries", "The same as veins", "Purely nervous structures"], a: 0, w: "Lymphatic capillaries are blind-ended tubes that start in the tissues and collect the excess fluid." },
+    { q: "Lymph is returned to the blood via the:", o: ["Hepatic portal vein", "Thoracic and right lymphatic ducts, which empty into the subclavian veins", "Pulmonary trunk", "Coronary sinus"], a: 1, w: "Lymph returns to the blood via the thoracic and right lymphatic ducts, which empty at the base of the neck." },
+    { q: "One main function of the lymphatic system in the small intestine is:", o: ["To absorb fats via the lacteals", "To absorb water only", "To produce bile", "To filter blood"], a: 0, w: "Fats are packaged as chylomicrons and absorbed via the lacteals into the lymph before entering the blood." },
+    { q: "Lymph nodes function to:", o: ["Pump lymph", "Filter lymph and provide a site for immune response", "Store fat", "Produce red blood cells"], a: 1, w: "Lymph nodes filter lymph, removing pathogens and debris, and are packed with immune cells that mount responses to antigens." },
+    { q: "Lymphoedema after breast cancer surgery is caused by:", o: ["Loss of arterial supply", "Blockage or removal of lymph nodes, so lymph cannot drain", "Increased blood pressure", "Low plasma protein"], a: 1, w: "Removing or blocking lymph nodes prevents lymph drainage, causing the arm to swell with lymphoedema." },
+
+    // ===== Note 10: clinical anatomy and detection (Q46-50) =====
+    { q: "Atherosclerosis is a disease of:", o: ["Veins only", "Arteries, where fatty plaques narrow and stiffen the walls", "Lymphatic vessels only", "Heart valves only"], a: 1, w: "Atherosclerosis is the build-up of fatty plaques inside arteries, which narrows and stiffens them." },
+    { q: "A deep vein thrombosis (DVT) is dangerous because:", o: ["A piece of the clot can break off and travel to the lungs as a pulmonary embolism", "It increases blood pressure", "It blocks the aorta", "It removes oxygen from blood"], a: 0, w: "A DVT in the leg can embolise to the lungs, causing a pulmonary embolism - which is why immobile patients are given blood thinners." },
+    { q: "Hypertension is often called the 'silent killer' because:", o: ["It produces no symptoms for years while damaging vessels, heart and organs", "It always causes immediate chest pain", "It only affects the brain", "It disappears on its own"], a: 0, w: "Hypertension damages vessels, heart, kidneys and brain over years without producing symptoms until damage is done." },
+    { q: "Doppler ultrasound is most useful for detecting:", o: ["Heart attack", "Deep vein thrombosis and peripheral arterial disease", "Lymphoedema", "Hypertension"], a: 1, w: "Doppler ultrasound visualises blood flow in veins and arteries, and is used to detect DVT and peripheral arterial disease." },
+    { q: "The clinical problem that maps onto a failure of venous valves is:", o: ["Atherosclerosis", "Varicose veins", "Lymphoedema", "Pulmonary embolism"], a: 1, w: "When venous valves fail, blood pools in the veins, causing them to dilate - this is varicose veins." },
+  ],
+};
+
+/* --------------------------- an2:9 --------------------------- */
+const T_AN2_RESPIRATORY = {
+  courseId: "an2",
+  topicIndex: 9,
+  title: "Respiratory System",
+  minutes: 30,
+  note: [
+    {
+      q: "Every cell in your body needs oxygen, but oxygen cannot walk there itself. What actually delivers it?",
+      body: `You have already seen that the cardiovascular system moves blood around the body, carrying oxygen to every tissue. But blood cannot make oxygen. Something must put oxygen into the blood in the first place, and that is the job of the respiratory system.
+
+My Socratic question: if the cardiovascular system is the delivery network, what is the supply system that keeps the network stocked?
+
+The answer is the respiratory system. It brings air from outside the body into close contact with the blood, so that oxygen can diffuse into the blood and carbon dioxide can diffuse out. The heart then pumps that oxygenated blood around the body. Without the respiratory system, the cardiovascular system would have nothing to deliver.
+
+The respiratory system has three functional parts:
+- The conducting portion - the airways that carry air from outside to the deepest parts of the lung. Nose, pharynx, larynx, trachea, bronchi, bronchioles.
+- The respiratory portion - the alveoli, where gas exchange actually takes place.
+- The pump - the muscles of breathing (mainly the diaphragm and intercostals) plus the pleural membranes and chest wall that make the lungs inflate and deflate.
+
+Crucial insight: the respiratory system is the cardiovascular system's supplier. Its entire structure exists to deliver air to a surface thin enough and large enough to allow oxygen to pass into the blood. Every part of the anatomy you are about to learn is designed for that single purpose.`
+    },
+    {
+      q: "Air enters through the nose, not the mouth, when you are healthy. What does the nose actually do that matters?",
+      body: `You can breathe through your mouth if you have to, but your body prefers the nose. That preference is not cosmetic - the nose does three things to the air that your mouth cannot.
+
+My Socratic question: the air outside is cold, dry and full of particles. The air reaching your lungs must be warm, moist and clean. Where does that conditioning happen?
+
+The answer is in the upper respiratory tract, and especially in the nose.
+
+The nose has a rich blood supply in its lining, and this warms the incoming air. It secretes mucus and fluid, which humidify the air. And the hairs and the mucus trap dust, pollen and microbes before they can reach the lungs. By the time air has passed through the nose, it has been warmed, moistened and partially filtered.
+
+Behind the nose is the pharynx, a muscular tube shared with the digestive system. It has three parts: the nasopharynx (behind the nose), the oropharynx (behind the mouth), and the laryngopharynx (behind the larynx). Air and food both pass through the pharynx, which is why it belongs to both the respiratory and digestive systems.
+
+Below the pharynx sits the larynx - the voice box. It is made of several cartilages (the largest being the thyroid cartilage, often called the Adam's apple), and it contains the vocal cords. The larynx does three jobs:
+- It keeps the airway open.
+- It produces sound.
+- It protects the airway during swallowing. When you swallow, the epiglottis flips down over the laryngeal opening, sealing the airway so food goes into the oesophagus instead of the trachea.
+
+Crucial insight: the nose is not just a hole in your face - it is a conditioning chamber that prepares air for the lungs. The nose warms, moistens and filters, and it does all three through the same rich vascular lining. This is why mouth-breathing in cold weather dries and irritates the airway, and why keeping the nose healthy protects the whole respiratory system.`
+    },
+    {
+      q: "The trachea is a single tube that leads to the lungs. Why does it split into millions of smaller tubes?",
+      body: `Follow a single breath of air on its journey. It travels down the trachea, which is about ten to twelve centimetres long and roughly two centimetres wide, held permanently open by C-shaped rings of cartilage in its wall. Then at the level of the sternal angle, the trachea splits into two main bronchi - one for each lung. And from there, the splitting continues.
+
+My Socratic question: the trachea already carries air efficiently. Why does the body keep dividing it into smaller and smaller tubes?
+
+The answer is surface area. The job of the lungs is to bring air into contact with blood, and to do that efficiently they need an enormous surface. The branching system creates that surface. Each division multiplies the number of tubes, and by the time the airways are at their smallest, there are millions of tiny branches.
+
+The lower respiratory tract, in order:
+
+- Trachea - the windpipe. C-shaped cartilage rings keep it open at the front; the gap at the back is filled by the trachealis muscle, which can narrow the trachea slightly.
+- Main (primary) bronchi - one for each lung, formed at the carina (the ridge at the split).
+- Lobar (secondary) bronchi - one for each lobe of the lung. Three on the right, two on the left.
+- Segmental (tertiary) bronchi - one for each bronchopulmonary segment (ten on each side).
+- Bronchioles - small airways with no cartilage in their walls, only smooth muscle.
+- Terminal bronchioles - the smallest conducting airways, no longer part of gas exchange.
+- Respiratory bronchioles - the first airways with a few alveoli in their walls, marking the start of gas exchange.
+- Alveolar ducts and alveolar sacs - the final chambers, whose walls are almost entirely alveoli.
+
+The change in wall structure matters. As you go down the tree, cartilage disappears and smooth muscle increases. This is why the smallest airways (the bronchioles) are the ones that can narrow dangerously in asthma - they are the ones with the most muscle and no cartilage to keep them open.
+
+Crucial insight: the branching of the airways is a surface-area strategy. Each division increases the total cross-sectional area, slowing the air and spreading it across a huge surface where exchange can happen. The change in wall structure along the way - cartilage high up, muscle low down - is the anatomical reason asthma attacks the bronchioles rather than the trachea.`
+    },
+    {
+      q: "The lungs are two large organs, but they are not symmetrical. Why is the right lung different from the left?",
+      body: `Look at a diagram of the two lungs side by side and you will notice something odd. They are not mirror images. The right lung is bigger and has three lobes. The left lung is smaller and has two. Why the asymmetry?
+
+My Socratic question: the two lungs do the same job. Why would the body give them different shapes?
+
+The answer is the heart. The heart sits in the mediastinum, tilted toward the left side of the chest. To fit around it, the left lung has to be a bit smaller, and it has a notch on its inner surface - called the cardiac notch - where the heart presses against it.
+
+The right lung has three lobes:
+- Superior lobe
+- Middle lobe
+- Inferior lobe
+Separated by two fissures: the oblique fissure and the horizontal fissure.
+
+The left lung has two lobes:
+- Superior lobe
+- Inferior lobe
+Separated by one fissure: the oblique fissure.
+
+Both lungs have the same general features: an apex (the rounded top, extending above the first rib), a base (resting on the diaphragm), a hilum (the region on the medial surface where the bronchi, pulmonary vessels, and lymphatics enter and leave), and surfaces (costal, mediastinal and diaphragmatic).
+
+The lungs are also divided into bronchopulmonary segments, each supplied by its own segmental bronchus and its own segment of pulmonary artery. There are ten segments on the right and eight or ten on the left (depending on how they are counted). This segmental anatomy is the basis of lung surgery - a surgeon can remove just one diseased segment without removing the whole lobe.
+
+Crucial insight: the asymmetry of the lungs is a direct consequence of the heart's position. The left lung is not "smaller because it is on the left" - it is smaller because the heart takes up space there. And the segmental structure of the lungs gives surgeons the ability to remove just a small piece of lung when a tumour or infection is localised.`
+    },
+    {
+      q: "The lungs sit inside the chest and move with every breath. What stops them from rubbing against the chest wall?",
+      body: `Every time you breathe, the lungs expand and then recoil, and they slide against the inside of the chest wall. Over a lifetime, that adds up to hundreds of millions of movements - and yet the lungs are not worn down. What protects them?
+
+My Socratic question: the lungs change shape with every breath and slide against the chest wall thousands of times a day. What would happen if there were nothing to prevent friction?
+
+The answer is the pleura - a thin, double-layered membrane that wraps both the lungs and the inside of the chest wall.
+
+The pleura has two layers:
+- The visceral pleura - stuck tightly to the outer surface of the lung.
+- The parietal pleura - lining the inside of the chest wall, the diaphragm, and the mediastinum.
+
+Between the two layers is a thin film of pleural fluid. The fluid does two things. First, it lubricates the surfaces so they slide smoothly with every breath, without friction. Second, it holds the two layers together by surface tension, so the lungs follow the movement of the chest wall as it expands.
+
+The space between the two pleural layers is called the pleural cavity. Normally it contains only a thin film of fluid, and the pressure inside it is slightly negative relative to the atmosphere - about -5 cm H2O. That negative pressure is what keeps the lungs inflated and pressed against the chest wall.
+
+Crucial insight: the pleura is what allows the lungs to move with the chest wall without friction. If air enters the pleural cavity - a pneumothorax - the negative pressure is lost, and the lung on that side collapses. If fluid accumulates - a pleural effusion - the lung is compressed. Both conditions are serious, and both come down to the same principle: the pleural cavity must stay sealed and slightly negative for the lungs to work.`
+    },
+    {
+      q: "Where does the actual gas exchange happen, and how thin is the barrier oxygen has to cross?",
+      body: `The airways deliver air to the lungs, but the real purpose of the whole system is here - at the alveoli, the tiny air sacs at the ends of the airway tree. This is where oxygen enters the blood and carbon dioxide leaves it. And the barrier between air and blood is one of the thinnest in the entire body.
+
+My Socratic question: oxygen must move from the air inside an alveolus into the blood inside a capillary. What is actually between them?
+
+The answer is the blood-air barrier, a three-layer structure less than one micrometre thick - about one fiftieth of the width of a human hair.
+
+The three layers are:
+- The alveolar epithelium - a single layer of flat cells (type I pneumocytes) whose cytoplasm is so thin it is barely visible under a microscope. They cover about 95% of the alveolar surface.
+- The fused basement membrane - in most of the body the epithelial and endothelial cells each have their own basement membrane, but at the alveolus they fuse together into a single thin sheet.
+- The capillary endothelium - the cells lining the capillary.
+
+There are also type II pneumocytes, which cover only about 5% of the alveolar surface but do three crucial jobs:
+- They secrete surfactant - a mixture of lipids and proteins that lowers surface tension inside the alveolus and prevents it from collapsing at the end of each breath.
+- They act as stem cells - they can divide to replace damaged type I cells.
+- They help regulate fluid movement across the alveolar wall.
+
+And there are alveolar macrophages - large wandering immune cells that patrol the air spaces, engulfing bacteria, dust and debris that made it past the upper defences.
+
+Crucial insight: the blood-air barrier is one of the thinnest barriers in the body because gas exchange demands it. Every cell that is packed into it would slow diffusion; every cell that is left out speeds it up. The three-layer design - thin alveolar cell, fused membrane, thin capillary cell - is the minimum structure that still holds together. When this barrier thickens (from fluid, inflammation, or scarring) or breaks down (in ARDS), gas exchange fails, and that is what makes these conditions so serious.`
+    },
+    {
+      q: "You breathe without thinking about it, yet breathing is a mechanical process. What actually pulls air into the lungs?",
+      body: `Air does not flow into your lungs by itself. Something has to pull it in, and that something is a mechanical process you rarely think about but perform about twenty thousand times a day. Breathing is not suction - it is pressure.
+
+My Socratic question: air flows from high pressure to low pressure. To make air flow into the lungs, what must the body do to the pressure inside the chest?
+
+The answer is that it must lower the pressure inside the chest below the outside atmospheric pressure, so air flows in.
+
+The main muscle of breathing is the diaphragm, a dome-shaped sheet of muscle that separates the chest from the abdomen. When the diaphragm contracts, it flattens and moves downward, increasing the vertical size of the chest cavity. The external intercostal muscles also contract, lifting the ribs up and out, increasing the width and depth of the chest. Together these two actions increase the volume of the chest, which lowers the pressure inside the lungs, and air flows in. This is inspiration, and it is an active process.
+
+Expiration is usually passive. When the diaphragm and intercostals relax, the elastic recoil of the lungs and chest wall pushes the air out. During exercise or forced expiration, the internal intercostals and the abdominal muscles contract to squeeze the chest cavity down further, forcing air out faster.
+
+For ventilation to work, the pleura must be sealed. The negative pressure inside the pleural cavity keeps the visceral pleura stuck to the parietal pleura, so when the chest wall moves, the lungs follow. If a hole lets air into the pleural cavity - a pneumothorax - the seal is lost, and the lung on that side collapses.
+
+Crucial insight: breathing is pressure-driven, not air-driven. The body lowers chest pressure to draw air in, and raises it to push air out. The diaphragm does most of the work, the intercostals help, and the pleura ensures the lungs move with the chest wall. Every condition that disrupts any of these three elements - a paralysed diaphragm, a rib fracture, a pneumothorax - reduces ventilation.`
+    },
+    {
+      q: "Doctors measure lung volumes with a spirometer. What do the numbers mean, and why do they matter?",
+      body: `When a patient has a breathing problem, one of the first tests is spirometry - a measurement of how much air the lungs can hold and how fast they can move it. The numbers that come out are standardised, and they tell the doctor a huge amount.
+
+My Socratic question: if you had to describe a person's lung function with just a few numbers, which numbers would you choose?
+
+The answer is that there are four key volumes and four key capacities.
+
+The volumes:
+- Tidal volume (TV) - the amount of air moved in or out during a normal, quiet breath. About 500 mL.
+- Inspiratory reserve volume (IRV) - the extra air you can breathe in after a normal breath in. About 3,000 mL.
+- Expiratory reserve volume (ERV) - the extra air you can breathe out after a normal breath out. About 1,100 mL.
+- Residual volume (RV) - the air left in the lungs after the strongest possible breath out. About 1,200 mL, and it cannot be voluntarily expelled.
+
+The capacities are combinations of volumes:
+- Vital capacity (VC) - the maximum air a person can breathe out after the deepest breath in. VC = TV + IRV + ERV.
+- Inspiratory capacity (IC) - the maximum air a person can breathe in after a normal breath out. IC = TV + IRV.
+- Functional residual capacity (FRC) - the air left in the lungs after a normal breath out. FRC = ERV + RV.
+- Total lung capacity (TLC) - the total air the lungs can hold. TLC = VC + RV.
+
+Spirometry measures TV, IRV, ERV and VC directly. RV and TLC cannot be measured with a simple spirometer and require other methods.
+
+Crucial insight: the numbers mean something clinically. In obstructive lung disease (asthma, COPD), air is trapped and RV goes up. In restrictive lung disease (pulmonary fibrosis), the lungs are stiff and all volumes are small. A single set of spirometry numbers can tell a doctor whether the problem is obstruction or restriction, and that guides treatment.`
+    },
+    {
+      q: "The lungs receive two separate blood supplies. Why two, and what does each one do?",
+      body: `Every other organ in the body has one blood supply. The lungs have two. This is unusual and it matters a lot for how the lungs work.
+
+My Socratic question: the lungs need a blood supply to keep their own tissue alive. They also receive blood that needs to be oxygenated. Are these the same blood, or two different supplies?
+
+The answer is two different supplies, doing two different jobs.
+
+The pulmonary circulation carries deoxygenated blood from the right ventricle to the alveoli for gas exchange. This is the larger supply - it carries the entire cardiac output, about five litres per minute at rest. The pulmonary arteries branch alongside the bronchi and form a capillary network around the alveoli. The blood becomes oxygenated and returns via the pulmonary veins to the left atrium. Importantly, the pulmonary circulation is a low-pressure system (about 25/8 mmHg), because the walls of the pulmonary arteries are thinner and resistance is low.
+
+The bronchial circulation carries oxygenated blood from the aorta to supply the lung tissue itself - the bronchi, the bronchioles, the pleura, the connective tissue, and the walls of the pulmonary vessels. It is a much smaller supply - about 1% of cardiac output - but it is what keeps the lung tissue alive.
+
+The two supplies meet at the level of the respiratory bronchioles and alveoli. Interestingly, some deoxygenated blood from the bronchial veins drains into the pulmonary veins, which slightly lowers the oxygen content of the blood leaving the lungs - a phenomenon called the physiological shunt.
+
+Crucial insight: the lungs have a dual blood supply because they have two jobs - gas exchange (the pulmonary circulation) and their own tissue nutrition (the bronchial circulation). Knowing this explains why the pulmonary circulation is a low-pressure system, why pulmonary embolism is dangerous (it blocks the pulmonary arteries), and why the lungs can survive on the bronchial supply for a while if part of the pulmonary supply is blocked.`
+    },
+    {
+      q: "What actually goes wrong with the respiratory system, and how do doctors work out the cause?",
+      body: `The respiratory system is exposed to the outside world more than any other internal system. Every breath brings in air, and with it dust, allergens, microbes and pollutants. This constant exposure is why respiratory disease is one of the leading causes of death worldwide.
+
+My Socratic question: the respiratory system has many parts. If something goes wrong, how would you work out which part is affected?
+
+The answer is that each part of the respiratory system has its own characteristic diseases, and each produces its own pattern of symptoms and signs.
+
+- Diseases of the upper airway - the common cold, sinusitis, pharyngitis and laryngitis. Symptoms include sore throat, nasal congestion and hoarseness.
+- Diseases of the bronchi and bronchioles - asthma (reversible airway narrowing from smooth muscle spasm), chronic bronchitis (chronic mucus production with a productive cough for at least three months of two consecutive years), and bronchiectasis (permanent dilation of the bronchi from repeated infection).
+- Diseases of the alveoli - pneumonia (infection of the alveolar spaces), emphysema (destruction of alveolar walls, reducing surface area), and pulmonary oedema (fluid in the alveoli from heart failure).
+- Diseases of the pleura - pleurisy (inflammation causing sharp pain on breathing), pneumothorax (air in the pleural cavity causing collapse), pleural effusion (fluid in the pleural cavity).
+- Diseases of the pulmonary circulation - pulmonary embolism (a clot blocking a pulmonary artery), pulmonary hypertension (high pressure in the pulmonary arteries).
+
+Doctors investigate respiratory problems through:
+- Physical examination - listening to breath sounds, percussing the chest, and checking for clubbing of the fingers.
+- Pulse oximetry - a non-invasive way of measuring how much oxygen is in the blood.
+- Spirometry - to measure lung volumes and airflow.
+- Chest X-ray - the first-line imaging study for most lung conditions.
+- CT scan - for more detailed imaging.
+- Arterial blood gases - to measure oxygen and carbon dioxide in the blood directly.
+- Sputum culture and cytology - to identify infections and look for cancer cells.
+
+Crucial insight: each part of the respiratory system has its own signature disease. Asthma is a disease of the bronchioles; pneumonia is a disease of the alveoli; pleurisy is a disease of the pleura. When you know the anatomy, the clinical picture becomes a map, and the map leads to the diagnosis. This is exactly why the anatomy of the respiratory system is examined so heavily in every medical course.`
+    },
+  ],
+  theory: [
+    { q: "State the three functional parts of the respiratory system.", a: "The conducting portion (nose, pharynx, larynx, trachea, bronchi, bronchioles) carries air to the lungs. The respiratory portion (alveoli) is where gas exchange occurs. The pump (diaphragm, intercostal muscles, pleural membranes and chest wall) moves air in and out." },
+    { q: "Describe the functions of the nose in respiration.", a: "The nose warms incoming air through its rich vascular lining, humidifies it through mucus and fluid secretion, and filters it through hairs and mucus that trap dust, pollen and microbes. Mouth-breathing bypasses these functions, which is why it is less efficient." },
+    { q: "Name the three parts of the pharynx.", a: "The nasopharynx (behind the nose), the oropharynx (behind the mouth), and the laryngopharynx (behind the larynx). The pharynx is shared with the digestive system." },
+    { q: "State the three functions of the larynx.", a: "It keeps the airway open, produces sound via the vocal cords, and protects the airway during swallowing through the epiglottis." },
+    { q: "Trace the path of air from the trachea to the alveoli.", a: "Trachea → main (primary) bronchi → lobar (secondary) bronchi → segmental (tertiary) bronchi → bronchioles → terminal bronchioles → respiratory bronchioles → alveolar ducts → alveolar sacs → alveoli." },
+    { q: "Describe the lobes and fissures of the right and left lungs.", a: "The right lung has three lobes (superior, middle, inferior) separated by the oblique and horizontal fissures. The left lung has two lobes (superior, inferior) separated only by the oblique fissure, and it has a cardiac notch where the heart presses against it." },
+    { q: "Describe the pleura and its function.", a: "The pleura is a double-layered membrane. The visceral pleura covers the lung surface and the parietal pleura lines the chest wall, diaphragm and mediastinum. Between them is a thin film of pleural fluid that lubricates the surfaces so they slide smoothly and holds the two layers together by surface tension. The pleural cavity is sealed and slightly negative in pressure (about -5 cm H2O), which keeps the lungs inflated." },
+    { q: "Describe the blood-air barrier and its three layers.", a: "The blood-air barrier is the membrane between air in the alveolus and blood in the capillary, less than one micrometre thick. Its three layers are: the alveolar epithelium (type I pneumocytes), the fused basement membrane, and the capillary endothelium." },
+    { q: "State the three functions of type II pneumocytes.", a: "They secrete surfactant (which lowers surface tension and prevents alveolar collapse), act as stem cells to replace damaged type I cells, and help regulate fluid movement across the alveolar wall." },
+    { q: "Explain the mechanics of inspiration and expiration.", a: "Inspiration is active. The diaphragm contracts and flattens, and the external intercostals lift the ribs up and out, increasing thoracic volume, lowering pressure, and drawing air in. Expiration is usually passive, driven by elastic recoil when the muscles relax. Forced expiration uses the internal intercostals and abdominal muscles." },
+    { q: "Name the four lung volumes and the four lung capacities.", a: "Volumes: tidal volume, inspiratory reserve volume, expiratory reserve volume, residual volume. Capacities: vital capacity, inspiratory capacity, functional residual capacity, total lung capacity." },
+    { q: "Describe the dual blood supply of the lungs.", a: "The pulmonary circulation carries deoxygenated blood from the right ventricle to the alveoli for gas exchange (the entire cardiac output, low pressure). The bronchial circulation carries oxygenated blood from the aorta to supply the lung tissue itself (about 1% of cardiac output). Some bronchial venous blood drains into the pulmonary veins, producing a small physiological shunt." },
+    { q: "List four common respiratory conditions and the part of the respiratory system each affects.", a: "Asthma - bronchi and bronchioles. Pneumonia - alveoli. Pneumothorax - pleural cavity. Pulmonary embolism - pulmonary arteries." },
+  ],
+  videos: [
+    { channel: "Anatomy", title: "Respiratory System Anatomy - Upper and Lower Tract", note: "Full tour of the nose, pharynx, larynx, trachea, bronchi, and lungs.", url: "https://www.youtube.com/results?search_query=respiratory+system+anatomy+upper+lower+tract" },
+    { channel: "Anatomy", title: "Lungs, Pleura, and the Mechanics of Breathing", note: "Lobes, fissures, pleural membranes, and how the diaphragm drives ventilation.", url: "https://www.youtube.com/results?search_query=lungs+pleura+mechanics+of+breathing+anatomy" },
+    { channel: "Anatomy", title: "Alveoli and Gas Exchange", note: "Blood-air barrier, pneumocytes, and surfactant at the alveolar level.", url: "https://www.youtube.com/results?search_query=alveoli+gas+exchange+blood-air+barrier+surfactant" },
+  ],
+  mcqs: [
+    // ===== Note 1: what the respiratory system is and why it exists (Q1-5) =====
+    { q: "The main purpose of the respiratory system is:", o: ["To filter blood", "To supply oxygen to the blood and remove carbon dioxide", "To produce red blood cells", "To regulate blood pressure"], a: 1, w: "The respiratory system supplies oxygen to the blood and removes carbon dioxide." },
+    { q: "The three functional parts of the respiratory system are:", o: ["Heart, lungs and diaphragm", "Nose, mouth and throat", "Conducting portion, respiratory portion and pump", "Alveoli, bronchi and trachea"], a: 2, w: "The respiratory system consists of a conducting portion, a respiratory portion, and a pump." },
+    { q: "The conducting portion of the respiratory system functions to:", o: ["Exchange gases", "Produce surfactant", "Filter blood", "Carry air from outside to the deepest parts of the lung"], a: 3, w: "The conducting portion carries air from outside down to the alveoli." },
+    { q: "Gas exchange takes place in which part of the respiratory system?", o: ["The respiratory portion (alveoli)", "The conducting portion (trachea)", "The pump (diaphragm)", "The pleural cavity"], a: 0, w: "Gas exchange takes place in the respiratory portion - the alveoli." },
+    { q: "Which of these is NOT part of the pump of the respiratory system?", o: ["Diaphragm", "Trachea", "External intercostal muscles", "Pleural membranes"], a: 1, w: "The trachea is part of the conducting portion, not the pump." },
+
+    // ===== Note 2: upper respiratory tract (Q6-10) =====
+    { q: "The nose conditions incoming air by:", o: ["Cooling and drying it", "Warming, moistening and filtering it", "Compressing it", "Sterilising it with acid"], a: 1, w: "The nose warms, moistens and filters air before it reaches the lungs." },
+    { q: "The three parts of the pharynx are:", o: ["Trachea, bronchi, bronchioles", "Nasopharynx, oropharynx, laryngopharynx", "Anterior, middle, posterior", "Larynx, trachea, oesophagus"], a: 1, w: "The pharynx has three parts: nasopharynx, oropharynx and laryngopharynx." },
+    { q: "The larynx contains:", o: ["Alveoli", "The vocal cords", "The oesophagus only", "The kidneys"], a: 1, w: "The larynx houses the vocal cords and produces voice." },
+    { q: "The epiglottis protects the airway by:", o: ["Flipping over the laryngeal opening during swallowing", "Warming incoming air", "Producing mucus", "Causing the cough reflex"], a: 0, w: "During swallowing, the epiglottis flips down over the laryngeal opening, directing food into the oesophagus." },
+    { q: "Air passing through the nose is conditioned mainly because the nasal lining has:", o: ["Cartilage rings", "A rich blood supply and mucus-secreting cells", "Smooth muscle only", "Bone"], a: 1, w: "A rich vascular lining warms the air and mucus-secreting cells humidify it." },
+
+    // ===== Note 3: lower respiratory tract (Q11-15) =====
+    { q: "The trachea is held open by:", o: ["Complete rings of cartilage", "C-shaped cartilage rings with a posterior gap", "Smooth muscle only", "Bone"], a: 1, w: "The trachea has C-shaped cartilage rings, with the posterior gap filled by the trachealis muscle." },
+    { q: "The trachea splits into the two main bronchi at the:", o: ["Alveolar sac", "Carina", "Larynx", "Diaphragm"], a: 1, w: "The carina is the internal ridge at the point where the trachea divides." },
+    { q: "The correct order of airways from the trachea downwards is:", o: ["Main bronchi → lobar bronchi → segmental bronchi → bronchioles", "Bronchioles → bronchi → terminal bronchioles", "Alveoli → alveolar ducts → respiratory bronchioles", "Segmental bronchi → main bronchi → bronchioles"], a: 0, w: "The order is: main bronchi → lobar bronchi → segmental bronchi → bronchioles." },
+    { q: "As airways narrow, cartilage disappears and smooth muscle:", o: ["Also disappears", "Increases", "Stays the same", "Turns into bone"], a: 1, w: "Smooth muscle increases as cartilage disappears, making the bronchioles the main site of airway narrowing in asthma." },
+    { q: "The first airways with alveoli in their walls are the:", o: ["Terminal bronchioles", "Main bronchi", "Respiratory bronchioles", "Trachea"], a: 2, w: "Respiratory bronchioles are the first airways with alveoli in their walls, marking the start of gas exchange." },
+
+    // ===== Note 4: lungs - lobes, fissures, surfaces (Q16-20) =====
+    { q: "The right lung has how many lobes?", o: ["Two", "Four", "Three", "One"], a: 2, w: "The right lung has three lobes: superior, middle and inferior." },
+    { q: "The left lung has how many lobes?", o: ["Three", "Two", "Four", "One"], a: 1, w: "The left lung has two lobes: superior and inferior." },
+    { q: "The reason the left lung is smaller than the right is:", o: ["It has fewer segments", "It has no fissure", "The heart occupies space on the left", "It has no hilum"], a: 2, w: "The heart sits on the left side of the mediastinum, so the left lung is smaller and has a cardiac notch." },
+    { q: "The right lung has which fissures?", o: ["Only the oblique fissure", "The oblique and horizontal fissures", "Only the horizontal fissure", "No fissures"], a: 1, w: "The right lung has both the oblique fissure and the horizontal fissure, dividing it into three lobes." },
+    { q: "A bronchopulmonary segment is:", o: ["A single alveolus", "A cartilage ring", "A type of pleura", "A portion of lung supplied by its own segmental bronchus and pulmonary artery segment"], a: 3, w: "Each bronchopulmonary segment has its own segmental bronchus and pulmonary artery segment, which is why surgeons can remove a single segment." },
+
+    // ===== Note 5: pleura and pleural cavity (Q21-25) =====
+    { q: "The pleura has how many layers?", o: ["One", "Three", "Two - visceral and parietal", "Four"], a: 2, w: "The pleura has two layers: the visceral pleura (on the lung surface) and the parietal pleura (on the chest wall)." },
+    { q: "The visceral pleura covers:", o: ["The chest wall", "The diaphragm only", "The mediastinum only", "The outer surface of the lung"], a: 3, w: "The visceral pleura is stuck to the outer surface of the lung." },
+    { q: "The main function of pleural fluid is to:", o: ["Warm the air", "Lubricate the surfaces and hold the two pleural layers together", "Carry oxygen", "Produce surfactant"], a: 1, w: "Pleural fluid lubricates the pleural surfaces and holds them together by surface tension." },
+    { q: "The pressure inside the normal pleural cavity is:", o: ["Equal to atmospheric pressure", "Zero", "Slightly negative relative to the atmosphere", "Slightly positive relative to the atmosphere"], a: 2, w: "The pleural cavity is sealed and slightly negative (about -5 cm H2O), which keeps the lungs inflated." },
+    { q: "Pneumothorax occurs when:", o: ["Fluid accumulates in the pleural cavity", "The visceral pleura thickens", "Air enters the pleural cavity and the lung collapses", "Lung tissue grows in the pleura"], a: 2, w: "When air enters the pleural cavity, the negative pressure is lost and the lung on that side collapses." },
+
+    // ===== Note 6: alveoli and the blood-air barrier (Q26-30) =====
+    { q: "The blood-air barrier has how many layers?", o: ["One", "Two", "Four", "Three"], a: 3, w: "The barrier has three layers: alveolar epithelium, fused basement membrane, and capillary endothelium." },
+    { q: "The approximate thickness of the blood-air barrier is:", o: ["Less than 1 micrometre", "1 millimetre", "10 micrometres", "1 centimetre"], a: 0, w: "The blood-air barrier is less than one micrometre thick - one fiftieth of a human hair." },
+    { q: "Type I pneumocytes cover about what fraction of the alveolar surface?", o: ["5%", "50%", "95%", "100%"], a: 2, w: "Type I pneumocytes are flat cells covering about 95% of the alveolar surface." },
+    { q: "Type II pneumocytes are primarily responsible for:", o: ["Phagocytosing bacteria", "Detecting odours", "Producing mucus", "Secreting surfactant"], a: 3, w: "Type II pneumocytes secrete surfactant, which lowers alveolar surface tension." },
+    { q: "Alveolar macrophages function mainly to:", o: ["Secrete surfactant", "Engulf bacteria, dust and debris in the alveoli", "Produce mucus", "Form the blood-air barrier"], a: 1, w: "Alveolar macrophages patrol the air spaces and engulf bacteria and inhaled particles." },
+
+    // ===== Note 7: muscles of breathing and mechanics of ventilation (Q31-35) =====
+    { q: "The main muscle of inspiration is the:", o: ["External intercostal", "Internal intercostal", "Diaphragm", "Abdominal muscle"], a: 2, w: "The diaphragm is the principal muscle of inspiration, flattening to increase chest volume." },
+    { q: "During inspiration, the pressure inside the chest:", o: ["Rises above atmospheric", "Equals atmospheric", "Falls below atmospheric", "Becomes zero"], a: 2, w: "Inspiration lowers intrathoracic pressure so air flows in." },
+    { q: "During quiet breathing, expiration is:", o: ["Active, using the diaphragm", "Passive, driven by elastic recoil", "Active, using the abdominal muscles", "Not happening at all"], a: 1, w: "Quiet expiration is passive, driven by elastic recoil of the lungs and chest wall." },
+    { q: "Forced expiration uses the:", o: ["Internal intercostals and abdominal muscles", "Diaphragm only", "External intercostals only", "Sternocleidomastoid"], a: 0, w: "Forced expiration recruits the internal intercostals and abdominal muscles to squeeze the chest cavity." },
+    { q: "The pleura is essential for ventilation because:", o: ["It carries oxygen", "It secretes surfactant", "It stores air", "It holds the lungs against the chest wall so they follow its movement"], a: 3, w: "The sealed, negative-pressure pleural cavity holds the lung against the chest wall, so the lung follows the chest wall's movement." },
+
+    // ===== Note 8: lung volumes and capacities (Q36-40) =====
+    { q: "Tidal volume is:", o: ["The maximum air a person can breathe in", "The air moved in or out during a normal, quiet breath", "The air left in the lungs after the strongest breath out", "The air breathed in after a normal breath in"], a: 1, w: "Tidal volume is the air moved in or out during a normal, quiet breath, about 500 mL." },
+    { q: "Residual volume is:", o: ["The air left in the lungs after the strongest possible breath out", "The maximum air a person can breathe out", "The air moved in a normal breath", "The same as tidal volume"], a: 0, w: "Residual volume is the air left in the lungs after the strongest possible breath out, about 1,200 mL." },
+    { q: "Vital capacity is calculated as:", o: ["TV + IRV", "TV + IRV + ERV", "ERV + RV", "VC + RV"], a: 1, w: "Vital capacity is the maximum air a person can breathe out after the deepest breath in: TV + IRV + ERV." },
+    { q: "Total lung capacity is calculated as:", o: ["TV + IRV", "ERV + RV", "VC + RV", "VC only"], a: 2, w: "Total lung capacity is the total air the lungs can hold: VC + RV." },
+    { q: "In obstructive lung disease such as COPD, which volume typically goes up?", o: ["Vital capacity", "Residual volume", "Tidal volume", "Inspiratory reserve volume"], a: 1, w: "In obstructive lung disease, air trapping increases residual volume." },
+
+    // ===== Note 9: blood supply of the lungs (Q41-45) =====
+    { q: "The pulmonary circulation carries:", o: ["Oxygenated blood from the aorta", "Deoxygenated blood from the right ventricle to the alveoli", "Lymph to the alveoli", "Only bronchial arterial blood"], a: 1, w: "The pulmonary circulation carries deoxygenated blood from the right ventricle to the alveoli for gas exchange." },
+    { q: "The bronchial circulation carries:", o: ["Deoxygenated blood to the alveoli", "Oxygenated blood from the aorta to supply the lung tissue itself", "Only lymph", "Only venous blood to the heart"], a: 1, w: "The bronchial circulation carries oxygenated blood from the aorta to supply the lung tissue itself." },
+    { q: "The pulmonary circulation is a low-pressure system because:", o: ["It carries less blood", "The pulmonary artery walls are thicker", "The pulmonary artery walls are thinner and resistance is low", "It has more valves"], a: 2, w: "The pulmonary artery walls are thinner and resistance is low, so the pulmonary circulation operates at low pressure." },
+    { q: "The physiological shunt in the lungs refers to:", o: ["Air entering the pleural cavity", "Some deoxygenated bronchial venous blood draining into the pulmonary veins", "Blood flowing through an atrial septal defect", "The airway closing in asthma"], a: 1, w: "Some bronchial venous blood drains into the pulmonary veins, slightly lowering the oxygen content of the blood leaving the lungs." },
+    { q: "Pulmonary embolism is dangerous because it:", o: ["Blocks a pulmonary artery, preventing gas exchange in the affected area", "Blocks the bronchial circulation only", "Collapses the pleura", "Causes the diaphragm to spasm"], a: 0, w: "Pulmonary embolism blocks a pulmonary artery, preventing gas exchange in the affected area of the lung." },
+
+    // ===== Note 10: clinical anatomy (Q46-50) =====
+    { q: "Asthma is a disease primarily of the:", o: ["Alveoli", "Pleura", "Bronchioles", "Trachea"], a: 2, w: "Asthma causes reversible airway narrowing from smooth muscle spasm in the bronchioles." },
+    { q: "Pneumonia is a disease primarily of the:", o: ["Bronchioles", "Alveoli", "Pleura", "Larynx"], a: 1, w: "Pneumonia is an infection of the alveolar spaces, filling them with fluid and inflammatory cells." },
+    { q: "Pleurisy produces:", o: ["Sharp pain on breathing", "Loss of voice", "Numbness in the fingers", "Blurred vision"], a: 0, w: "Pleurisy is inflammation of the pleura, causing sharp pain on breathing." },
+    { q: "Which of these is a first-line investigation for most lung conditions?", o: ["MRI", "Chest X-ray", "Bronchoscopy", "PET scan"], a: 1, w: "Chest X-ray is the first-line imaging study for most lung conditions." },
+    { q: "Chronic bronchitis is defined by:", o: ["Reversible airway narrowing", "A productive cough for at least three months of two consecutive years", "Destruction of alveolar walls", "Fluid in the pleural cavity"], a: 1, w: "Chronic bronchitis is defined clinically by a productive cough for at least three months of two consecutive years." },
+  ],
+};
+
+/* --------------------------- an2:10 --------------------------- */
+const T_AN2_DIGESTIVE = {
+  courseId: "an2",
+  topicIndex: 10,
+  title: "Digestive System",
+  minutes: 30,
+  note: [
+    {
+      q: "You eat a meal. Where does it actually go, and what is happening along the way?",
+      body: `Food enters your mouth, and from the moment you swallow, it begins a journey that will take it through a tube roughly nine metres long - your digestive tract. Along the way, it will be broken down, absorbed, and the leftovers expelled. The whole process is carried out by the digestive system.
+
+My Socratic question: your body cannot absorb a steak. It cannot absorb a grain of rice, or a slice of bread. So what actually has to happen to your food before your cells can use it?
+
+The answer is that food must be broken down - mechanically and chemically - into molecules small enough to cross the wall of the gut and enter the blood. A steak is a lump of protein; your cells need amino acids. Bread is starch; your cells need glucose. The digestive system's job is to convert the food you eat into the molecules your body can actually use.
+
+The digestive system has two parts:
+- The gastrointestinal (GI) tract - the continuous tube itself, from mouth to anus. It includes the mouth, pharynx, oesophagus, stomach, small intestine, large intestine, rectum and anal canal.
+- The accessory organs - organs that lie outside the tube but contribute to digestion: the salivary glands, liver, gallbladder and pancreas.
+
+Crucial insight: the digestive system is the body's disassembly line. Its job is not to absorb food - it is to break food down so that absorption can happen. Every structure you will learn in this topic exists to serve that single process: break it down, move it along, absorb it, and get rid of what is left.`
+    },
+    {
+      q: "Digestion begins before you swallow anything. What does the mouth actually do?",
+      body: `You put food in your mouth, you chew, and you swallow. That looks simple, but the mouth is already doing three critical jobs before the food even leaves it - and digestion has already started.
+
+My Socratic question: food has not entered your stomach yet, so how can digestion already be underway in the mouth?
+
+The answer is that the mouth performs mechanical digestion, chemical digestion and the formation of a bolus - all at once.
+
+Mechanical digestion happens through chewing. Teeth grind the food into smaller pieces, which increases its surface area and makes it easier for enzymes to act on it. The tongue moves the food around, mixes it with saliva, and shapes it into a soft ball called a bolus that can be swallowed.
+
+Chemical digestion begins with saliva. Saliva contains an enzyme called salivary amylase, which starts breaking down starch into smaller sugars. Saliva also contains mucus, which lubricates the food and makes the bolus slippery, and lysozyme, an antibacterial enzyme that helps protect the mouth.
+
+The mouth has three pairs of major salivary glands - the parotid, submandibular and sublingual glands - plus hundreds of minor glands scattered through the lining. The parotid glands secrete a watery, enzyme-rich saliva; the submandibular and sublingual glands secrete a thicker, more mucus-rich saliva.
+
+The teeth come in four types, each with a specific job: incisors (cutting), canines (tearing), premolars and molars (grinding and crushing).
+
+Crucial insight: the mouth is not just a doorway to the gut - it is the first stage of digestion. Chewing begins the mechanical breakdown, saliva begins the chemical breakdown of starch, and the bolus that is formed is what makes swallowing possible. Without the mouth, the rest of the digestive tract would have nothing to work with.`
+    },
+    {
+      q: "Swallowing looks effortless. What is actually happening when food moves from your mouth to your stomach?",
+      body: `The act of swallowing - called deglutition - looks so simple that most people never think about it. But it involves a rapid, precisely coordinated sequence of events in the pharynx and oesophagus, and if anything goes wrong, food can end up in the airway instead of the stomach.
+
+My Socratic question: the pharynx is a shared passage for food and air. So how does food manage to go down the oesophagus and not into the trachea?
+
+The answer is that swallowing is an ordered reflex that seals off the airway before food passes.
+
+Swallowing has three phases:
+- The oral (voluntary) phase - you consciously push the bolus to the back of the mouth with your tongue. This is the only part of swallowing you control.
+- The pharyngeal (involuntary) phase - the soft palate rises to seal off the nasopharynx, the epiglottis flips down to cover the laryngeal opening, and the pharyngeal constrictor muscles squeeze the bolus downwards into the oesophagus. Breathing is briefly paused.
+- The oesophageal (involuntary) phase - the bolus is carried down the oesophagus by peristalsis, a wave of muscular contraction that pushes the food ahead of it.
+
+The oesophagus itself has two muscle layers - an inner circular and an outer longitudinal layer - that work together to produce peristalsis. It is lined by stratified squamous epithelium, which resists abrasion from swallowed food. There is no digestion in the oesophagus; its only job is transport.
+
+At the lower end, the oesophagus meets the stomach at the lower oesophageal sphincter - a ring of muscle that remains closed to prevent stomach contents from refluxing back up.
+
+Crucial insight: swallowing is a rapid, precisely timed reflex. The epiglottis and soft palate close off the airway and nasopharynx at exactly the right moment, and the sphincter at the bottom of the oesophagus keeps stomach contents out. Every part of this mechanism exists to make sure that food, once it is swallowed, travels in one direction only.`
+    },
+    {
+      q: "The stomach is a muscular bag. What does it actually do to your food?",
+      body: `Your stomach is a J-shaped muscular organ that sits in the upper left of your abdomen, under the diaphragm. It holds food, churns it, and starts digesting protein - and it does all three at once without damaging itself.
+
+My Socratic question: the stomach produces acid strong enough to dissolve metal. Why does it not digest itself?
+
+The answer is that the stomach has several layers of protection, and its acid and enzymes are only produced in a controlled way.
+
+The stomach has four regions: the cardia (around the oesophageal opening), the fundus (the dome above the cardia), the body (the largest region, where digestion happens), and the pylorus (the funnel-shaped exit).
+
+Its wall has three muscle layers rather than two - inner oblique, middle circular, outer longitudinal - which allows it to churn in every direction, mixing food with gastric juice to form a semi-liquid paste called chyme.
+
+The stomach lining contains gastric glands with several cell types:
+- Parietal cells - secrete hydrochloric acid, which kills bacteria, denatures proteins and activates pepsinogen. They also secrete intrinsic factor, essential for absorbing vitamin B12 in the ileum.
+- Chief cells - secrete pepsinogen, the inactive precursor of pepsin, which digests protein.
+- G cells - secrete gastrin, a hormone that stimulates acid secretion.
+- Mucus-secreting cells - produce a thick alkaline mucus layer that coats the stomach lining and protects it from the acid.
+
+The stomach protects itself with the mucus layer and by releasing acid and enzymes only when needed.
+
+Crucial insight: the stomach is a churn, a chemical reactor and a gatekeeper. It churns food mechanically, digests protein chemically, kills swallowed bacteria, begins fat digestion with gastric lipase, absorbs a few substances (like alcohol and aspirin), and controls the rate at which chyme enters the small intestine. Every one of its structures - from the oblique muscle layer to the mucus-secreting cells - is matched to a specific job.`
+    },
+    {
+      q: "The small intestine is where most absorption happens. How is it built to do that?",
+      body: `The small intestine is about six metres long and divided into three parts: the duodenum, the jejunum and the ileum. It is where the final stages of digestion and almost all absorption take place, and it does this with one of the largest surface areas of any organ in the body.
+
+My Socratic question: the small intestine is a tube - so how does it absorb so much through such a small surface?
+
+The answer is that the inside of the small intestine is not smooth. It has three levels of folding that together increase its surface area about six hundred times.
+
+The three levels are:
+- The plicae circulares - the macroscopic folds visible to the naked eye, which spiral around the inner surface and slow the food down.
+- The villi - finger-like projections of the lining, each containing a network of capillaries and a lymphatic vessel called a lacteal. Sugars and amino acids enter the capillaries; fats enter the lacteals.
+- The microvilli - tiny projections on the surface of each absorptive cell, forming a brush border that dramatically increases the surface area further and carries the digestive enzymes.
+
+Each part of the small intestine has a different role. The duodenum is the shortest part, C-shaped, and receives bile from the liver and pancreatic juice from the pancreas through a shared opening. It is where most chemical digestion finishes. The jejunum is the middle section and the main site of absorption of nutrients. The ileum is the final section, where vitamin B12, bile salts and any remaining nutrients are absorbed.
+
+The lining of the small intestine also contains goblet cells that secrete mucus, and Brunner's glands in the duodenum that secrete an alkaline fluid to neutralise stomach acid.
+
+Crucial insight: the small intestine is a fine-tuned absorption machine. Every feature - the folds, the villi, the microvilli, the rich capillary networks, the lacteals - exists to bring food molecules as close as possible to the blood. When this structure is damaged (as in coeliac disease, where villi are flattened), absorption fails, and the consequences are malnutrition and diarrhoea.`
+    },
+    {
+      q: "The large intestine does not absorb nutrients. So what is it actually for?",
+      body: `The large intestine - about 1.5 metres long - is sometimes treated as an afterthought next to the small intestine. But it does important work: it reclaims water, absorbs electrolytes, houses trillions of bacteria, and stores faeces until they can be expelled.
+
+My Socratic question: if the small intestine has already absorbed the nutrients, what is left for the large intestine to absorb?
+
+The answer is water and electrolytes - and a large amount of it. Roughly 1.5 litres of fluid enters the large intestine every day, and it reclaims almost all of it, leaving about 100 millilitres to be lost in the faeces. If this reabsorption fails, the result is diarrhoea.
+
+The large intestine has four regions:
+- The caecum - a blind pouch at the beginning, in the lower right abdomen, with the appendix attached to it.
+- The colon - divided into ascending, transverse, descending and sigmoid parts, named for their direction of travel around the abdomen.
+- The rectum - a straight section in the pelvis that stores faeces before defecation.
+- The anal canal - the final few centimetres, guarded by two sphincters: an internal anal sphincter of smooth muscle (involuntary) and an external anal sphincter of skeletal muscle (voluntary).
+
+The colon's wall has three distinctive features: the taeniae coli (three bands of longitudinal muscle), haustra (sacculations between the bands), and appendices epiploicae (small fatty tags). It has no villi - only crypts - because it does not need to absorb nutrients.
+
+The large intestine also houses the gut microbiome - trillions of bacteria that ferment undigested fibre, producing short-chain fatty acids, vitamin K and some B vitamins, and shaping the body's immune system.
+
+Crucial insight: the large intestine is not a passive drain. It is the site where the last of the water is reclaimed, where the gut microbiome lives, and where faeces are stored and expelled under conscious control. Its diseases - colon cancer, ulcerative colitis, diverticulitis - are among the most common in clinical practice, and all of them are understood through its anatomy.`
+    },
+    {
+      q: "The liver is the largest internal organ. What does it actually do?",
+      body: `The liver sits in the upper right abdomen, tucked under the diaphragm. It weighs about 1.5 kilograms and performs hundreds of functions. It is also the only internal organ with two blood supplies and two drains - a dual input and output that reflects its unusual role in the body.
+
+My Socratic question: the liver is not part of the digestive tube itself - it sits off to the side. So what is it doing in the digestive system?
+
+The answer is that the liver is the body's metabolic processing plant. Everything absorbed from the gut goes to the liver first, through the portal vein, before it reaches the rest of the body. This is called the first-pass effect, and it is why the liver is one of the most important organs in digestion.
+
+The liver's main functions:
+- It processes nutrients absorbed from the gut - storing glucose as glycogen, converting amino acids, and packaging fats into lipoproteins for transport.
+- It detoxifies harmful substances - drugs, alcohol, and metabolic waste products.
+- It produces bile, which emulsifies fats in the small intestine.
+- It synthesises plasma proteins - albumin, clotting factors, and transport proteins.
+- It stores vitamins (A, D, B12) and iron.
+- It destroys old red blood cells and recycles their components.
+- It participates in immune defence through Kupffer cells, which engulf bacteria and debris from the portal blood.
+
+The liver is divided into lobes - right, left, caudate and quadrate - and functionally into eight Couinaud segments, each with its own blood supply and bile drainage. Its dual supply is the hepatic artery (25%, oxygenated) and the portal vein (75%, nutrient-rich). Its dual drainage is the hepatic veins into the inferior vena cava and the bile ducts into the gut.
+
+Crucial insight: the liver is the body's gatekeeper. Everything from the gut is processed here first, before it reaches the rest of the body. That is why liver disease has such widespread effects - the body loses not just one function but hundreds, all at once.`
+    },
+    {
+      q: "Bile is made in the liver but stored in the gallbladder. Why store it, instead of just making it when needed?",
+      body: `The liver produces bile continuously - about 600 to 1,000 millilitres per day. But the small intestine only needs bile when fat arrives from a meal, which happens a few times a day, not continuously. The gallbladder is what bridges the gap.
+
+My Socratic question: the liver makes bile all day, and the gut needs it only intermittently. What could fill the gap between supply and demand?
+
+The answer is the gallbladder - a pear-shaped sac tucked under the liver that stores and concentrates bile between meals.
+
+The biliary tree is the system of ducts that carries bile from the liver to the gut:
+- Bile canaliculi drain into progressively larger ducts within the liver.
+- The right and left hepatic ducts leave the liver and join to form the common hepatic duct.
+- The common hepatic duct is joined by the cystic duct from the gallbladder to form the common bile duct.
+- The common bile duct joins the pancreatic duct and empties into the duodenum at the hepatopancreatic ampulla (ampulla of Vater), guarded by the sphincter of Oddi.
+
+Between meals, the sphincter of Oddi is closed, and bile backs up into the gallbladder, where water and electrolytes are absorbed, concentrating the bile up to tenfold.
+
+When fatty food enters the duodenum, the hormone cholecystokinin (CCK) is released. CCK makes the gallbladder contract and the sphincter of Oddi relax, releasing a bolus of concentrated bile into the duodenum.
+
+Bile's main job is to emulsify fats - breaking large fat globules into tiny droplets - so that the enzyme pancreatic lipase can digest them.
+
+Crucial insight: the gallbladder is a concentrator, not just a reservoir. If it is removed (cholecystectomy) - as commonly happens for gallstones - the liver's bile still enters the gut, but the patient loses the ability to deliver a large, concentrated bolus of bile when fat arrives. This is why patients without a gallbladder often struggle to digest very fatty meals.`
+    },
+    {
+      q: "The pancreas produces digestive enzymes and hormones. How does it avoid digesting itself?",
+      body: `The pancreas sits behind the stomach, nestled against the duodenum. It has two very different jobs: as an exocrine gland, it produces digestive enzymes and bicarbonate, which it delivers to the duodenum; as an endocrine gland, it produces insulin and glucagon, which it delivers to the blood.
+
+My Socratic question: the pancreas makes the most powerful digestive enzymes in the body - enzymes that can break down any protein. Why does it not digest itself?
+
+The answer is that the pancreas is built to keep its enzymes inactive until they reach the gut, and to separate its exocrine and endocrine functions physically.
+
+The exocrine tissue is arranged in acini - clusters of cells that secrete enzyme precursors into a duct system. The enzymes are secreted as inactive zymogens, not as active enzymes. They are only activated when they reach the duodenum:
+- Trypsinogen is activated by enterokinase, an enzyme on the duodenal brush border, to form trypsin.
+- Trypsin then activates the other zymogens - chymotrypsinogen, proelastase and procarboxypeptidase.
+
+The pancreas also secretes bicarbonate, which neutralises the acid from the stomach and creates the alkaline environment the pancreatic enzymes need.
+
+The endocrine tissue is arranged in islets of Langerhans - clusters of cells that produce insulin, glucagon, somatostatin and pancreatic polypeptide. They are scattered through the pancreas and drain their hormones directly into the blood, not the ducts.
+
+Crucial insight: the separation of exocrine and endocrine functions, plus the zymogen activation system, is what makes the pancreas safe. When these defences fail - as in acute pancreatitis, most often triggered by gallstones or alcohol - the enzymes activate inside the pancreas, and the organ begins to digest itself. This is a medical emergency with a high mortality rate.`
+    },
+    {
+      q: "What actually goes wrong with the digestive system, and how do doctors work out the cause?",
+      body: `The digestive system is exposed to everything you eat and drink - and it can fail in many ways, from heartburn and ulcers to liver failure and colon cancer. Understanding the clinical anatomy of the digestive system is what lets a doctor work out where the problem is and what to do about it.
+
+My Socratic question: the digestive system is one continuous tube with several attached organs. If a patient has abdominal pain, how does the doctor narrow down where the problem is?
+
+The answer is that each part of the digestive system has its own characteristic diseases, and each produces its own pattern of symptoms and signs.
+
+- Diseases of the mouth and oesophagus - dental caries, oral cancer, gastro-oesophageal reflux disease (GORD), oesophageal varices, achalasia, oesophageal cancer. Symptoms: heartburn, difficulty swallowing, regurgitation.
+- Diseases of the stomach and duodenum - gastritis, peptic ulcer disease (often caused by Helicobacter pylori), gastric cancer, pyloric stenosis. Symptoms: epigastric pain, nausea, vomiting, weight loss.
+- Diseases of the small intestine - coeliac disease, Crohn's disease, small bowel obstruction, malabsorption. Symptoms: diarrhoea, bloating, weight loss, anaemia.
+- Diseases of the large intestine - colon cancer, ulcerative colitis, diverticulitis, appendicitis, irritable bowel syndrome. Symptoms: change in bowel habit, rectal bleeding, abdominal pain, weight loss.
+- Diseases of the liver - hepatitis, cirrhosis, fatty liver disease, liver cancer. Symptoms: jaundice, fatigue, abdominal swelling (ascites), easy bruising.
+- Diseases of the biliary tree - gallstones, cholecystitis, cholangitis, bile duct obstruction. Symptoms: right upper quadrant pain (often after fatty meals), jaundice, fever.
+- Diseases of the pancreas - acute and chronic pancreatitis, pancreatic cancer. Symptoms: severe epigastric pain radiating to the back, weight loss, jaundice.
+
+Investigations include:
+- History and physical examination
+- Blood tests (liver function tests, amylase, lipase, full blood count, coeliac serology)
+- Stool tests (faecal occult blood, stool culture, faecal calprotectin)
+- Imaging (ultrasound, CT, MRI, MRCP)
+- Endoscopy (upper GI endoscopy, colonoscopy, ERCP)
+- Biopsy (for cancer and chronic disease)
+
+Crucial insight: the digestive system is a map, and every symptom points to a location on that map. Epigastric pain suggests stomach or duodenum; right upper quadrant pain after a fatty meal suggests gallbladder; lower right abdominal pain suggests appendix or terminal ileum; blood in the stool suggests colon or rectum. Knowing the anatomy lets you localise the problem before you have any investigation.`
+    },
+  ],
+  theory: [
+    { q: "What are the two main parts of the digestive system?", a: "The gastrointestinal (GI) tract - the continuous tube from mouth to anus, including the mouth, pharynx, oesophagus, stomach, small intestine, large intestine, rectum and anal canal - and the accessory organs: salivary glands, liver, gallbladder and pancreas." },
+    { q: "Describe the structure and functions of the mouth in digestion.", a: "The mouth performs mechanical digestion through chewing, chemical digestion of starch via salivary amylase, and formation of the bolus for swallowing. Saliva contains mucus, enzymes and lysozyme, and is produced by the parotid, submandibular and sublingual glands." },
+    { q: "Describe the three phases of swallowing.", a: "Oral (voluntary) - the tongue pushes the bolus to the back of the mouth. Pharyngeal (involuntary) - the soft palate seals the nasopharynx, the epiglottis covers the larynx, and the pharyngeal constrictors push the bolus into the oesophagus. Oesophageal (involuntary) - peristalsis carries the bolus to the stomach." },
+    { q: "Name the four regions of the stomach and the four main cell types of its glands.", a: "Regions: cardia, fundus, body, pylorus. Cell types: parietal cells (acid and intrinsic factor), chief cells (pepsinogen), G cells (gastrin), mucus-secreting cells (protective alkaline mucus)." },
+    { q: "Describe the three levels of folding in the small intestine and their role.", a: "Plicae circulares (macroscopic folds), villi (microscopic projections containing capillaries and lacteals), and microvilli (brush border on each absorptive cell). Together they increase surface area about 600-fold for absorption." },
+    { q: "Name the three parts of the small intestine and their main roles.", a: "Duodenum - shortest, C-shaped, receives bile and pancreatic juice, where most chemical digestion is completed. Jejunum - middle section, main site of nutrient absorption. Ileum - final section, absorbs vitamin B12, bile salts and remaining nutrients." },
+    { q: "Name the four regions of the large intestine and their functions.", a: "Caecum - blind pouch with the appendix attached. Colon (ascending, transverse, descending, sigmoid) - absorbs water and electrolytes, houses the microbiome. Rectum - stores faeces. Anal canal - guarded by internal (involuntary) and external (voluntary) sphincters." },
+    { q: "List six functions of the liver.", a: "Processing of absorbed nutrients; detoxification of drugs, alcohol and metabolic waste; production of bile; synthesis of plasma proteins (albumin, clotting factors); storage of vitamins and iron; destruction of old red blood cells; and immune defence via Kupffer cells." },
+    { q: "Describe the biliary tree and the role of the gallbladder.", a: "Bile flows from liver canaliculi into the right and left hepatic ducts, which join to form the common hepatic duct. This is joined by the cystic duct from the gallbladder to form the common bile duct, which joins the pancreatic duct and empties into the duodenum at the ampulla of Vater. The gallbladder stores and concentrates bile between meals and contracts under CCK when fat enters the duodenum." },
+    { q: "How does the pancreas avoid self-digestion?", a: "Its exocrine enzymes are secreted as inactive zymogens, not as active enzymes. Trypsinogen is activated only in the duodenum by enterokinase; trypsin then activates the other zymogens. The endocrine tissue is separated in the islets of Langerhans and drains into the blood, not the ducts." },
+    { q: "Explain the first-pass effect and why it matters.", a: "Everything absorbed from the gut enters the portal vein and passes through the liver before reaching the systemic circulation. The liver processes nutrients, drugs and toxins first. This is why oral drugs may be inactivated by first-pass metabolism, and why the liver is called the body's gatekeeper." },
+    { q: "Name four conditions affecting the digestive system and the part each affects.", a: "Peptic ulcer disease - stomach or duodenum. Coeliac disease - small intestine. Diverticulitis - large intestine. Cholecystitis - gallbladder. All four are understood through the anatomy of the organ involved." },
+  ],
+  videos: [
+    { channel: "Anatomy", title: "The Digestive System - From Mouth to Anus", note: "Full walkthrough of the GI tract and the accessory organs.", url: "https://www.youtube.com/results?search_query=digestive+system+anatomy+mouth+to+anus" },
+    { channel: "Anatomy", title: "Stomach, Small Intestine and Large Intestine", note: "Regional anatomy and function of the three main segments of the GI tract.", url: "https://www.youtube.com/results?search_query=stomach+small+intestine+large+intestine+anatomy" },
+    { channel: "Anatomy", title: "Liver, Gallbladder and Pancreas", note: "The accessory organs of digestion, their ducts and their blood supply.", url: "https://www.youtube.com/results?search_query=liver+gallbladder+pancreas+anatomy+ducts" },
+  ],
+  mcqs: [
+    // ===== Note 1: what the digestive system is and why it exists (Q1-5) =====
+    { q: "The main purpose of the digestive system is:", o: ["To produce hormones", "To break down food into molecules the body can absorb and use", "To filter blood", "To store fat"], a: 1, w: "The digestive system breaks food down into absorbable molecules that the cells can use." },
+    { q: "The gastrointestinal tract runs from:", o: ["The mouth to the anus", "The nose to the lungs", "The heart to the kidneys", "The liver to the pancreas"], a: 0, w: "The GI tract is the continuous tube from mouth to anus." },
+    { q: "Which of these is an accessory organ of the digestive system?", o: ["Stomach", "Oesophagus", "Liver", "Small intestine"], a: 2, w: "The liver is an accessory organ - it lies outside the tube but contributes to digestion." },
+    { q: "The role of the accessory organs in digestion is to:", o: ["Absorb nutrients directly", "Contribute secretions that help break down food in the GI tract", "Store faeces", "Filter lymph"], a: 1, w: "The salivary glands, liver, gallbladder and pancreas contribute secretions that help digestion in the GI tract." },
+    { q: "Which of the following is NOT part of the gastrointestinal tract itself?", o: ["The oesophagus", "The pancreas", "The stomach", "The rectum"], a: 1, w: "The pancreas is an accessory organ, not part of the GI tube." },
+
+    // ===== Note 2: mouth, teeth and salivary glands (Q6-10) =====
+    { q: "The three jobs carried out by the mouth during eating are:", o: ["Mechanical digestion, chemical digestion, and forming the bolus", "Absorption, secretion and storage", "Filtration, reabsorption and secretion", "Chewing, breathing and speaking"], a: 0, w: "The mouth performs mechanical digestion (chewing), chemical digestion (salivary amylase) and forms the bolus." },
+    { q: "The enzyme in saliva that begins the digestion of starch is:", o: ["Pepsin", "Salivary amylase", "Lipase", "Trypsin"], a: 1, w: "Salivary amylase begins the breakdown of starch into smaller sugars." },
+    { q: "The three pairs of major salivary glands are:", o: ["Parotid, thyroid, adrenal", "Parotid, submandibular, sublingual", "Submandibular, sublingual, pancreas", "Parotid, sublingual, pancreas"], a: 1, w: "The three pairs of major salivary glands are the parotid, submandibular and sublingual glands." },
+    { q: "Which type of teeth are specialised for grinding and crushing?", o: ["Incisors", "Canines", "Premolars and molars", "Incisors and canines"], a: 2, w: "Premolars and molars have broad surfaces for grinding and crushing." },
+    { q: "The ball of food formed in the mouth before swallowing is called:", o: ["Chyme", "Bolus", "Faeces", "Chyle"], a: 1, w: "The bolus is the soft ball of chewed food mixed with saliva that can be swallowed." },
+
+    // ===== Note 3: pharynx and oesophagus (Q11-15) =====
+    { q: "During swallowing, the epiglottis:", o: ["Rises to open the airway", "Folds down to close the airway and protect the trachea", "Secretes mucus", "Produces sound"], a: 1, w: "The epiglottis flips down over the laryngeal opening during swallowing to keep food out of the airway." },
+    { q: "The three phases of swallowing, in order, are:", o: ["Pharyngeal, oral, oesophageal", "Oral, pharyngeal, oesophageal", "Oesophageal, oral, pharyngeal", "Oral, oesophageal, pharyngeal"], a: 1, w: "Swallowing proceeds from the oral (voluntary) phase, through the pharyngeal phase, to the oesophageal phase." },
+    { q: "The oesophagus is lined by which type of epithelium?", o: ["Simple columnar epithelium", "Stratified squamous epithelium", "Simple squamous epithelium", "Transitional epithelium"], a: 1, w: "The oesophagus is lined by stratified squamous epithelium, which resists abrasion from swallowed food." },
+    { q: "Movement of the bolus down the oesophagus is produced by:", o: ["The epiglottis", "Gravity alone", "Peristalsis from the circular and longitudinal muscle layers", "The diaphragm"], a: 2, w: "Peristalsis - coordinated contraction of circular and longitudinal muscle - pushes the bolus towards the stomach." },
+    { q: "The lower oesophageal sphincter functions to:", o: ["Allow air into the oesophagus", "Prevent stomach contents from refluxing into the oesophagus", "Secrete acid", "Store food"], a: 1, w: "The lower oesophageal sphincter remains closed to prevent reflux of stomach contents." },
+
+    // ===== Note 4: the stomach (Q16-20) =====
+    { q: "The four regions of the stomach are:", o: ["Duodenum, jejunum, ileum, colon", "Cardia, fundus, body, pylorus", "Fundus, antrum, pylorus, caecum", "Body, antrum, cardia, duodenum"], a: 1, w: "The stomach's four regions are the cardia, fundus, body and pylorus." },
+    { q: "The stomach wall has how many muscle layers?", o: ["One", "Two", "Four", "Three"], a: 3, w: "The stomach has three muscle layers - oblique, circular and longitudinal - which allow it to churn food." },
+    { q: "Parietal cells secrete:", o: ["Mucus", "Hydrochloric acid and intrinsic factor", "Pepsinogen", "Gastrin"], a: 1, w: "Parietal cells secrete hydrochloric acid (for digestion) and intrinsic factor (for vitamin B12 absorption)." },
+    { q: "Chief cells secrete:", o: ["Pepsinogen", "Hydrochloric acid", "Intrinsic factor", "Gastrin"], a: 0, w: "Chief cells secrete pepsinogen, which is converted into the protein-digesting enzyme pepsin." },
+    { q: "The main function of the mucus layer in the stomach is to:", o: ["Absorb nutrients", "Secrete enzymes", "Protect the stomach lining from acid", "Store food"], a: 2, w: "The alkaline mucus layer protects the stomach lining from the acid it produces." },
+
+    // ===== Note 5: the small intestine (Q21-25) =====
+    { q: "The three parts of the small intestine, in order, are:", o: ["Duodenum, jejunum, ileum", "Jejunum, duodenum, ileum", "Ileum, jejunum, duodenum", "Caecum, colon, rectum"], a: 0, w: "The small intestine has three parts: duodenum, jejunum and ileum, in that order." },
+    { q: "The three levels of folding in the small intestine are:", o: ["Rugae, villi, crypts", "Plicae circulares, villi, microvilli", "Haustra, taeniae, epiploicae", "Sinusoids, canaliculi, ducts"], a: 1, w: "The three levels are plicae circulares (macroscopic folds), villi and microvilli." },
+    { q: "The lymphatic vessel inside each intestinal villus is called a:", o: ["Lacteal", "Canaliculus", "Sinusoid", "Crypt"], a: 0, w: "The lacteal is the lymphatic vessel in the villus that absorbs fats." },
+    { q: "Which part of the small intestine receives bile and pancreatic juice?", o: ["Ileum", "Jejunum", "Duodenum", "Caecum"], a: 2, w: "The duodenum receives bile from the gallbladder and pancreatic juice from the pancreas." },
+    { q: "Vitamin B12 is absorbed mainly in the:", o: ["Stomach", "Duodenum", "Jejunum", "Ileum"], a: 3, w: "The ileum is the main site for absorption of vitamin B12, bile salts and remaining nutrients." },
+
+    // ===== Note 6: the large intestine (Q26-30) =====
+    { q: "The main function of the large intestine is to:", o: ["Digest proteins", "Absorb water and electrolytes, and store faeces", "Emulsify fats", "Absorb vitamins"], a: 1, w: "The large intestine reclaims water and electrolytes and stores faeces before expulsion." },
+    { q: "The blind pouch at the beginning of the large intestine is the:", o: ["Caecum", "Sigmoid colon", "Rectum", "Appendix"], a: 0, w: "The caecum is the blind pouch at the beginning of the large intestine, in the right lower abdomen." },
+    { q: "The three bands of longitudinal muscle in the colon wall are called:", o: ["Haustra", "Appendices epiploicae", "Taeniae coli", "Villi"], a: 2, w: "The taeniae coli are the three bands of longitudinal muscle on the colon wall." },
+    { q: "The internal anal sphincter is made of:", o: ["Smooth muscle and is under involuntary control", "Skeletal muscle and is under voluntary control", "Cartilage", "Elastic tissue"], a: 0, w: "The internal anal sphincter is smooth muscle and is under involuntary control." },
+    { q: "The gut microbiome is mainly housed in the:", o: ["Stomach", "Small intestine", "Large intestine", "Oesophagus"], a: 2, w: "The large intestine houses trillions of bacteria that ferment fibre, produce vitamins and shape immune function." },
+
+    // ===== Note 7: the liver (Q31-35) =====
+    { q: "The liver's dual blood supply comes from:", o: ["The portal vein and the hepatic artery", "The hepatic vein and the portal vein", "The aorta and the renal artery", "The pulmonary artery and the portal vein"], a: 0, w: "The liver receives blood from the hepatic artery (oxygenated) and the portal vein (nutrient-rich)." },
+    { q: "Which of the following is NOT a function of the liver?", o: ["Detoxification of drugs and alcohol", "Production of bile", "Synthesis of plasma proteins", "Production of insulin"], a: 3, w: "Insulin is produced by the pancreas, not the liver." },
+    { q: "The first-pass effect refers to the fact that:", o: ["Blood from the gut passes through the liver before reaching the rest of the body", "Blood from the liver passes through the gut", "The first pass of blood through the kidney filters waste", "The heart pumps blood twice in one cycle"], a: 0, w: "Everything absorbed from the gut goes to the liver first, where it is processed before reaching the systemic circulation." },
+    { q: "The liver is divided functionally into:", o: ["Two lobes only", "Eight Couinaud segments", "Four lobes and six segments", "Ten bronchopulmonary segments"], a: 1, w: "The liver is functionally divided into eight Couinaud segments, each with its own blood supply and bile drainage." },
+    { q: "Kupffer cells in the liver are important because they:", o: ["Produce bile", "Synthesise albumin", "Engulf bacteria and debris from the portal blood", "Store iron"], a: 2, w: "Kupffer cells are macrophages in the liver that engulf bacteria and debris from the portal blood." },
+
+    // ===== Note 8: biliary tree and gallbladder (Q36-40) =====
+    { q: "Bile is produced by the:", o: ["Gallbladder", "Liver", "Pancreas", "Duodenum"], a: 1, w: "Bile is produced by the liver and stored in the gallbladder." },
+    { q: "The common bile duct is formed by the union of the:", o: ["Common hepatic duct and cystic duct", "Right and left hepatic ducts", "Pancreatic duct and cystic duct", "Hepatic artery and portal vein"], a: 0, w: "The common bile duct is formed where the common hepatic duct joins the cystic duct from the gallbladder." },
+    { q: "Cholecystokinin (CCK) causes the gallbladder to:", o: ["Relax", "Contract and release bile", "Stop producing bile", "Store more bile"], a: 1, w: "CCK makes the gallbladder contract and the sphincter of Oddi relax, releasing bile into the duodenum." },
+    { q: "Bile's main function is to:", o: ["Digest proteins", "Absorb water", "Emulsify fats", "Neutralise stomach acid"], a: 2, w: "Bile emulsifies fats - breaking them into small droplets - so that pancreatic lipase can digest them." },
+    { q: "Between meals, bile is stored in the:", o: ["Liver", "Gallbladder", "Duodenum", "Stomach"], a: 1, w: "Between meals bile backs up into the gallbladder, where it is stored and concentrated." },
+
+    // ===== Note 9: the pancreas (Q41-45) =====
+    { q: "The exocrine pancreas secretes:", o: ["Insulin and glucagon", "Digestive enzymes and bicarbonate", "Bile", "Thyroid hormones"], a: 1, w: "The exocrine pancreas secretes digestive enzymes and bicarbonate into the duodenum." },
+    { q: "The endocrine pancreas secretes hormones from the:", o: ["Acinar cells", "Islets of Langerhans", "Duct cells", "Kupffer cells"], a: 1, w: "The endocrine pancreas consists of the islets of Langerhans, which produce insulin, glucagon and other hormones." },
+    { q: "Trypsinogen is converted to trypsin by:", o: ["Pepsin", "Chymotrypsin", "Enterokinase", "Bicarbonate"], a: 2, w: "Enterokinase, on the duodenal brush border, converts trypsinogen to active trypsin." },
+    { q: "The pancreas avoids self-digestion mainly because:", o: ["It has no digestive enzymes", "It secretes enzymes as inactive zymogens that are only activated in the duodenum", "It has no blood supply", "Its enzymes work only in acidic environments"], a: 1, w: "Pancreatic enzymes are secreted as inactive zymogens and are only activated when they reach the duodenum." },
+    { q: "Acute pancreatitis is most commonly caused by:", o: ["Gallstones or alcohol", "Viral infection", "Autoimmune disease", "Trauma to the pancreas"], a: 0, w: "Gallstones and alcohol account for the majority of acute pancreatitis cases." },
+
+    // ===== Note 10: clinical anatomy (Q46-50) =====
+    { q: "Right upper quadrant pain that occurs after a fatty meal most suggests a problem with the:", o: ["Stomach", "Gallbladder", "Appendix", "Pancreas"], a: 1, w: "Right upper quadrant pain after a fatty meal is classically biliary colic from gallstones." },
+    { q: "Lower right abdominal pain with tenderness at McBurney's point most suggests:", o: ["Appendicitis", "Gastritis", "Cholecystitis", "Diverticulitis"], a: 0, w: "Pain and tenderness at McBurney's point in the right iliac fossa is classic for appendicitis." },
+    { q: "Difficulty swallowing is a symptom most associated with disease of the:", o: ["Stomach", "Oesophagus", "Liver", "Colon"], a: 1, w: "Difficulty swallowing (dysphagia) suggests an oesophageal problem." },
+    { q: "Which investigation is used to visually examine the inside of the colon?", o: ["Colonoscopy", "Ultrasound", "CT scan", "MRI"], a: 0, w: "Colonoscopy is an endoscopic procedure for examining the inside of the colon." },
+    { q: "The digestive system can be thought of as a map because:", o: ["It is a single tube with no landmarks", "Each symptom points to a specific location on the tract", "All organs look alike", "All diseases are the same"], a: 1, w: "Each symptom of digestive disease points to a specific location on the anatomical map of the GI tract." },
+  ],
+};
+
+/* --------------------------- an2:14 --------------------------- */
+const T_AN2_GI_HISTO = {
+  courseId: "an2",
+  topicIndex: 14,
+  title: "Microscopic Anatomy — Histology of the GI Tract",
+  minutes: 30,
+  note: [
+    {
+      q: "Every part of the gut looks different down the microscope. Yet they all share one plan. What is that plan?",
+      body: `Put a slide of the oesophagus and a slide of the colon side by side under the microscope, and at first glance they could not look more different. The oesophagus is lined by many layers of flat cells; the colon by a single layer of tall cells packed with mucus-secreting goblet cells. One is built to resist abrasion; the other to absorb water and lubricate. Yet underneath these differences, they are the same organ built to the same four-layer template.
+
+My Socratic question: if every part of the GI tract looks different on the surface, what is the shared deep structure that unites them all?
+
+The answer is that every segment of the GI tract, from oesophagus to anal canal, has a wall made of the same four concentric layers, in the same order, from inside out. What changes from segment to segment is not the number of layers but the specific tissue within them - and it is those changes that give each segment its distinctive microscopic appearance.
+
+The four layers, from the lumen outward, are:
+
+- The mucosa - the innermost layer. It has three sub-parts: an epithelium (which varies by segment), a lamina propria (loose connective tissue with blood vessels, lymphatics and immune cells), and a muscularis mucosae (a thin layer of smooth muscle that can move the mucosa independently).
+- The submucosa - a layer of loose connective tissue containing larger blood vessels, lymphatics, and in some segments specialised glands. It also contains the submucosal (Meissner's) nerve plexus.
+- The muscularis externa - two thick layers of smooth muscle (inner circular, outer longitudinal) that produce peristalsis. Between them lies the myenteric (Auerbach's) nerve plexus.
+- The serosa or adventitia - the outermost layer. In the abdominal cavity, it is usually a serous membrane (the visceral peritoneum, called serosa). Where the gut is retroperitoneal or passes through the diaphragm, it is instead a fibrous adventitia.
+
+Crucial insight: the four-layer plan is the unifying principle of GI histology. Learn it once, and every segment becomes an exercise in identifying which tissue has changed in which layer. The epithelium tells you the segment's job; the muscularis externa tells you how it moves; the submucosa tells you what glands it needs; and the serosa tells you where it sits in the body.`
+    },
+    {
+      q: "The oesophagus must survive food passing over it for a lifetime. What tissue does it need?",
+      body: `The oesophagus is a muscular tube about 25 centimetres long that carries food from the pharynx to the stomach. It does not digest anything. Its only job is transport - but transport of food that has just been chewed, sometimes still sharp, sometimes still hot, sometimes rough. Its lining has to survive that for a whole lifetime without wearing through.
+
+My Socratic question: the oesophagus is not in the business of absorption or secretion. What epithelium would you choose for a tube that only has to survive friction?
+
+The answer is stratified squamous epithelium - the same tough, abrasion-resistant tissue that lines your mouth. It has many layers, so worn cells at the surface can be sloughed off and replaced from below without ever breaching the barrier.
+
+The oesophageal wall has the standard four-layer plan, with three features worth noting:
+
+The mucosa is lined by non-keratinized stratified squamous epithelium. In the very lowest part of the oesophagus, near the gastro-oesophageal junction, the epithelium abruptly changes to simple columnar - the transition marks the start of the stomach's territory.
+
+The submucosa contains scattered oesophageal glands that secrete mucus to lubricate the passage of food. These are most numerous in the upper and lower parts of the oesophagus.
+
+The muscularis externa changes along the oesophagus. In the upper third, it is skeletal muscle (voluntary). In the middle third, it is a mix of skeletal and smooth muscle. In the lower third, it is entirely smooth muscle (involuntary). This reflects the fact that swallowing begins as a voluntary act but becomes an involuntary reflex as it proceeds.
+
+Crucial insight: the oesophagus's stratified squamous lining is exactly what you would predict from its job. Where a tube only has to survive friction, it uses the toughest, most abrasion-resistant epithelium the body makes. The lower oesophageal sphincter, the transition to simple columnar at the gastro-oesophageal junction, and the changing muscle type along its length are all features to know - because each one has a clinical correlate in conditions like GORD and Barrett's oesophagus.`
+    },
+    {
+      q: "The stomach lining produces acid that would dissolve most tissues. What protects it?",
+      body: `The stomach is the only part of the GI tract that secretes hydrochloric acid strong enough to kill bacteria, denature protein and dissolve metal. Its own lining is not immune to that acid - it would digest itself if it were not protected. The stomach's histological design is built around that one problem: produce acid safely, and keep the acid away from the tissue making it.
+
+My Socratic question: acid that dissolves metal does not care what tissue it is next to. How does the stomach line itself with the same cells it is trying to protect?
+
+The answer is that the stomach's surface is covered by a thick layer of alkaline mucus, secreted continuously by mucus-secreting cells at the surface and in the necks of the gastric glands. That mucus layer is the stomach's shield - it keeps the acid a fraction of a millimetre away from the cells that produce it.
+
+The stomach mucosa is a simple columnar epithelium, entirely different from the oesophagus above it. It is thrown into deep gastric pits that descend into branched tubular gastric glands. The gastric glands contain four major cell types:
+
+- Parietal cells - large, rounded, often binucleate cells that secrete hydrochloric acid and intrinsic factor. They are eosinophilic because of their abundant mitochondria.
+- Chief cells - basophilic cells at the base of the glands that secrete pepsinogen, the inactive precursor of the protein-digesting enzyme pepsin.
+- Mucous neck cells - produce the alkaline mucus that protects the surface.
+- Enteroendocrine cells - scattered through the glands, secreting hormones such as gastrin, somatostatin and histamine.
+
+The stomach has three histological regions, and their gland content changes along them:
+
+- The cardia, the narrow strip around the oesophageal opening, has mostly mucus-secreting glands.
+- The fundus and body, the largest regions, contain the full complement of acid-secreting and enzyme-secreting glands.
+- The pylorus, the funnel-shaped exit, contains mostly mucus-secreting glands and the enteroendocrine cells that produce gastrin.
+
+Crucial insight: the stomach is a chemical plant with its own protective shielding. The simple columnar epithelium, the deep gastric pits, the alkaline mucus layer, and the specialised cell types all exist to make the stomach produce acid without destroying itself. When the protective mechanisms fail - as in peptic ulcer disease, where Helicobacter pylori infection breaks down the mucus layer - the acid attacks the wall.`
+    },
+    {
+      q: "The small intestine must absorb nutrients from food that is already liquid. What does its lining look like?",
+      body: `By the time chyme reaches the small intestine, food has been churned into a semi-liquid paste. The small intestine now has to absorb almost everything in it - sugars, amino acids, fatty acids, vitamins, minerals, water. To do that in the four hours the chyme spends there, the lining must present an enormous surface to the food.
+
+My Socratic question: the small intestine is only a tube, so how does it absorb so much through such a small surface?
+
+The answer is folding. The small intestine has three levels of folding that together increase its surface area roughly 600-fold compared with a smooth tube of the same length. And the epithelium lining those folds is simple columnar - the thinnest possible barrier for absorption.
+
+The three levels of folding:
+
+- Plicae circulares - the macroscopic, permanent folds of the mucosa and submucosa, visible to the naked eye. They are most prominent in the jejunum.
+- Villi - finger-like projections of the mucosa that stick out into the lumen. Each villus contains a core of lamina propria with a capillary network and a central lacteal (lymphatic vessel). The capillary absorbs sugars and amino acids; the lacteal absorbs fats.
+- Microvilli - tiny finger-like projections on the apical surface of each absorptive cell, forming the brush border that carries the digestive enzymes.
+
+The epithelium of the small intestine is simple columnar, made mainly of:
+
+- Enterocytes - tall, absorptive cells with a brush border of microvilli.
+- Goblet cells - scattered among the enterocytes, secreting mucus that lubricates the lining.
+- Enteroendocrine cells - scattered through the epithelium, secreting hormones like CCK and secretin.
+
+Between the villi, deep crypts of Lieberkuhn descend to the base of the mucosa. These crypts contain stem cells that continually renew the epithelium, and Paneth cells that secrete antibacterial substances.
+
+Crucial insight: the small intestine's histology is a case study in surface-area amplification. Every feature - folds, villi, microvilli - exists to bring food molecules closer to blood. The simple columnar epithelium is the thinnest barrier that can still actively transport substances across itself. And the crypts provide the constant renewal that keeps the surface healthy through a lifetime of digestion. When villi are flattened - as in untreated coeliac disease - the surface area collapses, and absorption fails.`
+    },
+    {
+      q: "The duodenum has unique glands in its submucosa. What are they, and why are they needed there?",
+      body: `The duodenum is the first and shortest part of the small intestine - about 25 centimetres long, C-shaped, curved around the head of the pancreas. It has a unique histological feature no other part of the small intestine has: submucosal glands. These are the duodenal (Brunner's) glands, and they exist to solve a specific problem the duodenum faces.
+
+My Socratic question: the duodenum receives acidic chyme straight from the stomach. What problem does that create, and how would a gland help?
+
+The answer is that the acid must be neutralised. Chyme leaving the stomach has a pH of about 2. The enzymes that work in the duodenum - pancreatic enzymes and duodenal brush border enzymes - work best at a neutral to slightly alkaline pH, around 7 to 8. If the acid is not neutralised, those enzymes cannot function, and the duodenal lining itself can be damaged.
+
+The duodenum's histological features reflect this problem:
+
+- The submucosa of the duodenum contains the duodenal (Brunner's) glands - branched tubular glands that secrete alkaline mucus. Their secretion neutralises the incoming stomach acid and protects the duodenal lining from it.
+- The mucosa contains the usual villi and crypts, but the crypts of the duodenum are deeper and extend into the submucosa (unlike elsewhere in the small intestine).
+- The duodenal mucosa also contains more goblet cells than the jejunum, and the enteroendocrine cells here secrete secretin and CCK - hormones that stimulate the pancreas and gallbladder.
+
+The duodenum also has a distinctive landmark: the major duodenal papilla, where the common bile duct and pancreatic duct empty their contents into the lumen. This is visible on histology as an abrupt transition in the epithelium, with ducts opening into the surface.
+
+Crucial insight: the duodenum is a chemical mixing chamber. It receives acid from the stomach, enzymes from the pancreas and bile from the gallbladder, and its own histological features - the Brunner's glands, the deeper crypts, the enteroendocrine cells - all exist to manage the chemistry happening there. When this chemistry goes wrong - as in peptic ulcer disease, where acid overwhelms the defences - the duodenum is one of the first casualties.`
+    },
+    {
+      q: "The ileum is the last part of the small intestine. What makes it histologically distinctive?",
+      body: `The ileum is the final and longest part of the small intestine, ending at the ileocaecal valve. It looks similar to the jejunum at first glance - same villi, same crypts, same simple columnar epithelium - but it has two distinctive histological features that identify it.
+
+My Socratic question: the ileum absorbs vitamin B12, bile salts, and whatever nutrients the jejunum did not absorb. What distinctive features would you predict it has?
+
+The answer is that it needs two things the rest of the small intestine does not: a way to absorb specific nutrients through specialised transport, and a strong immune presence because the ileum is the segment closest to the colon, where bacterial populations begin to rise.
+
+The two distinctive histological features of the ileum:
+
+- Peyer's patches - large, aggregations of lymphoid tissue (mostly B-cell follicles) located in the lamina propria and submucosa on the antimesenteric side of the ileum. They are the largest and most conspicuous in the ileum, and they serve as the gut's surveillance posts - sampling antigens from the gut lumen and mounting immune responses.
+- Villi that are shorter and less numerous than in the jejunum, with fewer plicae circulares. The ileum is the segment where the surface area is at its least impressive in the small intestine - but it is still huge compared to a smooth tube.
+
+The ileum also contains the usual crypts of Lieberkuhn, enteroendocrine cells, and goblet cells. Goblet cells are more numerous in the ileum than in the jejunum.
+
+Crucial insight: Peyer's patches are the histological signature of the ileum - they are what let a pathologist looking at a slide of small intestine say with certainty, "this is ileum." Their presence reflects the ileum's role not just as an absorber but as part of the gut-associated lymphoid tissue (GALT) that keeps the immune system informed about what is happening in the gut lumen. In Crohn's disease, the ileum is a common site of involvement, and Peyer's patches are thought to play a role in the disease's origin.`
+    },
+    {
+      q: "The colon absorbs water but has no villi. How does it absorb at all?",
+      body: `The colon - the last major segment of the GI tract before the rectum - has a different job from the small intestine. By the time contents reach it, most nutrients have been absorbed; what remains is mainly water, electrolytes and undigested fibre. Its job is to reclaim the water and prepare the waste for expulsion.
+
+My Socratic question: the small intestine uses villi to amplify its surface for absorption. The colon has no villi. So how does it absorb so much water?
+
+The answer is that water absorption does not need villi. Villi amplify surface area to absorb nutrients that require transporter proteins; water moves passively by osmosis, and passive osmosis does not need the same surface amplification. The colon instead absorbs sodium actively, and water follows osmotically.
+
+The colon's histological features:
+
+- The mucosa has no villi - only crypts of Lieberkuhn. These crypts are much deeper than in the small intestine, and they are packed with goblet cells.
+- The surface epithelium is simple columnar, but dominated by mucus-secreting goblet cells. In fact, the ratio of goblet cells to absorptive cells is highest in the colon. This is why the colon exists to lubricate as much as absorb - the mucus keeps the forming faeces slippery and easy to move.
+- The crypts contain enterocytes, enteroendocrine cells and stem cells, but no Paneth cells.
+- Peyer's patches are absent, but scattered lymphoid tissue exists.
+- The muscularis externa has three bands of longitudinal muscle (the taeniae coli) instead of a uniform outer layer.
+- The wall is thrown into sacculations (haustra), with small fatty tags (appendices epiploicae) on the outer surface.
+- The serosa is present where the colon is intraperitoneal (transverse and sigmoid), and adventitia where it is retroperitoneal (ascending and descending).
+
+Crucial insight: the colon is built for a different kind of absorption than the small intestine. Where the small intestine prioritises surface area for nutrient absorption, the colon prioritises mucus secretion for lubrication and sodium absorption for water reclaiming. The absence of villi is not a limitation - it is the design. When this design fails - as in ulcerative colitis, where the colon lining is inflamed and cannot absorb water properly - the result is diarrhoea.`
+    },
+    {
+      q: "The gut contains scattered cells that secrete hormones. Why would a simple tube need endocrine tissue?",
+      body: `The gut is not just a passive tube through which food passes. It is the body's largest endocrine organ, containing scattered cells - the enteroendocrine cells - that secrete more than twenty different hormones. These cells are individually scattered through the epithelium of the stomach and intestine, but collectively they make the gut one of the most important hormone systems in the body.
+
+My Socratic question: why would the gut need to secrete hormones at all? What is there to coordinate?
+
+The answer is that digestion is a coordinated process involving several organs at once - the stomach, pancreas, gallbladder, small intestine. All of these need to work together on a schedule set by food arriving in the gut. The enteroendocrine cells are the sensors and signal-generators that keep that schedule.
+
+The main enteroendocrine cells of the gut and their hormones:
+
+- G cells (stomach antrum) - secrete gastrin, which stimulates acid secretion by parietal cells.
+- D cells (stomach and intestine) - secrete somatostatin, which inhibits the secretion of many other gut hormones and slows digestion.
+- Enterochromaffin-like (ECL) cells (stomach) - secrete histamine, which stimulates acid secretion.
+- S cells (duodenum) - secrete secretin, which stimulates bicarbonate secretion by the pancreas and bile secretion by the liver.
+- I cells (duodenum and jejunum) - secrete cholecystokinin (CCK), which stimulates gallbladder contraction, pancreatic enzyme secretion, and slows gastric emptying.
+- K cells (duodenum and jejunum) - secrete gastric inhibitory peptide (GIP), which stimulates insulin release and slows gastric emptying.
+- L cells (ileum and colon) - secrete glucagon-like peptide 1 (GLP-1) and peptide YY (PYY), which slow gut motility and regulate appetite.
+
+These cells sit scattered in the epithelium, with their apical surfaces facing the lumen and their basal surfaces facing the blood. When they detect specific signals - nutrients, changes in pH, mechanical stretch - they release hormones into the blood that then act on distant organs.
+
+Crucial insight: the gut's endocrine cells are how the gut talks to itself and to the rest of the body. Every step of digestion - the secretion of acid, the release of bile, the delivery of pancreatic enzymes, the slowing of stomach emptying, the regulation of appetite - is coordinated by hormones from these cells. GLP-1 is now the basis for a whole class of diabetes and weight-loss drugs, which shows how clinically important gut hormones have become.`
+    },
+    {
+      q: "The liver is the largest gland in the body. What does its microscopic structure look like?",
+      body: `The liver weighs about 1.5 kilograms and does hundreds of jobs, but its histological design is deceptively simple: it is built from a repeating unit called the liver lobule, arranged so that every hepatocyte is in close contact with blood on one side and with bile drainage on the other.
+
+My Socratic question: the liver has two blood supplies and two drains. How could a structure be built to give every hepatocyte access to all of them?
+
+The answer is the lobule. Picture a classic hexagonal liver lobule: at its centre runs a central vein, and at each of its six corners sits a portal triad. Between these structures, plates of hepatocytes radiate outward, with blood channels - the sinusoids - running between them.
+
+The liver lobule, in detail:
+
+- Central vein - runs down the middle of each lobule and drains into the hepatic veins.
+- Portal triads - at each corner of the hexagon, each containing a branch of the hepatic artery, a branch of the portal vein, and a bile ductule.
+- Hepatocytes - the main liver cells, arranged in plates one or two cells thick that radiate outward from the central vein.
+- Hepatic sinusoids - leaky capillaries that run between the plates of hepatocytes. Blood from the portal triad flows through the sinusoids towards the central vein.
+- Kupffer cells - macrophages that line the sinusoids and engulf bacteria and debris from the portal blood.
+- Bile canaliculi - tiny channels between adjacent hepatocytes that collect bile and carry it outward to the bile ductules in the portal triads.
+
+Blood flow in the lobule: from the portal triad (hepatic artery and portal vein) into the sinusoids, through the sinusoids, into the central vein. Bile flow: in the opposite direction, from the hepatocytes into the canaliculi, then outward to the bile ductules at the portal triad.
+
+Crucial insight: the lobule's design is a masterpiece of efficiency. Every hepatocyte sits between a blood channel (sinusoid) and a bile channel (canaliculus), so it has direct access to both the blood it must process and the bile it must secrete. The counter-current flow of blood and bile - blood towards the centre, bile towards the periphery - means the hepatocyte's two jobs (blood processing and bile secretion) never interfere with each other. This organisation explains why the liver is so efficient at everything it does.`
+    },
+    {
+      q: "The pancreas and gallbladder have very different histology. What does each look like down the microscope?",
+      body: `The pancreas and gallbladder are both accessory organs of the GI tract, but they could not be more different histologically. The pancreas is a compound gland with an exocrine and endocrine component; the gallbladder is a simple muscular sac with a single function. Both are worth knowing, because both are common sites of disease.
+
+My Socratic question: the pancreas makes enzymes and the gallbladder stores bile. How different would their microscopic structures need to be to do such different jobs?
+
+The answer is that their structures are entirely shaped by their roles - the pancreas is a factory with delivery ducts, while the gallbladder is a storage tank with a muscular wall.
+
+The pancreas:
+
+- The exocrine pancreas is a compound acinar gland. It consists of acini - clusters of secretory cells arranged around a central lumen - that produce digestive enzymes.
+- Each acinus is made of pyramidal serous cells, with their nuclei near the base and secretory granules at the apex.
+- The acini drain into a branching duct system that ultimately forms the main pancreatic duct, which joins the common bile duct to empty into the duodenum.
+- Between the acini, the endocrine pancreas forms the islets of Langerhans - clusters of cells that produce insulin, glucagon, somatostatin and pancreatic polypeptide. They are visible on H&E staining as small, paler islands scattered through the exocrine tissue.
+
+The gallbladder:
+
+- The wall is made of three layers: mucosa, muscularis, and serosa or adventitia. There is no submucosa.
+- The mucosa is lined by simple columnar epithelium with a brush border. There are no goblet cells, but there are scattered mucus-secreting cells.
+- The epithelium is thrown into deep folds that disappear when the gallbladder is distended - a key histological feature.
+- Beneath the epithelium is a lamina propria (there is no muscularis mucosae), and beneath that is a muscularis of irregular smooth muscle bundles.
+- The outermost layer is serosa where the gallbladder is covered by peritoneum (its fundus and body), and adventitia where it sits against the liver (its neck).
+
+Crucial insight: the pancreas and gallbladder illustrate how histology is driven by function. The pancreas needs acini because it is a secretory factory; the gallbladder needs simple columnar epithelium and a muscular wall because it is a storage sac that must contract to release its contents. Both are common sites of disease - pancreatitis and cholecystitis respectively - and understanding their normal histology is the first step to recognising what goes wrong.`
+    },
+  ],
+  theory: [
+    { q: "Name the four layers of the GI tract wall from innermost to outermost.", a: "Mucosa (epithelium, lamina propria, muscularis mucosae); submucosa; muscularis externa (inner circular and outer longitudinal layers); serosa or adventitia." },
+    { q: "What are the three sub-parts of the GI mucosa?", a: "The epithelium (which varies by segment), the lamina propria (loose connective tissue with blood vessels, lymphatics and immune cells), and the muscularis mucosae (a thin layer of smooth muscle)." },
+    { q: "Describe the epithelium of the oesophagus and explain why it is suited to its function.", a: "The oesophagus is lined by non-keratinized stratified squamous epithelium. This is a tough, abrasion-resistant lining suited to a tube whose only job is to carry chewed food from the pharynx to the stomach, without needing to absorb or secrete." },
+    { q: "Name the four main cell types of the gastric glands and state the secretion of each.", a: "Parietal cells - hydrochloric acid and intrinsic factor. Chief cells - pepsinogen. Mucous neck cells - alkaline mucus. Enteroendocrine cells - hormones such as gastrin, somatostatin and histamine." },
+    { q: "Describe the three histological regions of the stomach and their gland content.", a: "The cardia (around the oesophageal opening) has mainly mucus-secreting glands. The fundus and body have the full complement of acid-secreting and enzyme-secreting glands. The pylorus has mainly mucus-secreting glands and the enteroendocrine cells that produce gastrin." },
+    { q: "Describe the three levels of folding in the small intestine and their role.", a: "Plicae circulares (macroscopic folds), villi (finger-like projections with a capillary core and a lacteal), and microvilli (the brush border on each absorptive cell). Together they increase the surface area about 600-fold for absorption." },
+    { q: "What are the duodenal (Brunner's) glands and what do they secrete?", a: "The duodenal (Brunner's) glands are branched tubular glands located in the submucosa of the duodenum. They secrete alkaline mucus that neutralises incoming stomach acid and protects the duodenal lining." },
+    { q: "What are Peyer's patches and where are they most prominent?", a: "Peyer's patches are large aggregations of lymphoid tissue (mostly B-cell follicles) located in the lamina propria and submucosa of the small intestine, most prominent on the antimesenteric side of the ileum. They sample antigens from the gut lumen and mount immune responses." },
+    { q: "Describe the histological features of the colon.", a: "The colon has no villi - only crypts of Lieberkuhn, which are deep and packed with mucus-secreting goblet cells. The surface epithelium is simple columnar. The muscularis externa has three bands of longitudinal muscle (taeniae coli), and the wall is thrown into haustra with appendices epiploicae on the outer surface." },
+    { q: "Name four enteroendocrine cells of the gut and their hormones.", a: "G cells (gastrin), S cells (secretin), I cells (cholecystokinin), and L cells (GLP-1 and PYY). Each responds to specific signals in the gut lumen and releases its hormone into the blood to act on distant organs." },
+    { q: "Describe the structure of a classic liver lobule.", a: "A hexagonal unit with a central vein at its centre and portal triads at its six corners. Plates of hepatocytes radiate outward from the central vein, with hepatic sinusoids running between them. Blood flows from the portal triads through the sinusoids to the central vein; bile flows in the opposite direction through bile canaliculi to the portal triads." },
+    { q: "Describe the histological differences between the pancreas and the gallbladder.", a: "The pancreas is a compound acinar gland with exocrine acini that drain into a duct system, and endocrine islets of Langerhans scattered between them. The gallbladder has no submucosa, is lined by simple columnar epithelium with a brush border, has deep mucosal folds that disappear when distended, and has an irregular muscularis of smooth muscle bundles." },
+  ],
+  videos: [
+    { channel: "Histology", title: "Histology of the GI Tract - The Four-Layer Plan", note: "The shared four-layer structure of the GI wall, from oesophagus to colon.", url: "https://www.youtube.com/results?search_query=histology+GI+tract+four+layer+plan+mucosa+submucosa" },
+    { channel: "Histology", title: "Stomach, Small Intestine and Colon Histology", note: "Slide-by-slide tour of the three main segments and how to tell them apart.", url: "https://www.youtube.com/results?search_query=stomach+small+intestine+colon+histology+slides" },
+    { channel: "Histology", title: "Liver Lobule and Pancreas Histology", note: "Structure of the liver lobule, portal triad and pancreatic acini.", url: "https://www.youtube.com/results?search_query=liver+lobule+portal+triad+pancreas+histology" },
+  ],
+  mcqs: [
+    // ===== Note 1: four-layer plan of the GI tract wall (Q1-5) =====
+    { q: "The four layers of the GI tract wall, from innermost to outermost, are:", o: ["Mucosa, submucosa, muscularis externa, serosa", "Serosa, muscularis, submucosa, mucosa", "Submucosa, mucosa, serosa, muscularis", "Muscularis, mucosa, submucosa, serosa"], a: 0, w: "The four layers, from inside out, are mucosa, submucosa, muscularis externa and serosa (or adventitia)." },
+    { q: "The three sub-parts of the GI mucosa are:", o: ["Lamina propria, muscularis externa, serosa", "Epithelium, lamina propria, muscularis mucosae", "Epithelium, submucosa, serosa", "Epithelium, muscularis externa, adventitia"], a: 1, w: "The mucosa consists of epithelium, lamina propria and muscularis mucosae." },
+    { q: "The submucosal (Meissner's) nerve plexus lies in the:", o: ["Muscularis externa", "Mucosa", "Submucosa", "Serosa"], a: 2, w: "The submucosal plexus lies within the submucosa, controlling secretion and blood flow." },
+    { q: "The myenteric (Auerbach's) nerve plexus lies between the:", o: ["Submucosa and muscularis externa", "Mucosa and submucosa", "Muscularis and serosa", "Two layers of the muscularis externa"], a: 3, w: "The myenteric plexus lies between the inner circular and outer longitudinal muscle layers, controlling motility." },
+    { q: "The outer layer of the GI tract in the abdominal cavity is usually the:", o: ["Serosa", "Mucosa", "Adventitia", "Submucosa"], a: 0, w: "In the abdominal cavity, the outer layer is usually the serosa (visceral peritoneum)." },
+
+    // ===== Note 2: oesophagus (Q6-10) =====
+    { q: "The oesophagus is lined by which type of epithelium?", o: ["Simple cuboidal epithelium", "Stratified squamous epithelium", "Simple squamous epithelium", "Transitional epithelium"], a: 1, w: "The oesophagus is lined by non-keratinized stratified squamous epithelium, suited to resisting abrasion." },
+    { q: "The epithelium at the very lowest part of the oesophagus changes to:", o: ["Stratified squamous", "Transitional", "Simple columnar", "Pseudostratified columnar"], a: 2, w: "At the gastro-oesophageal junction, the epithelium abruptly changes from stratified squamous to simple columnar." },
+    { q: "The oesophageal glands in the submucosa secrete:", o: ["Mucus", "Hydrochloric acid", "Pepsinogen", "Bicarbonate"], a: 0, w: "Oesophageal glands secrete mucus to lubricate the passage of food." },
+    { q: "The muscularis externa of the upper third of the oesophagus is made of:", o: ["Smooth muscle only", "Cardiac muscle", "Skeletal muscle only", "A mix of smooth and skeletal"], a: 2, w: "The upper third of the oesophagus has skeletal muscle, reflecting the voluntary phase of swallowing." },
+    { q: "The muscularis externa of the lower third of the oesophagus is made of:", o: ["Smooth muscle only", "Skeletal muscle only", "Cartilage", "Elastic tissue"], a: 0, w: "The lower third of the oesophagus has smooth muscle, reflecting the involuntary phase of swallowing." },
+
+    // ===== Note 3: stomach (Q11-15) =====
+    { q: "The stomach is lined by which type of epithelium?", o: ["Stratified squamous", "Simple columnar", "Transitional", "Pseudostratified columnar"], a: 1, w: "The stomach is lined by simple columnar epithelium, forming gastric pits and glands." },
+    { q: "Parietal cells of the stomach secrete:", o: ["Pepsinogen", "Gastrin", "Hydrochloric acid and intrinsic factor", "Mucus"], a: 2, w: "Parietal cells secrete hydrochloric acid and intrinsic factor." },
+    { q: "Chief cells of the stomach secrete:", o: ["Intrinsic factor", "Pepsinogen", "Hydrochloric acid", "Gastrin"], a: 1, w: "Chief cells secrete pepsinogen, the inactive precursor of pepsin." },
+    { q: "The stomach's protective alkaline mucus layer is secreted by:", o: ["Parietal cells", "Chief cells", "Enteroendocrine cells", "Mucous neck cells"], a: 3, w: "Mucous neck cells secrete the alkaline mucus that protects the stomach lining from acid." },
+    { q: "The cardiac region of the stomach contains mainly:", o: ["Mucus-secreting glands", "Acid-secreting glands", "Enzyme-secreting glands", "Enteroendocrine cells only"], a: 0, w: "The cardia has mainly mucus-secreting glands." },
+
+    // ===== Note 4: small intestine (Q16-20) =====
+    { q: "The small intestine is lined by which type of epithelium?", o: ["Stratified squamous", "Simple columnar", "Transitional", "Simple cuboidal"], a: 1, w: "The small intestine is lined by simple columnar epithelium, dominated by enterocytes." },
+    { q: "The three levels of folding in the small intestine are:", o: ["Rugae, villi, crypts", "Haustra, taeniae, epiploicae", "Plicae circulares, villi, microvilli", "Folds, crypts, sinusoids"], a: 2, w: "The three levels are plicae circulares (macroscopic folds), villi and microvilli." },
+    { q: "The central lymphatic vessel inside each villus is called a:", o: ["Lacteal", "Canaliculus", "Sinusoid", "Crypt"], a: 0, w: "The lacteal is the central lymphatic vessel in the villus that absorbs fats." },
+    { q: "The crypts of Lieberkuhn in the small intestine contain:", o: ["Only enterocytes", "Stem cells and Paneth cells", "Only goblet cells", "Only enteroendocrine cells"], a: 1, w: "The crypts contain stem cells that renew the epithelium, and Paneth cells that secrete antibacterial substances." },
+    { q: "The brush border of the small intestine is made of:", o: ["Cilia", "Villi", "Microvilli", "Plicae"], a: 2, w: "Microvilli form the brush border on the apical surface of absorptive cells." },
+
+    // ===== Note 5: duodenum (Q21-25) =====
+    { q: "The duodenal (Brunner's) glands are located in the:", o: ["Mucosa", "Submucosa", "Muscularis externa", "Serosa"], a: 1, w: "Brunner's glands are located in the submucosa of the duodenum, a unique feature among the small intestine." },
+    { q: "The duodenal glands secrete:", o: ["Hydrochloric acid", "Pepsinogen", "Alkaline mucus", "Bile"], a: 2, w: "The Brunner's glands secrete alkaline mucus that neutralises stomach acid." },
+    { q: "The major duodenal papilla is where the:", o: ["Common bile duct and pancreatic duct empty", "Stomach opens into the duodenum", "Ileum joins the caecum", "Appendix opens"], a: 0, w: "The major duodenal papilla is the opening of the common bile duct and pancreatic duct into the duodenum." },
+    { q: "Secretin and CCK are secreted by enteroendocrine cells in the:", o: ["Stomach", "Ileum", "Duodenum", "Colon"], a: 2, w: "The duodenum contains the enteroendocrine cells (S cells and I cells) that secrete secretin and CCK." },
+    { q: "Compared with the jejunum, the duodenal mucosa contains:", o: ["More goblet cells", "No goblet cells", "Fewer enteroendocrine cells", "No villi"], a: 0, w: "The duodenal mucosa contains more goblet cells than the jejunum." },
+
+    // ===== Note 6: ileum (Q26-30) =====
+    { q: "Peyer's patches are most prominent in the:", o: ["Stomach", "Ileum", "Duodenum", "Colon"], a: 1, w: "Peyer's patches are most prominent and largest in the ileum." },
+    { q: "Peyer's patches are aggregations of:", o: ["Enterocytes", "Goblet cells", "Lymphoid tissue", "Paneth cells"], a: 2, w: "Peyer's patches are large aggregations of lymphoid tissue (mostly B-cell follicles)." },
+    { q: "Peyer's patches are located on which side of the ileum?", o: ["The entire circumference evenly", "The mesenteric side only", "The antimesenteric side", "Only in the submucosa, nowhere else"], a: 2, w: "Peyer's patches are concentrated on the antimesenteric side of the ileum." },
+    { q: "Compared with the jejunum, the ileum has:", o: ["More plicae circulares", "Taller villi", "Shorter villi and fewer plicae", "No crypts"], a: 2, w: "The ileum has shorter villi and fewer plicae circulares than the jejunum, though the surface area is still large." },
+    { q: "The ileum is the main site of absorption of:", o: ["Iron", "Vitamin B12 and bile salts", "Glucose only", "Amino acids only"], a: 1, w: "The ileum is specialised for absorbing vitamin B12, bile salts and remaining nutrients." },
+
+    // ===== Note 7: large intestine (Q31-35) =====
+    { q: "The colon is lined by which type of epithelium?", o: ["Stratified squamous", "Simple columnar dominated by goblet cells", "Transitional", "Pseudostratified columnar"], a: 1, w: "The colon is lined by simple columnar epithelium dominated by mucus-secreting goblet cells." },
+    { q: "The colon differs from the small intestine in that it has:", o: ["More villi", "No crypts", "No villi, only crypts", "No goblet cells"], a: 2, w: "The colon has no villi - only crypts of Lieberkuhn, which are deep and packed with goblet cells." },
+    { q: "The three bands of longitudinal muscle in the colon wall are the:", o: ["Taeniae coli", "Haustra", "Appendices epiploicae", "Plicae circulares"], a: 0, w: "The taeniae coli are the three bands of longitudinal muscle on the colon wall." },
+    { q: "The sacculations of the colon wall are called:", o: ["Villi", "Crypts", "Haustra", "Rugae"], a: 2, w: "Haustra are the sacculations (bulges) of the colon wall between the taeniae coli." },
+    { q: "The small fatty tags on the outer surface of the colon are the:", o: ["Appendices epiploicae", "Taeniae coli", "Haustra", "Peyer's patches"], a: 0, w: "Appendices epiploicae are small fatty tags on the outer surface of the colon." },
+
+    // ===== Note 8: enteroendocrine cells (Q36-40) =====
+    { q: "G cells of the stomach secrete:", o: ["Gastrin", "Histamine", "Somatostatin", "Secretin"], a: 0, w: "G cells in the stomach antrum secrete gastrin, which stimulates acid secretion." },
+    { q: "Enterochromaffin-like (ECL) cells of the stomach secrete:", o: ["Gastrin", "Histamine", "Somatostatin", "GIP"], a: 1, w: "ECL cells secrete histamine, which stimulates acid secretion by parietal cells." },
+    { q: "S cells of the duodenum secrete:", o: ["Gastrin", "Secretin", "CCK", "GLP-1"], a: 1, w: "S cells in the duodenum secrete secretin, which stimulates bicarbonate secretion by the pancreas." },
+    { q: "I cells of the duodenum and jejunum secrete:", o: ["Secretin", "Gastrin", "CCK", "PYY"], a: 2, w: "I cells secrete cholecystokinin (CCK), which stimulates gallbladder contraction and pancreatic enzyme secretion." },
+    { q: "L cells of the ileum and colon secrete:", o: ["GLP-1 and PYY", "Gastrin and secretin", "CCK and GIP", "Histamine and somatostatin"], a: 0, w: "L cells secrete GLP-1 and PYY, which slow gut motility and regulate appetite." },
+
+    // ===== Note 9: liver lobule (Q41-45) =====
+    { q: "The central structure of a classic liver lobule is the:", o: ["Portal triad", "Central vein", "Hepatic artery", "Bile duct"], a: 1, w: "The central vein runs down the middle of each liver lobule and drains into the hepatic veins." },
+    { q: "A portal triad contains:", o: ["Three central veins", "Only hepatocytes", "A hepatic artery branch, a portal vein branch and a bile ductule", "Only bile ductules"], a: 2, w: "Each portal triad contains a branch of the hepatic artery, a branch of the portal vein, and a bile ductule." },
+    { q: "The macrophages that line the hepatic sinusoids are called:", o: ["Kupffer cells", "Paneth cells", "Goblet cells", "Enterocytes"], a: 0, w: "Kupffer cells are macrophages that line the hepatic sinusoids and engulf bacteria and debris." },
+    { q: "Bile flows in the liver lobule from the hepatocytes:", o: ["Towards the central vein", "Outward to the bile ductules at the portal triads", "Into the hepatic veins", "Into the sinusoids"], a: 1, w: "Bile flows in the opposite direction from blood - from the hepatocytes outward to the bile ductules at the portal triads." },
+    { q: "Blood flow in the liver lobule goes from the:", o: ["Central vein to the portal triad", "Portal triad through the sinusoids to the central vein", "Bile ductules to the sinusoids", "Hepatic veins to the portal triad"], a: 1, w: "Blood flows from the portal triad (hepatic artery and portal vein) through the sinusoids to the central vein." },
+
+    // ===== Note 10: pancreas and gallbladder (Q46-50) =====
+    { q: "The exocrine pancreas consists of:", o: ["Islets of Langerhans", "Compound acini draining into a duct system", "Simple columnar cells only", "Hepatocytes"], a: 1, w: "The exocrine pancreas is a compound acinar gland - clusters of secretory cells that drain into a duct system." },
+    { q: "The endocrine tissue of the pancreas is arranged in:", o: ["Acini", "Ducts", "Islets of Langerhans", "Hepatic sinusoids"], a: 2, w: "The endocrine pancreas forms the islets of Langerhans, scattered between the acini." },
+    { q: "The gallbladder is lined by which type of epithelium?", o: ["Stratified squamous", "Simple columnar with a brush border", "Transitional", "Pseudostratified ciliated columnar"], a: 1, w: "The gallbladder is lined by simple columnar epithelium with a brush border." },
+    { q: "A distinctive feature of the gallbladder mucosa is:", o: ["Deep folds that disappear when the gallbladder is distended", "Numerous goblet cells", "Villi containing lacteals", "A thick muscularis mucosae"], a: 0, w: "The gallbladder mucosa is thrown into deep folds that disappear when the organ is distended - a key histological feature." },
+    { q: "The gallbladder wall lacks which layer?", o: ["Mucosa", "Muscularis", "Serosa", "Submucosa"], a: 3, w: "The gallbladder wall has mucosa, muscularis and serosa or adventitia, but no submucosa." },
+  ],
+};
+
+/* --------------------------- an2:15 --------------------------- */
+const T_AN2_URINARY_HISTO = {
+  courseId: "an2",
+  topicIndex: 15,
+  title: "Microscopic Anatomy — Histology of the Urinary System",
+  minutes: 30,
+  note: [
+    {
+      q: "Four different organs, one job — getting rid of waste. What do they actually look like down the microscope?",
+      body: `The urinary system is four organs in series: two kidneys, two ureters, one bladder, one urethra. Each is built from a different arrangement of the same handful of tissue types, and each has a histological signature you can read at a glance. Together they take filtered blood and turn it into urine.
+
+My Socratic question: the kidney makes urine, the ureter carries it, the bladder stores it, the urethra expels it. Would you expect all four to be lined by the same epithelium, or by different ones?
+
+The answer is different ones, because each has a different job. The kidney is a filtration factory with a specialised, gland-like interior. The ureter and bladder are storage and transport tubes that must stretch and recoil. The urethra is an exit pipe that must resist the flow of urine and, in males, also carry semen.
+
+The general organisation of each:
+
+- The kidney - a solid organ with two distinct regions, an outer cortex and an inner medulla. It is packed with millions of microscopic tubular structures (the uriniferous tubules), blood vessels, and interstitial connective tissue. There is no "lining" in the usual sense - the whole organ is the filter.
+- The ureter - a muscular tube with three layers: a mucosa lined by transitional epithelium, a muscularis of smooth muscle, and an adventitia of fibrous connective tissue. The muscle propels urine by peristalsis.
+- The urinary bladder - a muscular sac with the same three layers as the ureter, but with a much thicker muscularis (the detrusor muscle) and a mucosa thrown into folds (rugae) that disappear when the bladder fills.
+- The urethra - a fibromuscular tube lined by epithelium that varies along its length (transitional near the bladder, then stratified columnar, then stratified squamous at the external opening), surrounded by smooth and skeletal muscle sphincters.
+
+Crucial insight: the four organs share a single functional theme - handling urine - but each is histologically distinct because each has a distinct mechanical job. The kidney filters. The ureter propels. The bladder stores. The urethra controls release. Read the epithelium and the muscle, and you can identify which organ you are looking at.`
+    },
+    {
+      q: "The kidney has an outer cortex and an inner medulla. How does the microscope tell them apart?",
+      body: `Cut a kidney in half and you can see the two regions with the naked eye: an outer pale rind, the cortex, and an inner darker zone, the medulla, which is divided into triangular pyramids. Under the microscope, the difference is even sharper - each region contains a different arrangement of the same tubules.
+
+My Socratic question: both regions contain nephron tubules. Why do they look so different?
+
+The answer is that the nephron has regions with different shapes, and each region sits in a different part of the kidney.
+
+The cortex contains:
+
+- Renal corpuscles - the round, ball-like structures where filtration happens. Each consists of a glomerulus (a tuft of capillaries) inside Bowman's capsule. The cortex is packed with these.
+- Proximal and distal convoluted tubules - the coiled segments of the nephron. They are seen as cross-sections of tubules with different staining characteristics: proximal tubules have a brush border and eosinophilic cytoplasm; distal tubules are paler and have no brush border.
+- Collecting ducts - running through the cortex and into the medulla.
+
+The medulla contains:
+
+- Loops of Henle - the hairpin-shaped tubules that dip down into the medulla and back up. They are seen as parallel tubules running longitudinally.
+- Collecting ducts - larger and more prominent as they converge towards the renal papilla.
+- Vasa recta - long, straight blood vessels that run parallel to the loops of Henle.
+
+There is a boundary zone between cortex and medulla called the medullary ray - a column of straight tubules (collecting ducts and loops of Henle) extending from the medulla into the cortex.
+
+Crucial insight: the cortex and medulla are two zones defined by the shape of the nephron at that point. The cortex has the "coiled" segments (corpuscles and convoluted tubules); the medulla has the "straight" segments (loops and collecting ducts). This arrangement is what lets the kidney concentrate urine - the loops create the salt gradient, and the collecting ducts use it.`
+    },
+    {
+      q: "The kidney filters 180 litres a day. What does its blood supply have to look like to do that?",
+      body: `The kidney weighs about 150 grams, yet it receives about a quarter of the heart's output - roughly 1.2 litres of blood every minute. That blood arrives by an artery, branches into a microscopic tree, is filtered in the cortex, and returns by a vein. Understanding the path it takes is essential for understanding the kidney's function.
+
+My Socratic question: the kidney has a two-capillary-bed arrangement, like the portal system of the liver. Why would that be useful?
+
+The answer is that the first capillary bed filters plasma, and the second one reabsorbs what should not be lost.
+
+The circulation of blood through the kidney, in sequence:
+
+- The renal artery enters the hilum and branches into segmental arteries, then interlobar arteries, which run between the renal pyramids.
+- At the base of each pyramid, the interlobar arteries curve to become the arcuate arteries, which run along the boundary between cortex and medulla.
+- From the arcuate arteries, interlobular (cortical radial) arteries ascend into the cortex.
+- Each interlobular artery gives off an afferent arteriole, which enters a renal corpuscle and splits into the glomerular capillaries - the first capillary bed.
+- The glomerular capillaries rejoin to form an efferent arteriole, which leaves the corpuscle. (Note the unusual arrangement: the efferent vessel is an arteriole, not a venule - the blood has not yet been oxygenated or deoxygenated in the usual sense.)
+- The efferent arteriole then splits into a second capillary bed - either the peritubular capillaries, which wrap around the cortical tubules, or the vasa recta, which descend into the medulla alongside the loops of Henle.
+- These capillaries rejoin into interlobular veins, then arcuate veins, then interlobar veins, and finally the renal vein, which leaves the hilum to drain into the inferior vena cava.
+
+Crucial insight: the kidney has two capillary beds in series - the glomerulus and the peritubular/vasa recta system - connected by the efferent arteriole. This is what allows filtration and reabsorption to happen in one continuous flow. It also explains why the efferent arteriole is such an important control point: by constricting or dilating it, the kidney can change the pressure in the glomerulus (affecting filtration) and the pressure in the peritubular capillaries (affecting reabsorption).`
+    },
+    {
+      q: "The kidney is packed with tubules. How would you break the whole tubule system into recognisable segments?",
+      body: `The functional unit of the kidney is the nephron - a long tubule that begins at a renal corpuscle in the cortex, dips into the medulla, and returns to the cortex before draining into a collecting duct. Each kidney contains roughly a million of them, and each has the same set of segments in the same order. Learning to recognise each segment on a slide is one of the central skills of renal histology.
+
+My Socratic question: the nephron is a continuous tube, but its walls change shape along its length. Why does the epithelium change from segment to segment?
+
+The answer is that each segment has a different job, and the epithelium is shaped by that job.
+
+The segments of the uriniferous tubule, in order:
+
+- Renal corpuscle - the filtration unit. A glomerulus (capillary tuft) inside Bowman's capsule.
+- Proximal convoluted tubule (PCT) - the first coiled segment. Lined by simple cuboidal epithelium with a prominent brush border of microvilli. The cells are deeply eosinophilic (pink) and have many mitochondria for the active reabsorption they perform.
+- Loop of Henle - a hairpin loop that descends into the medulla and returns to the cortex. The descending limb is thin and lined by simple squamous epithelium, permeable to water. The ascending limb is thicker and lined by simple cuboidal to low columnar epithelium, impermeable to water, and actively pumps out salt.
+- Distal convoluted tubule (DCT) - the second coiled segment, back in the cortex. Lined by simple cuboidal epithelium, but paler than the PCT, with no brush border, and fewer mitochondria.
+- Collecting duct - not technically part of the nephron (it drains several nephrons) but included in the uriniferous tubule. Lined by simple cuboidal epithelium that becomes taller as the duct approaches the renal papilla. Two cell types: principal cells (which respond to ADH) and intercalated cells (which regulate acid-base balance).
+
+The two classes of nephron:
+
+- Cortical nephrons - about 85% of all nephrons. Their corpuscles sit in the outer cortex, and their loops of Henle are short, barely dipping into the medulla. Their main job is to filter and reabsorb.
+- Juxtamedullary nephrons - about 15% of all nephrons. Their corpuscles sit near the corticomedullary junction, and their loops of Henle are very long, extending deep into the medulla. These are the nephrons that create the salt gradient that allows the kidney to concentrate urine.
+
+Crucial insight: the segment you are looking at tells you what the tubule is doing there. Brush border and eosinophilic cytoplasm mean PCT (heavy reabsorption). Pale cuboidal cells without a brush border mean DCT. Thin flat epithelium means the descending limb (water reabsorption). And the class of nephron tells you whether it is contributing to filtration (cortical) or to concentration (juxtamedullary).`
+    },
+    {
+      q: "Filtration happens in the renal corpuscle. What exactly is between the blood and the filtrate?",
+      body: `The renal corpuscle is where blood is filtered. Under the microscope it looks like a ball of capillaries inside a cup, but the structure is far more refined than that - the filtration barrier has three layers, each contributing to what passes and what is held back.
+
+My Socratic question: water, glucose, ions and urea all leave the blood and enter the filtrate. Red cells and large proteins do not. What physically separates them?
+
+The answer is a three-layered filtration barrier less than a micrometre thick, sitting between the blood in the glomerular capillary and the space inside Bowman's capsule.
+
+The three layers of the filtration barrier:
+
+- The fenestrated endothelium of the glomerular capillary - the innermost layer. The endothelial cells are perforated by fenestrations (pores) that let plasma through but hold back blood cells.
+- The glomerular basement membrane (GBM) - the middle layer, and the thickest. It is a specialised, fused basement membrane that filters by both size and charge. Large proteins are held back by size, and negatively charged proteins are repelled by the GBM's negative charge.
+- The filtration slits between the podocytes - the outermost layer. Podocytes are specialised epithelial cells that wrap around the capillaries with foot-like processes (pedicels). The narrow gaps between adjacent pedicels are the filtration slits, and they are bridged by a thin slit diaphragm that adds one final layer of selectivity.
+
+The renal corpuscle as a whole has two poles:
+
+- The vascular pole - where the afferent arteriole enters and the efferent arteriole leaves. This is where the juxtaglomerular apparatus sits.
+- The urinary pole - where the filtrate leaves Bowman's capsule and enters the proximal convoluted tubule.
+
+Bowman's capsule itself has two layers: an outer parietal layer of simple squamous epithelium, and an inner visceral layer made of the podocytes that wrap the capillaries.
+
+Crucial insight: the filtration barrier is a three-layer sieve with both size and charge selectivity. Damage to any of the three layers - as in glomerulonephritis - causes protein and blood to leak into the urine. This is why proteinuria and haematuria are the earliest laboratory signs of glomerular disease, and why urinalysis is so important in detecting it.`
+    },
+    {
+      q: "The juxtaglomerular apparatus sits at the vascular pole of the corpuscle. What is it, and what does it do?",
+      body: `At the point where the afferent arteriole enters the renal corpuscle, the tubule wall (specifically the distal convoluted tubule) curves back and touches the arteriole. Where they meet, a specialised cluster of cells forms the juxtaglomerular apparatus (JGA). It is small - a few hundred cells - but it is one of the most important regulatory structures in the entire body.
+
+My Socratic question: the JGA sits at the crossroads between the blood vessel and the tubule. What two things would you want to monitor there?
+
+The answer is blood pressure in the arteriole, and salt concentration in the tubule. The JGA monitors both, and adjusts kidney function accordingly.
+
+The three components of the JGA:
+
+- Juxtaglomerular (JG) cells - modified smooth muscle cells in the wall of the afferent arteriole. They contain granules of renin, an enzyme that initiates the renin-angiotensin-aldosterone system (RAAS). They act as baroreceptors: when they detect a fall in arteriolar pressure (or a fall in sodium delivery), they release renin.
+- Macula densa - a specialised patch of cells in the wall of the distal convoluted tubule where it passes beside the afferent arteriole. These cells are taller and more densely packed than the surrounding DCT cells. They act as chemoreceptors: they sense the sodium chloride concentration of the tubular fluid.
+- Extraglomerular mesangial cells (Lacis cells) - cells lying between the arteriole and the macula densa, thought to transmit signals between the two.
+
+What the JGA actually does:
+
+- When blood pressure in the afferent arteriole falls, or when the macula densa detects low sodium chloride in the tubule, the JG cells release renin.
+- Renin converts angiotensinogen (from the liver) to angiotensin I.
+- Angiotensin-converting enzyme (ACE) in the lungs converts angiotensin I to angiotensin II.
+- Angiotensin II is a potent vasoconstrictor and stimulates aldosterone release from the adrenal cortex.
+- Aldosterone makes the distal tubule and collecting duct reabsorb more sodium and water, which raises blood volume and blood pressure.
+- The JGA therefore acts as a feedback loop that maintains renal perfusion and, indirectly, whole-body blood pressure.
+
+Crucial insight: the JGA is the kidney's own blood pressure sensor and regulator. It links the kidney to the cardiovascular system in a way no other organ does - which is why kidney disease so often causes hypertension, and why hypertension so often damages the kidney. Drugs that block the RAAS (ACE inhibitors, ARBs) are among the most commonly prescribed medicines in the world, and they all act on the pathway the JGA initiates.`
+    },
+    {
+      q: "The urinary bladder must hold urine for hours and then empty on command. What tissue does that?",
+      body: `The bladder is a hollow muscular sac that stores urine for hours and then contracts forcefully to empty. Its histology reflects both jobs: a lining that stretches without tearing, and a muscle wall thick enough to generate significant pressure.
+
+My Socratic question: the bladder must expand to hold 400-600 millilitres of urine without leaking, then contract hard enough to empty completely. What would the epithelium and the muscle have to be able to do?
+
+The answer is that the epithelium must be able to change shape dramatically, and the muscle must be able to generate coordinated contraction.
+
+The histological features of the bladder:
+
+- The mucosa is lined by transitional epithelium (urothelium) - a unique epithelium found only in the urinary tract. In the relaxed bladder, the surface cells are large, dome-shaped, and often binucleate (called umbrella cells). When the bladder fills and stretches, these cells flatten, and the epithelium thins. The epithelial cells are joined by tight junctions that make the lining impermeable to urine - a critical barrier against the toxic substances dissolved in it.
+- Beneath the epithelium is the lamina propria - a layer of connective tissue containing blood vessels and lymphatics.
+- The muscularis is called the detrusor muscle. It is made of three interlacing layers of smooth muscle (inner longitudinal, middle circular, outer longitudinal), although the boundaries between them are less distinct than in the gut. The muscle fibres are arranged in a spiral pattern that allows the bladder to contract in all directions at once.
+- The serosa (where the bladder is covered by peritoneum) or adventitia (elsewhere) is the outermost layer.
+
+The trigone is a smooth triangular area at the base of the bladder, marked by the two ureteric orifices and the internal urethral orifice. Its mucosa is smooth (no rugae) and tightly bound to the muscularis, which is why it does not fold even when the bladder is empty.
+
+Crucial insight: the bladder's histology is a direct answer to the mechanical demands placed on it. Transitional epithelium gives it a stretchable, impermeable lining. The detrusor muscle, with its three interlacing layers, gives it the coordinated contraction needed to empty. When the detrusor is damaged or the epithelium is irritated - as in interstitial cystitis - bladder function fails, and the consequences are pain and incontinence.`
+    },
+    {
+      q: "The ureter is a narrow tube that must move urine from the kidney to the bladder. What tissue does that?",
+      body: `The ureter is a muscular tube about 25 centimetres long that carries urine from the renal pelvis to the bladder. It does not simply let urine drain under gravity - it actively propels urine by peristaltic contractions of its smooth muscle wall, exactly as the gut propels food.
+
+My Socratic question: the ureter must move urine downward against a pressure gradient (bladder pressure is higher than kidney pressure during filling). What tissue would you need for that?
+
+The answer is smooth muscle thick enough to generate peristaltic waves, and an epithelium that can stretch as urine passes and protect the underlying tissue from the urine itself.
+
+The three layers of the ureteric wall:
+
+- The mucosa - lined by transitional epithelium (urothelium), the same as the bladder. Beneath it is a lamina propria of loose connective tissue.
+- The muscularis - two or three layers of smooth muscle (inner longitudinal, outer circular - but in the lower ureter, there is an additional outer longitudinal layer, making three layers). The muscle layers produce peristaltic waves that push urine towards the bladder.
+- The adventitia - an outer fibrous coat that anchors the ureter to surrounding structures.
+
+The ureter has three natural narrowings where a kidney stone is most likely to get stuck:
+
+- The pelviureteric junction (where the renal pelvis becomes the ureter).
+- Where the ureter crosses the pelvic brim, over the common iliac artery.
+- The vesicoureteric junction (where the ureter enters the bladder wall).
+
+Crucial insight: the ureter is not a passive drain - it is an active pump. Its peristaltic waves are generated by smooth muscle and paced by the same pacemaker cells found in the gut. When a stone blocks the ureter, the muscle contracts harder against the obstruction, which is why renal colic is so painful. Understanding the three narrowings explains why stones lodge where they do, and why doctors image the whole ureter when investigating stones.`
+    },
+    {
+      q: "The collecting ducts drain into the renal pelvis. What is between the nephron and the ureter?",
+      body: `The nephron ends at the collecting duct, but the collecting duct does not open directly into the ureter. Between them are the renal papilla, the minor calyx, the major calyx, and the renal pelvis. Together they form the collecting system - a funnel that gathers urine from millions of tubules and channels it into the ureter.
+
+My Socratic question: the kidney has a million nephrons, each producing a tiny drop of urine. How does all of that urine get gathered and moved out?
+
+The answer is that the collecting ducts converge on the renal papilla, where they open into the minor calyx, which drains into a major calyx, which drains into the renal pelvis, which becomes the ureter.
+
+The collecting system, in order:
+
+- The renal papilla - the tip of each medullary pyramid, where the collecting ducts open.
+- The minor calyx - a cup-shaped structure that surrounds each papilla and collects its urine. Each kidney has 8-12 minor calyces.
+- The major calyx - formed by the fusion of two or three minor calyces. Each kidney has 2-3 major calyces.
+- The renal pelvis - the large funnel-shaped cavity that receives all the major calyces and narrows to become the ureter.
+
+The histology of the collecting system:
+
+- The calyces and renal pelvis are lined by transitional epithelium (urothelium), the same as the ureter and bladder.
+- Beneath the epithelium is a lamina propria and a thin muscularis of smooth muscle.
+- The muscle wall is thinner in the calyces than in the ureter, because the calyces do not need to generate strong peristaltic waves - they mainly funnel urine.
+
+Crucial insight: the collecting system is the connection between the nephron and the outside world. Its transitional epithelium is continuous with the ureter and the bladder, which is why urine can pass from the nephron to the outside without ever crossing a barrier that leaks. When a calyx is obstructed (by stone, tumour or stricture), urine backs up into the kidney, causing hydronephrosis. Understanding the anatomy of the collecting system is what lets a doctor interpret imaging of the kidney and predict where an obstruction will cause damage.`
+    },
+    {
+      q: "The urinary system can fail in many ways. How does the histology help a doctor work out what has gone wrong?",
+      body: `The urinary system is susceptible to a huge range of diseases - from stones and infections to cancer and autoimmune conditions. What ties them all together is that each disease has a histological signature, and the laboratory is where many of them are detected.
+
+My Socratic question: a patient comes to a clinic with blood in the urine. What are the possible causes, and how would the histology of the urinary system help distinguish between them?
+
+The answer is that each part of the urinary system has its own diseases, and each produces its own histological findings.
+
+The main clinical entities, by organ:
+
+- Diseases of the glomerulus - glomerulonephritis (immune-mediated damage to the filtration barrier), diabetic nephropathy (thickening of the GBM), minimal change disease (loss of podocyte foot processes). All produce proteinuria and haematuria.
+- Diseases of the tubules - acute tubular necrosis (ischaemic or toxic injury), interstitial nephritis (inflammation of the tubules and interstitium). These cause acute kidney injury.
+- Diseases of the interstitium - chronic interstitial nephritis, often drug-induced.
+- Diseases of the blood vessels - hypertensive nephrosclerosis (thickening of arterioles), renal artery stenosis (narrowing of the main renal artery).
+- Diseases of the collecting system - stones (most commonly calcium oxalate), hydronephrosis (dilation from obstruction), transitional cell carcinoma (tumour of the urothelium).
+- Diseases of the bladder - cystitis (infection), interstitial cystitis (chronic inflammation of unknown cause), bladder cancer (usually transitional cell carcinoma).
+- Diseases of the ureter - obstruction by stones, ureteric stricture, ureteric cancer.
+
+How histology and laboratory tests help:
+
+- Urinalysis - detecting protein, blood, leukocytes, nitrites, and casts. Red cell casts specifically localise bleeding to the glomerulus.
+- Renal biopsy - examining the glomeruli, tubules and interstitium directly. This is the gold standard for diagnosing glomerular disease.
+- Imaging - CT, ultrasound and MRI to visualise structure and detect obstruction, stones and masses.
+- Blood tests - creatinine, urea and electrolytes to assess function.
+
+Crucial insight: the histology of the urinary system is not just an academic exercise - it is the basis of how urinary diseases are diagnosed. When you understand what normal kidney, ureter, bladder and urethra look like on a slide, you can recognise what is abnormal. And when you understand the functions each structure performs, you can predict what will happen when it fails. This is exactly why renal histology is examined so heavily in every medical course.`
+    },
+  ],
+  theory: [
+    { q: "Name the four organs of the urinary system and their main histological features.", a: "Kidney - solid organ with an outer cortex (renal corpuscles, convoluted tubules) and inner medulla (loops of Henle, collecting ducts). Ureter - muscular tube with a mucosa of transitional epithelium, a muscularis of smooth muscle, and an adventitia. Urinary bladder - muscular sac with a mucosa of transitional epithelium thrown into rugae, a thick detrusor muscle, and a serosa or adventitia. Urethra - fibromuscular tube lined by epithelium that varies along its length." },
+    { q: "How do the kidney cortex and medulla differ histologically?", a: "The cortex contains renal corpuscles and the convoluted (coiled) portions of the nephron - proximal and distal convoluted tubules. The medulla contains the straight portions - loops of Henle and collecting ducts - together with the vasa recta. The boundary zone (medullary ray) contains straight tubules extending from medulla into cortex." },
+    { q: "Trace the circulation of blood through the kidney.", a: "Renal artery → segmental arteries → interlobar arteries → arcuate arteries → interlobular (cortical radial) arteries → afferent arteriole → glomerular capillaries (first capillary bed) → efferent arteriole → peritubular capillaries or vasa recta (second capillary bed) → interlobular veins → arcuate veins → interlobar veins → renal vein → inferior vena cava." },
+    { q: "What are the segments of the uriniferous tubule in order?", a: "Renal corpuscle (Bowman's capsule + glomerulus) → proximal convoluted tubule → descending limb of the loop of Henle → ascending limb of the loop of Henle → distal convoluted tubule → collecting duct." },
+    { q: "Describe the two classes of nephron and their differences.", a: "Cortical nephrons (about 85%) have their corpuscles in the outer cortex and short loops of Henle that barely dip into the medulla. Juxtamedullary nephrons (about 15%) have their corpuscles near the corticomedullary junction and long loops that extend deep into the medulla; these are responsible for creating the medullary salt gradient that concentrates urine." },
+    { q: "Describe the three layers of the glomerular filtration barrier.", a: "The fenestrated endothelium of the glomerular capillary (holds back blood cells), the glomerular basement membrane (filters by size and charge), and the filtration slits between podocyte foot processes (bridged by a thin slit diaphragm). The barrier is less than one micrometre thick." },
+    { q: "Name the three components of the juxtaglomerular apparatus and state the function of each.", a: "Juxtaglomerular (JG) cells in the afferent arteriole wall - release renin when they detect a fall in arteriolar pressure. Macula densa - a specialised patch of the distal convoluted tubule that senses sodium chloride concentration in the tubular fluid. Extraglomerular mesangial (Lacis) cells - transmit signals between the JG cells and the macula densa." },
+    { q: "Describe the histology of the urinary bladder.", a: "Mucosa lined by transitional epithelium (urothelium) thrown into rugae that disappear when distended. Lamina propria of connective tissue. Detrusor muscle - three interlacing layers of smooth muscle (inner longitudinal, middle circular, outer longitudinal). Serosa or adventitia outermost. The trigone is a smooth triangular area at the base." },
+    { q: "Describe the three layers of the ureteric wall and the three natural narrowings.", a: "Mucosa lined by transitional epithelium with a lamina propria. Muscularis of two or three smooth muscle layers (inner longitudinal, outer circular, plus an additional outer longitudinal in the lower ureter) that produce peristalsis. Adventitia outermost. The three narrowings: the pelviureteric junction, where the ureter crosses the pelvic brim, and the vesicoureteric junction." },
+    { q: "Trace the path of urine from the collecting duct to the ureter.", a: "Collecting ducts open at the renal papilla → minor calyx → major calyx → renal pelvis → ureter. The calyces, renal pelvis and ureter are all lined by transitional epithelium, continuous with the bladder." },
+    { q: "How does histology help diagnose urinary system diseases?", a: "Each part of the urinary system has its own disease signature. Red cell casts in urine localise bleeding to the glomerulus. Renal biopsy reveals glomerular, tubular and interstitial pathology directly. Urinalysis detects protein, blood, leukocytes and nitrites. Imaging detects stones, obstruction and masses." },
+    { q: "Why is the kidney's dual capillary bed arrangement important?", a: "The first capillary bed (glomerulus) filters plasma; the second (peritubular capillaries or vasa recta) reabsorbs useful substances. This is what allows filtration and reabsorption to happen in one continuous flow. The efferent arteriole is a key control point: by constricting or dilating it, the kidney can change glomerular pressure and peritubular reabsorption pressure." },
+  ],
+  videos: [
+    { channel: "Histology", title: "Histology of the Kidney - Cortex and Medulla", note: "Slide-by-slide tour of the kidney cortex, medulla and nephron segments.", url: "https://www.youtube.com/results?search_query=histology+kidney+cortex+medulla+nephron" },
+    { channel: "Histology", title: "Renal Corpuscle and Glomerular Filtration Barrier", note: "Structure of the corpuscle, podocytes, and the three-layer filtration barrier.", url: "https://www.youtube.com/results?search_query=renal+corpuscle+glomerular+filtration+barrier+histology" },
+    { channel: "Histology", title: "Ureter and Urinary Bladder Histology", note: "Transitional epithelium, detrusor muscle, and the trilaminar wall of the ureter.", url: "https://www.youtube.com/results?search_query=ureter+urinary+bladder+transitional+epithelium+histology" },
+  ],
+  mcqs: [
+    // ===== Note 1: four organs - general organisation (Q1-5) =====
+    { q: "The functional unit of the kidney is the:", o: ["Renal corpuscle", "Nephron", "Collecting duct", "Glomerulus"], a: 1, w: "The nephron is the functional unit of the kidney." },
+    { q: "The urinary bladder is lined by:", o: ["Simple columnar epithelium", "Stratified squamous epithelium", "Transitional epithelium", "Pseudostratified columnar epithelium"], a: 2, w: "The urinary bladder is lined by transitional epithelium (urothelium)." },
+    { q: "The muscularis of the urinary bladder is called the:", o: ["Detrusor muscle", "Muscularis mucosae", "Pyloric sphincter", "Rugae"], a: 0, w: "The detrusor muscle is the thick smooth muscle wall of the bladder." },
+    { q: "The ureter is lined by which type of epithelium?", o: ["Simple squamous", "Simple cuboidal", "Transitional", "Stratified squamous"], a: 2, w: "The ureter is lined by transitional epithelium, continuous with the bladder." },
+    { q: "The trigone of the bladder is a:", o: ["Glandular region", "Smooth triangular area at the base", "Type of epithelium", "Section of the detrusor"], a: 1, w: "The trigone is a smooth triangular area marked by the two ureteric orifices and the internal urethral orifice." },
+
+    // ===== Note 2: cortex vs medulla (Q6-10) =====
+    { q: "Renal corpuscles are found in the:", o: ["Medulla", "Cortex", "Renal pelvis", "Ureter"], a: 1, w: "Renal corpuscles are located in the cortex of the kidney." },
+    { q: "The loops of Henle are found primarily in the:", o: ["Renal cortex", "Renal medulla", "Renal pelvis", "Renal capsule"], a: 1, w: "Loops of Henle dip into the medulla; the longer ones extend deepest in juxtamedullary nephrons." },
+    { q: "The medullary ray is a column of:", o: ["Renal corpuscles", "Convoluted tubules", "Straight tubules extending into the cortex", "Adipose tissue"], a: 2, w: "The medullary ray is a column of straight tubules (collecting ducts and loops of Henle) extending from the medulla into the cortex." },
+    { q: "The boundary between cortex and medulla is marked by the:", o: ["Arcuate arteries and veins", "Renal artery", "Interlobular arteries", "Efferent arteriole"], a: 0, w: "The arcuate arteries and veins run along the corticomedullary boundary." },
+    { q: "The vasa recta are found in the:", o: ["Cortex only", "Medulla, running alongside loops of Henle", "Renal pelvis", "Ureter"], a: 1, w: "Vasa recta are straight blood vessels that run parallel to the loops of Henle in the medulla." },
+
+    // ===== Note 3: renal circulation (Q11-15) =====
+    { q: "The artery that enters the kidney at the hilum is the:", o: ["Renal artery", "Segmental artery", "Interlobar artery", "Arcuate artery"], a: 0, w: "The renal artery enters the kidney at the hilum." },
+    { q: "Arcuate arteries are located at the:", o: ["Hilum", "Corticomedullary junction", "Renal papilla", "Renal capsule"], a: 1, w: "Arcuate arteries run along the boundary between cortex and medulla." },
+    { q: "The afferent arteriole enters the:", o: ["Peritubular capillaries", "Renal corpuscle", "Vasa recta", "Arcuate vein"], a: 1, w: "The afferent arteriole enters the renal corpuscle and splits into the glomerular capillaries." },
+    { q: "The efferent arteriole leaves the corpuscle and splits into:", o: ["The renal artery", "The interlobar artery", "A second capillary bed (peritubular or vasa recta)", "The renal vein directly"], a: 2, w: "The efferent arteriole splits into a second capillary bed - peritubular capillaries in the cortex, or vasa recta in the medulla." },
+    { q: "The kidney's unusual second capillary bed is important because it allows:", o: ["Filtration and reabsorption in one continuous flow", "Only filtration", "Only secretion", "Direct drainage to the renal vein"], a: 0, w: "The two capillary beds in series allow filtration (first bed) and reabsorption (second bed) in one continuous flow." },
+
+    // ===== Note 4: uriniferous tubule and nephron classes (Q16-20) =====
+    { q: "The proximal convoluted tubule is lined by simple cuboidal epithelium with:", o: ["No brush border", "A prominent brush border of microvilli", "Cilia", "Goblet cells"], a: 1, w: "The PCT has a prominent brush border of microvilli and is deeply eosinophilic." },
+    { q: "The descending limb of the loop of Henle is lined by:", o: ["Simple squamous epithelium", "Simple columnar epithelium", "Stratified squamous epithelium", "Transitional epithelium"], a: 0, w: "The descending limb is thin and lined by simple squamous epithelium, permeable to water." },
+    { q: "The distal convoluted tubule is lined by:", o: ["Simple cuboidal epithelium without a brush border", "Simple squamous epithelium", "Stratified columnar epithelium", "Transitional epithelium"], a: 0, w: "The DCT is lined by simple cuboidal epithelium without a brush border, paler than the PCT." },
+    { q: "Cortical nephrons differ from juxtamedullary nephrons in that cortical nephrons have:", o: ["Longer loops of Henle", "Shorter loops of Henle that barely dip into the medulla", "No loops of Henle", "No renal corpuscle"], a: 1, w: "Cortical nephrons (about 85%) have short loops of Henle; juxtamedullary nephrons have long ones." },
+    { q: "The juxtamedullary nephrons are the ones responsible for:", o: ["Only filtration", "Creating the salt gradient that concentrates urine", "Secretion of potassium only", "Producing renin only"], a: 1, w: "Juxtamedullary nephrons, with their long loops, are responsible for creating the medullary salt gradient." },
+
+    // ===== Note 5: renal corpuscle and filtration barrier (Q21-25) =====
+    { q: "The renal corpuscle consists of:", o: ["A glomerulus inside Bowman's capsule", "Only Bowman's capsule", "Only the glomerulus", "A tubule and a capillary"], a: 0, w: "The renal corpuscle consists of a glomerulus (capillary tuft) enclosed within Bowman's capsule." },
+    { q: "The three layers of the glomerular filtration barrier are:", o: ["Alveolar epithelium, basement membrane, capillary endothelium", "Fenestrated endothelium, glomerular basement membrane, podocyte filtration slits", "Mucus layer, cilia, basement membrane", "Simple squamous epithelium, mucus, capillaries"], a: 1, w: "The barrier is fenestrated endothelium, GBM, and podocyte filtration slits with slit diaphragms." },
+    { q: "Podocytes are specialised cells of the:", o: ["Parietal layer of Bowman's capsule", "Visceral layer of Bowman's capsule", "Proximal tubule", "Loop of Henle"], a: 1, w: "Podocytes form the visceral layer of Bowman's capsule, wrapping around the glomerular capillaries." },
+    { q: "The vascular pole of the renal corpuscle is where:", o: ["Filtrate leaves", "The afferent and efferent arterioles enter and leave", "The tubule begins", "The juxtaglomerular apparatus sits only"], a: 1, w: "The vascular pole is where the afferent and efferent arterioles enter and leave. The juxtaglomerular apparatus also sits here." },
+    { q: "The urinary pole of the renal corpuscle is where:", o: ["Filtrate leaves into the proximal tubule", "Blood enters", "Blood leaves", "The juxtaglomerular apparatus sits"], a: 0, w: "The urinary pole is where the filtrate leaves Bowman's capsule and enters the proximal convoluted tubule." },
+
+    // ===== Note 6: juxtaglomerular apparatus (Q26-30) =====
+    { q: "The juxtaglomerular apparatus is located at the:", o: ["Urinary pole of the corpuscle", "Vascular pole of the corpuscle", "Renal papilla", "Renal pelvis"], a: 1, w: "The JGA sits at the vascular pole of the renal corpuscle." },
+    { q: "Juxtaglomerular (JG) cells are located in the:", o: ["Distal convoluted tubule", "Wall of the afferent arteriole", "Bowman's capsule", "Loop of Henle"], a: 1, w: "JG cells are modified smooth muscle cells in the wall of the afferent arteriole." },
+    { q: "JG cells release:", o: ["Aldosterone", "Renin", "Angiotensin", "ADH"], a: 1, w: "JG cells release renin, which initiates the renin-angiotensin-aldosterone system." },
+    { q: "The macula densa is a specialised patch of the:", o: ["Afferent arteriole", "Distal convoluted tubule", "Proximal convoluted tubule", "Collecting duct"], a: 1, w: "The macula densa is a specialised patch in the distal convoluted tubule that senses sodium chloride concentration." },
+    { q: "The macula densa functions as a:", o: ["Baroreceptor", "Chemoreceptor sensing sodium chloride in the tubular fluid", "Phagocyte", "Secretion site for renin"], a: 1, w: "The macula densa senses sodium chloride concentration in the tubular fluid and signals the JG cells." },
+
+    // ===== Note 7: urinary bladder (Q31-35) =====
+    { q: "The urinary bladder is lined by transitional epithelium whose surface cells are called:", o: ["Umbrella cells", "Goblet cells", "Enterocytes", "Enteroendocrine cells"], a: 0, w: "The large surface cells of transitional epithelium are called umbrella cells." },
+    { q: "The rugae of the bladder are:", o: ["Permanent folds", "Folds that disappear when the bladder is distended", "Small glands", "Bands of muscle"], a: 1, w: "Rugae are mucosal folds that disappear when the bladder fills." },
+    { q: "The detrusor muscle is composed of:", o: ["One layer of smooth muscle", "Three interlacing layers of smooth muscle", "Skeletal muscle only", "Cardiac muscle"], a: 1, w: "The detrusor muscle has three interlacing layers of smooth muscle (inner longitudinal, middle circular, outer longitudinal)." },
+    { q: "The trigone of the bladder is distinctive because its mucosa is:", o: ["Covered in villi", "Smooth, with no rugae", "Ciliated", "Stratified squamous"], a: 1, w: "The trigone's mucosa is smooth with no rugae, tightly bound to the muscularis." },
+    { q: "Tight junctions between the umbrella cells of transitional epithelium function to:", o: ["Allow urine to leak into the underlying tissue", "Make the lining impermeable to urine", "Promote muscle contraction", "Secrete hormones"], a: 1, w: "Tight junctions make the urothelium impermeable to the toxic substances in urine." },
+
+    // ===== Note 8: ureter (Q36-40) =====
+    { q: "The ureter has how many layers in its wall?", o: ["One", "Two", "Three", "Four"], a: 2, w: "The ureter has three layers: mucosa, muscularis and adventitia." },
+    { q: "Urine is propelled along the ureter by:", o: ["Gravity", "Peristaltic contractions of smooth muscle", "Cilia", "Negative pressure in the bladder"], a: 1, w: "Urine is propelled by peristaltic waves of smooth muscle contraction." },
+    { q: "The three natural narrowings of the ureter are:", o: ["The pelviureteric junction, the pelvic brim crossing, and the vesicoureteric junction", "The hilum, pelvis and bladder", "The cortex, medulla and papilla", "The three muscle layers only"], a: 0, w: "The three narrowings are where stones are most likely to lodge: PUJ, pelvic brim and VUJ." },
+    { q: "The ureteric mucosa is lined by:", o: ["Simple squamous epithelium", "Simple columnar epithelium", "Transitional epithelium", "Stratified squamous epithelium"], a: 2, w: "The ureter is lined by transitional epithelium, continuous with the bladder." },
+    { q: "In the lower ureter, the muscularis has:", o: ["Only one layer", "Two layers only", "Three layers (an extra outer longitudinal layer)", "No muscle"], a: 2, w: "The lower ureter has three muscle layers - an extra outer longitudinal layer." },
+
+    // ===== Note 9: renal pelvis and calyces (Q41-45) =====
+    { q: "Urine drains from the collecting ducts at the renal papilla into the:", o: ["Renal pelvis directly", "Minor calyx", "Ureter directly", "Renal vein"], a: 1, w: "Collecting ducts open at the renal papilla into the minor calyx." },
+    { q: "The minor calyces fuse to form the:", o: ["Major calyces", "Renal pelvis", "Ureter", "Renal papilla"], a: 0, w: "Two or three minor calyces fuse to form each major calyx." },
+    { q: "The renal pelvis is:", o: ["The outer capsule of the kidney", "The funnel-shaped cavity that collects urine from all major calyces", "A layer of the ureter", "The renal medulla"], a: 1, w: "The renal pelvis is the funnel-shaped cavity that receives all major calyces and narrows to become the ureter." },
+    { q: "The calyces and renal pelvis are lined by:", o: ["Simple columnar epithelium", "Stratified squamous epithelium", "Transitional epithelium", "Pseudostratified columnar epithelium"], a: 2, w: "The calyces and renal pelvis are lined by transitional epithelium, continuous with the ureter." },
+    { q: "Obstruction of a calyx or renal pelvis leads to:", o: ["Improved urine flow", "Hydronephrosis - dilation and damage of the kidney", "Proteinuria only", "No consequence"], a: 1, w: "Obstruction causes urine to back up, dilating and damaging the kidney - a condition called hydronephrosis." },
+
+    // ===== Note 10: clinical histophysiology (Q46-50) =====
+    { q: "Red cell casts in the urine specifically indicate bleeding from the:", o: ["Ureter", "Bladder", "Glomerulus", "Urethra"], a: 2, w: "Red cell casts form in the renal tubules and localise the bleeding to the glomerulus." },
+    { q: "The gold-standard investigation for glomerular disease is:", o: ["Urinalysis alone", "Renal biopsy", "CT scan", "Blood pressure measurement"], a: 1, w: "Renal biopsy allows direct examination of glomeruli, tubules and interstitium." },
+    { q: "The most common composition of kidney stones is:", o: ["Uric acid", "Struvite", "Calcium oxalate", "Cystine"], a: 2, w: "Calcium oxalate stones are the most common type of kidney stone." },
+    { q: "Diabetic nephropathy is characterised histologically by:", o: ["Loss of podocyte foot processes", "Thickening of the glomerular basement membrane", "Interstitial fibrosis only", "Crescents in Bowman's space"], a: 1, w: "Diabetic nephropathy causes thickening of the glomerular basement membrane." },
+    { q: "Urinalysis is a critical diagnostic tool in renal disease mainly because it can detect:", o: ["Only glucose", "Proteinuria, haematuria and casts", "Only pH", "Only nitrites"], a: 1, w: "Urinalysis detects proteinuria, haematuria and casts - all key markers of renal disease." },
+  ],
 };
 
 /* Registry: add each built topic here. */
@@ -22301,6 +24417,13 @@ const CONTENT = {
   "an2:5": T_AN2_PELVIS,
   "an2:4": T_AN2_REPRO,
   "an2:12": T_AN2_CIRC_HISTO,
+  "an2:6": T_AN2_THORAX,
+  "an2:7": T_AN2_CIRCULATORY,
+  "an2:8": T_AN2_CARDIOVASCULAR,
+  "an2:9": T_AN2_RESPIRATORY,
+  "an2:10": T_AN2_DIGESTIVE,
+  "an2:14": T_AN2_GI_HISTO,
+  "an2:15": T_AN2_URINARY_HISTO,
 
 };
 
