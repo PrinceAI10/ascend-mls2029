@@ -20644,6 +20644,250 @@ Crucial insight: almost every real-world use of this lining covered in this topi
   ],
 };
 
+/* --------------------------- an2:11 --------------------------- */
+const T_AN2_URINARY = {
+  courseId: "an2",
+  topicIndex: 11,
+  title: "Urinary System",
+  minutes: 26,
+  note: [
+    {
+      q: "Why does the body need an entire system dedicated to making urine, when every cell already produces waste?",
+      body: `Every cell in your body is a chemical factory. It burns fuel, builds proteins, and manages hundreds of reactions a minute. Every one of those reactions produces waste.
+
+My Socratic question: if none of that waste ever left the body, what would actually happen to you?
+
+The answer is that you would poison yourself from the inside. Carbon dioxide would accumulate until blood pH crashed. Urea would rise until the brain swelled. Potassium would climb until the heart stopped. The waste products of normal metabolism are toxic at concentrations only slightly above normal.
+
+The body removes this waste through four organs working together. The lungs exhale carbon dioxide. The skin sweats out water and salts. The gut excretes bile pigments and unabsorbed food. But the kidneys do the heavy lifting - they are the only organs that can examine each molecule in the blood and decide, one at a time, whether it stays or leaves.
+
+The urinary system has four parts. The kidneys are the filters - two bean-shaped organs against the back wall of the abdomen. The ureters are two muscular tubes carrying urine downward from each kidney. The bladder is a muscular sac in the pelvis that stores urine. The urethra is the single tube from the bladder to the outside.
+
+Crucial insight: the urinary system is not a garbage disposal - it is a precision instrument. Its job is not to make urine; its job is to keep the blood exactly right. Urine is the leftover after that job is done.`
+    },
+
+    {
+      q: "If a mechanical filter removed your waste perfectly, why would you still die within days?",
+      body: `A dialysis machine removes urea, creatinine, and excess fluid from the blood perfectly. Yet dialysis patients still face shortened lifespans and remain critically dependent on treatment. Something is being missed.
+
+My Socratic question: if the filter works perfectly, what is the machine not replacing?
+
+The answer is that the kidney is not just a filter. It is a filter, a chemist, a factory, and a signalling hub, all in one organ.
+
+As a chemist, it fine-tunes sodium, potassium, calcium, and pH second by second. As a factory, it produces three hormones: erythropoietin (which tells the bone marrow to make red blood cells), calcitriol (which controls calcium absorption), and renin (which regulates blood pressure). As a signalling hub, it responds to hormones from the brain and adrenal glands in real time.
+
+The consequences are predictable. Dialysis patients become anaemic because their kidney no longer makes erythropoietin. They develop weak bones because their kidney no longer makes calcitriol. They struggle with blood pressure because their kidney no longer makes renin.
+
+The numbers tell you why the kidney matters so much. It receives a quarter of every heartbeat's blood - roughly 1.2 litres per minute - despite weighing only 150 grams. Every minute it filters 125 millilitres of fluid, and over a day that is about 180 litres. Of that, 99 percent is reabsorbed, and 1 to 2 litres leave as urine.
+
+Crucial insight: the kidney keeps the blood exactly right, and urine is only the leftover. This is why a transplant restores far more than dialysis can - it restores the whole organ, not just the filter.`
+    },
+
+    {
+      q: "Why does the kidney need a million tiny nephrons, when one giant filter would do the same job?",
+      body: `Each kidney contains about one million tiny structures called nephrons. That seems wasteful - a million small filters doing what one big one could do.
+
+My Socratic question: if every nephron does the same job, why does the kidney need so many?
+
+The answer has three parts. First, surface area. A million tiny filters create an enormous total surface for exchanging substances with blood - far more than one large filter of the same weight could achieve. Second, redundancy. If you lose some nephrons to disease, the survivors can take on more work. This is why someone can donate a kidney and live normally. Third, local pressure control. Each nephron regulates its own filtration pressure, so damage to one is contained.
+
+Each nephron has two parts. The renal corpuscle is the filter - a ball of capillaries (the glomerulus) inside a cup-shaped sac (Bowman's capsule). Blood pressure forces water, ions, glucose, amino acids, and urea through the capillary walls into the capsule. Large proteins and blood cells are too big and stay in the blood. The renal tubule is a long, looping tube that follows, and this is where the raw filtered fluid is transformed into urine.
+
+Crucial insight: the million-nephron design is why kidney disease is silent for so long. You can lose 70 percent of your nephrons and still have normal-looking blood tests. By the time symptoms appear, most of the reserve is gone.`
+    },
+
+    {
+      q: "Blood enters the glomerulus under very high pressure. Why does the kidney not burst?",
+      body: `The pressure inside glomerular capillaries is much higher than in ordinary capillaries. Every minute, that pressure forces 125 millilitres of fluid out of the blood. Over a day, that is 180 litres - two bathtubs full.
+
+My Socratic question: if fluid is being forced out at that pressure all day long, why does the glomerulus not rupture?
+
+Three features protect it. First, glomerular capillaries are built for filtration, not exchange. Their walls have pores that let water and small solutes through but hold back proteins and cells. Mesangial cells provide physical support and can contract to regulate flow.
+
+Second, the kidney autoregulates. When blood pressure rises, the small arteries feeding the glomerulus tighten. When pressure falls, they relax. This keeps filtration stable across a blood pressure range of roughly 80 to 180 mmHg - protecting the delicate filter from systemic pressure swings.
+
+Third, the fluid that leaves is not lost. It enters the tubule and 99 percent returns to the blood further downstream. If that reabsorption failed, the body would lose its entire blood volume in hours.
+
+What separates blood from filtrate is a three-layer filtration membrane. The inner layer is the fenestrated endothelium of the capillary. The middle layer is a specialised basement membrane that filters by size and charge. The outer layer is made of podocytes, whose "feet" form narrow filtration slits. Together they hold back anything the size of a protein or larger.
+
+Crucial insight: when this barrier breaks down, proteins leak into the urine - a condition called proteinuria. It is one of the earliest laboratory signs of kidney damage, and it is why careful urinalysis matters.`
+    },
+
+    {
+      q: "The kidney filters 180 litres a day but produces only 2 litres of urine. Where do the other 178 litres go?",
+      body: `The numbers are striking. Every day the kidney filters about 180 litres of fluid out of the blood. Every day it produces about 2 litres of urine. So 178 litres, or 99 percent, must return to the body.
+
+My Socratic question: what happens to those 178 litres, and what decides which 2 litres leave?
+
+The 178 litres are reabsorbed - pulled back into the blood along the tubule. Reabsorption is active and selective, not just filtration in reverse. Filtration is passive and unselective; reabsorption uses energy to choose which substances to reclaim and how much of each.
+
+Urine formation happens in three phases, in sequence. Filtration occurs in the renal corpuscle, where blood pressure drives fluid into Bowman's capsule. Reabsorption occurs along the tubule, where useful substances return to the blood. Secretion also occurs along the tubule, where substances the body wants to remove are actively pushed into the filtrate.
+
+The 2 litres that leave as urine are not "leftovers." They are deliberately retained fluid. The tubule reabsorbs less water in specific segments, particularly the collecting duct, where water movement is under hormonal control.
+
+There is a limit to reabsorption - the transport maximum. When the filtered load exceeds it, the excess spills into urine. This is why glucose appears in the urine of uncontrolled diabetics: their blood glucose is so high that the transporters are saturated, and the excess escapes.
+
+Crucial insight: urine is not what the kidney fails to keep - it is what the kidney chooses to let go. Every substance in urine was deliberately not reabsorbed.`
+    },
+
+    {
+      q: "How can the kidney make urine more concentrated than blood, when physics says water flows toward the saltier side?",
+      body: `Osmosis is one of the most reliable laws in biology. Water always flows toward the side with more dissolved particles. If the kidney wants to keep water in the body, it must make the tubule fluid more concentrated than blood - but by the laws of osmosis, that is exactly where water would leave.
+
+My Socratic question: the kidney produces urine up to four times more concentrated than blood. Where does that concentration come from?
+
+The answer is the countercurrent multiplier, and it happens in the loop of Henle - a hairpin-shaped tube that dips into the salty medulla of the kidney.
+
+The trick is two limbs with opposite properties. The descending limb is permeable to water but not to salt. As fluid descends, water leaves by osmosis and the fluid becomes more concentrated. The ascending limb is impermeable to water but actively pumps salt out into the surrounding tissue. Salt leaves; water cannot follow.
+
+The result is a salt gradient in the medulla - up to four times the concentration of blood. Then the collecting duct, passing through this salty region, uses the gradient. When ADH makes the collecting duct permeable to water, water flows out into the salty medulla, and the urine inside becomes concentrated.
+
+The collecting duct is where the final decision is made. Each nephron empties into a collecting duct, and the ducts run down through the medulla. Their walls become permeable to water under ADH. The collecting duct is also where the kidney makes final adjustments to pH and potassium.
+
+Crucial insight: the kidney does not concentrate urine directly - it builds a salt gradient first, then exploits it. Loop diuretics like furosemide work by destroying that gradient, which is why they produce such powerful urine output.`
+    },
+
+    {
+      q: "If the kidney autoregulates so well, why does it also need hormones from the brain?",
+      body: `The kidney keeps its own filtration rate nearly constant across a wide range of blood pressures. It has its own sensors and its own feedback loops. So why is almost every kidney function also controlled by hormones from elsewhere?
+
+My Socratic question: if the kidney is so good at self-regulation, why does it need to be told what to do?
+
+Autoregulation solves the short-term, local problem - keeping filtration stable. But the body faces problems the kidney cannot see alone. Whether you are dehydrated or overhydrated. Whether your blood pressure is dangerously low. Whether your potassium is dangerously high. These are body-wide problems, and hormones deliver the information.
+
+Three hormones dominate. ADH, from the posterior pituitary, tells the collecting ducts whether to hold onto water. When you are dehydrated, ADH rises and you produce a small volume of concentrated urine. When you drink, ADH falls and you produce a large volume of dilute urine. Aldosterone, from the adrenal glands, tells the distal tubule to reabsorb sodium and secrete potassium. It is triggered by low blood pressure or high potassium. ANP, from the heart, does the opposite - when blood volume is high, ANP tells the kidney to excrete more sodium and water.
+
+Together these hormones keep fluid and electrolyte balance steady across the whole day. When one fails, the effects are dramatic. In diabetes insipidus, ADH is absent, and the kidney produces 15 to 20 litres of dilute urine per day.
+
+Crucial insight: the kidney is not autonomous. It uses autoregulation for short-term stability, and hormones for body-wide balance. Kidney damage breaks the filter; hormonal dysregulation leaves the filter without instructions.`
+    },
+
+    {
+      q: "What happens when the immune system attacks the kidney's own filter?",
+      body: `The immune system has to destroy invaders while leaving the body's own tissues alone. Occasionally that distinction breaks down. When the target is the glomerulus, the result is glomerulonephritis.
+
+My Socratic question: the glomerulus is made of the body's own cells. Why would the immune system attack it?
+
+There are three mechanisms. Circulating immune complexes - clumps of antibody stuck to foreign antigens - can deposit in the glomerulus, and the immune attack on these clumps damages the surrounding tissue. Antibodies can directly target proteins in the glomerulus. Or antibodies against other tissues can accidentally cross-react with glomerular tissue.
+
+All three converge on the same result: inflammation of the glomerulus. Immune cells release enzymes and signals that damage the filtration barrier. The barrier becomes leaky. Red blood cells and proteins that should be held back escape into the filtrate.
+
+Clinically this shows up as haematuria (blood in urine) and proteinuria (protein in urine), often with reduced filtration. Common causes include post-streptococcal glomerulonephritis (1 to 3 weeks after a strep infection), IgA nephropathy (the most common primary glomerulonephritis worldwide), and lupus nephritis (in patients with lupus).
+
+From the laboratory bench, glomerulonephritis is often first detected by routine urinalysis. Red blood cells with red cell casts - cylindrical structures formed when red cells get trapped in the tubules - localise the bleeding to the glomerulus. Protein appears as the barrier breaks down. Early detection through careful urinalysis can catch the disease before permanent damage is done.
+
+Crucial insight: glomerulonephritis is the body attacking its own filter, and the damage shows up in the urine before it shows up anywhere else. A few red cells and a bit of protein in a routine sample can be the earliest sign.`
+    },
+
+    {
+      q: "When the kidney fails slowly over years, what actually kills the patient?",
+      body: `Chronic kidney disease is not one disease. It is the endpoint of many - diabetes, hypertension, glomerulonephritis, polycystic kidney disease. Because the kidney has so much reserve, symptoms do not appear until 70 percent or more of function is gone.
+
+My Socratic question: if the kidney is only one organ, why does its slow failure cause a devastating multi-system illness?
+
+The answer is that the kidney performs many functions at once. When it fails, all of them fail together. The resulting syndrome is called uraemia - literally "urine in the blood" - and it is a whole-body illness.
+
+Filtration failure lets waste accumulate. Urea, creatinine, and uric acid rise. Nausea, vomiting, loss of appetite, and eventually confusion and coma follow. Fluid and electrolyte regulation fail. Potassium rises dangerously, threatening the heart's rhythm. Fluid accumulates, causing oedema and heart failure. Acid builds up, producing metabolic acidosis.
+
+Hormonal failure produces its own problems. Without erythropoietin, anaemia develops. Without calcitriol, calcium cannot be absorbed and bone disease follows. Without renin regulation, blood pressure swings wildly.
+
+Chronic kidney disease progresses through five stages, defined by the glomerular filtration rate. Stage 5 is end-stage renal disease requiring dialysis or transplant. Progression can be slowed by controlling the underlying cause, but it cannot be reversed.
+
+For a laboratory scientist, CKD is a disease you will help detect and monitor. Rising creatinine, falling GFR, protein in the urine, anaemia, abnormal calcium and phosphate - these are the diagnostic markers.
+
+Crucial insight: kidney failure is not just a failure of one function - it is the failure of many integrated functions at once. Its loss is felt throughout the body.`
+    },
+
+    {
+      q: "How do bacteria get into a tube that has a direct opening to the outside world?",
+      body: `The urinary tract has an opening to the environment. Bacteria are everywhere. Yet most people go through life without a single urinary tract infection.
+
+My Socratic question: why do most people almost never get a UTI, and what has to go wrong for one to develop?
+
+The urinary tract has several defences. The flow of urine flushes bacteria out before they establish themselves. The lining has mucus and antibodies that make adhesion difficult. In men, the urethra is long, giving bacteria a difficult path. In women, the urethra is much shorter - which is why UTIs are far more common in women. Urination flushes the bladder with every void, so bacteria must be persistent to stay.
+
+When a UTI develops, it usually starts with bacteria ascending from the outside. The most common organism is Escherichia coli, from the gut. From the urethra, bacteria travel upward to the bladder.
+
+When infection is confined to the bladder, it is called cystitis. Symptoms are burning on urination, urgency, frequency, and lower abdominal discomfort. The urine is often cloudy and sometimes blood-tinged. Cystitis is uncomfortable but rarely dangerous.
+
+When infection spreads up to the kidneys, it is called pyelonephritis. This is much more serious - high fever, chills, back pain, and sometimes nausea and vomiting. If not treated promptly, it can cause permanent kidney damage or sepsis.
+
+From the laboratory, urine from a suspected UTI is examined three ways. Physically, it may be cloudy or blood-tinged. Chemically, the dipstick shows nitrites (produced by certain bacteria) and leukocyte esterase (an enzyme in white cells). Microscopically, it contains white cells and bacteria. The combination confirms the infection. A culture identifies the organism and guides antibiotic choice.
+
+Crucial insight: UTIs are among the most common specimens you will process. The dipstick findings - nitrites and leukocyte esterase - are simple, fast, and often diagnostic. In pregnancy, even mild UTIs require treatment because they can spread to the kidneys and threaten the pregnancy.`
+    }
+  ],
+  theory: [
+    { q: "Name the four organs of the urinary system and state the function of each.", a: "Kidneys - filter blood to form urine, regulate fluid, electrolyte and acid-base balance, and produce hormones (erythropoietin, calcitriol, renin). Ureters - muscular tubes carrying urine from each kidney to the bladder. Bladder - muscular sac storing urine before micturition. Urethra - single tube carrying urine from the bladder to the exterior, controlled by internal (involuntary) and external (voluntary) sphincters." },
+    { q: "Describe the position and gross structure of the kidney.", a: "Paired retroperitoneal organs on the posterior abdominal wall, roughly T12 to L3, with the right kidney slightly lower than the left. Each has a convex lateral border and concave medial border with a hilum for the renal artery, renal vein, and ureter. Internally: outer cortex, inner medulla (renal pyramids), and renal pelvis. Surrounded by fibrous capsule, perirenal fat, and renal fascia." },
+    { q: "Describe the structure of a nephron and name its segments.", a: "Two main parts. The renal corpuscle - glomerulus inside Bowman's capsule - is the site of filtration. The renal tubule continues as: proximal convoluted tubule, descending limb of the loop of Henle, ascending limb, distal convoluted tubule, and collecting duct. Roughly one million nephrons per kidney." },
+    { q: "Name the three processes of urine formation and where each occurs.", a: "Filtration - in the renal corpuscle; passive, driven by blood pressure. Reabsorption - along the tubule; active and passive, returning useful substances to blood. Secretion - along the tubule; active, moving substances from blood into filtrate." },
+    { q: "Explain the transport maximum and give a clinical example.", a: "The transport maximum is the maximum rate at which a substance can be reabsorbed, set by the number of transporters. When the filtered load exceeds it, the excess appears in urine. Example: glucose spills into the urine when blood glucose exceeds the renal threshold of about 10 mmol/L, as in uncontrolled diabetes." },
+    { q: "Explain how the loop of Henle concentrates urine.", a: "Countercurrent multiplier. The descending limb is permeable to water but not salt - water leaves as fluid descends into the salty medulla. The ascending limb is impermeable to water but pumps out salt. This builds a salt gradient in the medulla (up to four times blood osmolality). The collecting duct uses the gradient, and ADH makes it permeable to water so water leaves and urine is concentrated." },
+    { q: "Describe the role of ADH in urine concentration.", a: "ADH is made in the hypothalamus and released by the posterior pituitary. It increases water permeability of the collecting ducts. When plasma osmolality rises (dehydration), ADH is released, water is reabsorbed, and a small volume of concentrated urine is produced. When plasma osmolality falls, ADH falls, and a large volume of dilute urine is produced." },
+    { q: "Describe the renin-angiotensin-aldosterone system.", a: "When the kidney senses low blood pressure or low sodium, juxtaglomerular cells release renin. Renin converts angiotensinogen to angiotensin I. ACE converts angiotensin I to angiotensin II, which is a vasoconstrictor and stimulates aldosterone release. Aldosterone acts on the distal tubule to reabsorb sodium and water and secrete potassium, raising blood volume and pressure." },
+    { q: "Explain the significance of proteinuria and haematuria.", a: "Proteinuria usually indicates damage to the glomerular filtration barrier. Causes include glomerulonephritis, diabetic nephropathy, and hypertensive nephrosclerosis. Haematuria can come from anywhere along the urinary tract. Red cell casts localise the bleeding to the glomerulus." },
+    { q: "List the main clinical conditions affecting the urinary system.", a: "Urinary tract infection (cystitis and pyelonephritis), glomerulonephritis, nephrotic syndrome, acute kidney injury, chronic kidney disease, renal calculi, polycystic kidney disease, renal cell carcinoma, and diabetic nephropathy." }
+  ],
+  videos: [
+    { channel: "CrashCourse", title: "The Urinary System: From Your Kidneys to Your Toilet", note: "Overview of the whole system - structures, function, and how they work together.", url: "" },
+    { channel: "Khan Academy", title: "The Kidney and Nephron", note: "Detailed tour of the nephron - filtration, reabsorption, loop of Henle, and hormonal control.", url: "" },
+    { channel: "Amoeba Sisters", title: "The Urinary System", note: "Animated, friendly walkthrough. Good first watch before the deeper material.", url: "" }
+  ],
+  mcqs: [
+    { q: "Which of the following is NOT a function of the kidney?", o: ["Regulating blood pressure", "Producing bile", "Filtering blood plasma", "Balancing acid and base"], a: 1, w: "Bile is produced by the liver, not the kidney. The kidney regulates blood pressure, filters plasma, and balances acid-base." },
+    { q: "The functional unit of the kidney is the:", o: ["Renal pelvis", "Glomerulus", "Nephron", "Renal pyramid"], a: 2, w: "The nephron is the kidney's functional unit where filtration, reabsorption, and secretion occur." },
+    { q: "Approximately how many nephrons are in each kidney?", o: ["One million", "One thousand", "One hundred thousand", "Ten million"], a: 0, w: "Each kidney contains roughly one million nephrons." },
+    { q: "Which two structures make up the renal corpuscle?", o: ["Glomerulus and loop of Henle", "Glomerulus and Bowman's capsule", "Bowman's capsule and distal tubule", "Proximal tubule and collecting duct"], a: 1, w: "The renal corpuscle is the glomerulus enclosed within Bowman's capsule." },
+    { q: "Filtration in the nephron occurs at the:", o: ["Loop of Henle", "Distal convoluted tubule", "Renal corpuscle", "Collecting duct"], a: 2, w: "Filtration occurs at the renal corpuscle where blood pressure drives fluid into Bowman's capsule." },
+    { q: "Which substance is normally NOT filtered into Bowman's capsule?", o: ["Glucose", "Sodium ions", "Large plasma proteins", "Urea"], a: 2, w: "Large proteins and blood cells are too big to cross the filtration membrane and remain in blood." },
+    { q: "Approximately how much fluid do the kidneys filter per day?", o: ["18 litres", "180 litres", "1.8 litres", "1,800 litres"], a: 1, w: "The kidneys filter about 180 litres of fluid per day." },
+    { q: "Approximately what percentage of filtered fluid is reabsorbed?", o: ["50 percent", "75 percent", "99 percent", "10 percent"], a: 2, w: "About 99 percent of the filtrate returns to the blood, leaving 1-2 litres as urine." },
+    { q: "Which process in urine formation requires cellular energy?", o: ["Filtration", "Reabsorption", "Diffusion of oxygen", "Osmosis of water"], a: 1, w: "Reabsorption uses ATP-driven transporters; filtration is purely passive." },
+    { q: "The transport maximum of a substance is determined by:", o: ["Blood pressure", "Urine volume", "Number of transporters", "Kidney weight"], a: 2, w: "The transport maximum depends on how many transporter proteins are available in the tubule." },
+    { q: "Glucose appears in the urine of a diabetic patient because:", o: ["The kidney produces too much glucose", "The glomerulus filters too much water", "The filtered load exceeds the transport maximum", "Glucose is actively secreted by the tubule"], a: 2, w: "When the filtered glucose load exceeds the transporters' capacity, the excess spills into the urine." },
+    { q: "The loop of Henle is primarily responsible for:", o: ["Filtering blood plasma", "Reabsorbing glucose", "Secreting hydrogen ions", "Creating a salt gradient in the medulla"], a: 3, w: "The loop of Henle builds a concentrated salt gradient in the medulla through the countercurrent multiplier." },
+    { q: "The descending limb of the loop of Henle is permeable to:", o: ["Water but not solutes", "Solutes but not water", "Both water and solutes", "Neither water nor solutes"], a: 0, w: "The descending limb allows water to leave by osmosis but does not allow solutes through." },
+    { q: "The ascending limb of the loop of Henle is permeable to:", o: ["Water but not solutes", "Both water and solutes", "Solutes but not water", "Neither water nor solutes"], a: 2, w: "The ascending limb actively pumps out solutes but is impermeable to water." },
+    { q: "The countercurrent multiplier mechanism functions to:", o: ["Slow down filtration", "Prevent glucose loss", "Secrete potassium ions", "Enable urine concentration"], a: 3, w: "It builds the salt gradient that allows the kidney to produce concentrated urine." },
+    { q: "ADH acts primarily on which part of the nephron?", o: ["The glomerulus", "The proximal tubule", "The collecting duct", "The loop of Henle"], a: 2, w: "ADH increases water permeability of the collecting ducts, allowing water reabsorption." },
+    { q: "ADH release increases when blood becomes:", o: ["More dilute", "More concentrated", "Higher in volume", "Lower in pressure"], a: 1, w: "High plasma osmolality triggers ADH release, increasing water reabsorption." },
+    { q: "Diabetes insipidus results in:", o: ["Large volumes of dilute urine", "Excess glucose in urine", "Reduced urine output", "Blood in urine"], a: 0, w: "With absent or ineffective ADH, the kidney cannot concentrate urine and produces large dilute volumes." },
+    { q: "Autoregulation of the kidney refers to:", o: ["Generating its own hormones", "Stabilising filtration rate", "Secreting insulin directly", "Repairing its own tissue"], a: 1, w: "Autoregulation keeps the glomerular filtration rate nearly constant across a wide blood pressure range." },
+    { q: "Below approximately what blood pressure does autoregulation fail?", o: ["80 mmHg", "180 mmHg", "120 mmHg", "60 mmHg"], a: 0, w: "Autoregulation fails below about 80 mmHg, at which point filtration drops." },
+    { q: "Which gland releases ADH into the bloodstream?", o: ["The kidney", "The adrenal gland", "The posterior pituitary", "The liver"], a: 2, w: "ADH is produced in the hypothalamus and released by the posterior pituitary." },
+    { q: "Which structure carries urine from the kidney to the bladder?", o: ["The urethra", "The ureter", "The renal pelvis", "The collecting duct"], a: 1, w: "The ureters carry urine from each kidney to the urinary bladder." },
+    { q: "Which structure carries urine from the bladder to the exterior?", o: ["The ureter", "The renal pelvis", "The nephron", "The urethra"], a: 3, w: "The urethra is the single tube that carries urine from the bladder to the outside." },
+    { q: "The trigone of the bladder is:", o: ["A muscular layer", "The internal sphincter", "A triangular mucosal area", "The outer serous coat"], a: 2, w: "The trigone is a smooth triangular region marked by the two ureteric orifices and the internal urethral orifice." },
+    { q: "The inner lining of the urinary bladder is:", o: ["Simple squamous epithelium", "Transitional epithelium", "Simple columnar epithelium", "Stratified squamous epithelium"], a: 1, w: "Transitional epithelium (urothelium) lines the urinary tract and stretches as the bladder fills." },
+    { q: "The kidneys are positioned:", o: ["Inside the pelvic cavity", "In the thorax", "Behind the bladder", "Against the posterior abdominal wall"], a: 3, w: "The kidneys are retroperitoneal, lying against the posterior abdominal wall on either side of the spine." },
+    { q: "The kidneys receive approximately what fraction of cardiac output?", o: ["5 percent", "25 percent", "50 percent", "10 percent"], a: 1, w: "The kidneys receive about 25 percent of cardiac output, reflecting their high filtration demand." },
+    { q: "The process of emptying the bladder is called:", o: ["Filtration", "Micturition", "Reabsorption", "Secretion"], a: 1, w: "Micturition is the process of bladder emptying, also known as urination." },
+    { q: "The micturition reflex is triggered by:", o: ["High blood glucose", "ADH release", "Bladder wall stretch", "Renin secretion"], a: 2, w: "Stretch receptors in the bladder wall detect filling and trigger the micturition reflex." },
+    { q: "Erythropoietin from the kidney stimulates production of:", o: ["Red blood cells", "White blood cells", "Platelets", "Plasma proteins"], a: 0, w: "Erythropoietin signals the bone marrow to produce red blood cells." },
+    { q: "The kidney helps regulate blood pressure by secreting:", o: ["Insulin", "Thyroxine", "Cortisol", "Renin"], a: 3, w: "Renin initiates the renin-angiotensin-aldosterone system, which regulates blood pressure." },
+    { q: "Which vitamin is converted to its active form by the kidney?", o: ["Vitamin A", "Vitamin D", "Vitamin C", "Vitamin K"], a: 1, w: "The kidney converts vitamin D to calcitriol, the active form that controls calcium absorption." },
+    { q: "The renal pelvis functions to:", o: ["Filter blood plasma", "Collect urine into the ureter", "Store urine before micturition", "Reabsorb glucose from filtrate"], a: 1, w: "The renal pelvis is a funnel-shaped cavity that collects urine and channels it into the ureter." },
+    { q: "Which of the following is NOT normally present in urine?", o: ["Urea", "Creatinine", "Glucose", "Sodium ions"], a: 2, w: "Glucose is normally fully reabsorbed and appears in urine only when blood glucose exceeds the transport maximum." },
+    { q: "Protein in the urine most commonly indicates:", o: ["Diabetes mellitus", "Glomerular damage", "Liver disease", "Dehydration"], a: 1, w: "Proteinuria reflects damage to the glomerular filtration barrier, allowing proteins to leak through." },
+    { q: "The specific gravity of urine reflects its:", o: ["Acidity", "Colour", "Volume", "Concentration"], a: 3, w: "Specific gravity measures how concentrated the urine is compared with pure water." },
+    { q: "A fixed specific gravity of about 1.010 that does not vary may indicate:", o: ["Normal kidney function", "Impaired concentrating ability", "Diabetes mellitus", "Urinary infection"], a: 1, w: "A fixed specific gravity near that of plasma suggests the kidney cannot concentrate or dilute urine." },
+    { q: "Ketones in the urine are most commonly associated with:", o: ["Fat breakdown states", "Kidney stones", "Urinary infection", "Liver disease"], a: 0, w: "Ketones appear when the body burns fat for fuel, as in diabetic ketoacidosis or prolonged fasting." },
+    { q: "The presence of nitrites in urine suggests:", o: ["Kidney stones", "Bacterial infection", "Liver disease", "Diabetes mellitus"], a: 1, w: "Nitrites are produced by certain bacteria that convert nitrate to nitrite, indicating infection." },
+    { q: "Leukocyte esterase in urine indicates the presence of:", o: ["Red blood cells", "Glucose", "White blood cells", "Ketone bodies"], a: 2, w: "Leukocyte esterase is an enzyme present in white cells, indicating inflammation or infection." },
+    { q: "The presence of red blood cells in urine is called:", o: ["Proteinuria", "Glycosuria", "Haematuria", "Ketonuria"], a: 2, w: "Haematuria is the presence of red blood cells in the urine." },
+    { q: "Which urinary organ lies behind the peritoneum?", o: ["The bladder", "The urethra", "The kidneys", "The prostate"], a: 2, w: "The kidneys are retroperitoneal, lying against the posterior abdominal wall." },
+    { q: "The glomerulus is best described as:", o: ["A capillary tuft for filtration", "A urine-carrying tube", "A muscular storage sac", "An endocrine gland"], a: 0, w: "The glomerulus is a tuft of capillaries where blood plasma is filtered under pressure." },
+    { q: "Most glucose reabsorption occurs in the:", o: ["Proximal convoluted tubule", "Distal convoluted tubule", "Loop of Henle", "Collecting duct"], a: 0, w: "The proximal convoluted tubule reabsorbs essentially all filtered glucose and amino acids." },
+    { q: "The main site where ADH exerts its effect is the:", o: ["Proximal tubule", "Distal tubule", "Collecting duct", "Glomerulus"], a: 2, w: "ADH increases water permeability of the collecting ducts." },
+    { q: "A dehydrated patient typically produces:", o: ["Large volumes of dilute urine", "Small volumes of concentrated urine", "Urine containing glucose", "Urine containing protein"], a: 1, w: "Dehydration triggers ADH release, so the kidney reabsorbs more water and produces small concentrated volumes." },
+    { q: "The external urethral sphincter is under:", o: ["Involuntary control", "Voluntary control", "Hormonal control", "No nervous control"], a: 1, w: "The external urethral sphincter is skeletal muscle and is under voluntary control." },
+    { q: "Which of the following is NOT a part of the male urethra?", o: ["The prostatic part", "The membranous part", "The spongy part", "The vaginal part"], a: 3, w: "There is no vaginal part of the male urethra. The three parts are prostatic, membranous, and spongy." },
+    { q: "Kidney stones are also called:", o: ["Renal calculi", "Renal tumours", "Renal cysts", "Renal infarcts"], a: 0, w: "Renal calculi is the medical term for kidney stones." },
+    { q: "Most urinary tract infections are caused by:", o: ["Viruses", "Fungi", "Escherichia coli", "Parasites"], a: 2, w: "The most common cause of urinary tract infection is the bacterium Escherichia coli." }
+  ]
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -20756,6 +21000,7 @@ const CONTENT = {
   "phyp:8": T_PHYP_BLOODTYPING,
   "an2:0": T_AN2_ABDWALL,
   "an2:1": T_AN2_PERITONEUM,
+  "an2:11": T_AN2_URINARY,
 };
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
