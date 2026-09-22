@@ -28877,166 +28877,269 @@ const T_HEM_STAINS = {
   courseId: "hem",
   topicIndex: 7,
   title: "Types of Haematological Stains, Principles of Staining and Staining Techniques",
-  minutes: 30,
+  minutes: 32,
 
   note: [
     {
-      q: "A blood film left unstained is almost invisible. Why does colour change everything?",
-      body: `Take a perfectly made blood film, dry it, and place it under a microscope without staining it. You will see almost nothing - a faint, grey, translucent smear with ghostly outlines of cells. Now stain the same film with a Romanowsky stain and look again. Suddenly the film is alive with colour: red cells are pink, white cells have deep purple nuclei, platelets are violet, and the fine details of chromatin, granules and cytoplasm become visible.
+      q: "An unstained blood film is almost invisible. Why does colour change everything?",
+      body: `Take a perfectly made blood film, dry it, and place it under a microscope without staining it. You will see almost nothing - a faint, grey, translucent smear with ghostly outlines of cells. Now stain the same film and look again. Suddenly the film is alive with colour: red cells are pink, white cells have deep purple nuclei, platelets are violet, and the fine details of chromatin, granules and cytoplasm become visible.
 
 My Socratic question: the cells did not change between the two examinations. Only the colour changed. Why does colour make such a difference?
 
-The answer is contrast. The human eye can distinguish colour and shade far more effectively than subtle differences in transparency or refractive index. A haematological stain is not just decoration - it is a tool that converts invisible differences in cell chemistry into visible differences in colour. Each stain binds to specific cellular components based on their chemical properties, so the pattern of colour reflects the composition of the cell.
+The answer is contrast. The human eye distinguishes colour and shade far more effectively than subtle differences in transparency. A haematological stain is not decoration - it is a tool that converts invisible differences in cell chemistry into visible differences in colour. Each stain binds to specific cellular components based on their chemical properties, so the pattern of colour is a map of the cell.
 
-Romanowsky stains - the family that includes Wright, Giemsa, May-Grünwald and Leishman - are the standard for blood films. They contain two dyes: one acidic (eosin) that stains basic components pink, and one basic (methylene blue and its derivatives) that stains acidic components blue-purple. The interaction of these two dyes produces the characteristic colour pattern of a stained blood film.
+Romanowsky stains - the family that includes Leishman, Giemsa, Wright, May-Grünwald and Field's - are the standard for routine blood films. They contain an acidic dye (eosin) that stains basic components pink and a basic dye (methylene blue and its oxidation products) that stains acidic components blue-purple. Together they produce the characteristic colours of a stained blood film.
 
-Crucial insight: haematological staining is the process of adding coloured dyes to blood cells so that their chemical and structural differences become visible under the microscope. Without staining, a blood film is almost useless. With staining, it becomes one of the most informative tests in medicine. Understanding why stains work - and how to use them correctly - is essential for every haematology laboratory.`
+Crucial insight: haematological staining is the process of adding coloured dyes to blood cells so that their chemical and structural differences become visible. Without staining, a film is nearly useless; with staining, it becomes one of the most informative tests in medicine. Romanowsky stains are the routine standard, but two other families - supravital and cytochemical stains - extend what staining can do.`
     },
     {
       q: "The chemistry of colour: how does a dye choose what to stain?",
-      body: `A stain is not a paint. It does not simply coat a cell with colour. It binds selectively to particular chemical groups in the cell, based on electrical charge and chemical affinity. Understanding this chemistry is the key to understanding why different structures stain differently.
+      body: `A stain is not paint. It does not simply coat a cell with colour. It binds selectively to particular chemical groups in the cell, based on electrical charge and chemical affinity. This chemistry is the key to why different structures stain differently.
 
 My Socratic question: red cells and white cell nuclei are both made of proteins and nucleic acids. Why does one stain pink and the other purple?
 
-The answer is that they have different net electrical charges and different chemical compositions, and stains are themselves charged molecules.
+The answer is that they have different net charges, and dyes are themselves charged molecules.
 
-Dyes are classified as either acidic or basic, based on the charge of the coloured ion:
+**Basic dyes** carry a positive charge and bind negatively charged (acidic) structures. The main basic dye in Romanowsky stains is **methylene blue** and its oxidation product **azure B**. These bind DNA and RNA, which are negatively charged because of their phosphate groups. That is why nuclei stain blue-purple.
 
-**Basic dyes** carry a positive charge and bind to negatively charged (acidic) structures. The main basic dye in Romanowsky stains is **methylene blue** and its oxidation product **azure B**. These bind to DNA and RNA, which are negatively charged because of their phosphate groups. That is why nuclei stain blue-purple.
+**Acidic dyes** carry a negative charge and bind positively charged (basic) structures. The main acidic dye is **eosin**. It binds haemoglobin in red cells and many cytoplasmic proteins, staining them pink.
 
-**Acidic dyes** carry a negative charge and bind to positively charged (basic) structures. The main acidic dye is **eosin**. It binds to positively charged proteins, including haemoglobin in red cells and many cytoplasmic proteins. That is why red cells and cytoplasm stain pink.
+**Neutral dyes** are complexes of an acidic and a basic dye that stain specific structures with a distinctive colour. The Romanowsky effect - the purple of chromatin and the mauve-pink of neutrophil granules - comes from the interaction of oxidised methylene blue (azure B) with eosin, forming a neutral dye complex.
 
-**Neutral dyes** are complexes of an acidic and a basic dye, and they stain specific structures with a distinctive colour. The Romanowsky effect - the characteristic purple of chromatin and the mauve-pink of neutrophil granules - comes from the interaction of oxidised methylene blue (azure B) with eosin, forming a neutral dye complex.
-
-Crucial insight: staining is a chemical reaction between charged dye molecules and charged cellular components. Acidic dyes stain basic structures pink; basic dyes stain acidic structures blue-purple. The pattern of colour you see is a map of the cell's chemistry - and every stain you use obeys this rule.`
+Crucial insight: staining is a chemical reaction between charged dyes and charged cellular components. Acidic dyes stain basic structures pink; basic dyes stain acidic structures blue-purple; neutral dye complexes produce the Romanowsky effect. Every stain you use obeys this rule, and every colour you see is a chemical signature.`
     },
     {
-      q: "What is a Romanowsky stain, and why is it the standard for blood films?",
-      body: `Romanowsky stains are the family of stains that dominate haematology. They are named after Dmitri Romanowsky, a Russian physician who in the 1890s discovered that a mixture of methylene blue and eosin produced a purple colour in certain cellular structures that neither dye produced alone. That discovery changed haematology forever.
+      q: "The Romanowsky family: Leishman, Giemsa, Wright, May-Grünwald, Field's. Why so many?",
+      body: `Romanowsky stains dominate haematology. They are named after Dmitri Romanowsky, who in the 1890s discovered that a mixture of methylene blue and eosin produced a purple colour that neither dye produced alone. That discovery changed haematology forever, and it gave rise to a family of related stains, each with its own character.
 
-My Socratic question: if individual dyes already stained cells, why was the combination of two dyes so important?
+My Socratic question: if all Romanowsky stains contain eosin and oxidised methylene blue, why would a laboratory keep several different ones?
 
-The answer is the Romanowsky effect. When methylene blue is oxidised (a process called polychroming), it forms azure B and other related compounds. When azure B combines with eosin, it forms a neutral dye complex that stains chromatin and certain granules a distinctive purple-mauve colour. This neutral dye effect cannot be produced by either dye alone, and it is what allows haematologists to distinguish different types of white cells, to see nuclear detail, and to identify parasites inside red cells.
-
-The main Romanowsky stains used in haematology:
-
-- **Wright stain** - the most common in many laboratories, especially in the United States. It is a mixture of eosin and oxidised methylene blue (azure B), dissolved in methanol.
-- **Giemsa stain** - widely used in Europe and in parasitology. It is similar in principle but contains additional azure compounds, giving a slightly different colour balance. It is particularly good for staining parasites and for demonstrating fine nuclear detail.
-- **May-Grünwald stain** - a Romanowsky stain that uses a different dye preparation. Often used in combination with Giemsa as May-Grünwald-Giemsa (MGG).
-- **Leishman stain** - a Romanowsky stain widely used in the UK and Commonwealth countries. It is a mixture of eosin and methylene blue dissolved in methanol.
-- **Field's stain** - a rapid Romanowsky stain used for thick films in malaria diagnosis.
-
-Crucial insight: the Romanowsky stains are the standard for blood films because they produce the Romanowsky effect - a neutral dye complex that reveals nuclear detail, granule colour and parasite morphology in a way no single dye can. The choice of which Romanowsky stain to use depends on local tradition, the specific test, and the diagnostic question being asked.`
-    },
-    {
-      q: "Wright, Giemsa, Leishman. What is actually in them, and what does each do?",
-      body: `Each Romanowsky stain is a variation on the same theme, but the details of their composition affect how cells look and which tests they are best suited for. Understanding these differences helps you choose the right stain for the right situation.
-
-My Socratic question: if all Romanowsky stains contain eosin and methylene blue derivatives, why do laboratories use different ones?
-
-The answer is that the exact composition, the pH of the working solution, the method of preparation and the staining time all affect the final colour balance and cellular detail.
-
-**Wright stain:**
-- Composition: eosin Y and oxidised methylene blue (azure B) in methanol.
-- Working pH: usually around 6.4 to 6.8.
-- Uses: routine blood films, differential white cell counts, platelet morphology.
-- Advantages: simple, fast, good nuclear and cytoplasmic detail; widely used in automated stainers.
-
-**Giemsa stain:**
-- Composition: eosin, methylene blue, and additional azure compounds (azure A, azure B) plus glycerol and methanol.
-- Working pH: usually around 6.8 to 7.2 (buffered).
-- Uses: blood films, bone marrow films, thick films for malaria, and for detecting parasites, especially intracellular organisms.
-- Advantages: excellent for parasites, good chromatin detail, stable working solution, can be used for both thin and thick films.
+The answer is that the exact composition, the working pH, the method of preparation and the staining time all affect the final colour balance and cellular detail. Different stains are better for different purposes.
 
 **Leishman stain:**
 - Composition: eosin and methylene blue in methanol.
-- Working pH: usually around 6.8.
-- Uses: routine blood films, differential counts, bone marrow.
-- Advantages: simple to prepare, good overall staining, popular in the UK and Commonwealth.
+- Working pH: usually buffered around 6.8.
+- Uses: routine blood films, differential white cell counts, bone marrow films.
+- Character: simple to prepare, good overall staining, popular in the UK and Commonwealth. A reliable all-rounder.
+
+**Giemsa stain:**
+- Composition: eosin, methylene blue, and additional azure compounds (azure A, azure B), plus glycerol and methanol.
+- Working pH: usually buffered around 6.8 to 7.2.
+- Uses: blood films, bone marrow, thick films for malaria, and detection of parasites, especially intracellular organisms.
+- Character: excellent chromatin detail, good for parasites, works well on both thin and thick films. The stain of choice when parasites are suspected.
+
+**Wright stain:**
+- Composition: eosin Y and oxidised methylene blue (azure B) in methanol.
+- Working pH: usually buffered around 6.4 to 6.8.
+- Uses: routine blood films, differential counts, platelet morphology.
+- Character: simple, fast, widely used in automated stainers, especially in the United States.
 
 **May-Grünwald stain:**
-- Composition: eosin and methylene blue in methanol, similar to Wright but prepared differently.
-- Uses: often combined with Giemsa as MGG for bone marrow and haematology.
-- Advantages: excellent cellular detail, widely used in Europe.
+- Composition: eosin and methylene blue in methanol, prepared differently from Wright.
+- Uses: often combined with Giemsa as May-Grünwald-Giemsa (MGG) for bone marrow and haematology.
+- Character: excellent cellular detail, a European standard.
 
 **Field's stain:**
 - Composition: two solutions - Field's A (methylene blue) and Field's B (eosin).
-- Uses: rapid staining of thick films for malaria.
-- Advantages: very fast (seconds), useful in field conditions.
+- Uses: rapid staining of thick films for malaria, especially in field conditions.
+- Character: very fast (seconds), useful when speed matters more than fine detail.
 
-Crucial insight: the Romanowsky stains differ in the exact composition of dyes, the pH, and the method of use. Wright and Leishman are the routine workhorses; Giemsa is preferred for parasites and bone marrow; May-Grünwald-Giemsa is a European standard; Field's stain is a rapid field method. Choosing the right stain for the right test is part of good laboratory practice.`
+Crucial insight: the Romanowsky family shares one chemistry but is not interchangeable. Leishman and Wright are the routine workhorses; Giemsa is the stain of choice for parasites and bone marrow; May-Grünwald-Giemsa is the European standard; Field's stain is the rapid field method. Choosing the right Romanowsky stain for the right test is part of good laboratory practice.`
+    },
+    {
+      q: "pH-dependent buffering: why does a small pH change ruin the colour?",
+      body: `A Romanowsky stain is not simply a bottle of dye. It is a dye that must be diluted with a buffer at a specific pH before it will stain correctly. If the buffer is wrong, the film is wrong - even if the stain itself is perfect.
+
+My Socratic question: if the stain already contains all the dyes it needs, why does the pH of the diluting solution matter so much?
+
+The answer is that staining is a chemical reaction, and the charge of the cellular components and the dye molecules depends on pH. Small shifts in pH change which structures bind which dye, and the entire colour balance shifts with them.
+
+**The pH-dependent behaviour of a Romanowsky stain:**
+
+- **Acidic buffer (pH below 6.4).** The environment is more positively charged. Red cells bind more eosin and appear too pink; nuclei bind less basic dye and appear pale and washed out. The overall film looks too red.
+- **Optimal buffer (pH 6.4 to 6.8 for Leishman and Wright; 6.8 to 7.2 for Giemsa).** The charges are balanced, and every cell type stains in its correct colour: red cells pink, nuclei blue-purple, granules their characteristic colours.
+- **Alkaline buffer (pH above 7.0).** The environment is more negatively charged. Red cells bind less eosin and appear blue-grey; nuclei bind more basic dye and appear too dark. The overall film looks too blue.
+
+**Why the pH matters clinically:**
+
+- A film that is too pink may cause red cell inclusions, parasites and platelet granules to be missed.
+- A film that is too blue may obscure nuclear detail, making it difficult to identify white cells or to see chromatin patterns.
+- The pH optimum differs slightly between stains: Leishman and Wright usually work best at pH 6.4 to 6.8, while Giemsa works best at pH 6.8 to 7.2.
+
+**Practical implications:**
+
+- The buffer is usually a phosphate buffer, prepared fresh or commercially.
+- The pH should be checked daily or with each new batch.
+- The buffer should be stored correctly and not contaminated.
+- If the pH is wrong, the film is stained but unreliable.
+
+Crucial insight: pH-dependent buffering is not an optional technical detail - it is the foundation of correct Romanowsky staining. A perfectly prepared stain and a perfectly made film can still produce a useless result if the buffer pH is wrong. Checking and maintaining the buffer is a daily discipline of the haematology laboratory.`
+    },
+    {
+      q: "Supravital stains: staining living cells. How can that work?",
+      body: `All the stains discussed so far fix the cells before staining. Fixation kills the cells, preserves their structure, and allows them to be stained permanently. But what if you wanted to see how living cells behave - how they move, how their organelles are arranged, how they respond to a stimulus? Fixed cells cannot show you any of that. That is what supravital staining is for.
+
+My Socratic question: if a cell must be alive to show living behaviour, how can you add a dye to it without killing it?
+
+The answer is that supravital stains use dyes that are taken up by living cells without killing them, allowing the cells to be examined while still alive. The word supravital means "above life" - the stain is applied to the living cell in a way that preserves its life.
+
+**The principle of supravital staining:**
+
+- A supravital dye is a non-toxic dye that living cells can take up without being fixed first.
+- The dye is usually applied to fresh, unfixed cells - often a drop of blood or a smear of living tissue.
+- The dye is taken up by specific cellular structures (for example, mitochondria, lysosomes or reticulum) based on chemical affinity.
+- The living cell continues to function while the dye is present, allowing dynamic processes to be observed.
+- Because the cells are not fixed, they are examined quickly - supravital preparations are not permanent.
+
+**The main supravital stains used in haematology:**
+
+- **New methylene blue (also called brilliant cresyl blue).** A supravital dye that stains **reticulum** in red cells. Reticulum is a network of residual RNA and organelles in immature red cells (reticulocytes). When blood is incubated with new methylene blue, the reticulum is stained as a blue network visible within the red cell. This is the basis of the **reticulocyte count**, one of the most important tests of bone marrow function.
+
+- **Janus green B.** A supravital dye that stains mitochondria. It can be combined with neutral red (which stains lysosomes and vacuoles) to examine the internal organelles of living white cells.
+
+- **Neutral red.** A supravital dye that stains lysosomes and vacuoles, useful for examining the cytoplasm of living cells.
+
+**What supravital stains can show:**
+
+- The presence of reticulum in reticulocytes, allowing their identification and counting.
+- The internal organelles of living white cells.
+- The dynamic behaviour of cells, including movement and phagocytosis.
+- Some parasites and inclusions that are not visible in fixed films.
+
+Crucial insight: supravital stains are a distinct family because they are applied to living, unfixed cells. They are used when the diagnostic question is about living-cell behaviour or about structures (like reticulum) that are destroyed by fixation. The reticulocyte count, one of the most important haematological tests, is a supravital stain technique.`
+    },
+    {
+      q: "Cytochemical stains: staining the chemistry of the cell. Why would you need that?",
+      body: `A Romanowsky stain shows you the shape of a cell and its nucleus, cytoplasm and granules. But it does not tell you what enzymes the cell contains, what lipids it stores, what carbohydrates it produces, or what proteins it expresses. Cytochemical stains do - and in certain diagnostic situations, they are essential.
+
+My Socratic question: if a Romanowsky stain already shows you the cell's appearance, why would you need a stain that targets specific chemicals?
+
+The answer is that cell appearance is not always enough. Two cells can look similar under a Romanowsky stain but be very different in their origin, their function, and their response to treatment. Cytochemical stains reveal those differences by staining specific cellular components according to their chemical composition.
+
+**The principle of cytochemical staining:**
+
+- A cytochemical stain targets a specific chemical substance or enzyme in the cell.
+- The stain reaction is usually based on a specific chemical reaction, an enzyme-substrate reaction, or an affinity for a particular chemical group.
+- The result is a coloured product that marks the location of the substance within the cell.
+- Cytochemical stains are used mainly on bone marrow, leukaemia cells and other specialised specimens.
+
+**The main cytochemical stains used in haematology:**
+
+- **Myeloperoxidase (MPO).** Detects the enzyme myeloperoxidase, present in myeloid cells (especially neutrophils and their precursors). Stains myeloid blasts positively. Used to distinguish myeloid leukaemia from lymphoid leukaemia.
+
+- **Sudan Black B.** Detects lipids, especially in myeloid granules. Similar purpose to MPO. Stains myeloid blasts positively.
+
+- **Periodic acid-Schiff (PAS).** Detects glycogen and mucosubstances, staining them magenta. Used to identify glycogen storage diseases and to help diagnose certain leukaemias (lymphoblasts may show PAS-positive granules).
+
+- **Leukocyte alkaline phosphatase (LAP).** Detects the enzyme alkaline phosphatase in neutrophils. LAP is low in chronic myeloid leukaemia and high in reactive leucocytosis, making it useful for distinguishing the two.
+
+- **Acid phosphatase.** Detects acid phosphatase. The tartrate-resistant form (TRAP) is characteristic of hairy cell leukaemia.
+
+- **Perls' Prussian blue.** Detects iron, staining haemosiderin and ferritin blue. Used to diagnose iron deficiency and iron overload, and to identify sideroblasts in bone marrow.
+
+- **Reticulin stain.** Detects reticulin fibres in bone marrow. Used to assess marrow fibrosis.
+
+- **Congo red.** Detects amyloid, used to diagnose amyloidosis.
+
+**What cytochemical stains can show:**
+
+- The lineage of a leukaemia (myeloid vs lymphoid vs other).
+- The presence of specific enzymes or substances, indicating cell function or dysfunction.
+- Storage diseases (glycogen, iron, amyloid).
+- Some infections and parasites.
+
+Crucial insight: cytochemical stains reveal the chemistry of the cell, not just its shape. They are essential for diagnosing and classifying leukaemias, for identifying storage diseases, and for investigating functional disorders. Romanowsky stains show you what a cell looks like; cytochemical stains show you what it does.`
     },
     {
       q: "Staining technique: how do you actually stain a blood film?",
-      body: `A stain is only as good as the technique used to apply it. Poor technique produces poor staining, and poor staining produces misleading results. Understanding the steps of staining - and the reasons behind each - is essential for producing diagnostic-quality films.
+      body: `A stain is only as good as the technique used to apply it. Poor technique produces poor staining, and poor staining produces misleading results. Understanding the steps - and the reasons behind each - is essential for producing diagnostic-quality films.
 
 My Socratic question: you have a blood film, a bottle of stain, and a microscope. What could possibly go wrong?
 
-The answer is that several things can go wrong - and each produces a recognisable artefact.
+The answer is that several things can go wrong, and each produces a recognisable artefact.
 
-**The basic Romanowsky staining procedure (for Wright or Leishman stain):**
+**The basic Romanowsky staining procedure (for Leishman or Wright stain):**
 
-1. **Fixation.** The air-dried blood film is covered with undiluted stain (which contains methanol). The methanol fixes the cells - it denatures proteins and preserves cell structure. Fixation takes about 30 seconds to 1 minute.
-2. **Staining.** A buffer solution (usually phosphate buffer at pH 6.4 to 6.8) is added to dilute the stain on the slide. The diluted stain is left on the film for a defined time (typically 5 to 15 minutes for Wright or Leishman). During this time, the dyes bind to cellular components.
-3. **Washing.** The slide is rinsed with buffer or distilled water to remove excess stain. Washing should be gentle to avoid damaging the film.
-4. **Drying.** The slide is air-dried or blotted dry (with care) and examined under the microscope.
+- **Fixation.** The air-dried blood film is covered with undiluted stain, which contains methanol. The methanol fixes the cells, preserving their structure. Fixation takes about 30 seconds to 1 minute.
+- **Staining.** A buffer solution (usually phosphate buffer at pH 6.4 to 6.8) is added to dilute the stain on the slide. The diluted stain is left on the film for a defined time (typically 5 to 15 minutes for Leishman or Wright). During this time, the dyes bind to cellular components.
+- **Washing.** The slide is rinsed with buffer or distilled water to remove excess stain. Washing should be gentle to avoid damaging the film.
+- **Drying.** The slide is air-dried or blotted dry and examined.
 
 **Key variables that affect staining:**
 
-- **pH of the buffer.** If the buffer is too acidic (pH below 6.4), red cells stain too pink and white cell nuclei stain pale. If too alkaline (pH above 7.0), red cells stain blue-grey and white cell nuclei stain too dark. The correct pH is critical.
-- **Staining time.** Too short and the stain is too pale; too long and it is too dark or produces precipitate.
+- **pH of the buffer.** Too acidic and the film is too pink; too alkaline and it is too blue.
+- **Staining time.** Too short and the film is too pale; too long and it is too dark or produces precipitate.
 - **Concentration of dye.** Old or diluted stains may give poor results.
 - **Quality of the blood film.** Thick films stain differently from thin films; a poor film cannot be rescued by good staining.
 
-Crucial insight: staining is a controlled chemical reaction with specific conditions - pH, time, concentration, and temperature. Every variable matters, and errors produce recognisable artefacts. A laboratory scientist who understands the process can troubleshoot problems - a pink film, a blue film, a precipitate, pale nuclei - and correct them.`
+**The procedure for Giemsa staining (used in parasitology and bone marrow):**
+
+- The film is air-dried and fixed with methanol (for thin films) or left unfixed (for thick films).
+- The diluted Giemsa stain is applied for a defined time, often longer than for Wright or Leishman.
+- The slide is washed and dried.
+- Giemsa is preferred for parasites and for cellular detail.
+
+**The procedure for supravital staining (e.g. reticulocyte count):**
+
+- A drop of blood is mixed with an equal volume of supravital stain (e.g. new methylene blue).
+- The mixture is incubated for a defined time (usually 15 to 30 minutes) to allow the dye to be taken up by living cells.
+- A smear is made from the mixture and examined under the microscope.
+- The dye stains reticulum in reticulocytes as a blue network.
+
+**The procedure for cytochemical staining:**
+
+- A smear of bone marrow or blood is prepared and air-dried.
+- The slide is fixed with a fixative appropriate for the specific stain (some stains require specific fixatives).
+- The cytochemical reagent is applied and incubated.
+- The slide is washed, counterstained (if required), and examined.
+
+Crucial insight: each family of stains has its own protocol, its own timing, its own fixatives and its own controls. Understanding the technique behind each family allows you to produce accurate, reproducible results - and to troubleshoot when something goes wrong.`
     },
     {
-      q: "The colours of a well-stained film: what do they tell you?",
-      body: `Look at a well-stained blood film and you will see a pattern of colours that is both beautiful and informative. Every colour has a meaning. Learning to read those colours is one of the central skills of haematology.
+      q: "Sources of error and quality control: how do you ensure the stain is reliable?",
+      body: `Staining is a controlled chemical reaction, and like any reaction it is sensitive to conditions. Small deviations in pH, timing, temperature, or reagent quality can produce films that are stained but unreliable. Recognising these errors and preventing them is what quality control is for.
 
-My Socratic question: a red cell is pink, a neutrophil nucleus is dark purple, a lymphocyte nucleus is deep blue, and an eosinophil granule is bright orange-red. What does each colour tell you about the cell?
+My Socratic question: if the stain is working perfectly today, will it still work perfectly next week?
 
-The answer is that colour reflects the chemical composition of each structure, and the pattern of colours identifies the cell.
+The answer is not necessarily - stains age, buffers drift, and technique varies. Quality control is the discipline of checking the system regularly so that errors are caught before they affect patient results.
 
-**The standard colours of a well-stained Romanowsky blood film:**
+**Common sources of error in Romanowsky staining:**
 
-- **Red cells:** pink to salmon. Haemoglobin is a basic protein, so it binds eosin. If red cells are too pink, the buffer is too acidic; if too grey-blue, the buffer is too alkaline.
-- **Neutrophil nucleus:** dark purple. Chromatin is acidic (DNA), so it binds the basic dye. The purple colour comes from the Romanowsky effect.
-- **Neutrophil cytoplasm:** pale pink to lilac, with fine granules.
-- **Lymphocyte nucleus:** deep blue-purple, with clumped chromatin. Lymphocyte cytoplasm is pale blue, sometimes with a few azurophilic granules.
-- **Monocyte nucleus:** kidney-shaped or folded, purple-blue. Cytoplasm is grey-blue, often with fine granules and vacuoles.
-- **Eosinophil granules:** bright orange-red. Eosinophil granules contain basic proteins, so they bind eosin strongly.
-- **Basophil granules:** dark purple to black. Basophil granules contain heparin and histamine, which stain with basic dyes.
-- **Platelets:** violet, with fine granules.
-- **Nucleoli:** pale blue, visible in immature cells.
+- **Incorrect buffer pH.** Too acidic = film too pink; too alkaline = film too blue.
+- **Contaminated or aged stain.** Precipitate, dye crystals, or faded staining.
+- **Insufficient or excessive staining time.** Pale or dark films.
+- **Poor-quality blood film.** Thick films stain unevenly; thin films may not take up enough stain.
+- **Water artefact.** Incomplete drying before staining, or poor draining after washing.
+- **Precipitate.** Deposits of dye on the film, often from contaminated stain or inadequate washing.
+- **Fading.** Films stored for long periods may fade, especially if exposed to light or heat.
 
-Crucial insight: the colours of a well-stained film are not arbitrary. Each colour is a chemical signature. Learning to read those colours allows you to identify cells, to distinguish normal from abnormal, and to spot subtle changes that might indicate disease. Every haematologist and laboratory scientist develops this colour sense through practice - and every diagnostic decision depends on it.`
+**Common sources of error in supravital staining:**
+
+- **Incorrect incubation time.** Too short = incomplete staining of reticulum; too long = over-staining.
+- **Contaminated dye.** Precipitate or bacterial growth.
+- **Poor mixing.** Incomplete mixing of blood and dye gives uneven results.
+- **Delay in examination.** Supravital preparations are not permanent; delay reduces the reliability of the result.
+
+**Common sources of error in cytochemical staining:**
+
+- **Incorrect fixative.** Some stains require specific fixatives (e.g. formalin-acetone, methanol, or others).
+- **Incorrect incubation temperature or time.** Enzyme reactions are sensitive to both.
+- **Contaminated reagents.** Impurities or degradation of substrates.
+- **Failure to include controls.** Without controls, results cannot be validated.
+
+**Quality control measures:**
+
+- **Daily checks.** Stain a known control slide with each batch and inspect it for correct colours and detail.
+- **Buffer pH.** Check daily or with each new batch.
+- **Stain inspection.** Look for precipitate, dye crystals, or contamination.
+- **Reagent storage.** Store stains and buffers correctly, protected from light and heat.
+- **Controls.** Include positive and negative controls for cytochemical stains.
+- **Documentation.** Record all quality control results and actions taken.
+
+Crucial insight: quality control is not an optional extra - it is the foundation of reliable staining. A laboratory that does not check its staining cannot trust its results. The daily control slide, the buffer pH check, the inspection of the stain, and the use of controls in cytochemical staining are all part of professional laboratory practice.`
     },
     {
-      q: "Special stains: when Romanowsky staining is not enough.",
-      body: `Romanowsky stains are the routine standard for blood films, but they are not always sufficient. For certain diagnoses - particularly in bone marrow, in suspected infections, and in specific haematological conditions - a special stain is needed. Each special stain targets a specific component and answers a specific question.
-
-My Socratic question: if Romanowsky staining shows you the cells, why would you ever need a different stain?
-
-The answer is that Romanowsky staining shows cell morphology, but many diagnoses depend on detecting specific chemical substances inside cells. Special stains target those substances selectively.
-
-**The main special stains used in haematology:**
-
-- **Perls' Prussian blue stain** - detects iron. It stains haemosiderin and ferritin blue. Used to diagnose iron deficiency and iron overload, and to identify sideroblasts in bone marrow.
-- **Periodic acid-Schiff (PAS) stain** - detects glycogen and mucosubstances. It stains glycogen magenta. Used to identify glycogen storage diseases, and to help diagnose certain leukaemias (where lymphoblasts may contain PAS-positive granules).
-- **Myeloperoxidase (MPO) stain** - detects the enzyme myeloperoxidase, found in myeloid cells. It stains myeloid blasts positively. Used to distinguish myeloid from lymphoid leukaemias.
-- **Sudan Black B stain** - detects lipids. It stains lipid-containing granules black. Used for similar purposes to MPO.
-- **Leukocyte alkaline phosphatase (LAP) stain** - detects the enzyme alkaline phosphatase in neutrophils. Used to distinguish chronic myeloid leukaemia (low LAP) from a reactive leucocytosis (high LAP).
-- **Acid phosphatase stain** - detects acid phosphatase. Used in the diagnosis of hairy cell leukaemia (tartrate-resistant acid phosphatase, TRAP).
-- **Reticulin stain** - detects reticulin fibres in bone marrow. Used to assess marrow fibrosis.
-- **Congo red stain** - detects amyloid. Used to diagnose amyloidosis.
-- **Gram stain, Ziehl-Neelsen stain, Giemsa stain for parasites** - used to identify bacteria, mycobacteria, and parasites in blood and bone marrow.
-- **Perls' and iron stains** for detecting iron in bone marrow.
-
-Crucial insight: special stains are the specific tools of haematological diagnosis. Romanowsky staining tells you what the cells look like; special stains tell you what they contain. When you suspect a leukaemia, an infection, an iron disorder, or a storage disease, the right special stain can confirm the diagnosis. Knowing when to use each one - and what it can and cannot show - is part of the expertise of the haematology laboratory.`
-    },
-    {
-      q: "Automated staining: how has technology changed the laboratory?",
+      q: "Automated staining: has the technology changed the laboratory?",
       body: `In the past, every blood film was stained by hand - a labour-intensive process requiring careful timing, precise pH control, and a steady hand. Today, most laboratories use automated stainers, which offer consistency, speed and reproducibility that manual staining cannot match.
 
 My Socratic question: if manual staining works, why switch to automation?
@@ -29045,591 +29148,152 @@ The answer is consistency. Manual staining depends on the skill of the individua
 
 **The main types of automated stainers:**
 
-- **Dip-and-dry stainers** - the slide is dipped into successive baths of fixative, stain, buffer and rinse, then dried. Common in many routine laboratories.
-- **Flat-bed stainers** - the slide lies flat and the stain is applied by pipette or spray. Good for consistency and for small batches.
-- **Spray stainers** - the stain is sprayed onto the slide in a controlled volume. Fast, but uses more reagent.
-- **Continuous-flow stainers** - slides move on a conveyor through a series of staining stations. High throughput.
+- **Dip-and-dry stainers.** The slide is dipped into successive baths of fixative, stain, buffer and rinse, then dried. Common in routine laboratories.
+- **Flat-bed stainers.** The slide lies flat and the stain is applied by pipette or spray. Good for consistency and for small batches.
+- **Spray stainers.** The stain is sprayed onto the slide in a controlled volume. Fast, but uses more reagent.
+- **Continuous-flow stainers.** Slides move on a conveyor through a series of staining stations. High throughput.
 
 **Advantages of automated staining:**
-- Reproducibility - every slide is stained the same way
-- Consistency - less affected by individual technique
-- Speed - higher throughput, especially for large laboratories
-- Safety - reduced handling of stains and reagents
-- Standardisation - easier to comply with quality standards
+
+- Reproducibility - every slide is stained the same way.
+- Consistency - less affected by individual technique.
+- Speed - higher throughput, especially in large laboratories.
+- Safety - reduced handling of stains and reagents.
+- Standardisation - easier to comply with quality standards.
 
 **Limitations:**
-- Cost - automated stainers and reagents are expensive
-- Less flexibility - harder to adjust for unusual samples or special stains
-- Maintenance - requires regular servicing and quality control
-- Reagent compatibility - not all stains work well in all machines
 
-Crucial insight: automated staining has transformed the haematology laboratory by making staining consistent, fast and reproducible. But automation is not a substitute for understanding - the laboratory scientist must still know the principles of staining, be able to troubleshoot problems, and recognise when a stained slide is not right. The machine is a tool; the knowledge is what makes it useful.`
-    },
-    {
-      q: "Quality control in staining: how do you know the stain is working?",
-      body: `A stained blood film is only useful if the staining is correct. A pink film, a blue film, a precipitate, a film that fades - these are all signs that something has gone wrong. Quality control in staining is the process of ensuring that every film is stained correctly and that the results are reliable.
+- Cost - automated stainers and reagents are expensive.
+- Less flexibility - harder to adjust for unusual samples or special stains.
+- Maintenance - requires regular servicing and quality control.
+- Reagent compatibility - not all stains work well in all machines.
 
-My Socratic question: how would you know that a stain is working properly?
+**The automated stainer in context:**
 
-The answer is by checking known standards and by inspecting the stained film for the characteristic features of good staining.
+- It is a tool, not a replacement for knowledge.
+- The laboratory scientist must still understand the principles of staining, be able to troubleshoot problems, and recognise when a stained slide is not right.
+- Quality control remains essential - automated stainers can drift, and their output must be checked.
+- Cytochemical and supravital stains are often still performed manually, because they require specific handling and controls.
 
-**Quality control in staining:**
-
-- **Daily checks.** A control slide - a slide of known normal blood - is stained with each batch or each day. The control is examined to ensure that the colours are correct, that the nuclear and cytoplasmic detail is clear, and that there is no precipitate or contamination.
-- **Checking the stain itself.** The stain is inspected for sediment, precipitate, or contamination. The pH of the buffer is checked periodically (every day if possible). The staining times are checked against the protocol.
-- **Checking the stained film.** A well-stained film should show:
-  - Red cells: uniformly pink-salmon, without blue or grey tinge
-  - Neutrophil nuclei: dark purple, with clear chromatin detail
-  - Lymphocyte nuclei: deep blue-purple
-  - Platelets: clearly visible, violet
-  - No precipitate or stain deposit
-  - No water artefact (cells should not be lysed)
-  - Background clear, without excessive dye
-
-**Common problems and their causes:**
-
-- **Too pink (acidic).** The buffer is too acidic, or the stain is too old. Correct by adjusting the buffer pH.
-- **Too blue (alkaline).** The buffer is too alkaline. Correct by adjusting the buffer pH.
-- **Precipitate.** The stain is contaminated, or the staining time is too long, or the slide was not adequately washed.
-- **Pale staining.** The stain is too old, or the staining time is too short, or the film is too thick.
-- **Dark staining.** The staining time is too long, or the stain is too concentrated.
-- **Water artefact.** The slide was not properly dried before staining, or the washing water was not properly drained.
-
-Crucial insight: quality control is not an optional extra - it is the foundation of reliable staining. A laboratory that does not check its staining cannot trust its results. The daily control slide, the inspection of the stain, and the recognition of common problems are all part of the professional practice of haematology.`
+Crucial insight: automated staining has transformed the haematology laboratory by making staining consistent, fast and reproducible. But automation is not a substitute for understanding - the laboratory scientist must still know the principles, be able to troubleshoot, and recognise when a stained slide is not fit for diagnostic use.`
     },
     {
       q: "Consolidation and your final test.",
       body: `Your cognitive map for haematological stains, in five lines.
 
-**The purpose:** haematological stains add colour to blood cells so that their chemical and structural differences become visible under the microscope. Without staining, a blood film is almost useless.
+**The three families:** Romanowsky stains (routine morphology - Leishman, Giemsa, Wright, May-Grünwald, Field's), supravital stains (living cells - new methylene blue, Janus green B, neutral red), and cytochemical stains (cell chemistry - MPO, Sudan Black B, PAS, LAP, acid phosphatase, Perls', reticulin, Congo red).
 
-**The chemistry:** acidic dyes (eosin) stain basic structures pink; basic dyes (methylene blue and its derivatives) stain acidic structures blue-purple. The Romanowsky effect - a neutral dye complex - produces the characteristic purple of chromatin and the mauve-pink of neutrophil granules.
+**The chemistry of colour:** acidic dyes (eosin) stain basic structures pink; basic dyes (methylene blue derivatives) stain acidic structures blue-purple; neutral dye complexes produce the Romanowsky effect (purple chromatin, mauve-pink granules).
 
-**The Romanowsky stains:** Wright, Giemsa, Leishman, May-Grünwald and Field's stain. Each is a mixture of eosin and oxidised methylene blue derivatives, with variations in composition, pH and application. Wright and Leishman are routine workhorses; Giemsa is preferred for parasites and bone marrow; Field's is rapid for thick films.
+**Romanowsky technique and pH:** fixation with methanol, staining with diluted dye in buffer at controlled pH (6.4-6.8 for Leishman/Wright; 6.8-7.2 for Giemsa), washing and drying. pH is critical - too acidic = too pink, too alkaline = too blue.
 
-**The technique:** fixation, staining in buffer at controlled pH, washing and drying. Key variables are pH of the buffer, staining time, and stain quality. Errors produce recognisable artefacts.
+**Supravital and cytochemical technique:** supravital dyes are applied to living, unfixed cells (e.g. reticulocyte count with new methylene blue); cytochemical stains target specific enzymes or substances and require appropriate fixatives and controls.
 
-**Special stains and quality control:** Perls', PAS, MPO, Sudan Black, LAP, acid phosphatase, reticulin, Congo red and others answer specific diagnostic questions. Quality control ensures every stain is correct, using control slides, checks on the stain and buffer, and inspection of the stained film.
+**Quality control and automation:** daily control slides, buffer pH checks, stain inspection, and controls for cytochemical stains. Automated stainers provide consistency and speed but do not replace understanding or quality control.
 
-Now your final test. A laboratory receives a blood film from a patient with suspected malaria. The film is stained with Giemsa stain. A laboratory scientist examines the film and finds that the red cells are pink and the white cells are well stained, but the parasites are difficult to see clearly.
+Now your final test. A laboratory receives a bone marrow aspirate from a patient with suspected acute leukaemia. The laboratory scientist prepares several slides for different stains.
 
-Question one: why is Giemsa stain preferred over Wright stain for this case?
-Question two: what could be wrong with the staining technique that makes the parasites difficult to see?
-Question three: what are the key quality control checks that should be performed to ensure the stain is working correctly?
+Question one: which stains would be used to distinguish myeloid leukaemia from lymphoid leukaemia, and why?
+Question two: what role do Romanowsky stains play in this diagnostic process, and why are they not sufficient on their own?
+Question three: what quality control measures should be in place for each type of stain used in this case?
 
 Work them through before reading on.
 
-My answers. One: Giemsa stain is preferred for malaria because it contains additional azure compounds that give better contrast for intracellular parasites, particularly in thick films. It is also more tolerant of pH variation and produces clearer nuclear detail, making it easier to distinguish parasite nuclei from red cell background and from other inclusions. Two: the parasites may be difficult to see because the pH of the buffer is incorrect (too acidic or too alkaline), or the staining time is too short, or the film is too thick or too thin, or the stain is old. The most common cause is incorrect pH - Giemsa works best at pH 6.8 to 7.2, and small deviations affect parasite staining. Three: the key quality control checks are: stain a known positive control slide with each batch; check the pH of the buffer; inspect the stain for precipitate or contamination; check the staining time against the protocol; inspect the stained film for the characteristic colours (pink red cells, blue-purple nuclei, clearly visible parasites). If the control slide is not correct, the stain and all slides stained with it are unreliable.
+My answers. One: to distinguish myeloid from lymphoid leukaemia, the laboratory would use cytochemical stains - specifically **myeloperoxidase (MPO)** and **Sudan Black B**. MPO and Sudan Black B stain myeloid blasts positively, so a positive result supports myeloid leukaemia. A negative result for both, combined with a positive **PAS** stain (which may be seen in lymphoblasts), supports lymphoid leukaemia. These stains target specific chemicals (enzymes and lipids) that differ between the two lineages, providing information that morphology alone cannot. Two: Romanowsky stains (Leishman, Giemsa or Wright) are essential for examining the morphology of the cells - the size, nuclear shape, chromatin pattern, and cytoplasmic features of the blasts. They provide the first indication that the marrow is abnormal and suggest the diagnosis. However, Romanowsky stains cannot identify the lineage of the blasts reliably - two leukaemias that look similar under Romanowsky staining may be very different in origin and treatment. Cytochemical stains fill that gap. Three: quality control for each stain type includes: for Romanowsky stains, daily staining of a control slide, checking the pH of the buffer, inspecting the stain for precipitate or contamination, and documenting results. For cytochemical stains, the appropriate fixative must be used; positive and negative controls must be included with each batch; incubation times and temperatures must be controlled; reagents must be stored correctly; and results must be documented and reviewed. If any control fails, the results are not reported, and the test is repeated.
 
-If those came cleanly, you understand the principles and practice of haematological staining - from the chemistry of dyes to the technique of staining, from the colour pattern of a well-stained film to the quality control that ensures it. This is the foundation for every blood film you will ever examine in the laboratory.`
+If those came cleanly, you understand the three families of haematological stains, the chemistry that makes them work, the techniques that make them reliable, and the quality control that makes them trustworthy. This is the foundation for every stained film and every special stain you will ever perform in the laboratory.`
     }
   ],
 
   theory: [
     { q: "Define a haematological stain and explain its purpose.", a: "A haematological stain is a coloured dye (or mixture of dyes) applied to blood cells to make their chemical and structural differences visible under the microscope. Its purpose is to provide contrast, allowing identification of cell types, nuclear detail, cytoplasmic granules, and intracellular organisms." },
-    { q: "Explain the chemical basis of staining - why acidic and basic dyes stain different structures.", a: "Dyes are charged molecules. Acidic dyes (such as eosin) carry a negative charge and bind to positively charged (basic) structures like haemoglobin and cytoplasmic proteins, staining them pink. Basic dyes (such as methylene blue and its derivatives) carry a positive charge and bind to negatively charged (acidic) structures like DNA and RNA, staining them blue-purple." },
-    { q: "What is the Romanowsky effect and why is it important?", a: "The Romanowsky effect is the purple-mauve colour produced when oxidised methylene blue (azure B) combines with eosin to form a neutral dye complex. This colour cannot be produced by either dye alone. It is important because it allows chromatin detail, granule colour, and parasite morphology to be seen clearly, and it is the defining feature of Romanowsky stains." },
-    { q: "Name the main Romanowsky stains and state one use for each.", a: "Wright stain - routine blood films, differential counts. Giemsa stain - blood films, bone marrow, malaria and other parasites. Leishman stain - routine blood films, bone marrow. May-Grünwald stain - often used with Giemsa (MGG) for bone marrow. Field's stain - rapid staining of thick films for malaria." },
-    { q: "Describe the basic procedure for staining a blood film with a Romanowsky stain.", a: "Air-dry the blood film. Cover with undiluted stain (containing methanol) to fix the cells. Add buffer (pH 6.4-6.8) to dilute the stain. Leave for a defined time (typically 5-15 minutes). Rinse with buffer or distilled water. Dry and examine." },
-    { q: "State the key variables that affect the quality of a Romanowsky stain.", a: "The pH of the buffer (too acidic = too pink, too alkaline = too blue), the staining time (too short = pale, too long = dark or precipitate), the quality and freshness of the stain, the thickness of the blood film, and the temperature of the staining solutions." },
-    { q: "Explain why red cells and white cell nuclei stain different colours in a Romanowsky stain.", a: "Red cells contain haemoglobin, which is a basic protein and therefore binds the acidic dye eosin, staining pink. White cell nuclei contain DNA and RNA, which are acidic and therefore bind the basic dye (oxidised methylene blue/azure B), staining blue-purple. The Romanowsky effect enhances the purple colour of chromatin." },
-    { q: "List five special stains used in haematology and state what each detects.", a: "Perls' Prussian blue - iron. PAS - glycogen and mucosubstances. Myeloperoxidase (MPO) - the enzyme myeloperoxidase in myeloid cells. Sudan Black B - lipids. Leukocyte alkaline phosphatase (LAP) - alkaline phosphatase in neutrophils. Acid phosphatase - acid phosphatase (including tartrate-resistant acid phosphatase for hairy cell leukaemia)." },
-    { q: "Describe the advantages and limitations of automated staining.", a: "Advantages: reproducibility, consistency, speed, safety, standardisation. Limitations: cost, reduced flexibility, need for maintenance, and reagent compatibility issues. Automated staining does not replace the need for understanding the principles and being able to troubleshoot." },
-    { q: "Describe the quality control measures essential for haematological staining.", a: "Daily staining of a known normal control slide. Checking the pH of the buffer. Inspecting the stain for precipitate or contamination. Checking staining times against the protocol. Examining the stained film for the characteristic colours (pink red cells, blue-purple nuclei, violet platelets, no precipitate, no water artefact). Documenting results and troubleshooting problems." }
+    { q: "Explain the chemical basis of staining - why acidic and basic dyes stain different structures.", a: "Dyes are charged molecules. Acidic dyes (such as eosin) carry a negative charge and bind positively charged (basic) structures like haemoglobin, staining them pink. Basic dyes (such as methylene blue and its oxidation products) carry a positive charge and bind negatively charged (acidic) structures like DNA and RNA, staining them blue-purple." },
+    { q: "What is the Romanowsky effect and why is it important?", a: "The Romanowsky effect is the purple-mauve colour produced when oxidised methylene blue (azure B) combines with eosin to form a neutral dye complex. It cannot be produced by either dye alone. It is important because it reveals chromatin detail, granule colour and parasite morphology clearly, and it is the defining feature of Romanowsky stains." },
+    { q: "Name the main Romanowsky stains and state one use for each.", a: "Leishman stain - routine blood films and bone marrow (UK/Commonwealth standard). Giemsa stain - blood films, bone marrow, and parasites (especially malaria). Wright stain - routine blood films and differential counts (US standard). May-Grünwald stain - often combined with Giemsa (MGG) for bone marrow and haematology. Field's stain - rapid staining of thick films for malaria." },
+    { q: "Explain why pH-dependent buffering is critical in Romanowsky staining.", a: "Staining is a chemical reaction, and the charge of cellular components and dye molecules depends on pH. If the buffer is too acidic, red cells stain too pink and nuclei appear pale; if too alkaline, red cells appear blue-grey and nuclei stain too dark. Optimal pH is 6.4-6.8 for Leishman and Wright, and 6.8-7.2 for Giemsa." },
+    { q: "What are supravital stains, and how do they differ from Romanowsky stains?", a: "Supravital stains are dyes applied to living, unfixed cells, allowing them to be examined without being killed. They differ from Romanowsky stains, which are applied to fixed cells. Supravital stains are used when the diagnostic question is about living-cell behaviour or structures (like reticulum) that are destroyed by fixation." },
+    { q: "Name the main supravital stains used in haematology and state the purpose of each.", a: "New methylene blue (or brilliant cresyl blue) - stains reticulum in reticulocytes, used for the reticulocyte count. Janus green B - stains mitochondria. Neutral red - stains lysosomes and vacuoles. These dyes allow examination of living cells and their organelles." },
+    { q: "What are cytochemical stains, and give five examples with what each detects.", a: "Cytochemical stains target specific chemical substances or enzymes in cells, revealing their lineage and function. Examples: myeloperoxidase (MPO) - detects myeloperoxidase in myeloid cells; Sudan Black B - detects lipids in myeloid granules; periodic acid-Schiff (PAS) - detects glycogen and mucosubstances; leukocyte alkaline phosphatase (LAP) - detects alkaline phosphatase in neutrophils; Perls' Prussian blue - detects iron; acid phosphatase (including TRAP) - detects acid phosphatase." },
+    { q: "Describe the quality control measures essential for haematological staining.", a: "Daily staining of a known control slide with each batch; checking the pH of the buffer; inspecting the stain for precipitate or contamination; storing stains and buffers correctly; using positive and negative controls for cytochemical stains; checking the staining time against the protocol; and documenting all quality control results." },
+    { q: "Describe the advantages and limitations of automated staining.", a: "Advantages: reproducibility, consistency, speed, safety, and standardisation. Limitations: cost, reduced flexibility for unusual samples or special stains, need for maintenance, and reagent compatibility issues. Automated staining does not replace the need for understanding the principles and for troubleshooting." }
   ],
 
   videos: [
-    { channel: "Hematology", title: "Romanowsky Stains - Chemistry and Technique", note: "How eosin and methylene blue produce the characteristic colours of a blood film.", url: "https://www.youtube.com/results?search_query=romanowsky+stains+wright+giemsa+leishman+hematology" },
-    { channel: "Hematology", title: "Blood Film Staining - Step by Step", note: "Practical demonstration of staining a blood film and troubleshooting common problems.", url: "https://www.youtube.com/results?search_query=blood+film+staining+procedure+step+by+step" },
-    { channel: "Hematology", title: "Special Stains in Haematology", note: "Perls', PAS, MPO, LAP and other special stains used in diagnostic haematology.", url: "https://www.youtube.com/results?search_query=special+stains+hematology+perls+PAS+MPO" }
+    { channel: "Hematology", title: "Romanowsky Stains - Leishman, Giemsa, Wright and Field's", note: "The Romanowsky family explained - composition, pH, and clinical uses.", url: "https://www.youtube.com/results?search_query=romanowsky+stains+leishman+giemsa+wright+fields" },
+    { channel: "Hematology", title: "Supravital Stains and the Reticulocyte Count", note: "How new methylene blue stains reticulum in living reticulocytes.", url: "https://www.youtube.com/results?search_query=supravital+stain+reticulocyte+count+new+methylene+blue" },
+    { channel: "Hematology", title: "Cytochemical Stains in Haematology", note: "MPO, Sudan Black B, PAS, LAP, TRAP and other cytochemical stains used in diagnosis.", url: "https://www.youtube.com/results?search_query=cytochemical+stains+hematology+MPO+PAS+LAP" }
   ],
 
   mcqs: [
     // ===== Note 1 (Q1-5): why staining matters =====
-    { q: "Haematological stains are used to:", o: ["Preserve blood cells", "Add colour to blood cells so their differences become visible", "Kill bacteria", "Make blood clot"], a: 1, w: "Stains add colour so that cellular differences become visible under the microscope." },
-    { q: "An unstained blood film is almost useless because:", o: ["It is too thick", "The cells are almost transparent and lack contrast", "It is contaminated", "It cannot be examined"], a: 1, w: "Unstained cells are translucent and lack contrast, making them nearly invisible." },
-    { q: "The main purpose of a stain in haematology is to provide:", o: ["Contrast", "Anticoagulation", "Fixation", "Sterilisation"], a: 0, w: "A stain provides contrast so cells can be identified." },
-    { q: "Romanowsky stains contain:", o: ["Only one dye", "An acidic dye and a basic dye", "Only basic dyes", "Only acidic dyes"], a: 1, w: "Romanowsky stains contain both an acidic dye (eosin) and a basic dye (methylene blue derivatives)." },
-    { q: "The two main dyes in a Romanowsky stain are:", o: ["Eosin and methylene blue", "Eosin and haematoxylin", "Methylene blue and safranin", "Haematoxylin and eosin"], a: 0, w: "Romanowsky stains combine eosin and methylene blue (oxidised to azure B)." },
+    { q: "Haematological stains are used to:", o: ["Preserve blood cells", "Add colour to blood cells so their differences become visible", "Kill bacteria", "Make blood clot"], a: 1, w: "Stains add colour so cellular differences become visible." },
+    { q: "An unstained blood film is almost useless because:", o: ["It is too thick", "The cells are almost transparent and lack contrast", "It is contaminated", "It cannot be examined"], a: 1, w: "Unstained cells are translucent and lack contrast." },
+    { q: "The main purpose of a stain in haematology is to provide:", o: ["Contrast", "Anticoagulation", "Fixation", "Sterilisation"], a: 0, w: "A stain provides contrast for identification." },
+    { q: "The three main families of haematological stains are:", o: ["Romanowsky, supravital, cytochemical", "Acidic, basic, neutral", "Leishman, Giemsa, Wright", "Gram, Ziehl-Neelsen, PAS"], a: 0, w: "The three families are Romanowsky, supravital and cytochemical stains." },
+    { q: "Romanowsky stains are the standard for:", o: ["Routine blood films", "Cytochemical reactions", "Supravital staining only", "Bacterial cultures"], a: 0, w: "Romanowsky stains are the routine standard for blood films." },
 
     // ===== Note 2 (Q6-10): chemistry of staining =====
     { q: "Acidic dyes carry a charge that is:", o: ["Positive", "Negative", "Neutral", "Variable"], a: 1, w: "Acidic dyes carry a negative charge." },
     { q: "Basic dyes carry a charge that is:", o: ["Positive", "Negative", "Neutral", "Variable"], a: 0, w: "Basic dyes carry a positive charge." },
-    { q: "Basic dyes stain which cellular structures?", o: ["Acidic structures like DNA and RNA", "Basic structures like haemoglobin", "Lipids", "Carbohydrates"], a: 0, w: "Basic dyes bind acidic structures such as DNA and RNA, staining them blue-purple." },
+    { q: "Basic dyes stain which cellular structures?", o: ["Acidic structures like DNA and RNA", "Basic structures like haemoglobin", "Lipids", "Carbohydrates"], a: 0, w: "Basic dyes bind acidic structures like DNA and RNA, staining them blue-purple." },
     { q: "Acidic dyes stain which cellular structures?", o: ["Acidic structures like DNA", "Basic structures like haemoglobin and cytoplasmic proteins", "Lipids", "Nucleic acids"], a: 1, w: "Acidic dyes bind basic structures such as haemoglobin, staining them pink." },
-    { q: "The Romanowsky effect is produced by:", o: ["Eosin alone", "Methylene blue alone", "A neutral dye complex of oxidised methylene blue and eosin", "Haematoxylin"], a: 2, w: "The Romanowsky effect is the purple colour produced by the neutral complex of azure B and eosin." },
+    { q: "The Romanowsky effect is produced by:", o: ["Eosin alone", "Methylene blue alone", "A neutral dye complex of azure B and eosin", "Haematoxylin"], a: 2, w: "The Romanowsky effect comes from the neutral complex of azure B and eosin." },
 
-    // ===== Note 3 (Q11-15): Romanowsky stains =====
+    // ===== Note 3 (Q11-15): Romanowsky family =====
     { q: "The Romanowsky stains are named after:", o: ["A Russian physician", "An American chemist", "A British haematologist", "A German pathologist"], a: 0, w: "Dmitri Romanowsky was a Russian physician." },
-    { q: "Which Romanowsky stain is most commonly used in the United States?", o: ["Giemsa", "Wright", "Leishman", "Field's"], a: 1, w: "Wright stain is most commonly used in the United States." },
-    { q: "Which Romanowsky stain is preferred for parasites such as malaria?", o: ["Giemsa", "Wright", "Leishman", "May-Grünwald"], a: 0, w: "Giemsa stain is preferred for parasites and is widely used in parasitology." },
-    { q: "Which Romanowsky stain is widely used in the UK and Commonwealth?", o: ["Giemsa", "Wright", "Leishman", "Field's"], a: 2, w: "Leishman stain is widely used in the UK and Commonwealth." },
-    { q: "Field's stain is used primarily for:", o: ["Bone marrow films", "Routine blood counts", "Rapid staining of thick films for malaria", "Platelet counts"], a: 2, w: "Field's stain is a rapid method for staining thick films for malaria." },
-
-    // ===== Note 4 (Q16-20): composition of stains =====
-    { q: "Wright stain contains:", o: ["Eosin and oxidised methylene blue in methanol", "Eosin and haematoxylin", "Methylene blue only", "Eosin only"], a: 0, w: "Wright stain contains eosin and oxidised methylene blue (azure B) in methanol." },
-    { q: "Giemsa stain differs from Wright stain mainly by:", o: ["Containing no eosin", "Containing additional azure compounds", "Containing haematoxylin", "Containing no methylene blue"], a: 1, w: "Giemsa contains additional azure compounds, giving better parasite and nuclear detail." },
-    { q: "Leishman stain is similar to Wright stain but is prepared differently and is popular in:", o: ["The UK and Commonwealth", "Only Japan", "Only Africa", "Only South America"], a: 0, w: "Leishman stain is widely used in the UK and Commonwealth." },
-    { q: "May-Grünwald-Giemsa (MGG) is:", o: ["A single stain", "A combination of two Romanowsky stains", "A non-Romanowsky stain", "A special stain for iron"], a: 1, w: "MGG combines May-Grünwald and Giemsa stains, widely used in European haematology." },
-    { q: "The pH of the buffer used in Romanowsky staining is usually around:", o: ["3.0 to 4.0", "6.4 to 7.2", "8.0 to 9.0", "10.0 to 11.0"], a: 1, w: "The buffer pH is usually between 6.4 and 7.2, with Giemsa often at 6.8 to 7.2." },
-
-    // ===== Note 5 (Q21-25): staining technique =====
-    { q: "The first step of Romanowsky staining is:", o: ["Adding buffer", "Fixation with methanol", "Washing", "Drying"], a: 1, w: "The film is fixed with methanol, which is present in the undiluted stain." },
-    { q: "The buffer is added to the stain to:", o: ["Fix the cells", "Dilute the stain and control pH", "Wash the slide", "Preserve the film"], a: 1, w: "Buffer dilutes the stain and controls pH, which is critical for correct colour." },
-    { q: "A blood film stained with a buffer that is too acidic will appear:", o: ["Too blue", "Too pink", "Too pale", "Too dark"], a: 1, w: "An acidic buffer (low pH) makes red cells stain too pink." },
-    { q: "A blood film stained with a buffer that is too alkaline will appear:", o: ["Too pink", "Too blue", "Too pale", "Too dark"], a: 1, w: "An alkaline buffer (high pH) makes red cells appear blue-grey." },
-    { q: "Staining time that is too short produces:", o: ["Pale staining", "Dark staining", "Precipitate", "Water artefact"], a: 0, w: "Insufficient staining time produces pale, weakly stained films." },
-
-    // ===== Note 6 (Q26-30): colours of a well-stained film =====
-    { q: "In a well-stained Romanowsky film, red cells appear:", o: ["Pink to salmon", "Blue-grey", "Violet", "Colourless"], a: 0, w: "Red cells stain pink to salmon due to haemoglobin binding eosin." },
-    { q: "The nucleus of a neutrophil appears:", o: ["Pale blue", "Dark purple", "Bright red", "Black"], a: 1, w: "Neutrophil nuclei stain dark purple due to chromatin binding basic dye." },
-    { q: "Eosinophil granules appear:", o: ["Deep blue", "Bright orange-red", "Green", "Black"], a: 1, w: "Eosinophil granules contain basic proteins and stain bright orange-red with eosin." },
-    { q: "The cytoplasm of a lymphocyte typically appears:", o: ["Bright orange", "Pale blue", "Deep red", "Black"], a: 1, w: "Lymphocyte cytoplasm is pale blue." },
-    { q: "Platelets in a well-stained film appear:", o: ["Violet with fine granules", "Pink", "Green", "Black"], a: 0, w: "Platelets stain violet with fine granules." },
-
-    // ===== Note 7 (Q31-35): special stains =====
-    { q: "Perls' Prussian blue stain detects:", o: ["Iron", "Glycogen", "Lipids", "Amyloid"], a: 0, w: "Perls' stain detects iron, staining haemosiderin and ferritin blue." },
-    { q: "Periodic acid-Schiff (PAS) stain detects:", o: ["Iron", "Glycogen and mucosubstances", "Lipids", "Nucleic acids"], a: 1, w: "PAS stains glycogen and mucosubstances magenta." },
-    { q: "Myeloperoxidase (MPO) stain is used to:", o: ["Detect iron", "Distinguish myeloid from lymphoid leukaemias", "Detect parasites", "Measure platelet count"], a: 1, w: "MPO stains myeloid blasts positively and helps distinguish myeloid from lymphoid leukaemias." },
-    { q: "Sudan Black B stain detects:", o: ["Iron", "Glycogen", "Lipids", "Amyloid"], a: 2, w: "Sudan Black B stains lipid-containing granules black." },
-    { q: "Leukocyte alkaline phosphatase (LAP) stain is used to distinguish:", o: ["Myeloid from lymphoid leukaemia", "Chronic myeloid leukaemia from reactive leucocytosis", "Iron deficiency from thalassaemia", "Malaria from other infections"], a: 1, w: "LAP is low in chronic myeloid leukaemia and high in reactive leucocytosis." },
-
-    // ===== Note 8 (Q36-40): automated staining =====
-    { q: "The main advantage of automated staining is:", o: ["Lower cost", "Greater reproducibility and consistency", "Better colour", "Fewer reagents"], a: 1, w: "Automated staining is more reproducible and consistent than manual staining." },
-    { q: "Which of the following is a limitation of automated staining?", o: ["Slower than manual", "Less flexible for unusual samples or special stains", "Less consistent", "Uses fewer reagents"], a: 1, w: "Automated stainers are less flexible for unusual samples and special stains." },
-    { q: "A dip-and-dry stainer works by:", o: ["Spraying stain onto the slide", "Dipping the slide through successive baths of fixative, stain, buffer and rinse", "Using a conveyor belt", "Using centrifugal force"], a: 1, w: "Dip-and-dry stainers move the slide through successive baths." },
-    { q: "Automated staining does not replace the need for:", o: ["Understanding the principles of staining and troubleshooting", "A microscope", "A laboratory", "A computer"], a: 0, w: "Understanding and troubleshooting remain essential even with automation." },
-    { q: "Which type of automated stainer uses a conveyor to move slides through staining stations?", o: ["Dip-and-dry", "Flat-bed", "Continuous-flow", "Spray"], a: 2, w: "Continuous-flow stainers use a conveyor to move slides through staining stations." },
-
-    // ===== Note 9 (Q41-45): quality control =====
-    { q: "A daily control slide in staining is used to:", o: ["Test the patient's blood", "Verify that the stain is working correctly", "Calibrate the microscope", "Measure the pH of the buffer"], a: 1, w: "A known normal control slide verifies that the stain is working correctly." },
-    { q: "If a stained film appears too pink, the most likely cause is:", o: ["Buffer too alkaline", "Buffer too acidic", "Staining time too long", "Stain too concentrated"], a: 1, w: "An acidic buffer makes red cells stain too pink." },
-    { q: "If a stained film shows precipitate, a likely cause is:", o: ["Staining time too short", "Contaminated stain or inadequate washing", "Buffer pH too high", "Slide not dried"], a: 1, w: "Precipitate is often due to contaminated stain or inadequate washing." },
-    { q: "Water artefact on a blood film is caused by:", o: ["Using too much buffer", "Inadequate drying before staining or poor draining after washing", "Buffer pH too low", "Stain too old"], a: 1, w: "Water artefact occurs when the film is not properly dried or drained." },
-    { q: "A well-stained film should show all of the following EXCEPT:", o: ["Pink red cells", "Blue-purple nuclei", "Visible platelets", "Precipitate on the film"], a: 3, w: "Precipitate is a sign of poor staining, not a feature of a well-stained film." },
-
-    // ===== Note 10 (Q46-50): consolidation =====
-    { q: "The purpose of a haematological stain is to:", o: ["Preserve cells", "Provide contrast so cells can be identified", "Prevent clotting", "Sterilise the slide"], a: 1, w: "Stains provide contrast so cells and their structures can be identified." },
-    { q: "Acidic dyes stain basic structures:", o: ["Blue", "Pink", "Green", "Black"], a: 1, w: "Acidic dyes such as eosin stain basic structures pink." },
-    { q: "The Romanowsky effect produces:", o: ["A pink colour", "A purple-mauve colour in chromatin and granules", "A green colour", "A black colour"], a: 1, w: "The Romanowsky effect produces the characteristic purple-mauve colour." },
-    { q: "Which of these is NOT a Romanowsky stain?", o: ["Wright", "Giemsa", "Leishman", "Perls'"], a: 3, w: "Perls' Prussian blue is a special stain for iron, not a Romanowsky stain." },
-    { q: "The quality of staining depends on:", o: ["Only the stain", "Only the buffer", "The stain, buffer pH, staining time and technique", "Only the microscope"], a: 2, w: "Quality depends on the stain, buffer pH, time and technique." }
-  ]
-};
-
-// ==================== HEMATOLOGY TOPIC 8: BLOOD SMEARS ====================
-const T_HEM_BLOOD_SMEARS = {
-  courseId: "hem",
-  topicIndex: 8,
-  title: "Blood Smears/Films Preparation & Examination (Thick and Thin Blood Smears)",
-  minutes: 30,
-
-  note: [
-    {
-      q: "A drop of blood on a slide is not yet a blood film. What turns one into the other?",
-      body: `Place a drop of blood on a glass slide and look at it. It is a small, dark red, wet blob. It contains millions of cells, all packed together, overlapping and indistinct. If you tried to examine it under the microscope as it is, you would see a thick, opaque mass - useless for diagnosis.
-
-Now spread that drop across the slide into a thin, even layer, dry it, stain it, and look again. Suddenly you can see individual red cells, each with its own shape and colour. White cells stand out clearly, their nuclei visible and distinct. Platelets appear as tiny violet fragments. You can count, classify, and examine every cell.
-
-My Socratic question: the blood did not change between the two examinations. What did the spreading process actually do?
-
-The answer is that spreading the drop into a thin layer separated the cells from each other. In the original drop, the cells were packed together - too close to distinguish individually. In the spread film, the cells are distributed in a single layer, so each one can be seen clearly. A blood film is therefore not just a drop of blood - it is a carefully prepared, thin, single-layer spread of cells that allows the microscope to reveal what the naked eye cannot.
-
-This topic covers the two types of blood film used in haematology - the thin film and the thick film - and the techniques for preparing, staining and examining each. It also covers the criteria for a good film, the common faults, and the reasons each type is used.
-
-Crucial insight: a blood film is the fundamental diagnostic tool of haematology. Every blood count, every cell morphology assessment, every search for parasites, and every differential diagnosis of a blood disorder depends on examining a properly prepared blood film. The skill of making a good film is as essential as the skill of reading it.`
-    },
-    {
-      q: "There are two kinds of blood film. Why two, and what is each for?",
-      body: `You might assume a blood film is a blood film - a drop of blood spread on a slide. But haematology uses two distinct types, and each has its own purpose, its own appearance, and its own method of preparation.
-
-My Socratic question: if a thin film lets you see individual cells clearly, why would you ever need a thick film?
-
-The answer is concentration. A thin film is ideal for examining individual cell morphology - the shape of red cells, the appearance of white cell nuclei, the colour of granules, the presence of parasites inside red cells. But because the cells are spread out, any organism that is present only in small numbers (such as malarial parasites in early infection) can be very difficult to find. A thick film concentrates a much larger volume of blood into a smaller area, so it is far more sensitive for detecting low numbers of parasites - at the cost of losing the ability to see individual cell morphology.
-
-The two films are therefore complementary:
-
-- **Thin film** - a single layer of cells spread thinly across the slide. Used for: cell morphology (red cell shape, white cell type, platelet appearance), differential white cell counts, detection of intracellular parasites, and assessment of anaemia or leukaemia. The red cells are spread out, the white cells are identifiable, and the film is examined after staining with a Romanowsky stain.
-
-- **Thick film** - a larger drop of blood spread over a small area and allowed to dry without being spread thin, so the cells are concentrated. Used for: detection of parasites (especially malaria), particularly when parasite numbers are low. The red cells are lysed during staining, so individual cell morphology is lost, but parasites and other organisms are seen against a clear background. Thick films are more sensitive than thin films for parasite detection but require more skill to interpret.
-
-Both films are usually made from the same drop of blood at the same time, so that thin and thick films are available together. The thin film is used for morphology; the thick film is used for parasite detection. This is the standard approach in haematology and parasitology.
-
-Crucial insight: thin and thick films are not interchangeable. The thin film shows you what the cells look like; the thick film shows you what is hiding among them. A complete blood film examination typically requires both.`
-    },
-    {
-      q: "The thin film: how is it made, and what does a good one look like?",
-      body: `The thin blood film is one of the most familiar sights in haematology. It is a single layer of blood cells spread evenly across a glass slide, with a well-defined head, body, and tail. Making a good one is a skill, and like any skill, it takes practice.
-
-My Socratic question: if the goal is a single layer of cells spread evenly, what could go wrong during the spreading process?
-
-The answer is that several things can go wrong, and each produces a recognisable fault.
-
-**The standard wedge (push) technique for a thin film:**
-
-- Place a small drop of blood (about 2-3 mm in diameter) near one end of a clean glass slide.
-- Hold a second slide (the spreader or pusher) at an angle of about 30 to 45 degrees, and touch it to the drop so the blood runs along its edge.
-- Push the spreader slide smoothly and steadily along the length of the slide, drawing the blood behind it into a thin film.
-- Allow the film to air-dry completely.
-- Stain the film (usually with a Romanowsky stain).
-- Examine under the microscope.
-
-**What a good thin film looks like:**
-
-- The film is a single layer of cells spread evenly across the slide.
-- It has a rounded head (where the drop was placed), a body (the main area), and a feathered tail (where the film thins to a single cell layer).
-- The red cells are evenly distributed, with minimal overlap in the body and tail.
-- The film is neither too thick nor too thin.
-- The film does not extend to the edges of the slide (leaving margins for handling).
-- The film is fully dried and stained without artefacts.
-
-**Common faults and their causes:**
-
-- **Too thick.** The drop was too large, or the spreader was pushed too slowly, or the angle was too steep. The cells overlap and cannot be distinguished.
-- **Too thin.** The drop was too small, or the spreader was pushed too fast, or the angle was too shallow. The cells are too sparse.
-- **Ridges or lines (chatter).** The spreader was pushed unevenly, or the slide was dirty, or the drop was too large.
-- **Holes or gaps.** The slide was dirty or greasy, or the blood was clotted.
-- **Film extends to the edges.** The drop was too large or the spreader was pushed too far.
-- **Tail too long or too short.** The speed or angle of the spreader was wrong.
-
-Crucial insight: a good thin film is one where the red cells are spread into a single layer in the body and tail of the film, without overlap or gaps. The wedge technique, the size of the drop, the angle of the spreader, and the speed of the push all determine the quality of the film. A poorly made film cannot be rescued by good staining - the fault is in the preparation.`
-    },
-    {
-      q: "The thick film: how is it made, and why is it different?",
-      body: `The thick film is the workhorse of malaria diagnosis. It is prepared differently from the thin film, and it looks different under the microscope - but its sensitivity for detecting low numbers of parasites is far greater.
-
-My Socratic question: if the thick film is so useful for finding parasites, why not use it for everything?
-
-The answer is that the thick film sacrifices morphology for sensitivity. The red cells are deliberately lysed during staining, so individual cell shape is lost - but any parasite inside the red cells is left behind, concentrated on the slide, where it can be found even if there are only a few parasites in the entire sample.
-
-**The standard method for a thick film:**
-
-- Place a larger drop of blood (about 5-10 mm in diameter, or several drops) on a clean glass slide.
-- Using a corner of a spreader slide, spread the drop in a circular or oval motion to cover an area about 1-2 cm in diameter.
-- The film should be thick enough to be opaque when wet, but not so thick that it flakes off during staining.
-- Allow the film to air-dry completely - this is critical. A thick film must be completely dry before staining, which may take 30 minutes to several hours depending on humidity.
-- **Do not fix the thick film with methanol.** The thick film must not be fixed, because the red cells need to be lysed during staining to release the parasites. Fixation would prevent lysis and hide the parasites.
-- Stain the film - typically with Giemsa stain, sometimes with Field's stain for rapid field diagnosis.
-- Examine under the microscope at high magnification (oil immersion).
-
-**What a good thick film looks like:**
-
-- The film is a roughly circular or oval area of concentrated blood.
-- After staining, the background is pale blue-grey, and the white cells, platelets, and parasites stand out against it.
-- The red cells have been lysed, leaving only faint outlines or "ghosts".
-- Parasites are clearly visible as small, coloured forms - rings, trophozoites, schizonts, gametocytes.
-- The film is well spread but not too thick; overly thick films may not stain properly or may flake off.
-
-**Common faults and their causes:**
-
-- **Too thick.** The film does not dry properly, stains poorly, and may flake off. Parasites may be obscured.
-- **Too thin.** The film dries too quickly and may not concentrate enough blood for parasite detection.
-- **Incomplete drying.** Staining a wet thick film causes the blood to wash off; this is one of the most common faults.
-- **Fixing the film.** If methanol is used, the red cells are fixed and do not lyse; parasites remain inside the red cells and are harder to see.
-- **Poor spreading.** Uneven or incomplete spreading produces areas where parasites are missed.
-
-Crucial insight: the thick film is a concentration technique. It is more sensitive than the thin film for detecting parasites, but it loses the ability to see cell morphology. The keys to a good thick film are: a properly sized drop, complete spreading, complete drying before staining, and no methanol fixation. A properly prepared thick film is one of the most sensitive diagnostic tools for malaria and other blood parasites.`
-    },
-    {
-      q: "Staining the films: why do thick and thin films need different treatment?",
-      body: `You have already learned the principles of Romanowsky staining (hem:7). Here, the focus is on how staining is adapted for thin and thick films, because the two films require different handling.
-
-My Socratic question: if both films are stained with a Romanowsky stain, why would the technique differ?
-
-The answer is that the thin film is fixed with methanol to preserve cell morphology, while the thick film must NOT be fixed, so that the red cells lyse during staining and release any parasites. This single difference determines the entire staining method.
-
-**Staining the thin film:**
-
-- The thin film is air-dried and then fixed with methanol (either by dipping the slide in methanol for a few seconds, or by covering the film with undiluted Romanowsky stain, which contains methanol).
-- After fixation, the stain is diluted with buffer (pH 6.4-6.8) and left for a defined time.
-- The slide is washed and dried.
-- Result: red cells are preserved as intact pink discs; white cells have distinct blue-purple nuclei; parasites inside red cells are visible with their red cell background.
-
-**Staining the thick film:**
-
-- The thick film must be completely dry before staining, but it must NOT be fixed with methanol.
-- The film is placed in a staining dish or covered with diluted Giemsa stain (or Field's stain) for a defined time.
-- During staining, the red cells lyse (because they are not fixed), releasing their haemoglobin and leaving the parasites visible against a pale background.
-- The slide is washed and dried.
-- Result: red cells appear as pale "ghosts"; parasites and white cells stand out as coloured forms against the pale background.
-
-**Combined thin and thick films on one slide (the "thick and thin" method):**
-
-In many laboratories, the thin and thick films are made on the same slide, side by side. The thin film is at one end and the thick film at the other. This allows both films to be stained and examined together, which is especially useful for malaria diagnosis:
-
-- The thin film shows the species of parasite and the red cell morphology.
-- The thick film confirms the presence of parasites and allows a more sensitive quantification.
-- The combination is standard in malaria diagnosis.
-
-Crucial insight: the difference in staining between thin and thick films is not arbitrary - it is determined by the diagnostic purpose of each film. The thin film preserves cell morphology; the thick film concentrates parasites. The choice to fix or not to fix, to stain with Giemsa or with a rapid method, and to examine one or both films, all depends on what the clinician needs to know.`
-    },
-    {
-      q: "A good film vs a bad film: how do you know the difference?",
-      body: `Not every blood film is suitable for examination. A poorly prepared film can produce misleading results, or can be entirely useless. Learning to recognise a good film from a bad one is an essential skill.
-
-My Socratic question: you are handed a stained blood film. How would you assess its quality before you begin examining it?
-
-The answer is that a good film has a set of recognisable features, and each fault has a recognisable cause. The most important quality checks are:
-
-**Quality criteria for a thin film:**
-
-- The film has a well-defined head, body, and tail.
-- The film is spread in a single layer in the body and tail.
-- The red cells are evenly distributed, with minimal overlap.
-- The red cells are uniform in size and shape (for a normal blood sample).
-- The white cells are well-stained and clearly identifiable.
-- Platelets are visible and well-stained.
-- There is no precipitate, no water artefact, and no stain deposit.
-- The film does not reach the edges of the slide.
-- The film is neither too thick nor too thin.
-
-**Quality criteria for a thick film:**
-
-- The film is a well-defined area of concentrated blood, usually circular or oval.
-- The film is thick enough to concentrate a suitable volume of blood but not so thick that it fails to dry or stain.
-- The film is completely dry before staining.
-- The film is not fixed with methanol.
-- The film is well stained, with a pale blue-grey background and clearly visible parasites, white cells and platelets.
-- There is no flaking or peeling of the film.
-- There is no precipitate or stain deposit.
-
-**Common faults and their causes (recap):**
-
-- **Too thick (thin film).** Drop too large, spreader too slow or too steep.
-- **Too thin (thin film).** Drop too small, spreader too fast or too shallow.
-- **Chatter / ridges (thin film).** Uneven pressure, dirty spreader, or too large a drop.
-- **Holes / gaps (thin film).** Dirty or greasy slide.
-- **Film at the edges (thin film).** Drop too large or spreader pushed too far.
-- **Wet thick film.** Inadequate drying before staining.
-- **Fixed thick film.** Accidental use of methanol.
-- **Flaking thick film.** Too thick or unevenly spread.
-
-Crucial insight: the quality of a blood film is judged by its ability to allow accurate examination. A good thin film shows individual cells clearly; a good thick film concentrates parasites effectively. A poorly prepared film - whether thin or thick - cannot be rescued by good staining or by a skilled microscopist. The first step in any blood film examination is to assess the quality of the film itself.`
-    },
-    {
-      q: "Examining a blood film: what do you look for, and how do you look?",
-      body: `A stained blood film is a landscape of cells. To examine it properly, you need to know where to look and what to look for. A systematic approach ensures that nothing is missed.
-
-My Socratic question: if you were handed a stained blood film and asked to examine it, where would you start, and what would you look at first?
-
-The answer is that examination follows a defined pattern, and every part of the film has something to show.
-
-**The systematic examination of a thin film:**
-
-- **Low power (10x objective) first.** Scan the whole film to check its overall quality, to find the best area for examination (where the cells are in a single layer), and to look for any obvious abnormalities or large parasites.
-- **Oil immersion (100x objective) for detailed examination.** This is where the individual cell morphology is assessed.
-- **Start with the red cells.** Are they normal in size and shape? Are they uniformly pink? Are there any abnormal forms (sickle cells, target cells, spherocytes, schistocytes, etc.)? Are there any inclusions (Howell-Jolly bodies, Pappenheimer bodies, malarial parasites)?
-- **Examine the white cells.** Identify the different types (neutrophils, lymphocytes, monocytes, eosinophils, basophils) and estimate the differential count. Look for any abnormal or immature forms (blasts, atypical lymphocytes, etc.).
-- **Examine the platelets.** Are they present in adequate numbers? Are they normal in size and shape? Are there any platelet clumps?
-- **Look for any other findings.** Parasites, bacteria, fungi, or other abnormalities.
-
-**The systematic examination of a thick film:**
-
-- **Low power first.** Find a suitable area - not too thick, not too thin, well stained.
-- **Oil immersion for detailed examination.** Scan the film for parasites. Because the red cells are lysed, the parasites appear against a pale background.
-- **Quantify the parasites.** Count the number of parasites per high-power field, or per 100 white cells, or per microlitre (depending on the protocol).
-- **Identify the parasite species** (if possible) by examining the parasite morphology.
-- **Note any other findings** (white cells, platelets, other organisms).
-
-**Quantification of parasites:**
-
-Malaria parasitaemia can be reported in several ways:
-
-- **Parasites per microlitre (parasites/µL)** - calculated from the number of parasites seen and the white cell count or red cell count.
-- **Parasites per high-power field** - a simple count of parasites seen in a set number of fields.
-- **Percentage of red cells parasitised** - used in some settings.
-
-Crucial insight: examining a blood film is a systematic process, not a random scan. Low power first for orientation and overall assessment; oil immersion for detailed cell morphology and parasite detection; a defined sequence (red cells, white cells, platelets, other findings). Every part of the film and every cell type has something to contribute to the diagnosis.`
-    },
-    {
-      q: "Faults and artefacts: what can go wrong with a blood film?",
-      body: `Every blood film is a small work of technique. When the technique goes wrong, the film shows it. Recognising faults and knowing their causes is essential for accurate interpretation.
-
-My Socratic question: you examine a blood film and notice that all the red cells are blue-grey instead of pink. What could have gone wrong?
-
-The answer is that the buffer pH was too alkaline. Each fault has a cause, and recognising the fault allows you to correct the technique or to interpret the film with caution.
-
-**Common faults in thin films and their causes:**
-
-- **Too thick.** Drop too large, spreader too slow, or angle too steep. Cells overlap, making detailed examination difficult.
-- **Too thin.** Drop too small, spreader too fast, or angle too shallow. Cells are too sparse for a proper differential count.
-- **Chatter / ridges.** Uneven pressure on the spreader, dirty spreader, or too large a drop.
-- **Holes / gaps.** Dirty or greasy slide, or clotted blood.
-- **Film extends to the edges.** Drop too large or spreader pushed too far, leaving no margins for handling.
-- **Too pink (acidic).** Buffer pH too low. Red cells stain too pink, nuclei too pale.
-- **Too blue (alkaline).** Buffer pH too high. Red cells stain blue-grey, nuclei too dark.
-- **Precipitate.** Contaminated stain, insufficient washing, or stain too old.
-- **Water artefact.** Inadequate drying before staining, or poor draining after washing.
-- **Fading.** Prolonged storage in light or heat, or inadequate sealing.
-
-**Common faults in thick films and their causes:**
-
-- **Wet film.** Inadequate drying before staining; the film washes off during staining.
-- **Fixed film.** Accidental use of methanol; red cells do not lyse, parasites remain inside red cells and are harder to see.
-- **Too thick.** Poor drying, poor staining, and flaking.
-- **Too thin.** Insufficient concentration; parasites may be missed.
-- **Flaking.** Too thick or unevenly spread; the film peels off during staining or storage.
-- **Precipitate.** Same causes as for thin films.
-
-**Why faults matter:**
-
-- A faulty film may produce misleading results. For example, a film that is too thick may hide cells in the overlap; a film that is too pink may have poorly stained nuclei that are difficult to identify; a wet thick film may lose its parasites during staining.
-- A faulty film should be recognised and, if possible, a new film should be prepared.
-- When a fault cannot be corrected (for example, if a patient's sample is limited), the microscopist must interpret the film with caution and document the fault.
-
-Crucial insight: faults in blood films are not random - they have specific causes, and each cause produces a recognisable appearance. Learning to recognise faults and to trace them to their cause is part of the professional skill of the haematology laboratory. A good microscopist does not just interpret films - they also judge their quality and know when a film is not fit for diagnostic use.`
-    },
-    {
-      q: "Clinical significance: when the blood film changes the diagnosis.",
-      body: `The blood film is not just a test - it is a window into the patient. In many conditions, the film provides the diagnosis or confirms it; in others, it provides critical information that no other test can give. Understanding the clinical significance of blood film examination is essential for every laboratory scientist.
-
-My Socratic question: if a full blood count can tell you the numbers of red cells, white cells and platelets, why would you still need to examine a film?
-
-The answer is that the full blood count gives the numbers; the film gives the diagnosis.
-
-**Clinical situations where the blood film is essential:**
-
-- **Anaemia.** The film shows the size, shape, and colour of red cells. Microcytic hypochromic cells suggest iron deficiency; macrocytic cells suggest B12 or folate deficiency; sickle cells suggest sickle cell disease; spherocytes suggest hereditary spherocytosis; schistocytes suggest haemolysis. The film can point to the diagnosis when the numbers alone cannot.
-
-- **Leukaemia.** The film may show blast cells, immature white cells, or abnormal white cell forms. In acute leukaemia, the diagnosis is often first suspected from the film. In chronic leukaemias, the film shows the characteristic mature but abnormal cells.
-
-- **Lymphoma and other lymphoid disorders.** The film may show atypical lymphocytes or abnormal lymphoid cells, prompting further investigation.
-
-- **Malaria and other parasites.** The thick and thin films are essential for diagnosing malaria, and the film can identify the species and quantify the parasitaemia. Other blood parasites (trypanosomes, babesia, microfilariae) are also detected on blood films.
-
-- **Thrombocytopenia and platelet disorders.** The film confirms the platelet count, distinguishes true thrombocytopenia from pseudothrombocytopenia (platelet clumping), and shows platelet size and morphology.
-
-- **Bone marrow disorders.** The film may show immature cells, abnormal cells, or characteristic features that prompt bone marrow examination.
-
-- **Infections.** The film may show bacteria (in severe sepsis), fungi (in immunocompromised patients), or other organisms.
-
-- **Haemoglobinopathies.** The film may show sickle cells, target cells, or other abnormal forms that suggest haemoglobinopathy.
-
-- **Inherited red cell disorders.** The film may show spherocytes, elliptocytes, ovalocytes, or other abnormalities that suggest an inherited red cell disorder.
-
-**The film as a screening tool:**
-
-The blood film is not just a diagnostic tool - it is also a screening tool. In many laboratories, the film is examined as part of the full blood count whenever the count is abnormal, when the patient has symptoms, or when a specific diagnosis is suspected. The film may reveal the unexpected - a parasite, an abnormal cell, a clue to a systemic disease.
-
-Crucial insight: the blood film is one of the most valuable tests in medicine. It is inexpensive, it requires only a drop of blood, and it can reveal a diagnosis that no other test can make. In the hands of a skilled microscopist, the film is not just a laboratory test - it is a clinical consultation.`
-    },
-    {
-      q: "Consolidation and your final test.",
-      body: `Your cognitive map for blood smears and films, in five lines.
-
-**The two types of film:** the thin film (a single layer of cells, used for cell morphology, differential counts, and intracellular parasites) and the thick film (a concentrated drop of blood, used for parasite detection, especially malaria). Both are usually made from the same drop.
-
-**The thin film technique:** a small drop is spread using the wedge (push) technique; the film is air-dried, fixed with methanol, and stained with a Romanowsky stain. A good film has a head, body and tail, with cells spread in a single layer.
-
-**The thick film technique:** a larger drop is spread over a circular area, allowed to dry completely, and stained WITHOUT fixation (so the red cells lyse and release parasites). The thick film is more sensitive for parasite detection but loses cell morphology.
-
-**Staining:** thin films are fixed and stained; thick films are not fixed and are stained so that red cells lyse. Both are stained with Romanowsky stains (Giemsa for parasites; Wright or Leishman for routine).
-
-**Quality and examination:** a good film has no faults; a faulty film has recognisable causes and must be interpreted with caution. Examination is systematic - low power first, then oil immersion, with a defined sequence (red cells, white cells, platelets, other findings). The blood film is essential for diagnosing anaemia, leukaemia, parasites, platelet disorders and many other conditions.
-
-Now your final test. A 28-year-old man returns from a trip to a malaria-endemic region with fever, chills and headache. A blood sample is collected. The laboratory prepares a thick film and a thin film on the same slide, stains them with Giemsa, and examines them under the microscope.
-
-Question one: why are both a thick film and a thin film prepared for this patient?
-Question two: the thick film is prepared correctly, but the thin film is too thick, with cells overlapping and difficult to distinguish. What should the laboratory do, and what would be the consequences of examining the thin film as it is?
-Question three: the thick film shows numerous ring-form parasites inside red cells. What does this finding suggest, and how would you report it?
-
-Work them through before reading on.
-
-My answers. One: both films are prepared because they serve different purposes. The thick film is more sensitive for detecting parasites, especially when parasite numbers are low, and it is the primary film for malaria diagnosis. The thin film allows the species of parasite to be identified and the red cell morphology to be examined. Together they give both sensitivity and specificity, and this combination is standard for malaria diagnosis. Two: the thin film should be discarded and a new one prepared, because it is not fit for diagnostic use. Examining the too-thick film would risk missing parasites, failing to identify the species correctly, and misinterpreting red cell morphology. A poorly prepared film cannot be rescued by good staining or careful examination. Three: the finding of numerous ring-form parasites inside red cells on the thick film is suggestive of malaria (most commonly Plasmodium falciparum, but other species are possible). The report should include: the presence of parasites, the species if identifiable (from the thin film), the stage of the parasites (ring forms, trophozoites, schizonts, gametocytes), and an estimate of the parasitaemia (e.g. parasites per microlitre, or percentage of red cells parasitised). The clinician uses this information to guide treatment.
-
-If those came cleanly, you understand the preparation, staining and examination of thick and thin blood films - the foundation of diagnostic haematology.`
-    }
-  ],
-
-  theory: [
-    { q: "Explain why a drop of blood must be spread into a film before it can be examined under the microscope.", a: "In an unsmeared drop, the cells are packed together and overlap, making individual cells and their structures impossible to see. Spreading the drop into a thin film separates the cells into a single layer, so each cell can be examined individually. The film allows the microscope to reveal details - cell shape, nuclear structure, granules and parasites - that are invisible in a drop." },
-    { q: "Distinguish the thin film from the thick film and state the purpose of each.", a: "A thin film is a single layer of cells spread thinly across the slide; it is used for cell morphology, differential white cell counts, and the detection of intracellular parasites. A thick film is a larger drop of blood spread over a small area and dried without being spread thin; it is used for parasite detection (especially malaria) because it concentrates a larger volume of blood, but it loses cell morphology because the red cells are lysed during staining." },
-    { q: "Describe the wedge (push) technique for preparing a thin blood film.", a: "Place a small drop of blood near one end of a clean slide. Hold a second spreader slide at about 30-45 degrees, touch it to the drop, and push it smoothly and steadily along the length of the slide, drawing the blood into a thin film. Allow the film to air-dry. The film should have a head, body, and tail, with cells spread in a single layer." },
-    { q: "Describe the method for preparing a thick blood film and explain why it must not be fixed with methanol.", a: "Place a larger drop of blood on a clean slide and spread it in a circular or oval motion using the corner of a spreader slide, to cover an area about 1-2 cm in diameter. Allow it to air-dry completely. It must NOT be fixed with methanol because the red cells need to be lysed during staining to release any parasites; fixation would preserve the red cells and hide the parasites." },
-    { q: "Explain the difference in staining between thin and thick films.", a: "The thin film is fixed with methanol (present in undiluted Romanowsky stain) to preserve cell morphology, then stained with diluted stain and buffer at controlled pH. The thick film is NOT fixed, so the red cells lyse during staining and the parasites are left against a pale background. This difference is essential: fixation would defeat the purpose of the thick film." },
-    { q: "List the quality criteria for a good thin film.", a: "A well-defined head, body, and tail. A single layer of cells in the body and tail. Even distribution of red cells with minimal overlap. Well-stained red cells, white cells, and platelets. No precipitate, water artefact, or stain deposit. The film does not extend to the edges of the slide. The film is neither too thick nor too thin." },
-    { q: "List the quality criteria for a good thick film.", a: "A well-defined area of concentrated blood (circular or oval). Thick enough to concentrate a suitable volume, but not so thick that it fails to dry or flakes off. Completely dry before staining. Not fixed with methanol. Well stained, with a pale blue-grey background and clearly visible parasites, white cells and platelets. No precipitate or stain deposit." },
-    { q: "Describe the systematic examination of a thin blood film.", a: "Examine at low power first to assess overall quality and locate the best area. Then examine at oil immersion, starting with red cells (size, shape, colour, inclusions, parasites), then white cells (type, differential count, abnormal forms), then platelets (number, size, clumping), and finally any other findings. The examination should be systematic and thorough." },
-    { q: "Explain how the thick and thin films are used together in malaria diagnosis.", a: "The thick film is used for detection and quantification of parasites because it concentrates a larger volume of blood and is more sensitive when parasite numbers are low. The thin film is used for species identification and examination of red cell morphology. Together they give both sensitivity and specificity. Both are often made on the same slide (thick and thin method)." },
-    { q: "Describe the significance of the blood film in clinical diagnosis.", a: "The blood film provides diagnostic information that no other test can give. It is essential for diagnosing anaemia (based on red cell morphology), leukaemia (based on white cell morphology and immature forms), parasites (malaria, trypanosomes, babesia), platelet disorders (platelet clumping, size, morphology), inherited red cell disorders, and many other conditions. It is inexpensive, rapid, and often the first test to suggest a diagnosis." }
-  ],
-
-  videos: [
-    { channel: "Hematology", title: "Thin and Thick Blood Film Preparation", note: "Step-by-step demonstration of the wedge technique for thin films and the spreading technique for thick films.", url: "https://www.youtube.com/results?search_query=thin+thick+blood+film+preparation+wedge+technique" },
-    { channel: "Hematology", title: "Malaria Diagnosis - Thick and Thin Films", note: "How to prepare, stain and examine thick and thin films for malaria parasites.", url: "https://www.youtube.com/results?search_query=malaria+diagnosis+thick+thin+blood+films" },
-    { channel: "Hematology", title: "Blood Film Examination - A Systematic Approach", note: "How to examine a blood film systematically, from low power to oil immersion.", url: "https://www.youtube.com/results?search_query=blood+film+examination+systematic+approach+hematology" }
-  ],
-
-  mcqs: [
-    // ===== Note 1 (Q1-5): why films are needed =====
-    { q: "A blood film is necessary because:", o: ["It prevents clotting", "It separates cells into a single layer for examination", "It stains the cells", "It sterilises the sample"], a: 1, w: "Spreading blood into a film separates the cells into a single layer for examination." },
-    { q: "An unsmeared drop of blood under the microscope is:", o: ["Easy to examine", "A thick, opaque mass of overlapping cells", "Clear and transparent", "Composed only of plasma"], a: 1, w: "In an unsmeared drop, cells are packed together and cannot be individually examined." },
-    { q: "The main purpose of preparing a blood film is to:", o: ["Kill bacteria", "Allow individual cells to be seen clearly", "Increase cell count", "Preserve the sample"], a: 1, w: "The film allows individual cells and their structures to be seen clearly." },
-    { q: "A blood film is described as the fundamental tool of:", o: ["Microbiology", "Biochemistry", "Haematology", "Histology"], a: 2, w: "The blood film is the fundamental diagnostic tool of haematology." },
-    { q: "A properly prepared blood film allows examination of:", o: ["Only red cells", "Only white cells", "Individual cells, their morphology, and any parasites", "Only plasma"], a: 2, w: "A properly prepared film allows examination of cell morphology and parasites." },
-
-    // ===== Note 2 (Q6-10): thin vs thick =====
-    { q: "The two main types of blood film are:", o: ["Fresh and fixed", "Thin and thick", "Stained and unstained", "Wet and dry"], a: 1, w: "The two main types are thin and thick films." },
-    { q: "The thin film is best used for:", o: ["Detecting low numbers of parasites", "Cell morphology and differential counts", "Concentrating parasites", "Measuring clotting times"], a: 1, w: "The thin film is used for cell morphology and differential counts." },
-    { q: "The thick film is best used for:", o: ["Differential counts", "Detecting low numbers of parasites", "Examining red cell shape", "Measuring platelet count"], a: 1, w: "The thick film is more sensitive for detecting parasites because it concentrates blood." },
-    { q: "The thick film loses cell morphology because:", o: ["It is too thin", "The red cells are lysed during staining", "It is fixed with methanol", "It is not stained"], a: 1, w: "The red cells are lysed during staining, so individual cell morphology is lost." },
-    { q: "In routine practice, thin and thick films are usually made:", o: ["On different days", "From the same drop of blood", "From different patients", "From serum only"], a: 1, w: "Both films are usually made from the same drop of blood." },
-
-    // ===== Note 3 (Q11-15): thin film technique =====
-    { q: "The standard technique for making a thin film is called:", o: ["The wedge (push) technique", "The drop technique", "The spinning technique", "The spread technique"], a: 0, w: "The wedge (push) technique is the standard method for a thin film." },
-    { q: "The angle of the spreader slide for a thin film should be about:", o: ["10 degrees", "30 to 45 degrees", "60 to 90 degrees", "90 degrees"], a: 1, w: "The spreader slide is held at about 30 to 45 degrees." },
-    { q: "The size of the drop for a thin film should be about:", o: ["1 mm", "2 to 3 mm", "5 to 10 mm", "20 mm"], a: 1, w: "The drop for a thin film is about 2 to 3 mm in diameter." },
-    { q: "A good thin film has:", o: ["Only a head", "Only a tail", "A head, body, and tail", "No defined regions"], a: 2, w: "A good thin film has a head, body, and tail." },
-    { q: "If the thin film is too thick, the cause is most likely:", o: ["Too small a drop", "Too large a drop, too slow a push, or too steep an angle", "Too fast a push", "Too shallow an angle"], a: 1, w: "A thick film can be caused by a large drop, slow push, or steep angle." },
-
-    // ===== Note 4 (Q16-20): thick film technique =====
-    { q: "The drop for a thick film is typically:", o: ["1 mm", "2-3 mm", "5-10 mm", "20-30 mm"], a: 2, w: "The drop for a thick film is larger, about 5-10 mm." },
-    { q: "The thick film must be completely dry before staining because:", o: ["It is too thick otherwise", "A wet film will wash off during staining", "Dry films stain more darkly", "It is required by law"], a: 1, w: "A wet thick film will wash off during staining." },
-    { q: "The thick film must NOT be fixed with methanol because:", o: ["Methanol is toxic", "Fixation prevents red cell lysis and hides parasites", "Methanol is not available", "It is not necessary"], a: 1, w: "Fixation would prevent the red cells from lysing, hiding the parasites." },
-    { q: "The thick film is usually stained with:", o: ["Wright stain", "Giemsa stain", "Leishman stain", "Haematoxylin"], a: 1, w: "The thick film is typically stained with Giemsa stain." },
-    { q: "A good thick film after staining shows:", o: ["Intact red cells", "A pale blue-grey background with visible parasites", "No visible cells", "Only white cells"], a: 1, w: "After staining, the thick film has a pale background with clearly visible parasites." },
-
-    // ===== Note 5 (Q21-25): staining differences =====
-    { q: "The thin film is fixed with methanol before staining to:", o: ["Preserve cell morphology", "Lysed the cells", "Prevent staining", "Make the film thicker"], a: 0, w: "Fixation preserves cell morphology in the thin film." },
-    { q: "The thick film is not fixed so that:", o: ["The film dries faster", "The red cells lyse and release parasites", "The stain penetrates faster", "The white cells are preserved"], a: 1, w: "Without fixation, the red cells lyse during staining and release parasites." },
-    { q: "The buffer pH for Romanowsky staining is usually:", o: ["3.0-4.0", "6.4-7.2", "8.0-9.0", "10.0-11.0"], a: 1, w: "The buffer pH is usually 6.4 to 7.2." },
-    { q: "If the buffer is too acidic, the film appears:", o: ["Too blue", "Too pink", "Too dark", "Colourless"], a: 1, w: "An acidic buffer makes the film appear too pink." },
-    { q: "The combined thick and thin film method is particularly useful for:", o: ["Routine blood counts", "Malaria diagnosis", "Coagulation testing", "Glucose testing"], a: 1, w: "The thick and thin method is standard for malaria diagnosis." },
-
-    // ===== Note 6 (Q26-30): quality assessment =====
-    { q: "A good thin film should have:", o: ["Cells overlapping heavily", "Cells spread in a single layer with minimal overlap", "No cells visible", "Only white cells"], a: 1, w: "A good thin film has cells spread in a single layer with minimal overlap." },
-    { q: "A film that extends to the edges of the slide is:", o: ["Ideal", "A fault, because it leaves no margin for handling", "Required for staining", "Better for examination"], a: 1, w: "A good film leaves margins for handling." },
-    { q: "Chatter or ridges on a thin film are caused by:", o: ["Too small a drop", "Uneven pressure, dirty spreader, or too large a drop", "Too fast a push", "Too shallow an angle"], a: 1, w: "Chatter is caused by uneven pressure, a dirty spreader, or too large a drop." },
-    { q: "A thick film that flakes off during staining is likely:", o: ["Too thin", "Too thick or unevenly spread", "Properly made", "Fixed with methanol"], a: 1, w: "A thick film that flakes is too thick or unevenly spread." },
-    { q: "The first step in examining any blood film is:", o: ["Oil immersion immediately", "Assessment of the film's quality", "Counting platelets", "Staining the film"], a: 1, w: "The film's quality should be assessed before detailed examination." },
-
-    // ===== Note 7 (Q31-35): examination =====
-    { q: "A blood film should first be examined at:", o: ["Oil immersion", "Low power", "High power", "Any magnification"], a: 1, w: "A blood film should first be examined at low power to assess quality and locate the best area." },
-    { q: "The area of the thin film best for detailed examination is:", o: ["The head", "The body and tail, where cells are in a single layer", "The very edge", "Any area"], a: 1, w: "The body and tail of the thin film, where cells are in a single layer, are best for examination." },
-    { q: "In examining a thin film, which cells are usually assessed first?", o: ["Red cells", "White cells", "Platelets", "Parasites"], a: 0, w: "The red cells are usually assessed first." },
-    { q: "A thick film is examined at oil immersion to:", o: ["Count red cells", "Look for parasites against a pale background", "Measure platelet size", "Assess cell morphology"], a: 1, w: "The thick film is examined at oil immersion for parasite detection." },
-    { q: "Malaria parasitaemia can be reported as:", o: ["Only the presence or absence of parasites", "Parasites per microlitre, per high-power field, or percentage of red cells parasitised", "Only the species of parasite", "Only the stage of the parasite"], a: 1, w: "Parasitaemia can be reported in several ways, including parasites per microlitre." },
-
-    // ===== Note 8 (Q36-40): faults and artefacts =====
-    { q: "A thin film that is too pink suggests:", o: ["Buffer too alkaline", "Buffer too acidic", "Staining time too long", "Stain too old"], a: 1, w: "A pink film suggests the buffer is too acidic." },
-    { q: "A thin film that is too blue suggests:", o: ["Buffer too acidic", "Buffer too alkaline", "Staining time too short", "Film too thin"], a: 1, w: "A blue film suggests the buffer is too alkaline." },
-    { q: "Water artefact on a blood film is caused by:", o: ["Too much stain", "Inadequate drying or poor draining after washing", "Too long staining", "Too old stain"], a: 1, w: "Water artefact is caused by inadequate drying or poor draining." },
-    { q: "A fixed thick film is a problem because:", o: ["It dries too slowly", "The red cells do not lyse and parasites are hidden", "It stains too darkly", "It flakes off"], a: 1, w: "Fixation prevents red cell lysis and hides parasites." },
-    { q: "A faulty blood film should be:", o: ["Examined anyway", "Discarded and a new one prepared", "Stained again", "Examined at low power only"], a: 1, w: "A faulty film should be discarded and a new one prepared." },
-
-    // ===== Note 9 (Q41-45): clinical significance =====
-    { q: "The blood film is essential for diagnosing:", o: ["Only anaemia", "Only leukaemia", "A wide range of haematological and parasitic conditions", "Only infections"], a: 2, w: "The film is essential for diagnosing a wide range of conditions." },
-    { q: "Microcytic hypochromic red cells on a blood film suggest:", o: ["B12 deficiency", "Iron deficiency", "Sickle cell disease", "Hereditary spherocytosis"], a: 1, w: "Microcytic hypochromic cells suggest iron deficiency." },
-    { q: "Blast cells on a blood film suggest:", o: ["Acute leukaemia", "Chronic infection", "Iron deficiency", "Haemophilia"], a: 0, w: "Blast cells suggest acute leukaemia." },
-    { q: "Sickle cells on a blood film suggest:", o: ["Iron deficiency", "Sickle cell disease", "B12 deficiency", "Thalassaemia only"], a: 1, w: "Sickle cells suggest sickle cell disease." },
-    { q: "Platelet clumping on a blood film is important because it can:", o: ["Increase platelet count", "Falsely lower the platelet count (pseudothrombocytopenia)", "Cause bleeding", "Improve staining"], a: 1, w: "Platelet clumping can falsely lower the automated platelet count." },
-
-    // ===== Note 10 (Q46-50): consolidation =====
-    { q: "The two types of blood film are:", o: ["Fresh and fixed", "Thin and thick", "Wet and dry", "Stained and unstained"], a: 1, w: "Thin and thick are the two types of blood film." },
-    { q: "The thick film is best for:", o: ["Differential counts", "Parasite detection", "Red cell morphology", "Platelet counts"], a: 1, w: "The thick film is best for parasite detection." },
-    { q: "The thick film must NOT be fixed because:", o: ["It is not necessary", "Fixation prevents red cell lysis", "It is too thick", "It is too thin"], a: 1, w: "Fixation prevents the red cell lysis needed for parasite detection." },
-    { q: "A good thin film has:", o: ["Cells overlapping heavily", "A head, body and tail with cells in a single layer", "No cells", "Cells only at the edges"], a: 1, w: "A good thin film has a head, body and tail with cells in a single layer." },
-    { q: "Both thick and thin films are usually prepared together for:", o: ["Routine blood counts", "Malaria diagnosis", "Coagulation testing", "Glucose testing"], a: 1, w: "The combination is standard for malaria diagnosis." }
+    { q: "Which Romanowsky stain is most commonly used in the UK and Commonwealth?", o: ["Giemsa", "Wright", "Leishman", "Field's"], a: 2, w: "Leishman stain is widely used in the UK and Commonwealth." },
+    { q: "Which Romanowsky stain is preferred for parasites such as malaria?", o: ["Giemsa", "Leishman", "Wright", "May-Grünwald"], a: 0, w: "Giemsa stain is the stain of choice for parasites." },
+    { q: "Field's stain is particularly useful because it is:", o: ["Slow and detailed", "Rapid, for field conditions", "Only for bone marrow", "Only for thick films"], a: 1, w: "Field's stain is very fast, useful for rapid malaria diagnosis in field conditions." },
+    { q: "May-Grünwald-Giemsa (MGG) is a standard stain for:", o: ["Bacterial cultures", "Urine sediment", "Bone marrow and haematology", "Parasites only"], a: 2, w: "MGG provides excellent cellular detail and is a European standard for bone marrow and haematology." },
+
+    // ===== Note 4 (Q16-20): pH-dependent buffering =====
+    { q: "The optimal pH for Leishman and Wright stains is usually:", o: ["4.0-5.0", "6.4-6.8", "7.5-8.0", "8.5-9.0"], a: 1, w: "Leishman and Wright stains work best at pH 6.4-6.8." },
+    { q: "The optimal pH for Giemsa stain is usually:", o: ["5.0-5.5", "6.0-6.5", "6.8-7.2", "7.5-8.0"], a: 2, w: "Giemsa stain works best at pH 6.8-7.2." },
+    { q: "If the buffer is too acidic (low pH), the film will appear:", o: ["Too blue", "Too pink", "Too dark", "Colourless"], a: 1, w: "Acidic buffer causes red cells to stain too pink and nuclei to appear pale." },
+    { q: "If the buffer is too alkaline (high pH), the film will appear:", o: ["Too pink", "Too pale", "Too blue", "Colourless"], a: 2, w: "Alkaline buffer causes red cells to appear blue-grey and nuclei to stain too dark." },
+    { q: "The buffer used for Romanowsky staining is usually:", o: ["Acetate buffer", "Phosphate buffer", "Tris buffer", "Bicarbonate buffer"], a: 1, w: "Phosphate buffer is the standard buffer for Romanowsky staining." },
+
+    // ===== Note 5 (Q21-25): supravital stains =====
+    { q: "Supravital stains are applied to:", o: ["Fixed cells", "Living, unfixed cells", "Only paraffin sections", "Only frozen sections"], a: 1, w: "Supravital stains are applied to living, unfixed cells." },
+    { q: "The supravital stain used for the reticulocyte count is:", o: ["New methylene blue", "Eosin", "Giemsa", "Haematoxylin"], a: 0, w: "New methylene blue (or brilliant cresyl blue) stains reticulum in reticulocytes." },
+    { q: "The structure stained by new methylene blue in reticulocytes is:", o: ["DNA", "Reticulum", "Mitochondria", "Lipids"], a: 1, w: "New methylene blue stains reticulum, a network of residual RNA and organelles." },
+    { q: "Janus green B is a supravital dye that stains:", o: ["Nuclei", "Mitochondria", "Lysosomes", "Reticulum"], a: 1, w: "Janus green B stains mitochondria in living cells." },
+    { q: "Supravital preparations are not permanent because:", o: ["They are too thick", "The cells are not fixed", "They are too pale", "They require special microscopes"], a: 1, w: "Because the cells are not fixed, supravital preparations must be examined quickly and are not permanent." },
+
+    // ===== Note 6 (Q26-30): cytochemical stains =====
+    { q: "Cytochemical stains are used to:", o: ["Show cell shape only", "Detect specific chemicals or enzymes in cells", "Count reticulocytes", "Stain mitochondria in living cells"], a: 1, w: "Cytochemical stains target specific chemicals or enzymes in cells." },
+    { q: "Myeloperoxidase (MPO) staining is used to identify:", o: ["Lymphoid leukaemia", "Myeloid leukaemia", "Malaria", "Iron deficiency"], a: 1, w: "MPO stains myeloid blasts positively, helping to identify myeloid leukaemia." },
+    { q: "Which stain detects glycogen and is used in leukaemia diagnosis?", o: ["PAS", "LAP", "Perls'", "Congo red"], a: 0, w: "Periodic acid-Schiff (PAS) detects glycogen and mucosubstances, useful in leukaemia diagnosis." },
+    { q: "Leukocyte alkaline phosphatase (LAP) is useful for distinguishing:", o: ["Myeloid from lymphoid leukaemia", "Chronic myeloid leukaemia from reactive leucocytosis", "Iron deficiency from thalassaemia", "Malaria from other parasites"], a: 1, w: "LAP is low in chronic myeloid leukaemia and high in reactive leucocytosis." },
+    { q: "Perls' Prussian blue stain is used to detect:", o: ["Lipids", "Iron", "Glycogen", "Amyloid"], a: 1, w: "Perls' Prussian blue detects iron, staining haemosiderin and ferritin blue." },
+
+    // ===== Note 7 (Q31-35): staining technique =====
+    { q: "In Romanowsky staining, fixation of the blood film is achieved by:", o: ["Heating the slide", "Covering with undiluted stain (contains methanol)", "Using formalin vapour", "Freezing"], a: 1, w: "The methanol in the undiluted stain fixes the film." },
+    { q: "After fixation, the Romanowsky stain is diluted with:", o: ["Distilled water", "Buffer solution", "Alcohol", "Acetone"], a: 1, w: "Buffer solution is added to dilute the stain and control pH." },
+    { q: "The recommended staining time for Leishman stain is typically:", o: ["10 seconds", "5-15 minutes", "1 hour", "24 hours"], a: 1, w: "Leishman stain is typically applied for 5-15 minutes." },
+    { q: "For supravital staining (reticulocyte count), the blood is mixed with dye and incubated for:", o: ["1 minute", "15-30 minutes", "2 hours", "24 hours"], a: 1, w: "Incubation for 15-30 minutes allows the dye to be taken up by living cells." },
+    { q: "Which family of stains is often still performed manually because of specific handling requirements?", o: ["Romanowsky stains", "Automated stains", "Cytochemical and supravital stains", "Wright stain"], a: 2, w: "Cytochemical and supravital stains often require manual handling and controls." },
+
+    // ===== Note 8 (Q36-40): sources of error and quality control =====
+    { q: "A film that is too pink is most likely due to:", o: ["Alkaline buffer", "Acidic buffer", "Too long staining", "Contaminated stain"], a: 1, w: "Acidic buffer (low pH) causes excessive pink staining." },
+    { q: "A film that is too blue is most likely due to:", o: ["Acidic buffer", "Alkaline buffer", "Too short staining", "Water artefact"], a: 1, w: "Alkaline buffer (high pH) causes excessive blue staining." },
+    { q: "Which of the following is a source of error in supravital staining?", o: ["Incorrect incubation time", "Incorrect fixative", "Too much buffer", "Paraffin embedding"], a: 0, w: "Incorrect incubation time can cause incomplete or over-staining in supravital preparations." },
+    { q: "Positive and negative controls are especially important for:", o: ["Romanowsky stains", "Supravital stains", "Cytochemical stains", "Automated stainers"], a: 2, w: "Cytochemical stains require positive and negative controls to validate results." },
+    { q: "A daily control slide is used in quality control to:", o: ["Calibrate the microscope", "Check that staining is correct", "Measure pH", "Measure temperature"], a: 1, w: "The control slide confirms that the staining process is producing correct colours and detail." },
+
+    // ===== Note 9 (Q41-45): automated staining =====
+    { q: "Automated stainers offer the greatest advantage in terms of:", o: ["Cost", "Reproducibility and consistency", "Flexibility", "Speed only"], a: 1, w: "Automated stainers provide consistent, reproducible staining from slide to slide." },
+    { q: "Which type of automated stainer dips slides into successive baths?", o: ["Flat-bed stainer", "Spray stainer", "Dip-and-dry stainer", "Continuous-flow stainer"], a: 2, w: "Dip-and-dry stainers move slides through successive baths of reagent." },
+    { q: "A limitation of automated staining is:", o: ["Poor reproducibility", "Slow speed", "Less flexibility for special stains", "High variability"], a: 2, w: "Automated stainers may be less flexible for unusual samples or special stains." },
+    { q: "Quality control for automated stainers:", o: ["Is not necessary", "Is only required once a year", "Remains essential", "Is only for cytochemical stains"], a: 2, w: "Quality control remains essential - automated stainers can drift and their output must be checked." },
+    { q: "Which of the following is NOT an advantage of automated staining?", o: ["Standardisation", "Reduced handling of reagents", "Greater flexibility", "Higher throughput"], a: 2, w: "Greater flexibility is not an advantage of automated staining; manual methods are more flexible." },
+
+    // ===== Note 10 (Q46-50): consolidation - clinical application and integration =====
+    { q: "To distinguish myeloid from lymphoid leukaemia, the most useful cytochemical stains are:", o: ["MPO and Sudan Black B", "PAS and Congo red", "Perls' and reticulin", "Giemsa and Wright"], a: 0, w: "MPO and Sudan Black B stain myeloid blasts positively, helping distinguish myeloid from lymphoid leukaemia." },
+    { q: "Romanowsky stains are essential in leukaemia diagnosis because they:", o: ["Identify the lineage", "Show cell morphology and suggest the diagnosis", "Detect specific enzymes", "Stain reticulum"], a: 1, w: "Romanowsky stains show cell morphology and provide the first indication of leukaemia." },
+    { q: "Cytochemical stains are needed in addition to Romanowsky stains because:", o: ["They are faster", "They reveal cell chemistry and lineage", "They are cheaper", "They do not require controls"], a: 1, w: "Cytochemical stains reveal the chemical composition and lineage of cells, which morphology alone cannot." },
+    { q: "Which of the following is NOT part of quality control for Romanowsky stains?", o: ["Daily control slide", "Buffer pH check", "Stain inspection", "Positive and negative controls with each batch"], a: 3, w: "Positive and negative controls are especially used for cytochemical stains; Romanowsky stains use control slides and buffer checks." },
+    { q: "The three families of haematological stains are important because they:", o: ["All stain the same structures", "Provide different information - morphology, living-cell behaviour, and cell chemistry", "Are interchangeable", "Are all applied to fixed cells"], a: 1, w: "The three families provide different diagnostic information and are complementary in the laboratory." }
   ]
 };
 
@@ -29774,7 +29438,6 @@ const CONTENT = {
   "hem:5": T_HEM_ANTICOAGULANTS,
   "hem:6": T_HEM_PHLEBOTOMY,
   "hem:7": T_HEM_STAINS,
-  "hem:8": T_HEM_BLOOD_SMEARS,
 
 };
 
