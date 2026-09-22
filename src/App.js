@@ -28209,8 +28209,299 @@ If those came cleanly, you understand the formation of platelets - where they co
   ]
 };
 
+// ==================== HEMATOLOGY TOPIC 5: BLOOD ANTICOAGULANTS ====================
+const T_HEM_ANTICOAGULANTS = {
+  courseId: "hem",
+  topicIndex: 5,
+  title: "Blood Anticoagulants, Mechanism of Action and Effects on Blood Cells",
+  minutes: 30,
 
+  note: [
+    {
+      q: "Blood left in a glass tube clots within minutes. Why?",
+      body: `Draw a sample of blood and leave it standing in a plain glass tube. Within a few minutes, it will thicken, then set into a gel, and finally retract into a solid clot surrounded by clear yellow serum. This is not a defect of the blood. It is the blood doing exactly what it evolved to do: sealing a wound.
 
+My Socratic question: the blood was removed from the body through a needle, not through a cut. Why does it still clot?
+
+The answer is that clotting is triggered by contact with a foreign surface. The inside of a blood vessel is lined by endothelium, a smooth, non-stick surface that actively prevents clotting. When blood leaves the vessel and touches glass or plastic, or when tissue damage occurs, the clotting cascade is activated. The blood cannot distinguish a needle puncture from a wound, so it does what it always does: it clots.
+
+For a laboratory scientist, this creates an immediate problem. A clotted sample is useless. You cannot count cells in a solid gel. You cannot measure clotting factors in a sample that has already clotted. You cannot examine platelet function if the platelets are trapped in a fibrin mesh. To perform any test on whole blood or plasma, you must first prevent the blood from clotting without damaging the cells you are trying to study.
+
+Crucial insight: anticoagulants are substances that prevent blood from clotting. In the laboratory, they are essential for every test that requires whole blood or plasma. Without them, a sample would clot within minutes and be impossible to analyse. Every tube you use in haematology contains an anticoagulant, and the choice of anticoagulant determines what tests you can perform and how reliable the results will be.`
+    },
+    {
+      q: "If clotting is a cascade of reactions, where would you interrupt it?",
+      body: `Clotting does not happen in one step. It is a cascade - a chain of enzyme reactions in which each step activates the next. Factor XII activates XI, XI activates IX, IX with its cofactor activates X, and so on, until finally fibrinogen is converted to fibrin, which forms the mesh of a clot. Interrupt any step in the cascade, and the whole process stops.
+
+My Socratic question: if you wanted to stop this cascade with a chemical, which step would you target, and why?
+
+The answer depends on what you need the sample for, but the principle is the same: you must block a step that is essential and cannot be bypassed. In practice, laboratory anticoagulants target two main points:
+
+First, they remove the calcium the cascade needs. Several steps in the cascade require calcium ions (Ca²⁺) as a cofactor. Factor IX needs calcium. Factor X needs calcium. The conversion of prothrombin to thrombin needs calcium. Calcium is essential. If you remove it from the blood, the cascade stalls. This is how the chelating anticoagulants work - EDTA, citrate, and oxalate all bind calcium and remove it from the reaction.
+
+Second, they inhibit thrombin directly. Thrombin is the enzyme that converts fibrinogen to fibrin - the final and essential step. If you inhibit thrombin, no fibrin is formed. This is how heparin works - it activates a natural inhibitor called antithrombin III, which then inactivates thrombin and other clotting factors.
+
+Crucial insight: anticoagulants work by interrupting the clotting cascade at specific points - most commonly by removing the calcium the cascade requires, or by inhibiting thrombin. Understanding the mechanism tells you which anticoagulant to use for which test, because different tests require different anticoagulants and each anticoagulant has its own effects on blood cells.`
+    },
+    {
+      q: "The chelating anticoagulants: EDTA, citrate, and oxalate. How do they remove calcium?",
+      body: `Chelation is a chemical process in which a molecule wraps around a metal ion and holds it tightly, preventing it from participating in other reactions. The word comes from the Greek chele, meaning claw - the chelator grabs the metal ion like a crab's claw. When a chelator grabs calcium in blood, the calcium is no longer available for the clotting cascade, and clotting stops.
+
+My Socratic question: if EDTA, citrate, and oxalate all remove calcium, why do laboratories use different ones for different tests?
+
+The answer is that they differ in how strongly they bind calcium, how they affect blood cells, and how they affect the tests you want to perform.
+
+EDTA (ethylenediaminetetraacetic acid) is the strongest calcium chelator. It binds calcium very tightly, so it completely prevents clotting. It is the anticoagulant of choice for most haematology tests because it preserves cell morphology better than any other anticoagulant. EDTA comes as a salt - K₂EDTA (dipotassium) or K₃EDTA (tripotassium) - and the recommended form for blood counts is K₂EDTA because it causes less cell shrinkage. It is used for full blood counts, blood films, and most routine haematology.
+
+Citrate (sodium citrate) is a weaker calcium chelator. It binds calcium reversibly, so its effect depends on concentration. It is used mainly for coagulation tests - PT, APTT, and others - because it preserves clotting factors better than EDTA does. The standard concentration is 3.2% sodium citrate, in a precise ratio of 1 part anticoagulant to 9 parts blood. If the ratio is wrong, the clotting times are wrong.
+
+Oxalate (potassium or ammonium oxalate) is also a calcium chelator. It is used in some coagulation tests and in some older methods. It is less commonly used today because EDTA and citrate have largely replaced it, but it still appears in some tests and in some teaching material.
+
+Crucial insight: EDTA preserves cells best; citrate preserves clotting factors best. That is why EDTA is used for blood counts and citrate is used for clotting tests. Using the wrong anticoagulant for a test can give completely misleading results - a blood count on a citrate tube will be inaccurate because the sample is diluted by the anticoagulant, and a clotting test on an EDTA tube will be meaningless because EDTA destroys the calcium the test needs.`
+    },
+    {
+      q: "Heparin works differently. How does it prevent clotting?",
+      body: `Heparin is not a chelator. It does not remove calcium. It works by a completely different mechanism, and that mechanism is one of the most elegant in pharmacology.
+
+My Socratic question: if heparin does not remove calcium, what does it do?
+
+The answer is that heparin activates a natural anticoagulant protein called antithrombin III. Antithrombin III circulates in the blood and slowly inactivates thrombin and other clotting factors. On its own, it is too slow to prevent clotting in a sample. Heparin binds to antithrombin III and changes its shape, making it hundreds of times more effective. The activated antithrombin III then rapidly inactivates thrombin, factor Xa, and several other clotting factors.
+
+Heparin is therefore an indirect anticoagulant. It does not inhibit clotting factors itself; it makes a natural inhibitor work faster. This is why heparin is used therapeutically (in patients) as well as in some laboratory tests. It is a fast-acting anticoagulant, and its effect can be reversed by protamine sulphate, which binds heparin and neutralises it.
+
+In the laboratory, heparin is used for certain tests - particularly some blood gas analyses, some biochemical measurements, and some special haematology tests - because it does not chelate calcium and therefore does not interfere with calcium-dependent tests. However, it is not used for routine blood counts because it can cause platelet clumping and can alter cell staining.
+
+Crucial insight: heparin works indirectly - it activates antithrombin III, which then inactivates thrombin and other clotting factors. This is different from EDTA, citrate, and oxalate, which work directly by removing calcium. The different mechanism explains why heparin is used for different tests and why its effects on blood cells differ from those of the chelating anticoagulants.`
+    },
+    {
+      q: "What actually happens to blood cells in each anticoagulant?",
+      body: `An anticoagulant prevents clotting, but it does not leave blood cells untouched. Each anticoagulant has its own effects on red cells, white cells, and platelets, and those effects determine what the cells look like under the microscope and what the automated analyser reports.
+
+My Socratic question: if you look at a blood film made from an EDTA tube versus a heparin tube, would you see any difference?
+
+The answer is yes. The anticoagulant changes cell morphology, and understanding these changes is essential for accurate laboratory work.
+
+EDTA effects:
+- Red cells: EDTA preserves red cell morphology very well. Cells remain disc-shaped and do not clump. This is why EDTA is the standard anticoagulant for blood films.
+- White cells: EDTA preserves white cell morphology well for most cells, but neutrophils may show slight changes if the sample is old. Platelets: EDTA can cause platelet clumping in some individuals (a phenomenon called EDTA-induced pseudothrombocytopenia), which can falsely lower the platelet count. This is a recognised problem that requires a repeat sample in citrate or heparin.
+- Other effects: EDTA can cause slight shrinkage of red cells over time, which affects MCV if the sample is analysed late.
+
+Citrate effects:
+- Red cells: Citrate dilutes the blood (1 part anticoagulant to 9 parts blood), so all cell counts are lower than in an EDTA sample unless corrected. Red cell morphology is reasonably preserved.
+- White cells: reasonably preserved, but citrate is not the preferred anticoagulant for white cell morphology.
+- Platelets: citrate preserves platelets well and is used for platelet function tests.
+- Other effects: because citrate dilutes the sample, you must use the correct fill volume. If the tube is underfilled, there is too much anticoagulant relative to blood, and all clotting times are falsely prolonged.
+
+Heparin effects:
+- Red cells: heparin can cause red cell agglutination and can interfere with Romanowsky staining, producing a blue background on blood films.
+- White cells: heparin can cause white cell clumping and can alter staining.
+- Platelets: heparin can cause platelet activation and clumping, which is why it is not used for platelet counts.
+- Other effects: heparin is the anticoagulant of choice for some biochemical tests and blood gases.
+
+Oxalate effects:
+- Oxalate can cause red cell shrinkage and can alter cell morphology. It is less commonly used today.
+
+Crucial insight: every anticoagulant changes cell morphology in some way. EDTA is the best for preserving cell shape and is the standard for blood counts and blood films. Citrate is the standard for clotting tests. Heparin is used only where its specific properties are needed. Choosing the wrong anticoagulant can produce artefactual results - and knowing the effects of each is how you avoid them.`
+    },
+    {
+      q: "The anticoagulant-to-blood ratio: why does a small error cause a large problem?",
+      body: `Every anticoagulant tube is designed to hold a specific volume of blood. The tube contains a measured amount of anticoagulant, and the blood must be added to a precise fill line. If you underfill the tube, there is too much anticoagulant relative to blood; if you overfill it, there is too little. Both cause errors.
+
+My Socratic question: why does a small error in fill volume matter so much in a citrate tube?
+
+The answer is that the citrate tube contains a fixed amount of sodium citrate in a ratio of 1 part anticoagulant to 9 parts blood. If the tube is underfilled, the ratio becomes, say, 1 part anticoagulant to 7 parts blood. Now there is more citrate per millilitre of blood than intended. The extra citrate binds more calcium, and the clotting times (PT, APTT) are falsely prolonged. The laboratory may report an abnormal result when the patient is actually normal - or miss a genuine abnormality because the result is falsely prolonged.
+
+The same problem occurs in the opposite direction with overfilling: there is too little citrate per millilitre of blood, so not enough calcium is removed, and the sample may clot or give falsely shortened times.
+
+For EDTA tubes, the ratio also matters, but the effect is different. EDTA tubes contain an excess of EDTA - far more than needed to chelate all the calcium in the blood. This means they are more forgiving of small fill errors. A slightly underfilled EDTA tube will still prevent clotting, and the main effect is dilution of the sample, which is usually small. However, a severely underfilled EDTA tube can affect some tests.
+
+The standard fill volumes are marked on every tube. A citrate tube with a 2.0 mL fill line must be filled to that line. An EDTA tube with a 2.0 mL fill line must be filled to that line. The laboratory may reject underfilled citrate tubes because the results will be unreliable.
+
+Crucial insight: the anticoagulant-to-blood ratio is critical, especially for citrate tubes used in coagulation testing. An underfilled citrate tube produces falsely prolonged clotting times, which can lead to unnecessary investigation or missed diagnosis. This is why laboratories check fill volumes and reject samples that do not meet the required ratio.`
+    },
+    {
+      q: "Different tubes, different colours, different tests. How do you know which tube to use?",
+      body: `Walk into any blood collection area and you will see a rack of tubes with different coloured caps. The colours are not decoration. They are a standardised code that tells you which anticoagulant is inside and therefore which tests the tube is suitable for.
+
+My Socratic question: if you were asked to collect blood for a full blood count, a clotting screen, and a blood glucose test, which tubes would you choose, and in what order would you draw them?
+
+The answer is determined by the anticoagulant inside each tube and by the order of draw, which prevents cross-contamination between tubes.
+
+The main tube colours and their contents:
+- Purple (lavender) top: contains EDTA. Used for full blood count, blood film, reticulocyte count, and most haematology tests. This is the tube you use for a full blood count.
+- Light blue top: contains sodium citrate. Used for coagulation tests - PT, APTT, INR, fibrinogen, D-dimer, and clotting factor assays. This is the tube you use for a clotting screen.
+- Green top: contains heparin. Used for some biochemical tests, blood gases, and certain special tests. It is not used for routine haematology.
+- Grey top: contains potassium oxalate and sodium fluoride. Used for glucose and lactate tests, because fluoride inhibits glycolysis and preserves glucose. Not used for haematology.
+- Red top: contains no anticoagulant. Used for serum tests (biochemistry, serology). Blood clots in this tube, and the serum is separated. Not used for haematology.
+- Yellow top: contains acid citrate dextrose (ACD) or sodium polyanethol sulfonate (SPS). Used for blood culture (SPS) or special tests like HLA typing or DNA studies (ACD).
+
+The order of draw matters because additives from one tube can contaminate the next. The standard order is: blood culture bottles first, then citrate (light blue), then serum (red), then heparin (green), then EDTA (purple), then fluoride/oxalate (grey). This order prevents anticoagulants like EDTA or citrate from contaminating tubes drawn later, which could affect their results.
+
+Crucial insight: the tube colour tells you what is inside, and what is inside determines which tests are valid. Using the wrong tube for a test is one of the most common pre-analytical errors in the laboratory. A full blood count on a citrate tube will be inaccurate; a clotting test on an EDTA tube will be meaningless. Knowing the colour code and the order of draw is a fundamental laboratory skill.`
+    },
+    {
+      q: "What goes wrong when anticoagulants are used incorrectly?",
+      body: `Anticoagulants prevent clotting, but they can also introduce errors if used incorrectly. The consequences range from mildly inaccurate results to completely misleading ones, and some can affect patient care.
+
+My Socratic question: what are the main problems that can arise from incorrect anticoagulant use, and how does the laboratory detect them?
+
+The answer is that there are several recognised errors, each with its own cause and its own detection.
+
+Underfilled citrate tubes: as discussed, this causes falsely prolonged clotting times. Detection: the laboratory checks the fill volume against the fill line. Tubes that are underfilled by more than 10% are usually rejected.
+
+Overfilled EDTA tubes: this is less of a problem because EDTA is in excess, but it can cause dilution errors if the tube is very overfilled. Detection: usually not an issue, but severe overfilling may cause slight inaccuracy.
+
+Wrong anticoagulant for the test: a full blood count on a citrate tube will give falsely low counts because the sample is diluted. A clotting test on an EDTA tube will give meaningless results because the calcium has been removed irreversibly. Detection: the laboratory checks the tube colour and rejects samples where the anticoagulant is wrong for the requested test.
+
+Platelet clumping in EDTA: this is a specific problem where EDTA causes platelets to clump in some individuals, leading to a falsely low platelet count (pseudothrombocytopenia). Detection: the blood film shows platelet clumps, and the automated count is low but the film shows adequate platelets. The solution is to repeat the sample in a citrate or heparin tube.
+
+Clotting in the tube: if the sample is not mixed properly with the anticoagulant, a small clot may form. This is a serious problem because it consumes platelets and clotting factors, giving falsely low results. Detection: the laboratory examines the sample for visible clots. Any sample with a clot is rejected.
+
+Haemolysis: some anticoagulants (especially oxalate) can cause red cell shrinkage or haemolysis if the sample is mishandled. Detection: the sample is inspected for haemolysis, and the analyser may flag it.
+
+Crucial insight: most anticoagulant-related errors are detected by careful inspection of the sample and by correlation with the clinical picture. The blood film is a powerful tool - it can reveal platelet clumping, clots, and haemolysis that the analyser might miss. A laboratory scientist who understands anticoagulant errors knows when to question a result and when to request a repeat sample.`
+    },
+    {
+      q: "How do you choose the right anticoagulant for a specific test?",
+      body: `The choice of anticoagulant is not arbitrary. It is determined by three questions: what are you measuring, what does the anticoagulant do to that measurement, and what does the anticoagulant do to the cells?
+
+My Socratic question: for each of these tests - full blood count, PT/APTT, blood glucose, blood gases, platelet aggregation - which anticoagulant would you choose, and why?
+
+The answer follows from the properties of each anticoagulant.
+
+Full blood count: EDTA. EDTA preserves cell morphology best, does not dilute the sample, and is compatible with automated analysers. It allows accurate counting of red cells, white cells, and platelets. It is the standard.
+
+PT/APTT (clotting screen): citrate. Citrate preserves clotting factors, and the calcium can be restored by adding calcium chloride in the test, allowing the clotting cascade to proceed under controlled conditions. EDTA would irreversibly remove calcium and destroy the test.
+
+Blood glucose: fluoride/oxalate (grey top). Fluoride inhibits the enzyme enolase, which is needed for glycolysis. This prevents the cells in the sample from consuming glucose, so the glucose concentration remains stable for hours. EDTA and citrate do not prevent glycolysis, so glucose would fall if the sample is delayed.
+
+Blood gases: heparin. Heparin does not chelate calcium, so it does not interfere with the ionised calcium measurement. It also does not dilute the sample significantly. Heparin is the standard for arterial blood gas samples.
+
+Platelet aggregation: citrate or heparin, depending on the protocol. Citrate is commonly used because it preserves platelet function, but the calcium concentration must be controlled. Heparin is used in some protocols.
+
+Coagulation factor assays: citrate. As with PT/APTT, citrate is required to preserve factor activity and allow controlled recalcification.
+
+Crucial insight: the choice of anticoagulant is determined by what you are measuring. If you are measuring cells, use EDTA. If you are measuring clotting, use citrate. If you are measuring glucose, use fluoride/oxalate. If you are measuring blood gases, use heparin. Using the wrong anticoagulant is not just a minor error - it can invalidate the test entirely.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for blood anticoagulants, in five lines.
+
+The purpose: anticoagulants prevent blood from clotting in vitro, allowing laboratory tests to be performed on whole blood or plasma. Without them, samples would clot within minutes.
+
+The mechanisms: chelating anticoagulants (EDTA, citrate, oxalate) remove calcium, which the clotting cascade requires. Heparin activates antithrombin III, which then inactivates thrombin and other clotting factors. Both interrupt the cascade, but at different points and by different mechanisms.
+
+The applications: EDTA is the anticoagulant of choice for blood counts and blood films because it preserves cell morphology. Citrate is the anticoagulant for coagulation tests because it preserves clotting factors and allows controlled recalcification. Heparin is used for blood gases and certain biochemical tests. Oxalate/fluoride is used for glucose.
+
+The effects on cells: each anticoagulant affects cell morphology differently. EDTA preserves cells best. Citrate dilutes the sample. Heparin can cause platelet and white cell clumping. Oxalate can cause red cell shrinkage. Knowing these effects is essential for interpreting results.
+
+The errors: underfilled citrate tubes cause falsely prolonged clotting times. Wrong anticoagulant for the test invalidates the result. Platelet clumping in EDTA causes pseudothrombocytopenia. Clots in the tube consume cells and factors. The laboratory detects these by inspecting the sample and the blood film.
+
+Now your final test. A 55-year-old man is admitted with chest pain. The doctor requests a full blood count, a clotting screen (PT/APTT), and a blood glucose. The phlebotomist draws blood into a purple-top (EDTA) tube, then a light blue-top (citrate) tube, then a grey-top (fluoride/oxalate) tube.
+
+Question one: which tube should be used for each test, and why?
+Question two: what is the correct order of draw for these three tubes, and why does the order matter?
+Question three: if the citrate tube is underfilled, what effect would this have on the PT/APTT results, and why?
+
+Work them through before reading on.
+
+My answers. One: the full blood count should be performed on the EDTA (purple) tube, because EDTA preserves cell morphology and does not dilute the sample. The clotting screen (PT/APTT) should be performed on the citrate (light blue) tube, because citrate preserves clotting factors and allows controlled recalcification in the test. The blood glucose should be performed on the fluoride/oxalate (grey) tube, because fluoride inhibits glycolysis and preserves glucose. Two: the correct order of draw is citrate (light blue) first, then EDTA (purple), then fluoride/oxalate (grey). The order matters because additives from one tube can contaminate the next. If EDTA were drawn before citrate, traces of EDTA could contaminate the citrate tube and affect the clotting tests. Drawing citrate first prevents this. Three: an underfilled citrate tube contains too much anticoagulant relative to blood. The excess citrate binds more calcium than intended, so the clotting times (PT/APTT) are falsely prolonged. The laboratory may reject the tube or report the result with a comment, because the ratio is critical for accurate coagulation testing.
+
+If those came cleanly, you understand the anticoagulants used in haematology - how they work, what they do to blood cells, and how to choose the right one for each test. This is the foundation for every sample you will ever analyse in the haematology laboratory.`
+    }
+  ],
+
+  theory: [
+    { q: "Define anticoagulant and explain why they are necessary in the haematology laboratory.", a: "An anticoagulant is a substance that prevents blood from clotting. They are necessary because blood removed from the body clots within minutes when it contacts a foreign surface, and a clotted sample cannot be analysed. Anticoagulants allow blood counts, clotting tests, and other haematological investigations to be performed on whole blood or plasma." },
+    { q: "Describe the mechanism of action of chelating anticoagulants.", a: "Chelating anticoagulants (EDTA, citrate, oxalate) work by binding calcium ions (Ca²⁺) and removing them from the clotting cascade. Calcium is required as a cofactor for several steps in the cascade, including the activation of factor IX, factor X, and the conversion of prothrombin to thrombin. Without calcium, the cascade stalls and clotting is prevented." },
+    { q: "Describe the mechanism of action of heparin.", a: "Heparin is an indirect anticoagulant. It binds to antithrombin III and changes its shape, making it hundreds of times more effective at inactivating thrombin, factor Xa, and several other clotting factors. Heparin does not remove calcium, so it is compatible with calcium-dependent tests." },
+    { q: "State the anticoagulant of choice for a full blood count and explain why.", a: "EDTA (ethylenediaminetetraacetic acid), usually as K₂EDTA, is the anticoagulant of choice for a full blood count. It preserves red cell, white cell, and platelet morphology better than any other anticoagulant, does not significantly dilute the sample, and is compatible with automated analysers." },
+    { q: "State the anticoagulant of choice for coagulation tests and explain why.", a: "Sodium citrate (3.2%) is the anticoagulant of choice for coagulation tests. It preserves clotting factor activity, and the calcium it chelates can be restored by adding calcium chloride in the test, allowing the clotting cascade to proceed under controlled conditions. The standard ratio is 1 part citrate to 9 parts blood." },
+    { q: "Explain the importance of the anticoagulant-to-blood ratio in citrate tubes.", a: "Citrate tubes must be filled to the marked fill line to maintain the 1:9 ratio. If underfilled, there is too much citrate relative to blood, so excess calcium is chelated and clotting times (PT, APTT) are falsely prolonged. If overfilled, there is too little citrate, and the sample may clot or give falsely shortened times. The ratio is critical for accurate coagulation testing." },
+    { q: "Name the main blood collection tubes by colour and state the anticoagulant in each.", a: "Purple/lavender top: EDTA. Light blue top: sodium citrate. Green top: heparin. Grey top: potassium oxalate and sodium fluoride. Red top: no anticoagulant (serum). Yellow top: ACD or SPS." },
+    { q: "Describe the effects of EDTA on blood cell morphology.", a: "EDTA preserves red cell morphology very well (cells remain disc-shaped and do not clump), preserves white cell morphology for most cells, and is the standard anticoagulant for blood films. However, EDTA can cause platelet clumping in some individuals (pseudothrombocytopenia), which can falsely lower the platelet count." },
+    { q: "Describe the effects of heparin on blood cell morphology.", a: "Heparin can cause red cell agglutination, white cell clumping, and platelet activation and clumping. It can also interfere with Romanowsky staining, producing a blue background on blood films. This is why heparin is not used for routine blood counts or blood films." },
+    { q: "What is pseudothrombocytopenia and how is it detected?", a: "Pseudothrombocytopenia is a falsely low platelet count caused by platelet clumping in EDTA tubes in some individuals. It is detected by examining the blood film, which shows platelet clumps, while the automated count is low but the film shows adequate platelets. The solution is to repeat the sample in a citrate or heparin tube." }
+  ],
+
+  videos: [
+    { channel: "Hematology", title: "Blood Anticoagulants - Mechanisms and Laboratory Use", note: "How EDTA, citrate, heparin and oxalate prevent clotting, and which tests each is used for.", url: "https://www.youtube.com/results?search_query=blood+anticoagulants+mechanism+EDTA+citrate+heparin" },
+    { channel: "Hematology", title: "Order of Draw and Tube Selection in Phlebotomy", note: "The colour-coded tube system and the correct order of draw to avoid contamination.", url: "https://www.youtube.com/results?search_query=order+of+draw+phlebotomy+tube+colors" },
+    { channel: "Hematology", title: "Effects of Anticoagulants on Blood Cell Morphology", note: "How each anticoagulant alters red cell, white cell and platelet appearance under the microscope.", url: "https://www.youtube.com/results?search_query=anticoagulant+effects+blood+cell+morphology+hematology" }
+  ],
+
+  mcqs: [
+    // ===== Note 1 (Q1-5): what anticoagulants are =====
+    { q: "An anticoagulant is best defined as a substance that:", o: ["Destroys blood cells", "Prevents blood from clotting", "Promotes clotting", "Carries oxygen"], a: 1, w: "An anticoagulant prevents blood from clotting." },
+    { q: "Blood left in a plain glass tube clots because:", o: ["The tube contains an anticoagulant", "Contact with a foreign surface activates the clotting cascade", "The blood is infected", "The blood is old"], a: 1, w: "Contact with a foreign surface (glass or plastic) activates the clotting cascade." },
+    { q: "The main reason anticoagulants are essential in haematology is:", o: ["They improve cell colour", "A clotted sample cannot be analysed", "They increase platelet count", "They make blood thinner"], a: 1, w: "A clotted sample cannot be analysed for cell counts or clotting factors." },
+    { q: "Clotting is best described as:", o: ["A single-step reaction", "A cascade of enzyme reactions", "A physical change only", "A reversible process"], a: 1, w: "Clotting is a cascade in which each step activates the next." },
+    { q: "The final step of the clotting cascade is:", o: ["Conversion of fibrinogen to fibrin", "Activation of factor XII", "Release of platelets", "Destruction of red cells"], a: 0, w: "The final step is the conversion of fibrinogen to fibrin, which forms the clot." },
+
+    // ===== Note 2 (Q6-10): mechanisms =====
+    { q: "Chelating anticoagulants work by:", o: ["Removing calcium from the clotting cascade", "Inhibiting thrombin directly", "Activating antithrombin III", "Destroying fibrinogen"], a: 0, w: "Chelating anticoagulants remove calcium, which is required for several steps in the cascade." },
+    { q: "Which anticoagulant works by activating antithrombin III?", o: ["EDTA", "Citrate", "Heparin", "Oxalate"], a: 2, w: "Heparin activates antithrombin III, which then inactivates thrombin and other factors." },
+    { q: "Calcium is required in the clotting cascade as a:", o: ["Substrate", "Cofactor", "Product", "Inhibitor"], a: 1, w: "Calcium acts as a cofactor for several steps, including factor IX and X activation." },
+    { q: "An indirect anticoagulant is one that:", o: ["Does not inhibit clotting factors itself but makes a natural inhibitor work faster", "Removes calcium directly", "Destroys platelets", "Promotes clotting"], a: 0, w: "Heparin is an indirect anticoagulant - it activates antithrombin III." },
+    { q: "Which of the following is NOT a chelating anticoagulant?", o: ["EDTA", "Citrate", "Heparin", "Oxalate"], a: 2, w: "Heparin is not a chelator - it works by activating antithrombin III." },
+
+    // ===== Note 3 (Q11-15): EDTA, citrate, oxalate =====
+    { q: "EDTA is the strongest chelator of:", o: ["Iron", "Calcium", "Sodium", "Potassium"], a: 1, w: "EDTA binds calcium very tightly, completely preventing clotting." },
+    { q: "The recommended form of EDTA for blood counts is:", o: ["K₂EDTA", "K₃EDTA", "Na₂EDTA", "Na₃EDTA"], a: 0, w: "K₂EDTA is recommended because it causes less cell shrinkage than K₃EDTA." },
+    { q: "Citrate is used mainly for:", o: ["Blood counts", "Coagulation tests", "Blood gases", "Glucose tests"], a: 1, w: "Citrate is the anticoagulant of choice for coagulation tests." },
+    { q: "The standard concentration of sodium citrate for coagulation testing is:", o: ["1.0%", "2.0%", "3.2%", "5.0%"], a: 2, w: "3.2% sodium citrate is the standard concentration." },
+    { q: "Oxalate is less commonly used today because:", o: ["It is too expensive", "It has largely been replaced by EDTA and citrate", "It does not prevent clotting", "It is toxic"], a: 1, w: "EDTA and citrate have largely replaced oxalate for most purposes." },
+
+    // ===== Note 4 (Q16-20): heparin =====
+    { q: "Heparin works by:", o: ["Removing calcium", "Activating antithrombin III", "Destroying fibrinogen", "Blocking platelets"], a: 1, w: "Heparin activates antithrombin III, which inactivates thrombin and other factors." },
+    { q: "Heparin's effect can be reversed by:", o: ["Calcium chloride", "Protamine sulphate", "Vitamin K", "EDTA"], a: 1, w: "Protamine sulphate binds heparin and neutralises its effect." },
+    { q: "Heparin is used in the laboratory for:", o: ["Routine blood counts", "Blood gases and certain biochemical tests", "Coagulation screens", "Blood films"], a: 1, w: "Heparin is used for blood gases and some biochemical tests." },
+    { q: "Heparin is not used for routine blood counts because:", o: ["It is too expensive", "It can cause platelet and white cell clumping", "It does not prevent clotting", "It is toxic"], a: 1, w: "Heparin can cause clumping and interferes with staining." },
+    { q: "The main difference between heparin and chelating anticoagulants is:", o: ["Heparin is more expensive", "Heparin does not remove calcium", "Heparin is weaker", "Heparin is only for animals"], a: 1, w: "Heparin does not remove calcium - it works indirectly through antithrombin III." },
+
+    // ===== Note 5 (Q21-25): effects on blood cells =====
+    { q: "The anticoagulant that best preserves red cell morphology is:", o: ["EDTA", "Citrate", "Heparin", "Oxalate"], a: 0, w: "EDTA preserves red cell morphology very well - that is why it is used for blood films." },
+    { q: "Citrate affects blood counts by:", o: ["Increasing cell counts", "Diluting the sample so counts are lower", "Destroying platelets", "Causing haemolysis"], a: 1, w: "Citrate dilutes the sample (1 part to 9 parts blood), so counts are lower unless corrected." },
+    { q: "Heparin can cause which of the following on a blood film?", o: ["Red cell agglutination and blue background", "Improved staining", "Increased platelets", "Sharper nuclear detail"], a: 0, w: "Heparin can cause red cell agglutination and interferes with Romanowsky staining." },
+    { q: "EDTA-induced pseudothrombocytopenia is caused by:", o: ["Platelet clumping in EDTA tubes", "Platelet destruction by EDTA", "Red cell lysis", "White cell clumping"], a: 0, w: "EDTA can cause platelet clumping in some individuals, falsely lowering the platelet count." },
+    { q: "Oxalate can cause which effect on red cells?", o: ["Swelling", "Shrinkage and altered morphology", "No effect", "Increased haemoglobin"], a: 1, w: "Oxalate can cause red cell shrinkage and altered morphology." },
+
+    // ===== Note 6 (Q26-30): ratio and fill volume =====
+    { q: "The standard anticoagulant-to-blood ratio in citrate tubes is:", o: ["1:4", "1:9", "1:1", "1:19"], a: 1, w: "Citrate tubes use 1 part anticoagulant to 9 parts blood." },
+    { q: "An underfilled citrate tube causes:", o: ["Falsely shortened clotting times", "Falsely prolonged clotting times", "No effect", "Clotting in the tube"], a: 1, w: "Underfilling means too much citrate, which chelates excess calcium and prolongs clotting times." },
+    { q: "An overfilled citrate tube can cause:", o: ["The sample to clot or give falsely shortened times", "Falsely prolonged times", "No effect", "Increased platelets"], a: 0, w: "Overfilling means too little citrate, so the sample may clot or give falsely shortened times." },
+    { q: "EDTA tubes are more forgiving of fill errors because:", o: ["EDTA is a weaker anticoagulant", "EDTA is present in excess relative to the calcium", "EDTA does not chelate calcium", "EDTA evaporates"], a: 1, w: "EDTA tubes contain excess EDTA, so small fill errors do not prevent clotting." },
+    { q: "The laboratory typically rejects citrate tubes that are underfilled by more than:", o: ["1%", "10%", "25%", "50%"], a: 1, w: "Tubes underfilled by more than about 10% are usually rejected for coagulation testing." },
+
+    // ===== Note 7 (Q31-35): tube colours and selection =====
+    { q: "The purple/lavender top tube contains:", o: ["EDTA", "Citrate", "Heparin", "Fluoride/oxalate"], a: 0, w: "Purple top tubes contain EDTA." },
+    { q: "The light blue top tube contains:", o: ["EDTA", "Sodium citrate", "Heparin", "Fluoride/oxalate"], a: 1, w: "Light blue top tubes contain sodium citrate." },
+    { q: "The grey top tube contains:", o: ["EDTA", "Citrate", "Heparin", "Potassium oxalate and sodium fluoride"], a: 3, w: "Grey top tubes contain fluoride/oxalate for glucose testing." },
+    { q: "The correct order of draw for citrate, EDTA, and fluoride tubes is:", o: ["Citrate, EDTA, fluoride", "EDTA, citrate, fluoride", "Fluoride, EDTA, citrate", "EDTA, fluoride, citrate"], a: 0, w: "The order is citrate (light blue), then EDTA (purple), then fluoride (grey)." },
+    { q: "The order of draw matters because:", o: ["It affects the colour of the sample", "Additives from one tube can contaminate the next", "It is required by law", "It affects the blood pressure"], a: 1, w: "Cross-contamination between tubes can affect test results." },
+
+    // ===== Note 8 (Q36-40): errors =====
+    { q: "A full blood count performed on a citrate tube will give:", o: ["Accurate results", "Falsely low counts due to dilution", "Falsely high counts", "No results"], a: 1, w: "Citrate dilutes the sample, so counts are lower than in an EDTA sample." },
+    { q: "A clotting test performed on an EDTA tube will give:", o: ["Accurate results", "Meaningless results because calcium has been irreversibly removed", "Falsely shortened times", "No effect"], a: 1, w: "EDTA irreversibly chelates calcium, so the clotting test cannot work." },
+    { q: "A small clot in an EDTA tube can cause:", o: ["Falsely low platelet and white cell counts", "Falsely high counts", "No effect", "Improved results"], a: 0, w: "A clot consumes platelets and white cells, lowering the counts." },
+    { q: "The best way to detect platelet clumping in EDTA is:", o: ["Automated analyser alone", "Examination of the blood film", "Repeat count on same tube", "Adding calcium"], a: 1, w: "The blood film shows platelet clumps that the analyser may not detect." },
+    { q: "If a sample is found to have a visible clot, the laboratory should:", o: ["Analyse it anyway", "Reject the sample and request a repeat", "Add anticoagulant", "Freeze it"], a: 1, w: "A clotted sample is unsuitable for analysis and should be rejected." },
+
+    // ===== Note 9 (Q41-45): anticoagulant selection =====
+    { q: "For a full blood count, the correct anticoagulant is:", o: ["EDTA", "Citrate", "Heparin", "Fluoride/oxalate"], a: 0, w: "EDTA is the anticoagulant of choice for full blood counts." },
+    { q: "For a PT/APTT clotting screen, the correct anticoagulant is:", o: ["EDTA", "Citrate", "Heparin", "Fluoride/oxalate"], a: 1, w: "Citrate is the anticoagulant of choice for coagulation tests." },
+    { q: "For a blood glucose test, the correct anticoagulant is:", o: ["EDTA", "Citrate", "Heparin", "Fluoride/oxalate"], a: 3, w: "Fluoride/oxalate inhibits glycolysis and preserves glucose." },
+    { q: "For blood gases, the correct anticoagulant is:", o: ["EDTA", "Citrate", "Heparin", "Fluoride/oxalate"], a: 2, w: "Heparin does not chelate calcium and is used for blood gases." },
+    { q: "The principle underlying anticoagulant selection is:", o: ["Use the cheapest one", "Choose based on what you are measuring and how the anticoagulant affects it", "Always use EDTA", "Use whatever is available"], a: 1, w: "The choice depends on the test and the anticoagulant's effects on that test." },
+
+    // ===== Note 10 (Q46-50): consolidation =====
+    { q: "The three main chelating anticoagulants are:", o: ["EDTA, citrate, oxalate", "Heparin, EDTA, citrate", "Oxalate, heparin, citrate", "EDTA, heparin, oxalate"], a: 0, w: "EDTA, citrate and oxalate are the three main chelating anticoagulants." },
+    { q: "The anticoagulant that works by activating antithrombin III is:", o: ["EDTA", "Citrate", "Heparin", "Oxalate"], a: 2, w: "Heparin activates antithrombin III." },
+    { q: "The best anticoagulant for preserving cell morphology for a blood film is:", o: ["EDTA", "Citrate", "Heparin", "Oxalate"], a: 0, w: "EDTA preserves cell morphology best." },
+    { q: "Pseudothrombocytopenia is a falsely low platelet count caused by:", o: ["EDTA-induced platelet clumping", "Citrate dilution", "Heparin activation", "Oxalate shrinkage"], a: 0, w: "EDTA can cause platelet clumping, falsely lowering the count." },
+    { q: "The anticoagulant-to-blood ratio is most critical for:", o: ["EDTA tubes", "Heparin tubes", "Citrate tubes", "Red top tubes"], a: 2, w: "The 1:9 ratio in citrate tubes is critical for accurate coagulation testing." }
+  ]
+};
 
 /* Registry: add each built topic here. */
 const CONTENT = {
