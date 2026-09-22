@@ -28503,13 +28503,17 @@ If those came cleanly, you understand the anticoagulants used in haematology - h
   ]
 };
 
-// ==================== HEMATOLOGY TOPIC 6: PHLEBOTOMY ====================
+/* --------------------------- hem:6 --------------------------- */
+// Objectives covered: blood sample collection (phlebotomy), handling and
+// storage of blood. Venipuncture, capillary puncture, arterial blood
+// sampling. Patient identification, safety, equipment, order of draw,
+// troubleshooting, specimen rejection criteria.
+// 10 note headers -> 5 MCQs each -> exactly 50 MCQs.
 const T_HEM_PHLEBOTOMY = {
   courseId: "hem",
   topicIndex: 6,
   title: "Blood Sample Collection (Phlebotomy), Handling and Storage of Blood",
   minutes: 30,
-
   note: [
     {
       q: "Every laboratory result begins with a needle. Why does the collection step matter so much?",
@@ -28529,11 +28533,11 @@ My Socratic question: if you needed a full blood count on an adult, a blood gas 
 
 The answer is no, and understanding why is the first step in phlebotomy.
 
-**Venipuncture** is the collection of blood from a vein. It is the most common method for routine blood tests - full blood counts, biochemistry, coagulation screens, blood cultures. The veins of the antecubital fossa (the inside of the elbow) are preferred because they are large, accessible, and relatively close to the surface [citation:9]. Venipuncture allows collection of relatively large volumes of blood (several millilitres to tens of millilitres), and it is the standard for most laboratory testing in adults and older children.
+Venipuncture is the collection of blood from a vein. It is the most common method for routine blood tests - full blood counts, biochemistry, coagulation screens, blood cultures. The veins of the antecubital fossa (the inside of the elbow) are preferred because they are large, accessible, and relatively close to the surface. Venipuncture allows collection of relatively large volumes of blood (several millilitres to tens of millilitres), and it is the standard for most laboratory testing in adults and older children.
 
-**Capillary puncture** (also called skin puncture or fingerstick) is the collection of a small volume of blood from a finger, heel, or earlobe. It is used when only a small volume is needed or when venipuncture is difficult or undesirable - for example, in newborns and infants, in patients with poor veins, or for point-of-care testing such as glucose monitoring [citation:17]. The volume obtained is small (typically less than 1 mL), and the blood is a mixture of arterial, venous, and capillary blood plus interstitial fluid, which can affect some results.
+Capillary puncture (also called skin puncture or fingerstick) is the collection of a small volume of blood from a finger, heel, or earlobe. It is used when only a small volume is needed or when venipuncture is difficult or undesirable - for example, in newborns and infants, in patients with poor veins, or for point-of-care testing such as glucose monitoring. The volume obtained is small (typically less than 1 mL), and the blood is a mixture of arterial, venous, and capillary blood plus interstitial fluid, which can affect some results.
 
-**Arterial puncture** is the collection of blood from an artery. It is used almost exclusively for arterial blood gas analysis, which measures oxygenation, ventilation, and acid-base status [citation:11]. The radial artery at the wrist is the preferred site because it is accessible, has good collateral circulation, and can be easily compressed if bleeding occurs [citation:11]. Arterial puncture is more painful and technically more difficult than venipuncture, and it carries a higher risk of complications, so it is reserved for specific indications.
+Arterial puncture is the collection of blood from an artery. It is used almost exclusively for arterial blood gas analysis, which measures oxygenation, ventilation, and acid-base status. The radial artery at the wrist is the preferred site because it is accessible, has good collateral circulation, and can be easily compressed if bleeding occurs. Arterial puncture is more painful and technically more difficult than venipuncture, and it carries a higher risk of complications, so it is reserved for specific indications.
 
 Crucial insight: the choice of technique is determined by the test and the patient. Venipuncture for routine blood tests, capillary puncture for small volumes or difficult veins, arterial puncture for blood gases. Using the wrong technique can produce an inadequate sample, cause unnecessary discomfort, or miss a critical diagnosis.`
     },
@@ -28545,21 +28549,21 @@ My Socratic question: the needle goes into a vein. What could possibly go wrong 
 
 The answer is that many things can go wrong, and each produces a specific problem.
 
-**Patient identification** is the first and most critical step. The patient must be identified by at least two identifiers - typically name and date of birth, or name and hospital number - before any blood is drawn [citation:16]. Misidentification leads to results attributed to the wrong patient, which can cause serious harm. Never identify a patient by the room number or the bed alone.
+Patient identification is the first and most critical step. The patient must be identified by at least two identifiers - typically name and date of birth, or name and hospital number - before any blood is drawn. Misidentification leads to results attributed to the wrong patient, which can cause serious harm. Never identify a patient by the room number or the bed alone.
 
-**Patient preparation** depends on the test. Some tests require fasting (glucose, lipids). Some require the patient to be seated or lying down (to prevent fainting). Some require the patient to avoid certain medications or foods. The phlebotomist must check the test requirements before collection.
+Patient preparation depends on the test. Some tests require fasting (glucose, lipids). Some require the patient to be seated or lying down (to prevent fainting). Some require the patient to avoid certain medications or foods. The phlebotomist must check the test requirements before collection.
 
-**Site selection** is usually the antecubital fossa. The median cubital vein is preferred because it is large, relatively fixed, and less likely to bruise. The cephalic and basilic veins are alternatives [citation:9]. Avoid areas with scars, bruises, oedema, or intravenous lines. If an IV line is present, draw from the opposite arm or distal to the line to avoid dilution and contamination [citation:1].
+Site selection is usually the antecubital fossa. The median cubital vein is preferred because it is large, relatively fixed, and less likely to bruise. The cephalic and basilic veins are alternatives. Avoid areas with scars, bruises, oedema, or intravenous lines. If an IV line is present, draw from the opposite arm or distal to the line to avoid dilution and contamination.
 
-**Tourniquet application** should be applied 7 to 10 centimetres above the puncture site and should not remain on for more than one minute [citation:16]. Prolonged tourniquet application causes stasis, which can cause haemolysis, falsely elevated potassium, and other abnormal results [citation:9].
+Tourniquet application should be applied 7 to 10 centimetres above the puncture site and should not remain on for more than one minute. Prolonged tourniquet application causes stasis, which can cause haemolysis, falsely elevated potassium, and other abnormal results.
 
-**Skin antisepsis** is performed with an appropriate disinfectant - typically chlorhexidine or isopropyl alcohol - applied in concentric circles and allowed to dry completely before puncture [citation:9]. If iodine is used, it should be removed with alcohol after drying to avoid interference with certain tests [citation:9].
+Skin antisepsis is performed with an appropriate disinfectant - typically chlorhexidine or isopropyl alcohol - applied in concentric circles and allowed to dry completely before puncture. If iodine is used, it should be removed with alcohol after drying to avoid interference with certain tests.
 
-**Needle insertion** is performed at a shallow angle (5 to 30 degrees) with the bevel facing up [citation:16]. The needle is advanced until blood flows into the tube. Once blood flows, the tourniquet is released immediately [citation:16].
+Needle insertion is performed at a shallow angle (5 to 30 degrees) with the bevel facing up. The needle is advanced until blood flows into the tube. Once blood flows, the tourniquet is released immediately.
 
-**Tube filling and mixing** follows the order of draw (see the next note). Tubes must be filled to the indicated fill line, and anticoagulant tubes must be mixed by gentle inversion immediately after collection to prevent clotting.
+Tube filling and mixing follows the order of draw (see the next note). Tubes must be filled to the indicated fill line, and anticoagulant tubes must be mixed by gentle inversion immediately after collection to prevent clotting.
 
-**Post-collection care** includes applying pressure to the puncture site until bleeding stops, checking that bleeding has ceased, and instructing the patient to keep pressure on the site for a few minutes [citation:16]. The needle is disposed of immediately in a sharps container without recapping [citation:9].
+Post-collection care includes applying pressure to the puncture site until bleeding stops, checking that bleeding has ceased, and instructing the patient to keep pressure on the site for a few minutes. The needle is disposed of immediately in a sharps container without recapping.
 
 Crucial insight: venipuncture is a sequence of steps, and every step exists to prevent a specific error. Patient identification prevents misattribution. Tourniquet time prevents haemolysis and stasis. Antisepsis prevents infection. Order of draw prevents cross-contamination. Post-collection care prevents bruising and bleeding. Skipping or rushing any step introduces a predictable error.`
     },
@@ -28569,29 +28573,29 @@ Crucial insight: venipuncture is a sequence of steps, and every step exists to p
 
 My Socratic question: a drop of blood from a finger is not the same as blood from a vein. What is different about it?
 
-The answer is that capillary blood is a mixture. It contains blood from capillaries, but also from arterioles and venules, and it is mixed with interstitial fluid (the fluid between cells) and intracellular fluid from damaged cells [citation:17]. This mixture can dilute the sample and affect results - for example, glucose and potassium may be lower, and some cellular components may be altered.
+The answer is that capillary blood is a mixture. It contains blood from capillaries, but also from arterioles and venules, and it is mixed with interstitial fluid (the fluid between cells) and intracellular fluid from damaged cells. This mixture can dilute the sample and affect results - for example, glucose and potassium may be lower, and some cellular components may be altered.
 
-**Indications for capillary puncture:**
+Indications for capillary puncture:
 - Newborns and infants (heel stick) - avoids the difficulty and risk of venipuncture
 - Patients with poor veins or difficult venous access
 - Point-of-care testing (glucose monitoring, coagulation testing)
 - Small volume requirements
-- Preservation of peripheral veins for future use [citation:17]
+- Preservation of peripheral veins for future use
 
-**Sites:**
-- Finger: the lateral side of the third, fourth, or fifth finger (not the index or thumb, which are more sensitive and more used) [citation:17]
+Sites:
+- Finger: the lateral side of the third, fourth, or fifth finger (not the index or thumb, which are more sensitive and more used)
 - Heel: in infants, the lateral or medial plantar surface of the heel
 - Earlobe: occasionally, but less commonly used
 
-**Technique:**
-- Warm the site if necessary to increase blood flow (warming the hand in warm water or using a warm pack) [citation:17]
+Technique:
+- Warm the site if necessary to increase blood flow (warming the hand in warm water or using a warm pack)
 - Clean the site with an appropriate antiseptic and allow it to dry
-- Puncture with a sterile, single-use lancet to a depth of 2.2 to 2.5 mm [citation:17]
-- Wipe away the first drop of blood (it contains interstitial fluid) with a dry gauze [citation:17]
-- Allow the blood to flow freely into the collection device - do not squeeze or milk the finger, as this causes haemolysis and contamination with tissue fluid [citation:2]
+- Puncture with a sterile, single-use lancet to a depth of 2.2 to 2.5 mm
+- Wipe away the first drop of blood (it contains interstitial fluid) with a dry gauze
+- Allow the blood to flow freely into the collection device - do not squeeze or milk the finger, as this causes haemolysis and contamination with tissue fluid
 - Apply pressure after collection and apply a dressing
 
-**Order of fill for capillary tubes:** glucose first, then haematology, then chemistry, then serum [citation:17].
+Order of fill for capillary tubes: glucose first, then haematology, then chemistry, then serum.
 
 Crucial insight: capillary puncture is not simply a smaller version of venipuncture. The sample is different, the technique is different, and the results can be different. The first drop must be wiped away, the finger must not be squeezed, and the order of fill must be followed. These details prevent haemolysis and dilution, which are the main sources of error in capillary sampling.`
     },
@@ -28601,36 +28605,36 @@ Crucial insight: capillary puncture is not simply a smaller version of venipunct
 
 My Socratic question: venous blood and arterial blood flow through the same body. Why would you need to puncture an artery instead of a vein?
 
-The answer is oxygen. Venous blood has already delivered its oxygen to the tissues, so its oxygen content reflects what the tissues have used, not what the lungs have supplied. Arterial blood, in contrast, reflects the blood as it leaves the lungs, before any oxygen has been extracted [citation:18]. For measuring oxygenation, ventilation, and acid-base status - the core of arterial blood gas analysis - only arterial blood will do.
+The answer is oxygen. Venous blood has already delivered its oxygen to the tissues, so its oxygen content reflects what the tissues have used, not what the lungs have supplied. Arterial blood, in contrast, reflects the blood as it leaves the lungs, before any oxygen has been extracted. For measuring oxygenation, ventilation, and acid-base status - the core of arterial blood gas analysis - only arterial blood will do.
 
-**Indications:**
+Indications:
 - Arterial blood gas analysis (oxygenation, ventilation, acid-base status)
 - Electrolyte measurement (in some protocols)
 - Certain special tests
 
-**Sites:**
-- Radial artery (preferred) - accessible, good collateral circulation, easy to compress [citation:11]
+Sites:
+- Radial artery (preferred) - accessible, good collateral circulation, easy to compress
 - Brachial artery - alternative, but deeper and less accessible
 - Femoral artery - used in emergencies, but higher risk of complications
 
-**The modified Allen test** is performed before radial artery puncture to confirm that the ulnar artery can supply the hand if the radial artery is damaged during puncture [citation:11]. The patient clenches their fist, the examiner compresses both radial and ulnar arteries, the patient opens their hand, and the ulnar artery is released. If the hand flushes within a few seconds, collateral circulation is adequate.
+The modified Allen test is performed before radial artery puncture to confirm that the ulnar artery can supply the hand if the radial artery is damaged during puncture. The patient clenches their fist, the examiner compresses both radial and ulnar arteries, the patient opens their hand, and the ulnar artery is released. If the hand flushes within a few seconds, collateral circulation is adequate.
 
-**Technique:**
+Technique:
 - Gather equipment: heparinized syringe, needle, antiseptic, gauze, bandage, local anaesthetic if needed
 - Perform the modified Allen test
 - Clean the site with antiseptic
-- Palpate the artery and insert the needle at approximately 45 degrees [citation:11]
-- Allow the syringe to fill spontaneously (do not pull the plunger, as this can cause air bubbles and affect results) [citation:11]
+- Palpate the artery and insert the needle at approximately 45 degrees
+- Allow the syringe to fill spontaneously (do not pull the plunger, as this can cause air bubbles and affect results)
 - Withdraw the needle, expel any air, cap the syringe, and mix gently
-- Apply pressure to the puncture site for 5 to 10 minutes (longer if the patient is on anticoagulants) [citation:18]
+- Apply pressure to the puncture site for 5 to 10 minutes (longer if the patient is on anticoagulants)
 - Check that bleeding has stopped and apply a dressing
 
-**Risks and complications:**
+Risks and complications:
 - Haematoma (bleeding under the skin)
 - Vasospasm (spasm of the artery)
 - Nerve damage
 - Infection
-- Fainting (vasovagal syncope) [citation:11]
+- Fainting (vasovagal syncope)
 
 Crucial insight: arterial puncture is reserved for tests that specifically require arterial blood - primarily blood gases. The radial artery is preferred, the modified Allen test confirms safety, and pressure must be applied for longer than after venipuncture. The risks are higher, so the procedure is performed only when necessary and by trained personnel.`
     },
@@ -28642,7 +28646,7 @@ My Socratic question: if you fill a tube containing EDTA first, and then fill a 
 
 The answer is that traces of EDTA from the first tube could carry over into the second tube. EDTA chelates calcium, and coagulation tests depend on calcium. Even a tiny amount of EDTA contamination could falsely prolong the clotting time. The order of draw prevents this.
 
-**The standard order of draw (CLSI):** [citation:4]
+The standard order of draw (CLSI):
 1. Blood culture tube or bottle (sterile)
 2. Sodium citrate tube (light blue) - coagulation tests
 3. Serum tubes, including clot activator and gel (red, gold, red-speckled)
@@ -28650,16 +28654,16 @@ The answer is that traces of EDTA from the first tube could carry over into the 
 5. EDTA tube with or without gel (lavender, pink, pearl)
 6. Sodium fluoride/potassium oxalate (grey) - glucose
 
-**Why this order:**
+Why this order:
 - Blood culture tubes are first to prevent contamination with non-sterile additives
 - Citrate tubes are early because they are most sensitive to contamination from other additives (especially EDTA and heparin)
 - Serum tubes are before heparin and EDTA to avoid contamination with anticoagulants that would prevent clotting
 - EDTA tubes are late because EDTA contamination is less likely to affect the tubes drawn after it (fluoride/oxalate)
 - Fluoride/oxalate tubes are last because they contain additives that could affect other tests if carried over
 
-**Practical considerations:**
-- When using a winged butterfly needle, a discard tube may be needed before citrate tubes to ensure the tube fills correctly [citation:16]
-- Tubes must be filled to the indicated fill line - underfilled citrate tubes will be rejected [citation:13]
+Practical considerations:
+- When using a winged butterfly needle, a discard tube may be needed before citrate tubes to ensure the tube fills correctly
+- Tubes must be filled to the indicated fill line - underfilled citrate tubes will be rejected
 - Tubes with anticoagulants must be mixed by gentle inversion immediately after filling
 
 Crucial insight: the order of draw is a simple sequence with a profound purpose. It prevents cross-contamination of additives between tubes, which is one of the most common pre-analytical errors. A reversed order of draw can produce falsely prolonged clotting times, falsely low calcium, or falsely high potassium - all of which can lead to wrong diagnoses and wrong treatments.`
@@ -28672,24 +28676,24 @@ My Socratic question: if a sample sits on a bench for two hours before analysis,
 
 The answer is that many things have changed. Red cells continue to consume glucose and produce lactate. Potassium leaks out of cells, falsely elevating serum potassium. Carbon dioxide diffuses out of the sample, altering pH. Clotting factors degrade, affecting coagulation tests. The longer the delay and the warmer the temperature, the greater the change.
 
-**General handling principles:**
-- Transport samples to the laboratory as soon as possible - ideally within one hour [citation:7]
+General handling principles:
+- Transport samples to the laboratory as soon as possible - ideally within one hour
 - Keep samples at the appropriate temperature for the test: most routine samples at room temperature; some tests require refrigeration or freezing
 - Protect samples from light if the analyte is light-sensitive (e.g. bilirubin)
 - Do not expose samples to extremes of temperature
 - Keep tubes upright and closed
 
-**Storage requirements by test type:**
-- **Haematology (EDTA whole blood):** analyse within 24 hours; store at room temperature [citation:13]
-- **Coagulation (citrate plasma):** analyse within 4 hours at room temperature; plasma can be frozen at -20°C for longer storage [citation:13]
-- **Biochemistry (serum/plasma):** varies by analyte; most analytes stable for hours at room temperature, some require refrigeration
-- **Blood gases (heparinized whole blood):** analyse within 30 minutes at room temperature (or within 1 hour on ice for glass syringes) [citation:3]
-- **Glucose (fluoride/oxalate):** fluoride inhibits glycolysis, so glucose is stable for hours at room temperature
+Storage requirements by test type:
+- Haematology (EDTA whole blood): analyse within 24 hours; store at room temperature
+- Coagulation (citrate plasma): analyse within 4 hours at room temperature; plasma can be frozen at minus 20 degrees Celsius for longer storage
+- Biochemistry (serum/plasma): varies by analyte; most analytes stable for hours at room temperature, some require refrigeration
+- Blood gases (heparinized whole blood): analyse within 30 minutes at room temperature (or within 1 hour on ice for glass syringes)
+- Glucose (fluoride/oxalate): fluoride inhibits glycolysis, so glucose is stable for hours at room temperature
 
-**Specific stability examples:**
-- Serum for most biochemistry: 2-8°C for 3-5 days [citation:5]
-- Coagulation plasma: frozen at -20°C for up to 30 days [citation:13]
-- EDTA whole blood: 24 hours at room temperature [citation:13]
+Specific stability examples:
+- Serum for most biochemistry: 2 to 8 degrees Celsius for 3 to 5 days
+- Coagulation plasma: frozen at minus 20 degrees Celsius for up to 30 days
+- EDTA whole blood: 24 hours at room temperature
 
 Crucial insight: blood samples are not inert. They are living tissue that continues to change after collection. Every hour of delay, every degree of temperature difference, every exposure to light changes the sample. The laboratory must know the stability limits for every test it performs, and the phlebotomist must transport samples promptly and under the correct conditions. A sample that was perfect at collection can become useless by the time it reaches the analyser.`
     },
@@ -28701,19 +28705,19 @@ My Socratic question: if a sample arrives in the laboratory and you cannot use i
 
 The answer is a specific set of criteria that indicate the sample will not give a reliable result.
 
-**Common rejection criteria:** [citation:6][citation:14]
-- **Haemolysed specimen:** red cells have ruptured, releasing haemoglobin and intracellular contents. Causes include rough handling, small needles, prolonged tourniquet time, and improper storage. Haemolysis falsely elevates potassium, lactate dehydrogenase, and other intracellular analytes.
-- **Insufficient specimen volume:** not enough blood for the requested test. Often caused by underfilled tubes or difficult collection.
-- **Broken specimen container:** the tube is damaged and the sample may be contaminated or lost.
-- **Clotted specimen:** blood has clotted in a tube that should contain anticoagulated blood. Causes include inadequate mixing, delayed mixing, or insufficient anticoagulant. A clotted sample cannot be analysed for cell counts or coagulation.
-- **Wrong temperature:** sample stored at the wrong temperature for the test. Some tests require room temperature, others refrigeration, others freezing.
+Common rejection criteria:
+- Haemolysed specimen: red cells have ruptured, releasing haemoglobin and intracellular contents. Causes include rough handling, small needles, prolonged tourniquet time, and improper storage. Haemolysis falsely elevates potassium, lactate dehydrogenase, and other intracellular analytes.
+- Insufficient specimen volume: not enough blood for the requested test. Often caused by underfilled tubes or difficult collection.
+- Broken specimen container: the tube is damaged and the sample may be contaminated or lost.
+- Clotted specimen: blood has clotted in a tube that should contain anticoagulated blood. Causes include inadequate mixing, delayed mixing, or insufficient anticoagulant. A clotted sample cannot be analysed for cell counts or coagulation.
+- Wrong temperature: sample stored at the wrong temperature for the test. Some tests require room temperature, others refrigeration, others freezing.
 
-**Additional rejection criteria:** [citation:13]
-- **Wrong ratio of blood to anticoagulant:** underfilled or overfilled citrate tubes - the ratio is critical for coagulation tests.
-- **Missing or incomplete identifiers:** the sample cannot be linked to a patient.
-- **Incorrect specimen type:** the wrong tube was used for the test.
+Additional rejection criteria:
+- Wrong ratio of blood to anticoagulant: underfilled or overfilled citrate tubes - the ratio is critical for coagulation tests.
+- Missing or incomplete identifiers: the sample cannot be linked to a patient.
+- Incorrect specimen type: the wrong tube was used for the test.
 
-**What happens when a sample is rejected?**
+What happens when a sample is rejected?
 - The laboratory notifies the requesting clinician
 - A repeat sample is requested
 - The reason for rejection is documented
@@ -28727,28 +28731,28 @@ Crucial insight: sample rejection is not just an inconvenience - it delays diagn
 
 My Socratic question: a phlebotomist is holding a used needle. What is the single most dangerous thing they could do with it?
 
-The answer is recapping it by hand. Recapping is the most common cause of needlestick injuries, and needlestick injuries can transmit bloodborne pathogens including HIV, hepatitis B, and hepatitis C [citation:8]. The rule is simple: never recap a needle by hand. Used needles go directly into a sharps container.
+The answer is recapping it by hand. Recapping is the most common cause of needlestick injuries, and needlestick injuries can transmit bloodborne pathogens including HIV, hepatitis B, and hepatitis C. The rule is simple: never recap a needle by hand. Used needles go directly into a sharps container.
 
-**Protecting the patient:**
+Protecting the patient:
 - Correct patient identification prevents wrong-patient errors
 - Skin antisepsis prevents infection
 - Careful technique prevents haematoma, nerve damage, and excessive bleeding
 - Monitoring after the procedure detects complications early
 - Informed consent respects the patient's autonomy
 
-**Protecting yourself:**
-- Wear gloves for every procedure [citation:10]
-- Perform hand hygiene before and after each patient contact [citation:10]
-- Use safety-engineered devices where available (retractable needles, needle guards) [citation:10]
-- Dispose of sharps immediately in a puncture-resistant, leak-proof container [citation:8]
+Protecting yourself:
+- Wear gloves for every procedure
+- Perform hand hygiene before and after each patient contact
+- Use safety-engineered devices where available (retractable needles, needle guards)
+- Dispose of sharps immediately in a puncture-resistant, leak-proof container
 - Never recap, bend, or break needles
-- Use eye protection and masks if splashing is anticipated [citation:10]
+- Use eye protection and masks if splashing is anticipated
 
-**Infection control:**
+Infection control:
 - Clean the workspace before and after each patient
 - Disinfect tourniquets between patients
-- Transport samples in sealed, labelled containers [citation:7]
-- Treat all samples as potentially infectious [citation:7]
+- Transport samples in sealed, labelled containers
+- Treat all samples as potentially infectious
 
 Crucial insight: phlebotomy safety is not about fear - it is about habit. The phlebotomist who automatically disposes of needles without recapping, who wears gloves for every procedure, who cleans the site properly, is not being paranoid. They are following a standard that protects everyone. Most needlestick injuries and most collection-related infections are preventable, and the prevention is built into the procedure.`
     },
@@ -28756,15 +28760,15 @@ Crucial insight: phlebotomy safety is not about fear - it is about habit. The ph
       q: "Consolidation and your final test.",
       body: `Your cognitive map for phlebotomy, collection, handling and storage, in five lines.
 
-**The three techniques:** venipuncture (vein, routine tests), capillary puncture (finger or heel, small volumes, point-of-care), arterial puncture (artery, blood gases). Each has its own indications and technique.
+The three techniques: venipuncture (vein, routine tests), capillary puncture (finger or heel, small volumes, point-of-care), arterial puncture (artery, blood gases). Each has its own indications and technique.
 
-**Venipuncture essentials:** patient identification (two identifiers), appropriate site selection (antecubital fossa), tourniquet time under one minute, skin antisepsis, correct needle angle, order of draw, and post-collection care.
+Venipuncture essentials: patient identification (two identifiers), appropriate site selection (antecubital fossa), tourniquet time under one minute, skin antisepsis, correct needle angle, order of draw, and post-collection care.
 
-**Order of draw:** blood culture, citrate, serum, heparin, EDTA, fluoride/oxalate. The sequence prevents cross-contamination of additives between tubes.
+Order of draw: blood culture, citrate, serum, heparin, EDTA, fluoride/oxalate. The sequence prevents cross-contamination of additives between tubes.
 
-**Handling and storage:** blood continues to change after collection. Transport promptly, store at the correct temperature for the test, and respect stability limits. EDTA whole blood for haematology: 24 hours at room temperature. Citrate plasma for coagulation: 4 hours at room temperature or frozen for longer.
+Handling and storage: blood continues to change after collection. Transport promptly, store at the correct temperature for the test, and respect stability limits. EDTA whole blood for haematology: 24 hours at room temperature. Citrate plasma for coagulation: 4 hours at room temperature or frozen for longer.
 
-**Rejection criteria:** haemolysed, insufficient, clotted, broken container, wrong temperature, wrong ratio, missing identifiers. Most are preventable through correct technique.
+Rejection criteria: haemolysed, insufficient, clotted, broken container, wrong temperature, wrong ratio, missing identifiers. Most are preventable through correct technique.
 
 Now your final test. A phlebotomist is asked to collect blood from a 3-year-old child for a full blood count and a blood glucose test. The child is frightened and the veins are difficult to see.
 
@@ -28774,12 +28778,11 @@ Question three: the sample is collected and sent to the laboratory. What rejecti
 
 Work them through before reading on.
 
-My answers. One: capillary puncture (fingerstick or heel stick) would be most appropriate. Venipuncture in a small child is difficult and distressing, and the veins may be hard to access. Capillary puncture requires only a small volume, which is sufficient for a full blood count and glucose test in a child, and it is less traumatic. Two: the correct order of fill for capillary tubes is glucose first, then haematology [citation:17]. The first drop of blood must be wiped away because it contains interstitial fluid and cellular debris from the puncture, which would dilute the sample and affect the results. Three: the laboratory should check for haemolysis (red or pink plasma/serum), insufficient volume, clotting, and correct labelling. If the sample is haemolysed, it would be rejected because haemolysis falsely elevates potassium, lactate dehydrogenase, and other intracellular analytes, making the results unreliable. A repeat sample would be requested, and the phlebotomist would be reminded to avoid squeezing the finger and to let the blood flow freely.
+My answers. One: capillary puncture (fingerstick or heel stick) would be most appropriate. Venipuncture in a small child is difficult and distressing, and the veins may be hard to access. Capillary puncture requires only a small volume, which is sufficient for a full blood count and glucose test in a child, and it is less traumatic. Two: the correct order of fill for capillary tubes is glucose first, then haematology. The first drop of blood must be wiped away because it contains interstitial fluid and cellular debris from the puncture, which would dilute the sample and affect the results. Three: the laboratory should check for haemolysis (red or pink plasma/serum), insufficient volume, clotting, and correct labelling. If the sample is haemolysed, it would be rejected because haemolysis falsely elevates potassium, lactate dehydrogenase, and other intracellular analytes, making the results unreliable. A repeat sample would be requested, and the phlebotomist would be reminded to avoid squeezing the finger and to let the blood flow freely.
 
 If those came cleanly, you understand the complete journey of a blood sample - from the moment of collection, through handling and storage, to the moment of analysis. This is the foundation of everything you will do in the haematology laboratory.`
-    }
+    },
   ],
-
   theory: [
     { q: "Define phlebotomy and explain why it is the most critical step in laboratory testing.", a: "Phlebotomy is the practice of collecting blood samples for laboratory testing. It is the most critical step because errors introduced at collection - haemolysis, clotting, wrong patient, wrong tube, delay in transport - cannot be corrected by any subsequent laboratory procedure. Pre-analytical errors account for the majority of all laboratory errors." },
     { q: "Name the three main blood collection techniques and state when each is used.", a: "Venipuncture (collection from a vein) is used for routine blood tests requiring larger volumes. Capillary puncture (finger or heel stick) is used for small volumes, point-of-care testing, and in newborns or patients with difficult veins. Arterial puncture (collection from an artery) is used primarily for arterial blood gas analysis." },
@@ -28789,513 +28792,1286 @@ If those came cleanly, you understand the complete journey of a blood sample - f
     { q: "State the standard order of draw and explain why it matters.", a: "The order is: blood culture, sodium citrate (light blue), serum (red/gold), heparin (green), EDTA (lavender), fluoride/oxalate (grey). It matters because additives from one tube can contaminate the next and affect test results. For example, EDTA contamination would falsely prolong clotting times in a citrate tube." },
     { q: "Explain why tourniquet time should be limited to one minute.", a: "Prolonged tourniquet application causes venous stasis, which leads to haemolysis, falsely elevated potassium, and altered concentrations of other analytes. It can also cause discomfort and bruising. The tourniquet should be released as soon as blood begins to flow." },
     { q: "List the main rejection criteria for blood samples.", a: "Haemolysed specimen, insufficient volume, broken container, clotted specimen, wrong temperature, wrong ratio of blood to anticoagulant, missing or incomplete patient identifiers, and incorrect specimen type for the test." },
-    { q: "Describe the handling and storage requirements for different sample types.", a: "EDTA whole blood for haematology: 24 hours at room temperature. Citrate plasma for coagulation: 4 hours at room temperature, or frozen at -20°C for up to 30 days. Serum for biochemistry: 2-8°C for 3-5 days. Heparinized whole blood for blood gases: 30 minutes at room temperature, or 1 hour on ice in glass syringes. Samples should be transported promptly and protected from extremes of temperature and light." },
-    { q: "Explain the infection control measures essential in phlebotomy.", a: "Hand hygiene before and after each patient. Gloves for every procedure. Skin antisepsis before puncture. Use of sterile, single-use devices. Immediate disposal of sharps in puncture-resistant containers without recapping. Disinfection of tourniquets and surfaces. Transport of samples in sealed, labelled containers. Treating all samples as potentially infectious." }
+    { q: "Describe the handling and storage requirements for different sample types.", a: "EDTA whole blood for haematology: 24 hours at room temperature. Citrate plasma for coagulation: 4 hours at room temperature, or frozen at -20 degrees Celsius for up to 30 days. Serum for biochemistry: 2-8 degrees Celsius for 3-5 days. Heparinized whole blood for blood gases: 30 minutes at room temperature, or 1 hour on ice in glass syringes. Samples should be transported promptly and protected from extremes of temperature and light." },
+    { q: "Explain the infection control measures essential in phlebotomy.", a: "Hand hygiene before and after each patient. Gloves for every procedure. Skin antisepsis before puncture. Use of sterile, single-use devices. Immediate disposal of sharps in puncture-resistant containers without recapping. Disinfection of tourniquets and surfaces. Transport of samples in sealed, labelled containers. Treating all samples as potentially infectious." },
   ],
-
   videos: [
     { channel: "Hematology", title: "Phlebotomy Technique - Venipuncture, Capillary and Arterial", note: "Step-by-step demonstration of all three collection techniques.", url: "https://www.youtube.com/results?search_query=phlebotomy+technique+venipuncture+capillary+arterial" },
     { channel: "Hematology", title: "Order of Draw and Tube Selection", note: "The CLSI order of draw and why it matters for preventing contamination.", url: "https://www.youtube.com/results?search_query=order+of+draw+phlebotomy+CLSI" },
-    { channel: "Hematology", title: "Blood Sample Handling, Storage and Rejection Criteria", note: "How to handle, store and assess blood samples, and when to reject them.", url: "https://www.youtube.com/results?search_query=blood+sample+handling+storage+rejection+criteria" }
+    { channel: "Hematology", title: "Blood Sample Handling, Storage and Rejection Criteria", note: "How to handle, store and assess blood samples, and when to reject them.", url: "https://www.youtube.com/results?search_query=blood+sample+handling+storage+rejection+criteria" },
   ],
-
   mcqs: [
     // ===== Note 1 (Q1-5): why collection matters =====
     { q: "Phlebotomy is best defined as:", o: ["The analysis of blood samples", "The practice of collecting blood samples", "The storage of blood samples", "The disposal of blood samples"], a: 1, w: "Phlebotomy is the practice of collecting blood samples for laboratory testing." },
-    { q: "Pre-analytical errors are errors that occur:", o: ["During analysis", "After analysis", "Before analysis, during collection and handling", "Only in the laboratory"], a: 2, w: "Pre-analytical errors occur before analysis, during collection and handling." },
+    { q: "Pre-analytical errors are errors that occur:", o: ["During analysis", "Before analysis, during collection and handling", "After analysis", "Only in the laboratory"], a: 1, w: "Pre-analytical errors occur before analysis, during collection and handling." },
     { q: "The majority of laboratory errors occur in which phase?", o: ["Pre-analytical", "Analytical", "Post-analytical", "All phases equally"], a: 0, w: "Pre-analytical errors account for the majority of all laboratory errors." },
-    { q: "A haemolysed sample is an example of:", o: ["A post-analytical error", "A pre-analytical error", "An analytical error", "An acceptable sample"], a: 1, w: "Haemolysis is a pre-analytical error caused by collection or handling problems." },
-    { q: "The foundation of laboratory medicine is:", o: ["The analyser", "The quality of the collected sample", "The report format", "The laboratory building"], a: 1, w: "Every result depends on the quality of the sample collected." },
+    { q: "A haemolysed sample is an example of:", o: ["An analytical error", "A post-analytical error", "A pre-analytical error", "An acceptable sample"], a: 2, w: "Haemolysis is a pre-analytical error caused by collection or handling problems." },
+    { q: "The foundation of laboratory medicine is:", o: ["The quality of the collected sample", "The analyser", "The report format", "The laboratory building"], a: 0, w: "Every result depends on the quality of the sample collected." },
 
     // ===== Note 2 (Q6-10): three techniques =====
-    { q: "Venipuncture is the collection of blood from a:", o: ["Vein", "Artery", "Capillary", "Bone marrow"], a: 0, w: "Venipuncture is collection from a vein." },
-    { q: "Capillary puncture is most appropriate for:", o: ["Large volume tests", "Blood gas analysis", "Newborns and point-of-care testing", "Blood cultures"], a: 2, w: "Capillary puncture is used for small volumes, newborns, and point-of-care testing." },
-    { q: "Arterial puncture is used primarily for:", o: ["Full blood count", "Blood gas analysis", "Glucose testing", "Coagulation screen"], a: 1, w: "Arterial puncture is used primarily for arterial blood gas analysis." },
-    { q: "The preferred site for venipuncture is:", o: ["The antecubital fossa", "The fingertip", "The radial artery", "The heel"], a: 0, w: "The antecubital fossa is the preferred site for venipuncture." },
-    { q: "The preferred site for arterial puncture is:", o: ["The brachial artery", "The radial artery", "The femoral artery", "The ulnar artery"], a: 1, w: "The radial artery is preferred for arterial puncture." },
+    { q: "Venipuncture is the collection of blood from a:", o: ["Vein", "Artery", "Bone marrow", "Capillary"], a: 0, w: "Venipuncture is collection from a vein." },
+    { q: "Capillary puncture is most appropriate for:", o: ["Blood gas analysis", "Newborns and point-of-care testing", "Large volume tests", "Blood cultures"], a: 1, w: "Capillary puncture is used for small volumes, newborns, and point-of-care testing." },
+    { q: "Arterial puncture is used primarily for:", o: ["Full blood count", "Coagulation screen", "Blood gas analysis", "Glucose testing"], a: 2, w: "Arterial puncture is used primarily for arterial blood gas analysis." },
+    { q: "The preferred site for venipuncture is:", o: ["The fingertip", "The radial artery", "The heel", "The antecubital fossa"], a: 3, w: "The antecubital fossa is the preferred site for venipuncture." },
+    { q: "The preferred site for arterial puncture is:", o: ["The radial artery", "The brachial artery", "The ulnar artery", "The femoral artery"], a: 0, w: "The radial artery is preferred for arterial puncture." },
 
     // ===== Note 3 (Q11-15): venipuncture =====
-    { q: "The tourniquet should remain on for no more than:", o: ["5 minutes", "1 minute", "3 minutes", "10 minutes"], a: 1, w: "The tourniquet should remain on for no more than one minute." },
-    { q: "The needle for venipuncture is inserted at an angle of:", o: ["45 degrees", "90 degrees", "5 to 30 degrees", "60 degrees"], a: 2, w: "Venipuncture needle is inserted at 5 to 30 degrees." },
-    { q: "Which vein is preferred for venipuncture?", o: ["Basilic vein", "Median cubital vein", "Cephalic vein", "Digital vein"], a: 1, w: "The median cubital vein is preferred because it is large and relatively fixed." },
-    { q: "After venipuncture, the needle should be:", o: ["Recapped carefully", "Disposed of immediately without recapping", "Set aside for later", "Bent to prevent reuse"], a: 1, w: "Needles should be disposed of immediately without recapping." },
-    { q: "Patient identification before phlebotomy requires:", o: ["The room number", "The bed number", "At least two identifiers", "The patient's appearance"], a: 2, w: "At least two identifiers (e.g. name and date of birth) are required." },
+    { q: "The tourniquet should remain on for no more than:", o: ["Three minutes", "One minute", "Five minutes", "Ten minutes"], a: 1, w: "The tourniquet should remain on for no more than one minute." },
+    { q: "The needle for venipuncture is inserted at an angle of:", o: ["45 degrees", "60 degrees", "5 to 30 degrees", "90 degrees"], a: 2, w: "Venipuncture needle is inserted at 5 to 30 degrees." },
+    { q: "Which vein is preferred for venipuncture?", o: ["Cephalic vein", "Basilic vein", "Digital vein", "Median cubital vein"], a: 3, w: "The median cubital vein is preferred because it is large and relatively fixed." },
+    { q: "After venipuncture, the needle should be:", o: ["Disposed of immediately without recapping", "Recapped carefully", "Bent to prevent reuse", "Set aside for later"], a: 0, w: "Needles should be disposed of immediately without recapping." },
+    { q: "Patient identification before phlebotomy requires:", o: ["The room number", "At least two identifiers", "The bed number", "The patient's appearance"], a: 1, w: "At least two identifiers, such as name and date of birth, are required." },
 
     // ===== Note 4 (Q16-20): capillary puncture =====
-    { q: "The first drop of blood in capillary puncture should be:", o: ["Collected", "Wiped away", "Tested first", "Discarded only for glucose"], a: 1, w: "The first drop contains interstitial fluid and should be wiped away." },
-    { q: "Squeezing the finger during capillary puncture can cause:", o: ["Better blood flow", "Haemolysis and tissue fluid contamination", "Increased accuracy", "Faster collection"], a: 1, w: "Squeezing causes haemolysis and contamination with tissue fluid." },
-    { q: "The correct order of fill for capillary tubes is:", o: ["Glucose, haematology, chemistry, serum", "Haematology, glucose, chemistry, serum", "Serum, glucose, haematology, chemistry", "Chemistry, haematology, glucose, serum"], a: 0, w: "The order is glucose, haematology, chemistry, serum." },
-    { q: "The puncture depth for capillary puncture is:", o: ["1 mm", "2.2 to 2.5 mm", "5 mm", "0.5 mm"], a: 1, w: "The puncture depth should be 2.2 to 2.5 mm." },
-    { q: "Capillary blood differs from venous blood because it:", o: ["Is pure arterial blood", "Is a mixture of arterial, venous, capillary and interstitial fluid", "Contains no cells", "Has no clinical use"], a: 1, w: "Capillary blood is a mixture including interstitial fluid." },
+    { q: "The first drop of blood in capillary puncture should be:", o: ["Collected", "Wiped away", "Discarded only for glucose testing", "Tested first"], a: 1, w: "The first drop contains interstitial fluid and should be wiped away." },
+    { q: "Squeezing the finger during capillary puncture can cause:", o: ["Better blood flow", "Faster collection", "Haemolysis and tissue fluid contamination", "Increased accuracy"], a: 2, w: "Squeezing causes haemolysis and contamination with tissue fluid." },
+    { q: "The correct order of fill for capillary tubes is:", o: ["Serum, glucose, haematology, chemistry", "Haematology, glucose, chemistry, serum", "Chemistry, haematology, glucose, serum", "Glucose, haematology, chemistry, serum"], a: 3, w: "The order is glucose, haematology, chemistry, serum." },
+    { q: "The puncture depth for capillary puncture is:", o: ["2.2 to 2.5 mm", "1 mm", "0.5 mm", "5 mm"], a: 0, w: "The puncture depth should be 2.2 to 2.5 mm." },
+    { q: "Capillary blood differs from venous blood because it:", o: ["Is pure arterial blood", "Is a mixture including interstitial fluid", "Has no clinical use", "Contains no cells"], a: 1, w: "Capillary blood is a mixture of arterial, venous, capillary blood and interstitial fluid." },
 
     // ===== Note 5 (Q21-25): arterial puncture =====
-    { q: "The modified Allen test is performed before:", o: ["Venipuncture", "Capillary puncture", "Radial artery puncture", "Heel stick"], a: 2, w: "The modified Allen test is performed before radial artery puncture to confirm collateral circulation." },
+    { q: "The modified Allen test is performed before:", o: ["Venipuncture", "Heel stick", "Radial artery puncture", "Capillary puncture"], a: 2, w: "The modified Allen test is performed before radial artery puncture to confirm collateral circulation." },
     { q: "The needle for arterial puncture is inserted at an angle of:", o: ["5 to 30 degrees", "45 degrees", "90 degrees", "10 degrees"], a: 1, w: "Arterial puncture needle is inserted at approximately 45 degrees." },
-    { q: "After arterial puncture, pressure should be applied for:", o: ["1 minute", "5 to 10 minutes", "30 seconds", "20 minutes always"], a: 1, w: "Pressure should be applied for 5 to 10 minutes after arterial puncture." },
-    { q: "The syringe for arterial blood gas should be:", o: ["Filled by pulling the plunger", "Allowed to fill spontaneously", "Filled by suction", "Filled with air first"], a: 1, w: "The syringe should fill spontaneously without pulling the plunger." },
-    { q: "A complication of arterial puncture is:", o: ["Haematoma", "Increased platelet count", "Improved circulation", "Reduced pain"], a: 0, w: "Haematoma is a complication of arterial puncture." },
+    { q: "After arterial puncture, pressure should be applied for:", o: ["30 seconds", "20 minutes always", "5 to 10 minutes", "1 minute"], a: 2, w: "Pressure should be applied for 5 to 10 minutes after arterial puncture." },
+    { q: "The syringe for arterial blood gas should be:", o: ["Filled by pulling the plunger", "Filled with air first", "Filled by suction", "Allowed to fill spontaneously"], a: 3, w: "The syringe should fill spontaneously without pulling the plunger." },
+    { q: "A complication of arterial puncture is:", o: ["Haematoma at the puncture site", "Vasodilation of the artery", "Increased clotting", "Polycythaemia"], a: 0, w: "Haematoma is a common complication of arterial puncture." },
 
     // ===== Note 6 (Q26-30): order of draw =====
-    { q: "The first tube in the order of draw is:", o: ["Citrate", "Blood culture", "EDTA", "Serum"], a: 1, w: "Blood culture tube is drawn first." },
-    { q: "The second tube in the order of draw is:", o: ["Sodium citrate", "Serum", "Heparin", "EDTA"], a: 0, w: "Sodium citrate (light blue) is second." },
-    { q: "The last tube in the order of draw is:", o: ["EDTA", "Heparin", "Fluoride/oxalate", "Serum"], a: 2, w: "Fluoride/oxalate (grey) is last." },
-    { q: "The order of draw matters because:", o: ["It affects the colour", "Additives can contaminate subsequent tubes", "It is required by law", "It saves time"], a: 1, w: "Cross-contamination of additives between tubes can affect test results." },
-    { q: "EDTA contamination of a citrate tube would cause:", o: ["Falsely shortened clotting times", "Falsely prolonged clotting times", "No effect", "Increased platelet count"], a: 1, w: "EDTA would chelate calcium and falsely prolong clotting times." },
+    { q: "In the standard order of draw, the FIRST tube collected is:", o: ["Blood culture", "Sodium citrate", "Serum tube", "EDTA tube"], a: 0, w: "Blood culture tubes are drawn first to maintain sterility." },
+    { q: "In the standard order of draw, the SECOND tube collected is:", o: ["Serum tube", "Sodium citrate", "Heparin tube", "EDTA tube"], a: 1, w: "Sodium citrate (light blue) is drawn second, as it is highly sensitive to contamination." },
+    { q: "Which tube is drawn IMMEDIATELY after the serum tube in the order of draw?", o: ["EDTA tube", "Fluoride/oxalate tube", "Heparin tube", "Blood culture"], a: 2, w: "Heparin (green) is drawn after the serum tube." },
+    { q: "In the standard order of draw, the LAST tube collected is:", o: ["EDTA tube", "Heparin tube", "Serum tube", "Sodium fluoride/potassium oxalate tube"], a: 3, w: "Fluoride/oxalate (grey) is drawn last." },
+    { q: "Contamination of a coagulation tube with EDTA would cause:", o: ["Falsely prolonged clotting time", "A falsely shortened clotting time", "No effect on the clotting time", "Immediate clotting of the sample"], a: 0, w: "EDTA chelates calcium, so contamination would falsely prolong clotting times." },
 
     // ===== Note 7 (Q31-35): handling and storage =====
-    { q: "Blood samples should ideally be transported to the laboratory within:", o: ["4 hours", "1 hour", "24 hours", "8 hours"], a: 1, w: "Samples should be transported as soon as possible, ideally within one hour." },
-    { q: "EDTA whole blood for haematology is stable for:", o: ["4 hours", "24 hours at room temperature", "1 week", "1 month"], a: 1, w: "EDTA whole blood is stable for up to 24 hours at room temperature." },
-    { q: "Citrate plasma for coagulation is stable for:", o: ["4 hours at room temperature", "24 hours", "1 week", "1 month"], a: 0, w: "Citrate plasma is stable for 4 hours at room temperature." },
-    { q: "Blood gases should be analysed within:", o: ["4 hours", "30 minutes", "24 hours", "8 hours"], a: 1, w: "Blood gases should be analysed within 30 minutes." },
-    { q: "Serum samples for biochemistry can be stored at 2-8°C for:", o: ["3-5 days", "30 days", "6 months", "1 year"], a: 0, w: "Serum samples can be stored at 2-8°C for 3-5 days." },
+    { q: "EDTA whole blood for haematology should ideally be analysed within:", o: ["1 hour", "24 hours", "72 hours", "1 week"], a: 1, w: "EDTA whole blood is stable for up to 24 hours at room temperature." },
+    { q: "Citrate plasma for coagulation should be analysed within:", o: ["30 minutes", "12 hours", "4 hours at room temperature", "24 hours"], a: 2, w: "Citrate plasma should be analysed within 4 hours or frozen for longer storage." },
+    { q: "Heparinized whole blood for blood gases should be analysed within:", o: ["4 hours", "2 hours", "1 hour always", "30 minutes at room temperature"], a: 3, w: "Blood gas samples should be analysed within 30 minutes at room temperature." },
+    { q: "If a sample is left on the bench for two hours before analysis, the most likely change is:", o: ["Falsely elevated potassium", "Falsely low potassium", "Falsely low sodium", "No change in any analyte"], a: 0, w: "Potassium leaks out of cells over time, falsely elevating serum potassium." },
+    { q: "Serum samples for most biochemistry tests are stable at 2 to 8 degrees Celsius for:", o: ["1 hour", "3 to 5 days", "30 days", "6 months"], a: 1, w: "Most serum analytes are stable at 2 to 8 degrees Celsius for 3 to 5 days." },
 
     // ===== Note 8 (Q36-40): rejection criteria =====
-    { q: "A haemolysed sample is rejected because it:", o: ["Is clotted", "Falsely elevates potassium and other intracellular analytes", "Has too little volume", "Is contaminated"], a: 1, w: "Haemolysis falsely elevates potassium and other intracellular analytes." },
-    { q: "A clotted sample is rejected because:", o: ["It is haemolysed", "It cannot be analysed for cell counts or coagulation", "It is too old", "It is the wrong colour"], a: 1, w: "A clotted sample cannot be analysed for cell counts or coagulation." },
-    { q: "An underfilled citrate tube is rejected because:", o: ["It is haemolysed", "The ratio of blood to anticoagulant is incorrect", "It is clotted", "It is too old"], a: 1, w: "The blood-to-anticoagulant ratio is critical for coagulation tests." },
-    { q: "A sample with missing patient identifiers is rejected because:", o: ["It is haemolysed", "It cannot be linked to a patient", "It is clotted", "It is too old"], a: 1, w: "Without identifiers, the result cannot be attributed to a patient." },
-    { q: "Most sample rejections are:", o: ["Unpreventable", "Preventable through correct technique", "Due to analyser faults", "Due to patient factors"], a: 1, w: "Most rejections are preventable through correct collection and handling technique." },
+    { q: "A haemolysed blood sample is likely to produce:", o: ["Falsely low potassium", "Falsely elevated potassium", "No change in potassium", "Falsely low LDH"], a: 1, w: "Haemolysis releases intracellular potassium, falsely elevating the result." },
+    { q: "Which of these is a common reason for sample rejection?", o: ["Correct labelling", "Adequate fill volume", "A clotted specimen in an anticoagulant tube", "Room temperature transport for a routine test"], a: 2, w: "A clotted specimen in an anticoagulant tube is a common and serious rejection criterion." },
+    { q: "An underfilled citrate tube is rejected mainly because:", o: ["It is too small to handle", "The colour is wrong", "It contains too much blood", "The blood-to-anticoagulant ratio is incorrect"], a: 3, w: "Coagulation tests require an exact blood-to-anticoagulant ratio, which an underfilled tube distorts." },
+    { q: "If a sample is rejected by the laboratory, what typically happens next?", o: ["A repeat sample is requested", "The result is reported with a caution", "The sample is analysed anyway", "The patient is discharged"], a: 0, w: "A repeat sample is usually requested when a sample is rejected." },
+    { q: "Most sample rejections are:", o: ["Unavoidable", "Preventable through correct technique", "Caused by the analyser", "Due to patient factors alone"], a: 1, w: "Most rejections - haemolysis, clotting, wrong temperature - are preventable through correct technique." },
 
-    // ===== Note 9 (Q41-45): safety =====
-    { q: "The most dangerous thing to do with a used needle is:", o: ["Dispose of it in a sharps container", "Recap it by hand", "Place it in a biohazard bag", "Hand it to a colleague"], a: 1, w: "Recapping by hand is the most common cause of needlestick injuries." },
-    { q: "Gloves should be worn:", o: ["Only for high-risk patients", "For every phlebotomy procedure", "Only when the patient requests", "Never"], a: 1, w: "Gloves should be worn for every procedure." },
-    { q: "Needles should be disposed of in:", o: ["A regular bin", "A biohazard bag", "A puncture-resistant sharps container", "A glass jar"], a: 2, w: "Needles go in a puncture-resistant sharps container." },
-    { q: "Hand hygiene should be performed:", o: ["Only after procedures", "Only before procedures", "Before and after each patient contact", "Once daily"], a: 2, w: "Hand hygiene is performed before and after each patient contact." },
-    { q: "All blood samples should be treated as:", o: ["Safe if from a healthy patient", "Potentially infectious", "Sterile", "Only infectious if visibly contaminated"], a: 1, w: "All samples should be treated as potentially infectious." },
+    // ===== Note 9 (Q41-45): safety in phlebotomy =====
+    { q: "The most dangerous action a phlebotomist can take with a used needle is:", o: ["Disposing of it in a sharps bin", "Recapping it by hand", "Placing it in a designated tray", "Handing it to a colleague"], a: 1, w: "Recapping by hand is the most common cause of needlestick injuries." },
+    { q: "The single most important action to prevent needlestick injuries is:", o: ["Recapping needles carefully", "Wearing two pairs of gloves", "Immediately disposing of sharps without recapping", "Using larger needles"], a: 2, w: "Sharps should be disposed of immediately in a puncture-resistant container without recapping." },
+    { q: "Needlestick injuries can transmit all of the following EXCEPT:", o: ["HIV", "Hepatitis B", "Hepatitis C", "Colour blindness"], a: 3, w: "Bloodborne pathogens such as HIV, hepatitis B and hepatitis C can be transmitted by needlestick injuries." },
+    { q: "Gloves should be worn:", o: ["For every phlebotomy procedure", "Only if the patient is known to have HIV", "Only for arterial puncture", "Only when the phlebotomist has cuts on their hands"], a: 0, w: "Gloves should be worn for every procedure, as all samples are potentially infectious." },
+    { q: "The disinfection of tourniquets between patients is important because:", o: ["It keeps them clean-looking", "Tourniquets can carry pathogens between patients", "It prevents the tourniquet from sticking", "It is required for legal reasons only"], a: 1, w: "Tourniquets can transmit pathogens between patients if not disinfected." },
 
     // ===== Note 10 (Q46-50): consolidation =====
-    { q: "The three main blood collection techniques are:", o: ["Venipuncture, capillary puncture, arterial puncture", "Venipuncture, arterial puncture, bone marrow aspiration", "Capillary, venous, arterial sampling", "Fingerstick, heelstick, earlobe"], a: 0, w: "The three techniques are venipuncture, capillary puncture, and arterial puncture." },
-    { q: "The correct order of draw is:", o: ["EDTA, citrate, serum, heparin, fluoride", "Blood culture, citrate, serum, heparin, EDTA, fluoride", "Serum, citrate, EDTA, heparin, fluoride", "Fluoride, EDTA, heparin, serum, citrate"], a: 1, w: "The CLSI order of draw is blood culture, citrate, serum, heparin, EDTA, fluoride." },
-    { q: "A child needing a full blood count and glucose test is best collected by:", o: ["Venipuncture", "Arterial puncture", "Capillary puncture", "Bone marrow aspiration"], a: 2, w: "Capillary puncture is most appropriate for small volumes in children." },
-    { q: "The first drop of capillary blood is wiped away because it:", o: ["Contains interstitial fluid", "Is too small", "Is clotted", "Is contaminated with bacteria"], a: 0, w: "The first drop contains interstitial fluid and cellular debris." },
-    { q: "If a sample is haemolysed, the correct action is to:", o: ["Analyse it anyway", "Reject it and request a repeat", "Add anticoagulant", "Freeze it"], a: 1, w: "A haemolysed sample should be rejected and a repeat requested." }
-  ]
+    { q: "In a 3-year-old child with difficult veins requiring a full blood count and glucose test, the most appropriate technique is:", o: ["Venipuncture of the antecubital fossa", "Capillary puncture", "Arterial puncture of the radial artery", "Femoral venipuncture"], a: 1, w: "Capillary puncture is the preferred technique for small children with difficult veins and small volume requirements." },
+    { q: "In capillary puncture, the correct order of fill is:", o: ["Haematology first, then glucose", "Serum first, then haematology", "Glucose first, then haematology", "Chemistry first, then glucose"], a: 2, w: "Glucose is filled first in capillary puncture, followed by haematology, chemistry, and serum." },
+    { q: "The first drop of blood in capillary puncture is wiped away because:", o: ["It is always clotted", "It contains interstitial fluid and cellular debris", "It contains too many red cells", "It contains too much glucose"], a: 1, w: "The first drop contains interstitial fluid and debris that would dilute the sample." },
+    { q: "Which of these is NOT a reason to reject a blood sample?", o: ["Haemolysis", "Insufficient volume", "A correctly filled EDTA tube for a full blood count", "Clotting in a citrate tube"], a: 2, w: "A correctly filled EDTA tube for a full blood count is an appropriate sample." },
+    { q: "The complete journey of a blood sample, in correct order, is:", o: ["Collection, handling, storage, analysis", "Analysis, storage, collection, handling", "Storage, collection, analysis, handling", "Handling, collection, analysis, storage"], a: 0, w: "The sample is collected, handled, stored, and then analysed - in that order." },
+  ],
 };
 
-// ==================== HEMATOLOGY TOPIC 7: HAEMATOLOGICAL STAINS ====================
+/* --------------------------- hem:7 --------------------------- */
+// Objectives covered: types of haematological stains, principles of
+// staining and staining techniques. Romanowsky stains (Leishman, Giemsa,
+// Field's, Wright), supravital stains (new methylene blue, brilliant cresyl
+// blue), cytochemical stains (PAS, peroxidase, LAP, Sudan black, iron).
+// Principles of dye interaction, buffered pH, staining protocol,
+// troubleshooting, reagent maintenance.
+// 10 note headers -> 5 MCQs each -> exactly 50 MCQs.
 const T_HEM_STAINS = {
   courseId: "hem",
   topicIndex: 7,
   title: "Types of Haematological Stains, Principles of Staining and Staining Techniques",
-  minutes: 32,
-
+  minutes: 30,
   note: [
     {
-      q: "An unstained blood film is almost invisible. Why does colour change everything?",
-      body: `Take a perfectly made blood film, dry it, and place it under a microscope without staining it. You will see almost nothing - a faint, grey, translucent smear with ghostly outlines of cells. Now stain the same film and look again. Suddenly the film is alive with colour: red cells are pink, white cells have deep purple nuclei, platelets are violet, and the fine details of chromatin, granules and cytoplasm become visible.
+      q: "Blood is red, so why does a blood film need to be stained at all?",
+      body: `You have collected the sample, made the film, and fixed it. You put it under the microscope - and you see almost nothing. A film of unstained blood is a thin, translucent, yellowish-red smear. Red cells are pale discs. White cells are ghosts. Nuclei are invisible. Platelets cannot be distinguished from debris. The parasite that the clinician is desperate to find is nowhere to be seen.
 
-My Socratic question: the cells did not change between the two examinations. Only the colour changed. Why does colour make such a difference?
+My Socratic question: the cells are all present on the slide. Why can they not be seen?
 
-The answer is contrast. The human eye distinguishes colour and shade far more effectively than subtle differences in transparency. A haematological stain is not decoration - it is a tool that converts invisible differences in cell chemistry into visible differences in colour. Each stain binds to specific cellular components based on their chemical properties, so the pattern of colour is a map of the cell.
+The answer is contrast. The cells are there in full number, but almost all of them have nearly the same refractive index as the surrounding medium. The eye can only see a difference between two things if something about them - colour, darkness, brightness - is different. In an unstained film, nothing is different enough. The information is present, but it is invisible.
 
-Romanowsky stains - the family that includes Leishman, Giemsa, Wright, May-Grünwald and Field's - are the standard for routine blood films. They contain an acidic dye (eosin) that stains basic components pink and a basic dye (methylene blue and its oxidation products) that stains acidic components blue-purple. Together they produce the characteristic colours of a stained blood film.
+Staining solves this by attaching coloured dyes to specific parts of the cells. The nucleus, the cytoplasm, the granules, the parasite's chromatin - each takes up dye differently, and it is these differences that make the cell's structure visible. A stained blood film is not a coloured version of an unstained one. It is the first point at which a blood film becomes readable at all.
 
-Crucial insight: haematological staining is the process of adding coloured dyes to blood cells so that their chemical and structural differences become visible. Without staining, a film is nearly useless; with staining, it becomes one of the most informative tests in medicine. Romanowsky stains are the routine standard, but two other families - supravital and cytochemical stains - extend what staining can do.`
+Crucial insight: without staining, a blood film contains information but no visibility. Staining is not decoration - it is the process that converts the invisible into the diagnostic. Every cell and parasite you will ever identify in haematology will be identified by how it takes up dye, and that is why this topic comes immediately after learning to make a good film.`
     },
     {
-      q: "The chemistry of colour: how does a dye choose what to stain?",
-      body: `A stain is not paint. It does not simply coat a cell with colour. It binds selectively to particular chemical groups in the cell, based on electrical charge and chemical affinity. This chemistry is the key to why different structures stain differently.
+      q: "There are dozens of stains available. Why do almost all blood films in the world use one family of stains?",
+      body: `Walk into any haematology laboratory in any country and the routine stain will be the same family of dyes, from the smallest clinic to the largest teaching hospital. This is remarkable - most areas of laboratory medicine have multiple competing methods. Why does blood film staining converge on one solution?
 
-My Socratic question: red cells and white cell nuclei are both made of proteins and nucleic acids. Why does one stain pink and the other purple?
+My Socratic question: what single property would a stain need in order to be useful for almost every cell and parasite a haematologist must identify?
 
-The answer is that they have different net charges, and dyes are themselves charged molecules.
+The answer is that the stain must allow the different parts of a blood cell to be distinguished from each other, and the different blood cells to be distinguished from each other, in a single preparation. That means the stain must colour the nucleus one way, the cytoplasm another way, and the granules and cytoplasmic inclusions in ways that identify the specific cell. Only one family of stains - the Romanowsky stains - does all of this at once.
 
-**Basic dyes** carry a positive charge and bind negatively charged (acidic) structures. The main basic dye in Romanowsky stains is **methylene blue** and its oxidation product **azure B**. These bind DNA and RNA, which are negatively charged because of their phosphate groups. That is why nuclei stain blue-purple.
+The Romanowsky family of stains is named after Dmitri Romanowsky, a Russian physician who in 1891 discovered that a mixture of two dyes - one acidic, one basic - produced a colour reaction that no single dye could achieve. The mixture stains the nucleus one colour, the cytoplasm another, and the granules a third. Every routine blood film stain in use today - Leishman, Giemsa, Wright, Field's, May-Grunwald - is a member of the Romanowsky family.
 
-**Acidic dyes** carry a negative charge and bind positively charged (basic) structures. The main acidic dye is **eosin**. It binds haemoglobin in red cells and many cytoplasmic proteins, staining them pink.
-
-**Neutral dyes** are complexes of an acidic and a basic dye that stain specific structures with a distinctive colour. The Romanowsky effect - the purple of chromatin and the mauve-pink of neutrophil granules - comes from the interaction of oxidised methylene blue (azure B) with eosin, forming a neutral dye complex.
-
-Crucial insight: staining is a chemical reaction between charged dyes and charged cellular components. Acidic dyes stain basic structures pink; basic dyes stain acidic structures blue-purple; neutral dye complexes produce the Romanowsky effect. Every stain you use obeys this rule, and every colour you see is a chemical signature.`
+Crucial insight: Romanowsky stains dominate haematology because they produce the full colour differentiation that a single stain cannot. The nucleus, cytoplasm, granules, red cells and parasites each take up the dyes in a characteristic way, and it is this full colour picture that makes the blood film the diagnostic tool it is. Understanding why the mixture works is the foundation of the entire topic.`
     },
     {
-      q: "The Romanowsky family: Leishman, Giemsa, Wright, May-Grünwald, Field's. Why so many?",
-      body: `Romanowsky stains dominate haematology. They are named after Dmitri Romanowsky, who in the 1890s discovered that a mixture of methylene blue and eosin produced a purple colour that neither dye produced alone. That discovery changed haematology forever, and it gave rise to a family of related stains, each with its own character.
+      q: "The Romanowsky stain works because of two dyes. What are they, and how do they combine to colour a blood cell?",
+      body: `A Romanowsky stain is a mixture of two very different dyes - one basic, one acidic - dissolved in methanol. Each one behaves differently because of its electrical charge, and it is this difference that produces the full colour picture.
 
-My Socratic question: if all Romanowsky stains contain eosin and oxidised methylene blue, why would a laboratory keep several different ones?
+My Socratic question: a basic dye and an acidic dye carry opposite charges. If you apply them together to a blood cell, which parts of the cell will each dye attach to?
 
-The answer is that the exact composition, the working pH, the method of preparation and the staining time all affect the final colour balance and cellular detail. Different stains are better for different purposes.
+The answer is that each dye attaches to whatever has the opposite charge. A basic dye is positively charged, so it attaches to negatively charged structures - which are the acidic ones. In a blood cell, the most acidic structures are the nucleic acids of the nucleus, so the basic dye stains the nucleus. An acidic dye is negatively charged, so it attaches to positively charged structures - which are the basic ones. In a blood cell, the basic structures include the proteins of the cytoplasm, so the acidic dye stains the cytoplasm.
 
-**Leishman stain:**
-- Composition: eosin and methylene blue in methanol.
-- Working pH: usually buffered around 6.8.
-- Uses: routine blood films, differential white cell counts, bone marrow films.
-- Character: simple to prepare, good overall staining, popular in the UK and Commonwealth. A reliable all-rounder.
+The two classic dyes of the Romanowsky family are:
+- Methylene blue - a basic dye that stains acidic structures, especially nuclei, blue. Its oxidised derivative, azure B, is the more important component, and it is what produces the characteristic purple colour of chromatin.
+- Eosin - an acidic dye that stains basic structures, especially cytoplasm and red cells, a red-orange colour.
 
-**Giemsa stain:**
-- Composition: eosin, methylene blue, and additional azure compounds (azure A, azure B), plus glycerol and methanol.
-- Working pH: usually buffered around 6.8 to 7.2.
-- Uses: blood films, bone marrow, thick films for malaria, and detection of parasites, especially intracellular organisms.
-- Character: excellent chromatin detail, good for parasites, works well on both thin and thick films. The stain of choice when parasites are suspected.
+This pairing is the reason the stain works. One dye tells you where the nucleus is; the other tells you where the cytoplasm is; and by comparing the two, you can identify the cell. This is the principle that all Romanowsky stains share.
 
-**Wright stain:**
-- Composition: eosin Y and oxidised methylene blue (azure B) in methanol.
-- Working pH: usually buffered around 6.4 to 6.8.
-- Uses: routine blood films, differential counts, platelet morphology.
-- Character: simple, fast, widely used in automated stainers, especially in the United States.
-
-**May-Grünwald stain:**
-- Composition: eosin and methylene blue in methanol, prepared differently from Wright.
-- Uses: often combined with Giemsa as May-Grünwald-Giemsa (MGG) for bone marrow and haematology.
-- Character: excellent cellular detail, a European standard.
-
-**Field's stain:**
-- Composition: two solutions - Field's A (methylene blue) and Field's B (eosin).
-- Uses: rapid staining of thick films for malaria, especially in field conditions.
-- Character: very fast (seconds), useful when speed matters more than fine detail.
-
-Crucial insight: the Romanowsky family shares one chemistry but is not interchangeable. Leishman and Wright are the routine workhorses; Giemsa is the stain of choice for parasites and bone marrow; May-Grünwald-Giemsa is the European standard; Field's stain is the rapid field method. Choosing the right Romanowsky stain for the right test is part of good laboratory practice.`
+Crucial insight: the basic dye stains the acidic nucleus, and the acidic dye stains the basic cytoplasm - a direct consequence of electrical charge. This single principle explains the entire colour scheme of a Romanowsky-stained blood film. Once you understand it, you can predict what any part of any cell will look like, and recognise when it looks wrong.`
     },
     {
-      q: "pH-dependent buffering: why does a small pH change ruin the colour?",
-      body: `A Romanowsky stain is not simply a bottle of dye. It is a dye that must be diluted with a buffer at a specific pH before it will stain correctly. If the buffer is wrong, the film is wrong - even if the stain itself is perfect.
+      q: "The stain contains two dyes. So where does the third, characteristic purple colour come from?",
+      body: `You have just learned that a Romanowsky stain has a basic dye (which colours the nucleus blue) and an acidic dye (which colours the cytoplasm red). But when you look down the microscope at a well-stained film, the nucleus of a white cell is not blue - it is a deep purple, sometimes described as reddish-purple, and this colour cannot be produced by either dye alone.
 
-My Socratic question: if the stain already contains all the dyes it needs, why does the pH of the diluting solution matter so much?
+My Socratic question: if the nucleus is coloured by the basic dye, and the basic dye alone is blue, why does the nucleus appear purple?
 
-The answer is that staining is a chemical reaction, and the charge of the cellular components and the dye molecules depends on pH. Small shifts in pH change which structures bind which dye, and the entire colour balance shifts with them.
+The answer is that a third component - the azure dyes - is also present, and it is the azure dyes that produce the purple colour. The azure dyes (azure A, azure B, azure C) are breakdown products of methylene blue, formed when the stain matures or is deliberately aged. They are formed by oxidative demethylation - a chemical change that removes methyl groups from methylene blue. The most important of these is azure B, and it is the azure dyes that produce the purple colour of chromatin.
 
-**The pH-dependent behaviour of a Romanowsky stain:**
+This purple colour is the hallmark of a properly working Romanowsky stain. When the stain is fresh and no azure dyes have formed, the nucleus stains blue and the film looks wrong - this is why a freshly prepared Romanowsky stain is sometimes deliberately aged or ripened before use. When the stain is too old or has been oxidised too far, the azure dyes break down further and the nuclear colour shifts again.
 
-- **Acidic buffer (pH below 6.4).** The environment is more positively charged. Red cells bind more eosin and appear too pink; nuclei bind less basic dye and appear pale and washed out. The overall film looks too red.
-- **Optimal buffer (pH 6.4 to 6.8 for Leishman and Wright; 6.8 to 7.2 for Giemsa).** The charges are balanced, and every cell type stains in its correct colour: red cells pink, nuclei blue-purple, granules their characteristic colours.
-- **Alkaline buffer (pH above 7.0).** The environment is more negatively charged. Red cells bind less eosin and appear blue-grey; nuclei bind more basic dye and appear too dark. The overall film looks too blue.
+The full colour scheme of a well-stained blood film:
+- Nuclei and chromatin: purple (from the azure dyes)
+- Cytoplasm of lymphocytes: sky blue (from methylene blue)
+- Cytoplasm of neutrophils: pale pink-lilac
+- Red cells: salmon pink (from eosin)
+- Eosinophil granules: bright orange-red (from eosin)
+- Basophil granules: deep purple-black (from the basic dye)
+- Platelets: violet-purple
 
-**Why the pH matters clinically:**
-
-- A film that is too pink may cause red cell inclusions, parasites and platelet granules to be missed.
-- A film that is too blue may obscure nuclear detail, making it difficult to identify white cells or to see chromatin patterns.
-- The pH optimum differs slightly between stains: Leishman and Wright usually work best at pH 6.4 to 6.8, while Giemsa works best at pH 6.8 to 7.2.
-
-**Practical implications:**
-
-- The buffer is usually a phosphate buffer, prepared fresh or commercially.
-- The pH should be checked daily or with each new batch.
-- The buffer should be stored correctly and not contaminated.
-- If the pH is wrong, the film is stained but unreliable.
-
-Crucial insight: pH-dependent buffering is not an optional technical detail - it is the foundation of correct Romanowsky staining. A perfectly prepared stain and a perfectly made film can still produce a useless result if the buffer pH is wrong. Checking and maintaining the buffer is a daily discipline of the haematology laboratory.`
+Crucial insight: the third colour of a Romanowsky stain - the purple of the nucleus - comes from the azure dyes, breakdown products of methylene blue. This is why the stain must be matured, why its age matters, and why the purple colour is the single most important indicator of whether the stain is working correctly.`
     },
     {
-      q: "Supravital stains: staining living cells. How can that work?",
-      body: `All the stains discussed so far fix the cells before staining. Fixation kills the cells, preserves their structure, and allows them to be stained permanently. But what if you wanted to see how living cells behave - how they move, how their organelles are arranged, how they respond to a stimulus? Fixed cells cannot show you any of that. That is what supravital staining is for.
+      q: "The stain is applied to a film that has been dried. What role does methanol play, and why must it be pure?",
+      body: `A Romanowsky stain is supplied as a solution in methanol - usually absolute methanol, sometimes with glycerol added. When the film is immersed in the stain, two things happen at once: the cells are fixed, and the dyes begin to penetrate. This dual role of methanol is easy to overlook but essential to understand.
 
-My Socratic question: if a cell must be alive to show living behaviour, how can you add a dye to it without killing it?
+My Socratic question: the film has already been air-dried. Why does it still need to be fixed with methanol before staining?
 
-The answer is that supravital stains use dyes that are taken up by living cells without killing them, allowing the cells to be examined while still alive. The word supravital means "above life" - the stain is applied to the living cell in a way that preserves its life.
+The answer is that air-drying alone does not preserve the cell structure in a form that the dyes can act on. The proteins of the cell need to be coagulated - chemically fixed in place - so that the shape and internal structure of each cell does not distort or dissolve when the aqueous stain is applied. Methanol does this: it dehydrates the cells and precipitates their proteins, locking the morphology in place. Without fixation, the cells would swell, distort, and lose the very detail the stain is meant to reveal.
 
-**The principle of supravital staining:**
+This is why methanol must be pure. Methanol is hygroscopic - it absorbs water from the air. A bottle of methanol-based stain that has been left open will gradually take up water, and the water content changes its behaviour. A water-contaminated Romanowsky stain fixes the cells poorly, and the resulting film looks washed-out and blurred, with poor nuclear detail. This is one of the most common reasons a Romanowsky stain fails while still looking perfectly normal.
 
-- A supravital dye is a non-toxic dye that living cells can take up without being fixed first.
-- The dye is usually applied to fresh, unfixed cells - often a drop of blood or a smear of living tissue.
-- The dye is taken up by specific cellular structures (for example, mitochondria, lysosomes or reticulum) based on chemical affinity.
-- The living cell continues to function while the dye is present, allowing dynamic processes to be observed.
-- Because the cells are not fixed, they are examined quickly - supravital preparations are not permanent.
+In the standard Romanowsky protocol, the film is covered with undiluted stain for a set time - typically 30 seconds to 2 minutes - to allow both fixation and initial dye penetration. Only then is the stain diluted with buffered water to allow the staining reactions to complete.
 
-**The main supravital stains used in haematology:**
-
-- **New methylene blue (also called brilliant cresyl blue).** A supravital dye that stains **reticulum** in red cells. Reticulum is a network of residual RNA and organelles in immature red cells (reticulocytes). When blood is incubated with new methylene blue, the reticulum is stained as a blue network visible within the red cell. This is the basis of the **reticulocyte count**, one of the most important tests of bone marrow function.
-
-- **Janus green B.** A supravital dye that stains mitochondria. It can be combined with neutral red (which stains lysosomes and vacuoles) to examine the internal organelles of living white cells.
-
-- **Neutral red.** A supravital dye that stains lysosomes and vacuoles, useful for examining the cytoplasm of living cells.
-
-**What supravital stains can show:**
-
-- The presence of reticulum in reticulocytes, allowing their identification and counting.
-- The internal organelles of living white cells.
-- The dynamic behaviour of cells, including movement and phagocytosis.
-- Some parasites and inclusions that are not visible in fixed films.
-
-Crucial insight: supravital stains are a distinct family because they are applied to living, unfixed cells. They are used when the diagnostic question is about living-cell behaviour or about structures (like reticulum) that are destroyed by fixation. The reticulocyte count, one of the most important haematological tests, is a supravital stain technique.`
+Crucial insight: methanol in a Romanowsky stain has two jobs - it fixes the cells and it delivers the dyes. It must be anhydrous (water-free) and protected from atmospheric moisture, because water-contaminated methanol is one of the commonest causes of poor staining. When a film looks washed out with poor nuclear detail, the first thing to check is not the dye but the methanol.`
     },
     {
-      q: "Cytochemical stains: staining the chemistry of the cell. Why would you need that?",
-      body: `A Romanowsky stain shows you the shape of a cell and its nucleus, cytoplasm and granules. But it does not tell you what enzymes the cell contains, what lipids it stores, what carbohydrates it produces, or what proteins it expresses. Cytochemical stains do - and in certain diagnostic situations, they are essential.
+      q: "Water is added to dilute the stain during the procedure. Why does the pH of that water matter so much?",
+      body: `During the Romanowsky staining procedure, after the film has been covered with undiluted stain, the stain is diluted with water. This dilution step is often treated as routine - just add water. But the pH of that water is one of the most consequential variables in the entire procedure, and getting it wrong produces a film that looks convincingly stained but is diagnostically useless.
 
-My Socratic question: if a Romanowsky stain already shows you the cell's appearance, why would you need a stain that targets specific chemicals?
+My Socratic question: the water is only there to dilute the stain. Why would its pH - which is not the pH of the dyes themselves - have such a large effect on the final result?
 
-The answer is that cell appearance is not always enough. Two cells can look similar under a Romanowsky stain but be very different in their origin, their function, and their response to treatment. Cytochemical stains reveal those differences by staining specific cellular components according to their chemical composition.
+The answer is that the staining reaction depends on the charge of the cell components and of the dyes, and charge depends on pH. In an acidic environment, more of the cell's chemical groups become positively charged, so acidic dyes bind more strongly and the film takes on too much red or pink - the film looks too red, with pale nuclei. In an alkaline environment, more groups become negatively charged, so basic dyes bind more strongly and the film takes on too much blue - the film looks too blue, with dark, poorly differentiated nuclei.
 
-**The principle of cytochemical staining:**
+This is why buffered water is used - usually a phosphate buffer at pH 6.8, which is close to the pH of blood and gives the balanced colour reaction that haematologists expect. Buffer pH 7.2 is used for certain special purposes, particularly when staining for parasites such as malaria, because it gives slightly better contrast for the parasite's chromatin against the red cell. But for routine blood films, pH 6.8 is the standard.
 
-- A cytochemical stain targets a specific chemical substance or enzyme in the cell.
-- The stain reaction is usually based on a specific chemical reaction, an enzyme-substrate reaction, or an affinity for a particular chemical group.
-- The result is a coloured product that marks the location of the substance within the cell.
-- Cytochemical stains are used mainly on bone marrow, leukaemia cells and other specialised specimens.
+A poorly buffered water supply can vary in pH from day to day, which is why many laboratories use distilled or deionised water with a buffer tablet added, rather than tap water. Tap water in many regions is slightly acidic or slightly alkaline, and its pH can fluctuate - enough to make every film stained with it unreliable.
 
-**The main cytochemical stains used in haematology:**
-
-- **Myeloperoxidase (MPO).** Detects the enzyme myeloperoxidase, present in myeloid cells (especially neutrophils and their precursors). Stains myeloid blasts positively. Used to distinguish myeloid leukaemia from lymphoid leukaemia.
-
-- **Sudan Black B.** Detects lipids, especially in myeloid granules. Similar purpose to MPO. Stains myeloid blasts positively.
-
-- **Periodic acid-Schiff (PAS).** Detects glycogen and mucosubstances, staining them magenta. Used to identify glycogen storage diseases and to help diagnose certain leukaemias (lymphoblasts may show PAS-positive granules).
-
-- **Leukocyte alkaline phosphatase (LAP).** Detects the enzyme alkaline phosphatase in neutrophils. LAP is low in chronic myeloid leukaemia and high in reactive leucocytosis, making it useful for distinguishing the two.
-
-- **Acid phosphatase.** Detects acid phosphatase. The tartrate-resistant form (TRAP) is characteristic of hairy cell leukaemia.
-
-- **Perls' Prussian blue.** Detects iron, staining haemosiderin and ferritin blue. Used to diagnose iron deficiency and iron overload, and to identify sideroblasts in bone marrow.
-
-- **Reticulin stain.** Detects reticulin fibres in bone marrow. Used to assess marrow fibrosis.
-
-- **Congo red.** Detects amyloid, used to diagnose amyloidosis.
-
-**What cytochemical stains can show:**
-
-- The lineage of a leukaemia (myeloid vs lymphoid vs other).
-- The presence of specific enzymes or substances, indicating cell function or dysfunction.
-- Storage diseases (glycogen, iron, amyloid).
-- Some infections and parasites.
-
-Crucial insight: cytochemical stains reveal the chemistry of the cell, not just its shape. They are essential for diagnosing and classifying leukaemias, for identifying storage diseases, and for investigating functional disorders. Romanowsky stains show you what a cell looks like; cytochemical stains show you what it does.`
+Crucial insight: the pH of the water used to dilute a Romanowsky stain decides the balance between red and blue in the final film, and therefore whether the film can be reliably interpreted. Buffered water at pH 6.8 is the standard for routine films; pH 7.2 is used for parasite stains. Anything else produces a film that is stained but not readable - and this is one of the commonest reasons a laboratory's films look wrong.`
     },
     {
-      q: "Staining technique: how do you actually stain a blood film?",
-      body: `A stain is only as good as the technique used to apply it. Poor technique produces poor staining, and poor staining produces misleading results. Understanding the steps - and the reasons behind each - is essential for producing diagnostic-quality films.
+      q: "The Romanowsky family has several named stains. Why so many, and when is each one used?",
+      body: `Leishman, Giemsa, Wright, Field's, May-Grunwald - these names appear on every shelf in a haematology laboratory. They belong to the same family and share the same basic chemistry, yet each has a slightly different composition that makes it the right choice for a particular situation.
 
-My Socratic question: you have a blood film, a bottle of stain, and a microscope. What could possibly go wrong?
+My Socratic question: if all Romanowsky stains work on the same principle, why does the laboratory need more than one?
 
-The answer is that several things can go wrong, and each produces a recognisable artefact.
+The answer is that each named stain is a particular combination of the same dyes, adjusted for a particular use. The composition is chosen to favour one application - routine morphology, thick films for parasites, urgent staining in an emergency, etc. The differences are small but consequential.
 
-**The basic Romanowsky staining procedure (for Leishman or Wright stain):**
+The main Romanowsky stains and their uses:
+- Leishman stain - the routine blood film stain in most haematology laboratories, especially in the UK and Commonwealth countries. It uses methanol as the solvent and contains methylene blue (as the eosinate) and eosin. It is used for routine morphology and blood counts.
+- Giemsa stain - a similar mixture but with azure dyes present from the outset and usually buffered differently. It is the standard stain for thick films in malaria diagnosis, and for staining bone marrow and cytology preparations. Its advantage over Leishman is its slightly stronger nuclear and parasite chromatin staining.
+- Wright stain - the routine Romanowsky stain used in North America. It is very similar to Leishman and is interchangeable with it in most applications.
+- Field's stain - a rapid Romanowsky stain designed specifically for malaria diagnosis. It uses two separate solutions (Field's A and Field's B) that stain a thick film in seconds rather than minutes, at the cost of poorer nuclear detail. It is used in busy malaria clinics where speed matters.
+- May-Grunwald-Giemsa (MGG) - a combination of May-Grunwald (a Romanowsky-type stain) and Giemsa, giving particularly good differentiation of white cell lineages. Used mostly for bone marrow and haematology research.
 
-- **Fixation.** The air-dried blood film is covered with undiluted stain, which contains methanol. The methanol fixes the cells, preserving their structure. Fixation takes about 30 seconds to 1 minute.
-- **Staining.** A buffer solution (usually phosphate buffer at pH 6.4 to 6.8) is added to dilute the stain on the slide. The diluted stain is left on the film for a defined time (typically 5 to 15 minutes for Leishman or Wright). During this time, the dyes bind to cellular components.
-- **Washing.** The slide is rinsed with buffer or distilled water to remove excess stain. Washing should be gentle to avoid damaging the film.
-- **Drying.** The slide is air-dried or blotted dry and examined.
-
-**Key variables that affect staining:**
-
-- **pH of the buffer.** Too acidic and the film is too pink; too alkaline and it is too blue.
-- **Staining time.** Too short and the film is too pale; too long and it is too dark or produces precipitate.
-- **Concentration of dye.** Old or diluted stains may give poor results.
-- **Quality of the blood film.** Thick films stain differently from thin films; a poor film cannot be rescued by good staining.
-
-**The procedure for Giemsa staining (used in parasitology and bone marrow):**
-
-- The film is air-dried and fixed with methanol (for thin films) or left unfixed (for thick films).
-- The diluted Giemsa stain is applied for a defined time, often longer than for Wright or Leishman.
-- The slide is washed and dried.
-- Giemsa is preferred for parasites and for cellular detail.
-
-**The procedure for supravital staining (e.g. reticulocyte count):**
-
-- A drop of blood is mixed with an equal volume of supravital stain (e.g. new methylene blue).
-- The mixture is incubated for a defined time (usually 15 to 30 minutes) to allow the dye to be taken up by living cells.
-- A smear is made from the mixture and examined under the microscope.
-- The dye stains reticulum in reticulocytes as a blue network.
-
-**The procedure for cytochemical staining:**
-
-- A smear of bone marrow or blood is prepared and air-dried.
-- The slide is fixed with a fixative appropriate for the specific stain (some stains require specific fixatives).
-- The cytochemical reagent is applied and incubated.
-- The slide is washed, counterstained (if required), and examined.
-
-Crucial insight: each family of stains has its own protocol, its own timing, its own fixatives and its own controls. Understanding the technique behind each family allows you to produce accurate, reproducible results - and to troubleshoot when something goes wrong.`
+Crucial insight: the Romanowsky family is not a set of interchangeable stains - each is chosen for a specific purpose. Leishman and Wright for routine morphology, Giemsa for parasites and bone marrow, Field's for rapid malaria diagnosis, and MGG for detailed white cell differentiation. Knowing which to use for which situation is part of the laboratory scientist's professional judgement.`
     },
     {
-      q: "Sources of error and quality control: how do you ensure the stain is reliable?",
-      body: `Staining is a controlled chemical reaction, and like any reaction it is sensitive to conditions. Small deviations in pH, timing, temperature, or reagent quality can produce films that are stained but unreliable. Recognising these errors and preventing them is what quality control is for.
+      q: "Not all haematological stains are Romanowsky stains. What do the supravital stains do that Romanowsky stains cannot?",
+      body: `The Romanowsky stains are the workhorses of the haematology laboratory. But there is a whole class of structures they cannot show, and for these the laboratory uses a different family of stains - the supravital stains.
 
-My Socratic question: if the stain is working perfectly today, will it still work perfectly next week?
+My Socratic question: the Romanowsky stains show the nucleus, the cytoplasm, and the granules of every blood cell. What could a stain possibly reveal that the Romanowsky stains do not?
 
-The answer is not necessarily - stains age, buffers drift, and technique varies. Quality control is the discipline of checking the system regularly so that errors are caught before they affect patient results.
+The answer is that the Romanowsky stains fix the cells before staining them, and the fixing process destroys certain structures. Specifically, the supravital stains are applied to living cells - cells that have not been fixed - and they reveal structures that disappear once the cell is fixed. The word supravital means above life - a stain applied to still-living tissue.
 
-**Common sources of error in Romanowsky staining:**
+The two classic supravital stains in haematology:
+- New methylene blue (NMB) - used to stain reticulocytes, the young red cells that still contain residual ribosomal RNA. When a supravital stain is mixed with fresh blood, the dye precipitates the RNA into a visible dark blue network called a reticular network, which is visible inside the red cell. This is the basis of the reticulocyte count - a critical test of bone marrow red cell production.
+- Brilliant cresyl blue - used for the same purpose, particularly for detecting Heinz bodies. Heinz bodies are denatured haemoglobin inclusions that appear in conditions such as G6PD deficiency and after exposure to certain oxidant drugs. A supravital stain precipitates the denatured haemoglobin into characteristic dark inclusions, which Romanowsky stains do not show.
 
-- **Incorrect buffer pH.** Too acidic = film too pink; too alkaline = film too blue.
-- **Contaminated or aged stain.** Precipitate, dye crystals, or faded staining.
-- **Insufficient or excessive staining time.** Pale or dark films.
-- **Poor-quality blood film.** Thick films stain unevenly; thin films may not take up enough stain.
-- **Water artefact.** Incomplete drying before staining, or poor draining after washing.
-- **Precipitate.** Deposits of dye on the film, often from contaminated stain or inadequate washing.
-- **Fading.** Films stored for long periods may fade, especially if exposed to light or heat.
+Supravital stains do not fix the cells; they must be applied to fresh, living blood within a short time of collection. Their value lies precisely in what they show that fixed cells cannot.
 
-**Common sources of error in supravital staining:**
-
-- **Incorrect incubation time.** Too short = incomplete staining of reticulum; too long = over-staining.
-- **Contaminated dye.** Precipitate or bacterial growth.
-- **Poor mixing.** Incomplete mixing of blood and dye gives uneven results.
-- **Delay in examination.** Supravital preparations are not permanent; delay reduces the reliability of the result.
-
-**Common sources of error in cytochemical staining:**
-
-- **Incorrect fixative.** Some stains require specific fixatives (e.g. formalin-acetone, methanol, or others).
-- **Incorrect incubation temperature or time.** Enzyme reactions are sensitive to both.
-- **Contaminated reagents.** Impurities or degradation of substrates.
-- **Failure to include controls.** Without controls, results cannot be validated.
-
-**Quality control measures:**
-
-- **Daily checks.** Stain a known control slide with each batch and inspect it for correct colours and detail.
-- **Buffer pH.** Check daily or with each new batch.
-- **Stain inspection.** Look for precipitate, dye crystals, or contamination.
-- **Reagent storage.** Store stains and buffers correctly, protected from light and heat.
-- **Controls.** Include positive and negative controls for cytochemical stains.
-- **Documentation.** Record all quality control results and actions taken.
-
-Crucial insight: quality control is not an optional extra - it is the foundation of reliable staining. A laboratory that does not check its staining cannot trust its results. The daily control slide, the buffer pH check, the inspection of the stain, and the use of controls in cytochemical staining are all part of professional laboratory practice.`
+Crucial insight: supravital stains work on living, unfixed cells and reveal structures destroyed by fixation - reticulocyte RNA networks, Heinz bodies, and other living-cell inclusions. The reticulocyte count is one of the most important tests in the evaluation of anaemia, and Heinz bodies are diagnostic in haemolytic anaemias from oxidative stress. Romanowsky stains and supravital stains answer different questions; the laboratory needs both.`
     },
     {
-      q: "Automated staining: has the technology changed the laboratory?",
-      body: `In the past, every blood film was stained by hand - a labour-intensive process requiring careful timing, precise pH control, and a steady hand. Today, most laboratories use automated stainers, which offer consistency, speed and reproducibility that manual staining cannot match.
+      q: "There is a third family of stains - the cytochemical stains. What do they do, and when are they needed?",
+      body: `You have met the Romanowsky stains, which show cell morphology, and the supravital stains, which reveal living-cell structures. There is a third family - the cytochemical stains - which reveal something neither of the others can: the chemistry of the cell.
 
-My Socratic question: if manual staining works, why switch to automation?
+My Socratic question: the Romanowsky stain already tells you what kind of cell you are looking at. What would a stain that reveals the cell's chemistry add?
 
-The answer is consistency. Manual staining depends on the skill of the individual, the freshness of the reagents, and the exact timing - variables that change from slide to slide and person to person. Automated stainers control these variables precisely, so every slide is stained the same way.
+The answer is that it confirms the identity of the cell and distinguishes cells that look similar but are chemically different. This matters most in two situations: identifying leukaemias and lymphomas, and diagnosing certain inherited blood disorders. In these cases, the morphology alone may be ambiguous, but the cell's chemical reactions give a definitive answer.
 
-**The main types of automated stainers:**
+The main cytochemical stains:
+- Periodic acid-Schiff (PAS) - stains glycogen and other carbohydrates. Used to identify lymphoblasts and to help diagnose acute lymphoblastic leukaemia.
+- Myeloperoxidase (MPO) - stains the enzyme myeloperoxidase, which is present in myeloid cells. Used to distinguish acute myeloid leukaemia (MPO-positive) from acute lymphoblastic leukaemia (MPO-negative). This is a critical distinction because the two conditions require different treatments.
+- Sudan black B - stains lipids, particularly the lipids in the granules of myeloid cells. Like MPO, it helps identify myeloid lineage.
+- Leucocyte alkaline phosphatase (LAP) - stains the enzyme alkaline phosphatase in neutrophils. Used to distinguish chronic myeloid leukaemia (low LAP score) from a reactive leucocytosis (high LAP score).
+- Perl's Prussian blue - stains iron. Used to detect iron in bone marrow and to diagnose iron deficiency and iron overload disorders. It is the standard stain for assessing bone marrow iron stores.
 
-- **Dip-and-dry stainers.** The slide is dipped into successive baths of fixative, stain, buffer and rinse, then dried. Common in routine laboratories.
-- **Flat-bed stainers.** The slide lies flat and the stain is applied by pipette or spray. Good for consistency and for small batches.
-- **Spray stainers.** The stain is sprayed onto the slide in a controlled volume. Fast, but uses more reagent.
-- **Continuous-flow stainers.** Slides move on a conveyor through a series of staining stations. High throughput.
+Cytochemical stains are applied to bone marrow aspirates and blood films, using specific substrates and reaction conditions that produce a visible colour only when the target chemical is present.
 
-**Advantages of automated staining:**
-
-- Reproducibility - every slide is stained the same way.
-- Consistency - less affected by individual technique.
-- Speed - higher throughput, especially in large laboratories.
-- Safety - reduced handling of stains and reagents.
-- Standardisation - easier to comply with quality standards.
-
-**Limitations:**
-
-- Cost - automated stainers and reagents are expensive.
-- Less flexibility - harder to adjust for unusual samples or special stains.
-- Maintenance - requires regular servicing and quality control.
-- Reagent compatibility - not all stains work well in all machines.
-
-**The automated stainer in context:**
-
-- It is a tool, not a replacement for knowledge.
-- The laboratory scientist must still understand the principles of staining, be able to troubleshoot problems, and recognise when a stained slide is not right.
-- Quality control remains essential - automated stainers can drift, and their output must be checked.
-- Cytochemical and supravital stains are often still performed manually, because they require specific handling and controls.
-
-Crucial insight: automated staining has transformed the haematology laboratory by making staining consistent, fast and reproducible. But automation is not a substitute for understanding - the laboratory scientist must still know the principles, be able to troubleshoot, and recognise when a stained slide is not fit for diagnostic use.`
+Crucial insight: cytochemical stains reveal the cell's chemistry, not its shape. They are essential in haematological oncology because they distinguish leukaemias that look similar but require completely different treatments - especially the myeloid-versus-lymphoid distinction by MPO. The Romanowsky stain tells you the shape; the cytochemical stain tells you the chemistry; together they give the diagnosis.`
     },
     {
       q: "Consolidation and your final test.",
       body: `Your cognitive map for haematological stains, in five lines.
 
-**The three families:** Romanowsky stains (routine morphology - Leishman, Giemsa, Wright, May-Grünwald, Field's), supravital stains (living cells - new methylene blue, Janus green B, neutral red), and cytochemical stains (cell chemistry - MPO, Sudan Black B, PAS, LAP, acid phosphatase, Perls', reticulin, Congo red).
+Why we stain: unstained blood cells are nearly transparent and cannot be distinguished from one another. Staining provides contrast and differentiates cell structures.
 
-**The chemistry of colour:** acidic dyes (eosin) stain basic structures pink; basic dyes (methylene blue derivatives) stain acidic structures blue-purple; neutral dye complexes produce the Romanowsky effect (purple chromatin, mauve-pink granules).
+The Romanowsky family: mixtures of a basic dye (methylene blue and azure dyes) and an acidic dye (eosin). The basic dye stains the acidic nucleus; the acidic dye stains the basic cytoplasm; the azure dyes give the characteristic purple of chromatin. Stains include Leishman and Wright (routine), Giemsa (parasites and bone marrow), Field's (rapid malaria), and MGG (white cell differentiation).
 
-**Romanowsky technique and pH:** fixation with methanol, staining with diluted dye in buffer at controlled pH (6.4-6.8 for Leishman/Wright; 6.8-7.2 for Giemsa), washing and drying. pH is critical - too acidic = too pink, too alkaline = too blue.
+The staining protocol: fix with anhydrous methanol, cover with undiluted stain, dilute with buffered water (pH 6.8 for routine, pH 7.2 for parasites), wash, dry, and examine. Control pH and anhydrous methanol rigorously.
 
-**Supravital and cytochemical technique:** supravital dyes are applied to living, unfixed cells (e.g. reticulocyte count with new methylene blue); cytochemical stains target specific enzymes or substances and require appropriate fixatives and controls.
+Supravital stains: applied to living, unfixed cells. New methylene blue for reticulocyte counts; brilliant cresyl blue for Heinz bodies. Reveal structures destroyed by fixation.
 
-**Quality control and automation:** daily control slides, buffer pH checks, stain inspection, and controls for cytochemical stains. Automated stainers provide consistency and speed but do not replace understanding or quality control.
+Cytochemical stains: reveal cell chemistry, not shape. PAS, MPO, Sudan black, LAP, and Perl's Prussian blue. Essential for distinguishing leukaemias that look morphologically similar but require different treatment.
 
-Now your final test. A laboratory receives a bone marrow aspirate from a patient with suspected acute leukaemia. The laboratory scientist prepares several slides for different stains.
+Now your final test. A blood film from a patient with suspected acute leukaemia is stained with Leishman stain. The film appears too blue, and the nuclei of the white cells are very dark and poorly differentiated.
 
-Question one: which stains would be used to distinguish myeloid leukaemia from lymphoid leukaemia, and why?
-Question two: what role do Romanowsky stains play in this diagnostic process, and why are they not sufficient on their own?
-Question three: what quality control measures should be in place for each type of stain used in this case?
+Question one: what is the most likely cause of the film appearing too blue?
+Question two: how would the appearance differ if the film had been too red?
+Question three: what would you check and adjust before restaining the film?
 
 Work them through before reading on.
 
-My answers. One: to distinguish myeloid from lymphoid leukaemia, the laboratory would use cytochemical stains - specifically **myeloperoxidase (MPO)** and **Sudan Black B**. MPO and Sudan Black B stain myeloid blasts positively, so a positive result supports myeloid leukaemia. A negative result for both, combined with a positive **PAS** stain (which may be seen in lymphoblasts), supports lymphoid leukaemia. These stains target specific chemicals (enzymes and lipids) that differ between the two lineages, providing information that morphology alone cannot. Two: Romanowsky stains (Leishman, Giemsa or Wright) are essential for examining the morphology of the cells - the size, nuclear shape, chromatin pattern, and cytoplasmic features of the blasts. They provide the first indication that the marrow is abnormal and suggest the diagnosis. However, Romanowsky stains cannot identify the lineage of the blasts reliably - two leukaemias that look similar under Romanowsky staining may be very different in origin and treatment. Cytochemical stains fill that gap. Three: quality control for each stain type includes: for Romanowsky stains, daily staining of a control slide, checking the pH of the buffer, inspecting the stain for precipitate or contamination, and documenting results. For cytochemical stains, the appropriate fixative must be used; positive and negative controls must be included with each batch; incubation times and temperatures must be controlled; reagents must be stored correctly; and results must be documented and reviewed. If any control fails, the results are not reported, and the test is repeated.
+My answers. One: the most likely cause of a too-blue film is that the pH of the water used to dilute the stain was too alkaline. An alkaline pH increases the negative charge on cell components, so the basic dye binds more strongly, giving a blue-dominant film with poorly differentiated nuclei. Two: if the film had been too red (acidic pH), the acidic dye would have bound more strongly, giving a pink or red-dominant film with pale nuclei and orange-red cytoplasm. Three: I would check the pH of the buffered water - it should be 6.8 for a routine blood film - and confirm the methanol used is anhydrous. If the water is the wrong pH, I would replace it with correctly buffered water, then restain a fresh film. I would also check the age and condition of the stain itself, as a depleted or overly oxidised stain can also produce poor results.
 
-If those came cleanly, you understand the three families of haematological stains, the chemistry that makes them work, the techniques that make them reliable, and the quality control that makes them trustworthy. This is the foundation for every stained film and every special stain you will ever perform in the laboratory.`
-    }
+If those came cleanly, you understand the principles and the practice of haematological staining - the step that turns an invisible blood film into a diagnostic specimen. The stains you have learned here will be the tools you use every day in the haematology laboratory.`
+    },
   ],
-
   theory: [
-    { q: "Define a haematological stain and explain its purpose.", a: "A haematological stain is a coloured dye (or mixture of dyes) applied to blood cells to make their chemical and structural differences visible under the microscope. Its purpose is to provide contrast, allowing identification of cell types, nuclear detail, cytoplasmic granules, and intracellular organisms." },
-    { q: "Explain the chemical basis of staining - why acidic and basic dyes stain different structures.", a: "Dyes are charged molecules. Acidic dyes (such as eosin) carry a negative charge and bind positively charged (basic) structures like haemoglobin, staining them pink. Basic dyes (such as methylene blue and its oxidation products) carry a positive charge and bind negatively charged (acidic) structures like DNA and RNA, staining them blue-purple." },
-    { q: "What is the Romanowsky effect and why is it important?", a: "The Romanowsky effect is the purple-mauve colour produced when oxidised methylene blue (azure B) combines with eosin to form a neutral dye complex. It cannot be produced by either dye alone. It is important because it reveals chromatin detail, granule colour and parasite morphology clearly, and it is the defining feature of Romanowsky stains." },
-    { q: "Name the main Romanowsky stains and state one use for each.", a: "Leishman stain - routine blood films and bone marrow (UK/Commonwealth standard). Giemsa stain - blood films, bone marrow, and parasites (especially malaria). Wright stain - routine blood films and differential counts (US standard). May-Grünwald stain - often combined with Giemsa (MGG) for bone marrow and haematology. Field's stain - rapid staining of thick films for malaria." },
-    { q: "Explain why pH-dependent buffering is critical in Romanowsky staining.", a: "Staining is a chemical reaction, and the charge of cellular components and dye molecules depends on pH. If the buffer is too acidic, red cells stain too pink and nuclei appear pale; if too alkaline, red cells appear blue-grey and nuclei stain too dark. Optimal pH is 6.4-6.8 for Leishman and Wright, and 6.8-7.2 for Giemsa." },
-    { q: "What are supravital stains, and how do they differ from Romanowsky stains?", a: "Supravital stains are dyes applied to living, unfixed cells, allowing them to be examined without being killed. They differ from Romanowsky stains, which are applied to fixed cells. Supravital stains are used when the diagnostic question is about living-cell behaviour or structures (like reticulum) that are destroyed by fixation." },
-    { q: "Name the main supravital stains used in haematology and state the purpose of each.", a: "New methylene blue (or brilliant cresyl blue) - stains reticulum in reticulocytes, used for the reticulocyte count. Janus green B - stains mitochondria. Neutral red - stains lysosomes and vacuoles. These dyes allow examination of living cells and their organelles." },
-    { q: "What are cytochemical stains, and give five examples with what each detects.", a: "Cytochemical stains target specific chemical substances or enzymes in cells, revealing their lineage and function. Examples: myeloperoxidase (MPO) - detects myeloperoxidase in myeloid cells; Sudan Black B - detects lipids in myeloid granules; periodic acid-Schiff (PAS) - detects glycogen and mucosubstances; leukocyte alkaline phosphatase (LAP) - detects alkaline phosphatase in neutrophils; Perls' Prussian blue - detects iron; acid phosphatase (including TRAP) - detects acid phosphatase." },
-    { q: "Describe the quality control measures essential for haematological staining.", a: "Daily staining of a known control slide with each batch; checking the pH of the buffer; inspecting the stain for precipitate or contamination; storing stains and buffers correctly; using positive and negative controls for cytochemical stains; checking the staining time against the protocol; and documenting all quality control results." },
-    { q: "Describe the advantages and limitations of automated staining.", a: "Advantages: reproducibility, consistency, speed, safety, and standardisation. Limitations: cost, reduced flexibility for unusual samples or special stains, need for maintenance, and reagent compatibility issues. Automated staining does not replace the need for understanding the principles and for troubleshooting." }
+    { q: "Explain why blood films must be stained before examination.", a: "Unstained blood cells are nearly transparent and have refractive indices similar to the surrounding medium, so they cannot be distinguished from one another or their internal structures seen. Staining attaches coloured dyes to specific cell components, creating the contrast needed to identify cell types, differentiate nuclei and cytoplasm, and recognise parasites and inclusions." },
+    { q: "What is a Romanowsky stain, and what are its two main dye components?", a: "A Romanowsky stain is a mixture of a basic dye and an acidic dye dissolved in methanol. The basic dye (methylene blue, with its oxidised derivatives the azure dyes) stains acidic cell structures such as nuclei. The acidic dye (eosin) stains basic structures such as cytoplasm and red cells. The interaction between the two dyes is what produces the characteristic colour differentiation of a Romanowsky-stained blood film." },
+    { q: "Explain why the nucleus of a white cell stains purple in a Romanowsky stain.", a: "The purple colour is produced by the azure dyes (azure A, B, and C), which are oxidation products of methylene blue formed when the stain matures. Azure B in particular binds the acidic nucleic acids of chromatin and gives the characteristic purple colour. Without the azure dyes present, the nucleus would appear blue, and the film would look incorrectly stained." },
+    { q: "Explain the role of methanol in a Romanowsky stain.", a: "Methanol has two roles: it fixes the cells by dehydrating and precipitating their proteins, and it delivers the dyes. Fixation is essential because without it the cells would swell and distort when the aqueous portion of the stain is applied. Methanol must be anhydrous (water-free) because water-contaminated methanol fixes poorly, producing washed-out, blurred films with poor nuclear detail." },
+    { q: "Why must the water used to dilute a Romanowsky stain be buffered, and what pH is standard?", a: "The staining reaction depends on the electrical charge of cell components and dyes, which depends on pH. An acidic pH produces a red-dominant film with pale nuclei; an alkaline pH produces a blue-dominant film with dark, poorly differentiated nuclei. Buffered water at pH 6.8 is standard for routine blood films; pH 7.2 is used for staining parasites such as malaria, because it gives better contrast for parasite chromatin." },
+    { q: "Compare Leishman, Giemsa, and Field's stains, stating the main use of each.", a: "Leishman stain is the routine blood film stain in many laboratories, used for morphology and blood counts. Giemsa stain is used particularly for thick films in malaria diagnosis, bone marrow preparations, and cytology, because it gives stronger chromatin staining. Field's stain is a rapid Romanowsky stain used for malaria thick films in busy clinics, where speed matters more than nuclear detail." },
+    { q: "What are supravital stains and why are they used?", a: "Supravital stains are stains applied to living, unfixed cells. They are used to demonstrate structures that are destroyed or altered by fixation, especially reticulocyte RNA networks (stained by new methylene blue for the reticulocyte count) and Heinz bodies (denatured haemoglobin inclusions stained by brilliant cresyl blue). They must be applied to fresh blood within a short time of collection." },
+    { q: "Name four cytochemical stains and state what each is used to demonstrate.", a: "Periodic acid-Schiff (PAS) demonstrates glycogen and is used in lymphoid leukaemias. Myeloperoxidase (MPO) demonstrates the enzyme myeloperoxidase and distinguishes myeloid from lymphoid leukaemias. Sudan black B demonstrates lipids in myeloid granules. Leucocyte alkaline phosphatase (LAP) demonstrates alkaline phosphatase in neutrophils and helps distinguish chronic myeloid leukaemia from reactive leucocytosis. Perl's Prussian blue demonstrates iron in bone marrow." },
+    { q: "Explain why the myeloperoxidase stain is so important in leukaemia diagnosis.", a: "Myeloperoxidase is present in myeloid cells but not in lymphoid cells. The stain therefore distinguishes acute myeloid leukaemia (MPO-positive) from acute lymphoblastic leukaemia (MPO-negative). This distinction is critical because the two conditions require completely different treatments. Morphology alone may not distinguish them, so the cytochemical stain provides essential confirmation." },
+    { q: "List the steps of a routine Romanowsky staining procedure for a blood film.", a: "Allow the film to air-dry completely. Cover the film with undiluted stain for 30 seconds to 2 minutes to fix the cells and begin dye penetration. Dilute the stain with buffered water at pH 6.8 and leave for a further 5-15 minutes. Wash off the stain with buffered water. Dry the film upright. Examine under the microscope, first at low power to check the film quality, then under oil immersion for cell morphology." },
   ],
-
   videos: [
-    { channel: "Hematology", title: "Romanowsky Stains - Leishman, Giemsa, Wright and Field's", note: "The Romanowsky family explained - composition, pH, and clinical uses.", url: "https://www.youtube.com/results?search_query=romanowsky+stains+leishman+giemsa+wright+fields" },
-    { channel: "Hematology", title: "Supravital Stains and the Reticulocyte Count", note: "How new methylene blue stains reticulum in living reticulocytes.", url: "https://www.youtube.com/results?search_query=supravital+stain+reticulocyte+count+new+methylene+blue" },
-    { channel: "Hematology", title: "Cytochemical Stains in Haematology", note: "MPO, Sudan Black B, PAS, LAP, TRAP and other cytochemical stains used in diagnosis.", url: "https://www.youtube.com/results?search_query=cytochemical+stains+hematology+MPO+PAS+LAP" }
+    { channel: "Hematology", title: "Romanowsky Stains - Principles and Practice", note: "Explains the chemistry of methylene blue, azure and eosin, and the role of pH.", url: "https://www.youtube.com/results?search_query=romanowsky+stains+principles+haematology" },
+    { channel: "Hematology", title: "Leishman, Giemsa and Field's Stains - How to Choose", note: "Compares the routine Romanowsky stains and their specific uses.", url: "https://www.youtube.com/results?search_query=leishman+giemsa+fields+stain+comparison" },
+    { channel: "Hematology", title: "Supravital and Cytochemical Stains in Haematology", note: "Reticulocyte stains, Heinz bodies, MPO, PAS, LAP and Perl's Prussian blue.", url: "https://www.youtube.com/results?search_query=supravital+cytochemical+stains+haematology" },
   ],
-
   mcqs: [
-    // ===== Note 1 (Q1-5): why staining matters =====
-    { q: "Haematological stains are used to:", o: ["Preserve blood cells", "Add colour to blood cells so their differences become visible", "Kill bacteria", "Make blood clot"], a: 1, w: "Stains add colour so cellular differences become visible." },
-    { q: "An unstained blood film is almost useless because:", o: ["It is too thick", "The cells are almost transparent and lack contrast", "It is contaminated", "It cannot be examined"], a: 1, w: "Unstained cells are translucent and lack contrast." },
-    { q: "The main purpose of a stain in haematology is to provide:", o: ["Contrast", "Anticoagulation", "Fixation", "Sterilisation"], a: 0, w: "A stain provides contrast for identification." },
-    { q: "The three main families of haematological stains are:", o: ["Romanowsky, supravital, cytochemical", "Acidic, basic, neutral", "Leishman, Giemsa, Wright", "Gram, Ziehl-Neelsen, PAS"], a: 0, w: "The three families are Romanowsky, supravital and cytochemical stains." },
-    { q: "Romanowsky stains are the standard for:", o: ["Routine blood films", "Cytochemical reactions", "Supravital staining only", "Bacterial cultures"], a: 0, w: "Romanowsky stains are the routine standard for blood films." },
+    // ===== Note 1 (Q1-5): why we stain =====
+    { q: "Blood films must be stained before examination mainly because:", o: ["Staining kills infectious agents", "Unstained cells lack contrast and cannot be distinguished", "Staining preserves the cells for years", "Staining reduces the risk of infection"], a: 1, w: "Unstained cells are nearly transparent and cannot be reliably distinguished; staining provides the necessary contrast." },
+    { q: "The main function of a stain in haematology is to:", o: ["Provide colour contrast between cell structures", "Neutralise the charge on cells", "Fix the cells to the slide", "Increase the refractive index of cells"], a: 0, w: "Stains colour cell structures differently, producing the contrast needed for identification." },
+    { q: "Which of the following would NOT be visible in an unstained blood film?", o: ["The overall shape of red cells", "The approximate number of red cells", "The chromatin pattern of a nucleus", "The approximate number of platelets"], a: 2, w: "Nuclear chromatin patterns require staining to be visible." },
+    { q: "The information present in an unstained blood film is best described as:", o: ["Absent", "Invisible but present", "Destroyed by drying", "Only useful for parasites"], a: 1, w: "The information is present but invisible without staining." },
+    { q: "The principle that makes staining necessary is:", o: ["Cells have identical refractive indices to their surroundings", "Cells are coloured red to begin with", "Cells absorb all light without staining", "Cells are too large to see clearly"], a: 0, w: "Cells and their surroundings have similar refractive indices, so contrast is needed." },
 
-    // ===== Note 2 (Q6-10): chemistry of staining =====
-    { q: "Acidic dyes carry a charge that is:", o: ["Positive", "Negative", "Neutral", "Variable"], a: 1, w: "Acidic dyes carry a negative charge." },
-    { q: "Basic dyes carry a charge that is:", o: ["Positive", "Negative", "Neutral", "Variable"], a: 0, w: "Basic dyes carry a positive charge." },
-    { q: "Basic dyes stain which cellular structures?", o: ["Acidic structures like DNA and RNA", "Basic structures like haemoglobin", "Lipids", "Carbohydrates"], a: 0, w: "Basic dyes bind acidic structures like DNA and RNA, staining them blue-purple." },
-    { q: "Acidic dyes stain which cellular structures?", o: ["Acidic structures like DNA", "Basic structures like haemoglobin and cytoplasmic proteins", "Lipids", "Nucleic acids"], a: 1, w: "Acidic dyes bind basic structures such as haemoglobin, staining them pink." },
-    { q: "The Romanowsky effect is produced by:", o: ["Eosin alone", "Methylene blue alone", "A neutral dye complex of azure B and eosin", "Haematoxylin"], a: 2, w: "The Romanowsky effect comes from the neutral complex of azure B and eosin." },
+    // ===== Note 2 (Q6-10): the Romanowsky family =====
+    { q: "The Romanowsky stains are named after:", o: ["A British pathologist", "A Russian physician", "A German chemist", "An American haematologist"], a: 1, w: "Dmitri Romanowsky was a Russian physician who discovered the dye interaction in 1891." },
+    { q: "The key discovery that made Romanowsky stains possible was:", o: ["The isolation of haemoglobin", "The identification of red cell antigens", "The interaction between a basic and an acidic dye", "The introduction of the electron microscope"], a: 2, w: "Romanowsky discovered that a mixture of a basic and an acidic dye produced a colour reaction no single dye could achieve." },
+    { q: "Which of the following is NOT a Romanowsky stain?", o: ["Leishman stain", "Giemsa stain", "New methylene blue", "Wright stain"], a: 2, w: "New methylene blue is a supravital stain, not a Romanowsky stain." },
+    { q: "Romanowsky stains dominate haematology mainly because they:", o: ["Are the cheapest stains available", "Are the oldest stains in use", "Can be prepared without any chemicals", "Produce full colour differentiation of all cell components"], a: 3, w: "They produce full colour differentiation of nucleus, cytoplasm, granules and parasites in one preparation." },
+    { q: "The two dye components of a Romanowsky stain are:", o: ["A basic dye and an acidic dye", "Two basic dyes", "Two acidic dyes", "A neutral dye only"], a: 0, w: "A Romanowsky stain contains a basic dye and an acidic dye." },
 
-    // ===== Note 3 (Q11-15): Romanowsky family =====
-    { q: "The Romanowsky stains are named after:", o: ["A Russian physician", "An American chemist", "A British haematologist", "A German pathologist"], a: 0, w: "Dmitri Romanowsky was a Russian physician." },
-    { q: "Which Romanowsky stain is most commonly used in the UK and Commonwealth?", o: ["Giemsa", "Wright", "Leishman", "Field's"], a: 2, w: "Leishman stain is widely used in the UK and Commonwealth." },
-    { q: "Which Romanowsky stain is preferred for parasites such as malaria?", o: ["Giemsa", "Leishman", "Wright", "May-Grünwald"], a: 0, w: "Giemsa stain is the stain of choice for parasites." },
-    { q: "Field's stain is particularly useful because it is:", o: ["Slow and detailed", "Rapid, for field conditions", "Only for bone marrow", "Only for thick films"], a: 1, w: "Field's stain is very fast, useful for rapid malaria diagnosis in field conditions." },
-    { q: "May-Grünwald-Giemsa (MGG) is a standard stain for:", o: ["Bacterial cultures", "Urine sediment", "Bone marrow and haematology", "Parasites only"], a: 2, w: "MGG provides excellent cellular detail and is a European standard for bone marrow and haematology." },
+    // ===== Note 3 (Q11-15): dye interactions =====
+    { q: "The basic dye in a Romanowsky stain stains the nucleus because the nucleus is:", o: ["Basic and attracts acidic dyes", "Neutral and attracts both dyes", "Acidic and attracts basic dyes", "Coloured blue naturally"], a: 2, w: "The nucleus is acidic, so it attracts the positively charged basic dye." },
+    { q: "The acidic dye in a Romanowsky stain stains the cytoplasm because the cytoplasm is:", o: ["Acidic and attracts basic dyes", "Basic and attracts acidic dyes", "Neutral and attracts neither dye", "Coloured red naturally"], a: 1, w: "The cytoplasm is basic, so it attracts the negatively charged acidic dye." },
+    { q: "Which of the following is the main basic dye in a Romanowsky stain?", o: ["Eosin", "Methylene blue", "Sudan black", "Erythrosin"], a: 1, w: "Methylene blue (and its oxidation products, the azure dyes) is the main basic dye." },
+    { q: "Which of the following is the main acidic dye in a Romanowsky stain?", o: ["Methylene blue", "Azur B", "New methylene blue", "Eosin"], a: 3, w: "Eosin is the main acidic dye." },
+    { q: "The colour scheme of a Romanowsky stain is determined by:", o: ["The temperature of the laboratory", "The electrical charge on cell components", "The size of the cells", "The pH of the patient's blood only"], a: 1, w: "The electrical charge on cell components determines which dye binds to which structure." },
 
-    // ===== Note 4 (Q16-20): pH-dependent buffering =====
-    { q: "The optimal pH for Leishman and Wright stains is usually:", o: ["4.0-5.0", "6.4-6.8", "7.5-8.0", "8.5-9.0"], a: 1, w: "Leishman and Wright stains work best at pH 6.4-6.8." },
-    { q: "The optimal pH for Giemsa stain is usually:", o: ["5.0-5.5", "6.0-6.5", "6.8-7.2", "7.5-8.0"], a: 2, w: "Giemsa stain works best at pH 6.8-7.2." },
-    { q: "If the buffer is too acidic (low pH), the film will appear:", o: ["Too blue", "Too pink", "Too dark", "Colourless"], a: 1, w: "Acidic buffer causes red cells to stain too pink and nuclei to appear pale." },
-    { q: "If the buffer is too alkaline (high pH), the film will appear:", o: ["Too pink", "Too pale", "Too blue", "Colourless"], a: 2, w: "Alkaline buffer causes red cells to appear blue-grey and nuclei to stain too dark." },
-    { q: "The buffer used for Romanowsky staining is usually:", o: ["Acetate buffer", "Phosphate buffer", "Tris buffer", "Bicarbonate buffer"], a: 1, w: "Phosphate buffer is the standard buffer for Romanowsky staining." },
+    // ===== Note 4 (Q16-20): azure dyes and the purple of the nucleus =====
+    { q: "The purple colour of chromatin in a Romanowsky-stained film is produced by:", o: ["Eosin", "The azure dyes", "Methylene blue alone", "Sudan black B"], a: 1, w: "The azure dyes (especially azure B) produce the purple colour of chromatin." },
+    { q: "The azure dyes are formed by:", o: ["Mixing eosin with methylene blue", "Oxidative demethylation of methylene blue", "Adding methanol to the dye", "Heating the stain to boiling point"], a: 1, w: "Azure dyes are oxidation products formed by demethylation of methylene blue." },
+    { q: "A freshly prepared Romanowsky stain often produces a blue nucleus rather than a purple one because:", o: ["The azure dyes have not yet formed", "Eosin is present in excess", "The pH is too high", "The methanol is contaminated"], a: 0, w: "Fresh stain lacks the azure dyes, so chromatin appears blue rather than purple; the stain must mature." },
+    { q: "The maturation of a Romanowsky stain is important because:", o: ["It makes the stain dissolve more easily", "It destroys the eosin", "It allows the azure dyes to form, giving characteristic nuclear colour", "It reduces the toxicity of the stain"], a: 2, w: "Maturation allows the azure dyes to form, giving the characteristic purple chromatin colour." },
+    { q: "The colour of eosinophil granules in a Romanowsky-stained film is:", o: ["Deep purple-black", "Sky blue", "Violet", "Bright orange-red"], a: 3, w: "Eosinophil granules stain bright orange-red with eosin." },
 
-    // ===== Note 5 (Q21-25): supravital stains =====
-    { q: "Supravital stains are applied to:", o: ["Fixed cells", "Living, unfixed cells", "Only paraffin sections", "Only frozen sections"], a: 1, w: "Supravital stains are applied to living, unfixed cells." },
-    { q: "The supravital stain used for the reticulocyte count is:", o: ["New methylene blue", "Eosin", "Giemsa", "Haematoxylin"], a: 0, w: "New methylene blue (or brilliant cresyl blue) stains reticulum in reticulocytes." },
-    { q: "The structure stained by new methylene blue in reticulocytes is:", o: ["DNA", "Reticulum", "Mitochondria", "Lipids"], a: 1, w: "New methylene blue stains reticulum, a network of residual RNA and organelles." },
-    { q: "Janus green B is a supravital dye that stains:", o: ["Nuclei", "Mitochondria", "Lysosomes", "Reticulum"], a: 1, w: "Janus green B stains mitochondria in living cells." },
-    { q: "Supravital preparations are not permanent because:", o: ["They are too thick", "The cells are not fixed", "They are too pale", "They require special microscopes"], a: 1, w: "Because the cells are not fixed, supravital preparations must be examined quickly and are not permanent." },
+    // ===== Note 5 (Q21-25): methanol and fixation =====
+    { q: "The main role of methanol in a Romanowsky stain is to:", o: ["Fix the cells and deliver the dyes", "Neutralise the stain's charge", "Increase the pH of the stain", "Kill all bacteria on the slide"], a: 0, w: "Methanol both fixes the cells and acts as the solvent that delivers the dyes." },
+    { q: "Methanol fixes the cells by:", o: ["Dissolving the cell membrane", "Dehydrating and precipitating their proteins", "Adding a positive charge to the cells", "Adding a negative charge to the cells"], a: 1, w: "Methanol dehydrates and precipitates proteins, locking the cell morphology in place." },
+    { q: "Methanol for Romanowsky stains must be anhydrous because:", o: ["Water is toxic to the dyes", "Water prevents the dyes from dissolving", "Water-contaminated methanol fixes poorly and produces washed-out films", "Water is too expensive to include"], a: 2, w: "Water-contaminated methanol fixes poorly, producing washed-out films with poor nuclear detail." },
+    { q: "A Romanowsky stain left open to the air will gradually:", o: ["Lose its colour completely", "Become a stronger stain", "Change colour from purple to blue", "Take up water and become contaminated"], a: 3, w: "Methanol is hygroscopic; an open bottle absorbs atmospheric water and becomes contaminated." },
+    { q: "After air-drying a blood film, the cells are still unfixed.", o: ["True, and methanol fixation is therefore still required", "False, air-drying fully fixes the cells", "True, but this does not matter for staining", "False, fixation happens during staining with water"], a: 0, w: "Air-drying does not fix the cells; methanol fixation is essential before staining." },
 
-    // ===== Note 6 (Q26-30): cytochemical stains =====
-    { q: "Cytochemical stains are used to:", o: ["Show cell shape only", "Detect specific chemicals or enzymes in cells", "Count reticulocytes", "Stain mitochondria in living cells"], a: 1, w: "Cytochemical stains target specific chemicals or enzymes in cells." },
-    { q: "Myeloperoxidase (MPO) staining is used to identify:", o: ["Lymphoid leukaemia", "Myeloid leukaemia", "Malaria", "Iron deficiency"], a: 1, w: "MPO stains myeloid blasts positively, helping to identify myeloid leukaemia." },
-    { q: "Which stain detects glycogen and is used in leukaemia diagnosis?", o: ["PAS", "LAP", "Perls'", "Congo red"], a: 0, w: "Periodic acid-Schiff (PAS) detects glycogen and mucosubstances, useful in leukaemia diagnosis." },
-    { q: "Leukocyte alkaline phosphatase (LAP) is useful for distinguishing:", o: ["Myeloid from lymphoid leukaemia", "Chronic myeloid leukaemia from reactive leucocytosis", "Iron deficiency from thalassaemia", "Malaria from other parasites"], a: 1, w: "LAP is low in chronic myeloid leukaemia and high in reactive leucocytosis." },
-    { q: "Perls' Prussian blue stain is used to detect:", o: ["Lipids", "Iron", "Glycogen", "Amyloid"], a: 1, w: "Perls' Prussian blue detects iron, staining haemosiderin and ferritin blue." },
+    // ===== Note 6 (Q26-30): pH of buffered water =====
+    { q: "The standard pH for buffered water used with a routine Romanowsky stain is:", o: ["6.8", "7.6", "5.0", "8.5"], a: 0, w: "Buffered water at pH 6.8 is standard for routine blood films." },
+    { q: "A film that appears too red after Romanowsky staining is most likely caused by:", o: ["An alkaline pH of the water", "An acidic pH of the water", "An old stain", "Excessive methanol"], a: 1, w: "An acidic pH causes the acidic dye to bind too strongly, producing a red-dominant film." },
+    { q: "A film that appears too blue after Romanowsky staining is most likely caused by:", o: ["An acidic pH of the water", "A cold laboratory", "An alkaline pH of the water", "A fresh stain"], a: 2, w: "An alkaline pH causes the basic dye to bind too strongly, producing a blue-dominant film." },
+    { q: "The pH of the water used to dilute a Romanowsky stain matters because:", o: ["The water is a substrate for the stain", "The charge of cell components and dyes depends on pH", "Water is required for fixation", "The dyes are dissolved in the water only"], a: 1, w: "The charge on cell components and dyes - and therefore the staining reaction - depends on pH." },
+    { q: "For staining thick films to detect malaria parasites, the recommended pH of the buffered water is:", o: ["5.0", "7.2", "6.8", "8.5"], a: 1, w: "A pH of 7.2 is used for parasite stains to give better contrast for parasite chromatin." },
 
-    // ===== Note 7 (Q31-35): staining technique =====
-    { q: "In Romanowsky staining, fixation of the blood film is achieved by:", o: ["Heating the slide", "Covering with undiluted stain (contains methanol)", "Using formalin vapour", "Freezing"], a: 1, w: "The methanol in the undiluted stain fixes the film." },
-    { q: "After fixation, the Romanowsky stain is diluted with:", o: ["Distilled water", "Buffer solution", "Alcohol", "Acetone"], a: 1, w: "Buffer solution is added to dilute the stain and control pH." },
-    { q: "The recommended staining time for Leishman stain is typically:", o: ["10 seconds", "5-15 minutes", "1 hour", "24 hours"], a: 1, w: "Leishman stain is typically applied for 5-15 minutes." },
-    { q: "For supravital staining (reticulocyte count), the blood is mixed with dye and incubated for:", o: ["1 minute", "15-30 minutes", "2 hours", "24 hours"], a: 1, w: "Incubation for 15-30 minutes allows the dye to be taken up by living cells." },
-    { q: "Which family of stains is often still performed manually because of specific handling requirements?", o: ["Romanowsky stains", "Automated stains", "Cytochemical and supravital stains", "Wright stain"], a: 2, w: "Cytochemical and supravital stains often require manual handling and controls." },
+    // ===== Note 7 (Q31-35): named Romanowsky stains =====
+    { q: "The routine blood film stain in many Commonwealth countries is:", o: ["Leishman stain", "Field's stain", "May-Grunwald stain", "Sudan black B"], a: 0, w: "Leishman stain is the routine blood film stain in many Commonwealth countries." },
+    { q: "The Romanowsky stain used primarily for thick films in malaria diagnosis is:", o: ["Leishman stain", "Giemsa stain", "Wright stain", "PAS"], a: 1, w: "Giemsa stain is used for thick films in malaria diagnosis, giving strong parasite chromatin staining." },
+    { q: "Field's stain is particularly useful because it:", o: ["Gives the best nuclear detail available", "Requires no buffer at all", "Stains thick films rapidly for malaria diagnosis", "Is the least toxic of all the stains"], a: 2, w: "Field's stain is a rapid Romanowsky stain designed for malaria diagnosis in busy clinics." },
+    { q: "The routine blood film stain in North America is:", o: ["Leishman stain", "Field's stain", "Giemsa stain only", "Wright stain"], a: 3, w: "Wright stain is the routine Romanowsky stain in North America." },
+    { q: "May-Grunwald-Giemsa stain is particularly useful for:", o: ["Staining white cell lineages in detail", "Rapid malaria diagnosis", "Staining reticulocytes", "Detecting Heinz bodies"], a: 0, w: "MGG is used for detailed white cell differentiation, particularly in bone marrow and haematology research." },
 
-    // ===== Note 8 (Q36-40): sources of error and quality control =====
-    { q: "A film that is too pink is most likely due to:", o: ["Alkaline buffer", "Acidic buffer", "Too long staining", "Contaminated stain"], a: 1, w: "Acidic buffer (low pH) causes excessive pink staining." },
-    { q: "A film that is too blue is most likely due to:", o: ["Acidic buffer", "Alkaline buffer", "Too short staining", "Water artefact"], a: 1, w: "Alkaline buffer (high pH) causes excessive blue staining." },
-    { q: "Which of the following is a source of error in supravital staining?", o: ["Incorrect incubation time", "Incorrect fixative", "Too much buffer", "Paraffin embedding"], a: 0, w: "Incorrect incubation time can cause incomplete or over-staining in supravital preparations." },
-    { q: "Positive and negative controls are especially important for:", o: ["Romanowsky stains", "Supravital stains", "Cytochemical stains", "Automated stainers"], a: 2, w: "Cytochemical stains require positive and negative controls to validate results." },
-    { q: "A daily control slide is used in quality control to:", o: ["Calibrate the microscope", "Check that staining is correct", "Measure pH", "Measure temperature"], a: 1, w: "The control slide confirms that the staining process is producing correct colours and detail." },
+    // ===== Note 8 (Q36-40): supravital stains =====
+    { q: "Supravital stains are applied to:", o: ["Fixed, dead cells", "Living, unfixed cells", "Frozen tissue sections", "Paraffin-embedded tissue"], a: 1, w: "Supravital stains are applied to living, unfixed cells." },
+    { q: "The supravital stain used for the reticulocyte count is:", o: ["Methylene blue", "Eosin", "New methylene blue", "Sudan black B"], a: 2, w: "New methylene blue is used to stain the reticulocyte RNA network." },
+    { q: "Reticulocytes are young red cells that still contain:", o: ["Residual DNA", "Intact nuclei", "Denatured haemoglobin", "Residual ribosomal RNA"], a: 3, w: "Reticulocytes contain residual ribosomal RNA, which the supravital stain precipitates into a visible network." },
+    { q: "Heinz bodies are best demonstrated using:", o: ["Brilliant cresyl blue", "Leishman stain only", "Eosin only", "Romanowsky stain alone"], a: 0, w: "Heinz bodies, denatured haemoglobin inclusions, are best demonstrated with a supravital stain such as brilliant cresyl blue." },
+    { q: "Supravital stains reveal structures that Romanowsky stains cannot because supravital stains:", o: ["Are applied at a higher temperature", "Are less specific than Romanowsky stains", "Are applied to living cells, preserving structures destroyed by fixation", "Are more concentrated than Romanowsky stains"], a: 2, w: "Supravital stains preserve living-cell structures that fixation would destroy." },
 
-    // ===== Note 9 (Q41-45): automated staining =====
-    { q: "Automated stainers offer the greatest advantage in terms of:", o: ["Cost", "Reproducibility and consistency", "Flexibility", "Speed only"], a: 1, w: "Automated stainers provide consistent, reproducible staining from slide to slide." },
-    { q: "Which type of automated stainer dips slides into successive baths?", o: ["Flat-bed stainer", "Spray stainer", "Dip-and-dry stainer", "Continuous-flow stainer"], a: 2, w: "Dip-and-dry stainers move slides through successive baths of reagent." },
-    { q: "A limitation of automated staining is:", o: ["Poor reproducibility", "Slow speed", "Less flexibility for special stains", "High variability"], a: 2, w: "Automated stainers may be less flexible for unusual samples or special stains." },
-    { q: "Quality control for automated stainers:", o: ["Is not necessary", "Is only required once a year", "Remains essential", "Is only for cytochemical stains"], a: 2, w: "Quality control remains essential - automated stainers can drift and their output must be checked." },
-    { q: "Which of the following is NOT an advantage of automated staining?", o: ["Standardisation", "Reduced handling of reagents", "Greater flexibility", "Higher throughput"], a: 2, w: "Greater flexibility is not an advantage of automated staining; manual methods are more flexible." },
+    // ===== Note 9 (Q41-45): cytochemical stains =====
+    { q: "The key characteristic of cytochemical stains is that they reveal:", o: ["The cell's shape", "The cell's chemistry", "The cell's colour", "The cell's age"], a: 1, w: "Cytochemical stains reveal the chemistry of cells, not just their morphology." },
+    { q: "The cytochemical stain most important for distinguishing acute myeloid from acute lymphoblastic leukaemia is:", o: ["Myeloperoxidase", "Sudan black B only", "PAS", "Perl's Prussian blue"], a: 0, w: "Myeloperoxidase is present in myeloid cells and absent from lymphoid cells, so it distinguishes AML from ALL." },
+    { q: "Periodic acid-Schiff (PAS) is particularly useful in the diagnosis of:", o: ["Iron deficiency anaemia", "Acute lymphoblastic leukaemia", "Chronic myeloid leukaemia", "Malaria"], a: 1, w: "PAS stains glycogen and is used to identify lymphoblasts in acute lymphoblastic leukaemia." },
+    { q: "Perl's Prussian blue stain is used to demonstrate:", o: ["Glycogen", "Alkaline phosphatase", "Lipids", "Iron"], a: 3, w: "Perl's Prussian blue stains iron and is used to assess bone marrow iron stores." },
+    { q: "Leucocyte alkaline phosphatase (LAP) stain is most useful for distinguishing:", o: ["Iron deficiency from thalassaemia", "Malaria from babesiosis", "Chronic myeloid leukaemia from a reactive leucocytosis", "ALL from AML"], a: 2, w: "The LAP score is low in chronic myeloid leukaemia and high in reactive leucocytosis." },
 
-    // ===== Note 10 (Q46-50): consolidation - clinical application and integration =====
-    { q: "To distinguish myeloid from lymphoid leukaemia, the most useful cytochemical stains are:", o: ["MPO and Sudan Black B", "PAS and Congo red", "Perls' and reticulin", "Giemsa and Wright"], a: 0, w: "MPO and Sudan Black B stain myeloid blasts positively, helping distinguish myeloid from lymphoid leukaemia." },
-    { q: "Romanowsky stains are essential in leukaemia diagnosis because they:", o: ["Identify the lineage", "Show cell morphology and suggest the diagnosis", "Detect specific enzymes", "Stain reticulum"], a: 1, w: "Romanowsky stains show cell morphology and provide the first indication of leukaemia." },
-    { q: "Cytochemical stains are needed in addition to Romanowsky stains because:", o: ["They are faster", "They reveal cell chemistry and lineage", "They are cheaper", "They do not require controls"], a: 1, w: "Cytochemical stains reveal the chemical composition and lineage of cells, which morphology alone cannot." },
-    { q: "Which of the following is NOT part of quality control for Romanowsky stains?", o: ["Daily control slide", "Buffer pH check", "Stain inspection", "Positive and negative controls with each batch"], a: 3, w: "Positive and negative controls are especially used for cytochemical stains; Romanowsky stains use control slides and buffer checks." },
-    { q: "The three families of haematological stains are important because they:", o: ["All stain the same structures", "Provide different information - morphology, living-cell behaviour, and cell chemistry", "Are interchangeable", "Are all applied to fixed cells"], a: 1, w: "The three families provide different diagnostic information and are complementary in the laboratory." }
-  ]
+    // ===== Note 10 (Q46-50): consolidation =====
+    { q: "A Romanowsky-stained film appears too blue overall. The most likely cause is:", o: ["The pH of the buffered water is too alkaline", "The pH of the buffered water is too acidic", "The stain is contaminated with eosin", "The methanol was too pure"], a: 0, w: "An alkaline pH causes basic dye to bind more strongly, producing a blue-dominant film." },
+    { q: "A film that is too red with pale nuclei is most likely due to:", o: ["A fresh stain", "The pH of the water being too acidic", "Excessive eosin in the stain", "An old stain that has oxidised"], a: 1, w: "An acidic pH causes the acidic dye to bind more strongly, producing a red-dominant film." },
+    { q: "To correct a too-blue film, the first thing to check is:", o: ["The age of the patient", "The blood film thickness", "The pH of the buffered water and the age of the stain", "The temperature of the laboratory"], a: 2, w: "Checking the pH of the buffered water and the condition of the stain is the first step in correcting a too-blue film." },
+    { q: "The correct pH of the buffered water for a routine blood film is:", o: ["7.6", "8.5", "5.0", "6.8"], a: 3, w: "Buffered water at pH 6.8 is the standard for routine blood films." },
+    { q: "Which of the following is NOT a Romanowsky stain?", o: ["New methylene blue", "Leishman stain", "Giemsa stain", "Wright stain"], a: 0, w: "New methylene blue is a supravital stain, not a Romanowsky stain." },
+  ],
 };
+
+/* --------------------------- hem:8 --------------------------- */
+// Objectives covered: blood smears/films preparation and examination
+// (thick and thin blood smears). Techniques for evaluating thin and thick
+// films, assessing blood cell morphology, estimating platelet and WBC counts,
+// performing differential counts, diagnosing parasites (especially malaria),
+// and validating automated analyser results by microscopic review.
+// 10 note headers -> 5 MCQs each -> exactly 50 MCQs.
+const T_HEM_BLOOD_SMEARS = {
+  courseId: "hem",
+  topicIndex: 8,
+  title: "Blood Smears/Films Preparation & Examination (Thick and Thin Blood Smears)",
+  minutes: 30,
+  note: [
+    {
+      q: "In the age of automated analysers, why does the blood film still matter?",
+      body: `A modern haematology analyser counts thousands of cells per second and produces a full blood count in under a minute. So why does the laboratory still insist on making a blood film, staining it, and looking at it down a microscope? The reason is that the analyser counts cells but cannot see them.
+
+My Socratic question: if the analyser gives you accurate numbers for red cells, white cells and platelets, what kind of information is missing from its report?
+
+The answer is morphology. The analyser can tell you the count, the size (mean cell volume), and often the haemoglobin. It cannot tell you whether the red cells are abnormally shaped, whether the neutrophils are hypersegmented, whether toxic granulation is present, whether blasts are circulating, or whether a malaria parasite is inside a red cell. All of that requires looking at the cells themselves, and only a well-made blood film allows that.
+
+This is why the blood film sits at the centre of haematology. It is the confirmatory step for every automated result, the screening test for parasites, and the only way to recognise the morphological features that suggest leukaemia, haemolytic anaemia, infection, or inherited disorders. Automated results without a film are numbers without a picture.
+
+Crucial insight: the blood film is not a legacy technique that survives despite automation - it is the diagnostic tool that automation cannot replace. Every analyser flag, every unexpected result, and every clinical suspicion that morphology might reveal something must be confirmed by looking at an actual blood film. That is why making and examining a good film remains one of the essential skills of a haematology laboratory scientist.`
+    },
+    {
+      q: "There are two kinds of blood film in haematology - thick and thin. Why two, and how do they differ?",
+      body: `A single drop of blood can be spread onto a slide in two completely different ways, producing two films that look nothing like each other and answer two different questions. Every haematology laboratory uses both, and knowing when to use which is basic professional judgement.
+
+My Socratic question: the thick film is dried without being fixed, and the red cells are deliberately lysed during staining. Why would you want to destroy the red cells?
+
+The answer is that the thick film is designed to concentrate parasites. When the red cells are lysed, the white cells and any parasites they contain are left behind, concentrated in a small area. A thick film therefore examines the equivalent of many times more blood per field than a thin film, dramatically increasing the chance of finding a malaria parasite in a low-parasitaemia sample.
+
+The two films:
+- The thin film is the classic blood film used for cell morphology. It is spread thinly so that a single layer of red cells is visible with no overlapping. It is fixed in methanol before staining, so the cells retain their morphology. It is used for differential white cell counts, red cell morphology, platelet estimates, and parasite species identification.
+- The thick film is a drop of blood spread into a small circle or rectangle and allowed to dry without spreading thin. It is NOT fixed in methanol before staining - the water in the stain lyses the red cells, leaving a concentrated layer of white cells and any parasites. It is used for the detection of parasites, especially malaria.
+
+The thin film answers the question "what kind of cell is this?" The thick film answers the question "is there a parasite present, and if so how many?" They are complementary and routinely stained together on the same slide for malaria screening.
+
+Crucial insight: thick and thin films are not two versions of the same test - they are two different tests on the same sample. The thin film preserves morphology; the thick film concentrates parasites. Both are essential, and malaria diagnosis uses both together.`
+    },
+    {
+      q: "The thin film is only useful if it is made well. What does a good thin film look like?",
+      body: `A thin film that is too thick, too long, or spread with the wrong technique is a wasted slide. The whole purpose of the thin film is to spread the blood into a layer so thin that red cells lie in a single layer, side by side, not overlapping - so their individual shape, size and internal structure can be seen. Anything that defeats that purpose defeats the film.
+
+My Socratic question: if you placed a large drop of blood on a slide and simply spread it with the edge of another slide, what could go wrong?
+
+The answer is that many things could go wrong, and each produces a recognisable defect in the film:
+- Too large a drop produces a film too long to fit on the slide, and too thick to allow single-layer viewing.
+- Too small a drop produces a film that stops short of covering the slide.
+- Too fast a spread produces a thin film that is too short and too pale.
+- Too slow a spread produces a thick film that does not spread fully, with a heavy tail.
+- A rough or dirty spreader produces ridges and holes in the film.
+- A high haematocrit makes spreading harder and produces thicker films.
+
+The technique for a good thin film is straightforward:
+- Use a clean, grease-free slide.
+- Place a small drop of blood (2-3 mm diameter) about 1 cm from one end of the slide.
+- Hold a spreader slide at about 30 to 45 degrees to the base slide.
+- Back the spreader into the drop so the blood runs along its edge.
+- Push the spreader smoothly and steadily forward, in one motion, without stopping.
+- Allow the film to air-dry completely before staining.
+
+A well-made thin film has three zones: a head (thicker), a body (the ideal single-layer zone), and a tail (thinner, with red cells sometimes distorted). The body is where morphology is assessed.
+
+Crucial insight: the quality of the film determines everything that follows. The best stain in the world cannot rescue a badly made film, and a well-made film will show more diagnostic detail with an imperfect stain than a poorly made film will ever show with a perfect one. Film-making is the first and most important technical skill in blood film examination.`
+    },
+    {
+      q: "The thick film looks like a smear of dried blood on a slide. How is it made, and how is it different?",
+      body: `The thick film looks simpler than the thin film - no careful spreading, no controlled angle. A drop of blood is placed on a slide, and the corner of another slide is used to spread it into a small circle or rectangle about 1 cm in diameter. Then the film is allowed to dry - thoroughly, and for longer than a thin film - before staining. It is not fixed in methanol, and this is where its difference from the thin film begins.
+
+My Socratic question: the thin film is fixed in methanol to preserve the red cells. The thick film is deliberately not fixed, and the red cells are destroyed during staining. Why is the thick film's destruction of red cells not a defect?
+
+The answer is that the destruction is the whole point. The thick film is designed to concentrate parasites, and it can only do this if the surrounding red cell material is removed. When the unfixed thick film is exposed to the aqueous portion of the stain, the water causes the red cells to lyse. Their haemoglobin is washed away, and what remains is a concentrated layer of white cells, platelets, and any parasites that were inside the red cells. Because a thick film examines roughly 20 to 30 times more blood per field than a thin film, it is far more sensitive for detecting low-level parasitaemia.
+
+The technique for a good thick film:
+- Use a clean, grease-free slide.
+- Place a drop of blood about 1 cm from one end.
+- Use the corner of a spreader slide to spread it into a circle or rectangle about 1 cm in diameter, with even thickness.
+- Allow the film to dry completely - typically 20 to 30 minutes at room temperature, or faster in an incubator. It must be completely dry before staining, or the film will wash off.
+- Stain without methanol fixation. The red cells lyse during staining.
+
+Crucial insight: the thick film and the thin film require different techniques for the same reason - they answer different questions. The thick film exchanges morphology for sensitivity: it destroys the red cells and their morphology to concentrate the parasites. For malaria diagnosis, the thick film tells you whether parasites are present and roughly how many; the thin film tells you which species and what the red cell morphology is. Together, they are the gold standard for malaria diagnosis.`
+    },
+    {
+      q: "A blood film is a coloured picture of a patient. What does the examiner actually look for in a thin film?",
+      body: `A thin film, stained and mounted, is a complete picture of the patient's blood at the moment of collection. It shows every red cell, every white cell, every platelet, and any abnormal cells that should not be there. But an examiner does not look at all of it at once - they follow a systematic sequence that ensures nothing is missed.
+
+My Socratic question: if the film contains dozens of different features that matter clinically, how does the examiner make sure every one of them is checked?
+
+The answer is that thin film examination follows a standard order, from the low-power overview to the high-power differential:
+
+- Low power (10x) - assess the overall quality of the film, including evenness, thickness, and the presence of three zones. Check for any large abnormal cells, clumps, or parasites. Scan the edges, where large cells and platelet clumps are more likely.
+- Oil immersion (100x) - examine red cell morphology in the body of the film, where red cells are a single layer. Assess size, shape, colour, and any inclusions. Look at the white cells for overall distribution and any obvious abnormalities.
+- Differential count (100x) - count 100 white cells, identifying each cell type and recording any morphological abnormalities (toxic granulation, hypersegmentation, atypical lymphocytes, blasts, etc.).
+- Platelet estimate (100x) - estimate platelet numbers by counting platelets per oil immersion field or per 10 fields.
+- Parasite screen (100x) - examine the red cells for malaria parasites and other intraerythrocytic organisms.
+
+Each step answers a different question and adds a different piece of information. The order ensures the examiner sees the whole picture, not just the most obvious feature.
+
+Crucial insight: film examination is not just about looking - it is about looking systematically. Every feature has a specific question it answers: red cell morphology tells you about anaemia and its cause; white cell morphology tells you about infection, leukaemia, and immune response; platelets tell you about bleeding risk; parasites tell you about infection. A film examined without a system misses findings that a systematic examiner would see.`
+    },
+    {
+      q: "The white cell differential count is the heart of the thin film. Why does it matter so much?",
+      body: `The differential count is the most information-dense part of blood film examination. It answers questions that no analyser can answer alone, and it frequently changes the diagnosis. It is also one of the most demanding parts of the examination, because it requires the examiner to identify each white cell correctly, recognise its morphology, and count a hundred of them in a row.
+
+My Socratic question: the automated analyser already gives a white cell count and a five-part differential. Why does the laboratory still insist on a manual differential count on many samples?
+
+The answer is that the analyser's differential is a numerical estimate, and it cannot recognise morphology. It can count neutrophils, lymphocytes, monocytes, eosinophils and basophils, but it cannot tell you that some of those neutrophils are hypersegmented, that some have toxic granulation, that the lymphocytes are atypical, or that there are blasts in the circulation. The manual differential fills those gaps, and it is required whenever the analyser flags an abnormality or when the clinical picture suggests that morphology matters.
+
+The differential count is performed by counting 100 white cells in the body of the thin film, under oil immersion, and classifying each one:
+- Neutrophils (segmented) - normally the most numerous, 40-75%.
+- Lymphocytes - 20-45%.
+- Monocytes - 2-10%.
+- Eosinophils - 1-6%.
+- Basophils - 0-1%.
+
+For each cell, the examiner also notes any morphological features - toxic granulation, Dohle bodies, hypersegmentation, atypical lymphocytes, blast cells, and so on. These features are often more important than the percentage.
+
+Crucial insight: the differential count is not just a set of percentages. It is a detailed morphological assessment of the white cells, and it can reveal conditions that the analyser cannot detect. A shift to the left (increased band forms) suggests acute infection; hypersegmented neutrophils suggest B12 or folate deficiency; atypical lymphocytes suggest viral infection; blasts suggest acute leukaemia. Each of these findings requires a trained human eye looking down a microscope.`
+    },
+    {
+      q: "Red cell morphology can show dozens of different abnormalities. Which ones matter most, and what do they tell you?",
+      body: `Red cell morphology is the second half of the diagnostic picture, alongside the white cell differential. A well-stained thin film shows each red cell clearly, and any deviation from the normal shape, size, or colour is a clue to the underlying disease.
+
+My Socratic question: if a patient is anaemic, and the analyser reports the haemoglobin and mean cell volume, why does the shape of the red cells matter?
+
+The answer is that the shape often tells you the cause of the anaemia, and the cause determines the treatment. A small, pale red cell suggests iron deficiency; a large, round cell suggests B12 or folate deficiency; a crescent-shaped cell suggests sickle cell disease; a sphere suggests hereditary spherocytosis; a cell with a bite out of it suggests a specific immune process. The morphology narrows the diagnosis long before any further test is run.
+
+The most important red cell morphological features:
+
+Size:
+- Microcytes - smaller than normal, suggests iron deficiency, thalassaemia, or chronic disease.
+- Macrocytes - larger than normal, suggests B12 or folate deficiency, or liver disease.
+- Anisocytosis - variation in size, a general sign of anaemia.
+
+Shape:
+- Poikilocytosis - variation in shape, a general sign of abnormal erythropoiesis.
+- Sickle cells - crescent-shaped, diagnostic of sickle cell disease.
+- Spherocytes - round, without central pallor, seen in hereditary spherocytosis and immune haemolysis.
+- Target cells - target-shaped, seen in liver disease, thalassaemia, and after splenectomy.
+- Elliptocytes - oval-shaped, seen in hereditary elliptocytosis.
+- Schistocytes - fragmented red cells, seen in mechanical haemolysis, DIC, and TTP.
+- Teardrop cells - teardrop-shaped, seen in myelofibrosis.
+
+Colour:
+- Hypochromia - increased central pallor, seen in iron deficiency and thalassaemia.
+- Polychromasia - bluish tinge, indicating young red cells (reticulocytes).
+
+Inclusions:
+- Howell-Jolly bodies - nuclear remnants, seen after splenectomy.
+- Pappenheimer bodies - iron-containing granules.
+- Basophilic stippling - residual RNA, seen in lead poisoning and thalassaemia.
+- Malaria parasites - inside the red cell.
+- Heinz bodies - denatured haemoglobin (visible with supravital stain).
+
+Crucial insight: red cell morphology is a diagnostic shortcut. Before any further test is run, the shape, size, colour and inclusions of the red cells on a stained film narrow the differential down to a handful of possibilities. A haematologist who knows red cell morphology can often make the diagnosis from the film alone.`
+    },
+    {
+      q: "Platelets are tiny compared to red and white cells. How does the film examiner assess them?",
+      body: `Platelets are the smallest formed elements of the blood - about 2 to 4 micrometres across, compared with red cells at 7 to 8 micrometres. They are easy to overlook on a film, but they matter enormously: low platelets cause bleeding, high platelets can cause clotting, and abnormal platelet size or clumping can indicate a specific disorder. The film examiner assesses platelets directly, using a standard estimate.
+
+My Socratic question: the analyser gives a precise platelet count in the report. Why does the film examiner also need to estimate platelets?
+
+The answer is that the analyser can be fooled, and the film can detect what the analyser misses. Platelet clumping - a common problem when blood is collected in EDTA - causes falsely low platelet counts because the analyser counts clumps as single large particles, or rejects them entirely. Platelet satellitism - where platelets adhere to neutrophils in EDTA - causes a similar false result. Only the film can show these phenomena, which is why the film estimate is an essential quality check on the analyser's platelet count.
+
+The standard platelet estimate:
+- Under oil immersion, count the number of platelets in 10 consecutive fields.
+- Divide the total by 10 to give an average per field.
+- Multiply by 20,000 to give an approximate platelet count per microlitre (or multiply by 15,000 - the exact factor depends on the microscope and the laboratory protocol).
+- A normal film typically shows 8 to 15 platelets per oil immersion field.
+
+Platelets appear as small, violet-purple bodies with irregular or granular appearance. On a well-stained film they are easy to see once the examiner knows what to look for. Abnormal findings to note include:
+- Platelet clumping - suggests EDTA-induced clumping; a repeat sample in citrate or heparin is needed.
+- Platelet satellitism - platelets surrounding neutrophils; also EDTA-related.
+- Large platelets (megathrombocytes) - suggest rapid platelet turnover, as in immune thrombocytopenia or inherited macrothrombocytopenia.
+- Absent or markedly reduced platelets - suggests severe thrombocytopenia, a bleeding risk.
+
+Crucial insight: the platelet estimate is a direct examination of the platelets themselves, and it catches the analyser errors that no numerical flag can detect. A film showing platelet clumping explains a falsely low analyser count; a film showing large platelets suggests a diagnosis. The platelet estimate is quick, but it is not optional.`
+    },
+    {
+      q: "Malaria diagnosis uses both thick and thin films. What does each contribute, and how are they examined?",
+      body: `Malaria diagnosis is one of the most important applications of blood film examination, and it uses both films together. The thick film is the screening test - it is far more sensitive and is where parasites are usually first found. The thin film is the confirmatory test - it identifies the species and quantifies the parasitaemia, which determines the treatment.
+
+My Socratic question: the thick film is more sensitive, and the thin film more specific. Why not just use one of them?
+
+The answer is that sensitivity and specificity answer different questions and both are needed. The thick film can detect a parasitaemia as low as 5 to 10 parasites per microlitre of blood, whereas the thin film requires a much higher parasitaemia to be reliable - so the thick film is the screening test of choice. But the thick film destroys the red cells, so the parasite's position within the red cell cannot be assessed - and position within the red cell is one of the key features that distinguishes Plasmodium falciparum from P. vivax, P. ovale, and P. malariae. Only the thin film preserves that information.
+
+Examination of the thick film for parasites:
+- Examine at least 100 to 200 oil immersion fields (or count parasites against 200 white cells, depending on the protocol).
+- Report the result as parasites per microlitre, or as a semi-quantitative scale (+ to ++++).
+- If parasites are found, examine the thin film to identify the species.
+
+Examination of the thin film for parasites:
+- Examine under oil immersion in the body of the film, where red cells are in a single layer.
+- Identify the species based on parasite morphology, red cell size, presence of Schuffner's dots, and position of the parasite within the red cell.
+- Quantify parasitaemia as a percentage of red cells infected.
+
+Species-specific features are the key to identification on the thin film:
+- P. falciparum - multiple infections per cell, banana-shaped gametocytes, no enlargement of the red cell.
+- P. vivax - enlarged red cell, Schuffner's dots, amoeboid trophozoites.
+- P. ovale - enlarged red cell, oval shape, Schuffner's dots, fimbriated edges.
+- P. malariae - normal-size red cell, band-form trophozoites, no dots.
+
+Crucial insight: the thick film finds the parasite, and the thin film identifies it. Malaria treatment depends on the species and the parasitaemia, and only both films together give that information. A positive thick film without a thin film is an incomplete diagnosis; a thin film alone risks missing low-parasitaemia infections.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for blood smears, in five lines.
+
+Why films still matter: analysers count cells but cannot assess morphology or detect parasites. The film is the confirmatory step for every automated result.
+
+Thin and thick films: the thin film is spread thinly and fixed in methanol for cell morphology; the thick film is spread into a circle and left unfixed so red cells lyse during staining, concentrating parasites for detection. Both are used together in malaria screening.
+
+Making a thin film: small drop of blood, spreader slide at 30-45 degrees, one smooth forward motion, air-dry completely. The body of the film, where red cells are in a single layer, is where the examination is done.
+
+Thin film examination: assess film quality at low power, then red cell morphology, white cell differential (100 cells), platelet estimate, and parasite screen at oil immersion. Note any morphological abnormality in each cell line.
+
+Thick film examination: used for parasite detection, especially malaria. Examine at least 100-200 oil immersion fields before reporting a negative result. If positive, examine the thin film to identify the species and quantify the parasitaemia.
+
+Now your final test. A 6-year-old child returns from a malaria-endemic region with fever. A thick film is made and stained; examination under oil immersion shows rare intraerythrocytic parasites in about 1 in 20 fields. A thin film is then examined and shows red cells that are enlarged with Schuffner's dots, and amoeboid trophozoites inside them.
+
+Question one: is the diagnosis confirmed, and if so which species?
+Question two: why was the thick film essential in this case, and why was the thin film needed afterwards?
+Question three: what further examination of the thin film would you perform to guide treatment?
+
+Work them through before reading on.
+
+My answers. One: the diagnosis is confirmed as malaria. The species is Plasmodium vivax, based on the enlarged red cells, the presence of Schuffner's dots, and the amoeboid trophozoites - all characteristic of P. vivax. Two: the thick film was essential because it is more sensitive, and the parasitaemia was low (about 1 in 20 fields). A thin film alone at this parasitaemia would likely have missed the infection entirely. The thin film was needed because the thick film destroys the red cells and cannot show the position of the parasite within the red cell or the presence of Schuffner's dots - both of which are essential to distinguish P. vivax from P. ovale, and both of which are visible only on a thin film. Three: I would quantify the parasitaemia - counting the percentage of red cells infected or the number of parasites per microlitre - because the parasitaemia guides treatment and identifies patients at risk of severe disease. I would also check for mixed infection with P. falciparum, which is common in endemic regions and would change the treatment.
+
+If those came cleanly, you understand the principles and practice of blood film preparation and examination - the diagnostic step that converts an automated number into a picture of the patient's blood, and the step that detects the parasites no analyser can see.`
+    },
+  ],
+  theory: [
+    { q: "Explain why blood film examination is still necessary despite automated analysers.", a: "Automated analysers count cells, measure size, and estimate haemoglobin, but they cannot assess morphology or detect intraerythrocytic parasites. Blood film examination confirms the analyser's results, detects abnormalities that no numerical flag can reveal (such as hypersegmentation, toxic granulation, atypical lymphocytes, blasts, and malaria parasites), and is essential whenever the clinical picture or analyser flags suggest that morphology matters." },
+    { q: "Compare the thick and thin blood films in terms of preparation, purpose, and examination.", a: "The thin film is a small drop of blood spread thinly and fixed in methanol before staining; it is used for cell morphology, white cell differential counts, red cell morphology, and platelet estimates, and it is examined in the body of the film where red cells form a single layer. The thick film is a drop spread into a circle and NOT fixed before staining, so the red cells lyse during staining; it is used for the detection of parasites (especially malaria), and it is examined at oil immersion over at least 100-200 fields because it is far more sensitive for low-parasitaemia samples." },
+    { q: "Describe how to make a good thin blood film.", a: "Use a clean, grease-free slide. Place a small drop of blood (2-3 mm) about 1 cm from one end. Hold a spreader slide at 30-45 degrees. Back the spreader into the drop so the blood runs along its edge, then push forward smoothly in one motion without stopping. Allow to air-dry completely before staining. A good film has a head, a body (the ideal single-layer zone for examination) and a tail." },
+    { q: "Describe how to make a good thick blood film.", a: "Place a drop of blood about 1 cm from one end of a clean slide. Use the corner of a spreader slide to spread it into a circle or rectangle about 1 cm in diameter, of even thickness. Allow it to dry completely - typically 20 to 30 minutes at room temperature, or faster in an incubator. Do not fix in methanol; the red cells lyse during staining, leaving a concentrated layer of white cells and parasites." },
+    { q: "List the steps of a systematic thin film examination.", a: "At low power (10x), assess film quality, evenness, and zones, and scan the edges for large cells or clumps. At oil immersion (100x), examine red cell morphology in the body of the film. Perform the white cell differential count (100 cells), noting morphology. Estimate platelets by counting per field. Screen red cells for parasites. Note any abnormal cells, inclusions, or clumps." },
+    { q: "What is the differential count, and how is it performed?", a: "The differential count is the classification of 100 consecutive white cells under oil immersion in the body of the film. Each cell is identified as a neutrophil, lymphocyte, monocyte, eosinophil or basophil, and any morphological abnormalities (toxic granulation, hypersegmentation, atypia, blasts) are recorded. The result is expressed as a percentage for each cell type, together with a description of any abnormal morphology." },
+    { q: "List the main red cell morphological abnormalities and their clinical significance.", a: "Size: microcytes (iron deficiency, thalassaemia), macrocytes (B12/folate deficiency, liver disease), anisocytosis. Shape: poikilocytosis, sickle cells (sickle cell disease), spherocytes (hereditary spherocytosis, immune haemolysis), target cells (liver disease, thalassaemia, post-splenectomy), schistocytes (mechanical haemolysis, DIC), teardrop cells (myelofibrosis). Colour: hypochromia (iron deficiency, thalassaemia), polychromasia (reticulocytosis). Inclusions: Howell-Jolly bodies (post-splenectomy), basophilic stippling (lead poisoning, thalassaemia), Pappenheimer bodies, malaria parasites." },
+    { q: "Describe the standard platelet estimate on a blood film.", a: "Under oil immersion, count the number of platelets in 10 consecutive fields, divide by 10 for an average per field, and multiply by 20,000 to give an approximate platelet count per microlitre (or by 15,000 depending on the laboratory protocol). A normal film usually shows 8 to 15 platelets per field. Note any clumping (suggesting EDTA-induced clumping), satellitism, or abnormally large platelets." },
+    { q: "Explain how the thick and thin films are used together for malaria diagnosis.", a: "The thick film is the screening test because it is far more sensitive - it detects parasitaemia as low as 5 to 10 parasites per microlitre. If parasites are found, the thin film is used to identify the species and quantify the parasitaemia. The thin film preserves red cell morphology, allowing species-specific features (such as Schuffner's dots and red cell enlargement) to be assessed. Both films are therefore essential: the thick film finds the parasite, the thin film identifies it." },
+    { q: "What are the species-specific features of the four malaria parasites on a thin film?", a: "P. falciparum: multiple infections per red cell, banana-shaped gametocytes, no enlargement of the red cell. P. vivax: enlarged red cell, Schuffner's dots, amoeboid trophozoites. P. ovale: enlarged red cell (often oval), Schuffner's dots, fimbriated edges. P. malariae: normal-size red cell, band-form trophozoites, no dots. Species identification guides treatment and identifies drug-resistant infections." },
+  ],
+  videos: [
+    { channel: "Hematology", title: "Making a Good Blood Film - Thin and Thick", note: "Demonstration of both film techniques and how to assess film quality.", url: "https://www.youtube.com/results?search_query=making+thin+thick+blood+film+technique" },
+    { channel: "Hematology", title: "Examining a Blood Film - Differential Count and Morphology", note: "Systematic walkthrough of a thin film examination, from low power to oil immersion.", url: "https://www.youtube.com/results?search_query=blood+film+examination+differential+count+morphology" },
+    { channel: "Hematology", title: "Malaria Diagnosis on Thick and Thin Films", note: "How to detect and identify malaria parasites on blood films.", url: "https://www.youtube.com/results?search_query=malaria+diagnosis+thick+thin+blood+film" },
+  ],
+  mcqs: [
+    // ===== Note 1 (Q1-5): why films still matter =====
+    { q: "Blood film examination is still necessary despite automated analysers mainly because:", o: ["Analysers cannot produce a full blood count", "Analysers cannot assess morphology or detect parasites", "Analysers are too slow for routine use", "Analysers cannot count platelets"], a: 1, w: "Analysers count cells but cannot assess morphology or detect parasites; only the film can." },
+    { q: "The blood film is best described as:", o: ["A legacy technique being phased out", "The confirmatory step for automated results and the screening test for parasites", "A method only used in research", "A slower alternative to the analyser"], a: 1, w: "The film confirms automated results and screens for parasites." },
+    { q: "Which of the following can a blood film detect that an analyser cannot?", o: ["Total white cell count", "Haemoglobin concentration", "Toxic granulation in neutrophils", "Mean cell volume"], a: 2, w: "Toxic granulation is a morphological feature visible only on a stained film." },
+    { q: "An analyser flag on a full blood count should be followed by:", o: ["Ignoring the flag if the clinical picture is clear", "A repeat analyser run", "A blood film examination", "A red cell antibody screen only"], a: 2, w: "Analyser flags require blood film examination to confirm and characterise the abnormality." },
+    { q: "The principal role of the blood film in modern haematology is to:", o: ["Add morphological and parasitological information to automated results", "Replace automated analysers", "Provide a backup when the analyser is broken", "Measure haemoglobin more accurately"], a: 0, w: "The film adds morphological and parasitological information that automated results cannot provide." },
+
+    // ===== Note 2 (Q6-10): thick vs thin =====
+    { q: "The thin blood film is used for:", o: ["Concentrating parasites", "Detecting low-level parasitaemia", "Cell morphology and differential counts", "Estimating the parasitaemia percentage"], a: 2, w: "The thin film is used for cell morphology and differential counts." },
+    { q: "The thick blood film is used for:", o: ["Differential counts", "Detecting and quantifying parasites", "Assessing red cell morphology", "Estimating platelet size"], a: 1, w: "The thick film is used for parasite detection because it is more sensitive." },
+    { q: "The thick film is not fixed in methanol because:", o: ["Methanol destroys the parasites", "It is too expensive", "The red cells need to lyse during staining to concentrate parasites", "Fixation prevents the white cells from staining"], a: 2, w: "The red cells must lyse during staining so the parasites can be concentrated for detection." },
+    { q: "The thin film is fixed in methanol because:", o: ["Methanol preserves the cell morphology for examination", "It kills the parasites", "It removes the red cells", "It prevents the stain from acting"], a: 0, w: "Methanol preserves the morphology of the cells so that they can be reliably identified." },
+    { q: "For malaria screening, the recommended approach is:", o: ["Thin film only", "Thick film only", "Both thick and thin films together", "Automated analyser only"], a: 2, w: "Both thick and thin films are used together for malaria screening and diagnosis." },
+
+    // ===== Note 3 (Q11-15): making a thin film =====
+    { q: "The correct angle for the spreader slide when making a thin film is:", o: ["10 degrees", "30 to 45 degrees", "60 degrees", "90 degrees"], a: 1, w: "A 30-45 degree angle is standard for a thin film." },
+    { q: "The ideal drop of blood for a thin film is about:", o: ["2 to 3 mm in diameter", "1 cm in diameter", "1 mm in diameter", "5 cm in diameter"], a: 0, w: "A small drop of 2-3 mm is ideal for a thin film." },
+    { q: "A spreader slide is used to:", o: ["Puncture the skin", "Spread the drop of blood into a thin film", "Fix the film", "Stain the film"], a: 1, w: "The spreader slide is pushed forward to spread the drop into a thin film." },
+    { q: "A film that has been spread too quickly will be:", o: ["Too thick", "Too dark", "Too short and pale", "Too long and thick"], a: 2, w: "Spreading too quickly produces a short, pale film." },
+    { q: "The zone of the thin film where morphology is best assessed is the:", o: ["Head", "Body", "Tail", "Edge"], a: 1, w: "The body of the film is where red cells are in a single layer, and where morphology is assessed." },
+
+    // ===== Note 4 (Q16-20): making a thick film =====
+    { q: "The correct size of a thick film is about:", o: ["1 cm in diameter", "5 cm in diameter", "5 mm in diameter", "2 cm in diameter"], a: 0, w: "A thick film is spread into a circle about 1 cm in diameter." },
+    { q: "The thick film should be allowed to dry for:", o: ["A few seconds", "2 minutes", "20 to 30 minutes at room temperature", "At least 2 hours"], a: 2, w: "The thick film must dry completely before staining, typically 20-30 minutes." },
+    { q: "The thick film is not fixed in methanol because:", o: ["It would not stick to the slide", "The red cells must lyse during staining to expose parasites", "Methanol is harmful to parasites", "It is not allowed by protocol"], a: 1, w: "The red cells lyse during staining so that the parasites can be concentrated for detection." },
+    { q: "If a thick film is not completely dry before staining:", o: ["It will wash off the slide", "It will stain too dark", "It will stain too light", "The parasites will not be visible"], a: 0, w: "An incompletely dried thick film will wash off the slide during staining." },
+    { q: "The thick film examines approximately how much more blood per field than a thin film?", o: ["The same amount", "2 to 3 times more", "20 to 30 times more", "100 times more"], a: 2, w: "A thick film examines roughly 20-30 times more blood per field than a thin film." },
+
+    // ===== Note 5 (Q21-25): systematic examination =====
+    { q: "Blood film examination should begin at:", o: ["Oil immersion, to examine the cells directly", "Low power, to assess film quality and scan", "High power, to count platelets", "Any magnification, as it does not matter"], a: 1, w: "Examination begins at low power to assess the film and scan for abnormalities." },
+    { q: "The differential count is performed at:", o: ["Low power", "Medium power", "High power (40x)", "Oil immersion (100x)"], a: 3, w: "The differential count is performed at oil immersion (100x)." },
+    { q: "The correct order of thin film examination is:", o: ["Differential count, then red cell morphology, then film quality", "Low power scan, red cell morphology, differential count, platelet estimate, parasite screen", "Parasite screen, then film quality, then morphology", "Red cell morphology, then low power scan, then differential count"], a: 1, w: "The correct order is low power scan, then morphology, differential count, platelet estimate, and parasite screen." },
+    { q: "The edges of the film are scanned at low power because:", o: ["They are where the cells are least distorted", "They are where large cells, clumps and parasites are more likely", "They contain the fewest cells", "They are where the film is thinnest"], a: 1, w: "The edges of the film often contain large cells, clumps and parasites." },
+    { q: "Why is a systematic approach essential to film examination?", o: ["It ensures every feature is examined and nothing is missed", "It makes the examination faster", "It is required by regulation", "It reduces the need for staining"], a: 0, w: "Systematic examination ensures that every important feature is assessed." },
+
+    // ===== Note 6 (Q26-30): differential count =====
+    { q: "The differential count involves counting:", o: ["10 white cells", "100 white cells", "100 red cells", "50 white cells"], a: 1, w: "The differential count involves classifying 100 white cells." },
+    { q: "The normal percentage range for neutrophils is approximately:", o: ["40 to 75%", "20 to 45%", "2 to 10%", "1 to 6%"], a: 0, w: "Neutrophils normally make up about 40-75% of white cells." },
+    { q: "The normal percentage range for lymphocytes is approximately:", o: ["1 to 6%", "20 to 45%", "40 to 75%", "2 to 10%"], a: 1, w: "Lymphocytes normally make up about 20-45% of white cells." },
+    { q: "Hypersegmented neutrophils on a film suggest:", o: ["Acute bacterial infection", "Iron deficiency", "B12 or folate deficiency", "Viral infection"], a: 2, w: "Hypersegmentation of neutrophils suggests B12 or folate deficiency." },
+    { q: "The presence of blasts on a blood film suggests:", o: ["Acute leukaemia", "Chronic inflammation", "Viral infection", "Iron deficiency anaemia"], a: 0, w: "Circulating blasts suggest acute leukaemia and require urgent referral." },
+
+    // ===== Note 7 (Q31-35): red cell morphology =====
+    { q: "Microcytes on a blood film suggest:", o: ["B12 deficiency", "Iron deficiency or thalassaemia", "Liver disease", "Sickle cell disease"], a: 1, w: "Microcytes suggest iron deficiency or thalassaemia." },
+    { q: "Macrocytes on a blood film suggest:", o: ["Iron deficiency", "B12 or folate deficiency", "Sickle cell disease", "Hereditary spherocytosis"], a: 1, w: "Macrocytes suggest B12 or folate deficiency, or liver disease." },
+    { q: "Spherocytes are most characteristic of:", o: ["Sickle cell disease", "Thalassaemia", "Hereditary spherocytosis and immune haemolysis", "Iron deficiency"], a: 2, w: "Spherocytes are seen in hereditary spherocytosis and immune haemolysis." },
+    { q: "Schistocytes (fragmented red cells) are characteristically seen in:", o: ["Mechanical haemolysis, DIC and TTP", "Iron deficiency", "B12 deficiency", "Chronic disease"], a: 0, w: "Schistocytes suggest mechanical haemolysis, DIC or TTP." },
+    { q: "Howell-Jolly bodies are most typically seen:", o: ["In iron deficiency", "In B12 deficiency", "After splenectomy", "In sickle cell disease"], a: 2, w: "Howell-Jolly bodies (nuclear remnants) are classically seen after splenectomy." },
+
+    // ===== Note 8 (Q36-40): platelet estimate =====
+    { q: "A normal blood film typically shows how many platelets per oil immersion field?", o: ["1 to 3", "8 to 15", "20 to 30", "50 or more"], a: 1, w: "A normal film shows about 8-15 platelets per oil immersion field." },
+    { q: "The standard platelet estimate is performed by counting platelets in:", o: ["1 field", "5 fields", "10 fields", "50 fields"], a: 2, w: "The platelet estimate is based on counting platelets in 10 consecutive fields." },
+    { q: "After averaging platelets per field, the estimate is usually multiplied by:", o: ["1,000", "5,000", "20,000", "100,000"], a: 2, w: "The average per field is multiplied by 20,000 (or by 15,000 in some laboratories) to estimate platelets per microlitre." },
+    { q: "Platelet clumping on a blood film usually indicates:", o: ["True thrombocytopenia", "EDTA-induced clumping", "Increased platelet production", "Leukaemia"], a: 1, w: "Platelet clumping is usually caused by EDTA-induced clumping and can falsely lower the automated count." },
+    { q: "Platelet satellitism refers to:", o: ["Platelets surrounding neutrophils", "Platelets adhering to red cells", "Platelets in the film tail", "Large platelets in the film"], a: 0, w: "Platelet satellitism describes platelets surrounding neutrophils, and is EDTA-related." },
+
+    // ===== Note 9 (Q41-45): malaria diagnosis =====
+    { q: "The thick film is preferred for malaria detection because:", o: ["It shows species-specific features better", "It is more sensitive for low parasitaemia", "It preserves red cell morphology", "It is quicker to make"], a: 1, w: "The thick film is more sensitive because it concentrates parasites from a larger volume of blood." },
+    { q: "The thin film is needed for malaria diagnosis because:", o: ["It is more sensitive than the thick film", "It is the only film that shows parasites", "It preserves red cell morphology and shows species-specific features", "It is faster to examine"], a: 2, w: "Only the thin film preserves red cell morphology and species-specific features." },
+    { q: "On a thin film, Plasmodium falciparum is characterised by:", o: ["Enlarged red cells with Schuffner's dots", "Normal-size red cells with band forms", "Multiple infections per cell and banana-shaped gametocytes", "Oval red cells with fimbriated edges"], a: 2, w: "P. falciparum shows multiple infections per cell and banana-shaped gametocytes." },
+    { q: "Schuffner's dots are characteristically seen in:", o: ["P. vivax and P. ovale", "P. falciparum only", "P. malariae only", "All malaria species equally"], a: 0, w: "Schuffner's dots are characteristic of P. vivax and P. ovale." },
+    { q: "The parasitaemia on a thin film is usually reported as:", o: ["Number of parasites per microlitre only", "Percentage of red cells infected", "Plus signs only", "Not reported on the thin film"], a: 1, w: "The thin film parasitaemia is usually reported as the percentage of red cells infected." },
+
+    // ===== Note 10 (Q46-50): consolidation =====
+    { q: "Which film is used for assessing red cell morphology?", o: ["The thick film", "The thin film", "Both films equally", "Neither film"], a: 1, w: "The thin film preserves red cell morphology and is used for assessing it." },
+    { q: "Which film is more sensitive for detecting low-level parasitaemia?", o: ["The thin film", "The thick film", "Both films are equally sensitive", "Neither film is sensitive"], a: 1, w: "The thick film is far more sensitive, detecting parasitaemia as low as 5-10 parasites per microlitre." },
+    { q: "A blood film showing microcytic, hypochromic red cells suggests:", o: ["B12 deficiency", "Iron deficiency or thalassaemia", "Sickle cell disease", "Hereditary spherocytosis"], a: 1, w: "Microcytic, hypochromic red cells suggest iron deficiency or thalassaemia." },
+    { q: "A blood film showing hypersegmented neutrophils with oval macrocytes suggests:", o: ["Iron deficiency", "B12 or folate deficiency", "Acute leukaemia", "Chronic myeloid leukaemia"], a: 1, w: "Hypersegmented neutrophils with oval macrocytes are classic for B12 or folate deficiency." },
+    { q: "For malaria diagnosis, the correct approach is to:", o: ["Use the thin film only", "Use the thick film only", "Use both films together - the thick film to detect, the thin film to identify", "Rely on the automated analyser only"], a: 2, w: "Both films are used: the thick film detects the parasite and the thin film identifies the species and quantifies the parasitaemia." },
+  ],
+};
+
+/* --------------------------- hem:9 --------------------------- */
+// Objectives covered: manual estimation of total leukocyte counts using
+// Turk's fluid. Principles of the WBC dilution and haemolysis, Turk's fluid
+// composition, Neubauer counting chamber, dilution pipette technique,
+// counting rules, calculation of results, sources of error, quality control,
+// and clinical significance of the TLC.
+// 10 note headers -> 5 MCQs each -> exactly 50 MCQs.
+const T_HEM_LEUKOCYTE_COUNT = {
+  courseId: "hem",
+  topicIndex: 9,
+  title: "Manual Estimation of Total Leukocyte Counts of Blood (Using Turk's Fluid)",
+  minutes: 30,
+  note: [
+    {
+      q: "The analyser gives a white cell count in seconds. Why does the laboratory still teach the manual method?",
+      body: `Every modern haematology laboratory has an automated analyser that produces a white blood cell count as part of a full blood count, in under a minute, with far greater precision than any human eye. Yet the manual method is still taught, still examined, and still used. Why?
+
+My Socratic question: if the analyser is faster and more precise than a manual count, what circumstances would still require a human being to count white cells down a microscope?
+
+The answer is that the manual method answers questions the analyser cannot, and it is the reference method against which the analyser is judged. There are three main situations where a manual count is essential:
+
+First, when the analyser result is suspected to be wrong. An analyser can be fooled by platelet clumps, nucleated red cells, cryoglobulins, or extreme leucocytosis. The manual count, performed directly on a diluted sample, is the reference method for confirming or refuting the analyser's result.
+
+Second, when automated counting is unavailable. In resource-limited settings, in emergency situations, or when an analyser is broken, the manual method is the only option.
+
+Third, in non-mammalian species. In birds and reptiles, all blood cells are nucleated, so automated counters cannot distinguish white cells from red cells. Manual counting is required.
+
+Crucial insight: the manual white cell count is not a legacy technique. It is the reference method against which automation is calibrated and validated, and the fallback when automation fails. Understanding it is understanding the foundation on which every automated result rests.`
+    },
+    {
+      q: "The manual count begins with a dilution. Why dilute the blood at all?",
+      body: `A microlitre of normal blood contains roughly 4,000 to 11,000 white cells. If you placed an undiluted drop on a counting chamber and looked at it under the microscope, the white cells would be buried among millions of red cells - 4.5 to 5.5 million per microlitre - and impossible to count. The dilution step solves this problem.
+
+My Socratic question: if the red cells outnumber the white cells by roughly a thousand to one, what would a dilution fluid need to do to make the white cells countable?
+
+The answer is that it must do two things: dilute the sample so the cells are spread out enough to count, and remove the red cells so they do not obscure the white cells. Turk's fluid does both at once.
+
+Turk's fluid is a white cell diluting fluid with two active components:
+- Acetic acid (typically 2% to 3%) - lyses the red cell membranes, destroying the red cells and leaving only the white cells. It also helps preserve the white cells.
+- A dye - either gentian violet or methylene blue - which stains the white cell nuclei a deep violet-blue, making them easy to see against the pale background.
+
+The standard dilution is 1 in 20. This is achieved by mixing 0.02 mL (20 microlitres) of blood with 0.38 mL of Turk's fluid, giving a total volume of 0.40 mL and a dilution factor of 20. In the traditional Thoma pipette method, blood is drawn to the 0.5 mark and Turk's fluid to the 11 mark, which also gives a 1 in 20 dilution (because the fluid in the stem up to the 1 mark is not mixed with the blood).
+
+Crucial insight: the dilution step is not just about reducing the cell concentration. It is about converting a sample that cannot be counted into one that can be counted. The acetic acid destroys the red cells; the dye makes the white cells visible; the dilution factor determines the final calculation. Every part of Turk's fluid has a purpose.`
+    },
+    {
+      q: "The counting chamber is the measuring instrument. How does it work, and what does each square mean?",
+      body: `The counting chamber - also called a haemocytometer - is a specialised glass slide with a ruled grid of known dimensions and a known depth. It is the instrument that converts a drop of diluted blood into a number with units of cells per litre. Without understanding its geometry, the calculation makes no sense.
+
+My Socratic question: if you place a drop of diluted blood under a coverslip on a ruled slide, what information do you need to know about the chamber to calculate the cell concentration?
+
+The answer is three things: the area of the grid you count, the depth of the chamber, and the dilution factor. The counting chamber provides the first two.
+
+The Improved Neubauer chamber, the most widely used, has these specifications:
+- Depth: 0.1 mm (the distance between the chamber surface and the underside of the coverslip).
+- Ruling: a central square of 1 mm by 1 mm, divided into 25 smaller squares. The four corner squares of the chamber (each 1 mm by 1 mm) are used for the white cell count.
+- The four large corner squares each have an area of 1 mm squared and a depth of 0.1 mm, so each has a volume of 0.1 microlitres.
+
+For a white cell count, the four large corner squares are counted. The total area counted is 4 mm squared, and the total volume is 4 mm squared times 0.1 mm = 0.4 microlitres.
+
+This is the key number. Whatever number of white cells you count in the four corner squares, that number came from 0.4 microlitres of diluted blood.
+
+Crucial insight: the counting chamber is not just a slide - it is a precision measuring instrument with a defined volume. The four corner squares together represent 0.4 microlitres of diluted blood. Every subsequent calculation - dilution factor, volume conversion, and the final answer - flows from that single fact.`
+    },
+    {
+      q: "Turk's fluid has two jobs. What exactly is in it, and why those ingredients?",
+      body: `Turk's fluid is one of the oldest reagents in haematology, and its composition has barely changed in over a century. It is a simple mixture of three components, each with a specific purpose. Understanding why each is there makes the whole reagent make sense.
+
+My Socratic question: a white cell counting fluid must dilute the sample, destroy the red cells, and make the white cells visible. Could a single substance do all three? If not, what combination would?
+
+The answer is that three substances are needed, each solving one problem.
+
+The composition of Turk's fluid:
+- Glacial acetic acid - typically 2 mL per 100 mL of fluid, giving a 2% acetic acid solution. Its job is to lyse the red cells by disrupting their membranes. Without this, the red cells would remain intact and obscure the white cells. The acetic acid also helps preserve the white cell morphology.
+- Distilled water - the solvent, making up the bulk of the fluid.
+- Gentian violet or methylene blue - a small amount of dye, typically 1 gram per 100 mL or a few drops of a 10 g/L solution. Its job is to stain the white cell nuclei a deep violet-blue, making them clearly visible against the pale background.
+
+A typical recipe: 2 mL glacial acetic acid, 98 mL distilled water, and 3 drops of 10 g/L methylene blue solution [citation:1][citation:5][citation:11]. Some laboratories use gentian violet instead of methylene blue; both work by staining the nuclei.
+
+Crucial insight: Turk's fluid is a purpose-built reagent. The acetic acid destroys the red cells, the dye stains the white cell nuclei, and the water provides the dilution. If any one component is missing, the count becomes difficult or impossible. The simplicity of Turk's fluid hides its cleverness - each ingredient exists because of a specific problem it solves.`
+    },
+    {
+      q: "The traditional method uses a pipette with two marks. How does it produce a 1 in 20 dilution?",
+      body: `The traditional manual white cell count uses a Thoma white cell pipette - a small glass pipette with a bulb in the middle, marked with a 0.5 mark below the bulb and an 11 mark above it. It looks old-fashioned, but understanding it explains the dilution factor that every calculation depends on.
+
+My Socratic question: the pipette takes blood to the 0.5 mark and then fluid to the 11 mark. The marks are 10.5 units apart on the scale. Why does this produce a dilution of exactly 1 in 20, not 1 in 21?
+
+The answer is that the fluid drawn into the pipette does not all mix with the blood. The stem of the pipette from the tip to the 1 mark fills with diluting fluid first, and this portion never mixes with the blood in the bulb. The fluid that actually dilutes the blood is the portion from the 1 mark to the 11 mark, which is 10 units of fluid. The blood occupies 0.5 units. So the true dilution is 0.5 parts blood in 10 parts fluid, which is 1 in 20.
+
+The traditional procedure:
+- Draw blood to the 0.5 mark by capillary action.
+- Wipe the outside of the pipette tip to remove excess blood.
+- Draw Turk's fluid to the 11 mark.
+- Seal both ends and mix gently for 1 to 2 minutes.
+- Discard the first 2 drops (the fluid in the stem, which is mostly diluent).
+- Fill the counting chamber.
+
+Modern practice often replaces the Thoma pipette with a micropipette and tube method: 20 microlitres of blood added to 380 microlitres of Turk's fluid in a small tube. This also gives a 1 in 20 dilution, and it is easier to calibrate and standardise.
+
+Crucial insight: the 1 in 20 dilution is the number that appears in every calculation of the manual white cell count. Whether you use a Thoma pipette or a micropipette and tube, the principle is the same - a measured volume of blood is diluted with a measured volume of Turk's fluid, and the ratio between them determines the dilution factor. Getting this factor right is essential; every cell you count will be multiplied by it.`
+    },
+    {
+      q: "The cells are now in the chamber. What are the rules for counting them correctly?",
+      body: `Filling the counting chamber is only half the task. The other half is counting the cells without bias. In a chamber filled with white cells, some will fall on the boundary lines of the squares, and if the counter is not consistent, the same sample can give different results on different days. To prevent this, haematology uses strict counting rules.
+
+My Socratic question: a white cell lies exactly on the line between two squares. Should it be counted in the left square, the right square, or neither?
+
+The answer is that there is a rule, and it exists to ensure that every cell is counted once and only once. The standard rule is: count cells that touch the upper and left-hand boundary lines, and do not count cells that touch the lower and right-hand boundary lines [citation:15]. In Chinese textbooks, the same rule is expressed as "count the top, not the bottom; count the left, not the right" [citation:11]. This ensures that boundary cells are not double-counted or missed.
+
+Other counting rules:
+- Count in a systematic pattern - typically a serpentine or zigzag pattern through each square - so that you do not skip areas or count the same area twice.
+- Count with the 10x objective. The white cells are stained deep violet-blue and are clearly visible at this magnification.
+- Allow the cells to settle for 2 to 3 minutes before counting, so that they are all in the same focal plane [citation:11].
+- If the cell distribution is uneven - for example, if the counts in the four squares differ by more than 10% - the chamber may be poorly filled, and the sample should be re-mixed and re-filled [citation:11].
+
+Crucial insight: counting rules are not arbitrary. They are the mechanism that makes the manual count reproducible. Without them, two people counting the same sample would get different answers. With them, the manual count becomes a precise method with known and controllable sources of error.`
+    },
+    {
+      q: "The cells are counted. How do you convert a raw count into a result in cells per litre?",
+      body: `You have counted a number of white cells in the four corner squares. That number is not the answer - it is a raw count from a diluted sample in a tiny volume. To convert it into a clinically meaningful result, you need to apply the calculation, and every part of the calculation has a purpose.
+
+My Socratic question: if you counted 100 white cells in the four corner squares, and the dilution is 1 in 20, what is the white cell count in cells per litre?
+
+The answer comes from combining three pieces of information: the volume counted, the dilution factor, and the unit conversion. The volume counted is 0.4 microlitres (four squares of 0.1 microlitre each). The dilution factor is 20. The unit conversion from microlitres to litres is 1,000,000.
+
+The standard formula for the manual WBC count in cells per litre is:
+WBC count (cells/L) = (Number of cells counted x Dilution factor x 10^6) / Volume counted (microlitres)
+
+For the Neubauer chamber:
+WBC count (cells/L) = (N x 20 x 10^6) / 0.4
+
+This simplifies to:
+WBC count (cells/L) = N x 50 x 10^6
+
+Where N is the total number of white cells counted in the four corner squares.
+
+So if you counted 100 cells:
+WBC count = 100 x 50 x 10^6 = 5.0 x 10^9 cells/L
+
+Alternatively, many textbooks use the formula: WBC count (cells/cu mm) = N x 50, where N is the count in four squares and the dilution is 1 in 20 [citation:20]. This gives the result in cells per cubic millimetre (which is numerically the same as cells per microlitre), and multiplying by 10^6 converts to cells per litre.
+
+Crucial insight: the calculation is not a mystery. It is simply the answer to the question: if this many cells were in this tiny volume of diluted blood, how many would be in a litre of whole blood? Every term in the formula - the count, the dilution factor, the volume, the conversion - is there for a reason, and understanding each term prevents calculation errors.`
+    },
+    {
+      q: "The analyser and the manual count sometimes disagree. Which one is right, and why?",
+      body: `In a modern laboratory, a discrepancy between the analyser's white cell count and a manual count triggers investigation. The analyser is faster and more precise, but the manual count is the reference method. Understanding when and why they disagree is part of understanding what the manual count is for.
+
+My Socratic question: if the analyser and the manual count disagree, and the analyser is more precise, why would the manual count be considered the reference method?
+
+The answer is that precision and accuracy are different things. The analyser is more precise - it gives the same answer on repeated runs - but it can be systematically wrong in situations it was not designed to handle. The manual count, performed on a diluted sample under direct visual inspection, is less precise but more accurate in these specific situations.
+
+Common causes of analyser error that the manual count detects:
+- Platelet clumps: the analyser may count platelet clumps as white cells, falsely elevating the WBC. The manual count on a diluted sample shows the clumps and can exclude them.
+- Nucleated red blood cells: in severe haemolysis or marrow stress, nucleated red cells circulate. The analyser counts them as white cells, falsely elevating the count. The manual method uses Turk's fluid, which lyses mature red cells but not nucleated ones - a correction formula is needed if nRBCs are present [citation:19].
+- Cryoglobulins or fibrin: these can be counted as cells by the analyser but are visible as non-cellular material on the manual count.
+- Extreme leucocytosis: very high white cell counts can exceed the analyser's linear range, requiring dilution and manual counting.
+
+Crucial insight: the manual white cell count is the reference method because it allows the observer to see what is being counted. The analyser is a black box that produces a number; the manual count shows the cells themselves. When the two disagree, the manual count reveals what the analyser missed or miscounted, and that is why it remains an essential skill.`
+    },
+    {
+      q: "A manual count is never exactly repeatable. Where does the error come from, and how is it controlled?",
+      body: `If you count the same sample twice, you will not get exactly the same number. If you count the same sample in two different chambers, you will not get exactly the same number. This is not a failure of technique - it is inherent in the method. Understanding the sources of error is what separates a competent manual counter from one who simply follows instructions.
+
+My Socratic question: even with perfect pipetting, perfect mixing, and perfect counting, why would two counts on the same sample still differ slightly?
+
+The answer is that the cells are distributed randomly in the counting chamber, and random distributions always have variation. This is called inherent error. It cannot be eliminated by better technique - it can only be reduced by counting more cells. In theory, the variation is proportional to the square root of the number of cells counted. If you count four times as many cells, the variation is halved [citation:2].
+
+The main sources of error in the manual WBC count:
+
+Technical errors (preventable):
+- Poor technique in obtaining the blood specimen.
+- Insufficient mixing of the blood before sampling.
+- Inaccurate pipetting or badly calibrated pipettes.
+- Inadequate mixing of the blood with Turk's fluid.
+- Faulty filling of the counting chamber (bubbles, overflow, underfilling).
+- Careless counting, including bias for or against certain cell types.
+
+Inherent errors (reducible, not eliminable):
+- Random distribution of cells in the chamber.
+- Variation between different areas of the chamber.
+
+Quality control measures:
+- Count in duplicate and average the results.
+- Check that counts in the four squares agree within 10%.
+- Use calibrated pipettes and counting chambers.
+- Follow the counting rules consistently.
+- Do not let foreknowledge of the expected result bias the count [citation:2].
+
+Crucial insight: the manual count has a known and quantifiable error. This is not a weakness - it is a property of the method that a competent scientist understands and controls. The goal is not to eliminate error, which is impossible, but to keep it within acceptable limits and to recognise when an unexpected result might be due to error rather than a real change in the patient.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for the manual total leukocyte count, in five lines.
+
+The purpose: the manual WBC count is the reference method for confirming analyser results, the fallback when automation is unavailable, and the only method for non-mammalian species.
+
+Turk's fluid: 2% acetic acid to lyse red cells, a dye (gentian violet or methylene blue) to stain white cell nuclei, in distilled water. The standard dilution is 1 in 20.
+
+The counting chamber: Improved Neubauer, depth 0.1 mm. For WBC counts, the four large corner squares are counted, giving a total volume of 0.4 microlitres of diluted blood.
+
+The calculation: WBC count (cells/L) = (N x 20 x 10^6) / 0.4 = N x 50 x 10^6, where N is the total count in the four squares. For counts in cells per cubic millimetre, the formula is N x 50.
+
+Counting rules: count cells touching the upper and left boundaries; do not count those touching the lower and right boundaries. Count in a systematic pattern.
+
+Now your final test. A manual white cell count is performed on a blood sample from an adult patient. Using a 1 in 20 dilution in Turk's fluid and an Improved Neubauer chamber, the technician counts 80 white cells in the four large corner squares.
+
+Question one: what is the white cell count in cells per litre?
+Question two: if the analyser reported a count of 12.0 x 10^9/L for the same sample, and the manual count is significantly lower, what is the most likely explanation?
+Question three: what quality control steps should the technician have taken to ensure the manual count is reliable?
+
+Work them through before reading on.
+
+My answers. One: using the formula WBC count = N x 50 x 10^6, where N = 80, the count is 80 x 50 x 10^6 = 4.0 x 10^9 cells/L. Alternatively, in cells per cubic millimetre: 80 x 50 = 4,000 cells/cu mm, which equals 4.0 x 10^9 cells/L. Two: if the analyser reported 12.0 x 10^9/L and the manual count is 4.0 x 10^9/L, the discrepancy is large. The most likely explanation is an analyser error - possibly nucleated red blood cells being counted as white cells, or platelet clumps being counted, or a calibration issue. The manual count on a diluted sample avoids these sources of error. Three: the technician should have counted in duplicate and averaged the results; checked that the counts in the four squares agreed within 10%; ensured the pipettes and counting chamber were clean and calibrated; followed the counting rules consistently; and avoided bias from knowing the analyser result beforehand.
+
+If those came cleanly, you understand the principles and practice of the manual total leukocyte count - the reference method that underpins every automated white cell count you will ever report.`
+    },
+  ],
+  theory: [
+    { q: "Explain why the manual white blood cell count is still used despite the availability of automated analysers.", a: "The manual count serves as the reference method against which analysers are calibrated and validated. It is used when the analyser result is suspected to be erroneous (due to platelet clumps, nucleated red cells, or extreme leucocytosis), when automation is unavailable, and for species whose cells cannot be counted automatically (such as birds and reptiles, whose red cells are nucleated)." },
+    { q: "State the composition of Turk's fluid and the function of each component.", a: "Turk's fluid consists of approximately 2% glacial acetic acid, distilled water, and a dye (gentian violet or methylene blue). The acetic acid lyses the red blood cells, destroying them so they do not obscure the white cells. The dye stains the white cell nuclei a deep violet-blue, making them clearly visible. The distilled water provides the dilution." },
+    { q: "Describe the Improved Neubauer counting chamber and the area used for a white cell count.", a: "The Improved Neubauer chamber has a depth of 0.1 mm. Its ruled area includes a central 1 mm squared region divided into 25 smaller squares, and four large corner squares each of 1 mm squared. For a white cell count, the four large corner squares are counted, giving a total area of 4 mm squared and a total volume of 0.4 microlitres of diluted blood." },
+    { q: "Describe the dilution technique for the manual WBC count using a Thoma pipette.", a: "Blood is drawn to the 0.5 mark of a white cell pipette by capillary action. The outside of the tip is wiped clean. Turk's fluid is then drawn to the 11 mark. The pipette is sealed and mixed gently. The first two drops are discarded, and the chamber is filled. Because the fluid from the tip to the 1 mark does not mix with the blood, the true dilution is 0.5 parts blood in 10 parts fluid, i.e., 1 in 20." },
+    { q: "Describe the dilution technique using the micropipette and tube method, and state why it is preferred in modern practice.", a: "20 microlitres of blood are added to 380 microlitres of Turk's fluid in a small tube, giving a total volume of 400 microlitres and a dilution of 1 in 20. This method is preferred because micropipettes are easier to calibrate, the dilution is easier to standardise, and the tube can be labelled and handled more easily than a pipette." },
+    { q: "State the counting rules for the manual WBC count and explain why they matter.", a: "Cells touching the upper and left-hand boundary lines of the counting square are counted; cells touching the lower and right-hand boundary lines are not. Cells are counted in a systematic pattern to avoid skipping or double-counting areas. These rules ensure that every cell is counted once and only once, making the count reproducible between different observers and different runs." },
+    { q: "Write the formula for calculating the WBC count from a manual count, and explain each term.", a: "The formula is: WBC count (cells/L) = (N x Dilution factor x 10^6) / Volume counted (microlitres). For a 1 in 20 dilution in an Improved Neubauer chamber, where N is the count in the four corner squares and the volume counted is 0.4 microlitres, the formula simplifies to WBC count = N x 50 x 10^6 cells/L. N is the number of cells counted, 20 is the dilution factor, 0.4 is the volume in microlitres, and 10^6 converts microlitres to litres." },
+    { q: "List the main sources of error in the manual WBC count and state how each can be minimised.", a: "Technical errors: poor specimen collection, insufficient mixing, inaccurate pipetting, inadequate mixing of blood with Turk's fluid, faulty chamber filling, and careless counting. These are minimised by careful technique, calibrated equipment, and consistent counting rules. Inherent errors: random distribution of cells in the chamber and variation between different areas. These are reduced by counting more cells and by performing duplicate counts and averaging the results." },
+    { q: "Explain why nucleated red blood cells can cause a falsely elevated white cell count, and how the manual count can correct for this.", a: "Nucleated red blood cells (nRBCs) are not lysed by Turk's fluid and are counted alongside white cells, falsely elevating the count. If nRBCs are seen on the blood film, a correction can be applied: Corrected WBC = Uncorrected WBC x 100 / (100 + number of nRBCs per 100 WBCs). The manual count allows the observer to detect nRBCs, which automated counters may miss or count incorrectly." },
+    { q: "State the normal reference range for the total white cell count in adults, and name two conditions that cause leukocytosis and two that cause leukopenia.", a: "The normal adult WBC count is approximately 4.5 to 11.0 x 10^9/L. Leukocytosis (elevated WBC) is caused by acute bacterial infection, tissue necrosis, leukaemia, and stress. Leukopenia (decreased WBC) is caused by viral infections, myelotoxic drugs and chemotherapy, aplastic anaemia, and overwhelming bacterial infection in older adults." },
+  ],
+  videos: [
+    { channel: "Hematology", title: "Manual WBC Count using Turk's Fluid", note: "Step-by-step demonstration of the dilution, chamber filling and counting technique.", url: "https://www.youtube.com/results?search_query=manual+WBC+count+Turk%27s+fluid+procedure" },
+    { channel: "Hematology", title: "Neubauer Counting Chamber Explained", note: "How the counting chamber works and how to calculate the WBC count.", url: "https://www.youtube.com/results?search_query=Neubauer+counting+chamber+WBC+calculation" },
+    { channel: "Hematology", title: "Sources of Error in Manual Cell Counts", note: "Technical and inherent errors and how to minimise them.", url: "https://www.youtube.com/results?search_query=sources+of+error+manual+cell+count+hematology" },
+  ],
+  mcqs: [
+    // ===== Note 1 (Q1-5): why the manual count still matters =====
+    { q: "The manual white cell count is still used mainly because:", o: ["Analysers are not widely available", "It is the reference method and the fallback when automation fails", "It is faster than the analyser", "It is required by law in all countries"], a: 1, w: "The manual count is the reference method for confirming analyser results and the fallback when automation is unavailable." },
+    { q: "Which situation would most clearly require a manual white cell count rather than an automated one?", o: ["A routine full blood count on a healthy adult", "A suspected analyser error due to platelet clumps", "A follow-up blood count on a stable patient", "A lipid profile"], a: 1, w: "Platelet clumps can cause analyser error, and the manual count is the reference method for confirming the true WBC." },
+    { q: "Manual white cell counts are essential in birds and reptiles because:", o: ["Their cells are too large for analysers", "All their blood cells are nucleated", "Analysers are not available in those settings", "Their blood does not clot"], a: 1, w: "In birds and reptiles, all blood cells are nucleated, so automated counters cannot distinguish white cells from red cells." },
+    { q: "The manual count is described as the reference method because:", o: ["It is the oldest method", "It allows the observer to see the cells being counted", "It is the fastest method", "It requires no equipment"], a: 1, w: "The manual count allows direct visual confirmation of what is being counted, which the analyser cannot provide." },
+    { q: "A discrepancy between an analyser result and a manual count should be resolved by:", o: ["Reporting the analyser result", "Reporting the manual count", "Investigating the cause and confirming with appropriate methods", "Averaging the two results"], a: 2, w: "A discrepancy requires investigation; the manual count may reveal what the analyser missed or miscounted." },
+
+    // ===== Note 2 (Q6-10): dilution and Turk's fluid =====
+    { q: "The main purpose of diluting the blood in a WBC count is to:", o: ["Reduce the cell concentration so cells can be counted individually", "Increase the number of white cells", "Change the colour of the blood", "Prevent clotting"], a: 0, w: "Dilution spreads the cells out so they can be counted individually under the microscope." },
+    { q: "Turk's fluid lyses red blood cells because it contains:", o: ["Methylene blue", "Glacial acetic acid", "Distilled water", "Gentian violet"], a: 1, w: "The acetic acid in Turk's fluid lyses the red cell membranes." },
+    { q: "The dye in Turk's fluid (gentian violet or methylene blue) functions to:", o: ["Lyses the red cells", "Stain the white cell nuclei for visibility", "Preserve the red cells", "Prevent clotting"], a: 1, w: "The dye stains the white cell nuclei a deep violet-blue, making them visible against the background." },
+    { q: "The standard dilution for a manual white cell count is:", o: ["1 in 10", "1 in 20", "1 in 100", "1 in 200"], a: 1, w: "The standard dilution is 1 in 20." },
+    { q: "A typical recipe for Turk's fluid includes:", o: ["2 mL glacial acetic acid, 98 mL distilled water, and a few drops of methylene blue", "10 mL acetic acid and 90 mL saline", "5 mL formalin and 95 mL water", "Pure distilled water only"], a: 0, w: "Turk's fluid is typically 2 mL glacial acetic acid, 98 mL distilled water, and 3 drops of methylene blue or gentian violet." },
+
+    // ===== Note 3 (Q11-15): the counting chamber =====
+    { q: "The depth of the Improved Neubauer counting chamber is:", o: ["0.01 mm", "0.1 mm", "1 mm", "0.5 mm"], a: 1, w: "The depth of the chamber is 0.1 mm." },
+    { q: "For a white cell count using the Improved Neubauer chamber, the cells are counted in:", o: ["The central square only", "The four large corner squares", "All nine large squares", "The small squares only"], a: 1, w: "The four large corner squares are counted for a white cell count." },
+    { q: "The total volume of diluted blood examined when counting the four large corner squares is:", o: ["0.04 microlitres", "0.1 microlitres", "0.4 microlitres", "4 microlitres"], a: 2, w: "Four squares of 1 mm squared each, at a depth of 0.1 mm, give a total volume of 0.4 microlitres." },
+    { q: "Each large corner square of the Improved Neubauer chamber has an area of:", o: ["0.04 mm squared", "0.1 mm squared", "1 mm squared", "4 mm squared"], a: 2, w: "Each large corner square is 1 mm by 1 mm, so its area is 1 mm squared." },
+    { q: "The counting chamber converts a drop of diluted blood into a number because it has:", o: ["A defined area and a defined depth", "A large surface area", "A coloured background", "A built-in calculator"], a: 0, w: "The chamber has a precisely defined area and depth, giving a known volume of diluted blood." },
+
+    // ===== Note 4 (Q16-20): Turk's fluid composition =====
+    { q: "The acetic acid concentration in Turk's fluid is typically:", o: ["0.2%", "2%", "20%", "50%"], a: 1, w: "Turk's fluid typically contains about 2% acetic acid." },
+    { q: "If the dye were omitted from Turk's fluid, the consequence would be:", o: ["Red cells would not lyse", "White cells would be difficult to see", "The dilution would be wrong", "The chamber would not fill"], a: 1, w: "Without the dye, the white cells would not be stained and would be difficult to visualise against the background." },
+    { q: "If the acetic acid were omitted from Turk's fluid, the consequence would be:", o: ["White cells would not stain", "Red cells would remain intact and obscure the white cells", "The dilution would be incorrect", "The chamber would overflow"], a: 1, w: "Without acetic acid, the red cells would not lyse and would obscure the white cells." },
+    { q: "Turk's fluid should be stored out of light because:", o: ["The dye may deteriorate", "The acetic acid evaporates", "The water evaporates", "The fluid becomes toxic"], a: 0, w: "The dye in Turk's fluid can deteriorate if exposed to light over time." },
+    { q: "Which of the following is NOT a component of Turk's fluid?", o: ["Glacial acetic acid", "Distilled water", "Gentian violet", "Sodium citrate"], a: 3, w: "Sodium citrate is an anticoagulant, not a component of Turk's fluid." },
+
+    // ===== Note 5 (Q21-25): the Thoma pipette method =====
+    { q: "In the Thoma pipette method, blood is drawn to which mark?", o: ["0.5", "1.0", "11", "2.0"], a: 0, w: "Blood is drawn to the 0.5 mark of the white cell pipette." },
+    { q: "The Thoma pipette produces a 1 in 20 dilution because:", o: ["The fluid from the tip to the 1 mark does not mix with the blood", "The pipette is exactly 20 times the size of the blood sample", "The blood is diluted twice", "The dye is concentrated 20 times"], a: 0, w: "The fluid in the stem up to the 1 mark is not mixed with the blood, so the true dilution is 0.5 in 10, or 1 in 20." },
+    { q: "After filling the Thoma pipette and mixing, the first drops should be:", o: ["Collected for counting", "Discarded", "Stained again", "Diluted further"], a: 1, w: "The first drops are discarded because they contain mostly diluent from the stem of the pipette." },
+    { q: "The micropipette and tube method is preferred in modern practice because:", o: ["It is cheaper", "It is easier to calibrate and standardise", "It requires no mixing", "It uses less blood"], a: 1, w: "Micropipettes are easier to calibrate and the dilution is easier to standardise than with the Thoma pipette." },
+    { q: "The dilution factor in the micropipette and tube method, using 20 microlitres of blood in 380 microlitres of Turk's fluid, is:", o: ["1 in 10", "1 in 20", "1 in 100", "1 in 200"], a: 1, w: "20 microlitres of blood in a total volume of 400 microlitres gives a 1 in 20 dilution." },
+
+    // ===== Note 6 (Q26-30): counting rules =====
+    { q: "According to the standard counting rule, cells touching which boundaries are counted?", o: ["Upper and left", "Lower and right", "Upper and right", "Lower and left"], a: 0, w: "Cells touching the upper and left boundary lines are counted; those touching the lower and right are not." },
+    { q: "The purpose of the counting rule is to:", o: ["Make counting faster", "Ensure each cell is counted once and only once", "Reduce the need for dilution", "Improve the stain quality"], a: 1, w: "The rule prevents double-counting or missing cells that lie on boundary lines." },
+    { q: "Which objective is used for counting white cells in the manual method?", o: ["4x", "10x", "40x", "100x oil immersion"], a: 1, w: "The 10x objective is used for the manual white cell count." },
+    { q: "After filling the counting chamber, the cells should be allowed to settle for:", o: ["A few seconds", "2 to 3 minutes", "30 minutes", "1 hour"], a: 1, w: "Cells should be allowed to settle for 2 to 3 minutes before counting." },
+    { q: "If the counts in the four squares differ by more than 10%, the correct action is to:", o: ["Report the result anyway", "Re-mix the sample and re-fill the chamber", "Count more squares", "Multiply the result by 1.1"], a: 1, w: "Uneven distribution suggests poor chamber filling; the sample should be re-mixed and the chamber re-filled." },
+
+    // ===== Note 7 (Q31-35): calculation =====
+    { q: "Using the formula WBC count = N x 50 x 10^6, if N = 60, the WBC count is:", o: ["3.0 x 10^9/L", "6.0 x 10^9/L", "1.2 x 10^9/L", "5.0 x 10^9/L"], a: 0, w: "60 x 50 x 10^6 = 3.0 x 10^9/L." },
+    { q: "In the calculation WBC count (cells/L) = (N x 20 x 10^6) / 0.4, the number 0.4 represents:", o: ["The dilution factor", "The volume counted in microlitres", "The number of squares", "The chamber depth"], a: 1, w: "0.4 is the total volume counted in microlitres (four squares of 0.1 microlitre each)." },
+    { q: "The number 10^6 in the WBC calculation converts:", o: ["Microlitres to litres", "Litres to microlitres", "Cells to litres", "Millilitres to litres"], a: 0, w: "10^6 converts a count per microlitre to a count per litre." },
+    { q: "A manual WBC count gives 120 cells in the four squares with a 1 in 20 dilution. The WBC count in cells/L is:", o: ["2.4 x 10^9/L", "6.0 x 10^9/L", "12.0 x 10^9/L", "4.8 x 10^9/L"], a: 1, w: "120 x 50 x 10^6 = 6.0 x 10^9/L." },
+    { q: "The WBC count in cells per cubic millimetre (cu mm), using a 1 in 20 dilution and counting four squares, is calculated as:", o: ["N x 20", "N x 50", "N x 10", "N x 100"], a: 1, w: "The WBC count in cells/cu mm is N x 50, where N is the count in the four squares and the dilution is 1 in 20." },
+
+    // ===== Note 8 (Q36-40): analyser vs manual discrepancies =====
+    { q: "Platelet clumps can cause an analyser to report:", o: ["A falsely low WBC count", "A falsely high WBC count", "No change in WBC count", "A falsely low haemoglobin"], a: 1, w: "Analysers may count platelet clumps as white cells, falsely elevating the WBC count." },
+    { q: "Nucleated red blood cells can cause a falsely elevated WBC count because:", o: ["They are counted as white cells by the analyser and are not lysed by Turk's fluid", "They stain the same colour as white cells", "They clump with white cells", "They increase the dilution factor"], a: 0, w: "Nucleated red cells are not lysed by Turk's fluid and may be counted as white cells." },
+    { q: "The correction formula for nucleated red blood cells is:", o: ["Corrected WBC = Uncorrected WBC x 100 / (100 + nRBCs)", "Corrected WBC = Uncorrected WBC + nRBCs", "Corrected WBC = Uncorrected WBC / nRBCs", "Corrected WBC = Uncorrected WBC x nRBCs"], a: 0, w: "The corrected WBC = Uncorrected WBC x 100 / (100 + nRBCs per 100 WBCs)." },
+    { q: "Extreme leucocytosis can cause analyser error because:", o: ["The cells are too small to count", "The count may exceed the analyser's linear range", "The cells clump together", "The analyser cannot stain the cells"], a: 1, w: "Very high white cell counts can exceed the analyser's linear range, requiring dilution and manual counting." },
+    { q: "When the analyser and manual count disagree, the manual count is trusted because:", o: ["It is always more precise", "It allows direct visual confirmation of what is being counted", "It is faster", "It requires less skill"], a: 1, w: "The manual count allows the observer to see the cells and identify interferences that the analyser cannot detect." },
+
+    // ===== Note 9 (Q41-45): sources of error and quality control =====
+    { q: "Which of the following is a technical error in the manual WBC count?", o: ["Inherent variation in cell distribution", "Insufficient mixing of the blood with Turk's fluid", "Random distribution of cells", "Variation between chamber areas"], a: 1, w: "Insufficient mixing is a technical error that can be prevented by proper technique." },
+    { q: "Inherent error in the manual WBC count can be reduced by:", o: ["Counting more cells", "Using a larger chamber", "Staining the cells more darkly", "Counting faster"], a: 0, w: "Inherent error is proportional to the square root of the number of cells counted; counting more cells reduces the variation." },
+    { q: "Performing duplicate counts and averaging the results is a form of:", o: ["Technical error", "Quality control", "Inherent error", "Dilution error"], a: 1, w: "Duplicate counts and averaging are quality control measures that reduce the effect of random error." },
+    { q: "If the count in one of the four squares is markedly different from the others, the most likely cause is:", o: ["A high white cell count", "Poor chamber filling or uneven distribution", "A low dilution factor", "An error in the stain"], a: 1, w: "Uneven distribution or poor filling of the chamber causes discordant counts between squares." },
+    { q: "Which of the following would NOT be a source of error in the manual WBC count?", o: ["A dirty counting chamber", "A calibrated micropipette", "Inadequate mixing of the diluted sample", "Air bubbles in the chamber"], a: 1, w: "A calibrated micropipette is a quality control measure, not a source of error." },
+
+    // ===== Note 10 (Q46-50): consolidation =====
+    { q: "The manual WBC count is most useful as a reference method when:", o: ["A routine full blood count is requested", "The analyser result is suspected to be erroneous", "The patient is healthy", "The sample is clotted"], a: 1, w: "The manual count is the reference method for confirming or refuting suspected analyser errors." },
+    { q: "The normal adult reference range for the total white cell count is approximately:", o: ["1.5 to 4.5 x 10^9/L", "4.5 to 11.0 x 10^9/L", "11.0 to 20.0 x 10^9/L", "0.5 to 2.0 x 10^9/L"], a: 1, w: "The normal adult WBC count is approximately 4.5 to 11.0 x 10^9/L." },
+    { q: "Leukocytosis is most commonly caused by:", o: ["Viral infection", "Acute bacterial infection", "Aplastic anaemia", "Chemotherapy"], a: 1, w: "Acute bacterial infection is a common cause of leukocytosis." },
+    { q: "Leukopenia is most commonly caused by:", o: ["Viral infection and myelotoxic drugs", "Acute bacterial infection", "Tissue necrosis", "Stress"], a: 0, w: "Viral infections and myelotoxic drugs are common causes of leukopenia." },
+    { q: "The complete manual WBC count procedure, in correct order, is:", o: ["Dilute blood in Turk's fluid, fill chamber, count, calculate", "Fill chamber, dilute blood, count, calculate", "Count, dilute, fill chamber, calculate", "Calculate, count, dilute, fill chamber"], a: 0, w: "The procedure is: dilute the blood, fill the counting chamber, count the cells, and calculate the result." },
+  ],
+};
+
+/* --------------------------- hem:10 --------------------------- */
+// Objectives covered: microscopy in haematology. Definition of microscopy,
+// compound light microscope components, magnification and resolution,
+// numerical aperture, types of microscope used in haematology (brightfield,
+// phase contrast, darkfield, fluorescence), Kohler illumination, oil
+// immersion, routine care, cleaning, maintenance, troubleshooting.
+// 10 note headers -> 5 MCQs each -> exactly 50 MCQs.
+const T_HEM_MICROSCOPY = {
+  courseId: "hem",
+  topicIndex: 10,
+  title: "Microscopy (Types, Uses and Care of Microscopes in Haematology)",
+  minutes: 30,
+  note: [
+    {
+      q: "Everything you have learned ends at the eyepiece. Why is the microscope the ultimate instrument of haematology?",
+      body: `You have learned how blood is made, how it is collected, how it is stained, and how it is spread on a film. All of that preparation exists for one moment: when the stained, well-made film is placed on the stage of a microscope and the scientist looks down the eyepiece. This is where the diagnosis is made.
+
+My Socratic question: what does the microscope actually add that no other instrument in the laboratory can provide?
+
+The answer is direct visual access to the cell. The analyser gives numbers, the stain gives colour, the film gives a preparation - but only the microscope allows the human eye to see the individual cell, its size, its shape, its nucleus, its cytoplasm, its granules, its inclusions, and any parasite inside it. Every morphological feature that the other topics in this course have described - sickle cells, spherocytes, hypersegmented neutrophils, malaria parasites, blast cells - can only be seen through a microscope.
+
+This is why microscopy sits at the end of the course. It is the instrument that ties everything else together. Without it, the stains, films and dilutions would have no purpose. With it, a drop of blood becomes a diagnostic picture of the patient.
+
+Crucial insight: microscopy is the study of objects too small to be seen by the unaided eye, using an instrument that magnifies and resolves them. In haematology, it is the final common pathway of every diagnostic technique - the instrument through which morphology is assessed, parasites are detected, and automated results are confirmed. Understanding its principles, its types, and its care is essential.`
+    },
+    {
+      q: "Two microscopes have the same magnification but one shows more detail. What physical property distinguishes them?",
+      body: `Two compound microscopes may both be labelled 1000x, and yet the image through one is crisp and highly detailed, while the image through the other is blurry and imprecise. If magnification is the same, what is the difference? The answer is resolution.
+
+My Socratic question: magnification makes an image bigger. If two microscopes magnify by the same amount, why would one show more detail than the other?
+
+The answer is that magnification only enlarges the image - it does not create new information. If the optics cannot resolve two adjacent points as separate, then magnifying them simply enlarges the blur. Resolution, not magnification, is the true measure of a microscope's capability.
+
+Resolution (also called resolving power) is defined as the smallest distance between two points at which they can still be distinguished as separate rather than as a single blurred point. The lower the resolution value, the finer the detail that can be seen. A good light microscope can resolve two points that are about 0.2 micrometres apart. Anything closer than that will be seen as one object, no matter how much magnification is applied.
+
+Magnification versus resolution:
+- Magnification is the ratio of the image size to the object size. It is a number with an "x" after it, e.g. 100x, 400x, 1000x.
+- Resolution is the minimum resolvable distance. It is measured in units of length, e.g. micrometres, and it determines whether two nearby objects can be seen as separate.
+
+Total magnification in a compound microscope is calculated by multiplying the magnification of the objective lens by that of the ocular (eyepiece) lens. For example, a 100x oil immersion objective with a 10x ocular gives 1000x total magnification.
+
+Crucial insight: magnification is what we call the power of a microscope in everyday speech, but resolution is what determines its true usefulness. A well-designed microscope with 400x magnification and good optics can show more diagnostic detail than a poorly designed one with 1000x. In haematology, where the features being assessed - granule size, chromatin pattern, parasite morphology - are at the limit of the light microscope's resolving power, resolution matters far more than magnification.`
+    },
+    {
+      q: "A lens is more than just curved glass. What does numerical aperture mean, and why does it set the limit of resolution?",
+      body: `Every objective lens has a specification written on its side. Beside the magnification and the tube length, there is a number like 0.25, 0.65, or 1.25. This number is the numerical aperture (NA), and it is the single most important determinant of a lens's resolving power.
+
+My Socratic question: the numerical aperture of an oil immersion lens is 1.25, while that of a low-power lens is 0.25. If NA is a number without units, what does it actually describe, and why does it matter so much?
+
+The answer is that numerical aperture is a measure of a lens's ability to gather light from a specimen, and it determines how much fine detail the lens can resolve. Specifically, NA is calculated from two factors: the angle of the cone of light that the lens can collect from the specimen, and the refractive index of the medium between the lens and the specimen.
+
+The formula for NA is: NA = n sin theta, where n is the refractive index of the medium between the specimen and the objective, and theta is the half-angle of the maximum cone of light that can enter the lens.
+
+The relationship between NA and resolution is given by the Abbe equation:
+Resolution (d) = wavelength / (2 x NA)
+
+This means that the higher the numerical aperture, the smaller the value of d, and therefore the finer the detail that can be resolved. A lens with NA 0.25 can resolve detail of about 1.1 micrometres; a lens with NA 1.25 can resolve detail of about 0.22 micrometres - five times finer.
+
+This is why oil immersion matters. The refractive index of air is 1.0, but the refractive index of immersion oil is about 1.515, the same as glass. By filling the space between the lens and the specimen with oil, the refractive index of the medium is raised from 1.0 to 1.5, and the numerical aperture (and therefore the resolution) is significantly improved.
+
+Crucial insight: numerical aperture is the hidden number that determines what a microscope can actually see. It is why the oil immersion lens with NA 1.25 resolves far more detail than the high-power dry lens with NA 0.65, and why using oil is not optional when examining red cell morphology or malaria parasites at 1000x. Without oil, even the best objective cannot achieve its rated resolution.`
+    },
+    {
+      q: "The compound microscope has many parts. Which ones actually determine what you see?",
+      body: `A compound microscope has roughly a dozen named parts, from the eyepiece to the base. Learning them all is necessary, but it is worth understanding which parts actually determine the image and which parts merely support it.
+
+My Socratic question: if a microscope is described as "compound," what does that word tell you about how many lenses are involved?
+
+The answer is that "compound" means the microscope uses two or more lenses in sequence to produce the final image. The main lenses are the objective lens (close to the specimen) and the ocular or eyepiece lens (close to the eye). The objective forms a magnified image of the specimen; the ocular then magnifies that image again, producing the very large final image you see.
+
+The main parts of a compound light microscope and their functions:
+- Eyepiece (ocular lens) - the lens nearest the eye, typically 10x magnification. It magnifies the image formed by the objective.
+- Objective lenses - the lenses near the specimen. Most microscopes have three or four, typically 4x, 10x, 40x, and 100x (oil immersion). Each objective has its own magnification and numerical aperture.
+- Revolving nosepiece - holds the objectives and rotates to change magnification.
+- Stage - the flat platform on which the slide is placed. Often fitted with mechanical stage controls for precise movement.
+- Stage clips - hold the slide in place.
+- Condenser - a lens beneath the stage that focuses light onto the specimen. Critical for optimal illumination and resolution.
+- Iris diaphragm - controls the amount of light passing through the condenser to the specimen.
+- Illuminator (light source) - built-in lamp at the base of the microscope.
+- Coarse focus knob - moves the stage (or the objective) up and down rapidly, for initial focusing at low power.
+- Fine focus knob - moves the stage (or the objective) very slightly, for precise focusing at high power.
+- Arm - connects the base to the head and supports the optical system.
+- Base - the flat bottom that supports the microscope.
+
+Crucial insight: the parts that directly determine the image are the objective lens, the ocular lens, the condenser and the iris diaphragm, and the illuminator. The objective determines magnification and resolution; the ocular adds further magnification; the condenser and iris diaphragm control the quality of illumination, which in turn determines whether the resolution of the objective can be realised. The other parts support and position these optical elements. When microscopy is suboptimal, the cause is almost always in these optical parts.`
+    },
+    {
+      q: "The condenser and iris diaphragm are often neglected, yet they control whether the image is sharp or washed out. Why?",
+      body: `The condenser and iris diaphragm sit beneath the stage and are often ignored by students who focus only on magnification. Yet they are directly responsible for the quality of illumination, which in turn determines whether the objective lens can achieve its full resolution. Poor condenser settings produce images that are dim, washed out, or full of glare - and no focus adjustment can fix that.
+
+My Socratic question: the objective lens determines resolution, so why would the setting of a lens below the stage have any effect on how sharp the image looks?
+
+The answer is that resolution depends not only on the objective but on the cone of light reaching the specimen. To achieve the full numerical aperture of an objective, the specimen must be illuminated with a cone of light that at least matches the cone the objective can gather. The condenser's job is to produce this cone; the iris diaphragm controls its width.
+
+Setting up Kohler illumination is the standard way to align the microscope for optimal imaging. In essence:
+- Focus the condenser so that the light source is imaged in the specimen plane (or the specimen is imaged in the condenser aperture).
+- Adjust the condenser aperture (iris diaphragm) so that it is about 70-80% of the objective's numerical aperture - this balances contrast and resolution, allowing the full NA of the objective to be used without producing glare.
+- Centre the condenser so the light is evenly distributed across the field.
+
+Common mistakes in condenser use:
+- Leaving the iris diaphragm wide open at all magnifications, producing glare and poor contrast.
+- Closing the iris diaphragm too far to "increase contrast", which reduces resolution and produces artefacts.
+- Failing to adjust the condenser height after changing objectives.
+
+Crucial insight: the condenser and iris diaphragm are the microscopist's main controls for balancing illumination, contrast and resolution. A microscope that is perfectly focused but has the condenser misaligned will never show the detail that its objective could produce. This is why understanding the condenser is essential for high-quality haematological microscopy, where fine detail determines the diagnosis.`
+    },
+    {
+      q: "Why does the 100x objective require immersion oil, and why does the same rule not apply to the other lenses?",
+      body: `When you switch from the 40x objective to the 100x objective, you add a drop of oil to the slide. The oil is not optional - without it, the 100x lens cannot function as it was designed to. Yet you never add oil to the 4x, 10x, or 40x lenses. Why the difference?
+
+My Socratic question: the 100x objective has a numerical aperture of 1.25, which is impossible to achieve with air between the lens and the specimen. Why can air not deliver a NA of 1.25?
+
+The answer lies in the formula NA = n sin theta. The maximum value of sin theta is 1 (when theta is 90 degrees). So the maximum NA achievable with air (n = 1.0) is 1.0. To reach an NA above 1.0, the refractive index n must be greater than 1.0 - and this requires a medium other than air. Immersion oil has a refractive index of about 1.515, matching that of glass, so it allows the numerical aperture to exceed 1.0.
+
+Why oil is needed only for the 100x objective:
+- At low and medium magnification (4x, 10x, 40x), the objective's NA is below 1.0, and air can deliver that NA. Adding oil would offer no benefit and would complicate the technique.
+- At 100x, the objective's NA is above 1.0 (typically 1.25 or 1.30), and air cannot deliver this. Oil is needed to raise the refractive index of the medium and allow the full NA to be reached.
+
+There is also a second reason. At 100x, the working distance between the lens and the specimen is very short - often only 0.1 to 0.2 mm. In this tiny gap, even small variations in the air path would cause significant loss of light. The oil fills this gap completely and homogeneously, eliminating air-gap losses.
+
+Crucial insight: oil immersion exists because of a fundamental optical limit. Above NA 1.0, only a medium with a refractive index higher than air can deliver the necessary light cone. The oil does not magnify; it preserves light and allows the 100x objective to reach its full numerical aperture. Using the 100x objective without oil would be like driving a sports car with the parking brake on - the equipment is there, but it cannot perform.`
+    },
+    {
+      q: "Haematology uses several types of microscopy. Why is brightfield not enough on its own?",
+      body: `Brightfield microscopy - the standard technique of a stained blood film on a white background with transmitted light - is the mainstay of haematology. But it is not the only type used, and for certain purposes it is not sufficient.
+
+My Socratic question: if brightfield microscopy can show almost every cell and parasite in a stained blood film, what kinds of specimen could it not adequately show?
+
+The answer is that brightfield microscopy requires contrast, and contrast requires staining or natural pigmentation. Certain specimens have neither. Living, unstained cells are nearly transparent in a brightfield microscope because their refractive index is close to that of the surrounding medium. Their internal structures are invisible unless they are stained - and staining kills them. So brightfield microscopy cannot be used to study living, unstained cells, which is exactly what certain haematological techniques require.
+
+The main types of microscopy used in haematology:
+- Brightfield microscopy - the routine method. Light is transmitted through a stained specimen, and contrast comes from the stain. Used for all standard blood film examinations: differential counts, red cell morphology, platelet estimates, and parasite detection.
+- Phase contrast microscopy - converts small differences in refractive index into visible differences in brightness. Used to examine living, unstained cells, such as reticulocyte preparations or cell cultures, where the internal structures are not visible in brightfield.
+- Darkfield microscopy - the specimen is illuminated with a hollow cone of light, so the background is dark and objects appear bright. Used to examine unstained specimens such as Treponema pallidum (the spirochete of syphilis) in wet preparations, where the organism is too thin to be seen in brightfield.
+- Fluorescence microscopy - uses ultraviolet or blue light to excite fluorescent dyes that then emit visible light. Used in immunohaematology and for detecting certain parasites such as malaria in fluorescent-stained preparations.
+
+Crucial insight: the choice of microscopy technique is dictated by the properties of the specimen. Brightfield is the default because stained blood films provide contrast. When the specimen is unstained or living, or when the object is too thin or too faint for brightfield, other techniques are needed. Understanding the principles behind each type is essential for selecting the right method for the diagnostic question.`
+    },
+    {
+      q: "Phase contrast and darkfield both reveal invisible things. What is the difference between them?",
+      body: `Phase contrast and darkfield microscopy both solve the problem of specimens that are nearly invisible in brightfield - but they do so in completely different ways, and they are used for different purposes.
+
+My Socratic question: in phase contrast, the specimen appears darker or lighter against a grey background. In darkfield, the specimen appears bright against a black background. Why the difference?
+
+The answer lies in how each technique manipulates the light.
+
+Phase contrast microscopy works by exploiting small differences in refractive index within the specimen. In a brightfield microscope, these differences are invisible. In a phase contrast microscope, the light passing through the specimen is separated into two beams - one that passes through the specimen (and is slightly delayed by its refractive index), and one that passes around it - and then these two beams are recombined. The interference between them converts the invisible phase differences into visible brightness differences. The result is a grey background with darker and lighter features where internal structures lie.
+
+Darkfield microscopy works by illuminating the specimen with light that is directed to the sides of the field, not straight through it. Only light that is scattered or refracted by the specimen reaches the eye. Because the direct light is blocked, the background is black. Only the specimen appears bright, because it scatters light into the viewing path. The result is a black background with brilliantly lit objects.
+
+The two techniques are used for different reasons:
+- Phase contrast is used when the specimen is transparent but has internal structure that differs in refractive index - living cells, reticulocyte preparations, and unstained preparations where internal details matter.
+- Darkfield is used when the object is extremely thin or has a refractive index very close to the surroundings - such as spirochetes - and would be invisible in brightfield even when stained.
+
+Crucial insight: phase contrast converts refractive index into brightness, and darkfield converts scattered light into brightness. Both reveal invisible things, but for different specimens. Phase contrast for translucent, internally structured cells; darkfield for extremely thin or sparsely scattered objects.`
+    },
+    {
+      q: "Kohler illumination sounds like a technical detail. Why does it matter in daily practice?",
+      body: `Kohler illumination is the standard method for aligning a microscope for optimal imaging. Its name appears in every microscopy textbook, and yet many microscopists use it without understanding what it does or why it matters. In practice, the principle is simple: uniform, glare-free illumination that allows the objective to achieve its full resolution.
+
+My Socratic question: if the objective lens is fixed and its optical properties are set, why would the alignment of the illuminator and condenser have any effect on image quality?
+
+The answer is that an objective can only perform to its full numerical aperture if the specimen is illuminated with an appropriate cone of light. If the illumination is uneven, off-centre, or too narrow, the effective numerical aperture is reduced, and the resolution is degraded. Kohler illumination ensures that the illumination is uniform across the field, that the condenser aperture is matched to the objective, and that the light source is properly focused.
+
+The steps of Kohler illumination, in simplified form:
+- Focus on the specimen with the 10x objective.
+- Close the field diaphragm and adjust the condenser height so the field diaphragm is sharply focused on the specimen.
+- Open the field diaphragm just until it is no longer visible in the field of view.
+- Adjust the condenser aperture (iris diaphragm) so that it is about 70-80% of the objective's numerical aperture - usually judged visually, by opening and closing the iris until contrast and resolution are balanced.
+- Centre the condenser using the centring screws, so the illumination is even across the field.
+- Repeat the aperture adjustment for each objective as magnification is changed.
+
+What Kohler illumination achieves:
+- Uniform illumination, so the entire field is evenly lit.
+- Full use of the objective's numerical aperture, so resolution is maximised.
+- Balanced contrast, so the image is clear without being too dim.
+- Reduced glare, so the image is clean.
+
+Crucial insight: Kohler illumination is not an optional refinement - it is the difference between using the objective at its designed performance and using it at reduced performance. In haematology, where fine cellular detail determines the diagnosis, this difference matters. A microscope with Kohler illumination correctly set up will show more diagnostic detail than the same microscope with the illumination misaligned.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for microscopy in haematology, in five lines.
+
+Definition and importance: microscopy is the study of objects too small to be seen by the unaided eye, using an instrument that magnifies and resolves them. In haematology, it is the final step of every diagnostic technique.
+
+Magnification and resolution: magnification is the ratio of image to object size; resolution is the smallest resolvable distance between two points. Resolution, not magnification, determines the diagnostic usefulness of a microscope. Numerical aperture (NA) is the key determinant of resolution, given by NA = n sin theta, and resolution d = wavelength / (2 x NA).
+
+The compound microscope: objective lens and ocular lens produce the magnified image; the condenser and iris diaphragm control the illumination. Total magnification = objective magnification x ocular magnification.
+
+Types of microscopy: brightfield (routine, uses stained specimens), phase contrast (living, unstained cells), darkfield (very thin or faint objects), fluorescence (fluorescently labelled specimens).
+
+Care and maintenance: clean lenses with lens paper and appropriate solvent; never use rough cloth. Keep the microscope covered when not in use. Clean the oil immersion objective after every use with lens paper. Do not let oil dry on the lens. Store in a dry, dust-free environment. Regular professional servicing.
+
+Now your final test. A haematology student is asked to examine a blood film for malaria parasites. She sets up the microscope with the 100x oil immersion objective, but forgets to add a drop of oil to the slide. She reports that the image is dim and lacks detail.
+
+Question one: what physical principle has she overlooked, and why does the absence of oil degrade the image?
+Question two: how would you correct her technique, and what improvement would you expect?
+Question three: what additional step of microscope care should she perform after completing the examination?
+
+Work them through before reading on.
+
+My answers. One: she has overlooked the principle of numerical aperture. The 100x objective is designed to have a numerical aperture above 1.0, which requires a medium with refractive index greater than air between the lens and the specimen. Without oil, the refractive index of air (1.0) limits the effective NA to about 0.95, so the objective cannot gather the full cone of light and resolution is degraded. The image appears dim because less light is collected, and detail is lost. Two: I would instruct her to clean the slide, add a drop of immersion oil to the slide over the area to be examined, and lower the objective until it contacts the oil. She should not use the 40x objective to add oil, as the oil should only be used with the 100x objective. With oil in place, the NA rises to 1.25, the image becomes brighter and sharper, and fine detail such as parasite morphology and red cell inclusions becomes visible. Three: after examination, she should clean the oil from the 100x objective immediately with lens paper, clean the slide and stage as needed, and check that no oil has migrated to other objectives. This is part of routine microscope care, which ensures that the objective continues to perform correctly. If oil is left to dry on the lens, it can harden and damage the optical coating, degrading the microscope permanently.
+
+If those came cleanly, you understand the principles and practice of microscopy in haematology - the instrument on which every diagnostic technique in this course ultimately depends.`
+    },
+  ],
+  theory: [
+    { q: "Define microscopy and explain why it is the foundation of haematological diagnosis.", a: "Microscopy is the study of objects too small to be seen by the unaided eye, using an instrument that magnifies and resolves them. It is the foundation of haematological diagnosis because morphological features - cell shape, size, nuclear and cytoplasmic detail, inclusions, and parasites - can only be assessed by direct visual examination. The analyser gives numbers, but only the microscope allows the observer to see the cells themselves and confirm the diagnosis." },
+    { q: "Explain the difference between magnification and resolution, and state which is more important in haematology.", a: "Magnification is the ratio of the image size to the object size, expressed as a number with an x, such as 1000x. Resolution is the smallest distance between two points at which they can still be distinguished as separate, measured in units of length. Resolution is more important because magnification only enlarges the image - if the optical system cannot resolve fine detail, magnifying it further only produces a larger blur. In haematology, where fine detail determines diagnosis, resolution is the limiting factor." },
+    { q: "Define numerical aperture and explain its relationship to resolution.", a: "Numerical aperture (NA) is a measure of a lens's ability to gather light from the specimen, given by NA = n sin theta, where n is the refractive index of the medium between the specimen and the objective and theta is the half-angle of the maximum cone of light that can enter the lens. Resolution (d) is inversely related to NA by the equation d = wavelength / (2 x NA). A higher NA therefore gives a smaller value of d, which means better (finer) resolution." },
+    { q: "Explain why the 100x objective requires immersion oil while the lower-power objectives do not.", a: "The numerical aperture of the 100x objective is above 1.0 (typically about 1.25). Because NA = n sin theta and the maximum value of sin theta is 1.0, achieving an NA above 1.0 requires a medium with a refractive index greater than that of air (1.0). Immersion oil has a refractive index of about 1.515, matching glass, so it allows the NA to exceed 1.0. Lower-power objectives have NA values below 1.0, which air can deliver, so oil is not needed." },
+    { q: "Name the main parts of a compound light microscope and state the function of each.", a: "Eyepiece (ocular lens) - magnifies the image for viewing. Objective lenses - magnify the specimen and determine resolution. Revolving nosepiece - rotates objectives into position. Stage - supports the slide. Stage clips - hold the slide. Condenser - focuses light onto the specimen. Iris diaphragm - controls the amount of light reaching the specimen. Illuminator - provides the light source. Coarse focus knob - rapid focusing at low power. Fine focus knob - precise focusing at high power. Arm - supports the optical system. Base - supports the microscope." },
+    { q: "Explain the role of the condenser and iris diaphragm in achieving optimal microscopy.", a: "The condenser focuses the light from the illuminator onto the specimen, producing a cone of light that matches the numerical aperture of the objective. The iris diaphragm controls the width of this cone. For optimal microscopy, the condenser must be focused and centred, and the iris diaphragm set to about 70-80% of the objective's numerical aperture - this balances contrast and resolution, allowing the full NA of the objective to be used without glare. Incorrect condenser settings produce dim, washed-out, or glare-affected images that cannot be corrected by focusing alone." },
+    { q: "Describe Kohler illumination and explain its importance.", a: "Kohler illumination is the standard method for aligning a microscope to produce uniform, glare-free illumination with the condenser properly matched to the objective. The steps include focusing the specimen, adjusting the condenser height so the field diaphragm is sharply focused on the specimen, opening the field diaphragm just until it disappears from view, setting the condenser aperture to about 70-80% of the objective's NA, and centring the condenser. Correct Kohler illumination ensures that the objective can achieve its full numerical aperture and therefore its full resolution, which is essential for assessing fine cellular detail in haematology." },
+    { q: "Describe the different types of microscopy used in haematology and the uses of each.", a: "Brightfield microscopy - uses transmitted light through a stained specimen; used for routine blood film examination. Phase contrast microscopy - converts refractive index differences into brightness differences; used for living, unstained cells. Darkfield microscopy - illuminates the specimen with a hollow cone of light so the background is dark and objects appear bright; used for very thin or faint objects such as spirochetes. Fluorescence microscopy - uses UV or blue light to excite fluorescent dyes; used in immunohaematology and for fluorescent-stained parasites." },
+    { q: "Explain why phase contrast and darkfield microscopy are useful in haematology.", a: "Both techniques reveal specimens that are nearly invisible in brightfield. Phase contrast is useful for living, unstained cells because it converts small refractive index differences into visible brightness differences, allowing internal structures to be seen. Darkfield is useful for extremely thin objects such as spirochetes, which scatter light efficiently even when unstained, so they appear brightly illuminated against a dark background. Neither technique replaces brightfield for stained blood films, but each extends the range of specimens that can be examined." },
+    { q: "Describe the routine care and maintenance of a compound light microscope.", a: "Clean the lenses with lens paper and appropriate lens cleaning solution - never use rough cloth or ordinary tissue. Clean the oil immersion objective immediately after use to remove oil, as dried oil can damage the coating. Keep the microscope covered when not in use to protect from dust. Store in a dry, dust-free environment. Do not expose the microscope to extremes of temperature or humidity. Carry the microscope with both hands - one on the arm and one under the base. Have the microscope professionally serviced at regular intervals to check alignment and lubrication. Follow the manufacturer's instructions for any specific model." },
+  ],
+  videos: [
+    { channel: "Hematology", title: "Compound Light Microscope - Parts and Functions", note: "Walkthrough of the microscope components and their roles in image formation.", url: "https://www.youtube.com/results?search_query=compound+light+microscope+parts+functions" },
+    { channel: "Hematology", title: "Magnification, Resolution and Numerical Aperture", note: "Explains the optical principles that determine microscope performance.", url: "https://www.youtube.com/results?search_query=magnification+resolution+numerical+aperture+microscopy" },
+    { channel: "Hematology", title: "Care and Maintenance of the Laboratory Microscope", note: "How to clean, store and maintain a microscope for long-term use.", url: "https://www.youtube.com/results?search_query=care+maintenance+laboratory+microscope" },
+  ],
+  mcqs: [
+    // ===== Note 1 (Q1-5): why microscopy matters =====
+    { q: "Microscopy is best defined as the study of objects using:", o: ["Chemical analysis", "An instrument that magnifies and resolves them", "Electronic counting", "Centrifugation"], a: 1, w: "Microscopy uses an instrument to magnify and resolve objects too small to be seen by the unaided eye." },
+    { q: "In haematology, microscopy is important because it allows:", o: ["Direct visual assessment of cell morphology and parasites", "Faster reporting", "Automated counting of cells", "Reduced staining time"], a: 0, w: "Microscopy allows direct visual assessment of morphology and parasites." },
+    { q: "Which of the following can only be detected by microscopy, not by an analyser?", o: ["Total white cell count", "Haemoglobin concentration", "Malaria parasites in red cells", "Mean cell volume"], a: 2, w: "Malaria parasites can only be seen by direct microscopic examination." },
+    { q: "Microscopy is described as the final common pathway because:", o: ["It is the last step in the diagnostic process, where morphology is confirmed", "It replaces all other tests", "It is the first step in analysis", "It is only used in research"], a: 0, w: "Microscopy is often the confirmatory step where morphology is assessed." },
+    { q: "The instrument used in routine haematological microscopy is the:", o: ["Electron microscope", "Compound light microscope", "Fluorescence microscope only", "Phase contrast microscope only"], a: 1, w: "The compound light microscope is the routine instrument for haematological microscopy." },
+
+    // ===== Note 2 (Q6-10): magnification vs resolution =====
+    { q: "Magnification is best defined as:", o: ["The smallest distance between two points that can be distinguished", "The ratio of the image size to the object size", "The brightness of the image", "The colour of the image"], a: 1, w: "Magnification is the ratio of the image size to the object size." },
+    { q: "Resolution is best defined as:", o: ["The ratio of image to object size", "The brightness of the light source", "The smallest distance between two points that can be distinguished as separate", "The colour contrast of the image"], a: 2, w: "Resolution is the smallest distance between two points at which they can still be distinguished." },
+    { q: "Two microscopes with the same magnification may show different amounts of detail because they differ in:", o: ["Colour", "Resolution", "Weight", "Height"], a: 1, w: "The difference lies in resolution, which determines how much detail can be seen." },
+    { q: "Which is more important in haematological microscopy?", o: ["Magnification", "Resolution", "Colour of the light source", "Size of the microscope"], a: 1, w: "Resolution is more important, because it determines whether fine detail can be seen." },
+    { q: "The total magnification of a compound microscope is calculated by:", o: ["Adding objective and ocular magnifications", "Subtracting ocular from objective magnification", "Multiplying objective and ocular magnifications", "Dividing objective magnification by ocular magnification"], a: 2, w: "Total magnification is the product of objective and ocular magnifications." },
+
+    // ===== Note 3 (Q11-15): numerical aperture =====
+    { q: "Numerical aperture is given by the formula:", o: ["NA = n sin theta", "NA = n cos theta", "NA = n / theta", "NA = theta / n"], a: 0, w: "Numerical aperture is NA = n sin theta, where n is the refractive index and theta is the half-angle of the light cone." },
+    { q: "The relationship between resolution and numerical aperture is given by:", o: ["d = wavelength x NA", "d = wavelength / (2 x NA)", "d = 2 x wavelength x NA", "d = NA / wavelength"], a: 1, w: "The Abbe equation states that resolution d = wavelength / (2 x NA)." },
+    { q: "The maximum numerical aperture achievable with air as the medium is:", o: ["0.5", "1.0", "1.5", "2.0"], a: 1, w: "Because the refractive index of air is 1.0, the maximum NA achievable with air is 1.0." },
+    { q: "The refractive index of immersion oil is approximately:", o: ["1.0", "1.33", "1.515", "2.0"], a: 2, w: "Immersion oil has a refractive index of about 1.515, matching glass." },
+    { q: "A higher numerical aperture gives:", o: ["Lower resolution", "Better (finer) resolution", "No change in resolution", "Slower focusing"], a: 1, w: "A higher NA reduces the value of d, giving better (finer) resolution." },
+
+    // ===== Note 4 (Q16-20): compound microscope parts =====
+    { q: "The term compound in compound microscope means:", o: ["It has multiple stages", "It uses two or more lenses in sequence", "It is made of composite materials", "It can be used for multiple specimens"], a: 1, w: "Compound means two or more lenses are used in sequence to form the image." },
+    { q: "The lens nearest the specimen is the:", o: ["Ocular lens", "Objective lens", "Condenser lens", "Projector lens"], a: 1, w: "The objective lens is closest to the specimen." },
+    { q: "The ocular lens is located:", o: ["At the top, near the eye", "Beneath the stage", "Inside the base", "On the nosepiece"], a: 0, w: "The ocular lens is at the top of the microscope, nearest the eye." },
+    { q: "The revolving nosepiece functions to:", o: ["Hold the slide", "Rotate objectives into position", "Focus the light", "Adjust the diaphragm"], a: 1, w: "The nosepiece rotates to bring different objectives into position." },
+    { q: "The flat platform on which the slide is placed is the:", o: ["Stage", "Arm", "Base", "Nosepiece"], a: 0, w: "The stage is the platform that holds the slide." },
+
+    // ===== Note 5 (Q21-25): condenser and diaphragm =====
+    { q: "The condenser is located:", o: ["Above the stage", "Beneath the stage", "Inside the eyepiece", "On the nosepiece"], a: 1, w: "The condenser lies beneath the stage and focuses light onto the specimen." },
+    { q: "The function of the iris diaphragm is to:", o: ["Magnify the specimen", "Control the amount of light reaching the specimen", "Focus the image", "Hold the slide"], a: 1, w: "The iris diaphragm controls the amount of light passing through the condenser." },
+    { q: "For optimal imaging, the iris diaphragm should be set to about:", o: ["10% of the objective's numerical aperture", "30% of the objective's numerical aperture", "70-80% of the objective's numerical aperture", "100% of the objective's numerical aperture"], a: 2, w: "The iris diaphragm is usually set to 70-80% of the objective's numerical aperture for optimal balance of contrast and resolution." },
+    { q: "If the iris diaphragm is left wide open, the image will show:", o: ["Reduced glare and improved contrast", "Increased glare and reduced contrast", "No change in image quality", "Improved resolution but reduced brightness"], a: 1, w: "A wide-open iris diaphragm produces glare and reduces contrast." },
+    { q: "If the iris diaphragm is closed too far, the effect on the image is:", o: ["Improved resolution and brightness", "Reduced resolution and possible artefacts", "No change", "Increased numerical aperture"], a: 1, w: "Closing the iris diaphragm too far reduces resolution and may introduce artefacts." },
+
+    // ===== Note 6 (Q26-30): oil immersion =====
+    { q: "Immersion oil is required for which objective?", o: ["4x", "10x", "40x", "100x"], a: 3, w: "Immersion oil is required for the 100x oil immersion objective." },
+    { q: "The purpose of immersion oil is to:", o: ["Stain the specimen", "Increase the refractive index between the lens and specimen, improving resolution", "Fix the specimen", "Clean the lens"], a: 1, w: "Oil increases the refractive index of the medium, allowing the NA to exceed 1.0." },
+    { q: "If the 100x objective is used without oil, the effect is:", o: ["Increased resolution", "Reduced resolution and a dimmer image", "No change in image quality", "Increased numerical aperture"], a: 1, w: "Without oil, the NA is limited, reducing resolution and brightness." },
+    { q: "The refractive index of air is approximately:", o: ["1.0", "1.33", "1.515", "2.0"], a: 0, w: "The refractive index of air is 1.0." },
+    { q: "After using the oil immersion objective, the oil should be:", o: ["Left on the lens to protect it", "Cleaned immediately with lens paper", "Cleaned once a week", "Removed with water only"], a: 1, w: "Oil should be cleaned from the objective immediately after use with lens paper." },
+
+    // ===== Note 7 (Q31-35): types of microscopy =====
+    { q: "The routine microscopy method for stained blood films is:", o: ["Phase contrast", "Brightfield", "Darkfield", "Fluorescence"], a: 1, w: "Brightfield microscopy is the routine method for stained blood films." },
+    { q: "Phase contrast microscopy is used for:", o: ["Stained blood films", "Very thin objects such as spirochetes", "Living, unstained cells", "Fluorescently labelled specimens"], a: 2, w: "Phase contrast is used for living, unstained cells to reveal internal structures." },
+    { q: "Darkfield microscopy is particularly useful for:", o: ["Blood film morphology", "Very thin or faint objects such as spirochetes", "Quantitative cell counts", "Fluorescent labels"], a: 1, w: "Darkfield is used for thin or faint objects, which appear bright against a dark background." },
+    { q: "Fluorescence microscopy uses:", o: ["Ultraviolet or blue light to excite fluorescent dyes", "Polarised light only", "Darkfield illumination", "A single low-power lens"], a: 0, w: "Fluorescence microscopy uses UV or blue light to excite fluorescent dyes." },
+    { q: "The choice of microscopy technique depends primarily on:", o: ["The experience of the microscopist", "The properties of the specimen", "The cost of the microscope", "The time of day"], a: 1, w: "The choice of technique depends on the properties of the specimen being examined." },
+
+    // ===== Note 8 (Q36-40): phase contrast vs darkfield =====
+    { q: "Phase contrast microscopy converts which property into visible contrast?", o: ["Refractive index differences", "Colour differences", "Scattered light", "Fluorescent emission"], a: 0, w: "Phase contrast converts refractive index differences into visible contrast." },
+    { q: "Darkfield microscopy produces an image in which:", o: ["The specimen appears dark on a bright background", "The background is dark and the specimen appears bright", "The specimen is coloured", "The specimen is fluorescent"], a: 1, w: "In darkfield, the background is dark and the specimen appears bright due to light scattering." },
+    { q: "Which microscopy technique is best for examining unstained, living cells?", o: ["Brightfield", "Phase contrast", "Fluorescence", "Electron microscopy"], a: 1, w: "Phase contrast is best for living, unstained cells because it reveals internal structure." },
+    { q: "The principle behind darkfield microscopy is that:", o: ["Light is absorbed by the specimen", "Only light scattered by the specimen reaches the eye", "The specimen is stained with a dye", "The specimen is fluorescently labelled"], a: 1, w: "In darkfield, only scattered light from the specimen is seen." },
+    { q: "Phase contrast and darkfield microscopy differ fundamentally in:", o: ["Their magnification range", "The way they manipulate light to produce contrast", "The type of lens used", "The size of the specimen"], a: 1, w: "Both produce contrast, but by different mechanisms: phase shift versus light scattering." },
+
+    // ===== Note 9 (Q41-45): Kohler illumination =====
+    { q: "Kohler illumination is best described as:", o: ["A method for cleaning the microscope", "A method for aligning the microscope for optimal illumination", "A method for staining specimens", "A method for storing the microscope"], a: 1, w: "Kohler illumination is an alignment method that produces optimal, uniform illumination." },
+    { q: "One of the steps of Kohler illumination involves adjusting the condenser aperture so that it is:", o: ["Fully open", "Fully closed", "About 70-80% of the objective's NA", "Determined by the specimen size"], a: 2, w: "The condenser aperture is set to about 70-80% of the objective's numerical aperture." },
+    { q: "The field diaphragm is used in Kohler illumination to:", o: ["Stain the specimen", "Control the size of the illuminated field", "Magnify the image", "Focus the specimen"], a: 1, w: "The field diaphragm controls the size of the illuminated field." },
+    { q: "Proper Kohler illumination ensures that the objective:", o: ["Cannot reach its full NA", "Can reach its full numerical aperture and resolution", "Is unaffected by illumination", "Requires no focusing"], a: 1, w: "Kohler illumination allows the objective to achieve its full numerical aperture." },
+    { q: "If Kohler illumination is not set up correctly, the image will show:", o: ["Uniform illumination and full resolution", "Uneven illumination, glare, or reduced resolution", "No effect at all", "Improved contrast without trade-offs"], a: 1, w: "Incorrect Kohler illumination causes uneven illumination, glare, or reduced resolution." },
+
+    // ===== Note 10 (Q46-50): consolidation =====
+    { q: "The main difference between magnification and resolution is that:", o: ["Magnification is the ratio of image to object size, and resolution is the smallest resolvable distance", "Magnification and resolution are the same thing", "Resolution is the ratio of image to object size, and magnification is the smallest resolvable distance", "Magnification only applies to the objective, and resolution to the ocular"], a: 0, w: "Magnification is the ratio of image to object size; resolution is the smallest resolvable distance." },
+    { q: "The oil immersion lens is used with oil because:", o: ["Oil magnifies the image further", "Oil increases the numerical aperture, improving resolution", "Oil stains the specimen", "Oil fixes the specimen"], a: 1, w: "Oil increases the refractive index of the medium, allowing a higher numerical aperture and better resolution." },
+    { q: "A microscope objective with a higher numerical aperture will have:", o: ["Poorer resolution", "Better resolution", "No effect on resolution", "Lower magnification"], a: 1, w: "A higher numerical aperture gives better (finer) resolution." },
+    { q: "Which of the following is NOT a required part of routine microscope care?", o: ["Cleaning the lenses with lens paper", "Leaving oil on the lens overnight", "Covering the microscope when not in use", "Professional servicing at intervals"], a: 1, w: "Oil should never be left on the lens; it should be cleaned immediately after use." },
+    { q: "For optimal performance, a microscope should be kept in:", o: ["A humid, warm environment", "A dry, dust-free environment", "Direct sunlight", "A cold, damp environment"], a: 1, w: "A dry, dust-free environment protects the optics and mechanical parts." },
+  ],
+};
+
 
 /* Registry: add each built topic here. */
 const CONTENT = {
@@ -29438,6 +30214,9 @@ const CONTENT = {
   "hem:5": T_HEM_ANTICOAGULANTS,
   "hem:6": T_HEM_PHLEBOTOMY,
   "hem:7": T_HEM_STAINS,
+  "hem:8": T_HEM_BLOOD_SMEARS,
+  "hem:9": T_HEM_LEUKOCYTE_COUNT,
+  "hem:10": T_HEM_MICROSCOPY,
 
 };
 
