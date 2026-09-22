@@ -28503,6 +28503,1136 @@ If those came cleanly, you understand the anticoagulants used in haematology - h
   ]
 };
 
+// ==================== HEMATOLOGY TOPIC 6: PHLEBOTOMY ====================
+const T_HEM_PHLEBOTOMY = {
+  courseId: "hem",
+  topicIndex: 6,
+  title: "Blood Sample Collection (Phlebotomy), Handling and Storage of Blood",
+  minutes: 30,
+
+  note: [
+    {
+      q: "Every laboratory result begins with a needle. Why does the collection step matter so much?",
+      body: `You have learned how blood cells are made, how anticoagulants prevent clotting, and how samples are analysed. But none of that matters if the sample itself is wrong. A perfectly calibrated analyser, a carefully validated assay, a meticulous technologist - all of it is wasted if the blood in the tube was collected badly, handled carelessly, or stored incorrectly.
+
+My Socratic question: the analysis happens in the laboratory, but the sample is collected somewhere else - at a bedside, in a clinic, in a patient's home. If the laboratory cannot control what happens during collection, how can it trust its own results?
+
+The answer is that it cannot, unless the collection step is standardised. Phlebotomy - the practice of collecting blood samples - is the first and most critical step in the entire laboratory process. Errors introduced at collection are called pre-analytical errors, and they account for the majority of all laboratory errors. A haemolysed sample, a clotted sample, a sample from the wrong patient, a sample left at room temperature for hours - these are not laboratory failures. They are collection and handling failures, and they produce wrong results just as surely as a broken analyser.
+
+Crucial insight: phlebotomy is not a simple technical task. It is the foundation of laboratory medicine. Every result you will ever report depends on the quality of the sample that was collected. Understanding the principles of blood collection - venipuncture, capillary puncture, and arterial sampling - is as essential as understanding the tests themselves.`
+    },
+    {
+      q: "The three ways to get blood out of a body. What are they, and when is each used?",
+      body: `Not all blood samples are collected the same way. The method depends on the patient, the test, and the volume of blood needed. There are three main techniques, each with its own indications, advantages and limitations.
+
+My Socratic question: if you needed a full blood count on an adult, a blood gas on a critically ill patient, and a glucose check on a newborn, would you use the same technique for all three?
+
+The answer is no, and understanding why is the first step in phlebotomy.
+
+**Venipuncture** is the collection of blood from a vein. It is the most common method for routine blood tests - full blood counts, biochemistry, coagulation screens, blood cultures. The veins of the antecubital fossa (the inside of the elbow) are preferred because they are large, accessible, and relatively close to the surface [citation:9]. Venipuncture allows collection of relatively large volumes of blood (several millilitres to tens of millilitres), and it is the standard for most laboratory testing in adults and older children.
+
+**Capillary puncture** (also called skin puncture or fingerstick) is the collection of a small volume of blood from a finger, heel, or earlobe. It is used when only a small volume is needed or when venipuncture is difficult or undesirable - for example, in newborns and infants, in patients with poor veins, or for point-of-care testing such as glucose monitoring [citation:17]. The volume obtained is small (typically less than 1 mL), and the blood is a mixture of arterial, venous, and capillary blood plus interstitial fluid, which can affect some results.
+
+**Arterial puncture** is the collection of blood from an artery. It is used almost exclusively for arterial blood gas analysis, which measures oxygenation, ventilation, and acid-base status [citation:11]. The radial artery at the wrist is the preferred site because it is accessible, has good collateral circulation, and can be easily compressed if bleeding occurs [citation:11]. Arterial puncture is more painful and technically more difficult than venipuncture, and it carries a higher risk of complications, so it is reserved for specific indications.
+
+Crucial insight: the choice of technique is determined by the test and the patient. Venipuncture for routine blood tests, capillary puncture for small volumes or difficult veins, arterial puncture for blood gases. Using the wrong technique can produce an inadequate sample, cause unnecessary discomfort, or miss a critical diagnosis.`
+    },
+    {
+      q: "Venipuncture: the standard method. How is it performed correctly?",
+      body: `Venipuncture is the most common blood collection technique in the world, and for good reason. It is relatively safe, relatively comfortable, and allows collection of sufficient blood for almost any test. But it must be performed correctly, or the sample will be compromised.
+
+My Socratic question: the needle goes into a vein. What could possibly go wrong that would make the sample unusable?
+
+The answer is that many things can go wrong, and each produces a specific problem.
+
+**Patient identification** is the first and most critical step. The patient must be identified by at least two identifiers - typically name and date of birth, or name and hospital number - before any blood is drawn [citation:16]. Misidentification leads to results attributed to the wrong patient, which can cause serious harm. Never identify a patient by the room number or the bed alone.
+
+**Patient preparation** depends on the test. Some tests require fasting (glucose, lipids). Some require the patient to be seated or lying down (to prevent fainting). Some require the patient to avoid certain medications or foods. The phlebotomist must check the test requirements before collection.
+
+**Site selection** is usually the antecubital fossa. The median cubital vein is preferred because it is large, relatively fixed, and less likely to bruise. The cephalic and basilic veins are alternatives [citation:9]. Avoid areas with scars, bruises, oedema, or intravenous lines. If an IV line is present, draw from the opposite arm or distal to the line to avoid dilution and contamination [citation:1].
+
+**Tourniquet application** should be applied 7 to 10 centimetres above the puncture site and should not remain on for more than one minute [citation:16]. Prolonged tourniquet application causes stasis, which can cause haemolysis, falsely elevated potassium, and other abnormal results [citation:9].
+
+**Skin antisepsis** is performed with an appropriate disinfectant - typically chlorhexidine or isopropyl alcohol - applied in concentric circles and allowed to dry completely before puncture [citation:9]. If iodine is used, it should be removed with alcohol after drying to avoid interference with certain tests [citation:9].
+
+**Needle insertion** is performed at a shallow angle (5 to 30 degrees) with the bevel facing up [citation:16]. The needle is advanced until blood flows into the tube. Once blood flows, the tourniquet is released immediately [citation:16].
+
+**Tube filling and mixing** follows the order of draw (see the next note). Tubes must be filled to the indicated fill line, and anticoagulant tubes must be mixed by gentle inversion immediately after collection to prevent clotting.
+
+**Post-collection care** includes applying pressure to the puncture site until bleeding stops, checking that bleeding has ceased, and instructing the patient to keep pressure on the site for a few minutes [citation:16]. The needle is disposed of immediately in a sharps container without recapping [citation:9].
+
+Crucial insight: venipuncture is a sequence of steps, and every step exists to prevent a specific error. Patient identification prevents misattribution. Tourniquet time prevents haemolysis and stasis. Antisepsis prevents infection. Order of draw prevents cross-contamination. Post-collection care prevents bruising and bleeding. Skipping or rushing any step introduces a predictable error.`
+    },
+    {
+      q: "Capillary puncture: small volumes, big questions. When and how?",
+      body: `A capillary puncture takes a drop of blood from the fingertip or heel. It sounds simple, and it is - but the simplicity hides important differences from venipuncture that affect the sample and the results.
+
+My Socratic question: a drop of blood from a finger is not the same as blood from a vein. What is different about it?
+
+The answer is that capillary blood is a mixture. It contains blood from capillaries, but also from arterioles and venules, and it is mixed with interstitial fluid (the fluid between cells) and intracellular fluid from damaged cells [citation:17]. This mixture can dilute the sample and affect results - for example, glucose and potassium may be lower, and some cellular components may be altered.
+
+**Indications for capillary puncture:**
+- Newborns and infants (heel stick) - avoids the difficulty and risk of venipuncture
+- Patients with poor veins or difficult venous access
+- Point-of-care testing (glucose monitoring, coagulation testing)
+- Small volume requirements
+- Preservation of peripheral veins for future use [citation:17]
+
+**Sites:**
+- Finger: the lateral side of the third, fourth, or fifth finger (not the index or thumb, which are more sensitive and more used) [citation:17]
+- Heel: in infants, the lateral or medial plantar surface of the heel
+- Earlobe: occasionally, but less commonly used
+
+**Technique:**
+- Warm the site if necessary to increase blood flow (warming the hand in warm water or using a warm pack) [citation:17]
+- Clean the site with an appropriate antiseptic and allow it to dry
+- Puncture with a sterile, single-use lancet to a depth of 2.2 to 2.5 mm [citation:17]
+- Wipe away the first drop of blood (it contains interstitial fluid) with a dry gauze [citation:17]
+- Allow the blood to flow freely into the collection device - do not squeeze or milk the finger, as this causes haemolysis and contamination with tissue fluid [citation:2]
+- Apply pressure after collection and apply a dressing
+
+**Order of fill for capillary tubes:** glucose first, then haematology, then chemistry, then serum [citation:17].
+
+Crucial insight: capillary puncture is not simply a smaller version of venipuncture. The sample is different, the technique is different, and the results can be different. The first drop must be wiped away, the finger must not be squeezed, and the order of fill must be followed. These details prevent haemolysis and dilution, which are the main sources of error in capillary sampling.`
+    },
+    {
+      q: "Arterial puncture: the difficult one. Why is it necessary, and how is it done?",
+      body: `Arterial puncture is the most technically demanding of the three collection methods. It is more painful, carries more risk, and is used for a narrower range of tests. But for certain tests, it is the only option.
+
+My Socratic question: venous blood and arterial blood flow through the same body. Why would you need to puncture an artery instead of a vein?
+
+The answer is oxygen. Venous blood has already delivered its oxygen to the tissues, so its oxygen content reflects what the tissues have used, not what the lungs have supplied. Arterial blood, in contrast, reflects the blood as it leaves the lungs, before any oxygen has been extracted [citation:18]. For measuring oxygenation, ventilation, and acid-base status - the core of arterial blood gas analysis - only arterial blood will do.
+
+**Indications:**
+- Arterial blood gas analysis (oxygenation, ventilation, acid-base status)
+- Electrolyte measurement (in some protocols)
+- Certain special tests
+
+**Sites:**
+- Radial artery (preferred) - accessible, good collateral circulation, easy to compress [citation:11]
+- Brachial artery - alternative, but deeper and less accessible
+- Femoral artery - used in emergencies, but higher risk of complications
+
+**The modified Allen test** is performed before radial artery puncture to confirm that the ulnar artery can supply the hand if the radial artery is damaged during puncture [citation:11]. The patient clenches their fist, the examiner compresses both radial and ulnar arteries, the patient opens their hand, and the ulnar artery is released. If the hand flushes within a few seconds, collateral circulation is adequate.
+
+**Technique:**
+- Gather equipment: heparinized syringe, needle, antiseptic, gauze, bandage, local anaesthetic if needed
+- Perform the modified Allen test
+- Clean the site with antiseptic
+- Palpate the artery and insert the needle at approximately 45 degrees [citation:11]
+- Allow the syringe to fill spontaneously (do not pull the plunger, as this can cause air bubbles and affect results) [citation:11]
+- Withdraw the needle, expel any air, cap the syringe, and mix gently
+- Apply pressure to the puncture site for 5 to 10 minutes (longer if the patient is on anticoagulants) [citation:18]
+- Check that bleeding has stopped and apply a dressing
+
+**Risks and complications:**
+- Haematoma (bleeding under the skin)
+- Vasospasm (spasm of the artery)
+- Nerve damage
+- Infection
+- Fainting (vasovagal syncope) [citation:11]
+
+Crucial insight: arterial puncture is reserved for tests that specifically require arterial blood - primarily blood gases. The radial artery is preferred, the modified Allen test confirms safety, and pressure must be applied for longer than after venipuncture. The risks are higher, so the procedure is performed only when necessary and by trained personnel.`
+    },
+    {
+      q: "The order of draw: why does the sequence of tubes matter?",
+      body: `You have several tubes to fill, each with a different coloured cap and a different additive inside. The order in which you fill them is not arbitrary - it is a standardised sequence designed to prevent one tube's additive from contaminating the next.
+
+My Socratic question: if you fill a tube containing EDTA first, and then fill a tube for coagulation testing, what could happen to the coagulation test?
+
+The answer is that traces of EDTA from the first tube could carry over into the second tube. EDTA chelates calcium, and coagulation tests depend on calcium. Even a tiny amount of EDTA contamination could falsely prolong the clotting time. The order of draw prevents this.
+
+**The standard order of draw (CLSI):** [citation:4]
+1. Blood culture tube or bottle (sterile)
+2. Sodium citrate tube (light blue) - coagulation tests
+3. Serum tubes, including clot activator and gel (red, gold, red-speckled)
+4. Heparin tube with or without gel (green)
+5. EDTA tube with or without gel (lavender, pink, pearl)
+6. Sodium fluoride/potassium oxalate (grey) - glucose
+
+**Why this order:**
+- Blood culture tubes are first to prevent contamination with non-sterile additives
+- Citrate tubes are early because they are most sensitive to contamination from other additives (especially EDTA and heparin)
+- Serum tubes are before heparin and EDTA to avoid contamination with anticoagulants that would prevent clotting
+- EDTA tubes are late because EDTA contamination is less likely to affect the tubes drawn after it (fluoride/oxalate)
+- Fluoride/oxalate tubes are last because they contain additives that could affect other tests if carried over
+
+**Practical considerations:**
+- When using a winged butterfly needle, a discard tube may be needed before citrate tubes to ensure the tube fills correctly [citation:16]
+- Tubes must be filled to the indicated fill line - underfilled citrate tubes will be rejected [citation:13]
+- Tubes with anticoagulants must be mixed by gentle inversion immediately after filling
+
+Crucial insight: the order of draw is a simple sequence with a profound purpose. It prevents cross-contamination of additives between tubes, which is one of the most common pre-analytical errors. A reversed order of draw can produce falsely prolonged clotting times, falsely low calcium, or falsely high potassium - all of which can lead to wrong diagnoses and wrong treatments.`
+    },
+    {
+      q: "Handling and storage: what happens to blood after it leaves the patient?",
+      body: `The sample is collected. The needle is withdrawn. The tube is filled and mixed. Now what? Blood is a living tissue, and it does not stop changing when it leaves the body. Cells continue to metabolise, clotting factors degrade, and analytes change with time and temperature. Handling and storage determine whether the sample still reflects the patient's true state when it reaches the analyser.
+
+My Socratic question: if a sample sits on a bench for two hours before analysis, what has changed inside it?
+
+The answer is that many things have changed. Red cells continue to consume glucose and produce lactate. Potassium leaks out of cells, falsely elevating serum potassium. Carbon dioxide diffuses out of the sample, altering pH. Clotting factors degrade, affecting coagulation tests. The longer the delay and the warmer the temperature, the greater the change.
+
+**General handling principles:**
+- Transport samples to the laboratory as soon as possible - ideally within one hour [citation:7]
+- Keep samples at the appropriate temperature for the test: most routine samples at room temperature; some tests require refrigeration or freezing
+- Protect samples from light if the analyte is light-sensitive (e.g. bilirubin)
+- Do not expose samples to extremes of temperature
+- Keep tubes upright and closed
+
+**Storage requirements by test type:**
+- **Haematology (EDTA whole blood):** analyse within 24 hours; store at room temperature [citation:13]
+- **Coagulation (citrate plasma):** analyse within 4 hours at room temperature; plasma can be frozen at -20°C for longer storage [citation:13]
+- **Biochemistry (serum/plasma):** varies by analyte; most analytes stable for hours at room temperature, some require refrigeration
+- **Blood gases (heparinized whole blood):** analyse within 30 minutes at room temperature (or within 1 hour on ice for glass syringes) [citation:3]
+- **Glucose (fluoride/oxalate):** fluoride inhibits glycolysis, so glucose is stable for hours at room temperature
+
+**Specific stability examples:**
+- Serum for most biochemistry: 2-8°C for 3-5 days [citation:5]
+- Coagulation plasma: frozen at -20°C for up to 30 days [citation:13]
+- EDTA whole blood: 24 hours at room temperature [citation:13]
+
+Crucial insight: blood samples are not inert. They are living tissue that continues to change after collection. Every hour of delay, every degree of temperature difference, every exposure to light changes the sample. The laboratory must know the stability limits for every test it performs, and the phlebotomist must transport samples promptly and under the correct conditions. A sample that was perfect at collection can become useless by the time it reaches the analyser.`
+    },
+    {
+      q: "When things go wrong: what makes a sample unusable?",
+      body: `Not every sample that arrives in the laboratory is suitable for analysis. Some are rejected, and the reasons for rejection are standardised. Understanding them helps you avoid them - and helps you recognise when a result might be unreliable.
+
+My Socratic question: if a sample arrives in the laboratory and you cannot use it, what would make you reject it?
+
+The answer is a specific set of criteria that indicate the sample will not give a reliable result.
+
+**Common rejection criteria:** [citation:6][citation:14]
+- **Haemolysed specimen:** red cells have ruptured, releasing haemoglobin and intracellular contents. Causes include rough handling, small needles, prolonged tourniquet time, and improper storage. Haemolysis falsely elevates potassium, lactate dehydrogenase, and other intracellular analytes.
+- **Insufficient specimen volume:** not enough blood for the requested test. Often caused by underfilled tubes or difficult collection.
+- **Broken specimen container:** the tube is damaged and the sample may be contaminated or lost.
+- **Clotted specimen:** blood has clotted in a tube that should contain anticoagulated blood. Causes include inadequate mixing, delayed mixing, or insufficient anticoagulant. A clotted sample cannot be analysed for cell counts or coagulation.
+- **Wrong temperature:** sample stored at the wrong temperature for the test. Some tests require room temperature, others refrigeration, others freezing.
+
+**Additional rejection criteria:** [citation:13]
+- **Wrong ratio of blood to anticoagulant:** underfilled or overfilled citrate tubes - the ratio is critical for coagulation tests.
+- **Missing or incomplete identifiers:** the sample cannot be linked to a patient.
+- **Incorrect specimen type:** the wrong tube was used for the test.
+
+**What happens when a sample is rejected?**
+- The laboratory notifies the requesting clinician
+- A repeat sample is requested
+- The reason for rejection is documented
+- The patient may need to be re-bled, which is inconvenient and sometimes harmful
+
+Crucial insight: sample rejection is not just an inconvenience - it delays diagnosis and treatment, causes patient discomfort, and wastes resources. Most rejections are preventable. Haemolysis can be prevented by careful technique. Clotting can be prevented by proper mixing. Wrong temperature can be prevented by correct transport. The laboratory scientist who understands rejection criteria is better equipped to prevent them.`
+    },
+    {
+      q: "Safety in phlebotomy: protecting the patient and the phlebotomist.",
+      body: `Phlebotomy involves needles, blood, and patients. All three carry risk. Protecting the patient from harm and protecting yourself from injury are integral parts of the procedure, not optional extras.
+
+My Socratic question: a phlebotomist is holding a used needle. What is the single most dangerous thing they could do with it?
+
+The answer is recapping it by hand. Recapping is the most common cause of needlestick injuries, and needlestick injuries can transmit bloodborne pathogens including HIV, hepatitis B, and hepatitis C [citation:8]. The rule is simple: never recap a needle by hand. Used needles go directly into a sharps container.
+
+**Protecting the patient:**
+- Correct patient identification prevents wrong-patient errors
+- Skin antisepsis prevents infection
+- Careful technique prevents haematoma, nerve damage, and excessive bleeding
+- Monitoring after the procedure detects complications early
+- Informed consent respects the patient's autonomy
+
+**Protecting yourself:**
+- Wear gloves for every procedure [citation:10]
+- Perform hand hygiene before and after each patient contact [citation:10]
+- Use safety-engineered devices where available (retractable needles, needle guards) [citation:10]
+- Dispose of sharps immediately in a puncture-resistant, leak-proof container [citation:8]
+- Never recap, bend, or break needles
+- Use eye protection and masks if splashing is anticipated [citation:10]
+
+**Infection control:**
+- Clean the workspace before and after each patient
+- Disinfect tourniquets between patients
+- Transport samples in sealed, labelled containers [citation:7]
+- Treat all samples as potentially infectious [citation:7]
+
+Crucial insight: phlebotomy safety is not about fear - it is about habit. The phlebotomist who automatically disposes of needles without recapping, who wears gloves for every procedure, who cleans the site properly, is not being paranoid. They are following a standard that protects everyone. Most needlestick injuries and most collection-related infections are preventable, and the prevention is built into the procedure.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for phlebotomy, collection, handling and storage, in five lines.
+
+**The three techniques:** venipuncture (vein, routine tests), capillary puncture (finger or heel, small volumes, point-of-care), arterial puncture (artery, blood gases). Each has its own indications and technique.
+
+**Venipuncture essentials:** patient identification (two identifiers), appropriate site selection (antecubital fossa), tourniquet time under one minute, skin antisepsis, correct needle angle, order of draw, and post-collection care.
+
+**Order of draw:** blood culture, citrate, serum, heparin, EDTA, fluoride/oxalate. The sequence prevents cross-contamination of additives between tubes.
+
+**Handling and storage:** blood continues to change after collection. Transport promptly, store at the correct temperature for the test, and respect stability limits. EDTA whole blood for haematology: 24 hours at room temperature. Citrate plasma for coagulation: 4 hours at room temperature or frozen for longer.
+
+**Rejection criteria:** haemolysed, insufficient, clotted, broken container, wrong temperature, wrong ratio, missing identifiers. Most are preventable through correct technique.
+
+Now your final test. A phlebotomist is asked to collect blood from a 3-year-old child for a full blood count and a blood glucose test. The child is frightened and the veins are difficult to see.
+
+Question one: which collection technique would be most appropriate for this child, and why?
+Question two: if capillary puncture is used, what is the correct order of fill for the tubes, and why does the first drop of blood need to be wiped away?
+Question three: the sample is collected and sent to the laboratory. What rejection criteria should the laboratory check for, and what would happen if the sample is haemolysed?
+
+Work them through before reading on.
+
+My answers. One: capillary puncture (fingerstick or heel stick) would be most appropriate. Venipuncture in a small child is difficult and distressing, and the veins may be hard to access. Capillary puncture requires only a small volume, which is sufficient for a full blood count and glucose test in a child, and it is less traumatic. Two: the correct order of fill for capillary tubes is glucose first, then haematology [citation:17]. The first drop of blood must be wiped away because it contains interstitial fluid and cellular debris from the puncture, which would dilute the sample and affect the results. Three: the laboratory should check for haemolysis (red or pink plasma/serum), insufficient volume, clotting, and correct labelling. If the sample is haemolysed, it would be rejected because haemolysis falsely elevates potassium, lactate dehydrogenase, and other intracellular analytes, making the results unreliable. A repeat sample would be requested, and the phlebotomist would be reminded to avoid squeezing the finger and to let the blood flow freely.
+
+If those came cleanly, you understand the complete journey of a blood sample - from the moment of collection, through handling and storage, to the moment of analysis. This is the foundation of everything you will do in the haematology laboratory.`
+    }
+  ],
+
+  theory: [
+    { q: "Define phlebotomy and explain why it is the most critical step in laboratory testing.", a: "Phlebotomy is the practice of collecting blood samples for laboratory testing. It is the most critical step because errors introduced at collection - haemolysis, clotting, wrong patient, wrong tube, delay in transport - cannot be corrected by any subsequent laboratory procedure. Pre-analytical errors account for the majority of all laboratory errors." },
+    { q: "Name the three main blood collection techniques and state when each is used.", a: "Venipuncture (collection from a vein) is used for routine blood tests requiring larger volumes. Capillary puncture (finger or heel stick) is used for small volumes, point-of-care testing, and in newborns or patients with difficult veins. Arterial puncture (collection from an artery) is used primarily for arterial blood gas analysis." },
+    { q: "Describe the correct procedure for venipuncture.", a: "Identify the patient with two identifiers. Position the patient safely. Select the site (usually the antecubital fossa, median cubital vein preferred). Apply tourniquet 7-10 cm above the site for no more than one minute. Clean the skin with antiseptic and allow to dry. Insert needle at 5-30 degrees with bevel up. Collect blood in the correct order of draw. Release tourniquet once blood flows. Fill tubes to the indicated line and mix anticoagulant tubes gently. Withdraw needle and apply pressure. Dispose of needle immediately without recapping." },
+    { q: "Describe the correct procedure for capillary puncture.", a: "Warm the site if necessary. Clean with antiseptic. Puncture the lateral side of the finger (or heel in infants) with a sterile lancet to a depth of 2.2-2.5 mm. Wipe away the first drop of blood. Allow blood to flow freely into the collection device without squeezing. Fill tubes in the order: glucose, haematology, chemistry, serum. Apply pressure and dress the site." },
+    { q: "Describe the correct procedure for arterial puncture.", a: "Perform the modified Allen test to confirm collateral circulation. Clean the site with antiseptic. Palpate the artery and insert the needle at approximately 45 degrees. Allow the syringe to fill spontaneously without pulling the plunger. Withdraw the needle, expel air, cap and mix. Apply pressure for 5-10 minutes. Check bleeding has stopped and apply a dressing." },
+    { q: "State the standard order of draw and explain why it matters.", a: "The order is: blood culture, sodium citrate (light blue), serum (red/gold), heparin (green), EDTA (lavender), fluoride/oxalate (grey). It matters because additives from one tube can contaminate the next and affect test results. For example, EDTA contamination would falsely prolong clotting times in a citrate tube." },
+    { q: "Explain why tourniquet time should be limited to one minute.", a: "Prolonged tourniquet application causes venous stasis, which leads to haemolysis, falsely elevated potassium, and altered concentrations of other analytes. It can also cause discomfort and bruising. The tourniquet should be released as soon as blood begins to flow." },
+    { q: "List the main rejection criteria for blood samples.", a: "Haemolysed specimen, insufficient volume, broken container, clotted specimen, wrong temperature, wrong ratio of blood to anticoagulant, missing or incomplete patient identifiers, and incorrect specimen type for the test." },
+    { q: "Describe the handling and storage requirements for different sample types.", a: "EDTA whole blood for haematology: 24 hours at room temperature. Citrate plasma for coagulation: 4 hours at room temperature, or frozen at -20°C for up to 30 days. Serum for biochemistry: 2-8°C for 3-5 days. Heparinized whole blood for blood gases: 30 minutes at room temperature, or 1 hour on ice in glass syringes. Samples should be transported promptly and protected from extremes of temperature and light." },
+    { q: "Explain the infection control measures essential in phlebotomy.", a: "Hand hygiene before and after each patient. Gloves for every procedure. Skin antisepsis before puncture. Use of sterile, single-use devices. Immediate disposal of sharps in puncture-resistant containers without recapping. Disinfection of tourniquets and surfaces. Transport of samples in sealed, labelled containers. Treating all samples as potentially infectious." }
+  ],
+
+  videos: [
+    { channel: "Hematology", title: "Phlebotomy Technique - Venipuncture, Capillary and Arterial", note: "Step-by-step demonstration of all three collection techniques.", url: "https://www.youtube.com/results?search_query=phlebotomy+technique+venipuncture+capillary+arterial" },
+    { channel: "Hematology", title: "Order of Draw and Tube Selection", note: "The CLSI order of draw and why it matters for preventing contamination.", url: "https://www.youtube.com/results?search_query=order+of+draw+phlebotomy+CLSI" },
+    { channel: "Hematology", title: "Blood Sample Handling, Storage and Rejection Criteria", note: "How to handle, store and assess blood samples, and when to reject them.", url: "https://www.youtube.com/results?search_query=blood+sample+handling+storage+rejection+criteria" }
+  ],
+
+  mcqs: [
+    // ===== Note 1 (Q1-5): why collection matters =====
+    { q: "Phlebotomy is best defined as:", o: ["The analysis of blood samples", "The practice of collecting blood samples", "The storage of blood samples", "The disposal of blood samples"], a: 1, w: "Phlebotomy is the practice of collecting blood samples for laboratory testing." },
+    { q: "Pre-analytical errors are errors that occur:", o: ["During analysis", "After analysis", "Before analysis, during collection and handling", "Only in the laboratory"], a: 2, w: "Pre-analytical errors occur before analysis, during collection and handling." },
+    { q: "The majority of laboratory errors occur in which phase?", o: ["Pre-analytical", "Analytical", "Post-analytical", "All phases equally"], a: 0, w: "Pre-analytical errors account for the majority of all laboratory errors." },
+    { q: "A haemolysed sample is an example of:", o: ["A post-analytical error", "A pre-analytical error", "An analytical error", "An acceptable sample"], a: 1, w: "Haemolysis is a pre-analytical error caused by collection or handling problems." },
+    { q: "The foundation of laboratory medicine is:", o: ["The analyser", "The quality of the collected sample", "The report format", "The laboratory building"], a: 1, w: "Every result depends on the quality of the sample collected." },
+
+    // ===== Note 2 (Q6-10): three techniques =====
+    { q: "Venipuncture is the collection of blood from a:", o: ["Vein", "Artery", "Capillary", "Bone marrow"], a: 0, w: "Venipuncture is collection from a vein." },
+    { q: "Capillary puncture is most appropriate for:", o: ["Large volume tests", "Blood gas analysis", "Newborns and point-of-care testing", "Blood cultures"], a: 2, w: "Capillary puncture is used for small volumes, newborns, and point-of-care testing." },
+    { q: "Arterial puncture is used primarily for:", o: ["Full blood count", "Blood gas analysis", "Glucose testing", "Coagulation screen"], a: 1, w: "Arterial puncture is used primarily for arterial blood gas analysis." },
+    { q: "The preferred site for venipuncture is:", o: ["The antecubital fossa", "The fingertip", "The radial artery", "The heel"], a: 0, w: "The antecubital fossa is the preferred site for venipuncture." },
+    { q: "The preferred site for arterial puncture is:", o: ["The brachial artery", "The radial artery", "The femoral artery", "The ulnar artery"], a: 1, w: "The radial artery is preferred for arterial puncture." },
+
+    // ===== Note 3 (Q11-15): venipuncture =====
+    { q: "The tourniquet should remain on for no more than:", o: ["5 minutes", "1 minute", "3 minutes", "10 minutes"], a: 1, w: "The tourniquet should remain on for no more than one minute." },
+    { q: "The needle for venipuncture is inserted at an angle of:", o: ["45 degrees", "90 degrees", "5 to 30 degrees", "60 degrees"], a: 2, w: "Venipuncture needle is inserted at 5 to 30 degrees." },
+    { q: "Which vein is preferred for venipuncture?", o: ["Basilic vein", "Median cubital vein", "Cephalic vein", "Digital vein"], a: 1, w: "The median cubital vein is preferred because it is large and relatively fixed." },
+    { q: "After venipuncture, the needle should be:", o: ["Recapped carefully", "Disposed of immediately without recapping", "Set aside for later", "Bent to prevent reuse"], a: 1, w: "Needles should be disposed of immediately without recapping." },
+    { q: "Patient identification before phlebotomy requires:", o: ["The room number", "The bed number", "At least two identifiers", "The patient's appearance"], a: 2, w: "At least two identifiers (e.g. name and date of birth) are required." },
+
+    // ===== Note 4 (Q16-20): capillary puncture =====
+    { q: "The first drop of blood in capillary puncture should be:", o: ["Collected", "Wiped away", "Tested first", "Discarded only for glucose"], a: 1, w: "The first drop contains interstitial fluid and should be wiped away." },
+    { q: "Squeezing the finger during capillary puncture can cause:", o: ["Better blood flow", "Haemolysis and tissue fluid contamination", "Increased accuracy", "Faster collection"], a: 1, w: "Squeezing causes haemolysis and contamination with tissue fluid." },
+    { q: "The correct order of fill for capillary tubes is:", o: ["Glucose, haematology, chemistry, serum", "Haematology, glucose, chemistry, serum", "Serum, glucose, haematology, chemistry", "Chemistry, haematology, glucose, serum"], a: 0, w: "The order is glucose, haematology, chemistry, serum." },
+    { q: "The puncture depth for capillary puncture is:", o: ["1 mm", "2.2 to 2.5 mm", "5 mm", "0.5 mm"], a: 1, w: "The puncture depth should be 2.2 to 2.5 mm." },
+    { q: "Capillary blood differs from venous blood because it:", o: ["Is pure arterial blood", "Is a mixture of arterial, venous, capillary and interstitial fluid", "Contains no cells", "Has no clinical use"], a: 1, w: "Capillary blood is a mixture including interstitial fluid." },
+
+    // ===== Note 5 (Q21-25): arterial puncture =====
+    { q: "The modified Allen test is performed before:", o: ["Venipuncture", "Capillary puncture", "Radial artery puncture", "Heel stick"], a: 2, w: "The modified Allen test is performed before radial artery puncture to confirm collateral circulation." },
+    { q: "The needle for arterial puncture is inserted at an angle of:", o: ["5 to 30 degrees", "45 degrees", "90 degrees", "10 degrees"], a: 1, w: "Arterial puncture needle is inserted at approximately 45 degrees." },
+    { q: "After arterial puncture, pressure should be applied for:", o: ["1 minute", "5 to 10 minutes", "30 seconds", "20 minutes always"], a: 1, w: "Pressure should be applied for 5 to 10 minutes after arterial puncture." },
+    { q: "The syringe for arterial blood gas should be:", o: ["Filled by pulling the plunger", "Allowed to fill spontaneously", "Filled by suction", "Filled with air first"], a: 1, w: "The syringe should fill spontaneously without pulling the plunger." },
+    { q: "A complication of arterial puncture is:", o: ["Haematoma", "Increased platelet count", "Improved circulation", "Reduced pain"], a: 0, w: "Haematoma is a complication of arterial puncture." },
+
+    // ===== Note 6 (Q26-30): order of draw =====
+    { q: "The first tube in the order of draw is:", o: ["Citrate", "Blood culture", "EDTA", "Serum"], a: 1, w: "Blood culture tube is drawn first." },
+    { q: "The second tube in the order of draw is:", o: ["Sodium citrate", "Serum", "Heparin", "EDTA"], a: 0, w: "Sodium citrate (light blue) is second." },
+    { q: "The last tube in the order of draw is:", o: ["EDTA", "Heparin", "Fluoride/oxalate", "Serum"], a: 2, w: "Fluoride/oxalate (grey) is last." },
+    { q: "The order of draw matters because:", o: ["It affects the colour", "Additives can contaminate subsequent tubes", "It is required by law", "It saves time"], a: 1, w: "Cross-contamination of additives between tubes can affect test results." },
+    { q: "EDTA contamination of a citrate tube would cause:", o: ["Falsely shortened clotting times", "Falsely prolonged clotting times", "No effect", "Increased platelet count"], a: 1, w: "EDTA would chelate calcium and falsely prolong clotting times." },
+
+    // ===== Note 7 (Q31-35): handling and storage =====
+    { q: "Blood samples should ideally be transported to the laboratory within:", o: ["4 hours", "1 hour", "24 hours", "8 hours"], a: 1, w: "Samples should be transported as soon as possible, ideally within one hour." },
+    { q: "EDTA whole blood for haematology is stable for:", o: ["4 hours", "24 hours at room temperature", "1 week", "1 month"], a: 1, w: "EDTA whole blood is stable for up to 24 hours at room temperature." },
+    { q: "Citrate plasma for coagulation is stable for:", o: ["4 hours at room temperature", "24 hours", "1 week", "1 month"], a: 0, w: "Citrate plasma is stable for 4 hours at room temperature." },
+    { q: "Blood gases should be analysed within:", o: ["4 hours", "30 minutes", "24 hours", "8 hours"], a: 1, w: "Blood gases should be analysed within 30 minutes." },
+    { q: "Serum samples for biochemistry can be stored at 2-8°C for:", o: ["3-5 days", "30 days", "6 months", "1 year"], a: 0, w: "Serum samples can be stored at 2-8°C for 3-5 days." },
+
+    // ===== Note 8 (Q36-40): rejection criteria =====
+    { q: "A haemolysed sample is rejected because it:", o: ["Is clotted", "Falsely elevates potassium and other intracellular analytes", "Has too little volume", "Is contaminated"], a: 1, w: "Haemolysis falsely elevates potassium and other intracellular analytes." },
+    { q: "A clotted sample is rejected because:", o: ["It is haemolysed", "It cannot be analysed for cell counts or coagulation", "It is too old", "It is the wrong colour"], a: 1, w: "A clotted sample cannot be analysed for cell counts or coagulation." },
+    { q: "An underfilled citrate tube is rejected because:", o: ["It is haemolysed", "The ratio of blood to anticoagulant is incorrect", "It is clotted", "It is too old"], a: 1, w: "The blood-to-anticoagulant ratio is critical for coagulation tests." },
+    { q: "A sample with missing patient identifiers is rejected because:", o: ["It is haemolysed", "It cannot be linked to a patient", "It is clotted", "It is too old"], a: 1, w: "Without identifiers, the result cannot be attributed to a patient." },
+    { q: "Most sample rejections are:", o: ["Unpreventable", "Preventable through correct technique", "Due to analyser faults", "Due to patient factors"], a: 1, w: "Most rejections are preventable through correct collection and handling technique." },
+
+    // ===== Note 9 (Q41-45): safety =====
+    { q: "The most dangerous thing to do with a used needle is:", o: ["Dispose of it in a sharps container", "Recap it by hand", "Place it in a biohazard bag", "Hand it to a colleague"], a: 1, w: "Recapping by hand is the most common cause of needlestick injuries." },
+    { q: "Gloves should be worn:", o: ["Only for high-risk patients", "For every phlebotomy procedure", "Only when the patient requests", "Never"], a: 1, w: "Gloves should be worn for every procedure." },
+    { q: "Needles should be disposed of in:", o: ["A regular bin", "A biohazard bag", "A puncture-resistant sharps container", "A glass jar"], a: 2, w: "Needles go in a puncture-resistant sharps container." },
+    { q: "Hand hygiene should be performed:", o: ["Only after procedures", "Only before procedures", "Before and after each patient contact", "Once daily"], a: 2, w: "Hand hygiene is performed before and after each patient contact." },
+    { q: "All blood samples should be treated as:", o: ["Safe if from a healthy patient", "Potentially infectious", "Sterile", "Only infectious if visibly contaminated"], a: 1, w: "All samples should be treated as potentially infectious." },
+
+    // ===== Note 10 (Q46-50): consolidation =====
+    { q: "The three main blood collection techniques are:", o: ["Venipuncture, capillary puncture, arterial puncture", "Venipuncture, arterial puncture, bone marrow aspiration", "Capillary, venous, arterial sampling", "Fingerstick, heelstick, earlobe"], a: 0, w: "The three techniques are venipuncture, capillary puncture, and arterial puncture." },
+    { q: "The correct order of draw is:", o: ["EDTA, citrate, serum, heparin, fluoride", "Blood culture, citrate, serum, heparin, EDTA, fluoride", "Serum, citrate, EDTA, heparin, fluoride", "Fluoride, EDTA, heparin, serum, citrate"], a: 1, w: "The CLSI order of draw is blood culture, citrate, serum, heparin, EDTA, fluoride." },
+    { q: "A child needing a full blood count and glucose test is best collected by:", o: ["Venipuncture", "Arterial puncture", "Capillary puncture", "Bone marrow aspiration"], a: 2, w: "Capillary puncture is most appropriate for small volumes in children." },
+    { q: "The first drop of capillary blood is wiped away because it:", o: ["Contains interstitial fluid", "Is too small", "Is clotted", "Is contaminated with bacteria"], a: 0, w: "The first drop contains interstitial fluid and cellular debris." },
+    { q: "If a sample is haemolysed, the correct action is to:", o: ["Analyse it anyway", "Reject it and request a repeat", "Add anticoagulant", "Freeze it"], a: 1, w: "A haemolysed sample should be rejected and a repeat requested." }
+  ]
+};
+
+// ==================== HEMATOLOGY TOPIC 7: HAEMATOLOGICAL STAINS ====================
+const T_HEM_STAINS = {
+  courseId: "hem",
+  topicIndex: 7,
+  title: "Types of Haematological Stains, Principles of Staining and Staining Techniques",
+  minutes: 30,
+
+  note: [
+    {
+      q: "A blood film left unstained is almost invisible. Why does colour change everything?",
+      body: `Take a perfectly made blood film, dry it, and place it under a microscope without staining it. You will see almost nothing - a faint, grey, translucent smear with ghostly outlines of cells. Now stain the same film with a Romanowsky stain and look again. Suddenly the film is alive with colour: red cells are pink, white cells have deep purple nuclei, platelets are violet, and the fine details of chromatin, granules and cytoplasm become visible.
+
+My Socratic question: the cells did not change between the two examinations. Only the colour changed. Why does colour make such a difference?
+
+The answer is contrast. The human eye can distinguish colour and shade far more effectively than subtle differences in transparency or refractive index. A haematological stain is not just decoration - it is a tool that converts invisible differences in cell chemistry into visible differences in colour. Each stain binds to specific cellular components based on their chemical properties, so the pattern of colour reflects the composition of the cell.
+
+Romanowsky stains - the family that includes Wright, Giemsa, May-Grünwald and Leishman - are the standard for blood films. They contain two dyes: one acidic (eosin) that stains basic components pink, and one basic (methylene blue and its derivatives) that stains acidic components blue-purple. The interaction of these two dyes produces the characteristic colour pattern of a stained blood film.
+
+Crucial insight: haematological staining is the process of adding coloured dyes to blood cells so that their chemical and structural differences become visible under the microscope. Without staining, a blood film is almost useless. With staining, it becomes one of the most informative tests in medicine. Understanding why stains work - and how to use them correctly - is essential for every haematology laboratory.`
+    },
+    {
+      q: "The chemistry of colour: how does a dye choose what to stain?",
+      body: `A stain is not a paint. It does not simply coat a cell with colour. It binds selectively to particular chemical groups in the cell, based on electrical charge and chemical affinity. Understanding this chemistry is the key to understanding why different structures stain differently.
+
+My Socratic question: red cells and white cell nuclei are both made of proteins and nucleic acids. Why does one stain pink and the other purple?
+
+The answer is that they have different net electrical charges and different chemical compositions, and stains are themselves charged molecules.
+
+Dyes are classified as either acidic or basic, based on the charge of the coloured ion:
+
+**Basic dyes** carry a positive charge and bind to negatively charged (acidic) structures. The main basic dye in Romanowsky stains is **methylene blue** and its oxidation product **azure B**. These bind to DNA and RNA, which are negatively charged because of their phosphate groups. That is why nuclei stain blue-purple.
+
+**Acidic dyes** carry a negative charge and bind to positively charged (basic) structures. The main acidic dye is **eosin**. It binds to positively charged proteins, including haemoglobin in red cells and many cytoplasmic proteins. That is why red cells and cytoplasm stain pink.
+
+**Neutral dyes** are complexes of an acidic and a basic dye, and they stain specific structures with a distinctive colour. The Romanowsky effect - the characteristic purple of chromatin and the mauve-pink of neutrophil granules - comes from the interaction of oxidised methylene blue (azure B) with eosin, forming a neutral dye complex.
+
+Crucial insight: staining is a chemical reaction between charged dye molecules and charged cellular components. Acidic dyes stain basic structures pink; basic dyes stain acidic structures blue-purple. The pattern of colour you see is a map of the cell's chemistry - and every stain you use obeys this rule.`
+    },
+    {
+      q: "What is a Romanowsky stain, and why is it the standard for blood films?",
+      body: `Romanowsky stains are the family of stains that dominate haematology. They are named after Dmitri Romanowsky, a Russian physician who in the 1890s discovered that a mixture of methylene blue and eosin produced a purple colour in certain cellular structures that neither dye produced alone. That discovery changed haematology forever.
+
+My Socratic question: if individual dyes already stained cells, why was the combination of two dyes so important?
+
+The answer is the Romanowsky effect. When methylene blue is oxidised (a process called polychroming), it forms azure B and other related compounds. When azure B combines with eosin, it forms a neutral dye complex that stains chromatin and certain granules a distinctive purple-mauve colour. This neutral dye effect cannot be produced by either dye alone, and it is what allows haematologists to distinguish different types of white cells, to see nuclear detail, and to identify parasites inside red cells.
+
+The main Romanowsky stains used in haematology:
+
+- **Wright stain** - the most common in many laboratories, especially in the United States. It is a mixture of eosin and oxidised methylene blue (azure B), dissolved in methanol.
+- **Giemsa stain** - widely used in Europe and in parasitology. It is similar in principle but contains additional azure compounds, giving a slightly different colour balance. It is particularly good for staining parasites and for demonstrating fine nuclear detail.
+- **May-Grünwald stain** - a Romanowsky stain that uses a different dye preparation. Often used in combination with Giemsa as May-Grünwald-Giemsa (MGG).
+- **Leishman stain** - a Romanowsky stain widely used in the UK and Commonwealth countries. It is a mixture of eosin and methylene blue dissolved in methanol.
+- **Field's stain** - a rapid Romanowsky stain used for thick films in malaria diagnosis.
+
+Crucial insight: the Romanowsky stains are the standard for blood films because they produce the Romanowsky effect - a neutral dye complex that reveals nuclear detail, granule colour and parasite morphology in a way no single dye can. The choice of which Romanowsky stain to use depends on local tradition, the specific test, and the diagnostic question being asked.`
+    },
+    {
+      q: "Wright, Giemsa, Leishman. What is actually in them, and what does each do?",
+      body: `Each Romanowsky stain is a variation on the same theme, but the details of their composition affect how cells look and which tests they are best suited for. Understanding these differences helps you choose the right stain for the right situation.
+
+My Socratic question: if all Romanowsky stains contain eosin and methylene blue derivatives, why do laboratories use different ones?
+
+The answer is that the exact composition, the pH of the working solution, the method of preparation and the staining time all affect the final colour balance and cellular detail.
+
+**Wright stain:**
+- Composition: eosin Y and oxidised methylene blue (azure B) in methanol.
+- Working pH: usually around 6.4 to 6.8.
+- Uses: routine blood films, differential white cell counts, platelet morphology.
+- Advantages: simple, fast, good nuclear and cytoplasmic detail; widely used in automated stainers.
+
+**Giemsa stain:**
+- Composition: eosin, methylene blue, and additional azure compounds (azure A, azure B) plus glycerol and methanol.
+- Working pH: usually around 6.8 to 7.2 (buffered).
+- Uses: blood films, bone marrow films, thick films for malaria, and for detecting parasites, especially intracellular organisms.
+- Advantages: excellent for parasites, good chromatin detail, stable working solution, can be used for both thin and thick films.
+
+**Leishman stain:**
+- Composition: eosin and methylene blue in methanol.
+- Working pH: usually around 6.8.
+- Uses: routine blood films, differential counts, bone marrow.
+- Advantages: simple to prepare, good overall staining, popular in the UK and Commonwealth.
+
+**May-Grünwald stain:**
+- Composition: eosin and methylene blue in methanol, similar to Wright but prepared differently.
+- Uses: often combined with Giemsa as MGG for bone marrow and haematology.
+- Advantages: excellent cellular detail, widely used in Europe.
+
+**Field's stain:**
+- Composition: two solutions - Field's A (methylene blue) and Field's B (eosin).
+- Uses: rapid staining of thick films for malaria.
+- Advantages: very fast (seconds), useful in field conditions.
+
+Crucial insight: the Romanowsky stains differ in the exact composition of dyes, the pH, and the method of use. Wright and Leishman are the routine workhorses; Giemsa is preferred for parasites and bone marrow; May-Grünwald-Giemsa is a European standard; Field's stain is a rapid field method. Choosing the right stain for the right test is part of good laboratory practice.`
+    },
+    {
+      q: "Staining technique: how do you actually stain a blood film?",
+      body: `A stain is only as good as the technique used to apply it. Poor technique produces poor staining, and poor staining produces misleading results. Understanding the steps of staining - and the reasons behind each - is essential for producing diagnostic-quality films.
+
+My Socratic question: you have a blood film, a bottle of stain, and a microscope. What could possibly go wrong?
+
+The answer is that several things can go wrong - and each produces a recognisable artefact.
+
+**The basic Romanowsky staining procedure (for Wright or Leishman stain):**
+
+1. **Fixation.** The air-dried blood film is covered with undiluted stain (which contains methanol). The methanol fixes the cells - it denatures proteins and preserves cell structure. Fixation takes about 30 seconds to 1 minute.
+2. **Staining.** A buffer solution (usually phosphate buffer at pH 6.4 to 6.8) is added to dilute the stain on the slide. The diluted stain is left on the film for a defined time (typically 5 to 15 minutes for Wright or Leishman). During this time, the dyes bind to cellular components.
+3. **Washing.** The slide is rinsed with buffer or distilled water to remove excess stain. Washing should be gentle to avoid damaging the film.
+4. **Drying.** The slide is air-dried or blotted dry (with care) and examined under the microscope.
+
+**Key variables that affect staining:**
+
+- **pH of the buffer.** If the buffer is too acidic (pH below 6.4), red cells stain too pink and white cell nuclei stain pale. If too alkaline (pH above 7.0), red cells stain blue-grey and white cell nuclei stain too dark. The correct pH is critical.
+- **Staining time.** Too short and the stain is too pale; too long and it is too dark or produces precipitate.
+- **Concentration of dye.** Old or diluted stains may give poor results.
+- **Quality of the blood film.** Thick films stain differently from thin films; a poor film cannot be rescued by good staining.
+
+Crucial insight: staining is a controlled chemical reaction with specific conditions - pH, time, concentration, and temperature. Every variable matters, and errors produce recognisable artefacts. A laboratory scientist who understands the process can troubleshoot problems - a pink film, a blue film, a precipitate, pale nuclei - and correct them.`
+    },
+    {
+      q: "The colours of a well-stained film: what do they tell you?",
+      body: `Look at a well-stained blood film and you will see a pattern of colours that is both beautiful and informative. Every colour has a meaning. Learning to read those colours is one of the central skills of haematology.
+
+My Socratic question: a red cell is pink, a neutrophil nucleus is dark purple, a lymphocyte nucleus is deep blue, and an eosinophil granule is bright orange-red. What does each colour tell you about the cell?
+
+The answer is that colour reflects the chemical composition of each structure, and the pattern of colours identifies the cell.
+
+**The standard colours of a well-stained Romanowsky blood film:**
+
+- **Red cells:** pink to salmon. Haemoglobin is a basic protein, so it binds eosin. If red cells are too pink, the buffer is too acidic; if too grey-blue, the buffer is too alkaline.
+- **Neutrophil nucleus:** dark purple. Chromatin is acidic (DNA), so it binds the basic dye. The purple colour comes from the Romanowsky effect.
+- **Neutrophil cytoplasm:** pale pink to lilac, with fine granules.
+- **Lymphocyte nucleus:** deep blue-purple, with clumped chromatin. Lymphocyte cytoplasm is pale blue, sometimes with a few azurophilic granules.
+- **Monocyte nucleus:** kidney-shaped or folded, purple-blue. Cytoplasm is grey-blue, often with fine granules and vacuoles.
+- **Eosinophil granules:** bright orange-red. Eosinophil granules contain basic proteins, so they bind eosin strongly.
+- **Basophil granules:** dark purple to black. Basophil granules contain heparin and histamine, which stain with basic dyes.
+- **Platelets:** violet, with fine granules.
+- **Nucleoli:** pale blue, visible in immature cells.
+
+Crucial insight: the colours of a well-stained film are not arbitrary. Each colour is a chemical signature. Learning to read those colours allows you to identify cells, to distinguish normal from abnormal, and to spot subtle changes that might indicate disease. Every haematologist and laboratory scientist develops this colour sense through practice - and every diagnostic decision depends on it.`
+    },
+    {
+      q: "Special stains: when Romanowsky staining is not enough.",
+      body: `Romanowsky stains are the routine standard for blood films, but they are not always sufficient. For certain diagnoses - particularly in bone marrow, in suspected infections, and in specific haematological conditions - a special stain is needed. Each special stain targets a specific component and answers a specific question.
+
+My Socratic question: if Romanowsky staining shows you the cells, why would you ever need a different stain?
+
+The answer is that Romanowsky staining shows cell morphology, but many diagnoses depend on detecting specific chemical substances inside cells. Special stains target those substances selectively.
+
+**The main special stains used in haematology:**
+
+- **Perls' Prussian blue stain** - detects iron. It stains haemosiderin and ferritin blue. Used to diagnose iron deficiency and iron overload, and to identify sideroblasts in bone marrow.
+- **Periodic acid-Schiff (PAS) stain** - detects glycogen and mucosubstances. It stains glycogen magenta. Used to identify glycogen storage diseases, and to help diagnose certain leukaemias (where lymphoblasts may contain PAS-positive granules).
+- **Myeloperoxidase (MPO) stain** - detects the enzyme myeloperoxidase, found in myeloid cells. It stains myeloid blasts positively. Used to distinguish myeloid from lymphoid leukaemias.
+- **Sudan Black B stain** - detects lipids. It stains lipid-containing granules black. Used for similar purposes to MPO.
+- **Leukocyte alkaline phosphatase (LAP) stain** - detects the enzyme alkaline phosphatase in neutrophils. Used to distinguish chronic myeloid leukaemia (low LAP) from a reactive leucocytosis (high LAP).
+- **Acid phosphatase stain** - detects acid phosphatase. Used in the diagnosis of hairy cell leukaemia (tartrate-resistant acid phosphatase, TRAP).
+- **Reticulin stain** - detects reticulin fibres in bone marrow. Used to assess marrow fibrosis.
+- **Congo red stain** - detects amyloid. Used to diagnose amyloidosis.
+- **Gram stain, Ziehl-Neelsen stain, Giemsa stain for parasites** - used to identify bacteria, mycobacteria, and parasites in blood and bone marrow.
+- **Perls' and iron stains** for detecting iron in bone marrow.
+
+Crucial insight: special stains are the specific tools of haematological diagnosis. Romanowsky staining tells you what the cells look like; special stains tell you what they contain. When you suspect a leukaemia, an infection, an iron disorder, or a storage disease, the right special stain can confirm the diagnosis. Knowing when to use each one - and what it can and cannot show - is part of the expertise of the haematology laboratory.`
+    },
+    {
+      q: "Automated staining: how has technology changed the laboratory?",
+      body: `In the past, every blood film was stained by hand - a labour-intensive process requiring careful timing, precise pH control, and a steady hand. Today, most laboratories use automated stainers, which offer consistency, speed and reproducibility that manual staining cannot match.
+
+My Socratic question: if manual staining works, why switch to automation?
+
+The answer is consistency. Manual staining depends on the skill of the individual, the freshness of the reagents, and the exact timing - variables that change from slide to slide and person to person. Automated stainers control these variables precisely, so every slide is stained the same way.
+
+**The main types of automated stainers:**
+
+- **Dip-and-dry stainers** - the slide is dipped into successive baths of fixative, stain, buffer and rinse, then dried. Common in many routine laboratories.
+- **Flat-bed stainers** - the slide lies flat and the stain is applied by pipette or spray. Good for consistency and for small batches.
+- **Spray stainers** - the stain is sprayed onto the slide in a controlled volume. Fast, but uses more reagent.
+- **Continuous-flow stainers** - slides move on a conveyor through a series of staining stations. High throughput.
+
+**Advantages of automated staining:**
+- Reproducibility - every slide is stained the same way
+- Consistency - less affected by individual technique
+- Speed - higher throughput, especially for large laboratories
+- Safety - reduced handling of stains and reagents
+- Standardisation - easier to comply with quality standards
+
+**Limitations:**
+- Cost - automated stainers and reagents are expensive
+- Less flexibility - harder to adjust for unusual samples or special stains
+- Maintenance - requires regular servicing and quality control
+- Reagent compatibility - not all stains work well in all machines
+
+Crucial insight: automated staining has transformed the haematology laboratory by making staining consistent, fast and reproducible. But automation is not a substitute for understanding - the laboratory scientist must still know the principles of staining, be able to troubleshoot problems, and recognise when a stained slide is not right. The machine is a tool; the knowledge is what makes it useful.`
+    },
+    {
+      q: "Quality control in staining: how do you know the stain is working?",
+      body: `A stained blood film is only useful if the staining is correct. A pink film, a blue film, a precipitate, a film that fades - these are all signs that something has gone wrong. Quality control in staining is the process of ensuring that every film is stained correctly and that the results are reliable.
+
+My Socratic question: how would you know that a stain is working properly?
+
+The answer is by checking known standards and by inspecting the stained film for the characteristic features of good staining.
+
+**Quality control in staining:**
+
+- **Daily checks.** A control slide - a slide of known normal blood - is stained with each batch or each day. The control is examined to ensure that the colours are correct, that the nuclear and cytoplasmic detail is clear, and that there is no precipitate or contamination.
+- **Checking the stain itself.** The stain is inspected for sediment, precipitate, or contamination. The pH of the buffer is checked periodically (every day if possible). The staining times are checked against the protocol.
+- **Checking the stained film.** A well-stained film should show:
+  - Red cells: uniformly pink-salmon, without blue or grey tinge
+  - Neutrophil nuclei: dark purple, with clear chromatin detail
+  - Lymphocyte nuclei: deep blue-purple
+  - Platelets: clearly visible, violet
+  - No precipitate or stain deposit
+  - No water artefact (cells should not be lysed)
+  - Background clear, without excessive dye
+
+**Common problems and their causes:**
+
+- **Too pink (acidic).** The buffer is too acidic, or the stain is too old. Correct by adjusting the buffer pH.
+- **Too blue (alkaline).** The buffer is too alkaline. Correct by adjusting the buffer pH.
+- **Precipitate.** The stain is contaminated, or the staining time is too long, or the slide was not adequately washed.
+- **Pale staining.** The stain is too old, or the staining time is too short, or the film is too thick.
+- **Dark staining.** The staining time is too long, or the stain is too concentrated.
+- **Water artefact.** The slide was not properly dried before staining, or the washing water was not properly drained.
+
+Crucial insight: quality control is not an optional extra - it is the foundation of reliable staining. A laboratory that does not check its staining cannot trust its results. The daily control slide, the inspection of the stain, and the recognition of common problems are all part of the professional practice of haematology.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for haematological stains, in five lines.
+
+**The purpose:** haematological stains add colour to blood cells so that their chemical and structural differences become visible under the microscope. Without staining, a blood film is almost useless.
+
+**The chemistry:** acidic dyes (eosin) stain basic structures pink; basic dyes (methylene blue and its derivatives) stain acidic structures blue-purple. The Romanowsky effect - a neutral dye complex - produces the characteristic purple of chromatin and the mauve-pink of neutrophil granules.
+
+**The Romanowsky stains:** Wright, Giemsa, Leishman, May-Grünwald and Field's stain. Each is a mixture of eosin and oxidised methylene blue derivatives, with variations in composition, pH and application. Wright and Leishman are routine workhorses; Giemsa is preferred for parasites and bone marrow; Field's is rapid for thick films.
+
+**The technique:** fixation, staining in buffer at controlled pH, washing and drying. Key variables are pH of the buffer, staining time, and stain quality. Errors produce recognisable artefacts.
+
+**Special stains and quality control:** Perls', PAS, MPO, Sudan Black, LAP, acid phosphatase, reticulin, Congo red and others answer specific diagnostic questions. Quality control ensures every stain is correct, using control slides, checks on the stain and buffer, and inspection of the stained film.
+
+Now your final test. A laboratory receives a blood film from a patient with suspected malaria. The film is stained with Giemsa stain. A laboratory scientist examines the film and finds that the red cells are pink and the white cells are well stained, but the parasites are difficult to see clearly.
+
+Question one: why is Giemsa stain preferred over Wright stain for this case?
+Question two: what could be wrong with the staining technique that makes the parasites difficult to see?
+Question three: what are the key quality control checks that should be performed to ensure the stain is working correctly?
+
+Work them through before reading on.
+
+My answers. One: Giemsa stain is preferred for malaria because it contains additional azure compounds that give better contrast for intracellular parasites, particularly in thick films. It is also more tolerant of pH variation and produces clearer nuclear detail, making it easier to distinguish parasite nuclei from red cell background and from other inclusions. Two: the parasites may be difficult to see because the pH of the buffer is incorrect (too acidic or too alkaline), or the staining time is too short, or the film is too thick or too thin, or the stain is old. The most common cause is incorrect pH - Giemsa works best at pH 6.8 to 7.2, and small deviations affect parasite staining. Three: the key quality control checks are: stain a known positive control slide with each batch; check the pH of the buffer; inspect the stain for precipitate or contamination; check the staining time against the protocol; inspect the stained film for the characteristic colours (pink red cells, blue-purple nuclei, clearly visible parasites). If the control slide is not correct, the stain and all slides stained with it are unreliable.
+
+If those came cleanly, you understand the principles and practice of haematological staining - from the chemistry of dyes to the technique of staining, from the colour pattern of a well-stained film to the quality control that ensures it. This is the foundation for every blood film you will ever examine in the laboratory.`
+    }
+  ],
+
+  theory: [
+    { q: "Define a haematological stain and explain its purpose.", a: "A haematological stain is a coloured dye (or mixture of dyes) applied to blood cells to make their chemical and structural differences visible under the microscope. Its purpose is to provide contrast, allowing identification of cell types, nuclear detail, cytoplasmic granules, and intracellular organisms." },
+    { q: "Explain the chemical basis of staining - why acidic and basic dyes stain different structures.", a: "Dyes are charged molecules. Acidic dyes (such as eosin) carry a negative charge and bind to positively charged (basic) structures like haemoglobin and cytoplasmic proteins, staining them pink. Basic dyes (such as methylene blue and its derivatives) carry a positive charge and bind to negatively charged (acidic) structures like DNA and RNA, staining them blue-purple." },
+    { q: "What is the Romanowsky effect and why is it important?", a: "The Romanowsky effect is the purple-mauve colour produced when oxidised methylene blue (azure B) combines with eosin to form a neutral dye complex. This colour cannot be produced by either dye alone. It is important because it allows chromatin detail, granule colour, and parasite morphology to be seen clearly, and it is the defining feature of Romanowsky stains." },
+    { q: "Name the main Romanowsky stains and state one use for each.", a: "Wright stain - routine blood films, differential counts. Giemsa stain - blood films, bone marrow, malaria and other parasites. Leishman stain - routine blood films, bone marrow. May-Grünwald stain - often used with Giemsa (MGG) for bone marrow. Field's stain - rapid staining of thick films for malaria." },
+    { q: "Describe the basic procedure for staining a blood film with a Romanowsky stain.", a: "Air-dry the blood film. Cover with undiluted stain (containing methanol) to fix the cells. Add buffer (pH 6.4-6.8) to dilute the stain. Leave for a defined time (typically 5-15 minutes). Rinse with buffer or distilled water. Dry and examine." },
+    { q: "State the key variables that affect the quality of a Romanowsky stain.", a: "The pH of the buffer (too acidic = too pink, too alkaline = too blue), the staining time (too short = pale, too long = dark or precipitate), the quality and freshness of the stain, the thickness of the blood film, and the temperature of the staining solutions." },
+    { q: "Explain why red cells and white cell nuclei stain different colours in a Romanowsky stain.", a: "Red cells contain haemoglobin, which is a basic protein and therefore binds the acidic dye eosin, staining pink. White cell nuclei contain DNA and RNA, which are acidic and therefore bind the basic dye (oxidised methylene blue/azure B), staining blue-purple. The Romanowsky effect enhances the purple colour of chromatin." },
+    { q: "List five special stains used in haematology and state what each detects.", a: "Perls' Prussian blue - iron. PAS - glycogen and mucosubstances. Myeloperoxidase (MPO) - the enzyme myeloperoxidase in myeloid cells. Sudan Black B - lipids. Leukocyte alkaline phosphatase (LAP) - alkaline phosphatase in neutrophils. Acid phosphatase - acid phosphatase (including tartrate-resistant acid phosphatase for hairy cell leukaemia)." },
+    { q: "Describe the advantages and limitations of automated staining.", a: "Advantages: reproducibility, consistency, speed, safety, standardisation. Limitations: cost, reduced flexibility, need for maintenance, and reagent compatibility issues. Automated staining does not replace the need for understanding the principles and being able to troubleshoot." },
+    { q: "Describe the quality control measures essential for haematological staining.", a: "Daily staining of a known normal control slide. Checking the pH of the buffer. Inspecting the stain for precipitate or contamination. Checking staining times against the protocol. Examining the stained film for the characteristic colours (pink red cells, blue-purple nuclei, violet platelets, no precipitate, no water artefact). Documenting results and troubleshooting problems." }
+  ],
+
+  videos: [
+    { channel: "Hematology", title: "Romanowsky Stains - Chemistry and Technique", note: "How eosin and methylene blue produce the characteristic colours of a blood film.", url: "https://www.youtube.com/results?search_query=romanowsky+stains+wright+giemsa+leishman+hematology" },
+    { channel: "Hematology", title: "Blood Film Staining - Step by Step", note: "Practical demonstration of staining a blood film and troubleshooting common problems.", url: "https://www.youtube.com/results?search_query=blood+film+staining+procedure+step+by+step" },
+    { channel: "Hematology", title: "Special Stains in Haematology", note: "Perls', PAS, MPO, LAP and other special stains used in diagnostic haematology.", url: "https://www.youtube.com/results?search_query=special+stains+hematology+perls+PAS+MPO" }
+  ],
+
+  mcqs: [
+    // ===== Note 1 (Q1-5): why staining matters =====
+    { q: "Haematological stains are used to:", o: ["Preserve blood cells", "Add colour to blood cells so their differences become visible", "Kill bacteria", "Make blood clot"], a: 1, w: "Stains add colour so that cellular differences become visible under the microscope." },
+    { q: "An unstained blood film is almost useless because:", o: ["It is too thick", "The cells are almost transparent and lack contrast", "It is contaminated", "It cannot be examined"], a: 1, w: "Unstained cells are translucent and lack contrast, making them nearly invisible." },
+    { q: "The main purpose of a stain in haematology is to provide:", o: ["Contrast", "Anticoagulation", "Fixation", "Sterilisation"], a: 0, w: "A stain provides contrast so cells can be identified." },
+    { q: "Romanowsky stains contain:", o: ["Only one dye", "An acidic dye and a basic dye", "Only basic dyes", "Only acidic dyes"], a: 1, w: "Romanowsky stains contain both an acidic dye (eosin) and a basic dye (methylene blue derivatives)." },
+    { q: "The two main dyes in a Romanowsky stain are:", o: ["Eosin and methylene blue", "Eosin and haematoxylin", "Methylene blue and safranin", "Haematoxylin and eosin"], a: 0, w: "Romanowsky stains combine eosin and methylene blue (oxidised to azure B)." },
+
+    // ===== Note 2 (Q6-10): chemistry of staining =====
+    { q: "Acidic dyes carry a charge that is:", o: ["Positive", "Negative", "Neutral", "Variable"], a: 1, w: "Acidic dyes carry a negative charge." },
+    { q: "Basic dyes carry a charge that is:", o: ["Positive", "Negative", "Neutral", "Variable"], a: 0, w: "Basic dyes carry a positive charge." },
+    { q: "Basic dyes stain which cellular structures?", o: ["Acidic structures like DNA and RNA", "Basic structures like haemoglobin", "Lipids", "Carbohydrates"], a: 0, w: "Basic dyes bind acidic structures such as DNA and RNA, staining them blue-purple." },
+    { q: "Acidic dyes stain which cellular structures?", o: ["Acidic structures like DNA", "Basic structures like haemoglobin and cytoplasmic proteins", "Lipids", "Nucleic acids"], a: 1, w: "Acidic dyes bind basic structures such as haemoglobin, staining them pink." },
+    { q: "The Romanowsky effect is produced by:", o: ["Eosin alone", "Methylene blue alone", "A neutral dye complex of oxidised methylene blue and eosin", "Haematoxylin"], a: 2, w: "The Romanowsky effect is the purple colour produced by the neutral complex of azure B and eosin." },
+
+    // ===== Note 3 (Q11-15): Romanowsky stains =====
+    { q: "The Romanowsky stains are named after:", o: ["A Russian physician", "An American chemist", "A British haematologist", "A German pathologist"], a: 0, w: "Dmitri Romanowsky was a Russian physician." },
+    { q: "Which Romanowsky stain is most commonly used in the United States?", o: ["Giemsa", "Wright", "Leishman", "Field's"], a: 1, w: "Wright stain is most commonly used in the United States." },
+    { q: "Which Romanowsky stain is preferred for parasites such as malaria?", o: ["Giemsa", "Wright", "Leishman", "May-Grünwald"], a: 0, w: "Giemsa stain is preferred for parasites and is widely used in parasitology." },
+    { q: "Which Romanowsky stain is widely used in the UK and Commonwealth?", o: ["Giemsa", "Wright", "Leishman", "Field's"], a: 2, w: "Leishman stain is widely used in the UK and Commonwealth." },
+    { q: "Field's stain is used primarily for:", o: ["Bone marrow films", "Routine blood counts", "Rapid staining of thick films for malaria", "Platelet counts"], a: 2, w: "Field's stain is a rapid method for staining thick films for malaria." },
+
+    // ===== Note 4 (Q16-20): composition of stains =====
+    { q: "Wright stain contains:", o: ["Eosin and oxidised methylene blue in methanol", "Eosin and haematoxylin", "Methylene blue only", "Eosin only"], a: 0, w: "Wright stain contains eosin and oxidised methylene blue (azure B) in methanol." },
+    { q: "Giemsa stain differs from Wright stain mainly by:", o: ["Containing no eosin", "Containing additional azure compounds", "Containing haematoxylin", "Containing no methylene blue"], a: 1, w: "Giemsa contains additional azure compounds, giving better parasite and nuclear detail." },
+    { q: "Leishman stain is similar to Wright stain but is prepared differently and is popular in:", o: ["The UK and Commonwealth", "Only Japan", "Only Africa", "Only South America"], a: 0, w: "Leishman stain is widely used in the UK and Commonwealth." },
+    { q: "May-Grünwald-Giemsa (MGG) is:", o: ["A single stain", "A combination of two Romanowsky stains", "A non-Romanowsky stain", "A special stain for iron"], a: 1, w: "MGG combines May-Grünwald and Giemsa stains, widely used in European haematology." },
+    { q: "The pH of the buffer used in Romanowsky staining is usually around:", o: ["3.0 to 4.0", "6.4 to 7.2", "8.0 to 9.0", "10.0 to 11.0"], a: 1, w: "The buffer pH is usually between 6.4 and 7.2, with Giemsa often at 6.8 to 7.2." },
+
+    // ===== Note 5 (Q21-25): staining technique =====
+    { q: "The first step of Romanowsky staining is:", o: ["Adding buffer", "Fixation with methanol", "Washing", "Drying"], a: 1, w: "The film is fixed with methanol, which is present in the undiluted stain." },
+    { q: "The buffer is added to the stain to:", o: ["Fix the cells", "Dilute the stain and control pH", "Wash the slide", "Preserve the film"], a: 1, w: "Buffer dilutes the stain and controls pH, which is critical for correct colour." },
+    { q: "A blood film stained with a buffer that is too acidic will appear:", o: ["Too blue", "Too pink", "Too pale", "Too dark"], a: 1, w: "An acidic buffer (low pH) makes red cells stain too pink." },
+    { q: "A blood film stained with a buffer that is too alkaline will appear:", o: ["Too pink", "Too blue", "Too pale", "Too dark"], a: 1, w: "An alkaline buffer (high pH) makes red cells appear blue-grey." },
+    { q: "Staining time that is too short produces:", o: ["Pale staining", "Dark staining", "Precipitate", "Water artefact"], a: 0, w: "Insufficient staining time produces pale, weakly stained films." },
+
+    // ===== Note 6 (Q26-30): colours of a well-stained film =====
+    { q: "In a well-stained Romanowsky film, red cells appear:", o: ["Pink to salmon", "Blue-grey", "Violet", "Colourless"], a: 0, w: "Red cells stain pink to salmon due to haemoglobin binding eosin." },
+    { q: "The nucleus of a neutrophil appears:", o: ["Pale blue", "Dark purple", "Bright red", "Black"], a: 1, w: "Neutrophil nuclei stain dark purple due to chromatin binding basic dye." },
+    { q: "Eosinophil granules appear:", o: ["Deep blue", "Bright orange-red", "Green", "Black"], a: 1, w: "Eosinophil granules contain basic proteins and stain bright orange-red with eosin." },
+    { q: "The cytoplasm of a lymphocyte typically appears:", o: ["Bright orange", "Pale blue", "Deep red", "Black"], a: 1, w: "Lymphocyte cytoplasm is pale blue." },
+    { q: "Platelets in a well-stained film appear:", o: ["Violet with fine granules", "Pink", "Green", "Black"], a: 0, w: "Platelets stain violet with fine granules." },
+
+    // ===== Note 7 (Q31-35): special stains =====
+    { q: "Perls' Prussian blue stain detects:", o: ["Iron", "Glycogen", "Lipids", "Amyloid"], a: 0, w: "Perls' stain detects iron, staining haemosiderin and ferritin blue." },
+    { q: "Periodic acid-Schiff (PAS) stain detects:", o: ["Iron", "Glycogen and mucosubstances", "Lipids", "Nucleic acids"], a: 1, w: "PAS stains glycogen and mucosubstances magenta." },
+    { q: "Myeloperoxidase (MPO) stain is used to:", o: ["Detect iron", "Distinguish myeloid from lymphoid leukaemias", "Detect parasites", "Measure platelet count"], a: 1, w: "MPO stains myeloid blasts positively and helps distinguish myeloid from lymphoid leukaemias." },
+    { q: "Sudan Black B stain detects:", o: ["Iron", "Glycogen", "Lipids", "Amyloid"], a: 2, w: "Sudan Black B stains lipid-containing granules black." },
+    { q: "Leukocyte alkaline phosphatase (LAP) stain is used to distinguish:", o: ["Myeloid from lymphoid leukaemia", "Chronic myeloid leukaemia from reactive leucocytosis", "Iron deficiency from thalassaemia", "Malaria from other infections"], a: 1, w: "LAP is low in chronic myeloid leukaemia and high in reactive leucocytosis." },
+
+    // ===== Note 8 (Q36-40): automated staining =====
+    { q: "The main advantage of automated staining is:", o: ["Lower cost", "Greater reproducibility and consistency", "Better colour", "Fewer reagents"], a: 1, w: "Automated staining is more reproducible and consistent than manual staining." },
+    { q: "Which of the following is a limitation of automated staining?", o: ["Slower than manual", "Less flexible for unusual samples or special stains", "Less consistent", "Uses fewer reagents"], a: 1, w: "Automated stainers are less flexible for unusual samples and special stains." },
+    { q: "A dip-and-dry stainer works by:", o: ["Spraying stain onto the slide", "Dipping the slide through successive baths of fixative, stain, buffer and rinse", "Using a conveyor belt", "Using centrifugal force"], a: 1, w: "Dip-and-dry stainers move the slide through successive baths." },
+    { q: "Automated staining does not replace the need for:", o: ["Understanding the principles of staining and troubleshooting", "A microscope", "A laboratory", "A computer"], a: 0, w: "Understanding and troubleshooting remain essential even with automation." },
+    { q: "Which type of automated stainer uses a conveyor to move slides through staining stations?", o: ["Dip-and-dry", "Flat-bed", "Continuous-flow", "Spray"], a: 2, w: "Continuous-flow stainers use a conveyor to move slides through staining stations." },
+
+    // ===== Note 9 (Q41-45): quality control =====
+    { q: "A daily control slide in staining is used to:", o: ["Test the patient's blood", "Verify that the stain is working correctly", "Calibrate the microscope", "Measure the pH of the buffer"], a: 1, w: "A known normal control slide verifies that the stain is working correctly." },
+    { q: "If a stained film appears too pink, the most likely cause is:", o: ["Buffer too alkaline", "Buffer too acidic", "Staining time too long", "Stain too concentrated"], a: 1, w: "An acidic buffer makes red cells stain too pink." },
+    { q: "If a stained film shows precipitate, a likely cause is:", o: ["Staining time too short", "Contaminated stain or inadequate washing", "Buffer pH too high", "Slide not dried"], a: 1, w: "Precipitate is often due to contaminated stain or inadequate washing." },
+    { q: "Water artefact on a blood film is caused by:", o: ["Using too much buffer", "Inadequate drying before staining or poor draining after washing", "Buffer pH too low", "Stain too old"], a: 1, w: "Water artefact occurs when the film is not properly dried or drained." },
+    { q: "A well-stained film should show all of the following EXCEPT:", o: ["Pink red cells", "Blue-purple nuclei", "Visible platelets", "Precipitate on the film"], a: 3, w: "Precipitate is a sign of poor staining, not a feature of a well-stained film." },
+
+    // ===== Note 10 (Q46-50): consolidation =====
+    { q: "The purpose of a haematological stain is to:", o: ["Preserve cells", "Provide contrast so cells can be identified", "Prevent clotting", "Sterilise the slide"], a: 1, w: "Stains provide contrast so cells and their structures can be identified." },
+    { q: "Acidic dyes stain basic structures:", o: ["Blue", "Pink", "Green", "Black"], a: 1, w: "Acidic dyes such as eosin stain basic structures pink." },
+    { q: "The Romanowsky effect produces:", o: ["A pink colour", "A purple-mauve colour in chromatin and granules", "A green colour", "A black colour"], a: 1, w: "The Romanowsky effect produces the characteristic purple-mauve colour." },
+    { q: "Which of these is NOT a Romanowsky stain?", o: ["Wright", "Giemsa", "Leishman", "Perls'"], a: 3, w: "Perls' Prussian blue is a special stain for iron, not a Romanowsky stain." },
+    { q: "The quality of staining depends on:", o: ["Only the stain", "Only the buffer", "The stain, buffer pH, staining time and technique", "Only the microscope"], a: 2, w: "Quality depends on the stain, buffer pH, time and technique." }
+  ]
+};
+
+// ==================== HEMATOLOGY TOPIC 8: BLOOD SMEARS ====================
+const T_HEM_BLOOD_SMEARS = {
+  courseId: "hem",
+  topicIndex: 8,
+  title: "Blood Smears/Films Preparation & Examination (Thick and Thin Blood Smears)",
+  minutes: 30,
+
+  note: [
+    {
+      q: "A drop of blood on a slide is not yet a blood film. What turns one into the other?",
+      body: `Place a drop of blood on a glass slide and look at it. It is a small, dark red, wet blob. It contains millions of cells, all packed together, overlapping and indistinct. If you tried to examine it under the microscope as it is, you would see a thick, opaque mass - useless for diagnosis.
+
+Now spread that drop across the slide into a thin, even layer, dry it, stain it, and look again. Suddenly you can see individual red cells, each with its own shape and colour. White cells stand out clearly, their nuclei visible and distinct. Platelets appear as tiny violet fragments. You can count, classify, and examine every cell.
+
+My Socratic question: the blood did not change between the two examinations. What did the spreading process actually do?
+
+The answer is that spreading the drop into a thin layer separated the cells from each other. In the original drop, the cells were packed together - too close to distinguish individually. In the spread film, the cells are distributed in a single layer, so each one can be seen clearly. A blood film is therefore not just a drop of blood - it is a carefully prepared, thin, single-layer spread of cells that allows the microscope to reveal what the naked eye cannot.
+
+This topic covers the two types of blood film used in haematology - the thin film and the thick film - and the techniques for preparing, staining and examining each. It also covers the criteria for a good film, the common faults, and the reasons each type is used.
+
+Crucial insight: a blood film is the fundamental diagnostic tool of haematology. Every blood count, every cell morphology assessment, every search for parasites, and every differential diagnosis of a blood disorder depends on examining a properly prepared blood film. The skill of making a good film is as essential as the skill of reading it.`
+    },
+    {
+      q: "There are two kinds of blood film. Why two, and what is each for?",
+      body: `You might assume a blood film is a blood film - a drop of blood spread on a slide. But haematology uses two distinct types, and each has its own purpose, its own appearance, and its own method of preparation.
+
+My Socratic question: if a thin film lets you see individual cells clearly, why would you ever need a thick film?
+
+The answer is concentration. A thin film is ideal for examining individual cell morphology - the shape of red cells, the appearance of white cell nuclei, the colour of granules, the presence of parasites inside red cells. But because the cells are spread out, any organism that is present only in small numbers (such as malarial parasites in early infection) can be very difficult to find. A thick film concentrates a much larger volume of blood into a smaller area, so it is far more sensitive for detecting low numbers of parasites - at the cost of losing the ability to see individual cell morphology.
+
+The two films are therefore complementary:
+
+- **Thin film** - a single layer of cells spread thinly across the slide. Used for: cell morphology (red cell shape, white cell type, platelet appearance), differential white cell counts, detection of intracellular parasites, and assessment of anaemia or leukaemia. The red cells are spread out, the white cells are identifiable, and the film is examined after staining with a Romanowsky stain.
+
+- **Thick film** - a larger drop of blood spread over a small area and allowed to dry without being spread thin, so the cells are concentrated. Used for: detection of parasites (especially malaria), particularly when parasite numbers are low. The red cells are lysed during staining, so individual cell morphology is lost, but parasites and other organisms are seen against a clear background. Thick films are more sensitive than thin films for parasite detection but require more skill to interpret.
+
+Both films are usually made from the same drop of blood at the same time, so that thin and thick films are available together. The thin film is used for morphology; the thick film is used for parasite detection. This is the standard approach in haematology and parasitology.
+
+Crucial insight: thin and thick films are not interchangeable. The thin film shows you what the cells look like; the thick film shows you what is hiding among them. A complete blood film examination typically requires both.`
+    },
+    {
+      q: "The thin film: how is it made, and what does a good one look like?",
+      body: `The thin blood film is one of the most familiar sights in haematology. It is a single layer of blood cells spread evenly across a glass slide, with a well-defined head, body, and tail. Making a good one is a skill, and like any skill, it takes practice.
+
+My Socratic question: if the goal is a single layer of cells spread evenly, what could go wrong during the spreading process?
+
+The answer is that several things can go wrong, and each produces a recognisable fault.
+
+**The standard wedge (push) technique for a thin film:**
+
+- Place a small drop of blood (about 2-3 mm in diameter) near one end of a clean glass slide.
+- Hold a second slide (the spreader or pusher) at an angle of about 30 to 45 degrees, and touch it to the drop so the blood runs along its edge.
+- Push the spreader slide smoothly and steadily along the length of the slide, drawing the blood behind it into a thin film.
+- Allow the film to air-dry completely.
+- Stain the film (usually with a Romanowsky stain).
+- Examine under the microscope.
+
+**What a good thin film looks like:**
+
+- The film is a single layer of cells spread evenly across the slide.
+- It has a rounded head (where the drop was placed), a body (the main area), and a feathered tail (where the film thins to a single cell layer).
+- The red cells are evenly distributed, with minimal overlap in the body and tail.
+- The film is neither too thick nor too thin.
+- The film does not extend to the edges of the slide (leaving margins for handling).
+- The film is fully dried and stained without artefacts.
+
+**Common faults and their causes:**
+
+- **Too thick.** The drop was too large, or the spreader was pushed too slowly, or the angle was too steep. The cells overlap and cannot be distinguished.
+- **Too thin.** The drop was too small, or the spreader was pushed too fast, or the angle was too shallow. The cells are too sparse.
+- **Ridges or lines (chatter).** The spreader was pushed unevenly, or the slide was dirty, or the drop was too large.
+- **Holes or gaps.** The slide was dirty or greasy, or the blood was clotted.
+- **Film extends to the edges.** The drop was too large or the spreader was pushed too far.
+- **Tail too long or too short.** The speed or angle of the spreader was wrong.
+
+Crucial insight: a good thin film is one where the red cells are spread into a single layer in the body and tail of the film, without overlap or gaps. The wedge technique, the size of the drop, the angle of the spreader, and the speed of the push all determine the quality of the film. A poorly made film cannot be rescued by good staining - the fault is in the preparation.`
+    },
+    {
+      q: "The thick film: how is it made, and why is it different?",
+      body: `The thick film is the workhorse of malaria diagnosis. It is prepared differently from the thin film, and it looks different under the microscope - but its sensitivity for detecting low numbers of parasites is far greater.
+
+My Socratic question: if the thick film is so useful for finding parasites, why not use it for everything?
+
+The answer is that the thick film sacrifices morphology for sensitivity. The red cells are deliberately lysed during staining, so individual cell shape is lost - but any parasite inside the red cells is left behind, concentrated on the slide, where it can be found even if there are only a few parasites in the entire sample.
+
+**The standard method for a thick film:**
+
+- Place a larger drop of blood (about 5-10 mm in diameter, or several drops) on a clean glass slide.
+- Using a corner of a spreader slide, spread the drop in a circular or oval motion to cover an area about 1-2 cm in diameter.
+- The film should be thick enough to be opaque when wet, but not so thick that it flakes off during staining.
+- Allow the film to air-dry completely - this is critical. A thick film must be completely dry before staining, which may take 30 minutes to several hours depending on humidity.
+- **Do not fix the thick film with methanol.** The thick film must not be fixed, because the red cells need to be lysed during staining to release the parasites. Fixation would prevent lysis and hide the parasites.
+- Stain the film - typically with Giemsa stain, sometimes with Field's stain for rapid field diagnosis.
+- Examine under the microscope at high magnification (oil immersion).
+
+**What a good thick film looks like:**
+
+- The film is a roughly circular or oval area of concentrated blood.
+- After staining, the background is pale blue-grey, and the white cells, platelets, and parasites stand out against it.
+- The red cells have been lysed, leaving only faint outlines or "ghosts".
+- Parasites are clearly visible as small, coloured forms - rings, trophozoites, schizonts, gametocytes.
+- The film is well spread but not too thick; overly thick films may not stain properly or may flake off.
+
+**Common faults and their causes:**
+
+- **Too thick.** The film does not dry properly, stains poorly, and may flake off. Parasites may be obscured.
+- **Too thin.** The film dries too quickly and may not concentrate enough blood for parasite detection.
+- **Incomplete drying.** Staining a wet thick film causes the blood to wash off; this is one of the most common faults.
+- **Fixing the film.** If methanol is used, the red cells are fixed and do not lyse; parasites remain inside the red cells and are harder to see.
+- **Poor spreading.** Uneven or incomplete spreading produces areas where parasites are missed.
+
+Crucial insight: the thick film is a concentration technique. It is more sensitive than the thin film for detecting parasites, but it loses the ability to see cell morphology. The keys to a good thick film are: a properly sized drop, complete spreading, complete drying before staining, and no methanol fixation. A properly prepared thick film is one of the most sensitive diagnostic tools for malaria and other blood parasites.`
+    },
+    {
+      q: "Staining the films: why do thick and thin films need different treatment?",
+      body: `You have already learned the principles of Romanowsky staining (hem:7). Here, the focus is on how staining is adapted for thin and thick films, because the two films require different handling.
+
+My Socratic question: if both films are stained with a Romanowsky stain, why would the technique differ?
+
+The answer is that the thin film is fixed with methanol to preserve cell morphology, while the thick film must NOT be fixed, so that the red cells lyse during staining and release any parasites. This single difference determines the entire staining method.
+
+**Staining the thin film:**
+
+- The thin film is air-dried and then fixed with methanol (either by dipping the slide in methanol for a few seconds, or by covering the film with undiluted Romanowsky stain, which contains methanol).
+- After fixation, the stain is diluted with buffer (pH 6.4-6.8) and left for a defined time.
+- The slide is washed and dried.
+- Result: red cells are preserved as intact pink discs; white cells have distinct blue-purple nuclei; parasites inside red cells are visible with their red cell background.
+
+**Staining the thick film:**
+
+- The thick film must be completely dry before staining, but it must NOT be fixed with methanol.
+- The film is placed in a staining dish or covered with diluted Giemsa stain (or Field's stain) for a defined time.
+- During staining, the red cells lyse (because they are not fixed), releasing their haemoglobin and leaving the parasites visible against a pale background.
+- The slide is washed and dried.
+- Result: red cells appear as pale "ghosts"; parasites and white cells stand out as coloured forms against the pale background.
+
+**Combined thin and thick films on one slide (the "thick and thin" method):**
+
+In many laboratories, the thin and thick films are made on the same slide, side by side. The thin film is at one end and the thick film at the other. This allows both films to be stained and examined together, which is especially useful for malaria diagnosis:
+
+- The thin film shows the species of parasite and the red cell morphology.
+- The thick film confirms the presence of parasites and allows a more sensitive quantification.
+- The combination is standard in malaria diagnosis.
+
+Crucial insight: the difference in staining between thin and thick films is not arbitrary - it is determined by the diagnostic purpose of each film. The thin film preserves cell morphology; the thick film concentrates parasites. The choice to fix or not to fix, to stain with Giemsa or with a rapid method, and to examine one or both films, all depends on what the clinician needs to know.`
+    },
+    {
+      q: "A good film vs a bad film: how do you know the difference?",
+      body: `Not every blood film is suitable for examination. A poorly prepared film can produce misleading results, or can be entirely useless. Learning to recognise a good film from a bad one is an essential skill.
+
+My Socratic question: you are handed a stained blood film. How would you assess its quality before you begin examining it?
+
+The answer is that a good film has a set of recognisable features, and each fault has a recognisable cause. The most important quality checks are:
+
+**Quality criteria for a thin film:**
+
+- The film has a well-defined head, body, and tail.
+- The film is spread in a single layer in the body and tail.
+- The red cells are evenly distributed, with minimal overlap.
+- The red cells are uniform in size and shape (for a normal blood sample).
+- The white cells are well-stained and clearly identifiable.
+- Platelets are visible and well-stained.
+- There is no precipitate, no water artefact, and no stain deposit.
+- The film does not reach the edges of the slide.
+- The film is neither too thick nor too thin.
+
+**Quality criteria for a thick film:**
+
+- The film is a well-defined area of concentrated blood, usually circular or oval.
+- The film is thick enough to concentrate a suitable volume of blood but not so thick that it fails to dry or stain.
+- The film is completely dry before staining.
+- The film is not fixed with methanol.
+- The film is well stained, with a pale blue-grey background and clearly visible parasites, white cells and platelets.
+- There is no flaking or peeling of the film.
+- There is no precipitate or stain deposit.
+
+**Common faults and their causes (recap):**
+
+- **Too thick (thin film).** Drop too large, spreader too slow or too steep.
+- **Too thin (thin film).** Drop too small, spreader too fast or too shallow.
+- **Chatter / ridges (thin film).** Uneven pressure, dirty spreader, or too large a drop.
+- **Holes / gaps (thin film).** Dirty or greasy slide.
+- **Film at the edges (thin film).** Drop too large or spreader pushed too far.
+- **Wet thick film.** Inadequate drying before staining.
+- **Fixed thick film.** Accidental use of methanol.
+- **Flaking thick film.** Too thick or unevenly spread.
+
+Crucial insight: the quality of a blood film is judged by its ability to allow accurate examination. A good thin film shows individual cells clearly; a good thick film concentrates parasites effectively. A poorly prepared film - whether thin or thick - cannot be rescued by good staining or by a skilled microscopist. The first step in any blood film examination is to assess the quality of the film itself.`
+    },
+    {
+      q: "Examining a blood film: what do you look for, and how do you look?",
+      body: `A stained blood film is a landscape of cells. To examine it properly, you need to know where to look and what to look for. A systematic approach ensures that nothing is missed.
+
+My Socratic question: if you were handed a stained blood film and asked to examine it, where would you start, and what would you look at first?
+
+The answer is that examination follows a defined pattern, and every part of the film has something to show.
+
+**The systematic examination of a thin film:**
+
+- **Low power (10x objective) first.** Scan the whole film to check its overall quality, to find the best area for examination (where the cells are in a single layer), and to look for any obvious abnormalities or large parasites.
+- **Oil immersion (100x objective) for detailed examination.** This is where the individual cell morphology is assessed.
+- **Start with the red cells.** Are they normal in size and shape? Are they uniformly pink? Are there any abnormal forms (sickle cells, target cells, spherocytes, schistocytes, etc.)? Are there any inclusions (Howell-Jolly bodies, Pappenheimer bodies, malarial parasites)?
+- **Examine the white cells.** Identify the different types (neutrophils, lymphocytes, monocytes, eosinophils, basophils) and estimate the differential count. Look for any abnormal or immature forms (blasts, atypical lymphocytes, etc.).
+- **Examine the platelets.** Are they present in adequate numbers? Are they normal in size and shape? Are there any platelet clumps?
+- **Look for any other findings.** Parasites, bacteria, fungi, or other abnormalities.
+
+**The systematic examination of a thick film:**
+
+- **Low power first.** Find a suitable area - not too thick, not too thin, well stained.
+- **Oil immersion for detailed examination.** Scan the film for parasites. Because the red cells are lysed, the parasites appear against a pale background.
+- **Quantify the parasites.** Count the number of parasites per high-power field, or per 100 white cells, or per microlitre (depending on the protocol).
+- **Identify the parasite species** (if possible) by examining the parasite morphology.
+- **Note any other findings** (white cells, platelets, other organisms).
+
+**Quantification of parasites:**
+
+Malaria parasitaemia can be reported in several ways:
+
+- **Parasites per microlitre (parasites/µL)** - calculated from the number of parasites seen and the white cell count or red cell count.
+- **Parasites per high-power field** - a simple count of parasites seen in a set number of fields.
+- **Percentage of red cells parasitised** - used in some settings.
+
+Crucial insight: examining a blood film is a systematic process, not a random scan. Low power first for orientation and overall assessment; oil immersion for detailed cell morphology and parasite detection; a defined sequence (red cells, white cells, platelets, other findings). Every part of the film and every cell type has something to contribute to the diagnosis.`
+    },
+    {
+      q: "Faults and artefacts: what can go wrong with a blood film?",
+      body: `Every blood film is a small work of technique. When the technique goes wrong, the film shows it. Recognising faults and knowing their causes is essential for accurate interpretation.
+
+My Socratic question: you examine a blood film and notice that all the red cells are blue-grey instead of pink. What could have gone wrong?
+
+The answer is that the buffer pH was too alkaline. Each fault has a cause, and recognising the fault allows you to correct the technique or to interpret the film with caution.
+
+**Common faults in thin films and their causes:**
+
+- **Too thick.** Drop too large, spreader too slow, or angle too steep. Cells overlap, making detailed examination difficult.
+- **Too thin.** Drop too small, spreader too fast, or angle too shallow. Cells are too sparse for a proper differential count.
+- **Chatter / ridges.** Uneven pressure on the spreader, dirty spreader, or too large a drop.
+- **Holes / gaps.** Dirty or greasy slide, or clotted blood.
+- **Film extends to the edges.** Drop too large or spreader pushed too far, leaving no margins for handling.
+- **Too pink (acidic).** Buffer pH too low. Red cells stain too pink, nuclei too pale.
+- **Too blue (alkaline).** Buffer pH too high. Red cells stain blue-grey, nuclei too dark.
+- **Precipitate.** Contaminated stain, insufficient washing, or stain too old.
+- **Water artefact.** Inadequate drying before staining, or poor draining after washing.
+- **Fading.** Prolonged storage in light or heat, or inadequate sealing.
+
+**Common faults in thick films and their causes:**
+
+- **Wet film.** Inadequate drying before staining; the film washes off during staining.
+- **Fixed film.** Accidental use of methanol; red cells do not lyse, parasites remain inside red cells and are harder to see.
+- **Too thick.** Poor drying, poor staining, and flaking.
+- **Too thin.** Insufficient concentration; parasites may be missed.
+- **Flaking.** Too thick or unevenly spread; the film peels off during staining or storage.
+- **Precipitate.** Same causes as for thin films.
+
+**Why faults matter:**
+
+- A faulty film may produce misleading results. For example, a film that is too thick may hide cells in the overlap; a film that is too pink may have poorly stained nuclei that are difficult to identify; a wet thick film may lose its parasites during staining.
+- A faulty film should be recognised and, if possible, a new film should be prepared.
+- When a fault cannot be corrected (for example, if a patient's sample is limited), the microscopist must interpret the film with caution and document the fault.
+
+Crucial insight: faults in blood films are not random - they have specific causes, and each cause produces a recognisable appearance. Learning to recognise faults and to trace them to their cause is part of the professional skill of the haematology laboratory. A good microscopist does not just interpret films - they also judge their quality and know when a film is not fit for diagnostic use.`
+    },
+    {
+      q: "Clinical significance: when the blood film changes the diagnosis.",
+      body: `The blood film is not just a test - it is a window into the patient. In many conditions, the film provides the diagnosis or confirms it; in others, it provides critical information that no other test can give. Understanding the clinical significance of blood film examination is essential for every laboratory scientist.
+
+My Socratic question: if a full blood count can tell you the numbers of red cells, white cells and platelets, why would you still need to examine a film?
+
+The answer is that the full blood count gives the numbers; the film gives the diagnosis.
+
+**Clinical situations where the blood film is essential:**
+
+- **Anaemia.** The film shows the size, shape, and colour of red cells. Microcytic hypochromic cells suggest iron deficiency; macrocytic cells suggest B12 or folate deficiency; sickle cells suggest sickle cell disease; spherocytes suggest hereditary spherocytosis; schistocytes suggest haemolysis. The film can point to the diagnosis when the numbers alone cannot.
+
+- **Leukaemia.** The film may show blast cells, immature white cells, or abnormal white cell forms. In acute leukaemia, the diagnosis is often first suspected from the film. In chronic leukaemias, the film shows the characteristic mature but abnormal cells.
+
+- **Lymphoma and other lymphoid disorders.** The film may show atypical lymphocytes or abnormal lymphoid cells, prompting further investigation.
+
+- **Malaria and other parasites.** The thick and thin films are essential for diagnosing malaria, and the film can identify the species and quantify the parasitaemia. Other blood parasites (trypanosomes, babesia, microfilariae) are also detected on blood films.
+
+- **Thrombocytopenia and platelet disorders.** The film confirms the platelet count, distinguishes true thrombocytopenia from pseudothrombocytopenia (platelet clumping), and shows platelet size and morphology.
+
+- **Bone marrow disorders.** The film may show immature cells, abnormal cells, or characteristic features that prompt bone marrow examination.
+
+- **Infections.** The film may show bacteria (in severe sepsis), fungi (in immunocompromised patients), or other organisms.
+
+- **Haemoglobinopathies.** The film may show sickle cells, target cells, or other abnormal forms that suggest haemoglobinopathy.
+
+- **Inherited red cell disorders.** The film may show spherocytes, elliptocytes, ovalocytes, or other abnormalities that suggest an inherited red cell disorder.
+
+**The film as a screening tool:**
+
+The blood film is not just a diagnostic tool - it is also a screening tool. In many laboratories, the film is examined as part of the full blood count whenever the count is abnormal, when the patient has symptoms, or when a specific diagnosis is suspected. The film may reveal the unexpected - a parasite, an abnormal cell, a clue to a systemic disease.
+
+Crucial insight: the blood film is one of the most valuable tests in medicine. It is inexpensive, it requires only a drop of blood, and it can reveal a diagnosis that no other test can make. In the hands of a skilled microscopist, the film is not just a laboratory test - it is a clinical consultation.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for blood smears and films, in five lines.
+
+**The two types of film:** the thin film (a single layer of cells, used for cell morphology, differential counts, and intracellular parasites) and the thick film (a concentrated drop of blood, used for parasite detection, especially malaria). Both are usually made from the same drop.
+
+**The thin film technique:** a small drop is spread using the wedge (push) technique; the film is air-dried, fixed with methanol, and stained with a Romanowsky stain. A good film has a head, body and tail, with cells spread in a single layer.
+
+**The thick film technique:** a larger drop is spread over a circular area, allowed to dry completely, and stained WITHOUT fixation (so the red cells lyse and release parasites). The thick film is more sensitive for parasite detection but loses cell morphology.
+
+**Staining:** thin films are fixed and stained; thick films are not fixed and are stained so that red cells lyse. Both are stained with Romanowsky stains (Giemsa for parasites; Wright or Leishman for routine).
+
+**Quality and examination:** a good film has no faults; a faulty film has recognisable causes and must be interpreted with caution. Examination is systematic - low power first, then oil immersion, with a defined sequence (red cells, white cells, platelets, other findings). The blood film is essential for diagnosing anaemia, leukaemia, parasites, platelet disorders and many other conditions.
+
+Now your final test. A 28-year-old man returns from a trip to a malaria-endemic region with fever, chills and headache. A blood sample is collected. The laboratory prepares a thick film and a thin film on the same slide, stains them with Giemsa, and examines them under the microscope.
+
+Question one: why are both a thick film and a thin film prepared for this patient?
+Question two: the thick film is prepared correctly, but the thin film is too thick, with cells overlapping and difficult to distinguish. What should the laboratory do, and what would be the consequences of examining the thin film as it is?
+Question three: the thick film shows numerous ring-form parasites inside red cells. What does this finding suggest, and how would you report it?
+
+Work them through before reading on.
+
+My answers. One: both films are prepared because they serve different purposes. The thick film is more sensitive for detecting parasites, especially when parasite numbers are low, and it is the primary film for malaria diagnosis. The thin film allows the species of parasite to be identified and the red cell morphology to be examined. Together they give both sensitivity and specificity, and this combination is standard for malaria diagnosis. Two: the thin film should be discarded and a new one prepared, because it is not fit for diagnostic use. Examining the too-thick film would risk missing parasites, failing to identify the species correctly, and misinterpreting red cell morphology. A poorly prepared film cannot be rescued by good staining or careful examination. Three: the finding of numerous ring-form parasites inside red cells on the thick film is suggestive of malaria (most commonly Plasmodium falciparum, but other species are possible). The report should include: the presence of parasites, the species if identifiable (from the thin film), the stage of the parasites (ring forms, trophozoites, schizonts, gametocytes), and an estimate of the parasitaemia (e.g. parasites per microlitre, or percentage of red cells parasitised). The clinician uses this information to guide treatment.
+
+If those came cleanly, you understand the preparation, staining and examination of thick and thin blood films - the foundation of diagnostic haematology.`
+    }
+  ],
+
+  theory: [
+    { q: "Explain why a drop of blood must be spread into a film before it can be examined under the microscope.", a: "In an unsmeared drop, the cells are packed together and overlap, making individual cells and their structures impossible to see. Spreading the drop into a thin film separates the cells into a single layer, so each cell can be examined individually. The film allows the microscope to reveal details - cell shape, nuclear structure, granules and parasites - that are invisible in a drop." },
+    { q: "Distinguish the thin film from the thick film and state the purpose of each.", a: "A thin film is a single layer of cells spread thinly across the slide; it is used for cell morphology, differential white cell counts, and the detection of intracellular parasites. A thick film is a larger drop of blood spread over a small area and dried without being spread thin; it is used for parasite detection (especially malaria) because it concentrates a larger volume of blood, but it loses cell morphology because the red cells are lysed during staining." },
+    { q: "Describe the wedge (push) technique for preparing a thin blood film.", a: "Place a small drop of blood near one end of a clean slide. Hold a second spreader slide at about 30-45 degrees, touch it to the drop, and push it smoothly and steadily along the length of the slide, drawing the blood into a thin film. Allow the film to air-dry. The film should have a head, body, and tail, with cells spread in a single layer." },
+    { q: "Describe the method for preparing a thick blood film and explain why it must not be fixed with methanol.", a: "Place a larger drop of blood on a clean slide and spread it in a circular or oval motion using the corner of a spreader slide, to cover an area about 1-2 cm in diameter. Allow it to air-dry completely. It must NOT be fixed with methanol because the red cells need to be lysed during staining to release any parasites; fixation would preserve the red cells and hide the parasites." },
+    { q: "Explain the difference in staining between thin and thick films.", a: "The thin film is fixed with methanol (present in undiluted Romanowsky stain) to preserve cell morphology, then stained with diluted stain and buffer at controlled pH. The thick film is NOT fixed, so the red cells lyse during staining and the parasites are left against a pale background. This difference is essential: fixation would defeat the purpose of the thick film." },
+    { q: "List the quality criteria for a good thin film.", a: "A well-defined head, body, and tail. A single layer of cells in the body and tail. Even distribution of red cells with minimal overlap. Well-stained red cells, white cells, and platelets. No precipitate, water artefact, or stain deposit. The film does not extend to the edges of the slide. The film is neither too thick nor too thin." },
+    { q: "List the quality criteria for a good thick film.", a: "A well-defined area of concentrated blood (circular or oval). Thick enough to concentrate a suitable volume, but not so thick that it fails to dry or flakes off. Completely dry before staining. Not fixed with methanol. Well stained, with a pale blue-grey background and clearly visible parasites, white cells and platelets. No precipitate or stain deposit." },
+    { q: "Describe the systematic examination of a thin blood film.", a: "Examine at low power first to assess overall quality and locate the best area. Then examine at oil immersion, starting with red cells (size, shape, colour, inclusions, parasites), then white cells (type, differential count, abnormal forms), then platelets (number, size, clumping), and finally any other findings. The examination should be systematic and thorough." },
+    { q: "Explain how the thick and thin films are used together in malaria diagnosis.", a: "The thick film is used for detection and quantification of parasites because it concentrates a larger volume of blood and is more sensitive when parasite numbers are low. The thin film is used for species identification and examination of red cell morphology. Together they give both sensitivity and specificity. Both are often made on the same slide (thick and thin method)." },
+    { q: "Describe the significance of the blood film in clinical diagnosis.", a: "The blood film provides diagnostic information that no other test can give. It is essential for diagnosing anaemia (based on red cell morphology), leukaemia (based on white cell morphology and immature forms), parasites (malaria, trypanosomes, babesia), platelet disorders (platelet clumping, size, morphology), inherited red cell disorders, and many other conditions. It is inexpensive, rapid, and often the first test to suggest a diagnosis." }
+  ],
+
+  videos: [
+    { channel: "Hematology", title: "Thin and Thick Blood Film Preparation", note: "Step-by-step demonstration of the wedge technique for thin films and the spreading technique for thick films.", url: "https://www.youtube.com/results?search_query=thin+thick+blood+film+preparation+wedge+technique" },
+    { channel: "Hematology", title: "Malaria Diagnosis - Thick and Thin Films", note: "How to prepare, stain and examine thick and thin films for malaria parasites.", url: "https://www.youtube.com/results?search_query=malaria+diagnosis+thick+thin+blood+films" },
+    { channel: "Hematology", title: "Blood Film Examination - A Systematic Approach", note: "How to examine a blood film systematically, from low power to oil immersion.", url: "https://www.youtube.com/results?search_query=blood+film+examination+systematic+approach+hematology" }
+  ],
+
+  mcqs: [
+    // ===== Note 1 (Q1-5): why films are needed =====
+    { q: "A blood film is necessary because:", o: ["It prevents clotting", "It separates cells into a single layer for examination", "It stains the cells", "It sterilises the sample"], a: 1, w: "Spreading blood into a film separates the cells into a single layer for examination." },
+    { q: "An unsmeared drop of blood under the microscope is:", o: ["Easy to examine", "A thick, opaque mass of overlapping cells", "Clear and transparent", "Composed only of plasma"], a: 1, w: "In an unsmeared drop, cells are packed together and cannot be individually examined." },
+    { q: "The main purpose of preparing a blood film is to:", o: ["Kill bacteria", "Allow individual cells to be seen clearly", "Increase cell count", "Preserve the sample"], a: 1, w: "The film allows individual cells and their structures to be seen clearly." },
+    { q: "A blood film is described as the fundamental tool of:", o: ["Microbiology", "Biochemistry", "Haematology", "Histology"], a: 2, w: "The blood film is the fundamental diagnostic tool of haematology." },
+    { q: "A properly prepared blood film allows examination of:", o: ["Only red cells", "Only white cells", "Individual cells, their morphology, and any parasites", "Only plasma"], a: 2, w: "A properly prepared film allows examination of cell morphology and parasites." },
+
+    // ===== Note 2 (Q6-10): thin vs thick =====
+    { q: "The two main types of blood film are:", o: ["Fresh and fixed", "Thin and thick", "Stained and unstained", "Wet and dry"], a: 1, w: "The two main types are thin and thick films." },
+    { q: "The thin film is best used for:", o: ["Detecting low numbers of parasites", "Cell morphology and differential counts", "Concentrating parasites", "Measuring clotting times"], a: 1, w: "The thin film is used for cell morphology and differential counts." },
+    { q: "The thick film is best used for:", o: ["Differential counts", "Detecting low numbers of parasites", "Examining red cell shape", "Measuring platelet count"], a: 1, w: "The thick film is more sensitive for detecting parasites because it concentrates blood." },
+    { q: "The thick film loses cell morphology because:", o: ["It is too thin", "The red cells are lysed during staining", "It is fixed with methanol", "It is not stained"], a: 1, w: "The red cells are lysed during staining, so individual cell morphology is lost." },
+    { q: "In routine practice, thin and thick films are usually made:", o: ["On different days", "From the same drop of blood", "From different patients", "From serum only"], a: 1, w: "Both films are usually made from the same drop of blood." },
+
+    // ===== Note 3 (Q11-15): thin film technique =====
+    { q: "The standard technique for making a thin film is called:", o: ["The wedge (push) technique", "The drop technique", "The spinning technique", "The spread technique"], a: 0, w: "The wedge (push) technique is the standard method for a thin film." },
+    { q: "The angle of the spreader slide for a thin film should be about:", o: ["10 degrees", "30 to 45 degrees", "60 to 90 degrees", "90 degrees"], a: 1, w: "The spreader slide is held at about 30 to 45 degrees." },
+    { q: "The size of the drop for a thin film should be about:", o: ["1 mm", "2 to 3 mm", "5 to 10 mm", "20 mm"], a: 1, w: "The drop for a thin film is about 2 to 3 mm in diameter." },
+    { q: "A good thin film has:", o: ["Only a head", "Only a tail", "A head, body, and tail", "No defined regions"], a: 2, w: "A good thin film has a head, body, and tail." },
+    { q: "If the thin film is too thick, the cause is most likely:", o: ["Too small a drop", "Too large a drop, too slow a push, or too steep an angle", "Too fast a push", "Too shallow an angle"], a: 1, w: "A thick film can be caused by a large drop, slow push, or steep angle." },
+
+    // ===== Note 4 (Q16-20): thick film technique =====
+    { q: "The drop for a thick film is typically:", o: ["1 mm", "2-3 mm", "5-10 mm", "20-30 mm"], a: 2, w: "The drop for a thick film is larger, about 5-10 mm." },
+    { q: "The thick film must be completely dry before staining because:", o: ["It is too thick otherwise", "A wet film will wash off during staining", "Dry films stain more darkly", "It is required by law"], a: 1, w: "A wet thick film will wash off during staining." },
+    { q: "The thick film must NOT be fixed with methanol because:", o: ["Methanol is toxic", "Fixation prevents red cell lysis and hides parasites", "Methanol is not available", "It is not necessary"], a: 1, w: "Fixation would prevent the red cells from lysing, hiding the parasites." },
+    { q: "The thick film is usually stained with:", o: ["Wright stain", "Giemsa stain", "Leishman stain", "Haematoxylin"], a: 1, w: "The thick film is typically stained with Giemsa stain." },
+    { q: "A good thick film after staining shows:", o: ["Intact red cells", "A pale blue-grey background with visible parasites", "No visible cells", "Only white cells"], a: 1, w: "After staining, the thick film has a pale background with clearly visible parasites." },
+
+    // ===== Note 5 (Q21-25): staining differences =====
+    { q: "The thin film is fixed with methanol before staining to:", o: ["Preserve cell morphology", "Lysed the cells", "Prevent staining", "Make the film thicker"], a: 0, w: "Fixation preserves cell morphology in the thin film." },
+    { q: "The thick film is not fixed so that:", o: ["The film dries faster", "The red cells lyse and release parasites", "The stain penetrates faster", "The white cells are preserved"], a: 1, w: "Without fixation, the red cells lyse during staining and release parasites." },
+    { q: "The buffer pH for Romanowsky staining is usually:", o: ["3.0-4.0", "6.4-7.2", "8.0-9.0", "10.0-11.0"], a: 1, w: "The buffer pH is usually 6.4 to 7.2." },
+    { q: "If the buffer is too acidic, the film appears:", o: ["Too blue", "Too pink", "Too dark", "Colourless"], a: 1, w: "An acidic buffer makes the film appear too pink." },
+    { q: "The combined thick and thin film method is particularly useful for:", o: ["Routine blood counts", "Malaria diagnosis", "Coagulation testing", "Glucose testing"], a: 1, w: "The thick and thin method is standard for malaria diagnosis." },
+
+    // ===== Note 6 (Q26-30): quality assessment =====
+    { q: "A good thin film should have:", o: ["Cells overlapping heavily", "Cells spread in a single layer with minimal overlap", "No cells visible", "Only white cells"], a: 1, w: "A good thin film has cells spread in a single layer with minimal overlap." },
+    { q: "A film that extends to the edges of the slide is:", o: ["Ideal", "A fault, because it leaves no margin for handling", "Required for staining", "Better for examination"], a: 1, w: "A good film leaves margins for handling." },
+    { q: "Chatter or ridges on a thin film are caused by:", o: ["Too small a drop", "Uneven pressure, dirty spreader, or too large a drop", "Too fast a push", "Too shallow an angle"], a: 1, w: "Chatter is caused by uneven pressure, a dirty spreader, or too large a drop." },
+    { q: "A thick film that flakes off during staining is likely:", o: ["Too thin", "Too thick or unevenly spread", "Properly made", "Fixed with methanol"], a: 1, w: "A thick film that flakes is too thick or unevenly spread." },
+    { q: "The first step in examining any blood film is:", o: ["Oil immersion immediately", "Assessment of the film's quality", "Counting platelets", "Staining the film"], a: 1, w: "The film's quality should be assessed before detailed examination." },
+
+    // ===== Note 7 (Q31-35): examination =====
+    { q: "A blood film should first be examined at:", o: ["Oil immersion", "Low power", "High power", "Any magnification"], a: 1, w: "A blood film should first be examined at low power to assess quality and locate the best area." },
+    { q: "The area of the thin film best for detailed examination is:", o: ["The head", "The body and tail, where cells are in a single layer", "The very edge", "Any area"], a: 1, w: "The body and tail of the thin film, where cells are in a single layer, are best for examination." },
+    { q: "In examining a thin film, which cells are usually assessed first?", o: ["Red cells", "White cells", "Platelets", "Parasites"], a: 0, w: "The red cells are usually assessed first." },
+    { q: "A thick film is examined at oil immersion to:", o: ["Count red cells", "Look for parasites against a pale background", "Measure platelet size", "Assess cell morphology"], a: 1, w: "The thick film is examined at oil immersion for parasite detection." },
+    { q: "Malaria parasitaemia can be reported as:", o: ["Only the presence or absence of parasites", "Parasites per microlitre, per high-power field, or percentage of red cells parasitised", "Only the species of parasite", "Only the stage of the parasite"], a: 1, w: "Parasitaemia can be reported in several ways, including parasites per microlitre." },
+
+    // ===== Note 8 (Q36-40): faults and artefacts =====
+    { q: "A thin film that is too pink suggests:", o: ["Buffer too alkaline", "Buffer too acidic", "Staining time too long", "Stain too old"], a: 1, w: "A pink film suggests the buffer is too acidic." },
+    { q: "A thin film that is too blue suggests:", o: ["Buffer too acidic", "Buffer too alkaline", "Staining time too short", "Film too thin"], a: 1, w: "A blue film suggests the buffer is too alkaline." },
+    { q: "Water artefact on a blood film is caused by:", o: ["Too much stain", "Inadequate drying or poor draining after washing", "Too long staining", "Too old stain"], a: 1, w: "Water artefact is caused by inadequate drying or poor draining." },
+    { q: "A fixed thick film is a problem because:", o: ["It dries too slowly", "The red cells do not lyse and parasites are hidden", "It stains too darkly", "It flakes off"], a: 1, w: "Fixation prevents red cell lysis and hides parasites." },
+    { q: "A faulty blood film should be:", o: ["Examined anyway", "Discarded and a new one prepared", "Stained again", "Examined at low power only"], a: 1, w: "A faulty film should be discarded and a new one prepared." },
+
+    // ===== Note 9 (Q41-45): clinical significance =====
+    { q: "The blood film is essential for diagnosing:", o: ["Only anaemia", "Only leukaemia", "A wide range of haematological and parasitic conditions", "Only infections"], a: 2, w: "The film is essential for diagnosing a wide range of conditions." },
+    { q: "Microcytic hypochromic red cells on a blood film suggest:", o: ["B12 deficiency", "Iron deficiency", "Sickle cell disease", "Hereditary spherocytosis"], a: 1, w: "Microcytic hypochromic cells suggest iron deficiency." },
+    { q: "Blast cells on a blood film suggest:", o: ["Acute leukaemia", "Chronic infection", "Iron deficiency", "Haemophilia"], a: 0, w: "Blast cells suggest acute leukaemia." },
+    { q: "Sickle cells on a blood film suggest:", o: ["Iron deficiency", "Sickle cell disease", "B12 deficiency", "Thalassaemia only"], a: 1, w: "Sickle cells suggest sickle cell disease." },
+    { q: "Platelet clumping on a blood film is important because it can:", o: ["Increase platelet count", "Falsely lower the platelet count (pseudothrombocytopenia)", "Cause bleeding", "Improve staining"], a: 1, w: "Platelet clumping can falsely lower the automated platelet count." },
+
+    // ===== Note 10 (Q46-50): consolidation =====
+    { q: "The two types of blood film are:", o: ["Fresh and fixed", "Thin and thick", "Wet and dry", "Stained and unstained"], a: 1, w: "Thin and thick are the two types of blood film." },
+    { q: "The thick film is best for:", o: ["Differential counts", "Parasite detection", "Red cell morphology", "Platelet counts"], a: 1, w: "The thick film is best for parasite detection." },
+    { q: "The thick film must NOT be fixed because:", o: ["It is not necessary", "Fixation prevents red cell lysis", "It is too thick", "It is too thin"], a: 1, w: "Fixation prevents the red cell lysis needed for parasite detection." },
+    { q: "A good thin film has:", o: ["Cells overlapping heavily", "A head, body and tail with cells in a single layer", "No cells", "Cells only at the edges"], a: 1, w: "A good thin film has a head, body and tail with cells in a single layer." },
+    { q: "Both thick and thin films are usually prepared together for:", o: ["Routine blood counts", "Malaria diagnosis", "Coagulation testing", "Glucose testing"], a: 1, w: "The combination is standard for malaria diagnosis." }
+  ]
+};
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -28642,6 +29772,9 @@ const CONTENT = {
   "hem:3": T_HEM_LEUKOPOIESIS,
   "hem:4": T_HEM_THROMBOPOIESIS,
   "hem:5": T_HEM_ANTICOAGULANTS,
+  "hem:6": T_HEM_PHLEBOTOMY,
+  "hem:7": T_HEM_STAINS,
+  "hem:8": T_HEM_BLOOD_SMEARS,
 
 };
 
