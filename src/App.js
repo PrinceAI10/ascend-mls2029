@@ -26726,6 +26726,1492 @@ Crucial insight: cholinergic pharmacology is the practical application of recept
   ],
 };
 
+// ==================== HAEMATOLOGY TOPIC 0: INTRODUCTION TO HAEMATOLOGY ====================
+const T_HEM_INTRO = {
+  courseId: "hem",
+  topicIndex: 0,
+  title: "Introduction to Haematology",
+  minutes: 30,
+  note: [
+    {
+      q: "Why does haematology deserve its own science, when blood is just one tissue?",
+      body: `Medicine is divided into systems — cardiology for the heart, neurology for the nerves, nephrology for the kidneys. Each is defined by one organ. Haematology is different: it is defined not by an organ but by a fluid that flows through every organ at once. Blood touches everything.
+
+My Socratic question: if blood is just one tissue, why would a whole medical specialty — with its own laboratories, its own diseases, its own treatments — be built around it?
+
+The answer is that blood is not one thing. It is three things in one: a transport system, a defence system, and a repair system, all circulating together. It carries oxygen, fuels every cell, fights infection, and seals wounds. When any one of those jobs fails, the consequences reach every organ in the body. That is why haematology is not a narrow specialty — it is a window into the whole of medicine.
+
+The word itself comes from two Greek roots: haima, meaning blood, and logos, meaning study or reason. Haematology is the study of blood — not just its cells, but the organs that make them, the diseases that afflict them, and the tests that reveal them.
+
+Crucial insight: haematology is the study of blood and blood-forming tissues, and of the diseases that affect them. It exists as a specialty because blood is the one tissue the entire body depends on — and its disorders reach every system. As a laboratory scientist, you will spend your career looking at blood, and this first topic explains why that work matters.`
+    },
+    {
+      q: "How did people study blood before they could see its cells?",
+      body: `For most of human history, the microscope did not exist. Physicians could see blood with their eyes, feel a pulse, watch a wound bleed — but they had no way to see what blood was actually made of. And yet they made observations that still shape how we describe it today.
+
+My Socratic question: if you cannot see cells, how can you learn anything useful about blood?
+
+The answer is that early physicians studied what they could observe — the colour, the volume, the flow, the behaviour of blood outside the body. And surprisingly, some of those observations were correct.
+
+The ancient Greeks believed that blood was one of four "humours" — along with phlegm, yellow bile and black bile — and that health was the balance of the four. This humoral theory was wrong in detail, but its central intuition — that the state of the blood reflects the state of the body — was exactly right.
+
+The first crude blood transfusions were attempted in the 1600s, mostly between animals and humans, and they mostly failed. The idea was right, but no one yet understood blood groups or compatibility. It would be another two and a half centuries before transfusion became safe.
+
+Crucial insight: haematology began as careful observation of blood's visible properties long before its microscopic structure was understood. Ancient medicine's humoral theory was inaccurate, but its instinct — that the blood reflects the body — was the seed that later grew into the modern science. Understanding this history shows that science often advances by correcting intuition, not by starting from nothing.`
+    },
+    {
+      q: "What invention finally allowed medicine to see inside blood?",
+      body: `Every science has a moment when a new tool opens a new world. For haematology, that moment was the invention of the microscope — and the realisation, in the seventeenth century, that blood is not a red liquid but a red liquid full of cells.
+
+My Socratic question: what would you see if you put a drop of blood under the very first microscopes, and why was that a revolutionary thing to see?
+
+The answer is that you would see tiny round discs, packed together, and a few scattered larger cells among them. For the first time, the blood's cellular nature was visible. What had looked like a uniform fluid was revealed to be a suspension of living cells.
+
+The key figure was Antonie van Leeuwenhoek, a Dutch draper in the 1600s, who built extraordinary single-lens microscopes with tiny glass beads. He was the first to see and describe red blood cells, and later, capillaries and even sperm cells. His observations were not understood immediately, but they began the transformation of haematology from a branch of humoral philosophy into a cellular science.
+
+Other early microscopists, including Marcello Malpighi and Jan Swammerdam, contributed observations of blood in living tissues. By the end of the 1600s, the idea that blood contains cells — and that those cells matter — was on solid ground.
+
+Crucial insight: the microscope is the founding instrument of haematology. It revealed that blood is not a fluid but a cell suspension, and turned the visible properties of blood into cellular facts. The microscope you will use in the laboratory is the direct descendant of Leeuwenhoek's bead lenses — and it is still the instrument on which most haematological diagnosis depends.`
+    },
+    {
+      q: "When did blood transfusion become safe, and who made it possible?",
+      body: `Transfusion is one of the most useful procedures in medicine, and for most of history it was lethal. When a patient received blood from the wrong donor, the immune system attacked the transfused cells, and the patient died. For two and a half centuries after the first attempts, no one could explain why some transfusions worked and others did not.
+
+My Socratic question: if you were a doctor in 1900 and a transfusion was fatal, what information would you need to avoid that death?
+
+The answer is information about blood groups — the different antigens on red blood cells that make one person's blood incompatible with another's. This was discovered by Karl Landsteiner, an Austrian physician, working in Vienna at the very end of the nineteenth century.
+
+In 1901, Landsteiner mixed sera and red cells from different people and observed that some combinations clumped while others did not. This was the discovery of the ABO blood group system — the finding that human red cells carry A and B antigens in different combinations, and that people carry antibodies against the antigens they lack. He was awarded the Nobel Prize in 1930 for the discovery.
+
+The Rh system, the second most important blood group system, was discovered in 1940 by Landsteiner and Alexander Wiener, working with rhesus monkeys. Together, ABO and Rh made safe transfusion possible — and made pregnancy safe for Rh-negative mothers.
+
+Crucial insight: the discovery of blood groups turned transfusion from a lethal gamble into a routine, life-saving procedure. Landsteiner's work — the ABO system in 1901 and the Rh system in 1940 — is the reason every blood sample is now typed and cross-matched before transfusion. It is also the reason a laboratory scientist is the first person to look at a transfusion request, and often the person who prevents the wrong unit from being given.`
+    },
+    {
+      q: "What did the twentieth century add to haematology, beyond transfusion?",
+      body: `Landsteiner's blood groups solved one great problem — how to give blood safely. But the twentieth century added several more discoveries, each transforming a different part of what haematology could do.
+
+My Socratic question: transfusion addresses one problem — the loss of blood. What other haematological problems would you expect medicine to solve in the twentieth century?
+
+The answer is that the twentieth century saw solutions to several: how to stop blood clotting when it should not, how to make it clot when it should, how to treat cancers of the blood, and how to diagnose them all reliably.
+
+Two discoveries stand out. First, in the 1920s, heparin was discovered — the natural anticoagulant that would make surgery, dialysis and transfusion safe. Its history is remarkable: it was discovered in liver extracts by Jay McLean, a medical student, and developed into a usable drug over the next two decades. Second, in the 1940s and after, the structure of haemoglobin was worked out — culminating in Max Perutz and John Kendrew's work on protein structure, awarded the Nobel Prize in 1962 — which made it possible to understand the molecular basis of haemoglobin disorders like sickle cell disease.
+
+Alongside these, chemotherapy for leukaemia and lymphoma was developed, bone marrow transplantation became possible, flow cytometry automated the counting and characterisation of cells, and molecular diagnostics began to detect genetic abnormalities at the DNA level. By the end of the twentieth century, haematology was a science of molecules as well as cells.
+
+Crucial insight: the twentieth century transformed haematology from a morphological science into a molecular one. Anticoagulants, haemoglobin structure, chemotherapy, transplantation, flow cytometry and molecular diagnostics all matured in this period. The laboratory scientist of today works in the world those discoveries built — but the fundamental principles behind them are the same as they were a century ago.`
+    },
+    {
+      q: "What exactly does a haematology laboratory do today?",
+      body: `When you step into a haematology laboratory, you see analysers, microscopes, centrifuges, and racks of blood tubes. Each instrument and each tube is part of a single workflow: turn a patient's blood into information a doctor can act on.
+
+My Socratic question: a doctor suspects anaemia. What would the laboratory actually do to confirm it?
+
+The answer is a sequence of tests, each answering a specific question, and each using a different technique you will learn in this course.
+
+The main tests in a routine haematology laboratory:
+
+- Full blood count (FBC) — the most common test. It measures haemoglobin, red cell count, haematocrit, white cell count, platelet count, and red cell indices (size and haemoglobin content). Most FBCs are done on automated analysers, with a blood film reviewed under the microscope when something looks abnormal.
+- Blood film examination — a stained film of peripheral blood is examined under the microscope to assess cell morphology, identify abnormal cells, and detect parasites such as malaria.
+- Coagulation tests — measuring how long blood takes to clot (prothrombin time, activated partial thromboplastin time, fibrinogen, D-dimer), used to investigate bleeding and clotting disorders.
+- Special tests — haemoglobin electrophoresis for haemoglobinopathies, flow cytometry for leukaemia and lymphoma, bone marrow examination for unexplained cytopenias.
+- Blood transfusion testing — blood group typing and cross-matching, done before any transfusion.
+
+Everything in this course — the stains, the cell counts, the films, the microscopes, the quality assurance — exists to make these tests reliable.
+
+Crucial insight: the haematology laboratory is a factory that turns blood into clinical information. Every test — FBC, blood film, coagulation, special investigations, transfusion testing — exists to answer a specific clinical question, and every technique you will learn serves one of those tests. When you understand the tests, you understand the laboratory.`
+    },
+    {
+      q: "Where does haematology sit among the medical laboratory sciences?",
+      body: `Haematology is one discipline among several in the medical laboratory — along with clinical chemistry, microbiology, histopathology, immunology and others. Each has its own samples, its own instruments, and its own diseases. What makes haematology distinctive?
+
+My Socratic question: many laboratory disciplines look at blood. What does haematology look at that the others do not?
+
+The answer is that haematology looks at the cells of the blood and the process of clotting. Clinical chemistry looks at the chemical composition of blood — glucose, electrolytes, enzymes. Microbiology looks at the organisms that may be present in blood. Immunology looks at antibodies and immune cells. Haematology looks at the blood cells themselves — their number, their shape, their maturity, and their behaviour in clotting.
+
+This gives haematology a set of defining concerns:
+
+- The production of blood cells — where they are made (bone marrow), how they are made (haematopoiesis), and how production is controlled.
+- The morphology of blood cells — their normal appearance and the changes that indicate disease.
+- The function of blood cells — what red cells, white cells and platelets do.
+- The process of haemostasis — how blood clots, and how that process is regulated.
+- The diseases of blood — anaemias, leukaemias, lymphomas, bleeding disorders, thromboses, and haemoglobinopathies.
+
+Crucial insight: haematology is the study of the cellular and clotting components of blood. It overlaps with the other laboratory disciplines — all of them work on blood — but its focus is unique: the cells themselves and the process that stops blood from leaking. Understanding where haematology sits among the other laboratory sciences gives you the framework for the rest of your training.`
+    },
+    {
+      q: "Why is haematology important for the individual patient?",
+      body: `Haematological tests are among the most commonly ordered in all of medicine. A full blood count, in particular, is done so routinely that it is almost a reflex — every patient admitted to hospital, every patient before surgery, every patient with unexplained fatigue. Why is it ordered so often?
+
+My Socratic question: if a patient comes into hospital with a fever and no obvious cause, why would a doctor order a full blood count before almost anything else?
+
+The answer is that haematological tests are a window into the whole body. They can reveal infection, inflammation, anaemia, bleeding risk, clotting risk, bone marrow failure, and cancer — all from a single sample of blood.
+
+Specific ways haematology serves the patient:
+
+- Diagnosis — for a patient with anaemia, the FBC and film define the type of anaemia and often its cause. For a patient with bleeding, coagulation tests identify the defect. For a patient with a suspected leukaemia, the film and bone marrow confirm the diagnosis.
+- Monitoring — for a patient on anticoagulants, regular coagulation tests ensure the dose is safe. For a patient on chemotherapy, FBCs track the effect on the bone marrow.
+- Screening — newborn screening for haemoglobinopathies, antenatal blood group typing, and routine health checks all use haematological tests.
+- Treatment — transfusion, anticoagulation, and chemotherapy all depend on haematology for both the decision and the monitoring.
+
+Crucial insight: haematology serves the patient at every stage — diagnosis, monitoring, screening, and treatment. Because blood circulates through every organ, its state reflects the state of the whole patient. When you run a full blood count, you are not running one test — you are taking a system-wide snapshot. This is why haematology is so central to clinical medicine, and why its accuracy matters so much.`
+    },
+    {
+      q: "Why is haematology important for the community and public health?",
+      body: `Haematology is not only about the individual patient. Some haematological conditions are so common, so costly, or so preventable that they matter at the level of whole populations — and this is where laboratory science meets public health.
+
+My Socratic question: what would a ministry of health need to know about haematological disease in its population, and how would it get that information?
+
+The answer is that the ministry would need to know the prevalence of haemoglobinopathies, the incidence of anaemia, the burden of malaria, the safety of the blood supply, and the effectiveness of screening programmes. All of that information comes from the haematology laboratory.
+
+Specific public health areas where haematology matters:
+
+- Haemoglobinopathies — sickle cell disease and thalassaemia are among the most common genetic disorders worldwide. Newborn screening, genetic counselling and public education all depend on haematology. In Ghana and much of West Africa, sickle cell disease has a particularly high prevalence.
+- Anaemia — iron-deficiency anaemia affects a quarter of the world's population, with the highest burden in low- and middle-income countries. Its detection and monitoring are haematology's job.
+- Malaria — one of the world's biggest infectious disease killers, diagnosed by examining a stained blood film. The laboratory is at the centre of malaria control.
+- Blood safety — every unit of blood transfused must be screened for HIV, hepatitis B, hepatitis C and other infections. This is haematology at work on a population scale.
+- Transfusion services — national blood services depend on haematology for typing, cross-matching and quality assurance.
+
+Crucial insight: haematology is not just a clinical discipline — it is a public health discipline. Its tests protect populations as well as patients, and its data shapes health policy. In your career, you will contribute not just to individual diagnoses but to a system that protects whole communities.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for the introduction to haematology, in five lines.
+
+The subject: haematology is the study of blood and blood-forming tissues, and the diseases that affect them — a specialty defined by a fluid, not an organ, because blood touches every organ at once.
+
+The history: humoral theory gave way to microscopy; Leeuwenhoek first saw blood cells; Landsteiner's discovery of the ABO (1901) and Rh (1940) blood groups made transfusion safe; the twentieth century added anticoagulants, haemoglobin structure, chemotherapy, transplantation, flow cytometry and molecular diagnostics.
+
+The laboratory: routine haematology includes the full blood count, the blood film, coagulation tests, specialised investigations (electrophoresis, flow cytometry, bone marrow), and transfusion testing.
+
+The place: haematology sits among the medical laboratory sciences, focused on the cells of the blood and the process of clotting, overlapping with but distinct from chemistry, microbiology and immunology.
+
+The importance: haematology serves the individual patient (diagnosis, monitoring, screening, treatment) and the whole community (haemoglobinopathies, anaemia, malaria, blood safety).
+
+Now your final test. A district hospital in Ghana has a new laboratory, a new microscope, and a new laboratory scientist — you. The hospital has no haematology analyser, but it has a constant stream of patients with fever, fatigue, and suspected sickle cell disease.
+
+Question one: what are the three most important haematological tests this laboratory should be able to run, and why?
+
+Question two: the laboratory needs to support a national programme for sickle cell disease. What haematological technique would be most useful, and why?
+
+Question three: the hospital is also being enrolled in a blood safety programme. What haematological tests will the laboratory be expected to perform for this programme, and why do they matter at the population level?
+
+Work them through before reading on.
+
+My answers. One: (a) the full blood count — haemoglobin, red cell count, white cell count, platelet count, and indices — because it screens for anaemia, infection, and haematological abnormalities in almost every patient. (b) the blood film — for malaria parasites and for examining cell morphology in suspected haematological disease. (c) sickle cell testing — either a sickling test or haemoglobin electrophoresis — because sickle cell disease is common in the population and needs to be diagnosed in individuals. Two: haemoglobin electrophoresis is the most useful technique for a national sickle cell programme, because it distinguishes sickle cell disease (HbSS) from sickle cell trait (HbAS) and from other haemoglobinopathies, which a simple sickling test cannot do. This information is essential for genetic counselling and public health planning. Three: for a blood safety programme the laboratory must perform ABO and Rh blood grouping and cross-matching of every unit before transfusion, and screen every unit for HIV, hepatitis B, hepatitis C and other transfusion-transmissible infections. These matter at the population level because a single infected unit can transmit disease to a recipient, and a mismatched unit can kill — so the laboratory is protecting not just one patient but the whole blood supply.
+
+If those came cleanly, you understand what haematology is, where it came from, what it does, and why it matters — at both the patient and the community level. Haematopoiesis, the formation of blood cells, is the natural next step.`
+    }
+  ],
+  theory: [
+    { q: "Define haematology, and state what makes it a distinct medical specialty.", a: "Haematology is the study of blood, blood-forming tissues, and the diseases affecting them. It is distinct because it is defined by a fluid — blood — rather than an organ, and because blood circulates through every system, its disorders reach every organ. It covers the production, morphology, function and diseases of blood cells, and the process of haemostasis." },
+    { q: "What is the origin of the word 'haematology', and what does it mean literally?", a: "It comes from the Greek haima (blood) and logos (study, reason). Literally, haematology is 'the study of blood'. In practice it covers the blood cells, the organs that produce them (especially bone marrow), haemostasis, and the laboratory tests used to investigate blood disorders." },
+    { q: "Describe the humoral theory of blood and its relation to modern haematology.", a: "Ancient Greek medicine held that health was a balance of four humours — blood, phlegm, yellow bile, and black bile. The theory was inaccurate in detail, but its central idea — that the state of the blood reflects the state of the body — was correct and became the seed of modern haematology." },
+    { q: "Who first described red blood cells, and with what instrument?", a: "Antonie van Leeuwenhoek, a Dutch microscopist in the seventeenth century, first described red blood cells using his own single-lens microscopes made with tiny glass beads. He also described capillaries and other microscopic structures. His observations established that blood is a suspension of cells, not a uniform fluid." },
+    { q: "Who discovered the ABO blood group system, and when?", a: "Karl Landsteiner discovered the ABO blood group system in 1901 while working in Vienna. He mixed sera and red cells from different people and observed that some combinations clumped. His discovery explained why some transfusions were fatal and others were not, and it made safe blood transfusion possible. He was awarded the Nobel Prize in 1930." },
+    { q: "Who discovered the Rh blood group system, and what did it add?", a: "Karl Landsteiner and Alexander Wiener discovered the Rh system in 1940, working with rhesus monkeys. It added a second major blood group system, and its discovery made it possible to prevent haemolytic disease of the newborn in Rh-negative mothers — completing the foundation of modern transfusion safety." },
+    { q: "Name four twentieth-century developments in haematology and their significance.", a: "Heparin (the natural anticoagulant, discovered in the 1920s, made surgery, dialysis and transfusion safe); haemoglobin structure (worked out by Perutz and Kendrew, Nobel Prize 1962, made the molecular basis of haemoglobinopathies understandable); chemotherapy for leukaemia and lymphoma (from the 1940s onward, made blood cancers treatable); and flow cytometry (from the 1960s onward, automated cell counting and characterisation)." },
+    { q: "List the main tests performed in a routine haematology laboratory.", a: "The full blood count (haemoglobin, red cell count, haematocrit, white cell count, platelet count, red cell indices); the peripheral blood film (morphology and parasites); coagulation tests (prothrombin time, activated partial thromboplastin time, fibrinogen, D-dimer); specialised investigations (haemoglobin electrophoresis, flow cytometry, bone marrow examination); and blood transfusion testing (blood grouping and cross-matching)." },
+    { q: "Distinguish haematology from clinical chemistry, microbiology and immunology.", a: "Haematology studies the cells of the blood and the process of clotting. Clinical chemistry studies the chemical composition of blood (glucose, electrolytes, enzymes). Microbiology studies the organisms that may be present in blood. Immunology studies antibodies and immune cells. All work on blood, but each has a distinct focus." },
+    { q: "State three ways haematology contributes to public health.", a: "(1) Detection and monitoring of haemoglobinopathies (sickle cell disease, thalassaemia), especially through newborn screening and genetic counselling. (2) Detection and management of anaemia, one of the most common public health problems worldwide. (3) Diagnosis of malaria through stained blood films, and assurance of blood safety through screening of donated blood for transfusion-transmissible infections." }
+  ],
+  videos: [
+    { channel: "Haematology", title: "Introduction to Haematology - History and Scope", note: "Overview of the origins of haematology and the modern laboratory.", url: "https://www.youtube.com/results?search_query=introduction+to+haematology+history+scope" },
+    { channel: "Haematology", title: "The Discovery of Blood Groups - Landsteiner and Transfusion Safety", note: "How ABO and Rh blood groups were discovered and why they matter.", url: "https://www.youtube.com/results?search_query=discovery+of+blood+groups+Landsteiner+ABO+Rh" },
+    { channel: "Haematology", title: "The Haematology Laboratory - What Tests Are Done and Why", note: "Full blood count, blood film, coagulation, and transfusion testing in the routine lab.", url: "https://www.youtube.com/results?search_query=haematology+laboratory+tests+full+blood+count+blood+film+coagulation" }
+  ],
+  mcqs: [
+    // ===== Note 1 (Q1-5): why haematology exists =====
+    { q: "Haematology is best defined as the study of:", o: ["The heart and blood vessels", "Blood, blood-forming tissues, and their diseases", "The immune system", "The kidneys"], a: 1, w: "Haematology studies blood, the tissues that form it, and the diseases that affect them." },
+    { q: "The word 'haematology' comes from the Greek roots haima and logos, meaning:", o: ["Heart and vessel", "Blood and study", "White and cell", "Clot and process"], a: 3, w: "Haima means blood and logos means study — haematology is literally 'the study of blood'." },
+    { q: "Haematology is defined by which unusual feature, compared with other medical specialties?", o: ["It focuses on the brain", "It is defined by a fluid rather than an organ", "It only treats children", "It is only practised in hospitals"], a: 0, w: "Haematology is defined by a fluid — blood — rather than by an organ, because blood circulates through every system." },
+    { q: "Which of these is NOT one of the three jobs of blood?", o: ["Transport", "Defence", "Repair", "Digestion"], a: 3, w: "Blood transports, defends and repairs — digestion is a function of the gastrointestinal tract, not blood." },
+    { q: "Haematology is a wide specialty because blood:", o: ["Is only present in the heart", "Touches every organ in the body", "Is easy to study", "Never changes"], a: 1, w: "Because blood circulates through every organ, its disorders reach every system, making haematology a wide specialty." },
+
+    // ===== Note 2 (Q6-10): pre-microscope history =====
+    { q: "Before the microscope, the dominant theory of blood was:", o: ["The humoral theory", "Cell theory", "Germ theory", "The circulatory theory"], a: 2, w: "Ancient medicine explained health and disease through the balance of the four humours, of which blood was one." },
+    { q: "The four humours of ancient Greek medicine were:", o: ["Blood, water, air, fire", "Blood, phlegm, yellow bile, black bile", "Red cells, white cells, platelets, plasma", "Arteries, veins, capillaries, heart"], a: 1, w: "The four humours were blood, phlegm, yellow bile and black bile — blood was one of them." },
+    { q: "The earliest blood transfusions, attempted in the 1600s, mostly failed because:", o: ["The technique was too slow", "Blood groups were not yet understood", "Doctors used the wrong veins", "Patients refused consent"], a: 1, w: "Blood groups (ABO, Rh) would not be discovered until the twentieth century — so early transfusions were a lethal gamble." },
+    { q: "The humoral theory was incorrect, but its central intuition — which turned out to be right — was that:", o: ["Blood is red because of iron", "Blood is made of cells", "The state of the blood reflects the state of the body", "Blood carries oxygen"], a: 0, w: "The humoral theory wrongly divided health into four humours, but its core idea — that blood reflects the body — was correct." },
+    { q: "Early haematology, before the microscope, relied mainly on:", o: ["Chemical analysis", "Genetic testing", "Careful observation of blood's visible properties", "Radiology"], a: 2, w: "Before the microscope, physicians could only study what they could see — colour, volume, flow and behaviour of blood." },
+
+    // ===== Note 3 (Q11-15): the microscope =====
+    { q: "The invention that transformed haematology from observation to cellular science was the:", o: ["Stethoscope", "Thermometer", "Microscope", "X-ray machine"], a: 0, w: "The microscope revealed that blood is not a uniform fluid but a suspension of cells." },
+    { q: "Red blood cells were first described by:", o: ["Antonie van Leeuwenhoek", "Karl Landsteiner", "William Harvey", "Louis Pasteur"], a: 1, w: "Leeuwenhoek, a Dutch microscopist, first described red blood cells using his single-lens microscopes." },
+    { q: "Leeuwenhoek's microscopes were remarkable because they used:", o: ["Multiple compound lenses", "Electron beams", "X-rays", "Single tiny glass bead lenses of great magnifying power"], a: 3, w: "Leeuwenhoek built single-lens microscopes with tiny glass beads that gave extraordinary magnification for his time." },
+    { q: "Before the microscope, blood was thought to be:", o: ["A suspension of cells", "A uniform red fluid", "A chemical solution of salts", "A mixture of two liquids"], a: 1, w: "Before the microscope revealed its cellular nature, blood was thought to be a uniform fluid." },
+    { q: "The discovery that blood contains cells was significant because it:", o: ["Changed haematology from humoral philosophy into a cellular science", "Made transfusion possible immediately", "Ended all disease", "Replaced the need for laboratories"], a: 0, w: "Once blood was understood to be cellular, haematology became a science of cells, which would eventually lead to modern diagnosis." },
+
+    // ===== Note 4 (Q16-20): blood groups and transfusion =====
+    { q: "The ABO blood group system was discovered in 1901 by:", o: ["Max Perutz", "Karl Landsteiner", "Alexander Wiener", "Jay McLean"], a: 1, w: "Karl Landsteiner discovered the ABO system in 1901 — the discovery that made transfusion safe." },
+    { q: "Landsteiner's discovery was made by observing:", o: ["The colour of plasma", "The size of red cells", "Clumping when sera and red cells from different people were mixed", "The number of platelets"], a: 2, w: "Landsteiner observed agglutination (clumping) in certain combinations of sera and red cells, revealing the ABO blood groups." },
+    { q: "The Rh blood group system was discovered in 1940 by:", o: ["Landsteiner alone", "Landsteiner and Wiener, working with rhesus monkeys", "Perutz and Kendrew", "McLean and Howell"], a: 1, w: "Landsteiner and Wiener discovered the Rh system in 1940, completing the foundation of transfusion safety." },
+    { q: "The discovery of the Rh system was particularly important for:", o: ["Preventing malaria", "Diagnosing anaemia", "Treating leukaemia", "Preventing haemolytic disease of the newborn"], a: 3, w: "The Rh system explained and allowed prevention of haemolytic disease of the newborn in Rh-negative mothers." },
+    { q: "Before blood groups were discovered, transfusion was:", o: ["Always safe", "A lethal gamble", "Impossible", "Only done on animals"], a: 1, w: "Without knowledge of blood groups, transfusions frequently killed the recipient through immune haemolysis." },
+
+    // ===== Note 5 (Q21-25): the twentieth century =====
+    { q: "Heparin, discovered in the 1920s, was important because it:", o: ["Cured leukaemia", "Replaced blood transfusion", "Made safe anticoagulation possible for surgery and transfusion", "Diagnosed anaemia"], a: 2, w: "Heparin, the natural anticoagulant, made surgery, dialysis and transfusion safe." },
+    { q: "The structure of haemoglobin was worked out in the twentieth century by:", o: ["Landsteiner and Wiener", "Perutz and Kendrew", "Watson and Crick", "McLean and Howell"], a: 1, w: "Max Perutz and John Kendrew worked out the structure of haemoglobin, winning the Nobel Prize in 1962." },
+    { q: "Chemotherapy for leukaemia and lymphoma was developed in the:", o: ["Eighteenth century", "Nineteenth century", "Twenty-first century", "Mid-to-late twentieth century"], a: 3, w: "Chemotherapy for blood cancers was developed in the mid-to-late twentieth century." },
+    { q: "Flow cytometry, developed in the late twentieth century, allowed:", o: ["Automated counting and characterisation of blood cells", "Rapid diagnosis of malaria only", "Transfusion without blood grouping", "The elimination of bone marrow transplantation"], a: 0, w: "Flow cytometry automated the counting and detailed characterisation of blood cells, transforming haematology laboratories." },
+    { q: "The twentieth century transformed haematology from a morphological science into a:", o: ["Purely observational one", "Molecular science", "Surgical specialty", "Radiological one"], a: 1, w: "By understanding haemoglobin structure, developing chemotherapy, and applying molecular diagnostics, haematology became a molecular science." },
+
+    // ===== Note 6 (Q26-30): the haematology laboratory =====
+    { q: "The most commonly performed test in a routine haematology laboratory is:", o: ["Bone marrow examination", "Electrophoresis", "Flow cytometry", "The full blood count"], a: 3, w: "The full blood count (FBC) is the most commonly performed haematological test." },
+    { q: "The full blood count measures all of the following EXCEPT:", o: ["Blood glucose", "Haemoglobin", "White cell count", "Platelet count"], a: 0, w: "Blood glucose is measured in clinical chemistry, not in the full blood count." },
+    { q: "A blood film is most useful for:", o: ["Measuring haemoglobin concentration", "Examining cell morphology and identifying parasites", "Measuring coagulation time", "Determining blood glucose"], a: 1, w: "The blood film allows the examiner to see cell morphology and to identify parasites such as malaria." },
+    { q: "Coagulation tests in the haematology laboratory include all of the following EXCEPT:", o: ["Prothrombin time", "Activated partial thromboplastin time", "Blood glucose", "Fibrinogen"], a: 2, w: "Coagulation tests measure clotting; blood glucose is a chemistry test, not a coagulation test." },
+    { q: "Blood transfusion testing in the laboratory involves:", o: ["Only haemoglobin measurement", "Only platelet count", "Only coagulation time", "Blood grouping and cross-matching"], a: 3, w: "Before transfusion, the laboratory performs ABO/Rh grouping and cross-matching to ensure compatibility." },
+
+    // ===== Note 7 (Q31-35): haematology among the laboratory sciences =====
+    { q: "The focus of haematology within the medical laboratory sciences is:", o: ["The cells of the blood and the process of clotting", "The chemistry of blood", "The organisms in blood", "The antibodies in blood"], a: 0, w: "Haematology studies the cells themselves and haemostasis; the others study chemistry, organisms or antibodies." },
+    { q: "Which laboratory discipline studies the chemical composition of blood?", o: ["Haematology", "Microbiology", "Clinical chemistry", "Histopathology"], a: 2, w: "Clinical chemistry measures substances such as glucose, electrolytes and enzymes." },
+    { q: "Which laboratory discipline studies the organisms that may be present in blood?", o: ["Clinical chemistry", "Haematology", "Immunology", "Microbiology"], a: 3, w: "Microbiology studies bacteria, viruses, fungi and parasites, including those in blood." },
+    { q: "Which laboratory discipline studies antibodies and immune cells?", o: ["Haematology", "Immunology", "Microbiology", "Clinical chemistry"], a: 1, w: "Immunology studies antibodies, antigens and the immune response." },
+    { q: "The set of defining concerns of haematology includes all EXCEPT:", o: ["Blood cell production", "Organ transplantation", "Blood cell morphology", "Haemostasis"], a: 1, w: "Organ transplantation is not a defining concern of haematology, though bone marrow transplantation is." },
+
+    // ===== Note 8 (Q36-40): importance to the patient =====
+    { q: "Haematological tests serve the individual patient at which stages?", o: ["Only diagnosis", "Only treatment", "Only screening", "Diagnosis, monitoring, screening and treatment"], a: 3, w: "Haematology serves the patient at every stage of care — diagnosis, monitoring, screening and treatment." },
+    { q: "For a patient with anaemia, which test most directly defines the type of anaemia?", o: ["Blood glucose", "Full blood count with red cell indices", "Blood culture", "Urinalysis"], a: 1, w: "The FBC and its red cell indices define the type of anaemia, often indicating the cause." },
+    { q: "For a patient on anticoagulants, the most relevant laboratory test is:", o: ["Full blood count", "Blood film", "Coagulation tests", "Blood glucose"], a: 2, w: "Coagulation tests (PT, APTT) monitor the effect of anticoagulants to ensure safety." },
+    { q: "Newborn screening for haemoglobinopathies is an example of haematology's role in:", o: ["Treatment", "Monitoring", "Surgery", "Screening"], a: 3, w: "Newborn screening is a public health screening application of haematology." },
+    { q: "Haematology is central to clinical medicine because blood:", o: ["Circulates through every organ, so its state reflects the whole patient", "Is only present in a few organs", "Is difficult to obtain", "Never changes"], a: 0, w: "Because blood circulates through every organ, a haematological snapshot reflects the state of the whole body." },
+
+    // ===== Note 9 (Q41-45): importance to the community =====
+    { q: "In Ghana and much of West Africa, the haemoglobinopathy of highest prevalence is:", o: ["Thalassaemia major", "Sickle cell disease", "Haemophilia A", "G6PD deficiency only"], a: 1, w: "Sickle cell disease has a particularly high prevalence in Ghana and much of West Africa." },
+    { q: "Iron-deficiency anaemia affects approximately what fraction of the world's population?", o: ["One tenth", "One quarter", "One half", "Everyone"], a: 1, w: "Iron-deficiency anaemia affects roughly a quarter of the world's population, with the highest burden in low- and middle-income countries." },
+    { q: "Malaria, one of the world's biggest infectious disease killers, is diagnosed in the laboratory by:", o: ["Blood culture", "Coagulation testing", "Flow cytometry", "Examining a stained blood film"], a: 3, w: "Malaria is diagnosed by examining a stained thick and thin blood film for the parasite." },
+    { q: "Every unit of blood transfused must be screened for which infections?", o: ["HIV, hepatitis B, hepatitis C and other transfusion-transmissible infections", "Only malaria", "Only hepatitis B", "Only syphilis"], a: 0, w: "Blood safety requires screening every unit for HIV, hepatitis B, hepatitis C and other transfusion-transmissible infections." },
+    { q: "Haematology contributes to public health most directly through:", o: ["Individual diagnosis only", "Detection of population-level disease and assurance of blood safety", "Surgery", "Radiology"], a: 1, w: "Haematology protects populations through disease detection (haemoglobinopathies, anaemia, malaria) and blood safety." },
+
+    // ===== Note 10 (Q46-50): consolidation and application =====
+    { q: "In a district hospital with no analyser, the three most essential haematological tests are:", o: ["Bone marrow, flow cytometry, electrophoresis", "Flow cytometry, coagulation, electrophoresis", "Full blood count, blood film, sickling test", "Only the blood film"], a: 2, w: "Without an analyser, the essential tests are the manual FBC, the blood film, and a sickling test for haemoglobinopathy screening." },
+    { q: "For a national sickle cell programme, the most useful laboratory technique is:", o: ["Haemoglobin electrophoresis", "Sickling test alone", "Full blood count alone", "Coagulation testing"], a: 0, w: "Haemoglobin electrophoresis distinguishes HbSS (disease) from HbAS (trait) and other haemoglobinopathies — essential for genetic counselling." },
+    { q: "Blood group typing and cross-matching are essential to:", o: ["Diagnose malaria", "Measure haemoglobin", "Test for diabetes", "Prevent incompatible transfusion reactions"], a: 3, w: "Grouping and cross-matching before transfusion prevent life-threatening incompatible transfusion reactions." },
+    { q: "The laboratory's role in a national blood safety programme includes all EXCEPT:", o: ["Blood grouping", "Performing bone marrow biopsies on donors", "Cross-matching", "Screening units for transfusion-transmissible infections"], a: 1, w: "Bone marrow biopsy is not part of routine donor blood safety testing; grouping, cross-matching and infection screening are." },
+    { q: "The best summary of haematology's importance is that it:", o: ["Only affects hospital patients", "Serves the individual patient and the whole community", "Is a purely academic subject", "Is only relevant in high-income countries"], a: 1, w: "Haematology serves both the individual patient (diagnosis, monitoring, screening, treatment) and the community (public health, blood safety)." }
+  ],
+};
+
+const T_HEM_HAEMATOPOIESIS = {
+  courseId: "hem",
+  topicIndex: 1,
+  title: "Haematopoiesis",
+  minutes: 30,
+
+  note: [
+    {
+      q: "Your bone marrow replaces billions of blood cells every day — how does it know which ones to make?",
+      body: `Every second of your life, roughly two million red blood cells die and are replaced. White cells are replaced even faster during infection. Platelets are consumed continuously to plug microscopic leaks in your vessels. And yet your blood count stays almost exactly the same, day after day, year after year.
+
+My Socratic question: something in your body is producing billions of new cells every day, and matching that production precisely to what is being lost. What kind of system could do that?
+
+The answer is a system that continuously makes new blood cells to replace the ones that are lost — and it does so in a controlled, regulated way.
+
+This process is called haematopoiesis. The word comes from Greek roots: haima (blood) and poiesis (to make). Haematopoiesis is quite literally "the making of blood."
+
+Haematopoiesis is not a single process. It is a hierarchy of processes:
+
+- Stem cells at the top, which divide to renew themselves while also producing more specialised cells.
+- Progenitor cells in the middle, which are committed to specific lineages but still immature.
+- Mature cells at the bottom, which are fully functional — red cells carrying oxygen, white cells fighting infection, platelets plugging leaks.
+
+What makes the whole system remarkable is that it is regulated — the rate of production is adjusted continuously, in response to the body's needs. When you are bleeding, red cell production rises. When you have an infection, white cell production rises. The bone marrow senses what is needed and responds.
+
+Crucial insight: haematopoiesis is the continuous, regulated formation of all the cellular components of blood from a single pool of stem cells in the bone marrow. It is not a single event but a hierarchy — stem cells give rise to progenitors, which give rise to mature cells — and every level is under tight regulatory control.`
+    },
+    {
+      q: "If every blood cell lives only weeks or months, where do the new cells keep coming from?",
+      body: `Follow a red blood cell on its journey. It is made in the bone marrow, released into the blood, circulates for about 120 days, and is then destroyed. Every red cell you have today will be gone in four months. The same is true of white cells and platelets, on shorter timescales. Yet the total number of cells in your blood never drops — it stays constant, because replacements are made as fast as old cells are lost.
+
+My Socratic question: if every cell in the blood is replaced on a rolling basis, and the blood count never falls, there must be a source of new cells somewhere. Where is that source, and what kind of cell could keep supplying them indefinitely?
+
+The answer is a special cell in the bone marrow that can divide to make more of itself, and can also produce any of the blood cell types.
+
+This cell is called the haematopoietic stem cell (HSC). It sits at the very top of the haematopoietic hierarchy, in the bone marrow, and it has two extraordinary properties:
+
+- Self-renewal — it can divide to produce more copies of itself, so the stem cell pool is never exhausted.
+- Multipotency — it can divide to produce daughter cells that commit to any of the blood lineages: red cells, white cells, platelets.
+
+These two properties together make the HSC the source of all blood production throughout your life. A single stem cell, in theory, could produce every blood cell in your body — and in bone marrow transplant, a small number of donor stem cells does exactly that, reconstituting a patient's entire blood system.
+
+Crucial insight: every cell in the blood descends from a haematopoietic stem cell in the bone marrow. The stem cell pool is small but self-renewing, and it can produce any blood lineage on demand. Without stem cells, there is no blood production at all.`
+    },
+    {
+      q: "Where in the body does blood actually get made — and does the answer change with age?",
+      body: `If you had to point to where your blood cells are made, you would point to your bones. But that answer is not true for everyone — and it is not even true for you at all stages of your life. Where blood cells are made changes dramatically from embryo to adult, and the reasons for that change tell you a lot about how haematopoiesis works.
+
+My Socratic question: what would a developing embryo need from its blood production site, and where could such a site be located?
+
+The answer is that an embryo needs blood cells to be made in different places at different stages, as its organs develop and its needs change. The site of haematopoiesis moves through three main phases:
+
+- Yolk sac phase (3rd to 6th week of gestation) — the earliest blood cells, mostly primitive red cells, are made in blood islands in the yolk sac wall. This is transient and supports early embryonic development.
+- Hepatic phase (6th week to birth) — the liver becomes the main site of blood cell production, joined later by the spleen. This is the main fetal site, and it produces all three lineages.
+- Medullary (bone marrow) phase (from the 5th month onward) — the bone marrow gradually takes over, and by birth it is the main site. From birth onwards, and for the rest of life in a healthy person, the bone marrow is the only site of normal haematopoiesis.
+
+In adult life, the bone marrow is not uniform. It is divided into:
+
+- Red (active) marrow — the actively haematopoietic marrow, packed with developing blood cells, found in the sternum, ribs, vertebrae, pelvis, skull, and proximal ends of the femur and humerus.
+- Yellow (inactive) marrow — mostly fat cells, found in the shafts of long bones. It can convert back to red marrow if the body needs more blood production.
+
+Crucial insight: the anatomical site of haematopoiesis changes with age — yolk sac, then liver and spleen, then bone marrow — and the adult site is the red marrow of the axial skeleton and proximal long bones. When disease forces the marrow to produce more, red marrow can reappear in sites where it had been replaced by fat.`
+    },
+    {
+      q: "A single stem cell can become any blood cell. How does it decide which one?",
+      body: `A haematopoietic stem cell has a remarkable problem. It can become a red cell, a white cell, or a platelet — and yet it must commit to one, at exactly the right time, in exactly the right numbers. There is no obvious signal telling it what to become; the decision seems to come from inside.
+
+My Socratic question: if a stem cell could become anything, what would determine which path it takes?
+
+The answer is that the cell's fate is determined by the balance of signals it receives and the internal state of the cell. This process is called differentiation — the gradual commitment of a stem cell to a specific lineage, accompanied by changes in what genes it expresses, what proteins it makes, and what it looks like.
+
+The haematopoietic hierarchy works through stages:
+
+- Multipotent stem cell — can become any blood cell. Self-renews.
+- Multipotent progenitor (MPP) — more differentiated, less self-renewing, but still can produce several lineages.
+- Common myeloid progenitor (CMP) — committed to the myeloid lineages: red cells, platelets, granulocytes, monocytes.
+- Common lymphoid progenitor (CLP) — committed to the lymphoid lineages: T cells, B cells, NK cells.
+- Lineage-restricted progenitors — committed to a single lineage.
+- Mature cells — fully differentiated and functional.
+
+Along the way, the cell's morphology changes: the nucleus shrinks, the cytoplasm changes colour, the cell gets smaller. And its protein expression changes: it starts making the proteins it needs for its job and stops making the ones it no longer needs.
+
+Crucial insight: differentiation is the process by which a stem cell becomes a specialised blood cell, and it happens through a sequence of lineage commitments guided by signals and by internal gene expression changes. Every mature blood cell in your body went through this pathway.`
+    },
+    {
+      q: "The bone marrow makes billions of cells a day. What tells it how many to make?",
+      body: `The bone marrow is a factory that produces billions of cells every day — but the daily output is not constant. During severe infection, white cell production can increase several-fold within hours. After significant blood loss, red cell production can double within days. After platelet consumption, platelet production rises. The factory adjusts its output to match demand.
+
+My Socratic question: what would the bone marrow need to sense what the body needs, and how would it translate that need into more or fewer cells?
+
+The answer is a system of growth factors and cytokines — small signalling molecules that are released by tissues in need, travel to the bone marrow, and tell the stem cells and progenitors what to produce.
+
+The main growth factors and their roles:
+
+- Erythropoietin (EPO) — produced by the kidney in response to low oxygen. Stimulates red cell production. Used clinically as a drug for anaemia of kidney disease.
+- Thrombopoietin (TPO) — produced by the liver. Stimulates platelet production. Used clinically to raise platelet counts.
+- Granulocyte colony-stimulating factor (G-CSF) — produced by many tissues in response to infection. Stimulates neutrophil production. Used clinically to raise white cell counts.
+- Granulocyte-macrophage colony-stimulating factor (GM-CSF) — stimulates both granulocyte and monocyte production.
+- Interleukins (IL-1, IL-3, IL-5, IL-6) — various roles in white cell production and immune regulation.
+- Stem cell factor (SCF) — a fundamental growth factor for stem cells and early progenitors, keeping them alive and dividing.
+
+These growth factors bind to receptors on the surface of haematopoietic cells, activating intracellular signalling pathways that drive proliferation and differentiation.
+
+Crucial insight: haematopoiesis is regulated by growth factors and cytokines that tell the bone marrow what the body needs. The kidney produces EPO for red cells, the liver produces TPO for platelets, and infection triggers G-CSF for white cells. Each growth factor activates specific signalling pathways in the target cell.`
+    },
+    {
+      q: "The growth factor binds the cell. How does that become 'make more cells'?",
+      body: `A growth factor like erythropoietin binds a receptor on the surface of a progenitor cell. But binding is not the same as a response. The cell must translate a brief extracellular signal into a coordinated change in gene expression, cell division, and maturation. That translation happens through intracellular signalling pathways.
+
+My Socratic question: the growth factor is outside the cell; the response happens inside. How does the message cross the membrane and reach the nucleus?
+
+The answer is a series of cascading protein interactions. Three pathways are especially important in haematopoiesis:
+
+- JAK/STAT pathway — when a growth factor like EPO or TPO binds its receptor, the receptor activates JAK kinases. JAKs phosphorylate the receptor, creating a docking site for STAT proteins. STATs are phosphorylated by JAK, then move to the nucleus and turn on the genes needed for proliferation and differentiation. This is the primary pathway for EPO, TPO, G-CSF and many other haematopoietic growth factors.
+- MAPK (RAS-RAF-MEK-ERK) pathway — activated by growth factor receptors through the small GTPase RAS. It triggers a kinase cascade that ends with ERK entering the nucleus and promoting cell division. It is the main pathway driving proliferation.
+- PI3K/AKT pathway — activated downstream of growth factor receptors. It produces the lipid PIP3, which recruits AKT. AKT promotes cell survival by blocking apoptosis. This pathway protects progenitor cells from dying while they mature.
+
+These pathways are not isolated — they interact. A single growth factor typically activates several pathways at once, and the balance between them determines whether the cell divides, matures, survives, or dies. In disease, the balance is broken: mutations in JAK2 cause the JAK/STAT pathway to be permanently on, driving excessive blood cell production (polycythaemia vera); mutations in RAS keep the MAPK pathway active, contributing to leukaemias; mutations in PI3K/AKT support the survival of abnormal cells.
+
+Crucial insight: growth factors work by activating intracellular signalling pathways — JAK/STAT for haematopoietic signalling, MAPK for proliferation, PI3K/AKT for survival. Understanding these pathways explains how normal haematopoiesis is regulated, and how mutations cause diseases.`
+    },
+    {
+      q: "Now the factory is running. What does it produce — and what do all those cells do?",
+      body: `Haematopoiesis produces three great families of mature blood cells, each with a specific job, plus plasma. Together they make up the blood — a tissue that is about 55% plasma by volume and 45% cells, and that performs three functions: transport, defence, and repair.
+
+My Socratic question: three families of cells, three functions. Which family does which job?
+
+The answer is that the three families correspond to the three functions:
+
+- Red blood cells (erythrocytes) — the transport family. They carry oxygen from the lungs to the tissues and carbon dioxide back. They contain haemoglobin, a protein that binds oxygen. They have no nucleus when mature (a design feature that leaves more space for haemoglobin). They live about 120 days.
+- White blood cells (leukocytes) — the defence family. They fight infection, respond to inflammation, and produce antibodies. They are subdivided into granulocytes (neutrophils, eosinophils, basophils), lymphocytes (T cells, B cells, NK cells), and monocytes (which become macrophages in the tissues).
+- Platelets (thrombocytes) — the repair family. They are not whole cells but cell fragments, produced from large precursor cells in the bone marrow called megakaryocytes. They circulate in the blood, and when they encounter a damaged vessel wall, they stick to it, clump together, and form a plug that stops bleeding.
+
+Each family has its own microscopic appearance, its own lifespan, and its own clinical significance. When the blood count is abnormal — too few red cells (anaemia), too many white cells (leukocytosis), too few platelets (thrombocytopenia) — the abnormality points to a problem in that specific lineage.
+
+Crucial insight: haematopoiesis produces three families of cells — red cells for transport, white cells for defence, platelets for repair — plus plasma. Each family has a specific function, a specific lifespan, and a specific clinical significance.`
+    },
+    {
+      q: "If the system can adjust itself, why do things still go wrong?",
+      body: `Haematopoiesis is a system with enormous regulatory precision — it matches production to demand, keeps the blood count stable for decades, and responds within hours to infection or bleeding. So why do blood diseases still exist? And why are they so serious?
+
+My Socratic question: a system this well-regulated should be very hard to break. What could still go wrong?
+
+The answer is that many things can still go wrong, and each produces a characteristic disease. Understanding these failure modes shows how the system works by showing what happens when it does not.
+
+The main categories of haematological disease:
+
+- Failure of production — when the bone marrow cannot produce enough cells. Aplastic anaemia (marrow failure of all lineages), pure red cell aplasia (red cells only), agranulocytosis (neutrophils only).
+- Excessive production — when the marrow produces too many cells. Polycythaemia vera (too many red cells, from a JAK2 mutation), essential thrombocythaemia (too many platelets), chronic myeloid leukaemia (too many granulocytes, from the Philadelphia chromosome).
+- Production of abnormal cells — leukaemias (immature cells that do not mature properly and crowd out normal haematopoiesis), lymphomas (abnormal lymphocytes that accumulate in lymph nodes), myelodysplastic syndromes (dysplastic cells that fail to mature normally).
+- Nutritional deficiency — iron deficiency, B12 deficiency, folate deficiency — all reduce production of specific lineages.
+- Peripheral destruction — haemolytic anaemias (red cells destroyed in the circulation), immune thrombocytopenia (platelets destroyed by antibodies).
+
+Each of these has a specific mechanism and a specific set of laboratory findings. Understanding them requires understanding the normal process — which is exactly why this topic comes first.
+
+Crucial insight: haematological diseases arise from failures of the normal regulatory system — too few cells, too many cells, or abnormal cells. Every disease has a specific mechanism and a specific signature in the laboratory.`
+    },
+    {
+      q: "When does haematopoiesis leave the marrow and start happening elsewhere?",
+      body: `In a healthy adult, haematopoiesis happens only in the bone marrow. But under certain conditions, the body can restart blood production in sites it used during fetal life — the liver, the spleen, even the lymph nodes. This is called extramedullary haematopoiesis, and it is a fascinating example of the body reaching back into its developmental past to solve a problem in the present.
+
+My Socratic question: if the marrow is the normal site of production, why would the body ever make blood somewhere else?
+
+The answer is that when the marrow cannot produce enough cells, the body tries to compensate. If the marrow is failing, or if it is being replaced by scar tissue (myelofibrosis), or if the demand for blood cells exceeds the marrow's capacity, the body reactivates the fetal sites. The liver and spleen, which were haematopoietic in fetal life, can restart blood production.
+
+Extramedullary haematopoiesis produces two visible clinical signs:
+
+- Hepatomegaly — enlargement of the liver, because the liver is now producing blood cells.
+- Splenomegaly — enlargement of the spleen, because the spleen is also producing blood cells (and also because it is doing extra work clearing abnormal cells).
+
+The two most common conditions that cause extramedullary haematopoiesis are:
+
+- Myelofibrosis — the marrow is replaced by fibrous tissue, and blood production shifts to the liver and spleen.
+- Chronic haemolytic anaemias — such as thalassaemia major and sickle cell disease, where the marrow cannot keep up with the rate of red cell destruction.
+
+Extramedullary haematopoiesis has clinical consequences. The enlarged spleen can trap and destroy blood cells (hypersplenism), making the anaemia worse.
+
+Crucial insight: extramedullary haematopoiesis is the body's attempt to make blood outside the bone marrow when the marrow cannot do the job. It is a sign of significant marrow disease or extreme demand, and it produces hepatomegaly and splenomegaly.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for haematopoiesis, in five lines.
+
+The process: haematopoiesis is the continuous formation of blood cells from a pool of stem cells — a hierarchy of stem cells, progenitors, and mature cells, producing billions of cells per day.
+
+The stem cell: the haematopoietic stem cell at the top of the hierarchy self-renews and gives rise to all lineages — red cells, white cells, platelets.
+
+The site: the site of haematopoiesis changes with age (yolk sac, then liver and spleen, then bone marrow), and in the healthy adult it is the red marrow of the axial skeleton and proximal long bones. Under certain conditions it can restart in the liver and spleen (extramedullary haematopoiesis).
+
+The regulation: haematopoiesis is controlled by growth factors (EPO for red cells, TPO for platelets, G-CSF for neutrophils) and by intracellular signalling pathways (JAK/STAT, MAPK, PI3K/AKT). Mutations in these pathways cause disease.
+
+The products: three families of mature cells — red cells (transport), white cells (defence), platelets (repair) — plus plasma.
+
+Now your final test. A 45-year-old man presents with fatigue, pallor, and an enlarged spleen. His full blood count shows anaemia and a slightly reduced platelet count. His bone marrow biopsy shows a hypercellular marrow with excess fibrous tissue. A diagnosis of primary myelofibrosis is made.
+
+Question one: given the bone marrow findings, where else is this patient's blood likely to be produced, and what two clinical signs would you expect?
+Question two: what is the specific name for this phenomenon, and why does it occur in myelofibrosis?
+Question three: the patient has an enlarged spleen. Why is this both a consequence of the underlying disease and a cause of the patient's anaemia?
+
+Work them through before reading on.
+
+My answers. One: because the marrow is being replaced by fibrous tissue (myelofibrosis), blood production shifts to the sites used in fetal life — mainly the liver and the spleen. The two clinical signs are hepatomegaly (enlarged liver) and splenomegaly (enlarged spleen). Two: the phenomenon is called extramedullary haematopoiesis — blood formation outside the bone marrow. It occurs because the marrow can no longer provide sufficient production, so the body reactivates sites that were haematopoietic in fetal life. Three: the enlarged spleen is both a consequence and a cause. It is a consequence because the spleen is one of the sites reactivated for extramedullary haematopoiesis, so it enlarges as it produces blood cells. It is also a cause of the anaemia because the enlarged spleen traps and destroys blood cells (hypersplenism), reducing the number of red cells and platelets in the circulation. The two mechanisms reinforce each other.
+
+If those came cleanly, you understand how blood cells are formed, where they are formed, how production is regulated, and what happens when the system is disrupted. Erythropoiesis — the specific formation of red blood cells — is the natural next step.`
+    }
+  ],
+
+  theory: [
+    { q: "Define haematopoiesis and state where it occurs in the adult.", a: "Haematopoiesis is the continuous, regulated formation of all the cellular components of blood from stem cells. In the healthy adult, it occurs in the red bone marrow of the axial skeleton (sternum, ribs, vertebrae, pelvis, skull) and the proximal ends of the femur and humerus." },
+    { q: "What two properties make the haematopoietic stem cell (HSC) special?", a: "Self-renewal (it can divide to produce more copies of itself, so the stem cell pool is never exhausted) and multipotency (it can give rise to daughter cells that commit to any blood lineage — red cells, white cells, platelets)." },
+    { q: "Describe the three phases of the anatomical site of haematopoiesis during development.", a: "Yolk sac phase (weeks 3-6 of gestation) — primitive blood cells made in yolk sac blood islands. Hepatic phase (week 6 to birth) — the liver, later joined by the spleen, is the main site. Medullary (bone marrow) phase (from month 5 onward) — the bone marrow becomes the main site and remains so for life." },
+    { q: "Distinguish red marrow from yellow marrow.", a: "Red (active) marrow is the haematopoietic marrow, packed with developing blood cells, found in the sternum, ribs, vertebrae, pelvis, skull, and proximal femur and humerus. Yellow (inactive) marrow is mostly fat, found in the shafts of long bones. Yellow marrow can convert back to red marrow when the body needs more blood production." },
+    { q: "Define differentiation and describe how it happens in haematopoiesis.", a: "Differentiation is the gradual commitment of a stem cell to a specific lineage, accompanied by changes in gene expression, protein production, and morphology. It proceeds through a hierarchy: multipotent stem cell, multipotent progenitor, common myeloid or lymphoid progenitor, lineage-restricted progenitor, mature cell." },
+    { q: "Name four growth factors that regulate haematopoiesis and state what each stimulates.", a: "Erythropoietin (EPO) — from the kidney — stimulates red cell production. Thrombopoietin (TPO) — from the liver — stimulates platelet production. Granulocyte colony-stimulating factor (G-CSF) — stimulates neutrophil production. Granulocyte-macrophage colony-stimulating factor (GM-CSF) — stimulates granulocyte and monocyte production. Others include the interleukins and stem cell factor (SCF)." },
+    { q: "Describe the JAK/STAT pathway and its role in haematopoiesis.", a: "When a growth factor like EPO or TPO binds its receptor, the receptor activates JAK kinases, which phosphorylate the receptor and recruit STAT proteins. STATs are phosphorylated by JAK, move to the nucleus, and turn on genes needed for proliferation and differentiation. This is the primary pathway for many haematopoietic growth factors." },
+    { q: "Describe the MAPK and PI3K/AKT pathways and their roles.", a: "The MAPK (RAS-RAF-MEK-ERK) pathway is activated by growth factor receptors and drives cell division (proliferation). The PI3K/AKT pathway produces PIP3, which recruits AKT, a kinase that promotes cell survival by blocking apoptosis. Together with JAK/STAT, these three pathways coordinate proliferation, differentiation and survival of haematopoietic cells." },
+    { q: "Name the three families of mature blood cells and state the function of each.", a: "Red blood cells (erythrocytes) — transport oxygen and carbon dioxide. White blood cells (leukocytes) — defence against infection, subdivided into granulocytes (neutrophils, eosinophils, basophils), lymphocytes (T, B, NK cells), and monocytes. Platelets (thrombocytes) — cell fragments that plug damaged vessel walls and stop bleeding." },
+    { q: "Define extramedullary haematopoiesis and give two conditions in which it occurs.", a: "Extramedullary haematopoiesis is the production of blood cells outside the bone marrow — in the liver, spleen, or lymph nodes — in response to marrow failure or extreme demand. It occurs in myelofibrosis (marrow replaced by fibrous tissue) and in chronic haemolytic anaemias such as thalassaemia major and sickle cell disease. It causes hepatomegaly and splenomegaly." }
+  ],
+
+  videos: [
+    { channel: "Haematology", title: "Haematopoiesis - The Hierarchy of Blood Cell Formation", note: "Overview of the stem cell hierarchy and the lineages of blood cells.", url: "https://www.youtube.com/results?search_query=haematopoiesis+stem+cell+hierarchy+blood+cell+formation" },
+    { channel: "Haematology", title: "Growth Factors and Signalling Pathways in Haematopoiesis", note: "How EPO, TPO, G-CSF and the JAK/STAT, MAPK and PI3K/AKT pathways regulate blood production.", url: "https://www.youtube.com/results?search_query=haematopoietic+growth+factors+JAK+STAT+MAPK+PI3K+AKT" },
+    { channel: "Haematology", title: "Bone Marrow and Extramedullary Haematopoiesis", note: "Site of blood production, red vs yellow marrow, and extramedullary haematopoiesis in disease.", url: "https://www.youtube.com/results?search_query=bone+marrow+extramedullary+haematopoiesis" }
+  ],
+
+  mcqs: [
+    // ===== Note 1 (Q1-5): what haematopoiesis is =====
+    { q: "Haematopoiesis is best defined as:", o: ["The destruction of blood cells", "The transportation of blood", "The continuous formation of blood cells from stem cells", "The clotting of blood"], a: 2, w: "Haematopoiesis is the continuous, regulated formation of blood cells from stem cells." },
+    { q: "The word 'haematopoiesis' comes from Greek roots meaning:", o: ["Blood and study", "Heart and vessel", "Cell and growth", "Blood and making"], a: 3, w: "Haima means blood and poiesis means making — haematopoiesis is 'the making of blood'." },
+    { q: "The three levels of the haematopoietic hierarchy are:", o: ["Stem cells, progenitors, mature cells", "Red cells, white cells, platelets", "Bone marrow, liver, spleen", "Nucleus, cytoplasm, membrane"], a: 0, w: "Haematopoiesis is a hierarchy of stem cells, progenitors, and mature cells." },
+    { q: "Which of these is NOT one of the three families of mature blood cells?", o: ["Red cells", "White cells", "Fibroblasts", "Platelets"], a: 2, w: "Fibroblasts are connective tissue cells, not blood cells." },
+    { q: "The rate of haematopoiesis is adjusted in response to:", o: ["The weather", "The body's needs", "The time of day", "The patient's age alone"], a: 1, w: "Haematopoiesis is regulated — production rises when the body needs more of a specific cell type." },
+
+    // ===== Note 2 (Q6-10): stem cells =====
+    { q: "The haematopoietic stem cell (HSC) sits at the top of the haematopoietic hierarchy in the:", o: ["Bone marrow", "Liver", "Spleen", "Lymph node"], a: 0, w: "The HSC is found in the bone marrow — the adult site of haematopoiesis." },
+    { q: "The two defining properties of a haematopoietic stem cell are:", o: ["Size and colour", "Motility and phagocytosis", "Self-renewal and multipotency", "Oxygen transport and clotting"], a: 2, w: "The HSC self-renews and is multipotent — it can produce all blood lineages." },
+    { q: "Self-renewal of a stem cell means that the stem cell can:", o: ["Produce only one type of cell", "Move between tissues", "Die without producing daughters", "Divide to produce more copies of itself"], a: 3, w: "Self-renewal lets the stem cell pool be maintained indefinitely." },
+    { q: "Multipotency of a stem cell means that the stem cell can:", o: ["Give rise to daughter cells that commit to any blood lineage", "Only become one cell type", "Only divide once", "Only live for one day"], a: 0, w: "Multipotency means the stem cell can produce red cells, white cells, or platelets." },
+    { q: "Bone marrow transplantation works because:", o: ["The marrow is a mechanical support", "Donor stem cells can reconstitute the recipient's entire blood system", "The marrow contains antibiotics", "The marrow only produces red cells"], a: 1, w: "A small number of donor stem cells can reconstitute all lineages, replacing a patient's blood production." },
+
+    // ===== Note 3 (Q11-15): anatomical sites =====
+    { q: "In a healthy adult, haematopoiesis occurs in the:", o: ["Liver", "Spleen", "Red bone marrow", "Lymph nodes"], a: 2, w: "The red marrow of the axial skeleton and proximal long bones is the adult site." },
+    { q: "The three phases of the site of haematopoiesis, in order, are:", o: ["Yolk sac, hepatic, medullary", "Liver, yolk sac, bone marrow", "Bone marrow, liver, spleen", "Spleen, liver, bone marrow"], a: 0, w: "The three phases are yolk sac, hepatic (liver), and medullary (bone marrow)." },
+    { q: "The yolk sac phase of haematopoiesis occurs:", o: ["In childhood", "In adults only", "In the third to sixth week of gestation", "Only in disease"], a: 2, w: "The yolk sac phase is the earliest, occurring at weeks 3-6 of gestation." },
+    { q: "Red marrow in the adult is found in all of the following EXCEPT:", o: ["Sternum", "Shafts of long bones", "Vertebrae", "Pelvis"], a: 1, w: "The shafts of long bones contain yellow marrow — red marrow is in the axial skeleton and proximal long bones." },
+    { q: "Yellow marrow can convert back to red marrow when:", o: ["The patient rests", "The body is warm", "The body needs more blood production", "The patient eats"], a: 2, w: "Yellow marrow is inactive but can be reactivated when demand for blood cells rises." },
+
+    // ===== Note 4 (Q16-20): differentiation =====
+    { q: "Differentiation is best defined as:", o: ["The death of a stem cell", "The gradual commitment of a stem cell to a specific lineage", "The movement of cells in the blood", "The formation of plasma"], a: 1, w: "Differentiation is the gradual commitment of a stem cell to a specific lineage." },
+    { q: "The common myeloid progenitor (CMP) gives rise to all of the following EXCEPT:", o: ["Red cells", "Platelets", "T cells", "Granulocytes"], a: 2, w: "T cells are lymphoid lineage, derived from the common lymphoid progenitor (CLP)." },
+    { q: "The common lymphoid progenitor (CLP) gives rise to:", o: ["Red cells and platelets", "T cells, B cells, NK cells", "Neutrophils and monocytes", "Megakaryocytes"], a: 1, w: "The CLP is committed to the lymphoid lineages: T cells, B cells, NK cells." },
+    { q: "As a haematopoietic cell differentiates, its morphology changes by:", o: ["Increasing in size only", "Losing its cytoplasm entirely", "The nucleus shrinking and the cell getting smaller", "Gaining a second nucleus"], a: 2, w: "Differentiation involves nuclear shrinkage, cytoplasmic changes, and a smaller cell size." },
+    { q: "A lineage-restricted progenitor is one that:", o: ["Can become any blood cell", "Has no nucleus", "Is a mature cell", "Is committed to a single lineage"], a: 3, w: "A lineage-restricted progenitor is committed to producing one specific type of mature cell." },
+
+    // ===== Note 5 (Q21-25): growth factors =====
+    { q: "Erythropoietin (EPO) is produced mainly by the:", o: ["Liver", "Kidney", "Spleen", "Bone marrow"], a: 1, w: "EPO is produced by the kidney in response to low oxygen." },
+    { q: "Thrombopoietin (TPO) is produced mainly by the:", o: ["Kidney", "Spleen", "Liver", "Lung"], a: 2, w: "TPO is produced by the liver and stimulates platelet production." },
+    { q: "Granulocyte colony-stimulating factor (G-CSF) stimulates production of:", o: ["Red cells", "Platelets", "Lymphocytes", "Neutrophils"], a: 3, w: "G-CSF stimulates neutrophil production, especially during infection." },
+    { q: "GM-CSF stimulates production of:", o: ["Granulocytes and monocytes", "Only red cells", "Only platelets", "Only lymphocytes"], a: 0, w: "GM-CSF stimulates both granulocyte and monocyte production." },
+    { q: "Stem cell factor (SCF) is important because it:", o: ["Only stimulates red cell production", "Keeps stem cells and early progenitors alive and dividing", "Only acts on platelets", "Only acts in the liver"], a: 1, w: "SCF is a fundamental growth factor for stem cells and early progenitors." },
+
+    // ===== Note 6 (Q26-30): signalling pathways =====
+    { q: "The JAK/STAT pathway is activated when:", o: ["A cell divides", "A growth factor binds its receptor", "The nucleus divides", "The cell dies"], a: 1, w: "JAK/STAT is activated when a growth factor like EPO or TPO binds its receptor." },
+    { q: "The MAPK pathway is the main pathway driving:", o: ["Cell survival", "Apoptosis", "Cell proliferation", "Platelet aggregation"], a: 2, w: "The MAPK (RAS-RAF-MEK-ERK) pathway drives cell division." },
+    { q: "The PI3K/AKT pathway is important because it:", o: ["Drives cell division only", "Promotes cell survival by blocking apoptosis", "Only acts on red cells", "Only acts in the liver"], a: 1, w: "PI3K/AKT protects progenitor cells from dying while they mature." },
+    { q: "A mutation in JAK2 that permanently activates the JAK/STAT pathway causes:", o: ["Aplastic anaemia", "Iron deficiency", "Haemophilia", "Polycythaemia vera"], a: 3, w: "Mutations in JAK2 cause the JAK/STAT pathway to be permanently on, driving polycythaemia vera." },
+    { q: "The three signalling pathways that are especially important in haematopoiesis are:", o: ["JAK/STAT, MAPK, PI3K/AKT", "Wnt, Notch, Hedgehog", "cAMP, cGMP, calcium", "Insulin, glucagon, cortisol"], a: 0, w: "JAK/STAT (signalling), MAPK (proliferation), and PI3K/AKT (survival) are the three key pathways." },
+
+    // ===== Note 7 (Q31-35): blood composition and cell function =====
+    { q: "Whole blood is approximately what percentage plasma by volume?", o: ["25%", "45%", "55%", "75%"], a: 2, w: "Whole blood is about 55% plasma and 45% cells by volume." },
+    { q: "Red blood cells (erythrocytes) are responsible for:", o: ["Fighting infection", "Clotting blood", "Transporting oxygen and carbon dioxide", "Producing antibodies"], a: 2, w: "Red cells transport oxygen from the lungs to tissues and carbon dioxide back." },
+    { q: "White blood cells (leukocytes) are responsible for:", o: ["Transporting oxygen", "Defence against infection", "Clotting blood", "Producing plasma"], a: 1, w: "White cells fight infection, respond to inflammation, and produce antibodies." },
+    { q: "Platelets (thrombocytes) are produced from:", o: ["Red cells", "White cells", "Plasma cells", "Megakaryocytes"], a: 3, w: "Platelets are cell fragments produced from large precursor cells called megakaryocytes." },
+    { q: "The three functions performed by the three families of blood cells are:", o: ["Transport, defence, repair", "Growth, repair, storage", "Secretion, absorption, excretion", "Movement, sensation, integration"], a: 0, w: "Red cells transport, white cells defend, platelets repair." },
+
+    // ===== Note 8 (Q36-40): disease states =====
+    { q: "Aplastic anaemia is an example of which category of haematological disease?", o: ["Excessive production", "Failure of production", "Peripheral destruction", "Nutritional deficiency"], a: 1, w: "Aplastic anaemia is marrow failure — a failure of production affecting all lineages." },
+    { q: "Polycythaemia vera, caused by a JAK2 mutation, is an example of:", o: ["Failure of production", "Peripheral destruction", "Excessive production", "Nutritional deficiency"], a: 2, w: "Polycythaemia vera is excessive red cell production due to a JAK2 mutation." },
+    { q: "Chronic myeloid leukaemia is characterised by:", o: ["Too few granulocytes", "Too few red cells only", "Too many granulocytes from the Philadelphia chromosome", "Too few platelets only"], a: 2, w: "CML is excessive granulocyte production driven by the Philadelphia chromosome." },
+    { q: "Which nutritional deficiency reduces red cell production?", o: ["Vitamin C deficiency", "Iron deficiency", "Sodium deficiency", "Chloride deficiency"], a: 1, w: "Iron, B12 and folate deficiencies all reduce production of specific lineages, especially red cells." },
+    { q: "Haemolytic anaemia is an example of:", o: ["Failure of production", "Excessive production", "Peripheral destruction", "Nutritional deficiency"], a: 2, w: "Haemolytic anaemias involve destruction of red cells in the circulation." },
+
+    // ===== Note 9 (Q41-45): extramedullary haematopoiesis =====
+    { q: "Extramedullary haematopoiesis refers to blood cell production occurring:", o: ["In the bone marrow only", "Outside the bone marrow", "Only in the liver", "Only in the lymph nodes"], a: 1, w: "Extramedullary haematopoiesis is blood formation outside the bone marrow." },
+    { q: "Extramedullary haematopoiesis most commonly occurs in the:", o: ["Kidney and lungs", "Heart and brain", "Liver and spleen", "Stomach and intestines"], a: 2, w: "The liver and spleen, which were haematopoietic in fetal life, are the main sites." },
+    { q: "The two visible clinical signs of extramedullary haematopoiesis are:", o: ["Hepatomegaly and splenomegaly", "Jaundice and pallor", "Fever and rash", "Cough and chest pain"], a: 0, w: "Enlargement of the liver and spleen are the classic clinical signs." },
+    { q: "A major cause of extramedullary haematopoiesis is:", o: ["Iron deficiency", "Vitamin C deficiency", "Haemophilia", "Myelofibrosis"], a: 3, w: "Myelofibrosis replaces the marrow with fibrous tissue, forcing blood production to shift to the liver and spleen." },
+    { q: "An enlarged spleen in extramedullary haematopoiesis can worsen anaemia because it:", o: ["Produces too many red cells", "Traps and destroys blood cells (hypersplenism)", "Produces autoantibodies", "Blocks the bone marrow"], a: 1, w: "Hypersplenism — trapping and destroying blood cells in the enlarged spleen — worsens anaemia." },
+
+    // ===== Note 10 (Q46-50): consolidation across the topic =====
+    { q: "The haematopoietic stem cell (HSC) is best described as:", o: ["A mature red cell", "A platelet precursor", "A self-renewing, multipotent cell in the bone marrow", "A plasma cell"], a: 2, w: "The HSC self-renews and is multipotent — the source of all blood lineages." },
+    { q: "The site of haematopoiesis in the healthy adult is the:", o: ["Red bone marrow of the axial skeleton and proximal long bones", "Liver", "Spleen", "Yolk sac"], a: 0, w: "Red marrow of the axial skeleton and proximal long bones is the adult site." },
+    { q: "The kidney produces which growth factor?", o: ["Thrombopoietin (TPO)", "Erythropoietin (EPO)", "G-CSF", "GM-CSF"], a: 1, w: "The kidney produces EPO in response to low oxygen, stimulating red cell production." },
+    { q: "The JAK/STAT pathway is the primary pathway activated by:", o: ["Only MAPK", "Only insulin", "EPO, TPO and many other haematopoietic growth factors", "Only cortisol"], a: 2, w: "JAK/STAT is the primary pathway for EPO, TPO, G-CSF and other haematopoietic growth factors." },
+    { q: "A patient with myelofibrosis develops hepatomegaly and splenomegaly. The underlying mechanism is:", o: ["Liver and spleen infection", "Fatty liver disease", "Portal hypertension only", "Extramedullary haematopoiesis in response to marrow failure"], a: 3, w: "When the marrow fails, the liver and spleen reactivate fetal haematopoiesis, enlarging both organs." }
+  ]
+};
+
+const T_HEM_ERYTHROPOIESIS = {
+  courseId: "hem",
+  topicIndex: 2,
+  title: "Erythropoiesis",
+  minutes: 30,
+
+  note: [
+    {
+      q: "Your bone marrow makes two million red blood cells every second. Why does it never run out of raw material?",
+      body: `Every second of your life, your bone marrow produces about two million red blood cells. Every one of those cells carries oxygen to your tissues, circulates for about 120 days, and is then destroyed. Your body replaces them continuously, matching production to loss with extraordinary precision. If production stops — even for a few days — the consequences are severe.
+
+My Socratic question: the bone marrow is a factory that never shuts down. What is the single process that keeps it running, and what does that process actually produce?
+
+The answer is erythropoiesis — the specific formation of red blood cells. The word comes from Greek: erythros (red) and poiesis (to make). Erythropoiesis is the branch of haematopoiesis that produces erythrocytes.
+
+Erythropoiesis is not a single step. It is a sequence:
+
+- A stem cell commits to the erythroid lineage.
+- The committed cell divides and matures through several stages.
+- The mature cell loses its nucleus and most organelles.
+- It is released into the bloodstream as a red blood cell.
+
+Each stage has its own name, its own appearance, and its own duration. And every stage is regulated by a hormone — erythropoietin — that tells the marrow how fast to work.
+
+Crucial insight: erythropoiesis is the process by which the body forms red blood cells, and it is a continuous, regulated sequence from stem cell to mature erythrocyte. It is the branch of haematopoiesis devoted entirely to the oxygen-carrying cells.`
+    },
+    {
+      q: "Where in the body does erythropoiesis happen — and does the site change with age?",
+      body: `Follow a red blood cell from its birth to its release. It begins as a stem cell in a specific location — and that location is not the same at every stage of life. Where red cells are made shifts dramatically from embryo to adult, and the reasons for that shift reveal a lot about how the body works.
+
+My Socratic question: an embryo has no fully developed bone marrow. So where would it make red blood cells, and why would the site change as it grows?
+
+The answer is that the site of erythropoiesis moves through three phases, mirroring the three phases of general haematopoiesis:
+
+- Yolk sac phase (3rd to 6th week of gestation) — the earliest red cells are made in blood islands in the yolk sac wall. They are primitive and short-lived.
+- Hepatic phase (6th week to birth) — the liver becomes the main site, later joined by the spleen. This phase produces definitive red cells with normal haemoglobin.
+- Medullary (bone marrow) phase (from the 5th month onward) — the bone marrow gradually takes over, and by birth it is the main site. From birth onwards, and for the rest of life in a healthy person, red cells are made only in the red marrow of the axial skeleton and proximal long bones.
+
+In adult life, the red marrow is not uniform. It occupies:
+
+- The sternum, ribs, vertebrae, pelvis and skull.
+- The proximal ends of the femur and humerus.
+- The shafts of long bones contain yellow (fatty) marrow, which can convert back to red marrow if the body needs more production.
+
+Crucial insight: the site of erythropoiesis changes with age — yolk sac, then liver and spleen, then bone marrow — and in the healthy adult it is the red marrow of the axial skeleton and proximal long bones. When disease forces the marrow to produce more, red marrow can reappear in sites where it had been replaced by fat.`
+    },
+    {
+      q: "A red blood cell starts as a stem cell and ends as a biconcave disc. What happens in between?",
+      body: `Picture a stem cell in the bone marrow. It has a nucleus, a full set of organelles, and the ability to divide. Now picture the red blood cell it will become: a biconcave disc, no nucleus, no mitochondria, packed with haemoglobin. Between those two cells lies a sequence of maturational stages — each with its own name, appearance and duration.
+
+My Socratic question: if the cell must lose its nucleus and its organelles to become a red cell, what must happen first, and in what order?
+
+The answer is that the cell matures through a defined sequence, becoming progressively more specialised and progressively less like a generic cell.
+
+The stages of erythropoiesis, in order:
+
+- Proerythroblast — the first committed erythroid cell. Large, with a large nucleus and basophilic cytoplasm (blue, because it is full of ribosomes for protein synthesis).
+- Basophilic erythroblast — smaller, with intensely basophilic cytoplasm. Ribosomes are making haemoglobin.
+- Polychromatophilic erythroblast — the cytoplasm is now a mix of blue and pink, because haemoglobin (pink) is accumulating and starting to mask the blue ribosomes.
+- Orthochromatic erythroblast (normoblast) — the smallest nucleated stage. Cytoplasm is now mostly pink, the nucleus is small and dense, and it is about to be extruded.
+- Reticulocyte — the nucleus has been extruded. Some ribosomes remain, so the cell still makes a little haemoglobin. It leaves the marrow and enters the blood.
+- Mature erythrocyte — the ribosomes are gone. The cell is now a fully mature, biconcave, haemoglobin-filled red blood cell.
+
+The whole sequence takes about 5 to 7 days in the bone marrow, and the reticulocyte takes about 24 to 48 hours to mature fully in the circulation. The reticulocyte count is a laboratory measure of how fast the marrow is producing red cells.
+
+Crucial insight: erythropoiesis proceeds through six defined stages — proerythroblast, basophilic, polychromatophilic, orthochromatic erythroblast, reticulocyte, and mature erythrocyte. Each stage is marked by changes in size, colour, and nuclear appearance. The reticulocyte count is the laboratory window into how fast this sequence is running.`
+    },
+    {
+      q: "What exactly does a red blood cell need in order to carry oxygen?",
+      body: `A red blood cell has one job: carry oxygen. To do that, it needs a molecule that binds oxygen reversibly — picks it up in the lungs and releases it in the tissues. That molecule is haemoglobin, and it is one of the most studied proteins in all of biology.
+
+My Socratic question: what kind of molecule would you design if you had to bind oxygen at one site and release it at another, while packing as much of it as possible into a tiny cell?
+
+The answer is haemoglobin — a complex protein with a structure that is precisely adapted to that job.
+
+Haemoglobin is made of two parts:
+
+- Haem — an iron-containing ring (a porphyrin ring with a central iron atom). The iron is where oxygen binds. Each haem binds one molecule of oxygen.
+- Globin — a protein made of four polypeptide chains (two alpha and two beta in adult haemoglobin). Each chain wraps around one haem group, protecting it from oxidation.
+
+Haemoglobin has four subunits — so it can carry four molecules of oxygen. But it does not just carry oxygen; it carries it cooperatively. When the first oxygen binds, it changes the shape of the haemoglobin molecule, making it easier for the second to bind, easier for the third, and easiest for the fourth. The reverse happens in the tissues: when the first oxygen is released, the molecule changes shape so the remaining oxygens are released more easily.
+
+Crucial insight: haemoglobin is a tetramer of two alpha and two beta globin chains, each carrying one haem group with an iron atom at its centre. It carries four oxygen molecules cooperatively — binding oxygen more readily in the lungs and releasing it more readily in the tissues. The structure is what makes efficient oxygen transport possible.`
+    },
+    {
+      q: "Red blood cells have no nucleus and no mitochondria. How do they survive for 120 days?",
+      body: `A mature red blood cell has no nucleus, no mitochondria, no ribosomes, and no endoplasmic reticulum. By the usual rules of cell biology, it should be dead within hours. Yet it survives for about 120 days in the bloodstream, carrying oxygen the entire time.
+
+My Socratic question: a cell with no mitochondria cannot perform aerobic respiration. So where does it get its energy?
+
+The answer is that the red cell relies entirely on anaerobic metabolism. Without mitochondria, it cannot use oxygen to produce ATP — which is actually an advantage, because the red cell's job is to carry oxygen, not to consume it. The red cell uses glycolysis instead.
+
+The red cell's metabolism has three pathways:
+
+- Glycolysis (Embden-Meyerhof pathway) — the main pathway, producing about 90% of the red cell's ATP. It breaks down glucose to lactate, generating two ATP per glucose. The lactate is released into the blood and metabolised by the liver.
+- Pentose phosphate pathway (hexose monophosphate shunt) — produces NADPH, which protects the red cell from oxidative damage. This pathway keeps glutathione in its reduced form, which neutralises oxidants that would otherwise destroy haemoglobin.
+- Rapoport-Luebering shunt — produces 2,3-BPG (bisphosphoglycerate), which regulates haemoglobin's affinity for oxygen. Higher levels of 2,3-BPG cause oxygen to be released more readily in tissues.
+
+Without these pathways, the red cell would either starve or be oxidised to death. The fact that it survives for 120 days without a nucleus or mitochondria is a testament to how efficiently those three pathways work.
+
+Crucial insight: red blood cells survive for 120 days without a nucleus or mitochondria by relying on anaerobic metabolism — glycolysis for ATP, the pentose phosphate pathway for antioxidant defence, and the Rapoport-Luebering shunt for 2,3-BPG, which regulates oxygen release. The absence of mitochondria means the red cell does not consume the oxygen it carries.`
+    },
+    {
+      q: "What is the red cell membrane actually made of, and why does it matter clinically?",
+      body: `A red blood cell has no nucleus, no organelles, and no internal structure to speak of. What it does have is a remarkable membrane — flexible enough to squeeze through capillaries smaller than itself, strong enough to survive 120 days of circulation, and stable enough to keep haemoglobin inside while letting oxygen and nutrients cross.
+
+My Socratic question: the red cell must be both deformable and stable. What kind of membrane would you build to achieve both?
+
+The answer is that the red cell membrane is a lipid bilayer reinforced by a cytoskeleton — a flexible scaffold of proteins attached to the inside of the membrane.
+
+The membrane has three components:
+
+- The lipid bilayer — a double layer of phospholipids and cholesterol. It gives the membrane its fluidity and its barrier properties.
+- Membrane proteins — integral proteins (which span the membrane) and peripheral proteins (which sit on either surface). These include channels, transporters, receptors, and cell adhesion molecules.
+- The membrane skeleton — a network of spectrin, actin, ankyrin, and other proteins on the inner surface of the membrane. This skeleton gives the red cell its shape, its deformability, and its mechanical strength.
+
+The membrane skeleton is what allows the red cell to bend as it passes through capillaries and then spring back to its biconcave shape. When the skeleton is defective — as in hereditary spherocytosis, where spectrin or ankyrin is abnormal — the red cell becomes spherical instead of biconcave, less deformable, and is destroyed prematurely by the spleen.
+
+The membrane also determines blood group antigens — the ABO and Rh antigens are proteins or carbohydrates on the red cell surface.
+
+Crucial insight: the red cell membrane is a lipid bilayer reinforced by a spectrin-based membrane skeleton. The skeleton gives the cell its biconcave shape and its deformability. Defects in the skeleton — as in hereditary spherocytosis — cause the red cell to lose its shape and be destroyed prematurely.`
+    },
+    {
+      q: "What exactly happens to a red blood cell when it reaches the end of its 120-day life?",
+      body: `After about 120 days, a red blood cell is old and worn. Its membrane is less flexible, its enzymes are less active, and its haemoglobin is more oxidised. The body must remove it and recycle its components.
+
+My Socratic question: the red cell contains iron, which is scarce and precious. How would you design the destruction process so that nothing valuable is lost?
+
+The answer is that the body has two destruction mechanisms, and both recycle the red cell's components.
+
+- Extravascular destruction (about 90% of red cells) — old red cells are engulfed by macrophages in the spleen, liver, and bone marrow. The spleen is the main site. Macrophages break the cell down, recycling the amino acids from globin, the iron from haem, and converting the rest of haem to bilirubin.
+- Intravascular destruction (about 10%) — some red cells break open directly in the bloodstream. The haemoglobin released binds to haptoglobin (a plasma protein) and is carried to the liver, where it is broken down.
+
+The breakdown of haemoglobin proceeds in steps:
+
+- Globin is broken down to amino acids, which are reused for protein synthesis.
+- Haem is broken down to iron and biliverdin. Iron is bound to transferrin and transported to the bone marrow for reuse in new haemoglobin. Biliverdin is converted to bilirubin.
+- Bilirubin is bound to albumin and transported to the liver, where it is conjugated and excreted in bile.
+
+Total daily destruction: about 1% of circulating red cells, or roughly 200 billion cells per day. The components are recycled, which is why the body can sustain such a high turnover.
+
+Crucial insight: old red cells are destroyed mainly by macrophages in the spleen, liver and bone marrow (extravascular), with a small fraction breaking open in the bloodstream (intravascular). Iron is recycled to the bone marrow, amino acids are reused, and the rest of haem is converted to bilirubin and excreted. Nothing of value is lost.`
+    },
+    {
+      q: "What is erythropoietin, and why is it the master regulator of red cell production?",
+      body: `A patient with kidney disease develops anaemia. A patient living at high altitude develops polycythaemia. A patient who loses blood begins producing red cells faster within days. All three of these situations have one thing in common: erythropoietin.
+
+My Socratic question: how would the body sense that it needs more red cells, and how would it tell the bone marrow to make them?
+
+The answer is that the kidney senses oxygen levels, and when it detects low oxygen, it releases erythropoietin (EPO), which travels to the bone marrow and tells the erythroid progenitors to survive, proliferate, and mature.
+
+EPO is a hormone — a glycoprotein — produced mainly by the kidney. Its production is regulated by tissue oxygen levels:
+
+- Hypoxia (low oxygen) — EPO production rises. This happens in anaemia, high altitude, chronic lung disease, and blood loss.
+- Hyperoxia (normal or high oxygen) — EPO production falls.
+
+EPO acts on erythroid progenitor cells in the bone marrow, especially the colony-forming unit-erythroid (CFU-E). It binds a receptor on the cell surface and activates the JAK/STAT pathway, which drives proliferation and prevents apoptosis. Without EPO, erythroid progenitors die, and red cell production stops.
+
+In chronic kidney disease, the damaged kidney cannot produce enough EPO, so red cell production falls — this is the anaemia of chronic kidney disease. Recombinant EPO is used clinically to treat this anaemia.
+
+Crucial insight: erythropoietin is a hormone produced mainly by the kidney in response to low oxygen. It travels to the bone marrow and stimulates erythroid progenitor cells via the JAK/STAT pathway. It is the master regulator of red cell production, and its deficiency causes the anaemia of chronic kidney disease.`
+    },
+    {
+      q: "What is the complete picture — from stem cell to destroyed red cell?",
+      body: `Let us assemble the whole story. A red blood cell begins as a stem cell in the bone marrow, matures through a defined sequence, is released into the bloodstream, carries oxygen for about 120 days, and is finally destroyed and recycled. Every step is regulated, every component is conserved, and the whole system runs continuously for a lifetime.
+
+My Socratic question: if you had to summarise the entire life of a red blood cell in a single paragraph, what would you say?
+
+The answer is that a red blood cell is the product of a continuous, regulated process — erythropoiesis — that begins with a stem cell and ends with a mature erythrocyte. It carries oxygen for about 120 days using haemoglobin, produces ATP anaerobically, maintains its shape with a spectrin-based cytoskeleton, and is finally destroyed by macrophages that recycle its iron, amino acids, and other components. The process is controlled by erythropoietin, which the kidney releases when it detects low oxygen.
+
+This is why the red cell count stays constant. Production matches destruction. The marrow is told how fast to work by the kidney. The kidney is told how much oxygen is needed by the tissues. The whole system is a feedback loop that keeps the body supplied with oxygen.
+
+Crucial insight: the life of a red blood cell is a continuous, regulated loop — production in the bone marrow, maturation through six stages, oxygen transport for 120 days, and destruction by macrophages that recycle iron and amino acids. Erythropoietin is the signal that keeps the loop running at the right speed.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for erythropoiesis, in five lines.
+
+The process: erythropoiesis is the specific formation of red blood cells — a continuous sequence from stem cell to mature erythrocyte, producing about two million cells per second.
+
+The stages: the red cell matures through six stages — proerythroblast, basophilic erythroblast, polychromatophilic erythroblast, orthochromatic erythroblast, reticulocyte, and mature erythrocyte.
+
+The site: the site changes with age — yolk sac, then liver and spleen, then bone marrow. In the healthy adult, it is the red marrow of the axial skeleton and proximal long bones.
+
+The regulation: erythropoietin, produced mainly by the kidney in response to low oxygen, is the master regulator. It stimulates erythroid progenitors in the marrow via the JAK/STAT pathway.
+
+The cell: a mature red blood cell has no nucleus or mitochondria, carries oxygen using haemoglobin, produces ATP anaerobically, maintains its shape with a spectrin cytoskeleton, and is destroyed after about 120 days by macrophages that recycle its iron and amino acids.
+
+Now your final test. A 62-year-old man with chronic kidney disease presents with fatigue, pallor, and shortness of breath on exertion. His full blood count shows a normocytic, normochromic anaemia. His reticulocyte count is low. Serum iron, B12, and folate are normal. His serum erythropoietin level is low.
+
+Question one: what is the most likely cause of this patient's anaemia, and why does chronic kidney disease cause it?
+Question two: what laboratory finding (reticulocyte count) would you expect in a patient whose marrow cannot respond to erythropoietin, and why?
+Question three: what is the treatment for this patient's anaemia, and how does it work?
+
+Work them through before reading on.
+
+My answers. One: the anaemia is caused by erythropoietin deficiency. The kidney is the main site of EPO production, and in chronic kidney disease the damaged kidney cannot produce enough EPO. Without EPO, the bone marrow cannot stimulate erythroid progenitors to survive and mature, so red cell production falls. Two: the reticulocyte count would be low, because reticulocytes are newly released red cells from the marrow. If the marrow is not being stimulated by EPO, it produces fewer new red cells, so fewer reticulocytes are released. A low reticulocyte count in anaemia indicates a failure of production rather than increased destruction. Three: the treatment is recombinant erythropoietin (epoetin alfa or similar), given by injection. It replaces the EPO the kidney can no longer produce and stimulates the bone marrow to produce red cells. It must be given with adequate iron, because the bone marrow needs iron to make haemoglobin.
+
+If those came cleanly, you understand how red blood cells are formed, where they are formed, how they are regulated, what they are made of, and what happens when they are destroyed. Leucopoiesis — the formation of white blood cells — is the natural next step.`
+    }
+  ],
+
+  theory: [
+    { q: "Define erythropoiesis and state where it occurs in the adult.", a: "Erythropoiesis is the specific formation of red blood cells (erythrocytes). It is the erythroid branch of haematopoiesis. In the healthy adult, it occurs in the red bone marrow of the axial skeleton (sternum, ribs, vertebrae, pelvis, skull) and the proximal ends of the femur and humerus." },
+    { q: "Describe the three phases of the anatomical site of erythropoiesis during development.", a: "Yolk sac phase (weeks 3-6 of gestation) — primitive red cells made in yolk sac blood islands. Hepatic phase (week 6 to birth) — the liver, later joined by the spleen, is the main site. Medullary (bone marrow) phase (from month 5 onward) — the bone marrow becomes the main site and remains so for life." },
+    { q: "Name the six stages of erythropoiesis in order.", a: "Proerythroblast, basophilic erythroblast, polychromatophilic erythroblast, orthochromatic erythroblast (normoblast), reticulocyte, and mature erythrocyte." },
+    { q: "Describe the structure of haemoglobin.", a: "Haemoglobin is a tetramer of two alpha and two beta globin chains, each carrying one haem group. The haem group is a porphyrin ring with a central iron atom. Each iron binds one molecule of oxygen, so haemoglobin carries four oxygen molecules. Oxygen binding is cooperative." },
+    { q: "Describe the three metabolic pathways of the red blood cell.", a: "Glycolysis (Embden-Meyerhof pathway) — produces about 90% of the red cell's ATP, breaking glucose to lactate. Pentose phosphate pathway (hexose monophosphate shunt) — produces NADPH, which protects against oxidative damage. Rapoport-Luebering shunt — produces 2,3-BPG, which regulates haemoglobin's affinity for oxygen." },
+    { q: "Describe the structure of the red cell membrane.", a: "The red cell membrane is a lipid bilayer (phospholipids and cholesterol) reinforced by a membrane skeleton of spectrin, actin, ankyrin, and other proteins. The skeleton gives the cell its biconcave shape and deformability. Defects in the skeleton, as in hereditary spherocytosis, cause the cell to become spherical and be destroyed prematurely." },
+    { q: "Describe the two mechanisms of red cell destruction.", a: "Extravascular destruction (about 90%) — old red cells are engulfed by macrophages in the spleen, liver, and bone marrow. Intravascular destruction (about 10%) — some red cells break open in the bloodstream, and the haemoglobin released binds haptoglobin and is carried to the liver. In both cases, iron is recycled to the bone marrow, amino acids are reused, and the rest of haem is converted to bilirubin." },
+    { q: "Describe the catabolism of haemoglobin.", a: "Globin is broken down to amino acids for reuse. Haem is broken down to iron (bound to transferrin and transported to the marrow) and biliverdin, which is converted to bilirubin. Bilirubin is bound to albumin, transported to the liver, conjugated, and excreted in bile." },
+    { q: "Describe the role of erythropoietin in red cell production.", a: "Erythropoietin (EPO) is a glycoprotein hormone produced mainly by the kidney in response to low oxygen. It travels to the bone marrow, binds receptors on erythroid progenitors (especially CFU-E), activates the JAK/STAT pathway, and stimulates proliferation and prevents apoptosis. Without EPO, erythroid progenitors die, and red cell production stops." },
+    { q: "Explain why chronic kidney disease causes anaemia.", a: "The kidney is the main site of erythropoietin production. In chronic kidney disease, the damaged kidney cannot produce enough EPO. Without EPO, the bone marrow cannot stimulate erythroid progenitors to survive and mature, so red cell production falls. This produces a normocytic, normochromic anaemia with a low reticulocyte count. Treatment is recombinant EPO." }
+  ],
+
+  videos: [
+    { channel: "Haematology", title: "Erythropoiesis - The Stages of Red Blood Cell Formation", note: "Overview of the six stages of red cell maturation and their morphological changes.", url: "https://www.youtube.com/results?search_query=erythropoiesis+stages+red+blood+cell+formation" },
+    { channel: "Haematology", title: "Haemoglobin Structure and Function", note: "Structure of haemoglobin, oxygen binding, and cooperative release.", url: "https://www.youtube.com/results?search_query=haemoglobin+structure+function+oxygen+binding" },
+    { channel: "Haematology", title: "Erythropoietin and Red Cell Destruction", note: "How EPO regulates red cell production, and how old red cells are destroyed and recycled.", url: "https://www.youtube.com/results?search_query=erythropoietin+red+cell+destruction+recycling" }
+  ],
+
+  mcqs: [
+    // ===== Note 1 (Q1-5): what erythropoiesis is =====
+    { q: "Erythropoiesis is best defined as:", o: ["The destruction of red blood cells", "The formation of all blood cells", "The specific formation of red blood cells", "The formation of platelets"], a: 2, w: "Erythropoiesis is the specific formation of red blood cells." },
+    { q: "The word 'erythropoiesis' comes from Greek roots meaning:", o: ["Red and making", "Blood and study", "Cell and growth", "Heart and vessel"], a: 0, w: "Erythros means red and poiesis means making — erythropoiesis is 'the making of red cells'." },
+    { q: "Erythropoiesis produces approximately how many red cells per second?", o: ["Two hundred", "Two thousand", "Two million", "Two billion"], a: 2, w: "The bone marrow produces about two million red blood cells per second." },
+    { q: "Erythropoiesis is a branch of:", o: ["Leukopoiesis", "Thrombopoiesis", "Haematopoiesis", "Lymphopoiesis"], a: 2, w: "Erythropoiesis is the erythroid branch of haematopoiesis." },
+    { q: "The main function of red blood cells produced by erythropoiesis is to:", o: ["Fight infection", "Clot blood", "Transport oxygen and carbon dioxide", "Produce antibodies"], a: 2, w: "Red cells transport oxygen from the lungs to tissues and carbon dioxide back." },
+
+    // ===== Note 2 (Q6-10): sites of erythropoiesis =====
+    { q: "In the healthy adult, erythropoiesis occurs in the:", o: ["Liver", "Spleen", "Red bone marrow", "Lymph nodes"], a: 2, w: "The red marrow of the axial skeleton and proximal long bones is the adult site." },
+    { q: "The three phases of the site of erythropoiesis, in order, are:", o: ["Yolk sac, hepatic, medullary", "Liver, yolk sac, bone marrow", "Bone marrow, liver, spleen", "Spleen, liver, bone marrow"], a: 0, w: "The three phases are yolk sac, hepatic (liver), and medullary (bone marrow)." },
+    { q: "The yolk sac phase of erythropoiesis occurs:", o: ["In childhood", "In the third to sixth week of gestation", "In adults only", "Only in disease"], a: 1, w: "The yolk sac phase is the earliest, occurring at weeks 3-6 of gestation." },
+    { q: "During the hepatic phase of erythropoiesis, the main site of production is the:", o: ["Yolk sac", "Liver", "Bone marrow", "Kidney"], a: 1, w: "The hepatic phase (weeks 6 to birth) has the liver as the main site, later joined by the spleen." },
+    { q: "Red marrow in the adult is found in all of the following EXCEPT:", o: ["Sternum", "Shafts of long bones", "Vertebrae", "Pelvis"], a: 1, w: "The shafts of long bones contain yellow marrow — red marrow is in the axial skeleton and proximal long bones." },
+
+    // ===== Note 3 (Q11-15): stages of erythropoiesis =====
+    { q: "The first committed erythroid cell is the:", o: ["Reticulocyte", "Proerythroblast", "Basophilic erythroblast", "Mature erythrocyte"], a: 1, w: "The proerythroblast is the first committed erythroid cell." },
+    { q: "The polychromatophilic erythroblast is so named because:", o: ["It has many nuclei", "Its cytoplasm is a mix of blue and pink", "It has no haemoglobin", "It is the largest stage"], a: 1, w: "The cytoplasm is a mix of blue (ribosomes) and pink (haemoglobin), hence 'polychromatophilic'." },
+    { q: "The stage at which the nucleus is extruded is the:", o: ["Proerythroblast", "Basophilic erythroblast", "Orthochromatic erythroblast", "Reticulocyte"], a: 2, w: "The orthochromatic erythroblast (normoblast) extrudes its nucleus to become a reticulocyte." },
+    { q: "A reticulocyte differs from a mature erythrocyte in that it:", o: ["Has a nucleus", "Still contains some ribosomes", "Has no haemoglobin", "Is larger than a proerythroblast"], a: 1, w: "Reticulocytes still contain some ribosomes and can make a little haemoglobin." },
+    { q: "The reticulocyte count is a laboratory measure of:", o: ["The number of white cells", "The number of platelets", "How fast the marrow is producing red cells", "The size of red cells"], a: 2, w: "The reticulocyte count reflects the rate of red cell production by the marrow." },
+
+    // ===== Note 4 (Q16-20): haemoglobin structure =====
+    { q: "Haemoglobin is made of:", o: ["Two haem groups and two globin chains", "Four haem groups and four globin chains", "One haem group and one globin chain", "Eight haem groups and eight globin chains"], a: 1, w: "Haemoglobin has four subunits — four haem groups and four globin chains (two alpha, two beta)." },
+    { q: "The iron atom in haemoglobin is located in the:", o: ["Globin chain", "Haem group", "Cell membrane", "Cytoplasm"], a: 1, w: "The iron atom is at the centre of the haem group, and it is where oxygen binds." },
+    { q: "Each haemoglobin molecule can carry how many oxygen molecules?", o: ["One", "Two", "Four", "Eight"], a: 2, w: "Each haem binds one oxygen, and there are four haem groups, so haemoglobin carries four oxygen molecules." },
+    { q: "The cooperative binding of oxygen to haemoglobin means that:", o: ["Oxygen binds randomly", "Binding of the first oxygen makes it easier for the next to bind", "Oxygen cannot be released", "Only one oxygen can bind at a time"], a: 1, w: "Cooperative binding means binding of one oxygen facilitates binding of the next." },
+    { q: "In adult haemoglobin, the globin chains are:", o: ["Two alpha and two beta", "Two alpha and two gamma", "Four beta", "Four alpha"], a: 0, w: "Adult haemoglobin (HbA) has two alpha and two beta globin chains." },
+
+    // ===== Note 5 (Q21-25): red cell metabolism =====
+    { q: "Red blood cells rely on which metabolic pathway for most of their ATP?", o: ["Oxidative phosphorylation", "Glycolysis", "The TCA cycle", "Beta-oxidation"], a: 1, w: "Without mitochondria, red cells rely on glycolysis for about 90% of their ATP." },
+    { q: "The pentose phosphate pathway in red cells produces:", o: ["ATP", "NADPH", "Lactate", "2,3-BPG"], a: 1, w: "The pentose phosphate pathway produces NADPH, which protects against oxidative damage." },
+    { q: "The Rapoport-Luebering shunt produces:", o: ["NADPH", "ATP", "2,3-BPG", "Lactate"], a: 2, w: "The Rapoport-Luebering shunt produces 2,3-BPG, which regulates oxygen release." },
+    { q: "A red cell that lacks mitochondria does not consume the oxygen it carries because:", o: ["It stores oxygen", "It has no mitochondria to use oxygen for ATP production", "It uses oxygen only in the nucleus", "Oxygen cannot enter the cell"], a: 1, w: "Without mitochondria, the red cell cannot perform oxidative phosphorylation, so it does not consume the oxygen it carries." },
+    { q: "Higher levels of 2,3-BPG cause haemoglobin to:", o: ["Bind oxygen more tightly", "Release oxygen more readily in tissues", "Lose its iron", "Denature"], a: 1, w: "2,3-BPG reduces haemoglobin's affinity for oxygen, causing more oxygen to be released in tissues." },
+
+    // ===== Note 6 (Q26-30): red cell membrane =====
+    { q: "The main structural protein of the red cell membrane skeleton is:", o: ["Spectrin", "Haemoglobin", "Albumin", "Fibrinogen"], a: 0, w: "Spectrin is the main protein of the red cell membrane skeleton." },
+    { q: "The red cell membrane skeleton gives the cell its:", o: ["Oxygen-carrying capacity", "Biconcave shape and deformability", "Nucleus", "Mitochondria"], a: 1, w: "The spectrin-based skeleton gives the red cell its biconcave shape and allows it to deform." },
+    { q: "Hereditary spherocytosis is caused by a defect in:", o: ["Haemoglobin structure", "Spectrin or ankyrin", "The iron transporter", "Glycolysis enzymes"], a: 1, w: "Defects in spectrin or ankyrin cause hereditary spherocytosis, where red cells become spherical and are destroyed prematurely." },
+    { q: "The lipid bilayer of the red cell membrane is made of:", o: ["Only cholesterol", "Only phospholipids", "Phospholipids and cholesterol", "Only proteins"], a: 2, w: "The lipid bilayer consists of phospholipids and cholesterol." },
+    { q: "ABO and Rh blood group antigens are found on:", o: ["The red cell membrane", "The red cell nucleus", "Haemoglobin", "The red cell mitochondria"], a: 0, w: "Blood group antigens are proteins or carbohydrates on the red cell membrane." },
+
+    // ===== Note 7 (Q31-35): red cell destruction =====
+    { q: "The average lifespan of a red blood cell is about:", o: ["24 hours", "30 days", "120 days", "1 year"], a: 2, w: "Red blood cells live about 120 days in the circulation." },
+    { q: "Most red cells are destroyed by:", o: ["Macrophages in the spleen, liver, and bone marrow", "Neutrophils in the blood", "The kidney", "Lymphocytes"], a: 0, w: "About 90% of red cells are destroyed by macrophages in the spleen, liver, and bone marrow (extravascular destruction)." },
+    { q: "The iron released from destroyed red cells is:", o: ["Excreted in urine", "Recycled to the bone marrow for reuse", "Stored in the lungs", "Converted to bilirubin"], a: 1, w: "Iron is bound to transferrin and transported to the bone marrow for reuse in new haemoglobin." },
+    { q: "The haem group of haemoglobin is broken down to:", o: ["Amino acids", "Iron and biliverdin", "Glucose", "Lactate"], a: 1, w: "Haem is broken down to iron and biliverdin, which is then converted to bilirubin." },
+    { q: "The approximate number of red cells destroyed per day is:", o: ["2 million", "20 million", "200 billion", "2 trillion"], a: 2, w: "About 1% of circulating red cells (roughly 200 billion) are destroyed and replaced daily." },
+
+    // ===== Note 8 (Q36-40): erythropoietin =====
+    { q: "Erythropoietin (EPO) is produced mainly by the:", o: ["Liver", "Kidney", "Spleen", "Bone marrow"], a: 1, w: "EPO is produced mainly by the kidney in response to low oxygen." },
+    { q: "EPO production increases in response to:", o: ["High oxygen levels", "Low oxygen levels (hypoxia)", "High blood glucose", "Low blood pressure only"], a: 1, w: "Low oxygen (hypoxia) triggers increased EPO production." },
+    { q: "EPO stimulates red cell production by acting on:", o: ["Erythroid progenitor cells in the bone marrow", "Mature red cells in the blood", "The liver", "The spleen"], a: 0, w: "EPO acts on erythroid progenitors (especially CFU-E), stimulating proliferation and preventing apoptosis." },
+    { q: "EPO activates which signalling pathway in erythroid progenitors?", o: ["MAPK only", "JAK/STAT", "PI3K/AKT only", "Wnt"], a: 1, w: "EPO activates the JAK/STAT pathway, which drives proliferation and maturation." },
+    { q: "Recombinant EPO is used clinically to treat:", o: ["Anaemia of chronic kidney disease", "Leukaemia", "Thrombocytopenia", "Haemophilia"], a: 0, w: "Recombinant EPO is used to treat the anaemia of chronic kidney disease, where the kidney cannot produce enough EPO." },
+
+    // ===== Note 9 (Q41-45): the full picture =====
+    { q: "The two hormones most important for red cell production are:", o: ["Insulin and glucagon", "Erythropoietin and thrombopoietin", "Cortisol and adrenaline", "Thyroxine and parathyroid hormone"], a: 1, w: "Erythropoietin stimulates red cell production; thrombopoietin stimulates platelet production." },
+    { q: "Reticulocytes are released into the blood and mature fully within:", o: ["24 to 48 hours", "5 to 7 days", "10 to 12 days", "30 days"], a: 0, w: "Reticulocytes mature fully in the circulation within about 24 to 48 hours." },
+    { q: "The total time for a red cell to mature from proerythroblast to release into the blood is about:", o: ["1 day", "5 to 7 days", "30 days", "120 days"], a: 1, w: "The full maturation sequence in the bone marrow takes about 5 to 7 days." },
+    { q: "The destruction of red cells and recycling of their components is important because:", o: ["Iron is scarce and must be conserved", "Red cells are toxic", "It produces energy", "It prevents infection"], a: 0, w: "Iron is scarce, so the body recycles it from destroyed red cells for use in new haemoglobin." },
+    { q: "A patient with chronic kidney disease develops anaemia because:", o: ["The kidney cannot produce enough erythropoietin", "The kidney destroys red cells", "The bone marrow fails", "Iron absorption is reduced"], a: 0, w: "The damaged kidney cannot produce enough EPO, so red cell production falls." },
+
+    // ===== Note 10 (Q46-50): consolidation and clinical application =====
+    { q: "The most important regulator of red cell production is:", o: ["Iron", "Erythropoietin", "Vitamin B12", "Folate"], a: 1, w: "Erythropoietin is the master regulator of red cell production." },
+    { q: "A low reticulocyte count in a patient with anaemia indicates:", o: ["Increased red cell destruction", "A failure of red cell production", "Iron overload", "Normal marrow function"], a: 1, w: "A low reticulocyte count indicates the marrow is not producing enough new red cells — a production failure." },
+    { q: "The treatment for anaemia of chronic kidney disease is:", o: ["Iron supplementation alone", "Recombinant erythropoietin (with adequate iron)", "Blood transfusion only", "Vitamin B12 injections"], a: 1, w: "Recombinant EPO replaces the EPO the kidney can no longer produce, and must be given with adequate iron." },
+    { q: "The site of erythropoiesis in the healthy adult is the:", o: ["Red marrow of the axial skeleton and proximal long bones", "Liver", "Spleen", "Yolk sac"], a: 0, w: "Red marrow of the axial skeleton and proximal long bones is the adult site." },
+    { q: "A patient with hereditary spherocytosis has anaemia because:", o: ["The red cells have abnormal haemoglobin", "The red cell membrane skeleton is defective, causing spherical cells that are destroyed prematurely", "The bone marrow fails", "EPO is deficient"], a: 1, w: "Defects in the membrane skeleton (spectrin or ankyrin) cause red cells to become spherical and be destroyed prematurely by the spleen." }
+  ]
+};
+
+const T_HEM_LEUKOPOIESIS = {
+  courseId: "hem",
+  topicIndex: 3,
+  title: "Leukopoiesis",
+  minutes: 30,
+
+  note: [
+    {
+      q: "Your body makes millions of white blood cells every minute. Why does it never run out of the cells that defend you?",
+      body: `Every minute of your life, your bone marrow produces millions of white blood cells. Some of them will live for only a few hours; others will survive for years. When you have an infection, production can increase tenfold within hours. When the infection clears, production falls back. The system adjusts continuously, matching supply to demand with extraordinary precision.
+
+My Socratic question: if white cells are being consumed at that rate — and their numbers are so tightly controlled — what process keeps producing them, and how does it know when to make more?
+
+The answer is leukopoiesis — the specific formation of white blood cells. The word comes from Greek: leukos (white) and poiesis (to make). Leukopoiesis is the branch of haematopoiesis that produces leukocytes.
+
+Leukopoiesis is not a single process. It has two great branches:
+
+- Myelopoiesis — the production of granulocytes (neutrophils, eosinophils, basophils), monocytes, and their tissue descendants (macrophages). It happens in the bone marrow.
+- Lymphopoiesis — the production of lymphocytes (T cells, B cells, NK cells). It begins in the bone marrow but matures in the bone marrow (B cells) or the thymus (T cells).
+
+Each branch produces cells that look different, live for different lengths of time, and do different jobs. But they all descend from the same haematopoietic stem cell.
+
+Crucial insight: leukopoiesis is the specific formation of white blood cells, and it has two great branches — myelopoiesis (granulocytes and monocytes) and lymphopoiesis (lymphocytes). Together they produce the cells that defend the body against infection.`
+    },
+    {
+      q: "If white blood cells all come from the same stem cell, how do they end up so different?",
+      body: `Picture two white blood cells under a microscope. One is a neutrophil — a multi-lobed nucleus, faint granules in the cytoplasm, a cell designed to engulf bacteria. The other is a lymphocyte — a small, round cell with a large nucleus and almost no cytoplasm, designed to recognise specific antigens. They look nothing alike. Yet both descend from the same haematopoietic stem cell in the bone marrow.
+
+My Socratic question: if they start from the same cell, what determines which one a stem cell becomes?
+
+The answer is lineage commitment — the process by which a stem cell chooses a pathway and progressively restricts its options until it can only become one type of cell.
+
+The first great fork in the road is between:
+
+- Common myeloid progenitor (CMP) — committed to the myeloid lineages: granulocytes, monocytes, red cells, platelets.
+- Common lymphoid progenitor (CLP) — committed to the lymphoid lineages: T cells, B cells, NK cells.
+
+From the CMP, the cell makes further choices:
+
+- Granulocyte-monocyte progenitor (GMP) — produces granulocytes and monocytes.
+- Megakaryocyte-erythroid progenitor (MEP) — produces platelets and red cells.
+
+From the GMP, the cell commits to one specific lineage — neutrophil, eosinophil, basophil, or monocyte.
+
+At each stage, the cell is guided by transcription factors — proteins that turn specific genes on or off, pushing the cell down a specific pathway. Different transcription factors produce different lineages.
+
+Crucial insight: lineage commitment is the process by which a stem cell progressively restricts its options until it becomes one specific type of white cell. The first fork is between myeloid and lymphoid; further forks produce the individual lineages. Transcription factors are the molecular switches that decide which path the cell takes.`
+    },
+    {
+      q: "Where does leukopoiesis happen, and does the site change with age?",
+      body: `Follow a white blood cell from its birth to where it becomes functional. Unlike red cells, white cells do not all mature in the same place. Some mature in the bone marrow; others leave the marrow as immature cells and finish maturing elsewhere — sometimes in the thymus, sometimes in the lymph nodes, sometimes in the tissues.
+
+My Socratic question: if different white cells mature in different places, where does leukopoiesis actually happen, and how does that change with age?
+
+The answer is that leukopoiesis follows the same anatomical progression as all haematopoiesis — yolk sac, then liver and spleen, then bone marrow — but with two important differences.
+
+- During fetal life, white cell production follows the general pattern: yolk sac, then liver and spleen, then bone marrow.
+- After birth, the bone marrow is the main site of production for all white cells. However, the site of final maturation differs by cell type.
+
+The maturation sites in the adult:
+
+- Neutrophils, eosinophils, basophils, and monocytes — fully mature in the bone marrow before being released.
+- B lymphocytes — begin in the bone marrow and mature in the bone marrow.
+- T lymphocytes — begin in the bone marrow but migrate as immature cells to the thymus, where they mature.
+- NK cells — mature in the bone marrow and other tissues.
+
+In the adult, the red marrow of the axial skeleton and proximal long bones is the site of production. The thymus, lymph nodes, and spleen are the sites of maturation and storage for specific white cell types.
+
+Crucial insight: leukopoiesis occurs in the bone marrow in the adult, but the site of final maturation depends on the cell type. Neutrophils and monocytes mature in the marrow; B cells mature in the marrow; T cells mature in the thymus; NK cells mature in the marrow and tissues.`
+    },
+    {
+      q: "How does a white blood cell go from a stem cell to a cell that can actually fight infection?",
+      body: `A neutrophil starts as a stem cell in the bone marrow. Within about 10 to 14 days, it becomes a fully mature cell that can leave the marrow, travel through the blood, squeeze out of a capillary, and engulf bacteria. That journey requires a specific sequence of maturational stages, each with its own appearance and function.
+
+My Socratic question: if the cell must become specialised enough to fight infection, what would its maturation sequence look like, and what changes at each stage?
+
+The answer is that the cell matures through a defined sequence, becoming progressively more specialised and progressively more capable of its final function.
+
+The stages of granulopoiesis (neutrophil maturation), in order:
+
+- Myeloblast — the first committed myeloid cell. Large, with a large nucleus and basophilic cytoplasm (blue, because it is full of ribosomes).
+- Promyelocyte — larger, with primary (azurophilic) granules appearing in the cytoplasm.
+- Myelocyte — the last stage capable of cell division. Secondary (specific) granules appear, and the nucleus begins to indent.
+- Metamyelocyte — no longer divides. The nucleus becomes kidney-shaped (indented).
+- Band cell (stab cell) — the nucleus becomes C-shaped or U-shaped, beginning to form lobes.
+- Segmented neutrophil — the nucleus is divided into 2 to 5 lobes. This is the mature cell that leaves the marrow and enters the blood.
+
+The whole sequence takes about 10 to 14 days. The marrow stores a large reserve of mature neutrophils (about 10 to 15 times the number circulating in the blood) that can be released rapidly during infection.
+
+Monocyte maturation follows a similar pattern but produces a cell with a kidney-shaped nucleus and no specific granules. When monocytes leave the blood and enter tissues, they become macrophages.
+
+Crucial insight: granulopoiesis proceeds through six stages — myeloblast, promyelocyte, myelocyte, metamyelocyte, band cell, and segmented neutrophil — taking about 10 to 14 days. The marrow stores a large reserve of mature neutrophils for rapid release during infection. Monocytes mature along a similar path and become macrophages in tissues.`
+    },
+    {
+      q: "What actually controls how many white blood cells the marrow makes?",
+      body: `During a severe infection, the white cell count can rise from 7,000 to 30,000 per microlitre within hours. After the infection clears, it falls back to normal within days. The marrow can adjust production by a factor of ten or more, up or down, within a short time.
+
+My Socratic question: what kind of system would allow the marrow to sense an infection and respond so quickly?
+
+The answer is a system of growth factors and cytokines — signalling molecules that tell the marrow which cells to produce and how fast.
+
+The main regulators of leukopoiesis:
+
+- Granulocyte colony-stimulating factor (G-CSF) — produced by macrophages, endothelial cells, and fibroblasts in response to infection. Stimulates neutrophil production and release from the marrow. Used clinically to raise white cell counts after chemotherapy.
+- Granulocyte-macrophage colony-stimulating factor (GM-CSF) — stimulates granulocyte and monocyte production.
+- Macrophage colony-stimulating factor (M-CSF) — stimulates monocyte and macrophage production.
+- Interleukin-3 (IL-3) — stimulates production of multiple myeloid lineages.
+- Interleukin-5 (IL-5) — stimulates eosinophil production.
+- Interleukin-2 (IL-2) — stimulates T cell proliferation.
+- Interleukin-4 and IL-6 — regulate B cell and T cell responses.
+
+These growth factors bind receptors on progenitor cells and activate signalling pathways, particularly JAK/STAT, to drive proliferation and maturation. During infection, the inflammatory response triggers release of G-CSF and GM-CSF, which stimulate the marrow to produce more neutrophils and monocytes.
+
+Crucial insight: leukopoiesis is regulated by growth factors and cytokines — G-CSF for neutrophils, GM-CSF for granulocytes and monocytes, M-CSF for monocytes, and interleukins for lymphocytes. During infection, the inflammatory response triggers these factors, and the marrow responds by increasing production.`
+    },
+    {
+      q: "Some white cells live for hours, others for years. How does the body maintain the right number of each?",
+      body: `A neutrophil lives for about 6 to 10 hours in the bloodstream before it moves into the tissues and dies within a few days. A memory B cell can survive for decades, providing lifelong immunity to a disease you had as a child. Both cells descend from the same stem cell, yet their lifespans differ by a factor of thousands.
+
+My Socratic question: if the lifespan of a white cell varies so dramatically, how does the body keep the right number of each type in circulation?
+
+The answer is that the body balances production against destruction — a process called leukocyte homeostasis — using several mechanisms.
+
+The main mechanisms of homeostasis:
+
+- Production control — growth factors determine how many cells are made. G-CSF drives neutrophil production; IL-2 drives T cell proliferation; IL-4 and IL-6 regulate B cell responses.
+- Storage and rapid release — the bone marrow stores a large reserve of mature neutrophils (the marrow granulocyte reserve) that can be released within minutes during infection.
+- Circulation and margination — some white cells circulate freely in the blood; others adhere to the walls of blood vessels (margination). These two pools exchange continuously, so the circulating count does not reflect the total number.
+- Tissue migration — white cells leave the blood and enter tissues where they are needed. Neutrophils migrate to sites of infection; lymphocytes migrate to lymph nodes and other lymphoid organs.
+- Apoptosis — old or unnecessary white cells die by programmed cell death and are cleared by macrophages.
+- Lifespan — different white cells have different lifespans, and the body adjusts production to match.
+
+Crucial insight: white cell numbers are kept stable by balancing production, storage, release, migration, and apoptosis. The marrow stores a large reserve of neutrophils for rapid release; the circulating and marginated pools exchange continuously; and different lifespans are matched by adjusting production.`
+    },
+    {
+      q: "How does a white cell know where to go when there is an infection?",
+      body: `An infection begins in a small cut on your finger. Within minutes, neutrophils from the bloodstream — circulating throughout your entire body — arrive at the exact site. They squeeze out of the capillary, crawl through the tissue, and begin engulfing bacteria. How did they know where to go?
+
+My Socratic question: the neutrophils were circulating randomly through the blood. What would tell them where the infection is?
+
+The answer is a process called chemotaxis — directed movement of cells toward a chemical signal.
+
+The steps that get a white cell from the blood to the infection:
+
+- Margination — the neutrophil slows down and sticks to the inner wall of the blood vessel near the infection.
+- Diapedesis — the neutrophil squeezes between the endothelial cells of the vessel wall and enters the tissue.
+- Chemotaxis — the neutrophil follows a chemical gradient toward the source of the signal. The chemical signals include bacterial products, complement fragments (C5a), leukotriene B4, and cytokines released by damaged tissue.
+- Phagocytosis — once the neutrophil reaches the bacteria, it engulfs them into a vesicle (phagosome), which fuses with lysosomes (phagolysosome) to kill and digest the bacteria.
+
+The same chemotactic signals attract monocytes, which mature into macrophages at the site and continue the work of phagocytosis.
+
+Crucial insight: white cells reach the site of infection through margination, diapedesis, and chemotaxis — following a chemical gradient toward the source of the signal. Once there, they engulf bacteria through phagocytosis. This is how the body concentrates its defences at the site of infection.`
+    },
+    {
+      q: "What happens when leukopoiesis goes wrong?",
+      body: `Leukopoiesis is one of the most tightly regulated processes in the body. When it works, you are protected from infection. When it fails — or when it becomes uncontrolled — the consequences are severe. Understanding the diseases of leukopoiesis shows why the normal process matters so much.
+
+My Socratic question: given that leukopoiesis is regulated by growth factors, transcription factors, and signalling pathways, what kinds of failure would you expect?
+
+The answer is that failures can occur at every level, and each produces a specific disease.
+
+The main categories of leukopoietic disease:
+
+- Failure of production — neutropenia (too few neutrophils), lymphopenia (too few lymphocytes). Causes include drugs, chemotherapy, radiation, viral infections, and congenital disorders. A patient with neutropenia is highly susceptible to bacterial infection.
+- Excessive production — neutrophilia (too many neutrophils, usually due to infection or inflammation), lymphocytosis (too many lymphocytes, due to viral infection or leukaemia).
+- Uncontrolled production — leukaemias. Acute leukaemias produce immature cells that crowd out normal haematopoiesis. Chronic leukaemias produce mature but abnormal cells that accumulate over time.
+- Abnormal function — chronic granulomatous disease (phagocytes cannot kill bacteria), leukocyte adhesion deficiency (white cells cannot leave blood vessels), and Chédiak-Higashi syndrome (defective granules).
+
+Each of these has a specific mechanism and a specific set of laboratory findings. For example, neutropenia is diagnosed by measuring the absolute neutrophil count; leukaemia is diagnosed by examining the bone marrow. Treatment depends on the underlying cause: G-CSF for neutropenia, chemotherapy for leukaemia.
+
+Crucial insight: diseases of leukopoiesis arise from failures at every level — too few cells, too many cells, uncontrolled production (leukaemia), or abnormal function. Each has a specific mechanism and laboratory finding. Understanding the normal process is essential for recognising and treating these diseases.`
+    },
+    {
+      q: "What does the bone marrow actually look like when it is making white blood cells?",
+      body: `The bone marrow is not just a bag of cells. It is a highly organised tissue with a specific architecture that supports and regulates leukopoiesis. To understand how white cells are made, you need to understand where they are made — and the bone marrow has a structure that supports this process.
+
+My Socratic question: if leukopoiesis needs to be regulated, supported, and controlled, what kind of architecture would the bone marrow need?
+
+The answer is a vascular and cellular architecture that brings stem cells into contact with the stromal cells, growth factors, and nutrients they need.
+
+The key features of bone marrow architecture:
+
+- Sinusoids — a network of specialised blood vessels with thin walls. Mature cells cross the sinusoid wall to enter the bloodstream.
+- Stromal cells — a network of cells (including fibroblasts, macrophages, adipocytes, and endothelial cells) that support haematopoietic cells. They secrete growth factors and cytokines.
+- Haematopoietic cords — the cellular areas between the sinusoids, packed with developing blood cells at all stages of maturation.
+- Central artery — the artery that supplies the marrow, branching into the sinusoid network.
+- Adipocytes — fat cells that fill the marrow as it becomes less active with age.
+
+The marrow is divided into two regions:
+
+- Red marrow — the active haematopoietic marrow, found in the axial skeleton and proximal long bones. It contains haematopoietic cells, stromal cells, and sinusoids.
+- Yellow marrow — the inactive, fatty marrow found in the shafts of long bones. It can convert back to red marrow if demand increases.
+
+When the marrow is producing white cells at high rates (as during infection), the red marrow expands, and the marrow can become hypercellular.
+
+Crucial insight: the bone marrow has a specific architecture — sinusoids for cell release, stromal cells for support, and haematopoietic cords for cell development. Red marrow is the active site of leukopoiesis; yellow marrow can be reactivated when demand increases. Understanding the structure is essential for interpreting bone marrow biopsies.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for leukopoiesis, in five lines.
+
+The process: leukopoiesis is the specific formation of white blood cells, with two great branches — myelopoiesis (granulocytes, monocytes, macrophages) and lymphopoiesis (T cells, B cells, NK cells).
+
+The sites: production occurs in the bone marrow. Final maturation differs — neutrophils and monocytes mature in the marrow; B cells mature in the marrow; T cells mature in the thymus; NK cells mature in the marrow and tissues.
+
+The stages: granulopoiesis proceeds through myeloblast, promyelocyte, myelocyte, metamyelocyte, band cell, and segmented neutrophil — taking about 10 to 14 days.
+
+The regulation: leukopoiesis is controlled by growth factors (G-CSF for neutrophils, GM-CSF for granulocytes and monocytes, M-CSF for monocytes, and interleukins for lymphocytes), which act via the JAK/STAT pathway.
+
+The clinical relevance: diseases of leukopoiesis include neutropenia, neutrophilia, leukaemias, and functional disorders. Each has a specific mechanism and laboratory finding.
+
+Now your final test. A 52-year-old woman receiving chemotherapy for breast cancer develops a fever and a sore throat. Her full blood count shows a marked reduction in neutrophils (absolute neutrophil count of 0.3 × 10^9/L). Her bone marrow shows reduced myeloid precursors but normal erythroid and megakaryocytic lineages.
+
+Question one: what is the most likely diagnosis, and why does chemotherapy cause it?
+Question two: why is this condition dangerous, and what specific complication is the patient at risk of?
+Question three: what treatment would you give this patient, and how does it work?
+
+Work them through before reading on.
+
+My answers. One: the patient has neutropenia (specifically, chemotherapy-induced neutropenia). Chemotherapy drugs kill rapidly dividing cells, and the myeloid precursors in the bone marrow are among the most rapidly dividing cells in the body. When they are destroyed by chemotherapy, the marrow cannot produce mature neutrophils, so the neutrophil count falls. Two: neutropenia is dangerous because neutrophils are the body's first line of defence against bacterial infection. Without them, the patient is highly susceptible to overwhelming bacterial infection, and febrile neutropenia is a medical emergency requiring urgent antibiotics. Three: the treatment is G-CSF (granulocyte colony-stimulating factor), given by injection. G-CSF stimulates the surviving myeloid precursors to proliferate and mature, increasing neutrophil production and reducing the duration of neutropenia. Antibiotics are also given to treat any active infection.
+
+If those came cleanly, you understand how white blood cells are formed, where they are formed, how they are regulated, and what happens when the system goes wrong. Thrombopoiesis — the formation of platelets — is the natural next step.`
+    }
+  ],
+
+  theory: [
+    { q: "Define leukopoiesis and name its two great branches.", a: "Leukopoiesis is the specific formation of white blood cells (leukocytes). Its two great branches are myelopoiesis (production of granulocytes, monocytes, and macrophages) and lymphopoiesis (production of T cells, B cells, and NK cells)." },
+    { q: "Distinguish the common myeloid progenitor from the common lymphoid progenitor.", a: "The common myeloid progenitor (CMP) is committed to the myeloid lineages — granulocytes, monocytes, red cells, and platelets. The common lymphoid progenitor (CLP) is committed to the lymphoid lineages — T cells, B cells, and NK cells." },
+    { q: "Describe the site of leukopoiesis in the adult and the maturation sites of different white cell types.", a: "Production occurs in the bone marrow. Maturation sites differ: neutrophils, eosinophils, basophils, and monocytes mature in the marrow; B cells mature in the marrow; T cells migrate to the thymus to mature; NK cells mature in the marrow and other tissues." },
+    { q: "Name the six stages of granulopoiesis in order and state the approximate duration.", a: "Myeloblast, promyelocyte, myelocyte, metamyelocyte, band cell (stab cell), and segmented neutrophil. The full sequence takes about 10 to 14 days." },
+    { q: "Name the main growth factors that regulate leukopoiesis and state what each stimulates.", a: "G-CSF — stimulates neutrophil production. GM-CSF — stimulates granulocyte and monocyte production. M-CSF — stimulates monocyte and macrophage production. IL-3 — stimulates multiple myeloid lineages. IL-5 — stimulates eosinophil production. IL-2 — stimulates T cell proliferation. IL-4 and IL-6 — regulate B and T cell responses." },
+    { q: "Describe the four steps by which a neutrophil reaches the site of infection.", a: "Margination — the neutrophil sticks to the vessel wall near the infection. Diapedesis — it squeezes between endothelial cells into the tissue. Chemotaxis — it follows a chemical gradient toward the signal. Phagocytosis — it engulfs the bacteria into a phagosome, which fuses with lysosomes to kill and digest them." },
+    { q: "Describe the mechanisms that maintain white cell homeostasis.", a: "Production control by growth factors; storage and rapid release from the marrow granulocyte reserve; circulation and margination (two exchangeable pools); tissue migration to sites of need; apoptosis of old cells; and adjustment of production to match different lifespans." },
+    { q: "Name the main diseases of leukopoiesis and state the mechanism of each.", a: "Neutropenia (failure of neutrophil production), lymphopenia (failure of lymphocyte production), neutrophilia (excessive neutrophils), lymphocytosis (excessive lymphocytes), leukaemias (uncontrolled production of immature or abnormal cells), and functional disorders such as chronic granulomatous disease (defective killing), leukocyte adhesion deficiency (defective migration), and Chédiak-Higashi syndrome (defective granules)." },
+    { q: "Describe the architecture of the bone marrow and its role in leukopoiesis.", a: "The bone marrow contains sinusoids (specialised vessels for cell release), stromal cells (which secrete growth factors and support developing cells), haematopoietic cords (packed with developing cells), and adipocytes. Red marrow is the active site; yellow marrow can be reactivated when demand increases." },
+    { q: "Explain why chemotherapy causes neutropenia.", a: "Chemotherapy kills rapidly dividing cells. Myeloid precursors in the bone marrow are among the most rapidly dividing cells in the body, so they are destroyed by chemotherapy. Without myeloid precursors, the marrow cannot produce mature neutrophils, and the neutrophil count falls." }
+  ],
+
+  videos: [
+    { channel: "Haematology", title: "Leukopoiesis - The Formation of White Blood Cells", note: "Overview of the two branches of leukopoiesis and the stages of granulopoiesis.", url: "https://www.youtube.com/results?search_query=leukopoiesis+white+blood+cell+formation+myelopoiesis+lymphopoiesis" },
+    { channel: "Haematology", title: "Granulopoiesis and Monocyte Maturation", note: "The six stages of granulopoiesis and the maturation of monocytes into macrophages.", url: "https://www.youtube.com/results?search_query=granulopoiesis+stages+neutrophil+maturation" },
+    { channel: "Haematology", title: "Leukocyte Homeostasis and Chemotaxis", note: "How white cell numbers are maintained and how cells reach sites of infection.", url: "https://www.youtube.com/results?search_query=leukocyte+homeostasis+chemotaxis+margination+diapedesis" }
+  ],
+
+  mcqs: [
+    // ===== Note 1 (Q1-5): what leukopoiesis is =====
+    { q: "Leukopoiesis is best defined as:", o: ["The destruction of white blood cells", "The formation of all blood cells", "The specific formation of white blood cells", "The formation of red blood cells"], a: 2, w: "Leukopoiesis is the specific formation of white blood cells." },
+    { q: "The word 'leukopoiesis' comes from Greek roots meaning:", o: ["Red and making", "White and making", "Blood and study", "Cell and growth"], a: 1, w: "Leukos means white and poiesis means making — leukopoiesis is 'the making of white cells'." },
+    { q: "The two great branches of leukopoiesis are:", o: ["Erythropoiesis and thrombopoiesis", "Myelopoiesis and lymphopoiesis", "Granulopoiesis and monopoiesis", "Monopoiesis and thrombopoiesis"], a: 1, w: "Leukopoiesis has two branches — myelopoiesis (granulocytes and monocytes) and lymphopoiesis (lymphocytes)." },
+    { q: "Myelopoiesis produces all of the following EXCEPT:", o: ["Neutrophils", "Monocytes", "T lymphocytes", "Eosinophils"], a: 2, w: "T lymphocytes are lymphoid lineage, produced by lymphopoiesis." },
+    { q: "Lymphopoiesis produces:", o: ["T cells, B cells, NK cells", "Neutrophils and monocytes", "Platelets", "Red blood cells"], a: 0, w: "Lymphopoiesis produces the lymphocytes: T cells, B cells, and NK cells." },
+
+    // ===== Note 2 (Q6-10): lineage commitment =====
+    { q: "The first great fork in leukopoiesis is between:", o: ["Red cells and platelets", "T cells and B cells", "Common myeloid progenitor and common lymphoid progenitor", "Neutrophils and monocytes"], a: 2, w: "The first fork is between the common myeloid progenitor (CMP) and the common lymphoid progenitor (CLP)." },
+    { q: "The common myeloid progenitor (CMP) gives rise to all of the following EXCEPT:", o: ["Granulocytes", "Monocytes", "B lymphocytes", "Red cells"], a: 2, w: "B lymphocytes are lymphoid lineage, derived from the CLP." },
+    { q: "The granulocyte-monocyte progenitor (GMP) gives rise to:", o: ["Granulocytes and monocytes", "Only neutrophils", "Only monocytes", "Red cells and platelets"], a: 0, w: "The GMP is committed to producing granulocytes and monocytes." },
+    { q: "Transcription factors in leukopoiesis function to:", o: ["Kill bacteria", "Turn specific genes on or off, directing lineage commitment", "Transport oxygen", "Store iron"], a: 1, w: "Transcription factors regulate gene expression and direct the cell toward a specific lineage." },
+    { q: "Lineage commitment is best described as:", o: ["The death of a stem cell", "The progressive restriction of a stem cell's options until it becomes one cell type", "The movement of cells in the blood", "The formation of plasma"], a: 1, w: "Lineage commitment progressively restricts the cell's potential until it can only become one type." },
+
+    // ===== Note 3 (Q11-15): sites of leukopoiesis =====
+    { q: "In the healthy adult, production of white blood cells occurs in the:", o: ["Liver", "Spleen", "Bone marrow", "Thymus"], a: 2, w: "The bone marrow is the main site of white cell production in the adult." },
+    { q: "T lymphocytes mature in the:", o: ["Bone marrow", "Thymus", "Spleen", "Liver"], a: 1, w: "T cells migrate to the thymus to mature." },
+    { q: "B lymphocytes mature in the:", o: ["Thymus", "Spleen", "Bone marrow", "Lymph nodes"], a: 2, w: "B cells mature in the bone marrow." },
+    { q: "Neutrophils and monocytes mature in the:", o: ["Bone marrow", "Thymus", "Spleen", "Lymph nodes"], a: 0, w: "Neutrophils and monocytes fully mature in the bone marrow before release." },
+    { q: "During fetal life, the main site of leukopoiesis after the yolk sac phase is the:", o: ["Bone marrow", "Liver", "Thymus", "Kidney"], a: 1, w: "The liver, later joined by the spleen, is the main fetal site after the yolk sac phase." },
+
+    // ===== Note 4 (Q16-20): stages of granulopoiesis =====
+    { q: "The first committed myeloid cell is the:", o: ["Myeloblast", "Promyelocyte", "Myelocyte", "Band cell"], a: 0, w: "The myeloblast is the first committed myeloid cell." },
+    { q: "The last stage of granulopoiesis capable of cell division is the:", o: ["Myeloblast", "Promyelocyte", "Myelocyte", "Metamyelocyte"], a: 2, w: "The myelocyte is the last stage capable of cell division." },
+    { q: "The metamyelocyte is characterised by:", o: ["A round nucleus", "A kidney-shaped (indented) nucleus", "A multi-lobed nucleus", "No nucleus"], a: 1, w: "The metamyelocyte has a kidney-shaped (indented) nucleus." },
+    { q: "The band cell (stab cell) is characterised by:", o: ["A C-shaped or U-shaped nucleus", "No granules", "A multi-lobed nucleus", "A round nucleus"], a: 0, w: "The band cell has a C-shaped or U-shaped nucleus beginning to form lobes." },
+    { q: "The full sequence of granulopoiesis takes about:", o: ["1 day", "5 to 7 days", "10 to 14 days", "30 days"], a: 2, w: "The full granulopoiesis sequence takes about 10 to 14 days." },
+
+    // ===== Note 5 (Q21-25): growth factors =====
+    { q: "G-CSF stimulates production of:", o: ["Red cells", "Neutrophils", "Platelets", "Lymphocytes"], a: 1, w: "G-CSF stimulates neutrophil production and release from the marrow." },
+    { q: "GM-CSF stimulates production of:", o: ["Granulocytes and monocytes", "Only red cells", "Only platelets", "Only lymphocytes"], a: 0, w: "GM-CSF stimulates both granulocyte and monocyte production." },
+    { q: "M-CSF stimulates production of:", o: ["Red cells", "Platelets", "Monocytes and macrophages", "Neutrophils"], a: 2, w: "M-CSF stimulates monocyte and macrophage production." },
+    { q: "IL-5 stimulates production of:", o: ["Eosinophils", "Neutrophils", "B cells", "Platelets"], a: 0, w: "IL-5 stimulates eosinophil production." },
+    { q: "IL-2 stimulates:", o: ["Red cell production", "T cell proliferation", "Platelet production", "Neutrophil production"], a: 1, w: "IL-2 stimulates T cell proliferation." },
+
+    // ===== Note 6 (Q26-30): white cell homeostasis =====
+    { q: "The marrow granulocyte reserve is important because:", o: ["It stores iron", "It allows rapid release of neutrophils during infection", "It produces red cells", "It destroys old white cells"], a: 1, w: "The marrow stores a large reserve of mature neutrophils that can be released within minutes during infection." },
+    { q: "Margination refers to:", o: ["The production of white cells", "The destruction of white cells", "White cells adhering to blood vessel walls", "The release of white cells from the marrow"], a: 2, w: "Margination is the process by which white cells adhere to the inner walls of blood vessels." },
+    { q: "The circulating and marginated pools of white cells are important because:", o: ["They are the same thing", "They exchange continuously, so the circulating count does not reflect the total number", "Only the marginated pool matters", "Only the circulating pool matters"], a: 1, w: "The two pools exchange continuously, so the circulating count does not reflect the total body white cell number." },
+    { q: "Apoptosis of white cells is important because:", o: ["It produces energy", "It removes old or unnecessary cells", "It stores iron", "It produces antibodies"], a: 1, w: "Apoptosis is programmed cell death that removes old or unnecessary white cells." },
+    { q: "Neutrophils have a lifespan in the bloodstream of about:", o: ["1 to 2 minutes", "6 to 10 hours", "1 to 2 days", "30 days"], a: 1, w: "Neutrophils live about 6 to 10 hours in the bloodstream before entering tissues." },
+
+    // ===== Note 7 (Q31-35): chemotaxis =====
+    { q: "Diapedesis is the process by which:", o: ["White cells squeeze between endothelial cells to leave the vessel", "White cells engulf bacteria", "White cells produce antibodies", "White cells divide"], a: 0, w: "Diapedesis is the migration of white cells between endothelial cells to leave the vessel." },
+    { q: "Chemotaxis is best described as:", o: ["Random movement", "Directed movement toward a chemical signal", "Cell division", "Cell death"], a: 1, w: "Chemotaxis is directed movement of cells toward a chemical gradient." },
+    { q: "Which of the following is a chemotactic signal for neutrophils?", o: ["C5a", "Insulin", "Thyroxine", "Haemoglobin"], a: 0, w: "C5a (a complement fragment), bacterial products, leukotriene B4, and cytokines are chemotactic signals." },
+    { q: "Phagocytosis involves:", o: ["The cell engulfing bacteria into a vesicle", "The cell producing antibodies", "The cell dividing", "The cell dying"], a: 0, w: "Phagocytosis is the engulfment of bacteria into a vesicle (phagosome)." },
+    { q: "A phagolysosome is formed when:", o: ["A phagosome fuses with a lysosome", "A cell divides", "An antibody binds a bacterium", "A chemotactic signal is received"], a: 0, w: "The phagosome fuses with a lysosome to form a phagolysosome, in which the bacteria are killed and digested." },
+
+    // ===== Note 8 (Q36-40): diseases of leukopoiesis =====
+    { q: "Neutropenia is defined as:", o: ["Too many neutrophils", "Too few neutrophils", "Too many lymphocytes", "Too few platelets"], a: 1, w: "Neutropenia is a reduction in the number of neutrophils in the blood." },
+    { q: "A patient with neutropenia is highly susceptible to:", o: ["Viral infections only", "Bacterial infections", "Bleeding", "Anaemia"], a: 1, w: "Neutrophils are the first line of defence against bacterial infection." },
+    { q: "Leukaemia is best described as:", o: ["Failure of white cell production", "A benign increase in white cells", "Uncontrolled production of abnormal white cells", "A defect in red cell production"], a: 2, w: "Leukaemia is uncontrolled production of immature or abnormal white cells that crowd out normal haematopoiesis." },
+    { q: "Chronic granulomatous disease is caused by:", o: ["Defective phagocyte killing of bacteria", "Too few neutrophils", "Too many lymphocytes", "Defective red cell production"], a: 0, w: "Chronic granulomatous disease is a functional disorder in which phagocytes cannot kill bacteria." },
+    { q: "Leukocyte adhesion deficiency is caused by:", o: ["Defective white cell migration", "Defective red cell production", "Too many platelets", "Too few lymphocytes"], a: 0, w: "Leukocyte adhesion deficiency prevents white cells from leaving blood vessels and reaching sites of infection." },
+
+    // ===== Note 9 (Q41-45): bone marrow architecture =====
+    { q: "Sinusoids in the bone marrow are important because:", o: ["They produce red cells", "They are the site of cell release into the bloodstream", "They store iron", "They produce antibodies"], a: 1, w: "Sinusoids are specialised vessels through which mature cells leave the marrow and enter the blood." },
+    { q: "Stromal cells in the bone marrow function to:", o: ["Kill bacteria", "Secrete growth factors and support developing cells", "Store fat", "Produce haemoglobin"], a: 1, w: "Stromal cells secrete growth factors and cytokines and provide physical support for developing haematopoietic cells." },
+    { q: "The haematopoietic cords of the bone marrow contain:", o: ["Only mature cells", "Only red cells", "Developing blood cells at all stages of maturation", "Only fat cells"], a: 2, w: "The haematopoietic cords are packed with developing blood cells at all stages." },
+    { q: "Yellow marrow differs from red marrow in that it:", o: ["Is inactive and mostly fatty", "Is more active", "Contains only neutrophils", "Contains no cells"], a: 0, w: "Yellow marrow is inactive, mostly fat, and can be reactivated when demand increases." },
+    { q: "A bone marrow biopsy is useful in diagnosing leukopoietic disease because:", o: ["It measures blood glucose", "It shows the cellular composition and maturation of the marrow", "It measures EPO", "It measures platelet count"], a: 1, w: "A bone marrow biopsy allows direct examination of the marrow's cellularity and the maturation of blood cells." },
+
+    // ===== Note 10 (Q46-50): consolidation and clinical application =====
+    { q: "The most important growth factor for neutrophil production is:", o: ["Erythropoietin", "G-CSF", "TPO", "IL-5"], a: 1, w: "G-CSF is the most important growth factor for neutrophil production." },
+    { q: "Chemotherapy-induced neutropenia occurs because:", o: ["The drug kills rapidly dividing myeloid precursors", "The drug kills red cells", "The drug blocks EPO", "The drug destroys platelets"], a: 0, w: "Chemotherapy kills rapidly dividing cells, including myeloid precursors in the marrow, causing neutropenia." },
+    { q: "Febrile neutropenia is a medical emergency because:", o: ["It causes anaemia", "It can rapidly progress to overwhelming bacterial sepsis", "It causes bleeding", "It is always fatal"], a: 1, w: "Febrile neutropenia can progress rapidly to overwhelming sepsis, which is why urgent antibiotics are given." },
+    { q: "The treatment for chemotherapy-induced neutropenia is:", o: ["Iron supplementation", "Recombinant G-CSF", "Recombinant EPO", "Platelet transfusion"], a: 1, w: "Recombinant G-CSF stimulates the surviving myeloid precursors to proliferate and mature, increasing neutrophil production." },
+    { q: "A patient with a neutrophil count of 0.3 × 10^9/L is at high risk of:", o: ["Viral infection", "Bacterial infection", "Bleeding", "Anaemia"], a: 1, w: "A neutrophil count below 0.5 × 10^9/L (severe neutropenia) puts the patient at high risk of bacterial infection." }
+  ]
+};
+
+// ==================== HEMATOLOGY TOPIC 4: THROMBOPOIESIS ====================
+const T_HEM_THROMBOPOIESIS = {
+  courseId: "hem",
+  topicIndex: 4,
+  title: "Thrombopoiesis",
+  minutes: 30,
+
+  note: [
+    {
+      q: "Your blood vessels are damaged hundreds of times a day. Why don't you bleed to death?",
+      body: `Every time you brush your teeth, bump your shin, or squeeze through a doorway, tiny blood vessels in your body tear. Some of these tears are so small you never notice them; others would be serious if they were not sealed immediately. Yet within seconds, each tear is plugged, and the bleeding stops.
+
+My Socratic question: the plug that seals these tears is made of cells that circulate in your blood. Where do those cells come from, and how does the body keep making them for an entire lifetime?
+
+The answer is thrombopoiesis - the specific formation of platelets. Platelets (also called thrombocytes) are small, disc-shaped cell fragments that circulate in the blood and rush to any site of vessel injury to form a plug. They are not whole cells - they have no nucleus - but they are essential. Without them, even a minor injury could be fatal.
+
+Thrombopoiesis is the branch of haematopoiesis that produces platelets. Like all blood cells, platelets descend ultimately from the haematopoietic stem cell in the bone marrow, but they follow a unique route that ends not in a whole new cell but in thousands of tiny fragments pinched off from a single enormous parent cell.
+
+Crucial insight: thrombopoiesis is the specific formation of platelets, the cell fragments that seal damaged blood vessels. Every time you stop bleeding - from a paper cut to a surgical incision - you are relying on platelets that were made by thrombopoiesis, and the system must run continuously for your entire life.`
+    },
+    {
+      q: "Platelets are not whole cells. What are they, and what is their parent?",
+      body: `Put a drop of blood under a microscope and you will see three things: red cells, white cells, and a third population of tiny, irregular, purple-staining fragments. Those fragments are platelets, and they are not whole cells at all - they are pieces of a much larger parent cell.
+
+My Socratic question: if platelets are fragments, what cell are they fragments of, and where does that cell live?
+
+The answer is that platelets are fragments of the cytoplasm of megakaryocytes - enormous cells that live in the bone marrow. A megakaryocyte is one of the largest cells in the body, sometimes reaching 100 micrometres in diameter (roughly ten times the size of a red blood cell). It has a single, large, multi-lobed nucleus and a vast expanse of cytoplasm, and it does not divide - instead, it matures and then extends long, branching processes that fragment into platelets.
+
+Megakaryocytes are rare. They make up less than 0.1% of the cells in the bone marrow. Yet each one can produce between 1,000 and 3,000 platelets before it dies. This extraordinary productivity is why a relatively small number of megakaryocytes can keep the blood supplied with 150,000 to 400,000 platelets per microlitre - the normal platelet count.
+
+Crucial insight: platelets are not cells - they are fragments of the cytoplasm of megakaryocytes, enormous bone marrow cells that package their cytoplasm into thousands of tiny packages before dying. Understanding this changes how you think about platelets: they have no nucleus, cannot divide, and cannot be replaced except by new megakaryocytes making more.`
+    },
+    {
+      q: "How does one cell produce thousands of platelets? Where does platelet production actually happen?",
+      body: `Follow a megakaryocyte from its birth to its death. It begins as a stem cell in the bone marrow. It commits to the megakaryocyte lineage. It undergoes a unique form of cell division in which the nucleus replicates repeatedly without the cell dividing - a process that produces a single cell with a huge, multi-lobed nucleus and a very large cytoplasm. Then it begins producing platelets.
+
+The location matters. Megakaryocytes sit in the bone marrow, right next to the sinusoids - the specialised blood vessels through which all blood cells enter the circulation. This position is not accidental. It is where the megakaryocyte can extend its cytoplasm into the bloodstream.
+
+My Socratic question: if the megakaryocyte sits in the bone marrow but the platelets must enter the blood, how does the cytoplasm get from one to the other?
+
+The answer is proplatelets. As the megakaryocyte matures, it extends long, branching, beaded processes of cytoplasm through the endothelial lining of the sinusoids and into the bloodstream. These processes are called proplatelets. They are like branches of a tree, extending from the megakaryocyte body into the flowing blood, and they are pinched off at their tips into individual platelets. Each megakaryocyte can extend multiple proplatelets simultaneously, each producing many platelets.
+
+The megakaryocyte therefore does not release platelets by bursting or by dividing. It reaches into the bloodstream, and the flow of blood itself helps shear off the platelet fragments at the tips of its proplatelets. The whole process is continuous, and a single megakaryocyte can produce platelets for several days before it finally dies.
+
+Crucial insight: platelet production happens at the interface between the bone marrow and the blood, where megakaryocytes extend proplatelets into the sinusoids and the flow of blood shears off platelets. The bone marrow sinusoids are therefore not just plumbing - they are the physical site where thrombopoiesis actually happens.`
+    },
+    {
+      q: "What are the stages of platelet production? Trace the pathway.",
+      body: `Thrombopoiesis follows a defined sequence of maturational stages, each with its own appearance under the microscope. Understanding the sequence is essential for recognising normal platelet production - and for spotting when it has gone wrong.
+
+The stages, in order, are:
+
+- Megakaryoblast - the first committed cell of the platelet lineage. It is large, with a large nucleus and basophilic cytoplasm. It has begun to commit to becoming a megakaryocyte.
+- Promegakaryocyte - larger still, with a more lobulated nucleus. The cytoplasm is becoming more abundant.
+- Granular megakaryocyte - the cytoplasm fills with granules (which will become the granules of the mature platelets). The nucleus becomes highly multi-lobed. This is the stage at which the cell is actively producing platelets.
+- Mature megakaryocyte - the fully mature cell with an enormous multi-lobed nucleus and vast cytoplasm. It extends proplatelets into the sinusoids and releases platelets.
+- Platelets - the final product, small disc-shaped fragments that enter the circulation.
+
+The whole process takes about 5 to 7 days from megakaryoblast to platelet release. Platelets then circulate in the blood for 7 to 10 days before being removed by the spleen and liver. This is shorter than the lifespan of red cells (120 days) or many white cells (hours to years), so platelet production must be continuous and rapid.
+
+Crucial insight: thrombopoiesis proceeds through four maturational stages - megakaryoblast, promegakaryocyte, granular megakaryocyte, and mature megakaryocyte - before platelets are released. The whole sequence takes about 5 to 7 days, and each stage is recognisable under the microscope by the size of the cell, the shape of the nucleus, and the appearance of the cytoplasm.`
+    },
+    {
+      q: "What actually tells the bone marrow to make platelets? The role of thrombopoietin.",
+      body: `Cut yourself and within days your platelet count rises. Get an infection and it may rise further. Donate platelets and the marrow responds by producing more. Something is telling the marrow how many platelets to make, and that something is a hormone called thrombopoietin.
+
+My Socratic question: if the body needs to increase platelet production in response to injury, what kind of signal would the marrow need, and where would it come from?
+
+The answer is thrombopoietin (TPO) - the primary growth factor that regulates platelet production. TPO is produced mainly by the liver (and to a lesser extent by the kidney and bone marrow), and it circulates in the blood. It binds to a specific receptor on megakaryocytes and their precursors called the c-Mpl receptor, and it stimulates them to proliferate, mature, and produce platelets.
+
+What makes TPO unusual is how its level is regulated. Most hormones are produced in response to a signal and cleared by the liver or kidney. TPO is different: its level is determined by how many platelets and megakaryocytes are present to absorb it. Platelets and megakaryocytes carry the c-Mpl receptor, and they bind TPO and remove it from circulation. So:
+
+- When platelet count is low, there are fewer platelets to absorb TPO, so free TPO levels rise, and the marrow is stimulated to produce more platelets.
+- When platelet count is high, more platelets absorb TPO, so free TPO levels fall, and the marrow is stimulated less.
+
+This is a beautiful negative feedback loop in which the product of the system - platelets - directly regulates the signal that produces them. It explains why platelet production rises quickly after platelet loss or destruction, and it also explains why diseases that disrupt the liver or bone marrow can disrupt platelet production.
+
+Crucial insight: thrombopoietin, produced mainly by the liver, is the master regulator of thrombopoiesis. It binds the c-Mpl receptor on megakaryocytes, and its level is controlled by how many platelets are present to absorb it - so when platelets are low, TPO rises, and when they are high, TPO falls. This feedback loop keeps platelet production matched to platelet need.`
+    },
+    {
+      q: "What do platelets actually look like, and what are they made of?",
+      body: `A platelet is small - about 2 to 4 micrometres in diameter, roughly a quarter of the size of a red cell - and disc-shaped when inactive. But it is not a simple structure. Inside its plasma membrane, it contains a dense collection of organelles, granules and cytoskeletal elements, each of which is essential to its function.
+
+My Socratic question: a platelet is a fragment of cytoplasm, so it cannot make new proteins. How does it manage to respond so rapidly and effectively to injury?
+
+The answer is that a platelet comes pre-packaged. Its cytoplasm is packed with everything it will need - so when it is activated, it can respond immediately without waiting for new synthesis.
+
+The main contents of a platelet:
+
+- Alpha granules - the most numerous granules. They contain clotting factors (including fibrinogen, von Willebrand factor, factor V), growth factors (including platelet-derived growth factor, which promotes wound healing), and other proteins that are released when the platelet is activated.
+- Dense granules (delta granules) - contain ADP, ATP, serotonin (5-HT), and calcium. When released, ADP and serotonin recruit more platelets to the site of injury.
+- Lysosomes - contain enzymes that help break down debris.
+- Mitochondria - provide energy for platelet activation.
+- Open canalicular system - a network of channels from the platelet surface into its interior, providing more surface area for the release and uptake of substances.
+- Dense tubular system - a network of membranes that stores calcium and helps regulate platelet activation.
+- Cytoskeleton - a network of microtubules and actin filaments that gives the platelet its shape and allows it to change shape when activated (from disc to spiky sphere).
+
+Platelets also carry proteins on their surface, including glycoprotein receptors (such as GPIb and GPIIb/IIIa) that allow them to bind von Willebrand factor and fibrinogen during clot formation.
+
+Crucial insight: a platelet is a pre-packaged, specialised fragment of cytoplasm. It carries granules filled with clotting factors and platelet-recruiting chemicals, a cytoskeleton that lets it change shape, and surface receptors that let it bind other platelets and the vessel wall. Every one of these features is essential to its role in haemostasis - and the loss of any one of them produces a bleeding disorder.`
+    },
+    {
+      q: "What actually controls how many platelets the marrow makes, and how do we measure them?",
+      body: `The platelet count in the blood is one of the most carefully regulated numbers in the body. It is normally kept between 150,000 and 400,000 platelets per microlitre of blood - roughly one platelet for every fifteen to twenty red cells. The body maintains this range through a combination of production control and removal, and any disruption produces recognisable disease.
+
+My Socratic question: if the normal platelet range is so tightly controlled, what mechanisms keep it there, and what would a rise or fall in platelet count tell us?
+
+The answer is that platelet count is regulated on two fronts - production and removal - and both are under constant control.
+
+Production control:
+
+- Thrombopoietin (TPO) is the primary regulator of platelet production. When platelet count falls, TPO levels rise, and megakaryocytes produce more platelets.
+- Inflammatory cytokines (such as IL-6) can raise platelet production in response to infection or inflammation - producing a reactive thrombocytosis.
+- Other growth factors, including IL-3, IL-11 and stem cell factor, also support megakaryocyte development.
+
+Removal:
+
+- Platelets circulate for about 7 to 10 days before being removed.
+- The spleen removes aged or damaged platelets. In conditions where the spleen is enlarged (hypersplenism), platelet count falls because too many platelets are being removed.
+- Antibody-mediated destruction can also remove platelets - this is the mechanism of immune thrombocytopenia (ITP).
+
+How platelets are measured:
+
+- Platelet count is measured in a full blood count (FBC), usually by automated analyser, expressed as platelets per microlitre (or x10^9/L).
+- A peripheral blood smear can be examined manually to confirm the count and look at platelet size and shape.
+- The mean platelet volume (MPV) gives an indication of platelet size, which can suggest whether the marrow is producing young, large platelets (as it does during recovery) or older, smaller ones.
+
+Crucial insight: platelet count is controlled by balancing production (regulated mainly by TPO) against removal (mainly by the spleen). Abnormal platelet counts - thrombocytosis (too many) or thrombocytopenia (too few) - point to a specific imbalance somewhere in this system, and identifying which part has gone wrong is how doctors diagnose the underlying disease.`
+    },
+    {
+      q: "What happens when thrombopoiesis fails or goes wrong?",
+      body: `When thrombopoiesis works, you never think about it. When it fails, the consequences can be severe. The platelet count can fall too low (thrombocytopenia) or rise too high (thrombocytosis), and both can be dangerous.
+
+My Socratic question: thrombopoiesis involves stem cells, growth factors, megakaryocytes, and platelets. What kinds of failure would you expect at each level?
+
+The answer is that failures can occur at every level, and each produces a specific disease.
+
+Failure of production (thrombocytopenia):
+
+- Bone marrow failure - aplastic anaemia, leukaemia, chemotherapy, radiation. The marrow cannot produce megakaryocytes, so platelet production falls. This is a serious cause of bleeding.
+- Nutritional deficiencies - vitamin B12 and folate deficiencies impair DNA synthesis and therefore megakaryocyte production.
+- Inherited disorders - congenital amegakaryocytic thrombocytopenia (a rare inherited failure of megakaryocyte production).
+- Liver disease - because the liver produces TPO, severe liver disease can reduce TPO production and impair platelet formation.
+
+Increased destruction (thrombocytopenia):
+
+- Immune thrombocytopenia (ITP) - autoantibodies destroy platelets. This is the most common cause of isolated thrombocytopenia.
+- Drug-induced thrombocytopenia - certain drugs (e.g. heparin, quinine) trigger immune-mediated platelet destruction.
+- Disseminated intravascular coagulation (DIC) - widespread clotting consumes platelets faster than the marrow can replace them.
+- Thrombotic thrombocytopenic purpura (TTP) and haemolytic uraemic syndrome (HUS) - conditions in which platelets are consumed by abnormal clotting in small vessels.
+- Hypersplenism - an enlarged spleen removes too many platelets.
+
+Excessive production (thrombocytosis):
+
+- Reactive thrombocytosis - occurs in response to infection, inflammation, iron deficiency, or after surgery. Usually mild and not dangerous.
+- Essential thrombocythaemia - a myeloproliferative neoplasm in which the marrow produces too many platelets. Can paradoxically increase the risk of both bleeding and clotting.
+
+Abnormal function:
+
+- Inherited platelet function disorders - Bernard-Soulier syndrome (defect in GPIb), Glanzmann thrombasthenia (defect in GPIIb/IIIa).
+- Acquired platelet dysfunction - caused by aspirin, clopidogrel, uraemia, or liver disease.
+
+Crucial insight: diseases of thrombopoiesis arise from failures at every level - too few platelets, too many platelets, or platelets that do not work properly. Each has a specific mechanism and a specific laboratory finding. Understanding normal thrombopoiesis is what allows you to recognise and diagnose these conditions - and to predict what a laboratory test result means for the patient.`
+    },
+    {
+      q: "Why does thrombopoietin therapy exist, and how does the laboratory detect thrombopoietic problems?",
+      body: `Thrombopoiesis is not just an academic topic - it has direct clinical applications that you will see in the laboratory and in patient care. The discovery of thrombopoietin in the 1990s led to a whole class of drugs that stimulate platelet production, and laboratory tests for platelet disorders are among the most common you will perform.
+
+My Socratic question: if a patient has dangerously low platelets because the marrow is not producing them, what kind of treatment could you offer?
+
+The answer is thrombopoietin receptor agonists (TPO-RAs) - drugs that mimic the action of natural TPO and stimulate megakaryocytes to produce more platelets. They are used in conditions such as immune thrombocytopenia (ITP), aplastic anaemia, and hepatitis C-associated thrombocytopenia. Examples include romiplostim, eltrombopag, and avatrombopag.
+
+At the same time, the laboratory has a set of tools for investigating platelet disorders:
+
+- Full blood count - gives the platelet count and mean platelet volume (MPV).
+- Peripheral blood smear - examines platelet size, shape, and number, and can reveal clumping (which can falsely lower the count) or abnormal forms.
+- Bleeding time and platelet function tests - assess how well platelets work.
+- Platelet aggregation studies - measure how platelets clump in response to different agonists, helping to distinguish different functional disorders.
+- Bone marrow biopsy - examines megakaryocyte number and appearance, useful when production failure is suspected.
+- Anti-platelet antibody tests - helpful in diagnosing immune-mediated destruction.
+- Genetic testing - for inherited platelet disorders.
+
+When a patient has a bleeding problem, the laboratory helps to distinguish between a problem with platelet number (thrombocytopenia or thrombocytosis), a problem with platelet function (normal number but poor function), and a problem with the clotting factors (which is a separate system but often investigated alongside platelet problems).
+
+Crucial insight: thrombopoiesis is not just a physiological process to understand - it is a target for treatment and a source of laboratory investigation. Thrombopoietin receptor agonists are now standard therapy for several platelet disorders, and the laboratory tools for investigating platelets are essential for diagnosing the full range of conditions affecting thrombopoiesis.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for thrombopoiesis, in five lines.
+
+The process: thrombopoiesis is the specific formation of platelets - small cell fragments that circulate in the blood and seal damaged vessels. It is the branch of haematopoiesis that produces platelets.
+
+The cell of origin: platelets are fragments of the cytoplasm of megakaryocytes, enormous bone marrow cells with multi-lobed nuclei that extend proplatelets into the bone marrow sinusoids, where the flow of blood shears off platelets.
+
+The stages: megakaryoblast → promegakaryocyte → granular megakaryocyte → mature megakaryocyte → platelets. The whole process takes about 5 to 7 days, and platelets circulate for 7 to 10 days.
+
+The regulation: thrombopoietin (TPO), produced mainly by the liver, is the master regulator. It binds the c-Mpl receptor on megakaryocytes, and its level is controlled by how many platelets are present to absorb it - so low platelets mean high TPO and more production.
+
+The clinical relevance: diseases of thrombopoiesis include thrombocytopenia (too few platelets) from failure of production, increased destruction, or splenic sequestration; thrombocytosis (too many platelets) from reactive or clonal causes; and platelet function disorders (normal number but abnormal function). TPO receptor agonists are used therapeutically.
+
+Now your final test. A 45-year-old woman presents with bruising and small red spots on her legs (petechiae) and gum bleeding. Her full blood count shows a platelet count of 18 x 10^9/L (normal 150-400). Her red cell and white cell counts are normal. She has no other symptoms and is not on any medications. A blood film confirms reduced platelets but no other abnormality. A bone marrow biopsy shows normal megakaryocyte numbers.
+
+Question one: what is the most likely diagnosis, and why does the normal megakaryocyte count on biopsy support this diagnosis?
+Question two: what mechanism explains the low platelet count, and what is the role of thrombopoietin in this condition?
+Question three: what treatment would you consider, and how does it work?
+
+Work them through before reading on.
+
+My answers. One: the most likely diagnosis is immune thrombocytopenia (ITP) - a condition in which autoantibodies destroy platelets. The normal megakaryocyte count on bone marrow biopsy supports this because it shows that platelet production is not the problem - the marrow is making megakaryocytes normally, so the low platelet count must be due to increased destruction (or, in some cases, impaired release) of platelets in the circulation. Two: the mechanism is antibody-mediated destruction. Autoantibodies bind to platelet surface antigens and the antibody-coated platelets are removed by the spleen (and to a lesser extent the liver). The role of thrombopoietin is that when platelets are destroyed and their count falls, there are fewer platelets to absorb TPO, so TPO levels rise, and the marrow is stimulated to produce more platelets - but in ITP the marrow cannot compensate fast enough for the rate of destruction. Three: treatment would include thrombopoietin receptor agonists (such as romiplostim or eltrombopag), which mimic TPO and stimulate megakaryocytes to produce more platelets. Other options include corticosteroids, intravenous immunoglobulin (IVIG), and splenectomy - all aimed at reducing platelet destruction. The choice of treatment depends on the severity of bleeding and the patient's response.
+
+If those came cleanly, you understand the formation of platelets - where they come from, how they are made, how they are regulated, and what happens when the system goes wrong. Thrombopoiesis is the last of the three great branches of haematopoiesis - with erythropoiesis and leukopoiesis - completing your understanding of how the body makes all of its blood cells.`
+    }
+  ],
+
+  theory: [
+    { q: "Define thrombopoiesis and state the cell from which platelets are derived.", a: "Thrombopoiesis is the specific formation of platelets (thrombocytes). Platelets are derived from megakaryocytes - large, multi-lobed bone marrow cells that extend proplatelets into the bone marrow sinusoids, where platelets are sheared off and released into the circulation." },
+    { q: "Explain why platelets are described as cell fragments rather than whole cells.", a: "Platelets are fragments of the cytoplasm of megakaryocytes. They have no nucleus, cannot divide, and cannot synthesise new proteins. They contain granules, mitochondria, and cytoskeletal elements that allow them to respond rapidly when activated." },
+    { q: "Describe the process by which megakaryocytes produce platelets.", a: "Megakaryocytes extend long, branching, beaded processes of cytoplasm - proplatelets - through the endothelial lining of the bone marrow sinusoids into the bloodstream. The flow of blood shears off the tips of these proplatelets into individual platelets. The process is continuous, and a single megakaryocyte can produce 1,000-3,000 platelets." },
+    { q: "Name the stages of thrombopoiesis in order.", a: "Megakaryoblast → promegakaryocyte → granular megakaryocyte → mature megakaryocyte → platelets. The process takes about 5-7 days from megakaryoblast to platelet release." },
+    { q: "What is the normal platelet count and lifespan?", a: "The normal platelet count is 150,000-400,000 per microlitre (150-400 x 10^9/L). Platelets circulate for about 7-10 days before being removed by the spleen and liver." },
+    { q: "State the main regulator of thrombopoiesis and its source.", a: "Thrombopoietin (TPO) is the main regulator. It is produced mainly by the liver (and to a lesser extent by the kidney and bone marrow) and stimulates megakaryocyte proliferation, maturation and platelet production via the c-Mpl receptor." },
+    { q: "Explain how thrombopoietin level is regulated.", a: "TPO is unusual in that its level is determined by how many platelets and megakaryocytes are present to absorb it. Platelets and megakaryocytes carry the c-Mpl receptor and bind TPO, removing it from circulation. When platelet count is low, free TPO rises, stimulating the marrow. When platelet count is high, free TPO falls, reducing stimulation. This creates a negative feedback loop." },
+    { q: "Name the three main granule types in platelets and state their contents.", a: "Alpha granules contain clotting factors (fibrinogen, von Willebrand factor, factor V) and growth factors (platelet-derived growth factor). Dense granules (delta granules) contain ADP, ATP, serotonin and calcium. Lysosomes contain enzymes that help break down debris." },
+    { q: "Distinguish thrombocytopenia from thrombocytosis.", a: "Thrombocytopenia is a reduced platelet count (below 150 x 10^9/L), which causes a bleeding tendency. Thrombocytosis is an increased platelet count (above 450 x 10^9/L), which may be reactive (secondary to inflammation, infection or iron deficiency) or clonal (essential thrombocythaemia)." },
+    { q: "Explain the mechanism and use of thrombopoietin receptor agonists.", a: "Thrombopoietin receptor agonists (TPO-RAs) such as romiplostim and eltrombopag mimic the action of natural TPO. They bind the c-Mpl receptor on megakaryocytes and stimulate platelet production. They are used in conditions such as immune thrombocytopenia (ITP), aplastic anaemia, and hepatitis C-associated thrombocytopenia." }
+  ],
+
+  videos: [
+    { channel: "Hematology", title: "Thrombopoiesis - How Platelets Are Made", note: "Overview of megakaryocytes, proplatelets, and platelet release into the circulation.", url: "https://www.youtube.com/results?search_query=thrombopoiesis+platelet+formation+megakaryocyte+proplatelet" },
+    { channel: "Hematology", title: "Thrombopoietin and Regulation of Platelet Production", note: "How TPO regulates megakaryocyte development and platelet count via c-Mpl.", url: "https://www.youtube.com/results?search_query=thrombopoietin+regulation+platelet+production+c-Mpl" },
+    { channel: "Hematology", title: "Platelet Structure and Function", note: "Granules, cytoskeleton, surface receptors and the role of platelets in haemostasis.", url: "https://www.youtube.com/results?search_query=platelet+structure+function+granules+haemostasis" }
+  ],
+
+  mcqs: [
+    // ===== Note 1 (Q1-5): what thrombopoiesis is =====
+    { q: "Thrombopoiesis is best defined as:", o: ["The destruction of platelets", "The formation of all blood cells", "The specific formation of platelets", "The formation of red blood cells"], a: 2, w: "Thrombopoiesis is the specific formation of platelets." },
+    { q: "The word 'thrombopoiesis' comes from Greek roots meaning:", o: ["Red and making", "Clot and making", "Blood and study", "Cell and growth"], a: 1, w: "Thrombos means clot, and poiesis means making - 'the making of clot cells'." },
+    { q: "Platelets are also called:", o: ["Erythrocytes", "Leukocytes", "Thrombocytes", "Monocytes"], a: 2, w: "Platelets are also called thrombocytes." },
+    { q: "Thrombopoiesis is a branch of:", o: ["Erythropoiesis", "Leukopoiesis", "Haematopoiesis", "None of the above"], a: 2, w: "Thrombopoiesis is a branch of haematopoiesis, the formation of all blood cells." },
+    { q: "The main function of platelets is:", o: ["Carrying oxygen", "Fighting infection", "Sealing damaged blood vessels", "Producing antibodies"], a: 2, w: "Platelets seal damaged blood vessels by forming a plug." },
+
+    // ===== Note 2 (Q6-10): megakaryocytes =====
+    { q: "Platelets are derived from which cell?", o: ["Reticulocyte", "Myeloblast", "Megakaryocyte", "Lymphoblast"], a: 2, w: "Platelets are derived from megakaryocytes." },
+    { q: "Megakaryocytes are found in the:", o: ["Blood", "Bone marrow", "Spleen", "Liver"], a: 1, w: "Megakaryocytes are found in the bone marrow." },
+    { q: "The approximate diameter of a megakaryocyte is:", o: ["10 micrometres", "100 micrometres", "1 micrometre", "10 millimetres"], a: 1, w: "Megakaryocytes are among the largest cells in the body, up to about 100 micrometres." },
+    { q: "How many platelets can a single megakaryocyte produce?", o: ["10-20", "100-200", "1,000-3,000", "100,000"], a: 2, w: "A single megakaryocyte can produce 1,000-3,000 platelets." },
+    { q: "The distinctive feature of the megakaryocyte nucleus is that it is:", o: ["Round", "Multi-lobed", "Absent", "Fragmented"], a: 1, w: "The megakaryocyte has a large, multi-lobed nucleus." },
+
+    // ===== Note 3 (Q11-15): proplatelets and the site of production =====
+    { q: "The long, branching processes that megakaryocytes extend into the bloodstream are called:", o: ["Microvilli", "Proplatelets", "Cilia", "Pseudopodia"], a: 1, w: "These processes are called proplatelets." },
+    { q: "Platelets are released from proplatelets by:", o: ["Enzymatic digestion", "Shearing from the flow of blood", "Cell division", "Apoptosis"], a: 1, w: "The flow of blood shears off the tips of proplatelets into individual platelets." },
+    { q: "Megakaryocytes sit adjacent to which structures in the bone marrow?", o: ["Sinusoids", "Osteoblasts", "Adipocytes", "Cartilage"], a: 0, w: "Megakaryocytes sit next to the bone marrow sinusoids, allowing them to extend proplatelets into the bloodstream." },
+    { q: "The site where platelets are released into the circulation is:", o: ["The spleen", "The bone marrow sinusoids", "The liver", "The lymph nodes"], a: 1, w: "Platelets are released at the bone marrow sinusoids." },
+    { q: "The production of platelets requires:", o: ["Only the megakaryocyte cytoplasm", "Only the nucleus", "The whole megakaryocyte to burst", "Only the cell membrane"], a: 0, w: "Platelets are formed from the megakaryocyte cytoplasm - the nucleus remains in the marrow." },
+
+    // ===== Note 4 (Q16-20): stages of thrombopoiesis =====
+    { q: "The first committed cell of the platelet lineage is the:", o: ["Megakaryoblast", "Promegakaryocyte", "Granular megakaryocyte", "Platelet"], a: 0, w: "The megakaryoblast is the first committed cell of the platelet lineage." },
+    { q: "The stage at which granules begin to fill the cytoplasm is the:", o: ["Megakaryoblast", "Promegakaryocyte", "Granular megakaryocyte", "Mature megakaryocyte"], a: 2, w: "Granules fill the cytoplasm at the granular megakaryocyte stage." },
+    { q: "The full sequence of thrombopoiesis takes approximately:", o: ["1 day", "5-7 days", "30 days", "100 days"], a: 1, w: "Thrombopoiesis takes about 5-7 days from megakaryoblast to platelet release." },
+    { q: "Platelets circulate in the blood for about:", o: ["7-10 days", "120 days", "1-2 hours", "30 days"], a: 0, w: "Platelets circulate for about 7-10 days before removal." },
+    { q: "The order of stages in thrombopoiesis is:", o: ["Promegakaryocyte → megakaryoblast → granular megakaryocyte → mature megakaryocyte", "Megakaryoblast → promegakaryocyte → granular megakaryocyte → mature megakaryocyte", "Megakaryoblast → granular megakaryocyte → promegakaryocyte → mature megakaryocyte", "Mature megakaryocyte → granular megakaryocyte → promegakaryocyte → megakaryoblast"], a: 1, w: "The correct order is megakaryoblast → promegakaryocyte → granular megakaryocyte → mature megakaryocyte." },
+
+    // ===== Note 5 (Q21-25): thrombopoietin =====
+    { q: "The main regulator of thrombopoiesis is:", o: ["Erythropoietin", "G-CSF", "Thrombopoietin", "IL-5"], a: 2, w: "Thrombopoietin is the main regulator of platelet production." },
+    { q: "Thrombopoietin is produced mainly by the:", o: ["Bone marrow", "Kidney", "Liver", "Spleen"], a: 2, w: "Thrombopoietin is produced mainly by the liver." },
+    { q: "Thrombopoietin acts by binding which receptor?", o: ["Epo receptor", "G-CSF receptor", "c-Mpl receptor", "IL-5 receptor"], a: 2, w: "TPO binds the c-Mpl receptor on megakaryocytes and their precursors." },
+    { q: "When platelet count falls, thrombopoietin level:", o: ["Falls", "Rises", "Stays the same", "Becomes undetectable"], a: 1, w: "When platelet count falls, there are fewer platelets to absorb TPO, so free TPO rises." },
+    { q: "The unusual feature of TPO regulation is that its level depends on:", o: ["The rate of liver synthesis alone", "The number of platelets and megakaryocytes present to absorb it", "The rate of kidney excretion", "The presence of infection"], a: 1, w: "TPO level is determined by how much TPO is bound and removed by platelets and megakaryocytes." },
+
+    // ===== Note 6 (Q26-30): platelet structure =====
+    { q: "Alpha granules of platelets contain:", o: ["Only ADP", "Clotting factors and growth factors", "Only calcium", "Only serotonin"], a: 1, w: "Alpha granules contain clotting factors (fibrinogen, vWF, factor V) and growth factors such as PDGF." },
+    { q: "Dense granules of platelets contain:", o: ["ADP, ATP, serotonin and calcium", "Fibrinogen and factor V", "Lysosomal enzymes", "Mitochondria"], a: 0, w: "Dense granules contain ADP, ATP, serotonin and calcium." },
+    { q: "Serotonin in platelets is important because it:", o: ["Carries oxygen", "Recruits more platelets to the site of injury", "Breaks down clots", "Produces antibodies"], a: 1, w: "Serotonin is released from dense granules and helps recruit more platelets to the site of injury." },
+    { q: "The open canalicular system of a platelet functions to:", o: ["Store calcium", "Provide additional surface area for release and uptake of substances", "Generate energy", "Synthesise proteins"], a: 1, w: "The open canalicular system provides additional surface area for the release and uptake of substances." },
+    { q: "Platelet surface receptors such as GPIb and GPIIb/IIIa allow platelets to:", o: ["Produce energy", "Bind von Willebrand factor and fibrinogen during clot formation", "Divide", "Synthesise proteins"], a: 1, w: "GP receptors allow platelets to bind vWF and fibrinogen during clot formation." },
+
+    // ===== Note 7 (Q31-35): platelet count and measurement =====
+    { q: "The normal platelet count is:", o: ["50-100 x 10^9/L", "150-400 x 10^9/L", "500-800 x 10^9/L", "10-50 x 10^9/L"], a: 1, w: "The normal platelet count is 150-400 x 10^9/L." },
+    { q: "Platelet count is measured in a:", o: ["Full blood count", "Liver function test", "Urea and electrolytes", "Coagulation screen"], a: 0, w: "Platelet count is part of the full blood count." },
+    { q: "Mean platelet volume (MPV) gives an indication of:", o: ["Platelet age and production rate", "Platelet number", "Clotting time", "Bleeding time"], a: 0, w: "MPV indicates whether the marrow is producing young, large platelets or older, smaller ones." },
+    { q: "In hypersplenism, platelet count falls because:", o: ["The marrow stops producing platelets", "Too many platelets are removed by the enlarged spleen", "Platelets are destroyed by antibodies", "TPO levels fall"], a: 1, w: "In hypersplenism, an enlarged spleen removes too many platelets, lowering the count." },
+    { q: "A reactive thrombocytosis is most commonly caused by:", o: ["Infection, inflammation, or iron deficiency", "Bone marrow failure", "Splenectomy", "Vitamin B12 deficiency"], a: 0, w: "Reactive thrombocytosis is caused by infection, inflammation, or iron deficiency." },
+
+    // ===== Note 8 (Q36-40): diseases of thrombopoiesis =====
+    { q: "Thrombocytopenia is defined as a platelet count:", o: ["Above 450 x 10^9/L", "Below 150 x 10^9/L", "Above 150 x 10^9/L", "Below 50 x 10^9/L"], a: 1, w: "Thrombocytopenia is a platelet count below 150 x 10^9/L." },
+    { q: "The most common cause of isolated thrombocytopenia is:", o: ["Aplastic anaemia", "Immune thrombocytopenia (ITP)", "Leukaemia", "Liver disease"], a: 1, w: "Immune thrombocytopenia (ITP) is the most common cause of isolated thrombocytopenia." },
+    { q: "In ITP, the platelet count is low because:", o: ["The marrow cannot make platelets", "Autoantibodies destroy platelets", "The spleen produces too many platelets", "TPO is deficient"], a: 1, w: "ITP is caused by autoantibodies destroying platelets." },
+    { q: "Disseminated intravascular coagulation (DIC) causes thrombocytopenia by:", o: ["Reducing TPO production", "Consuming platelets faster than the marrow can replace them", "Blocking megakaryocyte development", "Causing hypersplenism"], a: 1, w: "DIC consumes platelets faster than the marrow can replace them." },
+    { q: "Bernard-Soulier syndrome is caused by a defect in:", o: ["GPIb receptor", "GPIIb/IIIa receptor", "Alpha granules", "Dense granules"], a: 0, w: "Bernard-Soulier syndrome is caused by a defect in the GPIb receptor." },
+
+    // ===== Note 9 (Q41-45): laboratory investigation of platelets =====
+    { q: "Thrombopoietin receptor agonists such as romiplostim work by:", o: ["Destroying platelets", "Mimicking TPO and stimulating platelet production", "Blocking the spleen", "Reducing platelet activation"], a: 1, w: "TPO receptor agonists mimic TPO and stimulate the marrow to produce platelets." },
+    { q: "The peripheral blood smear is useful in platelet disorders because it:", o: ["Measures platelet count precisely", "Can reveal platelet clumping, size, shape and abnormal forms", "Measures bleeding time", "Measures clotting time"], a: 1, w: "The blood smear reveals platelet clumping, size, shape and abnormal forms." },
+    { q: "Platelet aggregation studies are used to:", o: ["Measure platelet count", "Assess platelet function and distinguish between different functional disorders", "Measure TPO levels", "Measure bleeding time"], a: 1, w: "Platelet aggregation studies assess how well platelets clump in response to different agonists." },
+    { q: "When platelet production failure is suspected, the best investigation is:", o: ["Bone marrow biopsy", "Peripheral blood smear", "Bleeding time", "Platelet aggregation studies"], a: 0, w: "Bone marrow biopsy examines megakaryocyte number and appearance when production failure is suspected." },
+    { q: "A patient has a normal platelet count but a bleeding tendency. The most likely explanation is:", o: ["Thrombocytopenia", "Thrombocytosis", "A platelet function disorder", "A clotting factor deficiency only"], a: 2, w: "A normal platelet count with bleeding suggests a platelet function disorder." },
+
+    // ===== Note 10 (Q46-50): consolidation =====
+    { q: "The three great branches of haematopoiesis are:", o: ["Erythropoiesis, leukopoiesis, thrombopoiesis", "Glycolysis, TCA, ETC", "Mitosis, meiosis, apoptosis", "Erythropoiesis, lymphopoiesis, monopoiesis"], a: 0, w: "The three branches are erythropoiesis, leukopoiesis and thrombopoiesis." },
+    { q: "Thrombopoiesis is important clinically because:", o: ["It is not clinically relevant", "It is the source of platelets for haemostasis and is the basis for treating platelet disorders", "It only affects red cells", "It only matters in children"], a: 1, w: "Thrombopoiesis provides the platelets for haemostasis and is the basis for treating platelet disorders." },
+    { q: "A patient with a platelet count of 18 x 10^9/L, bruising, petechiae and normal red and white cells most likely has:", o: ["Aplastic anaemia", "Immune thrombocytopenia (ITP)", "Leukaemia", "Liver disease"], a: 1, w: "Isolated thrombocytopenia with bruising and petechiae, with normal red and white cells, is typical of ITP." },
+    { q: "In ITP, the bone marrow typically shows:", o: ["Absent megakaryocytes", "Normal or increased megakaryocyte numbers", "Increased red cell precursors only", "Fatty replacement"], a: 1, w: "In ITP, the marrow shows normal or increased megakaryocytes, because production is not the problem - destruction is." },
+    { q: "The best treatment for severe ITP is likely to include:", o: ["Iron supplementation", "Thrombopoietin receptor agonists, corticosteroids, or IVIG", "Vitamin B12", "Blood transfusion only"], a: 1, w: "Treatment for ITP includes TPO receptor agonists, corticosteroids, IVIG, or splenectomy." }
+  ]
+};
+
+
+
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -26859,6 +28345,18 @@ const CONTENT = {
   "pha:4": T_PHA_PHARMACOKINETICS,
   "pha:5": T_PHA_ADRENERGIC,
   "pha:6": T_PHA_CHOLINERGIC,
+  "hem:0": T_HEM_INTRO,
+  "hem:1": T_HEM_HAEMATOPOIESIS,
+  "hem:2": T_HEM_ERYTHROPOIESIS,
+  "hem:3": T_HEM_LEUKOPOIESIS,
+  "hem:4": T_HEM_THROMBOPOIESIS,
+  "hem:5": T_HEM_ANTICOAGULANTS,
+  "hem:6": T_HEM_PHLEBOTOMY,
+  "hem:7": T_HEM_STAINS,
+  "hem:8": T_HEM_BLOOD_SMEARS,
+  "hem:9": T_HEM_LEUKOCYTE_COUNT,
+  "hem:10": T_HEM_MICROSCOPY,
+  "hem:11": T_HEM_QUALITY_ASSURANCE,
 
 };
 
