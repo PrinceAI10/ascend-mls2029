@@ -30072,6 +30072,300 @@ If those came cleanly, you understand the principles and practice of microscopy 
   ],
 };
 
+/* --------------------------- hem:11 --------------------------- */
+// Objectives covered: quality assurance in haematological testing and the
+// principles of Total Quality Management in haematology. Definitions of
+// quality, QA, QC, TQM; Good Laboratory Practice; standardisation;
+// personnel and training; documentation; equipment validation and
+// calibration; internal QC and EQA; inter-laboratory comparisons; audits;
+// continuous improvement; patient-centred care; the three phases of testing
+// (pre-analytical, analytical, post-analytical).
+// 10 note headers -> 5 MCQs each -> exactly 50 MCQs.
+const T_HEM_QUALITY = {
+  courseId: "hem",
+  topicIndex: 11,
+  title: "Quality Assurance in Haematological Testing, Principles of Total Quality Management",
+  minutes: 30,
+  note: [
+    {
+      q: "You have spent a whole course learning to perform haematology tests. Why does the final topic ask how to trust them?",
+      body: `You have learned how blood cells are produced, how samples are collected and stained, how films are examined, how cells are counted, and how microscopes are used. Every one of those topics has taught you to perform a haematological test. This final topic asks a different question: how do you know that what you have done is correct?
+
+My Socratic question: a result of 8.5 x 10^9 per litre for a white cell count is only useful if the clinician can trust it. What would make the clinician trust it?
+
+The answer is not the number itself. The clinician trusts the result because there is a system behind it - a system that guarantees the sample was correct, the technique was standardised, the equipment was calibrated, the reagents were in date, the staff were trained, the result was checked, and any error was detected before the result was reported. That system is quality assurance. It is what makes the difference between a number and a clinically trustworthy result.
+
+Everything in this topic is about that system. And it is placed last because it is the framework within which every other topic in this course operates. A well-trained scientist, an expensive analyser, a beautiful blood film - none of them can be trusted if the quality system around them is broken.
+
+Crucial insight: quality assurance is not a bureaucratic overlay on top of laboratory work. It is the system that makes laboratory work trustworthy. Every test in this course, from sample collection to microscopy, is performed within a quality framework that ensures the result is correct. Understanding that framework is the final, and arguably the most important, skill of a haematology scientist.`
+    },
+    {
+      q: "There are several levels of quality - QC, QA, TQM. What does each actually mean?",
+      body: `The words quality control, quality assurance and total quality management are often used interchangeably, but they are not the same thing. They sit at different levels of the same hierarchy, and confusing them obscures what each contributes.
+
+My Socratic question: if you check a control sample and it is within range, you have done quality control. But is that enough to guarantee the patient's result is correct?
+
+The answer is no - and that is why there is more than one level. Quality control verifies the analytical step of one test on one day. But the result depends on much more than the analytical step. The sample might have been mislabelled, stored wrongly, or collected from the wrong patient. The equipment might have been badly calibrated. The staff member might be poorly trained. Quality control would not detect any of those, because they lie outside the analytical step.
+
+The hierarchy, from narrowest to broadest:
+- Quality control (QC) - the set of procedures used to detect and correct errors within the analytical phase of a single test. Running a control sample, comparing it against a range, and acting on the result is QC.
+- Quality assurance (QA) - the wider set of policies, procedures and activities that ensure quality across the entire testing process, from patient preparation to reporting. QA includes QC, but also covers sample collection, equipment maintenance, staff training, documentation, and audits.
+- Total Quality Management (TQM) - an organisation-wide management philosophy that treats quality as a responsibility of everyone in the organisation, at every level, aimed at continuous improvement. TQM extends QA beyond the laboratory into the entire institution.
+
+Crucial insight: QC is the daily check; QA is the system; TQM is the culture. Each one adds a layer to what the one below it can guarantee. A laboratory with good QC but no QA can still release wrong results because the errors are outside the analytical step. A laboratory with QA but no TQM will not sustain improvement over time. All three levels are needed.`
+    },
+    {
+      q: "The clinician will receive a result that depends on dozens of steps. Why do we group them into three phases?",
+      body: `A haematology result travels through a long sequence: the patient is identified, blood is collected, the sample is labelled and transported, it is received and logged in the laboratory, it is processed, analysed, reported, and interpreted. That is more than a dozen steps, each capable of introducing error. To manage that complexity, the quality system groups the steps into three phases.
+
+My Socratic question: if an error can occur at any of those dozen steps, why does grouping them into three phases help us prevent it?
+
+The answer is that each phase has its own characteristic errors, its own controls, and its own means of monitoring. Grouping makes the errors visible and allows targeted quality measures.
+
+The three phases of testing:
+- Pre-analytical phase - everything that happens before the sample reaches the analyser: patient preparation, identification, sample collection, labelling, transport, storage, and receiving and accessioning. This is where the majority of laboratory errors occur, and yet it is the phase most likely to be outside the laboratory's direct control.
+- Analytical phase - the actual measurement: calibration, reagent preparation, instrument operation, running the sample, and the analytical run itself. This is the phase traditionally covered by QC. It is the phase most under the laboratory's control.
+- Post-analytical phase - everything after the measurement: result review, validation, reporting, critical value notification, and interpretation. This is where errors of transmission, transcription, and communication occur.
+
+A quality system monitors all three phases. It recognises that the analytical phase, while critical, is only one part of the journey, and that pre-analytical errors - which are typically more numerous - are often the greatest threat to patient safety.
+
+Crucial insight: errors do not respect the boundaries of the laboratory. The three phases give us a framework for finding and preventing them. Once you understand that the majority of errors happen in the pre-analytical phase, you understand why quality must begin at the bedside, not at the analyser.`
+    },
+    {
+      q: "A laboratory is a system, but a person still has to carry it out. Why does the quality system begin with the people?",
+      body: `The instruments are modern, the reagents are of high quality, the protocols are written - but a laboratory is only as good as the people who run it. A well-trained, competent, accountable staff is the foundation on which every other quality measure rests.
+
+My Socratic question: if the same analyser, the same reagents and the same protocol are used by two different laboratories, why would the results still differ?
+
+The answer is the people. How the sample is drawn, how the instrument is prepared, how the QC result is interpreted, how a discrepancy is investigated - all of these depend on the knowledge, skill, and judgement of the person performing them. Equipment and protocols are tools; people decide how they are used.
+
+The people-related elements of a quality system:
+- Personnel qualifications - defined educational requirements for each role, from entry-level to senior scientist.
+- Training - structured induction and ongoing training, with documented evidence that each person has been trained on each procedure they perform.
+- Competency assessment - periodic assessment of each person's ability to perform each task correctly, with documented results.
+- Job descriptions - clear definition of responsibilities and authority, so that accountability is explicit.
+- Continuing professional development - ongoing learning to keep pace with advances in the field.
+- Accountability - a culture in which each person takes responsibility for their work and speaks up when something is wrong.
+
+Crucial insight: every quality system is ultimately a human system. Written procedures, calibrated instruments and controlled reagents are essential, but they are tools in the hands of people. The most important quality control measure in any laboratory is a competent, trained, accountable staff. This is why personnel, training and competency are the first pillars of any quality framework.`
+    },
+    {
+      q: "Written procedures, records, and documents seem like paperwork. Why do they matter so much?",
+      body: `Every quality system generates documents: standard operating procedures, forms, logs, records, reports. To someone unfamiliar with the laboratory, they can look like bureaucracy. To the quality scientist, they are the memory and the accountability of the laboratory.
+
+My Socratic question: if a test was performed correctly, why does it matter whether anyone wrote it down?
+
+The answer is that a laboratory cannot prove that anything happened correctly if there is no record. Documentation serves two purposes, and both are essential:
+- It standardises work. A written procedure ensures that every person performs a task the same way, on every shift, in every laboratory. Without it, each person develops their own technique, and results become incomparable.
+- It provides evidence. In accreditation, in audits, and in incident investigation, only documented evidence counts. If the QC was run but not recorded, it is treated as if it was not run.
+
+The main documents of a quality system:
+- Standard operating procedures (SOPs) - the written instructions for every procedure, from sample collection to instrument operation to result reporting.
+- Records - the logs that document what was actually done: QC records, calibration records, equipment maintenance logs, temperature records, sample acceptance records, staff training records.
+- Forms - the structured documents used to capture data (sample rejection forms, incident report forms, worksheet templates).
+- Quality manual - the overarching document that defines the laboratory's quality system and policies.
+
+Document control is itself a discipline. Every document must have a unique identifier, a version number, an approval signature, and a date. Superseded versions must be removed from circulation. This prevents the use of outdated procedures.
+
+Crucial insight: in a quality system, if it is not written down, it did not happen. Documentation is the evidence that quality standards are being met, and it is the mechanism for maintaining them over time, across different staff, and through changes in technology. It is the laboratory's institutional memory.`
+    },
+    {
+      q: "The analyser sits in the middle of the laboratory. What does it mean to have confidence in it?",
+      body: `The analyser produces the numbers that go into the patient's report. If the analyser is performing incorrectly, every result it produces is suspect. So the quality system must be able to demonstrate that the analyser is performing correctly, not just assume it.
+
+My Socratic question: the analyser is electronic and does the same thing on every run. Why would its performance ever change?
+
+The answer is that the analyser is a physical instrument operating with physical reagents on biological samples, and all three of these can vary. The light source ages. The tubes can become dirty. The reagents can degrade. The electronic components can drift. Even a perfectly functioning analyser can be compromised by its environment, its consumables, or the handling of the samples.
+
+The equipment-related elements of a quality system:
+- Selection and validation - when a new analyser or method is introduced, it must be validated to demonstrate that it performs as required before it is used for patient testing.
+- Calibration - adjusting the instrument against known reference materials so that the results it produces are traceable to a standard.
+- Internal quality control (IQC) - running control samples of known value at intervals (often daily, or at the start of every batch) and comparing the results against a defined range.
+- External quality assessment (EQA) - participating in a scheme where the same sample is sent to many laboratories and the results are compared. Also called proficiency testing.
+- Preventive maintenance - scheduled cleaning, replacement of worn parts, and inspection, so that failure is prevented rather than corrected.
+- Troubleshooting and corrective action - the documented process for identifying and fixing equipment faults.
+
+Each of these elements contributes a distinct piece of confidence. Calibration ensures the analyser is set correctly. IQC confirms it is performing correctly today. EQA confirms it is performing comparably to other laboratories. Maintenance ensures that it continues to perform correctly over time.
+
+Crucial insight: the analyser is not trusted because it is a machine, but because the system around it continuously verifies it. Calibration, IQC, EQA and maintenance are all means of producing evidence that the analyser's results are trustworthy. Without that evidence, an analyser's result is just a number.`
+    },
+    {
+      q: "Running a control sample is a daily ritual. What is IQC actually checking?",
+      body: `Every morning in a haematology laboratory, a control sample is run before patient samples. The result is plotted on a chart and compared against a defined range. If it is within range, patient testing proceeds. If it is out of range, testing stops until the problem is found. This daily ritual is internal quality control, and it is one of the most powerful tools in the laboratory.
+
+My Socratic question: the control sample is not from a patient. It has a known value. So what does running it actually tell you?
+
+The answer is that it tells you whether the analyser, the reagents, and the technique are all behaving consistently with the way they were when the target values were established. The control does not measure a patient, but it verifies the entire analytical system.
+
+Key concepts of IQC:
+- The control material has a target value (established from many previous runs) and a defined range (typically the mean plus or minus 2 standard deviations).
+- The control is run alongside patient samples under the same conditions, so any problem affecting the controls is assumed to affect patients.
+- The results are plotted on a Levey-Jennings chart, which shows the mean, the plus and minus 2 standard deviation limits, and the trend of results over time.
+- The scientist interprets the chart using rules - Westgard rules are the standard - to determine whether the run is acceptable or whether it should be rejected.
+- If a run is rejected, patient results from that run are not reported until the problem is corrected and the run is repeated.
+
+The various rules (1-2s, 1-3s, 2-2s, R-4s, 4-1s, 10x) are all about distinguishing random variation from systematic error. Random variation is inevitable and harmless. Systematic error indicates a real problem - a drifting instrument, a degraded reagent, a change in technique - and must be investigated.
+
+Crucial insight: IQC is not about scoring a pass or fail. It is about detecting systematic error before it reaches a patient. The control sample is a sentinel - it tells you about the health of the system, so that you can intervene before a wrong result is reported. Without IQC, a drifting analyser could produce hundreds of wrong results before anyone noticed.`
+    },
+    {
+      q: "IQC checks your own laboratory. Why do you also need to compare with other laboratories?",
+      body: `Internal quality control tells you that your laboratory's results today are consistent with its results yesterday. It does not tell you whether your laboratory's results are consistent with the results of other laboratories. Two laboratories could both have perfect IQC and still produce results that differ systematically from each other. External quality assessment is the tool that detects this.
+
+My Socratic question: if two laboratories have perfect IQC and their results disagree, which one is correct?
+
+The answer is that you cannot tell from IQC alone, because IQC only measures consistency within each laboratory. External quality assessment (EQA), also called proficiency testing, sends the same sample to many laboratories and compares their results against each other and against a reference method. This reveals systematic differences between laboratories that IQC cannot detect.
+
+How EQA works:
+- The EQA provider sends the same sample to all participating laboratories, usually on a regular schedule (monthly, quarterly).
+- Each laboratory analyses the sample as if it were a patient sample and returns the result.
+- The provider compares all the results, calculates a consensus or reference value, and reports each laboratory's performance.
+- If a laboratory's result is significantly different from the consensus, it must investigate the discrepancy and take corrective action.
+
+The value of EQA:
+- It detects systematic bias that IQC cannot detect.
+- It identifies problems with reagents, calibrators, or methods that may be shared across laboratories.
+- It provides an independent verification of the laboratory's results.
+- It is required for accreditation in most jurisdictions.
+- It helps the laboratory compare its performance with peers and identify areas for improvement.
+
+Crucial insight: IQC ensures internal consistency; EQA ensures external comparability. Both are essential. A laboratory with perfect IQC but poor EQA may be reliably producing the wrong answer. A laboratory with good EQA but poor IQC may be producing variable results that sometimes drift outside acceptable limits. Only both together give the full picture of quality.`
+    },
+    {
+      q: "Quality is not a set of boxes to tick. What does continuous improvement actually mean?",
+      body: `Quality is not a destination. No laboratory ever reaches a state where it has no problems, no variation, and no room for improvement. Total Quality Management treats quality as an ongoing process, where every result is an opportunity to learn, every incident is an opportunity to improve, and every process can be refined.
+
+My Socratic question: if a laboratory performs well for a year and then an error occurs, is that a failure of the quality system?
+
+The answer is no, unless the error is repeated. A single error reveals an opportunity to improve. What matters is whether the laboratory learns from it, corrects the underlying problem, and prevents recurrence. That is the essence of continuous improvement.
+
+The mechanisms of continuous improvement:
+- Incident reporting - a non-punitive system in which errors and near-misses are reported so that they can be investigated and prevented. The goal is not to blame, but to fix.
+- Root cause analysis - investigating an incident to identify the underlying cause, not just the proximate one. A wrong result could be caused by a mislabelled sample, but the root cause might be an unclear labelling protocol.
+- Corrective and preventive action (CAPA) - the process of fixing a problem (corrective) and preventing it from recurring (preventive).
+- Audits - internal and external reviews of the quality system to check that it is working as intended. Internal audits are performed by trained staff within the laboratory; external audits are performed by accreditation bodies or regulators.
+- Key performance indicators (KPIs) - metrics that track quality over time: sample rejection rate, turnaround time, QC failure rate, EQA performance, error rate.
+- Quality improvement projects - structured efforts to improve a specific process, using data to measure the improvement.
+- Feedback loops - from clinicians, from patients, from staff, and from audits.
+
+Crucial insight: continuous improvement means the quality system is a living system, not a static one. It responds to problems, learns from incidents, and evolves as new methods and technologies appear. The goal is not perfection - which is unattainable - but ongoing improvement, so that each year the laboratory is better than the last.`
+    },
+    {
+      q: "Consolidation and your final test.",
+      body: `Your cognitive map for quality assurance in haematology, in five lines.
+
+The levels of quality: quality control (QC) detects and corrects errors in the analytical phase of a single test; quality assurance (QA) covers the entire testing process, including pre-analytical and post-analytical phases; total quality management (TQM) is an organisation-wide philosophy of continuous improvement.
+
+The three phases of testing: pre-analytical (before analysis - where most errors occur), analytical (the measurement itself), and post-analytical (after measurement - reporting and interpretation). Quality systems monitor all three.
+
+The pillars of quality: personnel and training, standardised procedures and documentation, equipment validation and calibration, internal quality control (IQC), external quality assessment (EQA), and audits.
+
+IQC and EQA: IQC uses control samples to verify the analytical system day by day; EQA compares the laboratory's results with other laboratories. Both are essential, and each detects a different type of problem.
+
+Continuous improvement: incidents are reported and investigated, root causes are addressed, corrective and preventive actions are documented, audits check the system, and performance is tracked over time. Quality is a process, not a destination.
+
+Now your final test. A haematology laboratory has been running a full blood count analyser for six months. The IQC results have always been within the acceptable range, but a recent EQA report shows that the laboratory's haemoglobin results are consistently 5% lower than the consensus value.
+
+Question one: which quality control mechanism detected the problem, and why did IQC not detect it?
+Question two: what are the most likely causes, and what steps would you take to investigate and correct them?
+Question three: what is the wider lesson about the relationship between IQC and EQA in a quality system?
+
+Work them through before reading on.
+
+My answers. One: the problem was detected by external quality assessment (EQA). IQC did not detect it because IQC compares results against the laboratory's own target values, so a systematic bias affecting all runs equally would still fall within range. EQA compares results against other laboratories, so a systematic bias becomes visible. Two: the most likely causes are a calibration error on the analyser, a change in calibrator or reagent lot, or a method drift. To investigate, I would check the calibration status and review calibration records for the period; check the reagent and calibrator lot numbers and compare against previous lots; check for any recent method changes or software updates; and consider recalibrating the analyser against a fresh calibrator. Once corrected, I would re-run IQC and check that EQA results return to the consensus range. Three: the wider lesson is that IQC and EQA are complementary, not interchangeable. IQC ensures internal consistency; EQA ensures external comparability. A laboratory with perfect IQC can still be producing systematically biased results, and only EQA will reveal it. Both mechanisms must be in place, and both must be acted upon, for a laboratory's results to be genuinely trustworthy.
+
+If those came cleanly, you understand the framework that makes haematology trustworthy - the system that ensures every result reported is accurate, timely, and reliable. And with that, you have completed the entire Hematology I course.`
+    },
+  ],
+  theory: [
+    { q: "Define quality control, quality assurance, and total quality management, and explain the difference between them.", a: "Quality control (QC) refers to the procedures used to detect and correct errors within the analytical phase of a single test, such as running control samples. Quality assurance (QA) is the wider set of policies, procedures and activities that ensure quality across the entire testing process, including pre-analytical and post-analytical phases; it includes QC as one of its components. Total Quality Management (TQM) is an organisation-wide management philosophy that treats quality as a responsibility of everyone in the organisation and aims at continuous improvement. Each level extends the scope of the one below it." },
+    { q: "Name the three phases of laboratory testing, and give two examples of errors that occur in each.", a: "Pre-analytical phase (before analysis) - for example, mislabelled sample, haemolysed sample, delayed transport. Analytical phase (the measurement itself) - for example, incorrectly calibrated instrument, degraded reagent, incorrect dilution. Post-analytical phase (after measurement) - for example, transcription error, unreported critical value, delayed reporting of a result." },
+    { q: "Explain why the pre-analytical phase is the most error-prone phase of laboratory testing.", a: "The pre-analytical phase involves the largest number of steps, most of which occur outside the laboratory's direct control - patient identification, sample collection, labelling, transport, and storage. It is also performed by the widest range of staff, from phlebotomists to porters. Errors introduced here cannot be corrected by any subsequent laboratory procedure, and they account for the majority of all laboratory errors." },
+    { q: "List the main pillars of a quality management system in a medical laboratory.", a: "Personnel and training (with competency assessment), standardised operating procedures (SOPs) and documentation, equipment selection and validation, calibration and maintenance, internal quality control (IQC), external quality assessment (EQA), audits, incident reporting and corrective action, and continuous improvement. These pillars together constitute a complete quality system." },
+    { q: "Explain why personnel and training are considered the foundation of a quality system.", a: "Every quality system is ultimately a human system. Instruments, reagents and written procedures are tools in the hands of people; the correctness of the result depends on how those tools are used. Training ensures that every person knows how to perform each procedure correctly. Competency assessment ensures that this knowledge is maintained. Accountability ensures that each person takes responsibility for their work. Without these, all other quality measures become ineffective." },
+    { q: "Describe the purposes and components of internal quality control (IQC).", a: "IQC verifies the analytical system on a day-to-day basis by running control samples of known value. The components include the control material (with a target value and defined range), the schedule of control runs (typically daily or at the start of every batch), the Levey-Jennings chart (plotting the mean and standard deviation limits), and the interpretation rules (Westgard rules) used to determine whether a run is acceptable. If a run is rejected, patient results from that run are not reported until the problem is corrected and the run is repeated." },
+    { q: "Explain the purpose of external quality assessment (EQA) and how it differs from IQC.", a: "EQA, also called proficiency testing, sends the same sample to many laboratories and compares their results. It verifies that the laboratory's results are comparable with those of other laboratories and with a reference method. Unlike IQC, EQA detects systematic bias and inter-laboratory differences, which IQC cannot detect because IQC compares results only against the laboratory's own target values. Both are essential: IQC ensures internal consistency, and EQA ensures external comparability." },
+    { q: "Describe the role of documentation in a quality system.", a: "Documentation standardises work by providing written procedures that everyone follows, and it provides evidence that quality standards are being met. The main documents are standard operating procedures (SOPs), records (QC records, calibration records, maintenance logs, training records), forms (rejection forms, incident reports), and the quality manual. Document control is essential: each document must have a unique identifier, version number, approval signature and date, and superseded versions must be removed from use." },
+    { q: "Explain what is meant by continuous improvement in the context of laboratory quality management.", a: "Continuous improvement means that quality is a process, not a destination. Laboratories use incident reporting, root cause analysis, corrective and preventive action (CAPA), audits, key performance indicators (KPIs) and quality improvement projects to identify problems and improve processes over time. The goal is not perfection, which is unattainable, but ongoing improvement so that the laboratory's performance is better this year than last." },
+    { q: "Describe how IQC and EQA together provide confidence in a laboratory's results.", a: "IQC ensures that the laboratory's results are consistent from day to day within itself. EQA ensures that the laboratory's results are comparable with those of other laboratories. Together they cover both internal consistency and external comparability. A laboratory with good IQC but poor EQA may be reliably producing the wrong answer; a laboratory with good EQA but poor IQC may be producing variable results. Both must be in place and acted upon for a laboratory's results to be genuinely trustworthy." },
+  ],
+  videos: [
+    { channel: "Laboratory Quality", title: "Total Quality Management in the Medical Laboratory", note: "Overview of TQM principles and their application in the clinical laboratory.", url: "https://www.youtube.com/results?search_query=total+quality+management+medical+laboratory" },
+    { channel: "Laboratory Quality", title: "Internal Quality Control and Levey-Jennings Charts", note: "How IQC works, how to interpret a Levey-Jennings chart and use Westgard rules.", url: "https://www.youtube.com/results?search_query=internal+quality+control+levey+jennings+westgard" },
+    { channel: "Laboratory Quality", title: "External Quality Assessment and Proficiency Testing", note: "How EQA schemes work and why they are essential for laboratory credibility.", url: "https://www.youtube.com/results?search_query=external+quality+assessment+proficiency+testing+laboratory" },
+  ],
+  mcqs: [
+    // ===== Note 1 (Q1-5): why quality matters =====
+    { q: "The purpose of quality assurance in the haematology laboratory is to:", o: ["Increase test speed", "Ensure that results are accurate and trustworthy", "Reduce the cost of testing", "Replace the need for training"], a: 1, w: "Quality assurance ensures that laboratory results are accurate, reliable and trustworthy." },
+    { q: "A laboratory result is trustworthy mainly because:", o: ["The number is large", "The analyser is expensive", "There is a quality system behind it", "The result was printed on letterhead"], a: 2, w: "Trust in a result comes from the quality system that supports the entire testing process." },
+    { q: "Quality assurance in the laboratory is best described as:", o: ["A bureaucratic requirement", "A framework that makes laboratory results trustworthy", "A single daily procedure", "An optional add-on"], a: 1, w: "Quality assurance is the framework that ensures laboratory results can be trusted." },
+    { q: "The relationship between quality assurance and the rest of the haematology course is best described as:", o: ["It is unrelated to the other topics", "It is only relevant to analyser operation", "It is the framework within which every other topic operates", "It replaces the other topics"], a: 2, w: "Quality assurance is the framework within which all other laboratory work takes place." },
+    { q: "If the quality system around a test is broken, the result of that test:", o: ["Is still reliable if the analyser is modern", "Cannot be fully trusted regardless of the analyser", "Is unaffected", "Can be trusted if the scientist is experienced"], a: 1, w: "A broken quality system undermines trust in the result regardless of instrumentation." },
+
+    // ===== Note 2 (Q6-10): QC, QA and TQM =====
+    { q: "Quality control (QC) is best defined as:", o: ["Procedures to detect and correct errors in the analytical phase of a test", "The entire quality system of the laboratory", "An organisation-wide management philosophy", "The process of auditing the laboratory"], a: 0, w: "QC focuses on detecting and correcting errors in the analytical phase of testing." },
+    { q: "Quality assurance (QA) is best defined as:", o: ["An organisation-wide management philosophy", "The wider set of policies and activities that ensure quality across the entire testing process", "A single daily procedure", "The same thing as quality control"], a: 1, w: "QA covers the entire testing process, from pre-analytical to post-analytical phases." },
+    { q: "Total Quality Management (TQM) is best described as:", o: ["A laboratory-specific procedure", "A single analyser's quality system", "An organisation-wide management philosophy of continuous improvement", "A governmental regulation"], a: 2, w: "TQM treats quality as a responsibility of everyone in the organisation and aims at continuous improvement." },
+    { q: "Which of the following best describes the relationship between QC, QA and TQM?", o: ["They are the same thing", "QC and QA are unrelated", "They operate at different levels of scope, from narrowest to broadest", "TQM is narrower than QC"], a: 2, w: "QC is the narrowest, QA is broader, and TQM is the broadest scope." },
+    { q: "If a laboratory has good QC but no QA, the main risk is:", o: ["Slow turnaround", "Errors outside the analytical phase going undetected", "Poor colour of the analyser's screen", "Loss of accreditation only"], a: 1, w: "QA covers errors in the pre-analytical and post-analytical phases that QC alone cannot detect." },
+
+    // ===== Note 3 (Q11-15): three phases of testing =====
+    { q: "The pre-analytical phase includes which of the following?", o: ["Running the control samples", "Sample collection, labelling and transport", "The measurement itself", "Result reporting"], a: 1, w: "The pre-analytical phase covers everything before analysis, including collection and transport." },
+    { q: "The analytical phase of testing includes:", o: ["Patient identification at the bedside", "Sample transport to the laboratory", "Running the sample on the analyser", "Reporting of critical values"], a: 2, w: "The analytical phase is the actual measurement of the sample." },
+    { q: "The post-analytical phase includes:", o: ["Result reporting and critical value notification", "Blood collection", "Sample storage", "Reagent preparation"], a: 0, w: "The post-analytical phase covers everything after the measurement, including reporting." },
+    { q: "The majority of laboratory errors occur in:", o: ["The analytical phase", "The pre-analytical phase", "The post-analytical phase", "All phases equally"], a: 1, w: "The pre-analytical phase is where most laboratory errors occur." },
+    { q: "The three-phase framework is useful because it:", o: ["Separates the laboratory from the rest of the hospital", "Allows errors to be identified and prevented by phase", "Simplifies reporting", "Reduces the need for staff training"], a: 1, w: "Grouping errors by phase allows targeted quality measures." },
+
+    // ===== Note 4 (Q16-20): personnel and training =====
+    { q: "The foundation of any quality system is:", o: ["The analyser", "The reagent", "Competent, trained and accountable staff", "The building"], a: 2, w: "People are the foundation of any quality system; equipment and procedures are tools in their hands." },
+    { q: "Two laboratories using the same analyser and reagents can produce different results because:", o: ["The analyser is faulty", "Their staff differ in training, skill and technique", "The reagents are different", "The samples are different"], a: 1, w: "Different staff training, skill and technique can produce different results despite identical equipment." },
+    { q: "Competency assessment in the quality system refers to:", o: ["Assessment of the analyser's performance", "Periodic assessment of each person's ability to perform each task correctly", "The measurement of sample quality", "The evaluation of the reagent's purity"], a: 1, w: "Competency assessment verifies that each person can perform each task correctly." },
+    { q: "A defined job description is important in the quality system because:", o: ["It formalises responsibilities and accountability", "It justifies salary", "It is a legal requirement only", "It replaces the need for training"], a: 0, w: "Job descriptions clarify responsibilities and accountability within the quality system." },
+    { q: "Continuing professional development is part of the quality system because:", o: ["It is required by law in all countries", "It ensures that staff keep pace with advances in the field", "It replaces competency assessment", "It reduces the need for SOPs"], a: 1, w: "Continuing professional development ensures that staff remain current with advances." },
+
+    // ===== Note 5 (Q21-25): documentation =====
+    { q: "Standard operating procedures (SOPs) exist primarily to:", o: ["Satisfy accreditation bodies", "Standardise how each procedure is performed", "Provide a record of who did what", "Replace staff training"], a: 1, w: "SOPs standardise how procedures are performed so that everyone follows the same method." },
+    { q: "In a quality system, if an activity was performed but not documented, it is treated as:", o: ["Completed", "Partially completed", "Not performed", "Optional"], a: 2, w: "In a quality system, only documented actions count as having been performed." },
+    { q: "Document control ensures that:", o: ["Only current, approved versions of documents are in use", "Documents are never revised", "Documents are kept secret", "Documents are held only by the manager"], a: 0, w: "Document control ensures that only current versions are in use and superseded versions are removed." },
+    { q: "Which of the following is NOT a typical component of quality documentation?", o: ["Standard operating procedures", "Records and logs", "Quality manual", "Personal diary of the laboratory manager"], a: 3, w: "A personal diary is not part of the laboratory quality documentation system." },
+    { q: "The quality manual is best described as:", o: ["A working bench manual", "The overarching document defining the laboratory's quality system and policies", "A list of reagents", "A record of daily QC results"], a: 1, w: "The quality manual defines the laboratory's quality system and policies." },
+
+    // ===== Note 6 (Q26-30): equipment confidence =====
+    { q: "Validation of a new analyser means:", o: ["The analyser was purchased from a reputable supplier", "The analyser has been demonstrated to perform as required before patient testing", "The analyser was cleaned", "The analyser was calibrated once"], a: 1, w: "Validation demonstrates that a new analyser performs as required before it is used for patient testing." },
+    { q: "Calibration of an analyser is performed to:", o: ["Adjust the instrument against known reference materials so results are traceable to a standard", "Clean the instrument's internal components", "Replace the light source", "Verify the instrument's electrical safety"], a: 0, w: "Calibration adjusts the instrument against known reference materials so that its results are traceable to a standard." },
+    { q: "Internal quality control (IQC) is performed to:", o: ["Calibrate the analyser", "Verify the analytical system performs correctly on each run", "Replace the reagent", "Compare results with other laboratories"], a: 1, w: "IQC verifies the analytical system's performance on a run-by-run basis." },
+    { q: "External quality assessment (EQA) is used to:", o: ["Calibrate the analyser", "Compare the laboratory's results with other laboratories", "Replace IQC", "Train new staff"], a: 1, w: "EQA compares the laboratory's results with those of other laboratories." },
+    { q: "Preventive maintenance in the laboratory aims to:", o: ["Fix faults after they occur", "Prevent failure by scheduled cleaning and inspection", "Replace the analyser regularly", "Reduce staff workload"], a: 1, w: "Preventive maintenance prevents failure rather than correcting faults after they occur." },
+
+    // ===== Note 7 (Q31-35): IQC =====
+    { q: "Internal quality control (IQC) uses control samples with:", o: ["Unknown values", "Known values", "Only high values", "Only low values"], a: 1, w: "IQC uses control samples with known values." },
+    { q: "The IQC control range is typically defined as:", o: ["The mean plus or minus 1 standard deviation", "The mean plus or minus 2 standard deviations", "The mean plus or minus 3 standard deviations", "A range chosen by the manager"], a: 1, w: "The control range is typically the mean plus or minus 2 standard deviations." },
+    { q: "IQC results are plotted on a:", o: ["Levey-Jennings chart", "Bar chart", "Pie chart", "Scattergram"], a: 0, w: "IQC results are plotted on a Levey-Jennings chart with mean and SD limits." },
+    { q: "The Westgard rules are used to:", o: ["Calibrate the analyser", "Interpret IQC results to decide whether a run should be accepted or rejected", "Measure the patient's haemoglobin", "Set the reagent's expiry date"], a: 1, w: "Westgard rules interpret IQC results to decide whether a run is acceptable or should be rejected." },
+    { q: "If an IQC result is outside the acceptable range, the correct action is to:", o: ["Report patient results anyway", "Stop testing until the problem is identified and corrected, then repeat the run", "Report the results with a comment", "Repeat the control once and accept the second result regardless"], a: 1, w: "If IQC is out of range, patient testing must stop until the problem is corrected and the run is repeated." },
+
+    // ===== Note 8 (Q36-40): EQA =====
+    { q: "EQA is also called:", o: ["Internal quality control", "Proficiency testing", "Calibration verification", "Method validation"], a: 1, w: "EQA is also called proficiency testing." },
+    { q: "EQA detects a problem that IQC cannot detect, namely:", o: ["Random variation", "Systematic bias affecting the laboratory's results compared with other laboratories", "Analyser breakdown", "Reagent expiry"], a: 1, w: "EQA detects systematic bias that IQC cannot detect because IQC compares results only within the laboratory." },
+    { q: "EQA compares the laboratory's results with:", o: ["The laboratory's own previous results", "The results of other participating laboratories", "The clinician's expectation", "The patient's previous results"], a: 1, w: "EQA compares the laboratory's results with those of other participating laboratories." },
+    { q: "If a laboratory's EQA result differs significantly from the consensus, the laboratory should:", o: ["Wait for the next EQA cycle", "Investigate and take corrective action", "Ignore the discrepancy", "Report the result anyway"], a: 1, w: "A significant EQA discrepancy must be investigated and corrected." },
+    { q: "EQA is often required for laboratory accreditation because:", o: ["It ensures internal consistency", "It provides independent verification of external comparability", "It measures turnaround time", "It verifies staff competency"], a: 1, w: "EQA provides independent verification that the laboratory's results are externally comparable." },
+
+    // ===== Note 9 (Q41-45): continuous improvement =====
+    { q: "Continuous improvement in the quality system means:", o: ["Reaching a state of perfection", "Ongoing improvement, with quality as a process rather than a destination", "Replacing all equipment annually", "Reducing the number of tests"], a: 1, w: "Continuous improvement treats quality as an ongoing process, not a destination." },
+    { q: "Incident reporting in a quality system should be:", o: ["Punitive, to discourage mistakes", "Non-punitive, to encourage reporting and learning", "Optional", "Done only for serious errors"], a: 1, w: "Incident reporting is most effective when non-punitive, so that errors and near-misses are reported and can be investigated." },
+    { q: "Root cause analysis is used to:", o: ["Identify the underlying cause of an incident, not just the proximate cause", "Blame the person involved", "Calculate the cost of an error", "Report to the accreditation body"], a: 0, w: "Root cause analysis identifies the underlying cause of an incident so that it can be prevented." },
+    { q: "Corrective and preventive action (CAPA) is concerned with:", o: ["Punishing errors", "Fixing the problem and preventing recurrence", "Reporting to the clinician only", "Replacing equipment"], a: 1, w: "CAPA corrects the current problem and prevents its recurrence." },
+    { q: "Key performance indicators (KPIs) in the quality system are used to:", o: ["Measure and track quality over time", "Set staff salaries", "Reduce the number of tests", "Replace IQC"], a: 0, w: "KPIs are metrics that track quality over time, such as sample rejection rate and turnaround time." },
+
+    // ===== Note 10 (Q46-50): consolidation =====
+    { q: "The three levels of quality in a laboratory are:", o: ["QC, QA and TQM", "Pre, analytical and post", "Internal, external and continuous", "Calibration, IQC and EQA"], a: 0, w: "The three levels are quality control, quality assurance and total quality management." },
+    { q: "In the three-phase testing model, the phase where most errors occur is:", o: ["Analytical", "Pre-analytical", "Post-analytical", "All phases equally"], a: 1, w: "The pre-analytical phase accounts for the majority of errors." },
+    { q: "The main difference between IQC and EQA is that:", o: ["IQC detects systematic bias, EQA detects random variation", "IQC verifies internal consistency, EQA verifies external comparability", "IQC is performed annually, EQA daily", "IQC is optional, EQA is required"], a: 1, w: "IQC verifies internal consistency; EQA verifies external comparability." },
+    { q: "The core lesson about IQC and EQA in a quality system is that:", o: ["IQC alone is sufficient", "EQA alone is sufficient", "Both are needed because each detects a different type of problem", "Neither is needed if the analyser is modern"], a: 2, w: "Both IQC and EQA are essential because each detects a different type of error." },
+    { q: "In the final analysis, the purpose of quality management in a haematology laboratory is to:", o: ["Satisfy regulators", "Reduce paperwork", "Ensure that every reported result is accurate and reliable for the patient", "Increase analyser speed"], a: 2, w: "The ultimate purpose of quality management is to ensure every reported result is accurate and reliable for the patient." },
+  ],
+};
 
 /* Registry: add each built topic here. */
 const CONTENT = {
@@ -30217,6 +30511,7 @@ const CONTENT = {
   "hem:8": T_HEM_BLOOD_SMEARS,
   "hem:9": T_HEM_LEUKOCYTE_COUNT,
   "hem:10": T_HEM_MICROSCOPY,
+  "hem:11": T_HEM_QUALITY,
 
 };
 
