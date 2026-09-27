@@ -337,16 +337,20 @@ textarea.pastebox:focus{border-color:var(--amber)}
    turn the number into a visual anchor instead of small grey mono text. */
 .lesson{display:flex;flex-direction:column;gap:18px}
 .lesson-step{
-  padding:20px 22px 20px 24px;
+  position:relative;
+  padding:20px 22px 20px 28px;
   background:linear-gradient(155deg,var(--bg-2) 0%,var(--bg-3) 130%);
   border:1px solid var(--line);
-  border-left:3px solid var(--amber);
   border-radius:var(--r-sm);
   box-shadow:0 1px 0 rgba(0,0,0,.15),0 8px 20px -14px rgba(0,0,0,.35);
   animation:lessonIn .5s cubic-bezier(.2,.7,.3,1) both;
-  transition:border-color .18s,box-shadow .2s,transform .18s;
+  transition:border-color .18s,box-shadow .2s;
 }
-.lesson-step:hover{border-color:var(--line-2);box-shadow:0 1px 0 rgba(0,0,0,.15),0 12px 26px -14px rgba(0,0,0,.45);transform:translateY(-1px)}
+.lesson-step:before{
+  content:"";position:absolute;left:10px;top:14px;bottom:14px;width:3px;
+  border-radius:3px;background:linear-gradient(180deg,var(--amber-2),var(--amber));
+}
+.lesson-step:hover{border-color:var(--line-2);box-shadow:0 1px 0 rgba(0,0,0,.15),0 12px 26px -14px rgba(0,0,0,.45)}
 @keyframes lessonIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .lesson-step:nth-child(1){animation-delay:.02s}
 .lesson-step:nth-child(2){animation-delay:.07s}
@@ -364,17 +368,60 @@ textarea.pastebox:focus{border-color:var(--amber)}
   box-shadow:0 0 0 3px var(--amber-dim),0 2px 6px -1px rgba(0,0,0,.4);
 }
 .lesson-p{color:var(--text);font-size:15.5px;line-height:1.8;margin:0 0 13px;
-  white-space:pre-line;max-width:68ch}
+  white-space:pre-line}
 .lesson-p:last-child{margin-bottom:0}
+/* Two recurring structural paragraph types get their own colour language:
+   amber = the Socratic question prompting the step, green (reusing the
+   existing --good token, no new colour introduced) = the takeaway summary.
+   This lets a student's eye find "what's the question" and "what's the
+   point" while skimming, instead of hunting through uniform paragraphs. */
+.lesson-p-question{
+  font-style:italic;color:var(--text);
+  background:var(--amber-dim);border:1px solid rgba(245,185,63,.25);
+  border-radius:10px;padding:14px 16px;margin:4px 0 16px}
+.lesson-p-question-label{
+  display:block;font-style:normal;font-family:var(--mono);font-size:10px;
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--amber-2);margin-bottom:6px}
+.lesson-p-insight{
+  color:var(--text);font-weight:500;
+  background:var(--good-dim);border:1px solid rgba(84,208,138,.25);
+  border-radius:10px;padding:14px 16px;margin:4px 0 16px}
+.lesson-p-insight-label{
+  display:block;font-family:var(--mono);font-size:10px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--good);margin-bottom:6px}
+/* Homepage entrance animation - scoped to .home-view only, so this never
+   touches .card/.grid usage anywhere else in the app (those classes are
+   shared across ~dozens of screens, so an unscoped rule here would have
+   applied everywhere, not just the homepage the user asked for). */
+.home-view .hero,.home-view>.card,.home-view>.grid{animation:lessonIn .45s cubic-bezier(.2,.7,.3,1) both}
+.home-view .hero{animation-delay:0s}
+.home-view>.grid.g4{animation-delay:.06s}
+.home-view .grid.g4>*{animation:lessonIn .45s cubic-bezier(.2,.7,.3,1) both}
+.home-view .grid.g4>*:nth-child(1){animation-delay:.08s}
+.home-view .grid.g4>*:nth-child(2){animation-delay:.12s}
+.home-view .grid.g4>*:nth-child(3){animation-delay:.16s}
+.home-view .grid.g4>*:nth-child(4){animation-delay:.20s}
+.home-view>.card:nth-of-type(1){animation-delay:.10s}
+.home-view>.card:nth-of-type(2){animation-delay:.24s}
+.home-view>.card:nth-of-type(3){animation-delay:.28s}
+.home-view .grid.g3>*{animation:lessonIn .45s cubic-bezier(.2,.7,.3,1) both}
+.home-view .grid.g3>*:nth-child(1){animation-delay:.30s}
+.home-view .grid.g3>*:nth-child(2){animation-delay:.34s}
+.home-view .grid.g3>*:nth-child(3){animation-delay:.38s}
+.home-view .grid.g2>*{animation:lessonIn .45s cubic-bezier(.2,.7,.3,1) both}
+.home-view .grid.g2>*:nth-child(1){animation-delay:.42s}
+.home-view .grid.g2>*:nth-child(2){animation-delay:.46s}
+@media (prefers-reduced-motion:reduce){.home-view .hero,.home-view>.card,.home-view>.grid,.home-view .grid.g4>*,.home-view .grid.g3>*,.home-view .grid.g2>*{animation:none}}
 .qa{display:flex;flex-direction:column;gap:14px}
 .qa-item{
   border:1px solid var(--line);border-radius:var(--r-sm);padding:16px 18px;
   background:linear-gradient(155deg,var(--bg-2) 0%,var(--bg-3) 130%);
   box-shadow:0 1px 0 rgba(0,0,0,.15),0 8px 20px -14px rgba(0,0,0,.35);
-  transition:border-color .18s,box-shadow .2s,transform .18s;
+  transition:border-color .18s,box-shadow .2s;
   animation:lessonIn .5s cubic-bezier(.2,.7,.3,1) both;
 }
-.qa-item:hover{border-color:var(--line-2);box-shadow:0 1px 0 rgba(0,0,0,.15),0 12px 26px -14px rgba(0,0,0,.45);transform:translateY(-1px)}
+.qa-item:hover{border-color:var(--line-2);box-shadow:0 1px 0 rgba(0,0,0,.15),0 12px 26px -14px rgba(0,0,0,.45)}
 .qa-item:nth-child(1){animation-delay:.02s}
 .qa-item:nth-child(2){animation-delay:.06s}
 .qa-item:nth-child(3){animation-delay:.10s}
@@ -382,7 +429,7 @@ textarea.pastebox:focus{border-color:var(--amber)}
 @media (prefers-reduced-motion:reduce){.qa-item{animation:none}}
 .qa-q{font-weight:650;color:var(--text);font-size:15px;line-height:1.5;margin-bottom:8px;
   display:flex;gap:10px;align-items:baseline}
-.qa-a{color:var(--text-2);font-size:15px;line-height:1.75;margin:0;max-width:68ch}
+.qa-a{color:var(--text-2);font-size:15px;line-height:1.75;margin:0}
 .qa-a:before{content:"Answer  ";font-family:var(--mono);font-size:11px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--good);font-weight:600}
 .tabs{display:inline-flex;gap:4px;background:var(--bg-3);border:1px solid var(--line);
@@ -458,9 +505,14 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .ascend-root button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 .ascend-root h1,.ascend-root h2,.ascend-root h3{margin:0;letter-spacing:-.02em;font-weight:750;line-height:1.2}
 .mono{font-family:var(--mono)}
-.eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:.18em;
-  font-size:11px;color:var(--text-3);font-weight:600;display:inline-flex;align-items:center;gap:7px}
-.eyebrow:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--amber);flex-shrink:0}
+.eyebrow{
+  font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em;
+  font-size:10.5px;font-weight:700;color:var(--amber-2);
+  display:inline-flex;align-items:center;
+  background:var(--amber-dim);
+  border:1px solid rgba(245,185,63,.28);
+  padding:4px 10px;border-radius:999px;
+}
 .plan-in{width:100%;background:var(--bg-3);border:1px solid var(--line);border-radius:11px;
   padding:13px 14px;color:var(--text);font-size:15px;font-family:var(--mono)}
 .plan-in:focus{outline:none;border-color:var(--amber)}
@@ -4112,7 +4164,30 @@ function TopicView({ app }) {
         {(t.note || []).map((it, idx) => (
           <div className="lesson-step" key={idx}>
             <h3 className="lesson-q"><span className="lesson-n">{String(idx + 1).padStart(2, "0")}</span><span>{it.q}</span></h3>
-            {it.body.split("\n\n").map((p, k) => <p className="lesson-p" key={k}>{p}</p>)}
+            {it.body.split("\n\n").map((p, k) => {
+              // Give the two recurring structural paragraph types their own
+              // look instead of every paragraph reading identically - this
+              // is what actually lets a student follow the Socratic method
+              // (question -> explanation -> insight) at a glance rather
+              // than treating the whole step as one undifferentiated block.
+              if (p.startsWith("My Socratic question:")) {
+                return (
+                  <p className="lesson-p lesson-p-question" key={k}>
+                    <span className="lesson-p-question-label">Socratic question</span>
+                    {p.replace("My Socratic question:", "").trim()}
+                  </p>
+                );
+              }
+              if (p.startsWith("Crucial insight:")) {
+                return (
+                  <p className="lesson-p lesson-p-insight" key={k}>
+                    <span className="lesson-p-insight-label">Crucial insight</span>
+                    {p.replace("Crucial insight:", "").trim()}
+                  </p>
+                );
+              }
+              return <p className="lesson-p" key={k}>{p}</p>;
+            })}
           </div>
         ))}
       </div>
@@ -9719,7 +9794,7 @@ function HomeView({ app }) {
   const freezesAvailable = app.progress.streakFreezes || 0;
 
   return (
-    <div className="view">
+    <div className="view home-view">
       <div className="hero" style={{ 
   position: "relative", 
   overflow: "hidden", 
