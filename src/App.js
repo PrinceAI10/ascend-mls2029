@@ -33147,27 +33147,27 @@ function QuizView({ app }) {
   const mcqs = t ? (t.mcqs || []) : [];
   const sessKey = "ascend_quiz_" + app.courseId + "_" + app.topicId;
 
-  // The quiz state is saved in sessionStorage under generic keys. If that saved
+  // The quiz state is saved in localStorage under generic keys. If that saved
   // session belongs to a DIFFERENT topic than the one now open, discard it so the
   // new topic starts fresh - otherwise the previous topic's (often finished)
   // questions load here and block you from starting a new set.
   try {
-    if (sessionStorage.getItem('ascend_quiz_topic') !== sessKey) {
-      sessionStorage.removeItem('ascend_quiz_questions');
-      sessionStorage.removeItem('ascend_quiz_mode');
-      sessionStorage.removeItem('ascend_quiz_index');
-      sessionStorage.removeItem('ascend_quiz_answers');
-      sessionStorage.removeItem('ascend_quiz_reveal');
-      sessionStorage.removeItem('ascend_quiz_done');
-      sessionStorage.removeItem('ascend_quiz_left');
-      sessionStorage.removeItem('ascend_quiz_elapsed');
+    if (localStorage.getItem('ascend_quiz_topic') !== sessKey) {
+      localStorage.removeItem('ascend_quiz_questions');
+      localStorage.removeItem('ascend_quiz_mode');
+      localStorage.removeItem('ascend_quiz_index');
+      localStorage.removeItem('ascend_quiz_answers');
+      localStorage.removeItem('ascend_quiz_reveal');
+      localStorage.removeItem('ascend_quiz_done');
+      localStorage.removeItem('ascend_quiz_left');
+      localStorage.removeItem('ascend_quiz_elapsed');
     }
   } catch {}
   
-  // PERSISTENCE: Load from sessionStorage on mount
+  // PERSISTENCE: Load from localStorage on mount
   const [q, setQ] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_quiz_questions');
+      const saved = localStorage.getItem('ascend_quiz_questions');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed && parsed.length > 0) return parsed;
@@ -33178,35 +33178,35 @@ function QuizView({ app }) {
 
   const [mode, setMode] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_quiz_mode');
+      const saved = localStorage.getItem('ascend_quiz_mode');
       return saved || null;
     } catch { return null; }
   });
 
   const [i, setI] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_quiz_index');
+      const saved = localStorage.getItem('ascend_quiz_index');
       return saved ? parseInt(saved, 10) : 0;
     } catch { return 0; }
   });
 
   const [answers, setAnswers] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_quiz_answers');
+      const saved = localStorage.getItem('ascend_quiz_answers');
       return saved ? JSON.parse(saved) : {};
     } catch { return {}; }
   });
 
   const [reveal, setReveal] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_quiz_reveal');
+      const saved = localStorage.getItem('ascend_quiz_reveal');
       return saved === "true";
     } catch { return false; }
   });
 
   const [done, setDone] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_quiz_done');
+      const saved = localStorage.getItem('ascend_quiz_done');
       return saved === "true";
     } catch { return false; }
   });
@@ -33220,7 +33220,7 @@ function QuizView({ app }) {
 
   const [left, setLeft] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_quiz_left');
+      const saved = localStorage.getItem('ascend_quiz_left');
       if (saved) {
         const val = parseInt(saved, 10);
         if (val > 0) return val;
@@ -33231,7 +33231,7 @@ function QuizView({ app }) {
 
   const [elapsed, setElapsed] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_quiz_elapsed');
+      const saved = localStorage.getItem('ascend_quiz_elapsed');
       if (saved) {
         const val = parseInt(saved, 10);
         if (val > 0) return val;
@@ -33245,31 +33245,31 @@ function QuizView({ app }) {
     if (mode === null) return;
     try {
       if (q && q.length > 0) {
-        sessionStorage.setItem('ascend_quiz_questions', JSON.stringify(q));
+        localStorage.setItem('ascend_quiz_questions', JSON.stringify(q));
       }
-      sessionStorage.setItem('ascend_quiz_mode', mode);
-      sessionStorage.setItem('ascend_quiz_index', String(i));
-      sessionStorage.setItem('ascend_quiz_answers', JSON.stringify(answers));
-      sessionStorage.setItem('ascend_quiz_reveal', String(reveal));
-      sessionStorage.setItem('ascend_quiz_done', String(done));
-      sessionStorage.setItem('ascend_quiz_left', String(left));
-      sessionStorage.setItem('ascend_quiz_elapsed', String(elapsed));
-      sessionStorage.setItem('ascend_quiz_topic', sessKey);
+      localStorage.setItem('ascend_quiz_mode', mode);
+      localStorage.setItem('ascend_quiz_index', String(i));
+      localStorage.setItem('ascend_quiz_answers', JSON.stringify(answers));
+      localStorage.setItem('ascend_quiz_reveal', String(reveal));
+      localStorage.setItem('ascend_quiz_done', String(done));
+      localStorage.setItem('ascend_quiz_left', String(left));
+      localStorage.setItem('ascend_quiz_elapsed', String(elapsed));
+      localStorage.setItem('ascend_quiz_topic', sessKey);
     } catch {}
   }, [q, mode, i, answers, reveal, done, left, elapsed]);
 
   // Clear all quiz session storage
   const clearQuizSession = () => {
     try {
-      sessionStorage.removeItem('ascend_quiz_questions');
-      sessionStorage.removeItem('ascend_quiz_mode');
-      sessionStorage.removeItem('ascend_quiz_index');
-      sessionStorage.removeItem('ascend_quiz_answers');
-      sessionStorage.removeItem('ascend_quiz_reveal');
-      sessionStorage.removeItem('ascend_quiz_done');
-      sessionStorage.removeItem('ascend_quiz_left');
-      sessionStorage.removeItem('ascend_quiz_elapsed');
-      sessionStorage.removeItem('ascend_quiz_topic');
+      localStorage.removeItem('ascend_quiz_questions');
+      localStorage.removeItem('ascend_quiz_mode');
+      localStorage.removeItem('ascend_quiz_index');
+      localStorage.removeItem('ascend_quiz_answers');
+      localStorage.removeItem('ascend_quiz_reveal');
+      localStorage.removeItem('ascend_quiz_done');
+      localStorage.removeItem('ascend_quiz_left');
+      localStorage.removeItem('ascend_quiz_elapsed');
+      localStorage.removeItem('ascend_quiz_topic');
     } catch {}
   };
 
@@ -33583,7 +33583,7 @@ function TopicView({ app }) {
         readingAwarded: readingAwarded,
         readingNotif: readingNotif
       };
-      sessionStorage.setItem('ascend_topic_read_' + app.courseId + '_' + app.topicId, JSON.stringify(state));
+      localStorage.setItem('ascend_topic_read_' + app.courseId + '_' + app.topicId, JSON.stringify(state));
     } catch (error) {
       // Silently fail
     }
@@ -33593,7 +33593,7 @@ function TopicView({ app }) {
   useEffect(() => {
     if (!t) return;
     try {
-      const saved = sessionStorage.getItem('ascend_topic_read_' + app.courseId + '_' + app.topicId);
+      const saved = localStorage.getItem('ascend_topic_read_' + app.courseId + '_' + app.topicId);
       if (saved) {
         const state = JSON.parse(saved);
         if (state.readTime !== undefined) {
@@ -34016,7 +34016,7 @@ function CoursesView({ app }) {
   // on the same day. A saved state from a previous day is ignored.
   useEffect(() => {
     try {
-      const saved = JSON.parse(sessionStorage.getItem("ascend_daily_cbt") || "null");
+      const saved = JSON.parse(localStorage.getItem("ascend_daily_cbt") || "null");
       if (saved && saved.tk === tk && Array.isArray(saved.answers) && saved.answers.length === questions.length) {
         setAnswers(saved.answers);
         setQIndex(Math.min(saved.qIndex || 0, questions.length - 1));
@@ -34031,7 +34031,7 @@ function CoursesView({ app }) {
   useEffect(() => {
     if (!restored) return;
     try {
-      sessionStorage.setItem("ascend_daily_cbt", JSON.stringify({ tk, qIndex, answers, finished }));
+      localStorage.setItem("ascend_daily_cbt", JSON.stringify({ tk, qIndex, answers, finished }));
     } catch {}
   }, [restored, tk, qIndex, answers, finished]);
 
@@ -37721,17 +37721,17 @@ function YouTubeView({ app }) {
   );
 }
 function PapersView({ app }) {
-  // PERSISTENCE: Load from sessionStorage on mount
+  // PERSISTENCE: Load from localStorage on mount
   const [tab, setTab] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_papers_tab');
+      const saved = localStorage.getItem('ascend_papers_tab');
       return saved || "passco";
     } catch { return "passco"; }
   });
   
   const [courseId, setCourseId] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_papers_course');
+      const saved = localStorage.getItem('ascend_papers_course');
       // Was hardcoded to "ana" as the ultimate fallback - a Level 100 Sem 2
       // course - meaning a student who never explicitly clicked a course
       // pill would silently get AI-generated practice questions for a
@@ -37746,14 +37746,14 @@ function PapersView({ app }) {
   
   const [sample, setSample] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_papers_sample');
+      const saved = localStorage.getItem('ascend_papers_sample');
       return saved || "";
     } catch { return ""; }
   });
   
   const [similarCount, setSimilarCount] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_papers_count');
+      const saved = localStorage.getItem('ascend_papers_count');
       const v = saved ? parseInt(saved, 10) : 20;
       return [20, 30, 40, 50].includes(v) ? v : 20;
     } catch { return 20; }
@@ -37764,21 +37764,21 @@ function PapersView({ app }) {
   
   const [active, setActive] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_papers_active');
+      const saved = localStorage.getItem('ascend_papers_active');
       return saved ? JSON.parse(saved) : null;
     } catch { return null; }
   });
   
   const [items, setItems] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_papers_items');
+      const saved = localStorage.getItem('ascend_papers_items');
       return saved ? JSON.parse(saved) : null;
     } catch { return null; }
   });
   
   const [err, setErr] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_papers_err');
+      const saved = localStorage.getItem('ascend_papers_err');
       return saved || "";
     } catch { return ""; }
   });
@@ -37795,13 +37795,13 @@ function PapersView({ app }) {
   // SAVE: Persist all state changes
   useEffect(() => {
     try {
-      sessionStorage.setItem('ascend_papers_tab', tab);
-      sessionStorage.setItem('ascend_papers_course', courseId);
-      sessionStorage.setItem('ascend_papers_sample', sample);
-      sessionStorage.setItem('ascend_papers_count', String(similarCount));
-      if (active) sessionStorage.setItem('ascend_papers_active', JSON.stringify(active));
-      if (items) sessionStorage.setItem('ascend_papers_items', JSON.stringify(items));
-      if (err) sessionStorage.setItem('ascend_papers_err', err);
+      localStorage.setItem('ascend_papers_tab', tab);
+      localStorage.setItem('ascend_papers_course', courseId);
+      localStorage.setItem('ascend_papers_sample', sample);
+      localStorage.setItem('ascend_papers_count', String(similarCount));
+      if (active) localStorage.setItem('ascend_papers_active', JSON.stringify(active));
+      if (items) localStorage.setItem('ascend_papers_items', JSON.stringify(items));
+      if (err) localStorage.setItem('ascend_papers_err', err);
     } catch {}
   }, [tab, courseId, sample, similarCount, active, items, err]);
   
@@ -37818,7 +37818,7 @@ function PapersView({ app }) {
         err,
         busy
       };
-      sessionStorage.setItem('ascend_papers_state', JSON.stringify(state));
+      localStorage.setItem('ascend_papers_state', JSON.stringify(state));
     } catch (error) {
       // Silently fail
     }
@@ -37827,7 +37827,7 @@ function PapersView({ app }) {
   // Restore PapersView state on mount
   useEffect(() => {
     try {
-      const saved = sessionStorage.getItem('ascend_papers_state');
+      const saved = localStorage.getItem('ascend_papers_state');
       if (saved) {
         const state = JSON.parse(saved);
         if (state.tab) setTab(state.tab);
@@ -39311,7 +39311,7 @@ function HomeView({ app }) {
   const resumeCourse = resumeTopic ? courseById(resumeTopic.courseId) : null;
 
   // Today's ring: how far into today's 5-question daily set the student is.
-  // Read live from the same sessionStorage key the daily CBT itself writes
+  // Read live from the same localStorage key the daily CBT itself writes
   // to, so the ring fills in real time as they answer - and stays at 0/5
   // instead of guessing if they haven't opened today's set yet. This is the
   // "one unfinished thing" that's meant to keep pulling them back, the way
@@ -39319,7 +39319,7 @@ function HomeView({ app }) {
   const dailyProgress = (() => {
     if (doneToday) return { answered: 5, total: 5 };
     try {
-      const saved = JSON.parse(sessionStorage.getItem("ascend_daily_cbt") || "null");
+      const saved = JSON.parse(localStorage.getItem("ascend_daily_cbt") || "null");
       if (saved && saved.tk === tk && Array.isArray(saved.answers)) {
         const answered = saved.answers.filter((a) => a !== null).length;
         return { answered, total: saved.answers.length || 5 };
