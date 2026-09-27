@@ -109,7 +109,13 @@ const CSS = `
   --r:16px; --r-sm:11px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--bg)}
+html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;background:var(--bg);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+/* Some browsers auto-shrink text and re-flow (adding side margins) on
+   long text-heavy pages to "fit" what they guess is a mobile-sized font -
+   the line above stops that heuristic from kicking in so layout stays
+   exactly as sized, matching the reported "everything shrunk with big
+   empty margins" symptom. Not confirmed as the cause yet - flag if it
+   doesn't fix it and we'll keep digging with the actual URL/zoom info. */
 /* iOS Safe Area Support */
 html, body {
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
@@ -344,13 +350,21 @@ textarea.pastebox:focus{border-color:var(--amber)}
   border-radius:var(--r-sm);
   box-shadow:0 1px 0 rgba(0,0,0,.15),0 8px 20px -14px rgba(0,0,0,.35);
   animation:lessonIn .5s cubic-bezier(.2,.7,.3,1) both;
-  transition:border-color .18s,box-shadow .2s;
+  opacity:.82;
+  transition:border-color .18s,box-shadow .2s,opacity .3s;
 }
 .lesson-step:before{
   content:"";position:absolute;left:10px;top:14px;bottom:14px;width:3px;
   border-radius:3px;background:linear-gradient(180deg,var(--amber-2),var(--amber));
 }
 .lesson-step:hover{border-color:var(--line-2);box-shadow:0 1px 0 rgba(0,0,0,.15),0 12px 26px -14px rgba(0,0,0,.45)}
+.lesson-step-active{
+  opacity:1;
+  border-color:rgba(245,185,63,.4);
+  box-shadow:0 1px 0 rgba(0,0,0,.15),0 8px 20px -14px rgba(0,0,0,.35),0 0 0 1px rgba(245,185,63,.12);
+}
+.lesson-step-active:before{box-shadow:0 0 10px 1px rgba(245,185,63,.5)}
+@media (prefers-reduced-motion:reduce){.lesson-step{transition:none}}
 @keyframes lessonIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .lesson-step:nth-child(1){animation-delay:.02s}
 .lesson-step:nth-child(2){animation-delay:.07s}
@@ -376,43 +390,49 @@ textarea.pastebox:focus{border-color:var(--amber)}
    This lets a student's eye find "what's the question" and "what's the
    point" while skimming, instead of hunting through uniform paragraphs. */
 .lesson-p-question{
-  font-style:italic;color:var(--text);
+  font-style:normal;font-weight:650;color:var(--text);
   background:var(--amber-dim);border:1px solid rgba(245,185,63,.25);
   border-radius:10px;padding:14px 16px;margin:4px 0 16px}
 .lesson-p-question-label{
   display:block;font-style:normal;font-family:var(--mono);font-size:10px;
   font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   color:var(--amber-2);margin-bottom:6px}
+/* Was --good (green) - green already means "correct answer" elsewhere in
+   the app (quiz feedback, streak states), so reusing it here made the
+   insight box read as a right/wrong signal instead of "the takeaway".
+   Blue has no other meaning in this app yet, so it reads cleanly as
+   "key point to remember." */
 .lesson-p-insight{
-  color:var(--text);font-weight:500;
-  background:var(--good-dim);border:1px solid rgba(84,208,138,.25);
+  color:var(--text);font-weight:650;
+  background:rgba(90,169,255,.12);border:1px solid rgba(90,169,255,.28);
   border-radius:10px;padding:14px 16px;margin:4px 0 16px}
 .lesson-p-insight-label{
   display:block;font-family:var(--mono);font-size:10px;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--good);margin-bottom:6px}
-/* Homepage entrance animation - scoped to .home-view only, so this never
-   touches .card/.grid usage anywhere else in the app (those classes are
-   shared across ~dozens of screens, so an unscoped rule here would have
-   applied everywhere, not just the homepage the user asked for). */
-.home-view .hero,.home-view>.card,.home-view>.grid{animation:lessonIn .45s cubic-bezier(.2,.7,.3,1) both}
-.home-view .hero{animation-delay:0s}
-.home-view>.grid.g4{animation-delay:.06s}
-.home-view .grid.g4>*{animation:lessonIn .45s cubic-bezier(.2,.7,.3,1) both}
-.home-view .grid.g4>*:nth-child(1){animation-delay:.08s}
-.home-view .grid.g4>*:nth-child(2){animation-delay:.12s}
-.home-view .grid.g4>*:nth-child(3){animation-delay:.16s}
-.home-view .grid.g4>*:nth-child(4){animation-delay:.20s}
-.home-view>.card:nth-of-type(1){animation-delay:.10s}
-.home-view>.card:nth-of-type(2){animation-delay:.24s}
-.home-view>.card:nth-of-type(3){animation-delay:.28s}
-.home-view .grid.g3>*{animation:lessonIn .45s cubic-bezier(.2,.7,.3,1) both}
-.home-view .grid.g3>*:nth-child(1){animation-delay:.30s}
-.home-view .grid.g3>*:nth-child(2){animation-delay:.34s}
-.home-view .grid.g3>*:nth-child(3){animation-delay:.38s}
-.home-view .grid.g2>*{animation:lessonIn .45s cubic-bezier(.2,.7,.3,1) both}
-.home-view .grid.g2>*:nth-child(1){animation-delay:.42s}
-.home-view .grid.g2>*:nth-child(2){animation-delay:.46s}
-@media (prefers-reduced-motion:reduce){.home-view .hero,.home-view>.card,.home-view>.grid,.home-view .grid.g4>*,.home-view .grid.g3>*,.home-view .grid.g2>*{animation:none}}
+  letter-spacing:.1em;text-transform:uppercase;color:#7db8ff;margin-bottom:6px}
+/* SAT-style text highlighter: select text inside a paragraph, a small
+   floating swatch picker appears above the selection, pick a colour.
+   Click an existing highlight to remove it. */
+.lesson-p-body{cursor:text}
+mark.lesson-hl{cursor:pointer;border-radius:3px;padding:0 1px;color:inherit;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+mark.lesson-hl-blue{background:rgba(90,169,255,.35)}
+mark.lesson-hl-pink{background:rgba(255,120,180,.35)}
+mark.lesson-hl-yellow{background:rgba(245,214,80,.45)}
+.hl-toolbar{
+  position:absolute;transform:translateX(-50%);display:flex;gap:6px;
+  background:var(--bg-2);border:1px solid var(--line-2);border-radius:10px;
+  padding:6px;box-shadow:0 8px 20px -6px rgba(0,0,0,.5);z-index:30;}
+.hl-swatch{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.15);padding:0;cursor:pointer}
+.hl-swatch:hover{border-color:rgba(255,255,255,.4)}
+.hl-swatch-blue{background:#5aa9ff}
+.hl-swatch-pink{background:#ff78b4}
+.hl-swatch-yellow{background:#f5d650}
+/* Homepage entrance animation reverted - only the hero headline
+   ("Understand the mechanism...") was ever asked for; the blanket
+   fade-up across every card/grid on the homepage is removed. */
+.hero-headline-anim{animation:lessonIn .6s cubic-bezier(.2,.7,.3,1) both}
+.hero-headline-glow{position:relative;display:inline-block;animation:heroGlow 2.6s ease-in-out .6s infinite}
+@keyframes heroGlow{0%,100%{text-shadow:0 0 0 rgba(245,185,63,0)}50%{text-shadow:0 0 18px rgba(245,185,63,.55)}}
+@media (prefers-reduced-motion:reduce){.hero-headline-anim,.hero-headline-glow{animation:none}}
 .qa{display:flex;flex-direction:column;gap:14px}
 .qa-item{
   border:1px solid var(--line);border-radius:var(--r-sm);padding:16px 18px;
@@ -3989,6 +4009,157 @@ function TopicView({ app }) {
   const timerRef = useRef(null);
   const [downloadingPdf, setDownloadingPdf] = useState(false);
 
+  // READING PROGRESS - which numbered step (0-indexed) the student has
+  // scrolled to, used for the progress bar and step highlighting below.
+  // Same unconditional-hooks pattern as the reading timer above.
+  const [activeStep, setActiveStep] = useState(0);
+  const stepRefs = useRef([]);
+  useEffect(() => {
+    stepRefs.current = [];
+    setActiveStep(0);
+  }, [t]);
+
+  // TEXT HIGHLIGHTER - SAT-style multi-colour highlighting for the lesson
+  // body text. Each highlight is {key, start, end, color} where `key`
+  // identifies which paragraph it belongs to ("<stepIdx>-<paraIdx>") and
+  // start/end are plain-text character offsets into that paragraph's body
+  // (the "Socratic question" / "Crucial insight" labels are excluded from
+  // offsets - only the body text under lesson-p-body is highlightable).
+  // Persisted per student per topic, same localStorage pattern as the
+  // reading timer above, so highlights survive a refresh / reopening the
+  // topic later.
+  const [highlights, setHighlights] = useState([]);
+  const [hlToolbar, setHlToolbar] = useState(null); // {x, y, key, start, end} or null
+  const lessonRef = useRef(null);
+  const hlStorageKey = t ? `ascend_highlights_${app.courseId}_${app.topicId}` : null;
+
+  useEffect(() => {
+    setHighlights([]);
+    setHlToolbar(null);
+    if (!hlStorageKey) return;
+    try {
+      const saved = localStorage.getItem(hlStorageKey);
+      if (saved) setHighlights(JSON.parse(saved));
+    } catch {}
+  }, [hlStorageKey]);
+
+  const saveHighlights = (next) => {
+    setHighlights(next);
+    if (!hlStorageKey) return;
+    try { localStorage.setItem(hlStorageKey, JSON.stringify(next)); } catch {}
+  };
+
+  // Walks the text nodes inside a lesson-p-body span, in order, to convert
+  // a DOM (node, offset) position from a live Selection Range into a
+  // plain-text character offset - needed because once highlights exist,
+  // the paragraph is no longer one text node but several (plain text +
+  // <mark> segments).
+  const domPosToOffset = (root, node, offset) => {
+    let total = 0, found = false, result = 0;
+    const walk = (el) => {
+      if (found) return;
+      for (const child of el.childNodes) {
+        if (found) return;
+        if (child === node) { result = total + offset; found = true; return; }
+        if (child.nodeType === 3) total += child.textContent.length;
+        else walk(child);
+      }
+    };
+    walk(root);
+    return found ? result : total;
+  };
+
+  const handleLessonMouseUp = () => {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || sel.rangeCount === 0) { setHlToolbar(null); return; }
+    const range = sel.getRangeAt(0);
+    const bodyEl = range.startContainer.nodeType === 1
+      ? range.startContainer.closest?.(".lesson-p-body")
+      : range.startContainer.parentElement?.closest(".lesson-p-body");
+    const endBodyEl = range.endContainer.nodeType === 1
+      ? range.endContainer.closest?.(".lesson-p-body")
+      : range.endContainer.parentElement?.closest(".lesson-p-body");
+    if (!bodyEl || bodyEl !== endBodyEl) { setHlToolbar(null); return; } // ignore cross-paragraph selections
+    const key = bodyEl.getAttribute("data-key");
+    const start = domPosToOffset(bodyEl, range.startContainer, range.startOffset);
+    const end = domPosToOffset(bodyEl, range.endContainer, range.endOffset);
+    if (end <= start) { setHlToolbar(null); return; }
+    const rect = range.getBoundingClientRect();
+    const shellRect = lessonRef.current ? lessonRef.current.getBoundingClientRect() : { top: 0, left: 0 };
+    setHlToolbar({
+      x: rect.left + rect.width / 2 - shellRect.left,
+      y: rect.top - shellRect.top - 44,
+      key, start, end,
+    });
+  };
+
+  const applyHighlight = (color) => {
+    if (!hlToolbar) return;
+    const { key, start, end } = hlToolbar;
+    // Drop any existing ranges on this paragraph that overlap the new
+    // selection (simplest correct behaviour: re-colouring a span just
+    // replaces whatever was there rather than trying to merge/split).
+    const next = highlights
+      .filter((h) => !(h.key === key && h.start < end && h.end > start))
+      .concat([{ key, start, end, color }]);
+    saveHighlights(next);
+    setHlToolbar(null);
+    window.getSelection()?.removeAllRanges();
+  };
+
+  const clearHighlight = (h) => {
+    saveHighlights(highlights.filter((x) => x !== h));
+  };
+
+  // Renders a paragraph's plain text as a mix of plain text and <mark>
+  // spans for whichever highlight ranges belong to this paragraph's key.
+  const renderHighlighted = (text, key) => {
+    const ranges = highlights
+      .filter((h) => h.key === key)
+      .sort((a, b) => a.start - b.start);
+    if (ranges.length === 0) return text;
+    const nodes = [];
+    let cursor = 0;
+    ranges.forEach((h, i) => {
+      const s = Math.max(h.start, cursor), e = Math.min(h.end, text.length);
+      if (e <= s) return;
+      if (s > cursor) nodes.push(text.slice(cursor, s));
+      nodes.push(
+        <mark
+          key={key + "-" + i}
+          className={"lesson-hl lesson-hl-" + h.color}
+          onClick={() => clearHighlight(h)}
+          title="Click to remove highlight"
+        >
+          {text.slice(s, e)}
+        </mark>
+      );
+      cursor = e;
+    });
+    if (cursor < text.length) nodes.push(text.slice(cursor));
+    return nodes;
+  };
+
+  useEffect(() => {
+    if (!t) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = Number(entry.target.getAttribute("data-step-idx"));
+            if (!Number.isNaN(idx)) setActiveStep(idx);
+          }
+        });
+      },
+      // Treat a horizontal band near the top of the viewport as "the
+      // reading position" - a step counts as active once its heading
+      // crosses into that band, not only when fully in view.
+      { rootMargin: "-15% 0px -70% 0px", threshold: 0 }
+    );
+    stepRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, [t]);
+
   // READING TIMER - Save state
   useEffect(() => {
     if (!t) return;
@@ -4160,9 +4331,27 @@ function TopicView({ app }) {
       </div>
       <div className="divider" />
       <div className="eyebrow" style={{ marginBottom: 14 }}>The lesson</div>
-      <div className="lesson">
+      {(t.note || []).length > 0 && (
+        <div style={{ marginBottom: 18 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 7 }}>
+            <span className="mono" style={{ fontSize: 12, color: "var(--text-3)" }}>
+              Step {activeStep + 1} of {(t.note || []).length}
+            </span>
+            <span className="mono" style={{ fontSize: 12, color: "var(--amber-2)", fontWeight: 600 }}>
+              {Math.round(((activeStep + 1) / (t.note || []).length) * 100)}%
+            </span>
+          </div>
+          <div className="bar"><i style={{ width: ((activeStep + 1) / (t.note || []).length) * 100 + "%" }} /></div>
+        </div>
+      )}
+      <div className="lesson" ref={lessonRef} onMouseUp={handleLessonMouseUp} style={{ position: "relative" }}>
         {(t.note || []).map((it, idx) => (
-          <div className="lesson-step" key={idx}>
+          <div
+            className={"lesson-step" + (idx === activeStep ? " lesson-step-active" : "")}
+            key={idx}
+            data-step-idx={idx}
+            ref={(el) => (stepRefs.current[idx] = el)}
+          >
             <h3 className="lesson-q"><span className="lesson-n">{String(idx + 1).padStart(2, "0")}</span><span>{it.q}</span></h3>
             {it.body.split("\n\n").map((p, k) => {
               // Give the two recurring structural paragraph types their own
@@ -4170,26 +4359,46 @@ function TopicView({ app }) {
               // is what actually lets a student follow the Socratic method
               // (question -> explanation -> insight) at a glance rather
               // than treating the whole step as one undifferentiated block.
+              const hlKey = idx + "-" + k;
               if (p.startsWith("My Socratic question:")) {
+                const body = p.replace("My Socratic question:", "").trim();
+                const text = body.charAt(0).toUpperCase() + body.slice(1);
                 return (
                   <p className="lesson-p lesson-p-question" key={k}>
                     <span className="lesson-p-question-label">Socratic question</span>
-                    {p.replace("My Socratic question:", "").trim()}
+                    <span className="lesson-p-body" data-key={hlKey}>{renderHighlighted(text, hlKey)}</span>
                   </p>
                 );
               }
               if (p.startsWith("Crucial insight:")) {
+                const body = p.replace("Crucial insight:", "").trim();
+                const text = body.charAt(0).toUpperCase() + body.slice(1);
                 return (
                   <p className="lesson-p lesson-p-insight" key={k}>
                     <span className="lesson-p-insight-label">Crucial insight</span>
-                    {p.replace("Crucial insight:", "").trim()}
+                    <span className="lesson-p-body" data-key={hlKey}>{renderHighlighted(text, hlKey)}</span>
                   </p>
                 );
               }
-              return <p className="lesson-p" key={k}>{p}</p>;
+              return (
+                <p className="lesson-p" key={k}>
+                  <span className="lesson-p-body" data-key={hlKey}>{renderHighlighted(p, hlKey)}</span>
+                </p>
+              );
             })}
           </div>
         ))}
+        {hlToolbar && (
+          <div
+            className="hl-toolbar"
+            style={{ left: hlToolbar.x, top: hlToolbar.y }}
+            onMouseDown={(e) => e.preventDefault()}
+          >
+            <button className="hl-swatch hl-swatch-blue" onClick={() => applyHighlight("blue")} aria-label="Highlight blue" />
+            <button className="hl-swatch hl-swatch-pink" onClick={() => applyHighlight("pink")} aria-label="Highlight pink" />
+            <button className="hl-swatch hl-swatch-yellow" onClick={() => applyHighlight("yellow")} aria-label="Highlight yellow" />
+          </div>
+        )}
       </div>
       <div className="divider" />
       <div className="eyebrow" style={{ marginBottom: 12 }}>Visualise it</div>
@@ -9833,7 +10042,7 @@ function HomeView({ app }) {
       fontWeight: 600,
       textTransform: "uppercase"
     }}>ASCEND</div>
-    <h1 className="hero-h" style={{ 
+    <h1 className="hero-h hero-headline-anim" style={{ 
       fontSize: "clamp(22px, 4.6vw, 38px)", 
       maxWidth: "clamp(12ch, 16ch, 20ch)", 
       fontWeight: 800, 
@@ -9841,7 +10050,7 @@ function HomeView({ app }) {
       margin: "clamp(4px, 1vh, 10px) 0",
       color: "var(--text)",
       lineHeight: 1.1
-    }}>Understand the <span className="hl" style={{ color: "var(--amber)" }}>mechanism</span>, and recall takes care of itself.</h1>
+    }}>Understand the <span className="hl hero-headline-glow" style={{ color: "var(--amber)" }}>mechanism</span>, and recall takes care of itself.</h1>
     <p className="hero-p" style={{ 
       color: "var(--text-2)", 
       maxWidth: "clamp(35ch, 52ch, 60ch)", 
