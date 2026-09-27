@@ -323,21 +323,66 @@ textarea.pastebox:focus{border-color:var(--amber)}
   animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes bl{0%,60%,100%{opacity:.25}30%{opacity:1}}
-.divider{height:1px;background:var(--line);margin:24px 0}
+.divider{height:1px;background:linear-gradient(90deg,var(--line) 0%,var(--line) 60%,transparent 100%);margin:24px 0}
 .back{display:inline-flex;align-items:center;gap:6px;color:var(--text-2);font-size:13.5px;font-weight:600;margin-bottom:14px;cursor:pointer}
 .back:hover{color:var(--text)}
 .note-hint{font-size:12.5px;color:var(--text-3)}
-.lesson-step{margin:0 0 26px}
+/* Lesson redesign - same palette (amber/navy), fixes the "packed/bulky
+   from far" feedback: previously each step was just a bare paragraph
+   stacked on the next with no grouping and no line-length limit, so on a
+   1080px-wide view a paragraph could run ~130 characters per line - a
+   dense, undifferentiated wall of text. Fix: give each step a defined
+   card boundary (so the eye can chunk the lesson into steps at a glance,
+   even from a distance), cap paragraph width to a readable measure, and
+   turn the number into a visual anchor instead of small grey mono text. */
+.lesson{display:flex;flex-direction:column;gap:18px}
+.lesson-step{
+  padding:20px 22px 20px 24px;
+  background:linear-gradient(155deg,var(--bg-2) 0%,var(--bg-3) 130%);
+  border:1px solid var(--line);
+  border-left:3px solid var(--amber);
+  border-radius:var(--r-sm);
+  box-shadow:0 1px 0 rgba(0,0,0,.15),0 8px 20px -14px rgba(0,0,0,.35);
+  animation:lessonIn .5s cubic-bezier(.2,.7,.3,1) both;
+  transition:border-color .18s,box-shadow .2s,transform .18s;
+}
+.lesson-step:hover{border-color:var(--line-2);box-shadow:0 1px 0 rgba(0,0,0,.15),0 12px 26px -14px rgba(0,0,0,.45);transform:translateY(-1px)}
+@keyframes lessonIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.lesson-step:nth-child(1){animation-delay:.02s}
+.lesson-step:nth-child(2){animation-delay:.07s}
+.lesson-step:nth-child(3){animation-delay:.12s}
+.lesson-step:nth-child(4){animation-delay:.17s}
+.lesson-step:nth-child(5){animation-delay:.22s}
+.lesson-step:nth-child(n+6){animation-delay:.26s}
+@media (prefers-reduced-motion:reduce){.lesson-step{animation:none}}
 .lesson-q{font-size:16.5px;font-weight:700;color:var(--amber-2);line-height:1.4;
-  margin:0 0 10px;display:flex;gap:10px;align-items:baseline}
-.lesson-n{font-family:var(--mono);font-size:12px;color:var(--amber);font-weight:600;flex-shrink:0}
-.lesson-p{color:var(--text);font-size:15.5px;line-height:1.78;margin:0 0 13px;white-space:pre-line}
+  margin:0 0 12px;display:flex;gap:12px;align-items:center}
+.lesson-n{
+  font-family:var(--mono);font-size:12px;font-weight:700;color:#1B1405;
+  background:linear-gradient(155deg,var(--amber-2),var(--amber));flex-shrink:0;width:24px;height:24px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 3px var(--amber-dim),0 2px 6px -1px rgba(0,0,0,.4);
+}
+.lesson-p{color:var(--text);font-size:15.5px;line-height:1.8;margin:0 0 13px;
+  white-space:pre-line;max-width:68ch}
 .lesson-p:last-child{margin-bottom:0}
-.qa-item{border-top:1px solid var(--line);padding:16px 0}
-.qa-item:first-child{border-top:none}
-.qa-q{font-weight:650;color:var(--text);font-size:15px;line-height:1.5;margin-bottom:7px;
+.qa{display:flex;flex-direction:column;gap:14px}
+.qa-item{
+  border:1px solid var(--line);border-radius:var(--r-sm);padding:16px 18px;
+  background:linear-gradient(155deg,var(--bg-2) 0%,var(--bg-3) 130%);
+  box-shadow:0 1px 0 rgba(0,0,0,.15),0 8px 20px -14px rgba(0,0,0,.35);
+  transition:border-color .18s,box-shadow .2s,transform .18s;
+  animation:lessonIn .5s cubic-bezier(.2,.7,.3,1) both;
+}
+.qa-item:hover{border-color:var(--line-2);box-shadow:0 1px 0 rgba(0,0,0,.15),0 12px 26px -14px rgba(0,0,0,.45);transform:translateY(-1px)}
+.qa-item:nth-child(1){animation-delay:.02s}
+.qa-item:nth-child(2){animation-delay:.06s}
+.qa-item:nth-child(3){animation-delay:.10s}
+.qa-item:nth-child(n+4){animation-delay:.14s}
+@media (prefers-reduced-motion:reduce){.qa-item{animation:none}}
+.qa-q{font-weight:650;color:var(--text);font-size:15px;line-height:1.5;margin-bottom:8px;
   display:flex;gap:10px;align-items:baseline}
-.qa-a{color:var(--text);font-size:15px;line-height:1.7;margin:0}
+.qa-a{color:var(--text-2);font-size:15px;line-height:1.75;margin:0;max-width:68ch}
 .qa-a:before{content:"Answer  ";font-family:var(--mono);font-size:11px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--good);font-weight:600}
 .tabs{display:inline-flex;gap:4px;background:var(--bg-3);border:1px solid var(--line);
@@ -414,7 +459,8 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .ascend-root h1,.ascend-root h2,.ascend-root h3{margin:0;letter-spacing:-.02em;font-weight:750;line-height:1.2}
 .mono{font-family:var(--mono)}
 .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:.18em;
-  font-size:11px;color:var(--text-3);font-weight:600}
+  font-size:11px;color:var(--text-3);font-weight:600;display:inline-flex;align-items:center;gap:7px}
+.eyebrow:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--amber);flex-shrink:0}
 .plan-in{width:100%;background:var(--bg-3);border:1px solid var(--line);border-radius:11px;
   padding:13px 14px;color:var(--text);font-size:15px;font-family:var(--mono)}
 .plan-in:focus{outline:none;border-color:var(--amber)}
