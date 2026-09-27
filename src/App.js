@@ -27797,7 +27797,7 @@ The regulation: leukopoiesis is controlled by growth factors (G-CSF for neutroph
 
 The clinical relevance: diseases of leukopoiesis include neutropenia, neutrophilia, leukaemias, and functional disorders. Each has a specific mechanism and laboratory finding.
 
-Now your final test. A 52-year-old woman receiving chemotherapy for breast cancer develops a fever and a sore throat. Her full blood count shows a marked reduction in neutrophils (absolute neutrophil count of 0.3 × 10^9/L). Her bone marrow shows reduced myeloid precursors but normal erythroid and megakaryocytic lineages.
+Now your final test. A 52-year-old woman receiving chemotherapy for breast cancer develops a fever and a sore throat. Her full blood count shows a marked reduction in neutrophils (absolute neutrophil count of 0.3 × 10⁹/L). Her bone marrow shows reduced myeloid precursors but normal erythroid and megakaryocytic lineages.
 
 Question one: what is the most likely diagnosis, and why does chemotherapy cause it?
 Question two: why is this condition dangerous, and what specific complication is the patient at risk of?
@@ -27899,7 +27899,7 @@ If those came cleanly, you understand how white blood cells are formed, where th
     { q: "Chemotherapy-induced neutropenia occurs because:", o: ["The drug kills rapidly dividing myeloid precursors", "The drug kills red cells", "The drug blocks EPO", "The drug destroys platelets"], a: 0, w: "Chemotherapy kills rapidly dividing cells, including myeloid precursors in the marrow, causing neutropenia." },
     { q: "Febrile neutropenia is a medical emergency because:", o: ["It causes anaemia", "It can rapidly progress to overwhelming bacterial sepsis", "It causes bleeding", "It is always fatal"], a: 1, w: "Febrile neutropenia can progress rapidly to overwhelming sepsis, which is why urgent antibiotics are given." },
     { q: "The treatment for chemotherapy-induced neutropenia is:", o: ["Iron supplementation", "Recombinant G-CSF", "Recombinant EPO", "Platelet transfusion"], a: 1, w: "Recombinant G-CSF stimulates the surviving myeloid precursors to proliferate and mature, increasing neutrophil production." },
-    { q: "A patient with a neutrophil count of 0.3 × 10^9/L is at high risk of:", o: ["Viral infection", "Bacterial infection", "Bleeding", "Anaemia"], a: 1, w: "A neutrophil count below 0.5 × 10^9/L (severe neutropenia) puts the patient at high risk of bacterial infection." }
+    { q: "A patient with a neutrophil count of 0.3 × 10⁹/L is at high risk of:", o: ["Viral infection", "Bacterial infection", "Bleeding", "Anaemia"], a: 1, w: "A neutrophil count below 0.5 × 10⁹/L (severe neutropenia) puts the patient at high risk of bacterial infection." }
   ]
 };
 
@@ -28026,7 +28026,7 @@ Removal:
 
 How platelets are measured:
 
-- Platelet count is measured in a full blood count (FBC), usually by automated analyser, expressed as platelets per microlitre (or x10^9/L).
+- Platelet count is measured in a full blood count (FBC), usually by automated analyser, expressed as platelets per microlitre (or x10⁹/L).
 - A peripheral blood smear can be examined manually to confirm the count and look at platelet size and shape.
 - The mean platelet volume (MPV) gives an indication of platelet size, which can suggest whether the marrow is producing young, large platelets (as it does during recovery) or older, smaller ones.
 
@@ -28103,7 +28103,7 @@ The regulation: thrombopoietin (TPO), produced mainly by the liver, is the maste
 
 The clinical relevance: diseases of thrombopoiesis include thrombocytopenia (too few platelets) from failure of production, increased destruction, or splenic sequestration; thrombocytosis (too many platelets) from reactive or clonal causes; and platelet function disorders (normal number but abnormal function). TPO receptor agonists are used therapeutically.
 
-Now your final test. A 45-year-old woman presents with bruising and small red spots on her legs (petechiae) and gum bleeding. Her full blood count shows a platelet count of 18 x 10^9/L (normal 150-400). Her red cell and white cell counts are normal. She has no other symptoms and is not on any medications. A blood film confirms reduced platelets but no other abnormality. A bone marrow biopsy shows normal megakaryocyte numbers.
+Now your final test. A 45-year-old woman presents with bruising and small red spots on her legs (petechiae) and gum bleeding. Her full blood count shows a platelet count of 18 x 10⁹/L (normal 150-400). Her red cell and white cell counts are normal. She has no other symptoms and is not on any medications. A blood film confirms reduced platelets but no other abnormality. A bone marrow biopsy shows normal megakaryocyte numbers.
 
 Question one: what is the most likely diagnosis, and why does the normal megakaryocyte count on biopsy support this diagnosis?
 Question two: what mechanism explains the low platelet count, and what is the role of thrombopoietin in this condition?
@@ -28122,11 +28122,11 @@ If those came cleanly, you understand the formation of platelets - where they co
     { q: "Explain why platelets are described as cell fragments rather than whole cells.", a: "Platelets are fragments of the cytoplasm of megakaryocytes. They have no nucleus, cannot divide, and cannot synthesise new proteins. They contain granules, mitochondria, and cytoskeletal elements that allow them to respond rapidly when activated." },
     { q: "Describe the process by which megakaryocytes produce platelets.", a: "Megakaryocytes extend long, branching, beaded processes of cytoplasm - proplatelets - through the endothelial lining of the bone marrow sinusoids into the bloodstream. The flow of blood shears off the tips of these proplatelets into individual platelets. The process is continuous, and a single megakaryocyte can produce 1,000-3,000 platelets." },
     { q: "Name the stages of thrombopoiesis in order.", a: "Megakaryoblast → promegakaryocyte → granular megakaryocyte → mature megakaryocyte → platelets. The process takes about 5-7 days from megakaryoblast to platelet release." },
-    { q: "What is the normal platelet count and lifespan?", a: "The normal platelet count is 150,000-400,000 per microlitre (150-400 x 10^9/L). Platelets circulate for about 7-10 days before being removed by the spleen and liver." },
+    { q: "What is the normal platelet count and lifespan?", a: "The normal platelet count is 150,000-400,000 per microlitre (150-400 x 10⁹/L). Platelets circulate for about 7-10 days before being removed by the spleen and liver." },
     { q: "State the main regulator of thrombopoiesis and its source.", a: "Thrombopoietin (TPO) is the main regulator. It is produced mainly by the liver (and to a lesser extent by the kidney and bone marrow) and stimulates megakaryocyte proliferation, maturation and platelet production via the c-Mpl receptor." },
     { q: "Explain how thrombopoietin level is regulated.", a: "TPO is unusual in that its level is determined by how many platelets and megakaryocytes are present to absorb it. Platelets and megakaryocytes carry the c-Mpl receptor and bind TPO, removing it from circulation. When platelet count is low, free TPO rises, stimulating the marrow. When platelet count is high, free TPO falls, reducing stimulation. This creates a negative feedback loop." },
     { q: "Name the three main granule types in platelets and state their contents.", a: "Alpha granules contain clotting factors (fibrinogen, von Willebrand factor, factor V) and growth factors (platelet-derived growth factor). Dense granules (delta granules) contain ADP, ATP, serotonin and calcium. Lysosomes contain enzymes that help break down debris." },
-    { q: "Distinguish thrombocytopenia from thrombocytosis.", a: "Thrombocytopenia is a reduced platelet count (below 150 x 10^9/L), which causes a bleeding tendency. Thrombocytosis is an increased platelet count (above 450 x 10^9/L), which may be reactive (secondary to inflammation, infection or iron deficiency) or clonal (essential thrombocythaemia)." },
+    { q: "Distinguish thrombocytopenia from thrombocytosis.", a: "Thrombocytopenia is a reduced platelet count (below 150 x 10⁹/L), which causes a bleeding tendency. Thrombocytosis is an increased platelet count (above 450 x 10⁹/L), which may be reactive (secondary to inflammation, infection or iron deficiency) or clonal (essential thrombocythaemia)." },
     { q: "Explain the mechanism and use of thrombopoietin receptor agonists.", a: "Thrombopoietin receptor agonists (TPO-RAs) such as romiplostim and eltrombopag mimic the action of natural TPO. They bind the c-Mpl receptor on megakaryocytes and stimulate platelet production. They are used in conditions such as immune thrombocytopenia (ITP), aplastic anaemia, and hepatitis C-associated thrombocytopenia." }
   ],
 
@@ -28180,14 +28180,14 @@ If those came cleanly, you understand the formation of platelets - where they co
     { q: "Platelet surface receptors such as GPIb and GPIIb/IIIa allow platelets to:", o: ["Produce energy", "Bind von Willebrand factor and fibrinogen during clot formation", "Divide", "Synthesise proteins"], a: 1, w: "GP receptors allow platelets to bind vWF and fibrinogen during clot formation." },
 
     // ===== Note 7 (Q31-35): platelet count and measurement =====
-    { q: "The normal platelet count is:", o: ["50-100 x 10^9/L", "150-400 x 10^9/L", "500-800 x 10^9/L", "10-50 x 10^9/L"], a: 1, w: "The normal platelet count is 150-400 x 10^9/L." },
+    { q: "The normal platelet count is:", o: ["50-100 x 10⁹/L", "150-400 x 10⁹/L", "500-800 x 10⁹/L", "10-50 x 10⁹/L"], a: 1, w: "The normal platelet count is 150-400 x 10⁹/L." },
     { q: "Platelet count is measured in a:", o: ["Full blood count", "Liver function test", "Urea and electrolytes", "Coagulation screen"], a: 0, w: "Platelet count is part of the full blood count." },
     { q: "Mean platelet volume (MPV) gives an indication of:", o: ["Platelet age and production rate", "Platelet number", "Clotting time", "Bleeding time"], a: 0, w: "MPV indicates whether the marrow is producing young, large platelets or older, smaller ones." },
     { q: "In hypersplenism, platelet count falls because:", o: ["The marrow stops producing platelets", "Too many platelets are removed by the enlarged spleen", "Platelets are destroyed by antibodies", "TPO levels fall"], a: 1, w: "In hypersplenism, an enlarged spleen removes too many platelets, lowering the count." },
     { q: "A reactive thrombocytosis is most commonly caused by:", o: ["Infection, inflammation, or iron deficiency", "Bone marrow failure", "Splenectomy", "Vitamin B12 deficiency"], a: 0, w: "Reactive thrombocytosis is caused by infection, inflammation, or iron deficiency." },
 
     // ===== Note 8 (Q36-40): diseases of thrombopoiesis =====
-    { q: "Thrombocytopenia is defined as a platelet count:", o: ["Above 450 x 10^9/L", "Below 150 x 10^9/L", "Above 150 x 10^9/L", "Below 50 x 10^9/L"], a: 1, w: "Thrombocytopenia is a platelet count below 150 x 10^9/L." },
+    { q: "Thrombocytopenia is defined as a platelet count:", o: ["Above 450 x 10⁹/L", "Below 150 x 10⁹/L", "Above 150 x 10⁹/L", "Below 50 x 10⁹/L"], a: 1, w: "Thrombocytopenia is a platelet count below 150 x 10⁹/L." },
     { q: "The most common cause of isolated thrombocytopenia is:", o: ["Aplastic anaemia", "Immune thrombocytopenia (ITP)", "Leukaemia", "Liver disease"], a: 1, w: "Immune thrombocytopenia (ITP) is the most common cause of isolated thrombocytopenia." },
     { q: "In ITP, the platelet count is low because:", o: ["The marrow cannot make platelets", "Autoantibodies destroy platelets", "The spleen produces too many platelets", "TPO is deficient"], a: 1, w: "ITP is caused by autoantibodies destroying platelets." },
     { q: "Disseminated intravascular coagulation (DIC) causes thrombocytopenia by:", o: ["Reducing TPO production", "Consuming platelets faster than the marrow can replace them", "Blocking megakaryocyte development", "Causing hypersplenism"], a: 1, w: "DIC consumes platelets faster than the marrow can replace them." },
@@ -28203,7 +28203,7 @@ If those came cleanly, you understand the formation of platelets - where they co
     // ===== Note 10 (Q46-50): consolidation =====
     { q: "The three great branches of haematopoiesis are:", o: ["Erythropoiesis, leukopoiesis, thrombopoiesis", "Glycolysis, TCA, ETC", "Mitosis, meiosis, apoptosis", "Erythropoiesis, lymphopoiesis, monopoiesis"], a: 0, w: "The three branches are erythropoiesis, leukopoiesis and thrombopoiesis." },
     { q: "Thrombopoiesis is important clinically because:", o: ["It is not clinically relevant", "It is the source of platelets for haemostasis and is the basis for treating platelet disorders", "It only affects red cells", "It only matters in children"], a: 1, w: "Thrombopoiesis provides the platelets for haemostasis and is the basis for treating platelet disorders." },
-    { q: "A patient with a platelet count of 18 x 10^9/L, bruising, petechiae and normal red and white cells most likely has:", o: ["Aplastic anaemia", "Immune thrombocytopenia (ITP)", "Leukaemia", "Liver disease"], a: 1, w: "Isolated thrombocytopenia with bruising and petechiae, with normal red and white cells, is typical of ITP." },
+    { q: "A patient with a platelet count of 18 x 10⁹/L, bruising, petechiae and normal red and white cells most likely has:", o: ["Aplastic anaemia", "Immune thrombocytopenia (ITP)", "Leukaemia", "Liver disease"], a: 1, w: "Isolated thrombocytopenia with bruising and petechiae, with normal red and white cells, is typical of ITP." },
     { q: "In ITP, the bone marrow typically shows:", o: ["Absent megakaryocytes", "Normal or increased megakaryocyte numbers", "Increased red cell precursors only", "Fatty replacement"], a: 1, w: "In ITP, the marrow shows normal or increased megakaryocytes, because production is not the problem - destruction is." },
     { q: "The best treatment for severe ITP is likely to include:", o: ["Iron supplementation", "Thrombopoietin receptor agonists, corticosteroids, or IVIG", "Vitamin B12", "Blood transfusion only"], a: 1, w: "Treatment for ITP includes TPO receptor agonists, corticosteroids, IVIG, or splenectomy." }
   ]
@@ -29594,20 +29594,20 @@ My Socratic question: if you counted 100 white cells in the four corner squares,
 The answer comes from combining three pieces of information: the volume counted, the dilution factor, and the unit conversion. The volume counted is 0.4 microlitres (four squares of 0.1 microlitre each). The dilution factor is 20. The unit conversion from microlitres to litres is 1,000,000.
 
 The standard formula for the manual WBC count in cells per litre is:
-WBC count (cells/L) = (Number of cells counted x Dilution factor x 10^6) / Volume counted (microlitres)
+WBC count (cells/L) = (Number of cells counted x Dilution factor x 10⁶) / Volume counted (microlitres)
 
 For the Neubauer chamber:
-WBC count (cells/L) = (N x 20 x 10^6) / 0.4
+WBC count (cells/L) = (N x 20 x 10⁶) / 0.4
 
 This simplifies to:
-WBC count (cells/L) = N x 50 x 10^6
+WBC count (cells/L) = N x 50 x 10⁶
 
 Where N is the total number of white cells counted in the four corner squares.
 
 So if you counted 100 cells:
-WBC count = 100 x 50 x 10^6 = 5.0 x 10^9 cells/L
+WBC count = 100 x 50 x 10⁶ = 5.0 x 10⁹ cells/L
 
-Alternatively, many textbooks use the formula: WBC count (cells/cu mm) = N x 50, where N is the count in four squares and the dilution is 1 in 20 [citation:20]. This gives the result in cells per cubic millimetre (which is numerically the same as cells per microlitre), and multiplying by 10^6 converts to cells per litre.
+Alternatively, many textbooks use the formula: WBC count (cells/cu mm) = N x 50, where N is the count in four squares and the dilution is 1 in 20 [citation:20]. This gives the result in cells per cubic millimetre (which is numerically the same as cells per microlitre), and multiplying by 10⁶ converts to cells per litre.
 
 Crucial insight: the calculation is not a mystery. It is simply the answer to the question: if this many cells were in this tiny volume of diluted blood, how many would be in a litre of whole blood? Every term in the formula - the count, the dilution factor, the volume, the conversion - is there for a reason, and understanding each term prevents calculation errors.`
     },
@@ -29668,19 +29668,19 @@ Turk's fluid: 2% acetic acid to lyse red cells, a dye (gentian violet or methyle
 
 The counting chamber: Improved Neubauer, depth 0.1 mm. For WBC counts, the four large corner squares are counted, giving a total volume of 0.4 microlitres of diluted blood.
 
-The calculation: WBC count (cells/L) = (N x 20 x 10^6) / 0.4 = N x 50 x 10^6, where N is the total count in the four squares. For counts in cells per cubic millimetre, the formula is N x 50.
+The calculation: WBC count (cells/L) = (N x 20 x 10⁶) / 0.4 = N x 50 x 10⁶, where N is the total count in the four squares. For counts in cells per cubic millimetre, the formula is N x 50.
 
 Counting rules: count cells touching the upper and left boundaries; do not count those touching the lower and right boundaries. Count in a systematic pattern.
 
 Now your final test. A manual white cell count is performed on a blood sample from an adult patient. Using a 1 in 20 dilution in Turk's fluid and an Improved Neubauer chamber, the technician counts 80 white cells in the four large corner squares.
 
 Question one: what is the white cell count in cells per litre?
-Question two: if the analyser reported a count of 12.0 x 10^9/L for the same sample, and the manual count is significantly lower, what is the most likely explanation?
+Question two: if the analyser reported a count of 12.0 x 10⁹/L for the same sample, and the manual count is significantly lower, what is the most likely explanation?
 Question three: what quality control steps should the technician have taken to ensure the manual count is reliable?
 
 Work them through before reading on.
 
-My answers. One: using the formula WBC count = N x 50 x 10^6, where N = 80, the count is 80 x 50 x 10^6 = 4.0 x 10^9 cells/L. Alternatively, in cells per cubic millimetre: 80 x 50 = 4,000 cells/cu mm, which equals 4.0 x 10^9 cells/L. Two: if the analyser reported 12.0 x 10^9/L and the manual count is 4.0 x 10^9/L, the discrepancy is large. The most likely explanation is an analyser error - possibly nucleated red blood cells being counted as white cells, or platelet clumps being counted, or a calibration issue. The manual count on a diluted sample avoids these sources of error. Three: the technician should have counted in duplicate and averaged the results; checked that the counts in the four squares agreed within 10%; ensured the pipettes and counting chamber were clean and calibrated; followed the counting rules consistently; and avoided bias from knowing the analyser result beforehand.
+My answers. One: using the formula WBC count = N x 50 x 10⁶, where N = 80, the count is 80 x 50 x 10⁶ = 4.0 x 10⁹ cells/L. Alternatively, in cells per cubic millimetre: 80 x 50 = 4,000 cells/cu mm, which equals 4.0 x 10⁹ cells/L. Two: if the analyser reported 12.0 x 10⁹/L and the manual count is 4.0 x 10⁹/L, the discrepancy is large. The most likely explanation is an analyser error - possibly nucleated red blood cells being counted as white cells, or platelet clumps being counted, or a calibration issue. The manual count on a diluted sample avoids these sources of error. Three: the technician should have counted in duplicate and averaged the results; checked that the counts in the four squares agreed within 10%; ensured the pipettes and counting chamber were clean and calibrated; followed the counting rules consistently; and avoided bias from knowing the analyser result beforehand.
 
 If those came cleanly, you understand the principles and practice of the manual total leukocyte count - the reference method that underpins every automated white cell count you will ever report.`
     },
@@ -29692,10 +29692,10 @@ If those came cleanly, you understand the principles and practice of the manual 
     { q: "Describe the dilution technique for the manual WBC count using a Thoma pipette.", a: "Blood is drawn to the 0.5 mark of a white cell pipette by capillary action. The outside of the tip is wiped clean. Turk's fluid is then drawn to the 11 mark. The pipette is sealed and mixed gently. The first two drops are discarded, and the chamber is filled. Because the fluid from the tip to the 1 mark does not mix with the blood, the true dilution is 0.5 parts blood in 10 parts fluid, i.e., 1 in 20." },
     { q: "Describe the dilution technique using the micropipette and tube method, and state why it is preferred in modern practice.", a: "20 microlitres of blood are added to 380 microlitres of Turk's fluid in a small tube, giving a total volume of 400 microlitres and a dilution of 1 in 20. This method is preferred because micropipettes are easier to calibrate, the dilution is easier to standardise, and the tube can be labelled and handled more easily than a pipette." },
     { q: "State the counting rules for the manual WBC count and explain why they matter.", a: "Cells touching the upper and left-hand boundary lines of the counting square are counted; cells touching the lower and right-hand boundary lines are not. Cells are counted in a systematic pattern to avoid skipping or double-counting areas. These rules ensure that every cell is counted once and only once, making the count reproducible between different observers and different runs." },
-    { q: "Write the formula for calculating the WBC count from a manual count, and explain each term.", a: "The formula is: WBC count (cells/L) = (N x Dilution factor x 10^6) / Volume counted (microlitres). For a 1 in 20 dilution in an Improved Neubauer chamber, where N is the count in the four corner squares and the volume counted is 0.4 microlitres, the formula simplifies to WBC count = N x 50 x 10^6 cells/L. N is the number of cells counted, 20 is the dilution factor, 0.4 is the volume in microlitres, and 10^6 converts microlitres to litres." },
+    { q: "Write the formula for calculating the WBC count from a manual count, and explain each term.", a: "The formula is: WBC count (cells/L) = (N x Dilution factor x 10⁶) / Volume counted (microlitres). For a 1 in 20 dilution in an Improved Neubauer chamber, where N is the count in the four corner squares and the volume counted is 0.4 microlitres, the formula simplifies to WBC count = N x 50 x 10⁶ cells/L. N is the number of cells counted, 20 is the dilution factor, 0.4 is the volume in microlitres, and 10⁶ converts microlitres to litres." },
     { q: "List the main sources of error in the manual WBC count and state how each can be minimised.", a: "Technical errors: poor specimen collection, insufficient mixing, inaccurate pipetting, inadequate mixing of blood with Turk's fluid, faulty chamber filling, and careless counting. These are minimised by careful technique, calibrated equipment, and consistent counting rules. Inherent errors: random distribution of cells in the chamber and variation between different areas. These are reduced by counting more cells and by performing duplicate counts and averaging the results." },
     { q: "Explain why nucleated red blood cells can cause a falsely elevated white cell count, and how the manual count can correct for this.", a: "Nucleated red blood cells (nRBCs) are not lysed by Turk's fluid and are counted alongside white cells, falsely elevating the count. If nRBCs are seen on the blood film, a correction can be applied: Corrected WBC = Uncorrected WBC x 100 / (100 + number of nRBCs per 100 WBCs). The manual count allows the observer to detect nRBCs, which automated counters may miss or count incorrectly." },
-    { q: "State the normal reference range for the total white cell count in adults, and name two conditions that cause leukocytosis and two that cause leukopenia.", a: "The normal adult WBC count is approximately 4.5 to 11.0 x 10^9/L. Leukocytosis (elevated WBC) is caused by acute bacterial infection, tissue necrosis, leukaemia, and stress. Leukopenia (decreased WBC) is caused by viral infections, myelotoxic drugs and chemotherapy, aplastic anaemia, and overwhelming bacterial infection in older adults." },
+    { q: "State the normal reference range for the total white cell count in adults, and name two conditions that cause leukocytosis and two that cause leukopenia.", a: "The normal adult WBC count is approximately 4.5 to 11.0 x 10⁹/L. Leukocytosis (elevated WBC) is caused by acute bacterial infection, tissue necrosis, leukaemia, and stress. Leukopenia (decreased WBC) is caused by viral infections, myelotoxic drugs and chemotherapy, aplastic anaemia, and overwhelming bacterial infection in older adults." },
   ],
   videos: [
     { channel: "Hematology", title: "Manual WBC Count using Turk's Fluid", note: "Step-by-step demonstration of the dilution, chamber filling and counting technique.", url: "https://www.youtube.com/results?search_query=manual+WBC+count+Turk%27s+fluid+procedure" },
@@ -29746,10 +29746,10 @@ If those came cleanly, you understand the principles and practice of the manual 
     { q: "If the counts in the four squares differ by more than 10%, the correct action is to:", o: ["Report the result anyway", "Re-mix the sample and re-fill the chamber", "Count more squares", "Multiply the result by 1.1"], a: 1, w: "Uneven distribution suggests poor chamber filling; the sample should be re-mixed and the chamber re-filled." },
 
     // ===== Note 7 (Q31-35): calculation =====
-    { q: "Using the formula WBC count = N x 50 x 10^6, if N = 60, the WBC count is:", o: ["3.0 x 10^9/L", "6.0 x 10^9/L", "1.2 x 10^9/L", "5.0 x 10^9/L"], a: 0, w: "60 x 50 x 10^6 = 3.0 x 10^9/L." },
-    { q: "In the calculation WBC count (cells/L) = (N x 20 x 10^6) / 0.4, the number 0.4 represents:", o: ["The dilution factor", "The volume counted in microlitres", "The number of squares", "The chamber depth"], a: 1, w: "0.4 is the total volume counted in microlitres (four squares of 0.1 microlitre each)." },
-    { q: "The number 10^6 in the WBC calculation converts:", o: ["Microlitres to litres", "Litres to microlitres", "Cells to litres", "Millilitres to litres"], a: 0, w: "10^6 converts a count per microlitre to a count per litre." },
-    { q: "A manual WBC count gives 120 cells in the four squares with a 1 in 20 dilution. The WBC count in cells/L is:", o: ["2.4 x 10^9/L", "6.0 x 10^9/L", "12.0 x 10^9/L", "4.8 x 10^9/L"], a: 1, w: "120 x 50 x 10^6 = 6.0 x 10^9/L." },
+    { q: "Using the formula WBC count = N x 50 x 10⁶, if N = 60, the WBC count is:", o: ["3.0 x 10⁹/L", "6.0 x 10⁹/L", "1.2 x 10⁹/L", "5.0 x 10⁹/L"], a: 0, w: "60 x 50 x 10⁶ = 3.0 x 10⁹/L." },
+    { q: "In the calculation WBC count (cells/L) = (N x 20 x 10⁶) / 0.4, the number 0.4 represents:", o: ["The dilution factor", "The volume counted in microlitres", "The number of squares", "The chamber depth"], a: 1, w: "0.4 is the total volume counted in microlitres (four squares of 0.1 microlitre each)." },
+    { q: "The number 10⁶ in the WBC calculation converts:", o: ["Microlitres to litres", "Litres to microlitres", "Cells to litres", "Millilitres to litres"], a: 0, w: "10⁶ converts a count per microlitre to a count per litre." },
+    { q: "A manual WBC count gives 120 cells in the four squares with a 1 in 20 dilution. The WBC count in cells/L is:", o: ["2.4 x 10⁹/L", "6.0 x 10⁹/L", "12.0 x 10⁹/L", "4.8 x 10⁹/L"], a: 1, w: "120 x 50 x 10⁶ = 6.0 x 10⁹/L." },
     { q: "The WBC count in cells per cubic millimetre (cu mm), using a 1 in 20 dilution and counting four squares, is calculated as:", o: ["N x 20", "N x 50", "N x 10", "N x 100"], a: 1, w: "The WBC count in cells/cu mm is N x 50, where N is the count in the four squares and the dilution is 1 in 20." },
 
     // ===== Note 8 (Q36-40): analyser vs manual discrepancies =====
@@ -29768,7 +29768,7 @@ If those came cleanly, you understand the principles and practice of the manual 
 
     // ===== Note 10 (Q46-50): consolidation =====
     { q: "The manual WBC count is most useful as a reference method when:", o: ["A routine full blood count is requested", "The analyser result is suspected to be erroneous", "The patient is healthy", "The sample is clotted"], a: 1, w: "The manual count is the reference method for confirming or refuting suspected analyser errors." },
-    { q: "The normal adult reference range for the total white cell count is approximately:", o: ["1.5 to 4.5 x 10^9/L", "4.5 to 11.0 x 10^9/L", "11.0 to 20.0 x 10^9/L", "0.5 to 2.0 x 10^9/L"], a: 1, w: "The normal adult WBC count is approximately 4.5 to 11.0 x 10^9/L." },
+    { q: "The normal adult reference range for the total white cell count is approximately:", o: ["1.5 to 4.5 x 10⁹/L", "4.5 to 11.0 x 10⁹/L", "11.0 to 20.0 x 10⁹/L", "0.5 to 2.0 x 10⁹/L"], a: 1, w: "The normal adult WBC count is approximately 4.5 to 11.0 x 10⁹/L." },
     { q: "Leukocytosis is most commonly caused by:", o: ["Viral infection", "Acute bacterial infection", "Aplastic anaemia", "Chemotherapy"], a: 1, w: "Acute bacterial infection is a common cause of leukocytosis." },
     { q: "Leukopenia is most commonly caused by:", o: ["Viral infection and myelotoxic drugs", "Acute bacterial infection", "Tissue necrosis", "Stress"], a: 0, w: "Viral infections and myelotoxic drugs are common causes of leukopenia." },
     { q: "The complete manual WBC count procedure, in correct order, is:", o: ["Dilute blood in Turk's fluid, fill chamber, count, calculate", "Fill chamber, dilute blood, count, calculate", "Count, dilute, fill chamber, calculate", "Calculate, count, dilute, fill chamber"], a: 0, w: "The procedure is: dilute the blood, fill the counting chamber, count the cells, and calculate the result." },
@@ -30091,7 +30091,7 @@ const T_HEM_QUALITY = {
       q: "You have spent a whole course learning to perform haematology tests. Why does the final topic ask how to trust them?",
       body: `You have learned how blood cells are produced, how samples are collected and stained, how films are examined, how cells are counted, and how microscopes are used. Every one of those topics has taught you to perform a haematological test. This final topic asks a different question: how do you know that what you have done is correct?
 
-My Socratic question: a result of 8.5 x 10^9 per litre for a white cell count is only useful if the clinician can trust it. What would make the clinician trust it?
+My Socratic question: a result of 8.5 x 10⁹ per litre for a white cell count is only useful if the clinician can trust it. What would make the clinician trust it?
 
 The answer is not the number itself. The clinician trusts the result because there is a system behind it - a system that guarantees the sample was correct, the technique was standardised, the equipment was calibrated, the reagents were in date, the staff were trained, the result was checked, and any error was detected before the result was reported. That system is quality assurance. It is what makes the difference between a number and a clinically trustworthy result.
 
