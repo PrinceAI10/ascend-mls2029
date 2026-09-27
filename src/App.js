@@ -4682,6 +4682,13 @@ function TopicView({ app }) {
             style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6 }}
             onClick={() => {
               const sel = window.getSelection();
+              console.log("HL:", sel ? { collapsed: sel.isCollapsed, ranges: sel.rangeCount, text: sel.toString() } : "no selection");
+              console.log("HL DEBUG", {
+              hasSel: !!sel,
+              collapsed: sel && sel.isCollapsed,
+              ranges: sel && sel.rangeCount,
+              text: sel ? sel.toString() : null,
+            });
               if (!sel || sel.isCollapsed || sel.rangeCount === 0) {
                 window.alert("First select the text you want to highlight, then tap the pencil.");
                 return;
