@@ -356,6 +356,7 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .lesson-step:before{
   content:"";position:absolute;left:10px;top:14px;bottom:14px;width:3px;
   border-radius:3px;background:linear-gradient(180deg,var(--amber-2),var(--amber));
+  box-shadow:0 0 6px 0 rgba(245,185,63,.35);
 }
 .lesson-step:hover{border-color:var(--line-2);box-shadow:0 1px 0 rgba(0,0,0,.15),0 12px 26px -14px rgba(0,0,0,.45)}
 .lesson-step-active{
@@ -363,6 +364,15 @@ textarea.pastebox:focus{border-color:var(--amber)}
   border-color:rgba(245,185,63,.4);
   box-shadow:0 1px 0 rgba(0,0,0,.15),0 8px 20px -14px rgba(0,0,0,.35),0 0 0 1px rgba(245,185,63,.12);
 }
+/* One-shot "step just finished" pulse - a brief amber ring that expands
+   and fades, fired once when the student scrolls past a step. */
+.lesson-step-pulse{animation:stepCompletePulse .7s ease-out}
+@keyframes stepCompletePulse{
+  0%{box-shadow:0 1px 0 rgba(0,0,0,.15),0 8px 20px -14px rgba(0,0,0,.35),0 0 0 0 rgba(245,185,63,.5)}
+  60%{box-shadow:0 1px 0 rgba(0,0,0,.15),0 8px 20px -14px rgba(0,0,0,.35),0 0 0 8px rgba(245,185,63,0)}
+  100%{box-shadow:0 1px 0 rgba(0,0,0,.15),0 8px 20px -14px rgba(0,0,0,.35),0 0 0 0 rgba(245,185,63,0)}
+}
+@media (prefers-reduced-motion:reduce){.lesson-step-pulse{animation:none}}
 .lesson-step-active:before{box-shadow:0 0 10px 1px rgba(245,185,63,.5)}
 @media (prefers-reduced-motion:reduce){.lesson-step{transition:none}}
 @keyframes lessonIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -498,6 +508,9 @@ mark.lesson-hl-yellow{background:rgba(245,214,80,.45)}
   animation:notifPulse 1.8s ease-in-out infinite}
 @keyframes notifPulse{0%,100%{transform:scale(1);box-shadow:0 2px 6px rgba(240,119,106,0.55)}
   50%{transform:scale(1.12);box-shadow:0 2px 12px rgba(240,119,106,0.9)}}
+.counter-bump{display:inline-block;animation:counterBump .55s cubic-bezier(.2,.7,.3,1)}
+@keyframes counterBump{0%{transform:scale(1)}35%{transform:scale(1.28)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.counter-bump{animation:none}}
 .notif-item.unread{background:var(--amber-dim)}
 .notif-item .unread-dot{width:8px;height:8px;border-radius:50%;background:var(--bad);
   display:inline-block;flex-shrink:0}
@@ -2465,6 +2478,38 @@ function Ring({ value, size = 46, stroke = 5, color = "var(--amber)" }) {
   );
 }
 
+// Motion polish - animated XP/streak counter. Ticks the displayed number
+// from its old value up (or down) to the new one over ~500ms instead of
+// snapping instantly, and gives itself a brief scale "bump" while it's
+// moving so an XP/streak gain actually registers as an event rather than
+// a number silently changing. Used in the topbar for both the streak chip
+// and the XP chip.
+function AnimatedCounter({ value }) {
+  const [display, setDisplay] = useState(value);
+  const [bump, setBump] = useState(false);
+  const prevRef = useRef(value);
+  useEffect(() => {
+    const from = prevRef.current;
+    const to = value;
+    if (from === to) { setDisplay(to); return; }
+    const duration = 550;
+    const startTime = performance.now();
+    let raf;
+    const tick = (now) => {
+      const t = Math.min(1, (now - startTime) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setDisplay(Math.round(from + (to - from) * eased));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    setBump(true);
+    const bumpTimer = setTimeout(() => setBump(false), 550);
+    prevRef.current = to;
+    return () => { cancelAnimationFrame(raf); clearTimeout(bumpTimer); };
+  }, [value]);
+  return <span className={bump ? "counter-bump" : ""}>{display}</span>;
+}
+
 // Draws a shareable milestone card (rank-up, achievement, streak) onto an
 // offscreen canvas - a 4:5 portrait image sized for Instagram feed/story,
 // dark ASCEND-branded background, the milestone in big type, one stat line
@@ -4160,6 +4205,29 @@ function TopicView({ app }) {
     return () => observer.disconnect();
   }, [t]);
 
+  // MOTION POLISH - step-complete pulse. As the student scrolls past a
+  // step (the next one becomes active), mark every step before it as
+  // "read" and briefly pulse the one that was just finished, so finishing
+  // a step registers as a small moment instead of just silently scrolling
+  // on. completedSteps also swaps that step's number badge for a
+  // checkmark, giving the "you're on step 4 of 10" tracker a visual trail
+  // of what's actually been read, not just a position.
+  const [completedSteps, setCompletedSteps] = useState(new Set());
+  const [justCompleted, setJustCompleted] = useState(null);
+  useEffect(() => { setCompletedSteps(new Set()); setJustCompleted(null); }, [t]);
+  useEffect(() => {
+    if (activeStep <= 0) return;
+    setCompletedSteps((prev) => {
+      if (prev.has(activeStep - 1)) return prev;
+      const next = new Set(prev);
+      next.add(activeStep - 1);
+      return next;
+    });
+    setJustCompleted(activeStep - 1);
+    const timer = setTimeout(() => setJustCompleted(null), 700);
+    return () => clearTimeout(timer);
+  }, [activeStep]);
+
   // READING TIMER - Save state
   useEffect(() => {
     if (!t) return;
@@ -4251,7 +4319,7 @@ function TopicView({ app }) {
   return (
     <div className="view">
       <button className="back" onClick={() => app.go("course", { courseId: t.courseId })}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> {c.name}</button>
-      <div className="eyebrow">{c.code} · Topic {String(t.topicIndex + 1).padStart(2, "0")}</div>
+      <div className="eyebrow" style={{ marginTop: 10 }}>{c.code} · Topic {String(t.topicIndex + 1).padStart(2, "0")}</div>
       <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }} className="mono">
         Updated {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
       </div>
@@ -4347,12 +4415,12 @@ function TopicView({ app }) {
       <div className="lesson" ref={lessonRef} onMouseUp={handleLessonMouseUp} style={{ position: "relative" }}>
         {(t.note || []).map((it, idx) => (
           <div
-            className={"lesson-step" + (idx === activeStep ? " lesson-step-active" : "")}
+            className={"lesson-step" + (idx === activeStep ? " lesson-step-active" : "") + (justCompleted === idx ? " lesson-step-pulse" : "")}
             key={idx}
             data-step-idx={idx}
             ref={(el) => (stepRefs.current[idx] = el)}
           >
-            <h3 className="lesson-q"><span className="lesson-n">{String(idx + 1).padStart(2, "0")}</span><span>{it.q}</span></h3>
+            <h3 className="lesson-q"><span className="lesson-n">{completedSteps.has(idx) ? <Ic.check p={12} /> : String(idx + 1).padStart(2, "0")}</span><span>{it.q}</span></h3>
             {it.body.split("\n\n").map((p, k) => {
               // Give the two recurring structural paragraph types their own
               // look instead of every paragraph reading identically - this
@@ -14214,12 +14282,12 @@ export default function App() {
               </button>
               <div className="onlymobile" style={{ flex: 1, minWidth: 0 }}><Wordmark /></div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }} className="topbar-icons">
-                <span className="chip streakchip" data-tour="streak"><Ic.flame p={15} /><span className="val">{progress?.streak || 0}</span></span>
+                <span className="chip streakchip" data-tour="streak"><Ic.flame p={15} /><span className="val"><AnimatedCounter value={progress?.streak || 0} /></span></span>
                 <button className="iconbtn" onClick={() => go("search")} title="Search all courses"><Ic.search p={17} /></button>
                 <button className="iconbtn" onClick={toggleFontScale} title={"Text size: " + (fontScale === "small" ? "Small" : fontScale === "large" ? "Large" : "Normal") + " (tap to change)"}><Ic.textSize p={17} /></button>
                 <button className="iconbtn" onClick={toggleTheme} title={theme === "system" ? "Theme: System (follows day/night)" : theme === "light" ? "Theme: Light" : "Theme: Dark"}>{theme === "system" ? <Ic.monitor p={17} /> : theme === "light" ? <Ic.sun p={17} /> : <Ic.moon p={17} />}</button>
                 <button className="iconbtn" onClick={openNotif} title="Notifications"><Ic.bell p={18} />{unreadCount > 0 && <span className="notif-badge">{unreadCount > 9 ? "9+" : unreadCount}</span>}</button>
-                <span className="chip" data-tour="xp"><span className="val" style={{ color: r.c }}>{progress?.xp || 0}</span> XP</span>
+                <span className="chip" data-tour="xp"><span className="val" style={{ color: r.c }}><AnimatedCounter value={progress?.xp || 0} /></span> XP</span>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <span className="username" style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
                   <button className="avatar" onClick={setName} title="Click to change your username">{progress?.name?.[0]?.toUpperCase() || "?"}</button>
@@ -14502,4 +14570,4 @@ export default function App() {
       )}
     </div>
   );
-} 
+}
