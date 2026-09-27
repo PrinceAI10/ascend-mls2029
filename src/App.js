@@ -4136,7 +4136,10 @@ function TopicView({ app }) {
   // reading timer above, so highlights survive a refresh / reopening the
   // topic later.
   const [highlights, setHighlights] = useState([]);
-  const [hlToolbar, setHlToolbar] = useState(null); // {x, y, key, start, end} or null
+  // SAT-style highlighter: the pencil button opens this colour picker.
+  // shape is now just { key, start, end } — no screen coordinates needed,
+  // because the picker is a centered modal rather than a floating toolbar.
+  const [hlToolbar, setHlToolbar] = useState(null);
   const lessonRef = useRef(null);
   const hlStorageKey = t ? `ascend_highlights_${app.courseId}_${app.topicId}` : null;
 
@@ -4175,40 +4178,19 @@ function TopicView({ app }) {
     walk(root);
     return found ? result : total;
   };
-
-  // Mobile text selection (long-press + drag handles) does not reliably
-  // fire a native "mouseup" on the underlying element the way a desktop
-  // click-drag does - the browser's own selection UI owns the gesture,
-  // so touchend is the event that actually lands. The small delay lets
-  // the selection finish settling (handles can still be moving right at
-  // touchend) before we read window.getSelection().
-  const handleLessonTouchEnd = () => {
-    setTimeout(handleLessonMouseUp, 0);
-  };
-
-  const handleLessonMouseUp = () => {
-    const sel = window.getSelection();
-    if (!sel || sel.isCollapsed || sel.rangeCount === 0) { setHlToolbar(null); return; }
-    const range = sel.getRangeAt(0);
-    const bodyEl = range.startContainer.nodeType === 1
-      ? range.startContainer.closest?.(".lesson-p-body")
-      : range.startContainer.parentElement?.closest(".lesson-p-body");
-    const endBodyEl = range.endContainer.nodeType === 1
-      ? range.endContainer.closest?.(".lesson-p-body")
-      : range.endContainer.parentElement?.closest(".lesson-p-body");
-    if (!bodyEl || bodyEl !== endBodyEl) { setHlToolbar(null); return; } // ignore cross-paragraph selections
-    const key = bodyEl.getAttribute("data-key");
-    const start = domPosToOffset(bodyEl, range.startContainer, range.startOffset);
-    const end = domPosToOffset(bodyEl, range.endContainer, range.endOffset);
-    if (end <= start) { setHlToolbar(null); return; }
-    const rect = range.getBoundingClientRect();
-    const shellRect = lessonRef.current ? lessonRef.current.getBoundingClientRect() : { top: 0, left: 0 };
-    setHlToolbar({
-      x: rect.left + rect.width / 2 - shellRect.left,
-      y: rect.top - shellRect.top - 44,
-      key, start, end,
-    });
-  };
+  // NOTE: The old handleLessonMouseUp / handleLessonTouchEnd pair lived here.
+  // They tried to guess when the user had finished selecting text by
+  // listening for mouseup (desktop) and touchend (mobile). On mobile, the
+  // browser owns the long-press selection gesture and does not reliably
+  // fire touchend on our page at the right moment, so the floating colour
+  // toolbar often never appeared (or appeared in the wrong place / after
+  // the selection had already collapsed).
+  //
+  // The SAT-style fix: nothing auto-triggers anymore. The pencil button
+  // (rendered further down in the JSX) reads the live selection on demand
+  // and opens a centred colour-picker modal. This works identically on
+  // desktop, iOS, and Android because there is no gesture detection
+  // involved — just a normal button tap.
 
   const applyHighlight = (color) => {
     if (!hlToolbar) return;
@@ -4219,11 +4201,15 @@ function TopicView({ app }) {
     const next = highlights
       .filter((h) => !(h.key === key && h.start < end && h.end > start))
       .concat([{ key, start, end, color }]);
-    saveHighlights(next);
+        saveHighlights(next);
     setHlToolbar(null);
-    window.getSelection()?.removeAllRanges();
+    // Clear the native selection *after* the modal closes, so mobile
+    // browsers (iOS Safari, Samsung Internet) don't briefly flash the
+    // selection handles back into view behind the modal as it fades out.
+    setTimeout(() => {
+      try { window.getSelection()?.removeAllRanges(); } catch {}
+    }, 0);
   };
-
   const clearHighlight = (h) => {
     saveHighlights(highlights.filter((x) => x !== h));
   };
@@ -4686,6 +4672,50 @@ function TopicView({ app }) {
               </button>
             );
           })()}
+                    {/* SAT-style highlighter trigger.
+              Always visible, works on desktop and mobile. Reads the live
+              text selection on demand instead of trying to detect the end
+              of a selection gesture (which mobile browsers handle
+              inconsistently — that was the old bug). */}
+          <button
+            className="btn btn-sm"
+            style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6 }}
+            onClick={() => {
+              const sel = window.getSelection();
+              if (!sel || sel.isCollapsed || sel.rangeCount === 0) {
+                window.alert("First select the text you want to highlight, then tap the pencil.");
+                return;
+              }
+              const range = sel.getRangeAt(0);
+              const bodyEl = range.startContainer.nodeType === 1
+                ? range.startContainer.closest?.(".lesson-p-body")
+                : range.startContainer.parentElement?.closest(".lesson-p-body");
+              const endBodyEl = range.endContainer.nodeType === 1
+                ? range.endContainer.closest?.(".lesson-p-body")
+                : range.endContainer.parentElement?.closest(".lesson-p-body");
+              if (!bodyEl || bodyEl !== endBodyEl) {
+                window.alert("Highlighting works within a single paragraph. Please select text inside one paragraph.");
+                return;
+              }
+              const key = bodyEl.getAttribute("data-key");
+              const start = domPosToOffset(bodyEl, range.startContainer, range.startOffset);
+              const end = domPosToOffset(bodyEl, range.endContainer, range.endOffset);
+              if (end <= start) {
+                window.alert("Please select some text first.");
+                return;
+              }
+              setHlToolbar({ key, start, end });
+            }}
+            title="Highlight selected text"
+          >
+            {/* Pencil SVG icon — matches the app's existing icon style
+                (stroke-based, currentColor, same weight as other icons). */}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 20h9" />
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z" />
+            </svg>
+            Highlight
+          </button>
         </div>
       </div>
       <div className="divider" />
@@ -4703,7 +4733,7 @@ function TopicView({ app }) {
           <div className="bar"><i style={{ width: ((activeStep + 1) / (t.note || []).length) * 100 + "%" }} /></div>
         </div>
       )}
-      <div className="lesson" ref={lessonRef} onMouseUp={handleLessonMouseUp} onTouchEnd={handleLessonTouchEnd} style={{ position: "relative" }}>
+      <div className="lesson" ref={lessonRef} style={{ position: "relative" }}>
         {(t.note || []).map((it, idx) => (
           <div
             className={"lesson-step" + (idx === activeStep ? " lesson-step-active" : "") + (justCompleted === idx ? " lesson-step-pulse" : "")}
@@ -4747,17 +4777,7 @@ function TopicView({ app }) {
             })}
           </div>
         ))}
-        {hlToolbar && (
-          <div
-            className="hl-toolbar"
-            style={{ left: hlToolbar.x, top: hlToolbar.y }}
-            onMouseDown={(e) => e.preventDefault()}
-          >
-            <button className="hl-swatch hl-swatch-blue" onClick={() => applyHighlight("blue")} aria-label="Highlight blue" />
-            <button className="hl-swatch hl-swatch-pink" onClick={() => applyHighlight("pink")} aria-label="Highlight pink" />
-            <button className="hl-swatch hl-swatch-yellow" onClick={() => applyHighlight("yellow")} aria-label="Highlight yellow" />
-          </div>
-        )}
+        
       </div>
       <div className="divider" />
       <div className="eyebrow" style={{ marginBottom: 12 }}>Visualise it</div>
@@ -4816,7 +4836,105 @@ function TopicView({ app }) {
         <button className="btn btn-a" onClick={() => app.go("quiz", { courseId: t.courseId, topicId: t.topicIndex })}>Start <Ic.chevR p={16} /></button>
       </div>
     </div>
-  );
+  );      {/* SAT-style highlighter colour-picker modal.
+          Rendered via createPortal directly onto document.body — same
+          pattern as the level picker and offline overlay — because a
+          position:fixed element inside the zoomed .main container can
+          drift off-center on mobile at Small/Large text sizes. */}
+      {hlToolbar && createPortal(
+        <div
+          style={{
+            position: "fixed", inset: 0, zIndex: 10000,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            background: "rgba(10,12,16,0.65)",
+            WebkitBackdropFilter: "blur(2px)", backdropFilter: "blur(2px)",
+            padding: 20,
+          }}
+          onClick={() => setHlToolbar(null)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "var(--bg-2)",
+              border: "1px solid var(--line-2)",
+              borderRadius: 18,
+              padding: "22px 24px",
+              maxWidth: 320,
+              width: "100%",
+              textAlign: "center",
+              boxShadow: "0 24px 60px rgba(0,0,0,0.45)",
+            }}
+          >
+            <div style={{
+              fontSize: 12,
+              letterSpacing: ".06em",
+              textTransform: "uppercase",
+              color: "var(--text-3)",
+              fontWeight: 700,
+              marginBottom: 4,
+            }}>
+              Highlight colour
+            </div>
+            <p style={{
+              color: "var(--text-2)",
+              fontSize: 13,
+              margin: "0 0 18px",
+              lineHeight: 1.5,
+            }}>
+              Choose a colour for the text you selected.
+            </p>
+            <div style={{ display: "flex", justifyContent: "center", gap: 14 }}>
+              {[
+                { id: "blue",   label: "Blue" },
+                { id: "yellow", label: "Yellow" },
+                { id: "pink",   label: "Pink" },
+              ].map((c) => (
+                <button
+                  key={c.id}
+                  onClick={() => applyHighlight(c.id)}
+                  aria-label={`Highlight ${c.label}`}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 8,
+                    padding: 4,
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: "50%",
+                      display: "block",
+                      border: "2px solid rgba(255,255,255,0.18)",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
+                      background:
+                        c.id === "blue"   ? "#5aa9ff" :
+                        c.id === "yellow" ? "#f5d650" :
+                                            "#ff78b4",
+                    }}
+                  />
+                  <span style={{ fontSize: 12.5, color: "var(--text-2)", fontWeight: 600 }}>
+                    {c.label}
+                  </span>
+                </button>
+              ))}
+            </div>
+            <button
+              className="btn btn-g btn-sm"
+              style={{ width: "100%", marginTop: 20 }}
+              onClick={() => setHlToolbar(null)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>,
+        document.body
+      )}
 }
 
 /* ------------------------------- course --------------------------------- */
