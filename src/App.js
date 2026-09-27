@@ -22056,12 +22056,12 @@ My Socratic question: a single layer of cells that weighs two grams - why is it 
 
 The answer is that the endothelium performs a long list of functions, all essential to life. It is:
 
-- A barrier - controlling what passes between blood and tissues.
-- A non-thrombogenic surface - preventing blood from clotting inside healthy vessels (by producing heparan sulphate, prostacyclin, and tissue plasminogen activator).
-- A regulator of vascular tone - producing nitric oxide (vasodilator) and endothelin (vasoconstrictor), which control the diameter of the vessel.
-- A regulator of inflammation - expressing adhesion molecules that let white blood cells enter the tissues, but only when needed.
-- A regulator of angiogenesis - releasing growth factors that promote new vessel formation.
-- A metabolic organ - inactivating hormones and drugs, and converting angiotensin I to angiotensin II in the lung.
+- A barrier → controlling what passes between blood and tissues.
+- A non-thrombogenic surface → preventing blood from clotting inside healthy vessels (by producing heparan sulphate, prostacyclin, and tissue plasminogen activator).
+- A regulator of vascular tone → producing nitric oxide (vasodilator) and endothelin (vasoconstrictor), which control the diameter of the vessel.
+- A regulator of inflammation → expressing adhesion molecules that let white blood cells enter the tissues, but only when needed.
+- A regulator of angiogenesis → releasing growth factors that promote new vessel formation.
+- A metabolic organ → inactivating hormones and drugs, and converting angiotensin I to angiotensin II in the lung.
 
 No other single layer of cells does all of this. The endothelium is not just a lining; it is a continuously active regulatory interface between blood and tissue.
 
@@ -22242,10 +22242,10 @@ My Socratic question: if the chest wall is a solid barrier, why can a doctor hea
 The answer is that the chest wall is not uniform. Certain landmarks - the sternal angle, the costal margin, the mid-clavicular line, the mid-axillary line - are reference points on the surface that correspond to fixed underlying structures. Between the ribs there are gaps (the intercostal spaces), and behind the sternum and the heart the cage is thin enough for sound to pass through. Surface anatomy is how a clinician navigates the body without an X-ray.
 
 The key landmarks you must know:
-- The suprasternal notch (jugular notch) - the dip at the top of the sternum, level with T2.
-- The sternal angle (angle of Louis) - the ridge where the manubrium meets the body of the sternum, level with T4/T5. It is the single most useful landmark on the chest: the second costal cartilage articulates here, and it marks the level of the aortic arch, the bifurcation of the trachea, and the beginning and end of the aortic arch.
-- The costal margin - the lower edge of the rib cage, formed by the seventh to tenth costal cartilages.
-- The xiphisternal joint - where the xiphoid process meets the body of the sternum, level with T9.
+- The suprasternal notch (jugular notch) → the dip at the top of the sternum, level with T2.
+- The sternal angle (angle of Louis) → the ridge where the manubrium meets the body of the sternum, level with T4/T5. It is the single most useful landmark on the chest: the second costal cartilage articulates here, and it marks the level of the aortic arch, the bifurcation of the trachea, and the beginning and end of the aortic arch.
+- The costal margin → the lower edge of the rib cage, formed by the seventh to tenth costal cartilages.
+- The xiphisternal joint → where the xiphoid process meets the body of the sternum, level with T9.
 - Vertical lines: mid-clavicular, anterior axillary, mid-axillary, posterior axillary, scapular, and paravertebral.
 
 Crucial insight: surface anatomy is the clinician's coordinate system. Every examination, every injection, every chest drain is placed using these landmarks. If you know the sternal angle, you know where the second rib is; if you know the second rib, you can count down to any intercostal space - which is exactly what you do before inserting a needle into the chest.`
@@ -22274,9 +22274,9 @@ My Socratic question: if the ribs are the wall, what would muscles on top of the
 
 The answer is that these muscles move the upper limb, not the chest. The anterior chest wall is where the arm attaches to the trunk, and the muscles crossing this region are the ones that position the shoulder and upper arm. The three layers, from superficial to deep, are:
 
-- Pectoralis major - a large fan-shaped muscle from the clavicle, sternum and upper six costal cartilages to the lateral lip of the intertubercular sulcus of the humerus. Action: adducts and medially rotates the arm (and flexes the extended arm). Innervation: medial and lateral pectoral nerves.
-- Pectoralis minor - a smaller triangular muscle from ribs 3-5 to the coracoid process of the scapula. Action: stabilises the scapula, drawing it forward and down. Innervation: medial pectoral nerve.
-- Subclavius - a small muscle from the first rib to the underside of the clavicle. Action: depresses the clavicle. Innervation: nerve to subclavius.
+- Pectoralis major → a large fan-shaped muscle from the clavicle, sternum and upper six costal cartilages to the lateral lip of the intertubercular sulcus of the humerus. Action: adducts and medially rotates the arm (and flexes the extended arm). Innervation: medial and lateral pectoral nerves.
+- Pectoralis minor → a smaller triangular muscle from ribs 3-5 to the coracoid process of the scapula. Action: stabilises the scapula, drawing it forward and down. Innervation: medial pectoral nerve.
+- Subclavius → a small muscle from the first rib to the underside of the clavicle. Action: depresses the clavicle. Innervation: nerve to subclavius.
 
 Deep to these, the serratus anterior wraps around the side of the chest - a large muscle from the outer surfaces of the upper eight or nine ribs to the medial border of the scapula. It protracts the scapula and holds it against the thoracic wall. Its long thoracic nerve is famously vulnerable during axillary surgery - injury produces "winged scapula."
 
@@ -22290,13 +22290,13 @@ My Socratic question: a bone that only needs to curve around the chest could be 
 
 The answer is that each feature is a joint, a muscle attachment, or a passageway for the neurovascular bundle.
 
-- Head - the expanded end that articulates with the vertebral body (its own vertebra and the one above), forming the costovertebral joint.
-- Neck - the narrow segment between the head and the tubercle, where the rib's costotransverse ligament attaches.
-- Tubercle - a small bump that articulates with the transverse process of its own vertebra (the costotransverse joint) and provides an attachment for the costotransverse ligament.
-- Angle - the point of maximum curvature, where the rib turns from its posterior course to its anterior course. It is here that the rib is most likely to fracture under direct trauma.
-- Shaft - the main body of the rib, with a rounded outer surface and a grooved inner surface.
-- Costal groove - a groove on the inner, inferior surface that houses the intercostal nerve, artery and vein. This is the neurovascular bundle of the intercostal space.
-- Costal cartilage - the bar of hyaline cartilage at the front of the rib, joining the rib to the sternum or to the rib above.
+- Head → the expanded end that articulates with the vertebral body (its own vertebra and the one above), forming the costovertebral joint.
+- Neck → the narrow segment between the head and the tubercle, where the rib's costotransverse ligament attaches.
+- Tubercle → a small bump that articulates with the transverse process of its own vertebra (the costotransverse joint) and provides an attachment for the costotransverse ligament.
+- Angle → the point of maximum curvature, where the rib turns from its posterior course to its anterior course. It is here that the rib is most likely to fracture under direct trauma.
+- Shaft → the main body of the rib, with a rounded outer surface and a grooved inner surface.
+- Costal groove → a groove on the inner, inferior surface that houses the intercostal nerve, artery and vein. This is the neurovascular bundle of the intercostal space.
+- Costal cartilage → the bar of hyaline cartilage at the front of the rib, joining the rib to the sternum or to the rib above.
 
 The ribs themselves fall into three groups: true ribs (1-7), which reach the sternum through their own costal cartilage; false ribs (8-10), whose cartilages join the cartilage of the rib above; and floating ribs (11-12), which have no anterior attachment at all.
 
@@ -22310,9 +22310,9 @@ My Socratic question: the intercostal space is only a centimetre or two wide. Wh
 
 The answer is that the three muscle layers form a multilayered wall that keeps the space rigid and moves the ribs. From superficial to deep:
 
-- External intercostal - fibres run downwards and forwards (like putting your hands in your pockets). It extends from the tubercle of the rib to the costochondral junction, where it becomes the anterior intercostal membrane. It elevates the ribs during inspiration.
-- Internal intercostal - fibres run downwards and backwards (like putting your hands in your back pockets). It extends from the sternum to the angle of the rib, where it becomes the posterior intercostal membrane. It depresses the ribs during forced expiration.
-- Innermost intercostal - the deepest layer, with fibres running in the same direction as the internal intercostals. It is separated from the internal layer by the neurovascular bundle. It also depresses the ribs.
+- External intercostal → fibres run downwards and forwards (like putting your hands in your pockets). It extends from the tubercle of the rib to the costochondral junction, where it becomes the anterior intercostal membrane. It elevates the ribs during inspiration.
+- Internal intercostal → fibres run downwards and backwards (like putting your hands in your back pockets). It extends from the sternum to the angle of the rib, where it becomes the posterior intercostal membrane. It depresses the ribs during forced expiration.
+- Innermost intercostal → the deepest layer, with fibres running in the same direction as the internal intercostals. It is separated from the internal layer by the neurovascular bundle. It also depresses the ribs.
 
 The neurovascular bundle runs in the costal groove on the underside of each rib, in a strict order from above downwards: intercostal vein, artery, nerve (remembered as VAN - vein, artery, nerve). Because the bundle sits in the groove, the safest point to insert a needle into an intercostal space is just above the rib below - well below the groove and away from the bundle.
 
@@ -22341,14 +22341,14 @@ My Socratic question: the phrenic nerve arises from C3, C4 and C5 - at the base 
 The answer is embryology. The diaphragm develops from the septum transversum, which forms in the cervical region of the early embryo and then migrates downwards to its final position. As it migrates, it drags its nerve supply with it - so the phrenic nerve remains a cervical nerve, even though the muscle it supplies now sits at the level of the lower ribs. This is why irritation of the diaphragm (by blood, pus, or air) refers pain to the shoulder tip - the phrenic nerve shares spinal segments (C3-C5) with the skin of the shoulder.
 
 The diaphragm has three main parts:
-- The sternal part - small, attached to the back of the xiphoid process.
-- The costal part - large, attached to the inner surfaces of the lower six ribs and their costal cartilages.
-- The lumbar part - attached to the lumbar vertebrae via the right and left crura, and to the arcuate ligaments.
+- The sternal part → small, attached to the back of the xiphoid process.
+- The costal part → large, attached to the inner surfaces of the lower six ribs and their costal cartilages.
+- The lumbar part → attached to the lumbar vertebrae via the right and left crura, and to the arcuate ligaments.
 
 Three major structures pierce the diaphragm at three named openings:
-- The aortic opening (T12) - transmits the aorta, the thoracic duct and the azygos vein.
-- The oesophageal opening (T10) - transmits the oesophagus, the vagus nerves, and the oesophageal branches of the left gastric vessels.
-- The caval opening (T8) - transmits the inferior vena cava and the right phrenic nerve.
+- The aortic opening (T12) → transmits the aorta, the thoracic duct and the azygos vein.
+- The oesophageal opening (T10) → transmits the oesophagus, the vagus nerves, and the oesophageal branches of the left gastric vessels.
+- The caval opening (T8) → transmits the inferior vena cava and the right phrenic nerve.
 
 Crucial insight: the diaphragm is the single most important muscle in the thorax, and its anatomy explains a long list of clinical facts - the cervical origin of the phrenic nerve, the referred shoulder-tip pain of diaphragmatic irritation, the three openings and their vertebral levels (remember "I 8 ten EGGs at 10, and the aorta at 12"), and the fact that any paralysis of one half of the diaphragm (from phrenic nerve injury) causes the paralysed side to rise paradoxically during inspiration.`
     },
@@ -22361,9 +22361,9 @@ My Socratic question: the mediastinum looks like a single space in a diagram, bu
 The answer is that the mediastinum is divided into compartments, and each compartment contains a different set of structures - which is how a radiologist, seeing a mass on a chest X-ray, can narrow the diagnosis down to a handful of possibilities just by knowing which compartment the mass is in.
 
 The mediastinum is divided into superior and inferior parts by a plane passing from the sternal angle to the intervertebral disc between T4 and T5. The inferior part is further divided into:
-- Anterior mediastinum - in front of the heart. Contains the thymus (in children), fat, and lymph nodes. A mass here in a young adult is classically a thymoma or lymphoma.
-- Middle mediastinum - contains the heart, the pericardium, the ascending aorta, the pulmonary trunk, the superior and inferior vena cavae, the phrenic nerves, and the main bronchi. A mass here is usually cardiac, pericardial, or nodal.
-- Posterior mediastinum - behind the heart. Contains the descending thoracic aorta, the oesophagus, the thoracic duct, the azygos and hemiazygos veins, and the sympathetic trunks. A mass here is classically neurogenic or oesophageal.
+- Anterior mediastinum → in front of the heart. Contains the thymus (in children), fat, and lymph nodes. A mass here in a young adult is classically a thymoma or lymphoma.
+- Middle mediastinum → contains the heart, the pericardium, the ascending aorta, the pulmonary trunk, the superior and inferior vena cavae, the phrenic nerves, and the main bronchi. A mass here is usually cardiac, pericardial, or nodal.
+- Posterior mediastinum → behind the heart. Contains the descending thoracic aorta, the oesophagus, the thoracic duct, the azygos and hemiazygos veins, and the sympathetic trunks. A mass here is classically neurogenic or oesophageal.
 
 Crucial insight: the mediastinum is a diagnostic map. When a chest X-ray shows a widened mediastinum or a mediastinal mass, the compartment it sits in immediately narrows the differential diagnosis. The divisions are not academic - they are the framework of thoracic radiology and thoracic surgery, and every chest CT report is organised around them.`
     },
@@ -22391,11 +22391,11 @@ The answer is that the lymphatic drainage of the breast is dominated by one rout
 
 The lymphatic drainage of the breast has several routes, in order of clinical importance:
 
-- Axillary nodes (about 75 percent of lymph) - the dominant route. The lymph travels from the breast to the axillary nodes, which are divided into five groups: anterior (pectoral), posterior (subscapular), lateral (humeral), central, and apical. Almost all breast cancer surgery involves sampling or removing some of these nodes.
-- Internal mammary (parasternal) nodes (about 20 percent) - especially from the medial part of the breast and the deep parts of the gland. These are not clinically palpable but may be involved in medial tumours.
-- Supraclavicular nodes - involved in advanced disease.
-- Abdominal (subdiaphragmatic) nodes - rare, from the lower part of the breast.
-- The opposite breast and axilla - rare, via the superficial lymphatic plexus.
+- Axillary nodes (about 75 percent of lymph) → the dominant route. The lymph travels from the breast to the axillary nodes, which are divided into five groups: anterior (pectoral), posterior (subscapular), lateral (humeral), central, and apical. Almost all breast cancer surgery involves sampling or removing some of these nodes.
+- Internal mammary (parasternal) nodes (about 20 percent) → especially from the medial part of the breast and the deep parts of the gland. These are not clinically palpable but may be involved in medial tumours.
+- Supraclavicular nodes → involved in advanced disease.
+- Abdominal (subdiaphragmatic) nodes → rare, from the lower part of the breast.
+- The opposite breast and axilla → rare, via the superficial lymphatic plexus.
 
 The sentinel lymph node is the first node that lymph from the tumour drains to. A sentinel lymph node biopsy - injecting a dye or a radioactive tracer near the tumour and identifying the first node it reaches - has replaced routine axillary dissection for many patients, sparing them the long-term complication of lymphoedema.
 
@@ -22510,9 +22510,9 @@ The answer is distance. In a tiny organism, every cell is close enough to the ou
 So the body solves the distance problem with a pump and a set of pipes. The pump is the heart. The pipes are the blood vessels. The fluid is blood. Together they form the circulatory system, whose job is to move blood quickly to every tissue and back again.
 
 The circulatory system has three components:
-- The heart - a muscular pump with four chambers that drives blood around the body.
-- The blood vessels - arteries, capillaries and veins - the pipes that carry the blood.
-- The blood - the fluid itself, which carries oxygen, nutrients, hormones and waste.
+- The heart → a muscular pump with four chambers that drives blood around the body.
+- The blood vessels → arteries, capillaries and veins - the pipes that carry the blood.
+- The blood → the fluid itself, which carries oxygen, nutrients, hormones and waste.
 
 Crucial insight: the circulatory system exists to defeat distance. Diffusion can only work across fractions of a millimetre, and the body is nearly two metres tall - so a pump and a network of vessels are needed to keep every cell supplied. Every feature you will learn in this topic exists to serve that single purpose.`
     },
@@ -22525,10 +22525,10 @@ My Socratic question: the heart has four chambers. Why four, and not one big bag
 The answer is that blood must be pumped twice - once to the lungs, and once to the whole body. Those are two very different journeys, and they need two different pumps working in series. Each pump has two chambers: one to receive blood, and one to push it out.
 
 The four chambers:
-- Right atrium - receives deoxygenated blood from the body via the superior and inferior vena cavae.
-- Right ventricle - pumps deoxygenated blood to the lungs via the pulmonary trunk.
-- Left atrium - receives oxygenated blood from the lungs via the pulmonary veins.
-- Left ventricle - pumps oxygenated blood to the whole body via the aorta.
+- Right atrium → receives deoxygenated blood from the body via the superior and inferior vena cavae.
+- Right ventricle → pumps deoxygenated blood to the lungs via the pulmonary trunk.
+- Left atrium → receives oxygenated blood from the lungs via the pulmonary veins.
+- Left ventricle → pumps oxygenated blood to the whole body via the aorta.
 
 The left ventricle has the thickest muscular wall of all four chambers because it must push blood around the entire body, while the right ventricle only needs to push it a short distance to the lungs.
 
@@ -22545,12 +22545,12 @@ My Socratic question: a valve is essentially a one-way door. Why does the heart 
 The answer is that the heart has four natural places where blood could backflow, and each needs its own valve. They fall into two groups.
 
 The atrioventricular (AV) valves sit between the atria and the ventricles:
-- Tricuspid valve - between the right atrium and right ventricle. It has three cusps (flaps).
-- Mitral valve - between the left atrium and left ventricle. It has two cusps, and it is the only valve with two cusps.
+- Tricuspid valve → between the right atrium and right ventricle. It has three cusps (flaps).
+- Mitral valve → between the left atrium and left ventricle. It has two cusps, and it is the only valve with two cusps.
 
 The semilunar valves sit between the ventricles and the great arteries leaving the heart:
-- Pulmonary valve - between the right ventricle and the pulmonary trunk.
-- Aortic valve - between the left ventricle and the aorta.
+- Pulmonary valve → between the right ventricle and the pulmonary trunk.
+- Aortic valve → between the left ventricle and the aorta.
 
 The AV valves are anchored to the ventricular wall by strong tendinous cords (the chordae tendineae) attached to muscular pillars (the papillary muscles). When the ventricle contracts, the pressure would normally blow the AV valve cusps back up into the atrium - but the chordae tendineae and papillary muscles hold them shut, so blood can only go out through the semilunar valves.
 
@@ -22567,13 +22567,13 @@ My Socratic question: if a beating heart rubbed directly against the lungs and t
 The answer is friction damage - the same thing that would happen to a wheel if its bearings were gone. So the heart is enclosed in a protective sac called the pericardium.
 
 The pericardium has two layers:
-- The fibrous pericardium - a tough outer sac of dense connective tissue. It anchors the heart in place and prevents it from overfilling with blood.
-- The serous pericardium - a thinner, double-layered membrane inside the fibrous layer. Its outer layer (parietal) lines the fibrous pericardium, and its inner layer (visceral, also called the epicardium) sticks to the heart's surface. Between the two serous layers sits a thin film of pericardial fluid, which lubricates the surfaces so they slide smoothly with each beat.
+- The fibrous pericardium → a tough outer sac of dense connective tissue. It anchors the heart in place and prevents it from overfilling with blood.
+- The serous pericardium → a thinner, double-layered membrane inside the fibrous layer. Its outer layer (parietal) lines the fibrous pericardium, and its inner layer (visceral, also called the epicardium) sticks to the heart's surface. Between the two serous layers sits a thin film of pericardial fluid, which lubricates the surfaces so they slide smoothly with each beat.
 
 The wall of the heart itself has three layers:
-- Epicardium - the outer layer, the same as the visceral serous pericardium.
-- Myocardium - the thick muscular middle layer that does the actual pumping. Its thickness varies; it is thickest in the left ventricle.
-- Endocardium - the smooth inner lining that sits in contact with the blood. It is continuous with the lining of the blood vessels.
+- Epicardium → the outer layer, the same as the visceral serous pericardium.
+- Myocardium → the thick muscular middle layer that does the actual pumping. Its thickness varies; it is thickest in the left ventricle.
+- Endocardium → the smooth inner lining that sits in contact with the blood. It is continuous with the lining of the blood vessels.
 
 Crucial insight: the heart is protected at two levels - externally by the pericardium, and structurally by its own three-layered wall. The pericardial fluid prevents friction, the fibrous layer stops the heart from over-expanding, and the myocardium is thickest where the work is hardest. Every layer has a specific protective or mechanical job.`
     },
@@ -22587,8 +22587,8 @@ The answer is that the endocardium (the inner lining of the heart) is a sealed b
 
 So the heart has its own arteries - the coronary arteries - which arise from the very first part of the aorta, just above the aortic valve. As the aortic valve closes, blood fills the two small openings called the coronary ostia, and passes into:
 
-- The left coronary artery - which quickly divides into the left anterior descending (LAD) artery, running down the front of the heart, and the left circumflex artery, curving around the left side of the heart. Between them, they supply the left ventricle, the left atrium, and the interventricular septum.
-- The right coronary artery - which runs around the right side of the heart and supplies the right atrium and right ventricle, and, in most people, the sinoatrial node and the atrioventricular node.
+- The left coronary artery → which quickly divides into the left anterior descending (LAD) artery, running down the front of the heart, and the left circumflex artery, curving around the left side of the heart. Between them, they supply the left ventricle, the left atrium, and the interventricular septum.
+- The right coronary artery → which runs around the right side of the heart and supplies the right atrium and right ventricle, and, in most people, the sinoatrial node and the atrioventricular node.
 
 The blood then drains into the coronary sinus, a large vein on the back of the heart, which empties directly into the right atrium.
 
@@ -22622,8 +22622,8 @@ The answer is that blood must collect oxygen in the lungs before it can deliver 
 
 So there are two circuits in series:
 
-- The pulmonary circuit - the shorter, low-pressure circuit that takes deoxygenated blood from the right ventricle to the lungs via the pulmonary trunk, where it picks up oxygen and dumps carbon dioxide, then returns as oxygenated blood to the left atrium via the pulmonary veins.
-- The systemic circuit - the longer, high-pressure circuit that takes oxygenated blood from the left ventricle to every tissue in the body via the aorta, delivers oxygen and nutrients, picks up carbon dioxide and waste, and returns as deoxygenated blood to the right atrium via the superior and inferior vena cavae.
+- The pulmonary circuit → the shorter, low-pressure circuit that takes deoxygenated blood from the right ventricle to the lungs via the pulmonary trunk, where it picks up oxygen and dumps carbon dioxide, then returns as oxygenated blood to the left atrium via the pulmonary veins.
+- The systemic circuit → the longer, high-pressure circuit that takes oxygenated blood from the left ventricle to every tissue in the body via the aorta, delivers oxygen and nutrients, picks up carbon dioxide and waste, and returns as deoxygenated blood to the right atrium via the superior and inferior vena cavae.
 
 The two circuits share the same blood and the same heart. The right side of the heart serves the pulmonary circuit; the left side serves the systemic circuit.
 
@@ -22656,9 +22656,9 @@ My Socratic question: if the fetal lungs cannot deliver oxygen, how does the fet
 
 The answer is that the fetus has three special shunts - shortcuts that route blood around the lungs and liver.
 
-- The ductus venosus - a blood vessel that bypasses the liver, taking oxygenated blood from the umbilical vein directly to the inferior vena cava.
-- The foramen ovale - a hole between the right atrium and left atrium that allows oxygenated blood to skip the right ventricle and the lungs entirely.
-- The ductus arteriosus - a vessel connecting the pulmonary trunk to the aorta, letting blood bypass the lungs when it leaves the right ventricle.
+- The ductus venosus → a blood vessel that bypasses the liver, taking oxygenated blood from the umbilical vein directly to the inferior vena cava.
+- The foramen ovale → a hole between the right atrium and left atrium that allows oxygenated blood to skip the right ventricle and the lungs entirely.
+- The ductus arteriosus → a vessel connecting the pulmonary trunk to the aorta, letting blood bypass the lungs when it leaves the right ventricle.
 
 At the moment of birth, three things happen at once. The baby takes its first breath, the lungs expand, and pulmonary resistance drops dramatically. Blood rushes into the lungs, the pressure in the left atrium rises above the pressure in the right atrium, and the foramen ovale snaps shut. Rising oxygen levels cause the ductus arteriosus to constrict. The umbilical cord is cut, and the umbilical vessels and ductus venosus close with them.
 
@@ -22677,17 +22677,17 @@ My Socratic question: given that the heart is a pump, the vessels are pipes, and
 
 The answer is four, and each one maps onto a specific part of the anatomy.
 
-- Problems with the pump - heart failure, where the heart cannot pump enough blood; arrhythmias, where the conducting system misfires; and valve disease, where a valve leaks (regurgitation) or narrows (stenosis).
-- Problems with the pipes - atherosclerosis, where arteries narrow with fatty plaques; aneurysms, where a vessel wall weakens and bulges; and varicose veins, where valves fail and veins pool.
-- Problems with the blood supply to the heart itself - myocardial infarction (heart attack), where a coronary artery is blocked and heart muscle dies.
-- Problems with the circuits - congenital heart defects (patent ductus arteriosus, septal defects), pulmonary embolism, and portal hypertension.
+- Problems with the pump → heart failure, where the heart cannot pump enough blood; arrhythmias, where the conducting system misfires; and valve disease, where a valve leaks (regurgitation) or narrows (stenosis).
+- Problems with the pipes → atherosclerosis, where arteries narrow with fatty plaques; aneurysms, where a vessel wall weakens and bulges; and varicose veins, where valves fail and veins pool.
+- Problems with the blood supply to the heart itself → myocardial infarction (heart attack), where a coronary artery is blocked and heart muscle dies.
+- Problems with the circuits → congenital heart defects (patent ductus arteriosus, septal defects), pulmonary embolism, and portal hypertension.
 
 Doctors detect these problems through a set of standard techniques:
-- Auscultation - listening with a stethoscope for heart sounds and murmurs, which reflect valve function.
-- Electrocardiogram (ECG) - recording the heart's electrical activity to detect arrhythmias and infarction.
-- Echocardiography - ultrasound imaging of the heart's chambers, valves and motion.
-- Cardiac catheterisation and angiography - injecting dye into the coronary arteries to look for blockages.
-- Blood tests - measuring cardiac troponin, which rises when heart muscle is damaged.
+- Auscultation → listening with a stethoscope for heart sounds and murmurs, which reflect valve function.
+- Electrocardiogram (ECG) → recording the heart's electrical activity to detect arrhythmias and infarction.
+- Echocardiography → ultrasound imaging of the heart's chambers, valves and motion.
+- Cardiac catheterisation and angiography → injecting dye into the coronary arteries to look for blockages.
+- Blood tests → measuring cardiac troponin, which rises when heart muscle is damaged.
 
 Crucial insight: every clinical test in cardiology is a direct application of the anatomy you have just learned. An ECG is a picture of the conducting system; a murmur is the sound of a valve; a blocked coronary artery is the reason troponin rises. When you understand the anatomy, you understand the tests - and that is exactly why this topic is examined so heavily in every medical course.`
     },
@@ -22798,9 +22798,9 @@ My Socratic question: if the heart is the pump that pushes blood around the body
 The answer is that the heart is only half the story. The blood must be delivered - through large arteries, then smaller arteries, then arterioles, then microscopic capillaries, then venules, then veins, and finally back to the heart. This is the vascular tree. The cardiovascular system is the study of that whole network - how the vessels are built, how they behave, how the blood flows through them, and how the body adjusts that flow from moment to moment.
 
 The cardiovascular system has three functional parts:
-- The pump - the heart, which you studied in the last topic.
-- The distribution and collection network - arteries, capillaries and veins.
-- The control systems - the mechanisms that adjust vessel diameter, blood pressure and blood flow to match the body's needs at any given moment.
+- The pump → the heart, which you studied in the last topic.
+- The distribution and collection network → arteries, capillaries and veins.
+- The control systems → the mechanisms that adjust vessel diameter, blood pressure and blood flow to match the body's needs at any given moment.
 
 Crucial insight: the cardiovascular system is the whole transport network - the pump, the pipes and the controls that keep them working together. Every cell in your body depends on it, and every clinical problem in cardiology comes down to one of three things going wrong: the pump, the pipes or the controls. Understanding the vessels is therefore just as important as understanding the heart itself.`
     },
@@ -22814,9 +22814,9 @@ The answer is that the demands change. Blood leaves the heart at high pressure a
 
 So there are three vessel types:
 
-- Arteries - thick-walled, muscular and elastic tubes that carry blood away from the heart under high pressure. They branch into smaller and smaller vessels, eventually forming arterioles.
-- Capillaries - microscopic, thin-walled vessels, only one cell thick, where the actual exchange of gases, nutrients and waste takes place between blood and tissue.
-- Veins - thin-walled, floppy tubes that carry blood back to the heart at low pressure. They contain valves to prevent backflow and act as a reservoir of blood.
+- Arteries → thick-walled, muscular and elastic tubes that carry blood away from the heart under high pressure. They branch into smaller and smaller vessels, eventually forming arterioles.
+- Capillaries → microscopic, thin-walled vessels, only one cell thick, where the actual exchange of gases, nutrients and waste takes place between blood and tissue.
+- Veins → thin-walled, floppy tubes that carry blood back to the heart at low pressure. They contain valves to prevent backflow and act as a reservoir of blood.
 
 The progression from artery to arteriole to capillary to venule to vein is called the vascular tree, and it is a smooth transition from high pressure to low, from thick walls to thin, from fast flow to slow.
 
@@ -22832,9 +22832,9 @@ The answer is that they do three different jobs. Some arteries must withstand th
 
 The three types:
 
-- Elastic arteries - the largest arteries, closest to the heart. Their walls are packed with elastic fibres, which stretch when the heart pumps and recoil when it relaxes. This is what smooths out the pulse into a continuous flow. Examples: the aorta, the pulmonary trunk, the common carotid arteries.
-- Muscular arteries - medium-sized vessels that distribute blood to specific organs. Their walls have a thick middle layer of smooth muscle, which allows them to partially control blood flow to their target organ. Examples: the brachial artery, the femoral artery, the coronary arteries.
-- Arterioles - the smallest arteries, immediately before capillaries. They have thin walls but a rich supply of smooth muscle, allowing them to change diameter constantly. They are the main resistance vessels of the body, and they are the primary site where blood flow is controlled.
+- Elastic arteries → the largest arteries, closest to the heart. Their walls are packed with elastic fibres, which stretch when the heart pumps and recoil when it relaxes. This is what smooths out the pulse into a continuous flow. Examples: the aorta, the pulmonary trunk, the common carotid arteries.
+- Muscular arteries → medium-sized vessels that distribute blood to specific organs. Their walls have a thick middle layer of smooth muscle, which allows them to partially control blood flow to their target organ. Examples: the brachial artery, the femoral artery, the coronary arteries.
+- Arterioles → the smallest arteries, immediately before capillaries. They have thin walls but a rich supply of smooth muscle, allowing them to change diameter constantly. They are the main resistance vessels of the body, and they are the primary site where blood flow is controlled.
 
 Crucial insight: the three sizes of artery reflect three roles - conductance (elastic), distribution (muscular) and resistance (arterioles). The arterioles are the most important for day-to-day control, because they are where the body decides, second by second, which tissues get blood and how much.`
     },
@@ -22848,9 +22848,9 @@ The answer is that by the time blood reaches a capillary, the pressure has alrea
 
 The three types of capillary reflect three different exchange needs:
 
-- Continuous capillaries - the endothelial cells are joined by tight junctions, allowing only small molecules through. Found in muscle, skin, connective tissue, and the central nervous system (where they form part of the blood-brain barrier).
-- Fenestrated capillaries - have small pores called fenestrations that let larger molecules through. Found in the kidney, intestines and endocrine glands, where rapid exchange is needed.
-- Sinusoidal capillaries - have large gaps between the cells, allowing even whole cells and large proteins to pass through. Found in the liver, spleen and bone marrow.
+- Continuous capillaries → the endothelial cells are joined by tight junctions, allowing only small molecules through. Found in muscle, skin, connective tissue, and the central nervous system (where they form part of the blood-brain barrier).
+- Fenestrated capillaries → have small pores called fenestrations that let larger molecules through. Found in the kidney, intestines and endocrine glands, where rapid exchange is needed.
+- Sinusoidal capillaries → have large gaps between the cells, allowing even whole cells and large proteins to pass through. Found in the liver, spleen and bone marrow.
 
 Crucial insight: capillaries are the "business end" of the cardiovascular system. Every other vessel exists to get blood to and from them, and every other vessel is designed with the pressures and speeds that capillaries cannot tolerate. Thinness is the capillary's design feature, not its weakness.`
     },
@@ -22862,10 +22862,10 @@ My Socratic question: blood in the veins of the leg must go up against gravity, 
 
 The answer is a combination of four mechanisms working together.
 
-- Valves - veins contain one-way valves, formed from folds of the inner lining. These prevent blood from falling back down when the vein is squeezed. Valves are most numerous in the leg veins, exactly where the gravitational problem is greatest.
-- The skeletal muscle pump - when you walk, the muscles of your legs contract and squeeze the deep veins running between them. This squeezes blood upward, and the valves stop it falling back. This is why walking helps circulation and standing still does not.
-- The respiratory pump - when you breathe in, the pressure in your chest falls relative to your abdomen. This pressure difference pulls blood from the abdominal veins into the thoracic veins, helping it return to the heart.
-- The heart's suction - when the ventricles relax, the pressure in the atria falls, drawing blood into the heart from the great veins.
+- Valves → veins contain one-way valves, formed from folds of the inner lining. These prevent blood from falling back down when the vein is squeezed. Valves are most numerous in the leg veins, exactly where the gravitational problem is greatest.
+- The skeletal muscle pump → when you walk, the muscles of your legs contract and squeeze the deep veins running between them. This squeezes blood upward, and the valves stop it falling back. This is why walking helps circulation and standing still does not.
+- The respiratory pump → when you breathe in, the pressure in your chest falls relative to your abdomen. This pressure difference pulls blood from the abdominal veins into the thoracic veins, helping it return to the heart.
+- The heart's suction → when the ventricles relax, the pressure in the atria falls, drawing blood into the heart from the great veins.
 
 The veins also act as a reservoir. Because they are floppy and compliant, they can hold about 70 percent of the body's total blood volume at any moment. When the body needs more blood in the arteries - during exercise, or after haemorrhage - the sympathetic nervous system constricts the veins and shifts that stored blood into the active circulation.
 
@@ -22880,9 +22880,9 @@ My Socratic question: blood pressure is written as two numbers - 120/80. What ar
 The answer is that blood pressure is the force blood exerts on the walls of the arteries, expressed in millimetres of mercury. The higher number, called the systolic pressure, is the peak pressure when the heart contracts. The lower number, called the diastolic pressure, is the pressure when the heart relaxes. So 120/80 means a systolic of 120 mmHg and a diastolic of 80 mmHg.
 
 Blood pressure is generated by three factors working together:
-- Cardiac output - how much blood the heart pumps out each minute. This depends on heart rate and stroke volume.
-- Peripheral resistance - how much the arterioles resist the flow of blood. Wider arterioles mean less resistance and lower pressure; narrower arterioles mean more resistance and higher pressure.
-- Blood volume - how much blood there is in the circulation. More blood means higher pressure.
+- Cardiac output → how much blood the heart pumps out each minute. This depends on heart rate and stroke volume.
+- Peripheral resistance → how much the arterioles resist the flow of blood. Wider arterioles mean less resistance and lower pressure; narrower arterioles mean more resistance and higher pressure.
+- Blood volume → how much blood there is in the circulation. More blood means higher pressure.
 
 The formula is simple: blood pressure = cardiac output × peripheral resistance.
 
@@ -22940,9 +22940,9 @@ The answer is that the lymphatic system returns it to the blood. Without lymphat
 
 The lymphatic system has three components:
 
-- Lymphatic capillaries - blind-ended tubes that start in the tissues and collect the excess fluid. They are more permeable than blood capillaries, so they can also pick up large molecules, cellular debris and even bacteria that blood capillaries cannot.
-- Lymphatic vessels and nodes - the capillaries drain into larger lymphatic vessels, which carry the lymph through lymph nodes. The nodes filter the lymph, removing pathogens and debris, and they are also where immune cells meet foreign antigens and mount a response.
-- The thoracic duct and right lymphatic duct - the two great trunks that empty lymph back into the venous system at the base of the neck, at the left and right subclavian veins respectively.
+- Lymphatic capillaries → blind-ended tubes that start in the tissues and collect the excess fluid. They are more permeable than blood capillaries, so they can also pick up large molecules, cellular debris and even bacteria that blood capillaries cannot.
+- Lymphatic vessels and nodes → the capillaries drain into larger lymphatic vessels, which carry the lymph through lymph nodes. The nodes filter the lymph, removing pathogens and debris, and they are also where immune cells meet foreign antigens and mount a response.
+- The thoracic duct and right lymphatic duct → the two great trunks that empty lymph back into the venous system at the base of the neck, at the left and right subclavian veins respectively.
 
 The lymphatic system also has two other important jobs:
 - It absorbs fats from the small intestine. Dietary fats are packaged into chylomicrons that are too large for blood capillaries, so they enter the lacteals (specialised lymphatic vessels in the villi) and are carried by the lymph to the thoracic duct before entering the blood.
@@ -22958,18 +22958,18 @@ My Socratic question: the cardiovascular system has a pump, pipes and controls. 
 
 The answer is that each part can fail in its own characteristic way, and each failure produces a recognisable clinical picture.
 
-- Failure of the pipes - atherosclerosis is the classic. Fatty plaques build up inside the arteries, narrowing them and stiffening their walls. When a plaque ruptures, a clot forms on top, blocking the vessel entirely. In the heart, this is a myocardial infarction. In the brain, a stroke. In the legs, peripheral arterial disease, which causes pain on walking that stops at rest (intermittent claudication). Treatment includes lifestyle changes, statins, blood thinners and surgical bypass.
-- Failure of venous return - varicose veins from valve incompetence, and deep vein thrombosis (DVT) when a clot forms in a deep vein of the leg. A DVT is dangerous because a piece of the clot can break off and travel to the lungs, causing a pulmonary embolism. This is why immobile patients are given blood thinners.
-- Failure of blood pressure control - hypertension (high blood pressure) is the most common cardiovascular disease worldwide, and it silently damages the vessels, heart, kidneys and brain over years. Hypertension causes strokes, heart attacks, kidney failure and blindness. Hypotension (low blood pressure) causes fainting and, in severe cases, shock.
-- Failure of the microcirculation - oedema when capillary exchange is unbalanced, as in heart failure, liver disease or kidney disease.
-- Failure of the lymphatics - lymphoedema when lymph cannot drain, and increased infection risk because the lymph nodes cannot filter pathogens.
+- Failure of the pipes → atherosclerosis is the classic. Fatty plaques build up inside the arteries, narrowing them and stiffening their walls. When a plaque ruptures, a clot forms on top, blocking the vessel entirely. In the heart, this is a myocardial infarction. In the brain, a stroke. In the legs, peripheral arterial disease, which causes pain on walking that stops at rest (intermittent claudication). Treatment includes lifestyle changes, statins, blood thinners and surgical bypass.
+- Failure of venous return → varicose veins from valve incompetence, and deep vein thrombosis (DVT) when a clot forms in a deep vein of the leg. A DVT is dangerous because a piece of the clot can break off and travel to the lungs, causing a pulmonary embolism. This is why immobile patients are given blood thinners.
+- Failure of blood pressure control → hypertension (high blood pressure) is the most common cardiovascular disease worldwide, and it silently damages the vessels, heart, kidneys and brain over years. Hypertension causes strokes, heart attacks, kidney failure and blindness. Hypotension (low blood pressure) causes fainting and, in severe cases, shock.
+- Failure of the microcirculation → oedema when capillary exchange is unbalanced, as in heart failure, liver disease or kidney disease.
+- Failure of the lymphatics → lymphoedema when lymph cannot drain, and increased infection risk because the lymph nodes cannot filter pathogens.
 
 Doctors detect these problems through standard tools:
-- Physical examination - feeling pulses, listening to the heart and lungs, and checking for oedema.
-- Blood pressure measurement - to detect hypertension.
-- Blood tests - cholesterol, glucose, D-dimer (for clots), BNP (for heart failure).
-- Imaging - Doppler ultrasound for DVT and peripheral arterial disease; CT angiography for the coronary arteries.
-- Invasive procedures - cardiac catheterisation, angioplasty and stenting for blocked coronary arteries.
+- Physical examination → feeling pulses, listening to the heart and lungs, and checking for oedema.
+- Blood pressure measurement → to detect hypertension.
+- Blood tests → cholesterol, glucose, D-dimer (for clots), BNP (for heart failure).
+- Imaging → Doppler ultrasound for DVT and peripheral arterial disease; CT angiography for the coronary arteries.
+- Invasive procedures → cardiac catheterisation, angioplasty and stenting for blocked coronary arteries.
 
 Crucial insight: every clinical problem in the cardiovascular system maps onto a specific part of the anatomy you have just learned. Atherosclerosis is a disease of arteries; varicose veins are a disease of venous valves; lymphoedema is a disease of the lymphatic system. When you understand the anatomy, you understand the disease, and you understand the treatment.`
     },
@@ -23080,9 +23080,9 @@ My Socratic question: if the cardiovascular system is the delivery network, what
 The answer is the respiratory system. It brings air from outside the body into close contact with the blood, so that oxygen can diffuse into the blood and carbon dioxide can diffuse out. The heart then pumps that oxygenated blood around the body. Without the respiratory system, the cardiovascular system would have nothing to deliver.
 
 The respiratory system has three functional parts:
-- The conducting portion - the airways that carry air from outside to the deepest parts of the lung. Nose, pharynx, larynx, trachea, bronchi, bronchioles.
-- The respiratory portion - the alveoli, where gas exchange actually takes place.
-- The pump - the muscles of breathing (mainly the diaphragm and intercostals) plus the pleural membranes and chest wall that make the lungs inflate and deflate.
+- The conducting portion → the airways that carry air from outside to the deepest parts of the lung. Nose, pharynx, larynx, trachea, bronchi, bronchioles.
+- The respiratory portion → the alveoli, where gas exchange actually takes place.
+- The pump → the muscles of breathing (mainly the diaphragm and intercostals) plus the pleural membranes and chest wall that make the lungs inflate and deflate.
 
 Crucial insight: the respiratory system is the cardiovascular system's supplier. Its entire structure exists to deliver air to a surface thin enough and large enough to allow oxygen to pass into the blood. Every part of the anatomy you are about to learn is designed for that single purpose.`
     },
@@ -23115,14 +23115,14 @@ The answer is surface area. The job of the lungs is to bring air into contact wi
 
 The lower respiratory tract, in order:
 
-- Trachea - the windpipe. C-shaped cartilage rings keep it open at the front; the gap at the back is filled by the trachealis muscle, which can narrow the trachea slightly.
-- Main (primary) bronchi - one for each lung, formed at the carina (the ridge at the split).
-- Lobar (secondary) bronchi - one for each lobe of the lung. Three on the right, two on the left.
-- Segmental (tertiary) bronchi - one for each bronchopulmonary segment (ten on each side).
-- Bronchioles - small airways with no cartilage in their walls, only smooth muscle.
-- Terminal bronchioles - the smallest conducting airways, no longer part of gas exchange.
-- Respiratory bronchioles - the first airways with a few alveoli in their walls, marking the start of gas exchange.
-- Alveolar ducts and alveolar sacs - the final chambers, whose walls are almost entirely alveoli.
+- Trachea → the windpipe. C-shaped cartilage rings keep it open at the front; the gap at the back is filled by the trachealis muscle, which can narrow the trachea slightly.
+- Main (primary) bronchi → one for each lung, formed at the carina (the ridge at the split).
+- Lobar (secondary) bronchi → one for each lobe of the lung. Three on the right, two on the left.
+- Segmental (tertiary) bronchi → one for each bronchopulmonary segment (ten on each side).
+- Bronchioles → small airways with no cartilage in their walls, only smooth muscle.
+- Terminal bronchioles → the smallest conducting airways, no longer part of gas exchange.
+- Respiratory bronchioles → the first airways with a few alveoli in their walls, marking the start of gas exchange.
+- Alveolar ducts and alveolar sacs → the final chambers, whose walls are almost entirely alveoli.
 
 The change in wall structure matters. As you go down the tree, cartilage disappears and smooth muscle increases. This is why the smallest airways (the bronchioles) are the ones that can narrow dangerously in asthma - they are the ones with the most muscle and no cartilage to keep them open.
 
@@ -23162,8 +23162,8 @@ My Socratic question: the lungs change shape with every breath and slide against
 The answer is the pleura - a thin, double-layered membrane that wraps both the lungs and the inside of the chest wall.
 
 The pleura has two layers:
-- The visceral pleura - stuck tightly to the outer surface of the lung.
-- The parietal pleura - lining the inside of the chest wall, the diaphragm, and the mediastinum.
+- The visceral pleura → stuck tightly to the outer surface of the lung.
+- The parietal pleura → lining the inside of the chest wall, the diaphragm, and the mediastinum.
 
 Between the two layers is a thin film of pleural fluid. The fluid does two things. First, it lubricates the surfaces so they slide smoothly with every breath, without friction. Second, it holds the two layers together by surface tension, so the lungs follow the movement of the chest wall as it expands.
 
@@ -23180,13 +23180,13 @@ My Socratic question: oxygen must move from the air inside an alveolus into the 
 The answer is the blood-air barrier, a three-layer structure less than one micrometre thick - about one fiftieth of the width of a human hair.
 
 The three layers are:
-- The alveolar epithelium - a single layer of flat cells (type I pneumocytes) whose cytoplasm is so thin it is barely visible under a microscope. They cover about 95% of the alveolar surface.
-- The fused basement membrane - in most of the body the epithelial and endothelial cells each have their own basement membrane, but at the alveolus they fuse together into a single thin sheet.
-- The capillary endothelium - the cells lining the capillary.
+- The alveolar epithelium → a single layer of flat cells (type I pneumocytes) whose cytoplasm is so thin it is barely visible under a microscope. They cover about 95% of the alveolar surface.
+- The fused basement membrane → in most of the body the epithelial and endothelial cells each have their own basement membrane, but at the alveolus they fuse together into a single thin sheet.
+- The capillary endothelium → the cells lining the capillary.
 
 There are also type II pneumocytes, which cover only about 5% of the alveolar surface but do three crucial jobs:
-- They secrete surfactant - a mixture of lipids and proteins that lowers surface tension inside the alveolus and prevents it from collapsing at the end of each breath.
-- They act as stem cells - they can divide to replace damaged type I cells.
+- They secrete surfactant → a mixture of lipids and proteins that lowers surface tension inside the alveolus and prevents it from collapsing at the end of each breath.
+- They act as stem cells → they can divide to replace damaged type I cells.
 - They help regulate fluid movement across the alveolar wall.
 
 And there are alveolar macrophages - large wandering immune cells that patrol the air spaces, engulfing bacteria, dust and debris that made it past the upper defences.
@@ -23218,16 +23218,16 @@ My Socratic question: if you had to describe a person's lung function with just 
 The answer is that there are four key volumes and four key capacities.
 
 The volumes:
-- Tidal volume (TV) - the amount of air moved in or out during a normal, quiet breath. About 500 mL.
-- Inspiratory reserve volume (IRV) - the extra air you can breathe in after a normal breath in. About 3,000 mL.
-- Expiratory reserve volume (ERV) - the extra air you can breathe out after a normal breath out. About 1,100 mL.
-- Residual volume (RV) - the air left in the lungs after the strongest possible breath out. About 1,200 mL, and it cannot be voluntarily expelled.
+- Tidal volume (TV) → the amount of air moved in or out during a normal, quiet breath. About 500 mL.
+- Inspiratory reserve volume (IRV) → the extra air you can breathe in after a normal breath in. About 3,000 mL.
+- Expiratory reserve volume (ERV) → the extra air you can breathe out after a normal breath out. About 1,100 mL.
+- Residual volume (RV) → the air left in the lungs after the strongest possible breath out. About 1,200 mL, and it cannot be voluntarily expelled.
 
 The capacities are combinations of volumes:
-- Vital capacity (VC) - the maximum air a person can breathe out after the deepest breath in. VC = TV + IRV + ERV.
-- Inspiratory capacity (IC) - the maximum air a person can breathe in after a normal breath out. IC = TV + IRV.
-- Functional residual capacity (FRC) - the air left in the lungs after a normal breath out. FRC = ERV + RV.
-- Total lung capacity (TLC) - the total air the lungs can hold. TLC = VC + RV.
+- Vital capacity (VC) → the maximum air a person can breathe out after the deepest breath in. VC = TV + IRV + ERV.
+- Inspiratory capacity (IC) → the maximum air a person can breathe in after a normal breath out. IC = TV + IRV.
+- Functional residual capacity (FRC) → the air left in the lungs after a normal breath out. FRC = ERV + RV.
+- Total lung capacity (TLC) → the total air the lungs can hold. TLC = VC + RV.
 
 Spirometry measures TV, IRV, ERV and VC directly. RV and TLC cannot be measured with a simple spirometer and require other methods.
 
@@ -23257,20 +23257,20 @@ My Socratic question: the respiratory system has many parts. If something goes w
 
 The answer is that each part of the respiratory system has its own characteristic diseases, and each produces its own pattern of symptoms and signs.
 
-- Diseases of the upper airway - the common cold, sinusitis, pharyngitis and laryngitis. Symptoms include sore throat, nasal congestion and hoarseness.
-- Diseases of the bronchi and bronchioles - asthma (reversible airway narrowing from smooth muscle spasm), chronic bronchitis (chronic mucus production with a productive cough for at least three months of two consecutive years), and bronchiectasis (permanent dilation of the bronchi from repeated infection).
-- Diseases of the alveoli - pneumonia (infection of the alveolar spaces), emphysema (destruction of alveolar walls, reducing surface area), and pulmonary oedema (fluid in the alveoli from heart failure).
-- Diseases of the pleura - pleurisy (inflammation causing sharp pain on breathing), pneumothorax (air in the pleural cavity causing collapse), pleural effusion (fluid in the pleural cavity).
-- Diseases of the pulmonary circulation - pulmonary embolism (a clot blocking a pulmonary artery), pulmonary hypertension (high pressure in the pulmonary arteries).
+- Diseases of the upper airway → the common cold, sinusitis, pharyngitis and laryngitis. Symptoms include sore throat, nasal congestion and hoarseness.
+- Diseases of the bronchi and bronchioles → asthma (reversible airway narrowing from smooth muscle spasm), chronic bronchitis (chronic mucus production with a productive cough for at least three months of two consecutive years), and bronchiectasis (permanent dilation of the bronchi from repeated infection).
+- Diseases of the alveoli → pneumonia (infection of the alveolar spaces), emphysema (destruction of alveolar walls, reducing surface area), and pulmonary oedema (fluid in the alveoli from heart failure).
+- Diseases of the pleura → pleurisy (inflammation causing sharp pain on breathing), pneumothorax (air in the pleural cavity causing collapse), pleural effusion (fluid in the pleural cavity).
+- Diseases of the pulmonary circulation → pulmonary embolism (a clot blocking a pulmonary artery), pulmonary hypertension (high pressure in the pulmonary arteries).
 
 Doctors investigate respiratory problems through:
-- Physical examination - listening to breath sounds, percussing the chest, and checking for clubbing of the fingers.
-- Pulse oximetry - a non-invasive way of measuring how much oxygen is in the blood.
-- Spirometry - to measure lung volumes and airflow.
-- Chest X-ray - the first-line imaging study for most lung conditions.
-- CT scan - for more detailed imaging.
-- Arterial blood gases - to measure oxygen and carbon dioxide in the blood directly.
-- Sputum culture and cytology - to identify infections and look for cancer cells.
+- Physical examination → listening to breath sounds, percussing the chest, and checking for clubbing of the fingers.
+- Pulse oximetry → a non-invasive way of measuring how much oxygen is in the blood.
+- Spirometry → to measure lung volumes and airflow.
+- Chest X-ray → the first-line imaging study for most lung conditions.
+- CT scan → for more detailed imaging.
+- Arterial blood gases → to measure oxygen and carbon dioxide in the blood directly.
+- Sputum culture and cytology → to identify infections and look for cancer cells.
 
 Crucial insight: each part of the respiratory system has its own signature disease. Asthma is a disease of the bronchioles; pneumonia is a disease of the alveoli; pleurisy is a disease of the pleura. When you know the anatomy, the clinical picture becomes a map, and the map leads to the diagnosis. This is exactly why the anatomy of the respiratory system is examined so heavily in every medical course.`
     },
@@ -23381,8 +23381,8 @@ My Socratic question: your body cannot absorb a steak. It cannot absorb a grain 
 The answer is that food must be broken down - mechanically and chemically - into molecules small enough to cross the wall of the gut and enter the blood. A steak is a lump of protein; your cells need amino acids. Bread is starch; your cells need glucose. The digestive system's job is to convert the food you eat into the molecules your body can actually use.
 
 The digestive system has two parts:
-- The gastrointestinal (GI) tract - the continuous tube itself, from mouth to anus. It includes the mouth, pharynx, oesophagus, stomach, small intestine, large intestine, rectum and anal canal.
-- The accessory organs - organs that lie outside the tube but contribute to digestion: the salivary glands, liver, gallbladder and pancreas.
+- The gastrointestinal (GI) tract → the continuous tube itself, from mouth to anus. It includes the mouth, pharynx, oesophagus, stomach, small intestine, large intestine, rectum and anal canal.
+- The accessory organs → organs that lie outside the tube but contribute to digestion: the salivary glands, liver, gallbladder and pancreas.
 
 Crucial insight: the digestive system is the body's disassembly line. Its job is not to absorb food - it is to break food down so that absorption can happen. Every structure you will learn in this topic exists to serve that single process: break it down, move it along, absorb it, and get rid of what is left.`
     },
@@ -23413,9 +23413,9 @@ My Socratic question: the pharynx is a shared passage for food and air. So how d
 The answer is that swallowing is an ordered reflex that seals off the airway before food passes.
 
 Swallowing has three phases:
-- The oral (voluntary) phase - you consciously push the bolus to the back of the mouth with your tongue. This is the only part of swallowing you control.
-- The pharyngeal (involuntary) phase - the soft palate rises to seal off the nasopharynx, the epiglottis flips down to cover the laryngeal opening, and the pharyngeal constrictor muscles squeeze the bolus downwards into the oesophagus. Breathing is briefly paused.
-- The oesophageal (involuntary) phase - the bolus is carried down the oesophagus by peristalsis, a wave of muscular contraction that pushes the food ahead of it.
+- The oral (voluntary) phase → you consciously push the bolus to the back of the mouth with your tongue. This is the only part of swallowing you control.
+- The pharyngeal (involuntary) phase → the soft palate rises to seal off the nasopharynx, the epiglottis flips down to cover the laryngeal opening, and the pharyngeal constrictor muscles squeeze the bolus downwards into the oesophagus. Breathing is briefly paused.
+- The oesophageal (involuntary) phase → the bolus is carried down the oesophagus by peristalsis, a wave of muscular contraction that pushes the food ahead of it.
 
 The oesophagus itself has two muscle layers - an inner circular and an outer longitudinal layer - that work together to produce peristalsis. It is lined by stratified squamous epithelium, which resists abrasion from swallowed food. There is no digestion in the oesophagus; its only job is transport.
 
@@ -23436,10 +23436,10 @@ The stomach has four regions: the cardia (around the oesophageal opening), the f
 Its wall has three muscle layers rather than two - inner oblique, middle circular, outer longitudinal - which allows it to churn in every direction, mixing food with gastric juice to form a semi-liquid paste called chyme.
 
 The stomach lining contains gastric glands with several cell types:
-- Parietal cells - secrete hydrochloric acid, which kills bacteria, denatures proteins and activates pepsinogen. They also secrete intrinsic factor, essential for absorbing vitamin B12 in the ileum.
-- Chief cells - secrete pepsinogen, the inactive precursor of pepsin, which digests protein.
-- G cells - secrete gastrin, a hormone that stimulates acid secretion.
-- Mucus-secreting cells - produce a thick alkaline mucus layer that coats the stomach lining and protects it from the acid.
+- Parietal cells → secrete hydrochloric acid, which kills bacteria, denatures proteins and activates pepsinogen. They also secrete intrinsic factor, essential for absorbing vitamin B12 in the ileum.
+- Chief cells → secrete pepsinogen, the inactive precursor of pepsin, which digests protein.
+- G cells → secrete gastrin, a hormone that stimulates acid secretion.
+- Mucus-secreting cells → produce a thick alkaline mucus layer that coats the stomach lining and protects it from the acid.
 
 The stomach protects itself with the mucus layer and by releasing acid and enzymes only when needed.
 
@@ -23454,9 +23454,9 @@ My Socratic question: the small intestine is a tube - so how does it absorb so m
 The answer is that the inside of the small intestine is not smooth. It has three levels of folding that together increase its surface area about six hundred times.
 
 The three levels are:
-- The plicae circulares - the macroscopic folds visible to the naked eye, which spiral around the inner surface and slow the food down.
-- The villi - finger-like projections of the lining, each containing a network of capillaries and a lymphatic vessel called a lacteal. Sugars and amino acids enter the capillaries; fats enter the lacteals.
-- The microvilli - tiny projections on the surface of each absorptive cell, forming a brush border that dramatically increases the surface area further and carries the digestive enzymes.
+- The plicae circulares → the macroscopic folds visible to the naked eye, which spiral around the inner surface and slow the food down.
+- The villi → finger-like projections of the lining, each containing a network of capillaries and a lymphatic vessel called a lacteal. Sugars and amino acids enter the capillaries; fats enter the lacteals.
+- The microvilli → tiny projections on the surface of each absorptive cell, forming a brush border that dramatically increases the surface area further and carries the digestive enzymes.
 
 Each part of the small intestine has a different role. The duodenum is the shortest part, C-shaped, and receives bile from the liver and pancreatic juice from the pancreas through a shared opening. It is where most chemical digestion finishes. The jejunum is the middle section and the main site of absorption of nutrients. The ileum is the final section, where vitamin B12, bile salts and any remaining nutrients are absorbed.
 
@@ -23473,10 +23473,10 @@ My Socratic question: if the small intestine has already absorbed the nutrients,
 The answer is water and electrolytes - and a large amount of it. Roughly 1.5 litres of fluid enters the large intestine every day, and it reclaims almost all of it, leaving about 100 millilitres to be lost in the faeces. If this reabsorption fails, the result is diarrhoea.
 
 The large intestine has four regions:
-- The caecum - a blind pouch at the beginning, in the lower right abdomen, with the appendix attached to it.
-- The colon - divided into ascending, transverse, descending and sigmoid parts, named for their direction of travel around the abdomen.
-- The rectum - a straight section in the pelvis that stores faeces before defecation.
-- The anal canal - the final few centimetres, guarded by two sphincters: an internal anal sphincter of smooth muscle (involuntary) and an external anal sphincter of skeletal muscle (voluntary).
+- The caecum → a blind pouch at the beginning, in the lower right abdomen, with the appendix attached to it.
+- The colon → divided into ascending, transverse, descending and sigmoid parts, named for their direction of travel around the abdomen.
+- The rectum → a straight section in the pelvis that stores faeces before defecation.
+- The anal canal → the final few centimetres, guarded by two sphincters: an internal anal sphincter of smooth muscle (involuntary) and an external anal sphincter of skeletal muscle (voluntary).
 
 The colon's wall has three distinctive features: the taeniae coli (three bands of longitudinal muscle), haustra (sacculations between the bands), and appendices epiploicae (small fatty tags). It has no villi - only crypts - because it does not need to absorb nutrients.
 
@@ -23493,10 +23493,10 @@ My Socratic question: the liver is not part of the digestive tube itself - it si
 The answer is that the liver is the body's metabolic processing plant. Everything absorbed from the gut goes to the liver first, through the portal vein, before it reaches the rest of the body. This is called the first-pass effect, and it is why the liver is one of the most important organs in digestion.
 
 The liver's main functions:
-- It processes nutrients absorbed from the gut - storing glucose as glycogen, converting amino acids, and packaging fats into lipoproteins for transport.
-- It detoxifies harmful substances - drugs, alcohol, and metabolic waste products.
+- It processes nutrients absorbed from the gut → storing glucose as glycogen, converting amino acids, and packaging fats into lipoproteins for transport.
+- It detoxifies harmful substances → drugs, alcohol, and metabolic waste products.
 - It produces bile, which emulsifies fats in the small intestine.
-- It synthesises plasma proteins - albumin, clotting factors, and transport proteins.
+- It synthesises plasma proteins → albumin, clotting factors, and transport proteins.
 - It stores vitamins (A, D, B12) and iron.
 - It destroys old red blood cells and recycles their components.
 - It participates in immune defence through Kupffer cells, which engulf bacteria and debris from the portal blood.
@@ -23537,7 +23537,7 @@ The answer is that the pancreas is built to keep its enzymes inactive until they
 
 The exocrine tissue is arranged in acini - clusters of cells that secrete enzyme precursors into a duct system. The enzymes are secreted as inactive zymogens, not as active enzymes. They are only activated when they reach the duodenum:
 - Trypsinogen is activated by enterokinase, an enzyme on the duodenal brush border, to form trypsin.
-- Trypsin then activates the other zymogens - chymotrypsinogen, proelastase and procarboxypeptidase.
+- Trypsin then activates the other zymogens → chymotrypsinogen, proelastase and procarboxypeptidase.
 
 The pancreas also secretes bicarbonate, which neutralises the acid from the stomach and creates the alkaline environment the pancreatic enzymes need.
 
@@ -23553,13 +23553,13 @@ My Socratic question: the digestive system is one continuous tube with several a
 
 The answer is that each part of the digestive system has its own characteristic diseases, and each produces its own pattern of symptoms and signs.
 
-- Diseases of the mouth and oesophagus - dental caries, oral cancer, gastro-oesophageal reflux disease (GORD), oesophageal varices, achalasia, oesophageal cancer. Symptoms: heartburn, difficulty swallowing, regurgitation.
-- Diseases of the stomach and duodenum - gastritis, peptic ulcer disease (often caused by Helicobacter pylori), gastric cancer, pyloric stenosis. Symptoms: epigastric pain, nausea, vomiting, weight loss.
-- Diseases of the small intestine - coeliac disease, Crohn's disease, small bowel obstruction, malabsorption. Symptoms: diarrhoea, bloating, weight loss, anaemia.
-- Diseases of the large intestine - colon cancer, ulcerative colitis, diverticulitis, appendicitis, irritable bowel syndrome. Symptoms: change in bowel habit, rectal bleeding, abdominal pain, weight loss.
-- Diseases of the liver - hepatitis, cirrhosis, fatty liver disease, liver cancer. Symptoms: jaundice, fatigue, abdominal swelling (ascites), easy bruising.
-- Diseases of the biliary tree - gallstones, cholecystitis, cholangitis, bile duct obstruction. Symptoms: right upper quadrant pain (often after fatty meals), jaundice, fever.
-- Diseases of the pancreas - acute and chronic pancreatitis, pancreatic cancer. Symptoms: severe epigastric pain radiating to the back, weight loss, jaundice.
+- Diseases of the mouth and oesophagus → dental caries, oral cancer, gastro-oesophageal reflux disease (GORD), oesophageal varices, achalasia, oesophageal cancer. Symptoms: heartburn, difficulty swallowing, regurgitation.
+- Diseases of the stomach and duodenum → gastritis, peptic ulcer disease (often caused by Helicobacter pylori), gastric cancer, pyloric stenosis. Symptoms: epigastric pain, nausea, vomiting, weight loss.
+- Diseases of the small intestine → coeliac disease, Crohn's disease, small bowel obstruction, malabsorption. Symptoms: diarrhoea, bloating, weight loss, anaemia.
+- Diseases of the large intestine → colon cancer, ulcerative colitis, diverticulitis, appendicitis, irritable bowel syndrome. Symptoms: change in bowel habit, rectal bleeding, abdominal pain, weight loss.
+- Diseases of the liver → hepatitis, cirrhosis, fatty liver disease, liver cancer. Symptoms: jaundice, fatigue, abdominal swelling (ascites), easy bruising.
+- Diseases of the biliary tree → gallstones, cholecystitis, cholangitis, bile duct obstruction. Symptoms: right upper quadrant pain (often after fatty meals), jaundice, fever.
+- Diseases of the pancreas → acute and chronic pancreatitis, pancreatic cancer. Symptoms: severe epigastric pain radiating to the back, weight loss, jaundice.
 
 Investigations include:
 - History and physical examination
@@ -23679,10 +23679,10 @@ The answer is that every segment of the GI tract, from oesophagus to anal canal,
 
 The four layers, from the lumen outward, are:
 
-- The mucosa - the innermost layer. It has three sub-parts: an epithelium (which varies by segment), a lamina propria (loose connective tissue with blood vessels, lymphatics and immune cells), and a muscularis mucosae (a thin layer of smooth muscle that can move the mucosa independently).
-- The submucosa - a layer of loose connective tissue containing larger blood vessels, lymphatics, and in some segments specialised glands. It also contains the submucosal (Meissner's) nerve plexus.
-- The muscularis externa - two thick layers of smooth muscle (inner circular, outer longitudinal) that produce peristalsis. Between them lies the myenteric (Auerbach's) nerve plexus.
-- The serosa or adventitia - the outermost layer. In the abdominal cavity, it is usually a serous membrane (the visceral peritoneum, called serosa). Where the gut is retroperitoneal or passes through the diaphragm, it is instead a fibrous adventitia.
+- The mucosa → the innermost layer. It has three sub-parts: an epithelium (which varies by segment), a lamina propria (loose connective tissue with blood vessels, lymphatics and immune cells), and a muscularis mucosae (a thin layer of smooth muscle that can move the mucosa independently).
+- The submucosa → a layer of loose connective tissue containing larger blood vessels, lymphatics, and in some segments specialised glands. It also contains the submucosal (Meissner's) nerve plexus.
+- The muscularis externa → two thick layers of smooth muscle (inner circular, outer longitudinal) that produce peristalsis. Between them lies the myenteric (Auerbach's) nerve plexus.
+- The serosa or adventitia → the outermost layer. In the abdominal cavity, it is usually a serous membrane (the visceral peritoneum, called serosa). Where the gut is retroperitoneal or passes through the diaphragm, it is instead a fibrous adventitia.
 
 Crucial insight: the four-layer plan is the unifying principle of GI histology. Learn it once, and every segment becomes an exercise in identifying which tissue has changed in which layer. The epithelium tells you the segment's job; the muscularis externa tells you how it moves; the submucosa tells you what glands it needs; and the serosa tells you where it sits in the body.`
     },
@@ -23714,10 +23714,10 @@ The answer is that the stomach's surface is covered by a thick layer of alkaline
 
 The stomach mucosa is a simple columnar epithelium, entirely different from the oesophagus above it. It is thrown into deep gastric pits that descend into branched tubular gastric glands. The gastric glands contain four major cell types:
 
-- Parietal cells - large, rounded, often binucleate cells that secrete hydrochloric acid and intrinsic factor. They are eosinophilic because of their abundant mitochondria.
-- Chief cells - basophilic cells at the base of the glands that secrete pepsinogen, the inactive precursor of the protein-digesting enzyme pepsin.
-- Mucous neck cells - produce the alkaline mucus that protects the surface.
-- Enteroendocrine cells - scattered through the glands, secreting hormones such as gastrin, somatostatin and histamine.
+- Parietal cells → large, rounded, often binucleate cells that secrete hydrochloric acid and intrinsic factor. They are eosinophilic because of their abundant mitochondria.
+- Chief cells → basophilic cells at the base of the glands that secrete pepsinogen, the inactive precursor of the protein-digesting enzyme pepsin.
+- Mucous neck cells → produce the alkaline mucus that protects the surface.
+- Enteroendocrine cells → scattered through the glands, secreting hormones such as gastrin, somatostatin and histamine.
 
 The stomach has three histological regions, and their gland content changes along them:
 
@@ -23737,15 +23737,15 @@ The answer is folding. The small intestine has three levels of folding that toge
 
 The three levels of folding:
 
-- Plicae circulares - the macroscopic, permanent folds of the mucosa and submucosa, visible to the naked eye. They are most prominent in the jejunum.
-- Villi - finger-like projections of the mucosa that stick out into the lumen. Each villus contains a core of lamina propria with a capillary network and a central lacteal (lymphatic vessel). The capillary absorbs sugars and amino acids; the lacteal absorbs fats.
-- Microvilli - tiny finger-like projections on the apical surface of each absorptive cell, forming the brush border that carries the digestive enzymes.
+- Plicae circulares → the macroscopic, permanent folds of the mucosa and submucosa, visible to the naked eye. They are most prominent in the jejunum.
+- Villi → finger-like projections of the mucosa that stick out into the lumen. Each villus contains a core of lamina propria with a capillary network and a central lacteal (lymphatic vessel). The capillary absorbs sugars and amino acids; the lacteal absorbs fats.
+- Microvilli → tiny finger-like projections on the apical surface of each absorptive cell, forming the brush border that carries the digestive enzymes.
 
 The epithelium of the small intestine is simple columnar, made mainly of:
 
-- Enterocytes - tall, absorptive cells with a brush border of microvilli.
-- Goblet cells - scattered among the enterocytes, secreting mucus that lubricates the lining.
-- Enteroendocrine cells - scattered through the epithelium, secreting hormones like CCK and secretin.
+- Enterocytes → tall, absorptive cells with a brush border of microvilli.
+- Goblet cells → scattered among the enterocytes, secreting mucus that lubricates the lining.
+- Enteroendocrine cells → scattered through the epithelium, secreting hormones like CCK and secretin.
 
 Between the villi, deep crypts of Lieberkuhn descend to the base of the mucosa. These crypts contain stem cells that continually renew the epithelium, and Paneth cells that secrete antibacterial substances.
 
@@ -23761,9 +23761,9 @@ The answer is that the acid must be neutralised. Chyme leaving the stomach has a
 
 The duodenum's histological features reflect this problem:
 
-- The submucosa of the duodenum contains the duodenal (Brunner's) glands - branched tubular glands that secrete alkaline mucus. Their secretion neutralises the incoming stomach acid and protects the duodenal lining from it.
+- The submucosa of the duodenum contains the duodenal (Brunner's) glands → branched tubular glands that secrete alkaline mucus. Their secretion neutralises the incoming stomach acid and protects the duodenal lining from it.
 - The mucosa contains the usual villi and crypts, but the crypts of the duodenum are deeper and extend into the submucosa (unlike elsewhere in the small intestine).
-- The duodenal mucosa also contains more goblet cells than the jejunum, and the enteroendocrine cells here secrete secretin and CCK - hormones that stimulate the pancreas and gallbladder.
+- The duodenal mucosa also contains more goblet cells than the jejunum, and the enteroendocrine cells here secrete secretin and CCK → hormones that stimulate the pancreas and gallbladder.
 
 The duodenum also has a distinctive landmark: the major duodenal papilla, where the common bile duct and pancreatic duct empty their contents into the lumen. This is visible on histology as an abrupt transition in the epithelium, with ducts opening into the surface.
 
@@ -23779,8 +23779,8 @@ The answer is that it needs two things the rest of the small intestine does not:
 
 The two distinctive histological features of the ileum:
 
-- Peyer's patches - large, aggregations of lymphoid tissue (mostly B-cell follicles) located in the lamina propria and submucosa on the antimesenteric side of the ileum. They are the largest and most conspicuous in the ileum, and they serve as the gut's surveillance posts - sampling antigens from the gut lumen and mounting immune responses.
-- Villi that are shorter and less numerous than in the jejunum, with fewer plicae circulares. The ileum is the segment where the surface area is at its least impressive in the small intestine - but it is still huge compared to a smooth tube.
+- Peyer's patches → large, aggregations of lymphoid tissue (mostly B-cell follicles) located in the lamina propria and submucosa on the antimesenteric side of the ileum. They are the largest and most conspicuous in the ileum, and they serve as the gut's surveillance posts - sampling antigens from the gut lumen and mounting immune responses.
+- Villi that are shorter and less numerous than in the jejunum, with fewer plicae circulares. The ileum is the segment where the surface area is at its least impressive in the small intestine → but it is still huge compared to a smooth tube.
 
 The ileum also contains the usual crypts of Lieberkuhn, enteroendocrine cells, and goblet cells. Goblet cells are more numerous in the ileum than in the jejunum.
 
@@ -23796,8 +23796,8 @@ The answer is that water absorption does not need villi. Villi amplify surface a
 
 The colon's histological features:
 
-- The mucosa has no villi - only crypts of Lieberkuhn. These crypts are much deeper than in the small intestine, and they are packed with goblet cells.
-- The surface epithelium is simple columnar, but dominated by mucus-secreting goblet cells. In fact, the ratio of goblet cells to absorptive cells is highest in the colon. This is why the colon exists to lubricate as much as absorb - the mucus keeps the forming faeces slippery and easy to move.
+- The mucosa has no villi → only crypts of Lieberkuhn. These crypts are much deeper than in the small intestine, and they are packed with goblet cells.
+- The surface epithelium is simple columnar, but dominated by mucus-secreting goblet cells. In fact, the ratio of goblet cells to absorptive cells is highest in the colon. This is why the colon exists to lubricate as much as absorb → the mucus keeps the forming faeces slippery and easy to move.
 - The crypts contain enterocytes, enteroendocrine cells and stem cells, but no Paneth cells.
 - Peyer's patches are absent, but scattered lymphoid tissue exists.
 - The muscularis externa has three bands of longitudinal muscle (the taeniae coli) instead of a uniform outer layer.
@@ -23816,13 +23816,13 @@ The answer is that digestion is a coordinated process involving several organs a
 
 The main enteroendocrine cells of the gut and their hormones:
 
-- G cells (stomach antrum) - secrete gastrin, which stimulates acid secretion by parietal cells.
-- D cells (stomach and intestine) - secrete somatostatin, which inhibits the secretion of many other gut hormones and slows digestion.
-- Enterochromaffin-like (ECL) cells (stomach) - secrete histamine, which stimulates acid secretion.
-- S cells (duodenum) - secrete secretin, which stimulates bicarbonate secretion by the pancreas and bile secretion by the liver.
-- I cells (duodenum and jejunum) - secrete cholecystokinin (CCK), which stimulates gallbladder contraction, pancreatic enzyme secretion, and slows gastric emptying.
-- K cells (duodenum and jejunum) - secrete gastric inhibitory peptide (GIP), which stimulates insulin release and slows gastric emptying.
-- L cells (ileum and colon) - secrete glucagon-like peptide 1 (GLP-1) and peptide YY (PYY), which slow gut motility and regulate appetite.
+- G cells (stomach antrum) → secrete gastrin, which stimulates acid secretion by parietal cells.
+- D cells (stomach and intestine) → secrete somatostatin, which inhibits the secretion of many other gut hormones and slows digestion.
+- Enterochromaffin-like (ECL) cells (stomach) → secrete histamine, which stimulates acid secretion.
+- S cells (duodenum) → secrete secretin, which stimulates bicarbonate secretion by the pancreas and bile secretion by the liver.
+- I cells (duodenum and jejunum) → secrete cholecystokinin (CCK), which stimulates gallbladder contraction, pancreatic enzyme secretion, and slows gastric emptying.
+- K cells (duodenum and jejunum) → secrete gastric inhibitory peptide (GIP), which stimulates insulin release and slows gastric emptying.
+- L cells (ileum and colon) → secrete glucagon-like peptide 1 (GLP-1) and peptide YY (PYY), which slow gut motility and regulate appetite.
 
 These cells sit scattered in the epithelium, with their apical surfaces facing the lumen and their basal surfaces facing the blood. When they detect specific signals - nutrients, changes in pH, mechanical stretch - they release hormones into the blood that then act on distant organs.
 
@@ -23838,12 +23838,12 @@ The answer is the lobule. Picture a classic hexagonal liver lobule: at its centr
 
 The liver lobule, in detail:
 
-- Central vein - runs down the middle of each lobule and drains into the hepatic veins.
-- Portal triads - at each corner of the hexagon, each containing a branch of the hepatic artery, a branch of the portal vein, and a bile ductule.
-- Hepatocytes - the main liver cells, arranged in plates one or two cells thick that radiate outward from the central vein.
-- Hepatic sinusoids - leaky capillaries that run between the plates of hepatocytes. Blood from the portal triad flows through the sinusoids towards the central vein.
-- Kupffer cells - macrophages that line the sinusoids and engulf bacteria and debris from the portal blood.
-- Bile canaliculi - tiny channels between adjacent hepatocytes that collect bile and carry it outward to the bile ductules in the portal triads.
+- Central vein → runs down the middle of each lobule and drains into the hepatic veins.
+- Portal triads → at each corner of the hexagon, each containing a branch of the hepatic artery, a branch of the portal vein, and a bile ductule.
+- Hepatocytes → the main liver cells, arranged in plates one or two cells thick that radiate outward from the central vein.
+- Hepatic sinusoids → leaky capillaries that run between the plates of hepatocytes. Blood from the portal triad flows through the sinusoids towards the central vein.
+- Kupffer cells → macrophages that line the sinusoids and engulf bacteria and debris from the portal blood.
+- Bile canaliculi → tiny channels between adjacent hepatocytes that collect bile and carry it outward to the bile ductules in the portal triads.
 
 Blood flow in the lobule: from the portal triad (hepatic artery and portal vein) into the sinusoids, through the sinusoids, into the central vein. Bile flow: in the opposite direction, from the hepatocytes into the canaliculi, then outward to the bile ductules at the portal triad.
 
@@ -23859,16 +23859,16 @@ The answer is that their structures are entirely shaped by their roles - the pan
 
 The pancreas:
 
-- The exocrine pancreas is a compound acinar gland. It consists of acini - clusters of secretory cells arranged around a central lumen - that produce digestive enzymes.
+- The exocrine pancreas is a compound acinar gland. It consists of acini → clusters of secretory cells arranged around a central lumen - that produce digestive enzymes.
 - Each acinus is made of pyramidal serous cells, with their nuclei near the base and secretory granules at the apex.
 - The acini drain into a branching duct system that ultimately forms the main pancreatic duct, which joins the common bile duct to empty into the duodenum.
-- Between the acini, the endocrine pancreas forms the islets of Langerhans - clusters of cells that produce insulin, glucagon, somatostatin and pancreatic polypeptide. They are visible on H&E staining as small, paler islands scattered through the exocrine tissue.
+- Between the acini, the endocrine pancreas forms the islets of Langerhans → clusters of cells that produce insulin, glucagon, somatostatin and pancreatic polypeptide. They are visible on H&E staining as small, paler islands scattered through the exocrine tissue.
 
 The gallbladder:
 
 - The wall is made of three layers: mucosa, muscularis, and serosa or adventitia. There is no submucosa.
 - The mucosa is lined by simple columnar epithelium with a brush border. There are no goblet cells, but there are scattered mucus-secreting cells.
-- The epithelium is thrown into deep folds that disappear when the gallbladder is distended - a key histological feature.
+- The epithelium is thrown into deep folds that disappear when the gallbladder is distended → a key histological feature.
 - Beneath the epithelium is a lamina propria (there is no muscularis mucosae), and beneath that is a muscularis of irregular smooth muscle bundles.
 - The outermost layer is serosa where the gallbladder is covered by peritoneum (its fundus and body), and adventitia where it sits against the liver (its neck).
 
@@ -23982,10 +23982,10 @@ The answer is different ones, because each has a different job. The kidney is a 
 
 The general organisation of each:
 
-- The kidney - a solid organ with two distinct regions, an outer cortex and an inner medulla. It is packed with millions of microscopic tubular structures (the uriniferous tubules), blood vessels, and interstitial connective tissue. There is no "lining" in the usual sense - the whole organ is the filter.
-- The ureter - a muscular tube with three layers: a mucosa lined by transitional epithelium, a muscularis of smooth muscle, and an adventitia of fibrous connective tissue. The muscle propels urine by peristalsis.
-- The urinary bladder - a muscular sac with the same three layers as the ureter, but with a much thicker muscularis (the detrusor muscle) and a mucosa thrown into folds (rugae) that disappear when the bladder fills.
-- The urethra - a fibromuscular tube lined by epithelium that varies along its length (transitional near the bladder, then stratified columnar, then stratified squamous at the external opening), surrounded by smooth and skeletal muscle sphincters.
+- The kidney → a solid organ with two distinct regions, an outer cortex and an inner medulla. It is packed with millions of microscopic tubular structures (the uriniferous tubules), blood vessels, and interstitial connective tissue. There is no "lining" in the usual sense - the whole organ is the filter.
+- The ureter → a muscular tube with three layers: a mucosa lined by transitional epithelium, a muscularis of smooth muscle, and an adventitia of fibrous connective tissue. The muscle propels urine by peristalsis.
+- The urinary bladder → a muscular sac with the same three layers as the ureter, but with a much thicker muscularis (the detrusor muscle) and a mucosa thrown into folds (rugae) that disappear when the bladder fills.
+- The urethra → a fibromuscular tube lined by epithelium that varies along its length (transitional near the bladder, then stratified columnar, then stratified squamous at the external opening), surrounded by smooth and skeletal muscle sphincters.
 
 Crucial insight: the four organs share a single functional theme - handling urine - but each is histologically distinct because each has a distinct mechanical job. The kidney filters. The ureter propels. The bladder stores. The urethra controls release. Read the epithelium and the muscle, and you can identify which organ you are looking at.`
     },
@@ -23999,15 +23999,15 @@ The answer is that the nephron has regions with different shapes, and each regio
 
 The cortex contains:
 
-- Renal corpuscles - the round, ball-like structures where filtration happens. Each consists of a glomerulus (a tuft of capillaries) inside Bowman's capsule. The cortex is packed with these.
-- Proximal and distal convoluted tubules - the coiled segments of the nephron. They are seen as cross-sections of tubules with different staining characteristics: proximal tubules have a brush border and eosinophilic cytoplasm; distal tubules are paler and have no brush border.
-- Collecting ducts - running through the cortex and into the medulla.
+- Renal corpuscles → the round, ball-like structures where filtration happens. Each consists of a glomerulus (a tuft of capillaries) inside Bowman's capsule. The cortex is packed with these.
+- Proximal and distal convoluted tubules → the coiled segments of the nephron. They are seen as cross-sections of tubules with different staining characteristics: proximal tubules have a brush border and eosinophilic cytoplasm; distal tubules are paler and have no brush border.
+- Collecting ducts → running through the cortex and into the medulla.
 
 The medulla contains:
 
-- Loops of Henle - the hairpin-shaped tubules that dip down into the medulla and back up. They are seen as parallel tubules running longitudinally.
-- Collecting ducts - larger and more prominent as they converge towards the renal papilla.
-- Vasa recta - long, straight blood vessels that run parallel to the loops of Henle.
+- Loops of Henle → the hairpin-shaped tubules that dip down into the medulla and back up. They are seen as parallel tubules running longitudinally.
+- Collecting ducts → larger and more prominent as they converge towards the renal papilla.
+- Vasa recta → long, straight blood vessels that run parallel to the loops of Henle.
 
 There is a boundary zone between cortex and medulla called the medullary ray - a column of straight tubules (collecting ducts and loops of Henle) extending from the medulla into the cortex.
 
@@ -24026,9 +24026,9 @@ The circulation of blood through the kidney, in sequence:
 - The renal artery enters the hilum and branches into segmental arteries, then interlobar arteries, which run between the renal pyramids.
 - At the base of each pyramid, the interlobar arteries curve to become the arcuate arteries, which run along the boundary between cortex and medulla.
 - From the arcuate arteries, interlobular (cortical radial) arteries ascend into the cortex.
-- Each interlobular artery gives off an afferent arteriole, which enters a renal corpuscle and splits into the glomerular capillaries - the first capillary bed.
+- Each interlobular artery gives off an afferent arteriole, which enters a renal corpuscle and splits into the glomerular capillaries → the first capillary bed.
 - The glomerular capillaries rejoin to form an efferent arteriole, which leaves the corpuscle. (Note the unusual arrangement: the efferent vessel is an arteriole, not a venule - the blood has not yet been oxygenated or deoxygenated in the usual sense.)
-- The efferent arteriole then splits into a second capillary bed - either the peritubular capillaries, which wrap around the cortical tubules, or the vasa recta, which descend into the medulla alongside the loops of Henle.
+- The efferent arteriole then splits into a second capillary bed → either the peritubular capillaries, which wrap around the cortical tubules, or the vasa recta, which descend into the medulla alongside the loops of Henle.
 - These capillaries rejoin into interlobular veins, then arcuate veins, then interlobar veins, and finally the renal vein, which leaves the hilum to drain into the inferior vena cava.
 
 Crucial insight: the kidney has two capillary beds in series - the glomerulus and the peritubular/vasa recta system - connected by the efferent arteriole. This is what allows filtration and reabsorption to happen in one continuous flow. It also explains why the efferent arteriole is such an important control point: by constricting or dilating it, the kidney can change the pressure in the glomerulus (affecting filtration) and the pressure in the peritubular capillaries (affecting reabsorption).`
@@ -24043,16 +24043,16 @@ The answer is that each segment has a different job, and the epithelium is shape
 
 The segments of the uriniferous tubule, in order:
 
-- Renal corpuscle - the filtration unit. A glomerulus (capillary tuft) inside Bowman's capsule.
-- Proximal convoluted tubule (PCT) - the first coiled segment. Lined by simple cuboidal epithelium with a prominent brush border of microvilli. The cells are deeply eosinophilic (pink) and have many mitochondria for the active reabsorption they perform.
-- Loop of Henle - a hairpin loop that descends into the medulla and returns to the cortex. The descending limb is thin and lined by simple squamous epithelium, permeable to water. The ascending limb is thicker and lined by simple cuboidal to low columnar epithelium, impermeable to water, and actively pumps out salt.
-- Distal convoluted tubule (DCT) - the second coiled segment, back in the cortex. Lined by simple cuboidal epithelium, but paler than the PCT, with no brush border, and fewer mitochondria.
-- Collecting duct - not technically part of the nephron (it drains several nephrons) but included in the uriniferous tubule. Lined by simple cuboidal epithelium that becomes taller as the duct approaches the renal papilla. Two cell types: principal cells (which respond to ADH) and intercalated cells (which regulate acid-base balance).
+- Renal corpuscle → the filtration unit. A glomerulus (capillary tuft) inside Bowman's capsule.
+- Proximal convoluted tubule (PCT) → the first coiled segment. Lined by simple cuboidal epithelium with a prominent brush border of microvilli. The cells are deeply eosinophilic (pink) and have many mitochondria for the active reabsorption they perform.
+- Loop of Henle → a hairpin loop that descends into the medulla and returns to the cortex. The descending limb is thin and lined by simple squamous epithelium, permeable to water. The ascending limb is thicker and lined by simple cuboidal to low columnar epithelium, impermeable to water, and actively pumps out salt.
+- Distal convoluted tubule (DCT) → the second coiled segment, back in the cortex. Lined by simple cuboidal epithelium, but paler than the PCT, with no brush border, and fewer mitochondria.
+- Collecting duct → not technically part of the nephron (it drains several nephrons) but included in the uriniferous tubule. Lined by simple cuboidal epithelium that becomes taller as the duct approaches the renal papilla. Two cell types: principal cells (which respond to ADH) and intercalated cells (which regulate acid-base balance).
 
 The two classes of nephron:
 
-- Cortical nephrons - about 85% of all nephrons. Their corpuscles sit in the outer cortex, and their loops of Henle are short, barely dipping into the medulla. Their main job is to filter and reabsorb.
-- Juxtamedullary nephrons - about 15% of all nephrons. Their corpuscles sit near the corticomedullary junction, and their loops of Henle are very long, extending deep into the medulla. These are the nephrons that create the salt gradient that allows the kidney to concentrate urine.
+- Cortical nephrons → about 85% of all nephrons. Their corpuscles sit in the outer cortex, and their loops of Henle are short, barely dipping into the medulla. Their main job is to filter and reabsorb.
+- Juxtamedullary nephrons → about 15% of all nephrons. Their corpuscles sit near the corticomedullary junction, and their loops of Henle are very long, extending deep into the medulla. These are the nephrons that create the salt gradient that allows the kidney to concentrate urine.
 
 Crucial insight: the segment you are looking at tells you what the tubule is doing there. Brush border and eosinophilic cytoplasm mean PCT (heavy reabsorption). Pale cuboidal cells without a brush border mean DCT. Thin flat epithelium means the descending limb (water reabsorption). And the class of nephron tells you whether it is contributing to filtration (cortical) or to concentration (juxtamedullary).`
     },
@@ -24066,14 +24066,14 @@ The answer is a three-layered filtration barrier less than a micrometre thick, s
 
 The three layers of the filtration barrier:
 
-- The fenestrated endothelium of the glomerular capillary - the innermost layer. The endothelial cells are perforated by fenestrations (pores) that let plasma through but hold back blood cells.
-- The glomerular basement membrane (GBM) - the middle layer, and the thickest. It is a specialised, fused basement membrane that filters by both size and charge. Large proteins are held back by size, and negatively charged proteins are repelled by the GBM's negative charge.
-- The filtration slits between the podocytes - the outermost layer. Podocytes are specialised epithelial cells that wrap around the capillaries with foot-like processes (pedicels). The narrow gaps between adjacent pedicels are the filtration slits, and they are bridged by a thin slit diaphragm that adds one final layer of selectivity.
+- The fenestrated endothelium of the glomerular capillary → the innermost layer. The endothelial cells are perforated by fenestrations (pores) that let plasma through but hold back blood cells.
+- The glomerular basement membrane (GBM) → the middle layer, and the thickest. It is a specialised, fused basement membrane that filters by both size and charge. Large proteins are held back by size, and negatively charged proteins are repelled by the GBM's negative charge.
+- The filtration slits between the podocytes → the outermost layer. Podocytes are specialised epithelial cells that wrap around the capillaries with foot-like processes (pedicels). The narrow gaps between adjacent pedicels are the filtration slits, and they are bridged by a thin slit diaphragm that adds one final layer of selectivity.
 
 The renal corpuscle as a whole has two poles:
 
-- The vascular pole - where the afferent arteriole enters and the efferent arteriole leaves. This is where the juxtaglomerular apparatus sits.
-- The urinary pole - where the filtrate leaves Bowman's capsule and enters the proximal convoluted tubule.
+- The vascular pole → where the afferent arteriole enters and the efferent arteriole leaves. This is where the juxtaglomerular apparatus sits.
+- The urinary pole → where the filtrate leaves Bowman's capsule and enters the proximal convoluted tubule.
 
 Bowman's capsule itself has two layers: an outer parietal layer of simple squamous epithelium, and an inner visceral layer made of the podocytes that wrap the capillaries.
 
@@ -24089,9 +24089,9 @@ The answer is blood pressure in the arteriole, and salt concentration in the tub
 
 The three components of the JGA:
 
-- Juxtaglomerular (JG) cells - modified smooth muscle cells in the wall of the afferent arteriole. They contain granules of renin, an enzyme that initiates the renin-angiotensin-aldosterone system (RAAS). They act as baroreceptors: when they detect a fall in arteriolar pressure (or a fall in sodium delivery), they release renin.
-- Macula densa - a specialised patch of cells in the wall of the distal convoluted tubule where it passes beside the afferent arteriole. These cells are taller and more densely packed than the surrounding DCT cells. They act as chemoreceptors: they sense the sodium chloride concentration of the tubular fluid.
-- Extraglomerular mesangial cells (Lacis cells) - cells lying between the arteriole and the macula densa, thought to transmit signals between the two.
+- Juxtaglomerular (JG) cells → modified smooth muscle cells in the wall of the afferent arteriole. They contain granules of renin, an enzyme that initiates the renin-angiotensin-aldosterone system (RAAS). They act as baroreceptors: when they detect a fall in arteriolar pressure (or a fall in sodium delivery), they release renin.
+- Macula densa → a specialised patch of cells in the wall of the distal convoluted tubule where it passes beside the afferent arteriole. These cells are taller and more densely packed than the surrounding DCT cells. They act as chemoreceptors: they sense the sodium chloride concentration of the tubular fluid.
+- Extraglomerular mesangial cells (Lacis cells) → cells lying between the arteriole and the macula densa, thought to transmit signals between the two.
 
 What the JGA actually does:
 
@@ -24114,8 +24114,8 @@ The answer is that the epithelium must be able to change shape dramatically, and
 
 The histological features of the bladder:
 
-- The mucosa is lined by transitional epithelium (urothelium) - a unique epithelium found only in the urinary tract. In the relaxed bladder, the surface cells are large, dome-shaped, and often binucleate (called umbrella cells). When the bladder fills and stretches, these cells flatten, and the epithelium thins. The epithelial cells are joined by tight junctions that make the lining impermeable to urine - a critical barrier against the toxic substances dissolved in it.
-- Beneath the epithelium is the lamina propria - a layer of connective tissue containing blood vessels and lymphatics.
+- The mucosa is lined by transitional epithelium (urothelium) → a unique epithelium found only in the urinary tract. In the relaxed bladder, the surface cells are large, dome-shaped, and often binucleate (called umbrella cells). When the bladder fills and stretches, these cells flatten, and the epithelium thins. The epithelial cells are joined by tight junctions that make the lining impermeable to urine - a critical barrier against the toxic substances dissolved in it.
+- Beneath the epithelium is the lamina propria → a layer of connective tissue containing blood vessels and lymphatics.
 - The muscularis is called the detrusor muscle. It is made of three interlacing layers of smooth muscle (inner longitudinal, middle circular, outer longitudinal), although the boundaries between them are less distinct than in the gut. The muscle fibres are arranged in a spiral pattern that allows the bladder to contract in all directions at once.
 - The serosa (where the bladder is covered by peritoneum) or adventitia (elsewhere) is the outermost layer.
 
@@ -24133,9 +24133,9 @@ The answer is smooth muscle thick enough to generate peristaltic waves, and an e
 
 The three layers of the ureteric wall:
 
-- The mucosa - lined by transitional epithelium (urothelium), the same as the bladder. Beneath it is a lamina propria of loose connective tissue.
-- The muscularis - two or three layers of smooth muscle (inner longitudinal, outer circular - but in the lower ureter, there is an additional outer longitudinal layer, making three layers). The muscle layers produce peristaltic waves that push urine towards the bladder.
-- The adventitia - an outer fibrous coat that anchors the ureter to surrounding structures.
+- The mucosa → lined by transitional epithelium (urothelium), the same as the bladder. Beneath it is a lamina propria of loose connective tissue.
+- The muscularis → two or three layers of smooth muscle (inner longitudinal, outer circular - but in the lower ureter, there is an additional outer longitudinal layer, making three layers). The muscle layers produce peristaltic waves that push urine towards the bladder.
+- The adventitia → an outer fibrous coat that anchors the ureter to surrounding structures.
 
 The ureter has three natural narrowings where a kidney stone is most likely to get stuck:
 
@@ -24155,16 +24155,16 @@ The answer is that the collecting ducts converge on the renal papilla, where the
 
 The collecting system, in order:
 
-- The renal papilla - the tip of each medullary pyramid, where the collecting ducts open.
-- The minor calyx - a cup-shaped structure that surrounds each papilla and collects its urine. Each kidney has 8-12 minor calyces.
-- The major calyx - formed by the fusion of two or three minor calyces. Each kidney has 2-3 major calyces.
-- The renal pelvis - the large funnel-shaped cavity that receives all the major calyces and narrows to become the ureter.
+- The renal papilla → the tip of each medullary pyramid, where the collecting ducts open.
+- The minor calyx → a cup-shaped structure that surrounds each papilla and collects its urine. Each kidney has 8-12 minor calyces.
+- The major calyx → formed by the fusion of two or three minor calyces. Each kidney has 2-3 major calyces.
+- The renal pelvis → the large funnel-shaped cavity that receives all the major calyces and narrows to become the ureter.
 
 The histology of the collecting system:
 
 - The calyces and renal pelvis are lined by transitional epithelium (urothelium), the same as the ureter and bladder.
 - Beneath the epithelium is a lamina propria and a thin muscularis of smooth muscle.
-- The muscle wall is thinner in the calyces than in the ureter, because the calyces do not need to generate strong peristaltic waves - they mainly funnel urine.
+- The muscle wall is thinner in the calyces than in the ureter, because the calyces do not need to generate strong peristaltic waves → they mainly funnel urine.
 
 Crucial insight: the collecting system is the connection between the nephron and the outside world. Its transitional epithelium is continuous with the ureter and the bladder, which is why urine can pass from the nephron to the outside without ever crossing a barrier that leaks. When a calyx is obstructed (by stone, tumour or stricture), urine backs up into the kidney, causing hydronephrosis. Understanding the anatomy of the collecting system is what lets a doctor interpret imaging of the kidney and predict where an obstruction will cause damage.`
     },
@@ -24178,20 +24178,20 @@ The answer is that each part of the urinary system has its own diseases, and eac
 
 The main clinical entities, by organ:
 
-- Diseases of the glomerulus - glomerulonephritis (immune-mediated damage to the filtration barrier), diabetic nephropathy (thickening of the GBM), minimal change disease (loss of podocyte foot processes). All produce proteinuria and haematuria.
-- Diseases of the tubules - acute tubular necrosis (ischaemic or toxic injury), interstitial nephritis (inflammation of the tubules and interstitium). These cause acute kidney injury.
-- Diseases of the interstitium - chronic interstitial nephritis, often drug-induced.
-- Diseases of the blood vessels - hypertensive nephrosclerosis (thickening of arterioles), renal artery stenosis (narrowing of the main renal artery).
-- Diseases of the collecting system - stones (most commonly calcium oxalate), hydronephrosis (dilation from obstruction), transitional cell carcinoma (tumour of the urothelium).
-- Diseases of the bladder - cystitis (infection), interstitial cystitis (chronic inflammation of unknown cause), bladder cancer (usually transitional cell carcinoma).
-- Diseases of the ureter - obstruction by stones, ureteric stricture, ureteric cancer.
+- Diseases of the glomerulus → glomerulonephritis (immune-mediated damage to the filtration barrier), diabetic nephropathy (thickening of the GBM), minimal change disease (loss of podocyte foot processes). All produce proteinuria and haematuria.
+- Diseases of the tubules → acute tubular necrosis (ischaemic or toxic injury), interstitial nephritis (inflammation of the tubules and interstitium). These cause acute kidney injury.
+- Diseases of the interstitium → chronic interstitial nephritis, often drug-induced.
+- Diseases of the blood vessels → hypertensive nephrosclerosis (thickening of arterioles), renal artery stenosis (narrowing of the main renal artery).
+- Diseases of the collecting system → stones (most commonly calcium oxalate), hydronephrosis (dilation from obstruction), transitional cell carcinoma (tumour of the urothelium).
+- Diseases of the bladder → cystitis (infection), interstitial cystitis (chronic inflammation of unknown cause), bladder cancer (usually transitional cell carcinoma).
+- Diseases of the ureter → obstruction by stones, ureteric stricture, ureteric cancer.
 
 How histology and laboratory tests help:
 
-- Urinalysis - detecting protein, blood, leukocytes, nitrites, and casts. Red cell casts specifically localise bleeding to the glomerulus.
-- Renal biopsy - examining the glomeruli, tubules and interstitium directly. This is the gold standard for diagnosing glomerular disease.
-- Imaging - CT, ultrasound and MRI to visualise structure and detect obstruction, stones and masses.
-- Blood tests - creatinine, urea and electrolytes to assess function.
+- Urinalysis → detecting protein, blood, leukocytes, nitrites, and casts. Red cell casts specifically localise bleeding to the glomerulus.
+- Renal biopsy → examining the glomeruli, tubules and interstitium directly. This is the gold standard for diagnosing glomerular disease.
+- Imaging → CT, ultrasound and MRI to visualise structure and detect obstruction, stones and masses.
+- Blood tests → creatinine, urea and electrolytes to assess function.
 
 Crucial insight: the histology of the urinary system is not just an academic exercise - it is the basis of how urinary diseases are diagnosed. When you understand what normal kidney, ureter, bladder and urethra look like on a slide, you can recognise what is abnormal. And when you understand the functions each structure performs, you can predict what will happen when it fails. This is exactly why renal histology is examined so heavily in every medical course.`
     },
@@ -24303,8 +24303,8 @@ The answer is that a drug's behaviour depends entirely on the body it enters. Th
 
 Pharmacology has two great concerns:
 
-- Pharmacodynamics - what the drug does to the body. The mechanism of action, the target it hits, the effect it produces. What happens when the drug binds its receptor.
-- Pharmacokinetics - what the body does to the drug. How it is absorbed, distributed to tissues, metabolised, and excreted. How it moves through the body over time.
+- Pharmacodynamics → what the drug does to the body. The mechanism of action, the target it hits, the effect it produces. What happens when the drug binds its receptor.
+- Pharmacokinetics → what the body does to the drug. How it is absorbed, distributed to tissues, metabolised, and excreted. How it moves through the body over time.
 
 Everything you will ever learn in pharmacology belongs to one of those two categories.
 
@@ -24337,7 +24337,7 @@ The answer is dose. Every drug is a poison at the wrong dose, and every poison i
 Some working definitions:
 
 - A drug is any chemical substance that, when introduced into a living system, produces a biological effect. That effect may be therapeutic, harmful, or neutral. The definition is by effect, not by intent.
-- A medicine (or pharmaceutical) is a drug that has been formulated for therapeutic use - prepared in a specific dose form, tested for safety and efficacy, and approved for clinical use. All medicines are drugs, but not all drugs are medicines.
+- A medicine (or pharmaceutical) is a drug that has been formulated for therapeutic use → prepared in a specific dose form, tested for safety and efficacy, and approved for clinical use. All medicines are drugs, but not all drugs are medicines.
 - A poison (or toxin) is a substance that produces harmful effects at doses that can be realistically encountered. It sits at one end of the dose spectrum of a drug.
 - A prodrug is an inactive compound that the body converts into an active drug. The body itself performs the last synthetic step.
 
@@ -24355,10 +24355,10 @@ The answer is both - and the answer has changed over time, but the older routes 
 
 The four historical sources of drugs:
 
-- Plants - the oldest source. Morphine from the opium poppy (Papaver somniferum), digoxin from the foxglove (Digitalis purpurea), quinine from the cinchona tree, aspirin from willow bark (via salicylic acid), vincristine from the Madagascar periwinkle. Roughly a quarter of modern medicines are still derived from or inspired by plant compounds.
-- Animals - insulin from pig and cow pancreas before recombinant human insulin was developed; heparin from pig intestine; some hormones and vaccines.
-- Minerals - lithium salts for bipolar disorder, iron salts for anaemia, magnesium sulphate for eclampsia, and various metal-based compounds.
-- Synthetic and semisynthetic - the modern default. Most new drugs are now synthesised or modified in the laboratory, based on an understanding of the target they must hit.
+- Plants → the oldest source. Morphine from the opium poppy (Papaver somniferum), digoxin from the foxglove (Digitalis purpurea), quinine from the cinchona tree, aspirin from willow bark (via salicylic acid), vincristine from the Madagascar periwinkle. Roughly a quarter of modern medicines are still derived from or inspired by plant compounds.
+- Animals → insulin from pig and cow pancreas before recombinant human insulin was developed; heparin from pig intestine; some hormones and vaccines.
+- Minerals → lithium salts for bipolar disorder, iron salts for anaemia, magnesium sulphate for eclampsia, and various metal-based compounds.
+- Synthetic and semisynthetic → the modern default. Most new drugs are now synthesised or modified in the laboratory, based on an understanding of the target they must hit.
 
 The modern source is a fourth category that has grown explosively: biologics. These are drugs produced by living cells through biotechnology - monoclonal antibodies, recombinant proteins, vaccines, and gene therapies. They cannot be made by traditional chemistry.
 
@@ -24374,10 +24374,10 @@ The answer is that almost every drug in use today acts on one of four classes of
 
 The four great classes of drug target:
 
-- Receptors - the largest and most important class. These are proteins that normally bind endogenous signalling molecules (hormones, neurotransmitters), and drugs can mimic or block them. They include G-protein coupled receptors, ion channel receptors, enzyme-linked receptors, and nuclear receptors.
-- Ion channels - proteins that allow ions to cross membranes. Drugs can open them (agonists) or block them (antagonists). Local anaesthetics block sodium channels; some antihypertensives block calcium channels.
-- Enzymes - proteins that catalyse chemical reactions. Drugs can inhibit them (most common) or activate them. Aspirin inhibits cyclooxygenase; statins inhibit HMG-CoA reductase; ACE inhibitors inhibit angiotensin-converting enzyme.
-- Transporters (carrier proteins) - proteins that move substances across membranes. Drugs can block them. Selective serotonin reuptake inhibitors block serotonin transporters; proton pump inhibitors block the gastric proton pump.
+- Receptors → the largest and most important class. These are proteins that normally bind endogenous signalling molecules (hormones, neurotransmitters), and drugs can mimic or block them. They include G-protein coupled receptors, ion channel receptors, enzyme-linked receptors, and nuclear receptors.
+- Ion channels → proteins that allow ions to cross membranes. Drugs can open them (agonists) or block them (antagonists). Local anaesthetics block sodium channels; some antihypertensives block calcium channels.
+- Enzymes → proteins that catalyse chemical reactions. Drugs can inhibit them (most common) or activate them. Aspirin inhibits cyclooxygenase; statins inhibit HMG-CoA reductase; ACE inhibitors inhibit angiotensin-converting enzyme.
+- Transporters (carrier proteins) → proteins that move substances across membranes. Drugs can block them. Selective serotonin reuptake inhibitors block serotonin transporters; proton pump inhibitors block the gastric proton pump.
 
 Some drugs also act on non-protein targets - DNA (cancer chemotherapy agents), cell membranes (some antifungals), or the immune system generally (biologics). But the four protein classes above cover the vast majority of clinical medicines.
 
@@ -24393,10 +24393,10 @@ The answer is that the receptor itself changes shape when it binds its natural l
 
 The four main classes of receptor, by mechanism:
 
-- G-protein coupled receptors (GPCRs) - seven-transmembrane receptors that work through a G-protein. When activated, the G-protein triggers a second messenger cascade inside the cell. These are the largest receptor family and the target of roughly a third of all prescription drugs.
-- Ion channel receptors (ligand-gated ion channels) - receptors that are themselves ion channels. When the ligand binds, the channel opens and ions flow through. The nicotinic acetylcholine receptor is the classic example.
-- Enzyme-linked receptors - receptors that are themselves enzymes, or are attached to one. Most are tyrosine kinases. When the ligand binds, the enzyme is activated and phosphorylates downstream proteins. The insulin receptor is an example.
-- Nuclear receptors - receptors inside the cell that bind lipid-soluble ligands (steroid hormones, thyroid hormone). When activated, they move to the nucleus and change gene expression directly. The oestrogen receptor and glucocorticoid receptor are examples.
+- G-protein coupled receptors (GPCRs) → seven-transmembrane receptors that work through a G-protein. When activated, the G-protein triggers a second messenger cascade inside the cell. These are the largest receptor family and the target of roughly a third of all prescription drugs.
+- Ion channel receptors (ligand-gated ion channels) → receptors that are themselves ion channels. When the ligand binds, the channel opens and ions flow through. The nicotinic acetylcholine receptor is the classic example.
+- Enzyme-linked receptors → receptors that are themselves enzymes, or are attached to one. Most are tyrosine kinases. When the ligand binds, the enzyme is activated and phosphorylates downstream proteins. The insulin receptor is an example.
+- Nuclear receptors → receptors inside the cell that bind lipid-soluble ligands (steroid hormones, thyroid hormone). When activated, they move to the nucleus and change gene expression directly. The oestrogen receptor and glucocorticoid receptor are examples.
 
 Crucial insight: a receptor is a signalling protein, not just a binding site. When a drug binds a receptor, it does not act on the cell directly - it hijacks the cell's own signalling system to produce an effect. Understanding receptor class is essential for understanding drug mechanism, because each class produces its effect in a different way and on a different timescale.`
     },
@@ -24408,8 +24408,8 @@ My Socratic question: if a drug binds a receptor, why would some drugs activate 
 
 The answer is that receptors are proteins, and proteins have two separable properties: whether a molecule binds to them (affinity), and whether that binding changes their behaviour (efficacy).
 
-- Agonists are drugs that bind the receptor and activate it - they have both affinity and efficacy. They mimic the natural ligand and produce the natural response.
-- Antagonists are drugs that bind the receptor but do not activate it - they have affinity but zero efficacy. They occupy the receptor and prevent the natural ligand (or an agonist drug) from binding. They produce no effect themselves; they only block the effect of others.
+- Agonists are drugs that bind the receptor and activate it → they have both affinity and efficacy. They mimic the natural ligand and produce the natural response.
+- Antagonists are drugs that bind the receptor but do not activate it → they have affinity but zero efficacy. They occupy the receptor and prevent the natural ligand (or an agonist drug) from binding. They produce no effect themselves; they only block the effect of others.
 
 There is also a middle ground:
 
@@ -24433,10 +24433,10 @@ The answer is that the relationship between dose and effect follows a specific c
 
 The key features of the dose-response curve:
 
-- Threshold - the minimum dose at which any effect is seen.
-- Slope - how steeply the effect rises with dose. A steep slope means small dose changes produce large effect changes; a shallow slope means the opposite.
-- Maximum effect (Emax) - the greatest effect the drug can produce, no matter how much more you give. Reached when the target is fully saturated.
-- EC50 (or ED50) - the dose that produces 50% of the maximum effect. It is a measure of potency: a drug with a lower EC50 is more potent.
+- Threshold → the minimum dose at which any effect is seen.
+- Slope → how steeply the effect rises with dose. A steep slope means small dose changes produce large effect changes; a shallow slope means the opposite.
+- Maximum effect (Emax) → the greatest effect the drug can produce, no matter how much more you give. Reached when the target is fully saturated.
+- EC50 (or ED50) → the dose that produces 50% of the maximum effect. It is a measure of potency: a drug with a lower EC50 is more potent.
 
 Two drugs can have the same maximum effect but very different potencies. Morphine and codeine both relieve pain, but morphine is far more potent - a smaller dose produces the same effect. Conversely, two drugs can have the same potency but different maximum effects.
 
@@ -24468,17 +24468,17 @@ My Socratic question: a patient comes into the clinic with a heart condition. Wh
 
 The answer is that the doctor runs through the same sequence every time:
 
-- Diagnose the problem - what process is failing? Which signalling system needs to be altered?
-- Identify the target - which receptor, ion channel, enzyme or transporter would change that process? This uses the four target classes you learned in Note 5.
-- Choose the drug - which available molecule hits that target? Is it an agonist or an antagonist? This uses the agonist/antagonist distinction from Note 7.
-- Choose the dose - what dose-response curve does that drug have, and where does the patient's situation sit on it? This uses the quantitative principles from Note 8.
-- Check the safety margin - what is the therapeutic index, and does the patient have any factor (renal impairment, liver disease, age) that narrows it? This uses Note 9.
-- Choose the route and schedule - how is the drug absorbed, distributed, metabolised and excreted? This is the pharmacokinetics from Note 10 and beyond.
+- Diagnose the problem → what process is failing? Which signalling system needs to be altered?
+- Identify the target → which receptor, ion channel, enzyme or transporter would change that process? This uses the four target classes you learned in Note 5.
+- Choose the drug → which available molecule hits that target? Is it an agonist or an antagonist? This uses the agonist/antagonist distinction from Note 7.
+- Choose the dose → what dose-response curve does that drug have, and where does the patient's situation sit on it? This uses the quantitative principles from Note 8.
+- Check the safety margin → what is the therapeutic index, and does the patient have any factor (renal impairment, liver disease, age) that narrows it? This uses Note 9.
+- Choose the route and schedule → how is the drug absorbed, distributed, metabolised and excreted? This is the pharmacokinetics from Note 10 and beyond.
 
 Two useful clinical examples:
 
-- Digoxin - a plant-derived drug (from the foxglove) that inhibits the sodium-potassium ATPase in cardiac muscle. It is a positive inotropic agent - it increases the force of heart contraction. It has a narrow therapeutic index, which is why plasma levels must be monitored. It is a textbook example of how a drug with a specific target, a specific mechanism, and a narrow safety margin is used clinically.
-- Morphine - a plant-derived opioid (from the opium poppy) that acts as an agonist at the mu-opioid receptor. It relieves severe pain but also suppresses respiration, causes constipation and produces dependence. Its use requires careful dose titration and monitoring. It illustrates why agonist drugs require an understanding of both intended and side effects.
+- Digoxin → a plant-derived drug (from the foxglove) that inhibits the sodium-potassium ATPase in cardiac muscle. It is a positive inotropic agent - it increases the force of heart contraction. It has a narrow therapeutic index, which is why plasma levels must be monitored. It is a textbook example of how a drug with a specific target, a specific mechanism, and a narrow safety margin is used clinically.
+- Morphine → a plant-derived opioid (from the opium poppy) that acts as an agonist at the mu-opioid receptor. It relieves severe pain but also suppresses respiration, causes constipation and produces dependence. Its use requires careful dose titration and monitoring. It illustrates why agonist drugs require an understanding of both intended and side effects.
 
 Crucial insight: the principles of drug action you have learned in this topic are the framework behind every prescription. Diagnosis, target selection, drug selection, dose selection, safety assessment and route planning all depend on the concepts introduced here. Everything else in pharmacology - the specific drugs, the specific receptors, the specific clinical situations - is built on this foundation.`
     },
@@ -24590,10 +24590,10 @@ The answer is that a drug needs a target. It produces its effect only where a sp
 
 Four protein classes make up nearly every drug target in clinical use:
 
-- Receptors - cell surface or intracellular proteins that normally respond to hormones and neurotransmitters. Drugs can mimic or block them.
-- Ion channels - proteins that allow specific ions to cross membranes. Drugs can open or block them.
-- Enzymes - proteins that catalyse biochemical reactions. Drugs usually inhibit them.
-- Transporters - proteins that move substances across membranes. Drugs can block them.
+- Receptors → cell surface or intracellular proteins that normally respond to hormones and neurotransmitters. Drugs can mimic or block them.
+- Ion channels → proteins that allow specific ions to cross membranes. Drugs can open or block them.
+- Enzymes → proteins that catalyse biochemical reactions. Drugs usually inhibit them.
+- Transporters → proteins that move substances across membranes. Drugs can block them.
 
 Crucial insight: a drug's target is the source of its specificity. Every drug has a target, and the location and function of that target determine what the drug does. When you prescribe a drug, you are not acting on "the body" - you are acting on one specific protein in one specific set of tissues. Understanding this is the foundation of rational drug therapy.`
     },
@@ -24607,10 +24607,10 @@ The answer is that drugs acting on receptors can be exquisitely specific. If a r
 
 The key features of receptors as drug targets:
 
-- They are proteins - so they have a specific shape and chemistry that can be bound selectively.
-- They are signalling molecules - binding them produces a biological response, not just a passive interaction.
-- They have natural ligands - so drugs can be designed to mimic the ligand (agonists) or block it (antagonists).
-- They are often tissue-specific - so a drug's effects can be limited to specific organs.
+- They are proteins → so they have a specific shape and chemistry that can be bound selectively.
+- They are signalling molecules → binding them produces a biological response, not just a passive interaction.
+- They have natural ligands → so drugs can be designed to mimic the ligand (agonists) or block it (antagonists).
+- They are often tissue-specific → so a drug's effects can be limited to specific organs.
 
 Types of receptor-based drug action:
 
@@ -24631,10 +24631,10 @@ The answer is that different signals require different timescales, mechanisms an
 
 The four receptor families:
 
-- G-protein coupled receptors (GPCRs) - seven-transmembrane proteins that work through a G-protein. When the ligand binds, the G-protein is activated and triggers a second messenger cascade inside the cell. They act in seconds. Around a third of prescription drugs target GPCRs.
-- Ion channel receptors (ligand-gated ion channels) - receptors that are themselves ion channels. When the ligand binds, the channel opens and ions flow through, changing the cell's membrane potential. They act in milliseconds - the fastest receptor family. The nicotinic acetylcholine receptor is an example.
-- Enzyme-linked receptors - receptors with intrinsic enzymatic activity, most commonly tyrosine kinase. When the ligand binds, the receptor phosphorylates downstream proteins, triggering a signalling cascade. They act in minutes to hours, and are important in growth and metabolism. The insulin receptor is an example.
-- Nuclear receptors - intracellular receptors that bind lipid-soluble ligands such as steroid hormones. When activated, they move to the nucleus and directly change gene expression. They act in hours to days - the slowest family. The oestrogen and glucocorticoid receptors are examples.
+- G-protein coupled receptors (GPCRs) → seven-transmembrane proteins that work through a G-protein. When the ligand binds, the G-protein is activated and triggers a second messenger cascade inside the cell. They act in seconds. Around a third of prescription drugs target GPCRs.
+- Ion channel receptors (ligand-gated ion channels) → receptors that are themselves ion channels. When the ligand binds, the channel opens and ions flow through, changing the cell's membrane potential. They act in milliseconds - the fastest receptor family. The nicotinic acetylcholine receptor is an example.
+- Enzyme-linked receptors → receptors with intrinsic enzymatic activity, most commonly tyrosine kinase. When the ligand binds, the receptor phosphorylates downstream proteins, triggering a signalling cascade. They act in minutes to hours, and are important in growth and metabolism. The insulin receptor is an example.
+- Nuclear receptors → intracellular receptors that bind lipid-soluble ligands such as steroid hormones. When activated, they move to the nucleus and directly change gene expression. They act in hours to days - the slowest family. The oestrogen and glucocorticoid receptors are examples.
 
 Crucial insight: the four receptor families correspond to four different signalling speeds and mechanisms. Fast responses (milliseconds) use ion channels; rapid responses (seconds) use GPCRs; medium responses (minutes to hours) use enzyme-linked receptors; slow responses (hours to days) use nuclear receptors. Choosing which family a drug should target depends entirely on how fast and how long the drug's effect needs to be.`
     },
@@ -24648,15 +24648,15 @@ The answer is that ion channels control the movement of charged particles across
 
 The main types of ion channel drugs:
 
-- Blockers - drugs that plug the channel and prevent ions from passing. Sodium channel blockers (local anaesthetics like lidocaine), calcium channel blockers (nifedipine, verapamil), potassium channel blockers (amiodarone).
-- Openers (activators) - drugs that keep the channel open longer than usual. Potassium channel openers (minoxidil for hypertension), some vasodilators.
-- Modulators - drugs that change the channel's gating behaviour, making it more or less likely to open in response to its usual trigger.
+- Blockers → drugs that plug the channel and prevent ions from passing. Sodium channel blockers (local anaesthetics like lidocaine), calcium channel blockers (nifedipine, verapamil), potassium channel blockers (amiodarone).
+- Openers (activators) → drugs that keep the channel open longer than usual. Potassium channel openers (minoxidil for hypertension), some vasodilators.
+- Modulators → drugs that change the channel's gating behaviour, making it more or less likely to open in response to its usual trigger.
 
 Ion channels also differ in how they are gated:
 
-- Voltage-gated - open in response to changes in membrane potential (sodium, potassium, calcium channels).
-- Ligand-gated - open when a chemical binds (the nicotinic acetylcholine receptor).
-- Mechanically gated - open in response to physical force (stretch receptors in the gut, bladder, and blood vessels).
+- Voltage-gated → open in response to changes in membrane potential (sodium, potassium, calcium channels).
+- Ligand-gated → open when a chemical binds (the nicotinic acetylcholine receptor).
+- Mechanically gated → open in response to physical force (stretch receptors in the gut, bladder, and blood vessels).
 
 Crucial insight: ion channels are fast, precise and electrically important. Drugs acting on them produce rapid, reversible effects that can be tuned by dose. They are the reason local anaesthetics work within seconds, calcium channel blockers lower blood pressure, and antiarrhythmics stabilise the heart. Understanding ion channels is essential for understanding any drug that affects nerve or muscle function.`
     },
@@ -24670,18 +24670,18 @@ The answer is that enzymes come in two kinds: enzymes we want to suppress (those
 
 The main mechanisms of enzyme inhibition by drugs:
 
-- Competitive inhibition - the drug binds at the active site, competing with the natural substrate. It can be overcome by increasing substrate concentration.
-- Non-competitive inhibition - the drug binds elsewhere on the enzyme and changes its shape, so the active site no longer works properly.
-- Irreversible inhibition - the drug forms a covalent bond with the enzyme, permanently inactivating it. New enzyme must be synthesised to restore activity.
+- Competitive inhibition → the drug binds at the active site, competing with the natural substrate. It can be overcome by increasing substrate concentration.
+- Non-competitive inhibition → the drug binds elsewhere on the enzyme and changes its shape, so the active site no longer works properly.
+- Irreversible inhibition → the drug forms a covalent bond with the enzyme, permanently inactivating it. New enzyme must be synthesised to restore activity.
 
 Key examples of enzyme inhibitor drugs:
 
-- Aspirin - irreversibly inhibits cyclooxygenase (COX), reducing pain, inflammation and fever.
-- Statins - competitively inhibit HMG-CoA reductase, lowering cholesterol synthesis.
-- ACE inhibitors - inhibit angiotensin-converting enzyme, lowering blood pressure.
-- Penicillin - irreversibly inhibits bacterial transpeptidase, blocking cell wall synthesis.
-- Methotrexate - inhibits dihydrofolate reductase, used in cancer and autoimmune disease.
-- Allopurinol - inhibits xanthine oxidase, lowering uric acid in gout.
+- Aspirin → irreversibly inhibits cyclooxygenase (COX), reducing pain, inflammation and fever.
+- Statins → competitively inhibit HMG-CoA reductase, lowering cholesterol synthesis.
+- ACE inhibitors → inhibit angiotensin-converting enzyme, lowering blood pressure.
+- Penicillin → irreversibly inhibits bacterial transpeptidase, blocking cell wall synthesis.
+- Methotrexate → inhibits dihydrofolate reductase, used in cancer and autoimmune disease.
+- Allopurinol → inhibits xanthine oxidase, lowering uric acid in gout.
 
 Crucial insight: enzyme inhibition is one of the most precise forms of drug action. Because enzymes are specific for their substrates, drugs that inhibit them can be specific for one biochemical pathway and produce effects limited to that pathway. This is why enzyme inhibitors are the backbone of modern therapy - from antibiotics to antihypertensives to cancer drugs.`
     },
@@ -24695,13 +24695,13 @@ The answer is that blocking a transporter allows you to control the concentratio
 
 Key examples of transporter-targeting drugs:
 
-- Selective serotonin reuptake inhibitors (SSRIs) - block the serotonin transporter, increasing serotonin in the synapse. Used for depression and anxiety.
-- Tricyclic antidepressants - block serotonin and noradrenaline transporters.
-- Selective noradrenaline reuptake inhibitors (SNRIs) - block noradrenaline and serotonin transporters.
-- Sodium-glucose cotransporter-2 (SGLT2) inhibitors - block glucose reabsorption in the kidney, so glucose is excreted in the urine. Used for diabetes.
-- Proton pump inhibitors (PPIs) - block the gastric H+/K+ ATPase, reducing stomach acid. Used for GORD and peptic ulcer disease.
-- Digoxin - inhibits the sodium-potassium ATPase in cardiac muscle, which is both a pump and a transporter.
-- Cocaine - blocks the dopamine transporter, increasing dopamine in the synapse.
+- Selective serotonin reuptake inhibitors (SSRIs) → block the serotonin transporter, increasing serotonin in the synapse. Used for depression and anxiety.
+- Tricyclic antidepressants → block serotonin and noradrenaline transporters.
+- Selective noradrenaline reuptake inhibitors (SNRIs) → block noradrenaline and serotonin transporters.
+- Sodium-glucose cotransporter-2 (SGLT2) inhibitors → block glucose reabsorption in the kidney, so glucose is excreted in the urine. Used for diabetes.
+- Proton pump inhibitors (PPIs) → block the gastric H+/K+ ATPase, reducing stomach acid. Used for GORD and peptic ulcer disease.
+- Digoxin → inhibits the sodium-potassium ATPase in cardiac muscle, which is both a pump and a transporter.
+- Cocaine → blocks the dopamine transporter, increasing dopamine in the synapse.
 
 Crucial insight: transporters control what enters and leaves cells, and blocking them changes the concentration of a substance at a specific site. They are the target of some of the most commonly prescribed drugs - antidepressants, diabetes drugs, and acid-suppressing drugs. Understanding transporters is essential for understanding how these drugs work.`
     },
@@ -24715,10 +24715,10 @@ The answer is affinity and specificity. Affinity is how strongly the drug binds 
 
 The forces that hold a drug to its target:
 
-- Ionic bonds - attractions between oppositely charged groups.
-- Hydrogen bonds - between polar groups.
-- Hydrophobic interactions - between non-polar regions, driven by water exclusion.
-- Van der Waals forces - weak attractions between close atoms.
+- Ionic bonds → attractions between oppositely charged groups.
+- Hydrogen bonds → between polar groups.
+- Hydrophobic interactions → between non-polar regions, driven by water exclusion.
+- Van der Waals forces → weak attractions between close atoms.
 
 None of these bonds is individually strong, but together - and multiplied across many atoms in the drug and the binding site - they add up to significant binding energy. The stronger the fit and the more bonds, the higher the affinity.
 
@@ -24726,7 +24726,7 @@ Selectivity depends on shape complementarity:
 
 - The drug's shape must match the binding site's shape.
 - The chemical groups on the drug must match the chemical groups in the site.
-- Any mismatch - in size, shape or charge - reduces binding.
+- Any mismatch → in size, shape or charge - reduces binding.
 
 Drug selectivity is rarely perfect. Most drugs bind their intended target with high affinity and other targets with lower affinity. The ratio between the two determines the drug's therapeutic window and its side-effect profile.
 
@@ -24745,14 +24745,14 @@ What happens at the molecular level when a drug binds:
 - The drug approaches the binding site through random diffusion.
 - It forms weak bonds with complementary groups in the site.
 - As more bonds form, the drug is held more tightly.
-- The receptor undergoes a conformational change - it shifts from an inactive to an active shape (agonists) or locks in an inactive shape (antagonists).
-- The changed receptor interacts with downstream molecules - a G-protein, an enzyme, an ion channel, another protein.
+- The receptor undergoes a conformational change → it shifts from an inactive to an active shape (agonists) or locks in an inactive shape (antagonists).
+- The changed receptor interacts with downstream molecules → a G-protein, an enzyme, an ion channel, another protein.
 - A signal is generated inside the cell.
 
 Two important distinctions:
 
-- Binding without activation - an antagonist binds the receptor and holds it in an inactive shape. Binding occurs, but no downstream signal is produced.
-- Binding with activation - an agonist binds and stabilises the active shape, triggering the downstream signal.
+- Binding without activation → an antagonist binds the receptor and holds it in an inactive shape. Binding occurs, but no downstream signal is produced.
+- Binding with activation → an agonist binds and stabilises the active shape, triggering the downstream signal.
 
 Crucial insight: drug action is a conformational event. The drug's real job is not to sit in a binding site but to change the shape of the receptor - to switch it on or lock it off. Understanding this is essential because it explains why two drugs can bind the same receptor with the same affinity but produce opposite effects: one stabilises the active shape, and the other stabilises the inactive shape.`
     },
@@ -24766,16 +24766,16 @@ The answer is that the receptor activates a cascade of intracellular signalling 
 
 The main downstream signalling mechanisms:
 
-- G-protein coupled receptors - activate G-proteins, which regulate enzymes (adenylyl cyclase, phospholipase C) that produce second messengers (cAMP, IP3, DAG). These second messengers trigger the response.
-- Ion channel receptors - open the channel, allowing ions to flow through and change the cell's electrical state. This triggers nerve or muscle activity.
-- Enzyme-linked receptors - autophosphorylate and recruit downstream proteins through phosphorylation cascades. This changes gene expression, cell growth or metabolism.
-- Nuclear receptors - move to the nucleus and directly change gene transcription. This produces slow, long-lasting effects.
+- G-protein coupled receptors → activate G-proteins, which regulate enzymes (adenylyl cyclase, phospholipase C) that produce second messengers (cAMP, IP3, DAG). These second messengers trigger the response.
+- Ion channel receptors → open the channel, allowing ions to flow through and change the cell's electrical state. This triggers nerve or muscle activity.
+- Enzyme-linked receptors → autophosphorylate and recruit downstream proteins through phosphorylation cascades. This changes gene expression, cell growth or metabolism.
+- Nuclear receptors → move to the nucleus and directly change gene transcription. This produces slow, long-lasting effects.
 
 Where drug effects come from:
 
-- Amplification - a small number of drug-receptor complexes can activate a large number of downstream molecules, so even partial receptor occupancy can produce a large response.
-- Specificity - the pathway activated depends on the receptor, so the effect is limited to the tissues and processes that receptor controls.
-- Side effects - off-target binding, or binding to the same receptor in the wrong tissue, produces unintended effects.
+- Amplification → a small number of drug-receptor complexes can activate a large number of downstream molecules, so even partial receptor occupancy can produce a large response.
+- Specificity → the pathway activated depends on the receptor, so the effect is limited to the tissues and processes that receptor controls.
+- Side effects → off-target binding, or binding to the same receptor in the wrong tissue, produces unintended effects.
 
 Crucial insight: the response to a drug is not produced by the binding itself but by the signalling cascade that binding triggers. Understanding the cascade is what allows pharmacology to predict what a drug will do, why it produces side effects, and how to design better drugs that activate or block only the pathways you want.`
     },
@@ -24915,10 +24915,10 @@ The answer is that the receptor must itself be the effector. There is no time fo
 
 The key features of ligand-gated ion channels:
 
-- They are fast - effects occur within milliseconds.
-- They are direct - binding opens the channel, no second messenger required.
-- They are usually excitatory or inhibitory - the ion that flows determines the effect.
-- They are found where speed matters - at synapses, at the neuromuscular junction, in the retina.
+- They are fast → effects occur within milliseconds.
+- They are direct → binding opens the channel, no second messenger required.
+- They are usually excitatory or inhibitory → the ion that flows determines the effect.
+- They are found where speed matters → at synapses, at the neuromuscular junction, in the retina.
 
 The classic example is the nicotinic acetylcholine receptor at the neuromuscular junction. When acetylcholine binds, the channel opens, sodium ions flow in, the muscle fibre depolarises, and contraction follows. Every voluntary movement you make depends on this receptor.
 
@@ -24943,7 +24943,7 @@ What makes GPCRs so druggable:
 
 - They sit on the cell surface, so drugs do not need to enter the cell to reach them.
 - They have a defined binding pocket that can be targeted with high specificity.
-- They mediate almost every major physiological process - so almost every disease has a GPCR-based treatment option.
+- They mediate almost every major physiological process → so almost every disease has a GPCR-based treatment option.
 - Their activity can be tuned up or down with agonists, antagonists, and allosteric modulators.
 
 Crucial insight: GPCRs dominate pharmacology because they are the body's most versatile signalling platform. They are accessible, specific, and involved in nearly every physiological process. When you study beta-blockers, antihistamines, opioids, dopamine agonists and antipsychotics, you are studying drugs that act on GPCRs. Understanding the GPCR is understanding the majority of clinical pharmacology.`
@@ -24958,19 +24958,19 @@ The answer is that the G-protein is the amplifier and the switch. When the GPCR 
 
 The cycle of G-protein activation:
 
-- Resting state - the G-protein exists as a trimer: alpha, beta and gamma subunits. The alpha subunit is bound to GDP and is inactive.
-- Receptor activation - the ligand binds the GPCR, which changes shape and interacts with the G-protein.
-- GDP-GTP exchange - the alpha subunit releases GDP and binds GTP. This is the activation step.
-- Subunit dissociation - the alpha subunit (now GTP-bound) separates from the beta-gamma dimer.
-- Effector modulation - both the alpha subunit and the beta-gamma dimer can interact with effector proteins (enzymes, ion channels), producing the cellular signal.
-- Signal termination - the alpha subunit has intrinsic GTPase activity and eventually hydrolyses GTP to GDP, returning to the resting state.
+- Resting state → the G-protein exists as a trimer: alpha, beta and gamma subunits. The alpha subunit is bound to GDP and is inactive.
+- Receptor activation → the ligand binds the GPCR, which changes shape and interacts with the G-protein.
+- GDP-GTP exchange → the alpha subunit releases GDP and binds GTP. This is the activation step.
+- Subunit dissociation → the alpha subunit (now GTP-bound) separates from the beta-gamma dimer.
+- Effector modulation → both the alpha subunit and the beta-gamma dimer can interact with effector proteins (enzymes, ion channels), producing the cellular signal.
+- Signal termination → the alpha subunit has intrinsic GTPase activity and eventually hydrolyses GTP to GDP, returning to the resting state.
 
 The main G-protein families:
 
-- Gs - stimulates adenylyl cyclase, increasing cAMP.
-- Gi - inhibits adenylyl cyclase, decreasing cAMP.
-- Gq - activates phospholipase C, producing IP3 and DAG.
-- G12/13 - regulates Rho GTPases and cytoskeletal changes.
+- Gs → stimulates adenylyl cyclase, increasing cAMP.
+- Gi → inhibits adenylyl cyclase, decreasing cAMP.
+- Gq → activates phospholipase C, producing IP3 and DAG.
+- G12/13 → regulates Rho GTPases and cytoskeletal changes.
 
 Crucial insight: the G-protein is the molecular switch that links the receptor to the effector. It amplifies the signal (one receptor activates many G-proteins), it provides a point of regulation (the GTPase cycle), and it determines what kind of signal the receptor produces (Gs, Gi, Gq, etc.). Many drugs and toxins act on G-proteins directly - cholera toxin and pertussis toxin both disrupt G-protein function, which is how they cause disease.`
     },
@@ -24984,11 +24984,11 @@ The answer is an enzyme-activated second messenger - a small molecule produced i
 
 The main second messengers:
 
-- cAMP (cyclic AMP) - produced by adenylyl cyclase (which Gs activates). Activates protein kinase A (PKA), which phosphorylates many target proteins. Affects metabolism, secretion, ion channel activity, and gene transcription.
-- IP3 (inositol trisphosphate) - produced by phospholipase C (which Gq activates). Diffuses to the endoplasmic reticulum, binds IP3 receptors, and triggers release of calcium into the cytoplasm.
-- DAG (diacylglycerol) - also produced by phospholipase C. Remains in the membrane and activates protein kinase C (PKC), which phosphorylates many targets.
-- Calcium (Ca2+) - released from intracellular stores by IP3. Binds calmodulin and other calcium-binding proteins, triggering muscle contraction, secretion, and gene expression.
-- cGMP (cyclic GMP) - produced by guanylyl cyclase. Activates protein kinase G. Important in smooth muscle relaxation (nitric oxide signalling).
+- cAMP (cyclic AMP) → produced by adenylyl cyclase (which Gs activates). Activates protein kinase A (PKA), which phosphorylates many target proteins. Affects metabolism, secretion, ion channel activity, and gene transcription.
+- IP3 (inositol trisphosphate) → produced by phospholipase C (which Gq activates). Diffuses to the endoplasmic reticulum, binds IP3 receptors, and triggers release of calcium into the cytoplasm.
+- DAG (diacylglycerol) → also produced by phospholipase C. Remains in the membrane and activates protein kinase C (PKC), which phosphorylates many targets.
+- Calcium (Ca2+) → released from intracellular stores by IP3. Binds calmodulin and other calcium-binding proteins, triggering muscle contraction, secretion, and gene expression.
+- cGMP (cyclic GMP) → produced by guanylyl cyclase. Activates protein kinase G. Important in smooth muscle relaxation (nitric oxide signalling).
 
 Crucial insight: second messengers are the amplifiers and broadcasters of the signal. They turn a tiny binding event into a large, cell-wide response. This is why drug doses can be so small and effects so large - and why drugs that interfere with second messengers (like theophylline, which inhibits cAMP breakdown, or sildenafil, which inhibits cGMP breakdown) can have such widespread effects.`
     },
@@ -25005,7 +25005,7 @@ How amplification works in a GPCR cascade:
 - One ligand binds one receptor.
 - The activated receptor activates many G-proteins (amplification step 1).
 - Each activated G-protein activates one adenylyl cyclase enzyme.
-- Each adenylyl cyclase produces many cAMP molecules (amplification step 2 - each enzyme makes many products).
+- Each adenylyl cyclase produces many cAMP molecules (amplification step 2 → each enzyme makes many products).
 - Each cAMP activates one protein kinase A.
 - Each protein kinase A phosphorylates many target proteins (amplification step 3).
 - Each phosphorylated target protein produces a cellular effect.
@@ -25014,9 +25014,9 @@ The overall amplification can be enormous - a single ligand molecule can trigger
 
 Amplification has clinical consequences:
 
-- Low doses can produce large effects - good for dosing.
-- But side effects can also be amplified - a small off-target binding event can produce widespread effects.
-- Amplification can also create toxicity - some drugs produce effects far greater than expected because their signal is amplified more than predicted.
+- Low doses can produce large effects → good for dosing.
+- But side effects can also be amplified → a small off-target binding event can produce widespread effects.
+- Amplification can also create toxicity → some drugs produce effects far greater than expected because their signal is amplified more than predicted.
 
 Crucial insight: signal amplification is why pharmacology can be so powerful - and so dangerous. A small amount of drug can produce a large effect, which is why dose calculations are so critical, why narrow therapeutic index drugs require monitoring, and why understanding the cascade matters for predicting both efficacy and toxicity.`
     },
@@ -25030,16 +25030,16 @@ The answer depends on whether the pathways converge or oppose each other. If bot
 
 Forms of crosstalk:
 
-- Convergence - two pathways activate the same effector, producing a combined effect.
-- Divergence - one receptor activates multiple effectors, producing multiple effects.
-- Antagonism - one pathway inhibits another, allowing the cell to balance opposing signals.
-- Synergy - two pathways together produce an effect greater than either alone.
-- Feedback - a downstream component of a pathway inhibits an upstream component, preventing overstimulation.
+- Convergence → two pathways activate the same effector, producing a combined effect.
+- Divergence → one receptor activates multiple effectors, producing multiple effects.
+- Antagonism → one pathway inhibits another, allowing the cell to balance opposing signals.
+- Synergy → two pathways together produce an effect greater than either alone.
+- Feedback → a downstream component of a pathway inhibits an upstream component, preventing overstimulation.
 
 Examples of crosstalk in medicine:
 
-- Cardiac myocytes receive both sympathetic (Gs) and parasympathetic (Gi) input. The balance determines the heart rate - which is why drugs that affect either pathway can change heart rate.
-- Growth factor receptors (tyrosine kinase) and GPCRs can activate shared downstream pathways (MAPK, PI3K). This crosstalk is important in cancer - a tumour may become resistant to one drug because another pathway compensates.
+- Cardiac myocytes receive both sympathetic (Gs) and parasympathetic (Gi) input. The balance determines the heart rate → which is why drugs that affect either pathway can change heart rate.
+- Growth factor receptors (tyrosine kinase) and GPCRs can activate shared downstream pathways (MAPK, PI3K). This crosstalk is important in cancer → a tumour may become resistant to one drug because another pathway compensates.
 - Insulin signalling and glucagon signalling both act on hepatocytes, and their balance determines whether the liver stores or releases glucose.
 
 Crucial insight: crosstalk is what makes cell signalling so complex and so responsive. It allows the cell to integrate many inputs at once, producing a coherent response. But it also means that drugs acting on one pathway can have unexpected effects on another - a fact that underlies many drug interactions and side effects.`
@@ -25054,16 +25054,16 @@ The answer is that the cell has mechanisms to protect itself from overstimulatio
 
 Mechanisms of desensitisation:
 
-- Phosphorylation - a kinase phosphorylates the receptor, reducing its ability to activate its G-protein. This happens within seconds to minutes. The receptor is still on the surface but is functionally uncoupled.
-- Arrestin binding - after phosphorylation, arrestin binds the receptor, further blocking G-protein coupling and targeting the receptor for internalisation.
-- Internalisation - the receptor is pulled into the cell by endocytosis, removing it from the surface. It may be recycled back to the surface (resensitisation) or degraded.
-- Downregulation - if stimulation continues for hours to days, the cell reduces the number of receptors it produces. This is a slower, longer-lasting form of desensitisation.
+- Phosphorylation → a kinase phosphorylates the receptor, reducing its ability to activate its G-protein. This happens within seconds to minutes. The receptor is still on the surface but is functionally uncoupled.
+- Arrestin binding → after phosphorylation, arrestin binds the receptor, further blocking G-protein coupling and targeting the receptor for internalisation.
+- Internalisation → the receptor is pulled into the cell by endocytosis, removing it from the surface. It may be recycled back to the surface (resensitisation) or degraded.
+- Downregulation → if stimulation continues for hours to days, the cell reduces the number of receptors it produces. This is a slower, longer-lasting form of desensitisation.
 
 Clinical examples:
 
-- Beta-agonists used in asthma - repeated use can cause desensitisation of beta-adrenergic receptors, reducing bronchodilation. This is why long-acting beta-agonists are used with corticosteroids.
-- Opioids - repeated use causes desensitisation and downregulation of mu-opioid receptors, which contributes to tolerance and the need for dose escalation.
-- Dopamine agonists in Parkinson's disease - long-term use can cause desensitisation and the "on-off" phenomenon.
+- Beta-agonists used in asthma → repeated use can cause desensitisation of beta-adrenergic receptors, reducing bronchodilation. This is why long-acting beta-agonists are used with corticosteroids.
+- Opioids → repeated use causes desensitisation and downregulation of mu-opioid receptors, which contributes to tolerance and the need for dose escalation.
+- Dopamine agonists in Parkinson's disease → long-term use can cause desensitisation and the "on-off" phenomenon.
 
 Crucial insight: desensitisation is the cell's protective response to overstimulation. It is a form of homeostasis at the receptor level. Understanding it explains why drugs must sometimes be given in pulses rather than continuously, why tolerance develops, and why some drugs lose effectiveness over time. It is also the mechanism behind drug withdrawal - when the drug is removed, the desensitised receptors recover, producing an exaggerated response to endogenous ligands.`
     },
@@ -25077,10 +25077,10 @@ The answer is a signalling pathway that is stuck in the "on" state - a receptor 
 
 **Cancer and signalling:**
 
-- RAS mutations - RAS is a small G-protein that relays growth signals. In many cancers, mutations lock RAS in the GTP-bound (active) form, so it signals continuously. Around 30% of all human cancers have a RAS mutation.
-- BCR-ABL fusion - in chronic myeloid leukaemia, a chromosomal translocation creates a fusion protein with constitutive tyrosine kinase activity. Imatinib (Gleevec) was designed to inhibit this kinase and is one of the first targeted cancer therapies.
-- HER2 amplification - in some breast cancers, the HER2 receptor (an enzyme-linked receptor) is overexpressed, driving excessive growth signalling. Trastuzumab (Herceptin) targets HER2.
-- GPCR mutations - some tumours have mutations in GPCRs that cause constitutive activation.
+- RAS mutations → RAS is a small G-protein that relays growth signals. In many cancers, mutations lock RAS in the GTP-bound (active) form, so it signals continuously. Around 30% of all human cancers have a RAS mutation.
+- BCR-ABL fusion → in chronic myeloid leukaemia, a chromosomal translocation creates a fusion protein with constitutive tyrosine kinase activity. Imatinib (Gleevec) was designed to inhibit this kinase and is one of the first targeted cancer therapies.
+- HER2 amplification → in some breast cancers, the HER2 receptor (an enzyme-linked receptor) is overexpressed, driving excessive growth signalling. Trastuzumab (Herceptin) targets HER2.
+- GPCR mutations → some tumours have mutations in GPCRs that cause constitutive activation.
 
 **Myasthenia gravis and signalling:**
 
@@ -25088,9 +25088,9 @@ Myasthenia gravis is an autoimmune disease in which antibodies attack the nicoti
 
 Other examples of signalling disease:
 
-- Cholera - the cholera toxin modifies the Gs alpha subunit so it cannot hydrolyse GTP. Adenylyl cyclase is permanently active, cAMP is high, and the intestinal cells secrete massive amounts of fluid.
-- Whooping cough - the pertussis toxin modifies the Gi alpha subunit so it cannot be activated, removing an inhibitory signal and increasing cAMP.
-- Diabetes - insulin signalling is defective (in type 2) or absent (in type 1), so glucose uptake by cells is impaired.
+- Cholera → the cholera toxin modifies the Gs alpha subunit so it cannot hydrolyse GTP. Adenylyl cyclase is permanently active, cAMP is high, and the intestinal cells secrete massive amounts of fluid.
+- Whooping cough → the pertussis toxin modifies the Gi alpha subunit so it cannot be activated, removing an inhibitory signal and increasing cAMP.
+- Diabetes → insulin signalling is defective (in type 2) or absent (in type 1), so glucose uptake by cells is impaired.
 
 Crucial insight: signal transduction is a chain, and a defect in any link can cause disease. Cancer often results from a signalling pathway stuck "on"; autoimmune disease can result from a receptor being attacked; toxins can disrupt G-protein cycling; metabolic disease can result from impaired insulin signalling. Understanding signal transduction is understanding the molecular basis of many of the most important diseases in medicine.`
     },
@@ -25104,28 +25104,28 @@ The answer is that each drug acts on a distinct part of the signalling cascade -
 
 Drugs that act on GPCR signalling:
 
-- Beta-blockers (atenolol, metoprolol) - antagonists at beta-adrenergic receptors (Gs-coupled). They block noradrenaline's effect, reducing heart rate and blood pressure.
-- Beta-agonists (salbutamol) - agonists at beta-2 adrenergic receptors (Gs-coupled). They increase cAMP in airway smooth muscle, causing bronchodilation.
-- Antihistamines - antagonists at H1 receptors (Gq-coupled). They block histamine's effects, reducing allergy symptoms.
-- Opioids (morphine) - agonists at mu-opioid receptors (Gi-coupled). They reduce cAMP and hyperpolarise neurons, producing analgesia.
+- Beta-blockers (atenolol, metoprolol) → antagonists at beta-adrenergic receptors (Gs-coupled). They block noradrenaline's effect, reducing heart rate and blood pressure.
+- Beta-agonists (salbutamol) → agonists at beta-2 adrenergic receptors (Gs-coupled). They increase cAMP in airway smooth muscle, causing bronchodilation.
+- Antihistamines → antagonists at H1 receptors (Gq-coupled). They block histamine's effects, reducing allergy symptoms.
+- Opioids (morphine) → agonists at mu-opioid receptors (Gi-coupled). They reduce cAMP and hyperpolarise neurons, producing analgesia.
 
 Drugs that act on second messengers:
 
-- Theophylline - inhibits phosphodiesterase, the enzyme that breaks down cAMP. Used in asthma and COPD.
-- Sildenafil (Viagra) - inhibits phosphodiesterase type 5, the enzyme that breaks down cGMP. Used in erectile dysfunction and pulmonary hypertension.
-- Caffeine - inhibits phosphodiesterase, increasing cAMP. This contributes to its stimulant effect.
+- Theophylline → inhibits phosphodiesterase, the enzyme that breaks down cAMP. Used in asthma and COPD.
+- Sildenafil (Viagra) → inhibits phosphodiesterase type 5, the enzyme that breaks down cGMP. Used in erectile dysfunction and pulmonary hypertension.
+- Caffeine → inhibits phosphodiesterase, increasing cAMP. This contributes to its stimulant effect.
 
 Drugs that act on enzyme-linked receptors:
 
-- Insulin - agonist at the insulin receptor (tyrosine kinase). Used in diabetes.
-- Imatinib - inhibits the BCR-ABL tyrosine kinase. Used in chronic myeloid leukaemia.
-- Trastuzumab - monoclonal antibody against HER2. Used in HER2-positive breast cancer.
+- Insulin → agonist at the insulin receptor (tyrosine kinase). Used in diabetes.
+- Imatinib → inhibits the BCR-ABL tyrosine kinase. Used in chronic myeloid leukaemia.
+- Trastuzumab → monoclonal antibody against HER2. Used in HER2-positive breast cancer.
 
 Drugs that act on nuclear receptors:
 
-- Corticosteroids (prednisolone, dexamethasone) - agonists at the glucocorticoid receptor. They change gene expression, reducing inflammation.
-- Oestrogen and progesterone - agonists at their respective nuclear receptors. Used in contraception and hormone replacement.
-- Thyroid hormone - agonist at the thyroid hormone receptor.
+- Corticosteroids (prednisolone, dexamethasone) → agonists at the glucocorticoid receptor. They change gene expression, reducing inflammation.
+- Oestrogen and progesterone → agonists at their respective nuclear receptors. Used in contraception and hormone replacement.
+- Thyroid hormone → agonist at the thyroid hormone receptor.
 
 Crucial insight: signal transduction is the mechanism behind a huge proportion of clinical drugs. Whether the drug acts on a receptor, a G-protein, a second messenger, or a downstream kinase, it is modifying a signalling cascade. Understanding the cascade lets you predict what the drug will do, why it causes the side effects it does, and how it interacts with other drugs that affect the same pathway. This is why signal transduction is one of the most important topics in pharmacology.`
     },
@@ -25237,11 +25237,11 @@ The answer is that the relationship between dose and effect is not linear - it f
 
 The core concepts:
 
-- Dose (or concentration) - the amount of drug administered or present at the target.
-- Response (or effect) - the measurable biological change produced.
-- Dose-response curve - a graph plotting response against dose, which typically takes a sigmoid (S-shaped) form.
-- Potency - how much drug is needed to produce a given effect.
-- Efficacy - the maximum effect a drug can produce.
+- Dose (or concentration) → the amount of drug administered or present at the target.
+- Response (or effect) → the measurable biological change produced.
+- Dose-response curve → a graph plotting response against dose, which typically takes a sigmoid (S-shaped) form.
+- Potency → how much drug is needed to produce a given effect.
+- Efficacy → the maximum effect a drug can produce.
 
 Crucial insight: quantitative drug-receptor interactions turn pharmacology from a descriptive science into a predictive one. Once you know a drug's dose-response curve, you can predict what a given dose will do - and you can compare drugs on a level playing field. This topic gives you the tools to do exactly that.`
     },
@@ -25255,9 +25255,9 @@ The answer is receptor occupancy. At low doses, few receptors are occupied, so t
 
 The three key features of the curve:
 
-- Threshold dose - the minimum dose at which any effect is detectable.
-- Slope - how steeply the response rises with dose. A steep slope means the effect is very sensitive to small dose changes (common with narrow therapeutic index drugs). A shallow slope means the opposite.
-- Maximum effect (Emax) - the greatest effect the drug can produce, reached when the receptors are saturated.
+- Threshold dose → the minimum dose at which any effect is detectable.
+- Slope → how steeply the response rises with dose. A steep slope means the effect is very sensitive to small dose changes (common with narrow therapeutic index drugs). A shallow slope means the opposite.
+- Maximum effect (Emax) → the greatest effect the drug can produce, reached when the receptors are saturated.
 
 The curve is often plotted as log dose versus response, which converts the sigmoid into a more symmetric shape that is easier to analyse. This log-dose plot is the standard in pharmacology.
 
@@ -25273,13 +25273,13 @@ The answer is not necessarily. Potency is a measure of the dose required, not of
 
 Potency is quantified by the EC50 (or ED50) - the dose that produces 50% of the maximum effect.
 
-- A lower EC50 means the drug achieves half its maximum effect at a lower dose - it is more potent.
-- A higher EC50 means more drug is needed - it is less potent.
+- A lower EC50 means the drug achieves half its maximum effect at a lower dose → it is more potent.
+- A higher EC50 means more drug is needed → it is less potent.
 
 Potency matters clinically because:
 
 - A more potent drug allows a smaller dose, which can reduce side effects related to dose (e.g. pill burden, injection volume).
-- But a more potent drug is not necessarily safer - it may have a narrower therapeutic index.
+- But a more potent drug is not necessarily safer → it may have a narrower therapeutic index.
 - Potency is also important in drug development, because a more potent drug requires less manufacturing cost per dose.
 
 Crucial insight: potency is about how much drug you need, not what the drug can do. It is measured by EC50. A more potent drug is not automatically better - it just requires a smaller dose to produce a given effect. Efficacy - the maximum effect - is what determines clinical usefulness. Confusing the two is one of the most common errors in pharmacology.`
@@ -25299,9 +25299,9 @@ Efficacy is quantified by the Emax - the maximum effect the drug can produce.
 
 Full agonists versus partial agonists:
 
-- A full agonist has high efficacy - it produces the full maximal response.
-- A partial agonist has lower efficacy - it produces a smaller maximal response even when all receptors are occupied.
-- This is why a partial agonist can act as an antagonist when a full agonist is present - it occupies the receptor but produces less effect, effectively reducing the overall response.
+- A full agonist has high efficacy → it produces the full maximal response.
+- A partial agonist has lower efficacy → it produces a smaller maximal response even when all receptors are occupied.
+- This is why a partial agonist can act as an antagonist when a full agonist is present → it occupies the receptor but produces less effect, effectively reducing the overall response.
 
 Crucial insight: efficacy is what determines the ceiling of a drug's usefulness. Potency tells you how much drug you need; efficacy tells you how much effect you can get. A high-efficacy drug can be used for severe conditions; a low-efficacy drug may be useful for mild ones but is limited by its ceiling. Understanding both - potency and efficacy - is essential for choosing the right drug for the right patient.`
     },
@@ -25315,10 +25315,10 @@ The answer is that the effect does not increase further - it has reached its cei
 
 The concept of the ceiling has several implications:
 
-- Ceiling effect - once the maximum effect is reached, increasing the dose does not increase the effect.
-- Therapeutic ceiling - the maximum dose that produces additional benefit without unacceptable side effects.
-- Dose-limiting toxicity - side effects that limit how much drug can be given before the therapeutic ceiling is reached.
-- Narrow therapeutic index - drugs where the therapeutic ceiling is close to the toxic dose, requiring careful monitoring.
+- Ceiling effect → once the maximum effect is reached, increasing the dose does not increase the effect.
+- Therapeutic ceiling → the maximum dose that produces additional benefit without unacceptable side effects.
+- Dose-limiting toxicity → side effects that limit how much drug can be given before the therapeutic ceiling is reached.
+- Narrow therapeutic index → drugs where the therapeutic ceiling is close to the toxic dose, requiring careful monitoring.
 
 A related concept is the "ceiling effect" of agonist efficacy. A partial agonist has a lower ceiling than a full agonist - it produces a smaller maximum effect. This is why partial agonists can be useful: they produce a moderate effect without the full risks of a full agonist (e.g. buprenorphine, a partial opioid agonist, produces analgesia with less respiratory depression than morphine).
 
@@ -25334,10 +25334,10 @@ The answer is that there are four main types of antagonism, and they work in dif
 
 The four types of antagonism:
 
-- Competitive antagonism - the antagonist binds reversibly at the same site as the agonist, competing with it. Increasing the agonist concentration can overcome the block. The antagonist shifts the dose-response curve to the right, without reducing the maximum effect. Example: beta-blockers at beta-adrenergic receptors.
-- Non-competitive antagonism - the antagonist binds at a different site, or binds irreversibly, so that increasing the agonist concentration cannot overcome the block. The antagonist reduces the maximum effect. Example: phenoxybenzamine at alpha-adrenergic receptors (irreversible).
-- Uncompetitive antagonism - the antagonist binds only to the agonist-receptor complex, not to the free receptor. It reduces both the potency and the maximum effect. This is rare in clinical pharmacology but important in theory.
-- Functional (physiological) antagonism - the antagonist acts on a different receptor to produce the opposite effect. It does not compete at the same receptor at all. Example: adrenaline (beta-agonist) and histamine (H1-agonist) have opposing effects on blood pressure - each is a functional antagonist of the other.
+- Competitive antagonism → the antagonist binds reversibly at the same site as the agonist, competing with it. Increasing the agonist concentration can overcome the block. The antagonist shifts the dose-response curve to the right, without reducing the maximum effect. Example: beta-blockers at beta-adrenergic receptors.
+- Non-competitive antagonism → the antagonist binds at a different site, or binds irreversibly, so that increasing the agonist concentration cannot overcome the block. The antagonist reduces the maximum effect. Example: phenoxybenzamine at alpha-adrenergic receptors (irreversible).
+- Uncompetitive antagonism → the antagonist binds only to the agonist-receptor complex, not to the free receptor. It reduces both the potency and the maximum effect. This is rare in clinical pharmacology but important in theory.
+- Functional (physiological) antagonism → the antagonist acts on a different receptor to produce the opposite effect. It does not compete at the same receptor at all. Example: adrenaline (beta-agonist) and histamine (H1-agonist) have opposing effects on blood pressure - each is a functional antagonist of the other.
 
 Chemical antagonism - a special case where the antagonist chemically inactivates the agonist before it reaches the receptor. Example: protamine sulphate binds heparin and neutralises it.
 
@@ -25353,19 +25353,19 @@ The answer is that binding is a physical interaction, and no drug fits only one 
 
 The key concepts:
 
-- Selectivity (or specificity) - how well a drug distinguishes its intended target from other targets.
-- Off-target binding - binding to a receptor other than the intended one.
-- Side effects - effects produced by off-target binding or by the drug's action on its intended target in an unintended tissue.
-- Therapeutic window - the range of drug concentrations that produces the desired effect without unacceptable side effects.
+- Selectivity (or specificity) → how well a drug distinguishes its intended target from other targets.
+- Off-target binding → binding to a receptor other than the intended one.
+- Side effects → effects produced by off-target binding or by the drug's action on its intended target in an unintended tissue.
+- Therapeutic window → the range of drug concentrations that produces the desired effect without unacceptable side effects.
 
 Selectivity is rarely absolute. Most drugs have a "selectivity profile" - they bind their intended target with the highest affinity, and other targets with lower affinity. The clinical usefulness of a drug depends on the ratio between its intended and unintended effects.
 
 Selectivity can be improved by:
 
-- Drug design - making the drug fit the target more specifically.
-- Dose selection - using the lowest effective dose.
-- Route of administration - targeting the drug to the tissue where it is needed.
-- Combining drugs - using lower doses of multiple drugs to reduce side effects.
+- Drug design → making the drug fit the target more specifically.
+- Dose selection → using the lowest effective dose.
+- Route of administration → targeting the drug to the tissue where it is needed.
+- Combining drugs → using lower doses of multiple drugs to reduce side effects.
 
 Crucial insight: side effects are not an accident - they are the direct consequence of the drug binding targets it was not designed for. Understanding the selectivity profile of a drug explains why beta-blockers cause bronchospasm in asthmatics (beta-2 receptors in the lungs), why antihistamines cause drowsiness (H1 receptors in the brain), and why tricyclic antidepressants cause dry mouth and constipation (muscarinic receptors in the gut and salivary glands). Every side effect has a mechanism, and every mechanism is a target.`
     },
@@ -25383,15 +25383,15 @@ A high TI means the toxic dose is much higher than the effective dose - a wide s
 
 Interpreting the TI:
 
-- TI > 10 - a wide margin, relatively safe. Penicillin has a very high TI - you can give enormous doses before toxicity appears.
-- TI between 2 and 10 - a moderate margin, requiring some caution.
-- TI < 2 - a narrow margin, dangerous. Small errors in dose can cause toxicity. Digoxin, warfarin, lithium and phenytoin all have low TIs.
+- TI > 10 → a wide margin, relatively safe. Penicillin has a very high TI - you can give enormous doses before toxicity appears.
+- TI between 2 and 10 → a moderate margin, requiring some caution.
+- TI < 2 → a narrow margin, dangerous. Small errors in dose can cause toxicity. Digoxin, warfarin, lithium and phenytoin all have low TIs.
 
 Related concepts:
 
-- Therapeutic window - the range of plasma concentrations between the minimum effective concentration and the minimum toxic concentration.
-- Margin of safety - a related measure that accounts for the slope of the dose-response curves.
-- Monitoring - many low-TI drugs require regular blood tests to ensure the plasma concentration remains within the therapeutic window.
+- Therapeutic window → the range of plasma concentrations between the minimum effective concentration and the minimum toxic concentration.
+- Margin of safety → a related measure that accounts for the slope of the dose-response curves.
+- Monitoring → many low-TI drugs require regular blood tests to ensure the plasma concentration remains within the therapeutic window.
 
 Crucial insight: the therapeutic index is the safety metric of pharmacology. It determines how carefully a drug must be dosed, whether plasma monitoring is required, and how much room there is for error. A doctor prescribing digoxin or warfarin knows they are working with a narrow margin - which is why regular blood tests are required to keep the dose in the therapeutic window. The TI is the reason why some drugs are available over the counter and others require intensive monitoring.`
     },
@@ -25405,23 +25405,23 @@ The answer is that the body adapts to the continued presence of the drug. There 
 
 The main forms of decreased responsiveness:
 
-- Tolerance - a reduced response to a drug after repeated administration, requiring higher doses to produce the same effect. It can develop over days to weeks. Example: tolerance to opioids.
-- Tachyphylaxis - rapid tolerance, developing within minutes to hours after repeated administration. Example: tolerance to indirect sympathomimetics like ephedrine.
-- Desensitisation - reduced receptor responsiveness due to receptor phosphorylation, arrestin binding, or internalisation. Occurs within seconds to minutes.
-- Downregulation - a reduction in the number of receptors due to prolonged stimulation, occurring over hours to days.
-- Physiological adaptation - the body compensates through homeostatic mechanisms. Example: the kidney retains sodium in response to vasodilators, reducing their antihypertensive effect.
+- Tolerance → a reduced response to a drug after repeated administration, requiring higher doses to produce the same effect. It can develop over days to weeks. Example: tolerance to opioids.
+- Tachyphylaxis → rapid tolerance, developing within minutes to hours after repeated administration. Example: tolerance to indirect sympathomimetics like ephedrine.
+- Desensitisation → reduced receptor responsiveness due to receptor phosphorylation, arrestin binding, or internalisation. Occurs within seconds to minutes.
+- Downregulation → a reduction in the number of receptors due to prolonged stimulation, occurring over hours to days.
+- Physiological adaptation → the body compensates through homeostatic mechanisms. Example: the kidney retains sodium in response to vasodilators, reducing their antihypertensive effect.
 
 Mechanisms of tolerance:
 
-- Pharmacokinetic tolerance - the body metabolises the drug faster (e.g. enzyme induction by alcohol).
-- Pharmacodynamic tolerance - the target tissue becomes less responsive (e.g. receptor desensitisation).
-- Learned tolerance - the patient adapts behaviourally to the drug's effects.
+- Pharmacokinetic tolerance → the body metabolises the drug faster (e.g. enzyme induction by alcohol).
+- Pharmacodynamic tolerance → the target tissue becomes less responsive (e.g. receptor desensitisation).
+- Learned tolerance → the patient adapts behaviourally to the drug's effects.
 
 Clinical consequences of decreased responsiveness:
 
-- Dose escalation may be needed - but this increases the risk of side effects.
-- Cross-tolerance - tolerance to one drug reduces the response to another in the same class (e.g. tolerance to one opioid reduces the response to another).
-- Withdrawal - when the drug is stopped, the adapted system overreacts, producing withdrawal symptoms.
+- Dose escalation may be needed → but this increases the risk of side effects.
+- Cross-tolerance → tolerance to one drug reduces the response to another in the same class (e.g. tolerance to one opioid reduces the response to another).
+- Withdrawal → when the drug is stopped, the adapted system overreacts, producing withdrawal symptoms.
 
 Crucial insight: decreased responsiveness is the body's adaptation to the continued presence of a drug. It is not a failure of the drug - it is a response of the body. Understanding it explains why long-term therapy requires careful dose adjustment, why some drugs are given in pulses or at the lowest effective dose, and why withdrawal symptoms occur when treatment is stopped abruptly.`
     },
@@ -25435,25 +25435,25 @@ The answer is a whole framework of information - and each piece corresponds to a
 
 The prescribing framework:
 
-- Diagnosis and goal - what process is failing, and what effect does the doctor want to achieve? This sets the target for the drug.
-- Drug selection - which drug acts on the relevant target? This uses the target classes from Topic 1.
-- Potency - how much drug is needed for the effect? This uses EC50. A more potent drug requires a smaller dose.
-- Efficacy - how much effect can the drug produce? This uses Emax. A high-efficacy drug may be needed for severe conditions.
-- Dose-response curve - what is the relationship between dose and effect? This tells the doctor how to adjust the dose and what to expect at different doses.
-- Therapeutic index - how safe is the drug? This determines whether monitoring is needed and how much room there is for error.
-- Selectivity - what side effects are expected? This uses the drug's off-target binding profile.
-- Decreased responsiveness - will the drug lose effectiveness over time? This informs long-term planning and the need for dose adjustment.
-- Antagonism - will other drugs the patient takes interfere? This uses the principles of competitive and non-competitive antagonism.
+- Diagnosis and goal → what process is failing, and what effect does the doctor want to achieve? This sets the target for the drug.
+- Drug selection → which drug acts on the relevant target? This uses the target classes from Topic 1.
+- Potency → how much drug is needed for the effect? This uses EC50. A more potent drug requires a smaller dose.
+- Efficacy → how much effect can the drug produce? This uses Emax. A high-efficacy drug may be needed for severe conditions.
+- Dose-response curve → what is the relationship between dose and effect? This tells the doctor how to adjust the dose and what to expect at different doses.
+- Therapeutic index → how safe is the drug? This determines whether monitoring is needed and how much room there is for error.
+- Selectivity → what side effects are expected? This uses the drug's off-target binding profile.
+- Decreased responsiveness → will the drug lose effectiveness over time? This informs long-term planning and the need for dose adjustment.
+- Antagonism → will other drugs the patient takes interfere? This uses the principles of competitive and non-competitive antagonism.
 
 A practical example - treating hypertension:
 
 - The doctor chooses a beta-blocker (e.g. atenolol) because it acts on beta-adrenergic receptors in the heart to reduce heart rate and cardiac output.
-- The doctor knows the drug's potency - starting dose is typically 25-50 mg, adjusted according to response.
-- The doctor knows the drug's efficacy - beta-blockers can lower blood pressure significantly, but not infinitely (Emax).
-- The doctor knows the therapeutic index - beta-blockers have a moderate TI and require monitoring for bradycardia and bronchospasm.
-- The doctor knows the selectivity profile - beta-1 selective blockers cause fewer respiratory side effects than non-selective ones.
+- The doctor knows the drug's potency → starting dose is typically 25-50 mg, adjusted according to response.
+- The doctor knows the drug's efficacy → beta-blockers can lower blood pressure significantly, but not infinitely (Emax).
+- The doctor knows the therapeutic index → beta-blockers have a moderate TI and require monitoring for bradycardia and bronchospasm.
+- The doctor knows the selectivity profile → beta-1 selective blockers cause fewer respiratory side effects than non-selective ones.
 - The doctor knows tolerance can develop, and may need to adjust the dose over time.
-- The doctor checks for drug interactions - other drugs that affect the same pathway (e.g. verapamil) can cause excessive bradycardia.
+- The doctor checks for drug interactions → other drugs that affect the same pathway (e.g. verapamil) can cause excessive bradycardia.
 
 Crucial insight: quantitative drug-receptor interactions are not abstract theory - they are the tools a doctor uses every day to prescribe safely and effectively. Potency, efficacy, dose-response, therapeutic index, selectivity, antagonism and decreased responsiveness all come together in the clinical decision. Understanding them is what separates a doctor who prescribes by habit from one who prescribes by reasoning.`
     },
@@ -25565,10 +25565,10 @@ The answer is that the drug must pass through a series of stages. It is absorbed
 
 The four components of pharmacokinetics:
 
-- Absorption - how the drug moves from its site of administration into the bloodstream.
-- Distribution - how the drug moves from the blood into the tissues and organs.
-- Metabolism - how the drug is chemically modified, primarily in the liver.
-- Excretion - how the drug and its metabolites are removed from the body, primarily by the kidneys.
+- Absorption → how the drug moves from its site of administration into the bloodstream.
+- Distribution → how the drug moves from the blood into the tissues and organs.
+- Metabolism → how the drug is chemically modified, primarily in the liver.
+- Excretion → how the drug and its metabolites are removed from the body, primarily by the kidneys.
 
 Crucial insight: pharmacokinetics determines whether a drug reaches its target, how long it stays there, and how quickly it is cleared. A drug with excellent pharmacodynamics but poor pharmacokinetics will fail in the clinic - it may never reach the target in sufficient concentration, or it may be eliminated before it can act. Pharmacokinetics is therefore the foundation of rational dosing: it tells you how much to give, how often, and by what route.`
     },
@@ -25582,14 +25582,14 @@ The answer is that the route determines absorption. Different routes have differ
 
 The main routes of administration:
 
-- Oral (PO) - swallowed. The most common route. Absorption occurs mainly in the small intestine. The drug must survive stomach acid, cross the gut wall, and pass through the liver before reaching the systemic circulation (first-pass metabolism). Slower onset, variable absorption.
-- Intravenous (IV) - injected directly into a vein. The drug enters the bloodstream immediately, with 100% bioavailability. Fast onset, precise control, but requires sterile technique and carries a risk of infection or embolism.
-- Intramuscular (IM) - injected into muscle. Absorption is rapid but not instantaneous; the drug is absorbed from the muscle into the blood. Used for vaccines, some antibiotics, and depot preparations.
-- Subcutaneous (SC) - injected under the skin. Similar to IM but slower absorption. Used for insulin, heparin, and some vaccines.
-- Sublingual (SL) - placed under the tongue. The drug is absorbed directly into the bloodstream, bypassing the liver. Fast onset. Used for nitroglycerin and some hormones.
-- Rectal - inserted into the rectum. Absorption is variable but useful when the patient is vomiting or unconscious.
-- Inhalation - breathed into the lungs. Rapid absorption because the lungs have a large surface area and rich blood supply. Used for anaesthetics and bronchodilators.
-- Topical - applied to the skin or mucous membranes. Absorption is usually local, though some drugs can be absorbed systemically.
+- Oral (PO) → swallowed. The most common route. Absorption occurs mainly in the small intestine. The drug must survive stomach acid, cross the gut wall, and pass through the liver before reaching the systemic circulation (first-pass metabolism). Slower onset, variable absorption.
+- Intravenous (IV) → injected directly into a vein. The drug enters the bloodstream immediately, with 100% bioavailability. Fast onset, precise control, but requires sterile technique and carries a risk of infection or embolism.
+- Intramuscular (IM) → injected into muscle. Absorption is rapid but not instantaneous; the drug is absorbed from the muscle into the blood. Used for vaccines, some antibiotics, and depot preparations.
+- Subcutaneous (SC) → injected under the skin. Similar to IM but slower absorption. Used for insulin, heparin, and some vaccines.
+- Sublingual (SL) → placed under the tongue. The drug is absorbed directly into the bloodstream, bypassing the liver. Fast onset. Used for nitroglycerin and some hormones.
+- Rectal → inserted into the rectum. Absorption is variable but useful when the patient is vomiting or unconscious.
+- Inhalation → breathed into the lungs. Rapid absorption because the lungs have a large surface area and rich blood supply. Used for anaesthetics and bronchodilators.
+- Topical → applied to the skin or mucous membranes. Absorption is usually local, though some drugs can be absorbed systemically.
 
 Crucial insight: the route of administration shapes everything about a drug's behaviour - how fast it acts, how much reaches the target, and how much is lost along the way. Choosing the right route is as important as choosing the right drug. A drug that is effective orally may be useless intravenously if it is not formulated for injection; a drug that needs to act within seconds must be given intravenously; a drug that would be destroyed by stomach acid must be given by another route.`
     },
@@ -25603,12 +25603,12 @@ The answer is that crossing a membrane depends on the drug's physicochemical pro
 
 The main factors determining membrane passage:
 
-- Lipid solubility (lipophilicity) - lipid-soluble (lipophilic) drugs cross membranes easily; water-soluble (hydrophilic) drugs do not. The membrane is a lipid bilayer, so lipophilic drugs dissolve through it.
-- Molecular size - small molecules cross more easily than large ones.
-- Charge (ionisation) - uncharged (unionised) drugs cross membranes more easily than charged (ionised) drugs. The ionised form is repelled by the lipid core.
-- pH and pKa - whether a drug is ionised depends on the pH of the environment and the drug's pKa. A weak acid is more unionised in an acidic environment; a weak base is more unionised in an alkaline environment.
-- Concentration gradient - drugs move from high concentration to low concentration (passive diffusion).
-- Presence of transporters - some drugs are moved across membranes by specific carrier proteins (facilitated diffusion or active transport).
+- Lipid solubility (lipophilicity) → lipid-soluble (lipophilic) drugs cross membranes easily; water-soluble (hydrophilic) drugs do not. The membrane is a lipid bilayer, so lipophilic drugs dissolve through it.
+- Molecular size → small molecules cross more easily than large ones.
+- Charge (ionisation) → uncharged (unionised) drugs cross membranes more easily than charged (ionised) drugs. The ionised form is repelled by the lipid core.
+- pH and pKa → whether a drug is ionised depends on the pH of the environment and the drug's pKa. A weak acid is more unionised in an acidic environment; a weak base is more unionised in an alkaline environment.
+- Concentration gradient → drugs move from high concentration to low concentration (passive diffusion).
+- Presence of transporters → some drugs are moved across membranes by specific carrier proteins (facilitated diffusion or active transport).
 
 The pH-partition hypothesis:
 
@@ -25628,16 +25628,16 @@ The answer is that blood from the gut does not go directly to the heart - it goe
 
 Key concepts:
 
-- Bioavailability (F) - the fraction of an administered dose that reaches the systemic circulation unchanged. For intravenous administration, F = 100% (by definition). For oral administration, F is usually less than 100%, sometimes much less.
-- First-pass metabolism - the metabolism of a drug in the gut wall and liver before it reaches the systemic circulation. It reduces bioavailability.
-- Factors affecting bioavailability - drug formulation, food, gastric emptying time, intestinal motility, and liver function.
+- Bioavailability (F) → the fraction of an administered dose that reaches the systemic circulation unchanged. For intravenous administration, F = 100% (by definition). For oral administration, F is usually less than 100%, sometimes much less.
+- First-pass metabolism → the metabolism of a drug in the gut wall and liver before it reaches the systemic circulation. It reduces bioavailability.
+- Factors affecting bioavailability → drug formulation, food, gastric emptying time, intestinal motility, and liver function.
 
 Examples:
 
-- Nitroglycerin - almost completely destroyed by first-pass metabolism if swallowed, which is why it is given sublingually or as a spray.
-- Morphine - has significant first-pass metabolism, so the oral dose is several times higher than the parenteral dose.
-- Propranolol - extensively metabolised by the liver, so its oral bioavailability is low and variable.
-- Lidocaine - completely destroyed by first-pass metabolism, which is why it is never given orally for systemic effects.
+- Nitroglycerin → almost completely destroyed by first-pass metabolism if swallowed, which is why it is given sublingually or as a spray.
+- Morphine → has significant first-pass metabolism, so the oral dose is several times higher than the parenteral dose.
+- Propranolol → extensively metabolised by the liver, so its oral bioavailability is low and variable.
+- Lidocaine → completely destroyed by first-pass metabolism, which is why it is never given orally for systemic effects.
 
 Crucial insight: bioavailability determines how much drug actually reaches the systemic circulation to produce its effect. The first-pass effect can dramatically reduce bioavailability, which is why some drugs are given by routes that bypass the liver (sublingual, intravenous, rectal, transdermal) and why the oral dose of a highly extracted drug is much higher than the intravenous dose. Understanding bioavailability is essential for choosing the right route and dose.`
     },
@@ -25651,20 +25651,20 @@ The answer is the drug's properties and the tissue's properties. Lipophilic drug
 
 Key concepts:
 
-- Volume of distribution (Vd) - the theoretical volume of fluid into which the total amount of drug in the body would need to be diluted to produce the observed plasma concentration. Vd = total amount of drug in body / plasma concentration.
-- High Vd - the drug distributes widely into tissues, so plasma concentration is low. Example: digoxin (Vd ~ 500 L).
-- Low Vd - the drug stays in the blood, so plasma concentration is high. Example: warfarin (Vd ~ 8 L).
-- Plasma protein binding - many drugs bind to plasma proteins, especially albumin. Only the unbound (free) fraction is pharmacologically active and can distribute to tissues.
-- Tissue binding - some drugs bind to tissue components, which can increase Vd and prolong the drug's presence in the body.
-- Barriers - the blood-brain barrier limits distribution of many drugs to the brain; the placental barrier limits distribution to the fetus (though many drugs cross it).
+- Volume of distribution (Vd) → the theoretical volume of fluid into which the total amount of drug in the body would need to be diluted to produce the observed plasma concentration. Vd = total amount of drug in body / plasma concentration.
+- High Vd → the drug distributes widely into tissues, so plasma concentration is low. Example: digoxin (Vd ~ 500 L).
+- Low Vd → the drug stays in the blood, so plasma concentration is high. Example: warfarin (Vd ~ 8 L).
+- Plasma protein binding → many drugs bind to plasma proteins, especially albumin. Only the unbound (free) fraction is pharmacologically active and can distribute to tissues.
+- Tissue binding → some drugs bind to tissue components, which can increase Vd and prolong the drug's presence in the body.
+- Barriers → the blood-brain barrier limits distribution of many drugs to the brain; the placental barrier limits distribution to the fetus (though many drugs cross it).
 
 Factors affecting distribution:
 
-- Lipid solubility - lipophilic drugs distribute widely.
-- Protein binding - highly bound drugs stay in the blood.
-- Tissue perfusion - well-perfused organs (heart, brain, liver, kidneys) receive the drug first.
-- Tissue affinity - some drugs have high affinity for specific tissues.
-- Barriers - the blood-brain barrier and placental barrier.
+- Lipid solubility → lipophilic drugs distribute widely.
+- Protein binding → highly bound drugs stay in the blood.
+- Tissue perfusion → well-perfused organs (heart, brain, liver, kidneys) receive the drug first.
+- Tissue affinity → some drugs have high affinity for specific tissues.
+- Barriers → the blood-brain barrier and placental barrier.
 
 Crucial insight: the volume of distribution tells you where a drug goes and how much of it is available to act. A drug with a high Vd is widely distributed in the body and its plasma concentration will be low; a drug with a low Vd stays in the blood and its plasma concentration will be high. Vd also determines the loading dose needed to achieve a therapeutic plasma concentration quickly, and it affects how easily the drug can be removed by dialysis in overdose.`
     },
@@ -25678,8 +25678,8 @@ The answer is that metabolism converts the drug into a more water-soluble form. 
 
 The two phases of drug metabolism:
 
-- Phase I reactions - these introduce or expose a functional group (such as -OH, -NH2, -COOH, -SH) on the drug molecule. This is usually done by oxidation, reduction or hydrolysis. The most important enzyme system is the cytochrome P450 (CYP) family, which catalyses oxidation reactions. Phase I reactions often (but not always) inactivate the drug. They can also convert a prodrug into its active form.
-- Phase II reactions - these conjugate the drug (or its Phase I metabolite) with a large, water-soluble molecule such as glucuronic acid, sulfate, glycine or glutathione. The conjugate is almost always pharmacologically inactive and highly water-soluble, so it can be excreted by the kidneys or in bile. The most common Phase II reaction is glucuronidation.
+- Phase I reactions → these introduce or expose a functional group (such as -OH, -NH2, -COOH, -SH) on the drug molecule. This is usually done by oxidation, reduction or hydrolysis. The most important enzyme system is the cytochrome P450 (CYP) family, which catalyses oxidation reactions. Phase I reactions often (but not always) inactivate the drug. They can also convert a prodrug into its active form.
+- Phase II reactions → these conjugate the drug (or its Phase I metabolite) with a large, water-soluble molecule such as glucuronic acid, sulfate, glycine or glutathione. The conjugate is almost always pharmacologically inactive and highly water-soluble, so it can be excreted by the kidneys or in bile. The most common Phase II reaction is glucuronidation.
 
 Key points about metabolism:
 
@@ -25702,22 +25702,22 @@ The answer is through the same processes that produce urine: glomerular filtrati
 
 The three renal processes:
 
-- Glomerular filtration - drugs and metabolites that are small enough (and not bound to plasma proteins) are filtered from the blood into the tubular fluid. The filtration rate depends on renal blood flow and glomerular function. Protein-bound drugs are not filtered.
-- Tubular secretion - drugs and metabolites are actively transported from the blood into the tubular fluid by carrier proteins. This is an active process that can be saturated (transport maximum). It is the main mechanism for removing protein-bound drugs, since they are not filtered.
-- Tubular reabsorption - some drugs and metabolites are reabsorbed from the tubular fluid back into the blood. This is usually passive and depends on the drug's lipid solubility and the pH of the urine. Lipid-soluble, unionised drugs are reabsorbed; water-soluble, ionised drugs are not.
+- Glomerular filtration → drugs and metabolites that are small enough (and not bound to plasma proteins) are filtered from the blood into the tubular fluid. The filtration rate depends on renal blood flow and glomerular function. Protein-bound drugs are not filtered.
+- Tubular secretion → drugs and metabolites are actively transported from the blood into the tubular fluid by carrier proteins. This is an active process that can be saturated (transport maximum). It is the main mechanism for removing protein-bound drugs, since they are not filtered.
+- Tubular reabsorption → some drugs and metabolites are reabsorbed from the tubular fluid back into the blood. This is usually passive and depends on the drug's lipid solubility and the pH of the urine. Lipid-soluble, unionised drugs are reabsorbed; water-soluble, ionised drugs are not.
 
 Factors affecting renal excretion:
 
-- Renal function - kidney disease reduces excretion, causing drug accumulation. Dose reduction is often needed.
-- Urine pH - acidic urine promotes excretion of weak bases; alkaline urine promotes excretion of weak acids. This can be manipulated clinically (e.g. alkalinising urine with sodium bicarbonate to treat aspirin overdose).
-- Protein binding - highly protein-bound drugs are poorly filtered.
-- Drug interactions - drugs competing for the same transporters can reduce each other's excretion.
+- Renal function → kidney disease reduces excretion, causing drug accumulation. Dose reduction is often needed.
+- Urine pH → acidic urine promotes excretion of weak bases; alkaline urine promotes excretion of weak acids. This can be manipulated clinically (e.g. alkalinising urine with sodium bicarbonate to treat aspirin overdose).
+- Protein binding → highly protein-bound drugs are poorly filtered.
+- Drug interactions → drugs competing for the same transporters can reduce each other's excretion.
 
 Other routes of excretion:
 
-- Biliary excretion - the liver secretes some drugs and metabolites into bile, which is then excreted in faeces. Some drugs undergo enterohepatic recirculation (they are reabsorbed from the gut after biliary excretion).
-- Pulmonary excretion - volatile drugs (e.g. anaesthetics) are excreted through the lungs.
-- Minor routes - sweat, saliva, tears and breast milk.
+- Biliary excretion → the liver secretes some drugs and metabolites into bile, which is then excreted in faeces. Some drugs undergo enterohepatic recirculation (they are reabsorbed from the gut after biliary excretion).
+- Pulmonary excretion → volatile drugs (e.g. anaesthetics) are excreted through the lungs.
+- Minor routes → sweat, saliva, tears and breast milk.
 
 Crucial insight: renal excretion is the main route by which drugs leave the body, and it depends on kidney function. Patients with kidney disease need dose adjustment to prevent drug accumulation and toxicity. Urine pH can be manipulated to enhance excretion in overdose. And drugs that are excreted in breast milk can affect nursing infants - an important clinical consideration.`
     },
@@ -25731,18 +25731,18 @@ The answer is that it depends on how many half-lives have passed. After 1 half-l
 
 Key concepts:
 
-- Half-life (t½) - the time required for the plasma concentration of a drug to fall by 50%.
-- Steady state - the state in which drug input equals drug elimination, so plasma concentration remains constant. Reached after about 4-5 half-lives of continuous dosing.
-- Loading dose - a larger initial dose given to achieve a therapeutic plasma concentration quickly.
-- Maintenance dose - the regular dose given to maintain the therapeutic plasma concentration.
-- Clearance - the volume of plasma cleared of drug per unit time. It determines the maintenance dose.
+- Half-life (t½) → the time required for the plasma concentration of a drug to fall by 50%.
+- Steady state → the state in which drug input equals drug elimination, so plasma concentration remains constant. Reached after about 4-5 half-lives of continuous dosing.
+- Loading dose → a larger initial dose given to achieve a therapeutic plasma concentration quickly.
+- Maintenance dose → the regular dose given to maintain the therapeutic plasma concentration.
+- Clearance → the volume of plasma cleared of drug per unit time. It determines the maintenance dose.
 
 Clinical implications of half-life:
 
-- Dosing interval - drugs with short half-lives need frequent dosing (or sustained-release formulations); drugs with long half-lives can be dosed less often.
-- Time to steady state - after starting a drug (or changing the dose), it takes about 4-5 half-lives to reach steady state. This determines how long before the full effect is seen.
-- Time to elimination - after stopping a drug, it takes about 4-5 half-lives for the drug to be essentially eliminated. This determines how long side effects or withdrawal symptoms may last.
-- Fluctuations in plasma concentration - drugs with short half-lives produce larger peaks and troughs between doses; drugs with long half-lives produce smoother plasma concentrations.
+- Dosing interval → drugs with short half-lives need frequent dosing (or sustained-release formulations); drugs with long half-lives can be dosed less often.
+- Time to steady state → after starting a drug (or changing the dose), it takes about 4-5 half-lives to reach steady state. This determines how long before the full effect is seen.
+- Time to elimination → after stopping a drug, it takes about 4-5 half-lives for the drug to be essentially eliminated. This determines how long side effects or withdrawal symptoms may last.
+- Fluctuations in plasma concentration → drugs with short half-lives produce larger peaks and troughs between doses; drugs with long half-lives produce smoother plasma concentrations.
 
 Crucial insight: half-life is the single most useful pharmacokinetic parameter for clinical practice. It tells you how often to dose, how long before the drug starts working, how long it will keep working, and how long after stopping it will take to be eliminated. Half-life is affected by liver and kidney function, so dose adjustment is often needed in patients with hepatic or renal impairment.`
     },
@@ -25756,24 +25756,24 @@ The answer is that drugs interact through two main mechanisms: pharmacokinetic a
 
 Pharmacokinetic interactions:
 
-- Absorption - one drug may change the absorption of another (e.g. antacids reduce the absorption of some antibiotics; food can change the absorption of many drugs).
-- Distribution - one drug may displace another from plasma proteins, increasing the free (active) concentration of the displaced drug (e.g. warfarin displaced by aspirin).
-- Metabolism - one drug may induce (speed up) or inhibit (slow down) the enzymes that metabolise another. This is the most common and clinically important type of interaction. Enzyme inducers (e.g. rifampicin, carbamazepine, phenytoin) reduce the effect of drugs metabolised by the same enzymes; enzyme inhibitors (e.g. ketoconazole, erythromycin, cimetidine) increase the effect and risk of toxicity.
-- Excretion - one drug may change the renal excretion of another (e.g. probenecid reduces penicillin excretion; diuretics reduce lithium excretion).
+- Absorption → one drug may change the absorption of another (e.g. antacids reduce the absorption of some antibiotics; food can change the absorption of many drugs).
+- Distribution → one drug may displace another from plasma proteins, increasing the free (active) concentration of the displaced drug (e.g. warfarin displaced by aspirin).
+- Metabolism → one drug may induce (speed up) or inhibit (slow down) the enzymes that metabolise another. This is the most common and clinically important type of interaction. Enzyme inducers (e.g. rifampicin, carbamazepine, phenytoin) reduce the effect of drugs metabolised by the same enzymes; enzyme inhibitors (e.g. ketoconazole, erythromycin, cimetidine) increase the effect and risk of toxicity.
+- Excretion → one drug may change the renal excretion of another (e.g. probenecid reduces penicillin excretion; diuretics reduce lithium excretion).
 
 Pharmacodynamic interactions:
 
-- Additive - two drugs with similar effects produce a combined effect equal to the sum of their individual effects (e.g. two antihypertensives).
-- Synergistic - two drugs together produce an effect greater than the sum of their individual effects (e.g. alcohol + benzodiazepines).
-- Antagonistic - two drugs have opposing effects, reducing the effect of one or both (e.g. beta-blocker + beta-agonist).
+- Additive → two drugs with similar effects produce a combined effect equal to the sum of their individual effects (e.g. two antihypertensives).
+- Synergistic → two drugs together produce an effect greater than the sum of their individual effects (e.g. alcohol + benzodiazepines).
+- Antagonistic → two drugs have opposing effects, reducing the effect of one or both (e.g. beta-blocker + beta-agonist).
 
 Examples of clinically important drug interactions:
 
-- Warfarin + aspirin - increased bleeding risk (pharmacodynamic + pharmacokinetic).
-- Warfarin + erythromycin - increased warfarin effect due to CYP inhibition.
-- Digoxin + diuretics - increased digoxin toxicity due to low potassium.
-- SSRIs + MAOIs - serotonin syndrome (potentially fatal).
-- Alcohol + paracetamol - increased risk of liver toxicity.
+- Warfarin + aspirin → increased bleeding risk (pharmacodynamic + pharmacokinetic).
+- Warfarin + erythromycin → increased warfarin effect due to CYP inhibition.
+- Digoxin + diuretics → increased digoxin toxicity due to low potassium.
+- SSRIs + MAOIs → serotonin syndrome (potentially fatal).
+- Alcohol + paracetamol → increased risk of liver toxicity.
 
 Crucial insight: drug interactions are a major cause of preventable harm, and most are predictable from the pharmacokinetic and pharmacodynamic properties of the drugs involved. Understanding how drugs are absorbed, distributed, metabolised and excreted lets you predict which combinations are safe and which require dose adjustment or monitoring. Every prescriber needs to consider drug interactions with every new prescription.`
     },
@@ -25787,28 +25787,28 @@ The answer is a complete pharmacokinetic profile - each component of ADME, plus 
 
 The prescribing framework:
 
-- Route of administration - choose based on the required speed of onset, the patient's condition, and the drug's bioavailability. Oral is convenient but slower; intravenous is fastest but requires access; sublingual bypasses the liver.
-- Absorption and bioavailability - determine the fraction of the dose that reaches the systemic circulation. If bioavailability is low or variable, adjust the dose or choose another route.
-- Distribution - determine where the drug goes and how much reaches the target. Consider the volume of distribution, protein binding, and barriers (blood-brain, placental).
-- Metabolism - determine how the drug is inactivated and eliminated. Consider liver function, genetic variation, and drug interactions.
-- Excretion - determine how the drug leaves the body. Consider kidney function, urine pH, and drug interactions.
-- Half-life - determine how often to dose and how long the drug will act. Choose a dosing interval based on half-life.
-- Loading dose - if a rapid therapeutic concentration is needed, give a larger initial dose based on volume of distribution.
-- Maintenance dose - to maintain the therapeutic concentration, give regular doses based on clearance.
-- Patient factors - age, weight, liver and kidney function, pregnancy, and other drugs all affect pharmacokinetics. Adjust the dose accordingly.
-- Monitoring - for drugs with a narrow therapeutic index, measure plasma concentrations to ensure they remain in the therapeutic window.
+- Route of administration → choose based on the required speed of onset, the patient's condition, and the drug's bioavailability. Oral is convenient but slower; intravenous is fastest but requires access; sublingual bypasses the liver.
+- Absorption and bioavailability → determine the fraction of the dose that reaches the systemic circulation. If bioavailability is low or variable, adjust the dose or choose another route.
+- Distribution → determine where the drug goes and how much reaches the target. Consider the volume of distribution, protein binding, and barriers (blood-brain, placental).
+- Metabolism → determine how the drug is inactivated and eliminated. Consider liver function, genetic variation, and drug interactions.
+- Excretion → determine how the drug leaves the body. Consider kidney function, urine pH, and drug interactions.
+- Half-life → determine how often to dose and how long the drug will act. Choose a dosing interval based on half-life.
+- Loading dose → if a rapid therapeutic concentration is needed, give a larger initial dose based on volume of distribution.
+- Maintenance dose → to maintain the therapeutic concentration, give regular doses based on clearance.
+- Patient factors → age, weight, liver and kidney function, pregnancy, and other drugs all affect pharmacokinetics. Adjust the dose accordingly.
+- Monitoring → for drugs with a narrow therapeutic index, measure plasma concentrations to ensure they remain in the therapeutic window.
 
 A practical example - starting a patient on digoxin:
 
-- Route - oral (convenient, adequate bioavailability).
-- Absorption - about 70-80% bioavailable; adjust dose accordingly.
-- Distribution - large volume of distribution (500 L); concentrates in heart, skeletal muscle and kidney.
-- Metabolism - minimal; most is excreted unchanged by the kidney.
-- Excretion - renal; dose must be reduced in kidney disease.
-- Half-life - about 36-48 hours; once-daily dosing is sufficient.
-- Loading dose - given if rapid effect is needed; calculated from volume of distribution.
-- Maintenance dose - calculated from clearance.
-- Monitoring - plasma levels monitored regularly due to narrow therapeutic index.
+- Route → oral (convenient, adequate bioavailability).
+- Absorption → about 70-80% bioavailable; adjust dose accordingly.
+- Distribution → large volume of distribution (500 L); concentrates in heart, skeletal muscle and kidney.
+- Metabolism → minimal; most is excreted unchanged by the kidney.
+- Excretion → renal; dose must be reduced in kidney disease.
+- Half-life → about 36-48 hours; once-daily dosing is sufficient.
+- Loading dose → given if rapid effect is needed; calculated from volume of distribution.
+- Maintenance dose → calculated from clearance.
+- Monitoring → plasma levels monitored regularly due to narrow therapeutic index.
 
 Crucial insight: pharmacokinetics is the science that makes rational prescribing possible. It tells you what dose to give, by what route, and how often - and how to adjust for the individual patient. Without pharmacokinetics, prescribing would be guesswork; with it, it becomes a quantitative, predictable, safe process. Every drug decision a doctor makes is grounded in the principles of absorption, distribution, metabolism, excretion, bioavailability and half-life.`
     },
@@ -25920,8 +25920,8 @@ The answer is that the sympathetic nervous system releases noradrenaline (norepi
 
 The two divisions of the autonomic nervous system:
 
-- Sympathetic nervous system - "fight or flight". Activated during stress, exercise, or danger. Increases heart rate and blood pressure, dilates airways and pupils, mobilises glucose, diverts blood from the gut to the muscles. Its main neurotransmitters are noradrenaline (at most synapses) and adrenaline (from the adrenal medulla).
-- Parasympathetic nervous system - "rest and digest". Activated during rest, digestion, and recovery. Slows heart rate, constricts pupils, stimulates digestion and salivation. Its main neurotransmitter is acetylcholine.
+- Sympathetic nervous system → "fight or flight". Activated during stress, exercise, or danger. Increases heart rate and blood pressure, dilates airways and pupils, mobilises glucose, diverts blood from the gut to the muscles. Its main neurotransmitters are noradrenaline (at most synapses) and adrenaline (from the adrenal medulla).
+- Parasympathetic nervous system → "rest and digest". Activated during rest, digestion, and recovery. Slows heart rate, constricts pupils, stimulates digestion and salivation. Its main neurotransmitter is acetylcholine.
 
 This topic focuses on the sympathetic branch - its neurotransmitters, its receptors, and the drugs that act on them.
 
@@ -25969,19 +25969,19 @@ The answer is that the receptors are different. Noradrenaline binds different re
 
 The two main families:
 
-- Alpha (α) adrenergic receptors - subdivided into α1 and α2.
-- Beta (β) adrenergic receptors - subdivided into β1, β2 and β3.
+- Alpha (α) adrenergic receptors → subdivided into α1 and α2.
+- Beta (β) adrenergic receptors → subdivided into β1, β2 and β3.
 
 Alpha receptors:
 
-- α1 receptors - located on vascular smooth muscle (causing vasoconstriction), on the iris (causing pupil dilation), on the bladder sphincter (causing contraction), and on the liver (causing glycogenolysis). Their main effect is contraction of smooth muscle. Signalling: Gq-coupled, IP3/DAG pathway.
-- α2 receptors - located on presynaptic nerve terminals (autoreceptors that inhibit noradrenaline release), on platelets (causing aggregation), and on some blood vessels. Their main effect is inhibition of neurotransmitter release. Signalling: Gi-coupled, decreasing cAMP.
+- α1 receptors → located on vascular smooth muscle (causing vasoconstriction), on the iris (causing pupil dilation), on the bladder sphincter (causing contraction), and on the liver (causing glycogenolysis). Their main effect is contraction of smooth muscle. Signalling: Gq-coupled, IP3/DAG pathway.
+- α2 receptors → located on presynaptic nerve terminals (autoreceptors that inhibit noradrenaline release), on platelets (causing aggregation), and on some blood vessels. Their main effect is inhibition of neurotransmitter release. Signalling: Gi-coupled, decreasing cAMP.
 
 Beta receptors:
 
-- β1 receptors - located mainly on the heart (increasing heart rate, force of contraction and conduction velocity) and on the kidney (stimulating renin release). Their main effect is cardiac stimulation. Signalling: Gs-coupled, increasing cAMP.
-- β2 receptors - located on bronchial smooth muscle (causing bronchodilation), on vascular smooth muscle (causing vasodilation), on the uterus (causing relaxation), on skeletal muscle (causing tremor and glycogenolysis), and on the liver (causing glycogenolysis). Their main effect is relaxation of smooth muscle. Signalling: Gs-coupled, increasing cAMP.
-- β3 receptors - located mainly on adipose tissue (causing lipolysis) and on the bladder (causing relaxation). Signalling: Gs-coupled.
+- β1 receptors → located mainly on the heart (increasing heart rate, force of contraction and conduction velocity) and on the kidney (stimulating renin release). Their main effect is cardiac stimulation. Signalling: Gs-coupled, increasing cAMP.
+- β2 receptors → located on bronchial smooth muscle (causing bronchodilation), on vascular smooth muscle (causing vasodilation), on the uterus (causing relaxation), on skeletal muscle (causing tremor and glycogenolysis), and on the liver (causing glycogenolysis). Their main effect is relaxation of smooth muscle. Signalling: Gs-coupled, increasing cAMP.
+- β3 receptors → located mainly on adipose tissue (causing lipolysis) and on the bladder (causing relaxation). Signalling: Gs-coupled.
 
 Crucial insight: the adrenergic receptor subtypes are the key to the specificity of adrenergic drugs. A drug that selectively activates β1 receptors will mainly affect the heart; a drug that selectively activates β2 receptors will mainly affect the airways. A drug that blocks β1 receptors will slow the heart; a drug that blocks α1 receptors will lower blood pressure by causing vasodilation. Understanding the receptor subtypes explains both the therapeutic effects and the side effects of every adrenergic drug.`
     },
@@ -25995,18 +25995,18 @@ The answer is that the body's own supply is not always enough, or not always in 
 
 The main classes of adrenergic agonists:
 
-- Direct-acting agonists - bind directly to adrenergic receptors and activate them. Example: phenylephrine (α1 agonist) for nasal congestion; salbutamol (β2 agonist) for asthma; dobutamine (β1 agonist) for heart failure.
-- Indirect-acting agonists - increase the amount of noradrenaline available at the synapse, rather than binding the receptor themselves. Example: amphetamine (releases noradrenaline from nerve terminals); cocaine (blocks reuptake of noradrenaline); tricyclic antidepressants (block reuptake).
-- Mixed-acting agonists - both bind receptors directly and increase noradrenaline release. Example: ephedrine.
+- Direct-acting agonists → bind directly to adrenergic receptors and activate them. Example: phenylephrine (α1 agonist) for nasal congestion; salbutamol (β2 agonist) for asthma; dobutamine (β1 agonist) for heart failure.
+- Indirect-acting agonists → increase the amount of noradrenaline available at the synapse, rather than binding the receptor themselves. Example: amphetamine (releases noradrenaline from nerve terminals); cocaine (blocks reuptake of noradrenaline); tricyclic antidepressants (block reuptake).
+- Mixed-acting agonists → both bind receptors directly and increase noradrenaline release. Example: ephedrine.
 
 Therapeutic uses of adrenergic agonists:
 
-- Asthma - β2 agonists (salbutamol, salmeterol) relax bronchial smooth muscle and dilate the airways.
-- Heart failure - β1 agonists (dobutamine) and adrenaline increase cardiac output.
-- Shock - adrenaline and noradrenaline raise blood pressure by vasoconstriction and cardiac stimulation.
-- Nasal congestion - α1 agonists (phenylephrine, oxymetazoline) constrict nasal blood vessels and reduce swelling.
-- Premature labour - β2 agonists (ritodrine) relax the uterus and delay labour.
-- Anaphylaxis - adrenaline is the drug of choice; it reverses bronchospasm, raises blood pressure, and reduces swelling.
+- Asthma → β2 agonists (salbutamol, salmeterol) relax bronchial smooth muscle and dilate the airways.
+- Heart failure → β1 agonists (dobutamine) and adrenaline increase cardiac output.
+- Shock → adrenaline and noradrenaline raise blood pressure by vasoconstriction and cardiac stimulation.
+- Nasal congestion → α1 agonists (phenylephrine, oxymetazoline) constrict nasal blood vessels and reduce swelling.
+- Premature labour → β2 agonists (ritodrine) relax the uterus and delay labour.
+- Anaphylaxis → adrenaline is the drug of choice; it reverses bronchospasm, raises blood pressure, and reduces swelling.
 
 Crucial insight: adrenergic agonists are used wherever the sympathetic nervous system's effects are needed but the body's own supply is insufficient. By choosing the right receptor subtype (α1, α2, β1, β2), we can target the effect to the tissue we want - β2 for the airways, β1 for the heart, α1 for the vessels. Understanding receptor selectivity is the key to using these drugs safely and effectively.`
     },
@@ -26020,15 +26020,15 @@ The answer is an adrenergic antagonist that blocks the receptor responsible for 
 
 The main classes of adrenergic antagonists:
 
-- Alpha-blockers (α1 antagonists) - block α1 receptors, causing vasodilation, lowering blood pressure, and relaxing the prostate and bladder neck. Examples: prazosin, doxazosin, tamsulosin. Used for hypertension and benign prostatic hyperplasia (BPH). Side effect: first-dose hypotension.
-- Beta-blockers (β antagonists) - block β receptors, slowing the heart, lowering blood pressure, reducing cardiac output, and reducing renin release. Examples: atenolol (β1-selective), metoprolol (β1-selective), propranolol (non-selective). Used for hypertension, angina, heart failure, arrhythmias, and after myocardial infarction.
-- Alpha-2 agonists - these are technically agonists, not antagonists, but they reduce sympathetic outflow by activating presynaptic α2 autoreceptors. Examples: clonidine, methyldopa. Used for hypertension.
-- Mixed alpha/beta blockers - block both receptor types. Example: labetalol, carvedilol. Used for hypertension, especially in pregnancy.
+- Alpha-blockers (α1 antagonists) → block α1 receptors, causing vasodilation, lowering blood pressure, and relaxing the prostate and bladder neck. Examples: prazosin, doxazosin, tamsulosin. Used for hypertension and benign prostatic hyperplasia (BPH). Side effect: first-dose hypotension.
+- Beta-blockers (β antagonists) → block β receptors, slowing the heart, lowering blood pressure, reducing cardiac output, and reducing renin release. Examples: atenolol (β1-selective), metoprolol (β1-selective), propranolol (non-selective). Used for hypertension, angina, heart failure, arrhythmias, and after myocardial infarction.
+- Alpha-2 agonists → these are technically agonists, not antagonists, but they reduce sympathetic outflow by activating presynaptic α2 autoreceptors. Examples: clonidine, methyldopa. Used for hypertension.
+- Mixed alpha/beta blockers → block both receptor types. Example: labetalol, carvedilol. Used for hypertension, especially in pregnancy.
 
 Beta-blocker selectivity:
 
-- β1-selective (cardioselective) - atenolol, metoprolol, bisoprolol. At low doses, they mainly block β1 receptors in the heart, so they cause less bronchospasm than non-selective blockers.
-- Non-selective - propranolol, nadolol. Block both β1 and β2 receptors, so they can cause bronchospasm (β2 in the lungs) and mask hypoglycaemia (β2 in the liver).
+- β1-selective (cardioselective) → atenolol, metoprolol, bisoprolol. At low doses, they mainly block β1 receptors in the heart, so they cause less bronchospasm than non-selective blockers.
+- Non-selective → propranolol, nadolol. Block both β1 and β2 receptors, so they can cause bronchospasm (β2 in the lungs) and mask hypoglycaemia (β2 in the liver).
 - β1-selective blockers are preferred in patients with asthma or COPD, though even they can cause bronchospasm at high doses.
 
 Crucial insight: adrenergic antagonists reduce the effects of the sympathetic nervous system. By choosing the right receptor subtype, we can target the effect to the tissue we want - β1 blockers for the heart, α1 blockers for the blood vessels and prostate. The selectivity of the blocker determines its clinical usefulness and its side effect profile. Understanding receptor selectivity is the key to choosing the right blocker for the right patient.`
@@ -26047,7 +26047,7 @@ The clinical scenario:
 - β2 agonists (e.g. salbutamol) are used for asthma; they relax the airways by activating β2 receptors.
 - β-blockers are used for hypertension; they lower blood pressure by blocking β1 receptors on the heart and kidneys.
 - Non-selective β-blockers (propranolol) block both β1 and β2, so they can cause bronchospasm in asthmatics.
-- β1-selective blockers (atenolol, metoprolol, bisoprolol) at low doses mainly block β1, so they are safer in asthma - though caution is still needed.
+- β1-selective blockers (atenolol, metoprolol, bisoprolol) at low doses mainly block β1, so they are safer in asthma → though caution is still needed.
 
 The same principle applies elsewhere:
 
@@ -26067,9 +26067,9 @@ The answer is orthostatic hypotension. When you stand up, gravity pulls blood in
 
 Orthostatic hypotension is a common side effect of:
 
-- α1-blockers - prazosin, doxazosin, terazosin. First-dose hypotension is particularly common; the first dose should be taken at bedtime.
-- Other vasodilators - nitrates, calcium channel blockers, ACE inhibitors, angiotensin receptor blockers.
-- Diuretics - by reducing blood volume.
+- α1-blockers → prazosin, doxazosin, terazosin. First-dose hypotension is particularly common; the first dose should be taken at bedtime.
+- Other vasodilators → nitrates, calcium channel blockers, ACE inhibitors, angiotensin receptor blockers.
+- Diuretics → by reducing blood volume.
 
 How to manage orthostatic hypotension:
 
@@ -26080,9 +26080,9 @@ How to manage orthostatic hypotension:
 
 Other side effects of α1-blockers:
 
-- Nasal congestion - because α1 receptors in the nasal mucosa cause vasoconstriction; blocking them causes swelling.
-- Dizziness and fainting - from orthostatic hypotension.
-- Retrograde ejaculation - because α1 receptors in the bladder neck and prostate are needed for normal ejaculation.
+- Nasal congestion → because α1 receptors in the nasal mucosa cause vasoconstriction; blocking them causes swelling.
+- Dizziness and fainting → from orthostatic hypotension.
+- Retrograde ejaculation → because α1 receptors in the bladder neck and prostate are needed for normal ejaculation.
 
 Crucial insight: adrenergic drugs affect blood pressure, and any drug that changes blood pressure can cause orthostatic hypotension. Understanding the mechanism - loss of compensatory vasoconstriction - explains both the side effect and how to manage it. When a patient starts an α1-blocker, the doctor should warn them about dizziness and advise them to rise slowly. The same principle applies to many other drugs that affect blood pressure.`
     },
@@ -26103,7 +26103,7 @@ The cheese reaction, step by step:
 - Tyramine enters the systemic circulation.
 - Tyramine displaces noradrenaline from nerve terminals (it is taken up into the nerve terminal and displaces noradrenaline from vesicles).
 - Noradrenaline floods the synapse.
-- Blood pressure rises rapidly and severely - a hypertensive crisis.
+- Blood pressure rises rapidly and severely → a hypertensive crisis.
 
 Management and prevention:
 
@@ -26113,9 +26113,9 @@ Management and prevention:
 
 Other drug interactions with MAOIs:
 
-- MAOIs + SSRIs - serotonin syndrome.
-- MAOIs + sympathomimetics (e.g. pseudoephedrine) - hypertensive crisis.
-- MAOIs + tricyclic antidepressants - hypertensive crisis or serotonin syndrome.
+- MAOIs + SSRIs → serotonin syndrome.
+- MAOIs + sympathomimetics (e.g. pseudoephedrine) → hypertensive crisis.
+- MAOIs + tricyclic antidepressants → hypertensive crisis or serotonin syndrome.
 
 Crucial insight: the cheese reaction is a direct consequence of the mechanism of MAOIs - they inhibit the enzyme that breaks down tyramine, allowing it to enter the circulation and release noradrenaline. The reaction is entirely preventable by avoiding tyramine-rich foods. It is a reminder that drug interactions are not just with other drugs - food can interact with drugs too, sometimes dangerously.`
     },
@@ -26129,19 +26129,19 @@ The answer is that the drugs differ in receptor selectivity, duration of action,
 
 The key comparative properties:
 
-- Receptor selectivity - β1-selective vs non-selective. β1-selective blockers (atenolol, metoprolol, bisoprolol) are safer in patients with asthma or COPD. Non-selective blockers (propranolol, nadolol) are preferred for some conditions (e.g. migraine prophylaxis, thyrotoxicosis) but carry a higher risk of bronchospasm and masking hypoglycaemia.
-- Lipid solubility - lipid-soluble blockers (propranolol, metoprolol) cross the blood-brain barrier and can cause central side effects (e.g. nightmares, fatigue). Water-soluble blockers (atenolol) do not and are less likely to cause these effects.
-- Duration of action - some blockers are short-acting (e.g. esmolol, used intravenously for rapid control) and some are long-acting (e.g. nadolol, taken once daily). The choice depends on the clinical setting.
-- Route of elimination - some blockers are metabolised by the liver (propranolol, metoprolol) and require dose reduction in liver disease; others are excreted by the kidney (atenolol) and require dose reduction in kidney disease.
-- Intrinsic sympathomimetic activity (ISA) - some blockers (e.g. pindolol, acebutolol) have partial agonist activity, meaning they produce a small amount of stimulation. They are useful in patients who cannot tolerate the full bradycardia of a standard β-blocker.
+- Receptor selectivity → β1-selective vs non-selective. β1-selective blockers (atenolol, metoprolol, bisoprolol) are safer in patients with asthma or COPD. Non-selective blockers (propranolol, nadolol) are preferred for some conditions (e.g. migraine prophylaxis, thyrotoxicosis) but carry a higher risk of bronchospasm and masking hypoglycaemia.
+- Lipid solubility → lipid-soluble blockers (propranolol, metoprolol) cross the blood-brain barrier and can cause central side effects (e.g. nightmares, fatigue). Water-soluble blockers (atenolol) do not and are less likely to cause these effects.
+- Duration of action → some blockers are short-acting (e.g. esmolol, used intravenously for rapid control) and some are long-acting (e.g. nadolol, taken once daily). The choice depends on the clinical setting.
+- Route of elimination → some blockers are metabolised by the liver (propranolol, metoprolol) and require dose reduction in liver disease; others are excreted by the kidney (atenolol) and require dose reduction in kidney disease.
+- Intrinsic sympathomimetic activity (ISA) → some blockers (e.g. pindolol, acebutolol) have partial agonist activity, meaning they produce a small amount of stimulation. They are useful in patients who cannot tolerate the full bradycardia of a standard β-blocker.
 
 Clinical examples of choosing the right drug:
 
-- Asthma + hypertension - choose a β1-selective blocker (atenolol, bisoprolol) at a low dose, or avoid β-blockers altogether and use another antihypertensive.
-- Angina + hypertension - choose a β1-selective blocker (atenolol, metoprolol) to reduce cardiac work and lower blood pressure.
-- Heart failure - choose a β1-selective blocker with proven benefit (bisoprolol, carvedilol, metoprolol succinate) at a low starting dose, titrated slowly.
-- Anxiety + palpitations - propranolol is sometimes used for performance anxiety because it blocks the peripheral symptoms of anxiety (tremor, tachycardia).
-- BPH + hypertension - an α1-blocker (tamsulosin, doxazosin) can treat both conditions.
+- Asthma + hypertension → choose a β1-selective blocker (atenolol, bisoprolol) at a low dose, or avoid β-blockers altogether and use another antihypertensive.
+- Angina + hypertension → choose a β1-selective blocker (atenolol, metoprolol) to reduce cardiac work and lower blood pressure.
+- Heart failure → choose a β1-selective blocker with proven benefit (bisoprolol, carvedilol, metoprolol succinate) at a low starting dose, titrated slowly.
+- Anxiety + palpitations → propranolol is sometimes used for performance anxiety because it blocks the peripheral symptoms of anxiety (tremor, tachycardia).
+- BPH + hypertension → an α1-blocker (tamsulosin, doxazosin) can treat both conditions.
 
 Crucial insight: adrenergic drugs are not interchangeable - they differ in selectivity, duration, lipid solubility and route of elimination. The clinical skill is to choose the drug whose properties match the patient's needs. A β1-selective, water-soluble blocker for a patient with asthma and liver disease; a short-acting, intravenous blocker for a patient in an acute setting; a long-acting blocker for a patient who struggles with adherence. Understanding the comparative pharmacology of these drugs is what makes prescribing safe and effective.`
     },
@@ -26153,24 +26153,24 @@ My Socratic question: a patient presents with acute severe asthma, a rapid heart
 
 The answer is that each problem points to a different adrenergic target.
 
-- Acute severe asthma - give a β2 agonist (salbutamol) by inhalation or nebuliser. β2 receptors are on bronchial smooth muscle; activating them causes bronchodilation and relieves the asthma.
-- Rapid heart rate - if the patient is also given a β2 agonist, the β2 receptors on the heart (and reflex tachycardia from vasodilation) can worsen the heart rate. If β1-blockade is needed, choose a β1-selective blocker (but be cautious in acute asthma).
-- Low blood pressure - give a vasoconstrictor such as adrenaline or noradrenaline. α1 receptors on blood vessels cause vasoconstriction; β1 receptors on the heart increase cardiac output. In anaphylaxis, adrenaline is the drug of choice because it addresses both.
+- Acute severe asthma → give a β2 agonist (salbutamol) by inhalation or nebuliser. β2 receptors are on bronchial smooth muscle; activating them causes bronchodilation and relieves the asthma.
+- Rapid heart rate → if the patient is also given a β2 agonist, the β2 receptors on the heart (and reflex tachycardia from vasodilation) can worsen the heart rate. If β1-blockade is needed, choose a β1-selective blocker (but be cautious in acute asthma).
+- Low blood pressure → give a vasoconstrictor such as adrenaline or noradrenaline. α1 receptors on blood vessels cause vasoconstriction; β1 receptors on the heart increase cardiac output. In anaphylaxis, adrenaline is the drug of choice because it addresses both.
 
 The clinical applications of adrenergic pharmacology:
 
-- Asthma - β2 agonists (salbutamol, salmeterol) for bronchodilation.
-- Anaphylaxis - adrenaline (epinephrine) for bronchodilation, vasoconstriction and cardiac stimulation.
-- Hypertension - β1 blockers (atenolol, metoprolol), α1 blockers (prazosin, doxazosin), mixed blockers (labetalol, carvedilol).
-- Heart failure - β1 blockers (bisoprolol, carvedilol) at low doses, titrated slowly.
-- Angina - β1 blockers reduce cardiac work and oxygen demand.
-- Arrhythmias - β1 blockers slow conduction and suppress abnormal rhythms.
-- Myocardial infarction - β1 blockers reduce mortality and reinfarction.
-- Benign prostatic hyperplasia - α1 blockers relax the prostate and bladder neck.
-- Glaucoma - β2 blockers (timolol eye drops) reduce aqueous humour production.
-- Nasal congestion - α1 agonists (phenylephrine, oxymetazoline) constrict nasal vessels.
-- Premature labour - β2 agonists (ritodrine) relax the uterus.
-- Shock - adrenaline, noradrenaline, dobutamine to raise blood pressure and cardiac output.
+- Asthma → β2 agonists (salbutamol, salmeterol) for bronchodilation.
+- Anaphylaxis → adrenaline (epinephrine) for bronchodilation, vasoconstriction and cardiac stimulation.
+- Hypertension → β1 blockers (atenolol, metoprolol), α1 blockers (prazosin, doxazosin), mixed blockers (labetalol, carvedilol).
+- Heart failure → β1 blockers (bisoprolol, carvedilol) at low doses, titrated slowly.
+- Angina → β1 blockers reduce cardiac work and oxygen demand.
+- Arrhythmias → β1 blockers slow conduction and suppress abnormal rhythms.
+- Myocardial infarction → β1 blockers reduce mortality and reinfarction.
+- Benign prostatic hyperplasia → α1 blockers relax the prostate and bladder neck.
+- Glaucoma → β2 blockers (timolol eye drops) reduce aqueous humour production.
+- Nasal congestion → α1 agonists (phenylephrine, oxymetazoline) constrict nasal vessels.
+- Premature labour → β2 agonists (ritodrine) relax the uterus.
+- Shock → adrenaline, noradrenaline, dobutamine to raise blood pressure and cardiac output.
 
 Choosing the right drug means:
 
@@ -26290,8 +26290,8 @@ The answer is that acetylcholine acts on two different families of receptor - mu
 
 The two cholinergic receptor families:
 
-- Muscarinic receptors (mAChR) - G-protein coupled receptors found on smooth muscle, cardiac muscle, glands, and the CNS. They mediate the parasympathetic effects: slowing the heart, constricting the pupils, stimulating secretions, contracting the gut and bladder. Subtypes: M1 (neural), M2 (cardiac), M3 (glandular and smooth muscle), M4 and M5 (CNS).
-- Nicotinic receptors (nAChR) - ligand-gated ion channels found at the neuromuscular junction, autonomic ganglia, and the CNS. They mediate fast synaptic transmission: skeletal muscle contraction (NMJ), ganglionic transmission (autonomic ganglia), and CNS effects.
+- Muscarinic receptors (mAChR) → G-protein coupled receptors found on smooth muscle, cardiac muscle, glands, and the CNS. They mediate the parasympathetic effects: slowing the heart, constricting the pupils, stimulating secretions, contracting the gut and bladder. Subtypes: M1 (neural), M2 (cardiac), M3 (glandular and smooth muscle), M4 and M5 (CNS).
+- Nicotinic receptors (nAChR) → ligand-gated ion channels found at the neuromuscular junction, autonomic ganglia, and the CNS. They mediate fast synaptic transmission: skeletal muscle contraction (NMJ), ganglionic transmission (autonomic ganglia), and CNS effects.
 
 Crucial insight: cholinergic pharmacology is the study of drugs that act on acetylcholine - its receptors, its synthesis, its release, and its breakdown. Because acetylcholine is involved in almost every parasympathetic function and in skeletal muscle contraction, cholinergic drugs have a wide range of clinical uses and a wide range of toxicities. Understanding them is essential for understanding both the parasympathetic nervous system and the pharmacology of the neuromuscular junction.`
     },
@@ -26313,7 +26313,7 @@ The synthesis of acetylcholine:
 The breakdown of acetylcholine:
 
 - Acetylcholine is broken down in the synaptic cleft by the enzyme acetylcholinesterase (AChE).
-- AChE hydrolyses acetylcholine into choline and acetate - a very fast reaction.
+- AChE hydrolyses acetylcholine into choline and acetate → a very fast reaction.
 - The choline is taken back up into the nerve terminal and reused for synthesis.
 
 Key differences from noradrenaline:
@@ -26335,16 +26335,16 @@ The answer is that different tissues express different receptor families. The he
 
 Muscarinic receptors (mAChR):
 
-- G-protein coupled receptors - seven-transmembrane structure.
-- Slower, longer-lasting effects - seconds.
+- G-protein coupled receptors → seven-transmembrane structure.
+- Slower, longer-lasting effects → seconds.
 - Located on: cardiac muscle (M2 - slows heart rate), smooth muscle (M3 - contracts gut and bladder, relaxes sphincters), glands (M3 - stimulates secretion), pupils (M3 - constricts), and the CNS (M1, M4, M5).
 - Subtypes: M1 (neural, gastric secretion), M2 (cardiac, slows heart), M3 (glandular, smooth muscle), M4 and M5 (CNS).
 - Signalling: M1, M3, M5 are Gq-coupled (IP3/DAG, calcium); M2 and M4 are Gi-coupled (decrease cAMP).
 
 Nicotinic receptors (nAChR):
 
-- Ligand-gated ion channels - five subunits surrounding a central pore.
-- Fast, brief effects - milliseconds.
+- Ligand-gated ion channels → five subunits surrounding a central pore.
+- Fast, brief effects → milliseconds.
 - Located on: the neuromuscular junction (skeletal muscle contraction), autonomic ganglia (sympathetic and parasympathetic transmission), and the CNS.
 - Subtypes: Nm (muscle-type, at the NMJ) and Nn (neuronal-type, at ganglia and CNS).
 - Signalling: binding of acetylcholine opens the channel, allowing sodium (and potassium) to flow through, causing depolarisation.
@@ -26361,24 +26361,24 @@ The answer is that the body's own supply is not always sufficient or appropriate
 
 The two main classes of cholinergic agonists:
 
-- Direct-acting agonists - bind muscarinic or nicotinic receptors directly.
+- Direct-acting agonists → bind muscarinic or nicotinic receptors directly.
   - Muscarinic agonists: pilocarpine (glaucoma), bethanechol (urinary retention, postoperative ileus), methacholine (diagnostic).
   - Nicotinic agonists: nicotine (smoking cessation, research), varenicline (smoking cessation).
-- Indirect-acting agonists (anticholinesterases) - inhibit acetylcholinesterase, increasing acetylcholine at the synapse.
+- Indirect-acting agonists (anticholinesterases) → inhibit acetylcholinesterase, increasing acetylcholine at the synapse.
   - Reversible: neostigmine (myasthenia gravis, reversal of neuromuscular blockade), physostigmine (glaucoma, anticholinergic overdose), edrophonium (diagnostic for myasthenia), donepezil, rivastigmine, galantamine (Alzheimer's disease).
   - Irreversible: organophosphates (insecticides, nerve agents), echothiophate (glaucoma).
 
 Clinical uses of cholinergic agonists:
 
-- Glaucoma - pilocarpine, physostigmine, echothiophate (constrict the pupil, open drainage).
-- Urinary retention - bethanechol (contracts the bladder).
-- Postoperative ileus - bethanechol (stimulates gut motility).
-- Myasthenia gravis - neostigmine, pyridostigmine (increase acetylcholine at the NMJ).
-- Alzheimer's disease - donepezil, rivastigmine, galantamine (increase acetylcholine in the brain).
-- Reversal of neuromuscular blockade - neostigmine (after surgery).
-- Anticholinergic overdose - physostigmine (crosses the blood-brain barrier).
-- Smoking cessation - nicotine, varenicline.
-- Diagnosis of myasthenia gravis - edrophonium (short-acting).
+- Glaucoma → pilocarpine, physostigmine, echothiophate (constrict the pupil, open drainage).
+- Urinary retention → bethanechol (contracts the bladder).
+- Postoperative ileus → bethanechol (stimulates gut motility).
+- Myasthenia gravis → neostigmine, pyridostigmine (increase acetylcholine at the NMJ).
+- Alzheimer's disease → donepezil, rivastigmine, galantamine (increase acetylcholine in the brain).
+- Reversal of neuromuscular blockade → neostigmine (after surgery).
+- Anticholinergic overdose → physostigmine (crosses the blood-brain barrier).
+- Smoking cessation → nicotine, varenicline.
+- Diagnosis of myasthenia gravis → edrophonium (short-acting).
 
 Crucial insight: cholinergic agonists are used wherever the parasympathetic nervous system's effects are needed but the body's own supply is insufficient. Direct-acting agonists bind the receptor; indirect-acting agonists increase acetylcholine at the synapse. By choosing the right drug, the right route, and the right dose, we can target the effect to the tissue we want - pilocarpine for the eye, bethanechol for the bladder, neostigmine for the neuromuscular junction. Understanding the receptor types and the drug mechanisms is the key to using them safely.`
     },
@@ -26392,29 +26392,29 @@ The answer is that you get the opposite effects - dry mouth, dilated pupils, inc
 
 The two main classes of cholinergic antagonists:
 
-- Muscarinic antagonists (antimuscarinics) - block muscarinic receptors.
+- Muscarinic antagonists (antimuscarinics) → block muscarinic receptors.
   - Atropine - the classic antimuscarinic; used for bradycardia, preoperative drying of secretions, anticholinesterase poisoning, and ophthalmic examination.
   - Hyoscine (scopolamine) - used for motion sickness and as a preoperative sedative.
   - Tropicamide, cyclopentolate - used for pupil dilation in eye examinations.
   - Oxybutynin, tolterodine, solifenacin - used for overactive bladder.
   - Ipratropium, tiotropium - inhaled for COPD and asthma (bronchodilation).
   - Benztropine, trihexyphenidyl - used for Parkinson's disease and drug-induced extrapyramidal symptoms.
-- Nicotinic antagonists - block nicotinic receptors.
+- Nicotinic antagonists → block nicotinic receptors.
   - Neuromuscular blockers (Nm) - used in anaesthesia to produce muscle relaxation. Depolarising (suxamethonium) and non-depolarising (tubocurarine, vecuronium, atracurium).
   - Ganglionic blockers (Nn) - block autonomic ganglia; rarely used clinically now (e.g. hexamethonium, trimethaphan).
 
 Clinical uses of cholinergic antagonists:
 
-- Bradycardia - atropine.
-- Preoperative - atropine or hyoscine (dry secretions, prevent vagal reflexes).
-- Motion sickness - hyoscine.
-- Overactive bladder - oxybutynin, tolterodine, solifenacin.
-- COPD and asthma - ipratropium, tiotropium (inhaled).
-- Parkinson's disease - benztropine, trihexyph​enidyl.
-- Eye examination - tropicamide, cyclopentolate.
-- Organophosphate poisoning - atropine (blocks muscarinic effects).
-- Muscle relaxation in anaesthesia - neuromuscular blockers.
-- Anticholinergic overdose - physostigmine (crosses BBB).
+- Bradycardia → atropine.
+- Preoperative → atropine or hyoscine (dry secretions, prevent vagal reflexes).
+- Motion sickness → hyoscine.
+- Overactive bladder → oxybutynin, tolterodine, solifenacin.
+- COPD and asthma → ipratropium, tiotropium (inhaled).
+- Parkinson's disease → benztropine, trihexyph​enidyl.
+- Eye examination → tropicamide, cyclopentolate.
+- Organophosphate poisoning → atropine (blocks muscarinic effects).
+- Muscle relaxation in anaesthesia → neuromuscular blockers.
+- Anticholinergic overdose → physostigmine (crosses BBB).
 
 Crucial insight: cholinergic antagonists block the effects of acetylcholine, producing effects opposite to parasympathetic activation. Muscarinic antagonists cause dry mouth, dilated pupils, tachycardia, urinary retention and constipation - the classic anticholinergic side effects. Nicotinic antagonists cause muscle relaxation (NMJ blockers) or ganglionic blockade. By choosing the right drug and the right route, we can target the effect to the tissue we want - atropine for the heart, oxybutynin for the bladder, tiotropium for the lungs. Understanding the receptor types and the drug mechanisms is the key to using them safely.`
     },
@@ -26428,22 +26428,22 @@ The answer is that acetylcholine is broken down too quickly to be given systemic
 
 The two classes of anticholinesterases:
 
-- Reversible inhibitors - bind reversibly to acetylcholinesterase, temporarily blocking it. The enzyme recovers when the drug is cleared.
+- Reversible inhibitors → bind reversibly to acetylcholinesterase, temporarily blocking it. The enzyme recovers when the drug is cleared.
   - Carbamates: neostigmine, physostigmine, pyridostigmine, edrophonium, donepezil, rivastigmine, galantamine.
   - Clinical uses: myasthenia gravis (neostigmine, pyridostigmine), reversal of neuromuscular blockade (neostigmine), glaucoma (physostigmine), anticholinergic overdose (physostigmine - crosses BBB), Alzheimer's disease (donepezil, rivastigmine, galantamine), diagnosis of myasthenia (edrophonium - short-acting).
-- Irreversible inhibitors - form a covalent bond with acetylcholinesterase, permanently inactivating it. The enzyme must be resynthesised for activity to return.
+- Irreversible inhibitors → form a covalent bond with acetylcholinesterase, permanently inactivating it. The enzyme must be resynthesised for activity to return.
   - Organophosphates: insecticides (parathion, malathion), nerve agents (sarin, soman, tabun, VX), echothiophate (glaucoma).
   - Clinical uses: glaucoma (echothiophate). Toxicity: organophosphate poisoning.
 
 Clinical uses of anticholinesterases:
 
-- Myasthenia gravis - neostigmine, pyridostigmine (increase acetylcholine at the NMJ).
-- Reversal of neuromuscular blockade - neostigmine (after surgery).
-- Glaucoma - physostigmine, echothiophate (constrict the pupil).
-- Alzheimer's disease - donepezil, rivastigmine, galantamine (increase acetylcholine in the brain).
-- Anticholinergic overdose - physostigmine (crosses the blood-brain barrier).
-- Diagnosis of myasthenia gravis - edrophonium (short-acting).
-- Organophosphate poisoning - pralidoxime (reactivates the enzyme) + atropine (blocks muscarinic effects).
+- Myasthenia gravis → neostigmine, pyridostigmine (increase acetylcholine at the NMJ).
+- Reversal of neuromuscular blockade → neostigmine (after surgery).
+- Glaucoma → physostigmine, echothiophate (constrict the pupil).
+- Alzheimer's disease → donepezil, rivastigmine, galantamine (increase acetylcholine in the brain).
+- Anticholinergic overdose → physostigmine (crosses the blood-brain barrier).
+- Diagnosis of myasthenia gravis → edrophonium (short-acting).
+- Organophosphate poisoning → pralidoxime (reactivates the enzyme) + atropine (blocks muscarinic effects).
 
 Crucial insight: anticholinesterases are drugs that amplify the body's own acetylcholine signal by preventing its breakdown. Reversible inhibitors are used therapeutically for a range of conditions; irreversible inhibitors (organophosphates) are used as insecticides and nerve agents, and their toxicity is a medical emergency. Understanding the mechanism - inhibition of acetylcholinesterase - explains both the therapeutic effects and the toxic effects, and it explains why pralidoxime and atropine are the antidotes for organophosphate poisoning.`
     },
@@ -26457,29 +26457,29 @@ The answer is that the NMJ is the final common pathway for all voluntary movemen
 
 The structure of the neuromuscular junction:
 
-- The presynaptic terminal - the end of the motor neuron, containing vesicles of acetylcholine.
-- The synaptic cleft - a small gap between nerve and muscle.
-- The postsynaptic membrane - the muscle fibre membrane, containing nicotinic acetylcholine receptors (Nm).
-- Acetylcholinesterase - the enzyme in the cleft that breaks down acetylcholine.
+- The presynaptic terminal → the end of the motor neuron, containing vesicles of acetylcholine.
+- The synaptic cleft → a small gap between nerve and muscle.
+- The postsynaptic membrane → the muscle fibre membrane, containing nicotinic acetylcholine receptors (Nm).
+- Acetylcholinesterase → the enzyme in the cleft that breaks down acetylcholine.
 
 Drugs acting on the NMJ:
 
-- Neuromuscular blockers (NMJ blockers) - block nicotinic receptors at the NMJ, causing muscle paralysis.
+- Neuromuscular blockers (NMJ blockers) → block nicotinic receptors at the NMJ, causing muscle paralysis.
   - Non-depolarising blockers (competitive antagonists): tubocurarine, vecuronium, atracurium, rocuronium, pancuronium. They compete with acetylcholine for the receptor. Effects last 30-60 minutes; reversed by neostigmine.
   - Depolarising blockers (agonists that cause persistent depolarisation): suxamethonium (succinylcholine). It binds the receptor and causes prolonged depolarisation, so the muscle initially fasciculates then relaxes. Effects last 5-10 minutes; not reversed by neostigmine (which worsens the block).
-- Anticholinesterases - increase acetylcholine at the NMJ, improving transmission.
+- Anticholinesterases → increase acetylcholine at the NMJ, improving transmission.
   - Neostigmine, pyridostigmine - used for myasthenia gravis and reversal of non-depolarising blockade.
   - Edrophonium - short-acting, used diagnostically.
-- Drugs that impair NMJ transmission (cause weakness) - aminoglycosides, tetracyclines, magnesium, botulinum toxin.
-- Drugs that improve NMJ transmission - calcium, aminopyridines.
+- Drugs that impair NMJ transmission (cause weakness) → aminoglycosides, tetracyclines, magnesium, botulinum toxin.
+- Drugs that improve NMJ transmission → calcium, aminopyridines.
 
 Clinical uses of NMJ drugs:
 
-- Muscle relaxation in anaesthesia - non-depolarising blockers (vecuronium, rocuronium) and suxamethonium (for rapid intubation).
-- Myasthenia gravis - anticholinesterases (neostigmine, pyridostigmine).
-- Reversal of neuromuscular blockade - neostigmine (with atropine to prevent bradycardia).
-- Tetanus - muscle relaxants to control spasms.
-- Malignant hyperthermia - dantrolene (acts on the muscle itself, not the NMJ).
+- Muscle relaxation in anaesthesia → non-depolarising blockers (vecuronium, rocuronium) and suxamethonium (for rapid intubation).
+- Myasthenia gravis → anticholinesterases (neostigmine, pyridostigmine).
+- Reversal of neuromuscular blockade → neostigmine (with atropine to prevent bradycardia).
+- Tetanus → muscle relaxants to control spasms.
+- Malignant hyperthermia → dantrolene (acts on the muscle itself, not the NMJ).
 
 Crucial insight: the neuromuscular junction is the final common pathway for voluntary movement, and drugs that act on it can produce complete muscle paralysis. This makes them essential for anaesthesia and intubation, but also dangerous - a patient who is paralysed but not adequately anaesthetised would be conscious but unable to move. Understanding the NMJ and the drugs that act on it is essential for safe anaesthesia and for the management of conditions like myasthenia gravis.`
     },
@@ -26493,23 +26493,23 @@ The answer is that acetylcholine accumulates. The enzyme that normally breaks it
 
 The clinical features of organophosphate poisoning:
 
-- Muscarinic effects - SLUDGE: Salivation, Lacrimation, Urination, Defecation, Gastrointestinal upset, Emesis. Also: miosis (pinpoint pupils), bradycardia, bronchorrhoea, bronchospasm, sweating.
-- Nicotinic effects - muscle fasciculations, weakness, paralysis, tachycardia, hypertension (from ganglionic stimulation).
-- CNS effects - anxiety, restlessness, confusion, seizures, coma, respiratory depression.
-- Cause of death - respiratory failure (from bronchorrhoea, bronchospasm, and paralysis of respiratory muscles).
+- Muscarinic effects → SLUDGE: Salivation, Lacrimation, Urination, Defecation, Gastrointestinal upset, Emesis. Also: miosis (pinpoint pupils), bradycardia, bronchorrhoea, bronchospasm, sweating.
+- Nicotinic effects → muscle fasciculations, weakness, paralysis, tachycardia, hypertension (from ganglionic stimulation).
+- CNS effects → anxiety, restlessness, confusion, seizures, coma, respiratory depression.
+- Cause of death → respiratory failure (from bronchorrhoea, bronchospasm, and paralysis of respiratory muscles).
 
 The treatment of organophosphate poisoning:
 
-- Atropine - blocks muscarinic receptors, reversing the muscarinic effects (bradycardia, secretions, bronchospasm). Given in large doses, repeated as needed. Atropine does not reverse nicotinic effects (muscle weakness, paralysis).
-- Pralidoxime (2-PAM) - reactivates acetylcholinesterase if given before ageing occurs. It must be given early (within hours) because the enzyme-inhibitor complex ages (becomes permanently inactivated). Pralidoxime reverses both muscarinic and nicotinic effects.
-- Benzodiazepines - for seizures.
-- Supportive care - airway management, ventilation, fluids.
+- Atropine → blocks muscarinic receptors, reversing the muscarinic effects (bradycardia, secretions, bronchospasm). Given in large doses, repeated as needed. Atropine does not reverse nicotinic effects (muscle weakness, paralysis).
+- Pralidoxime (2-PAM) → reactivates acetylcholinesterase if given before ageing occurs. It must be given early (within hours) because the enzyme-inhibitor complex ages (becomes permanently inactivated). Pralidoxime reverses both muscarinic and nicotinic effects.
+- Benzodiazepines → for seizures.
+- Supportive care → airway management, ventilation, fluids.
 
 Other uses of organophosphates:
 
-- Insecticides - parathion, malathion. Toxicity is common in agricultural workers.
-- Nerve agents - sarin, soman, tabun, VX. Used in chemical warfare and terrorism.
-- Echothiophate - used in ophthalmology for glaucoma (now rarely used).
+- Insecticides → parathion, malathion. Toxicity is common in agricultural workers.
+- Nerve agents → sarin, soman, tabun, VX. Used in chemical warfare and terrorism.
+- Echothiophate → used in ophthalmology for glaucoma (now rarely used).
 
 Crucial insight: organophosphate poisoning is a cholinergic crisis caused by irreversible inhibition of acetylcholinesterase. Acetylcholine accumulates at every cholinergic synapse, producing muscarinic, nicotinic and CNS effects. The treatment is atropine (blocks muscarinic effects) plus pralidoxime (reactivates the enzyme if given early). Understanding the mechanism - inhibition of acetylcholinesterase - explains both the toxicity and the treatment. The same enzyme that is the target of therapeutic anticholinesterases is the target of some of the most toxic chemicals known.`
     },
@@ -26531,18 +26531,18 @@ The pathophysiology of myasthenia gravis:
 
 The treatment of myasthenia gravis:
 
-- Anticholinesterases - neostigmine, pyridostigmine. They inhibit acetylcholinesterase, increasing acetylcholine at the NMJ, improving transmission. They provide symptomatic relief but do not treat the underlying autoimmune process.
-- Immunosuppression - corticosteroids, azathioprine, mycophenolate. They reduce antibody production.
-- Thymectomy - removal of the thymus, which is often abnormal in myasthenia gravis.
-- Monoclonal antibodies - rituximab, eculizumab, ravulizumab. They target specific components of the immune response.
-- Plasmapheresis / IVIG - for acute severe exacerbations.
+- Anticholinesterases → neostigmine, pyridostigmine. They inhibit acetylcholinesterase, increasing acetylcholine at the NMJ, improving transmission. They provide symptomatic relief but do not treat the underlying autoimmune process.
+- Immunosuppression → corticosteroids, azathioprine, mycophenolate. They reduce antibody production.
+- Thymectomy → removal of the thymus, which is often abnormal in myasthenia gravis.
+- Monoclonal antibodies → rituximab, eculizumab, ravulizumab. They target specific components of the immune response.
+- Plasmapheresis / IVIG → for acute severe exacerbations.
 
 Cholinergic crisis vs myasthenic crisis:
 
-- Myasthenic crisis - worsening of myasthenia due to insufficient treatment. Weakness, difficulty breathing, difficulty swallowing.
-- Cholinergic crisis - over-treatment with anticholinesterases. SLUDGE, muscle fasciculations, weakness, respiratory failure.
+- Myasthenic crisis → worsening of myasthenia due to insufficient treatment. Weakness, difficulty breathing, difficulty swallowing.
+- Cholinergic crisis → over-treatment with anticholinesterases. SLUDGE, muscle fasciculations, weakness, respiratory failure.
 - Distinguishing the two is clinically important: myasthenic crisis needs more anticholinesterase, cholinergic crisis needs less (and atropine).
-- Edrophonium test - a short-acting anticholinesterase was historically used to distinguish the two (improvement suggests myasthenic crisis; worsening suggests cholinergic crisis).
+- Edrophonium test → a short-acting anticholinesterase was historically used to distinguish the two (improvement suggests myasthenic crisis; worsening suggests cholinergic crisis).
 
 Crucial insight: myasthenia gravis is a disease of the neuromuscular junction, and cholinergic drugs are the mainstay of symptomatic treatment. Anticholinesterases increase acetylcholine at the NMJ, compensating for the lost receptors. But the disease is autoimmune, so immunosuppression is also needed. The distinction between myasthenic and cholinergic crisis is critical - both present with weakness, but the treatment is opposite. Understanding the NMJ and the drugs that act on it is essential for managing this condition.`
     },
@@ -26556,32 +26556,32 @@ The answer is that you would expect the effects of parasympathetic activation - 
 
 The side effects of cholinergic agonists (muscarinic effects):
 
-- Cardiovascular - bradycardia, hypotension, syncope.
-- Gastrointestinal - nausea, vomiting, diarrhoea, abdominal cramps, increased salivation.
-- Genitourinary - urinary urgency, incontinence.
-- Respiratory - bronchorrhoea, bronchospasm, dyspnoea.
-- Ocular - miosis, blurred vision, lacrimation.
-- CNS - confusion, seizures, coma (with severe toxicity).
-- Sweating - increased sweating.
+- Cardiovascular → bradycardia, hypotension, syncope.
+- Gastrointestinal → nausea, vomiting, diarrhoea, abdominal cramps, increased salivation.
+- Genitourinary → urinary urgency, incontinence.
+- Respiratory → bronchorrhoea, bronchospasm, dyspnoea.
+- Ocular → miosis, blurred vision, lacrimation.
+- CNS → confusion, seizures, coma (with severe toxicity).
+- Sweating → increased sweating.
 
 The side effects of cholinergic antagonists (anticholinergic effects):
 
-- Cardiovascular - tachycardia, palpitations.
-- Gastrointestinal - dry mouth, constipation, nausea, bloating.
-- Genitourinary - urinary retention, difficulty urinating.
-- Respiratory - dry airways, thickened secretions.
-- Ocular - mydriasis (dilated pupils), blurred vision, photophobia, dry eyes.
-- CNS - confusion, memory impairment, delirium (especially in the elderly), drowsiness, hallucinations.
-- Skin - dry skin, decreased sweating, flushing.
+- Cardiovascular → tachycardia, palpitations.
+- Gastrointestinal → dry mouth, constipation, nausea, bloating.
+- Genitourinary → urinary retention, difficulty urinating.
+- Respiratory → dry airways, thickened secretions.
+- Ocular → mydriasis (dilated pupils), blurred vision, photophobia, dry eyes.
+- CNS → confusion, memory impairment, delirium (especially in the elderly), drowsiness, hallucinations.
+- Skin → dry skin, decreased sweating, flushing.
 
 The classic mnemonic for anticholinergic effects:
 
-- "Dry as a bone" - dry mouth, dry skin, dry eyes.
-- "Red as a beet" - flushing.
-- "Hot as a hare" - hyperthermia (decreased sweating).
-- "Blind as a bat" - mydriasis, blurred vision.
-- "Mad as a hatter" - confusion, delirium.
-- "Full as a flask" - urinary retention.
+- "Dry as a bone" → dry mouth, dry skin, dry eyes.
+- "Red as a beet" → flushing.
+- "Hot as a hare" → hyperthermia (decreased sweating).
+- "Blind as a bat" → mydriasis, blurred vision.
+- "Mad as a hatter" → confusion, delirium.
+- "Full as a flask" → urinary retention.
 
 Managing side effects:
 
@@ -26602,27 +26602,27 @@ My Socratic question: a patient presents with difficulty urinating after surgery
 
 The answer is that each problem points to a different cholinergic target.
 
-- Postoperative urinary retention - give bethanechol (a direct-acting muscarinic agonist). It contracts the bladder and relaxes the sphincter, helping the patient urinate.
-- Acute angle-closure glaucoma - give pilocarpine (a direct-acting muscarinic agonist) or physostigmine (an anticholinesterase). They constrict the pupil (miosis), which opens the drainage angle and reduces intraocular pressure.
+- Postoperative urinary retention → give bethanechol (a direct-acting muscarinic agonist). It contracts the bladder and relaxes the sphincter, helping the patient urinate.
+- Acute angle-closure glaucoma → give pilocarpine (a direct-acting muscarinic agonist) or physostigmine (an anticholinesterase). They constrict the pupil (miosis), which opens the drainage angle and reduces intraocular pressure.
 
 The clinical applications of cholinergic pharmacology:
 
-- Glaucoma - pilocarpine, physostigmine, echothiophate (constrict the pupil).
-- Urinary retention - bethanechol (contracts the bladder).
-- Postoperative ileus - bethanechol (stimulates gut motility).
-- Myasthenia gravis - neostigmine, pyridostigmine (increase acetylcholine at the NMJ).
-- Alzheimer's disease - donepezil, rivastigmine, galantamine (increase acetylcholine in the brain).
-- Reversal of neuromuscular blockade - neostigmine (after surgery).
-- Anticholinergic overdose - physostigmine (crosses the blood-brain barrier).
-- Organophosphate poisoning - atropine (blocks muscarinic effects) + pralidoxime (reactivates the enzyme).
-- Bradycardia - atropine (blocks muscarinic effects on the heart).
-- Preoperative - atropine or hyoscine (dry secretions).
-- Motion sickness - hyoscine.
-- Overactive bladder - oxybutynin, tolterodine, solifenacin.
-- COPD and asthma - ipratropium, tiotropium (inhaled antimuscarinics).
-- Parkinson's disease - benztropine, trihexyphenidyl.
-- Eye examination - tropicamide, cyclopentolate.
-- Muscle relaxation in anaesthesia - neuromuscular blockers.
+- Glaucoma → pilocarpine, physostigmine, echothiophate (constrict the pupil).
+- Urinary retention → bethanechol (contracts the bladder).
+- Postoperative ileus → bethanechol (stimulates gut motility).
+- Myasthenia gravis → neostigmine, pyridostigmine (increase acetylcholine at the NMJ).
+- Alzheimer's disease → donepezil, rivastigmine, galantamine (increase acetylcholine in the brain).
+- Reversal of neuromuscular blockade → neostigmine (after surgery).
+- Anticholinergic overdose → physostigmine (crosses the blood-brain barrier).
+- Organophosphate poisoning → atropine (blocks muscarinic effects) + pralidoxime (reactivates the enzyme).
+- Bradycardia → atropine (blocks muscarinic effects on the heart).
+- Preoperative → atropine or hyoscine (dry secretions).
+- Motion sickness → hyoscine.
+- Overactive bladder → oxybutynin, tolterodine, solifenacin.
+- COPD and asthma → ipratropium, tiotropium (inhaled antimuscarinics).
+- Parkinson's disease → benztropine, trihexyphenidyl.
+- Eye examination → tropicamide, cyclopentolate.
+- Muscle relaxation in anaesthesia → neuromuscular blockers.
 
 Choosing the right drug means:
 
@@ -27955,11 +27955,11 @@ Crucial insight: platelet production happens at the interface between the bone m
 
 The stages, in order, are:
 
-- Megakaryoblast - the first committed cell of the platelet lineage. It is large, with a large nucleus and basophilic cytoplasm. It has begun to commit to becoming a megakaryocyte.
-- Promegakaryocyte - larger still, with a more lobulated nucleus. The cytoplasm is becoming more abundant.
-- Granular megakaryocyte - the cytoplasm fills with granules (which will become the granules of the mature platelets). The nucleus becomes highly multi-lobed. This is the stage at which the cell is actively producing platelets.
-- Mature megakaryocyte - the fully mature cell with an enormous multi-lobed nucleus and vast cytoplasm. It extends proplatelets into the sinusoids and releases platelets.
-- Platelets - the final product, small disc-shaped fragments that enter the circulation.
+- Megakaryoblast → the first committed cell of the platelet lineage. It is large, with a large nucleus and basophilic cytoplasm. It has begun to commit to becoming a megakaryocyte.
+- Promegakaryocyte → larger still, with a more lobulated nucleus. The cytoplasm is becoming more abundant.
+- Granular megakaryocyte → the cytoplasm fills with granules (which will become the granules of the mature platelets). The nucleus becomes highly multi-lobed. This is the stage at which the cell is actively producing platelets.
+- Mature megakaryocyte → the fully mature cell with an enormous multi-lobed nucleus and vast cytoplasm. It extends proplatelets into the sinusoids and releases platelets.
+- Platelets → the final product, small disc-shaped fragments that enter the circulation.
 
 The whole process takes about 5 to 7 days from megakaryoblast to platelet release. Platelets then circulate in the blood for 7 to 10 days before being removed by the spleen and liver. This is shorter than the lifespan of red cells (120 days) or many white cells (hours to years), so platelet production must be continuous and rapid.
 
@@ -27992,13 +27992,13 @@ The answer is that a platelet comes pre-packaged. Its cytoplasm is packed with e
 
 The main contents of a platelet:
 
-- Alpha granules - the most numerous granules. They contain clotting factors (including fibrinogen, von Willebrand factor, factor V), growth factors (including platelet-derived growth factor, which promotes wound healing), and other proteins that are released when the platelet is activated.
-- Dense granules (delta granules) - contain ADP, ATP, serotonin (5-HT), and calcium. When released, ADP and serotonin recruit more platelets to the site of injury.
-- Lysosomes - contain enzymes that help break down debris.
-- Mitochondria - provide energy for platelet activation.
-- Open canalicular system - a network of channels from the platelet surface into its interior, providing more surface area for the release and uptake of substances.
-- Dense tubular system - a network of membranes that stores calcium and helps regulate platelet activation.
-- Cytoskeleton - a network of microtubules and actin filaments that gives the platelet its shape and allows it to change shape when activated (from disc to spiky sphere).
+- Alpha granules → the most numerous granules. They contain clotting factors (including fibrinogen, von Willebrand factor, factor V), growth factors (including platelet-derived growth factor, which promotes wound healing), and other proteins that are released when the platelet is activated.
+- Dense granules (delta granules) → contain ADP, ATP, serotonin (5-HT), and calcium. When released, ADP and serotonin recruit more platelets to the site of injury.
+- Lysosomes → contain enzymes that help break down debris.
+- Mitochondria → provide energy for platelet activation.
+- Open canalicular system → a network of channels from the platelet surface into its interior, providing more surface area for the release and uptake of substances.
+- Dense tubular system → a network of membranes that stores calcium and helps regulate platelet activation.
+- Cytoskeleton → a network of microtubules and actin filaments that gives the platelet its shape and allows it to change shape when activated (from disc to spiky sphere).
 
 Platelets also carry proteins on their surface, including glycoprotein receptors (such as GPIb and GPIIb/IIIa) that allow them to bind von Willebrand factor and fibrinogen during clot formation.
 
@@ -28015,14 +28015,14 @@ The answer is that platelet count is regulated on two fronts - production and re
 Production control:
 
 - Thrombopoietin (TPO) is the primary regulator of platelet production. When platelet count falls, TPO levels rise, and megakaryocytes produce more platelets.
-- Inflammatory cytokines (such as IL-6) can raise platelet production in response to infection or inflammation - producing a reactive thrombocytosis.
+- Inflammatory cytokines (such as IL-6) can raise platelet production in response to infection or inflammation → producing a reactive thrombocytosis.
 - Other growth factors, including IL-3, IL-11 and stem cell factor, also support megakaryocyte development.
 
 Removal:
 
 - Platelets circulate for about 7 to 10 days before being removed.
 - The spleen removes aged or damaged platelets. In conditions where the spleen is enlarged (hypersplenism), platelet count falls because too many platelets are being removed.
-- Antibody-mediated destruction can also remove platelets - this is the mechanism of immune thrombocytopenia (ITP).
+- Antibody-mediated destruction can also remove platelets → this is the mechanism of immune thrombocytopenia (ITP).
 
 How platelets are measured:
 
@@ -28042,28 +28042,28 @@ The answer is that failures can occur at every level, and each produces a specif
 
 Failure of production (thrombocytopenia):
 
-- Bone marrow failure - aplastic anaemia, leukaemia, chemotherapy, radiation. The marrow cannot produce megakaryocytes, so platelet production falls. This is a serious cause of bleeding.
-- Nutritional deficiencies - vitamin B12 and folate deficiencies impair DNA synthesis and therefore megakaryocyte production.
-- Inherited disorders - congenital amegakaryocytic thrombocytopenia (a rare inherited failure of megakaryocyte production).
-- Liver disease - because the liver produces TPO, severe liver disease can reduce TPO production and impair platelet formation.
+- Bone marrow failure → aplastic anaemia, leukaemia, chemotherapy, radiation. The marrow cannot produce megakaryocytes, so platelet production falls. This is a serious cause of bleeding.
+- Nutritional deficiencies → vitamin B12 and folate deficiencies impair DNA synthesis and therefore megakaryocyte production.
+- Inherited disorders → congenital amegakaryocytic thrombocytopenia (a rare inherited failure of megakaryocyte production).
+- Liver disease → because the liver produces TPO, severe liver disease can reduce TPO production and impair platelet formation.
 
 Increased destruction (thrombocytopenia):
 
-- Immune thrombocytopenia (ITP) - autoantibodies destroy platelets. This is the most common cause of isolated thrombocytopenia.
-- Drug-induced thrombocytopenia - certain drugs (e.g. heparin, quinine) trigger immune-mediated platelet destruction.
-- Disseminated intravascular coagulation (DIC) - widespread clotting consumes platelets faster than the marrow can replace them.
-- Thrombotic thrombocytopenic purpura (TTP) and haemolytic uraemic syndrome (HUS) - conditions in which platelets are consumed by abnormal clotting in small vessels.
-- Hypersplenism - an enlarged spleen removes too many platelets.
+- Immune thrombocytopenia (ITP) → autoantibodies destroy platelets. This is the most common cause of isolated thrombocytopenia.
+- Drug-induced thrombocytopenia → certain drugs (e.g. heparin, quinine) trigger immune-mediated platelet destruction.
+- Disseminated intravascular coagulation (DIC) → widespread clotting consumes platelets faster than the marrow can replace them.
+- Thrombotic thrombocytopenic purpura (TTP) and haemolytic uraemic syndrome (HUS) → conditions in which platelets are consumed by abnormal clotting in small vessels.
+- Hypersplenism → an enlarged spleen removes too many platelets.
 
 Excessive production (thrombocytosis):
 
-- Reactive thrombocytosis - occurs in response to infection, inflammation, iron deficiency, or after surgery. Usually mild and not dangerous.
-- Essential thrombocythaemia - a myeloproliferative neoplasm in which the marrow produces too many platelets. Can paradoxically increase the risk of both bleeding and clotting.
+- Reactive thrombocytosis → occurs in response to infection, inflammation, iron deficiency, or after surgery. Usually mild and not dangerous.
+- Essential thrombocythaemia → a myeloproliferative neoplasm in which the marrow produces too many platelets. Can paradoxically increase the risk of both bleeding and clotting.
 
 Abnormal function:
 
-- Inherited platelet function disorders - Bernard-Soulier syndrome (defect in GPIb), Glanzmann thrombasthenia (defect in GPIIb/IIIa).
-- Acquired platelet dysfunction - caused by aspirin, clopidogrel, uraemia, or liver disease.
+- Inherited platelet function disorders → Bernard-Soulier syndrome (defect in GPIb), Glanzmann thrombasthenia (defect in GPIIb/IIIa).
+- Acquired platelet dysfunction → caused by aspirin, clopidogrel, uraemia, or liver disease.
 
 Crucial insight: diseases of thrombopoiesis arise from failures at every level - too few platelets, too many platelets, or platelets that do not work properly. Each has a specific mechanism and a specific laboratory finding. Understanding normal thrombopoiesis is what allows you to recognise and diagnose these conditions - and to predict what a laboratory test result means for the patient.`
     },
@@ -28077,13 +28077,13 @@ The answer is thrombopoietin receptor agonists (TPO-RAs) - drugs that mimic the 
 
 At the same time, the laboratory has a set of tools for investigating platelet disorders:
 
-- Full blood count - gives the platelet count and mean platelet volume (MPV).
-- Peripheral blood smear - examines platelet size, shape, and number, and can reveal clumping (which can falsely lower the count) or abnormal forms.
-- Bleeding time and platelet function tests - assess how well platelets work.
-- Platelet aggregation studies - measure how platelets clump in response to different agonists, helping to distinguish different functional disorders.
-- Bone marrow biopsy - examines megakaryocyte number and appearance, useful when production failure is suspected.
-- Anti-platelet antibody tests - helpful in diagnosing immune-mediated destruction.
-- Genetic testing - for inherited platelet disorders.
+- Full blood count → gives the platelet count and mean platelet volume (MPV).
+- Peripheral blood smear → examines platelet size, shape, and number, and can reveal clumping (which can falsely lower the count) or abnormal forms.
+- Bleeding time and platelet function tests → assess how well platelets work.
+- Platelet aggregation studies → measure how platelets clump in response to different agonists, helping to distinguish different functional disorders.
+- Bone marrow biopsy → examines megakaryocyte number and appearance, useful when production failure is suspected.
+- Anti-platelet antibody tests → helpful in diagnosing immune-mediated destruction.
+- Genetic testing → for inherited platelet disorders.
 
 When a patient has a bleeding problem, the laboratory helps to distinguish between a problem with platelet number (thrombocytopenia or thrombocytosis), a problem with platelet function (normal number but poor function), and a problem with the clotting factors (which is a separate system but often investigated alongside platelet problems).
 
@@ -28576,7 +28576,7 @@ My Socratic question: a drop of blood from a finger is not the same as blood fro
 The answer is that capillary blood is a mixture. It contains blood from capillaries, but also from arterioles and venules, and it is mixed with interstitial fluid (the fluid between cells) and intracellular fluid from damaged cells. This mixture can dilute the sample and affect results - for example, glucose and potassium may be lower, and some cellular components may be altered.
 
 Indications for capillary puncture:
-- Newborns and infants (heel stick) - avoids the difficulty and risk of venipuncture
+- Newborns and infants (heel stick) → avoids the difficulty and risk of venipuncture
 - Patients with poor veins or difficult venous access
 - Point-of-care testing (glucose monitoring, coagulation testing)
 - Small volume requirements
@@ -28592,7 +28592,7 @@ Technique:
 - Clean the site with an appropriate antiseptic and allow it to dry
 - Puncture with a sterile, single-use lancet to a depth of 2.2 to 2.5 mm
 - Wipe away the first drop of blood (it contains interstitial fluid) with a dry gauze
-- Allow the blood to flow freely into the collection device - do not squeeze or milk the finger, as this causes haemolysis and contamination with tissue fluid
+- Allow the blood to flow freely into the collection device → do not squeeze or milk the finger, as this causes haemolysis and contamination with tissue fluid
 - Apply pressure after collection and apply a dressing
 
 Order of fill for capillary tubes: glucose first, then haematology, then chemistry, then serum.
@@ -28613,9 +28613,9 @@ Indications:
 - Certain special tests
 
 Sites:
-- Radial artery (preferred) - accessible, good collateral circulation, easy to compress
-- Brachial artery - alternative, but deeper and less accessible
-- Femoral artery - used in emergencies, but higher risk of complications
+- Radial artery (preferred) → accessible, good collateral circulation, easy to compress
+- Brachial artery → alternative, but deeper and less accessible
+- Femoral artery → used in emergencies, but higher risk of complications
 
 The modified Allen test is performed before radial artery puncture to confirm that the ulnar artery can supply the hand if the radial artery is damaged during puncture. The patient clenches their fist, the examiner compresses both radial and ulnar arteries, the patient opens their hand, and the ulnar artery is released. If the hand flushes within a few seconds, collateral circulation is adequate.
 
@@ -28663,7 +28663,7 @@ Why this order:
 
 Practical considerations:
 - When using a winged butterfly needle, a discard tube may be needed before citrate tubes to ensure the tube fills correctly
-- Tubes must be filled to the indicated fill line - underfilled citrate tubes will be rejected
+- Tubes must be filled to the indicated fill line → underfilled citrate tubes will be rejected
 - Tubes with anticoagulants must be mixed by gentle inversion immediately after filling
 
 Crucial insight: the order of draw is a simple sequence with a profound purpose. It prevents cross-contamination of additives between tubes, which is one of the most common pre-analytical errors. A reversed order of draw can produce falsely prolonged clotting times, falsely low calcium, or falsely high potassium - all of which can lead to wrong diagnoses and wrong treatments.`
@@ -28677,7 +28677,7 @@ My Socratic question: if a sample sits on a bench for two hours before analysis,
 The answer is that many things have changed. Red cells continue to consume glucose and produce lactate. Potassium leaks out of cells, falsely elevating serum potassium. Carbon dioxide diffuses out of the sample, altering pH. Clotting factors degrade, affecting coagulation tests. The longer the delay and the warmer the temperature, the greater the change.
 
 General handling principles:
-- Transport samples to the laboratory as soon as possible - ideally within one hour
+- Transport samples to the laboratory as soon as possible → ideally within one hour
 - Keep samples at the appropriate temperature for the test: most routine samples at room temperature; some tests require refrigeration or freezing
 - Protect samples from light if the analyte is light-sensitive (e.g. bilirubin)
 - Do not expose samples to extremes of temperature
@@ -28920,8 +28920,8 @@ My Socratic question: a basic dye and an acidic dye carry opposite charges. If y
 The answer is that each dye attaches to whatever has the opposite charge. A basic dye is positively charged, so it attaches to negatively charged structures - which are the acidic ones. In a blood cell, the most acidic structures are the nucleic acids of the nucleus, so the basic dye stains the nucleus. An acidic dye is negatively charged, so it attaches to positively charged structures - which are the basic ones. In a blood cell, the basic structures include the proteins of the cytoplasm, so the acidic dye stains the cytoplasm.
 
 The two classic dyes of the Romanowsky family are:
-- Methylene blue - a basic dye that stains acidic structures, especially nuclei, blue. Its oxidised derivative, azure B, is the more important component, and it is what produces the characteristic purple colour of chromatin.
-- Eosin - an acidic dye that stains basic structures, especially cytoplasm and red cells, a red-orange colour.
+- Methylene blue → a basic dye that stains acidic structures, especially nuclei, blue. Its oxidised derivative, azure B, is the more important component, and it is what produces the characteristic purple colour of chromatin.
+- Eosin → an acidic dye that stains basic structures, especially cytoplasm and red cells, a red-orange colour.
 
 This pairing is the reason the stain works. One dye tells you where the nucleus is; the other tells you where the cytoplasm is; and by comparing the two, you can identify the cell. This is the principle that all Romanowsky stains share.
 
@@ -28985,11 +28985,11 @@ My Socratic question: if all Romanowsky stains work on the same principle, why d
 The answer is that each named stain is a particular combination of the same dyes, adjusted for a particular use. The composition is chosen to favour one application - routine morphology, thick films for parasites, urgent staining in an emergency, etc. The differences are small but consequential.
 
 The main Romanowsky stains and their uses:
-- Leishman stain - the routine blood film stain in most haematology laboratories, especially in the UK and Commonwealth countries. It uses methanol as the solvent and contains methylene blue (as the eosinate) and eosin. It is used for routine morphology and blood counts.
-- Giemsa stain - a similar mixture but with azure dyes present from the outset and usually buffered differently. It is the standard stain for thick films in malaria diagnosis, and for staining bone marrow and cytology preparations. Its advantage over Leishman is its slightly stronger nuclear and parasite chromatin staining.
-- Wright stain - the routine Romanowsky stain used in North America. It is very similar to Leishman and is interchangeable with it in most applications.
-- Field's stain - a rapid Romanowsky stain designed specifically for malaria diagnosis. It uses two separate solutions (Field's A and Field's B) that stain a thick film in seconds rather than minutes, at the cost of poorer nuclear detail. It is used in busy malaria clinics where speed matters.
-- May-Grunwald-Giemsa (MGG) - a combination of May-Grunwald (a Romanowsky-type stain) and Giemsa, giving particularly good differentiation of white cell lineages. Used mostly for bone marrow and haematology research.
+- Leishman stain → the routine blood film stain in most haematology laboratories, especially in the UK and Commonwealth countries. It uses methanol as the solvent and contains methylene blue (as the eosinate) and eosin. It is used for routine morphology and blood counts.
+- Giemsa stain → a similar mixture but with azure dyes present from the outset and usually buffered differently. It is the standard stain for thick films in malaria diagnosis, and for staining bone marrow and cytology preparations. Its advantage over Leishman is its slightly stronger nuclear and parasite chromatin staining.
+- Wright stain → the routine Romanowsky stain used in North America. It is very similar to Leishman and is interchangeable with it in most applications.
+- Field's stain → a rapid Romanowsky stain designed specifically for malaria diagnosis. It uses two separate solutions (Field's A and Field's B) that stain a thick film in seconds rather than minutes, at the cost of poorer nuclear detail. It is used in busy malaria clinics where speed matters.
+- May-Grunwald-Giemsa (MGG) → a combination of May-Grunwald (a Romanowsky-type stain) and Giemsa, giving particularly good differentiation of white cell lineages. Used mostly for bone marrow and haematology research.
 
 Crucial insight: the Romanowsky family is not a set of interchangeable stains - each is chosen for a specific purpose. Leishman and Wright for routine morphology, Giemsa for parasites and bone marrow, Field's for rapid malaria diagnosis, and MGG for detailed white cell differentiation. Knowing which to use for which situation is part of the laboratory scientist's professional judgement.`
     },
@@ -29002,8 +29002,8 @@ My Socratic question: the Romanowsky stains show the nucleus, the cytoplasm, and
 The answer is that the Romanowsky stains fix the cells before staining them, and the fixing process destroys certain structures. Specifically, the supravital stains are applied to living cells - cells that have not been fixed - and they reveal structures that disappear once the cell is fixed. The word supravital means above life - a stain applied to still-living tissue.
 
 The two classic supravital stains in haematology:
-- New methylene blue (NMB) - used to stain reticulocytes, the young red cells that still contain residual ribosomal RNA. When a supravital stain is mixed with fresh blood, the dye precipitates the RNA into a visible dark blue network called a reticular network, which is visible inside the red cell. This is the basis of the reticulocyte count - a critical test of bone marrow red cell production.
-- Brilliant cresyl blue - used for the same purpose, particularly for detecting Heinz bodies. Heinz bodies are denatured haemoglobin inclusions that appear in conditions such as G6PD deficiency and after exposure to certain oxidant drugs. A supravital stain precipitates the denatured haemoglobin into characteristic dark inclusions, which Romanowsky stains do not show.
+- New methylene blue (NMB) → used to stain reticulocytes, the young red cells that still contain residual ribosomal RNA. When a supravital stain is mixed with fresh blood, the dye precipitates the RNA into a visible dark blue network called a reticular network, which is visible inside the red cell. This is the basis of the reticulocyte count - a critical test of bone marrow red cell production.
+- Brilliant cresyl blue → used for the same purpose, particularly for detecting Heinz bodies. Heinz bodies are denatured haemoglobin inclusions that appear in conditions such as G6PD deficiency and after exposure to certain oxidant drugs. A supravital stain precipitates the denatured haemoglobin into characteristic dark inclusions, which Romanowsky stains do not show.
 
 Supravital stains do not fix the cells; they must be applied to fresh, living blood within a short time of collection. Their value lies precisely in what they show that fixed cells cannot.
 
@@ -29018,11 +29018,11 @@ My Socratic question: the Romanowsky stain already tells you what kind of cell y
 The answer is that it confirms the identity of the cell and distinguishes cells that look similar but are chemically different. This matters most in two situations: identifying leukaemias and lymphomas, and diagnosing certain inherited blood disorders. In these cases, the morphology alone may be ambiguous, but the cell's chemical reactions give a definitive answer.
 
 The main cytochemical stains:
-- Periodic acid-Schiff (PAS) - stains glycogen and other carbohydrates. Used to identify lymphoblasts and to help diagnose acute lymphoblastic leukaemia.
-- Myeloperoxidase (MPO) - stains the enzyme myeloperoxidase, which is present in myeloid cells. Used to distinguish acute myeloid leukaemia (MPO-positive) from acute lymphoblastic leukaemia (MPO-negative). This is a critical distinction because the two conditions require different treatments.
-- Sudan black B - stains lipids, particularly the lipids in the granules of myeloid cells. Like MPO, it helps identify myeloid lineage.
-- Leucocyte alkaline phosphatase (LAP) - stains the enzyme alkaline phosphatase in neutrophils. Used to distinguish chronic myeloid leukaemia (low LAP score) from a reactive leucocytosis (high LAP score).
-- Perl's Prussian blue - stains iron. Used to detect iron in bone marrow and to diagnose iron deficiency and iron overload disorders. It is the standard stain for assessing bone marrow iron stores.
+- Periodic acid-Schiff (PAS) → stains glycogen and other carbohydrates. Used to identify lymphoblasts and to help diagnose acute lymphoblastic leukaemia.
+- Myeloperoxidase (MPO) → stains the enzyme myeloperoxidase, which is present in myeloid cells. Used to distinguish acute myeloid leukaemia (MPO-positive) from acute lymphoblastic leukaemia (MPO-negative). This is a critical distinction because the two conditions require different treatments.
+- Sudan black B → stains lipids, particularly the lipids in the granules of myeloid cells. Like MPO, it helps identify myeloid lineage.
+- Leucocyte alkaline phosphatase (LAP) → stains the enzyme alkaline phosphatase in neutrophils. Used to distinguish chronic myeloid leukaemia (low LAP score) from a reactive leucocytosis (high LAP score).
+- Perl's Prussian blue → stains iron. Used to detect iron in bone marrow and to diagnose iron deficiency and iron overload disorders. It is the standard stain for assessing bone marrow iron stores.
 
 Cytochemical stains are applied to bone marrow aspirates and blood films, using specific substrates and reaction conditions that produce a visible colour only when the target chemical is present.
 
@@ -29180,7 +29180,7 @@ The answer is that the thick film is designed to concentrate parasites. When the
 
 The two films:
 - The thin film is the classic blood film used for cell morphology. It is spread thinly so that a single layer of red cells is visible with no overlapping. It is fixed in methanol before staining, so the cells retain their morphology. It is used for differential white cell counts, red cell morphology, platelet estimates, and parasite species identification.
-- The thick film is a drop of blood spread into a small circle or rectangle and allowed to dry without spreading thin. It is NOT fixed in methanol before staining - the water in the stain lyses the red cells, leaving a concentrated layer of white cells and any parasites. It is used for the detection of parasites, especially malaria.
+- The thick film is a drop of blood spread into a small circle or rectangle and allowed to dry without spreading thin. It is NOT fixed in methanol before staining → the water in the stain lyses the red cells, leaving a concentrated layer of white cells and any parasites. It is used for the detection of parasites, especially malaria.
 
 The thin film answers the question "what kind of cell is this?" The thick film answers the question "is there a parasite present, and if so how many?" They are complementary and routinely stained together on the same slide for malaria screening.
 
@@ -29224,7 +29224,7 @@ The technique for a good thick film:
 - Use a clean, grease-free slide.
 - Place a drop of blood about 1 cm from one end.
 - Use the corner of a spreader slide to spread it into a circle or rectangle about 1 cm in diameter, with even thickness.
-- Allow the film to dry completely - typically 20 to 30 minutes at room temperature, or faster in an incubator. It must be completely dry before staining, or the film will wash off.
+- Allow the film to dry completely → typically 20 to 30 minutes at room temperature, or faster in an incubator. It must be completely dry before staining, or the film will wash off.
 - Stain without methanol fixation. The red cells lyse during staining.
 
 Crucial insight: the thick film and the thin film require different techniques for the same reason - they answer different questions. The thick film exchanges morphology for sensitivity: it destroys the red cells and their morphology to concentrate the parasites. For malaria diagnosis, the thick film tells you whether parasites are present and roughly how many; the thin film tells you which species and what the red cell morphology is. Together, they are the gold standard for malaria diagnosis.`
@@ -29237,11 +29237,11 @@ My Socratic question: if the film contains dozens of different features that mat
 
 The answer is that thin film examination follows a standard order, from the low-power overview to the high-power differential:
 
-- Low power (10x) - assess the overall quality of the film, including evenness, thickness, and the presence of three zones. Check for any large abnormal cells, clumps, or parasites. Scan the edges, where large cells and platelet clumps are more likely.
-- Oil immersion (100x) - examine red cell morphology in the body of the film, where red cells are a single layer. Assess size, shape, colour, and any inclusions. Look at the white cells for overall distribution and any obvious abnormalities.
-- Differential count (100x) - count 100 white cells, identifying each cell type and recording any morphological abnormalities (toxic granulation, hypersegmentation, atypical lymphocytes, blasts, etc.).
-- Platelet estimate (100x) - estimate platelet numbers by counting platelets per oil immersion field or per 10 fields.
-- Parasite screen (100x) - examine the red cells for malaria parasites and other intraerythrocytic organisms.
+- Low power (10x) → assess the overall quality of the film, including evenness, thickness, and the presence of three zones. Check for any large abnormal cells, clumps, or parasites. Scan the edges, where large cells and platelet clumps are more likely.
+- Oil immersion (100x) → examine red cell morphology in the body of the film, where red cells are a single layer. Assess size, shape, colour, and any inclusions. Look at the white cells for overall distribution and any obvious abnormalities.
+- Differential count (100x) → count 100 white cells, identifying each cell type and recording any morphological abnormalities (toxic granulation, hypersegmentation, atypical lymphocytes, blasts, etc.).
+- Platelet estimate (100x) → estimate platelet numbers by counting platelets per oil immersion field or per 10 fields.
+- Parasite screen (100x) → examine the red cells for malaria parasites and other intraerythrocytic organisms.
 
 Each step answers a different question and adds a different piece of information. The order ensures the examiner sees the whole picture, not just the most obvious feature.
 
@@ -29256,11 +29256,11 @@ My Socratic question: the automated analyser already gives a white cell count an
 The answer is that the analyser's differential is a numerical estimate, and it cannot recognise morphology. It can count neutrophils, lymphocytes, monocytes, eosinophils and basophils, but it cannot tell you that some of those neutrophils are hypersegmented, that some have toxic granulation, that the lymphocytes are atypical, or that there are blasts in the circulation. The manual differential fills those gaps, and it is required whenever the analyser flags an abnormality or when the clinical picture suggests that morphology matters.
 
 The differential count is performed by counting 100 white cells in the body of the thin film, under oil immersion, and classifying each one:
-- Neutrophils (segmented) - normally the most numerous, 40-75%.
-- Lymphocytes - 20-45%.
-- Monocytes - 2-10%.
-- Eosinophils - 1-6%.
-- Basophils - 0-1%.
+- Neutrophils (segmented) → normally the most numerous, 40-75%.
+- Lymphocytes → 20-45%.
+- Monocytes → 2-10%.
+- Eosinophils → 1-6%.
+- Basophils → 0-1%.
 
 For each cell, the examiner also notes any morphological features - toxic granulation, Dohle bodies, hypersegmentation, atypical lymphocytes, blast cells, and so on. These features are often more important than the percentage.
 
@@ -29277,29 +29277,29 @@ The answer is that the shape often tells you the cause of the anaemia, and the c
 The most important red cell morphological features:
 
 Size:
-- Microcytes - smaller than normal, suggests iron deficiency, thalassaemia, or chronic disease.
-- Macrocytes - larger than normal, suggests B12 or folate deficiency, or liver disease.
-- Anisocytosis - variation in size, a general sign of anaemia.
+- Microcytes → smaller than normal, suggests iron deficiency, thalassaemia, or chronic disease.
+- Macrocytes → larger than normal, suggests B12 or folate deficiency, or liver disease.
+- Anisocytosis → variation in size, a general sign of anaemia.
 
 Shape:
-- Poikilocytosis - variation in shape, a general sign of abnormal erythropoiesis.
-- Sickle cells - crescent-shaped, diagnostic of sickle cell disease.
-- Spherocytes - round, without central pallor, seen in hereditary spherocytosis and immune haemolysis.
-- Target cells - target-shaped, seen in liver disease, thalassaemia, and after splenectomy.
-- Elliptocytes - oval-shaped, seen in hereditary elliptocytosis.
-- Schistocytes - fragmented red cells, seen in mechanical haemolysis, DIC, and TTP.
-- Teardrop cells - teardrop-shaped, seen in myelofibrosis.
+- Poikilocytosis → variation in shape, a general sign of abnormal erythropoiesis.
+- Sickle cells → crescent-shaped, diagnostic of sickle cell disease.
+- Spherocytes → round, without central pallor, seen in hereditary spherocytosis and immune haemolysis.
+- Target cells → target-shaped, seen in liver disease, thalassaemia, and after splenectomy.
+- Elliptocytes → oval-shaped, seen in hereditary elliptocytosis.
+- Schistocytes → fragmented red cells, seen in mechanical haemolysis, DIC, and TTP.
+- Teardrop cells → teardrop-shaped, seen in myelofibrosis.
 
 Colour:
-- Hypochromia - increased central pallor, seen in iron deficiency and thalassaemia.
-- Polychromasia - bluish tinge, indicating young red cells (reticulocytes).
+- Hypochromia → increased central pallor, seen in iron deficiency and thalassaemia.
+- Polychromasia → bluish tinge, indicating young red cells (reticulocytes).
 
 Inclusions:
-- Howell-Jolly bodies - nuclear remnants, seen after splenectomy.
-- Pappenheimer bodies - iron-containing granules.
-- Basophilic stippling - residual RNA, seen in lead poisoning and thalassaemia.
-- Malaria parasites - inside the red cell.
-- Heinz bodies - denatured haemoglobin (visible with supravital stain).
+- Howell-Jolly bodies → nuclear remnants, seen after splenectomy.
+- Pappenheimer bodies → iron-containing granules.
+- Basophilic stippling → residual RNA, seen in lead poisoning and thalassaemia.
+- Malaria parasites → inside the red cell.
+- Heinz bodies → denatured haemoglobin (visible with supravital stain).
 
 Crucial insight: red cell morphology is a diagnostic shortcut. Before any further test is run, the shape, size, colour and inclusions of the red cells on a stained film narrow the differential down to a handful of possibilities. A haematologist who knows red cell morphology can often make the diagnosis from the film alone.`
     },
@@ -29314,14 +29314,14 @@ The answer is that the analyser can be fooled, and the film can detect what the 
 The standard platelet estimate:
 - Under oil immersion, count the number of platelets in 10 consecutive fields.
 - Divide the total by 10 to give an average per field.
-- Multiply by 20,000 to give an approximate platelet count per microlitre (or multiply by 15,000 - the exact factor depends on the microscope and the laboratory protocol).
+- Multiply by 20,000 to give an approximate platelet count per microlitre (or multiply by 15,000 → the exact factor depends on the microscope and the laboratory protocol).
 - A normal film typically shows 8 to 15 platelets per oil immersion field.
 
 Platelets appear as small, violet-purple bodies with irregular or granular appearance. On a well-stained film they are easy to see once the examiner knows what to look for. Abnormal findings to note include:
-- Platelet clumping - suggests EDTA-induced clumping; a repeat sample in citrate or heparin is needed.
-- Platelet satellitism - platelets surrounding neutrophils; also EDTA-related.
-- Large platelets (megathrombocytes) - suggest rapid platelet turnover, as in immune thrombocytopenia or inherited macrothrombocytopenia.
-- Absent or markedly reduced platelets - suggests severe thrombocytopenia, a bleeding risk.
+- Platelet clumping → suggests EDTA-induced clumping; a repeat sample in citrate or heparin is needed.
+- Platelet satellitism → platelets surrounding neutrophils; also EDTA-related.
+- Large platelets (megathrombocytes) → suggest rapid platelet turnover, as in immune thrombocytopenia or inherited macrothrombocytopenia.
+- Absent or markedly reduced platelets → suggests severe thrombocytopenia, a bleeding risk.
 
 Crucial insight: the platelet estimate is a direct examination of the platelets themselves, and it catches the analyser errors that no numerical flag can detect. A film showing platelet clumping explains a falsely low analyser count; a film showing large platelets suggests a diagnosis. The platelet estimate is quick, but it is not optional.`
     },
@@ -29344,10 +29344,10 @@ Examination of the thin film for parasites:
 - Quantify parasitaemia as a percentage of red cells infected.
 
 Species-specific features are the key to identification on the thin film:
-- P. falciparum - multiple infections per cell, banana-shaped gametocytes, no enlargement of the red cell.
-- P. vivax - enlarged red cell, Schuffner's dots, amoeboid trophozoites.
-- P. ovale - enlarged red cell, oval shape, Schuffner's dots, fimbriated edges.
-- P. malariae - normal-size red cell, band-form trophozoites, no dots.
+- P. falciparum → multiple infections per cell, banana-shaped gametocytes, no enlargement of the red cell.
+- P. vivax → enlarged red cell, Schuffner's dots, amoeboid trophozoites.
+- P. ovale → enlarged red cell, oval shape, Schuffner's dots, fimbriated edges.
+- P. malariae → normal-size red cell, band-form trophozoites, no dots.
 
 Crucial insight: the thick film finds the parasite, and the thin film identifies it. Malaria treatment depends on the species and the parasitaemia, and only both films together give that information. A positive thick film without a thin film is an incomplete diagnosis; a thin film alone risks missing low-parasitaemia infections.`
     },
@@ -29506,8 +29506,8 @@ My Socratic question: if the red cells outnumber the white cells by roughly a th
 The answer is that it must do two things: dilute the sample so the cells are spread out enough to count, and remove the red cells so they do not obscure the white cells. Turk's fluid does both at once.
 
 Turk's fluid is a white cell diluting fluid with two active components:
-- Acetic acid (typically 2% to 3%) - lyses the red cell membranes, destroying the red cells and leaving only the white cells. It also helps preserve the white cells.
-- A dye - either gentian violet or methylene blue - which stains the white cell nuclei a deep violet-blue, making them easy to see against the pale background.
+- Acetic acid (typically 2% to 3%) → lyses the red cell membranes, destroying the red cells and leaving only the white cells. It also helps preserve the white cells.
+- A dye → either gentian violet or methylene blue - which stains the white cell nuclei a deep violet-blue, making them easy to see against the pale background.
 
 The standard dilution is 1 in 20. This is achieved by mixing 0.02 mL (20 microlitres) of blood with 0.38 mL of Turk's fluid, giving a total volume of 0.40 mL and a dilution factor of 20. In the traditional Thoma pipette method, blood is drawn to the 0.5 mark and Turk's fluid to the 11 mark, which also gives a 1 in 20 dilution (because the fluid in the stem up to the 1 mark is not mixed with the blood).
 
@@ -29541,9 +29541,9 @@ My Socratic question: a white cell counting fluid must dilute the sample, destro
 The answer is that three substances are needed, each solving one problem.
 
 The composition of Turk's fluid:
-- Glacial acetic acid - typically 2 mL per 100 mL of fluid, giving a 2% acetic acid solution. Its job is to lyse the red cells by disrupting their membranes. Without this, the red cells would remain intact and obscure the white cells. The acetic acid also helps preserve the white cell morphology.
-- Distilled water - the solvent, making up the bulk of the fluid.
-- Gentian violet or methylene blue - a small amount of dye, typically 1 gram per 100 mL or a few drops of a 10 g/L solution. Its job is to stain the white cell nuclei a deep violet-blue, making them clearly visible against the pale background.
+- Glacial acetic acid → typically 2 mL per 100 mL of fluid, giving a 2% acetic acid solution. Its job is to lyse the red cells by disrupting their membranes. Without this, the red cells would remain intact and obscure the white cells. The acetic acid also helps preserve the white cell morphology.
+- Distilled water → the solvent, making up the bulk of the fluid.
+- Gentian violet or methylene blue → a small amount of dye, typically 1 gram per 100 mL or a few drops of a 10 g/L solution. Its job is to stain the white cell nuclei a deep violet-blue, making them clearly visible against the pale background.
 
 A typical recipe: 2 mL glacial acetic acid, 98 mL distilled water, and 3 drops of 10 g/L methylene blue solution [citation:1][citation:5][citation:11]. Some laboratories use gentian violet instead of methylene blue; both work by staining the nuclei.
 
@@ -29578,10 +29578,10 @@ My Socratic question: a white cell lies exactly on the line between two squares.
 The answer is that there is a rule, and it exists to ensure that every cell is counted once and only once. The standard rule is: count cells that touch the upper and left-hand boundary lines, and do not count cells that touch the lower and right-hand boundary lines [citation:15]. In Chinese textbooks, the same rule is expressed as "count the top, not the bottom; count the left, not the right" [citation:11]. This ensures that boundary cells are not double-counted or missed.
 
 Other counting rules:
-- Count in a systematic pattern - typically a serpentine or zigzag pattern through each square - so that you do not skip areas or count the same area twice.
+- Count in a systematic pattern → typically a serpentine or zigzag pattern through each square - so that you do not skip areas or count the same area twice.
 - Count with the 10x objective. The white cells are stained deep violet-blue and are clearly visible at this magnification.
 - Allow the cells to settle for 2 to 3 minutes before counting, so that they are all in the same focal plane [citation:11].
-- If the cell distribution is uneven - for example, if the counts in the four squares differ by more than 10% - the chamber may be poorly filled, and the sample should be re-mixed and re-filled [citation:11].
+- If the cell distribution is uneven → for example, if the counts in the four squares differ by more than 10% - the chamber may be poorly filled, and the sample should be re-mixed and re-filled [citation:11].
 
 Crucial insight: counting rules are not arbitrary. They are the mechanism that makes the manual count reproducible. Without them, two people counting the same sample would get different answers. With them, the manual count becomes a precise method with known and controllable sources of error.`
     },
@@ -29846,18 +29846,18 @@ My Socratic question: if a microscope is described as "compound," what does that
 The answer is that "compound" means the microscope uses two or more lenses in sequence to produce the final image. The main lenses are the objective lens (close to the specimen) and the ocular or eyepiece lens (close to the eye). The objective forms a magnified image of the specimen; the ocular then magnifies that image again, producing the very large final image you see.
 
 The main parts of a compound light microscope and their functions:
-- Eyepiece (ocular lens) - the lens nearest the eye, typically 10x magnification. It magnifies the image formed by the objective.
-- Objective lenses - the lenses near the specimen. Most microscopes have three or four, typically 4x, 10x, 40x, and 100x (oil immersion). Each objective has its own magnification and numerical aperture.
-- Revolving nosepiece - holds the objectives and rotates to change magnification.
-- Stage - the flat platform on which the slide is placed. Often fitted with mechanical stage controls for precise movement.
-- Stage clips - hold the slide in place.
-- Condenser - a lens beneath the stage that focuses light onto the specimen. Critical for optimal illumination and resolution.
-- Iris diaphragm - controls the amount of light passing through the condenser to the specimen.
-- Illuminator (light source) - built-in lamp at the base of the microscope.
-- Coarse focus knob - moves the stage (or the objective) up and down rapidly, for initial focusing at low power.
-- Fine focus knob - moves the stage (or the objective) very slightly, for precise focusing at high power.
-- Arm - connects the base to the head and supports the optical system.
-- Base - the flat bottom that supports the microscope.
+- Eyepiece (ocular lens) → the lens nearest the eye, typically 10x magnification. It magnifies the image formed by the objective.
+- Objective lenses → the lenses near the specimen. Most microscopes have three or four, typically 4x, 10x, 40x, and 100x (oil immersion). Each objective has its own magnification and numerical aperture.
+- Revolving nosepiece → holds the objectives and rotates to change magnification.
+- Stage → the flat platform on which the slide is placed. Often fitted with mechanical stage controls for precise movement.
+- Stage clips → hold the slide in place.
+- Condenser → a lens beneath the stage that focuses light onto the specimen. Critical for optimal illumination and resolution.
+- Iris diaphragm → controls the amount of light passing through the condenser to the specimen.
+- Illuminator (light source) → built-in lamp at the base of the microscope.
+- Coarse focus knob → moves the stage (or the objective) up and down rapidly, for initial focusing at low power.
+- Fine focus knob → moves the stage (or the objective) very slightly, for precise focusing at high power.
+- Arm → connects the base to the head and supports the optical system.
+- Base → the flat bottom that supports the microscope.
 
 Crucial insight: the parts that directly determine the image are the objective lens, the ocular lens, the condenser and the iris diaphragm, and the illuminator. The objective determines magnification and resolution; the ocular adds further magnification; the condenser and iris diaphragm control the quality of illumination, which in turn determines whether the resolution of the objective can be realised. The other parts support and position these optical elements. When microscopy is suboptimal, the cause is almost always in these optical parts.`
     },
@@ -29871,7 +29871,7 @@ The answer is that resolution depends not only on the objective but on the cone 
 
 Setting up Kohler illumination is the standard way to align the microscope for optimal imaging. In essence:
 - Focus the condenser so that the light source is imaged in the specimen plane (or the specimen is imaged in the condenser aperture).
-- Adjust the condenser aperture (iris diaphragm) so that it is about 70-80% of the objective's numerical aperture - this balances contrast and resolution, allowing the full NA of the objective to be used without producing glare.
+- Adjust the condenser aperture (iris diaphragm) so that it is about 70-80% of the objective's numerical aperture → this balances contrast and resolution, allowing the full NA of the objective to be used without producing glare.
 - Centre the condenser so the light is evenly distributed across the field.
 
 Common mistakes in condenser use:
@@ -29906,10 +29906,10 @@ My Socratic question: if brightfield microscopy can show almost every cell and p
 The answer is that brightfield microscopy requires contrast, and contrast requires staining or natural pigmentation. Certain specimens have neither. Living, unstained cells are nearly transparent in a brightfield microscope because their refractive index is close to that of the surrounding medium. Their internal structures are invisible unless they are stained - and staining kills them. So brightfield microscopy cannot be used to study living, unstained cells, which is exactly what certain haematological techniques require.
 
 The main types of microscopy used in haematology:
-- Brightfield microscopy - the routine method. Light is transmitted through a stained specimen, and contrast comes from the stain. Used for all standard blood film examinations: differential counts, red cell morphology, platelet estimates, and parasite detection.
-- Phase contrast microscopy - converts small differences in refractive index into visible differences in brightness. Used to examine living, unstained cells, such as reticulocyte preparations or cell cultures, where the internal structures are not visible in brightfield.
-- Darkfield microscopy - the specimen is illuminated with a hollow cone of light, so the background is dark and objects appear bright. Used to examine unstained specimens such as Treponema pallidum (the spirochete of syphilis) in wet preparations, where the organism is too thin to be seen in brightfield.
-- Fluorescence microscopy - uses ultraviolet or blue light to excite fluorescent dyes that then emit visible light. Used in immunohaematology and for detecting certain parasites such as malaria in fluorescent-stained preparations.
+- Brightfield microscopy → the routine method. Light is transmitted through a stained specimen, and contrast comes from the stain. Used for all standard blood film examinations: differential counts, red cell morphology, platelet estimates, and parasite detection.
+- Phase contrast microscopy → converts small differences in refractive index into visible differences in brightness. Used to examine living, unstained cells, such as reticulocyte preparations or cell cultures, where the internal structures are not visible in brightfield.
+- Darkfield microscopy → the specimen is illuminated with a hollow cone of light, so the background is dark and objects appear bright. Used to examine unstained specimens such as Treponema pallidum (the spirochete of syphilis) in wet preparations, where the organism is too thin to be seen in brightfield.
+- Fluorescence microscopy → uses ultraviolet or blue light to excite fluorescent dyes that then emit visible light. Used in immunohaematology and for detecting certain parasites such as malaria in fluorescent-stained preparations.
 
 Crucial insight: the choice of microscopy technique is dictated by the properties of the specimen. Brightfield is the default because stained blood films provide contrast. When the specimen is unstained or living, or when the object is too thin or too faint for brightfield, other techniques are needed. Understanding the principles behind each type is essential for selecting the right method for the diagnostic question.`
     },
@@ -29926,8 +29926,8 @@ Phase contrast microscopy works by exploiting small differences in refractive in
 Darkfield microscopy works by illuminating the specimen with light that is directed to the sides of the field, not straight through it. Only light that is scattered or refracted by the specimen reaches the eye. Because the direct light is blocked, the background is black. Only the specimen appears bright, because it scatters light into the viewing path. The result is a black background with brilliantly lit objects.
 
 The two techniques are used for different reasons:
-- Phase contrast is used when the specimen is transparent but has internal structure that differs in refractive index - living cells, reticulocyte preparations, and unstained preparations where internal details matter.
-- Darkfield is used when the object is extremely thin or has a refractive index very close to the surroundings - such as spirochetes - and would be invisible in brightfield even when stained.
+- Phase contrast is used when the specimen is transparent but has internal structure that differs in refractive index → living cells, reticulocyte preparations, and unstained preparations where internal details matter.
+- Darkfield is used when the object is extremely thin or has a refractive index very close to the surroundings → such as spirochetes - and would be invisible in brightfield even when stained.
 
 Crucial insight: phase contrast converts refractive index into brightness, and darkfield converts scattered light into brightness. Both reveal invisible things, but for different specimens. Phase contrast for translucent, internally structured cells; darkfield for extremely thin or sparsely scattered objects.`
     },
@@ -29943,7 +29943,7 @@ The steps of Kohler illumination, in simplified form:
 - Focus on the specimen with the 10x objective.
 - Close the field diaphragm and adjust the condenser height so the field diaphragm is sharply focused on the specimen.
 - Open the field diaphragm just until it is no longer visible in the field of view.
-- Adjust the condenser aperture (iris diaphragm) so that it is about 70-80% of the objective's numerical aperture - usually judged visually, by opening and closing the iris until contrast and resolution are balanced.
+- Adjust the condenser aperture (iris diaphragm) so that it is about 70-80% of the objective's numerical aperture → usually judged visually, by opening and closing the iris until contrast and resolution are balanced.
 - Centre the condenser using the centring screws, so the illumination is even across the field.
 - Repeat the aperture adjustment for each objective as magnification is changed.
 
@@ -30108,9 +30108,9 @@ My Socratic question: if you check a control sample and it is within range, you 
 The answer is no - and that is why there is more than one level. Quality control verifies the analytical step of one test on one day. But the result depends on much more than the analytical step. The sample might have been mislabelled, stored wrongly, or collected from the wrong patient. The equipment might have been badly calibrated. The staff member might be poorly trained. Quality control would not detect any of those, because they lie outside the analytical step.
 
 The hierarchy, from narrowest to broadest:
-- Quality control (QC) - the set of procedures used to detect and correct errors within the analytical phase of a single test. Running a control sample, comparing it against a range, and acting on the result is QC.
-- Quality assurance (QA) - the wider set of policies, procedures and activities that ensure quality across the entire testing process, from patient preparation to reporting. QA includes QC, but also covers sample collection, equipment maintenance, staff training, documentation, and audits.
-- Total Quality Management (TQM) - an organisation-wide management philosophy that treats quality as a responsibility of everyone in the organisation, at every level, aimed at continuous improvement. TQM extends QA beyond the laboratory into the entire institution.
+- Quality control (QC) → the set of procedures used to detect and correct errors within the analytical phase of a single test. Running a control sample, comparing it against a range, and acting on the result is QC.
+- Quality assurance (QA) → the wider set of policies, procedures and activities that ensure quality across the entire testing process, from patient preparation to reporting. QA includes QC, but also covers sample collection, equipment maintenance, staff training, documentation, and audits.
+- Total Quality Management (TQM) → an organisation-wide management philosophy that treats quality as a responsibility of everyone in the organisation, at every level, aimed at continuous improvement. TQM extends QA beyond the laboratory into the entire institution.
 
 Crucial insight: QC is the daily check; QA is the system; TQM is the culture. Each one adds a layer to what the one below it can guarantee. A laboratory with good QC but no QA can still release wrong results because the errors are outside the analytical step. A laboratory with QA but no TQM will not sustain improvement over time. All three levels are needed.`
     },
@@ -30123,9 +30123,9 @@ My Socratic question: if an error can occur at any of those dozen steps, why doe
 The answer is that each phase has its own characteristic errors, its own controls, and its own means of monitoring. Grouping makes the errors visible and allows targeted quality measures.
 
 The three phases of testing:
-- Pre-analytical phase - everything that happens before the sample reaches the analyser: patient preparation, identification, sample collection, labelling, transport, storage, and receiving and accessioning. This is where the majority of laboratory errors occur, and yet it is the phase most likely to be outside the laboratory's direct control.
-- Analytical phase - the actual measurement: calibration, reagent preparation, instrument operation, running the sample, and the analytical run itself. This is the phase traditionally covered by QC. It is the phase most under the laboratory's control.
-- Post-analytical phase - everything after the measurement: result review, validation, reporting, critical value notification, and interpretation. This is where errors of transmission, transcription, and communication occur.
+- Pre-analytical phase → everything that happens before the sample reaches the analyser: patient preparation, identification, sample collection, labelling, transport, storage, and receiving and accessioning. This is where the majority of laboratory errors occur, and yet it is the phase most likely to be outside the laboratory's direct control.
+- Analytical phase → the actual measurement: calibration, reagent preparation, instrument operation, running the sample, and the analytical run itself. This is the phase traditionally covered by QC. It is the phase most under the laboratory's control.
+- Post-analytical phase → everything after the measurement: result review, validation, reporting, critical value notification, and interpretation. This is where errors of transmission, transcription, and communication occur.
 
 A quality system monitors all three phases. It recognises that the analytical phase, while critical, is only one part of the journey, and that pre-analytical errors - which are typically more numerous - are often the greatest threat to patient safety.
 
@@ -30140,12 +30140,12 @@ My Socratic question: if the same analyser, the same reagents and the same proto
 The answer is the people. How the sample is drawn, how the instrument is prepared, how the QC result is interpreted, how a discrepancy is investigated - all of these depend on the knowledge, skill, and judgement of the person performing them. Equipment and protocols are tools; people decide how they are used.
 
 The people-related elements of a quality system:
-- Personnel qualifications - defined educational requirements for each role, from entry-level to senior scientist.
-- Training - structured induction and ongoing training, with documented evidence that each person has been trained on each procedure they perform.
-- Competency assessment - periodic assessment of each person's ability to perform each task correctly, with documented results.
-- Job descriptions - clear definition of responsibilities and authority, so that accountability is explicit.
-- Continuing professional development - ongoing learning to keep pace with advances in the field.
-- Accountability - a culture in which each person takes responsibility for their work and speaks up when something is wrong.
+- Personnel qualifications → defined educational requirements for each role, from entry-level to senior scientist.
+- Training → structured induction and ongoing training, with documented evidence that each person has been trained on each procedure they perform.
+- Competency assessment → periodic assessment of each person's ability to perform each task correctly, with documented results.
+- Job descriptions → clear definition of responsibilities and authority, so that accountability is explicit.
+- Continuing professional development → ongoing learning to keep pace with advances in the field.
+- Accountability → a culture in which each person takes responsibility for their work and speaks up when something is wrong.
 
 Crucial insight: every quality system is ultimately a human system. Written procedures, calibrated instruments and controlled reagents are essential, but they are tools in the hands of people. The most important quality control measure in any laboratory is a competent, trained, accountable staff. This is why personnel, training and competency are the first pillars of any quality framework.`
     },
@@ -30160,10 +30160,10 @@ The answer is that a laboratory cannot prove that anything happened correctly if
 - It provides evidence. In accreditation, in audits, and in incident investigation, only documented evidence counts. If the QC was run but not recorded, it is treated as if it was not run.
 
 The main documents of a quality system:
-- Standard operating procedures (SOPs) - the written instructions for every procedure, from sample collection to instrument operation to result reporting.
-- Records - the logs that document what was actually done: QC records, calibration records, equipment maintenance logs, temperature records, sample acceptance records, staff training records.
-- Forms - the structured documents used to capture data (sample rejection forms, incident report forms, worksheet templates).
-- Quality manual - the overarching document that defines the laboratory's quality system and policies.
+- Standard operating procedures (SOPs) → the written instructions for every procedure, from sample collection to instrument operation to result reporting.
+- Records → the logs that document what was actually done: QC records, calibration records, equipment maintenance logs, temperature records, sample acceptance records, staff training records.
+- Forms → the structured documents used to capture data (sample rejection forms, incident report forms, worksheet templates).
+- Quality manual → the overarching document that defines the laboratory's quality system and policies.
 
 Document control is itself a discipline. Every document must have a unique identifier, a version number, an approval signature, and a date. Superseded versions must be removed from circulation. This prevents the use of outdated procedures.
 
@@ -30178,12 +30178,12 @@ My Socratic question: the analyser is electronic and does the same thing on ever
 The answer is that the analyser is a physical instrument operating with physical reagents on biological samples, and all three of these can vary. The light source ages. The tubes can become dirty. The reagents can degrade. The electronic components can drift. Even a perfectly functioning analyser can be compromised by its environment, its consumables, or the handling of the samples.
 
 The equipment-related elements of a quality system:
-- Selection and validation - when a new analyser or method is introduced, it must be validated to demonstrate that it performs as required before it is used for patient testing.
-- Calibration - adjusting the instrument against known reference materials so that the results it produces are traceable to a standard.
-- Internal quality control (IQC) - running control samples of known value at intervals (often daily, or at the start of every batch) and comparing the results against a defined range.
-- External quality assessment (EQA) - participating in a scheme where the same sample is sent to many laboratories and the results are compared. Also called proficiency testing.
-- Preventive maintenance - scheduled cleaning, replacement of worn parts, and inspection, so that failure is prevented rather than corrected.
-- Troubleshooting and corrective action - the documented process for identifying and fixing equipment faults.
+- Selection and validation → when a new analyser or method is introduced, it must be validated to demonstrate that it performs as required before it is used for patient testing.
+- Calibration → adjusting the instrument against known reference materials so that the results it produces are traceable to a standard.
+- Internal quality control (IQC) → running control samples of known value at intervals (often daily, or at the start of every batch) and comparing the results against a defined range.
+- External quality assessment (EQA) → participating in a scheme where the same sample is sent to many laboratories and the results are compared. Also called proficiency testing.
+- Preventive maintenance → scheduled cleaning, replacement of worn parts, and inspection, so that failure is prevented rather than corrected.
+- Troubleshooting and corrective action → the documented process for identifying and fixing equipment faults.
 
 Each of these elements contributes a distinct piece of confidence. Calibration ensures the analyser is set correctly. IQC confirms it is performing correctly today. EQA confirms it is performing comparably to other laboratories. Maintenance ensures that it continues to perform correctly over time.
 
@@ -30201,7 +30201,7 @@ Key concepts of IQC:
 - The control material has a target value (established from many previous runs) and a defined range (typically the mean plus or minus 2 standard deviations).
 - The control is run alongside patient samples under the same conditions, so any problem affecting the controls is assumed to affect patients.
 - The results are plotted on a Levey-Jennings chart, which shows the mean, the plus and minus 2 standard deviation limits, and the trend of results over time.
-- The scientist interprets the chart using rules - Westgard rules are the standard - to determine whether the run is acceptable or whether it should be rejected.
+- The scientist interprets the chart using rules → Westgard rules are the standard - to determine whether the run is acceptable or whether it should be rejected.
 - If a run is rejected, patient results from that run are not reported until the problem is corrected and the run is repeated.
 
 The various rules (1-2s, 1-3s, 2-2s, R-4s, 4-1s, 10x) are all about distinguishing random variation from systematic error. Random variation is inevitable and harmless. Systematic error indicates a real problem - a drifting instrument, a degraded reagent, a change in technique - and must be investigated.
@@ -30240,13 +30240,13 @@ My Socratic question: if a laboratory performs well for a year and then an error
 The answer is no, unless the error is repeated. A single error reveals an opportunity to improve. What matters is whether the laboratory learns from it, corrects the underlying problem, and prevents recurrence. That is the essence of continuous improvement.
 
 The mechanisms of continuous improvement:
-- Incident reporting - a non-punitive system in which errors and near-misses are reported so that they can be investigated and prevented. The goal is not to blame, but to fix.
-- Root cause analysis - investigating an incident to identify the underlying cause, not just the proximate one. A wrong result could be caused by a mislabelled sample, but the root cause might be an unclear labelling protocol.
-- Corrective and preventive action (CAPA) - the process of fixing a problem (corrective) and preventing it from recurring (preventive).
-- Audits - internal and external reviews of the quality system to check that it is working as intended. Internal audits are performed by trained staff within the laboratory; external audits are performed by accreditation bodies or regulators.
-- Key performance indicators (KPIs) - metrics that track quality over time: sample rejection rate, turnaround time, QC failure rate, EQA performance, error rate.
-- Quality improvement projects - structured efforts to improve a specific process, using data to measure the improvement.
-- Feedback loops - from clinicians, from patients, from staff, and from audits.
+- Incident reporting → a non-punitive system in which errors and near-misses are reported so that they can be investigated and prevented. The goal is not to blame, but to fix.
+- Root cause analysis → investigating an incident to identify the underlying cause, not just the proximate one. A wrong result could be caused by a mislabelled sample, but the root cause might be an unclear labelling protocol.
+- Corrective and preventive action (CAPA) → the process of fixing a problem (corrective) and preventing it from recurring (preventive).
+- Audits → internal and external reviews of the quality system to check that it is working as intended. Internal audits are performed by trained staff within the laboratory; external audits are performed by accreditation bodies or regulators.
+- Key performance indicators (KPIs) → metrics that track quality over time: sample rejection rate, turnaround time, QC failure rate, EQA performance, error rate.
+- Quality improvement projects → structured efforts to improve a specific process, using data to measure the improvement.
+- Feedback loops → from clinicians, from patients, from staff, and from audits.
 
 Crucial insight: continuous improvement means the quality system is a living system, not a static one. It responds to problems, learns from incidents, and evolves as new methods and technologies appear. The goal is not perfection - which is unattainable - but ongoing improvement, so that each year the laboratory is better than the last.`
     },
