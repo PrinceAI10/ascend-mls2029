@@ -4711,6 +4711,7 @@ function TopicView({ app }) {
                 window.alert("Please select some text first.");
                 return;
               }
+              console.log("HL ABOUT TO SET:", { key, start, end });
               setHlToolbar({ key, start, end });
             }}
             title="Highlight selected text"
