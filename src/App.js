@@ -30402,11 +30402,11 @@ My Socratic question: what does a molecule of cholesterol have in common with a 
 The answer is that they are both hydrophobic - they do not dissolve in water. Every lipid shares this property: it is essentially insoluble in water but soluble in organic solvents such as ether, chloroform and benzene. This is not a minor shared feature; it is the defining one, and it dictates everything the body must do to handle lipids - how it digests them, how it transports them in the water-based blood, and how it uses them.
 
 The major classes of lipids:
-- Fatty acids - long hydrocarbon chains with a carboxyl group at one end. They are the building blocks of most other lipids.
-- Triglycerides (triacylglycerols) - three fatty acids esterified to a glycerol backbone. The main storage form of energy, found in adipose tissue.
-- Phospholipids - two fatty acids and a phosphate-containing group attached to glycerol. The main structural lipid of cell membranes.
-- Steroids - a distinctive four-ring structure. Cholesterol is the parent compound; steroid hormones and bile acids derive from it.
-- Waxes - long-chain fatty acids esterified to long-chain alcohols, used for waterproofing.
+- Fatty acids → long hydrocarbon chains with a carboxyl group at one end. They are the building blocks of most other lipids.
+- Triglycerides (triacylglycerols) → three fatty acids esterified to a glycerol backbone. The main storage form of energy, found in adipose tissue.
+- Phospholipids → two fatty acids and a phosphate-containing group attached to glycerol. The main structural lipid of cell membranes.
+- Steroids → a distinctive four-ring structure. Cholesterol is the parent compound; steroid hormones and bile acids derive from it.
+- Waxes → long-chain fatty acids esterified to long-chain alcohols, used for waterproofing.
 
 Crucial insight: hydrophobic and water-insoluble - that is what makes a lipid a lipid. This single physical property creates both the functions and the problems of lipid metabolism. It provides the water-repelling membrane barrier, and it forces the body to devise elaborate mechanisms for digesting, absorbing and transporting substances that water cannot dissolve. Every mechanism you will learn in this topic exists to solve the problem that lipids do not dissolve in the body's main solvent.`
     },
@@ -30419,9 +30419,9 @@ My Socratic question: enzymes work best on the surface of their substrate. A sin
 The answer is emulsification. Bile salts, released from the gallbladder, are amphipathic molecules - they have a hydrophobic side that dissolves in fat and a hydrophilic side that faces water. They wedge themselves into the fat droplet, and their water-facing sides force the droplet to break up into thousands of tiny droplets. This is not a chemical reaction - it is a physical process. It converts one large fat globule into countless small ones, enormously increasing the total surface area available to lipase.
 
 The sequence of lipid digestion:
-- Mouth and stomach - little digestion. Gastric lipase begins a small amount of triglyceride digestion, but the main work happens later.
-- Small intestine - the main site. Bile salts emulsify the fat. Pancreatic lipase, with the help of a protein cofactor called colipase, breaks down triglycerides into two free fatty acids and a monoglyceride.
-- Micelle formation - the products of digestion, together with bile salts, form small aggregates called micelles, which ferry the water-insoluble products to the brush border of the intestinal cells for absorption.
+- Mouth and stomach → little digestion. Gastric lipase begins a small amount of triglyceride digestion, but the main work happens later.
+- Small intestine → the main site. Bile salts emulsify the fat. Pancreatic lipase, with the help of a protein cofactor called colipase, breaks down triglycerides into two free fatty acids and a monoglyceride.
+- Micelle formation → the products of digestion, together with bile salts, form small aggregates called micelles, which ferry the water-insoluble products to the brush border of the intestinal cells for absorption.
 
 Crucial insight: emulsification solves the fundamental problem of lipid digestion. By breaking a large fat globule into a fine emulsion, bile salts multiply the surface area available to lipase by many thousands of times, converting an impossible two-phase reaction into an efficient one. Without bile salts, most dietary fat would pass through the gut undigested - the condition known as steatorrhoea. Emulsification is not digestion, but it is the essential precondition for it.`
     },
@@ -30450,9 +30450,9 @@ My Socratic question: the interior of a chylomicron is pure fat, and the exterio
 The answer is a monolayer of amphipathic molecules. The chylomicron has a hydrophobic core of triglycerides and cholesteryl esters, and a hydrophilic surface made of phospholipids, free cholesterol and apolipoproteins. The phospholipids and apolipoproteins are amphipathic - one end dissolves in the fat core, the other faces the water. This creates a stable emulsion droplet that can circulate without coalescing.
 
 The structure of a chylomicron:
-- Core - hydrophobic. Contains triglycerides and cholesteryl esters.
-- Surface monolayer - amphipathic. Contains phospholipids, free cholesterol and apolipoproteins.
-- Apolipoproteins - proteins on the surface. They stabilise the particle, and they act as signals that target it to specific tissues. Different apolipoproteins have different functions.
+- Core → hydrophobic. Contains triglycerides and cholesteryl esters.
+- Surface monolayer → amphipathic. Contains phospholipids, free cholesterol and apolipoproteins.
+- Apolipoproteins → proteins on the surface. They stabilise the particle, and they act as signals that target it to specific tissues. Different apolipoproteins have different functions.
 
 The apolipoproteins are the key to targeting. ApoB-48, for example, is unique to chylomicrons and marks them as intestinal in origin. ApoC-II activates lipoprotein lipase in the capillaries of tissues, so the chylomicron can unload its triglyceride. ApoE is recognised by receptors in the liver, which remove the chylomicron remnant from the circulation.
 
@@ -30466,11 +30466,11 @@ My Socratic question: the density of a lipoprotein depends on its ratio of lipid
 
 The answer is that the more fat a particle contains, the larger and less dense it is. The more protein it contains, the smaller and denser it is. The names of the lipoprotein classes come directly from this relationship:
 
-- Chylomicrons - the largest and least dense. Made in the intestine; carry dietary (exogenous) triglycerides from the gut to the tissues. Very high triglyceride content.
-- VLDL (very-low-density lipoprotein) - made in the liver; carry endogenous triglycerides synthesised in the liver to the tissues.
-- IDL (intermediate-density lipoprotein) - a transitional particle between VLDL and LDL.
-- LDL (low-density lipoprotein) - the end product of VLDL metabolism; carries cholesterol to peripheral tissues. Sometimes called "bad cholesterol" because high LDL is associated with atherosclerosis.
-- HDL (high-density lipoprotein) - the smallest and densest; carries cholesterol from peripheral tissues back to the liver for excretion. Sometimes called "good cholesterol" because high HDL is protective.
+- Chylomicrons → the largest and least dense. Made in the intestine; carry dietary (exogenous) triglycerides from the gut to the tissues. Very high triglyceride content.
+- VLDL (very-low-density lipoprotein) → made in the liver; carry endogenous triglycerides synthesised in the liver to the tissues.
+- IDL (intermediate-density lipoprotein) → a transitional particle between VLDL and LDL.
+- LDL (low-density lipoprotein) → the end product of VLDL metabolism; carries cholesterol to peripheral tissues. Sometimes called "bad cholesterol" because high LDL is associated with atherosclerosis.
+- HDL (high-density lipoprotein) → the smallest and densest; carries cholesterol from peripheral tissues back to the liver for excretion. Sometimes called "good cholesterol" because high HDL is protective.
 
 Crucial insight: the lipoprotein classes are distinguished by their density, which is determined by their ratio of protein to lipid. Each class performs a distinct transport function - chylomicrons carry dietary fat from the gut, VLDL carries liver-synthesised fat to the tissues, LDL delivers cholesterol to peripheral cells, and HDL carries cholesterol away from the periphery to the liver. The dynamic balance between these classes, especially between LDL and HDL, is central to cardiovascular health.`
     },
@@ -30484,7 +30484,7 @@ The answer lies in the sequential action of enzymes and exchanges:
 
 - VLDL leaves the liver carrying mostly triglyceride. In the capillaries of adipose tissue and muscle, lipoprotein lipase - activated by apoC-II on the VLDL surface - hydrolyses the triglycerides into free fatty acids and glycerol. The fatty acids enter the tissues to be used for energy or storage.
 - The VLDL shrinks as it loses triglyceride. It becomes smaller and denser. Along the way it acquires cholesteryl esters from HDL and loses some of its surface proteins back to HDL.
-- As VLDL becomes smaller it becomes IDL, then LDL - a particle now depleted of triglyceride and enriched in cholesterol.
+- As VLDL becomes smaller it becomes IDL, then LDL → a particle now depleted of triglyceride and enriched in cholesterol.
 - LDL is taken up by tissues - liver and peripheral - via the LDL receptor, which recognises apoB-100 on the LDL surface.
 
 Why this matters:
@@ -30522,15 +30522,15 @@ Crucial insight: lipid transport is not a one-way flow - it is a circulation in 
 My Socratic question: if fat absorption depends on bile salts, pancreatic lipase and a healthy intestinal lining, what would you expect to happen if any of these failed?
 
 The answer is that fat would fail to be digested and absorbed, and would pass through the gut into the stool. The three major causes of steatorrhoea correspond exactly to the three requirements of normal fat digestion:
-- Failure of bile salt production or delivery - for example, in liver disease, bile duct obstruction, or ileal disease that interrupts the enterohepatic circulation.
-- Failure of pancreatic lipase secretion - for example, in chronic pancreatitis, pancreatic cancer or cystic fibrosis.
-- Failure of the intestinal mucosa to absorb - for example, in coeliac disease, tropical sprue, or extensive intestinal resection.
+- Failure of bile salt production or delivery → for example, in liver disease, bile duct obstruction, or ileal disease that interrupts the enterohepatic circulation.
+- Failure of pancreatic lipase secretion → for example, in chronic pancreatitis, pancreatic cancer or cystic fibrosis.
+- Failure of the intestinal mucosa to absorb → for example, in coeliac disease, tropical sprue, or extensive intestinal resection.
 
 Diagnostic assessment of steatorrhoea includes:
-- Faecal fat estimation - measuring the fat content of a 72-hour stool collection. The gold standard for confirming fat malabsorption.
-- Faecal elastase - a marker of pancreatic exocrine function.
-- Blood tests - including fat-soluble vitamin levels (A, D, E, K), which become deficient in fat malabsorption.
-- Imaging - ultrasound, CT and MRI to identify structural causes such as biliary obstruction.
+- Faecal fat estimation → measuring the fat content of a 72-hour stool collection. The gold standard for confirming fat malabsorption.
+- Faecal elastase → a marker of pancreatic exocrine function.
+- Blood tests → including fat-soluble vitamin levels (A, D, E, K), which become deficient in fat malabsorption.
+- Imaging → ultrasound, CT and MRI to identify structural causes such as biliary obstruction.
 
 Crucial insight: steatorrhoea is not a single disease - it is the common endpoint of any process that interferes with fat digestion or absorption. It is a direct demonstration of the biochemistry of fat handling: when bile salts, lipase, or the enterocyte fails, the lipid that should have been absorbed is instead passed in the stool. Recognising steatorrhoea is a clinical skill built on understanding of the underlying biochemistry.`
     },
@@ -30543,15 +30543,15 @@ My Socratic question: if free radicals are so damaging, why does the body tolera
 The answer has two parts. First, some free radicals are unavoidable by-products of normal metabolism. The electron transport chain, for example, leaks a small proportion of electrons onto oxygen, producing superoxide. Second, some free radicals are produced deliberately as part of the immune response - neutrophils generate superoxide and related species to kill ingested bacteria.
 
 The body's defences against free radicals - the antioxidant systems:
-- Enzymatic defences - superoxide dismutase (SOD) converts superoxide to hydrogen peroxide; catalase and glutathione peroxidase then convert hydrogen peroxide to water.
-- Non-enzymatic defences - vitamin E (alpha-tocopherol) protects membrane lipids; vitamin C (ascorbate) is a water-soluble antioxidant; glutathione, ubiquinone and uric acid also contribute.
-- Repair systems - enzymes that repair oxidatively damaged DNA, proteins and lipids.
+- Enzymatic defences → superoxide dismutase (SOD) converts superoxide to hydrogen peroxide; catalase and glutathione peroxidase then convert hydrogen peroxide to water.
+- Non-enzymatic defences → vitamin E (alpha-tocopherol) protects membrane lipids; vitamin C (ascorbate) is a water-soluble antioxidant; glutathione, ubiquinone and uric acid also contribute.
+- Repair systems → enzymes that repair oxidatively damaged DNA, proteins and lipids.
 
 When the balance tips toward too much oxidative damage and too little antioxidant defence, the condition is called oxidative stress. Oxidative stress is implicated in:
-- Atherosclerosis - oxidised LDL is taken up by macrophages to form foam cells.
-- Cancer - oxidative DNA damage contributes to mutation.
-- Neurodegenerative diseases - including Alzheimer's and Parkinson's.
-- Ageing - accumulated oxidative damage is one of the mechanisms of cellular ageing.
+- Atherosclerosis → oxidised LDL is taken up by macrophages to form foam cells.
+- Cancer → oxidative DNA damage contributes to mutation.
+- Neurodegenerative diseases → including Alzheimer's and Parkinson's.
+- Ageing → accumulated oxidative damage is one of the mechanisms of cellular ageing.
 
 Crucial insight: oxidative damage is an unavoidable consequence of aerobic life. The body produces free radicals as by-products of respiration and, deliberately, as weapons of the immune system. What matters is not eliminating free radicals - which would be impossible - but maintaining the balance between their production and the antioxidant defences that neutralise them. This balance is a central theme of modern biochemistry, and understanding it links lipid metabolism to the broader field of cellular stress and disease.`
     },
@@ -30564,10 +30564,10 @@ My Socratic question: if oxygen accepts electrons at the end of the electron tra
 The answer is that the partially reduced forms of oxygen are the reactive oxygen species - superoxide, hydrogen peroxide and the hydroxyl radical. They are more reactive than molecular oxygen and can damage the very molecules the cell needs to function. Every cell that uses oxygen must therefore also have mechanisms to deal with the reactive species that oxygen generates.
 
 Where reactive oxygen species come from:
-- The electron transport chain - a small proportion of electrons leak from complexes I and III onto oxygen, forming superoxide.
-- Other oxidases - enzymes such as xanthine oxidase, NADPH oxidase and cytochrome P450 enzymes generate reactive species as part of their normal reactions.
-- Environmental sources - ionising radiation, UV light, cigarette smoke and certain drugs and toxins.
-- Metal-catalysed reactions - iron and copper ions can catalyse the formation of the hydroxyl radical, the most reactive of all.
+- The electron transport chain → a small proportion of electrons leak from complexes I and III onto oxygen, forming superoxide.
+- Other oxidases → enzymes such as xanthine oxidase, NADPH oxidase and cytochrome P450 enzymes generate reactive species as part of their normal reactions.
+- Environmental sources → ionising radiation, UV light, cigarette smoke and certain drugs and toxins.
+- Metal-catalysed reactions → iron and copper ions can catalyse the formation of the hydroxyl radical, the most reactive of all.
 
 The antioxidant defences, once again, must match the production. The balance is central to health, and much of the modern research on ageing, cancer and cardiovascular disease focuses on the ways in which this balance can tip.
 
