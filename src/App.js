@@ -356,7 +356,7 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .lesson-q{font-size:16.5px;font-weight:700;color:var(--amber-2);line-height:1.4;
   margin:0 0 10px;display:flex;gap:10px;align-items:baseline}
 .lesson-n{font-family:var(--mono);font-size:12px;color:var(--amber);font-weight:600;flex-shrink:0}
-.lesson-p{color:var(--text);font-size:15.5px;line-height:1.78;margin:0 0 13px}
+.lesson-p{color:var(--text);font-size:15.5px;line-height:1.78;margin:0 0 13px;white-space:pre-line}
 .lesson-p:last-child{margin-bottom:0}
 .qa-item{border-top:1px solid var(--line);padding:16px 0}
 .qa-item:first-child{border-top:none}
