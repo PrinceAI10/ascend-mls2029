@@ -4276,6 +4276,13 @@ function TopicView({ app }) {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            // While the podcast is driving playback (including paused - a
+            // manual scroll shouldn't hijack the position mid-pause), it
+            // owns activeStep via its own setActiveStep calls. Without this
+            // guard, the smooth scrollIntoView triggered by the podcast can
+            // itself cross other steps' bands, and this observer would then
+            // yank activeStep to whatever it briefly saw mid-animation.
+            if (listenActiveRef.current) return;
             const idx = Number(entry.target.getAttribute("data-step-idx"));
             if (!Number.isNaN(idx)) setActiveStep(idx);
           }
@@ -4676,7 +4683,7 @@ function TopicView({ app }) {
         <div style={{ display: "flex", gap: 10, alignItems: "center", color: "var(--text-3)", fontSize: 13 }} className="mono">
           <span>{t.minutes || 15} MIN READ</span><span>·</span><span>{(t.theory || []).length} THEORY Q</span><span>·</span><span>{(t.mcqs || []).length} MCQ</span>
         </div>
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", rowGap: 8 }}>
           <button
             className="btn btn-sm"
             style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6 }}
@@ -4691,7 +4698,7 @@ function TopicView({ app }) {
             <Ic.file p={14} /> {downloadingPdf ? "Building..." : "Download notes"}
           </button>
           {(t.note || []).length > 0 && (
-            <div style={{ display: "flex", gap: 6, alignItems: "center", position: "relative" }}>
+            <div style={{ display: "flex", gap: 6, alignItems: "center", position: "relative", flexWrap: "wrap", rowGap: 6 }}>
               {!listening ? (
                 <button
                   className="btn btn-sm"
