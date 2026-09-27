@@ -63,6 +63,54 @@ if (typeof document !== "undefined" && !document.getElementById("ascend-pacifico
   setTimeout(revealWordmark, 700);
 }
 
+// ============================================================
+// LISTEN (PODCAST) VOICE HELPERS - module scope, shared by every
+// TopicView instance. The Web Speech API's getVoices() list is
+// populated asynchronously in most browsers (fires "voiceschanged"
+// once, some time after page load), so this caches the list once
+// it's ready instead of every TopicView re-querying it. Gender
+// isn't a real property the API gives us reliably across browsers,
+// so voices are matched by name against known male/female voice
+// names shipped by Chrome, Edge, and Safari/iOS, with pitch as a
+// fallback differentiator so the two options always sound distinct
+// even on a device with only one or two installed voices.
+const ASCEND_FEMALE_VOICE_HINTS = ["female", "zira", "samantha", "victoria", "susan", "karen", "moira", "tessa", "fiona", "google us english", "google uk english female", "aria", "jenny", "sonia", "libby", "hazel", "salli", "joanna", "amy"];
+const ASCEND_MALE_VOICE_HINTS = ["male", "david", "mark", "daniel", "alex", "fred", "google uk english male", "guy", "ryan", "tom", "matthew", "brian", "arthur"];
+let ascendVoicesCache = null;
+function ascendGetVoices() {
+  return new Promise((resolve) => {
+    if (!("speechSynthesis" in window)) { resolve([]); return; }
+    const existing = window.speechSynthesis.getVoices();
+    if (existing && existing.length) { ascendVoicesCache = existing; resolve(existing); return; }
+    if (ascendVoicesCache) { resolve(ascendVoicesCache); return; }
+    const onChange = () => {
+      const v = window.speechSynthesis.getVoices();
+      if (v && v.length) {
+        ascendVoicesCache = v;
+        window.speechSynthesis.removeEventListener("voiceschanged", onChange);
+        resolve(v);
+      }
+    };
+    window.speechSynthesis.addEventListener("voiceschanged", onChange);
+    // Safety timeout - some browsers never fire voiceschanged if the list
+    // genuinely stays empty (e.g. headless/embedded webviews).
+    setTimeout(() => resolve(window.speechSynthesis.getVoices() || []), 1200);
+  });
+}
+async function ascendPickVoice(gender) {
+  const voices = await ascendGetVoices();
+  if (!voices.length) return null;
+  const englishVoices = voices.filter((v) => /^en/i.test(v.lang)) ;
+  const pool = englishVoices.length ? englishVoices : voices;
+  const hints = gender === "female" ? ASCEND_FEMALE_VOICE_HINTS : ASCEND_MALE_VOICE_HINTS;
+  const byName = pool.find((v) => hints.some((h) => v.name.toLowerCase().includes(h)));
+  if (byName) return byName;
+  // No name match - fall back to a deterministic split of whatever's
+  // available so male/female still pick two different installed voices.
+  if (pool.length > 1) return gender === "female" ? pool[0] : pool[1];
+  return pool[0] || null;
+}
+
 // Dead code removed: extractTextFromImage() was never called anywhere in
 // the app (already flagged eslint no-unused-vars) but was still pulling in
 // Tesseract at module scope, which meant it was bundled and paid for on
@@ -592,6 +640,9 @@ const Ic = {
   check: ({ p = 20, style }) => <I s={p} style={style} w={2.4} d={<path d="m5 12 5 5L20 6" />} />,
   x: ({ p = 20, style }) => <I s={p} style={style} w={2.4} d={<path d="M6 6 18 18M18 6 6 18" />} />,
   play: ({ p = 20, style }) => <I s={p} style={style} fill="currentColor" w={0} d={<path d="M8 5v14l11-7z" />} />,
+  pause: ({ p = 20, style }) => <I s={p} style={style} fill="currentColor" w={0} d={<><rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" /></>} />,
+  voiceMale: ({ p = 28, style }) => <I s={p} style={style} d={<><circle cx="12" cy="8" r="4.2" /><path d="M4.5 20.5c0-4.14 3.36-7 7.5-7s7.5 2.86 7.5 7" /></>} />,
+  voiceFemale: ({ p = 28, style }) => <I s={p} style={style} d={<><circle cx="12" cy="7.5" r="4" /><path d="M12 11.5v3M9.3 13.3h5.4" /><path d="M4.5 20.5c0-4.14 3.36-7 7.5-7s7.5 2.86 7.5 7" /></>} />,
   ai: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z" /><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z" /></>} />,
   up: ({ p = 20, style }) => <I s={p} style={style} w={2.3} d={<path d="M12 19V6M6 11l6-6 6 6" />} />,
   send: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M4 12 20 4l-6 16-3-7z" />} />,
@@ -4320,6 +4371,138 @@ function TopicView({ app }) {
     };
   }, [t, app.courseId, app.topicId, app.progress?.streak, readingAwarded]);
 
+  // LISTEN (PODCAST) - reads the lesson notes aloud via the Web Speech API,
+  // stepping through t.note the same way the reading-progress tracker does
+  // (advancing activeStep as each step finishes) so the "Step X of N" label
+  // and progress bar stay in sync with what's actually playing out loud.
+  // Deliberately drives this off activeStep (state, re-renders the label)
+  // rather than a ref that only tracks the index silently in the background.
+  //
+  // Reads in short chunks (title / Socratic question / body paragraph /
+  // insight) rather than one long utterance per step, with a deliberate
+  // silent gap scheduled after each chunk via setTimeout - the Web Speech
+  // API has no SSML pause support, so this is what actually makes it sound
+  // like narration with breathing room instead of a flat wall of speech.
+  const [listening, setListening] = useState(false);
+  const [listenPaused, setListenPaused] = useState(false);
+  const [voicePickerOpen, setVoicePickerOpen] = useState(false);
+  const [voiceGender, setVoiceGender] = useState(() => {
+    try { return localStorage.getItem("ascend_voice_gender") || null; } catch { return null; }
+  });
+  const listenActiveRef = useRef(false);
+  const listenPausedRef = useRef(false);
+  const gapTimeoutRef = useRef(null);
+  const pendingChunkRef = useRef(null);
+  const listenVoiceRef = useRef(null);
+
+  const buildChunksForStep = useCallback((idx, step) => {
+    const chunks = [{ text: "Step " + (idx + 1) + ". " + step.q, pauseAfterMs: 700 }];
+    (step.body || "").split("\n\n").forEach((p) => {
+      if (p.startsWith("My Socratic question:")) {
+        chunks.push({ text: "Here's a question worth pausing on. " + p.replace("My Socratic question:", "").trim(), pauseAfterMs: 950, pitch: 1.06 });
+      } else if (p.startsWith("Crucial insight:")) {
+        chunks.push({ text: "And here's the crucial insight. " + p.replace("Crucial insight:", "").trim(), pauseAfterMs: 900, rate: 0.9 });
+      } else if (p.trim()) {
+        chunks.push({ text: p, pauseAfterMs: 550 });
+      }
+    });
+    return chunks;
+  }, []);
+
+  const speakChunk = useCallback((stepIdx, chunks, i) => {
+    if (!listenActiveRef.current) return;
+    const steps = (t && t.note) || [];
+    if (i >= chunks.length) {
+      const next = stepIdx + 1;
+      if (next < steps.length) {
+        setActiveStep(next);
+        speakChunk(next, buildChunksForStep(next, steps[next]), 0);
+      } else {
+        listenActiveRef.current = false;
+        setListening(false);
+        setListenPaused(false);
+      }
+      return;
+    }
+    const chunk = chunks[i];
+    const utter = new SpeechSynthesisUtterance(chunk.text);
+    utter.rate = chunk.rate || 0.96;
+    utter.pitch = chunk.pitch || 1;
+    if (listenVoiceRef.current) utter.voice = listenVoiceRef.current;
+    utter.onend = () => {
+      if (!listenActiveRef.current) return;
+      if (listenPausedRef.current) {
+        pendingChunkRef.current = { stepIdx, chunks, i: i + 1 };
+        return;
+      }
+      gapTimeoutRef.current = setTimeout(() => speakChunk(stepIdx, chunks, i + 1), chunk.pauseAfterMs || 400);
+    };
+    utter.onerror = () => {
+      listenActiveRef.current = false;
+      setListening(false);
+      setListenPaused(false);
+    };
+    window.speechSynthesis.speak(utter);
+  }, [t, buildChunksForStep]);
+
+  const beginListening = async (gender) => {
+    if (!("speechSynthesis" in window)) {
+      window.alert("Read-aloud isn't supported in this browser.");
+      return;
+    }
+    setVoicePickerOpen(false);
+    setVoiceGender(gender);
+    try { localStorage.setItem("ascend_voice_gender", gender); } catch {}
+    listenVoiceRef.current = await ascendPickVoice(gender);
+    const steps = (t && t.note) || [];
+    const startIdx = activeStep < steps.length ? activeStep : 0;
+    window.speechSynthesis.cancel();
+    listenActiveRef.current = true;
+    listenPausedRef.current = false;
+    setListening(true);
+    setListenPaused(false);
+    speakChunk(startIdx, buildChunksForStep(startIdx, steps[startIdx]), 0);
+  };
+
+  const startListening = () => setVoicePickerOpen(true);
+
+  const pauseListening = () => {
+    listenPausedRef.current = true;
+    setListenPaused(true);
+    if (gapTimeoutRef.current) { clearTimeout(gapTimeoutRef.current); gapTimeoutRef.current = null; }
+    window.speechSynthesis.pause();
+  };
+  const resumeListening = () => {
+    listenPausedRef.current = false;
+    setListenPaused(false);
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+    } else if (pendingChunkRef.current) {
+      const { stepIdx, chunks, i } = pendingChunkRef.current;
+      pendingChunkRef.current = null;
+      speakChunk(stepIdx, chunks, i);
+    }
+  };
+  const stopListening = () => {
+    listenActiveRef.current = false;
+    listenPausedRef.current = false;
+    pendingChunkRef.current = null;
+    if (gapTimeoutRef.current) { clearTimeout(gapTimeoutRef.current); gapTimeoutRef.current = null; }
+    window.speechSynthesis.cancel();
+    setListening(false);
+    setListenPaused(false);
+  };
+
+  // Stop any in-progress reading when leaving the topic or switching topics,
+  // so audio never keeps playing over a screen the student has left.
+  useEffect(() => {
+    return () => {
+      listenActiveRef.current = false;
+      if (gapTimeoutRef.current) clearTimeout(gapTimeoutRef.current);
+      window.speechSynthesis.cancel();
+    };
+  }, [t]);
+
   if (!t) {
     const title = (TOPICS[app.courseId] || [])[app.topicId] || "This topic";
     return (
@@ -4409,6 +4592,91 @@ function TopicView({ app }) {
           >
             <Ic.file p={14} /> {downloadingPdf ? "Building..." : "Download notes"}
           </button>
+          {(t.note || []).length > 0 && (
+            <div style={{ display: "flex", gap: 6, alignItems: "center", position: "relative" }}>
+              {!listening ? (
+                <button
+                  className="btn btn-sm"
+                  style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6 }}
+                  onClick={() => setVoicePickerOpen((o) => !o)}
+                >
+                  <Ic.play p={14} /> Listen
+                </button>
+              ) : (
+                <>
+                  <button
+                    className="btn btn-sm"
+                    style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6 }}
+                    onClick={listenPaused ? resumeListening : pauseListening}
+                  >
+                    {listenPaused ? <><Ic.play p={14} /> Resume</> : <><Ic.pause p={14} /> Pause</>}
+                  </button>
+                  <button
+                    className="btn btn-sm"
+                    style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6 }}
+                    onClick={stopListening}
+                  >
+                    <Ic.x p={14} /> Stop
+                  </button>
+                  <button
+                    title="Change voice"
+                    className="btn btn-sm"
+                    style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", padding: "6px 8px" }}
+                    onClick={() => setVoicePickerOpen((o) => !o)}
+                  >
+                    {voiceGender === "male" ? <Ic.voiceMale p={14} /> : <Ic.voiceFemale p={14} />}
+                  </button>
+                </>
+              )}
+              {voicePickerOpen && (
+                <div style={{ position: "fixed", inset: 0, zIndex: 39 }} onClick={() => setVoicePickerOpen(false)} />
+              )}
+              {voicePickerOpen && (
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    position: "absolute", top: "calc(100% + 8px)", right: 0, zIndex: 40,
+                    background: "var(--bg-2)", border: "1px solid var(--line)", borderRadius: 14,
+                    padding: "14px 16px", boxShadow: "0 12px 32px rgba(0,0,0,0.25)", minWidth: 220,
+                  }}
+                >
+                  <div style={{ fontSize: 12.5, color: "var(--text-3)", marginBottom: 10, textAlign: "center" }}>Choose a voice to listen with</div>
+                  <div style={{ display: "flex", gap: 18, justifyContent: "center" }}>
+                    <button
+                      onClick={() => beginListening("male")}
+                      style={{
+                        display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+                        background: "none", border: "none", cursor: "pointer", color: voiceGender === "male" ? "var(--amber-2)" : "var(--text-2)",
+                      }}
+                    >
+                      <div style={{
+                        width: 52, height: 52, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+                        background: "var(--bg-3)", border: voiceGender === "male" ? "2px solid var(--amber-2)" : "1px solid var(--line)",
+                      }}>
+                        <Ic.voiceMale p={26} />
+                      </div>
+                      <span className="mono" style={{ fontSize: 11.5 }}>Male</span>
+                    </button>
+                    <button
+                      onClick={() => beginListening("female")}
+                      style={{
+                        display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+                        background: "none", border: "none", cursor: "pointer", color: voiceGender === "female" ? "var(--amber-2)" : "var(--text-2)",
+                      }}
+                    >
+                      <div style={{
+                        width: 52, height: 52, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+                        background: "var(--bg-3)", border: voiceGender === "female" ? "2px solid var(--amber-2)" : "1px solid var(--line)",
+                      }}>
+                        <Ic.voiceFemale p={26} />
+                      </div>
+                      <span className="mono" style={{ fontSize: 11.5 }}>Female</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
           {(() => {
             const key = `${t.courseId}:${t.topicIndex}`;
             const saved = (app.progress.bookmarks || []).includes(key);
