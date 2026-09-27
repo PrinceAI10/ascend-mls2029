@@ -459,7 +459,7 @@ mark.lesson-hl-yellow{background:rgba(245,214,80,.45)}
 @media (prefers-reduced-motion:reduce){.qa-item{animation:none}}
 .qa-q{font-weight:650;color:var(--text);font-size:15px;line-height:1.5;margin-bottom:8px;
   display:flex;gap:10px;align-items:baseline}
-.qa-a{color:var(--text-2);font-size:15px;line-height:1.75;margin:0}
+.qa-a{color:var(--text);font-size:15px;line-height:1.75;margin:0}
 .qa-a:before{content:"Answer  ";font-family:var(--mono);font-size:11px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--good);font-weight:600}
 .tabs{display:inline-flex;gap:4px;background:var(--bg-3);border:1px solid var(--line);
@@ -14570,4 +14570,4 @@ export default function App() {
       )}
     </div>
   );
-}
+} 
