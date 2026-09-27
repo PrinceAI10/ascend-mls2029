@@ -256,9 +256,9 @@ html.ascend-pacifico-ready .brand-word,html.ascend-pacifico-ready .brand-word-he
 .card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:20px;word-wrap:break-word;overflow:hidden}
 .card.hover{transition:border-color .16s,transform .16s,background .16s;cursor:pointer}
 .card.hover:hover{border-color:var(--line-2);background:var(--bg-3);transform:translateY(-2px)}
-.card-feature{background:linear-gradient(150deg,#13203a,#0d1526)}
+.card-feature{background:linear-gradient(150deg,#182847 0%,#13203a 45%,#0d1526 100%)}
 .ascend-root.light .card-feature{background:linear-gradient(150deg,#EAEFF7,#DCE4EF)}
-.card-feature.hover:hover{background:linear-gradient(150deg,#172a48,#101a2e)}
+.card-feature.hover:hover{background:linear-gradient(150deg,#1d3252 0%,#172a48 45%,#101a2e 100%)}
 .slide-links{display:flex;flex-direction:column;gap:6px;margin:10px 0 4px}
 .slide-chip{display:flex;align-items:center;gap:9px;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;text-decoration:none;color:var(--text);font-size:13.5px;font-weight:550;transition:border-color .15s,background .15s}
 .slide-chip:hover{border-color:var(--line-2);background:var(--bg-3)}
@@ -269,7 +269,7 @@ html.ascend-pacifico-ready .brand-word,html.ascend-pacifico-ready .brand-word-he
 .ascend-root.light .card-feature.hover:hover{background:linear-gradient(150deg,#E2E9F4,#D2DCEA)}
 .grid{display:grid;gap:14px}
 .hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:20px;
-  background:linear-gradient(160deg,#0E1728 0%,#0B1120 60%);padding:30px 26px}
+  background:linear-gradient(160deg,#152036 0%,#0E1728 45%,#0B1120 100%);padding:30px 26px}
 .hero .ridge{position:absolute;inset:0;pointer-events:none;opacity:.9}
 .hero-h{font-size:clamp(24px,4.6vw,36px);max-width:16ch;font-weight:800;letter-spacing:-.03em}
 .hero-h .hl{color:var(--amber)}
@@ -356,7 +356,7 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .lesson-step:before{
   content:"";position:absolute;left:10px;top:14px;bottom:14px;width:3px;
   border-radius:3px;background:linear-gradient(180deg,var(--amber-2),var(--amber));
-  box-shadow:0 0 6px 0 rgba(245,185,63,.35);
+  box-shadow:0 0 4px 0 rgba(245,185,63,.6),0 0 14px 2px rgba(245,185,63,.4);
 }
 .lesson-step:hover{border-color:var(--line-2);box-shadow:0 1px 0 rgba(0,0,0,.15),0 12px 26px -14px rgba(0,0,0,.45)}
 .lesson-step-active{
@@ -373,7 +373,7 @@ textarea.pastebox:focus{border-color:var(--amber)}
   100%{box-shadow:0 1px 0 rgba(0,0,0,.15),0 8px 20px -14px rgba(0,0,0,.35),0 0 0 0 rgba(245,185,63,0)}
 }
 @media (prefers-reduced-motion:reduce){.lesson-step-pulse{animation:none}}
-.lesson-step-active:before{box-shadow:0 0 10px 1px rgba(245,185,63,.5)}
+.lesson-step-active:before{box-shadow:0 0 5px 0 rgba(245,185,63,.75),0 0 20px 3px rgba(245,185,63,.55)}
 @media (prefers-reduced-motion:reduce){.lesson-step{transition:none}}
 @keyframes lessonIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .lesson-step:nth-child(1){animation-delay:.02s}
@@ -535,6 +535,17 @@ mark.lesson-hl-yellow{background:rgba(245,214,80,.45)}
 .iconbtn:hover{color:var(--text);border-color:var(--line-2)}
 .ascend-root{background:var(--bg);color:var(--text);font-family:var(--sans);
   -webkit-font-smoothing:antialiased;line-height:1.55;font-size:15px}
+/* Dark mode's navy was one flat solid color - two very faint, fixed radial
+   glows (amber top-right, the newer blue accent lower-left) give it subtle
+   depth without reading as decoration. Kept out of .light entirely since a
+   light background would just look washed out under the same treatment. */
+.ascend-root:not(.light){
+  background:
+    radial-gradient(1100px 750px at 88% -8%, rgba(245,185,63,.05), transparent 55%),
+    radial-gradient(900px 700px at 4% 100%, rgba(90,169,255,.045), transparent 55%),
+    var(--bg);
+  background-attachment:fixed;
+}
 .ascend-root button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 .ascend-root h1,.ascend-root h2,.ascend-root h3{margin:0;letter-spacing:-.02em;font-weight:750;line-height:1.2}
 .mono{font-family:var(--mono)}
@@ -4114,6 +4125,16 @@ function TopicView({ app }) {
     return found ? result : total;
   };
 
+  // Mobile text selection (long-press + drag handles) does not reliably
+  // fire a native "mouseup" on the underlying element the way a desktop
+  // click-drag does - the browser's own selection UI owns the gesture,
+  // so touchend is the event that actually lands. The small delay lets
+  // the selection finish settling (handles can still be moving right at
+  // touchend) before we read window.getSelection().
+  const handleLessonTouchEnd = () => {
+    setTimeout(handleLessonMouseUp, 0);
+  };
+
   const handleLessonMouseUp = () => {
     const sel = window.getSelection();
     if (!sel || sel.isCollapsed || sel.rangeCount === 0) { setHlToolbar(null); return; }
@@ -4318,8 +4339,10 @@ function TopicView({ app }) {
 
   return (
     <div className="view">
-      <button className="back" onClick={() => app.go("course", { courseId: t.courseId })}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> {c.name}</button>
-      <div className="eyebrow" style={{ marginTop: 10 }}>{c.code} · Topic {String(t.topicIndex + 1).padStart(2, "0")}</div>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 14 }}>
+        <button className="back" style={{ marginBottom: 0 }} onClick={() => app.go("course", { courseId: t.courseId })}><Ic.chevR p={15} style={{ transform: "rotate(180deg)" }} /> {c.name}</button>
+        <div className="eyebrow">{c.code} · Topic {String(t.topicIndex + 1).padStart(2, "0")}</div>
+      </div>
       <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }} className="mono">
         Updated {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
       </div>
@@ -4412,7 +4435,7 @@ function TopicView({ app }) {
           <div className="bar"><i style={{ width: ((activeStep + 1) / (t.note || []).length) * 100 + "%" }} /></div>
         </div>
       )}
-      <div className="lesson" ref={lessonRef} onMouseUp={handleLessonMouseUp} style={{ position: "relative" }}>
+      <div className="lesson" ref={lessonRef} onMouseUp={handleLessonMouseUp} onTouchEnd={handleLessonTouchEnd} style={{ position: "relative" }}>
         {(t.note || []).map((it, idx) => (
           <div
             className={"lesson-step" + (idx === activeStep ? " lesson-step-active" : "") + (justCompleted === idx ? " lesson-step-pulse" : "")}
@@ -10093,12 +10116,17 @@ function HomeView({ app }) {
         <stop offset="0%" stopColor="rgba(245,185,63,.20)" />
         <stop offset="100%" stopColor="rgba(245,185,63,0)" />
       </radialGradient>
+      <radialGradient id="glowBlue" cx="8%" cy="95%" r="45%">
+        <stop offset="0%" stopColor="rgba(90,169,255,.10)" />
+        <stop offset="100%" stopColor="rgba(90,169,255,0)" />
+      </radialGradient>
       <linearGradient id="rl" x1="0" y1="0" x2="1" y2="0">
         <stop offset="0%" stopColor="rgba(157,175,201,.12)" />
         <stop offset="100%" stopColor="rgba(245,185,63,.5)" />
       </linearGradient>
     </defs>
     <rect width="600" height="220" fill="url(#glow)" />
+    <rect width="600" height="220" fill="url(#glowBlue)" />
     <polyline points="0,210 80,185 150,195 230,150 310,160 380,105 460,75 600,25" fill="none" stroke="url(#rl)" strokeWidth="clamp(1.8, 2.5, 3)" />
     <circle cx="600" cy="25" r="clamp(3, 4.5, 6)" fill="var(--amber)" />
   </svg>
