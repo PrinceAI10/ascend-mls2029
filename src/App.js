@@ -404,7 +404,7 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .lesson-step:before{
   content:"";position:absolute;left:10px;top:14px;bottom:14px;width:3px;
   border-radius:3px;background:linear-gradient(180deg,var(--amber-2),var(--amber));
-  box-shadow:0 0 4px 0 rgba(245,185,63,.6),0 0 14px 2px rgba(245,185,63,.4);
+  box-shadow:0 0 3px 0 rgba(245,185,63,.32),0 0 9px 1px rgba(245,185,63,.2);
 }
 .lesson-step:hover{border-color:var(--line-2);box-shadow:0 1px 0 rgba(0,0,0,.15),0 12px 26px -14px rgba(0,0,0,.45)}
 .lesson-step-active{
@@ -421,7 +421,7 @@ textarea.pastebox:focus{border-color:var(--amber)}
   100%{box-shadow:0 1px 0 rgba(0,0,0,.15),0 8px 20px -14px rgba(0,0,0,.35),0 0 0 0 rgba(245,185,63,0)}
 }
 @media (prefers-reduced-motion:reduce){.lesson-step-pulse{animation:none}}
-.lesson-step-active:before{box-shadow:0 0 5px 0 rgba(245,185,63,.75),0 0 20px 3px rgba(245,185,63,.55)}
+.lesson-step-active:before{box-shadow:0 0 3.5px 0 rgba(245,185,63,.42),0 0 12px 2px rgba(245,185,63,.3)}
 @media (prefers-reduced-motion:reduce){.lesson-step{transition:none}}
 @keyframes lessonIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .lesson-step:nth-child(1){animation-delay:.02s}
@@ -643,6 +643,9 @@ const Ic = {
   pause: ({ p = 20, style }) => <I s={p} style={style} fill="currentColor" w={0} d={<><rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" /></>} />,
   voiceMale: ({ p = 28, style }) => <I s={p} style={style} d={<><circle cx="12" cy="8" r="4.2" /><path d="M4.5 20.5c0-4.14 3.36-7 7.5-7s7.5 2.86 7.5 7" /></>} />,
   voiceFemale: ({ p = 28, style }) => <I s={p} style={style} d={<><circle cx="12" cy="7.5" r="4" /><path d="M12 11.5v3M9.3 13.3h5.4" /><path d="M4.5 20.5c0-4.14 3.36-7 7.5-7s7.5 2.86 7.5 7" /></>} />,
+  pencil: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M12 20h9" /><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" /></>} />,
+  skipBack: ({ p = 20, style }) => <I s={p} style={style} fill="currentColor" w={0} d={<><rect x="4" y="5" width="2.4" height="14" /><path d="M19 5v14l-11-7z" /></>} />,
+  skipForward: ({ p = 20, style }) => <I s={p} style={style} fill="currentColor" w={0} d={<><rect x="17.6" y="5" width="2.4" height="14" /><path d="M5 5v14l11-7z" /></>} />,
   ai: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z" /><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z" /></>} />,
   up: ({ p = 20, style }) => <I s={p} style={style} w={2.3} d={<path d="M12 19V6M6 11l6-6 6 6" />} />,
   send: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M4 12 20 4l-6 16-3-7z" />} />,
@@ -4133,26 +4136,30 @@ function TopicView({ app }) {
   // paragraph ("<stepIdx>-<paraIdx>"); start/end are character offsets
   // into that paragraph's body text.
   //
-  // UX: user selects text -> a floating "Highlight" pill appears at the
-  // bottom of the screen -> user taps it -> yellow highlight applied.
-  // Tapping an existing yellow mark removes it.
+  // UX: tap the pencil to bring the highlighter out (so a normal text
+  // selection made just to copy something doesn't pop anything up).
+  // While it's out, selecting any text shows a small colour palette
+  // (blue / yellow / pink) - tap a colour and that selection is
+  // highlighted immediately. Tapping an existing highlight removes it.
   //
-  // Why a floating pill instead of a header button? On narrow screens
-  // the header button row gets squeezed and the last button can be
-  // pushed off-screen entirely. A position:fixed pill can't be squeezed
-  // by any flexbox.
-  //
-  // Why no colour picker? Yellow is the standard highlight colour, and
-  // every extra tap is another chance for the flow to break on mobile.
+  // Detection uses the "selectionchange" event rather than mouseup/
+  // touchend - those don't fire reliably once mobile's own long-press
+  // selection-handle UI takes over the gesture, which is what made the
+  // old toolbar only work like a desktop mouse-hover control. The
+  // colour palette itself is rendered via a fixed-position portal (see
+  // the JSX below) rather than positioned against the selection's own
+  // bounding rect, so it can't end up off-screen or under a keyboard.
   // ============================================================
   const [highlights, setHighlights] = useState([]);
-  const [hlPillVisible, setHlPillVisible] = useState(false);
+  const [highlightArmed, setHighlightArmed] = useState(false);
+  const [pendingSelection, setPendingSelection] = useState(null); // {key,start,end} | null
   const lessonRef = useRef(null);
   const hlStorageKey = t ? `ascend_highlights_${app.courseId}_${app.topicId}` : null;
 
   useEffect(() => {
     setHighlights([]);
-    setHlPillVisible(false);
+    setHighlightArmed(false);
+    setPendingSelection(null);
     if (!hlStorageKey) return;
     try {
       const saved = localStorage.getItem(hlStorageKey);
@@ -4205,28 +4212,26 @@ function TopicView({ app }) {
     return { key, start, end };
   };
 
-  // selectionchange fires reliably on desktop AND mobile — unlike the
-  // finish-selection events that broke the original version.
-  // Whenever a live selection exists inside a lesson paragraph, show the
-  // floating pill; otherwise hide it.
+  // selectionchange fires reliably on desktop AND mobile. Only active
+  // while the highlighter is armed, so ordinary copy-selections elsewhere
+  // in the app are left completely alone.
   useEffect(() => {
-    if (!t) return;
-    const handler = () => setHlPillVisible(!!readLiveSelection());
+    if (!t || !highlightArmed) { setPendingSelection(null); return; }
+    const handler = () => setPendingSelection(readLiveSelection());
     document.addEventListener("selectionchange", handler);
     return () => document.removeEventListener("selectionchange", handler);
-  }, [t]);
+  }, [t, highlightArmed]);
 
-  // Called when the user taps the floating pill: apply yellow highlight
-  // to the current selection, then clear the pill and the native selection.
-  const commitHighlight = () => {
-    const sel = readLiveSelection();
-    if (!sel) { setHlPillVisible(false); return; }
-    const { key, start, end } = sel;
+  // Called when the user taps a colour swatch on the palette: apply that
+  // colour to the pending selection, then clear the palette and selection.
+  const commitHighlight = (color) => {
+    if (!pendingSelection) return;
+    const { key, start, end } = pendingSelection;
     const next = highlights
       .filter((h) => !(h.key === key && h.start < end && h.end > start))
-      .concat([{ key, start, end, color: "yellow" }]);
+      .concat([{ key, start, end, color }]);
     saveHighlights(next);
-    setHlPillVisible(false);
+    setPendingSelection(null);
     setTimeout(() => {
       try { window.getSelection()?.removeAllRanges(); } catch {}
     }, 0);
@@ -4381,16 +4386,33 @@ function TopicView({ app }) {
 
   // LISTEN (PODCAST) - reads the lesson notes aloud via the Web Speech API,
   // stepping through t.note the same way the reading-progress tracker does
-  // (advancing activeStep as each step finishes) so the "Step X of N" label
-  // and progress bar stay in sync with what's actually playing out loud.
-  // Deliberately drives this off activeStep (state, re-renders the label)
-  // rather than a ref that only tracks the index silently in the background.
+  // (advancing activeStep as each step finishes) so the "Step X of N" label,
+  // progress bar, and page scroll all stay in sync with what's playing.
   //
   // Reads in short chunks (title / Socratic question / body paragraph /
-  // insight) rather than one long utterance per step, with a deliberate
-  // silent gap scheduled after each chunk via setTimeout - the Web Speech
-  // API has no SSML pause support, so this is what actually makes it sound
-  // like narration with breathing room instead of a flat wall of speech.
+  // insight) with a deliberate silent gap scheduled after each chunk via
+  // setTimeout - the Web Speech API has no SSML pause support, so this is
+  // what makes it sound like narration instead of a flat wall of speech.
+  //
+  // Reliability notes (fixes for "pause doesn't resume" / "stops reading
+  // midway" / "different voice on phone vs laptop"):
+  // - Pause/Resume never calls the browser's native speechSynthesis.pause()
+  //   /resume() to continue playback - those are notoriously unreliable
+  //   (Chrome on Android in particular can silently drop into a state
+  //   it never recovers from). Pause instead fully cancels the current
+  //   utterance and remembers which chunk was interrupted; Resume just
+  //   re-speaks that chunk from its start.
+  // - Every chunk gets a "watchdog" timeout sized to its word count. If
+  //   the browser's onend event never fires (the actual cause of reading
+  //   silently stalling partway through), the watchdog fires instead and
+  //   moves the reading on, so it never just goes silent forever.
+  // - A quiet keep-alive pulse (pause+immediately resume the underlying
+  //   engine every few seconds) works around a long-standing Chrome bug
+  //   where long speech sessions cut out after ~15 seconds of speaking.
+  // - Voice "gender" is reinforced with an explicit pitch/rate delta on
+  //   top of whichever named voice gets matched, so male vs female stays
+  //   clearly distinct even on a device whose installed voices don't
+  //   have clear gender-labelled names (common on some Android phones).
   const [listening, setListening] = useState(false);
   const [listenPaused, setListenPaused] = useState(false);
   const [voicePickerOpen, setVoicePickerOpen] = useState(false);
@@ -4400,8 +4422,15 @@ function TopicView({ app }) {
   const listenActiveRef = useRef(false);
   const listenPausedRef = useRef(false);
   const gapTimeoutRef = useRef(null);
-  const pendingChunkRef = useRef(null);
+  const watchdogRef = useRef(null);
+  const keepAliveRef = useRef(null);
+  const currentChunkRef = useRef(null); // {stepIdx, chunks, i} - what Resume replays
+  const speakTokenRef = useRef(0); // invalidates stale onend/watchdog callbacks after pause/stop/skip
   const listenVoiceRef = useRef(null);
+  const voiceGenderRef = useRef(voiceGender);
+
+  const GENDER_PITCH = { male: 0.82, female: 1.12 };
+  const GENDER_RATE = { male: 0.97, female: 1 };
 
   const buildChunksForStep = useCallback((idx, step) => {
     const chunks = [{ text: "Step " + (idx + 1) + ". " + step.q, pauseAfterMs: 700 }];
@@ -4417,41 +4446,66 @@ function TopicView({ app }) {
     return chunks;
   }, []);
 
-  const speakChunk = useCallback((stepIdx, chunks, i) => {
-    if (!listenActiveRef.current) return;
+  const clearWatchdog = () => { if (watchdogRef.current) { clearTimeout(watchdogRef.current); watchdogRef.current = null; } };
+
+  const advanceFrom = useCallback((stepIdx, chunks, i) => {
     const steps = (t && t.note) || [];
-    if (i >= chunks.length) {
-      const next = stepIdx + 1;
-      if (next < steps.length) {
-        setActiveStep(next);
-        speakChunk(next, buildChunksForStep(next, steps[next]), 0);
-      } else {
-        listenActiveRef.current = false;
-        setListening(false);
-        setListenPaused(false);
-      }
+    const nextI = i + 1;
+    if (nextI < chunks.length) {
+      speakChunkRef.current(stepIdx, chunks, nextI);
       return;
     }
-    const chunk = chunks[i];
-    const utter = new SpeechSynthesisUtterance(chunk.text);
-    utter.rate = chunk.rate || 0.96;
-    utter.pitch = chunk.pitch || 1;
-    if (listenVoiceRef.current) utter.voice = listenVoiceRef.current;
-    utter.onend = () => {
-      if (!listenActiveRef.current) return;
-      if (listenPausedRef.current) {
-        pendingChunkRef.current = { stepIdx, chunks, i: i + 1 };
-        return;
-      }
-      gapTimeoutRef.current = setTimeout(() => speakChunk(stepIdx, chunks, i + 1), chunk.pauseAfterMs || 400);
-    };
-    utter.onerror = () => {
+    const nextStep = stepIdx + 1;
+    if (nextStep < steps.length) {
+      setActiveStep(nextStep);
+      speakChunkRef.current(nextStep, buildChunksForStep(nextStep, steps[nextStep]), 0);
+    } else {
       listenActiveRef.current = false;
       setListening(false);
       setListenPaused(false);
-    };
-    window.speechSynthesis.speak(utter);
+    }
   }, [t, buildChunksForStep]);
+
+  const speakChunk = useCallback((stepIdx, chunks, i) => {
+    if (!listenActiveRef.current || i >= chunks.length) return;
+    const chunk = chunks[i];
+    currentChunkRef.current = { stepIdx, chunks, i };
+    const myToken = ++speakTokenRef.current;
+    const genderKey = voiceGenderRef.current === "male" ? "male" : "female";
+    const utter = new SpeechSynthesisUtterance(chunk.text);
+    utter.rate = (chunk.rate || 0.96) * GENDER_RATE[genderKey];
+    utter.pitch = (chunk.pitch || 1) * GENDER_PITCH[genderKey];
+    if (listenVoiceRef.current) utter.voice = listenVoiceRef.current;
+
+    clearWatchdog();
+    const wordCount = Math.max(1, chunk.text.split(/\s+/).length);
+    watchdogRef.current = setTimeout(() => {
+      if (speakTokenRef.current !== myToken || !listenActiveRef.current || listenPausedRef.current) return;
+      advanceFrom(stepIdx, chunks, i);
+    }, Math.max(3500, wordCount * 420) + 3000);
+
+    utter.onend = () => {
+      if (speakTokenRef.current !== myToken) return;
+      clearWatchdog();
+      if (!listenActiveRef.current || listenPausedRef.current) return;
+      gapTimeoutRef.current = setTimeout(() => advanceFrom(stepIdx, chunks, i), chunk.pauseAfterMs || 400);
+    };
+    utter.onerror = () => {
+      if (speakTokenRef.current !== myToken) return;
+      clearWatchdog();
+      // Don't treat an interruption as fatal - try to keep the podcast
+      // moving rather than stopping the whole reading on one glitch.
+      if (!listenActiveRef.current || listenPausedRef.current) return;
+      gapTimeoutRef.current = setTimeout(() => advanceFrom(stepIdx, chunks, i), 300);
+    };
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utter);
+  }, [advanceFrom]);
+
+  // speakChunk and advanceFrom call each other; a ref sidesteps the
+  // circular useCallback dependency.
+  const speakChunkRef = useRef(speakChunk);
+  useEffect(() => { speakChunkRef.current = speakChunk; }, [speakChunk]);
 
   const beginListening = async (gender) => {
     if (!("speechSynthesis" in window)) {
@@ -4460,6 +4514,7 @@ function TopicView({ app }) {
     }
     setVoicePickerOpen(false);
     setVoiceGender(gender);
+    voiceGenderRef.current = gender;
     try { localStorage.setItem("ascend_voice_gender", gender); } catch {}
     listenVoiceRef.current = await ascendPickVoice(gender);
     const steps = (t && t.note) || [];
@@ -4469,6 +4524,13 @@ function TopicView({ app }) {
     listenPausedRef.current = false;
     setListening(true);
     setListenPaused(false);
+    if (keepAliveRef.current) clearInterval(keepAliveRef.current);
+    keepAliveRef.current = setInterval(() => {
+      if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+        window.speechSynthesis.pause();
+        window.speechSynthesis.resume();
+      }
+    }, 6000);
     speakChunk(startIdx, buildChunksForStep(startIdx, steps[startIdx]), 0);
   };
 
@@ -4477,36 +4539,64 @@ function TopicView({ app }) {
   const pauseListening = () => {
     listenPausedRef.current = true;
     setListenPaused(true);
+    speakTokenRef.current++;
+    clearWatchdog();
     if (gapTimeoutRef.current) { clearTimeout(gapTimeoutRef.current); gapTimeoutRef.current = null; }
-    window.speechSynthesis.pause();
+    window.speechSynthesis.cancel();
   };
   const resumeListening = () => {
+    if (!listenActiveRef.current) return;
     listenPausedRef.current = false;
     setListenPaused(false);
-    if (window.speechSynthesis.paused) {
-      window.speechSynthesis.resume();
-    } else if (pendingChunkRef.current) {
-      const { stepIdx, chunks, i } = pendingChunkRef.current;
-      pendingChunkRef.current = null;
-      speakChunk(stepIdx, chunks, i);
-    }
+    const c = currentChunkRef.current;
+    if (c) speakChunk(c.stepIdx, c.chunks, c.i);
   };
   const stopListening = () => {
     listenActiveRef.current = false;
     listenPausedRef.current = false;
-    pendingChunkRef.current = null;
+    speakTokenRef.current++;
+    clearWatchdog();
     if (gapTimeoutRef.current) { clearTimeout(gapTimeoutRef.current); gapTimeoutRef.current = null; }
+    if (keepAliveRef.current) { clearInterval(keepAliveRef.current); keepAliveRef.current = null; }
     window.speechSynthesis.cancel();
+    currentChunkRef.current = null;
     setListening(false);
     setListenPaused(false);
   };
+
+  // Back/forward - jump to the previous or next step and start reading
+  // it immediately, so the student can toggle back and forth on demand.
+  const skipStep = (dir) => {
+    if (!listenActiveRef.current) return;
+    const steps = (t && t.note) || [];
+    const target = Math.min(Math.max(activeStep + dir, 0), steps.length - 1);
+    speakTokenRef.current++;
+    clearWatchdog();
+    if (gapTimeoutRef.current) { clearTimeout(gapTimeoutRef.current); gapTimeoutRef.current = null; }
+    window.speechSynthesis.cancel();
+    listenPausedRef.current = false;
+    setListenPaused(false);
+    setActiveStep(target);
+    speakChunk(target, buildChunksForStep(target, steps[target]), 0);
+  };
+
+  // Auto-follow: keep the page scrolled to whichever step is currently
+  // being read aloud, the same way it already tracks manual scrolling.
+  useEffect(() => {
+    if (!listening) return;
+    const el = stepRefs.current[activeStep];
+    if (el) el.scrollIntoView({ block: "center", behavior: "smooth" });
+  }, [activeStep, listening]);
 
   // Stop any in-progress reading when leaving the topic or switching topics,
   // so audio never keeps playing over a screen the student has left.
   useEffect(() => {
     return () => {
       listenActiveRef.current = false;
+      speakTokenRef.current++;
+      clearWatchdog();
       if (gapTimeoutRef.current) clearTimeout(gapTimeoutRef.current);
+      if (keepAliveRef.current) clearInterval(keepAliveRef.current);
       window.speechSynthesis.cancel();
     };
   }, [t]);
@@ -4613,11 +4703,29 @@ function TopicView({ app }) {
               ) : (
                 <>
                   <button
+                    title="Previous step"
+                    className="btn btn-sm"
+                    style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", padding: "6px 8px" }}
+                    onClick={() => skipStep(-1)}
+                    disabled={activeStep <= 0}
+                  >
+                    <Ic.skipBack p={14} />
+                  </button>
+                  <button
                     className="btn btn-sm"
                     style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6 }}
                     onClick={listenPaused ? resumeListening : pauseListening}
                   >
                     {listenPaused ? <><Ic.play p={14} /> Resume</> : <><Ic.pause p={14} /> Pause</>}
+                  </button>
+                  <button
+                    title="Next step"
+                    className="btn btn-sm"
+                    style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", padding: "6px 8px" }}
+                    onClick={() => skipStep(1)}
+                    disabled={activeStep >= ((t.note || []).length - 1)}
+                  >
+                    <Ic.skipForward p={14} />
                   </button>
                   <button
                     className="btn btn-sm"
@@ -4684,6 +4792,16 @@ function TopicView({ app }) {
                 </div>
               )}
             </div>
+          )}
+          {(t.note || []).length > 0 && (
+            <button
+              title="Highlighter"
+              className="btn btn-sm"
+              style={{ background: highlightArmed ? "var(--amber-dim)" : "var(--bg-3)", color: highlightArmed ? "var(--amber-2)" : "var(--text-2)", border: highlightArmed ? "1px solid rgba(245,185,63,.4)" : "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6 }}
+              onClick={() => setHighlightArmed((a) => !a)}
+            >
+              <Ic.pencil p={14} /> {highlightArmed ? "Highlighting" : "Highlight"}
+            </button>
           )}
           {(() => {
             const key = `${t.courseId}:${t.topicIndex}`;
@@ -4814,52 +4932,33 @@ function TopicView({ app }) {
         <div><div style={{ fontWeight: 700, fontSize: 16 }}>Ready to test yourself?</div><div style={{ color: "var(--text-2)", fontSize: 14 }}>{(t.mcqs || []).length} MCQs</div></div>
         <button className="btn btn-a" onClick={() => app.go("quiz", { courseId: t.courseId, topicId: t.topicIndex })}>Start <Ic.chevR p={16} /></button>
       </div>
-    </div>
-  );            {/* ============================================================
-          Floating "Highlight" pill.
-          Rendered via createPortal onto document.body so no flexbox,
-          no CSS zoom, and no scroll position can push it off-screen.
-          Only visible when the user has a live text selection inside a
-          lesson paragraph (see the selectionchange listener above).
-          Tap it to apply a yellow highlight to the selection.
-          ============================================================ */}
-      {hlPillVisible && createPortal(
-        <div
-          style={{
-            position: "fixed",
-            left: "50%",
-            bottom: "calc(env(safe-area-inset-bottom, 0px) + 24px)",
-            transform: "translateX(-50%)",
-            zIndex: 10000,
-          }}
-        >
-          <button
-            onClick={commitHighlight}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "12px 20px",
-              borderRadius: 999,
-              border: "1px solid var(--amber)",
-              background: "var(--amber)",
-              color: "#1B1405",
-              fontWeight: 700,
-              fontSize: 14.5,
-              cursor: "pointer",
-              boxShadow: "0 8px 24px rgba(245,185,63,0.45), 0 2px 6px rgba(0,0,0,0.35)",
-              fontFamily: "inherit",
-            }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 20h9" />
-              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z" />
-            </svg>
-            Highlight
-          </button>
+      {/* Highlighter colour palette - rendered via createPortal onto
+          document.body so no flexbox, CSS zoom, or scroll position can
+          push it off-screen or under a mobile keyboard. Only shown while
+          the pencil is armed AND there's a live text selection. */}
+      {pendingSelection && createPortal(
+        <div style={{ position: "fixed", left: "50%", bottom: "calc(env(safe-area-inset-bottom, 0px) + 24px)", transform: "translateX(-50%)", zIndex: 10000 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 18px", borderRadius: 999, background: "var(--bg-2)", border: "1px solid var(--line-2)", boxShadow: "0 10px 28px rgba(0,0,0,0.4)" }}>
+            <span className="mono" style={{ fontSize: 11.5, color: "var(--text-3)" }}>Highlight:</span>
+            {["blue", "yellow", "pink"].map((c) => (
+              <button
+                key={c}
+                onClick={() => commitHighlight(c)}
+                onMouseDown={(e) => e.preventDefault()}
+                aria-label={"Highlight " + c}
+                style={{
+                  width: 30, height: 30, borderRadius: "50%", cursor: "pointer",
+                  background: c === "blue" ? "#5aa9ff" : c === "pink" ? "#ff78b4" : "#f5d650",
+                  border: "2px solid rgba(255,255,255,.2)",
+                }}
+              />
+            ))}
+          </div>
         </div>,
         document.body
       )}
+    </div>
+  );
 }
 
 /* ------------------------------- course --------------------------------- */
