@@ -672,6 +672,7 @@ mark.lesson-hl-yellow{background:rgba(245,214,80,.45)}
   background:var(--amber-dim);
   border:1px solid rgba(245,185,63,.28);
   padding:4px 10px;border-radius:999px;
+  margin-bottom:10px;
 }
 .plan-in{width:100%;background:var(--bg-3);border:1px solid var(--line);border-radius:11px;
   padding:13px 14px;color:var(--text);font-size:15px;font-family:var(--mono)}
@@ -3681,7 +3682,7 @@ const readBase64 = (f) => new Promise((res, rej) => {
   r.readAsDataURL(f);
 });
 
-/* PPTX is a zip. Read the central directory, inflate each slide XML and pull the text runs. */
+/* PPTX is a zip. Read the central directory, inflate each slide XML and pull the text runs only - images, charts and embedded pictures in the deck are never touched. */
 async function pptxToText(file) {
   const buf = await file.arrayBuffer();
   const dv = new DataView(buf);
@@ -4534,17 +4535,23 @@ function TopicView({ app }) {
   // spoken. The Socratic/insight labels are their own short chunk so there
   // is a small, deliberate beat between "My Socratic question." and the
   // question itself, instead of the two being run together.
+  // Arrows (→) are used throughout the notes as a term/definition separator
+  // and read fine visually, but a speech engine reads the character
+  // literally as "right arrow." For speech only, swap it for an em dash so
+  // it produces a natural pause instead of being spoken.
+  const forSpeech = (raw) => (raw || "").replace(/\s*→\s*/g, " — ");
+
   const buildChunksForStep = useCallback((idx, step) => {
-    const chunks = [{ text: "Step " + (idx + 1) + ". " + step.q, pauseAfterMs: 350, para: null }];
+    const chunks = [{ text: "Step " + (idx + 1) + ". " + forSpeech(step.q), pauseAfterMs: 350, para: null }];
     (step.body || "").split("\n\n").forEach((p, k) => {
       if (p.startsWith("My Socratic question:")) {
         chunks.push({ text: "My Socratic question.", pauseAfterMs: 450, para: k, pitch: 1.04 });
-        chunks.push({ text: p.replace("My Socratic question:", "").trim(), pauseAfterMs: 450, para: k, pitch: 1.04 });
+        chunks.push({ text: forSpeech(p.replace("My Socratic question:", "").trim()), pauseAfterMs: 450, para: k, pitch: 1.04 });
       } else if (p.startsWith("Crucial insight:")) {
         chunks.push({ text: "Crucial insight.", pauseAfterMs: 450, para: k });
-        chunks.push({ text: p.replace("Crucial insight:", "").trim(), pauseAfterMs: 400, para: k, rate: 0.94 });
+        chunks.push({ text: forSpeech(p.replace("Crucial insight:", "").trim()), pauseAfterMs: 400, para: k, rate: 0.94 });
       } else if (p.trim()) {
-        chunks.push({ text: p, pauseAfterMs: 250, para: k });
+        chunks.push({ text: forSpeech(p), pauseAfterMs: 250, para: k });
       }
     });
     return chunks;
@@ -9748,7 +9755,9 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
 }
 /* ------------------------------- resources ------------------------------ */
 const SOCRATIC_SYS = "You are the ASCEND Socratic tutor for KNUST medical laboratory science students. Break material into a sequential continuum of knowledge: pose a question, give a hint, then answer it fully in flowing paragraphs, then state the crucial insight or clinical pearl. Teach mechanism over memorisation. No emojis. Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. Use the caret ^ for exponents (e.g. 10^3 - the app will convert it to superscript). Use 'x' for multiplication. Write fractions as 'a/b' or in words. Never output symbols like $, \\times, or \\frac. Accuracy is critical - these are medical facts students will be examined on. Only state specific numbers, values, classifications, enzyme names, or mechanisms you are confident are correct. If you are not certain of an exact figure or detail, describe the concept accurately without inventing a precise number.";
-const SOCRATIC_TASK = "Break this study material into a focused Socratic lesson of 4 to 6 steps. For each step: state the question, explain the answer in one or two clear paragraphs, then give the crucial insight in one line. End with three short self-test questions and their answers. Be economical so the whole lesson is complete and never cut off.";
+const SOCRATIC_TASK = "Break this study material into a focused Socratic lesson of 4 to 6 steps. For each step: state the question, explain the answer in one or two clear paragraphs, then give the crucial insight in one line. End with three short self-test questions and their answers. Be economical so the whole lesson is complete and never cut off. " +
+  "Base the lesson on the readable text of the material only - ignore any stray symbols, misread characters, or fragments that do not form real words or sentences (this can happen when slides mix text with diagrams, charts or photos). " +
+  "The material may be partial - a slide deck's text with its diagrams and pictures left out, or a file that was cut short to fit. First work out what standard course topic this material is drawn from, then teach that topic properly: use everything usable in the material as your primary source, and where it is thin, cut short, or clearly missing a step a normal class on this subject would cover, fill the gap with accurate standard knowledge of your own so the lesson is complete and genuinely useful on its own, not just a repeat of the fragments you were given.";
 
 // ============================================================
 // PDF.js loader - extracts text from PDFs client-side
@@ -9909,7 +9918,13 @@ function ResourcesView() {
       new Promise((_, reject) => setTimeout(() => reject(new Error("OCR took too long (over 90 seconds) and was stopped.")), 90000)),
     ]);
     if (!ocrText || !ocrText.trim()) throw new Error("OCR ran but found no readable text on these pages.");
-    return ocrText;
+    // These pages had no real text layer, so this came from OCR reading the
+    // rendered page image - diagrams, photos and charts on the same page
+    // can produce garbled, non-text noise mixed in with the real words.
+    // Tag it so the lesson-building prompt knows to trust the readable
+    // words and disregard anything that isn't real text, rather than
+    // treating OCR artifacts as course content.
+    return "[This text was extracted via OCR from scanned pages, which may include misread characters or noise from diagrams, charts or photos on the page - rely only on the parts that read as real words and sentences.]\n" + ocrText;
   };
 
   const run = async () => {
