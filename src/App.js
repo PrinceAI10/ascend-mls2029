@@ -356,6 +356,70 @@ html.ascend-pacifico-ready .brand-word,html.ascend-pacifico-ready .brand-word-he
 .opt .key{font-family:var(--mono);font-weight:700;color:var(--text-3);flex-shrink:0}
 .opt.sel .key,.opt.correct .key{color:var(--amber-2)}
 .opt.wrong .key{color:var(--bad)}
+/* ===== Study calendar (Home) ===== */
+.cal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.cal-title{display:flex;align-items:center;gap:9px;min-width:0}
+.cal-title svg{color:var(--amber);flex-shrink:0}
+.cal-title .eyebrow{white-space:nowrap}
+.cal-streak{display:flex;align-items:center;gap:6px;flex-shrink:0;padding:5px 11px;border-radius:999px;
+  background:var(--amber-dim);border:1px solid rgba(245,185,63,.3);color:var(--amber-2);
+  font-family:var(--mono);font-weight:700;font-size:13px}
+.cal-streak small{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.cal-month{font-size:clamp(17px,4.4vw,20px);font-weight:750;letter-spacing:-.01em;text-align:center;flex:1}
+.cal-arrow{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--bg-3);
+  color:var(--text-2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.cal-arrow:hover:not(:disabled){border-color:var(--amber);color:var(--amber-2)}
+.cal-arrow:disabled{opacity:.3;cursor:default}
+.cal-dow,.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal-dow{margin-bottom:5px}
+.cal-dow span{text-align:center;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--text-3)}
+.cal-day{position:relative;aspect-ratio:1;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--line);background:transparent;color:var(--text-2);font-size:12.5px;font-weight:600;min-width:0}
+.cal-day.blank{border:none;background:none}
+.cal-day.future{color:var(--text-3);opacity:.5;border-style:dashed}
+.cal-day.frozen{border:1px dashed rgba(125,184,255,.7);color:#7db8ff}
+.cal-day.on{background:linear-gradient(160deg,var(--amber-2),var(--amber));border-color:transparent;
+  box-shadow:0 2px 10px -3px rgba(245,185,63,.6)}
+.cal-day.today{outline:2px solid var(--amber-2);outline-offset:2px}
+.cal-day .cal-num{position:absolute;top:3px;left:5px;font-size:9.5px;font-weight:700;line-height:1;color:#1B1405;opacity:.75}
+.cal-day svg{width:56%;height:56%;max-width:26px;max-height:26px;filter:drop-shadow(0 1px 1px rgba(120,53,15,.35))}
+.cal-key{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--text-2)}
+.cal-key-item{display:flex;align-items:center;gap:7px}
+.cal-swatch{width:18px;height:18px;border-radius:5px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cal-swatch.on{background:linear-gradient(160deg,var(--amber-2),var(--amber));border-color:transparent}
+.cal-swatch.on svg{width:12px;height:12px}
+.cal-swatch.today{outline:2px solid var(--amber-2);outline-offset:1px}
+.cal-swatch.frozen{border:1px dashed rgba(125,184,255,.8)}
+.cal-summary{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:12px;
+  font-family:var(--mono);font-size:11px;color:var(--text-3);letter-spacing:.04em}
+.cal-summary b{color:var(--text);font-weight:700}
+
+/* ===== Ask ASCEND AI (full-page chatbot) ===== */
+.askai{display:flex;flex-direction:column;height:calc(100dvh - 210px);min-height:420px;max-height:820px}
+.askai-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+.askai-frame{flex:1;min-height:0;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;
+  background:var(--bg-2);overflow:hidden}
+.askai-body{flex:1;min-height:0;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;
+  overscroll-behavior:contain;scroll-behavior:smooth}
+.askai-body .msg{max-width:92%}
+.askai-empty{margin:auto;text-align:center;padding:10px 6px;max-width:460px}
+.askai-orb{width:54px;height:54px;border-radius:16px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(150deg,rgba(90,169,255,.22),rgba(245,185,63,.22));border:1px solid rgba(245,185,63,.3);color:var(--amber-2)}
+.askai-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.askai-chip{padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg-3);color:var(--text-2);
+  font-size:12.5px;cursor:pointer;text-align:left}
+.askai-chip:hover{border-color:var(--amber);color:var(--amber-2)}
+.askai-in{display:flex;align-items:flex-end;gap:9px;padding:10px;border-top:1px solid var(--line);background:var(--bg-2)}
+.askai-in textarea{flex:1;resize:none;max-height:140px;min-height:42px;background:var(--bg);border:1px solid var(--line-2);
+  border-radius:12px;padding:11px 13px;color:var(--text);font:inherit;font-size:15px;line-height:1.4}
+.askai-in textarea:focus{outline:none;border-color:var(--amber)}
+.ascend-root.light .askai-in textarea{background:var(--bg-2)}
+.askai-send{height:42px;width:46px;padding:0;flex-shrink:0}
+.askai-note{font-size:11px;color:var(--text-3);text-align:center;margin-top:8px}
+@media (max-width:900px){.askai{height:calc(100dvh - 190px)}}
 .chat{border:1px solid var(--line);border-radius:14px;background:var(--bg-2);display:flex;flex-direction:column;overflow:hidden}
 .chat-body{padding:16px;display:flex;flex-direction:column;gap:12px;max-height:420px;overflow-y:auto;min-height:120px}
 .msg{max-width:88%;padding:11px 14px;border-radius:13px;font-size:14px;line-height:1.55;white-space:pre-wrap;word-wrap:break-word}
@@ -638,6 +702,7 @@ const Ic = {
   home: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M3 10.5 12 4l9 6.5" /><path d="M5 9.5V20h14V9.5" /></>} />,
   book: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M4 5.5A2 2 0 0 1 6 4h13v15H6.5A2.5 2.5 0 0 0 4 21.5z" /><path d="M4 5.5v16" /></>} />,
   flame: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M12 3c1 3 4 4.2 4 8a4 4 0 1 1-8 0c0-1.4.6-2.4 1.2-3.2C10 9 11 7 12 3z" />} />,
+  calendar: ({ p = 20, style }) => <I s={p} style={style} d={<><rect x="3.5" y="5" width="17" height="15.5" rx="2.5" /><path d="M3.5 10h17M8 3v4M16 3v4" /></>} />,
   trophy: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M7 4h10v4a5 5 0 0 1-10 0z" /><path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3M9 20h6M12 14v4" /></>} />,
   file: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4M9 13h6M9 17h6" /></>} />,
   slides: ({ p = 20, style }) => <I s={p} style={style} d={<><rect x="3" y="4" width="18" height="12" rx="1.5" /><path d="M12 16v3.4M8.5 20h7" /><path d="M10.6 8.4l3.4 2.1-3.4 2.1z" /></>} />,
@@ -5388,7 +5453,11 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
   const steps = [
     { selector: null, title: "Welcome to ASCEND", body: "Built by Prince, Ansah, Jeffery and Dacosta - the climb to First Class, together. This quick tour points out the basics. Tap Next to move on, or Skip any time." },
     { selector: '[data-tour="xp"]', title: "Earn XP as you learn", body: "Every lesson, quiz, and daily question you complete earns XP. Watch your rank climb as XP adds up." },
-    { selector: '[data-tour="streak"]', title: "Keep your streak alive", body: "Answer the Daily question correctly and your streak grows by one. Miss a day and it resets." },
+    // On phones the topbar chips are hidden (no room), so this falls back to
+    // the streak pill on the Home study calendar - findVisible() picks the
+    // first match that is actually on screen.
+    { selector: '[data-tour="streak"], [data-tour="cal-streak"]', title: "Keep your streak alive", body: "Answer the Daily question correctly and your streak grows by one. Miss a day and it resets. Your study calendar on Home shows every day you studied." },
+    { selector: '[data-tour="nav-askai"]', title: "Ask ASCEND AI anything", body: "Stuck on a concept? Open Ask ASCEND AI to chat about any course - no topic needed, and your conversation is kept for you." },
     { selector: '[data-tour="nav-tools"]', title: "Study Tools, on demand", body: "Generate flashcards, mind maps, and flow diagrams for any topic here - type one in, or paste your own notes." },
     { selector: '[data-tour="nav-papers"]', title: "Drill real past questions", body: "Passco holds real past exam papers, broken into sets. Practice mode reveals answers instantly; Exam mode times you and reviews at the end." },
     { selector: '[data-tour="quick-actions"]', title: "Jump back in fast", body: "These four buttons on Home get you straight to Continue studying, the Daily question, Passco, or Ranks." }
@@ -5555,19 +5624,22 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
           // polling on rAF for the element to actually appear instead of
           // giving up after one failed lookup, up to the same attempt cap
           // used for settle-detection.
+          // Time-based, not frame-count-based: 90 frames is only ~1.5s,
+          // which a slow phone connection easily exceeds before Home's
+          // data (and so the quick-actions row) has rendered.
+          const pollStart = Date.now();
           const pollForMount = () => {
             if (cancelled) return;
             const found = findVisible(s.selector);
             if (found) {
               found.scrollIntoView({ block: "center", behavior: "smooth" });
               waitForSettle(found);
-            } else if (pollForMount.attempts++ < 90) {
+            } else if (Date.now() - pollStart < 6000) {
               settleFrame = requestAnimationFrame(pollForMount);
             } else {
               measure();
             }
           };
-          pollForMount.attempts = 0;
           settleFrame = requestAnimationFrame(pollForMount);
         }
       }, 60);
@@ -5600,66 +5672,100 @@ function SpotlightTour({ onDone, menuOpen, setMenuOpen }) {
     onDone();
   };
 
-  const pad = 8;
-  const highlight = rect ? {
-    position: "fixed",
-    top: rect.top - pad, left: rect.left - pad,
-    width: rect.width + pad * 2, height: rect.height + pad * 2,
-    borderRadius: 12, border: "2px solid var(--amber)",
-    boxShadow: "0 0 0 4000px rgba(6,9,16,.72), 0 0 20px rgba(245,185,63,.35)",
-    zIndex: 1002, pointerEvents: "none",
-    animation: "fadeUp .2s ease-out"
-  } : {
-    position: "fixed", inset: 0, background: "rgba(6,9,16,.72)", zIndex: 1002, pointerEvents: "none"
-  };
+  // Laptop keyboard support: Esc skips, Right arrow = next, Left arrow = back.
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") { e.preventDefault(); finish(); }
+      else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        if (isLast) finish(); else setStep((n) => Math.min(steps.length - 1, n + 1));
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        setStep((n) => Math.max(0, n - 1));
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [step]);
 
-  // Position tooltip near the highlighted rect, flipping side if it would
-  // overflow. Uses visualViewport (accounts for mobile browser chrome / the
-  // on-screen keyboard) instead of window.innerHeight/innerWidth, which on
-  // phones can report a taller area than what's actually visible and push
-  // the tooltip off-screen or under the keyboard.
+  const pad = 8;
   const vv = typeof window !== "undefined" && window.visualViewport;
   const viewportW = vv ? vv.width : (typeof window !== "undefined" ? window.innerWidth : 360);
   const viewportH = vv ? vv.height : (typeof window !== "undefined" ? window.innerHeight : 640);
-  let tipStyle = {
-    position: "fixed", zIndex: 1003,
-    maxWidth: 340, width: "calc(100% - 40px)",
-    overflowY: "auto",
-  };
+
+  // Dim overlay drawn as an SVG with a rounded "hole" over the target
+  // (even-odd fill). The old approach - a 4000px box-shadow spread - is a
+  // known source of flicker, blank frames and dropped paints on mobile
+  // browsers/WebViews; a plain path paints reliably everywhere.
+  const hole = rect ? {
+    x: rect.left - pad, y: rect.top - pad,
+    w: rect.width + pad * 2, h: rect.height + pad * 2, r: 12
+  } : null;
+  const holePath = hole
+    ? `M-10000 -10000H20000V20000H-10000Z M${hole.x + hole.r} ${hole.y}H${hole.x + hole.w - hole.r}A${hole.r} ${hole.r} 0 0 1 ${hole.x + hole.w} ${hole.y + hole.r}V${hole.y + hole.h - hole.r}A${hole.r} ${hole.r} 0 0 1 ${hole.x + hole.w - hole.r} ${hole.y + hole.h}H${hole.x + hole.r}A${hole.r} ${hole.r} 0 0 1 ${hole.x} ${hole.y + hole.h - hole.r}V${hole.y + hole.r}A${hole.r} ${hole.r} 0 0 1 ${hole.x + hole.r} ${hole.y}Z`
+    : "M-10000 -10000H20000V20000H-10000Z";
+
+  // Tooltip: explicit pixel width (never wider than the visible area),
+  // centred on phones, placed BESIDE a drawer/nav target on wide screens so
+  // it doesn't cover the rest of the menu, and otherwise above/below the
+  // target - whichever has more room - with its height capped to that room.
+  const tipW = Math.min(340, viewportW - 32);
+  const clampLeft = (l) => Math.max(16, Math.min(l, viewportW - tipW - 16));
+  let tipStyle = { position: "fixed", zIndex: 1003, width: tipW, overflowY: "auto", overscrollBehavior: "contain" };
   if (rect) {
-    tipStyle.maxHeight = Math.max(200, viewportH - 32);
-    const spaceBelow = viewportH - (rect.top + rect.height);
-    const below = spaceBelow > 220 || rect.top < 220;
-    if (below) tipStyle.top = Math.max(12, rect.top + rect.height + pad + 14);
-    else tipStyle.bottom = Math.max(12, viewportH - (rect.top - pad) + 14);
-    let left = rect.left;
-    left = Math.max(16, Math.min(left, viewportW - 356));
-    tipStyle.left = left;
+    const spaceBelow = viewportH - (rect.top + rect.height + pad) - 14;
+    const spaceAbove = rect.top - pad - 14;
+    const spaceRight = viewportW - (rect.left + rect.width + pad) - 16;
+    if (spaceRight >= tipW + 16 && rect.width < viewportW * 0.6) {
+      // side placement (desktop nav items and other narrow targets)
+      tipStyle.left = rect.left + rect.width + pad + 16;
+      tipStyle.maxHeight = Math.max(200, viewportH - 32);
+      tipStyle.top = Math.max(16, Math.min(rect.top + rect.height / 2 - 100, viewportH - 16 - 260));
+    } else {
+      const placeBelow = spaceBelow >= 230 || spaceBelow >= spaceAbove;
+      tipStyle.left = clampLeft(rect.left + rect.width / 2 - tipW / 2);
+      if (placeBelow) {
+        tipStyle.top = Math.max(12, rect.top + rect.height + pad + 14);
+        tipStyle.maxHeight = Math.max(160, spaceBelow - 4);
+      } else {
+        tipStyle.bottom = Math.max(12, viewportH - (rect.top - pad) + 14);
+        tipStyle.maxHeight = Math.max(160, spaceAbove - 4);
+      }
+    }
   } else {
-    // Centered welcome step: compute an explicit px position from the same
-    // visualViewport-aware width/height used above, instead of CSS "50%" +
-    // transform (which resolves against the full layout viewport, not what's
-    // actually visible past mobile browser chrome / an open keyboard - the
-    // same class of bug already fixed for the anchored steps below). This
-    // keeps the card fully on-screen and never taller than the visible area.
-    const cardW = Math.min(340, viewportW - 32);
     const cardMaxH = Math.max(200, viewportH - 32);
-    tipStyle.width = cardW;
     tipStyle.maxHeight = cardMaxH;
-    tipStyle.left = Math.max(16, (viewportW - cardW) / 2);
+    tipStyle.left = Math.max(16, (viewportW - tipW) / 2);
     tipStyle.top = Math.max(16, (viewportH - Math.min(cardMaxH, 420)) / 2);
     if (vv) { tipStyle.top += vv.offsetTop || 0; tipStyle.left += vv.offsetLeft || 0; }
   }
-  // Safe-area padding so the tooltip never sits under a notch or the
-  // home-indicator strip on iOS PWAs / full-screen mobile browsers.
-  tipStyle.marginBottom = "env(safe-area-inset-bottom, 0px)";
-  tipStyle.marginTop = "env(safe-area-inset-top, 0px)";
 
   return (
     <>
-      <div style={{ position: "fixed", inset: 0, zIndex: 1001, background: "transparent" }} onClick={(e) => e.stopPropagation()} />
-      <div key={step} style={highlight} />
-      <div className="card" style={{ ...tipStyle, padding: "20px 20px 16px" }}>
+      <div
+        style={{ position: "fixed", inset: 0, zIndex: 1001, background: "transparent", touchAction: "none" }}
+        onClick={(e) => e.stopPropagation()}
+      />
+      <svg
+        key={"dim" + step}
+        aria-hidden="true"
+        style={{ position: "fixed", inset: 0, width: "100%", height: "100%", zIndex: 1002, pointerEvents: "none", animation: "fadeUp .2s ease-out" }}
+      >
+        <path d={holePath} fillRule="evenodd" fill="rgba(6,9,16,.72)" />
+      </svg>
+      {hole && (
+        <div
+          key={"ring" + step}
+          aria-hidden="true"
+          style={{
+            position: "fixed", zIndex: 1002, pointerEvents: "none",
+            top: hole.y, left: hole.x, width: hole.w, height: hole.h,
+            borderRadius: hole.r, border: "2px solid var(--amber)",
+            boxShadow: "0 0 20px rgba(245,185,63,.35)", animation: "fadeUp .2s ease-out"
+          }}
+        />
+      )}
+      <div className="card" role="dialog" aria-live="polite" aria-label={s.title} style={{ ...tipStyle, padding: "20px 20px 16px" }}>
         <h3 style={{ fontSize: 17, margin: "0 0 6px" }}>{s.title}</h3>
         <p style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.6, margin: "0 0 16px" }}>{s.body}</p>
         <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 14 }}>
@@ -10488,6 +10594,270 @@ function HallOfFameStrip({ app }) {
   );
 }
 
+/* ===================== STUDY CALENDAR (Home) =====================
+   A real month-view calendar instead of a contribution grid. Gold + flame =
+   a day you studied (part of your streak); empty = a day you missed; dashed
+   blue = a streak-freeze day; the outlined day is today. Arrows (or a
+   sideways swipe) move month to month across the whole year so a student
+   can look back at how each month went. Reads progress.dailyDone, the same
+   source of truth the streak itself is derived from. */
+function CalFlame() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="#C2410C" d="M12 2.2c.7 3.5 5.6 6 5.6 11.2A5.6 5.6 0 0 1 12 19a5.6 5.6 0 0 1-5.6-5.6c0-2.2 1-3.9 2.2-5.3.2 1.6 1 2.6 2 3C10.9 8.3 11 5 12 2.2z" />
+      <path fill="#FDE68A" d="M12 17.6a2.9 2.9 0 0 1-2.9-2.9c0-1.5 1.1-2.4 1.8-3.4.3.9.9 1.4 1.4 1.6.5-.7.8-1.5.8-2.4 1.1.9 1.8 2.1 1.8 3.4a2.9 2.9 0 0 1-2.9 2.9z" />
+    </svg>
+  );
+}
+
+function StudyCalendar({ progress }) {
+  const done = (progress && progress.dailyDone) || {};
+  const frozen = (progress && progress.frozenDays) || {};
+  const now = new Date();
+  const todayStr = localDateKey(now);
+  const curIdx = now.getFullYear() * 12 + now.getMonth();
+  const activeKeys = Object.keys(done).filter((k) => done[k]).sort();
+  const firstActive = activeKeys[0] || null;
+  // Browse from January of the earliest year with activity (or this year)
+  // through December of this year.
+  const minYear = Math.min(now.getFullYear(), firstActive ? parseInt(firstActive.slice(0, 4), 10) : now.getFullYear());
+  const minIdx = minYear * 12;
+  const maxIdx = now.getFullYear() * 12 + 11;
+  const [idx, setIdx] = useState(curIdx);
+  const touch = useRef(null);
+
+  const year = Math.floor(idx / 12);
+  const month = idx % 12;
+  const monthName = new Date(year, month, 1).toLocaleDateString("en-GB", { month: "long" });
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const lead = new Date(year, month, 1).getDay(); // Sunday-first
+  const pad2 = (n) => String(n).padStart(2, "0");
+
+  const cells = [];
+  for (let i = 0; i < lead; i++) cells.push({ blank: true, key: "b" + i });
+  let active = 0, missed = 0, hasFrozen = false;
+  for (let d = 1; d <= daysInMonth; d++) {
+    const key = year + "-" + pad2(month + 1) + "-" + pad2(d);
+    const on = !!done[key];
+    const isFrozen = !on && !!frozen[key];
+    const future = key > todayStr;
+    const isToday = key === todayStr;
+    if (on) active++;
+    if (isFrozen) hasFrozen = true;
+    // Only days since the student's first active day count as "missed" in
+    // the summary - the months before they joined aren't a failure.
+    if (!on && !isFrozen && !future && !isToday && firstActive && key > firstActive) missed++;
+    cells.push({ key, d, on, frozen: isFrozen, future, today: isToday });
+  }
+
+  const go = (delta) => setIdx((i) => Math.min(maxIdx, Math.max(minIdx, i + delta)));
+  const onTouchStart = (e) => { const t = e.touches[0]; touch.current = { x: t.clientX, y: t.clientY }; };
+  const onTouchEnd = (e) => {
+    if (!touch.current) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touch.current.x;
+    const dy = t.clientY - touch.current.y;
+    touch.current = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1);
+  };
+
+  const dow = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return (
+    <div className="card" style={{ marginTop: 16 }}>
+      <div className="cal-head">
+        <div className="cal-title">
+          <Ic.calendar p={22} />
+          <div className="eyebrow">Your study calendar</div>
+        </div>
+        <div className="cal-streak" data-tour="cal-streak" title="Your current streak">
+          <Ic.flame p={15} />
+          <span>{(progress && progress.streak) || 0}</span>
+          <small>day streak</small>
+        </div>
+      </div>
+
+      <div className="cal-nav">
+        <button className="cal-arrow" onClick={() => go(-1)} disabled={idx <= minIdx} aria-label="Previous month">
+          <Ic.chevR p={16} style={{ transform: "rotate(180deg)" }} />
+        </button>
+        <div className="cal-month" aria-live="polite">{monthName}, {year}</div>
+        <button className="cal-arrow" onClick={() => go(1)} disabled={idx >= maxIdx} aria-label="Next month">
+          <Ic.chevR p={16} />
+        </button>
+      </div>
+
+      <div onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} style={{ touchAction: "pan-y" }}>
+        <div className="cal-dow">{dow.map((n) => <span key={n}>{n}</span>)}</div>
+        <div className="cal-grid">
+          {cells.map((c) => c.blank ? <div key={c.key} className="cal-day blank" /> : (
+            <div
+              key={c.key}
+              title={c.key + (c.on ? " - studied" : c.frozen ? " - streak freeze" : c.future ? "" : c.today ? " - today" : " - missed")}
+              className={"cal-day" + (c.on ? " on" : "") + (c.frozen ? " frozen" : "") + (c.future ? " future" : "") + (c.today ? " today" : "")}
+            >
+              {c.on ? (<><span className="cal-num">{c.d}</span><CalFlame /></>) : c.d}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="cal-summary">
+        <span><b>{active}</b> ACTIVE DAY{active === 1 ? "" : "S"}</span>
+        {idx !== curIdx
+          ? <button className="btn btn-g btn-sm" style={{ padding: "3px 10px", fontSize: 11 }} onClick={() => setIdx(curIdx)}>Back to this month</button>
+          : <span>{missed > 0 ? <><b>{missed}</b> MISSED SO FAR</> : "NO MISSED DAYS"}</span>}
+      </div>
+
+      <div className="cal-key" role="group" aria-label="Calendar key">
+        <span className="cal-key-item"><span className="cal-swatch on"><CalFlame /></span>Studied - streak day</span>
+        <span className="cal-key-item"><span className="cal-swatch" />Empty - missed day</span>
+        <span className="cal-key-item"><span className="cal-swatch today" />Today</span>
+        {hasFrozen && <span className="cal-key-item"><span className="cal-swatch frozen" />Streak freeze</span>}
+      </div>
+    </div>
+  );
+}
+
+/* ===================== ASK ASCEND AI (standalone chatbot) =====================
+   A full-page chat that isn't tied to any topic: ask about any course, a
+   concept you're stuck on, exam technique, or how to plan your study.
+   History is kept per student on this device so a refresh or app switch
+   doesn't wipe the conversation. */
+function AskAIView({ app }) {
+  const who = String((app.progress && app.progress.name) || "guest").toLowerCase();
+  const storeKey = "ascend_askai_history:" + who;
+  const [msgs, setMsgs] = useState(() => {
+    try {
+      const raw = JSON.parse(localStorage.getItem(storeKey) || "[]");
+      return Array.isArray(raw) ? raw.slice(-60) : [];
+    } catch { return []; }
+  });
+  const [input, setInput] = useState("");
+  const [busy, setBusy] = useState(false);
+  const bodyRef = useRef(null);
+  const taRef = useRef(null);
+  const myCourses = visibleCoursesFor(app.progress);
+
+  useEffect(() => {
+    try { localStorage.setItem(storeKey, JSON.stringify(msgs.slice(-60))); } catch {}
+  }, [msgs]);
+  useEffect(() => {
+    if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
+  }, [msgs, busy]);
+
+  const levelLine = app.progress && app.progress.level
+    ? "The student is in Level " + app.progress.level + ", Semester " + (app.progress.semester || 1) + "."
+    : "";
+  const courseLine = myCourses.length
+    ? "Their courses this semester: " + myCourses.map((c) => c.name + " (" + c.code + ")").join(", ") + "."
+    : "";
+  const system =
+    "You are ASCEND AI, a friendly and rigorous study assistant for Medical Laboratory Science students at KNUST in Ghana. " +
+    "Answer questions on any course, concept, exam technique, or study planning. Teach the WHY and the mechanism, step by step, in clear plain language, and keep answers focused. " +
+    "Ask a short follow-up question when the request is too vague to answer well. No emojis. " +
+    "Write all mathematics and numbers in plain readable text. NEVER use LaTeX, markdown math, dollar signs, backslashes, or fraction commands. " +
+    "Use the caret ^ for exponents (e.g. 10^3 - the app will convert it). Use 'x' for multiplication. Write fractions as 'a/b' or in words. " +
+    "Accuracy is critical: only state specific facts, numbers, classifications, or mechanisms you are confident are correct, and describe the concept in general terms rather than inventing a precise figure you are unsure of. " +
+    "If a question is outside your knowledge or you are unsure, say so and suggest checking the lecture slides or asking the lecturer. " +
+    levelLine + " " + courseLine;
+
+  const send = async (override) => {
+    const text = String(override != null ? override : input).trim();
+    if (!text || busy) return;
+    const next = [...msgs, { role: "user", content: text }];
+    setMsgs(next);
+    setInput("");
+    if (taRef.current) taRef.current.style.height = "auto";
+    setBusy(true);
+    // Send only recent turns (keeps requests small on slow connections),
+    // skip error notices, and make sure the first turn is the student's.
+    let ctx = next.filter((m) => !m.err).slice(-14);
+    while (ctx.length && ctx[0].role !== "user") ctx = ctx.slice(1);
+    try {
+      const reply = await callClaude(system, ctx.map((m) => ({ role: m.role, content: m.content })), 2048);
+      setMsgs([...next, { role: "assistant", content: reply }]);
+    } catch (e) {
+      setMsgs([...next, { role: "assistant", err: true, content: ((e && e.message) ? e.message + " " : "") + "ASCEND AI couldn't respond just now. Please try again in a moment." }]);
+    }
+    setBusy(false);
+  };
+
+  const clearChat = () => {
+    if (!msgs.length) return;
+    if (window.confirm("Clear this whole conversation?")) setMsgs([]);
+  };
+
+  const firstCourse = myCourses[0] ? myCourses[0].name : null;
+  const chips = [
+    "Explain a hard concept to me like I'm new to it",
+    firstCourse ? "Quiz me with 5 questions on " + firstCourse : "Quiz me with 5 questions",
+    "How should I plan my study week before exams?",
+    "What's the difference between accuracy and precision in the lab?"
+  ];
+
+  const onKey = (e) => {
+    const coarse = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+    if (e.key === "Enter" && !e.shiftKey && !coarse) { e.preventDefault(); send(); }
+  };
+  const onInput = (e) => {
+    setInput(e.target.value);
+    const el = e.target;
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 140) + "px";
+  };
+
+  return (
+    <div className="view askai">
+      <div className="askai-head">
+        <div>
+          <div className="eyebrow">Ask ASCEND AI</div>
+          <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 2px" }}>Ask anything.</h1>
+          <div style={{ color: "var(--text-3)", fontSize: 13.5 }}>Any course, any concept, any time - no topic needed.</div>
+        </div>
+        {msgs.length > 0 && <button className="btn btn-g btn-sm" onClick={clearChat}>New chat</button>}
+      </div>
+
+      <div className="askai-frame">
+        <div className="askai-body" ref={bodyRef}>
+          {msgs.length === 0 && !busy && (
+            <div className="askai-empty">
+              <div className="askai-orb"><Ic.ai p={26} /></div>
+              <div style={{ fontWeight: 700, fontSize: 17 }}>What are you stuck on?</div>
+              <p style={{ color: "var(--text-2)", fontSize: 13.5, margin: "6px 0 0", lineHeight: 1.6 }}>
+                Ask about a concept, a mechanism, a lab method, or how to prepare for a paper. I'll walk you through it step by step.
+              </p>
+              <div className="askai-chips">
+                {chips.map((c) => <button key={c} className="askai-chip" onClick={() => send(c)}>{c}</button>)}
+              </div>
+            </div>
+          )}
+          {msgs.map((m, i) => (
+            <div key={i} className={"msg " + (m.role === "user" ? "u" : "a")}>
+              {m.role === "user" ? m.content : <AIText text={m.content} />}
+            </div>
+          ))}
+          {busy && <div className="msg a dots"><span /><span /><span /></div>}
+        </div>
+        <div className="askai-in">
+          <textarea
+            ref={taRef}
+            rows={1}
+            value={input}
+            placeholder="Ask ASCEND AI anything..."
+            onChange={onInput}
+            onKeyDown={onKey}
+            aria-label="Message ASCEND AI"
+          />
+          <button className="btn btn-a askai-send" onClick={() => send()} disabled={busy || !input.trim()} aria-label="Send">
+            <Ic.send p={18} />
+          </button>
+        </div>
+      </div>
+      <div className="askai-note">ASCEND AI can make mistakes - check important facts against your lecture notes.</div>
+    </div>
+  );
+}
+
 function HomeView({ app }) {
   const jsDay = new Date().getDay();
   // Which of the student's currently-visible courses is "today's" course,
@@ -10728,70 +11098,7 @@ function HomeView({ app }) {
 
       <NextExamCard />
 
-      {(() => {
-        // GitHub-style contribution calendar: 7 rows (days of week) x week-columns,
-        // spanning from a few weeks back through the end of September 2026, so it
-        // covers the whole study-and-exam period and fills the full width.
-        const done = app.progress.dailyDone || {};
-        const todayStr = localDateKey(new Date());
-        // start: the Sunday on/before 6 weeks ago; end: last day of September 2026
-        const start = new Date();
-        start.setDate(start.getDate() - 42);
-        start.setDate(start.getDate() - start.getDay()); // back up to Sunday
-        const end = new Date("2026-09-30T00:00:00");
-        // build weeks: each week is an array of 7 day-cells (Sun..Sat)
-        const weeks = [];
-        let cur = new Date(start);
-        while (cur <= end) {
-          const week = [];
-          for (let dow = 0; dow < 7; dow++) {
-            const key = localDateKey(cur);
-            week.push({
-              key,
-              active: !!done[key],
-              today: key === todayStr,
-              future: key > todayStr,
-            });
-            cur.setDate(cur.getDate() + 1);
-          }
-          weeks.push(week);
-        }
-        const activeCount = Object.keys(done).length;
-        const monthLabel = (wk) => {
-          // label a week-column with the month name if it contains the 1st of a month
-          const first = wk.find((d) => d.key.slice(8, 10) === "01");
-          if (!first) return "";
-          // Parse as local midnight (not bare "YYYY-MM-DD", which parses as
-          // UTC and can render as the wrong month near a timezone boundary).
-          return new Date(first.key + "T00:00:00").toLocaleDateString("en-GB", { month: "short" });
-        };
-        return (
-          <div className="card" style={{ marginTop: 16, overflowX: "auto" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
-              <div className="eyebrow">Your study calendar</div>
-              <div className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>{activeCount} ACTIVE DAY{activeCount === 1 ? "" : "S"}</div>
-            </div>
-            <div style={{ display: "flex", gap: 3, width: "100%" }}>
-              {weeks.map((wk, wi) => (
-                <div key={wi} style={{ display: "flex", flexDirection: "column", gap: 3, flex: 1, minWidth: 0 }}>
-                  {wk.map((d) => (
-                    <div key={d.key} title={d.key} style={{
-                      aspectRatio: "1", borderRadius: 3, width: "100%",
-                      background: d.active ? "var(--amber)" : "#1E3A6E",
-                      border: d.today ? "2px solid var(--amber-2)" : "1px solid rgba(255,255,255,0.06)",
-                    }} />
-                  ))}
-                </div>
-              ))}
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8 }}>
-              <span className="mono" style={{ fontSize: 9.5, color: "var(--text-3)" }}>{new Date(start).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}</span>
-              <span className="mono" style={{ fontSize: 9.5, color: "var(--text-3)" }}>END SEP</span>
-            </div>
-            <p className="note-hint" style={{ marginTop: 8 }}>Every day up to the end of September is a blue square. Study that day and it turns gold. Fill the whole board.</p>
-          </div>
-        );
-      })()}
+      <StudyCalendar progress={app.progress} />
 
       <div className="grid g3" style={{ marginTop: 16 }}>
         <div className="card">
@@ -12832,6 +13139,7 @@ function ForumView({ app }) {
 const NAV = [
   { key: "home", label: "Home", icon: "home", group: "Learn" },
   { key: "courses", label: "Courses", icon: "book", group: "Learn" },
+  { key: "askai", label: "Ask ASCEND AI", icon: "ai", group: "Learn" },
   { key: "daily", label: "Daily", icon: "flame", group: "Learn" },
   { key: "slides", label: "Slides", icon: "slides", group: "Learn" },
   { key: "resources", label: "Resources", icon: "upload", group: "Learn" },
@@ -14462,6 +14770,7 @@ export default function App() {
       case "plan": return <PlanView />;
       case "resources": return <ResourcesView />;
       case "slides": return <SlidesView app={app} />;
+      case "askai": return <AskAIView app={app} />;
       case "lamla": return <LAMLAView app={app} />;
       case "feedback": return <FeedbackView />;
       case "viewfeedback": return <ViewFeedbackView />;
