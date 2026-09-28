@@ -29686,7 +29686,7 @@ const CONTENT = {
   "hem:9": T_HEM_LEUKOCYTE_COUNT,
   "hem:10": T_HEM_MICROSCOPY,
   "hem:11": T_HEM_QUALITY,
-  "bc2:0": T_BC2_LIPID_METABOLISM,
+  "bch:11": T_BCH_LIPID_METAB,
 
 };
 

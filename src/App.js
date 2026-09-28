@@ -798,7 +798,7 @@ const COURSES_L200_S1 = [
   { id: "bc2p", name: "Biochemistry II Practicals", code: "SMS 281P", level: 200, semester: 1 },
   { id: "gpa", name: "General Pathology", code: "SMS 291", level: 200, semester: 1 },
   { id: "mic", name: "Microbiology I", code: "SMS 293", level: 200, semester: 1 },
-  { id: "bc2", name: "Biochemistry 2", code: "SMS 281", level: 200, semester: 1 },
+  { id: "bc2", name: "Biochemistry II", code: "SMS 281", level: 200, semester: 1 },
   { id: "hem", name: "Hematology I", code: "SMS 287", level: 200, semester: 1 },
   { id: "pha", name: "Pharmacology I", code: "SMS 295", level: 200, semester: 1 },
   { id: "an2", name: "Anatomy II", code: "SMS 285", level: 200, semester: 1 },
@@ -4146,7 +4146,7 @@ function TopicFlowDiagram({ title, context }) {
       setCode(clean);
     } catch (e) {
       const msg = e && e.message ? e.message : "";
-      setErr(/429|rate|busy/i.test(msg) ? "The AI service is busy. Please wait a moment and try again." : "Could not build the diagram just now. Please try again.");
+      setErr(/\b429\b|rate[ -]?limit|\bbusy\b/i.test(msg) ? "The AI service is busy. Please wait a moment and try again." : "Could not build the diagram just now. Please try again.");
     } finally {
       setBusy(false);
     }
@@ -9869,139 +9869,116 @@ function ResourcesView() {
     try { window.sessionStorage.setItem("ascend_res_result", result); } catch {}
   }, [result]);
 
-  const run = async () => {
-    setErr(""); 
-    setResult("");
-    
-    const typed = text.trim();
-    if (!typed && !file) { 
-      setErr("Paste some content or choose a file first."); 
-      return; 
+  // Tagged errors so the catch below can tell "we could not read your file"
+  // apart from "the AI was busy" - previously both looked identical, which
+  // is why a busy AI made the app re-run OCR and resend the whole request.
+  const stageError = (kind, message) => { const e = new Error(message); e.kind = kind; return e; };
+
+  // Free-tier AI providers count input tokens AND requested max_tokens
+  // against a per-minute budget. 25k chars of material + 8000 output tokens
+  // regularly blew that budget on its own, which is what produced the
+  // "AI service is busy" message on almost every file upload even when the
+  // service itself was fine. 12k chars (~3k tokens) and 4500 output tokens
+  // still covers a full 4-6 step lesson.
+  const MAX_MATERIAL_CHARS = 12000;
+  const LESSON_MAX_TOKENS = 4500;
+
+  const extractPdfText = async (f) => {
+    const pdfjsLib = await Promise.race([
+      loadPDFJS(),
+      new Promise((_, reject) => setTimeout(() => reject(new Error("Timed out loading the PDF reader library (it may be blocked by an ad blocker or firewall).")), 15000)),
+    ]);
+    const buf = await f.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+    let fullText = "";
+    const maxPages = Math.min(pdf.numPages, 20);
+    for (let i = 1; i <= maxPages; i++) {
+      try {
+        const page = await pdf.getPage(i);
+        const tc = await page.getTextContent();
+        const pageText = tc.items.map((it) => it.str).join(" ");
+        if (pageText.trim()) fullText += `\n--- Page ${i} ---\n${pageText}`;
+      } catch { continue; }
     }
-    
+    if (fullText.trim().length >= 40) return fullText;
+
+    // No usable text layer (scanned/image PDF) - OCR the pages instead.
+    setStage("No text layer found - reading pages with OCR (this can take a minute)...");
+    const ocrText = await Promise.race([
+      ocrPdfToText(pdfjsLib, pdf, 8, (done, total) => setStage(`Reading page ${done} of ${total} with OCR...`)),
+      new Promise((_, reject) => setTimeout(() => reject(new Error("OCR took too long (over 90 seconds) and was stopped.")), 90000)),
+    ]);
+    if (!ocrText || !ocrText.trim()) throw new Error("OCR ran but found no readable text on these pages.");
+    return ocrText;
+  };
+
+  const run = async () => {
+    setErr("");
+    setResult("");
+
+    const typed = text.trim();
+    if (!typed && !file) {
+      setErr("Paste some content or choose a file first.");
+      return;
+    }
+
     setBusy(true);
-    
+
     try {
-      const ext = fileExt(file);
-      
-      // ============================================================
-      // FIXED: Better PDF handling - extract text client-side
-      // ============================================================
-      if (file && ext === "pdf") {
-        setStage("Reading your PDF...");
-        
+      // ---- PHASE 1: get the material as plain text (never touches the AI) ----
+      let fileText = "";
+      if (file) {
+        const ext = fileExt(file);
         try {
-          // Load PDF.js library
-          const pdfjsLib = await Promise.race([
-            loadPDFJS(),
-            new Promise((_, reject) => setTimeout(() => reject(new Error("Timed out loading the PDF reader library (it may be blocked by an ad blocker or firewall).")), 15000))
-          ]);
-          const arrayBuffer = await file.arrayBuffer();
-          const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-          
-          let fullText = "";
-          const maxPages = Math.min(pdf.numPages, 20);
-          
-          for (let i = 1; i <= maxPages; i++) {
-            try {
-              const page = await pdf.getPage(i);
-              const textContent = await page.getTextContent();
-              const pageText = textContent.items.map(item => item.str).join(" ");
-              if (pageText.trim()) {
-                fullText += `\n--- Page ${i} ---\n${pageText}`;
-              }
-            } catch (pageErr) {
-              // Skip pages that fail
-              continue;
-            }
-          }
-          
-          if (!fullText.trim()) {
-            throw new Error("Could not extract text from this PDF. It may be a scanned image-based PDF.");
-          }
-          
-          // Truncate to reasonable size for AI
-          if (fullText.length > 25000) {
-            fullText = fullText.slice(0, 25000) + "\n... (truncated)";
-          }
-          
-          setStage("Building your lesson...");
-          
-          // Use the extracted text with the AI
-          const material = typed ? `${typed}\n\n${fullText}` : fullText;
-          setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 8000));
-          
-        } catch (pdfErr) {
-          // The embedded-text extraction found nothing (commonly a scanned/
-          // image-based PDF) or otherwise failed. Fall back to OCR-ing each
-          // page image client-side, then send the resulting plain text to
-          // the AI - this is the format the proxy actually supports.
-          try {
-            setStage("No text layer found - reading pages with OCR (this can take a minute)...");
-            const pdfjsLib = await loadPDFJS();
-            const arrayBuffer2 = await file.arrayBuffer();
-            const pdf2 = await pdfjsLib.getDocument({ data: arrayBuffer2 }).promise;
-            const ocrText = await Promise.race([
-              ocrPdfToText(pdfjsLib, pdf2, 8, (done, total) => setStage(`Reading page ${done} of ${total} with OCR...`)),
-              new Promise((_, reject) => setTimeout(() => reject(new Error("OCR took too long (over 90 seconds) and was stopped.")), 90000))
-            ]);
-            if (!ocrText) throw new Error("OCR ran but found no readable text on these pages.");
-            let material = typed ? `${typed}\n\n${ocrText}` : ocrText;
-            if (material.length > 25000) material = material.slice(0, 25000) + "\n... (truncated)";
-            setStage("Building your lesson...");
-            setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 8000));
-          } catch (ocrErr) {
-            console.log("PDF OCR fallback failed:", ocrErr && ocrErr.message);
-            const reason = (ocrErr && ocrErr.message) || "an unknown error";
-            throw new Error(`This PDF's text could not be read automatically (${reason}). Please try copying the text directly from the PDF and pasting it instead.`);
-          }
-        }
-        
-      } else if (file) {
-        // Handle other file types
-        let material = typed;
-        if (file && !material) {
-          if (ext === "pptx") { 
-            setStage("Opening your slides..."); 
-            material = await pptxToText(file); 
-          } else if (ext === "txt" || ext === "md") { 
-            setStage("Reading your file..."); 
-            material = await readTextFile(file); 
+          if (ext === "pdf") {
+            setStage("Reading your PDF...");
+            fileText = await extractPdfText(file);
+          } else if (ext === "pptx") {
+            setStage("Opening your slides...");
+            fileText = await pptxToText(file);
+          } else if (ext === "txt" || ext === "md") {
+            setStage("Reading your file...");
+            fileText = await readTextFile(file);
           } else {
             throw new Error("Supported files are PDF, PowerPoint (.pptx), and plain text. For .ppt or .doc, export to PDF first.");
           }
+        } catch (readErr) {
+          throw stageError("file", (readErr && readErr.message) || "That file could not be read.");
         }
-        if (!material) throw new Error("That file had no readable text.");
-        setStage("Building your lesson...");
-        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }], 8000));
-        
-      } else {
-        // Just text input
-        setStage("Building your lesson...");
-        setResult(await callClaude(SOCRATIC_SYS, [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + typed }], 8000));
+        if (!fileText || !fileText.trim()) throw stageError("file", "That file had no readable text. If it is a scan, paste the text instead.");
       }
-      
+
+      // Typed text is treated as extra focus/instructions when a file is
+      // attached, and as the material itself when it is not.
+      let material = file
+        ? (typed ? `Student focus / extra notes: ${typed}\n\n${fileText}` : fileText)
+        : typed;
+      if (material.length > MAX_MATERIAL_CHARS) material = material.slice(0, MAX_MATERIAL_CHARS) + "\n... (truncated to fit)";
+
+      // ---- PHASE 2: exactly ONE AI request (callClaude already retries itself) ----
+      setStage("Building your lesson...");
+      const out = await callClaude(
+        SOCRATIC_SYS,
+        [{ role: "user", content: SOCRATIC_TASK + "\n\nMATERIAL:\n" + material }],
+        LESSON_MAX_TOKENS
+      );
+      setResult(out);
     } catch (e) {
       const msg = e && e.message ? e.message : "The AI could not respond just now.";
-      
-      // ============================================================
-      // FIXED: Better error messages for different issues
-      // ============================================================
-      if (msg.toLowerCase().includes("pdf") || msg.toLowerCase().includes("scan")) {
-        setErr(`${msg}\n\nTry: Copy the text directly from the PDF and paste it instead.`);
-      } else if (msg.includes("429") || msg.includes("rate") || msg.includes("busy") || msg.includes("overload")) {
-        setErr("The AI service is busy right now. Please wait about 20 seconds and try again.");
-      } else if (msg.toLowerCase().includes("connection") || msg.toLowerCase().includes("internet") || msg.toLowerCase().includes("network")) {
+      const low = msg.toLowerCase();
+      if (e && e.kind === "file") {
+        setErr(`${msg}\n\nTry: copy the text directly from the file and paste it into the box above instead.`);
+      } else if (/\bbusy\b|\b429\b|rate[ -]?limit|overload|handling lots/.test(low)) {
+        setErr("The AI service is busy right now. Your file was read fine - just wait about 20 seconds and press the button again.");
+      } else if (low.includes("took too long") || low.includes("timeout") || low.includes("timed out")) {
+        setErr("The request took too long. Try a shorter file, or paste just the part you want broken down.");
+      } else if (low.includes("connect") || low.includes("internet") || low.includes("network") || low.includes("offline")) {
         setErr("Connection issue. Please check your internet and try again.");
-      } else if (msg.toLowerCase().includes("timeout")) {
-        setErr("The request timed out. The file may be too large. Try pasting the text directly instead.");
       } else {
         setErr(msg + " Please try again in a moment.");
       }
     } finally {
-      // GUARANTEED reset - runs no matter what happened above (success,
-      // caught error, or even an unexpected throw inside the catch block
-      // itself), so the button can never get stuck disabled again.
+      // GUARANTEED reset so the button can never get stuck disabled.
       setStage("");
       setBusy(false);
     }
@@ -10019,7 +9996,7 @@ function ResourcesView() {
         <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
           <label className="btn btn-g" style={{ cursor: "pointer" }}>
             <Ic.upload p={16} /> Upload PDF, slides or text
-            <input type="file" accept=".pdf,.pptx,.txt,.md" style={{ display: "none" }} onChange={(e) => { if (e.target.files[0]) { setFile(e.target.files[0]); setErr(""); } }} />
+            <input type="file" accept=".pdf,.pptx,.txt,.md" style={{ display: "none" }} onChange={(e) => { const f = e.target.files && e.target.files[0]; if (f) { setFile(f); setErr(""); } e.target.value = ""; }} />
           </label>
           {file && (
             <span style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--text-2)", fontSize: 13 }}>
@@ -10090,7 +10067,7 @@ function StudyToolsView({ app }) {
       setCards(clean);
     } catch (e) {
       const msg = e && e.message ? e.message : "The AI could not respond just now.";
-      if (msg.includes("429") || msg.includes("rate") || msg.includes("busy")) {
+      if (/\b429\b|rate[ -]?limit|\bbusy\b/i.test(msg)) {
         setErr("The AI service is busy. Please wait a moment and try again.");
       } else {
         setErr(msg + " Please try again in a moment.");
@@ -10116,7 +10093,7 @@ function StudyToolsView({ app }) {
       setMap(data);
     } catch (e) {
       const msg = e && e.message ? e.message : "The AI could not respond just now.";
-      if (msg.includes("429") || msg.includes("rate") || msg.includes("busy")) {
+      if (/\b429\b|rate[ -]?limit|\bbusy\b/i.test(msg)) {
         setErr("The AI service is busy. Please wait a moment and try again.");
       } else {
         setErr(msg + " Please try again in a moment.");
@@ -10144,7 +10121,7 @@ function StudyToolsView({ app }) {
       setFlowCode(code);
     } catch (e) {
       const msg = e && e.message ? e.message : "The AI could not respond just now.";
-      if (msg.includes("429") || msg.includes("rate") || msg.includes("busy")) {
+      if (/\b429\b|rate[ -]?limit|\bbusy\b/i.test(msg)) {
         setErr("The AI service is busy. Please wait a moment and try again.");
       } else {
         setErr(msg + " Please try again in a moment.");
