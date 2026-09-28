@@ -380,16 +380,15 @@ html.ascend-pacifico-ready .brand-word,html.ascend-pacifico-ready .brand-word-he
 .cal-day.blank{border:none;background:none}
 .cal-day.future{color:var(--text-3);opacity:.5;border-style:dashed}
 .cal-day.frozen{border:1px dashed rgba(125,184,255,.7);color:#7db8ff}
-.cal-day.on{background:linear-gradient(160deg,var(--amber-2),var(--amber));border-color:transparent;
-  box-shadow:0 2px 10px -3px rgba(245,185,63,.6)}
+.cal-day.on{background:var(--amber);border-color:var(--amber)}
 .cal-day.today{outline:2px solid var(--amber-2);outline-offset:2px}
 .cal-day .cal-num{position:absolute;top:3px;left:5px;font-size:9.5px;font-weight:700;line-height:1;color:#1B1405;opacity:.75}
-.cal-day svg{width:56%;height:56%;max-width:26px;max-height:26px;filter:drop-shadow(0 1px 1px rgba(120,53,15,.35))}
+.cal-day svg{width:56%;height:56%;max-width:26px;max-height:26px}
 .cal-key{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
   font-size:12px;color:var(--text-2)}
 .cal-key-item{display:flex;align-items:center;gap:7px}
 .cal-swatch{width:18px;height:18px;border-radius:5px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.cal-swatch.on{background:linear-gradient(160deg,var(--amber-2),var(--amber));border-color:transparent}
+.cal-swatch.on{background:var(--amber);border-color:var(--amber)}
 .cal-swatch.on svg{width:12px;height:12px}
 .cal-swatch.today{outline:2px solid var(--amber-2);outline-offset:1px}
 .cal-swatch.frozen{border:1px dashed rgba(125,184,255,.8)}
@@ -10602,10 +10601,11 @@ function HallOfFameStrip({ app }) {
    can look back at how each month went. Reads progress.dailyDone, the same
    source of truth the streak itself is derived from. */
 function CalFlame() {
+  // Same flame outline as the rest of ASCEND's icons (Ic.flame), drawn in the
+  // dark ink used on gold buttons - a plain SVG icon, not a coloured emoji.
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path fill="#C2410C" d="M12 2.2c.7 3.5 5.6 6 5.6 11.2A5.6 5.6 0 0 1 12 19a5.6 5.6 0 0 1-5.6-5.6c0-2.2 1-3.9 2.2-5.3.2 1.6 1 2.6 2 3C10.9 8.3 11 5 12 2.2z" />
-      <path fill="#FDE68A" d="M12 17.6a2.9 2.9 0 0 1-2.9-2.9c0-1.5 1.1-2.4 1.8-3.4.3.9.9 1.4 1.4 1.6.5-.7.8-1.5.8-2.4 1.1.9 1.8 2.1 1.8 3.4a2.9 2.9 0 0 1-2.9 2.9z" />
+    <svg viewBox="0 0 24 24" fill="rgba(27,20,5,.18)" stroke="#1B1405" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 3c1 3 4 4.2 4 8a4 4 0 1 1-8 0c0-1.4.6-2.4 1.2-3.2C10 9 11 7 12 3z" />
     </svg>
   );
 }
