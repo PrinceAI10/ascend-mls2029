@@ -442,6 +442,11 @@ textarea.pastebox:focus{border-color:var(--amber)}
 .lesson-p{color:var(--text);font-size:15.5px;line-height:1.8;margin:0 0 13px;
   white-space:pre-line}
 .lesson-p:last-child{margin-bottom:0}
+.lesson-step{scroll-margin-top:84px}
+/* Paragraph currently being read aloud - a soft amber rail so the eye can
+   stay locked to the voice. */
+.lesson-p-reading{box-shadow:-3px 0 0 0 var(--amber),-10px 0 18px -8px rgba(245,185,63,.55);
+  border-radius:6px;transition:box-shadow .25s ease}
 /* Two recurring structural paragraph types get their own colour language:
    amber = the Socratic question prompting the step, green (reusing the
    existing --good token, no new colour introduced) = the takeaway summary.
@@ -1208,6 +1213,29 @@ function slideCountForTopic(files, courseId, topicIndex) {
   return slidesForTopic(files, courseId, topicIndex).length;
 }
 
+// One course's slide "folder": every matching file in syllabus (topic) order,
+// de-duplicated by Drive id, with the PDF export attached as a fallback to
+// its parent deck instead of being counted as a separate file. Shared by the
+// course picker's counts and the course screen's list so the two can never
+// disagree about how many slides a course has.
+function buildSlideDeck(files, courseId) {
+  const deck = [];
+  const seen = {};
+  (TOPICS[courseId] || []).forEach((_, i) => {
+    const matches = slidesForTopic(files, courseId, i);
+    if (!matches.length) return;
+    const pdfFallback = matches.find((m) => m.mimeType === "application/pdf") || null;
+    matches
+      .filter((f) => f !== pdfFallback || matches.length === 1)
+      .forEach((f) => {
+        if (seen[f.id]) return;
+        seen[f.id] = true;
+        deck.push({ f: f, pdf: f.mimeType === "application/pdf" ? null : pdfFallback });
+      });
+  });
+  return deck;
+}
+
 function SlidesView({ app }) {
   const [files, setFiles] = useState(null);
   const [courseId, setCourseId] = useState(null); // null = course picker; set = topic list for that course
@@ -1222,18 +1250,29 @@ function SlidesView({ app }) {
 
   // Course picker screen
   if (!courseId) {
+    // Only count what this student can actually open: the courses for their
+    // own level and semester, using the same de-duplicated deck the course
+    // screen shows. (The Drive folder holds every level's files, so the raw
+    // folder size would overstate what they have.)
+    const myCourses = visibleCoursesFor(app.progress);
+    const countsByCourse = {};
+    let totalForYou = 0;
+    if (!loading) {
+      myCourses.forEach((c) => {
+        countsByCourse[c.id] = buildSlideDeck(files, c.id).length;
+        totalForYou += countsByCourse[c.id];
+      });
+    }
     return (
       <div className="view">
         <div className="eyebrow">Lecture Slides</div>
         <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Pick a course</h1>
         <div style={{ color: "var(--text-3)", fontSize: 13.5, marginBottom: 16 }}>
-          {loading ? "Loading slide library..." : `${files.length} file${files.length === 1 ? "" : "s"} in the shared Drive folder`}
+          {loading ? "Loading slide library..." : `${totalForYou} slide file${totalForYou === 1 ? "" : "s"} for your level and semester`}
         </div>
         <div style={{ display: "grid", gap: 10 }}>
-          {visibleCoursesFor(app.progress).map((c) => {
-            const count = loading ? null : (TOPICS[c.id] || []).reduce(
-              (sum, _, i) => sum + slideCountForTopic(files, c.id, i), 0
-            );
+          {myCourses.map((c) => {
+            const count = loading ? null : countsByCourse[c.id];
             return (
               <button
                 key={c.id}
@@ -1265,23 +1304,7 @@ function SlidesView({ app }) {
   const cleanName = (name) =>
     normalizeDriveFileName(name).replace(/^[a-z0-9]+_\d+_/i, "").replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").trim();
 
-  // Walk the topics in order, collect their slide files, de-duplicate by id.
-  const seen = {};
-  const deck = [];
-  if (!loading) {
-    topics.forEach((_, i) => {
-      const matches = slidesForTopic(files, courseId, i);
-      if (!matches.length) return;
-      const pdfFallback = matches.find((m) => m.mimeType === "application/pdf") || null;
-      matches
-        .filter((f) => f !== pdfFallback || matches.length === 1)
-        .forEach((f) => {
-          if (seen[f.id]) return;
-          seen[f.id] = true;
-          deck.push({ f: f, pdf: f.mimeType === "application/pdf" ? null : pdfFallback });
-        });
-    });
-  }
+  const deck = loading ? [] : buildSlideDeck(files, courseId);
 
   return (
     <div className="view">
@@ -4124,6 +4147,7 @@ function TopicView({ app }) {
   // Same unconditional-hooks pattern as the reading timer above.
   const [activeStep, setActiveStep] = useState(0);
   const stepRefs = useRef([]);
+  const paraRefs = useRef({}); // "step-para" -> <p>, for paragraph-level read-aloud follow
   useEffect(() => {
     stepRefs.current = [];
     setActiveStep(0);
@@ -4422,6 +4446,8 @@ function TopicView({ app }) {
   //   have clear gender-labelled names (common on some Android phones).
   const [listening, setListening] = useState(false);
   const [listenPaused, setListenPaused] = useState(false);
+  // Exactly which paragraph is being spoken right now ({step, para}; para null = heading).
+  const [readingPos, setReadingPos] = useState(null);
   const [voicePickerOpen, setVoicePickerOpen] = useState(false);
   const [voiceGender, setVoiceGender] = useState(() => {
     try { return localStorage.getItem("ascend_voice_gender") || null; } catch { return null; }
@@ -4439,15 +4465,22 @@ function TopicView({ app }) {
   const GENDER_PITCH = { male: 0.82, female: 1.12 };
   const GENDER_RATE = { male: 0.97, female: 1 };
 
+  // Each chunk carries `para` (index of the paragraph it belongs to, or null
+  // for the step heading) so the page can scroll to exactly what is being
+  // spoken. The Socratic/insight labels are their own short chunk so there
+  // is a small, deliberate beat between "My Socratic question." and the
+  // question itself, instead of the two being run together.
   const buildChunksForStep = useCallback((idx, step) => {
-    const chunks = [{ text: "Step " + (idx + 1) + ". " + step.q, pauseAfterMs: 700 }];
-    (step.body || "").split("\n\n").forEach((p) => {
+    const chunks = [{ text: "Step " + (idx + 1) + ". " + step.q, pauseAfterMs: 350, para: null }];
+    (step.body || "").split("\n\n").forEach((p, k) => {
       if (p.startsWith("My Socratic question:")) {
-        chunks.push({ text: "Here's a question worth pausing on. " + p.replace("My Socratic question:", "").trim(), pauseAfterMs: 950, pitch: 1.06 });
+        chunks.push({ text: "My Socratic question.", pauseAfterMs: 450, para: k, pitch: 1.04 });
+        chunks.push({ text: p.replace("My Socratic question:", "").trim(), pauseAfterMs: 450, para: k, pitch: 1.04 });
       } else if (p.startsWith("Crucial insight:")) {
-        chunks.push({ text: "And here's the crucial insight. " + p.replace("Crucial insight:", "").trim(), pauseAfterMs: 900, rate: 0.9 });
+        chunks.push({ text: "Crucial insight.", pauseAfterMs: 450, para: k });
+        chunks.push({ text: p.replace("Crucial insight:", "").trim(), pauseAfterMs: 400, para: k, rate: 0.94 });
       } else if (p.trim()) {
-        chunks.push({ text: p, pauseAfterMs: 550 });
+        chunks.push({ text: p, pauseAfterMs: 250, para: k });
       }
     });
     return chunks;
@@ -4477,6 +4510,7 @@ function TopicView({ app }) {
     if (!listenActiveRef.current || i >= chunks.length) return;
     const chunk = chunks[i];
     currentChunkRef.current = { stepIdx, chunks, i };
+    setReadingPos({ step: stepIdx, para: chunk.para == null ? null : chunk.para });
     const myToken = ++speakTokenRef.current;
     const genderKey = voiceGenderRef.current === "male" ? "male" : "female";
     const utter = new SpeechSynthesisUtterance(chunk.text);
@@ -4587,13 +4621,22 @@ function TopicView({ app }) {
     speakChunk(target, buildChunksForStep(target, steps[target]), 0);
   };
 
-  // Auto-follow: keep the page scrolled to whichever step is currently
-  // being read aloud, the same way it already tracks manual scrolling.
+  const isReading = (stepIdx, paraIdx) =>
+    listening && readingPos && readingPos.step === stepIdx && readingPos.para === paraIdx;
+
+  // Auto-follow: scroll to the exact paragraph being read aloud (not just
+  // its step), so the page stays glued to the voice. The heading chunk
+  // scrolls to the step title. Only runs while a reading session is live.
   useEffect(() => {
-    if (!listening) return;
-    const el = stepRefs.current[activeStep];
-    if (el) el.scrollIntoView({ block: "center", behavior: "smooth" });
-  }, [activeStep, listening]);
+    if (!listening || !readingPos) return;
+    const el = readingPos.para == null
+      ? stepRefs.current[readingPos.step]
+      : paraRefs.current[readingPos.step + "-" + readingPos.para];
+    if (el) el.scrollIntoView({ block: readingPos.para == null ? "start" : "center", behavior: "smooth" });
+  }, [readingPos, listening]);
+
+  // Clear the "now reading" marker when the reading ends.
+  useEffect(() => { if (!listening) setReadingPos(null); }, [listening]);
 
   // Stop any in-progress reading when leaving the topic or switching topics,
   // so audio never keeps playing over a screen the student has left.
@@ -4857,8 +4900,8 @@ function TopicView({ app }) {
                 const body = p.replace("My Socratic question:", "").trim();
                 const text = body.charAt(0).toUpperCase() + body.slice(1);
                 return (
-                  <p className="lesson-p lesson-p-question" key={k}>
-                    <span className="lesson-p-question-label">Socratic question</span>
+                  <p className={"lesson-p lesson-p-question" + (isReading(idx, k) ? " lesson-p-reading" : "")} key={k} ref={(el) => (paraRefs.current[hlKey] = el)}>
+                    <span className="lesson-p-question-label">My Socratic question</span>
                     <span className="lesson-p-body" data-key={hlKey}>{renderHighlighted(text, hlKey)}</span>
                   </p>
                 );
@@ -4867,14 +4910,14 @@ function TopicView({ app }) {
                 const body = p.replace("Crucial insight:", "").trim();
                 const text = body.charAt(0).toUpperCase() + body.slice(1);
                 return (
-                  <p className="lesson-p lesson-p-insight" key={k}>
+                  <p className={"lesson-p lesson-p-insight" + (isReading(idx, k) ? " lesson-p-reading" : "")} key={k} ref={(el) => (paraRefs.current[hlKey] = el)}>
                     <span className="lesson-p-insight-label">Crucial insight</span>
                     <span className="lesson-p-body" data-key={hlKey}>{renderHighlighted(text, hlKey)}</span>
                   </p>
                 );
               }
               return (
-                <p className="lesson-p" key={k}>
+                <p className={"lesson-p" + (isReading(idx, k) ? " lesson-p-reading" : "")} key={k} ref={(el) => (paraRefs.current[hlKey] = el)}>
                   <span className="lesson-p-body" data-key={hlKey}>{renderHighlighted(p, hlKey)}</span>
                 </p>
               );
