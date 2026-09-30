@@ -27057,6 +27057,13 @@ const CONTENT = {
   "hem:2": T_HEM_ERYTHROPOIESIS,
   "hem:3": T_HEM_LEUKOPOIESIS,
   "hem:4": T_HEM_THROMBOPOIESIS,
+  "hem:5": T_HEM_ANTICOAGULANTS,
+  "hem:6": T_HEM_PHLEBOTOMY,
+  "hem:5": T_HEM_ANTICOAGULANTS,
+  "hem:6": T_HEM_PHLEBOTOMY,
+  "hem:7": T_HEM_STAINS,
+  "hem:8": T_HEM_BLOOD_SMEARS,
+      
   
   
 
