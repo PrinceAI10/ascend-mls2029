@@ -797,7 +797,7 @@ const COURSES_L200_S1 = [
   { id: "micp", name: "Microbiology I Practicals", code: "SMS 293P", level: 200, semester: 1, contentMode: "practical-application", sourceCourseId: "mic" },
   { id: "hemp", name: "Hematology I Practicals", code: "SMS 287P", level: 200, semester: 1, contentMode: "practical-application", sourceCourseId: "hem" },
   { id: "bc2p", name: "Biochemistry II Practicals", code: "SMS 281P", level: 200, semester: 1 },
-  { id: "gpa", name: "General Pathology", code: "SMS 291", level: 200, semester: 1 },
+  { id: "pat", name: "General Pathology", code: "SMS 291", level: 200, semester: 1 },
   { id: "mic", name: "Microbiology I", code: "SMS 293", level: 200, semester: 1 },
   { id: "bc2", name: "Biochemistry II", code: "SMS 281", level: 200, semester: 1 },
   { id: "hem", name: "Hematology I", code: "SMS 287", level: 200, semester: 1 },
@@ -1007,7 +1007,7 @@ const TOPICS = {
     "Estimation of Plasma Glucose", "Sampling Techniques", "Order of Draw", "Phases of Analysis",
     "Spectrophotometry", "Dilution of Solutions"
   ],
-  gpa: [
+  pat: [
     "Introduction to General Pathology", "Cellular Adaptation, Cell Injury and Cell Death",
     "Haemodynamic Disorders", "Cell Cycle, Control and Applications", "Acute Inflammation",
     "Chemical Mediators of Inflammation", "Wound Healing — Tissue Repair/Regeneration",
