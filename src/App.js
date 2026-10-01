@@ -4239,11 +4239,45 @@ function TopicFlowDiagram({ title, context }) {
    step - no other file needs to change. Keep each SVG's viewBox self
    contained and use currentColor so it follows the light/dark theme. */
 const DIAGRAM_LIBRARY = {
-  // Example only - delete once you add real entries:
-  // "path:0:3": `<svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
-  //   <rect x="10" y="10" width="580" height="280" rx="12" fill="none" stroke="currentColor"/>
-  //   <text x="300" y="150" text-anchor="middle" fill="currentColor" font-size="16">Diagram goes here</text>
-  // </svg>`,
+  "hem:1:3": `<svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg">
+  <g font-family="sans-serif" font-size="13" text-anchor="middle">
+    <line x1="350" y1="55" x2="350" y2="90" stroke="currentColor" stroke-width="2"/>
+    <line x1="350" y1="125" x2="350" y2="150" stroke="currentColor" stroke-width="2"/>
+    <line x1="350" y1="150" x2="230" y2="185" stroke="currentColor" stroke-width="2"/>
+    <line x1="350" y1="150" x2="470" y2="185" stroke="currentColor" stroke-width="2"/>
+    <line x1="230" y1="220" x2="140" y2="255" stroke="currentColor" stroke-width="2"/>
+    <line x1="230" y1="220" x2="320" y2="255" stroke="currentColor" stroke-width="2"/>
+    <line x1="470" y1="220" x2="420" y2="255" stroke="currentColor" stroke-width="2"/>
+    <line x1="470" y1="220" x2="560" y2="255" stroke="currentColor" stroke-width="2"/>
+
+    <rect x="280" y="20" width="140" height="35" rx="8" fill="#8b5cf6" opacity="0.85"/>
+    <text x="350" y="42" fill="#fff" font-weight="700">HSC</text>
+
+    <rect x="280" y="90" width="140" height="35" rx="8" fill="#a78bfa" opacity="0.85"/>
+    <text x="350" y="112" fill="#fff" font-weight="700">MPP</text>
+
+    <rect x="160" y="185" width="140" height="35" rx="8" fill="#3b82f6" opacity="0.85"/>
+    <text x="230" y="207" fill="#fff" font-weight="700">CMP (myeloid)</text>
+    <rect x="400" y="185" width="140" height="35" rx="8" fill="#10b981" opacity="0.85"/>
+    <text x="470" y="207" fill="#fff" font-weight="700">CLP (lymphoid)</text>
+
+    <rect x="60" y="255" width="150" height="40" rx="8" fill="#ef4444" opacity="0.85"/>
+    <text x="135" y="272" fill="#fff" font-size="11">Erythroid</text>
+    <text x="135" y="287" fill="#fff" font-size="11">→ Red cells</text>
+
+    <rect x="245" y="255" width="150" height="40" rx="8" fill="#f59e0b" opacity="0.85"/>
+    <text x="320" y="272" fill="#fff" font-size="11">Megakaryocyte /</text>
+    <text x="320" y="287" fill="#fff" font-size="11">Granulocyte-Mono</text>
+
+    <rect x="345" y="255" width="150" height="40" rx="8" fill="#14b8a6" opacity="0.85"/>
+    <text x="420" y="272" fill="#fff" font-size="11">T cells</text>
+
+    <rect x="485" y="255" width="150" height="40" rx="8" fill="#22c55e" opacity="0.85"/>
+    <text x="560" y="272" fill="#fff" font-size="11">B cells / NK cells</text>
+
+    <text x="350" y="340" font-size="12" fill="currentColor" opacity="0.7">Stem cell → Progenitor → Lineage commitment → Mature cell</text>
+  </g>
+</svg>`,
 };
 
 /* StepDiagram: looks up DIAGRAM_LIBRARY for this exact step and, if a
