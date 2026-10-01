@@ -4239,44 +4239,53 @@ function TopicFlowDiagram({ title, context }) {
    step - no other file needs to change. Keep each SVG's viewBox self
    contained and use currentColor so it follows the light/dark theme. */
 const DIAGRAM_LIBRARY = {
-  "hem:1:3": `<svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg">
-  <g font-family="sans-serif" font-size="13" text-anchor="middle">
-    <line x1="350" y1="55" x2="350" y2="90" stroke="currentColor" stroke-width="2"/>
-    <line x1="350" y1="125" x2="350" y2="150" stroke="currentColor" stroke-width="2"/>
-    <line x1="350" y1="150" x2="230" y2="185" stroke="currentColor" stroke-width="2"/>
-    <line x1="350" y1="150" x2="470" y2="185" stroke="currentColor" stroke-width="2"/>
-    <line x1="230" y1="220" x2="140" y2="255" stroke="currentColor" stroke-width="2"/>
-    <line x1="230" y1="220" x2="320" y2="255" stroke="currentColor" stroke-width="2"/>
-    <line x1="470" y1="220" x2="420" y2="255" stroke="currentColor" stroke-width="2"/>
-    <line x1="470" y1="220" x2="560" y2="255" stroke="currentColor" stroke-width="2"/>
-
-    <rect x="280" y="20" width="140" height="35" rx="8" fill="#8b5cf6" opacity="0.85"/>
-    <text x="350" y="42" fill="#fff" font-weight="700">HSC</text>
-
-    <rect x="280" y="90" width="140" height="35" rx="8" fill="#a78bfa" opacity="0.85"/>
-    <text x="350" y="112" fill="#fff" font-weight="700">MPP</text>
-
-    <rect x="160" y="185" width="140" height="35" rx="8" fill="#3b82f6" opacity="0.85"/>
-    <text x="230" y="207" fill="#fff" font-weight="700">CMP (myeloid)</text>
-    <rect x="400" y="185" width="140" height="35" rx="8" fill="#10b981" opacity="0.85"/>
-    <text x="470" y="207" fill="#fff" font-weight="700">CLP (lymphoid)</text>
-
-    <rect x="60" y="255" width="150" height="40" rx="8" fill="#ef4444" opacity="0.85"/>
-    <text x="135" y="272" fill="#fff" font-size="11">Erythroid</text>
-    <text x="135" y="287" fill="#fff" font-size="11">→ Red cells</text>
-
-    <rect x="245" y="255" width="150" height="40" rx="8" fill="#f59e0b" opacity="0.85"/>
-    <text x="320" y="272" fill="#fff" font-size="11">Megakaryocyte /</text>
-    <text x="320" y="287" fill="#fff" font-size="11">Granulocyte-Mono</text>
-
-    <rect x="345" y="255" width="150" height="40" rx="8" fill="#14b8a6" opacity="0.85"/>
-    <text x="420" y="272" fill="#fff" font-size="11">T cells</text>
-
-    <rect x="485" y="255" width="150" height="40" rx="8" fill="#22c55e" opacity="0.85"/>
-    <text x="560" y="272" fill="#fff" font-size="11">B cells / NK cells</text>
-
-    <text x="350" y="340" font-size="12" fill="currentColor" opacity="0.7">Stem cell → Progenitor → Lineage commitment → Mature cell</text>
+    "hem:1:3": `<svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="700" height="380" rx="16" fill="#fdf6e9"/>
+  <g opacity="0.25" stroke="#c9a877" stroke-width="3">
+    <line x1="0" y1="40" x2="700" y2="40"/>
+    <line x1="0" y1="340" x2="700" y2="340"/>
+    <path d="M0,20 Q350,0 700,20"/>
+    <path d="M0,360 Q350,380 700,360"/>
   </g>
+
+  <text x="350" y="30" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#9c7a3c" font-weight="700">BONE MARROW</text>
+
+  <g transform="translate(300,90)">
+    <circle cx="50" cy="50" r="42" fill="#a78bfa"/>
+    <circle cx="50" cy="50" r="22" fill="#6d28d9"/>
+    <circle cx="42" cy="44" r="4" fill="#4c1d95"/>
+    <circle cx="58" cy="54" r="3" fill="#4c1d95"/>
+  </g>
+  <text x="350" y="205" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#5b21b6" font-weight="700">Stem Cell (HSC)</text>
+
+  <path d="M330,180 Q220,230 140,270" stroke="#9ca3af" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M350,190 L350,260" stroke="#9ca3af" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M370,180 Q480,230 560,270" stroke="#9ca3af" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <g transform="translate(140,300)">
+    <ellipse cx="0" cy="0" rx="34" ry="20" fill="#ef4444"/>
+    <ellipse cx="0" cy="0" rx="16" ry="9" fill="#fca5a5" opacity="0.8"/>
+  </g>
+  <text x="140" y="340" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#991b1b" font-weight="700">Red Blood Cell</text>
+
+  <g transform="translate(350,300)">
+    <circle cx="0" cy="0" r="30" fill="#bfdbfe"/>
+    <path d="M-10,-14 q10,-10 18,0 q8,10 -2,16 q10,6 0,16 q-10,8 -18,-2 q-8,-10 2,-30 z" fill="#1d4ed8"/>
+  </g>
+  <text x="350" y="340" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1e3a8a" font-weight="700">White Blood Cell</text>
+
+  <g transform="translate(560,300)">
+    <ellipse cx="-10" cy="-6" rx="9" ry="6" fill="#fbbf24"/>
+    <ellipse cx="8" cy="2" rx="10" ry="7" fill="#fbbf24"/>
+    <ellipse cx="-4" cy="10" rx="8" ry="5" fill="#fbbf24"/>
+  </g>
+  <text x="560" y="340" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#92400e" font-weight="700">Platelets</text>
 </svg>`,
 };
 
