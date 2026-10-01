@@ -41168,6 +41168,10 @@ This closes the collection and handling of blood samples. From here the course t
   ],
 };
 
+
+
+
+
 /* Registry: add each built topic here. */
 const CONTENT = {
   "ana:0": T_ANA_POSITION,
@@ -41373,6 +41377,8 @@ const CONTENT = {
   "hemp:4": T_HEMP_THROMBOPOIESIS,
   "hemp:5": T_HEMP_ANTICOAG,
   "hemp:6": T_HEMP_PHLEBOTOMY,
+  "hemp:7": T_HEMP_HAEM_STAINS,
+  "hemp:8": T_HEMP_BLOOD_FILMS,
 
   
 

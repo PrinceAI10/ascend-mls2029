@@ -996,12 +996,12 @@ const TOPICS = {
     "Erythropoiesis — Practical Approach", "Leukopoiesis — Practical Approach",
     "Thrombopoiesis — Practical Approach",
     "Blood Anticoagulants, Mechanism of Action and Effects on Blood Cells — Practical Approach",
-    "Blood Sample Collection (Phlebotomy), Handling and Storage of Blood",
-    "Types of Haematological Stains, Principles of Staining and Staining Techniques",
-    "Blood Smears/Films Preparation & Examination (Thick and Thin Blood Smears)",
-    "Manual Estimation of Total Leukocyte Counts of Blood (Using Turk's Fluid)",
-    "Microscopy (Types, Uses and Care of Microscopes in Haematology)",
-    "Quality Assurance in Haematological Testing, Principles of Total Quality Management"
+    "Blood Sample Collection (Phlebotomy), Handling and Storage of Blood — Practical Approach",
+    "Types of Haematological Stains, Principles of Staining and Staining Techniques — Practical Approach",
+    "Blood Smears/Films Preparation & Examination (Thick and Thin Blood Smears) — Practical Approach",
+    "Manual Estimation of Total Leukocyte Counts of Blood (Using Turk's Fluid) — Practical Approach",
+    "Microscopy (Types, Uses and Care of Microscopes in Haematology) — Practical Approach",
+    "Quality Assurance in Haematological Testing, Principles of Total Quality Management — Practical Approach"
   ],
   bc2p: [
     "Estimation of Plasma Glucose", "Sampling Techniques", "Order of Draw", "Phases of Analysis",
@@ -15360,3 +15360,4 @@ export default function App() {
     </div>
   );
 } 
+
