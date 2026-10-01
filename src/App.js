@@ -5137,7 +5137,7 @@ function TopicView({ app }) {
         <span>{it.q}</span>
       </h3>
 
-      {it.body.split("\n\n").map((p, k) => {
+            {it.body.split("\n\n").map((p, k) => {
         const hlKey = idx + "-" + k;
 
         if (p.startsWith("My Socratic question:")) {
@@ -5175,41 +5175,6 @@ function TopicView({ app }) {
           );
         }
 
-        if (p.startsWith("Crucial insight:")) {
-          const body = p
-            .replace("Crucial insight:", "")
-            .trim();
-
-          const text =
-            body.charAt(0).toUpperCase() + body.slice(1);
-
-          return (
-            <p
-              className={
-                "lesson-p lesson-p-insight" +
-                (isReading(idx, k)
-                  ? " lesson-p-reading"
-                  : "")
-              }
-              key={k}
-              ref={(el) => {
-                paraRefs.current[hlKey] = el;
-              }}
-            >
-              <span className="lesson-p-insight-label">
-                Crucial insight
-              </span>
-
-              <span
-                className="lesson-p-body"
-                data-key={hlKey}
-              >
-                {renderHighlighted(text, hlKey)}
-              </span>
-            </p>
-          );
-        }
-
         return (
           <p
             className={
@@ -5232,79 +5197,347 @@ function TopicView({ app }) {
           </p>
         );
       })}
-
-      <StepDiagram
-        courseId={t.courseId}
-        topicIndex={t.topicIndex}
-        stepIndex={idx}
-      />
     </div>
   ))}
 </div>
-      <div className="divider" />
-      <div className="eyebrow" style={{ marginBottom: 12 }}>Visualise it</div>
-      <TopicFlowDiagram title={t.title} context={noteContext} />
-      <div className="divider" />
-      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}><Ic.ai p={18} /><div className="eyebrow" style={{ margin: 0 }}>Ask ASCEND</div></div>
-      <AITutor topicTitle={t.title} context={noteContext} />
-      <div className="divider" />
-      <div className="eyebrow" style={{ marginBottom: 12 }}>{(t.theory || []).length} theory questions</div>
-      <div className="qa">
-        {(t.theory || []).map((it, idx) => (
-          <div className="qa-item" key={idx}>
-            <div className="qa-q"><span className="lesson-n">{String(idx + 1).padStart(2, "0")}</span><span>{it.q}</span></div>
-            <p className="qa-a">{it.a}</p>
-          </div>
-        ))}
+</>
+)}
+
+    <div className="divider" />
+
+    <div className="eyebrow" style={{ marginBottom: 12 }}>
+      Visualise it
+    </div>
+
+    <TopicFlowDiagram
+      title={t.title}
+      context={noteContext}
+    />
+
+    <div className="divider" />
+
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        marginBottom: 12,
+      }}
+    >
+      <Ic.ai p={18} />
+      <div className="eyebrow" style={{ margin: 0 }}>
+        Ask ASCEND
       </div>
-      {(t.videos || []).length > 0 && (
-        <>
-          <div className="divider" />
-          <div className="eyebrow" style={{ marginBottom: 6 }}>Watch on YouTube</div>
-          <p style={{ color: "var(--text-2)", fontSize: 13.5, margin: "0 0 12px", lineHeight: 1.55 }}>Tap a topic to open a fresh YouTube search - pick whichever video looks clearest to you. We keep these as searches, not fixed links, so they are always current and you choose the best one.</p>
-          <div className="grid g2">
-            {(t.videos || []).map((v, k) => {
-              const query = encodeURIComponent(v.title + " " + (t.title || ""));
-              const searchUrl = "https://www.youtube.com/results?search_query=" + query;
-              return (
-                <a className="card hover" key={k} href={searchUrl} target="_blank" rel="noreferrer" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <div style={{ width: 40, height: 40, borderRadius: 10, background: "var(--amber-dim)", color: "var(--amber)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Ic.play p={18} /></div>
-                    <div><div style={{ fontWeight: 650, fontSize: 14.5 }}>{v.title}</div><div className="mono" style={{ fontSize: 11, color: "var(--text-3)" }}>SEARCH YOUTUBE</div></div>
+    </div>
+
+    <AITutor
+      topicTitle={t.title}
+      context={noteContext}
+    />
+
+    <div className="divider" />
+
+    <div
+      className="eyebrow"
+      style={{ marginBottom: 12 }}
+    >
+      {(t.theory || []).length} theory questions
+    </div>
+
+    <div className="qa">
+      {(t.theory || []).map((it, idx) => (
+        <div className="qa-item" key={idx}>
+          <div className="qa-q">
+            <span className="lesson-n">
+              {String(idx + 1).padStart(2, "0")}
+            </span>
+
+            <span>{it.q}</span>
+          </div>
+
+          <p className="qa-a">{it.a}</p>
+        </div>
+      ))}
+    </div>
+
+    {(t.videos || []).length > 0 && (
+      <>
+        <div className="divider" />
+
+        <div
+          className="eyebrow"
+          style={{ marginBottom: 6 }}
+        >
+          Watch on YouTube
+        </div>
+
+        <p
+          style={{
+            color: "var(--text-2)",
+            fontSize: 13.5,
+            margin: "0 0 12px",
+            lineHeight: 1.55,
+          }}
+        >
+          Tap a topic to open a fresh YouTube search - pick
+          whichever video looks clearest to you. We keep these
+          as searches, not fixed links, so they are always current
+          and you choose the best one.
+        </p>
+
+        <div className="grid g2">
+          {(t.videos || []).map((v, k) => {
+            const query = encodeURIComponent(
+              v.title + " " + (t.title || "")
+            );
+
+            const searchUrl =
+              "https://www.youtube.com/results?search_query=" +
+              query;
+
+            return (
+              <a
+                className="card hover"
+                key={k}
+                href={searchUrl}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  display: "block",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: 10,
+                      background: "var(--amber-dim)",
+                      color: "var(--amber)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <Ic.play p={18} />
                   </div>
-                  <p style={{ color: "var(--text-2)", fontSize: 13, margin: "10px 0 0" }}>{v.note}</p>
-                </a>
-              );
-            })}
+
+                  <div>
+                    <div
+                      style={{
+                        fontWeight: 650,
+                        fontSize: 14.5,
+                      }}
+                    >
+                      {v.title}
+                    </div>
+
+                    <div
+                      className="mono"
+                      style={{
+                        fontSize: 11,
+                        color: "var(--text-3)",
+                      }}
+                    >
+                      SEARCH YOUTUBE
+                    </div>
+                  </div>
+                </div>
+
+                <p
+                  style={{
+                    color: "var(--text-2)",
+                    fontSize: 13,
+                    margin: "10px 0 0",
+                  }}
+                >
+                  {v.note}
+                </p>
+              </a>
+            );
+          })}
+        </div>
+      </>
+    )}
+
+    <div className="divider" />
+
+    <div
+      className="card"
+      style={{ marginBottom: 12 }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          marginBottom: 8,
+        }}
+      >
+        <div
+          style={{
+            width: 38,
+            height: 38,
+            borderRadius: 10,
+            background: "var(--amber-dim)",
+            color: "var(--amber)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+          }}
+        >
+          <Ic.chat p={18} />
+        </div>
+
+        <div style={{ minWidth: 0 }}>
+          <div
+            style={{
+              fontWeight: 700,
+              fontSize: 15.5,
+            }}
+          >
+            Stuck on this topic?
           </div>
-        </>
-      )}
-      <div className="divider" />
-      <div className="card" style={{ marginBottom: 12 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-          <div style={{ width: 38, height: 38, borderRadius: 10, background: "var(--amber-dim)", color: "var(--amber)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Ic.chat p={18} /></div>
-          <div style={{ minWidth: 0 }}>
-            <div style={{ fontWeight: 700, fontSize: 15.5 }}>Stuck on this topic?</div>
-            <div style={{ color: "var(--text-2)", fontSize: 13 }}>Ask your classmates before you test yourself. Answering others earns the most XP.</div>
+
+          <div
+            style={{
+              color: "var(--text-2)",
+              fontSize: 13,
+            }}
+          >
+            Ask your classmates before you test yourself.
+            Answering others earns the most XP.
           </div>
         </div>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <button className="btn btn-a btn-sm" onClick={() => app.go("forum", { forumCourse: t.courseId, forumTopic: t.topicIndex, forumTopicName: (TOPICS[t.courseId] || [])[t.topicIndex] || "", forumOpenAsk: true })}>Ask a question</button>
-          <button className="btn btn-g btn-sm" onClick={() => app.go("forum", { forumCourse: t.courseId, forumTopic: t.topicIndex, forumTopicName: (TOPICS[t.courseId] || [])[t.topicIndex] || "" })}>See classmates' questions</button>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          gap: 8,
+          flexWrap: "wrap",
+        }}
+      >
+        <button
+          className="btn btn-a btn-sm"
+          onClick={() =>
+            app.go("forum", {
+              forumCourse: t.courseId,
+              forumTopic: t.topicIndex,
+              forumTopicName:
+                (TOPICS[t.courseId] || [])[t.topicIndex] || "",
+              forumOpenAsk: true,
+            })
+          }
+        >
+          Ask a question
+        </button>
+
+        <button
+          className="btn btn-g btn-sm"
+          onClick={() =>
+            app.go("forum", {
+              forumCourse: t.courseId,
+              forumTopic: t.topicIndex,
+              forumTopicName:
+                (TOPICS[t.courseId] || [])[t.topicIndex] || "",
+            })
+          }
+        >
+          See classmates' questions
+        </button>
+      </div>
+    </div>
+
+    <div
+      className="card card-feature"
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: 16,
+        flexWrap: "wrap",
+      }}
+    >
+      <div>
+        <div
+          style={{
+            fontWeight: 700,
+            fontSize: 16,
+          }}
+        >
+          Ready to test yourself?
+        </div>
+
+        <div
+          style={{
+            color: "var(--text-2)",
+            fontSize: 14,
+          }}
+        >
+          {(t.mcqs || []).length} MCQs
         </div>
       </div>
-      <div className="card card-feature" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
-        <div><div style={{ fontWeight: 700, fontSize: 16 }}>Ready to test yourself?</div><div style={{ color: "var(--text-2)", fontSize: 14 }}>{(t.mcqs || []).length} MCQs</div></div>
-        <button className="btn btn-a" onClick={() => app.go("quiz", { courseId: t.courseId, topicId: t.topicIndex })}>Start <Ic.chevR p={16} /></button>
-      </div>
-      {/* Highlighter colour palette - rendered via createPortal onto
-          document.body so no flexbox, CSS zoom, or scroll position can
-          push it off-screen or under a mobile keyboard. Only shown while
-          the pencil is armed AND there's a live text selection. */}
-      {pendingSelection && createPortal(
-        <div style={{ position: "fixed", left: "50%", bottom: "calc(env(safe-area-inset-bottom, 0px) + 24px)", transform: "translateX(-50%)", zIndex: 10000 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 18px", borderRadius: 999, background: "var(--bg-2)", border: "1px solid var(--line-2)", boxShadow: "0 10px 28px rgba(0,0,0,0.4)" }}>
-            <span className="mono" style={{ fontSize: 11.5, color: "var(--text-3)" }}>Highlight:</span>
+
+      <button
+        className="btn btn-a"
+        onClick={() =>
+          app.go("quiz", {
+            courseId: t.courseId,
+            topicId: t.topicIndex,
+          })
+        }
+      >
+        Start <Ic.chevR p={16} />
+      </button>
+    </div>
+
+    {/* Highlighter colour palette */}
+    {pendingSelection &&
+      createPortal(
+        <div
+          style={{
+            position: "fixed",
+            left: "50%",
+            bottom:
+              "calc(env(safe-area-inset-bottom, 0px) + 24px)",
+            transform: "translateX(-50%)",
+            zIndex: 10000,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+              padding: "12px 18px",
+              borderRadius: 999,
+              background: "var(--bg-2)",
+              border: "1px solid var(--line-2)",
+              boxShadow:
+                "0 10px 28px rgba(0,0,0,0.4)",
+            }}
+          >
+            <span
+              className="mono"
+              style={{
+                fontSize: 11.5,
+                color: "var(--text-3)",
+              }}
+            >
+              Highlight:
+            </span>
+
             {["blue", "yellow", "pink"].map((c) => (
               <button
                 key={c}
@@ -5312,9 +5545,18 @@ function TopicView({ app }) {
                 onMouseDown={(e) => e.preventDefault()}
                 aria-label={"Highlight " + c}
                 style={{
-                  width: 30, height: 30, borderRadius: "50%", cursor: "pointer",
-                  background: c === "blue" ? "#5aa9ff" : c === "pink" ? "#ff78b4" : "#f5d650",
-                  border: "2px solid rgba(255,255,255,.2)",
+                  width: 30,
+                  height: 30,
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                  background:
+                    c === "blue"
+                      ? "#5aa9ff"
+                      : c === "pink"
+                        ? "#ff78b4"
+                        : "#f5d650",
+                  border:
+                    "2px solid rgba(255,255,255,.2)",
                 }}
               />
             ))}
@@ -5322,10 +5564,8 @@ function TopicView({ app }) {
         </div>,
         document.body
       )}
-    </div>
-  );
-}
-
+  </div>
+);
 /* ------------------------------- course --------------------------------- */
 function CourseView({ app }) {
   const c = courseById(app.courseId);
@@ -11731,6 +11971,45 @@ const MOTIVATION_QUOTES = [
   { q: "Consistency beats intensity. Ten minutes today beats three hours next week.", a: "ASCEND" },
   { q: "Doubt kills more dreams than failure ever will. Open the topic anyway.", a: "Suzy Kassem" },
   { q: "The climb to First Class is together. No gatekeeping. Keep moving.", a: "ASCEND" },
+  { q: "The first principle is that you must not fool yourself—and you are the easiest person to fool.", a: "Richard Feynman" },
+
+  { q: "I learned very early the difference between knowing the name of something and knowing something.", a: "Richard Feynman" },
+
+  { q: "I can live with doubt and uncertainty and not knowing. I think it is much more interesting to live not knowing than to have answers which might be wrong.", a: "Richard Feynman" },
+
+  { q: "The real utility of physicists is not to talk about what is already known, but to do something new.", a: "Richard Feynman" },
+
+  { q: "You have to keep proving yourself. You have to keep learning.", a: "Richard Feynman" },
+
+  { q: "The important thing is to never stop questioning.", a: "Albert Einstein" },
+
+  { q: "Curiosity is more important than knowledge.", a: "Albert Einstein" },
+
+  { q: "Education is what remains after one has forgotten what one has learned in school.", a: "Albert Einstein" },
+
+  { q: "I have no special talent. I am only passionately curious.", a: "Albert Einstein" },
+
+  { q: "The only source of knowledge is experience.", a: "Albert Einstein" },
+
+  { q: "Somewhere, something incredible is waiting to be known.", a: "Carl Sagan" },
+
+  { q: "Science is a way of trying not to fool yourself.", a: "Carl Sagan" },
+
+  { q: "We make our world significant by the courage of our questions and by the depth of our answers.", a: "Carl Sagan" },
+
+  { q: "The cure for ignorance is education.", a: "Edward Everett" },
+
+  { q: "Education is not preparation for life; education is life itself.", a: "John Dewey" },
+
+  { q: "Arriving at one goal is the starting point to another.", a: "John Dewey" },
+
+  { q: "The mind is not a vessel to be filled, but a fire to be kindled.", a: "Plutarch" },
+
+  { q: "The roots of education are bitter, but the fruit is sweet.", a: "Aristotle" },
+
+  { q: "Live as if you were to die tomorrow. Learn as if you were to live forever.", a: "Mahatma Gandhi" },
+
+  { q: "The beautiful thing about learning is that nobody can take it away from you.", a: "B.B. King" },
 ];
 
 function motivationForToday() {
