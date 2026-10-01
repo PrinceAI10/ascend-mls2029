@@ -4232,74 +4232,118 @@ function TopicFlowDiagram({ title, context }) {
 }
 
 /* ------------------------------- topic ---------------------------------- */
-/* DIAGRAM_LIBRARY: inline SVG diagrams shown inside a lesson step, keyed as
-   "courseId:topicIndex:stepIndex" (stepIndex is 0-based, matching the
-   position in that topic's note[] array - Step 1 in the UI = stepIndex 0).
-   Add an entry here any time you want a diagram to appear under a specific
-   step - no other file needs to change. Keep each SVG's viewBox self
-   contained and use currentColor so it follows the light/dark theme. */
-const DIAGRAM_LIBRARY = {
-    "hem:1:3": `<svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg">
-  <rect x="0" y="0" width="700" height="380" rx="16" fill="#fdf6e9"/>
-  <g opacity="0.25" stroke="#c9a877" stroke-width="3">
-    <line x1="0" y1="40" x2="700" y2="40"/>
-    <line x1="0" y1="340" x2="700" y2="340"/>
-    <path d="M0,20 Q350,0 700,20"/>
-    <path d="M0,360 Q350,380 700,360"/>
-  </g>
-
-  <text x="350" y="30" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#9c7a3c" font-weight="700">BONE MARROW</text>
-
-  <g transform="translate(300,90)">
+/* VISUAL_LIBRARY: keyed "courseId:topicIndex" (ONE entry per topic, not per
+   step) - images never sit inside the lesson. Each entry has an "images"
+   array (illustrated SVGs, shown in order like a mini gallery) and an
+   optional "mindmap" (the colour-coded box summary, shown last). Add a
+   topic here any time you've drawn visuals for it; topics with no entry
+   simply get no Visuals tab - nothing else needs to change. */
+const VISUAL_LIBRARY = {
+  "hem:1": {
+    images: [
+      {
+        title: "Haematopoiesis: stem cell to mature cells",
+        svg: `<svg viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(300,20)">
     <circle cx="50" cy="50" r="42" fill="#a78bfa"/>
     <circle cx="50" cy="50" r="22" fill="#6d28d9"/>
     <circle cx="42" cy="44" r="4" fill="#4c1d95"/>
     <circle cx="58" cy="54" r="3" fill="#4c1d95"/>
   </g>
-  <text x="350" y="205" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#5b21b6" font-weight="700">Stem Cell (HSC)</text>
+  <text x="350" y="135" text-anchor="middle" font-family="sans-serif" font-size="13" fill="currentColor" font-weight="700">Stem Cell (HSC)</text>
 
-  <path d="M330,180 Q220,230 140,270" stroke="#9ca3af" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
-  <path d="M350,190 L350,260" stroke="#9ca3af" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
-  <path d="M370,180 Q480,230 560,270" stroke="#9ca3af" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
-
+  <path d="M330,110 Q220,160 140,200" stroke="currentColor" opacity="0.4" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M350,120 L350,190" stroke="currentColor" opacity="0.4" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M370,110 Q480,160 560,200" stroke="currentColor" opacity="0.4" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
   <defs>
     <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-      <path d="M0,0 L8,4 L0,8 z" fill="#9ca3af"/>
+      <path d="M0,0 L8,4 L0,8 z" fill="currentColor" opacity="0.4"/>
     </marker>
   </defs>
 
-  <g transform="translate(140,300)">
+  <g transform="translate(140,230)">
     <ellipse cx="0" cy="0" rx="34" ry="20" fill="#ef4444"/>
     <ellipse cx="0" cy="0" rx="16" ry="9" fill="#fca5a5" opacity="0.8"/>
   </g>
-  <text x="140" y="340" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#991b1b" font-weight="700">Red Blood Cell</text>
+  <text x="140" y="270" text-anchor="middle" font-family="sans-serif" font-size="12" fill="currentColor" font-weight="700">Red Blood Cell</text>
 
-  <g transform="translate(350,300)">
+  <g transform="translate(350,230)">
     <circle cx="0" cy="0" r="30" fill="#bfdbfe"/>
     <path d="M-10,-14 q10,-10 18,0 q8,10 -2,16 q10,6 0,16 q-10,8 -18,-2 q-8,-10 2,-30 z" fill="#1d4ed8"/>
   </g>
-  <text x="350" y="340" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1e3a8a" font-weight="700">White Blood Cell</text>
+  <text x="350" y="270" text-anchor="middle" font-family="sans-serif" font-size="12" fill="currentColor" font-weight="700">White Blood Cell</text>
 
-  <g transform="translate(560,300)">
+  <g transform="translate(560,230)">
     <ellipse cx="-10" cy="-6" rx="9" ry="6" fill="#fbbf24"/>
     <ellipse cx="8" cy="2" rx="10" ry="7" fill="#fbbf24"/>
     <ellipse cx="-4" cy="10" rx="8" ry="5" fill="#fbbf24"/>
   </g>
-  <text x="560" y="340" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#92400e" font-weight="700">Platelets</text>
-</svg>`,
+  <text x="560" y="270" text-anchor="middle" font-family="sans-serif" font-size="12" fill="currentColor" font-weight="700">Platelets</text>
+</svg>`
+      }
+    ],
+    mindmap: `<svg viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg">
+  <g font-family="sans-serif" font-size="12.5" text-anchor="middle">
+    <line x1="330" y1="55" x2="330" y2="90" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+    <line x1="330" y1="125" x2="330" y2="150" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+    <line x1="330" y1="150" x2="170" y2="165" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+    <line x1="330" y1="150" x2="490" y2="165" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+    <line x1="170" y1="200" x2="90" y2="240" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+    <line x1="170" y1="200" x2="250" y2="240" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+    <line x1="490" y1="200" x2="410" y2="240" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+    <line x1="490" y1="200" x2="570" y2="240" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+
+    <rect x="260" y="20" width="140" height="35" rx="8" fill="#8b5cf6"/>
+    <text x="330" y="42" fill="#fff" font-weight="700">HSC</text>
+
+    <rect x="260" y="90" width="140" height="35" rx="8" fill="#a78bfa"/>
+    <text x="330" y="112" fill="#fff" font-weight="700">MPP</text>
+
+    <rect x="100" y="165" width="140" height="35" rx="8" fill="#3b82f6"/>
+    <text x="170" y="187" fill="#fff" font-weight="700">CMP (myeloid)</text>
+    <rect x="420" y="165" width="140" height="35" rx="8" fill="#10b981"/>
+    <text x="490" y="187" fill="#fff" font-weight="700">CLP (lymphoid)</text>
+
+    <rect x="20" y="240" width="140" height="40" rx="8" fill="#ef4444"/>
+    <text x="90" y="257" fill="#fff" font-size="11">Erythroid</text>
+    <text x="90" y="272" fill="#fff" font-size="11">→ Red cells</text>
+
+    <rect x="180" y="240" width="140" height="40" rx="8" fill="#f59e0b"/>
+    <text x="250" y="257" fill="#fff" font-size="11">Megakaryocyte /</text>
+    <text x="250" y="272" fill="#fff" font-size="11">Granulo-Monocyte</text>
+
+    <rect x="340" y="240" width="140" height="40" rx="8" fill="#14b8a6"/>
+    <text x="410" y="265" fill="#fff" font-size="11">T cells</text>
+
+    <rect x="500" y="240" width="140" height="40" rx="8" fill="#22c55e"/>
+    <text x="570" y="265" fill="#fff" font-size="11">B cells / NK</text>
+
+    <text x="330" y="320" font-size="12" fill="currentColor" opacity="0.6">Stem cell → Progenitor → Lineage commitment → Mature cell</text>
+  </g>
+</svg>`
+  },
 };
 
-/* StepDiagram: looks up DIAGRAM_LIBRARY for this exact step and, if a
-   diagram exists, renders it inline right under that step's text - so the
-   student sees it as they read, not in a separate tab or gallery. */
-function StepDiagram({ courseId, topicIndex, stepIndex }) {
-  const key = `${courseId}:${topicIndex}:${stepIndex}`;
-  const svg = DIAGRAM_LIBRARY[key];
-  if (!svg) return null;
+/* VisualsPanel: renders every illustrated image for this topic, then the
+   colour mind-map last, inside the current card/background theme (no SVG
+   background rect of its own, so it always sits on the Ascend surface). */
+function VisualsPanel({ courseId, topicIndex }) {
+  const entry = VISUAL_LIBRARY[`${courseId}:${topicIndex}`];
+  if (!entry) return null;
   return (
-    <div className="card" style={{ marginTop: 14, marginBottom: 4, padding: 14, textAlign: "center" }}>
-      <div className="eyebrow" style={{ marginBottom: 10, textAlign: "left" }}>Diagram</div>
-      <div style={{ maxWidth: "100%", color: "var(--text)" }} dangerouslySetInnerHTML={{ __html: svg }} />
+    <div style={{ marginBottom: 18 }}>
+      {(entry.images || []).map((img, i) => (
+        <div className="card" key={i} style={{ marginTop: 14, padding: 14, textAlign: "center" }}>
+          <div className="eyebrow" style={{ marginBottom: 10, textAlign: "left" }}>{img.title}</div>
+          <div style={{ maxWidth: "100%", color: "var(--text)" }} dangerouslySetInnerHTML={{ __html: img.svg }} />
+        </div>
+      ))}
+      {entry.mindmap && (
+        <div className="card" style={{ marginTop: 14, padding: 14, textAlign: "center" }}>
+          <div className="eyebrow" style={{ marginBottom: 10, textAlign: "left" }}>Summary map</div>
+          <div style={{ maxWidth: "100%", color: "var(--text)" }} dangerouslySetInnerHTML={{ __html: entry.mindmap }} />
+        </div>
+      )}
     </div>
   );
 }
@@ -4322,6 +4366,7 @@ function TopicView({ app }) {
   // scrolled to, used for the progress bar and step highlighting below.
   // Same unconditional-hooks pattern as the reading timer above.
   const [activeStep, setActiveStep] = useState(0);
+  const [topicView, setTopicView] = useState("lesson"); // "lesson" | "visuals"
   const stepRefs = useRef([]);
   const paraRefs = useRef({}); // "step-para" -> <p>, for paragraph-level read-aloud follow
   useEffect(() => {
@@ -5062,53 +5107,140 @@ function TopicView({ app }) {
           <div className="bar"><i style={{ width: ((activeStep + 1) / (t.note || []).length) * 100 + "%" }} /></div>
         </div>
       )}
-      <div className="lesson" ref={lessonRef} style={{ position: "relative" }}>
-        {(t.note || []).map((it, idx) => (
-          <div
-            className={"lesson-step" + (idx === activeStep ? " lesson-step-active" : "") + (justCompleted === idx ? " lesson-step-pulse" : "")}
-            key={idx}
-            data-step-idx={idx}
-            ref={(el) => (stepRefs.current[idx] = el)}
+      <div
+  className="lesson"
+  ref={lessonRef}
+  style={{ position: "relative" }}
+>
+  {(t.note || []).map((it, idx) => (
+    <div
+      className={
+        "lesson-step" +
+        (idx === activeStep ? " lesson-step-active" : "") +
+        (justCompleted === idx ? " lesson-step-pulse" : "")
+      }
+      key={idx}
+      data-step-idx={idx}
+      ref={(el) => {
+        stepRefs.current[idx] = el;
+      }}
+    >
+      <h3 className="lesson-q">
+        <span className="lesson-n">
+          {completedSteps.has(idx) ? (
+            <Ic.check p={12} />
+          ) : (
+            String(idx + 1).padStart(2, "0")
+          )}
+        </span>
+
+        <span>{it.q}</span>
+      </h3>
+
+      {it.body.split("\n\n").map((p, k) => {
+        const hlKey = idx + "-" + k;
+
+        if (p.startsWith("My Socratic question:")) {
+          const body = p
+            .replace("My Socratic question:", "")
+            .trim();
+
+          const text =
+            body.charAt(0).toUpperCase() + body.slice(1);
+
+          return (
+            <p
+              className={
+                "lesson-p lesson-p-question" +
+                (isReading(idx, k)
+                  ? " lesson-p-reading"
+                  : "")
+              }
+              key={k}
+              ref={(el) => {
+                paraRefs.current[hlKey] = el;
+              }}
+            >
+              <span className="lesson-p-question-label">
+                My Socratic question
+              </span>
+
+              <span
+                className="lesson-p-body"
+                data-key={hlKey}
+              >
+                {renderHighlighted(text, hlKey)}
+              </span>
+            </p>
+          );
+        }
+
+        if (p.startsWith("Crucial insight:")) {
+          const body = p
+            .replace("Crucial insight:", "")
+            .trim();
+
+          const text =
+            body.charAt(0).toUpperCase() + body.slice(1);
+
+          return (
+            <p
+              className={
+                "lesson-p lesson-p-insight" +
+                (isReading(idx, k)
+                  ? " lesson-p-reading"
+                  : "")
+              }
+              key={k}
+              ref={(el) => {
+                paraRefs.current[hlKey] = el;
+              }}
+            >
+              <span className="lesson-p-insight-label">
+                Crucial insight
+              </span>
+
+              <span
+                className="lesson-p-body"
+                data-key={hlKey}
+              >
+                {renderHighlighted(text, hlKey)}
+              </span>
+            </p>
+          );
+        }
+
+        return (
+          <p
+            className={
+              "lesson-p" +
+              (isReading(idx, k)
+                ? " lesson-p-reading"
+                : "")
+            }
+            key={k}
+            ref={(el) => {
+              paraRefs.current[hlKey] = el;
+            }}
           >
-            <h3 className="lesson-q"><span className="lesson-n">{completedSteps.has(idx) ? <Ic.check p={12} /> : String(idx + 1).padStart(2, "0")}</span><span>{it.q}</span></h3>
-            {it.body.split("\n\n").map((p, k) => {
-              // Give the two recurring structural paragraph types their own
-              // look instead of every paragraph reading identically - this
-              // is what actually lets a student follow the Socratic method
-              // (question -> explanation -> insight) at a glance rather
-              // than treating the whole step as one undifferentiated block.
-              const hlKey = idx + "-" + k;
-              if (p.startsWith("My Socratic question:")) {
-                const body = p.replace("My Socratic question:", "").trim();
-                const text = body.charAt(0).toUpperCase() + body.slice(1);
-                return (
-                  <p className={"lesson-p lesson-p-question" + (isReading(idx, k) ? " lesson-p-reading" : "")} key={k} ref={(el) => (paraRefs.current[hlKey] = el)}>
-                    <span className="lesson-p-question-label">My Socratic question</span>
-                    <span className="lesson-p-body" data-key={hlKey}>{renderHighlighted(text, hlKey)}</span>
-                  </p>
-                );
-              }
-              if (p.startsWith("Crucial insight:")) {
-                const body = p.replace("Crucial insight:", "").trim();
-                const text = body.charAt(0).toUpperCase() + body.slice(1);
-                return (
-                  <p className={"lesson-p lesson-p-insight" + (isReading(idx, k) ? " lesson-p-reading" : "")} key={k} ref={(el) => (paraRefs.current[hlKey] = el)}>
-                    <span className="lesson-p-insight-label">Crucial insight</span>
-                    <span className="lesson-p-body" data-key={hlKey}>{renderHighlighted(text, hlKey)}</span>
-                  </p>
-                );
-              }
-                            return (
-                <p className={"lesson-p" + (isReading(idx, k) ? " lesson-p-reading" : "")} key={k} ref={(el) => (paraRefs.current[hlKey] = el)}>
-                  <span className="lesson-p-body" data-key={hlKey}>{renderHighlighted(p, hlKey)}</span>
-                </p>
-              );
-            })}
-            <StepDiagram courseId={t.courseId} topicIndex={t.topicIndex} stepIndex={idx} />
-          </div>
-        ))}
-        
-      </div>
+            <span
+              className="lesson-p-body"
+              data-key={hlKey}
+            >
+              {renderHighlighted(p, hlKey)}
+            </span>
+          </p>
+        );
+      })}
+
+      <StepDiagram
+        courseId={t.courseId}
+        topicIndex={t.topicIndex}
+        stepIndex={idx}
+      />
+    </div>
+  ))}
+</div>
       <div className="divider" />
       <div className="eyebrow" style={{ marginBottom: 12 }}>Visualise it</div>
       <TopicFlowDiagram title={t.title} context={noteContext} />
@@ -10191,48 +10323,89 @@ function ResourcesView() {
 // ============================================================
 function StudyToolsView({ app }) {
   const [tab, setTab] = useState("cards");
-  // Was hardcoded to "ana" (a Level 100 Sem 2 course) - defaulted every
-  // student, regardless of their actual level/semester, into generating
-  // flashcards/mind maps against a course they may not even be able to see
-  // in the filtered picker above. Empty default forces an explicit pick
-  // from whatever's actually visible to them, same pattern as LAMLA's own
-  // course selector.
+
   const [courseId, setCourseId] = useState("");
   const [topic, setTopic] = useState("");
   const [material, setMaterial] = useState("");
   const [source, setSource] = useState("topic");
+
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
+
   const [cards, setCards] = useState(null);
   const [flipped, setFlipped] = useState({});
+
   const [map, setMap] = useState(null);
+
   const [flowCode, setFlowCode] = useState("");
   const [flowErr, setFlowErr] = useState("");
+
   const flowRef = useRef(null);
 
-  const subject = source === "paste"
-    ? `the following material:\n\n${material}`
-    : `the topic "${topic || "this subject"}"${courseById(courseId) ? ` in ${courseById(courseId).name} (${courseById(courseId).code})` : ""} for a KNUST first-year medical laboratory science student`;
+  const subject =
+    source === "paste"
+      ? `the following material:\n\n${material}`
+      : `the topic "${topic || "this subject"}"${
+          courseById(courseId)
+            ? ` in ${courseById(courseId).name} (${courseById(courseId).code})`
+            : ""
+        } for a KNUST first-year medical laboratory science student`;
+
+  /* =========================================================
+     FLASHCARDS
+  ========================================================= */
 
   const genCards = async () => {
     if (busy) return;
-    if (source === "topic" && !topic.trim()) { setErr("Type a topic first."); return; }
-    if (source === "paste" && !material.trim()) { setErr("Paste some material first."); return; }
-    setBusy(true); setErr(""); setCards(null); setFlipped({});
+
+    if (source === "topic" && !topic.trim()) {
+      setErr("Type a topic first.");
+      return;
+    }
+
+    if (source === "paste" && !material.trim()) {
+      setErr("Paste some material first.");
+      return;
+    }
+
+    setBusy(true);
+    setErr("");
+    setCards(null);
+    setFlipped({});
+
     try {
       const raw = await callClaude(
         "You create study flashcards for KNUST medical laboratory science students. Each card has a short front (a question, term, or prompt) and a concise back (the answer or definition). Focus on the most important, testable facts. Return ONLY a valid, compact JSON array, no prose, no markdown, no trailing commas. Only include facts you are confident are correct - do not invent specific numbers or classifications you are unsure of.",
-        [{ role: "user", content: `Create 10 to 14 flashcards on ${subject}. Format: [{"front":"...","back":"..."}]. Keep each side short and precise.` }],
+        [
+          {
+            role: "user",
+            content: `Create 10 to 14 flashcards on ${subject}. Format: [{"front":"...","back":"..."}]. Keep each side short and precise.`,
+          },
+        ],
         3000
       );
+
       const arr = parseAIJson(raw);
-      const clean = (Array.isArray(arr) ? arr : []).filter((x) => x && x.front && x.back);
-      if (!clean.length) throw new Error("No cards came back - try again.");
+
+      const clean = (Array.isArray(arr) ? arr : []).filter(
+        (x) => x && x.front && x.back
+      );
+
+      if (!clean.length) {
+        throw new Error("No cards came back - try again.");
+      }
+
       setCards(clean);
     } catch (e) {
-      const msg = e && e.message ? e.message : "The AI could not respond just now.";
+      const msg =
+        e && e.message
+          ? e.message
+          : "The AI could not respond just now.";
+
       if (/\b429\b|rate[ -]?limit|\bbusy\b/i.test(msg)) {
-        setErr("The AI service is busy. Please wait a moment and try again.");
+        setErr(
+          "The AI service is busy. Please wait a moment and try again."
+        );
       } else {
         setErr(msg + " Please try again in a moment.");
       }
@@ -10240,25 +10413,61 @@ function StudyToolsView({ app }) {
       setBusy(false);
     }
   };
+
+  /* =========================================================
+     MIND MAP
+  ========================================================= */
 
   const genMap = async () => {
     if (busy) return;
-    if (source === "topic" && !topic.trim()) { setErr("Type a topic first."); return; }
-    if (source === "paste" && !material.trim()) { setErr("Paste some material first."); return; }
-    setBusy(true); setErr(""); setMap(null);
+
+    if (source === "topic" && !topic.trim()) {
+      setErr("Type a topic first.");
+      return;
+    }
+
+    if (source === "paste" && !material.trim()) {
+      setErr("Paste some material first.");
+      return;
+    }
+
+    setBusy(true);
+    setErr("");
+    setMap(null);
+
     try {
       const raw = await callClaude(
         "You create hierarchical mind maps for KNUST medical laboratory science students. A mind map has a central topic, main branches, and sub-points under each. Return ONLY valid compact JSON, no prose, no markdown, no trailing commas. Only include facts you are confident are correct - do not invent specific numbers or classifications you are unsure of.",
-        [{ role: "user", content: `Create a mind map of ${subject}. Format: {"central":"topic name","branches":[{"title":"main idea","points":["sub-point","sub-point"]}],"recommendations":["short study tip","short study tip"]}. Give 4 to 6 branches, each with 2 to 4 short points. "points" must be pure high-yield EXAM facts - specifically the 20% of content that appears in ~80% of exams: the definitions, values, classifications, enzymes and mechanisms an examiner keeps testing. Each point a crisp memorisable fact, never vague prose (good: "Glycolysis nets 2 ATP, 2 NADH, 2 pyruvate"; bad: "Glycolysis is important"). "recommendations" is a separate list of 2 to 4 short, concrete study/recall tips for using this map (e.g. "Redraw this from memory, then check against the branches").` }],
+        [
+          {
+            role: "user",
+            content: `Create a mind map of ${subject}. Format: {"central":"topic name","branches":[{"title":"main idea","points":["sub-point","sub-point"]}],"recommendations":["short study tip","short study tip"]}. Give 4 to 6 branches, each with 2 to 4 short points. "points" must be pure high-yield EXAM facts - specifically the 20% of content that appears in ~80% of exams: the definitions, values, classifications, enzymes and mechanisms an examiner keeps testing. Each point a crisp memorisable fact, never vague prose (good: "Glycolysis nets 2 ATP, 2 NADH, 2 pyruvate"; bad: "Glycolysis is important"). "recommendations" is a separate list of 2 to 4 short, concrete study/recall tips for using this map (e.g. "Redraw this from memory, then check against the branches").`,
+          },
+        ],
         3000
       );
+
       const data = parseAIJson(raw);
-      if (!data || !data.central || !Array.isArray(data.branches)) throw new Error("bad shape");
+
+      if (
+        !data ||
+        !data.central ||
+        !Array.isArray(data.branches)
+      ) {
+        throw new Error("bad shape");
+      }
+
       setMap(data);
     } catch (e) {
-      const msg = e && e.message ? e.message : "The AI could not respond just now.";
+      const msg =
+        e && e.message
+          ? e.message
+          : "The AI could not respond just now.";
+
       if (/\b429\b|rate[ -]?limit|\bbusy\b/i.test(msg)) {
-        setErr("The AI service is busy. Please wait a moment and try again.");
+        setErr(
+          "The AI service is busy. Please wait a moment and try again."
+        );
       } else {
         setErr(msg + " Please try again in a moment.");
       }
@@ -10267,26 +10476,61 @@ function StudyToolsView({ app }) {
     }
   };
 
-  const branchColors = ["var(--amber)", "#5B8DEF", "#4FB477", "#E86A6A", "#B07CE8", "#E0A32E"];
+  /* =========================================================
+     FLOW DIAGRAM GENERATION
+  ========================================================= */
 
   const genFlow = async () => {
     if (busy) return;
-    if (source === "topic" && !topic.trim()) { setErr("Type a topic first."); return; }
-    if (source === "paste" && !material.trim()) { setErr("Paste some material first."); return; }
-    setBusy(true); setErr(""); setFlowErr(""); setFlowCode("");
+
+    if (source === "topic" && !topic.trim()) {
+      setErr("Type a topic first.");
+      return;
+    }
+
+    if (source === "paste" && !material.trim()) {
+      setErr("Paste some material first.");
+      return;
+    }
+
+    setBusy(true);
+    setErr("");
+    setFlowErr("");
+    setFlowCode("");
+
     try {
       const raw = await callClaude(
-        "You write Mermaid flowchart code for KNUST medical laboratory science students. Output ONLY Mermaid code - no prose, no markdown fences. The first line must be exactly: flowchart TD. Wrap EVERY node label in double quotes, e.g. A[\"Glycolysis\"] --> B[\"Pyruvate\"]. Use curly braces only for yes/no decisions, e.g. C{\"Oxygen present?\"}. Never use parentheses, semicolons, or the word 'end' as a node id. Show the pathway as a clear step-by-step flow.",
-        [{ role: "user", content: `Write a Mermaid flowchart of the process or pathway of ${subject}. Use 6 to 14 nodes. Every label in double quotes. Output only the code.` }],
+        "You write Mermaid flowchart code for KNUST medical laboratory science students. Output ONLY Mermaid code - no prose, no markdown fences. The first line must be exactly: flowchart TD. Wrap EVERY node label in double quotes, e.g. A[\"Glycolysis\"] --> B[\"Pyruvate\"]. Use curly braces only for yes/no decisions, e.g. C{\"Oxygen present?\"}. Never use parentheses, semicolons, or the word 'end' as a node id. Show the pathway as a clear step-by-step flow. Keep labels concise enough to fit comfortably inside a diagram node.",
+        [
+          {
+            role: "user",
+            content: `Write a Mermaid flowchart of the process or pathway of ${subject}. Use 6 to 14 nodes. Every label in double quotes. Keep each label short and exam-friendly. Output only the code.`,
+          },
+        ],
         1500
       );
+
       const code = sanitizeMermaid(raw);
-      if (!/^flowchart\s+(TD|TB|LR|RL|BT)/i.test(code)) throw new Error("The diagram could not be built - try again.");
+
+      if (
+        !/^flowchart\s+(TD|TB|LR|RL|BT)/i.test(code)
+      ) {
+        throw new Error(
+          "The diagram could not be built - try again."
+        );
+      }
+
       setFlowCode(code);
     } catch (e) {
-      const msg = e && e.message ? e.message : "The AI could not respond just now.";
+      const msg =
+        e && e.message
+          ? e.message
+          : "The AI could not respond just now.";
+
       if (/\b429\b|rate[ -]?limit|\bbusy\b/i.test(msg)) {
-        setErr("The AI service is busy. Please wait a moment and try again.");
+        setErr(
+          "The AI service is busy. Please wait a moment and try again."
+        );
       } else {
         setErr(msg + " Please try again in a moment.");
       }
@@ -10295,146 +10539,1162 @@ function StudyToolsView({ app }) {
     }
   };
 
+  /* =========================================================
+     MULTICOLORED MERMAID FLOW RENDERING
+     
+     Important:
+     - We keep Mermaid's generated diagram.
+     - We only control its spacing and appearance.
+     - Every node gets its own professional color.
+     - Text remains inside the node.
+  ========================================================= */
+
   useEffect(() => {
     if (!flowCode || tab !== "flow") return;
+
     let cancelled = false;
+
     (async () => {
       const mermaid = await loadMermaid().catch(() => null);
-      if (!mermaid || cancelled) { if (!cancelled) setFlowErr("Could not load the diagram library - check your connection."); return; }
+
+      if (!mermaid || cancelled) {
+        if (!cancelled) {
+          setFlowErr(
+            "Could not load the diagram library - check your connection."
+          );
+        }
+
+        return;
+      }
+
+      /*
+       * Professional Mermaid layout settings.
+       *
+       * nodeSpacing:
+       * Horizontal separation between nodes.
+       *
+       * rankSpacing:
+       * Vertical separation between levels.
+       *
+       * padding:
+       * Extra breathing room around the complete diagram.
+       */
+      try {
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: "loose",
+
+          theme: "base",
+
+          themeVariables: {
+            background: "transparent",
+
+            fontFamily:
+              'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+
+            fontSize: "15px",
+
+            lineColor: "#94A3B8",
+
+            textColor: "#EAF0FA",
+
+            primaryColor: "#EDE9FE",
+            primaryTextColor: "#312E81",
+            primaryBorderColor: "#8B5CF6",
+
+            secondaryColor: "#DBEAFE",
+            secondaryTextColor: "#1E3A8A",
+            secondaryBorderColor: "#3B82F6",
+
+            tertiaryColor: "#DCFCE7",
+            tertiaryTextColor: "#166534",
+            tertiaryBorderColor: "#22C55E",
+
+            edgeLabelBackground: "transparent",
+
+            clusterBkg: "transparent",
+            clusterBorder: "transparent",
+
+            nodeBorder: "#64748B",
+
+            mainBkg: "transparent",
+
+            flowchart: {
+              nodeSpacing: 90,
+              rankSpacing: 100,
+              curve: "basis",
+              padding: 30,
+              htmlLabels: true,
+              useMaxWidth: false,
+            },
+          },
+
+          flowchart: {
+            nodeSpacing: 90,
+            rankSpacing: 100,
+            curve: "basis",
+            padding: 30,
+            htmlLabels: true,
+            useMaxWidth: false,
+          },
+        });
+      } catch (e) {
+        /*
+         * If Mermaid version does not accept one of the optional
+         * configuration fields, rendering still continues below.
+         */
+      }
+
       const tryRender = async (src) => {
-        const id = "flow-" + Math.random().toString(36).slice(2);
+        const id =
+          "flow-" +
+          Math.random()
+            .toString(36)
+            .slice(2);
+
         const { svg } = await mermaid.render(id, src);
+
         return svg;
       };
+
       try {
         let svg;
-        try { svg = await tryRender(flowCode); }
-        catch { svg = await tryRender(stripMermaid(flowCode)); } // fallback pass
-        if (!cancelled && flowRef.current) { flowRef.current.innerHTML = svg; setFlowErr(""); }
+
+        try {
+          svg = await tryRender(flowCode);
+        } catch {
+          svg = await tryRender(
+            stripMermaid(flowCode)
+          );
+        }
+
+        if (cancelled || !flowRef.current) return;
+
+        /*
+         * Put Mermaid's SVG into the existing container.
+         */
+        flowRef.current.innerHTML = svg;
+
+        const root = flowRef.current.querySelector("svg");
+
+        if (!root) {
+          throw new Error("No SVG was produced.");
+        }
+
+        /*
+         * =====================================================
+         * RESPONSIVE SVG
+         * =====================================================
+         */
+
+        root.removeAttribute("width");
+        root.removeAttribute("height");
+
+        root.style.width = "100%";
+        root.style.height = "auto";
+        root.style.maxWidth = "none";
+        root.style.display = "block";
+        root.style.margin = "0 auto";
+        root.style.overflow = "visible";
+
+        /*
+         * Give the SVG enough breathing room.
+         */
+        root.setAttribute(
+          "preserveAspectRatio",
+          "xMidYMid meet"
+        );
+
+        /*
+         * =====================================================
+         * MULTICOLORED NODE PALETTE
+         * =====================================================
+         *
+         * These are deliberately soft backgrounds with stronger
+         * borders, similar to the SVG visual you showed.
+         */
+
+        const nodeStyles = [
+          {
+            bg: "#EDE9FE",
+            border: "#7C3AED",
+            text: "#4C1D95",
+          },
+
+          {
+            bg: "#DBEAFE",
+            border: "#2563EB",
+            text: "#1E3A8A",
+          },
+
+          {
+            bg: "#DCFCE7",
+            border: "#16A34A",
+            text: "#166534",
+          },
+
+          {
+            bg: "#FEE2E2",
+            border: "#DC2626",
+            text: "#991B1B",
+          },
+
+          {
+            bg: "#FEF3C7",
+            border: "#D97706",
+            text: "#92400E",
+          },
+
+          {
+            bg: "#FCE7F3",
+            border: "#DB2777",
+            text: "#9D174D",
+          },
+
+          {
+            bg: "#CFFAFE",
+            border: "#0891B2",
+            text: "#155E75",
+          },
+
+          {
+            bg: "#E0E7FF",
+            border: "#4F46E5",
+            text: "#312E81",
+          },
+        ];
+
+        /*
+         * Mermaid normally creates:
+         *
+         * <g class="node">
+         *   <rect ... />
+         *   <g class="label">...</g>
+         * </g>
+         *
+         * We style each node AFTER Mermaid has created it.
+         */
+        const nodes = Array.from(
+          root.querySelectorAll(".node")
+        );
+
+        nodes.forEach((node, index) => {
+          const style =
+            nodeStyles[index % nodeStyles.length];
+
+          /*
+           * Find the actual node shape.
+           */
+          const shapes = node.querySelectorAll(
+            "rect, polygon, path, circle"
+          );
+
+          shapes.forEach((shape) => {
+            /*
+             * Do not recolor paths that belong to arrows.
+             * Only shapes directly associated with the node
+             * are changed.
+             */
+            if (
+              shape.closest(".edgePath") ||
+              shape.closest(".edgeLabel")
+            ) {
+              return;
+            }
+
+            shape.style.fill = style.bg;
+            shape.style.stroke = style.border;
+            shape.style.strokeWidth = "2px";
+
+            if (
+              shape.tagName.toLowerCase() ===
+              "rect"
+            ) {
+              shape.setAttribute("rx", "12");
+              shape.setAttribute("ry", "12");
+            }
+          });
+
+          /*
+           * ===================================================
+           * TEXT
+           * ===================================================
+           */
+
+          const labels = node.querySelectorAll(
+            "text, foreignObject, .label"
+          );
+
+          labels.forEach((label) => {
+            label.style.color = style.text;
+            label.style.fill = style.text;
+            label.style.fontWeight = "650";
+          });
+
+          /*
+           * Mermaid HTML labels may contain DIV/SPAN.
+           */
+          const htmlText =
+            node.querySelectorAll(
+              "foreignObject div, foreignObject span"
+            );
+
+          htmlText.forEach((el) => {
+            el.style.color = style.text;
+            el.style.fontWeight = "650";
+            el.style.lineHeight = "1.3";
+            el.style.textAlign = "center";
+            el.style.padding = "2px 4px";
+            el.style.wordBreak = "normal";
+            el.style.overflowWrap = "break-word";
+          });
+        });
+
+        /*
+         * =====================================================
+         * ARROWS
+         * =====================================================
+         *
+         * Keep arrows neutral and visible instead of allowing
+         * the node colors to affect them.
+         */
+
+        const edges = root.querySelectorAll(
+          ".edgePath path, .flowchart-link, path.path"
+        );
+
+        edges.forEach((edge) => {
+          edge.style.stroke = "#94A3B8";
+          edge.style.strokeWidth = "2.2px";
+          edge.style.fill = "none";
+        });
+
+        /*
+         * Arrowheads.
+         */
+        const markers = root.querySelectorAll(
+          "marker path, marker polygon"
+        );
+
+        markers.forEach((marker) => {
+          marker.style.fill = "#94A3B8";
+          marker.style.stroke = "#94A3B8";
+        });
+
+        /*
+         * =====================================================
+         * EDGE LABELS
+         * =====================================================
+         */
+
+        const edgeLabels = root.querySelectorAll(
+          ".edgeLabel"
+        );
+
+        edgeLabels.forEach((label) => {
+          label.style.color = "var(--text-2)";
+          label.style.fill = "var(--text-2)";
+        });
+
+        /*
+         * Mermaid sometimes puts a background rectangle
+         * behind edge labels. Remove it so labels do not look
+         * like they are sitting on top of arrows.
+         */
+        root
+          .querySelectorAll(
+            ".edgeLabel rect, .edgeLabel .labelBkg"
+          )
+          .forEach((bg) => {
+            bg.style.fill = "transparent";
+            bg.style.stroke = "none";
+            bg.style.opacity = "0";
+          });
+
+        /*
+         * =====================================================
+         * EXTRA CSS SAFETY
+         * =====================================================
+         *
+         * This protects against text escaping its node.
+         */
+
+        const styleEl =
+          document.createElement("style");
+
+        styleEl.textContent = `
+          .ascend-flow-svg .node foreignObject {
+            overflow: visible;
+          }
+
+          .ascend-flow-svg .node foreignObject > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.3;
+            max-width: 180px;
+            min-width: 90px;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: normal;
+          }
+
+          .ascend-flow-svg .node text {
+            font-weight: 650;
+          }
+
+          .ascend-flow-svg .edgePath path {
+            vector-effect: non-scaling-stroke;
+          }
+        `;
+
+        root.classList.add("ascend-flow-svg");
+
+        root.insertBefore(
+          styleEl,
+          root.firstChild
+        );
+
+        /*
+         * =====================================================
+         * MINIMUM VISUAL WIDTH
+         * =====================================================
+         *
+         * Prevents a complex diagram from becoming a tiny,
+         * unreadable image on desktop.
+         */
+
+        const viewBox = root.getAttribute(
+          "viewBox"
+        );
+
+        if (viewBox) {
+          const parts = viewBox
+            .trim()
+            .split(/\s+/)
+            .map(Number);
+
+          if (
+            parts.length === 4 &&
+            Number.isFinite(parts[2]) &&
+            Number.isFinite(parts[3])
+          ) {
+            const [, , width, height] = parts;
+
+            /*
+             * Keep the original aspect ratio while allowing
+             * enough width for multiple branches.
+             */
+            if (width < 700) {
+              root.style.minWidth = "700px";
+            }
+
+            /*
+             * Very tall diagrams should not become cramped.
+             */
+            if (height > 900) {
+              root.style.minHeight = "900px";
+            }
+          }
+        }
+
+        /*
+         * Add generous padding around the rendered diagram.
+         */
+        flowRef.current.style.padding =
+          "28px 24px 36px";
+
+        flowRef.current.style.boxSizing =
+          "border-box";
+
+        flowRef.current.style.minWidth =
+          "min-content";
+
+        setFlowErr("");
       } catch (e) {
-        if (!cancelled) setFlowErr("This diagram did not render cleanly. Tap Build again for a fresh version.");
+        if (!cancelled) {
+          setFlowErr(
+            "This diagram did not render cleanly. Tap Build again for a fresh version."
+          );
+        }
       }
     })();
-    return () => { cancelled = true; };
+
+    return () => {
+      cancelled = true;
+    };
   }, [flowCode, tab]);
+
+  /* =========================================================
+     MIND MAP COLORS
+  ========================================================= */
+
+  const branchColors = [
+    "var(--amber)",
+    "#5B8DEF",
+    "#4FB477",
+    "#E86A6A",
+    "#B07CE8",
+    "#E0A32E",
+  ];
+
+  /* =========================================================
+     UI
+  ========================================================= */
 
   return (
     <div className="view">
-      <div className="eyebrow">Study tools</div>
-      <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>Flashcards and mind maps</h1>
-      <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "58ch" }}>Turn any topic or your own notes into flashcards for active recall, or a mind map to see how the ideas connect. Both are generated fresh by ASCEND.</p>
-
-      <div className="tabs">
-        <button className={"tab " + (tab === "cards" ? "on" : "")} onClick={() => { setTab("cards"); setErr(""); }}>Flashcards</button>
-        <button className={"tab " + (tab === "map" ? "on" : "")} onClick={() => { setTab("map"); setErr(""); }}>Mind map</button>
-        <button className={"tab " + (tab === "flow" ? "on" : "")} onClick={() => { setTab("flow"); setErr(""); }}>Flow diagram</button>
+      <div className="eyebrow">
+        Study tools
       </div>
 
-      <div className="card" style={{ marginTop: 12 }}>
-        <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
-          <button className="btn btn-sm" style={{ background: source === "topic" ? "var(--amber)" : "var(--bg-3)", color: source === "topic" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setSource("topic")}>From a topic</button>
-          <button className="btn btn-sm" style={{ background: source === "paste" ? "var(--amber)" : "var(--bg-3)", color: source === "paste" ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setSource("paste")}>From my notes</button>
+      <h1
+        style={{
+          fontSize: "clamp(22px,4vw,28px)",
+          margin: "6px 0 4px",
+        }}
+      >
+        Flashcards and mind maps
+      </h1>
+
+      <p
+        style={{
+          color: "var(--text-2)",
+          marginTop: 0,
+          maxWidth: "58ch",
+        }}
+      >
+        Turn any topic or your own notes into
+        flashcards for active recall, or a mind map
+        to see how the ideas connect. Both are
+        generated fresh by ASCEND.
+      </p>
+
+      {/* =====================================================
+          MAIN TOOL TABS
+      ===================================================== */}
+
+      <div className="tabs">
+        <button
+          className={
+            "tab " +
+            (tab === "cards" ? "on" : "")
+          }
+          onClick={() => {
+            setTab("cards");
+            setErr("");
+          }}
+        >
+          Flashcards
+        </button>
+
+        <button
+          className={
+            "tab " +
+            (tab === "map" ? "on" : "")
+          }
+          onClick={() => {
+            setTab("map");
+            setErr("");
+          }}
+        >
+          Mind map
+        </button>
+
+        <button
+          className={
+            "tab " +
+            (tab === "flow" ? "on" : "")
+          }
+          onClick={() => {
+            setTab("flow");
+            setErr("");
+          }}
+        >
+          Flow diagram
+        </button>
+      </div>
+
+      {/* =====================================================
+          INPUT CARD
+      ===================================================== */}
+
+      <div
+        className="card"
+        style={{ marginTop: 12 }}
+      >
+        <div
+          style={{
+            display: "flex",
+            gap: 8,
+            marginBottom: 14,
+          }}
+        >
+          <button
+            className="btn btn-sm"
+            style={{
+              background:
+                source === "topic"
+                  ? "var(--amber)"
+                  : "var(--bg-3)",
+              color:
+                source === "topic"
+                  ? "#1B1405"
+                  : "var(--text-2)",
+              border: "1px solid var(--line)",
+            }}
+            onClick={() =>
+              setSource("topic")
+            }
+          >
+            From a topic
+          </button>
+
+          <button
+            className="btn btn-sm"
+            style={{
+              background:
+                source === "paste"
+                  ? "var(--amber)"
+                  : "var(--bg-3)",
+              color:
+                source === "paste"
+                  ? "#1B1405"
+                  : "var(--text-2)",
+              border: "1px solid var(--line)",
+            }}
+            onClick={() =>
+              setSource("paste")
+            }
+          >
+            From my notes
+          </button>
         </div>
 
         {source === "topic" ? (
           <>
-            <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Course</label>
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 14 }}>
-              {visibleCoursesFor(app.progress).map((c) => (
-                <button key={c.id} className="btn btn-sm" style={{ background: courseId === c.id ? "var(--amber)" : "var(--bg-3)", color: courseId === c.id ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setCourseId(c.id)}>{c.code}</button>
+            <label
+              className="eyebrow"
+              style={{
+                display: "block",
+                marginBottom: 8,
+              }}
+            >
+              Course
+            </label>
+
+            <div
+              style={{
+                display: "flex",
+                gap: 8,
+                flexWrap: "wrap",
+                marginBottom: 14,
+              }}
+            >
+              {visibleCoursesFor(
+                app.progress
+              ).map((c) => (
+                <button
+                  key={c.id}
+                  className="btn btn-sm"
+                  style={{
+                    background:
+                      courseId === c.id
+                        ? "var(--amber)"
+                        : "var(--bg-3)",
+                    color:
+                      courseId === c.id
+                        ? "#1B1405"
+                        : "var(--text-2)",
+                    border:
+                      "1px solid var(--line)",
+                  }}
+                  onClick={() =>
+                    setCourseId(c.id)
+                  }
+                >
+                  {c.code}
+                </button>
               ))}
             </div>
-            <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Topic</label>
-            <input className="auth-input" value={topic} placeholder="e.g. Homeostasis, or Amino acids" onChange={(e) => setTopic(e.target.value)} />
+
+            <label
+              className="eyebrow"
+              style={{
+                display: "block",
+                marginBottom: 8,
+              }}
+            >
+              Topic
+            </label>
+
+            <input
+              className="auth-input"
+              value={topic}
+              placeholder="e.g. Homeostasis, or Amino acids"
+              onChange={(e) =>
+                setTopic(e.target.value)
+              }
+            />
           </>
         ) : (
           <>
-            <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>Paste your notes or lecture material</label>
-            <textarea className="pastebox" value={material} placeholder="Paste any notes, slide text or a paragraph here..." onChange={(e) => setMaterial(e.target.value)} />
+            <label
+              className="eyebrow"
+              style={{
+                display: "block",
+                marginBottom: 8,
+              }}
+            >
+              Paste your notes or lecture material
+            </label>
+
+            <textarea
+              className="pastebox"
+              value={material}
+              placeholder="Paste any notes, slide text or a paragraph here..."
+              onChange={(e) =>
+                setMaterial(e.target.value)
+              }
+            />
           </>
         )}
 
         <div style={{ marginTop: 14 }}>
-          {tab === "cards"
-            ? <button className="btn btn-a" onClick={genCards} disabled={busy}>{busy ? "Making your flashcards..." : "Make flashcards"} <Ic.ai p={16} /></button>
-            : tab === "map"
-            ? <button className="btn btn-a" onClick={genMap} disabled={busy}>{busy ? "Building your mind map..." : "Build mind map"} <Ic.ai p={16} /></button>
-            : <button className="btn btn-a" onClick={genFlow} disabled={busy}>{busy ? "Drawing your flow diagram..." : "Build flow diagram"} <Ic.ai p={16} /></button>}
+          {tab === "cards" ? (
+            <button
+              className="btn btn-a"
+              onClick={genCards}
+              disabled={busy}
+            >
+              {busy
+                ? "Making your flashcards..."
+                : "Make flashcards"}{" "}
+              <Ic.ai p={16} />
+            </button>
+          ) : tab === "map" ? (
+            <button
+              className="btn btn-a"
+              onClick={genMap}
+              disabled={busy}
+            >
+              {busy
+                ? "Building your mind map..."
+                : "Build mind map"}{" "}
+              <Ic.ai p={16} />
+            </button>
+          ) : (
+            <button
+              className="btn btn-a"
+              onClick={genFlow}
+              disabled={busy}
+            >
+              {busy
+                ? "Drawing your flow diagram..."
+                : "Build flow diagram"}{" "}
+              <Ic.ai p={16} />
+            </button>
+          )}
         </div>
       </div>
 
-      {err && <div className="card" style={{ marginTop: 14, borderColor: "var(--line-2)", color: "var(--text-2)", fontSize: 14 }}>{err}</div>}
-      {busy && <div className="card" style={{ marginTop: 14 }}><span className="dots"><span /><span /><span /></span></div>}
+      {/* =====================================================
+          ERRORS / LOADING
+      ===================================================== */}
 
-      {!busy && !err && tab === "cards" && !cards && (
-        <div className="card" style={{ marginTop: 14, color: "var(--text-2)", fontSize: 14 }}>No flashcards yet. Pick a topic or paste material above, then tap "Make flashcards".</div>
+      {err && (
+        <div
+          className="card"
+          style={{
+            marginTop: 14,
+            borderColor: "var(--line-2)",
+            color: "var(--text-2)",
+            fontSize: 14,
+          }}
+        >
+          {err}
+        </div>
       )}
-      {!busy && !err && tab === "map" && !map && (
-        <div className="card" style={{ marginTop: 14, color: "var(--text-2)", fontSize: 14 }}>No mind map yet. Pick a topic or paste material above, then tap "Build mind map".</div>
+
+      {busy && (
+        <div
+          className="card"
+          style={{ marginTop: 14 }}
+        >
+          <span className="dots">
+            <span />
+            <span />
+            <span />
+          </span>
+        </div>
       )}
-      {!busy && !err && tab === "flow" && !flowCode && (
-        <div className="card" style={{ marginTop: 14, color: "var(--text-2)", fontSize: 14 }}>No flow diagram yet. Pick a topic or paste material above, then tap "Build flow diagram".</div>
-      )}
+
+      {/* =====================================================
+          EMPTY STATES
+      ===================================================== */}
+
+      {!busy &&
+        !err &&
+        tab === "cards" &&
+        !cards && (
+          <div
+            className="card"
+            style={{
+              marginTop: 14,
+              color: "var(--text-2)",
+              fontSize: 14,
+            }}
+          >
+            No flashcards yet. Pick a topic or
+            paste material above, then tap
+            "Make flashcards".
+          </div>
+        )}
+
+      {!busy &&
+        !err &&
+        tab === "map" &&
+        !map && (
+          <div
+            className="card"
+            style={{
+              marginTop: 14,
+              color: "var(--text-2)",
+              fontSize: 14,
+            }}
+          >
+            No mind map yet. Pick a topic or
+            paste material above, then tap
+            "Build mind map".
+          </div>
+        )}
+
+      {!busy &&
+        !err &&
+        tab === "flow" &&
+        !flowCode && (
+          <div
+            className="card"
+            style={{
+              marginTop: 14,
+              color: "var(--text-2)",
+              fontSize: 14,
+            }}
+          >
+            No flow diagram yet. Pick a topic or
+            paste material above, then tap
+            "Build flow diagram".
+          </div>
+        )}
+
+      {/* =====================================================
+          FLASHCARDS
+      ===================================================== */}
 
       {tab === "cards" && cards && (
         <>
-          <p className="note-hint" style={{ margin: "16px 0 10px" }}>Tap a card to flip it. Say the answer out loud before you flip - that is the recall that builds memory.</p>
+          <p
+            className="note-hint"
+            style={{
+              margin: "16px 0 10px",
+            }}
+          >
+            Tap a card to flip it. Say the answer
+            out loud before you flip - that is the
+            recall that builds memory.
+          </p>
+
           <div className="grid g2">
             {cards.map((c, k) => (
-              <button key={k} className="card hover" style={{ minHeight: 120, textAlign: "left", display: "flex", flexDirection: "column", justifyContent: "center", cursor: "pointer", border: flipped[k] ? "1px solid var(--amber)" : "1px solid var(--line)" }} onClick={() => setFlipped({ ...flipped, [k]: !flipped[k] })}>
-                <div className="mono" style={{ fontSize: 10.5, color: flipped[k] ? "var(--amber)" : "var(--text-3)", marginBottom: 8 }}>{flipped[k] ? "ANSWER" : "TAP TO FLIP"}</div>
-                <div style={{ fontWeight: flipped[k] ? 500 : 650, fontSize: 15, lineHeight: 1.5, color: flipped[k] ? "var(--text-2)" : "var(--text)" }}>{flipped[k] ? c.back : c.front}</div>
+              <button
+                key={k}
+                className="card hover"
+                style={{
+                  minHeight: 120,
+                  textAlign: "left",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  border: flipped[k]
+                    ? "1px solid var(--amber)"
+                    : "1px solid var(--line)",
+                }}
+                onClick={() =>
+                  setFlipped({
+                    ...flipped,
+                    [k]: !flipped[k],
+                  })
+                }
+              >
+                <div
+                  className="mono"
+                  style={{
+                    fontSize: 10.5,
+                    color: flipped[k]
+                      ? "var(--amber)"
+                      : "var(--text-3)",
+                    marginBottom: 8,
+                  }}
+                >
+                  {flipped[k]
+                    ? "ANSWER"
+                    : "TAP TO FLIP"}
+                </div>
+
+                <div
+                  style={{
+                    fontWeight: flipped[k]
+                      ? 500
+                      : 650,
+                    fontSize: 15,
+                    lineHeight: 1.5,
+                    color: flipped[k]
+                      ? "var(--text-2)"
+                      : "var(--text)",
+                  }}
+                >
+                  {flipped[k]
+                    ? c.back
+                    : c.front}
+                </div>
               </button>
             ))}
           </div>
         </>
       )}
 
+      {/* =====================================================
+          MIND MAP
+      ===================================================== */}
+
       {tab === "map" && map && (
-        <div className="card" style={{ marginTop: 16 }}>
-          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 4 }}>
+        <div
+          className="card"
+          style={{ marginTop: 16 }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginBottom: 4,
+            }}
+          >
             <button
               className="btn btn-sm"
-              style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)" }}
-              onClick={() => downloadMindMapPDF(map).catch(() => setErr("Could not build the PDF - try again."))}
+              style={{
+                background: "var(--bg-3)",
+                color: "var(--text-2)",
+                border:
+                  "1px solid var(--line)",
+              }}
+              onClick={() =>
+                downloadMindMapPDF(map).catch(
+                  () =>
+                    setErr(
+                      "Could not build the PDF - try again."
+                    )
+                )
+              }
             >
               Download as PDF
             </button>
           </div>
-          <div style={{ textAlign: "center", marginBottom: 18 }}>
-            <span style={{ display: "inline-block", background: "var(--amber)", color: "#1B1405", fontWeight: 750, fontSize: 16, padding: "10px 20px", borderRadius: 12 }}>{map.central}</span>
+
+          <div
+            style={{
+              textAlign: "center",
+              marginBottom: 18,
+            }}
+          >
+            <span
+              style={{
+                display: "inline-block",
+                background: "var(--amber)",
+                color: "#1B1405",
+                fontWeight: 750,
+                fontSize: 16,
+                padding: "10px 20px",
+                borderRadius: 12,
+              }}
+            >
+              {map.central}
+            </span>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 14,
+            }}
+          >
             {map.branches.map((b, k) => (
-              <div key={k} style={{ borderLeft: `3px solid ${branchColors[k % branchColors.length]}`, paddingLeft: 14 }}>
-                <div style={{ fontWeight: 700, fontSize: 15, color: branchColors[k % branchColors.length], marginBottom: 6 }}>{b.title}</div>
-                <ul style={{ margin: 0, paddingLeft: 18, color: "var(--text-2)", fontSize: 14, lineHeight: 1.7 }}>
-                  {(b.points || []).map((p, j) => <li key={j}>{p}</li>)}
+              <div
+                key={k}
+                style={{
+                  borderLeft: `3px solid ${
+                    branchColors[
+                      k %
+                        branchColors.length
+                    ]
+                  }`,
+                  paddingLeft: 14,
+                }}
+              >
+                <div
+                  style={{
+                    fontWeight: 700,
+                    fontSize: 15,
+                    color:
+                      branchColors[
+                        k %
+                          branchColors.length
+                      ],
+                    marginBottom: 6,
+                  }}
+                >
+                  {b.title}
+                </div>
+
+                <ul
+                  style={{
+                    margin: 0,
+                    paddingLeft: 18,
+                    color: "var(--text-2)",
+                    fontSize: 14,
+                    lineHeight: 1.7,
+                  }}
+                >
+                  {(b.points || []).map(
+                    (p, j) => (
+                      <li key={j}>{p}</li>
+                    )
+                  )}
                 </ul>
               </div>
             ))}
           </div>
-          {Array.isArray(map.recommendations) && map.recommendations.length > 0 && (
-            <div style={{ marginTop: 18, paddingTop: 14, borderTop: "1px solid var(--line)" }}>
-              <div className="eyebrow" style={{ marginBottom: 8 }}>Recommendations</div>
-              <ul style={{ margin: 0, paddingLeft: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 7 }}>
-                {map.recommendations.map((r, ri) => (
-                  <li key={ri} style={{ display: "flex", gap: 9, alignItems: "flex-start", color: "var(--text)", fontSize: 14, lineHeight: 1.55 }}>
-                    <span style={{ color: "var(--amber)", flexShrink: 0, marginTop: 6, width: 5, height: 5, borderRadius: "50%", background: "var(--amber)" }} />
-                    <span>{r}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+
+          {Array.isArray(
+            map.recommendations
+          ) &&
+            map.recommendations.length >
+              0 && (
+              <div
+                style={{
+                  marginTop: 18,
+                  paddingTop: 14,
+                  borderTop:
+                    "1px solid var(--line)",
+                }}
+              >
+                <div
+                  className="eyebrow"
+                  style={{ marginBottom: 8 }}
+                >
+                  Recommendations
+                </div>
+
+                <ul
+                  style={{
+                    margin: 0,
+                    paddingLeft: 0,
+                    listStyle: "none",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 7,
+                  }}
+                >
+                  {map.recommendations.map(
+                    (r, ri) => (
+                      <li
+                        key={ri}
+                        style={{
+                          display: "flex",
+                          gap: 9,
+                          alignItems:
+                            "flex-start",
+                          color: "var(--text)",
+                          fontSize: 14,
+                          lineHeight: 1.55,
+                        }}
+                      >
+                        <span
+                          style={{
+                            color:
+                              "var(--amber)",
+                            flexShrink: 0,
+                            marginTop: 6,
+                            width: 5,
+                            height: 5,
+                            borderRadius: "50%",
+                            background:
+                              "var(--amber)",
+                          }}
+                        />
+
+                        <span>{r}</span>
+                      </li>
+                    )
+                  )}
+                </ul>
+              </div>
+            )}
         </div>
       )}
+
+      {/* =====================================================
+          COLORED FLOW DIAGRAM
+      ===================================================== */}
+
       {tab === "flow" && flowCode && (
         <>
-          <p className="note-hint" style={{ margin: "16px 0 10px" }}>Follow the arrows to see how each step leads to the next. Rebuild for a fresh version any time.</p>
-          <div className="card" style={{ marginTop: 4, overflowX: "auto" }}>
-            <div ref={flowRef} style={{ display: "flex", justifyContent: "center", minHeight: 60 }} />
-            {flowErr && <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 10 }}>{flowErr}</div>}
+          <p
+            className="note-hint"
+            style={{
+              margin: "16px 0 10px",
+            }}
+          >
+            Follow the arrows to see how each
+            step leads to the next. Rebuild for a
+            fresh version any time.
+          </p>
+
+          <div
+            className="card"
+            style={{
+              marginTop: 4,
+              overflowX: "auto",
+              overflowY: "hidden",
+              padding: 0,
+            }}
+          >
+            <div
+              ref={flowRef}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "flex-start",
+                minHeight: 100,
+                width: "100%",
+                boxSizing: "border-box",
+              }}
+            />
+
+            {flowErr && (
+              <div
+                style={{
+                  color: "var(--text-2)",
+                  fontSize: 13.5,
+                  margin:
+                    "0 20px 16px",
+                }}
+              >
+                {flowErr}
+              </div>
+            )}
           </div>
         </>
       )}
