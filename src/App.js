@@ -3873,6 +3873,9 @@ function QuizView({ app }) {
     return 0;
   });
 
+  const [tabSwitchCount, setTabSwitchCount] = useState(0);
+  const [showSwitchWarning, setShowSwitchWarning] = useState(false);
+
   // SAVE: Persist all quiz state changes
   useEffect(() => {
     if (mode === null) return;
@@ -3953,6 +3956,8 @@ function QuizView({ app }) {
       setDone(false);
       setLeft(shuffled.length * 45); 
       setElapsed(0); 
+      setTabSwitchCount(0);
+      setShowSwitchWarning(false);
       clearQuizSession();
       
     } catch (e) {
@@ -3975,13 +3980,38 @@ function QuizView({ app }) {
     clearQuizSession();
   };
 
-  // Timer effects
+    // Timer effects
   useEffect(() => {
     if (mode !== "exam" || done || bankLen === 0) return;
     if (left <= 0) { finish(); return; }
     const timer = setTimeout(() => setLeft((s) => s - 1), 1000);
     return () => clearTimeout(timer);
   }, [mode, left, done, bankLen]);
+
+    // Tab-switch / app-switch detection for Exam mode. 1st and 2nd switch
+  // away show a warning when the student returns; the 3rd switch
+  // auto-submits the exam immediately, no exceptions.
+  const finishRef = useRef(finish);
+  useEffect(() => { finishRef.current = finish; });
+
+  useEffect(() => {
+    if (mode !== "exam" || done) return;
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setTabSwitchCount((prevCount) => {
+          const newCount = prevCount + 1;
+          if (newCount >= 3) {
+            finishRef.current();
+          } else {
+            setShowSwitchWarning(true);
+          }
+          return newCount;
+        });
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [mode, done]);
 
   useEffect(() => {
     if (mode !== "practice" || done) return;
@@ -4096,10 +4126,19 @@ function QuizView({ app }) {
     <div className="view">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
         <div className="eyebrow">{mode === "exam" ? "Exam mode" : "Practice"} · {i + 1} / {bankLen}</div>
-        {mode === "exam"
+                {mode === "exam"
           ? <div className="chip mono" style={{ color: left < 60 ? "var(--bad)" : "var(--text)" }}><Ic.clock p={15} /> {mm}:{ss}</div>
           : <div className="chip mono" style={{ color: "var(--text-2)" }}><Ic.clock p={15} /> {emm}:{ess}</div>}
       </div>
+      {mode === "exam" && showSwitchWarning && (
+        <div className="card" style={{ marginBottom: 14, borderColor: "var(--bad)", background: "rgba(239,68,68,0.08)" }}>
+          <div style={{ fontWeight: 700, color: "var(--bad)", fontSize: 14 }}>⚠ Warning {tabSwitchCount}/2</div>
+          <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 4 }}>
+            You switched away from the exam. {tabSwitchCount >= 2 ? "One more switch will auto-submit your exam." : "Switching away one more time will warn you again — a third switch auto-submits your exam."}
+          </div>
+          <button className="btn btn-g" style={{ marginTop: 8, padding: "6px 10px", fontSize: 12 }} onClick={() => setShowSwitchWarning(false)}>I understand</button>
+        </div>
+      )}
       <div className="bar" style={{ marginBottom: 20 }}><i style={{ width: (i / bankLen) * 100 + "%" }} /></div>
       <h3 style={{ fontSize: 19, marginBottom: 16 }}>{item.q}</h3>
       {item.o.map((opt, oi) => {
@@ -4193,6 +4232,35 @@ function TopicFlowDiagram({ title, context }) {
 }
 
 /* ------------------------------- topic ---------------------------------- */
+/* DIAGRAM_LIBRARY: inline SVG diagrams shown inside a lesson step, keyed as
+   "courseId:topicIndex:stepIndex" (stepIndex is 0-based, matching the
+   position in that topic's note[] array - Step 1 in the UI = stepIndex 0).
+   Add an entry here any time you want a diagram to appear under a specific
+   step - no other file needs to change. Keep each SVG's viewBox self
+   contained and use currentColor so it follows the light/dark theme. */
+const DIAGRAM_LIBRARY = {
+  // Example only - delete once you add real entries:
+  // "path:0:3": `<svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+  //   <rect x="10" y="10" width="580" height="280" rx="12" fill="none" stroke="currentColor"/>
+  //   <text x="300" y="150" text-anchor="middle" fill="currentColor" font-size="16">Diagram goes here</text>
+  // </svg>`,
+};
+
+/* StepDiagram: looks up DIAGRAM_LIBRARY for this exact step and, if a
+   diagram exists, renders it inline right under that step's text - so the
+   student sees it as they read, not in a separate tab or gallery. */
+function StepDiagram({ courseId, topicIndex, stepIndex }) {
+  const key = `${courseId}:${topicIndex}:${stepIndex}`;
+  const svg = DIAGRAM_LIBRARY[key];
+  if (!svg) return null;
+  return (
+    <div className="card" style={{ marginTop: 14, marginBottom: 4, padding: 14, textAlign: "center" }}>
+      <div className="eyebrow" style={{ marginBottom: 10, textAlign: "left" }}>Diagram</div>
+      <div style={{ maxWidth: "100%", color: "var(--text)" }} dangerouslySetInnerHTML={{ __html: svg }} />
+    </div>
+  );
+}
+
 function TopicView({ app }) {
   const t = contentFor(app.courseId, app.topicId);
   const c = courseById(app.courseId);
@@ -4987,12 +5055,13 @@ function TopicView({ app }) {
                   </p>
                 );
               }
-              return (
+                            return (
                 <p className={"lesson-p" + (isReading(idx, k) ? " lesson-p-reading" : "")} key={k} ref={(el) => (paraRefs.current[hlKey] = el)}>
                   <span className="lesson-p-body" data-key={hlKey}>{renderHighlighted(p, hlKey)}</span>
                 </p>
               );
             })}
+            <StepDiagram courseId={t.courseId} topicIndex={t.topicIndex} stepIndex={idx} />
           </div>
         ))}
         
@@ -9546,6 +9615,8 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
   const [submitted, setSubmitted] = useState(false);
   const [cur, setCur] = useState(0); // index of the current question being shown
   const awardedRef = useRef(false);
+  const [tabSwitchCount, setTabSwitchCount] = useState(0);
+  const [showSwitchWarning, setShowSwitchWarning] = useState(false);
 
   const answered = Object.keys(picked).length;
   const allAnswered = answered === questions.length;
@@ -9585,11 +9656,36 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
     }
   };
 
-  const submitExam = () => {
+    const submitExam = () => {
     setSubmitted(true);
     award();
     try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch {}
   };
+
+    // Tab-switch / app-switch detection for Passco Exam mode. 1st and 2nd
+  // switch away show a warning when the student returns; the 3rd switch
+  // auto-submits the set immediately, no exceptions.
+  const submitExamRef = useRef(submitExam);
+  useEffect(() => { submitExamRef.current = submitExam; });
+
+  useEffect(() => {
+    if (mode !== "exam" || submitted) return;
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setTabSwitchCount((prevCount) => {
+          const newCount = prevCount + 1;
+          if (newCount >= 3) {
+            submitExamRef.current();
+          } else {
+            setShowSwitchWarning(true);
+          }
+          return newCount;
+        });
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [mode, submitted]);
 
   // Navigate between questions WITHOUT forcing the page back to the top. The
   // scroll position stays exactly where the student left it (persistent), so
@@ -9659,10 +9755,20 @@ function PasscoSet({ paper, chunkStart, chunkEnd, mode, onExit, app }) {
           <div className="eyebrow" style={{ margin: 0 }}>{paper.courseCode} · {paper.title}</div>
           <div style={{ color: "var(--text-3)", fontSize: 13, marginTop: 2 }}>Q{chunkStart + 1}-{chunkEnd} · {mode === "practice" ? "Practice" : "Exam"} · question {cur + 1} of {questions.length}</div>
         </div>
-        <div className="mono" style={{ fontWeight: 700 }}>
+                <div className="mono" style={{ fontWeight: 700 }}>
           {mode === "practice" ? <span><span style={{ color: "var(--amber)" }}>{correctCount}</span> / {answered}</span> : <span style={{ color: "var(--text-3)" }}>{answered}/{questions.length}</span>}
         </div>
       </div>
+
+      {mode === "exam" && showSwitchWarning && (
+        <div className="card" style={{ marginBottom: 12, borderColor: "var(--bad)", background: "rgba(239,68,68,0.08)" }}>
+          <div style={{ fontWeight: 700, color: "var(--bad)", fontSize: 14 }}>⚠ Warning {tabSwitchCount}/2</div>
+          <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 4 }}>
+            You switched away from the exam. {tabSwitchCount >= 2 ? "One more switch will auto-submit your exam." : "Switching away one more time will warn you again — a third switch auto-submits your exam."}
+          </div>
+          <button className="btn btn-g" style={{ marginTop: 8, padding: "6px 10px", fontSize: 12 }} onClick={() => setShowSwitchWarning(false)}>I understand</button>
+        </div>
+      )}
 
       {hasAR && showTip && (
         <div className="card" style={{ marginBottom: 12, borderColor: "var(--amber)" }}>
