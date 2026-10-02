@@ -236,7 +236,11 @@ const atlasStyles = `
 
 /* Play bar - sits above everything, same role as the Listen bar on a
    topic note. */
-.atlas-playbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.atlas-playbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; row-gap: 6px; }
+@media (max-width: 420px) {
+  .atlas-playbar { gap: 6px; padding: 10px 12px !important; }
+  .atlas-playbar .btn { min-height: 34px; padding: 5px 10px; font-size: 12.5px; }
+}
 .atlas-dots { display: flex; gap: 5px; margin-top: 10px; }
 .atlas-dot { flex: 1; height: 6px; border-radius: 3px; border: none; cursor: pointer; background: var(--line); }
 .atlas-dot.on { background: var(--amber); }
@@ -246,18 +250,25 @@ const atlasStyles = `
 .atlas-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; }
 .atlas-diagram-col { flex: 1 1 340px; min-width: 0; }
 .atlas-summary-col { flex: 1 1 280px; min-width: 0; }
+/* Below 900px, the summary panel stacks UNDER the diagram instead of trying
+   to fit beside it and squeezing the drawing. */
+@media (max-width: 900px) {
+  .atlas-row { flex-direction: column; }
+  .atlas-diagram-col,
+  .atlas-summary-col { flex: 1 1 auto; width: 100%; }
+}
 /* On phones the two columns stack full-width; min-width:0 above stops the
    flex basis from forcing a phantom horizontal scrollbar on 320px screens. */
 
 /* Zoom controls float on the diagram itself now, instead of taking a
    separate full-width row - the row is busy enough with the summary
    panel beside it. */
-.atlas-zoom-controls { position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; z-index: 2; }
+.atlas-zoom-controls { position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; z-index: 10; }
 .atlas-zoom-controls .btn { background: rgba(10,15,26,.65); backdrop-filter: blur(6px); box-shadow: 0 2px 8px rgba(0,0,0,.25); }
-/* Slightly larger tap targets on phones; the diagram stage is shorter there
-   so a couple more px of button height doesn't crowd it. */
 @media (max-width: 640px) {
-  .atlas-zoom-controls .btn { min-height: 32px; min-width: 32px; padding: 0 8px; }
+  .atlas-zoom-controls { top: 6px; right: 6px; gap: 3px; }
+  .atlas-zoom-controls .btn { min-height: 30px; min-width: 30px; padding: 0 6px; font-size: 12px; }
+  .atlas-zoom-controls .mono { min-width: 38px !important; font-size: 11.5px; }
 }
 
 /* Legend - full width, below the diagram+summary row, since it's
@@ -522,6 +533,7 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       <style>{atlasStyles}</style>
 
       {/* breadcrumb + back - navigation stays at the very top */}
+            <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 6, marginBottom: 12, rowGap: 4 }}></div>
       <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 6, marginBottom: 12 }}>
         <button className="back" style={{ margin: 0 }} onClick={onExit}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: "rotate(180deg)" }}><path d="M5 12h14M13 5l7 7-7 7" /></svg>
@@ -542,13 +554,22 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       </div>
 
       {/* ---- Play bar - on top, like the note's own Listen bar ---- */}
-            <div className="card atlas-playbar">
+                        <div className="card atlas-playbar">
         <button
           className="btn btn-a btn-sm"
           onClick={handlePlay}
-          title={playing ? "Pause" : "Play"}
-          aria-label={playing ? "Pause walkthrough" : "Play walkthrough"}
-          style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", padding: "6px 12px", minWidth: 44 }}
+          title={playing ? "Pause" : paused ? "Resume" : "Play"}
+          aria-label={playing ? "Pause walkthrough" : paused ? "Resume walkthrough" : "Play walkthrough"}
+          style={{
+            display: "inline-flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 2,
+            padding: "6px 14px",
+            minWidth: 56,
+            lineHeight: 1,
+          }}
         >
           {playing ? (
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -560,29 +581,42 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
               <path d="M8 5v14l11-7z" />
             </svg>
           )}
+          <span style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: "0.02em" }}>
+            {playing ? "Pause" : paused ? "Resume" : "Play"}
+          </span>
         </button>
-        <button className="btn btn-g btn-sm" onClick={() => stepBy(-1)} disabled={activeStep === 0} aria-label="Previous step">◀</button>
-        <button className="btn btn-g btn-sm" onClick={() => stepBy(1)} disabled={!diagram.loop && activeStep === diagram.narration.length - 1} aria-label="Next step">▶</button>
-        <button className="btn btn-g btn-sm mono" onClick={() => setSpeed((s) => (s === 1 ? 1.25 : s === 1.25 ? 0.85 : 1))} title="Playback speed">{speed}×</button>
+        <button className="btn btn-g btn-sm" onClick={() => stepBy(-1)} disabled={activeStep === 0} aria-label="Previous step" title="Previous step">◀</button>
+        <button className="btn btn-g btn-sm" onClick={() => stepBy(1)} disabled={!diagram.loop && activeStep === diagram.narration.length - 1} aria-label="Next step" title="Next step">▶</button>
+        <button className="btn btn-g btn-sm mono" onClick={() => setSpeed((s) => (s === 1 ? 1.25 : s === 1.25 ? 0.85 : 1))} title="Playback speed" aria-label={"Playback speed " + speed + "x"}>{speed}×</button>
         <span style={{ flex: 1 }} />
-        <span className="mono" style={{ fontSize: 11.5, color: "var(--text-3)" }}>Step {activeStep + 1} / {diagram.narration.length}</span>
+                <span className="mono" style={{ fontSize: 11.5, color: "var(--text-3)", whiteSpace: "nowrap", marginLeft: "auto" }}>Step {activeStep + 1} / {diagram.narration.length}</span>
       </div>
       <div className="atlas-dots">
         {diagram.narration.map((_, i) => (
           <button key={i} className={"atlas-dot" + (i <= activeStep ? " on" : "")} onClick={() => jumpTo(i)} title={`Step ${i + 1}`} />
         ))}
       </div>
-      <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 8, marginBottom: 14, minHeight: 36 }}>{diagram.narration[activeStep]}</div>
-
+            <div
+        style={{
+          color: "var(--text-2)",
+          fontSize: "clamp(13px, 3.4vw, 15px)",
+          lineHeight: 1.55,
+          marginTop: 8,
+          marginBottom: 14,
+          minHeight: 40,
+        }}
+      >
+        {diagram.narration[activeStep]}
+      </div>
       {/* ---- Diagram (left) + topic summary (right) ---- */}
       <div className="atlas-row">
         <div className="atlas-diagram-col">
                     <div
             className="card atlas-viewer-stage"
-            style={{
+                        style={{
               padding: 0,
               overflow: "hidden",
-              height: "clamp(260px, 42vh, 420px)",
+              height: "clamp(240px, 48vh, 560px)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -649,7 +683,7 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
                         {/* ---- Legend - full width, below the row ---- */}
       <div className="card atlas-legend-full" style={{ marginTop: 12 }}>
         <div className="eyebrow">Legend — tap any part to highlight it</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 12, marginTop: 12 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(160px, 100%), 1fr))", gap: 10, marginTop: 12 }}>
           {(diagram.labels || []).map((l) => {
             const active = activeLabelId === l.id;
             return (
