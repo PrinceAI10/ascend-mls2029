@@ -145,19 +145,43 @@ const atlasStyles = `
 /* Diagram + summary row - side by side once there's room, stacked on a
    narrow phone screen; same markup, flex-wrap handles both layouts. */
 .atlas-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; }
-.atlas-diagram-col { flex: 1 1 340px; min-width: 280px; }
-.atlas-summary-col { flex: 1 1 280px; min-width: 240px; }
+.atlas-diagram-col { flex: 1 1 340px; min-width: 0; }
+.atlas-summary-col { flex: 1 1 280px; min-width: 0; }
+/* On phones the two columns stack full-width; min-width:0 above stops the
+   flex basis from forcing a phantom horizontal scrollbar on 320px screens. */
 
 /* Zoom controls float on the diagram itself now, instead of taking a
    separate full-width row - the row is busy enough with the summary
    panel beside it. */
 .atlas-zoom-controls { position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; z-index: 2; }
-.atlas-zoom-controls .btn { background: rgba(10,15,26,.55); backdrop-filter: blur(4px); }
+.atlas-zoom-controls .btn { background: rgba(10,15,26,.65); backdrop-filter: blur(6px); box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+/* Slightly larger tap targets on phones; the diagram stage is shorter there
+   so a couple more px of button height doesn't crowd it. */
+@media (max-width: 640px) {
+  .atlas-zoom-controls .btn { min-height: 32px; min-width: 32px; padding: 0 8px; }
+}
 
 /* Legend - full width, below the diagram+summary row, since it's
    reference material to glance at rather than primary content. */
 .atlas-legend-full .atlas-legend-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 6px; margin-top: 8px;
+  display: grid;
+  /* 200px minimum so a longer label like "Atrioventricular (AV) node" fits
+     on one line without colliding with its neighbour. Drops to a single
+     full-width column automatically on phones. */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  /* 8px between rows, 16px between columns - the tighter 6px gap was
+     letting wrapped labels visibly touch the item below them. */
+  gap: 8px 16px;
+  margin-top: 10px;
+}
+/* Long labels wrap inside their own cell rather than pushing the cell wider
+   and shoving the row out of alignment. */
+.atlas-legend-full .atlas-legend-grid .btn {
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.35;
+  padding: 8px 10px;
+  min-height: 36px;
 }
 
 /* Respect the OS/browser "reduce motion" setting - the pulse/shake/snap
@@ -345,11 +369,48 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     jumpTo(next);
   };
 
-  /* ---- zoom / pan - unchanged from the original viewer ---- */
+    /* ---- zoom / pan - center-locked, clamped so the figure can never drift
+     fully off-stage ---- */
+  const MIN_ZOOM = 0.5, MAX_ZOOM = 3;
+  const PAN_LIMIT = 260; // max px the figure may be dragged from center at any zoom
+
+  // Apply a new zoom AND scale pan by the same ratio, so the point currently
+  // under the viewer's focus stays visually fixed. Without the pan-scaling
+  // step, zooming after a pan would slide the figure away from center.
+  const applyZoom = useCallback((nextZoomRaw) => {
+    const nextZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, +nextZoomRaw.toFixed(2)));
+    setZoom((prevZoom) => {
+      if (nextZoom === prevZoom) return prevZoom;
+      const k = nextZoom / prevZoom;
+      setPan((p) => {
+        const nx = p.x * k;
+        const ny = p.y * k;
+        const len = Math.hypot(nx, ny);
+        if (len > PAN_LIMIT) {
+          const s = PAN_LIMIT / len;
+          return { x: nx * s, y: ny * s };
+        }
+        return { x: nx, y: ny };
+      });
+      return nextZoom;
+    });
+  }, []);
+
   const onWheel = (e) => {
     e.preventDefault();
     const delta = e.deltaY > 0 ? -0.1 : 0.1;
-    setZoom((z) => Math.min(3, Math.max(0.5, +(z + delta).toFixed(2))));
+    setZoom((z) => {
+      const next = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, +(z + delta).toFixed(2)));
+      if (next === z) return z;
+      const k = next / z;
+      setPan((p) => {
+        const nx = p.x * k, ny = p.y * k;
+        const len = Math.hypot(nx, ny);
+        if (len > PAN_LIMIT) { const s = PAN_LIMIT / len; return { x: nx * s, y: ny * s }; }
+        return { x: nx, y: ny };
+      });
+      return next;
+    });
   };
   const pointers = useRef(new Map());
   const onPointerDown = (e) => {
@@ -370,12 +431,22 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       const pts = [...pointers.current.values()];
       const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
       const ratio = dist / (pinchRef.current.dist || 1);
-      setZoom(Math.min(3, Math.max(0.5, +(pinchRef.current.zoom * ratio).toFixed(2))));
+      applyZoom(pinchRef.current.zoom * ratio);
     } else if (pointers.current.size === 1 && dragRef.current) {
       const dx = e.clientX - dragRef.current.x;
       const dy = e.clientY - dragRef.current.y;
       dragRef.current = { x: e.clientX, y: e.clientY };
-      setPan((p) => ({ x: p.x + dx, y: p.y + dy }));
+      setPan((p) => {
+        // Clamp total displacement so the figure can be nudged around but
+        // never dragged completely out of the visible stage.
+        const nx = p.x + dx, ny = p.y + dy;
+        const len = Math.hypot(nx, ny);
+        if (len > PAN_LIMIT) {
+          const s = PAN_LIMIT / len;
+          return { x: nx * s, y: ny * s };
+        }
+        return { x: nx, y: ny };
+      });
     }
   };
   const onPointerUp = (e) => {
@@ -435,17 +506,17 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
         <div className="atlas-diagram-col">
           <div
             className="card atlas-viewer-stage"
-            style={{ padding: 0, overflow: "hidden", height: 320 }}
+                        style={{ padding: 0, overflow: "hidden", height: "clamp(260px, 42vh, 420px)" }}
             onWheel={onWheel}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
           >
-            <div className="atlas-zoom-controls">
-              <button className="btn btn-sm" onClick={() => setZoom((z) => Math.max(0.5, +(z - 0.2).toFixed(2)))}>−</button>
-              <button className="btn btn-sm mono" style={{ minWidth: 46 }} onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }}>{Math.round(zoom * 100)}%</button>
-              <button className="btn btn-sm" onClick={() => setZoom((z) => Math.min(3, +(z + 0.2).toFixed(2)))}>+</button>
+                        <div className="atlas-zoom-controls">
+              <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom(zoom - 0.2)}>−</button>
+              <button className="btn btn-sm mono" title="Reset zoom & pan" style={{ minWidth: 46 }} onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }}>{Math.round(zoom * 100)}%</button>
+              <button className="btn btn-sm" title="Zoom in" onClick={() => applyZoom(zoom + 0.2)}>+</button>
             </div>
             <div style={{ width: "100%", height: "100%", transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`, transformOrigin: "center center", transition: dragRef.current ? "none" : "transform 0.15s ease-out" }}>
               {diagram.render({ onLabelClick: setActiveLabelId, activeLabelId, activeStep, onOpenDrill: () => {} })}

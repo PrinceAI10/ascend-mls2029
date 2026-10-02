@@ -4683,7 +4683,7 @@ const ATLAS_TOPICS = new Set(
     .map((d) => `${d.topic.courseId}:${d.topic.topicIndex}`)
 );
 
-function TopicView({ app }) {
+function TopicView({ app, rootCls }) {
   const t = contentFor(app.courseId, app.topicId);
   const c = courseById(app.courseId);
 
@@ -5588,8 +5588,8 @@ function TopicView({ app }) {
           document.body so no flexbox, CSS zoom, or scroll position can
           push it off-screen or under a mobile keyboard. Only shown while
           the pencil is armed AND there's a live text selection. */}
-      {pendingSelection && createPortal(
-        <div style={{ position: "fixed", left: "50%", bottom: "calc(env(safe-area-inset-bottom, 0px) + 24px)", transform: "translateX(-50%)", zIndex: 10000 }}>
+         {pendingSelection && createPortal(
+  <div className={rootCls} style={{ position: "fixed", left: "50%", bottom: "calc(env(safe-area-inset-bottom, 0px) + 24px)", transform: "translateX(-50%)", zIndex: 10000 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 18px", borderRadius: 999, background: "var(--bg-2)", border: "1px solid var(--line-2)", boxShadow: "0 10px 28px rgba(0,0,0,0.4)" }}>
             <span className="mono" style={{ fontSize: 11.5, color: "var(--text-3)" }}>Highlight:</span>
             {["blue", "yellow", "pink"].map((c) => (
@@ -15385,7 +15385,7 @@ export default function App() {
       case "home": return <HomeView app={app} />;
       case "courses": return <CoursesView app={app} />;
       case "course": return <CourseView app={app} />;
-      case "topic": return <TopicView app={app} />;
+      case "topic": return <TopicView app={app} rootCls={rootCls} />;
       case "quiz": return <QuizView app={app} />;
       case "daily": return <DailyView app={app} />;
       case "ranks": return <RanksView app={app} />;
@@ -15719,20 +15719,22 @@ export default function App() {
                     {progress?.avatar ? <Avatar config={progress.avatar} size={33} /> : (progress?.name?.[0]?.toUpperCase() || "?")}
                   </button>
                 </div>
-                                                                                                {avatarPickerOpen && createPortal(
-                  <AvatarPicker
-                    value={progress?.avatar}
-                    name={progress?.name}
-                    onRename={setName}
-                    firstRun={!progress?.avatar}
-                    onClose={() => {
-                      if (!progress?.avatar) { try { localStorage.setItem("ascend_avatar_skipped", "true"); } catch {} }
-                      setAvatarPickerOpen(false);
-                    }}
-                    onSave={(cfg) => { setAvatar(cfg); setAvatarPickerOpen(false); }}
-                  />,
-                  document.body
-                )}
+                                                        {avatarPickerOpen && createPortal(
+  <div className={rootCls}>
+    <AvatarPicker
+      value={progress?.avatar}
+      name={progress?.name}
+      onRename={setName}
+      firstRun={!progress?.avatar}
+      onClose={() => {
+        if (!progress?.avatar) { try { localStorage.setItem("ascend_avatar_skipped", "true"); } catch {} }
+        setAvatarPickerOpen(false);
+      }}
+      onSave={(cfg) => { setAvatar(cfg); setAvatarPickerOpen(false); }}
+    />
+  </div>,
+  document.body
+)}
               </div>
             </div>
           </header>
