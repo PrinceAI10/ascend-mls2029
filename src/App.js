@@ -1049,7 +1049,7 @@ function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
             {firstRun ? "Create your avatar" : "Change your avatar"}
           </div>
           <div style={{ fontSize: 13, color: "var(--text-2)", marginTop: 4 }}>
-            Pick a look - you can change it anytime from the topbar.
+            Pick a look - you can change it anytime from here.
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}>
