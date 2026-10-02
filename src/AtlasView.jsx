@@ -119,6 +119,23 @@ const atlasStyles = `
 .atlas-snap { animation: atlasSnap 0.25s ease-out; }
 .atlas-viewer-stage { touch-action: none; cursor: grab; }
 .atlas-viewer-stage:active { cursor: grabbing; }
+
+/* Legend sits beside the diagram once there's room for both (desktop /
+   tablet landscape); on a narrow phone screen the flex items simply wrap
+   and the legend stacks below the diagram instead - no separate mobile
+   layout to maintain, the same markup adapts both ways. */
+.atlas-stage-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
+.atlas-stage-col { flex: 1 1 320px; min-width: 280px; }
+.atlas-legend-col { flex: 1 1 200px; min-width: 180px; max-height: 320px; overflow-y: auto; }
+
+/* Respect the OS/browser "reduce motion" setting - the pulse/shake/snap
+   animations above are convenience feedback, not load-bearing, so turning
+   them off here never breaks anything, it just stops moving. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-pulse rect { animation: none !important; opacity: 1 !important; }
+  .atlas-shake { animation: none !important; }
+  .atlas-snap { animation: none !important; }
+}
 `;
 
 /* ---------------------------------------------------------------- */
@@ -196,7 +213,6 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   const [paused, setPaused] = useState(false);
   const [voiceOn, setVoiceOn] = useState(true);
   const [speed, setSpeed] = useState(1);
-  const [showLegend, setShowLegend] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
 
@@ -251,7 +267,13 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
 
   const handlePlay = () => {
     if (playing) {
-      // pause
+      // Deliberately NOT window.speechSynthesis.pause() - that call is
+      // unreliable across browsers (notably mobile Safari), which is the
+      // same reason the existing Listen feature in App.js avoids it too.
+      // "Pause" here cancels and remembers the current step; "Resume"
+      // re-speaks that step from its start rather than mid-sentence - a
+      // fine trade-off since each step's narration is only a sentence
+      // or two.
       setPlaying(false);
       setPaused(true);
       playTokenRef.current++;
@@ -349,52 +371,60 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
         <button className="btn btn-sm" onClick={() => setZoom((z) => Math.min(3, +(z + 0.2).toFixed(2)))}>+</button>
       </div>
 
-      {/* the stage */}
-      <div
-        className="card atlas-viewer-stage"
-        style={{ padding: 0, overflow: "hidden", height: 320 }}
-        onWheel={onWheel}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerUp}
-        onPointerCancel={onPointerUp}
-      >
-        <div style={{ width: "100%", height: "100%", transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`, transformOrigin: "center center", transition: dragRef.current ? "none" : "transform 0.15s ease-out" }}>
-          {diagram.render({ onLabelClick: setActiveLabelId, activeLabelId, activeStep, onOpenDrill: () => {} })}
-        </div>
-      </div>
+      {/* the stage + legend - side by side once there's room, stacked on a
+          narrow phone screen; same markup, the flex-wrap in atlasStyles
+          handles both layouts without a media query branch in JS. */}
+      <div className="atlas-stage-row">
+        <div className="atlas-stage-col">
+          <div
+            className="card atlas-viewer-stage"
+            style={{ padding: 0, overflow: "hidden", height: 320 }}
+            onWheel={onWheel}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            onPointerCancel={onPointerUp}
+          >
+            <div style={{ width: "100%", height: "100%", transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`, transformOrigin: "center center", transition: dragRef.current ? "none" : "transform 0.15s ease-out" }}>
+              {diagram.render({ onLabelClick: setActiveLabelId, activeLabelId, activeStep, onOpenDrill: () => {} })}
+            </div>
+          </div>
 
-      {/* active label description */}
-      {activeLabel && (
-        <div className="card" style={{ marginTop: 10, borderColor: "rgba(245,185,63,.35)" }}>
-          <div style={{ fontWeight: 700, fontSize: 14, color: "var(--amber-2)" }}>{activeLabel.name}</div>
-          <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 4 }}>{activeLabel.desc}</div>
-          {activeLabel.drillTo && (
-            <button className="btn btn-a btn-sm" style={{ marginTop: 8 }} onClick={() => onDrill(activeLabel.drillTo)}>
-              Open {activeLabel.name} <Ic_chevR />
-            </button>
+          {/* active label description sits under the stage, full width */}
+          {activeLabel && (
+            <div className="card" style={{ marginTop: 10, borderColor: "rgba(245,185,63,.35)" }}>
+              <div style={{ fontWeight: 700, fontSize: 14, color: "var(--amber-2)" }}>{activeLabel.name}</div>
+              <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 4 }}>{activeLabel.desc}</div>
+              {activeLabel.drillTo && (
+                <button className="btn btn-a btn-sm" style={{ marginTop: 8 }} onClick={() => onDrill(activeLabel.drillTo)}>
+                  Open {activeLabel.name} <Ic_chevR />
+                </button>
+              )}
+            </div>
           )}
         </div>
-      )}
 
-      {/* legend toggle + panel */}
-      <button className="btn btn-g btn-sm" style={{ marginTop: 10 }} onClick={() => setShowLegend((s) => !s)}>
-        {showLegend ? "Hide legend" : "Show legend"}
-      </button>
-      {showLegend && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
-          {(diagram.labels || []).map((l) => (
-            <button
-              key={l.id}
-              className="btn btn-sm"
-              style={{ background: activeLabelId === l.id ? "var(--amber-dim)" : "var(--bg-3)", color: activeLabelId === l.id ? "var(--amber-2)" : "var(--text-2)", border: "1px solid var(--line)" }}
-              onClick={() => setActiveLabelId(l.id)}
-            >
-              {l.name}
-            </button>
-          ))}
+        <div className="atlas-legend-col card">
+          <div className="eyebrow" style={{ marginBottom: 8 }}>Legend</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            {(diagram.labels || []).map((l) => (
+              <button
+                key={l.id}
+                className="btn btn-sm"
+                style={{
+                  justifyContent: "flex-start", textAlign: "left",
+                  background: activeLabelId === l.id ? "var(--amber-dim)" : "transparent",
+                  color: activeLabelId === l.id ? "var(--amber-2)" : "var(--text-2)",
+                  border: "1px solid " + (activeLabelId === l.id ? "rgba(245,185,63,.35)" : "transparent"),
+                }}
+                onClick={() => setActiveLabelId(l.id)}
+              >
+                {l.name}
+              </button>
+            ))}
+          </div>
         </div>
-      )}
+      </div>
 
       {/* play walkthrough */}
       <div className="divider" />

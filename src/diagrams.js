@@ -70,8 +70,48 @@ export function diagramForTopic(courseId, topicIndex) {
 
 /* ------------------------------ content ----------------------------- */
 
+// Maps a node's flat hex colour to its matching <linearGradient> id (defined
+// once in atlasDefs() below) so active nodes fill with a soft gradient
+// instead of a flat colour - this plus the drop-shadow filter is what gives
+// the flat SVG a bit of dimensional, "hand-drawn-ish" depth without any new
+// dependency (three.js, a 3D model, an image) - still just SVG + CSS.
+const GRADIENT_BY_COLOR = {
+  [ATLAS_COLORS.trunk]: "atlas-grad-trunk",
+  [ATLAS_COLORS.lymphoid]: "atlas-grad-lymphoid",
+  [ATLAS_COLORS.erythroid]: "atlas-grad-erythroid",
+  [ATLAS_COLORS.nucleus]: "atlas-grad-nucleus",
+};
+
+// One shared <defs> block - gradients for every palette colour plus a soft
+// drop-shadow filter - included once at the top of every diagram's <svg>.
+export const atlasDefs = () => (
+  <defs key="atlas-defs">
+    <linearGradient id="atlas-grad-trunk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#FFD873" />
+      <stop offset="100%" stopColor={ATLAS_COLORS.trunk} />
+    </linearGradient>
+    <linearGradient id="atlas-grad-lymphoid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#5C93FF" />
+      <stop offset="100%" stopColor={ATLAS_COLORS.lymphoid} />
+    </linearGradient>
+    <linearGradient id="atlas-grad-erythroid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#E0685A" />
+      <stop offset="100%" stopColor={ATLAS_COLORS.erythroid} />
+    </linearGradient>
+    <linearGradient id="atlas-grad-nucleus" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#B19DFA" />
+      <stop offset="100%" stopColor={ATLAS_COLORS.nucleus} />
+    </linearGradient>
+    <filter id="atlas-shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.4" floodColor="#000" floodOpacity="0.28" />
+    </filter>
+  </defs>
+);
+
 const atlasNode = ({ id, x, y, w, h, label, sub, fill, dim, onLabelClick, activeLabelId, pulsing, onOpenDrill }) => {
   const active = activeLabelId === id;
+  const gradId = GRADIENT_BY_COLOR[fill];
+  const activeFill = gradId ? `url(#${gradId})` : fill;
   return (
     <g
       key={id}
@@ -81,9 +121,10 @@ const atlasNode = ({ id, x, y, w, h, label, sub, fill, dim, onLabelClick, active
     >
       <rect
         x={x} y={y} width={w} height={h} rx={10}
-        fill={active ? fill : dim}
+        fill={active ? activeFill : dim}
         stroke={fill}
         strokeWidth={active ? 2.4 : 1.4}
+        filter="url(#atlas-shadow)"
       />
       <text x={x + w / 2} y={y + h / 2 - (sub ? 6 : 0)} textAnchor="middle" dominantBaseline="middle"
         fontSize="13" fontWeight="700" fill={active ? "#0A0F1A" : "var(--text)"}>
@@ -150,6 +191,7 @@ export const DIAGRAMS = {
       const n = (id, props) => atlasNode({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
       return (
         <svg viewBox="0 0 900 440" width="100%" height="100%">
+          {atlasDefs()}
           {atlasLine(450, 90, 260, 170)}
           {atlasLine(450, 90, 640, 170)}
           {atlasLine(260, 230, 260, 290)}
@@ -206,6 +248,7 @@ export const DIAGRAMS = {
       const n = (id, props) => atlasNode({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
       return (
         <svg viewBox="0 0 900 380" width="100%" height="100%">
+          {atlasDefs()}
           {atlasLine(450, 90, 260, 160)}
           {atlasLine(450, 90, 640, 160)}
           {atlasLine(260, 220, 180, 280)}
@@ -267,6 +310,7 @@ export const DIAGRAMS = {
       const w = 120, gap = 20, startX = 40, y = 120;
       return (
         <svg viewBox="0 0 900 260" width="100%" height="100%">
+          {atlasDefs()}
           {stages.slice(0, -1).map((s, i) => atlasLine(startX + (i + 1) * (w + gap) - gap, y + 25, startX + (i + 1) * (w + gap), y + 25))}
           {n("epo", { x: 520, y: 30, w: 190, h: 40, label: "EPO", sub: "acts here →", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
           {stages.map((s, i) => n(s.id, {
