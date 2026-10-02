@@ -485,10 +485,15 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   };
 
   const pointers = useRef(new Map());
-  const onPointerDown = (e) => {
-    e.currentTarget.setPointerCapture?.(e.pointerId);
+    const onPointerDown = (e) => {
+    // Deliberately NOT capturing the pointer for a single touch/click.
+    // setPointerCapture routes the eventual `click` event to the stage div
+    // instead of the actual target - which is why the +/- zoom buttons
+    // never received their click. Capture only once a SECOND finger
+    // arrives, which is the only time we actually need it (pinch).
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pointers.current.size === 2) {
+      try { e.currentTarget.setPointerCapture?.(e.pointerId); } catch {}
       const pts = [...pointers.current.values()];
       const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
       pinchRef.current = { dist, zoom };
@@ -589,7 +594,12 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
           >
-                        <div className="atlas-zoom-controls" style={{ pointerEvents: "auto", zIndex: 10 }}>
+                                                <div
+              className="atlas-zoom-controls"
+              style={{ pointerEvents: "auto", zIndex: 10 }}
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
+            >
               <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom((z) => z - 0.2)}>−</button>
               <button className="btn btn-sm mono" title="Reset zoom" style={{ minWidth: 46 }} onClick={() => applyZoom(DEFAULT_ZOOM)}>{Math.round(zoom * 100)}%</button>
               <button className="btn btn-sm" title="Zoom in" onClick={() => applyZoom((z) => z + 0.2)}>+</button>
@@ -636,63 +646,90 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
         </div>
       </div>
 
-                  {/* ---- Legend - full width, below the row ---- */}
-            <div className="card atlas-legend-full" style={{ marginTop: 12 }}>
+                        {/* ---- Legend - full width, below the row ---- */}
+      <div className="card atlas-legend-full" style={{ marginTop: 12 }}>
         <div className="eyebrow">Legend — tap any part to highlight it</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 10, alignItems: "flex-start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 12, marginTop: 12 }}>
           {(diagram.labels || []).map((l) => {
             const active = activeLabelId === l.id;
             return (
-                            <button
+              <button
                 key={l.id}
-                className="btn btn-sm"
                 onClick={() => setActiveLabelId(active ? null : l.id)}
                 style={{
-                  display: "inline-flex",
-                  alignItems: "flex-start",
-                  gap: 8,
-                  padding: "6px 12px",
-                  textAlign: "left",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 6,
+                  padding: "10px 8px",
+                  textAlign: "center",
                   background: active ? "var(--amber-dim)" : "var(--bg-3)",
                   color: active ? "var(--amber-2)" : "var(--text)",
                   border: "1px solid " + (active ? ATLAS_COLORS.trunk : "var(--line)"),
-                  borderRadius: 10,
+                  borderRadius: 12,
                   fontWeight: 600,
-                  alignSelf: "flex-start",
-                  maxWidth: "100%",
-                  whiteSpace: "normal",
+                  cursor: "pointer",
                   height: "auto",
+                  minHeight: 120,
+                  transition: "border-color .15s, background .15s",
                 }}
               >
-                {/* Live preview of the actual structure from the diagram,
-                    rendered through the same primitive the diagram uses, so
-                    the legend swatch and the diagram always match. Each
-                    label id maps to the mini-version below. */}
-                <span style={{ display: "inline-flex", width: 34, height: 34, flexShrink: 0, alignItems: "center", justifyContent: "center", background: "var(--bg-2)", borderRadius: 8, overflow: "hidden" }}>
-                  <svg viewBox={LEGEND_VIEWBOXES[l.id] || "0 0 100 100"} width="34" height="34">
+                <span style={{
+                  display: "inline-flex",
+                  width: 64,
+                  height: 64,
+                  flexShrink: 0,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "var(--bg-2)",
+                  borderRadius: 12,
+                  overflow: "hidden",
+                  border: active ? "1px solid " + ATLAS_COLORS.trunk : "1px solid var(--line)",
+                }}>
+                  <svg viewBox={LEGEND_VIEWBOXES[l.id] || "0 0 100 100"} width="56" height="56">
                     {LEGEND_SWATCHES[l.id] ? LEGEND_SWATCHES[l.id](active) : (
                       <circle cx="50" cy="50" r="20" fill={active ? ATLAS_COLORS.trunk : "var(--text-3)"} />
                     )}
                   </svg>
                 </span>
-                <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", lineHeight: 1.15 }}>
-                  <span>{l.name}</span>
-                  {active && l.desc && (
-                    <span style={{
-                      display: "block",
-                      fontSize: 11.5,
-                      color: "var(--text-2)",
+                <span style={{ fontSize: 12.5, lineHeight: 1.3, fontWeight: 700 }}>{l.name}</span>
+                {active && l.desc && (
+                  <span style={{
+                    display: "block",
+                    fontSize: 11.5,
+                    color: "var(--text-2)",
+                    fontWeight: 400,
+                    lineHeight: 1.5,
+                    whiteSpace: "normal",
+                    wordBreak: "break-word",
+                  }}>
+                    {l.desc}
+                  </span>
+                )}
+                {active && l.drillTo && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDrill(l.drillTo);
+                    }}
+                    style={{
                       marginTop: 4,
-                      fontWeight: 400,
-                      lineHeight: 1.5,
-                      whiteSpace: "normal",
-                      wordBreak: "break-word",
-                      maxWidth: 320,
-                    }}>
-                      {l.desc}
-                    </span>
-                  )}
-                </span>
+                      padding: "5px 12px",
+                      borderRadius: 8,
+                      border: "1px solid " + ATLAS_COLORS.trunk,
+                      background: "var(--amber)",
+                      color: "#1B1405",
+                      fontWeight: 700,
+                      fontSize: 11.5,
+                      cursor: "pointer",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 5,
+                    }}
+                  >
+                    Open {DIAGRAMS[l.drillTo]?.title?.split(" — ")[0] || l.name} →
+                  </button>
+                )}
               </button>
             );
           })}

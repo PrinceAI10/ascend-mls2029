@@ -290,46 +290,228 @@ const atlasFlowArrow = ({ x1, y1, x2, y2, color = ATLAS_COLORS.neutral, dashed =
   );
 };
 
-const atlasLungs = ({ cx, cy, scale = 1, highlight = false }) => (
-  <g transform={`translate(${cx},${cy}) scale(${scale})`}
-    stroke={highlight ? ATLAS_COLORS.trunk : ATLAS_COLORS.neutral}
-    strokeWidth={highlight ? 2 : 1.4}>
-    <rect x="-6" y="-60" width="12" height="30" rx="4" fill="#E8E2FF" stroke="#8B7CC7" strokeWidth="1" />
-    <path d="M0,-30 Q-14,-22 -22,-10" fill="none" strokeWidth="2" />
-    <path d="M0,-30 Q14,-22 22,-10" fill="none" strokeWidth="2" />
-    <path d="M-18,-8 Q-58,-4 -58,32 Q-58,60 -26,66 Q-10,60 -8,26 Q-10,4 -18,-8 Z"
-      fill="#F5A8A0" stroke="#C0392B" strokeWidth="1.4" />
-    <path d="M18,-8 Q58,-4 58,32 Q58,60 26,66 Q10,60 8,26 Q10,4 18,-8 Z"
-      fill="#F5A8A0" stroke="#C0392B" strokeWidth="1.4" />
-    {[[-34,20],[-44,36],[-28,44],[34,20],[44,36],[28,44]].map(([x, y], i) => (
-      <circle key={i} cx={x} cy={y} r="3" fill="#2D7BFF" opacity="0.7" />
-    ))}
-  </g>
-);
+// Anatomical vessel: outer wall, lumen, inner highlight. `oxygenated` picks
+// the color; `dashed` (used for lymph vessels) gives a broken-line look;
+// `width` scales wall + lumen together. The inner highlight gives the tube
+// its round, three-dimensional read - without it, the vessel looks like a
+// flat ribbon instead of a pipe blood can move through.
+const atlasVessel = ({
+  d,
+  oxygenated = true,
+  width = 14,
+  dashed = false,
+}) => {
+  const base = oxygenated ? "#E53935" : "#2D7BFF";
+  const dark = oxygenated ? "#8C1C12" : "#123F9E";
+  const light = oxygenated ? "#F5C7C0" : "#B8D0FF";
+  const lumenW = Math.max(2, width - 4);
+  return (
+    <g>
+      {/* Outer wall - the vessel's outer edge, darker for definition */}
+      <path
+        d={d}
+        stroke={dark}
+        strokeWidth={width + 2}
+        fill="none"
+        strokeLinecap="round"
+        strokeDasharray={dashed ? "10 6" : undefined}
+      />
+      {/* Main lumen - the blood-carrying channel */}
+      <path
+        d={d}
+        stroke={base}
+        strokeWidth={width}
+        fill="none"
+        strokeLinecap="round"
+        strokeDasharray={dashed ? "10 6" : undefined}
+      />
+      {/* Inner highlight - offset upward, gives the tube a 3D round read */}
+      <path
+        d={d}
+        stroke={light}
+        strokeWidth={Math.max(1.5, lumenW * 0.28)}
+        fill="none"
+        strokeLinecap="round"
+        strokeDasharray={dashed ? "10 6" : undefined}
+        opacity="0.85"
+        transform="translate(0, -width * 0.18)"
+      />
+    </g>
+  );
+};
 
+// Anatomical lungs. Trachea descends from the top, splits into left and
+// right primary bronchi, each lung shows its two or three lobes with a
+// visible fissure, and the alveoli show as small clusters. The right lung
+// has three lobes (superior/middle/inferior) and the left has two
+// (superior/inferior), with the cardiac notch on the left where the heart
+// sits - which is why the left lung reads slightly smaller here.
+const atlasLungs = ({ cx, cy, scale = 1, highlight = false }) => {
+  const edge = highlight ? ATLAS_COLORS.trunk : "#B63B2E";
+  const edgeW = highlight ? 2.2 : 1.3;
+  return (
+    <g transform={`translate(${cx},${cy}) scale(${scale})`}>
+      {/* Trachea - cartilaginous rings drawn as small horizontal lines */}
+      <path d="M-6,-64 L-6,-30 L6,-30 L6,-64 Z" fill="#E8E2FF" stroke="#8B7CC7" strokeWidth="1" />
+      {[-60, -54, -48, -42, -36].map((y, i) => (
+        <line key={i} x1="-6" y1={y} x2="6" y2={y} stroke="#8B7CC7" strokeWidth="0.7" opacity="0.7" />
+      ))}
+
+      {/* Primary bronchi - bifurcation from the trachea into each lung */}
+      <path d="M0,-30 Q-10,-22 -18,-12" fill="none" stroke="#8B7CC7" strokeWidth="3" strokeLinecap="round" />
+      <path d="M0,-30 Q10,-22 18,-12" fill="none" stroke="#8B7CC7" strokeWidth="3" strokeLinecap="round" />
+
+      {/* Secondary bronchi branching into each lobe */}
+      <path d="M-18,-12 Q-30,-4 -40,8" fill="none" stroke="#8B7CC7" strokeWidth="1.6" opacity="0.8" />
+      <path d="M-18,-12 Q-26,4 -34,22" fill="none" stroke="#8B7CC7" strokeWidth="1.6" opacity="0.8" />
+      <path d="M-18,-12 Q-28,18 -34,38" fill="none" stroke="#8B7CC7" strokeWidth="1.4" opacity="0.7" />
+      <path d="M18,-12 Q30,-4 40,8" fill="none" stroke="#8B7CC7" strokeWidth="1.6" opacity="0.8" />
+      <path d="M18,-12 Q28,10 36,28" fill="none" stroke="#8B7CC7" strokeWidth="1.6" opacity="0.8" />
+      <path d="M18,-12 Q30,22 40,44" fill="none" stroke="#8B7CC7" strokeWidth="1.4" opacity="0.7" />
+
+      {/* LEFT LUNG - two lobes (superior + inferior) with the cardiac notch
+          on the inner (right) side where the heart sits */}
+      <path d="M-16,-10
+               Q-38,-16 -52,0
+               Q-62,18 -58,38
+               Q-54,58 -36,66
+               Q-20,70 -12,54
+               Q-10,32 -12,10
+               Q-14,-2 -16,-10 Z"
+        fill="#F5A8A0" stroke={edge} strokeWidth={edgeW} />
+
+      {/* Oblique fissure on the left lung */}
+      <path d="M-56,14 Q-40,20 -20,30" fill="none" stroke="#B63B2E" strokeWidth="0.9" opacity="0.7" />
+
+      {/* RIGHT LUNG - three lobes (superior + middle + inferior) */}
+      <path d="M16,-10
+               Q38,-16 52,0
+               Q62,18 58,40
+               Q52,60 34,66
+               Q18,68 12,50
+               Q10,28 12,8
+               Q14,-2 16,-10 Z"
+        fill="#F5A8A0" stroke={edge} strokeWidth={edgeW} />
+
+      {/* Horizontal fissure (between superior and middle lobes) */}
+      <path d="M18,-2 Q36,2 52,4" fill="none" stroke="#B63B2E" strokeWidth="0.9" opacity="0.7" />
+      {/* Oblique fissure (between middle and inferior lobes) */}
+      <path d="M56,26 Q40,34 20,44" fill="none" stroke="#B63B2E" strokeWidth="0.9" opacity="0.7" />
+
+      {/* Alveoli clusters - small blue dots sprinkled inside each lung */}
+      {[
+        [-38, 24], [-44, 40], [-30, 50], [-46, 56], [-24, 64],
+        [38, 24], [44, 40], [30, 50], [46, 58], [24, 62],
+      ].map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r="2.2" fill="#2D7BFF" opacity="0.65" />
+      ))}
+
+      {/* Lobe labels - light, unobtrusive, positioned inside the shapes */}
+      <text x="-38" y="6" textAnchor="middle" fontSize="6.5" fill="#5A1810" fontWeight="700">SUP</text>
+      <text x="-34" y="52" textAnchor="middle" fontSize="6.5" fill="#5A1810" fontWeight="700">INF</text>
+      <text x="36" y="0" textAnchor="middle" fontSize="6.5" fill="#5A1810" fontWeight="700">SUP</text>
+      <text x="38" y="20" textAnchor="middle" fontSize="6.5" fill="#5A1810" fontWeight="700">MID</text>
+      <text x="36" y="50" textAnchor="middle" fontSize="6.5" fill="#5A1810" fontWeight="700">INF</text>
+    </g>
+  );
+};
+
+// Anatomical four-chamber heart. Right side (blue) = deoxygenated, left side
+// (crimson) = oxygenated, matching the app's color convention. The great
+// vessels (aorta, pulmonary trunk, superior and inferior vena cava,
+// pulmonary veins) emerge from the top so the diagram shows blood actually
+// entering and leaving the heart, not just the chambers in isolation.
 const atlasHeart = ({ cx, cy, scale = 1, highlight = false, onDrill }) => (
   <g transform={`translate(${cx},${cy}) scale(${scale})`}
     style={onDrill ? { cursor: "pointer" } : undefined}>
+
+    {/* Pericardial sac outline - the soft exterior envelope */}
     <path
-      d="M-50,-15 Q-62,-50 -30,-62 Q0,-70 0,-45 Q0,-70 30,-62 Q62,-50 50,-15 Q45,20 0,58 Q-45,20 -50,-15 Z"
-      fill="#FBE9E7" opacity="0.9" stroke={ATLAS_COLORS.erythroid} strokeWidth="1.6" />
-    <path d="M-42,-25 Q-32,-45 -14,-40 L-14,-8 Q-30,-6 -42,-25 Z"
-      fill="url(#atlas-grad-lymphoid)" />
-    <path d="M42,-25 Q32,-45 14,-40 L14,-8 Q30,-6 42,-25 Z"
-      fill="url(#atlas-grad-erythroid)" />
-    <path d="M-42,-4 Q-46,26 -14,44 L-6,-2 Q-26,-4 -42,-4 Z"
-      fill="url(#atlas-grad-lymphoid)" />
-    <path d="M42,-4 Q46,26 14,44 L6,-2 Q26,-4 42,-4 Z"
-      fill="url(#atlas-grad-erythroid)" />
-    <line x1="-4" y1="-40" x2="-4" y2="44" stroke="#0A0F1A" strokeWidth="2.5" opacity="0.5" />
-    <text x="-26" y="-22" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">RA</text>
-    <text x="26" y="-22" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">LA</text>
-    <text x="-24" y="24" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">RV</text>
-    <text x="24" y="24" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">LV</text>
-    {highlight && <path
-      d="M-50,-15 Q-62,-50 -30,-62 Q0,-70 0,-45 Q0,-70 30,-62 Q62,-50 50,-15 Q45,20 0,58 Q-45,20 -50,-15 Z"
-      fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="3" />}
-    {onDrill && <text x="42" y="-46" textAnchor="middle" fontSize="13" fill={ATLAS_COLORS.trunk}>⤢</text>}
+      d="M-64,-8
+         Q-72,-42 -46,-58
+         Q-16,-72 0,-42
+         Q16,-72 46,-58
+         Q72,-42 64,-8
+         Q60,26 22,58
+         Q0,76 -22,58
+         Q-60,26 -64,-8 Z"
+      fill="#FBE9E7" opacity="0.55"
+      stroke="#C0392B" strokeWidth="1.4" />
+
+    {/* Superior vena cava - enters top-right (from body) */}
+    <path d="M22,-62 Q20,-80 26,-92 L14,-92 Q10,-78 12,-62 Z"
+      fill="url(#atlas-grad-lymphoid)" stroke="#123F9E" strokeWidth="1" />
+
+    {/* Inferior vena cava - enters bottom-right */}
+    <path d="M20,66 Q24,80 22,90 L10,90 Q12,78 10,66 Z"
+      fill="url(#atlas-grad-lymphoid)" stroke="#123F9E" strokeWidth="1" />
+
+    {/* Aorta - emerges from top-left */}
+    <path d="M-12,-62 Q-18,-82 -30,-92 L-42,-86 Q-28,-74 -24,-58 Z"
+      fill="url(#atlas-grad-erythroid)" stroke="#8C1C12" strokeWidth="1" />
+
+    {/* Pulmonary trunk - emerges from top-center-right */}
+    <path d="M8,-64 Q6,-84 -2,-92 L-12,-88 Q-4,-74 0,-60 Z"
+      fill="url(#atlas-grad-lymphoid)" stroke="#123F9E" strokeWidth="1" />
+
+    {/* Pulmonary veins - enter from top-left (from lungs) */}
+    <path d="M-46,-40 Q-62,-48 -70,-58 L-66,-68 Q-56,-58 -42,-52 Z"
+      fill="url(#atlas-grad-erythroid)" stroke="#8C1C12" strokeWidth="1" />
+
+    {/* RIGHT ATRIUM - upper right chamber (blue) */}
+    <path d="M-6,-46 Q-4,-58 10,-56 Q30,-52 40,-40 Q44,-22 34,-12 L0,-10 Q-10,-28 -6,-46 Z"
+      fill="url(#atlas-grad-lymphoid)" stroke="#123F9E" strokeWidth="1.2" />
+
+    {/* LEFT ATRIUM - upper left chamber (crimson) */}
+    <path d="M-42,-40 Q-52,-52 -34,-56 Q-16,-60 -6,-46 Q-2,-28 -12,-10 L-38,-14 Q-48,-24 -42,-40 Z"
+      fill="url(#atlas-grad-erythroid)" stroke="#8C1C12" strokeWidth="1.2" />
+
+    {/* RIGHT VENTRICLE - lower right chamber (blue). Thinner wall. */}
+    <path d="M-6,-6 Q-8,30 6,58 Q20,66 34,54 Q48,38 48,10 Q44,-6 32,-10 Z"
+      fill="url(#atlas-grad-lymphoid)" stroke="#123F9E" strokeWidth="1.2" />
+
+    {/* LEFT VENTRICLE - lower left chamber (crimson). Thicker wall. */}
+    <path d="M-8,-6 Q-14,34 -30,58 Q-44,64 -54,48 Q-64,24 -56,-4 Q-48,-16 -32,-12 Z"
+      fill="url(#atlas-grad-erythroid)" stroke="#8C1C12" strokeWidth="1.2" />
+
+    {/* Septum - the muscular wall between left and right */}
+    <path d="M-4,-42 Q-2,4 8,48 L4,54 Q-8,10 -10,-40 Z"
+      fill="#2B1A14" opacity="0.28" />
+
+    {/* Coronary vessels - a couple of small visible branches on the surface */}
+    <path d="M-6,-38 Q-20,-24 -34,6 Q-44,26 -50,40"
+      fill="none" stroke="#8C1C12" strokeWidth="1.4" opacity="0.7" strokeLinecap="round" />
+    <path d="M2,30 Q14,44 26,52"
+      fill="none" stroke="#8C1C12" strokeWidth="1.2" opacity="0.65" strokeLinecap="round" />
+
+    {/* Chamber labels - placed inside each chamber, white for contrast */}
+    <text x="18" y="-26" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">RA</text>
+    <text x="-26" y="-26" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">LA</text>
+    <text x="20" y="26" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">RV</text>
+    <text x="-32" y="26" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">LV</text>
+
+    {/* Vessel labels - small, near the emerging vessels */}
+    <text x="30" y="-80" textAnchor="middle" fontSize="7" fill="var(--text-2)">SVC</text>
+    <text x="-38" y="-80" textAnchor="middle" fontSize="7" fill="var(--text-2)">Aorta</text>
+    <text x="-4" y="-80" textAnchor="middle" fontSize="7" fill="var(--text-2)">PA</text>
+
+    {/* Active ring - drawn as a wider outline of the whole heart */}
+    {highlight && (
+      <path
+        d="M-64,-8
+           Q-72,-42 -46,-58
+           Q-16,-72 0,-42
+           Q16,-72 46,-58
+           Q72,-42 64,-8
+           Q60,26 22,58
+           Q0,76 -22,58
+           Q-60,26 -64,-8 Z"
+        fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="3.5"
+        strokeLinejoin="round" />
+    )}
+
+    {/* Drill indicator */}
+    {onDrill && <text x="58" y="-46" textAnchor="middle" fontSize="13" fill={ATLAS_COLORS.trunk}>⤢</text>}
   </g>
 );
 const atlasConductionPath = ({ cx, cy, scale = 1 }) => (
@@ -616,18 +798,24 @@ export const DIAGRAMS = {
             {atlasLungs({ cx: 450, cy: 90, scale: 1, highlight: false })}
           </g>
 
-          {/* Pulmonary vessels */}
+                    {/* Pulmonary vessels - pulmonary artery (blue, heart→lungs) and
+              pulmonary veins (red, lungs→heart). Drawn with the atlasVessel
+              primitive so the tube has a visible wall and a lumen that the
+              blood cells travel through. */}
           <g filter={hotFilter("system")}>
-            <path d="M395,220 Q380,160 420,120" stroke="url(#atlas-grad-lymphoid)" strokeWidth="12" fill="none" strokeLinecap="round" />
-            <path d="M505,220 Q520,160 480,120" stroke="url(#atlas-grad-erythroid)" strokeWidth="12" fill="none" strokeLinecap="round" />
+            {atlasVessel({ d: "M395,220 Q380,160 420,120", oxygenated: false, width: 14 })}
+            {atlasVessel({ d: "M505,220 Q520,160 480,120", oxygenated: true, width: 14 })}
             {atlasBloodCell({ cx: 408, cy: 170, r: 4, oxygenated: false, animate: true, delay: "0s" })}
             {atlasBloodCell({ cx: 492, cy: 170, r: 4, oxygenated: true,  animate: true, delay: "1s" })}
           </g>
 
-          {/* Systemic vessels */}
+                    {/* Systemic vessels - aorta (red, heart→body) on the right and
+              vena cava (blue, body→heart) on the left. Same vessel primitive
+              as the pulmonary vessels, so all four tubes share one visual
+              language. */}
           <g filter={hotFilter("system")}>
-            <path d="M560,300 Q640,400 620,520" stroke="url(#atlas-grad-erythroid)" strokeWidth="12" fill="none" strokeLinecap="round" />
-            <path d="M340,300 Q260,400 280,520" stroke="url(#atlas-grad-lymphoid)" strokeWidth="12" fill="none" strokeLinecap="round" />
+            {atlasVessel({ d: "M560,300 Q640,400 620,520", oxygenated: true, width: 14 })}
+            {atlasVessel({ d: "M340,300 Q260,400 280,520", oxygenated: false, width: 14 })}
             {atlasBloodCell({ cx: 610, cy: 440, r: 4, oxygenated: true,  animate: true, delay: "0.5s" })}
             {atlasBloodCell({ cx: 292, cy: 440, r: 4, oxygenated: false, animate: true, delay: "1.5s" })}
           </g>
@@ -665,45 +853,103 @@ export const DIAGRAMS = {
             </g>
           )}
 
-          {/* Hemostasis inset */}
+                    {/* Hemostasis inset - a callout box connected by a leader line to
+              the systemic vessel, showing what's happening at a wound site
+              on the same vessel blood is flowing through. */}
           {inFocus("hemostasis") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="70" y="270" width="160" height="120" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              {/* Leader line from the inset up to the systemic vessel */}
+              <path
+                d="M150,270 Q180,240 250,220 Q290,215 300,240"
+                fill="none"
+                stroke={ATLAS_COLORS.trunk}
+                strokeWidth="1.5"
+                strokeDasharray="4 4"
+                opacity="0.85"
+              />
+              <circle cx="300" cy="240" r="4" fill={ATLAS_COLORS.trunk} />
+              {/* Callout box with rounded corners */}
+              <rect x="70" y="270" width="160" height="130" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
               <text x="150" y="292" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>VESSEL INJURY</text>
-              <line x1="90" y1="330" x2="210" y2="330" stroke="url(#atlas-grad-erythroid)" strokeWidth="14" strokeLinecap="round" />
-              <line x1="150" y1="324" x2="150" y2="345" stroke="#0A0F1A" strokeWidth="3" />
-              {atlasPlatelet({ cx: 138, cy: 336, r: 4 })}
-              {atlasPlatelet({ cx: 150, cy: 336, r: 4 })}
-              {atlasPlatelet({ cx: 162, cy: 336, r: 4 })}
-              {atlasFlowArrow({ x1: 150, y1: 356, x2: 150, y2: 372, color: ATLAS_COLORS.trunk })}
-              <text x="150" y="384" textAnchor="middle" fontSize="10" fill="var(--text-2)">platelet plug + fibrin</text>
+              <text x="150" y="305" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">platelet plug + fibrin mesh</text>
+              {/* Damaged vessel segment */}
+              <line x1="90" y1="340" x2="210" y2="340" stroke="#8C1C12" strokeWidth="16" strokeLinecap="round" />
+              <line x1="90" y1="340" x2="210" y2="340" stroke="url(#atlas-grad-erythroid)" strokeWidth="13" strokeLinecap="round" />
+              {/* The wound - a small gap with platelets converging */}
+              <line x1="150" y1="332" x2="150" y2="348" stroke="var(--bg-2)" strokeWidth="6" />
+              {atlasPlatelet({ cx: 138, cy: 344, r: 5 })}
+              {atlasPlatelet({ cx: 150, cy: 346, r: 5 })}
+              {atlasPlatelet({ cx: 162, cy: 344, r: 5 })}
+              {/* Fibrin mesh - thin criss-crossing threads over the plug */}
+              <path d="M140,340 L160,352 M140,352 L160,340" stroke={ATLAS_COLORS.trunk} strokeWidth="1" opacity="0.8" />
+              {/* Platelet plug arrow */}
+              {atlasFlowArrow({ x1: 150, y1: 358, x2: 150, y2: 380, color: ATLAS_COLORS.trunk })}
+              <text x="150" y="393" textAnchor="middle" fontSize="9" fill="var(--text-2)">plug seals the wound</text>
             </g>
           )}
 
-          {/* Flow inset */}
+                    {/* Flow inset - connected by a leader line to the aorta, showing
+              the pressure gradient that drives flow through the same vessel
+              the student is already looking at. */}
           {inFocus("flow") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="670" y="270" width="180" height="120" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              {/* Leader line from the inset leftward to the systemic vessel */}
+              <path
+                d="M670,330 Q640,340 620,380 Q615,400 620,440"
+                fill="none"
+                stroke={ATLAS_COLORS.trunk}
+                strokeWidth="1.5"
+                strokeDasharray="4 4"
+                opacity="0.85"
+              />
+              <circle cx="620" cy="440" r="4" fill={ATLAS_COLORS.trunk} />
+              {/* Callout box */}
+              <rect x="670" y="270" width="180" height="130" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
               <text x="760" y="292" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>FLOW · PRESSURE</text>
-              <path d="M690,330 L810,330" stroke="url(#atlas-grad-erythroid)" strokeWidth="12" strokeLinecap="round" />
-              {atlasFlowArrow({ x1: 700, y1: 350, x2: 800, y2: 350, color: "#E53935" })}
-              <text x="700" y="372" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">high P</text>
-              <text x="800" y="372" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">lower P</text>
+              <text x="760" y="305" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">flow = ΔP ÷ resistance</text>
+              {/* Vessel segment showing the pressure gradient */}
+              <path d="M690,340 L830,340" stroke="#8C1C12" strokeWidth="16" strokeLinecap="round" />
+              <path d="M690,340 L830,340" stroke="url(#atlas-grad-erythroid)" strokeWidth="13" strokeLinecap="round" />
+              {atlasFlowArrow({ x1: 700, y1: 358, x2: 820, y2: 358, color: "#E53935" })}
+              <text x="690" y="380" textAnchor="middle" fontSize="9" fill="var(--text-2)">high P</text>
+              <text x="830" y="380" textAnchor="middle" fontSize="9" fill="var(--text-2)">lower P</text>
             </g>
           )}
 
-          {/* BP overlay */}
+                    {/* BP overlay - three small callouts showing what regulates blood
+              pressure, positioned around the body outline: brain above,
+              kidneys on the side, adrenal nearby. Leader lines connect each
+              to the body region the student is looking at. */}
           {inFocus("bp") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              {atlasFlowArrow({ x1: 450, y1: 435, x2: 450, y2: 528, color: ATLAS_COLORS.trunk, dashed: true })}
-              <text x="450" y="490" textAnchor="middle" fontSize="10.5" fill={ATLAS_COLORS.trunk} fontWeight="700">nerves · hormones</text>
+              {/* Brain callout - top */}
+              <path d="M450,435 L450,480" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" strokeDasharray="4 4" opacity="0.85" />
+              <circle cx="450" cy="435" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="380" y="480" width="140" height="32" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" />
+              <text x="450" y="500" textAnchor="middle" fontSize="10" fill={ATLAS_COLORS.trunk} fontWeight="700">Brain · nerves</text>
+
+              {/* Kidney callout - left side */}
+              <path d="M250,560 Q220,540 210,500 Q205,480 210,460" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" strokeDasharray="4 4" opacity="0.85" />
+              <circle cx="250" cy="560" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="150" y="420" width="120" height="40" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" />
+              <text x="210" y="438" textAnchor="middle" fontSize="10" fill={ATLAS_COLORS.trunk} fontWeight="700">Kidneys</text>
+              <text x="210" y="450" textAnchor="middle" fontSize="8" fill="var(--text-3)">renin · aldosterone</text>
+
+              {/* Adrenal callout - right side */}
+              <path d="M650,560 Q680,540 690,500 Q695,480 690,460" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" strokeDasharray="4 4" opacity="0.85" />
+              <circle cx="650" cy="560" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="640" y="420" width="120" height="40" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" />
+              <text x="700" y="438" textAnchor="middle" fontSize="10" fill={ATLAS_COLORS.trunk} fontWeight="700">Adrenal</text>
+              <text x="700" y="450" textAnchor="middle" fontSize="8" fill="var(--text-3)">adrenaline</text>
             </g>
           )}
 
-          {/* Lymphatic overlay */}
+                    {/* Lymphatic overlay - lymph vessels are thinner than blood
+              vessels and drawn dashed, matching real anatomical illustrations
+              where lymphatics are distinguished from veins visually. */}
           {inFocus("lymph") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <path d="M320,300 Q220,330 200,420 Q210,510 250,540" stroke="#2D7BFF" strokeWidth="7" fill="none" strokeLinecap="round" strokeDasharray="10 6" />
+              {atlasVessel({ d: "M320,300 Q220,330 200,420 Q210,510 250,540", oxygenated: false, width: 8, dashed: true })}
               {atlasLymphNode({ cx: 240, cy: 380 })}
               {atlasLymphNode({ cx: 215, cy: 460 })}
               <text x="150" y="500" fontSize="10.5" fill="#2D7BFF" fontWeight="700">lymph → blood</text>
