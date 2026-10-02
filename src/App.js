@@ -763,25 +763,183 @@ const AVATAR_FACES = {
 // gender is now a HARD filter (student picks Male or Female once, up
 // front) rather than a sort hint - each list only shows that gender's 4
 // styles, matching what was asked for explicitly here.
+// Helper: derive a highlight tint and shadow tint from a base hair colour, so
+// every style gets volume instead of reading as a flat silhouette. Uses the
+// same lightness math as the rest of the app's colour helpers.
+const hairShade = (hex, pct) => {
+  try {
+    const h = String(hex).replace("#", "");
+    const n = parseInt(h.length === 3 ? h.split("").map(c => c + c).join("") : h, 16);
+    let r = (n >> 16) + Math.round((pct / 100) * 255);
+    let g = ((n >> 8) & 0x00ff) + Math.round((pct / 100) * 255);
+    let b = (n & 0x0000ff) + Math.round((pct / 100) * 255);
+    r = Math.max(0, Math.min(255, r)); g = Math.max(0, Math.min(255, g)); b = Math.max(0, Math.min(255, b));
+    return "#" + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
+  } catch { return hex; }
+};
+
 const AVATAR_HAIR = {
+  // ---- MALE ----
   bald: { label: "Bald", gender: "male", behind: null, front: null },
-  fade: { label: "Taper fade", gender: "male", behind: null, front: (fill) => <path d="M20,38 Q50,10 80,38 L80,30 Q50,6 20,30 Z" fill={fill} /> },
-  afro: { label: "Afro", gender: "male", behind: (fill) => <circle cx="50" cy="44" r="40" fill={fill} />, front: null },
+
+  fade: {
+    label: "Taper Fade", gender: "male", behind: null,
+    front: (fill) => (
+      <g stroke="#1B1405" strokeWidth="0.8" strokeLinejoin="round">
+        {/* Base crown - follows the head curve with a clean hairline */}
+        <path d="M20,44 Q22,26 34,18 Q50,10 66,18 Q78,26 80,44 Q78,40 70,36 Q60,28 50,28 Q40,28 30,36 Q22,40 20,44 Z" fill={fill} />
+        {/* Temple shading for the taper */}
+        <path d="M20,44 Q22,40 30,36 Q27,42 26,48 Q23,46 20,44 Z" fill={hairShade(fill, -18)} />
+        <path d="M80,44 Q78,40 70,36 Q73,42 74,48 Q77,46 80,44 Z" fill={hairShade(fill, -18)} />
+        {/* Highlight band */}
+        <path d="M32,22 Q50,15 68,22 Q60,20 50,20 Q40,20 32,22 Z" fill={hairShade(fill, 22)} opacity="0.85" stroke="none" />
+      </g>
+    )
+  },
+
+  afro: {
+    label: "Afro", gender: "male",
+    behind: (fill) => (
+      <g stroke="#1B1405" strokeWidth="0.8">
+        {/* Layered rounded silhouette - a soft cloud rather than one flat circle */}
+        <circle cx="50" cy="40" r="38" fill={fill} />
+        <circle cx="24" cy="52" r="18" fill={fill} />
+        <circle cx="76" cy="52" r="18" fill={fill} />
+        <circle cx="50" cy="16" r="16" fill={fill} />
+        {/* Volume highlight */}
+        <circle cx="38" cy="26" r="12" fill={hairShade(fill, 26)} opacity="0.7" stroke="none" />
+        <circle cx="62" cy="24" r="8" fill={hairShade(fill, 26)} opacity="0.5" stroke="none" />
+      </g>
+    ),
+    front: null
+  },
+
   waves: {
     label: "Waves", gender: "male", behind: null,
-    front: (fill) => <g><path d="M16,42 Q50,4 84,42 L84,28 Q50,-4 16,28 Z" fill={fill} /><path d="M22,30 Q50,18 78,30" stroke="#00000035" strokeWidth="1.5" fill="none" /><path d="M22,22 Q50,10 78,22" stroke="#00000035" strokeWidth="1.5" fill="none" /></g>
+    front: (fill) => (
+      <g stroke="#1B1405" strokeWidth="0.8" strokeLinejoin="round">
+        {/* Base cap */}
+        <path d="M20,44 Q22,24 36,16 Q50,10 64,16 Q78,24 80,44 Q74,38 62,34 Q50,30 38,34 Q26,38 20,44 Z" fill={fill} />
+        {/* Four wave bands, alternating highlight/shadow for a combed effect */}
+        <path d="M24,42 Q34,34 48,32 Q62,34 76,42" stroke={hairShade(fill, -22)} strokeWidth="1.6" fill="none" />
+        <path d="M26,36 Q36,28 50,26 Q64,28 74,36" stroke={hairShade(fill, 20)} strokeWidth="1.4" fill="none" opacity="0.9" />
+        <path d="M30,30 Q40,23 50,21 Q60,23 70,30" stroke={hairShade(fill, -18)} strokeWidth="1.4" fill="none" />
+        <path d="M34,24 Q42,18 50,17 Q58,18 66,24" stroke={hairShade(fill, 18)} strokeWidth="1.2" fill="none" opacity="0.85" />
+      </g>
+    )
   },
+
+  lowcut: {
+    label: "Low Cut", gender: "male", behind: null,
+    front: (fill) => (
+      <g stroke="#1B1405" strokeWidth="0.8" strokeLinejoin="round">
+        {/* Tight, close-fitting cap with a natural hairline curve */}
+        <path d="M22,44 Q24,28 36,22 Q50,17 64,22 Q76,28 78,44 Q72,40 62,37 Q50,34 38,37 Q28,40 22,44 Z" fill={fill} />
+        {/* Subtle stubble shadow just below the hairline */}
+        <path d="M26,44 Q38,40 50,39 Q62,40 74,44 Q62,43 50,43 Q38,43 26,44 Z" fill={hairShade(fill, -25)} opacity="0.6" stroke="none" />
+        {/* Sheen highlight */}
+        <path d="M38,25 Q50,22 62,25 Q54,24 50,24 Q46,24 38,25 Z" fill={hairShade(fill, 30)} opacity="0.7" stroke="none" />
+      </g>
+    )
+  },
+
+  // ---- FEMALE ----
   braids: {
-    label: "Braids (long)", gender: "female", behind: (fill) => <g fill={fill}><rect x="12" y="26" width="7" height="70" rx="3.5" /><rect x="24" y="20" width="7" height="80" rx="3.5" /><rect x="69" y="20" width="7" height="80" rx="3.5" /><rect x="81" y="26" width="7" height="70" rx="3.5" /></g>,
-    front: (fill) => <path d="M16,30 Q50,2 84,30 L84,22 Q50,-6 16,22 Z" fill={fill} />
+    label: "Box Braids", gender: "female",
+    behind: (fill) => (
+      <g stroke="#1B1405" strokeWidth="0.7">
+        {/* Long braids draping either side, each drawn as a rounded column
+            with segment lines so it reads as plaited hair, not a flat bar */}
+        {[
+          { x: 12, y: 28, h: 68 }, { x: 22, y: 22, h: 78 },
+          { x: 71, y: 22, h: 78 }, { x: 81, y: 28, h: 68 },
+        ].map((b, i) => (
+          <g key={i}>
+            <rect x={b.x} y={b.y} width="7" height={b.h} rx="3.5" fill={i % 2 === 0 ? fill : hairShade(fill, -10)} />
+            {Array.from({ length: Math.floor(b.h / 8) }).map((_, j) => (
+              <line key={j} x1={b.x + 1} y1={b.y + 6 + j * 8} x2={b.x + 6} y2={b.y + 6 + j * 8}
+                stroke={hairShade(fill, -30)} strokeWidth="0.6" strokeLinecap="round" />
+            ))}
+          </g>
+        ))}
+        {/* Crown - hairline that frames the top of the head */}
+        <path d="M16,32 Q50,2 84,32 L84,22 Q50,-8 16,22 Z" fill={fill} />
+        <path d="M28,18 Q50,8 72,18 Q60,14 50,14 Q40,14 28,18 Z" fill={hairShade(fill, 22)} opacity="0.8" stroke="none" />
+      </g>
+    ),
+    front: (fill) => (
+      <g stroke="#1B1405" strokeWidth="0.8" strokeLinejoin="round">
+        {/* Front crown sweep, sitting over the forehead */}
+        <path d="M18,36 Q22,18 38,12 Q50,8 62,12 Q78,18 82,36 Q76,30 62,26 Q50,23 38,26 Q24,30 18,36 Z" fill={fill} />
+        <path d="M30,16 Q50,10 70,16 Q58,13 50,13 Q42,13 30,16 Z" fill={hairShade(fill, 24)} opacity="0.8" stroke="none" />
+      </g>
+    )
   },
-  ponytail: { label: "Ponytail", gender: "female", behind: (fill) => <path d="M78,30 Q100,40 92,70 Q84,86 76,68 Q74,44 78,30 Z" fill={fill} />, front: (fill) => <path d="M18,40 Q50,6 82,40 L82,28 Q50,-2 18,28 Z" fill={fill} /> },
+
+  ponytail: {
+    label: "Ponytail", gender: "female",
+    behind: (fill) => (
+      <g stroke="#1B1405" strokeWidth="0.8" strokeLinejoin="round">
+        {/* Ponytail: a tapered sweep from the crown down the side */}
+        <path d="M74,26 Q92,30 96,48 Q98,66 88,80 Q80,88 74,74 Q70,52 74,26 Z" fill={fill} />
+        <path d="M80,40 Q88,52 86,68 Q84,78 78,72" stroke={hairShade(fill, 22)} strokeWidth="1.4" fill="none" opacity="0.9" />
+        <path d="M76,30 Q86,38 88,52" stroke={hairShade(fill, -22)} strokeWidth="1" fill="none" />
+      </g>
+    ),
+    front: (fill) => (
+      <g stroke="#1B1405" strokeWidth="0.8" strokeLinejoin="round">
+        {/* Swept-back crown with a clear side part */}
+        <path d="M18,40 Q20,20 36,14 Q50,9 64,14 Q80,20 82,40 Q76,32 62,28 Q50,25 38,28 Q24,32 18,40 Z" fill={fill} />
+        <path d="M30,18 Q50,12 70,18 Q58,15 50,15 Q42,15 30,18 Z" fill={hairShade(fill, 24)} opacity="0.85" stroke="none" />
+        {/* Side part line */}
+        <path d="M42,12 Q38,20 36,28" stroke={hairShade(fill, -28)} strokeWidth="0.8" fill="none" />
+      </g>
+    )
+  },
+
   wig: {
     label: "Wig", gender: "female",
-    behind: (fill) => <ellipse cx="50" cy="55" rx="46" ry="48" fill={fill} />,
-    front: (fill) => <path d="M14,40 Q50,2 86,40 L86,24 Q50,-8 14,24 Z" fill={fill} />
+    behind: (fill) => (
+      <g stroke="#1B1405" strokeWidth="0.8">
+        {/* Full, voluminous silhouette framing the face */}
+        <ellipse cx="50" cy="52" rx="46" ry="50" fill={fill} />
+        {/* Volume highlights */}
+        <ellipse cx="34" cy="40" rx="14" ry="22" fill={hairShade(fill, 22)} opacity="0.55" stroke="none" />
+        <ellipse cx="68" cy="44" rx="10" ry="18" fill={hairShade(fill, 18)} opacity="0.4" stroke="none" />
+        {/* Soft inner shadow on the far side */}
+        <ellipse cx="70" cy="70" rx="18" ry="22" fill={hairShade(fill, -25)} opacity="0.4" stroke="none" />
+      </g>
+    ),
+    front: (fill) => (
+      <g stroke="#1B1405" strokeWidth="0.8" strokeLinejoin="round">
+        {/* Front curtain - a soft fringe covering the forehead */}
+        <path d="M14,44 Q18,20 34,12 Q50,6 66,12 Q82,20 86,44 Q80,32 62,28 Q50,25 38,28 Q20,32 14,44 Z" fill={fill} />
+        <path d="M28,18 Q50,10 72,18 Q58,14 50,14 Q42,14 28,18 Z" fill={hairShade(fill, 24)} opacity="0.8" stroke="none" />
+      </g>
+    )
   },
-  bun: { label: "Bun", gender: "female", behind: (fill) => <circle cx="50" cy="10" r="12" fill={fill} />, front: (fill) => <path d="M18,38 Q50,8 82,38 L82,28 Q50,0 18,28 Z" fill={fill} /> },
+
+  bun: {
+    label: "Top Bun", gender: "female",
+    behind: (fill) => (
+      <g stroke="#1B1405" strokeWidth="0.8">
+        {/* The bun itself, sitting above the head */}
+        <circle cx="50" cy="10" r="13" fill={fill} />
+        {/* Bun volume highlight */}
+        <circle cx="46" cy="7" r="5" fill={hairShade(fill, 26)} opacity="0.7" stroke="none" />
+        {/* Coil lines so the bun reads as swept-up hair */}
+        <path d="M42,6 Q50,12 58,6" stroke={hairShade(fill, -25)} strokeWidth="0.8" fill="none" />
+        <path d="M40,12 Q50,18 60,12" stroke={hairShade(fill, -25)} strokeWidth="0.8" fill="none" />
+      </g>
+    ),
+    front: (fill) => (
+      <g stroke="#1B1405" strokeWidth="0.8" strokeLinejoin="round">
+        {/* Crown pulled back toward the bun, with a slight widow's peak */}
+        <path d="M18,38 Q22,20 38,14 Q50,10 62,14 Q78,20 82,38 Q76,30 62,26 Q54,24 50,28 Q46,24 38,26 Q24,30 18,38 Z" fill={fill} />
+        <path d="M32,18 Q50,12 68,18 Q58,15 50,15 Q42,15 32,18 Z" fill={hairShade(fill, 24)} opacity="0.85" stroke="none" />
+      </g>
+    )
+  },
 };
 
 const AVATAR_EXTRAS = {
@@ -15561,7 +15719,7 @@ export default function App() {
                     {progress?.avatar ? <Avatar config={progress.avatar} size={33} /> : (progress?.name?.[0]?.toUpperCase() || "?")}
                   </button>
                 </div>
-                                                {avatarPickerOpen && (
+                                                                                                {avatarPickerOpen && createPortal(
                   <AvatarPicker
                     value={progress?.avatar}
                     name={progress?.name}
@@ -15572,7 +15730,8 @@ export default function App() {
                       setAvatarPickerOpen(false);
                     }}
                     onSave={(cfg) => { setAvatar(cfg); setAvatarPickerOpen(false); }}
-                  />
+                  />,
+                  document.body
                 )}
               </div>
             </div>
