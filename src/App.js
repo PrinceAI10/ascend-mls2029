@@ -1046,7 +1046,7 @@ function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
       <div className="card" style={{ maxWidth: 440, width: "100%", maxHeight: "94dvh", overflowY: "auto", WebkitOverflowScrolling: "touch", boxSizing: "border-box", padding: 16 }} onClick={(e) => e.stopPropagation()}>
                 <div style={{ textAlign: "center", marginBottom: 14 }}>
           <div style={{ fontSize: 17, fontWeight: 700 }}>
-            {firstRun ? "Set up your avatar" : "Select your avatar"}
+            {firstRun ? "Create your avatar" : "Change your avatar"}
           </div>
           <div style={{ fontSize: 13, color: "var(--text-2)", marginTop: 4 }}>
             Pick a look - you can change it anytime from the topbar.
