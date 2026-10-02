@@ -267,19 +267,31 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   const [playing, setPlaying] = useState(false);
   const [paused, setPaused] = useState(false);
   const [speed, setSpeed] = useState(1);
-  const [zoom, setZoom] = useState(1);
-  const [pan, setPan] = useState({ x: 0, y: 0 });
+  // Default zoom sits slightly under 1 so the whole diagram fits comfortably
+  // on first open without the drawing touching the stage edges. The user can
+  // still pinch/wheel/+/− to change it.
+  const DEFAULT_ZOOM = 0.9;
+  const MIN_ZOOM = 0.5;
+  const MAX_ZOOM = 3;
+  const [zoom, setZoom] = useState(DEFAULT_ZOOM);
 
   const playTokenRef = useRef(0);
   const pinchRef = useRef(null);
 
   // Reset local view state whenever a new diagram is opened (drill-down or back)
+    // Zoom helper used by the +/- buttons, the wheel, and pinch. Clamps to
+  // MIN_ZOOM..MAX_ZOOM and rounds to 2 decimals so the label stays clean.
+  const applyZoom = useCallback((nextZoomRaw) => {
+    const next = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, +Number(nextZoomRaw).toFixed(2)));
+    setZoom(next);
+  }, []);
+
   useEffect(() => {
     setActiveLabelId(null);
     setActiveStep(0);
     setPlaying(false);
     setPaused(false);
-        setZoom(1);
+    setZoom(DEFAULT_ZOOM);
     playTokenRef.current++;
     try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {}
   }, [diagramId]);
@@ -356,25 +368,16 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     jumpTo(next);
   };
 
-    /* ---- zoom / pan - center-locked, clamped so the figure can never drift
-     fully off-stage ---- */
-    const MIN_ZOOM = 0.5, MAX_ZOOM = 3;
-
-  // No pan state anymore - the figure is center-locked by the stage's
-  // own flexbox centering, so zoom just clamps and sets the scale.
-  const applyZoom = useCallback((nextZoomRaw) => {
-    const nextZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, +nextZoomRaw.toFixed(2)));
-    setZoom(nextZoom);
-  }, []);
+  
 
 
     // Zoom / pointer handling. Panning is deliberately disabled - the figure
   // is locked to the center of the stage at all times. Only ZOOM is
   // interactive: mouse wheel on desktop, two-finger pinch on touch, and
   // the +/- buttons. A single-finger drag does nothing.
-  const onWheel = (e) => {
+    const onWheel = (e) => {
     e.preventDefault();
-    const delta = e.deltaY > 0 ? -0.1 : 0.1;
+    const delta = e.deltaY > 0 ? -0.08 : 0.08;
     applyZoom(zoom + delta);
   };
 
@@ -484,11 +487,11 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
             onPointerCancel={onPointerUp}
           >
             <div className="atlas-zoom-controls">
-              <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom(zoom - 0.2)}>−</button>
-              <button className="btn btn-sm mono" title="Reset zoom to 100%" style={{ minWidth: 46 }} onClick={() => setZoom(1)}>{Math.round(zoom * 100)}%</button>
+                            <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom(zoom - 0.2)}>−</button>
+              <button className="btn btn-sm mono" title="Reset zoom" style={{ minWidth: 46 }} onClick={() => applyZoom(DEFAULT_ZOOM)}>{Math.round(zoom * 100)}%</button>
               <button className="btn btn-sm" title="Zoom in" onClick={() => applyZoom(zoom + 0.2)}>+</button>
             </div>
-            <div
+                        <div
               style={{
                 transform: `scale(${zoom})`,
                 transformOrigin: "center center",
@@ -498,6 +501,7 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
                 justifyContent: "center",
                 maxWidth: "100%",
                 maxHeight: "100%",
+                willChange: "transform",
               }}
             >
               {diagram.render({ onLabelClick: setActiveLabelId, activeLabelId, activeStep, onOpenDrill: () => {} })}
