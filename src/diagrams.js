@@ -26,6 +26,24 @@
 // ------------------------------------------------------------
 import React from "react";
 
+/* One global keyframe for animated blood cells drifting through vessels.
+   Attached per cell via inline style so each can have its own delay. */
+if (typeof document !== "undefined" && !document.getElementById("atlas-drift-keyframes")) {
+  const style = document.createElement("style");
+  style.id = "atlas-drift-keyframes";
+  style.textContent = `
+    @keyframes atlasDrift {
+      0%   { transform: translate(0, 0); opacity: 1; }
+      50%  { transform: translate(0, -6px); opacity: 0.9; }
+      100% { transform: translate(0, 0); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      [style*="atlasDrift"] { animation: none !important; }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
 // Small, deliberately limited palette on top of the app's existing
 // amber/good/bad tokens - navy, gold(amber), blue, crimson, purple,
 // matching the "navy, gold, white, blue" system already locked in for
@@ -201,6 +219,126 @@ const atlasValve = ({ id, x, y, open, flip, color, onLabelClick, activeLabelId, 
     </g>
   );
 };
+
+/* ---------------------------------------------------------------- */
+/* SHARED ANATOMICAL PRIMITIVES                                     */
+/* ---------------------------------------------------------------- */
+/* Reusable, clean-stylized building blocks for every Atlas diagram */
+/* in the cardio / respiratory / circulatory family. Each primitive */
+/* draws ONE thing well, is parameterised, and is used by every     */
+/* diagram that needs it - so a new topic composes rather than      */
+/* redraws anatomy. Extract more primitives here as new visual      */
+/* families are added (renal, immune, micro, etc.).                 */
+/* ---------------------------------------------------------------- */
+
+const atlasBloodCell = ({ cx, cy, r = 6, oxygenated = true, animate = false, delay = "0s", label }) => (
+  <g style={animate ? { animation: `atlasDrift 4s ease-in-out infinite`, animationDelay: delay } : undefined}>
+    <ellipse cx={cx} cy={cy} rx={r} ry={r * 0.6}
+      fill={oxygenated ? ATLAS_COLORS.erythroid : ATLAS_COLORS.lymphoid}
+      opacity="0.9" />
+    <ellipse cx={cx} cy={cy} rx={r * 0.5} ry={r * 0.3}
+      fill={oxygenated ? "#F5C7C0" : "#B8D0FF"} opacity="0.7" />
+    {label && <text x={cx} y={cy - r - 4} textAnchor="middle" fontSize="9" fill="var(--text-2)">{label}</text>}
+  </g>
+);
+
+const atlasWhiteCell = ({ cx, cy, r = 7, label }) => (
+  <g>
+    <circle cx={cx} cy={cy} r={r} fill="#F3F1FF" stroke={ATLAS_COLORS.nucleus} strokeWidth="1.2" />
+    <circle cx={cx} cy={cy} r={r * 0.55} fill={ATLAS_COLORS.nucleus} opacity="0.75" />
+    {label && <text x={cx} y={cy - r - 4} textAnchor="middle" fontSize="9" fill="var(--text-2)">{label}</text>}
+  </g>
+);
+
+const atlasPlatelet = ({ cx, cy, r = 4, label }) => (
+  <g>
+    <ellipse cx={cx} cy={cy} rx={r} ry={r * 0.7} fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="0.6" />
+    {label && <text x={cx} y={cy - r - 4} textAnchor="middle" fontSize="9" fill="var(--text-2)">{label}</text>}
+  </g>
+);
+
+const atlasLymphNode = ({ cx, cy, scale = 1 }) => (
+  <g transform={`translate(${cx},${cy}) scale(${scale})`}>
+    <ellipse cx="0" cy="0" rx="16" ry="11" fill={ATLAS_COLORS.lymphoid} opacity="0.7" />
+    <ellipse cx="0" cy="0" rx="10" ry="6" fill="#0A0F1A" opacity="0.22" />
+    <ellipse cx="-4" cy="-2" rx="3" ry="2" fill="#fff" opacity="0.5" />
+    <ellipse cx="4" cy="2" rx="3" ry="2" fill="#fff" opacity="0.5" />
+  </g>
+);
+
+const atlasFlowArrow = ({ x1, y1, x2, y2, color = ATLAS_COLORS.neutral, dashed = false }) => {
+  const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+  const headLen = 10;
+  return (
+    <g>
+      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth="2"
+        strokeLinecap="round" strokeDasharray={dashed ? "4 4" : undefined} />
+      <polygon
+        points={`0,0 ${-headLen},${-headLen/2} ${-headLen},${headLen/2}`}
+        transform={`translate(${x2},${y2}) rotate(${angle})`}
+        fill={color} />
+    </g>
+  );
+};
+
+const atlasLungs = ({ cx, cy, scale = 1, highlight = false }) => (
+  <g transform={`translate(${cx},${cy}) scale(${scale})`}
+    stroke={highlight ? ATLAS_COLORS.trunk : ATLAS_COLORS.neutral}
+    strokeWidth={highlight ? 2 : 1.4}>
+    <rect x="-6" y="-60" width="12" height="30" rx="4" fill="#F3F1FF" opacity="0.9" />
+    <path d="M0,-30 Q-14,-22 -22,-10" fill="none" />
+    <path d="M0,-30 Q14,-22 22,-10" fill="none" />
+    <path d="M-18,-8 Q-58,-4 -58,32 Q-58,60 -26,66 Q-10,60 -8,26 Q-10,4 -18,-8 Z"
+      fill="#FBE9E7" opacity="0.85" />
+    <path d="M18,-8 Q58,-4 58,32 Q58,60 26,66 Q10,60 8,26 Q10,4 18,-8 Z"
+      fill="#FBE9E7" opacity="0.85" />
+    {[[-34,20],[-44,36],[-28,44],[34,20],[44,36],[28,44]].map(([x, y], i) => (
+      <circle key={i} cx={x} cy={y} r="3" fill={ATLAS_COLORS.lymphoid} opacity="0.55" />
+    ))}
+  </g>
+);
+
+const atlasHeart = ({ cx, cy, scale = 1, highlight = false, onDrill }) => (
+  <g transform={`translate(${cx},${cy}) scale(${scale})`}
+    style={onDrill ? { cursor: "pointer" } : undefined}>
+    <path
+      d="M-50,-15 Q-62,-50 -30,-62 Q0,-70 0,-45 Q0,-70 30,-62 Q62,-50 50,-15 Q45,20 0,58 Q-45,20 -50,-15 Z"
+      fill="#FBE9E7" opacity="0.4" stroke={ATLAS_COLORS.erythroid} strokeWidth="1.4" />
+    <path d="M-42,-25 Q-32,-45 -14,-40 L-14,-8 Q-30,-6 -42,-25 Z"
+      fill={ATLAS_COLORS.lymphoid} opacity="0.75" />
+    <path d="M42,-25 Q32,-45 14,-40 L14,-8 Q30,-6 42,-25 Z"
+      fill={ATLAS_COLORS.erythroid} opacity="0.75" />
+    <path d="M-42,-4 Q-46,26 -14,44 L-6,-2 Q-26,-4 -42,-4 Z"
+      fill={ATLAS_COLORS.lymphoid} opacity="0.85" />
+    <path d="M42,-4 Q46,26 14,44 L6,-2 Q26,-4 42,-4 Z"
+      fill={ATLAS_COLORS.erythroid} opacity="0.85" />
+    <line x1="-4" y1="-40" x2="-4" y2="44" stroke="#0A0F1A" strokeWidth="2.5" opacity="0.4" />
+    <text x="-26" y="-22" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">RA</text>
+    <text x="26" y="-22" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">LA</text>
+    <text x="-24" y="24" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">RV</text>
+    <text x="24" y="24" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">LV</text>
+    {highlight && <path
+      d="M-50,-15 Q-62,-50 -30,-62 Q0,-70 0,-45 Q0,-70 30,-62 Q62,-50 50,-15 Q45,20 0,58 Q-45,20 -50,-15 Z"
+      fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="3" />}
+    {onDrill && <text x="42" y="-46" textAnchor="middle" fontSize="13" fill={ATLAS_COLORS.trunk}>⤢</text>}
+  </g>
+);
+
+const atlasConductionPath = ({ cx, cy, scale = 1 }) => (
+  <g transform={`translate(${cx},${cy}) scale(${scale})`}>
+    <circle cx="-36" cy="-32" r="6" fill={ATLAS_COLORS.trunk} opacity="0.95">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="1.2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="-4" cy="-8" r="5" fill={ATLAS_COLORS.trunk} opacity="0.95">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="1.2s" begin="0.4s" repeatCount="indefinite" />
+    </circle>
+    <line x1="-4" y1="-4" x2="-4" y2="20" stroke={ATLAS_COLORS.trunk} strokeWidth="2.5" strokeDasharray="3 3" />
+    <path d="M-4,20 Q-18,32 -30,40" stroke={ATLAS_COLORS.trunk} strokeWidth="2.5" fill="none" />
+    <path d="M-4,20 Q14,32 30,40" stroke={ATLAS_COLORS.trunk} strokeWidth="2.5" fill="none" />
+    <path d="M-30,40 Q-40,52 -46,52" stroke={ATLAS_COLORS.trunk} strokeWidth="2" fill="none" opacity="0.75" />
+    <path d="M30,40 Q40,52 46,52" stroke={ATLAS_COLORS.trunk} strokeWidth="2" fill="none" opacity="0.75" />
+  </g>
+);
 
 export const DIAGRAMS = {
 
@@ -394,29 +532,184 @@ export const DIAGRAMS = {
     },
   },
 
+    /* =========================================================
+     CARDIOVASCULAR SYSTEM — the topic's full 10-step overview.
+     Topic: Physiology II (ph2), Topic 02 (index 1).
+
+     This is the topic's PRIMARY diagram. It walks through all
+     10 steps of the topic note in order. The Cardiac Cycle
+     entry below is now a drill-down child of this one - tapping
+     the heart here opens the detailed beat animation.
+     ========================================================= */
+  "ph2:cardiovascular-system": {
+    id: "ph2:cardiovascular-system",
+    type: "diagram",
+    title: "The Cardiovascular System — Every Step, Illustrated",
+    topic: { courseId: "ph2", topicIndex: 1 },
+    parent: null,
+    summary: "Your body has to move oxygen, food and hormones to every cell, and carry waste away from them. It does this with three things working together: a pump (the heart), a set of pipes (the blood vessels), and a fluid that carries the cargo (the blood). Blood also has to stop itself from leaking when a vessel is cut, and a separate network of vessels - the lymphatics - collects the fluid that leaks out and returns it to the blood.",
+    labels: [
+      { id: "system", name: "The Whole System", desc: "Heart, vessels and blood - working together as one transport network." },
+      { id: "blood", name: "Blood", desc: "Red cells carry oxygen, white cells defend the body, platelets stop bleeding. Plasma is the liquid they float in." },
+      { id: "hemostasis", name: "Hemostasis", desc: "When a vessel is cut, the vessel tightens, platelets plug the hole, and fibrin locks the plug in place." },
+      { id: "heart", name: "The Heart", desc: "Four chambers, four valves. Right side sends blood to the lungs; left side sends blood to the body. Tap to open the detailed cardiac cycle.", drillTo: "ph2:cardiac-cycle" },
+      { id: "conduction", name: "Electrical System", desc: "The SA node starts each beat, the AV node delays the signal, then it spreads down the bundle branches and Purkinje fibres to make the ventricles contract together." },
+      { id: "cycle", name: "The Cardiac Cycle", desc: "One heartbeat: the heart fills (diastole), then squeezes (systole), pushing blood out to the lungs and the body." },
+      { id: "flow", name: "Blood Flow", desc: "Blood flows because of a pressure difference. Wider vessels allow more flow - a small change in width makes a big difference." },
+      { id: "bp", name: "Blood Pressure Control", desc: "The brain, kidneys and adrenal glands work together to keep blood pressure in a narrow, safe range." },
+      { id: "lymph", name: "Lymphatic System", desc: "Collects the fluid that leaks out of capillaries and returns it to the blood. Also filters it in lymph nodes and helps fight infection." },
+      { id: "whole", name: "The Whole Picture", desc: "Everything you just saw, working as one system." },
+    ],
+    narration: [
+      "Every cell in your body needs a constant supply of oxygen and food, and every cell produces waste. The cardiovascular system is the transport network that delivers the fuel and clears the waste. It's made of three parts working together: the heart, the blood vessels and the blood.",
+      "The blood is the fluid that carries everything. About forty-five per cent of it is cells - red cells that carry oxygen, white cells that fight infection, and platelets that stop bleeding. The other fifty-five per cent is plasma - water, proteins, electrolytes, nutrients and waste products.",
+      "When a vessel is cut, the body has to stop the leak fast. First the vessel tightens to slow the flow. Then platelets rush to the injury and stick together to form a plug. Finally, a protein called fibrin is woven through the plug like a mesh, locking it in place until the vessel heals.",
+      "The heart is the pump. It sits between the lungs and has four chambers and four valves. The right side receives used blood from the body and pushes it to the lungs to get fresh oxygen. The left side receives that freshly-oxygenated blood and pumps it out to the whole body.",
+      "The heart has its own electrical system that tells it when to beat. The SA node is the natural pacemaker - it fires first. The signal then travels to the AV node, which holds it back for a split second so the top chambers can finish emptying. Then the signal races down through the bundle branches and the Purkinje fibres, making the bottom chambers squeeze together at the same time.",
+      "One heartbeat is one cardiac cycle. The heart first relaxes and fills with blood - that's diastole. Then it contracts and pushes the blood out - that's systole. The amount pushed out per beat is the stroke volume, and the amount per minute is the cardiac output. At rest, that's around five litres every minute.",
+      "Blood flows through your vessels because of a pressure difference - high pressure at one end, lower at the other. Flow is also affected by how wide the vessel is. If a vessel narrows just a little, flow drops a lot, because resistance goes up by the fourth power of the radius. That's why even a small narrowing in an artery can cause real problems.",
+      "Your blood pressure has to stay in a narrow range - too low and tissues don't get enough blood, too high and vessels get damaged over time. The brain reacts within seconds through the nerves, telling the heart to speed up or slow down and the vessels to tighten or widen. The kidneys and adrenal glands react more slowly through hormones like renin-angiotensin and aldosterone, adjusting blood volume and vessel tone over hours to days.",
+      "Not all the fluid that leaves your capillaries gets reabsorbed. About two to four litres a day leaks into the tissues and has to be collected and returned. That's the job of the lymphatic system - a network of vessels and nodes that returns the fluid to the blood and filters it along the way, catching bacteria and other threats.",
+      "Putting it all together: the heart pumps, the vessels direct the flow, the blood carries the cargo, the pressure is kept steady, and the lymphatics return the fluid. Each part depends on the others, and when any one fails, the whole system struggles.",
+    ],
+    stepFocus: [
+      ["system"],
+      ["blood"],
+      ["hemostasis"],
+      ["heart"],
+      ["conduction"],
+      ["cycle"],
+      ["flow"],
+      ["bp"],
+      ["lymph"],
+      ["whole"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, onOpenDrill, preview }) => {
+      const diagram = DIAGRAMS["ph2:cardiovascular-system"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const dim = (id) => (activeStep === 9 ? 1 : (inFocus(id) ? 1 : 0.28));
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {atlasDefs()}
+
+          <g style={{ cursor: cur, opacity: dim("system") * dim("whole") }} onClick={click("system")}>
+            {atlasLungs({ cx: 450, cy: 90, scale: 1, highlight: inFocus("system") || inFocus("whole") })}
+          </g>
+
+          <g opacity={dim("system")}>
+            <path d="M395,220 Q380,160 420,120" stroke={ATLAS_COLORS.lymphoid} strokeWidth="10" fill="none" strokeLinecap="round" opacity="0.55" />
+            <path d="M505,220 Q520,160 480,120" stroke={ATLAS_COLORS.erythroid} strokeWidth="10" fill="none" strokeLinecap="round" opacity="0.55" />
+            {atlasBloodCell({ cx: 408, cy: 170, r: 4, oxygenated: false, animate: true, delay: "0s" })}
+            {atlasBloodCell({ cx: 492, cy: 170, r: 4, oxygenated: true,  animate: true, delay: "1s" })}
+          </g>
+
+          <g opacity={dim("system")}>
+            <path d="M560,300 Q640,400 620,520" stroke={ATLAS_COLORS.erythroid} strokeWidth="10" fill="none" strokeLinecap="round" opacity="0.55" />
+            <path d="M340,300 Q260,400 280,520" stroke={ATLAS_COLORS.lymphoid} strokeWidth="10" fill="none" strokeLinecap="round" opacity="0.55" />
+            {atlasBloodCell({ cx: 610, cy: 440, r: 4, oxygenated: true,  animate: true, delay: "0.5s" })}
+            {atlasBloodCell({ cx: 292, cy: 440, r: 4, oxygenated: false, animate: true, delay: "1.5s" })}
+          </g>
+
+          <g style={{ opacity: dim("system") * dim("bp"), cursor: cur }} onClick={click("bp")}>
+            <rect x="250" y="530" width="400" height="60" rx="14" fill={ATLAS_COLORS.neutral} opacity="0.22" />
+            <text x="450" y="566" textAnchor="middle" fontSize="14" fontWeight="700" fill="var(--text)">Whole body · tissues</text>
+          </g>
+
+          <g style={{ cursor: cur, opacity: dim("heart") * dim("whole") }} onClick={click("heart")}>
+            {atlasHeart({
+              cx: 450, cy: 320, scale: 1,
+              highlight: inFocus("heart") || inFocus("whole") || inFocus("cycle") || inFocus("conduction"),
+              onDrill: onOpenDrill,
+            })}
+            <circle cx="450" cy="320" r="115" fill="none" {...ring("heart")} pointerEvents="none" />
+          </g>
+
+          {inFocus("conduction") && (
+            <g opacity="0.9" pointerEvents="none">
+              {atlasConductionPath({ cx: 450, cy: 320, scale: 1 })}
+            </g>
+          )}
+
+          {inFocus("blood") && (
+            <g pointerEvents="none">
+              {atlasBloodCell({ cx: 400, cy: 280, r: 6, oxygenated: true,  label: "RBC" })}
+              {atlasWhiteCell({ cx: 500, cy: 280, r: 6, label: "WBC" })}
+              {atlasPlatelet({ cx: 450, cy: 380, r: 4, label: "Plt" })}
+            </g>
+          )}
+
+          {inFocus("hemostasis") && (
+            <g pointerEvents="none">
+              <rect x="70" y="270" width="160" height="120" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="150" y="292" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>VESSEL INJURY</text>
+              <line x1="90" y1="330" x2="210" y2="330" stroke={ATLAS_COLORS.erythroid} strokeWidth="14" strokeLinecap="round" opacity="0.5" />
+              <line x1="150" y1="324" x2="150" y2="345" stroke="#0A0F1A" strokeWidth="3" />
+              {atlasPlatelet({ cx: 138, cy: 336, r: 4 })}
+              {atlasPlatelet({ cx: 150, cy: 336, r: 4 })}
+              {atlasPlatelet({ cx: 162, cy: 336, r: 4 })}
+              {atlasFlowArrow({ x1: 150, y1: 356, x2: 150, y2: 372, color: ATLAS_COLORS.trunk })}
+              <text x="150" y="384" textAnchor="middle" fontSize="10" fill="var(--text-2)">platelet plug + fibrin</text>
+            </g>
+          )}
+
+          {inFocus("flow") && (
+            <g pointerEvents="none">
+              <rect x="670" y="270" width="180" height="120" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="760" y="292" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>FLOW · PRESSURE</text>
+              <path d="M690,330 L810,330" stroke={ATLAS_COLORS.erythroid} strokeWidth="12" strokeLinecap="round" opacity="0.5" />
+              {atlasFlowArrow({ x1: 700, y1: 350, x2: 800, y2: 350, color: ATLAS_COLORS.erythroid })}
+              <text x="700" y="372" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">high P</text>
+              <text x="800" y="372" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">lower P</text>
+            </g>
+          )}
+
+          {inFocus("bp") && (
+            <g pointerEvents="none">
+              {atlasFlowArrow({ x1: 450, y1: 435, x2: 450, y2: 528, color: ATLAS_COLORS.trunk, dashed: true })}
+              <text x="450" y="490" textAnchor="middle" fontSize="10.5" fill={ATLAS_COLORS.trunk} fontWeight="700">nerves · hormones</text>
+            </g>
+          )}
+
+          {inFocus("lymph") && (
+            <g pointerEvents="none" opacity="0.95">
+              <path d="M320,300 Q220,330 200,420 Q210,510 250,540" stroke={ATLAS_COLORS.lymphoid} strokeWidth="6" fill="none" strokeLinecap="round" strokeDasharray="10 6" />
+              {atlasLymphNode({ cx: 240, cy: 380 })}
+              {atlasLymphNode({ cx: 215, cy: 460 })}
+              <text x="150" y="500" fontSize="10.5" fill={ATLAS_COLORS.lymphoid} fontWeight="700">lymph → blood</text>
+            </g>
+          )}
+
+          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Lungs</text>
+          <text x="450" y="614" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Body</text>
+          <text x="120" y="220" textAnchor="middle" fontSize="11" fill="var(--text-3)" pointerEvents="none">Blood</text>
+          <text x="800" y="220" textAnchor="middle" fontSize="11" fill="var(--text-3)" pointerEvents="none">Hemostasis</text>
+          <text x="805" y="470" textAnchor="middle" fontSize="11" fill="var(--text-3)" pointerEvents="none">Flow · BP</text>
+          <text x="120" y="570" textAnchor="middle" fontSize="11" fill="var(--text-3)" pointerEvents="none">Lymphatics</text>
+        </svg>
+      );
+    },
+  },
+
   /* =========================================================
-     CARDIAC CYCLE — one heart, seven phases
-     Topic: Physiology II (ph2), Topic 02 (index 1), "The Cardiovascular System"
-     Not a tree: one fixed heart, and only valve state / chamber fill
-     opacity change per activeStep, so Play reads as the heart actually
-     beating rather than slides changing. Uses the same gradients/shadow
-     filter as every other diagram (atlasDefs), blue = deoxygenated /
-     right heart, crimson = oxygenated / left heart - same semantic use
-     of ATLAS_COLORS.lymphoid / ATLAS_COLORS.erythroid as elsewhere.
+     CARDIAC CYCLE — drill-down child of the Cardiovascular
+     System diagram above. Opens when the student taps the
+     heart on the parent diagram.
      ========================================================= */
   "ph2:cardiac-cycle": {
     id: "ph2:cardiac-cycle",
     type: "diagram",
     title: "The Cardiac Cycle — One Heartbeat, Seven Phases",
-    topic: { courseId: "ph2", topicIndex: 1 },
-    parent: null,
-    // Cyclic process - a heartbeat has no "end", so Play loops continuously
-    // once started rather than stopping after step 7. Compare to a one-shot
-    // process (e.g. Wound Healing, once built) which should NOT set this.
+    topic: null,
+    parent: "ph2:cardiovascular-system",
     loop: true,
-    // Fixed right-panel summary - this should mirror what the actual
-    // Cardiovascular System topic note says, not be written independently.
-    // Placeholder below until the real note text is pasted in for a check.
     summary: "Every heartbeat follows the same simple pattern: the top chambers fill and squeeze first, then the bottom chambers squeeze harder to push blood out to the lungs and the rest of the body, then the whole heart relaxes and refills before doing it again. The two sounds you hear through a stethoscope, 'lub' and 'dub', are just the heart's valves slamming shut at the two key moments in that cycle.",
     labels: [
       { id: "ra", name: "Right Atrium", desc: "Receives deoxygenated blood from the vena cavae and tops off the right ventricle during atrial systole." },
@@ -430,7 +723,7 @@ export const DIAGRAMS = {
       { id: "pveins", name: "Pulmonary Veins", desc: "Carry freshly oxygenated blood from the lungs into the left atrium — the only veins carrying oxygenated blood." },
       { id: "aorta", name: "Aorta", desc: "Carries oxygenated blood from the left ventricle to the systemic circulation." },
     ],
-        narration: [
+    narration: [
       "Phase one. The atria contract - squeezing the top two chambers of the heart - pushing the last bit of blood down through the open valves to completely fill the ventricles below.",
       "Phase two. Now the ventricles contract. Pressure inside them shoots up so fast that it slams the valves above them shut - that sudden shut is the first heart sound you hear, 'lub'. For this brief moment every valve in the heart is closed at once, so no blood is moving in or out - the chambers are sealed, like a fist clenching before it swings.",
       "Phase three. Pressure inside the ventricles has now built up past the pressure in the big arteries leaving the heart, so the outlet valves are forced open and blood surges out fast. This is where most of each heartbeat's blood actually leaves the heart.",
@@ -439,16 +732,14 @@ export const DIAGRAMS = {
       "Phase six. Once pressure inside the ventricles drops low enough, the valves above them swing open and blood rushes in on its own, no squeezing needed yet. Most of the heart's filling actually happens right here, before the atria even contract again.",
       "Phase seven. Filling slows to a trickle as the pressure inside the heart and the pressure feeding it even out. This is the heart's brief rest before the next beat starts the whole cycle over.",
     ],
-    // Per-phase state. av/sl: valve open or closed. ra/la/rv/lv: chamber
-    // fill opacity, so the heart visibly empties and refills as it beats.
     phaseState: [
-      { av: "open",   sl: "closed", ra: 1,    la: 1,    rv: 0.55, lv: 0.55 }, // atrial systole
-      { av: "closed", sl: "closed", ra: 0.3,  la: 0.3,  rv: 0.85, lv: 0.85 }, // isovolumic contraction - S1
-      { av: "closed", sl: "open",   ra: 0.3,  la: 0.3,  rv: 0.55, lv: 0.55 }, // rapid ejection
-      { av: "closed", sl: "open",   ra: 0.3,  la: 0.3,  rv: 0.4,  lv: 0.4  }, // reduced ejection
-      { av: "closed", sl: "closed", ra: 0.4,  la: 0.4,  rv: 0.4,  lv: 0.4  }, // isovolumic relaxation - S2
-      { av: "open",   sl: "closed", ra: 0.6,  la: 0.6,  rv: 0.75, lv: 0.75 }, // rapid filling
-      { av: "open",   sl: "closed", ra: 0.75, la: 0.75, rv: 0.85, lv: 0.85 }, // diastasis
+      { av: "open",   sl: "closed", ra: 1,    la: 1,    rv: 0.55, lv: 0.55 },
+      { av: "closed", sl: "closed", ra: 0.3,  la: 0.3,  rv: 0.85, lv: 0.85 },
+      { av: "closed", sl: "open",   ra: 0.3,  la: 0.3,  rv: 0.55, lv: 0.55 },
+      { av: "closed", sl: "open",   ra: 0.3,  la: 0.3,  rv: 0.4,  lv: 0.4  },
+      { av: "closed", sl: "closed", ra: 0.4,  la: 0.4,  rv: 0.4,  lv: 0.4  },
+      { av: "open",   sl: "closed", ra: 0.6,  la: 0.6,  rv: 0.75, lv: 0.75 },
+      { av: "open",   sl: "closed", ra: 0.75, la: 0.75, rv: 0.85, lv: 0.85 },
     ],
     viewBox: "0 0 900 560",
     render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
@@ -464,50 +755,29 @@ export const DIAGRAMS = {
       return (
         <svg viewBox="0 0 900 560" width="100%" height="100%">
           {atlasDefs()}
-
-          {/* vena cavae -> RA */}
           <path d="M560,60 Q600,40 630,100 L630,170 Q600,160 560,160 Z"
             fill="url(#atlas-grad-lymphoid)" opacity="0.5" {...ring("svc")} style={{ cursor: cur }} onClick={click("svc")} />
-          {/* pulmonary artery <- RV */}
           <path d="M560,170 Q520,100 460,70 L460,140 Q520,160 560,230 Z"
             fill="url(#atlas-grad-lymphoid)" opacity={s.sl === "open" ? 0.85 : 0.4} {...ring("pa")} style={{ cursor: cur }} onClick={click("pa")} />
-          {/* pulmonary veins -> LA */}
           <path d="M340,60 Q300,40 270,100 L270,170 Q300,160 340,160 Z"
             fill="url(#atlas-grad-erythroid)" opacity="0.5" {...ring("pveins")} style={{ cursor: cur }} onClick={click("pveins")} />
-          {/* aorta <- LV */}
           <path d="M340,170 Q380,90 440,60 L440,130 Q390,160 340,230 Z"
             fill="url(#atlas-grad-erythroid)" opacity={s.sl === "open" ? 0.85 : 0.4} {...ring("aorta")} style={{ cursor: cur }} onClick={click("aorta")} />
-
-          {/* right atrium */}
           <ellipse cx="590" cy="190" rx="95" ry="70" fill="url(#atlas-grad-lymphoid)" opacity={s.ra}
             filter="url(#atlas-shadow)" {...ring("ra")} style={{ cursor: cur }} onClick={click("ra")} />
-          {/* left atrium */}
           <ellipse cx="310" cy="190" rx="95" ry="70" fill="url(#atlas-grad-erythroid)" opacity={s.la}
             filter="url(#atlas-shadow)" {...ring("la")} style={{ cursor: cur }} onClick={click("la")} />
-
-          {/* A-V valves, at the atrio-ventricular junction */}
           {atlasValve({ id: "av", x: 590, y: 275, open: s.av === "open", color: ATLAS_COLORS.lymphoid, onLabelClick, activeLabelId, preview })}
           {atlasValve({ id: "av", x: 310, y: 275, open: s.av === "open", flip: true, color: ATLAS_COLORS.erythroid, onLabelClick, activeLabelId, preview })}
-
-          {/* right ventricle */}
           <path d="M470,290 Q470,420 560,480 Q650,460 680,370 Q690,300 630,280 Q550,260 470,290 Z"
             fill="url(#atlas-grad-lymphoid)" opacity={s.rv} filter="url(#atlas-shadow)" {...ring("rv")} style={{ cursor: cur }} onClick={click("rv")} />
-          {/* left ventricle */}
           <path d="M430,290 Q430,440 330,510 Q230,470 210,370 Q200,290 270,275 Q360,255 430,290 Z"
             fill="url(#atlas-grad-erythroid)" opacity={s.lv} filter="url(#atlas-shadow)" {...ring("lv")} style={{ cursor: cur }} onClick={click("lv")} />
-
-          {/* interventricular septum */}
           <line x1="450" y1="280" x2="450" y2="500" stroke={ATLAS_COLORS.neutral} strokeWidth="6" strokeLinecap="round" opacity="0.5" />
-
-          {/* semilunar valves, at ventricular outflow */}
           {atlasValve({ id: "sl", x: 560, y: 210, open: s.sl === "open", color: ATLAS_COLORS.lymphoid, onLabelClick, activeLabelId, preview })}
           {atlasValve({ id: "sl", x: 360, y: 210, open: s.sl === "open", flip: true, color: ATLAS_COLORS.erythroid, onLabelClick, activeLabelId, preview })}
-
-          {/* S1 / S2 heart sound markers */}
           {activeStep === 1 && <text x="450" y="300" textAnchor="middle" fontSize="22" fontWeight="700" fill={ATLAS_COLORS.trunk}>S1</text>}
           {activeStep === 4 && <text x="450" y="300" textAnchor="middle" fontSize="22" fontWeight="700" fill={ATLAS_COLORS.trunk}>S2</text>}
-
-          {/* chamber labels */}
           <text x="590" y="194" textAnchor="middle" fontSize="13" fill="#fff" opacity="0.85" pointerEvents="none">RA</text>
           <text x="310" y="194" textAnchor="middle" fontSize="13" fill="#fff" opacity="0.85" pointerEvents="none">LA</text>
           <text x="560" y="400" textAnchor="middle" fontSize="13" fill="#fff" opacity="0.85" pointerEvents="none">RV</text>
