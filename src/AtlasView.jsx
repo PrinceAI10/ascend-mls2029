@@ -42,11 +42,111 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import {
   DIAGRAMS,
+  ATLAS_COLORS,
   ATLAS_COURSE_NAMES,
   diagramsForCourse,
   coursesWithDiagrams,
   diagramForTopic,
 } from "./diagrams";
+
+// Per-label mini-illustration for the legend. Each entry draws a tiny
+// version of the actual structure it names, using the SAME primitives the
+// diagram itself uses (atlasHeart, atlasLungs, atlasBloodCell, etc.). This
+// way the legend is a real visual key, not just a list of terms.
+const LEGEND_VIEWBOXES = {
+  system: "0 0 100 100",
+  blood: "0 0 100 100",
+  hemostasis: "0 0 100 100",
+  heart: "0 0 100 100",
+  conduction: "0 0 100 100",
+  cycle: "0 0 100 100",
+  flow: "0 0 100 100",
+  bp: "0 0 100 100",
+  lymph: "0 0 100 100",
+  whole: "0 0 100 100",
+};
+
+const LEGEND_SWATCHES = {
+  system: (active) => (
+    <g>
+      <circle cx="50" cy="42" r="18" fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.5" />
+      <path d="M18 78 Q50 60 82 78" fill="none" stroke={active ? "#2D7BFF" : "#2F6FED"} strokeWidth="4" strokeLinecap="round" />
+    </g>
+  ),
+  blood: (active) => (
+    <g>
+      <ellipse cx="34" cy="50" rx="14" ry="9" fill="#E53935" stroke="#8C1C12" strokeWidth="1" />
+      <circle cx="62" cy="44" r="9" fill="#F3F1FF" stroke={ATLAS_COLORS.nucleus} strokeWidth="1.2" />
+      <circle cx="62" cy="44" r="5" fill={ATLAS_COLORS.nucleus} opacity="0.75" />
+      <ellipse cx="70" cy="72" rx="8" ry="5" fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="0.8" />
+    </g>
+  ),
+  hemostasis: (active) => (
+    <g>
+      <line x1="12" y1="55" x2="88" y2="55" stroke="#C0392B" strokeWidth="12" strokeLinecap="round" />
+      <line x1="50" y1="46" x2="50" y2="66" stroke="#0A0F1A" strokeWidth="3" />
+      <ellipse cx="42" cy="57" rx="6" ry="4" fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="0.8" />
+      <ellipse cx="50" cy="58" rx="6" ry="4" fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="0.8" />
+      <ellipse cx="58" cy="57" rx="6" ry="4" fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="0.8" />
+    </g>
+  ),
+  heart: (active) => (
+    <g>
+      <path d="M20 30 Q22 12 36 12 Q50 8 50 26 Q50 8 64 12 Q78 12 80 30 Q78 62 50 84 Q22 62 20 30 Z" fill="#FBE9E7" stroke={active ? ATLAS_COLORS.trunk : "#C0392B"} strokeWidth="2" />
+      <path d="M20 30 Q22 12 36 12 Q50 8 50 26 Q50 8 64 12 Q78 12 80 30 Z" fill="#2D7BFF" opacity="0.9" />
+      <path d="M20 30 Q22 52 50 84 Q78 62 80 30 Q70 44 50 44 Q30 44 20 30 Z" fill="#E53935" opacity="0.9" />
+    </g>
+  ),
+  conduction: (active) => (
+    <g>
+      <path d="M20 30 Q22 12 36 12 Q50 8 50 26 Q50 8 64 12 Q78 12 80 30 Q78 62 50 84 Q22 62 20 30 Z" fill="#FBE9E7" stroke="#C0392B" strokeWidth="1.5" />
+      <circle cx="34" cy="30" r="5" fill={ATLAS_COLORS.trunk}>
+        <animate attributeName="opacity" values="0.4;1;0.4" dur="1.2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="50" cy="44" r="4" fill={ATLAS_COLORS.trunk} />
+      <path d="M50 48 L50 66 M50 66 Q42 72 36 78 M50 66 Q58 72 64 78" stroke={ATLAS_COLORS.trunk} strokeWidth="2" fill="none" strokeLinecap="round" />
+    </g>
+  ),
+  cycle: (active) => (
+    <g>
+      <path d="M50 18 A32 32 0 0 1 82 50" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="4" strokeLinecap="round" />
+      <path d="M82 50 A32 32 0 0 1 50 82" fill="none" stroke="#E53935" strokeWidth="4" strokeLinecap="round" />
+      <path d="M50 82 A32 32 0 0 1 18 50" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="4" strokeLinecap="round" />
+      <path d="M18 50 A32 32 0 0 1 50 18" fill="none" stroke="#E53935" strokeWidth="4" strokeLinecap="round" />
+      <path d="M76 40 L84 46 L76 52 Z" fill={ATLAS_COLORS.trunk} />
+    </g>
+  ),
+  flow: (active) => (
+    <g>
+      <rect x="14" y="34" width="72" height="32" rx="16" fill="none" stroke={active ? ATLAS_COLORS.trunk : "#64748B"} strokeWidth="2.5" />
+      <path d="M22 50 L74 50" stroke="#E53935" strokeWidth="5" strokeLinecap="round" />
+      <path d="M68 42 L80 50 L68 58 Z" fill="#E53935" />
+    </g>
+  ),
+  bp: (active) => (
+    <g>
+      <circle cx="50" cy="24" r="10" fill="#8B5CF6" opacity="0.85" />
+      <rect x="20" y="40" width="26" height="32" rx="6" fill="#2F6FED" opacity="0.85" />
+      <rect x="54" y="40" width="26" height="32" rx="6" fill="#F5B93F" opacity="0.85" />
+      <path d="M50 34 L50 40 M33 40 L33 34 M67 40 L67 34" stroke="var(--text-2)" strokeWidth="1.4" />
+    </g>
+  ),
+  lymph: (active) => (
+    <g>
+      <path d="M14 60 Q30 40 50 50 Q70 60 86 40" fill="none" stroke="#2D7BFF" strokeWidth="4" strokeLinecap="round" strokeDasharray="6 4" />
+      <ellipse cx="36" cy="52" rx="10" ry="7" fill="#2F6FED" opacity="0.85" />
+      <ellipse cx="64" cy="48" rx="10" ry="7" fill="#2F6FED" opacity="0.85" />
+    </g>
+  ),
+  whole: (active) => (
+    <g>
+      <circle cx="50" cy="30" r="12" fill="#8B5CF6" opacity="0.9" />
+      <circle cx="22" cy="72" r="9" fill="#2F6FED" opacity="0.9" />
+      <circle cx="78" cy="72" r="9" fill="#E53935" opacity="0.9" />
+      <path d="M50 40 L22 62 M50 40 L78 62" stroke="var(--text-2)" strokeWidth="1.6" />
+    </g>
+  ),
+};
 
 /* ---------------------------------------------------------------- */
 /* Narration - a small, self-contained speech helper. Deliberately  */
@@ -270,7 +370,7 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   // Default zoom sits slightly under 1 so the whole diagram fits comfortably
   // on first open without the drawing touching the stage edges. The user can
   // still pinch/wheel/+/− to change it.
-  const DEFAULT_ZOOM = 0.9;
+  const DEFAULT_ZOOM = 1;
   const MIN_ZOOM = 0.5;
   const MAX_ZOOM = 3;
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
@@ -533,28 +633,54 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
         </div>
       </div>
 
-      {/* ---- Legend - full width, below the row ---- */}
+                  {/* ---- Legend - full width, below the row ---- */}
       <div className="card atlas-legend-full" style={{ marginTop: 12 }}>
-        <div className="eyebrow">Legend</div>
-        <div className="atlas-legend-grid">
-          {(diagram.labels || []).map((l) => (
-            <button
-              key={l.id}
-              className="btn btn-sm"
-              style={{
-                justifyContent: "flex-start", textAlign: "left",
-                background: activeLabelId === l.id ? "var(--amber-dim)" : "transparent",
-                color: activeLabelId === l.id ? "var(--amber-2)" : "var(--text-2)",
-                border: "1px solid " + (activeLabelId === l.id ? "rgba(245,185,63,.35)" : "transparent"),
-              }}
-              onClick={() => setActiveLabelId(l.id)}
-            >
-              {l.name}
-            </button>
-          ))}
+        <div className="eyebrow">Legend - tap any part to highlight it</div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 10 }}>
+          {(diagram.labels || []).map((l) => {
+            const active = activeLabelId === l.id;
+            return (
+              <button
+                key={l.id}
+                className="btn btn-sm"
+                onClick={() => setActiveLabelId(active ? null : l.id)}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "6px 12px",
+                  textAlign: "left",
+                  background: active ? "var(--amber-dim)" : "var(--bg-3)",
+                  color: active ? "var(--amber-2)" : "var(--text)",
+                  border: "1px solid " + (active ? ATLAS_COLORS.trunk : "var(--line)"),
+                  borderRadius: 10,
+                  fontWeight: 600,
+                }}
+              >
+                {/* Live preview of the actual structure from the diagram,
+                    rendered through the same primitive the diagram uses, so
+                    the legend swatch and the diagram always match. Each
+                    label id maps to the mini-version below. */}
+                <span style={{ display: "inline-flex", width: 34, height: 34, flexShrink: 0, alignItems: "center", justifyContent: "center", background: "var(--bg-2)", borderRadius: 8, overflow: "hidden" }}>
+                  <svg viewBox={LEGEND_VIEWBOXES[l.id] || "0 0 100 100"} width="34" height="34">
+                    {LEGEND_SWATCHES[l.id] ? LEGEND_SWATCHES[l.id](active) : (
+                      <circle cx="50" cy="50" r="20" fill={active ? ATLAS_COLORS.trunk : "var(--text-3)"} />
+                    )}
+                  </svg>
+                </span>
+                <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", lineHeight: 1.15 }}>
+                  <span>{l.name}</span>
+                  {active && l.desc && (
+                    <span style={{ fontSize: 11, color: "var(--text-2)", marginTop: 3, fontWeight: 400, maxWidth: 260 }}>
+                      {l.desc}
+                    </span>
+                  )}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
-
       {/* actions */}
       <div className="divider" />
       {topTopic && (
@@ -726,8 +852,16 @@ export default function AtlasView({ app }) {
   const openDiagram = (id) => { setDiagramId(id); setBreadcrumb([id]); setScreen("viewer"); };
   const drillInto = (id) => { setDiagramId(id); setBreadcrumb((b) => [...b, id]); };
   const goToBreadcrumb = (i) => { setDiagramId(breadcrumb[i]); setBreadcrumb((b) => b.slice(0, i + 1)); };
-  const exitViewer = () => {
-    if (openedFromCourseId != null && openedFromTopicId != null && breadcrumb.length <= 1) {
+    const exitViewer = () => {
+    // If we're drilled into a child diagram, Back steps UP the breadcrumb
+    // one level at a time instead of bouncing straight out to the list or
+    // topic. Only when we're on the root diagram (breadcrumb length <= 1)
+    // do we actually leave the viewer.
+    if (breadcrumb.length > 1) {
+      goToBreadcrumb(breadcrumb.length - 2);
+      return;
+    }
+    if (openedFromCourseId != null && openedFromTopicId != null) {
       app.go("topic", { courseId: openedFromCourseId, topicId: openedFromTopicId });
       return;
     }
