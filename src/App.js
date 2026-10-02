@@ -1014,11 +1014,7 @@ function PickerTile({ active, onClick, children }) {
       onClick={onClick}
       style={{
         width: 46, height: 46, borderRadius: 12,
-        // Explicit visible border - --line is too faint on a card that
-        // already sits on top of another card, so tiles were rendering but
-        // indistinguishable from the background.
         border: active ? "2px solid var(--amber)" : "2px solid var(--line-2)",
-        // Slightly raised surface so tiles read as tappable objects.
         background: "var(--raised)",
         display: "flex", alignItems: "center", justifyContent: "center",
         cursor: "pointer", padding: 0, flexShrink: 0,
@@ -1048,12 +1044,14 @@ function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 10 }} onClick={onClose}>
       <div className="card" style={{ maxWidth: 440, width: "100%", maxHeight: "94dvh", overflowY: "auto", WebkitOverflowScrolling: "touch", boxSizing: "border-box", padding: 16 }} onClick={(e) => e.stopPropagation()}>
-        {firstRun && (
-          <div style={{ textAlign: "center", marginBottom: 14 }}>
-            <div style={{ fontSize: 17, fontWeight: 700 }}>Set up your avatar</div>
-            <div style={{ fontSize: 13, color: "var(--text-2)", marginTop: 4 }}>Pick a look - you can change it anytime from the topbar.</div>
+                <div style={{ textAlign: "center", marginBottom: 14 }}>
+          <div style={{ fontSize: 17, fontWeight: 700 }}>
+            {firstRun ? "Set up your avatar" : "Select your avatar"}
           </div>
-        )}
+          <div style={{ fontSize: 13, color: "var(--text-2)", marginTop: 4 }}>
+            Pick a look - you can change it anytime from the topbar.
+          </div>
+        </div>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}>
           <Avatar config={cfg} size={90} crop="full" wave={waveKey} />
         </div>
@@ -5604,8 +5602,8 @@ function TopicView({ app, rootCls }) {
           document.body so no flexbox, CSS zoom, or scroll position can
           push it off-screen or under a mobile keyboard. Only shown while
           the pencil is armed AND there's a live text selection. */}
-         {pendingSelection && createPortal(
-  <div className={rootCls} style={{ position: "fixed", left: "50%", bottom: "calc(env(safe-area-inset-bottom, 0px) + 24px)", transform: "translateX(-50%)", zIndex: 10000 }}>
+               {pendingSelection && createPortal(
+        <div className={rootCls} style={{ position: "fixed", left: "50%", bottom: "calc(env(safe-area-inset-bottom, 0px) + 24px)", transform: "translateX(-50%)", zIndex: 10000 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 18px", borderRadius: 999, background: "var(--bg-2)", border: "1px solid var(--line-2)", boxShadow: "0 10px 28px rgba(0,0,0,0.4)" }}>
             <span className="mono" style={{ fontSize: 11.5, color: "var(--text-3)" }}>Highlight:</span>
             {["blue", "yellow", "pink"].map((c) => (
@@ -15735,22 +15733,22 @@ export default function App() {
                     {progress?.avatar ? <Avatar config={progress.avatar} size={33} /> : (progress?.name?.[0]?.toUpperCase() || "?")}
                   </button>
                 </div>
-                                                        {avatarPickerOpen && createPortal(
-  <div className={rootCls}>
-    <AvatarPicker
-      value={progress?.avatar}
-      name={progress?.name}
-      onRename={setName}
-      firstRun={!progress?.avatar}
-      onClose={() => {
-        if (!progress?.avatar) { try { localStorage.setItem("ascend_avatar_skipped", "true"); } catch {} }
-        setAvatarPickerOpen(false);
-      }}
-      onSave={(cfg) => { setAvatar(cfg); setAvatarPickerOpen(false); }}
-    />
-  </div>,
-  document.body
-)}
+                                                                                                        {avatarPickerOpen && createPortal(
+                  <div className={rootCls}>
+                    <AvatarPicker
+                      value={progress?.avatar}
+                      name={progress?.name}
+                      onRename={setName}
+                      firstRun={!progress?.avatar}
+                      onClose={() => {
+                        if (!progress?.avatar) { try { localStorage.setItem("ascend_avatar_skipped", "true"); } catch {} }
+                        setAvatarPickerOpen(false);
+                      }}
+                      onSave={(cfg) => { setAvatar(cfg); setAvatarPickerOpen(false); }}
+                    />
+                  </div>,
+                  document.body
+                )}
               </div>
             </div>
           </header>
