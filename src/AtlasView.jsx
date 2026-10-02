@@ -272,7 +272,6 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   
 
   const playTokenRef = useRef(0);
-  
   const pinchRef = useRef(null);
 
   // Reset local view state whenever a new diagram is opened (drill-down or back)
@@ -395,23 +394,19 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     });
   }, []);
 
-  
-  // Panning is disabled on purpose. The figure stays locked to the center of
-  // the stage at all times. Only ZOOM is interactive (wheel on desktop,
-  // pinch on touch, +/− buttons). Removing drag/pan means a stray click or
-  // finger-drag can never nudge the diagram off-center.
-  const pointers = useRef(new Map());
 
+    // Zoom / pointer handling. Panning is deliberately disabled - the figure
+  // is locked to the center of the stage at all times. Only ZOOM is
+  // interactive: mouse wheel on desktop, two-finger pinch on touch, and
+  // the +/- buttons. A single-finger drag does nothing.
   const onWheel = (e) => {
     e.preventDefault();
     const delta = e.deltaY > 0 ? -0.1 : 0.1;
     applyZoom(zoom + delta);
   };
 
+  const pointers = useRef(new Map());
   const onPointerDown = (e) => {
-    // Two-finger pinch ONLY. A single finger/touch is ignored entirely, so
-    // no drag-panning can happen. Multi-touch is tracked here purely to
-    // feed the pinch handler below.
     e.currentTarget.setPointerCapture?.(e.pointerId);
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pointers.current.size === 2) {
@@ -429,7 +424,7 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       const ratio = dist / (pinchRef.current.dist || 1);
       applyZoom(pinchRef.current.zoom * ratio);
     }
-    // No single-pointer branch here - dragging does nothing.
+    // Single-pointer case does nothing on purpose - no dragging.
   };
   const onPointerUp = (e) => {
     pointers.current.delete(e.pointerId);
@@ -484,21 +479,29 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       {/* ---- Diagram (left) + topic summary (right) ---- */}
       <div className="atlas-row">
         <div className="atlas-diagram-col">
-          <div
+                    <div
             className="card atlas-viewer-stage"
-                        style={{ padding: 0, overflow: "hidden", height: "clamp(260px, 42vh, 420px)" }}
+            style={{
+              padding: 0,
+              overflow: "hidden",
+              height: "clamp(260px, 42vh, 420px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+            }}
             onWheel={onWheel}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
           >
-                        <div className="atlas-zoom-controls">
-                            <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom(zoom - 0.2)}>−</button>
+            <div className="atlas-zoom-controls">
+              <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom(zoom - 0.2)}>−</button>
               <button className="btn btn-sm mono" title="Reset zoom to 100%" style={{ minWidth: 46 }} onClick={() => setZoom(1)}>{Math.round(zoom * 100)}%</button>
               <button className="btn btn-sm" title="Zoom in" onClick={() => applyZoom(zoom + 0.2)}>+</button>
             </div>
-                        <div
+            <div
               style={{
                 transform: `scale(${zoom})`,
                 transformOrigin: "center center",

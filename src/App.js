@@ -970,7 +970,7 @@ function Avatar({ config, size = 36, crop = "face", wave = 0 }) {
   const armColor = outfit.armColor || "#F4F6FA";
   const full = crop === "full";
   return (
-    <svg viewBox={full ? "0 0 100 162" : "0 0 100 92"} width={size} height={full ? size * 1.62 : size} style={{ borderRadius: full ? "12px" : "50%", flexShrink: 0, background: "var(--bg-3)" }}>
+        <svg viewBox={full ? "0 0 100 162" : "0 0 100 92"} width={size} height={full ? size * 1.62 : size} style={{ borderRadius: full ? "12px" : "50%", flexShrink: 0, background: "var(--bg-2)" }}>
       {hair.behind && hair.behind(hairColor)}
       {full && <g><rect x="32" y="128" width="12" height="22" fill="#2E3A55" /><rect x="56" y="128" width="12" height="22" fill="#2E3A55" /><ellipse cx="38" cy="153" rx="11" ry="6" fill="#1B1B1F" /><ellipse cx="62" cy="153" rx="11" ry="6" fill="#1B1B1F" /></g>}
       {full && <rect x="42" y="78" width="16" height="14" fill={skin} />}
@@ -1010,7 +1010,23 @@ function PickerSection({ title, children }) {
 }
 function PickerTile({ active, onClick, children }) {
   return (
-    <button onClick={onClick} style={{ width: 46, height: 46, borderRadius: 12, border: active ? "2px solid var(--amber)" : "1px solid var(--line)", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0, flexShrink: 0 }}>{children}</button>
+    <button
+      onClick={onClick}
+      style={{
+        width: 46, height: 46, borderRadius: 12,
+        // Explicit visible border - --line is too faint on a card that
+        // already sits on top of another card, so tiles were rendering but
+        // indistinguishable from the background.
+        border: active ? "2px solid var(--amber)" : "2px solid var(--line-2)",
+        // Slightly raised surface so tiles read as tappable objects.
+        background: "var(--raised)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        cursor: "pointer", padding: 0, flexShrink: 0,
+        boxSizing: "border-box",
+      }}
+    >
+      {children}
+    </button>
   );
 }
 
