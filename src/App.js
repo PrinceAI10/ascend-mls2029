@@ -701,6 +701,7 @@ const I = ({ d, s = 20, fill = "none", w = 1.9, style }) => (
 const Ic = {
   home: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M3 10.5 12 4l9 6.5" /><path d="M5 9.5V20h14V9.5" /></>} />,
   book: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M4 5.5A2 2 0 0 1 6 4h13v15H6.5A2.5 2.5 0 0 0 4 21.5z" /><path d="M4 5.5v16" /></>} />,
+  atlas: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M3 5.5A2 2 0 0 1 5 4h6v16H5a2 2 0 0 0-2 2z" /><path d="M21 5.5A2 2 0 0 0 19 4h-6v16h6a2 2 0 0 1 2 2z" /><path d="M12 4v16" /></>} />,
   flame: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M12 3c1 3 4 4.2 4 8a4 4 0 1 1-8 0c0-1.4.6-2.4 1.2-3.2C10 9 11 7 12 3z" />} />,
   calendar: ({ p = 20, style }) => <I s={p} style={style} d={<><rect x="3.5" y="5" width="17" height="15.5" rx="2.5" /><path d="M3.5 10h17M8 3v4M16 3v4" /></>} />,
   trophy: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M7 4h10v4a5 5 0 0 1-10 0z" /><path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3M9 20h6M12 14v4" /></>} />,
@@ -1412,6 +1413,7 @@ function SlidesView({ app }) {
    plan to make this a real lazy per-course load.
    ============================================================ */
 import { CONTENT } from "./contentData";
+import AtlasView from "./AtlasView";
 
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
@@ -13134,6 +13136,7 @@ const NAV = [
   { key: "askai", label: "Ask ASCEND AI", icon: "ai", group: "Learn" },
   { key: "daily", label: "Daily", icon: "flame", group: "Learn" },
   { key: "slides", label: "Slides", icon: "slides", group: "Learn" },
+  { key: "atlas", label: "Atlas", icon: "atlas", group: "Learn" },
   { key: "resources", label: "Resources", icon: "upload", group: "Learn" },
 
   { key: "review", label: "Review", icon: "target", group: "Practice" },
@@ -14762,6 +14765,7 @@ export default function App() {
       case "plan": return <PlanView />;
       case "resources": return <ResourcesView />;
       case "slides": return <SlidesView app={app} />;
+      case "atlas": return <AtlasView app={app} />;
       case "askai": return <AskAIView app={app} />;
       case "lamla": return <LAMLAView app={app} />;
       case "feedback": return <FeedbackView />;
