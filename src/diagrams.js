@@ -13,11 +13,15 @@
 // topic card in TopicView and the Atlas course/visuals lists
 // pick it up automatically - nothing else to touch.
 //
-// TO ADD A NEW BUILDER: copy "bch:glycolysis" below.
+// Builders (type: "builder") are deliberately not used in Atlas
+// right now - the drag/tap-to-arrange pathway format is being
+// held back for its own dedicated tab later. Atlas's job is
+// illustrated, animated diagrams only, each one following its
+// topic note's own narration.
 //
 // Keys are the diagram's own id (not the same as a topic key -
-// a topic can only ever have ONE diagram/builder attached via
-// its `topic` field, but a diagram can have child diagrams for
+// a topic can only ever have ONE diagram attached via its
+// `topic` field, but a diagram can have child diagrams for
 // drill-downs that aren't attached to any topic directly).
 // ------------------------------------------------------------
 import React from "react";
@@ -28,11 +32,12 @@ import React from "react";
 // the rest of the app. Defined once here so every diagram stays
 // visually consistent without anyone having to remember hex codes.
 export const ATLAS_COLORS = {
-  trunk: "#F5B93F",       // amber/gold - stem/progenitor trunks
+  trunk: "#F5B93F",       // amber/gold - stem/progenitor trunks, and the
+                           // general "selected" accent across every diagram
   trunkDim: "rgba(245,185,63,.14)",
-  lymphoid: "#2F6FED",    // blue - lymphoid lineage
+  lymphoid: "#2F6FED",    // blue - lymphoid lineage, and deoxygenated blood
   lymphoidDim: "rgba(47,111,237,.14)",
-  erythroid: "#C0392B",   // crimson - red cell lineage
+  erythroid: "#C0392B",   // crimson - red cell lineage, and oxygenated blood
   erythroidDim: "rgba(192,57,43,.14)",
   nucleus: "#8B5CF6",     // purple - nuclei / genetic material
   nucleusDim: "rgba(139,92,246,.14)",
@@ -45,7 +50,7 @@ export const ATLAS_COLORS = {
 // never has to import anything back out of App.js.
 export const ATLAS_COURSE_NAMES = {
   hem: "Hematology I",
-  bch: "Biochemistry",
+  ph2: "Physiology II",
 };
 
 /* ----------------------------- helpers ----------------------------- */
@@ -148,6 +153,33 @@ const atlasNode = ({ id, x, y, w, h, label, sub, fill, dim, onLabelClick, active
 const atlasLine = (x1, y1, x2, y2, color = ATLAS_COLORS.neutral) => (
   <line key={`${x1}-${y1}-${x2}-${y2}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth="1.6" opacity="0.55" />
 );
+
+/* ---------------------------------------------------------------- */
+/* Cardiac cycle - a small valve glyph, reused four times. Not an   */
+/* atlasNode (this diagram isn't a flowchart of boxes - it's one    */
+/* heart whose parts change state), so it gets its own tiny helper, */
+/* same way the erythroid maturation strip above has its own stage  */
+/* layout instead of forcing the tree layout to fit.                */
+/* ---------------------------------------------------------------- */
+const atlasValve = ({ id, x, y, open, flip, color, onLabelClick, activeLabelId, preview }) => {
+  const active = activeLabelId === id;
+  const spread = open ? 26 : 4;
+  return (
+    <g
+      key={id}
+      transform={`translate(${x},${y}) ${flip ? "scale(-1,1)" : ""}`}
+      onClick={preview ? undefined : () => onLabelClick(id)}
+      style={{ cursor: preview ? "default" : "pointer" }}
+    >
+      <line x1={-spread} y1={-10} x2={0} y2={0} stroke={color} strokeWidth="4" strokeLinecap="round" />
+      <line x1={spread} y1={-10} x2={0} y2={0} stroke={color} strokeWidth="4" strokeLinecap="round" />
+      {open && (
+        <path d="M-6,4 L0,12 L6,4" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.8" />
+      )}
+      {active && <circle cx="0" cy="0" r="18" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />}
+    </g>
+  );
+};
 
 export const DIAGRAMS = {
 
@@ -324,26 +356,118 @@ export const DIAGRAMS = {
   },
 
   /* =========================================================
-     GLYCOLYSIS — pathway builder
-     Topic: Biochemistry (bch), Topic 04 (index 3)
+     CARDIAC CYCLE — one heart, seven phases
+     Topic: Physiology II (ph2), Topic 02 (index 1), "The Cardiovascular System"
+     Not a tree: one fixed heart, and only valve state / chamber fill
+     opacity change per activeStep, so Play reads as the heart actually
+     beating rather than slides changing. Uses the same gradients/shadow
+     filter as every other diagram (atlasDefs), blue = deoxygenated /
+     right heart, crimson = oxygenated / left heart - same semantic use
+     of ATLAS_COLORS.lymphoid / ATLAS_COLORS.erythroid as elsewhere.
      ========================================================= */
-  "bch:glycolysis": {
-    id: "bch:glycolysis",
-    type: "builder",
-    title: "Glycolysis — Build the Pathway",
-    topic: { courseId: "bch", topicIndex: 3 },
-    intro: "Arrange the ten steps of glycolysis in the correct order, glucose to pyruvate. Tap a block to place it - a wrong block bounces back.",
-    steps: [
-      { id: "g", label: "Glucose" },
-      { id: "g6p", label: "Glucose-6-phosphate", sub: "Hexokinase" },
-      { id: "f6p", label: "Fructose-6-phosphate", sub: "Phosphoglucose isomerase" },
-      { id: "f16bp", label: "Fructose-1,6-bisphosphate", sub: "PFK-1" },
-      { id: "g3p", label: "DHAP / G3P", sub: "Aldolase" },
-      { id: "bpg", label: "1,3-Bisphosphoglycerate", sub: "G3P dehydrogenase" },
-      { id: "3pg", label: "3-Phosphoglycerate", sub: "Phosphoglycerate kinase" },
-      { id: "2pg", label: "2-Phosphoglycerate", sub: "Phosphoglycerate mutase" },
-      { id: "pep", label: "Phosphoenolpyruvate", sub: "Enolase" },
-      { id: "pyr", label: "Pyruvate", sub: "Pyruvate kinase" },
+  "ph2:cardiac-cycle": {
+    id: "ph2:cardiac-cycle",
+    type: "diagram",
+    title: "The Cardiac Cycle — One Heartbeat, Seven Phases",
+    topic: { courseId: "ph2", topicIndex: 1 },
+    parent: null,
+    labels: [
+      { id: "ra", name: "Right Atrium", desc: "Receives deoxygenated blood from the vena cavae and tops off the right ventricle during atrial systole." },
+      { id: "la", name: "Left Atrium", desc: "Receives oxygenated blood from the pulmonary veins and tops off the left ventricle during atrial systole." },
+      { id: "rv", name: "Right Ventricle", desc: "Pumps deoxygenated blood into the pulmonary artery toward the lungs — thinner wall, lower-pressure circuit." },
+      { id: "lv", name: "Left Ventricle", desc: "Pumps oxygenated blood into the aorta toward the body — thickest chamber wall, generates systemic pressure." },
+      { id: "av", name: "A-V Valves (Tricuspid + Mitral)", desc: "Separate atria from ventricles. Open during filling, snap shut at the start of ventricular contraction — that closure is heart sound S1." },
+      { id: "sl", name: "Semilunar Valves (Pulmonic + Aortic)", desc: "Separate ventricles from their great arteries. Open during ejection, snap shut as ventricles relax — that closure is heart sound S2." },
+      { id: "svc", name: "Vena Cavae", desc: "Superior and inferior vena cava deliver deoxygenated blood from the body into the right atrium." },
+      { id: "pa", name: "Pulmonary Artery", desc: "Carries deoxygenated blood from the right ventricle to the lungs — the only artery carrying deoxygenated blood." },
+      { id: "pveins", name: "Pulmonary Veins", desc: "Carry freshly oxygenated blood from the lungs into the left atrium — the only veins carrying oxygenated blood." },
+      { id: "aorta", name: "Aorta", desc: "Carries oxygenated blood from the left ventricle to the systemic circulation." },
     ],
+    narration: [
+      "Atrial systole. Both atria contract together, pushing the last of their blood through the open tricuspid and mitral valves to top off the ventricles.",
+      "Isovolumic contraction. The ventricles begin contracting. Pressure inside them rises so fast the A-V valves snap shut — that's heart sound one, S1. For a brief moment every valve is closed and chamber volume can't change.",
+      "Rapid ejection. Ventricular pressure now exceeds the pressure in the aorta and pulmonary artery, forcing the semilunar valves open. Blood is ejected fast — this is where most of the stroke volume leaves the heart.",
+      "Reduced ejection. Ejection continues, but ventricular pressure is now falling as the ventricles start to relax, so blood leaves more slowly.",
+      "Isovolumic relaxation. Ventricular pressure drops below aortic and pulmonary pressure, slamming the semilunar valves shut — heart sound two, S2. All four valves are closed again, volume constant, pressure falling fast.",
+      "Rapid filling. Once ventricular pressure drops below atrial pressure, the tricuspid and mitral valves swing open and blood rushes passively into the ventricles — most ventricular filling happens right here, before the atria even contract.",
+      "Diastasis. Filling slows to a trickle as pressures equalise. The heart rests briefly before the next atrial systole kicks the cycle off again.",
+    ],
+    // Per-phase state. av/sl: valve open or closed. ra/la/rv/lv: chamber
+    // fill opacity, so the heart visibly empties and refills as it beats.
+    phaseState: [
+      { av: "open",   sl: "closed", ra: 1,    la: 1,    rv: 0.55, lv: 0.55 }, // atrial systole
+      { av: "closed", sl: "closed", ra: 0.3,  la: 0.3,  rv: 0.85, lv: 0.85 }, // isovolumic contraction - S1
+      { av: "closed", sl: "open",   ra: 0.3,  la: 0.3,  rv: 0.55, lv: 0.55 }, // rapid ejection
+      { av: "closed", sl: "open",   ra: 0.3,  la: 0.3,  rv: 0.4,  lv: 0.4  }, // reduced ejection
+      { av: "closed", sl: "closed", ra: 0.4,  la: 0.4,  rv: 0.4,  lv: 0.4  }, // isovolumic relaxation - S2
+      { av: "open",   sl: "closed", ra: 0.6,  la: 0.6,  rv: 0.75, lv: 0.75 }, // rapid filling
+      { av: "open",   sl: "closed", ra: 0.75, la: 0.75, rv: 0.85, lv: 0.85 }, // diastasis
+    ],
+    viewBox: "0 0 900 560",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["ph2:cardiac-cycle"];
+      const s = diagram.phaseState[activeStep] || diagram.phaseState[0];
+      const active = (id) => activeLabelId === id;
+      const ring = (id) => (active(id)
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+
+      return (
+        <svg viewBox="0 0 900 560" width="100%" height="100%">
+          {atlasDefs()}
+
+          {/* vena cavae -> RA */}
+          <path d="M560,60 Q600,40 630,100 L630,170 Q600,160 560,160 Z"
+            fill="url(#atlas-grad-lymphoid)" opacity="0.5" {...ring("svc")} style={{ cursor: cur }} onClick={click("svc")} />
+          {/* pulmonary artery <- RV */}
+          <path d="M560,170 Q520,100 460,70 L460,140 Q520,160 560,230 Z"
+            fill="url(#atlas-grad-lymphoid)" opacity={s.sl === "open" ? 0.85 : 0.4} {...ring("pa")} style={{ cursor: cur }} onClick={click("pa")} />
+          {/* pulmonary veins -> LA */}
+          <path d="M340,60 Q300,40 270,100 L270,170 Q300,160 340,160 Z"
+            fill="url(#atlas-grad-erythroid)" opacity="0.5" {...ring("pveins")} style={{ cursor: cur }} onClick={click("pveins")} />
+          {/* aorta <- LV */}
+          <path d="M340,170 Q380,90 440,60 L440,130 Q390,160 340,230 Z"
+            fill="url(#atlas-grad-erythroid)" opacity={s.sl === "open" ? 0.85 : 0.4} {...ring("aorta")} style={{ cursor: cur }} onClick={click("aorta")} />
+
+          {/* right atrium */}
+          <ellipse cx="590" cy="190" rx="95" ry="70" fill="url(#atlas-grad-lymphoid)" opacity={s.ra}
+            filter="url(#atlas-shadow)" {...ring("ra")} style={{ cursor: cur }} onClick={click("ra")} />
+          {/* left atrium */}
+          <ellipse cx="310" cy="190" rx="95" ry="70" fill="url(#atlas-grad-erythroid)" opacity={s.la}
+            filter="url(#atlas-shadow)" {...ring("la")} style={{ cursor: cur }} onClick={click("la")} />
+
+          {/* A-V valves, at the atrio-ventricular junction */}
+          {atlasValve({ id: "av", x: 590, y: 275, open: s.av === "open", color: ATLAS_COLORS.lymphoid, onLabelClick, activeLabelId, preview })}
+          {atlasValve({ id: "av", x: 310, y: 275, open: s.av === "open", flip: true, color: ATLAS_COLORS.erythroid, onLabelClick, activeLabelId, preview })}
+
+          {/* right ventricle */}
+          <path d="M470,290 Q470,420 560,480 Q650,460 680,370 Q690,300 630,280 Q550,260 470,290 Z"
+            fill="url(#atlas-grad-lymphoid)" opacity={s.rv} filter="url(#atlas-shadow)" {...ring("rv")} style={{ cursor: cur }} onClick={click("rv")} />
+          {/* left ventricle */}
+          <path d="M430,290 Q430,440 330,510 Q230,470 210,370 Q200,290 270,275 Q360,255 430,290 Z"
+            fill="url(#atlas-grad-erythroid)" opacity={s.lv} filter="url(#atlas-shadow)" {...ring("lv")} style={{ cursor: cur }} onClick={click("lv")} />
+
+          {/* interventricular septum */}
+          <line x1="450" y1="280" x2="450" y2="500" stroke={ATLAS_COLORS.neutral} strokeWidth="6" strokeLinecap="round" opacity="0.5" />
+
+          {/* semilunar valves, at ventricular outflow */}
+          {atlasValve({ id: "sl", x: 560, y: 210, open: s.sl === "open", color: ATLAS_COLORS.lymphoid, onLabelClick, activeLabelId, preview })}
+          {atlasValve({ id: "sl", x: 360, y: 210, open: s.sl === "open", flip: true, color: ATLAS_COLORS.erythroid, onLabelClick, activeLabelId, preview })}
+
+          {/* S1 / S2 heart sound markers */}
+          {activeStep === 1 && <text x="450" y="300" textAnchor="middle" fontSize="22" fontWeight="700" fill={ATLAS_COLORS.trunk}>S1</text>}
+          {activeStep === 4 && <text x="450" y="300" textAnchor="middle" fontSize="22" fontWeight="700" fill={ATLAS_COLORS.trunk}>S2</text>}
+
+          {/* chamber labels */}
+          <text x="590" y="194" textAnchor="middle" fontSize="13" fill="#fff" opacity="0.85" pointerEvents="none">RA</text>
+          <text x="310" y="194" textAnchor="middle" fontSize="13" fill="#fff" opacity="0.85" pointerEvents="none">LA</text>
+          <text x="560" y="400" textAnchor="middle" fontSize="13" fill="#fff" opacity="0.85" pointerEvents="none">RV</text>
+          <text x="320" y="400" textAnchor="middle" fontSize="13" fill="#fff" opacity="0.85" pointerEvents="none">LV</text>
+        </svg>
+      );
+    },
   },
+
 };
