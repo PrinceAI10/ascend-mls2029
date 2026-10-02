@@ -132,8 +132,7 @@ const atlasStyles = `
   100% { transform: scale(1); opacity: 1; }
 }
 .atlas-snap { animation: atlasSnap 0.25s ease-out; }
-.atlas-viewer-stage { touch-action: none; cursor: grab; position: relative; }
-.atlas-viewer-stage:active { cursor: grabbing; }
+.atlas-viewer-stage { touch-action: none; cursor: default; position: relative; }
 
 /* Play bar - sits above everything, same role as the Listen bar on a
    topic note. */
@@ -270,10 +269,10 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   const [voiceOn, setVoiceOn] = useState(true);
   const [speed, setSpeed] = useState(1);
   const [zoom, setZoom] = useState(1);
-  const [pan, setPan] = useState({ x: 0, y: 0 });
+  
 
   const playTokenRef = useRef(0);
-  const dragRef = useRef(null);
+  
   const pinchRef = useRef(null);
 
   // Reset local view state whenever a new diagram is opened (drill-down or back)
@@ -396,29 +395,26 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     });
   }, []);
 
+  
+  // Panning is disabled on purpose. The figure stays locked to the center of
+  // the stage at all times. Only ZOOM is interactive (wheel on desktop,
+  // pinch on touch, +/− buttons). Removing drag/pan means a stray click or
+  // finger-drag can never nudge the diagram off-center.
+  const pointers = useRef(new Map());
+
   const onWheel = (e) => {
     e.preventDefault();
     const delta = e.deltaY > 0 ? -0.1 : 0.1;
-    setZoom((z) => {
-      const next = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, +(z + delta).toFixed(2)));
-      if (next === z) return z;
-      const k = next / z;
-      setPan((p) => {
-        const nx = p.x * k, ny = p.y * k;
-        const len = Math.hypot(nx, ny);
-        if (len > PAN_LIMIT) { const s = PAN_LIMIT / len; return { x: nx * s, y: ny * s }; }
-        return { x: nx, y: ny };
-      });
-      return next;
-    });
+    applyZoom(zoom + delta);
   };
-  const pointers = useRef(new Map());
+
   const onPointerDown = (e) => {
+    // Two-finger pinch ONLY. A single finger/touch is ignored entirely, so
+    // no drag-panning can happen. Multi-touch is tracked here purely to
+    // feed the pinch handler below.
     e.currentTarget.setPointerCapture?.(e.pointerId);
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    if (pointers.current.size === 1) {
-      dragRef.current = { x: e.clientX, y: e.clientY };
-    } else if (pointers.current.size === 2) {
+    if (pointers.current.size === 2) {
       const pts = [...pointers.current.values()];
       const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
       pinchRef.current = { dist, zoom };
@@ -432,39 +428,13 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
       const ratio = dist / (pinchRef.current.dist || 1);
       applyZoom(pinchRef.current.zoom * ratio);
-        } else if (pointers.current.size === 1 && dragRef.current) {
-      const dx = e.clientX - dragRef.current.x;
-      const dy = e.clientY - dragRef.current.y;
-      dragRef.current = { x: e.clientX, y: e.clientY };
-      // Ignore sub-pixel drift from a normal click or trackpad tap - a click
-      // with 1-2px of accidental movement was registering as a pan and
-      // leaving the figure permanently nudged off-center.
-      if (Math.abs(dx) < 1.5 && Math.abs(dy) < 1.5) return;
-      setPan((p) => {
-        // Clamp total displacement so the figure can be nudged around but
-        // never dragged completely out of the visible stage.
-        const nx = p.x + dx, ny = p.y + dy;
-        const len = Math.hypot(nx, ny);
-        if (len > PAN_LIMIT) {
-          const s = PAN_LIMIT / len;
-          return { x: nx * s, y: ny * s };
-        }
-        return { x: nx, y: ny };
-      });
     }
+    // No single-pointer branch here - dragging does nothing.
   };
-    const onPointerUp = (e) => {
+  const onPointerUp = (e) => {
     pointers.current.delete(e.pointerId);
     if (pointers.current.size < 2) pinchRef.current = null;
-    if (pointers.current.size === 0) {
-      dragRef.current = null;
-      // Snap back to exact center if the user's pan ended within a few px of
-      // home - so a click or a short drag can never leave the figure nudged
-      // slightly off-center and stacking with future zooms.
-      setPan((p) => (Math.hypot(p.x, p.y) < 4 ? { x: 0, y: 0 } : p));
-    }
   };
-
   const activeLabel = diagram.labels?.find((l) => l.id === activeLabelId) || null;
   const topTopic = topLevelTopicOf(diagram);
 
@@ -524,11 +494,22 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
             onPointerCancel={onPointerUp}
           >
                         <div className="atlas-zoom-controls">
-              <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom(zoom - 0.2)}>−</button>
-                            <button className="btn btn-sm mono" title="Reset zoom & pan to center" style={{ minWidth: 62 }} onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }}>⤾ {Math.round(zoom * 100)}%</button>
+                            <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom(zoom - 0.2)}>−</button>
+              <button className="btn btn-sm mono" title="Reset zoom to 100%" style={{ minWidth: 46 }} onClick={() => setZoom(1)}>{Math.round(zoom * 100)}%</button>
               <button className="btn btn-sm" title="Zoom in" onClick={() => applyZoom(zoom + 0.2)}>+</button>
             </div>
-            <div style={{ width: "100%", height: "100%", transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`, transformOrigin: "center center", transition: dragRef.current ? "none" : "transform 0.15s ease-out" }}>
+                        <div
+              style={{
+                transform: `scale(${zoom})`,
+                transformOrigin: "center center",
+                transition: "transform 0.15s ease-out",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                maxWidth: "100%",
+                maxHeight: "100%",
+              }}
+            >
               {diagram.render({ onLabelClick: setActiveLabelId, activeLabelId, activeStep, onOpenDrill: () => {} })}
             </div>
           </div>
