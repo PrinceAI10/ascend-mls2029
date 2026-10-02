@@ -1041,15 +1041,50 @@ function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
     return () => clearTimeout(t);
   }, []);
   
-  return (
+    return (
     <div style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 10 }} onClick={onClose}>
-      <div className="card" style={{ maxWidth: 440, width: "100%", maxHeight: "94dvh", overflowY: "auto", WebkitOverflowScrolling: "touch", boxSizing: "border-box", padding: 16 }} onClick={(e) => e.stopPropagation()}>
-                <div style={{ textAlign: "center", marginBottom: 14 }}>
+      <div
+        className="card"
+        style={{ position: "relative", maxWidth: 440, width: "100%", maxHeight: "94dvh", overflowY: "auto", WebkitOverflowScrolling: "touch", boxSizing: "border-box", padding: 16 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close (X) button - top-right. Closes the picker without saving,
+            exactly like tapping outside the card. Distinct from Cancel in
+            that it works even when the header/title area is scrolled off. */}
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close avatar picker"
+          title="Close"
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            width: 34,
+            height: 34,
+            borderRadius: 10,
+            border: "1px solid var(--line)",
+            background: "var(--bg-3)",
+            color: "var(--text-2)",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            zIndex: 2,
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M6 6 18 18M18 6 6 18" />
+          </svg>
+        </button>
+        <div style={{ textAlign: "center", marginBottom: 14 }}>
           <div style={{ fontSize: 17, fontWeight: 700 }}>
             {firstRun ? "Create your avatar" : "Change your avatar"}
           </div>
           <div style={{ fontSize: 13, color: "var(--text-2)", marginTop: 4 }}>
-            Pick a look - you can change it anytime from here.
+            {firstRun
+              ? "Pick a look - you can change it anytime from the topbar."
+              : "Tap a tile below to swap any part of your look."}
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}>

@@ -485,11 +485,10 @@ const atlasHeart = ({ cx, cy, scale = 1, highlight = false, onDrill }) => (
       fill="none" stroke="#8C1C12" strokeWidth="1.2" opacity="0.65" strokeLinecap="round" />
 
     {/* Chamber labels - placed inside each chamber, white for contrast */}
-    <text x="18" y="-26" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">RA</text>
+        <text x="18" y="-26" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">RA</text>
     <text x="-26" y="-26" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">LA</text>
     <text x="20" y="26" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">RV</text>
     <text x="-32" y="26" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">LV</text>
-
     {/* Vessel labels - small, near the emerging vessels */}
     <text x="30" y="-80" textAnchor="middle" fontSize="7" fill="var(--text-2)">SVC</text>
     <text x="-38" y="-80" textAnchor="middle" fontSize="7" fill="var(--text-2)">Aorta</text>
@@ -871,7 +870,7 @@ export const DIAGRAMS = {
               {/* Callout box with rounded corners */}
               <rect x="70" y="270" width="160" height="130" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
               <text x="150" y="292" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>VESSEL INJURY</text>
-              <text x="150" y="305" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">platelet plug + fibrin mesh</text>
+                            <text x="150" y="305" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">platelet plug + fibrin mesh</text>
               {/* Damaged vessel segment */}
               <line x1="90" y1="340" x2="210" y2="340" stroke="#8C1C12" strokeWidth="16" strokeLinecap="round" />
               <line x1="90" y1="340" x2="210" y2="340" stroke="url(#atlas-grad-erythroid)" strokeWidth="13" strokeLinecap="round" />
@@ -906,7 +905,7 @@ export const DIAGRAMS = {
               {/* Callout box */}
               <rect x="670" y="270" width="180" height="130" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
               <text x="760" y="292" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>FLOW · PRESSURE</text>
-              <text x="760" y="305" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">flow = ΔP ÷ resistance</text>
+                            <text x="760" y="305" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">flow = ΔP ÷ resistance</text>
               {/* Vessel segment showing the pressure gradient */}
               <path d="M690,340 L830,340" stroke="#8C1C12" strokeWidth="16" strokeLinecap="round" />
               <path d="M690,340 L830,340" stroke="url(#atlas-grad-erythroid)" strokeWidth="13" strokeLinecap="round" />
@@ -933,14 +932,13 @@ export const DIAGRAMS = {
               <circle cx="250" cy="560" r="4" fill={ATLAS_COLORS.trunk} />
               <rect x="150" y="420" width="120" height="40" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" />
               <text x="210" y="438" textAnchor="middle" fontSize="10" fill={ATLAS_COLORS.trunk} fontWeight="700">Kidneys</text>
-              <text x="210" y="450" textAnchor="middle" fontSize="8" fill="var(--text-3)">renin · aldosterone</text>
-
+                            <text x="210" y="450" textAnchor="middle" fontSize="8" fill="var(--text-2)">renin · aldosterone</text>
               {/* Adrenal callout - right side */}
               <path d="M650,560 Q680,540 690,500 Q695,480 690,460" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" strokeDasharray="4 4" opacity="0.85" />
               <circle cx="650" cy="560" r="4" fill={ATLAS_COLORS.trunk} />
               <rect x="640" y="420" width="120" height="40" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" />
               <text x="700" y="438" textAnchor="middle" fontSize="10" fill={ATLAS_COLORS.trunk} fontWeight="700">Adrenal</text>
-              <text x="700" y="450" textAnchor="middle" fontSize="8" fill="var(--text-3)">adrenaline</text>
+                            <text x="700" y="450" textAnchor="middle" fontSize="8" fill="var(--text-2)">adrenaline</text>
             </g>
           )}
 
@@ -957,12 +955,12 @@ export const DIAGRAMS = {
           )}
 
           {/* Static region labels */}
-          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Lungs</text>
+                    <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Lungs</text>
           <text x="450" y="614" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Body</text>
-          <text x="120" y="220" textAnchor="middle" fontSize="11" fill="var(--text-3)" pointerEvents="none">Blood</text>
-          <text x="800" y="220" textAnchor="middle" fontSize="11" fill="var(--text-3)" pointerEvents="none">Hemostasis</text>
-          <text x="805" y="470" textAnchor="middle" fontSize="11" fill="var(--text-3)" pointerEvents="none">Flow · BP</text>
-          <text x="120" y="570" textAnchor="middle" fontSize="11" fill="var(--text-3)" pointerEvents="none">Lymphatics</text>
+          <text x="120" y="220" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Blood</text>
+          <text x="800" y="220" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Hemostasis</text>
+          <text x="805" y="470" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Flow · BP</text>
+          <text x="120" y="570" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Lymphatics</text>
         </svg>
       );
     },
