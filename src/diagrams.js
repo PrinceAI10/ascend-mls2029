@@ -109,24 +109,33 @@ const GRADIENT_BY_COLOR = {
 // drop-shadow filter - included once at the top of every diagram's <svg>.
 export const atlasDefs = () => (
   <defs key="atlas-defs">
-    <linearGradient id="atlas-grad-trunk" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stopColor="#FFD873" />
-      <stop offset="100%" stopColor={ATLAS_COLORS.trunk} />
+        <linearGradient id="atlas-grad-trunk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#FFC93C" />
+      <stop offset="100%" stopColor="#D89B14" />
     </linearGradient>
     <linearGradient id="atlas-grad-lymphoid" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stopColor="#5C93FF" />
-      <stop offset="100%" stopColor={ATLAS_COLORS.lymphoid} />
+      <stop offset="0%" stopColor="#2D7BFF" />
+      <stop offset="100%" stopColor="#123F9E" />
     </linearGradient>
     <linearGradient id="atlas-grad-erythroid" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stopColor="#E0685A" />
-      <stop offset="100%" stopColor={ATLAS_COLORS.erythroid} />
+      <stop offset="0%" stopColor="#E53935" />
+      <stop offset="100%" stopColor="#8C1C12" />
     </linearGradient>
     <linearGradient id="atlas-grad-nucleus" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stopColor="#B19DFA" />
-      <stop offset="100%" stopColor={ATLAS_COLORS.nucleus} />
+      <stop offset="0%" stopColor="#A78BFA" />
+      <stop offset="100%" stopColor="#5B21B6" />
     </linearGradient>
     <filter id="atlas-shadow" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="2" stdDeviation="2.4" floodColor="#000" floodOpacity="0.28" />
+      <feDropShadow dx="0" dy="2" stdDeviation="2.4" floodColor="#000" floodOpacity="0.4" />
+    </filter>
+    <filter id="atlas-glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feFlood floodColor="#F5B93F" floodOpacity="0.95" />
+      <feComposite in2="blur" operator="in" />
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
     </filter>
   </defs>
 );
@@ -234,10 +243,10 @@ const atlasValve = ({ id, x, y, open, flip, color, onLabelClick, activeLabelId, 
 const atlasBloodCell = ({ cx, cy, r = 6, oxygenated = true, animate = false, delay = "0s", label }) => (
   <g style={animate ? { animation: `atlasDrift 4s ease-in-out infinite`, animationDelay: delay } : undefined}>
     <ellipse cx={cx} cy={cy} rx={r} ry={r * 0.6}
-      fill={oxygenated ? ATLAS_COLORS.erythroid : ATLAS_COLORS.lymphoid}
-      opacity="0.9" />
+      fill={oxygenated ? "#E53935" : "#2D7BFF"}
+      stroke={oxygenated ? "#8C1C12" : "#123F9E"} strokeWidth="0.8" />
     <ellipse cx={cx} cy={cy} rx={r * 0.5} ry={r * 0.3}
-      fill={oxygenated ? "#F5C7C0" : "#B8D0FF"} opacity="0.7" />
+      fill={oxygenated ? "#F5C7C0" : "#B8D0FF"} opacity="0.85" />
     {label && <text x={cx} y={cy - r - 4} textAnchor="middle" fontSize="9" fill="var(--text-2)">{label}</text>}
   </g>
 );
@@ -285,15 +294,15 @@ const atlasLungs = ({ cx, cy, scale = 1, highlight = false }) => (
   <g transform={`translate(${cx},${cy}) scale(${scale})`}
     stroke={highlight ? ATLAS_COLORS.trunk : ATLAS_COLORS.neutral}
     strokeWidth={highlight ? 2 : 1.4}>
-    <rect x="-6" y="-60" width="12" height="30" rx="4" fill="#F3F1FF" opacity="0.9" />
-    <path d="M0,-30 Q-14,-22 -22,-10" fill="none" />
-    <path d="M0,-30 Q14,-22 22,-10" fill="none" />
+    <rect x="-6" y="-60" width="12" height="30" rx="4" fill="#E8E2FF" stroke="#8B7CC7" strokeWidth="1" />
+    <path d="M0,-30 Q-14,-22 -22,-10" fill="none" strokeWidth="2" />
+    <path d="M0,-30 Q14,-22 22,-10" fill="none" strokeWidth="2" />
     <path d="M-18,-8 Q-58,-4 -58,32 Q-58,60 -26,66 Q-10,60 -8,26 Q-10,4 -18,-8 Z"
-      fill="#FBE9E7" opacity="0.85" />
+      fill="#F5A8A0" stroke="#C0392B" strokeWidth="1.4" />
     <path d="M18,-8 Q58,-4 58,32 Q58,60 26,66 Q10,60 8,26 Q10,4 18,-8 Z"
-      fill="#FBE9E7" opacity="0.85" />
+      fill="#F5A8A0" stroke="#C0392B" strokeWidth="1.4" />
     {[[-34,20],[-44,36],[-28,44],[34,20],[44,36],[28,44]].map(([x, y], i) => (
-      <circle key={i} cx={x} cy={y} r="3" fill={ATLAS_COLORS.lymphoid} opacity="0.55" />
+      <circle key={i} cx={x} cy={y} r="3" fill="#2D7BFF" opacity="0.7" />
     ))}
   </g>
 );
@@ -303,16 +312,16 @@ const atlasHeart = ({ cx, cy, scale = 1, highlight = false, onDrill }) => (
     style={onDrill ? { cursor: "pointer" } : undefined}>
     <path
       d="M-50,-15 Q-62,-50 -30,-62 Q0,-70 0,-45 Q0,-70 30,-62 Q62,-50 50,-15 Q45,20 0,58 Q-45,20 -50,-15 Z"
-      fill="#FBE9E7" opacity="0.4" stroke={ATLAS_COLORS.erythroid} strokeWidth="1.4" />
+      fill="#FBE9E7" opacity="0.9" stroke={ATLAS_COLORS.erythroid} strokeWidth="1.6" />
     <path d="M-42,-25 Q-32,-45 -14,-40 L-14,-8 Q-30,-6 -42,-25 Z"
-      fill={ATLAS_COLORS.lymphoid} opacity="0.75" />
+      fill="url(#atlas-grad-lymphoid)" />
     <path d="M42,-25 Q32,-45 14,-40 L14,-8 Q30,-6 42,-25 Z"
-      fill={ATLAS_COLORS.erythroid} opacity="0.75" />
+      fill="url(#atlas-grad-erythroid)" />
     <path d="M-42,-4 Q-46,26 -14,44 L-6,-2 Q-26,-4 -42,-4 Z"
-      fill={ATLAS_COLORS.lymphoid} opacity="0.85" />
+      fill="url(#atlas-grad-lymphoid)" />
     <path d="M42,-4 Q46,26 14,44 L6,-2 Q26,-4 42,-4 Z"
-      fill={ATLAS_COLORS.erythroid} opacity="0.85" />
-    <line x1="-4" y1="-40" x2="-4" y2="44" stroke="#0A0F1A" strokeWidth="2.5" opacity="0.4" />
+      fill="url(#atlas-grad-erythroid)" />
+    <line x1="-4" y1="-40" x2="-4" y2="44" stroke="#0A0F1A" strokeWidth="2.5" opacity="0.5" />
     <text x="-26" y="-22" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">RA</text>
     <text x="26" y="-22" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">LA</text>
     <text x="-24" y="24" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">RV</text>
@@ -323,7 +332,6 @@ const atlasHeart = ({ cx, cy, scale = 1, highlight = false, onDrill }) => (
     {onDrill && <text x="42" y="-46" textAnchor="middle" fontSize="13" fill={ATLAS_COLORS.trunk}>⤢</text>}
   </g>
 );
-
 const atlasConductionPath = ({ cx, cy, scale = 1 }) => (
   <g transform={`translate(${cx},${cy}) scale(${scale})`}>
     <circle cx="-36" cy="-32" r="6" fill={ATLAS_COLORS.trunk} opacity="0.95">
@@ -585,72 +593,84 @@ export const DIAGRAMS = {
       ["whole"],
     ],
     viewBox: "0 0 900 620",
-    render: ({ onLabelClick, activeLabelId, activeStep = 0, onOpenDrill, preview }) => {
+        render: ({ onLabelClick, activeLabelId, activeStep = 0, onOpenDrill, preview }) => {
       const diagram = DIAGRAMS["ph2:cardiovascular-system"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
       const click = (id) => (preview ? undefined : () => onLabelClick(id));
       const cur = preview ? "default" : "pointer";
       const ring = (id) => (activeLabelId === id
-        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3 }
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
         : { stroke: "transparent", strokeWidth: 0 });
-      const dim = (id) => (activeStep === 9 ? 1 : (inFocus(id) ? 1 : 0.28));
+      // Nothing dims - every structure stays fully visible at all times.
+      // Only the structure currently being discussed gets an amber glow.
+      const isHot = (id) => inFocus(id) && activeStep !== 9;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
       return (
         <svg viewBox="0 0 900 620" width="100%" height="100%">
           {atlasDefs()}
 
-          <g style={{ cursor: cur, opacity: dim("system") * dim("whole") }} onClick={click("system")}>
-            {atlasLungs({ cx: 450, cy: 90, scale: 1, highlight: inFocus("system") || inFocus("whole") })}
+          {/* Lungs */}
+          <g style={{ cursor: cur }} onClick={click("system")} filter={hotFilter("system")}>
+            {atlasLungs({ cx: 450, cy: 90, scale: 1, highlight: false })}
           </g>
 
-          <g opacity={dim("system")}>
-            <path d="M395,220 Q380,160 420,120" stroke={ATLAS_COLORS.lymphoid} strokeWidth="10" fill="none" strokeLinecap="round" opacity="0.55" />
-            <path d="M505,220 Q520,160 480,120" stroke={ATLAS_COLORS.erythroid} strokeWidth="10" fill="none" strokeLinecap="round" opacity="0.55" />
+          {/* Pulmonary vessels */}
+          <g filter={hotFilter("system")}>
+            <path d="M395,220 Q380,160 420,120" stroke="url(#atlas-grad-lymphoid)" strokeWidth="12" fill="none" strokeLinecap="round" />
+            <path d="M505,220 Q520,160 480,120" stroke="url(#atlas-grad-erythroid)" strokeWidth="12" fill="none" strokeLinecap="round" />
             {atlasBloodCell({ cx: 408, cy: 170, r: 4, oxygenated: false, animate: true, delay: "0s" })}
             {atlasBloodCell({ cx: 492, cy: 170, r: 4, oxygenated: true,  animate: true, delay: "1s" })}
           </g>
 
-          <g opacity={dim("system")}>
-            <path d="M560,300 Q640,400 620,520" stroke={ATLAS_COLORS.erythroid} strokeWidth="10" fill="none" strokeLinecap="round" opacity="0.55" />
-            <path d="M340,300 Q260,400 280,520" stroke={ATLAS_COLORS.lymphoid} strokeWidth="10" fill="none" strokeLinecap="round" opacity="0.55" />
+          {/* Systemic vessels */}
+          <g filter={hotFilter("system")}>
+            <path d="M560,300 Q640,400 620,520" stroke="url(#atlas-grad-erythroid)" strokeWidth="12" fill="none" strokeLinecap="round" />
+            <path d="M340,300 Q260,400 280,520" stroke="url(#atlas-grad-lymphoid)" strokeWidth="12" fill="none" strokeLinecap="round" />
             {atlasBloodCell({ cx: 610, cy: 440, r: 4, oxygenated: true,  animate: true, delay: "0.5s" })}
             {atlasBloodCell({ cx: 292, cy: 440, r: 4, oxygenated: false, animate: true, delay: "1.5s" })}
           </g>
 
-          <g style={{ opacity: dim("system") * dim("bp"), cursor: cur }} onClick={click("bp")}>
-            <rect x="250" y="530" width="400" height="60" rx="14" fill={ATLAS_COLORS.neutral} opacity="0.22" />
+          {/* Body region */}
+          <g style={{ cursor: cur }} onClick={click("bp")} filter={hotFilter("bp")}>
+            <rect x="250" y="530" width="400" height="60" rx="14" fill="#F5B93F" opacity="0.35" stroke="#D89B14" strokeWidth="1.5" />
             <text x="450" y="566" textAnchor="middle" fontSize="14" fontWeight="700" fill="var(--text)">Whole body · tissues</text>
           </g>
 
-          <g style={{ cursor: cur, opacity: dim("heart") * dim("whole") }} onClick={click("heart")}>
+          {/* Heart */}
+          <g style={{ cursor: cur }} onClick={click("heart")}
+             filter={(isHot("heart") || isHot("cycle") || isHot("conduction")) ? "url(#atlas-glow)" : undefined}>
             {atlasHeart({
               cx: 450, cy: 320, scale: 1,
-              highlight: inFocus("heart") || inFocus("whole") || inFocus("cycle") || inFocus("conduction"),
+              highlight: false,
               onDrill: onOpenDrill,
             })}
             <circle cx="450" cy="320" r="115" fill="none" {...ring("heart")} pointerEvents="none" />
           </g>
 
+          {/* Conduction overlay */}
           {inFocus("conduction") && (
-            <g opacity="0.9" pointerEvents="none">
+            <g opacity="0.95" pointerEvents="none" filter="url(#atlas-glow)">
               {atlasConductionPath({ cx: 450, cy: 320, scale: 1 })}
             </g>
           )}
 
+          {/* Blood overlay */}
           {inFocus("blood") && (
-            <g pointerEvents="none">
+            <g pointerEvents="none" filter="url(#atlas-glow)">
               {atlasBloodCell({ cx: 400, cy: 280, r: 6, oxygenated: true,  label: "RBC" })}
               {atlasWhiteCell({ cx: 500, cy: 280, r: 6, label: "WBC" })}
               {atlasPlatelet({ cx: 450, cy: 380, r: 4, label: "Plt" })}
             </g>
           )}
 
+          {/* Hemostasis inset */}
           {inFocus("hemostasis") && (
-            <g pointerEvents="none">
+            <g pointerEvents="none" filter="url(#atlas-glow)">
               <rect x="70" y="270" width="160" height="120" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
               <text x="150" y="292" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>VESSEL INJURY</text>
-              <line x1="90" y1="330" x2="210" y2="330" stroke={ATLAS_COLORS.erythroid} strokeWidth="14" strokeLinecap="round" opacity="0.5" />
+              <line x1="90" y1="330" x2="210" y2="330" stroke="url(#atlas-grad-erythroid)" strokeWidth="14" strokeLinecap="round" />
               <line x1="150" y1="324" x2="150" y2="345" stroke="#0A0F1A" strokeWidth="3" />
               {atlasPlatelet({ cx: 138, cy: 336, r: 4 })}
               {atlasPlatelet({ cx: 150, cy: 336, r: 4 })}
@@ -660,33 +680,37 @@ export const DIAGRAMS = {
             </g>
           )}
 
+          {/* Flow inset */}
           {inFocus("flow") && (
-            <g pointerEvents="none">
+            <g pointerEvents="none" filter="url(#atlas-glow)">
               <rect x="670" y="270" width="180" height="120" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
               <text x="760" y="292" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>FLOW · PRESSURE</text>
-              <path d="M690,330 L810,330" stroke={ATLAS_COLORS.erythroid} strokeWidth="12" strokeLinecap="round" opacity="0.5" />
-              {atlasFlowArrow({ x1: 700, y1: 350, x2: 800, y2: 350, color: ATLAS_COLORS.erythroid })}
+              <path d="M690,330 L810,330" stroke="url(#atlas-grad-erythroid)" strokeWidth="12" strokeLinecap="round" />
+              {atlasFlowArrow({ x1: 700, y1: 350, x2: 800, y2: 350, color: "#E53935" })}
               <text x="700" y="372" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">high P</text>
               <text x="800" y="372" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">lower P</text>
             </g>
           )}
 
+          {/* BP overlay */}
           {inFocus("bp") && (
-            <g pointerEvents="none">
+            <g pointerEvents="none" filter="url(#atlas-glow)">
               {atlasFlowArrow({ x1: 450, y1: 435, x2: 450, y2: 528, color: ATLAS_COLORS.trunk, dashed: true })}
               <text x="450" y="490" textAnchor="middle" fontSize="10.5" fill={ATLAS_COLORS.trunk} fontWeight="700">nerves · hormones</text>
             </g>
           )}
 
+          {/* Lymphatic overlay */}
           {inFocus("lymph") && (
-            <g pointerEvents="none" opacity="0.95">
-              <path d="M320,300 Q220,330 200,420 Q210,510 250,540" stroke={ATLAS_COLORS.lymphoid} strokeWidth="6" fill="none" strokeLinecap="round" strokeDasharray="10 6" />
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path d="M320,300 Q220,330 200,420 Q210,510 250,540" stroke="#2D7BFF" strokeWidth="7" fill="none" strokeLinecap="round" strokeDasharray="10 6" />
               {atlasLymphNode({ cx: 240, cy: 380 })}
               {atlasLymphNode({ cx: 215, cy: 460 })}
-              <text x="150" y="500" fontSize="10.5" fill={ATLAS_COLORS.lymphoid} fontWeight="700">lymph → blood</text>
+              <text x="150" y="500" fontSize="10.5" fill="#2D7BFF" fontWeight="700">lymph → blood</text>
             </g>
           )}
 
+          {/* Static region labels */}
           <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Lungs</text>
           <text x="450" y="614" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Body</text>
           <text x="120" y="220" textAnchor="middle" fontSize="11" fill="var(--text-3)" pointerEvents="none">Blood</text>
@@ -756,13 +780,13 @@ export const DIAGRAMS = {
         <svg viewBox="0 0 900 560" width="100%" height="100%">
           {atlasDefs()}
           <path d="M560,60 Q600,40 630,100 L630,170 Q600,160 560,160 Z"
-            fill="url(#atlas-grad-lymphoid)" opacity="0.5" {...ring("svc")} style={{ cursor: cur }} onClick={click("svc")} />
+            fill="url(#atlas-grad-lymphoid)" opacity="0.6" {...ring("svc")} style={{ cursor: cur }} onClick={click("svc")} />
           <path d="M560,170 Q520,100 460,70 L460,140 Q520,160 560,230 Z"
-            fill="url(#atlas-grad-lymphoid)" opacity={s.sl === "open" ? 0.85 : 0.4} {...ring("pa")} style={{ cursor: cur }} onClick={click("pa")} />
+            fill="url(#atlas-grad-lymphoid)" opacity={s.sl === "open" ? 0.9 : 0.5} {...ring("pa")} style={{ cursor: cur }} onClick={click("pa")} />
           <path d="M340,60 Q300,40 270,100 L270,170 Q300,160 340,160 Z"
-            fill="url(#atlas-grad-erythroid)" opacity="0.5" {...ring("pveins")} style={{ cursor: cur }} onClick={click("pveins")} />
+            fill="url(#atlas-grad-erythroid)" opacity="0.6" {...ring("pveins")} style={{ cursor: cur }} onClick={click("pveins")} />
           <path d="M340,170 Q380,90 440,60 L440,130 Q390,160 340,230 Z"
-            fill="url(#atlas-grad-erythroid)" opacity={s.sl === "open" ? 0.85 : 0.4} {...ring("aorta")} style={{ cursor: cur }} onClick={click("aorta")} />
+            fill="url(#atlas-grad-erythroid)" opacity={s.sl === "open" ? 0.9 : 0.5} {...ring("aorta")} style={{ cursor: cur }} onClick={click("aorta")} />
           <ellipse cx="590" cy="190" rx="95" ry="70" fill="url(#atlas-grad-lymphoid)" opacity={s.ra}
             filter="url(#atlas-shadow)" {...ring("ra")} style={{ cursor: cur }} onClick={click("ra")} />
           <ellipse cx="310" cy="190" rx="95" ry="70" fill="url(#atlas-grad-erythroid)" opacity={s.la}
