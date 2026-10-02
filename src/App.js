@@ -146,8 +146,8 @@ if (typeof window !== 'undefined') {
    ========================================================================= */
 const CSS = `
 :root, .ascend-root{
-  --bg:#0A0F1A; --bg-2:#0E1524; --bg-3:#121C2E; --raised:#16213A;
-  --line:#1B283F; --line-2:#243450;
+  --bg:#121A2E; --bg-2:#172544; --bg-3:#1D2E52; --raised:#223961;
+  --line:#2A3B5C; --line-2:#34486E;
   --text:#EAF0FA; --text-2:#9DAFC9; --text-3:#63748F;
   --amber:#F5B93F; --amber-2:#FFD583; --amber-dim:rgba(245,185,63,.13);
   --good:#54D08A; --good-dim:rgba(84,208,138,.12);
@@ -304,7 +304,7 @@ html.ascend-pacifico-ready .brand-word,html.ascend-pacifico-ready .brand-word-he
 .card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:20px;word-wrap:break-word;overflow:hidden}
 .card.hover{transition:border-color .16s,transform .16s,background .16s;cursor:pointer}
 .card.hover:hover{border-color:var(--line-2);background:var(--bg-3);transform:translateY(-2px)}
-.card-feature{background:linear-gradient(150deg,#182847 0%,#13203a 45%,#0d1526 100%)}
+.card-feature{background:linear-gradient(150deg,#243a63 0%,#1d3052 45%,#182847 100%)}
 .ascend-root.light .card-feature{background:linear-gradient(150deg,#EAEFF7,#DCE4EF)}
 .card-feature.hover:hover{background:linear-gradient(150deg,#1d3252 0%,#172a48 45%,#101a2e 100%)}
 .slide-links{display:flex;flex-direction:column;gap:6px;margin:10px 0 4px}
@@ -317,7 +317,7 @@ html.ascend-pacifico-ready .brand-word,html.ascend-pacifico-ready .brand-word-he
 .ascend-root.light .card-feature.hover:hover{background:linear-gradient(150deg,#E2E9F4,#D2DCEA)}
 .grid{display:grid;gap:14px}
 .hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:20px;
-  background:linear-gradient(160deg,#152036 0%,#0E1728 45%,#0B1120 100%);padding:30px 26px}
+  background:linear-gradient(160deg,#1f3052 0%,#182847 45%,#132038 100%);padding:30px 26px}
 .hero .ridge{position:absolute;inset:0;pointer-events:none;opacity:.9}
 .hero-h{font-size:clamp(24px,4.6vw,36px);max-width:16ch;font-weight:800;letter-spacing:-.03em}
 .hero-h .hl{color:var(--amber)}
@@ -720,6 +720,8 @@ const Ic = {
   ai: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z" /><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z" /></>} />,
   up: ({ p = 20, style }) => <I s={p} style={style} w={2.3} d={<path d="M12 19V6M6 11l6-6 6 6" />} />,
   send: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M4 12 20 4l-6 16-3-7z" />} />,
+  mic: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="23" /><line x1="8" y1="23" x2="16" y2="23" /></>} />,
+  speaker: ({ p = 20, style }) => <I s={p} style={style} d={<><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" /></>} />,
   clock: ({ p = 20, style }) => <I s={p} style={style} d={<><circle cx="12" cy="12" r="8" /><path d="M12 8v4l3 2" /></>} />,
   target: ({ p = 20, style }) => <I s={p} style={style} d={<><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3.4" /></>} />,
   star: ({ p = 20, style, fill = "none" }) => <I s={p} style={style} fill={fill} d={<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z" />} />,
@@ -2754,9 +2756,9 @@ function buildShareCardCanvas({ kind, title, subtitle, statLabel, statValue, col
   // ---- Full-bleed backdrop: deep navy with a soft color wash from the
   // milestone's own color, so every card feels tied to its badge color
   // rather than reading as one generic template repainted per event.
-  const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, "#070A11");
-  bg.addColorStop(1, "#0D1420");
+    const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, "#132038");
+  bg.addColorStop(1, "#172544");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
   const wash = ctx.createRadialGradient(W / 2, 60, 40, W / 2, 60, 900);
@@ -3763,6 +3765,85 @@ function AITutor({ topicTitle, context }) {
   const [busy, setBusy] = useState(false);
   const bodyRef = useRef(null);
   useEffect(() => { if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight; }, [msgs, busy]);
+
+  // ---- Voice input: webkitSpeechRecognition (new - no library needed) ----
+    const [listening, setListening] = useState(false);
+  const [micErr, setMicErr] = useState("");
+  const recogRef = useRef(null);
+  const speechSupported = typeof window !== "undefined" && (window.SpeechRecognition || window.webkitSpeechRecognition);
+
+  // Stop any in-progress mic capture or speech playback if the student
+  // navigates away from this tutor mid-use - otherwise recognition keeps
+  // listening, or a reply keeps reading aloud, after the component is gone.
+  useEffect(() => {
+    return () => {
+      try { if (recogRef.current) recogRef.current.stop(); } catch {}
+      try { window.speechSynthesis.cancel(); } catch {}
+    };
+  }, []);
+
+  const startListening = () => {
+    if (!speechSupported || listening) return;
+    setMicErr("");
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const r = new SR();
+    r.lang = "en-US";
+    r.interimResults = false;
+    r.maxAlternatives = 1;
+    r.onresult = (e) => {
+      const transcript = e.results[0][0].transcript;
+      setInput((prev) => (prev ? prev + " " : "") + transcript);
+    };
+    r.onerror = (e) => {
+      setListening(false);
+      if (e.error === "not-allowed" || e.error === "service-not-allowed") setMicErr("Microphone access denied - allow it in your browser's site settings and try again.");
+      else if (e.error === "network") setMicErr("Voice input needs an internet connection.");
+      else if (e.error === "no-speech") setMicErr("Didn't catch that - try again.");
+      else setMicErr("Could not hear you - try again.");
+    };
+    r.onend = () => setListening(false);
+    recogRef.current = r;
+    setListening(true);
+    r.start();
+  };
+  const stopListening = () => { if (recogRef.current) recogRef.current.stop(); setListening(false); };
+  // ---- Voice output: reuses the same speechSynthesis + voice picker the
+  // topic-note "Listen" button and Atlas Play already use. ----
+  const [voiceReplies, setVoiceReplies] = useState(() => {
+    try { return localStorage.getItem("ascend_tutor_voice_replies") === "true"; } catch { return false; }
+  });
+    const [speakingIdx, setSpeakingIdx] = useState(null);
+  const tutorVoiceRef = useRef(null);
+  const speakTokenRef = useRef(0); // invalidates a stale onend/onerror if speak() is called again before the voice picker resolves
+
+  const speak = async (text, idx) => {
+    if (!("speechSynthesis" in window)) return;
+    const myToken = ++speakTokenRef.current;
+    window.speechSynthesis.cancel();
+    if (speakingIdx === idx) { setSpeakingIdx(null); return; } // tap again to stop
+    let gender = "female";
+    try { gender = localStorage.getItem("ascend_voice_gender") || "female"; } catch {}
+    if (!tutorVoiceRef.current) tutorVoiceRef.current = await ascendPickVoice(gender);
+    if (speakTokenRef.current !== myToken) return; // superseded while the voice was loading
+    const clean = text.replace(/\s*→\s*/g, " — ");
+    const utter = new SpeechSynthesisUtterance(clean);
+    if (tutorVoiceRef.current) utter.voice = tutorVoiceRef.current;
+    utter.pitch = gender === "male" ? 0.82 : 1.12;
+    utter.rate = gender === "male" ? 0.97 : 1;
+    utter.onend = () => { if (speakTokenRef.current === myToken) setSpeakingIdx(null); };
+    utter.onerror = () => { if (speakTokenRef.current === myToken) setSpeakingIdx(null); };
+    setSpeakingIdx(idx);
+    window.speechSynthesis.speak(utter);
+  };
+
+  const toggleVoiceReplies = () => {
+    setVoiceReplies((v) => {
+      const next = !v;
+      try { localStorage.setItem("ascend_tutor_voice_replies", String(next)); } catch {}
+      return next;
+    });
+  };
+
   const send = async () => {
     const text = input.trim();
     if (!text || busy) return;
@@ -3772,22 +3853,60 @@ function AITutor({ topicTitle, context }) {
     const apiMsgs = next.slice(1);
     try {
       const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })), 4096);
-      setMsgs([...next, { role: "assistant", content: reply }]);
+      const finalMsgs = [...next, { role: "assistant", content: reply }];
+      setMsgs(finalMsgs);
+      if (voiceReplies) speak(reply, finalMsgs.length - 1);
     } catch (e) {
       setMsgs([...next, { role: "assistant", content: (e && e.message ? e.message + " " : "") + "The tutor could not respond just now. Please try again in a moment." }]);
     }
     setBusy(false);
   };
+
   return (
     <div className="chat">
+      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 6 }}>
+        <button
+          className="btn btn-sm"
+          style={{ background: voiceReplies ? "var(--amber-dim)" : "var(--bg-3)", color: voiceReplies ? "var(--amber-2)" : "var(--text-2)", border: voiceReplies ? "1px solid rgba(245,185,63,.4)" : "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6, fontSize: 12 }}
+          onClick={toggleVoiceReplies}
+        >
+          <Ic.speaker p={13} /> {voiceReplies ? "Voice mode on" : "Voice mode off"}
+        </button>
+      </div>
       <div className="chat-body" ref={bodyRef}>
-        {msgs.map((m, i) => <div key={i} className={"msg " + (m.role === "user" ? "u" : "a")}>{m.role === "user" ? m.content : <AIText text={m.content} />}</div>)}
+        {msgs.map((m, i) => (
+          <div key={i} className={"msg " + (m.role === "user" ? "u" : "a")} style={{ position: "relative" }}>
+            {m.role === "user" ? m.content : <AIText text={m.content} />}
+            {m.role === "assistant" && (
+              <button
+                title="Listen to this reply"
+                className="iconbtn"
+                style={{ position: "absolute", top: 4, right: 4, width: 24, height: 24, color: speakingIdx === i ? "var(--amber-2)" : "var(--text-3)" }}
+                onClick={() => speak(m.content, i)}
+              >
+                <Ic.speaker p={13} />
+              </button>
+            )}
+          </div>
+        ))}
         {busy && <div className="msg a dots"><span /><span /><span /></div>}
       </div>
       <div className="chat-in">
-        <input value={input} placeholder="Ask a question..." onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} />
+        <input value={input} placeholder={listening ? "Listening..." : "Ask a question..."} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} />
+        {speechSupported && (
+          <button
+            title="Speak your question"
+            className="btn btn-sm"
+            style={{ background: listening ? "var(--amber)" : "var(--bg-3)", color: listening ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }}
+            onClick={listening ? stopListening : startListening}
+          >
+            <Ic.mic p={16} />
+          </button>
+        )}
         <button className="btn btn-a btn-sm" onClick={send} disabled={busy}><Ic.send p={17} /></button>
       </div>
+            {listening && <div className="mono" style={{ fontSize: 11.5, color: "var(--amber-2)", marginTop: 4 }}>● Listening...</div>}
+      {micErr && <div className="mono" style={{ fontSize: 11.5, color: "var(--bad)", marginTop: 4 }}>{micErr}</div>}
     </div>
   );
 }
