@@ -1414,6 +1414,7 @@ function SlidesView({ app }) {
    ============================================================ */
 import { CONTENT } from "./contentData";
 import AtlasView from "./AtlasView";
+import { DIAGRAMS } from "./diagrams";
 
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
@@ -4195,6 +4196,19 @@ function TopicFlowDiagram({ title, context }) {
 }
 
 /* ------------------------------- topic ---------------------------------- */
+/* ATLAS_TOPICS: which topics have an illustrated Atlas diagram, keyed as
+   "courseId:topicIndex". Derived automatically from DIAGRAMS (imported
+   from diagrams.js) at module load, so adding a new diagram there is the
+   ONLY step ever needed to make the amber "Open the illustrated diagram"
+   card appear on the right topic - nothing in this file needs touching
+   again. Every other topic just shows the existing Mermaid "Build flow
+   diagram" card, unchanged. */
+const ATLAS_TOPICS = new Set(
+  Object.values(DIAGRAMS)
+    .filter((d) => d.topic)
+    .map((d) => `${d.topic.courseId}:${d.topic.topicIndex}`)
+);
+
 function TopicView({ app }) {
   const t = contentFor(app.courseId, app.topicId);
   const c = courseById(app.courseId);
@@ -5002,6 +5016,28 @@ function TopicView({ app }) {
       <div className="divider" />
       <div className="eyebrow" style={{ marginBottom: 12 }}>Visualise it</div>
       <TopicFlowDiagram title={t.title} context={noteContext} />
+      {ATLAS_TOPICS.has(`${t.courseId}:${t.topicIndex}`) && (
+        <div
+          className="card hover"
+          style={{ marginTop: 12, borderColor: "rgba(245,185,63,.35)", background: "var(--amber-dim)", cursor: "pointer" }}
+          onClick={() => app.go("atlas", { courseId: t.courseId, topicId: t.topicIndex })}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{
+              width: 38, height: 38, borderRadius: 10, flexShrink: 0,
+              background: "rgba(245,185,63,.18)", color: "var(--amber)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+              <Ic.atlas p={19} />
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontWeight: 700, fontSize: 14.5, color: "var(--amber-2)" }}>Open the illustrated diagram</div>
+              <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 2 }}>Walk through this topic as an illustrated animation.</div>
+            </div>
+            <Ic.chevR p={16} style={{ color: "var(--amber)", flexShrink: 0 }} />
+          </div>
+        </div>
+      )}
       <div className="divider" />
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}><Ic.ai p={18} /><div className="eyebrow" style={{ margin: 0 }}>Ask ASCEND</div></div>
       <AITutor topicTitle={t.title} context={noteContext} />

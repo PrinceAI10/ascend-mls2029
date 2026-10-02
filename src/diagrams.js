@@ -1,0 +1,305 @@
+// diagrams.js
+// ------------------------------------------------------------
+// ATLAS CONTENT REGISTRY
+//
+// Every illustrated visual in the Atlas tab - diagrams and
+// pathway builders alike - is one entry in DIAGRAMS below.
+// Nothing here calls the AI at runtime, nothing fetches, there
+// are no new npm packages. Everything is plain SVG drawn by
+// React, plus CSS transitions, exactly per the Atlas spec.
+//
+// TO ADD A NEW DIAGRAM: copy an existing "type: diagram" entry,
+// change the id/title/topic/labels/narration/render, done. The
+// topic card in TopicView and the Atlas course/visuals lists
+// pick it up automatically - nothing else to touch.
+//
+// TO ADD A NEW BUILDER: copy "bch:glycolysis" below.
+//
+// Keys are the diagram's own id (not the same as a topic key -
+// a topic can only ever have ONE diagram/builder attached via
+// its `topic` field, but a diagram can have child diagrams for
+// drill-downs that aren't attached to any topic directly).
+// ------------------------------------------------------------
+import React from "react";
+
+// Small, deliberately limited palette on top of the app's existing
+// amber/good/bad tokens - navy, gold(amber), blue, crimson, purple,
+// matching the "navy, gold, white, blue" system already locked in for
+// the rest of the app. Defined once here so every diagram stays
+// visually consistent without anyone having to remember hex codes.
+export const ATLAS_COLORS = {
+  trunk: "#F5B93F",       // amber/gold - stem/progenitor trunks
+  trunkDim: "rgba(245,185,63,.14)",
+  lymphoid: "#2F6FED",    // blue - lymphoid lineage
+  lymphoidDim: "rgba(47,111,237,.14)",
+  erythroid: "#C0392B",   // crimson - red cell lineage
+  erythroidDim: "rgba(192,57,43,.14)",
+  nucleus: "#8B5CF6",     // purple - nuclei / genetic material
+  nucleusDim: "rgba(139,92,246,.14)",
+  neutral: "#64748B",     // slate - unlabelled connective lines
+};
+
+// Course display names for the Atlas course picker. Add a line here
+// whenever a diagram is added for a course not yet listed - this is
+// intentionally separate from App.js's own COURSES list so AtlasView
+// never has to import anything back out of App.js.
+export const ATLAS_COURSE_NAMES = {
+  hem: "Hematology I",
+  bch: "Biochemistry",
+};
+
+/* ----------------------------- helpers ----------------------------- */
+
+export function diagramsForCourse(courseId) {
+  return Object.values(DIAGRAMS)
+    .filter((d) => d.topic && d.topic.courseId === courseId)
+    .sort((a, b) => a.topic.topicIndex - b.topic.topicIndex);
+}
+
+export function coursesWithDiagrams() {
+  const set = new Set();
+  Object.values(DIAGRAMS).forEach((d) => { if (d.topic) set.add(d.topic.courseId); });
+  return [...set];
+}
+
+export function diagramForTopic(courseId, topicIndex) {
+  return Object.values(DIAGRAMS).find(
+    (d) => d.topic && d.topic.courseId === courseId && d.topic.topicIndex === topicIndex
+  ) || null;
+}
+
+/* ------------------------------ content ----------------------------- */
+
+const atlasNode = ({ id, x, y, w, h, label, sub, fill, dim, onLabelClick, activeLabelId, pulsing, onOpenDrill }) => {
+  const active = activeLabelId === id;
+  return (
+    <g
+      key={id}
+      onClick={() => onLabelClick(id)}
+      style={{ cursor: "pointer" }}
+      className={pulsing ? "atlas-pulse" : ""}
+    >
+      <rect
+        x={x} y={y} width={w} height={h} rx={10}
+        fill={active ? fill : dim}
+        stroke={fill}
+        strokeWidth={active ? 2.4 : 1.4}
+      />
+      <text x={x + w / 2} y={y + h / 2 - (sub ? 6 : 0)} textAnchor="middle" dominantBaseline="middle"
+        fontSize="13" fontWeight="700" fill={active ? "#0A0F1A" : "var(--text)"}>
+        {label}
+      </text>
+      {sub && (
+        <text x={x + w / 2} y={y + h / 2 + 12} textAnchor="middle" dominantBaseline="middle"
+          fontSize="9.5" fill={active ? "#0A0F1A" : "var(--text-2)"}>
+          {sub}
+        </text>
+      )}
+      {onOpenDrill && (
+        <text x={x + w - 10} y={y + 13} textAnchor="end" fontSize="11" fill={active ? "#0A0F1A" : fill}>
+          ⤢
+        </text>
+      )}
+    </g>
+  );
+};
+
+const atlasLine = (x1, y1, x2, y2, color = ATLAS_COLORS.neutral) => (
+  <line key={`${x1}-${y1}-${x2}-${y2}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth="1.6" opacity="0.55" />
+);
+
+export const DIAGRAMS = {
+
+  /* =========================================================
+     HAEMATOPOIESIS — top level
+     Topic: Hematology I (hem), Topic 02 (index 1)
+     ========================================================= */
+  "hem:haematopoiesis": {
+    id: "hem:haematopoiesis",
+    type: "diagram",
+    title: "Haematopoiesis — The Complete Tree",
+    topic: { courseId: "hem", topicIndex: 1 },
+    parent: null,
+    labels: [
+      { id: "hsc", name: "Haematopoietic Stem Cell", desc: "The single cell type every blood cell in your body descends from. It can self-renew (make a copy of itself) and differentiate (commit to a lineage) at the same time." },
+      { id: "cmp", name: "Common Myeloid Progenitor", desc: "Commits to the myeloid line — red cells, platelets, granulocytes and monocytes. Tap the open-arrow to see this branch in full detail.", drillTo: "hem:haematopoiesis-myeloid" },
+      { id: "clp", name: "Common Lymphoid Progenitor", desc: "Commits to the lymphoid line — B cells, T cells and natural killer cells. These are the cells of adaptive and innate immunity." },
+      { id: "myeloid-leaf", name: "Myeloid-derived cells", desc: "Red cells, platelets, granulocytes and monocytes — all downstream of the common myeloid progenitor. Open the CMP branch to see each one." },
+      { id: "b", name: "B Lymphocytes", desc: "Mature in the bone marrow, produce antibodies once activated." },
+      { id: "t", name: "T Lymphocytes", desc: "Mature in the thymus, coordinate and carry out cell-mediated immunity." },
+      { id: "nk", name: "Natural Killer Cells", desc: "Innate lymphoid cells that kill virus-infected and tumour cells without needing prior sensitisation." },
+    ],
+    narration: [
+      "Every second of your life, roughly two million red blood cells die and are replaced. All of it starts with one kind of cell.",
+      "The haematopoietic stem cell can do two things at once — make a copy of itself, and give rise to every blood cell you will ever have.",
+      "Before birth this happens in the yolk sac, then the liver, then finally settles permanently in the bone marrow.",
+      "From the stem cell, two broad progenitor lines branch out — the common myeloid progenitor and the common lymphoid progenitor.",
+      "The myeloid progenitor is the trunk for red cells, platelets, granulocytes and monocytes — the cells of oxygen transport and innate defence.",
+      "The lymphoid progenitor is the trunk for B cells, T cells and natural killer cells — the cells of adaptive and innate immunity.",
+      "Each of these lines branches further into progenitors committed to one or two final cell types.",
+      "Growth factors — EPO, G-CSF, thrombopoietin — act at specific branch points, pushing a progenitor to mature down one path.",
+      "By the time a cell reaches the end of a branch it has lost the ability to become anything else. This is terminal differentiation.",
+      "Tap the myeloid progenitor now to see this branch open up in full detail.",
+    ],
+    stepFocus: [
+      ["hsc"], ["hsc"], ["hsc"], ["hsc", "cmp", "clp"], ["cmp"], ["clp"], ["cmp", "clp"], ["cmp"], ["b", "t", "nk", "myeloid-leaf"], ["cmp"],
+    ],
+    viewBox: "0 0 900 440",
+    render: ({ onLabelClick, activeLabelId, activeStep, onOpenDrill, preview }) => {
+      const focus = DIAGRAMS["hem:haematopoiesis"].stepFocus[activeStep] || [];
+      const n = (id, props) => atlasNode({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
+      return (
+        <svg viewBox="0 0 900 440" width="100%" height="100%">
+          {atlasLine(450, 90, 260, 170)}
+          {atlasLine(450, 90, 640, 170)}
+          {atlasLine(260, 230, 260, 290)}
+          {atlasLine(640, 230, 530, 290)}
+          {atlasLine(640, 230, 640, 290)}
+          {atlasLine(640, 230, 750, 290)}
+          {n("hsc", { x: 380, y: 30, w: 140, h: 60, label: "HSC", sub: "Stem cell", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
+          {n("cmp", { x: 180, y: 170, w: 160, h: 60, label: "CMP", sub: "Myeloid progenitor", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim, onOpenDrill: true })}
+          {n("clp", { x: 560, y: 170, w: 160, h: 60, label: "CLP", sub: "Lymphoid progenitor", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
+          {n("myeloid-leaf", { x: 170, y: 290, w: 180, h: 55, label: "Red cells · platelets", sub: "granulocytes · monocytes", fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim })}
+          {n("b", { x: 470, y: 290, w: 110, h: 55, label: "B cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
+          {n("t", { x: 590, y: 290, w: 110, h: 55, label: "T cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
+          {n("nk", { x: 710, y: 290, w: 110, h: 55, label: "NK cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     HAEMATOPOIESIS — myeloid drill-down
+     ========================================================= */
+  "hem:haematopoiesis-myeloid": {
+    id: "hem:haematopoiesis-myeloid",
+    type: "diagram",
+    title: "Myeloid Lineage",
+    topic: null,
+    parent: "hem:haematopoiesis",
+    labels: [
+      { id: "cmp", name: "Common Myeloid Progenitor", desc: "The trunk of this branch — gives rise to the granulocyte-monocyte line and the megakaryocyte-erythroid line." },
+      { id: "gmp", name: "Granulocyte-Monocyte Progenitor", desc: "Commits to neutrophils, eosinophils, basophils and monocytes — the phagocytic and inflammatory cells of innate immunity." },
+      { id: "mep", name: "Megakaryocyte-Erythroid Progenitor", desc: "Commits to platelets and red cells. Tap the open-arrow to see red cell maturation in full detail.", drillTo: "hem:haematopoiesis-erythroid" },
+      { id: "gran", name: "Granulocytes", desc: "Neutrophils, eosinophils and basophils — short-lived, first-responder white cells." },
+      { id: "mono", name: "Monocytes", desc: "Circulate, then migrate into tissue and become macrophages or dendritic cells." },
+      { id: "mega", name: "Megakaryocytes → Platelets", desc: "A single megakaryocyte fragments its cytoplasm into thousands of platelets, essential for clotting." },
+    ],
+    narration: [
+      "This is the myeloid branch, opened up from the common myeloid progenitor.",
+      "The CMP splits into two further progenitors — the granulocyte-monocyte progenitor, and the megakaryocyte-erythroid progenitor.",
+      "The granulocyte-monocyte progenitor is the trunk for neutrophils, eosinophils, basophils and monocytes.",
+      "These are the fast-responding cells of innate immunity — first on the scene at infection or injury.",
+      "The megakaryocyte-erythroid progenitor splits again into the platelet line and the red cell line.",
+      "A single megakaryocyte fragments its own cytoplasm into thousands of platelets, released straight into the blood.",
+      "The red cell line is where most of the clinically important maturation detail lives.",
+      "G-CSF drives the granulocyte line; thrombopoietin drives the megakaryocyte line; EPO drives the red cell line.",
+      "Each growth factor acts at a specific commitment point, and a deficiency in any of them produces a recognisable blood picture.",
+      "Tap the megakaryocyte-erythroid progenitor now to open the red cell maturation sequence.",
+    ],
+    stepFocus: [
+      ["cmp"], ["cmp", "gmp", "mep"], ["gmp"], ["gran", "mono"], ["mep"], ["mega"], ["mep"], ["gmp", "mep"], ["gmp", "mep"], ["mep"],
+    ],
+    viewBox: "0 0 900 380",
+    render: ({ onLabelClick, activeLabelId, activeStep, preview }) => {
+      const focus = DIAGRAMS["hem:haematopoiesis-myeloid"].stepFocus[activeStep] || [];
+      const n = (id, props) => atlasNode({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
+      return (
+        <svg viewBox="0 0 900 380" width="100%" height="100%">
+          {atlasLine(450, 90, 260, 160)}
+          {atlasLine(450, 90, 640, 160)}
+          {atlasLine(260, 220, 180, 280)}
+          {atlasLine(260, 220, 340, 280)}
+          {atlasLine(640, 220, 640, 280)}
+          {n("cmp", { x: 380, y: 30, w: 140, h: 60, label: "CMP", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
+          {n("gmp", { x: 180, y: 160, w: 160, h: 60, label: "GMP", sub: "Granulocyte-monocyte", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
+          {n("mep", { x: 560, y: 160, w: 160, h: 60, label: "MEP", sub: "Megakaryocyte-erythroid", fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim, onOpenDrill: true })}
+          {n("gran", { x: 90, y: 280, w: 140, h: 55, label: "Granulocytes", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
+          {n("mono", { x: 250, y: 280, w: 140, h: 55, label: "Monocytes", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
+          {n("mega", { x: 560, y: 280, w: 160, h: 55, label: "Megakaryocytes", sub: "→ Platelets", fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim })}
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     HAEMATOPOIESIS — erythroid drill-down (deepest level)
+     ========================================================= */
+  "hem:haematopoiesis-erythroid": {
+    id: "hem:haematopoiesis-erythroid",
+    type: "diagram",
+    title: "Erythroid Maturation",
+    topic: null,
+    parent: "hem:haematopoiesis-myeloid",
+    labels: [
+      { id: "s1", name: "Proerythroblast", desc: "The first morphologically recognisable red cell precursor. Large nucleus, deeply basophilic cytoplasm." },
+      { id: "s2", name: "Basophilic Normoblast", desc: "Cytoplasm still strongly basophilic (ribosome-rich); nucleus begins condensing." },
+      { id: "s3", name: "Polychromatophilic Normoblast", desc: "Cytoplasm takes on a mixed blue-pink colour as haemoglobin accumulates alongside remaining ribosomes." },
+      { id: "s4", name: "Orthochromatic Normoblast", desc: "Nucleus fully condensed and pyknotic; cytoplasm now mostly pink/eosinophilic from haemoglobin." },
+      { id: "s5", name: "Reticulocyte", desc: "Nucleus has been extruded. Residual RNA still visible with supravital stains. Circulates 1-2 days before full maturation." },
+      { id: "s6", name: "Mature Red Cell", desc: "Biconcave, anucleate, ~120 day lifespan, fully loaded with haemoglobin for oxygen transport." },
+      { id: "epo", name: "Erythropoietin (EPO)", desc: "Produced by the kidney in response to hypoxia. Drives proliferation and survival of the later erythroid precursors." },
+    ],
+    narration: [
+      "This is the full erythroid maturation sequence — six stages, left to right.",
+      "It begins with the proerythroblast — large nucleus, deep blue cytoplasm, packed with ribosomes for protein synthesis.",
+      "The basophilic normoblast follows — still strongly blue, the nucleus beginning to condense.",
+      "The polychromatophilic normoblast shows a mixed colour — haemoglobin is accumulating alongside the remaining ribosomes.",
+      "The orthochromatic normoblast is mostly pink now — the nucleus is fully condensed and about to be extruded.",
+      "The cell then ejects its nucleus entirely, becoming a reticulocyte — anucleate, with residual RNA still visible on special stains.",
+      "Erythropoietin, made by the kidney in response to low oxygen, acts on these later stages to drive their survival and proliferation.",
+      "After one to two days circulating, the reticulocyte loses its remaining RNA and becomes a fully mature red cell.",
+      "The mature red cell is biconcave, anucleate, and will circulate for around 120 days.",
+      "This whole sequence — proerythroblast to mature red cell — takes about a week in a healthy bone marrow.",
+    ],
+    stepFocus: [
+      [], ["s1"], ["s2"], ["s3"], ["s4"], ["s5"], ["epo", "s4", "s5"], ["s5"], ["s6"], ["s1", "s2", "s3", "s4", "s5", "s6"],
+    ],
+    viewBox: "0 0 900 260",
+    render: ({ onLabelClick, activeLabelId, activeStep, preview }) => {
+      const focus = DIAGRAMS["hem:haematopoiesis-erythroid"].stepFocus[activeStep] || [];
+      const n = (id, props) => atlasNode({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
+      const stages = [
+        { id: "s1", label: "Proerythro-\nblast" }, { id: "s2", label: "Basophilic\nnormoblast" },
+        { id: "s3", label: "Polychromato-\nphilic" }, { id: "s4", label: "Orthochromatic\nnormoblast" },
+        { id: "s5", label: "Reticulocyte" }, { id: "s6", label: "Mature\nRBC" },
+      ];
+      const w = 120, gap = 20, startX = 40, y = 120;
+      return (
+        <svg viewBox="0 0 900 260" width="100%" height="100%">
+          {stages.slice(0, -1).map((s, i) => atlasLine(startX + (i + 1) * (w + gap) - gap, y + 25, startX + (i + 1) * (w + gap), y + 25))}
+          {n("epo", { x: 520, y: 30, w: 190, h: 40, label: "EPO", sub: "acts here →", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
+          {stages.map((s, i) => n(s.id, {
+            x: startX + i * (w + gap), y, w, h: 65,
+            label: s.label.split("\n")[0], sub: s.label.split("\n")[1] || "",
+            fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim,
+          }))}
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     GLYCOLYSIS — pathway builder
+     Topic: Biochemistry (bch), Topic 04 (index 3)
+     ========================================================= */
+  "bch:glycolysis": {
+    id: "bch:glycolysis",
+    type: "builder",
+    title: "Glycolysis — Build the Pathway",
+    topic: { courseId: "bch", topicIndex: 3 },
+    intro: "Arrange the ten steps of glycolysis in the correct order, glucose to pyruvate. Tap a block to place it - a wrong block bounces back.",
+    steps: [
+      { id: "g", label: "Glucose" },
+      { id: "g6p", label: "Glucose-6-phosphate", sub: "Hexokinase" },
+      { id: "f6p", label: "Fructose-6-phosphate", sub: "Phosphoglucose isomerase" },
+      { id: "f16bp", label: "Fructose-1,6-bisphosphate", sub: "PFK-1" },
+      { id: "g3p", label: "DHAP / G3P", sub: "Aldolase" },
+      { id: "bpg", label: "1,3-Bisphosphoglycerate", sub: "G3P dehydrogenase" },
+      { id: "3pg", label: "3-Phosphoglycerate", sub: "Phosphoglycerate kinase" },
+      { id: "2pg", label: "2-Phosphoglycerate", sub: "Phosphoglycerate mutase" },
+      { id: "pep", label: "Phosphoenolpyruvate", sub: "Enolase" },
+      { id: "pyr", label: "Pyruvate", sub: "Pyruvate kinase" },
+    ],
+  },
+};
