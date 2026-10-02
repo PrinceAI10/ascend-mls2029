@@ -25058,21 +25058,21 @@ Crucial insight: Haematopoiesis is regulated by growth factors and cytokines tha
     },
     {
       q: "The growth factor binds the cell. How does that become 'make more cells'?",
-      body: `A growth factor like erythropoietin binds a receptor on the surface of a progenitor cell. But binding is not the same as a response. The cell must translate a brief extracellular signal into a coordinated change in gene expression, cell division, and maturation, and that translation happens through intracellular signalling pathways.
+            body: `A growth factor like erythropoietin finds a progenitor cell and locks onto a receptor - a docking point on the cell's outer surface, like a key finding its matching lock. But locking on happens outside the cell, and the actual response - make more cells, start maturing - has to happen deep inside, at the nucleus, where the DNA lives. So there is a gap to close: how does a signal received on the outside end up switching on genes on the inside?
 
-My Socratic question: The growth factor is outside the cell; the response happens inside. How does the message cross the membrane and reach the nucleus?
+My Socratic question: The message arrives at the cell's outer wall. The response has to happen at the nucleus, the cell's control centre. What carries the message across that distance?
 
-The answer is a series of cascading protein interactions. Three pathways are especially important in haematopoiesis.
+The answer is a relay team of proteins inside the cell, each one triggering the next like a line of dominoes, until the last domino reaches the nucleus and switches a gene on. Three relay teams matter most in blood cell production.
 
-The first is the JAK/STAT pathway. When a growth factor such as EPO or TPO binds its receptor, the receptor activates JAK kinases. These JAKs phosphorylate the receptor, creating a docking site for STAT proteins. The STATs are then phosphorylated by JAK, after which they move to the nucleus and turn on the genes needed for proliferation and differentiation. This is the primary pathway for EPO, TPO, G-CSF and many other haematopoietic growth factors.
+The first is called JAK/STAT. JAK is a type of enzyme called a kinase - a kinase's whole job is to tag other proteins with a small chemical marker, called a phosphate, that switches them on, the way flipping a switch turns on a lamp. When a growth factor like EPO or TPO locks onto its receptor, the receptor activates JAK kinases sitting just underneath it. The JAKs tag the receptor itself, creating a landing spot for the next protein in the relay, called STAT. Once STAT lands there, JAK tags it too, switching it on. Switched-on STAT then travels into the nucleus and turns on the genes the cell needs to divide and mature. This relay is the main one used by EPO, TPO, and G-CSF - in other words, the main relay for making red cells, platelets, and white cells.
 
-The second is the MAPK pathway, also called the RAS-RAF-MEK-ERK pathway. It is activated by growth factor receptors through the small GTPase RAS, and it triggers a kinase cascade that ends with ERK entering the nucleus and promoting cell division. It is the main pathway driving proliferation.
+The second relay is called MAPK, also known by its four proteins in order - RAS, RAF, MEK, ERK - like a four-person relay race, each one handing the baton to the next. It is triggered the same way, by a growth factor locking onto its receptor, and it ends when the last runner, ERK, reaches the nucleus and tells the cell to divide. This is the relay mainly responsible for triggering cell division.
 
-The third is the PI3K/AKT pathway. It is activated downstream of growth factor receptors, and it produces the lipid PIP3, which recruits AKT. AKT promotes cell survival by blocking apoptosis, so this pathway protects progenitor cells from dying while they mature.
+The third relay is called PI3K/AKT. Instead of telling the cell to divide, its job is to tell the cell to stay alive. A cell that is not needed is normally programmed to quietly self-destruct, a built-in cleanup process called apoptosis. The PI3K/AKT relay blocks that self-destruct signal, so young blood cells survive long enough to finish maturing instead of dying too early.
 
-These pathways are not isolated but interact with each other. A single growth factor typically activates several pathways at once, and the balance between them determines whether the cell divides, matures, survives, or dies. In disease this balance is broken, as mutations in JAK2 cause the JAK/STAT pathway to be permanently on, driving excessive blood cell production in polycythaemia vera, mutations in RAS keep the MAPK pathway active, contributing to leukaemias, and mutations in PI3K/AKT support the survival of abnormal cells.
+These three relays do not run in isolation - one growth factor usually sets off more than one at the same time, and which relay dominates decides whether the cell divides, matures, survives, or dies. This balance can break down in disease: a faulty, permanently-stuck-on version of JAK2, the first domino in the JAK/STAT relay, causes a condition called polycythaemia vera, where the body makes far too many blood cells because the make-more-cells signal never switches off.
 
-Crucial insight: Growth factors work by activating intracellular signalling pathways, with JAK/STAT for haematopoietic signalling, MAPK for proliferation, and PI3K/AKT for survival. Understanding these pathways explains how normal haematopoiesis is regulated, and how mutations cause diseases.`
+Crucial insight: Growth factors do not act on the nucleus directly - they trigger a relay of proteins inside the cell that carries the message there. JAK/STAT is the main relay for blood-cell growth factors, MAPK mainly drives cell division, and PI3K/AKT mainly keeps the cell alive while it matures. When one of these relays gets stuck in the on position through a mutation, the result is a blood disorder where cell production runs out of control.`
     },
     {
       q: "Now the factory is running. What does it produce — and what do all those cells do?",
@@ -25092,17 +25092,25 @@ Crucial insight: Haematopoiesis produces three families of cells, red cells for 
     },
     {
       q: "If the system can adjust itself, why do things still go wrong?",
-      body: `Haematopoiesis is a system with enormous regulatory precision. It matches production to demand, keeps the blood count stable for decades, and responds within hours to infection or bleeding. So why do blood diseases still exist, and why are they so serious?
+            body: `Haematopoiesis is a system with enormous regulatory precision. It matches production to demand, keeps the blood count stable for decades, and responds within hours to infection or bleeding. So why do blood diseases still exist, and why are they so serious?
 
 My Socratic question: A system this well-regulated should be very hard to break. What could still go wrong?
 
-The answer is that many things can still go wrong, and each produces a characteristic disease. Understanding these failure modes shows how the system works by showing what happens when it does not.
+The answer is that disease happens when one part of this process breaks - and depending on which part breaks, you get one of five different patterns of disease.
 
-The main categories of haematological disease are as follows. Failure of production occurs when the bone marrow cannot produce enough cells, as in aplastic anaemia, which is marrow failure of all lineages, pure red cell aplasia, which affects red cells only, and agranulocytosis, which affects neutrophils only. Excessive production occurs when the marrow produces too many cells, as in polycythaemia vera, which is too many red cells from a JAK2 mutation, essential thrombocythaemia, which is too many platelets, and chronic myeloid leukaemia, which is too many granulocytes from the Philadelphia chromosome. Production of abnormal cells occurs in leukaemias, where immature cells fail to mature properly and crowd out normal haematopoiesis, in lymphomas, where abnormal lymphocytes accumulate in lymph nodes, and in myelodysplastic syndromes, where dysplastic cells fail to mature normally. Nutritional deficiency, whether of iron, B12 or folate, reduces production of specific lineages. And peripheral destruction occurs in haemolytic anaemias, where red cells are destroyed in the circulation, and in immune thrombocytopenia, where platelets are destroyed by antibodies.
+The first pattern is too few cells being made at all - the marrow simply stops producing. Aplastic anaemia is this pattern affecting every cell type at once. The same failure can also hit just one lineage: pure red cell aplasia affects only red cells, and agranulocytosis affects only neutrophils, a type of white cell.
 
-Each of these has a specific mechanism and a specific set of laboratory findings. Understanding them requires understanding the normal process, which is exactly why this topic comes first.
+The second pattern is the opposite problem - too many cells being made. Polycythaemia vera means the marrow makes far too many red cells, usually because of that same stuck-on JAK2 mutation from the growth-factor relay you just learned. Essential thrombocythaemia is the platelet version - too many platelets. Chronic myeloid leukaemia is the white cell version - too many granulocytes, caused by a different genetic fault called the Philadelphia chromosome.
 
-Crucial insight: Haematological diseases arise from failures of the normal regulatory system, producing too few cells, too many cells, or abnormal cells. Every disease has a specific mechanism and a specific signature in the laboratory.`
+The third pattern is not making too few or too many cells, but making the wrong kind of cell - cells that look abnormal and cannot do their job. Leukaemias are immature cells that never finish maturing, and because they keep multiplying, they crowd out the normal, healthy cells around them. Lymphomas are the same kind of problem, but happening in lymph nodes rather than the bone marrow. Myelodysplastic syndromes are a milder version, where cells mature badly rather than not at all.
+
+The fourth pattern has nothing to do with the marrow itself - it is simply running out of raw materials. Without enough iron, vitamin B12, or folate, the marrow cannot build new cells properly, however well it is working otherwise.
+
+The fifth pattern is not a production problem at all - the marrow makes perfectly normal cells, but something outside the marrow is destroying them faster than they can be replaced. Haemolytic anaemias are red cells being destroyed in the bloodstream. Immune thrombocytopenia is platelets being destroyed by the body's own antibodies.
+
+Notice that all five patterns are really just the normal process you have already learned, breaking in a specific, recognisable place - too little production, too much production, the wrong product, missing ingredients, or destruction after the fact.
+
+Crucial insight: Every blood disease fits one of five patterns - too few cells made, too many cells made, abnormal cells made, missing raw materials, or normal cells destroyed too fast. Knowing the normal process tells you exactly where to look when something goes wrong.`
     },
     {
       q: "When does haematopoiesis leave the marrow and start happening elsewhere?",

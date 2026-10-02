@@ -154,6 +154,27 @@ const atlasLine = (x1, y1, x2, y2, color = ATLAS_COLORS.neutral) => (
   <line key={`${x1}-${y1}-${x2}-${y2}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth="1.6" opacity="0.55" />
 );
 
+// atlasCell: same clickable/pulsing/active-highlight wrapper as atlasNode,
+// but drawn as a circle instead of a rounded box - for diagrams that
+// should read as actual cells (haematopoiesis) rather than a flowchart.
+const atlasCell = ({ id, cx, cy, r, fill, dim, label, sub, onLabelClick, activeLabelId, pulsing, onOpenDrill }) => {
+  const active = activeLabelId === id;
+  const gradId = GRADIENT_BY_COLOR[fill];
+  const activeFill = gradId ? `url(#${gradId})` : fill;
+  return (
+    <g key={id} onClick={() => onLabelClick(id)} style={{ cursor: "pointer" }} className={pulsing ? "atlas-pulse" : ""}>
+      <circle cx={cx} cy={cy} r={r} fill={active ? activeFill : dim} stroke={fill} strokeWidth={active ? 2.6 : 1.6} filter="url(#atlas-shadow)" />
+      <text x={cx} y={cy - (sub ? 5 : -2)} textAnchor="middle" dominantBaseline="middle" fontSize="12.5" fontWeight="700" fill={active ? "#0A0F1A" : "var(--text)"}>{label}</text>
+      {sub && <text x={cx} y={cy + 12} textAnchor="middle" dominantBaseline="middle" fontSize="9" fill={active ? "#0A0F1A" : "var(--text-2)"}>{sub}</text>}
+      {onOpenDrill && <text x={cx + r - 10} y={cy - r + 14} textAnchor="end" fontSize="11" fill={active ? "#0A0F1A" : fill}>⤢</text>}
+    </g>
+  );
+};
+
+const atlasFlow = (d, color = ATLAS_COLORS.neutral) => (
+  <path d={d} stroke={color} strokeWidth="2" fill="none" opacity="0.5" strokeLinecap="round" />
+);
+
 /* ---------------------------------------------------------------- */
 /* Cardiac cycle - a small valve glyph, reused four times. Not an   */
 /* atlasNode (this diagram isn't a flowchart of boxes - it's one    */
@@ -217,26 +238,44 @@ export const DIAGRAMS = {
     stepFocus: [
       ["hsc"], ["hsc"], ["hsc"], ["hsc", "cmp", "clp"], ["cmp"], ["clp"], ["cmp", "clp"], ["cmp"], ["b", "t", "nk", "myeloid-leaf"], ["cmp"],
     ],
-    viewBox: "0 0 900 440",
+        viewBox: "0 0 900 440",
     render: ({ onLabelClick, activeLabelId, activeStep, onOpenDrill, preview }) => {
       const focus = DIAGRAMS["hem:haematopoiesis"].stepFocus[activeStep] || [];
-      const n = (id, props) => atlasNode({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
+      const c = (id, props) => atlasCell({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
       return (
         <svg viewBox="0 0 900 440" width="100%" height="100%">
           {atlasDefs()}
-          {atlasLine(450, 90, 260, 170)}
-          {atlasLine(450, 90, 640, 170)}
-          {atlasLine(260, 230, 260, 290)}
-          {atlasLine(640, 230, 530, 290)}
-          {atlasLine(640, 230, 640, 290)}
-          {atlasLine(640, 230, 750, 290)}
-          {n("hsc", { x: 380, y: 30, w: 140, h: 60, label: "HSC", sub: "Stem cell", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
-          {n("cmp", { x: 180, y: 170, w: 160, h: 60, label: "CMP", sub: "Myeloid progenitor", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim, onOpenDrill: true })}
-          {n("clp", { x: 560, y: 170, w: 160, h: 60, label: "CLP", sub: "Lymphoid progenitor", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
-          {n("myeloid-leaf", { x: 170, y: 290, w: 180, h: 55, label: "Red cells · platelets", sub: "granulocytes · monocytes", fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim })}
-          {n("b", { x: 470, y: 290, w: 110, h: 55, label: "B cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
-          {n("t", { x: 590, y: 290, w: 110, h: 55, label: "T cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
-          {n("nk", { x: 710, y: 290, w: 110, h: 55, label: "NK cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
+          {atlasFlow("M450,116 Q350,135 260,152")}
+          {atlasFlow("M450,116 Q550,135 640,152")}
+          {atlasFlow("M260,230 Q220,270 195,300")}
+          {atlasFlow("M640,230 Q565,270 495,300")}
+          {atlasFlow("M640,230 Q625,270 605,300")}
+          {atlasFlow("M640,230 Q685,270 710,300")}
+
+          {c("hsc", { cx: 450, cy: 70, r: 46, label: "HSC", sub: "Stem cell", fill: ATLAS_COLORS.nucleus, dim: ATLAS_COLORS.nucleusDim })}
+          {c("cmp", { cx: 260, cy: 190, r: 40, label: "CMP", sub: "Myeloid", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim, onOpenDrill: true })}
+          {c("clp", { cx: 640, cy: 190, r: 40, label: "CLP", sub: "Lymphoid", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
+
+          {/* myeloid-leaf: one clickable cluster of illustrated cells, same
+              single label/id as before - red cell, platelet, granulocyte */}
+          <g onClick={() => onLabelClick("myeloid-leaf")} style={{ cursor: "pointer" }} className={!preview && focus.includes("myeloid-leaf") ? "atlas-pulse" : ""}>
+            <g transform="translate(165,320)">
+              <ellipse cx="0" cy="0" rx="24" ry="14" fill="url(#atlas-grad-erythroid)" opacity={activeLabelId === "myeloid-leaf" ? 1 : 0.55} />
+              <ellipse cx="0" cy="0" rx="11" ry="6" fill="#F5C7C0" opacity="0.7" />
+            </g>
+            <g transform="translate(205,340)">
+              <circle r="10" fill="url(#atlas-grad-trunk)" opacity={activeLabelId === "myeloid-leaf" ? 1 : 0.55} />
+            </g>
+            <g transform="translate(180,355)">
+              <circle r="12" fill="url(#atlas-grad-erythroid)" opacity={activeLabelId === "myeloid-leaf" ? 0.9 : 0.45} />
+            </g>
+            <text x="195" y="390" textAnchor="middle" fontSize="11.5" fontWeight="700" fill={activeLabelId === "myeloid-leaf" ? ATLAS_COLORS.erythroid : "var(--text)"}>Red cells · platelets</text>
+            <text x="195" y="402" textAnchor="middle" fontSize="9" fill="var(--text-2)">granulocytes · monocytes</text>
+          </g>
+
+          {c("b", { cx: 495, cy: 330, r: 28, label: "B cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
+          {c("t", { cx: 605, cy: 330, r: 28, label: "T cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
+          {c("nk", { cx: 715, cy: 330, r: 28, label: "NK cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
         </svg>
       );
     },
@@ -378,7 +417,7 @@ export const DIAGRAMS = {
     // Fixed right-panel summary - this should mirror what the actual
     // Cardiovascular System topic note says, not be written independently.
     // Placeholder below until the real note text is pasted in for a check.
-    summary: "The heart moves blood through two circuits - pulmonary and systemic - in one coordinated cycle. Each beat has an electrical trigger and a mechanical response: the atria fill and contract first, then the ventricles contract to eject blood, then everything relaxes and refills. The two heart sounds, S1 and S2, mark the two moments every valve in the heart is briefly closed at once.",
+    summary: "Every heartbeat follows the same simple pattern: the top chambers fill and squeeze first, then the bottom chambers squeeze harder to push blood out to the lungs and the rest of the body, then the whole heart relaxes and refills before doing it again. The two sounds you hear through a stethoscope, 'lub' and 'dub', are just the heart's valves slamming shut at the two key moments in that cycle.",
     labels: [
       { id: "ra", name: "Right Atrium", desc: "Receives deoxygenated blood from the vena cavae and tops off the right ventricle during atrial systole." },
       { id: "la", name: "Left Atrium", desc: "Receives oxygenated blood from the pulmonary veins and tops off the left ventricle during atrial systole." },
@@ -391,14 +430,14 @@ export const DIAGRAMS = {
       { id: "pveins", name: "Pulmonary Veins", desc: "Carry freshly oxygenated blood from the lungs into the left atrium — the only veins carrying oxygenated blood." },
       { id: "aorta", name: "Aorta", desc: "Carries oxygenated blood from the left ventricle to the systemic circulation." },
     ],
-    narration: [
-      "Atrial systole. Both atria contract together, pushing the last of their blood through the open tricuspid and mitral valves to top off the ventricles.",
-      "Isovolumic contraction. The ventricles begin contracting. Pressure inside them rises so fast the A-V valves snap shut — that's heart sound one, S1. For a brief moment every valve is closed and chamber volume can't change.",
-      "Rapid ejection. Ventricular pressure now exceeds the pressure in the aorta and pulmonary artery, forcing the semilunar valves open. Blood is ejected fast — this is where most of the stroke volume leaves the heart.",
-      "Reduced ejection. Ejection continues, but ventricular pressure is now falling as the ventricles start to relax, so blood leaves more slowly.",
-      "Isovolumic relaxation. Ventricular pressure drops below aortic and pulmonary pressure, slamming the semilunar valves shut — heart sound two, S2. All four valves are closed again, volume constant, pressure falling fast.",
-      "Rapid filling. Once ventricular pressure drops below atrial pressure, the tricuspid and mitral valves swing open and blood rushes passively into the ventricles — most ventricular filling happens right here, before the atria even contract.",
-      "Diastasis. Filling slows to a trickle as pressures equalise. The heart rests briefly before the next atrial systole kicks the cycle off again.",
+        narration: [
+      "Phase one. The atria contract - squeezing the top two chambers of the heart - pushing the last bit of blood down through the open valves to completely fill the ventricles below.",
+      "Phase two. Now the ventricles contract. Pressure inside them shoots up so fast that it slams the valves above them shut - that sudden shut is the first heart sound you hear, 'lub'. For this brief moment every valve in the heart is closed at once, so no blood is moving in or out - the chambers are sealed, like a fist clenching before it swings.",
+      "Phase three. Pressure inside the ventricles has now built up past the pressure in the big arteries leaving the heart, so the outlet valves are forced open and blood surges out fast. This is where most of each heartbeat's blood actually leaves the heart.",
+      "Phase four. Blood is still leaving, but the ventricles are starting to relax, so it flows out more gently now instead of surging.",
+      "Phase five. Ventricular pressure has now dropped below the pressure in those big arteries, so the outlet valves snap shut to stop blood flowing backward - that's the second heart sound, 'dub'. Every valve is closed again, nothing is moving, and pressure inside the heart is falling fast.",
+      "Phase six. Once pressure inside the ventricles drops low enough, the valves above them swing open and blood rushes in on its own, no squeezing needed yet. Most of the heart's filling actually happens right here, before the atria even contract again.",
+      "Phase seven. Filling slows to a trickle as the pressure inside the heart and the pressure feeding it even out. This is the heart's brief rest before the next beat starts the whole cycle over.",
     ],
     // Per-phase state. av/sl: valve open or closed. ra/la/rv/lv: chamber
     // fill opacity, so the heart visibly empties and refills as it beats.

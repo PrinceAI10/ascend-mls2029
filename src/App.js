@@ -754,67 +754,59 @@ const Ic = {
 const AVATAR_SKIN_TONES = ["#F5D0B0", "#C68642", "#6B4226"];
 const AVATAR_HAIR_COLORS = ["#1B1210", "#6B4226", "#D9A441"];
 
+// Face shape is locked to one standard circle - no picker section, no
+// decision for the student to make here.
 const AVATAR_FACES = {
   round: { label: "Round", shape: (fill) => <ellipse cx="50" cy="54" rx="32" ry="34" fill={fill} /> },
-  oval: { label: "Oval", shape: (fill) => <ellipse cx="50" cy="54" rx="27" ry="38" fill={fill} /> },
-  square: { label: "Square", shape: (fill) => <rect x="20" y="22" width="60" height="66" rx="16" fill={fill} /> },
 };
 
-// "behind" draws under the face (for hair that frames the whole head, like
-// an afro); "front" draws on top (for a hairline/cap that sits above the
-// forehead). A style can use either, both, or neither (bald).
-// "gender" is a sort hint only (which tiles the picker shows first under
-// each toggle) - every style is always selectable by anyone, nothing is
-// actually locked to a gender.
+// gender is now a HARD filter (student picks Male or Female once, up
+// front) rather than a sort hint - each list only shows that gender's 4
+// styles, matching what was asked for explicitly here.
 const AVATAR_HAIR = {
-  bald: { label: "Bald", gender: "unisex", behind: null, front: null },
-  short: { label: "Short", gender: "unisex", behind: null, front: (fill) => <path d="M16,42 Q50,4 84,42 L84,26 Q50,-6 16,26 Z" fill={fill} /> },
-  afro: { label: "Afro", gender: "unisex", behind: (fill) => <circle cx="50" cy="44" r="40" fill={fill} />, front: null },
-  fade: { label: "Fade", gender: "masc", behind: null, front: (fill) => <path d="M20,38 Q50,10 80,38 L80,30 Q50,6 20,30 Z" fill={fill} /> },
+  bald: { label: "Bald", gender: "male", behind: null, front: null },
+  fade: { label: "Taper fade", gender: "male", behind: null, front: (fill) => <path d="M20,38 Q50,10 80,38 L80,30 Q50,6 20,30 Z" fill={fill} /> },
+  afro: { label: "Afro", gender: "male", behind: (fill) => <circle cx="50" cy="44" r="40" fill={fill} />, front: null },
+  waves: {
+    label: "Waves", gender: "male", behind: null,
+    front: (fill) => <g><path d="M16,42 Q50,4 84,42 L84,28 Q50,-4 16,28 Z" fill={fill} /><path d="M22,30 Q50,18 78,30" stroke="#00000035" strokeWidth="1.5" fill="none" /><path d="M22,22 Q50,10 78,22" stroke="#00000035" strokeWidth="1.5" fill="none" /></g>
+  },
   braids: {
-    label: "Braids", gender: "unisex", behind: null,
-    front: (fill) => <g fill={fill}><path d="M16,30 Q50,2 84,30 L84,22 Q50,-6 16,22 Z" /><rect x="14" y="26" width="6" height="34" rx="3" /><rect x="24" y="20" width="6" height="40" rx="3" /><rect x="70" y="20" width="6" height="40" rx="3" /><rect x="80" y="26" width="6" height="34" rx="3" /></g>
+    label: "Braids (long)", gender: "female", behind: (fill) => <g fill={fill}><rect x="12" y="26" width="7" height="70" rx="3.5" /><rect x="24" y="20" width="7" height="80" rx="3.5" /><rect x="69" y="20" width="7" height="80" rx="3.5" /><rect x="81" y="26" width="7" height="70" rx="3.5" /></g>,
+    front: (fill) => <path d="M16,30 Q50,2 84,30 L84,22 Q50,-6 16,22 Z" fill={fill} />
   },
-  locs: {
-    label: "Locs", gender: "unisex", behind: null,
-    front: (fill) => <g fill={fill}><path d="M16,30 Q50,2 84,30 L84,22 Q50,-6 16,22 Z" /><rect x="18" y="24" width="9" height="42" rx="4" /><rect x="33" y="18" width="9" height="46" rx="4" /><rect x="58" y="18" width="9" height="46" rx="4" /><rect x="73" y="24" width="9" height="42" rx="4" /></g>
+  ponytail: { label: "Ponytail", gender: "female", behind: (fill) => <path d="M78,30 Q100,40 92,70 Q84,86 76,68 Q74,44 78,30 Z" fill={fill} />, front: (fill) => <path d="M18,40 Q50,6 82,40 L82,28 Q50,-2 18,28 Z" fill={fill} /> },
+  wig: {
+    label: "Wig", gender: "female",
+    behind: (fill) => <ellipse cx="50" cy="55" rx="46" ry="48" fill={fill} />,
+    front: (fill) => <path d="M14,40 Q50,2 86,40 L86,24 Q50,-8 14,24 Z" fill={fill} />
   },
-  bun: { label: "Bun", gender: "fem", behind: (fill) => <circle cx="50" cy="10" r="12" fill={fill} />, front: (fill) => <path d="M18,38 Q50,8 82,38 L82,28 Q50,0 18,28 Z" fill={fill} /> },
-  ponytail: { label: "Ponytail", gender: "fem", behind: (fill) => <path d="M78,30 Q100,40 92,70 Q84,86 76,68 Q74,44 78,30 Z" fill={fill} />, front: (fill) => <path d="M18,40 Q50,6 82,40 L82,28 Q50,-2 18,28 Z" fill={fill} /> },
+  bun: { label: "Bun", gender: "female", behind: (fill) => <circle cx="50" cy="10" r="12" fill={fill} />, front: (fill) => <path d="M18,38 Q50,8 82,38 L82,28 Q50,0 18,28 Z" fill={fill} /> },
 };
 
 const AVATAR_EXTRAS = {
   none: { label: "None", shape: null },
   glasses: { label: "Glasses", shape: () => <g stroke="#2A2016" strokeWidth="3" fill="none"><circle cx="38" cy="56" r="10" /><circle cx="62" cy="56" r="10" /><line x1="48" y1="56" x2="52" y2="56" /></g> },
+  stethoscope: { label: "Stethoscope", shape: () => <path d="M36,80 Q36,92 50,92 Q64,92 64,80" stroke="#3A4A63" strokeWidth="3.5" fill="none" strokeLinecap="round" /> },
 };
 
 const AVATAR_OUTFITS = {
   labcoat: { label: "Lab coat", armColor: "#F4F6FA", shape: () => <g><path d="M20,86 Q50,78 80,86 L86,128 L14,128 Z" fill="#F4F6FA" /><rect x="46" y="86" width="8" height="42" fill="#C9D2E0" /><rect x="20" y="86" width="60" height="4" fill="#DCE2EC" /></g> },
   hoodie: { label: "Hoodie", armColor: "#3B4A63", shape: () => <g><path d="M18,88 Q50,76 82,88 L88,128 L12,128 Z" fill="#3B4A63" /><path d="M34,86 Q50,98 66,86" stroke="#2A3650" strokeWidth="3" fill="none" /></g> },
   blouse: { label: "Blouse", armColor: "#D85A7A", shape: () => <path d="M22,88 Q50,80 78,88 L82,128 L18,128 Z" fill="#D85A7A" /> },
+  scrubs: { label: "Scrubs", armColor: "#4C6B5A", shape: () => <path d="M20,88 Q50,80 80,88 L84,128 L16,128 Z" fill="#4C6B5A" /> },
 };
 
-// Legs are fixed (always scrub-navy trousers) - only the sneaker is a
-// choice, since the whole point of a sneaker selector is the shoe itself.
-const AVATAR_SNEAKERS = {
-  white: { label: "White", shape: () => <g><rect x="32" y="128" width="12" height="22" fill="#2E3A55" /><rect x="56" y="128" width="12" height="22" fill="#2E3A55" /><ellipse cx="38" cy="153" rx="11" ry="6" fill="#F4F6FA" stroke="#C9D2E0" /><ellipse cx="62" cy="153" rx="11" ry="6" fill="#F4F6FA" stroke="#C9D2E0" /></g> },
-  black: { label: "Black", shape: () => <g><rect x="32" y="128" width="12" height="22" fill="#2E3A55" /><rect x="56" y="128" width="12" height="22" fill="#2E3A55" /><ellipse cx="38" cy="153" rx="11" ry="6" fill="#1B1B1F" /><ellipse cx="62" cy="153" rx="11" ry="6" fill="#1B1B1F" /></g> },
-  amber: { label: "Amber", shape: () => <g><rect x="32" y="128" width="12" height="22" fill="#2E3A55" /><rect x="56" y="128" width="12" height="22" fill="#2E3A55" /><ellipse cx="38" cy="153" rx="11" ry="6" fill="#F5B93F" /><ellipse cx="62" cy="153" rx="11" ry="6" fill="#F5B93F" /></g> },
-};
+// Sneakers removed entirely per feedback - feet now render as one fixed
+// plain shoe, no selection, no registry.
+const DEFAULT_AVATAR = { face: "round", hair: "bald", skin: AVATAR_SKIN_TONES[0], hairColor: AVATAR_HAIR_COLORS[0], extra: "none", outfit: "labcoat" };
 
-const DEFAULT_AVATAR = { face: "round", hair: "short", skin: AVATAR_SKIN_TONES[0], hairColor: AVATAR_HAIR_COLORS[0], extra: "none", outfit: "labcoat", sneaker: "white" };
-
-// crop="face" (the default, used in the topbar/leaderboard/forum) frames
-// just the head so existing call sites don't need to change. crop="full"
-// (used in the picker preview and anywhere a full figure makes sense)
-// shows the neck and outfit too.
 function Avatar({ config, size = 36, crop = "face", wave = 0 }) {
   const c = config || DEFAULT_AVATAR;
-  const face = AVATAR_FACES[c.face] || AVATAR_FACES.round;
+  const face = AVATAR_FACES.round;
   const hair = AVATAR_HAIR[c.hair] || AVATAR_HAIR.bald;
   const extra = AVATAR_EXTRAS[c.extra] || AVATAR_EXTRAS.none;
   const outfit = AVATAR_OUTFITS[c.outfit] || AVATAR_OUTFITS.labcoat;
-  const sneaker = AVATAR_SNEAKERS[c.sneaker] || AVATAR_SNEAKERS.white;
   const skin = c.skin || AVATAR_SKIN_TONES[0];
   const hairColor = c.hairColor || AVATAR_HAIR_COLORS[0];
   const armColor = outfit.armColor || "#F4F6FA";
@@ -822,15 +814,11 @@ function Avatar({ config, size = 36, crop = "face", wave = 0 }) {
   return (
     <svg viewBox={full ? "0 0 100 162" : "0 0 100 92"} width={size} height={full ? size * 1.62 : size} style={{ borderRadius: full ? "12px" : "50%", flexShrink: 0, background: "var(--bg-3)" }}>
       {hair.behind && hair.behind(hairColor)}
-      {full && sneaker.shape && sneaker.shape()}
+      {full && <g><rect x="32" y="128" width="12" height="22" fill="#2E3A55" /><rect x="56" y="128" width="12" height="22" fill="#2E3A55" /><ellipse cx="38" cy="153" rx="11" ry="6" fill="#1B1B1F" /><ellipse cx="62" cy="153" rx="11" ry="6" fill="#1B1B1F" /></g>}
       {full && <rect x="42" y="78" width="16" height="14" fill={skin} />}
       {full && outfit.shape && outfit.shape()}
-      {full && (
-        <path d="M24,90 Q16,108 20,126" stroke={armColor} strokeWidth="11" fill="none" strokeLinecap="round" />
-      )}
-      {full && (
-        <circle cx="19" cy="127" r="5.5" fill={skin} />
-      )}
+      {full && <path d="M24,90 Q16,108 20,126" stroke={armColor} strokeWidth="11" fill="none" strokeLinecap="round" />}
+      {full && <circle cx="19" cy="127" r="5.5" fill={skin} />}
       {full && (
         <g key={wave} style={{ transformOrigin: "76px 90px", transformBox: "view-box", animation: "ascendAvatarWave 1.3s ease-in-out" }}>
           <path d="M76,90 Q84,108 80,126" stroke={armColor} strokeWidth="11" fill="none" strokeLinecap="round" />
@@ -850,14 +838,15 @@ function Avatar({ config, size = 36, crop = "face", wave = 0 }) {
 
 function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
   const [cfg, setCfg] = useState(value || DEFAULT_AVATAR);
-  const [genderFilter, setGenderFilter] = useState("all"); // sort hint only - never restricts
+  const [genderFilter, setGenderFilter] = useState(cfg.hair && AVATAR_HAIR[cfg.hair] ? AVATAR_HAIR[cfg.hair].gender : "male");
   const set = (k, v) => setCfg((c) => ({ ...c, [k]: v }));
-    const visibleHair = Object.entries(AVATAR_HAIR).sort(([, a], [, b]) => {
-    const rank = (h) => (genderFilter === "all" ? 0 : h.gender === genderFilter || h.gender === "unisex" ? 0 : 1);
-    return rank(a) - rank(b);
-  });
-    const [spinKey, setSpinKey] = useState(0); // bumping this restarts the CSS spin animation on click
-  const [waveKey, setWaveKey] = useState(0); // bumping this restarts the arm-wave animation on click
+  const visibleHair = Object.entries(AVATAR_HAIR).filter(([, h]) => h.gender === genderFilter);
+  const [waveKey, setWaveKey] = useState(0);
+  // Wave plays once automatically shortly after the card opens - no manual button.
+  useEffect(() => {
+    const t = setTimeout(() => setWaveKey((k) => k + 1), 500);
+    return () => clearTimeout(t);
+  }, []);
   const Section = ({ title, children }) => (
     <div style={{ marginBottom: 18 }}>
       <div className="eyebrow" style={{ marginBottom: 8 }}>{title}</div>
@@ -865,38 +854,24 @@ function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
     </div>
   );
   const Tile = ({ active, onClick, children }) => (
-    <button onClick={onClick} style={{ width: 48, height: 48, borderRadius: 12, border: active ? "2px solid var(--amber)" : "1px solid var(--line)", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}>{children}</button>
+    <button onClick={onClick} style={{ width: 46, height: 46, borderRadius: 12, border: active ? "2px solid var(--amber)" : "1px solid var(--line)", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0, flexShrink: 0 }}>{children}</button>
   );
   return (
-    <div style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }} onClick={onClose}>
-            <div className="card" style={{ maxWidth: 480, width: "100%", maxHeight: "86vh", overflow: "auto" }} onClick={(e) => e.stopPropagation()}>
+    <div style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 10 }} onClick={onClose}>
+      <div className="card" style={{ maxWidth: 440, width: "100%", maxHeight: "94dvh", overflowY: "auto", WebkitOverflowScrolling: "touch", boxSizing: "border-box", padding: 16 }} onClick={(e) => e.stopPropagation()}>
         {firstRun && (
           <div style={{ textAlign: "center", marginBottom: 14 }}>
             <div style={{ fontSize: 17, fontWeight: 700 }}>Set up your avatar</div>
             <div style={{ fontSize: 13, color: "var(--text-2)", marginTop: 4 }}>Pick a look - you can change it anytime from the topbar.</div>
           </div>
         )}
-                <div style={{ display: "flex", justifyContent: "center", marginBottom: 10, perspective: 700 }}>
-          <div
-            key={spinKey}
-            onClick={() => setSpinKey((k) => k + 1)}
-            title="Tap to spin"
-            style={{ cursor: "pointer", animation: "ascendAvatarBob 2.6s ease-in-out infinite, ascendAvatarSpin 0.7s ease-in-out" }}
-          >
-                        <Avatar config={cfg} size={90} crop="full" wave={waveKey} />
-          </div>
-        </div>
         <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}>
-          <button className="btn btn-sm btn-g" onClick={() => setWaveKey((k) => k + 1)}>👋 Wave</button>
+          <Avatar config={cfg} size={90} crop="full" wave={waveKey} />
         </div>
-        <style>{`
-          @keyframes ascendAvatarBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
-          @keyframes ascendAvatarSpin { 0%{transform:rotateY(0deg)} 100%{transform:rotateY(360deg)} }
-        `}</style>
         <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 18 }}>
-          {["all", "fem", "masc"].map((g) => (
-            <button key={g} className="btn btn-sm" style={{ background: genderFilter === g ? "var(--amber)" : "var(--bg-3)", color: genderFilter === g ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setGenderFilter(g)}>
-              {g === "all" ? "All styles" : g === "fem" ? "Feminine styles first" : "Masculine styles first"}
+          {["male", "female"].map((g) => (
+            <button key={g} className="btn btn-sm" style={{ background: genderFilter === g ? "var(--amber)" : "var(--bg-3)", color: genderFilter === g ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => { setGenderFilter(g); const first = Object.entries(AVATAR_HAIR).find(([, h]) => h.gender === g); if (first) set("hair", first[0]); }}>
+              {g === "male" ? "Male" : "Female"}
             </button>
           ))}
         </div>
@@ -907,42 +882,32 @@ function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
             </button>
           )}
         </div>
-        <Section title="Face shape">
-          {Object.keys(AVATAR_FACES).map((k) => (
-            <Tile key={k} active={cfg.face === k} onClick={() => set("face", k)}><Avatar config={{ ...cfg, face: k }} size={40} /></Tile>
+        <Section title="Hair style">
+          {visibleHair.map(([k, h]) => (
+            <Tile key={k} active={cfg.hair === k} onClick={() => set("hair", k)}><Avatar config={{ ...cfg, hair: k }} size={38} /></Tile>
           ))}
         </Section>
-                <Section title="Hair style">
-          {visibleHair.map(([k]) => (
-            <Tile key={k} active={cfg.hair === k} onClick={() => set("hair", k)}><Avatar config={{ ...cfg, hair: k }} size={40} /></Tile>
-          ))}
-        </Section>
-                <Section title="Outfit">
+        <Section title="Outfit">
           {Object.keys(AVATAR_OUTFITS).map((k) => (
-            <Tile key={k} active={cfg.outfit === k} onClick={() => set("outfit", k)}><Avatar config={{ ...cfg, outfit: k }} size={40} crop="full" /></Tile>
-          ))}
-        </Section>
-        <Section title="Sneakers">
-          {Object.keys(AVATAR_SNEAKERS).map((k) => (
-            <Tile key={k} active={cfg.sneaker === k} onClick={() => set("sneaker", k)}><Avatar config={{ ...cfg, sneaker: k }} size={40} crop="full" /></Tile>
+            <Tile key={k} active={cfg.outfit === k} onClick={() => set("outfit", k)}><Avatar config={{ ...cfg, outfit: k }} size={38} crop="full" /></Tile>
           ))}
         </Section>
         <Section title="Hair colour">
           {AVATAR_HAIR_COLORS.map((hex) => (
-            <Tile key={hex} active={cfg.hairColor === hex} onClick={() => set("hairColor", hex)}><div style={{ width: 24, height: 24, borderRadius: "50%", background: hex }} /></Tile>
+            <Tile key={hex} active={cfg.hairColor === hex} onClick={() => set("hairColor", hex)}><div style={{ width: 22, height: 22, borderRadius: "50%", background: hex }} /></Tile>
           ))}
         </Section>
         <Section title="Skin tone">
           {AVATAR_SKIN_TONES.map((hex) => (
-            <Tile key={hex} active={cfg.skin === hex} onClick={() => set("skin", hex)}><div style={{ width: 24, height: 24, borderRadius: "50%", background: hex }} /></Tile>
+            <Tile key={hex} active={cfg.skin === hex} onClick={() => set("skin", hex)}><div style={{ width: 22, height: 22, borderRadius: "50%", background: hex }} /></Tile>
           ))}
         </Section>
         <Section title="Extras">
           {Object.keys(AVATAR_EXTRAS).map((k) => (
-            <Tile key={k} active={cfg.extra === k} onClick={() => set("extra", k)}><Avatar config={{ ...cfg, extra: k }} size={40} /></Tile>
+            <Tile key={k} active={cfg.extra === k} onClick={() => set("extra", k)}><Avatar config={{ ...cfg, extra: k }} size={38} /></Tile>
           ))}
         </Section>
-                <div style={{ display: "flex", gap: 10, marginTop: 6 }}>
+        <div style={{ display: "flex", gap: 10, marginTop: 6 }}>
           <button className="btn btn-g" style={{ flex: 1 }} onClick={onClose}>{firstRun ? "Skip for now" : "Cancel"}</button>
           <button className="btn btn-a" style={{ flex: 1 }} onClick={() => onSave(cfg)}>Save</button>
         </div>
@@ -952,6 +917,77 @@ function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
 }
 
 /* --------------------------- password input ----------------------------- */
+/* ============================================================
+   HOTSPOT DIAGRAM
+   ------------------------------------------------------------
+   One illustrated SVG per topic, with numbered blue circle
+   markers positioned by percentage (x/y, 0-100) over it. Tapping
+   a marker reveals that structure's plain-language explanation
+   below the image - nothing shows until tapped, so the diagram
+   stays uncluttered. Add a new topic by adding one entry to
+   HOTSPOT_LIBRARY; no other code changes.
+   ============================================================ */
+const HOTSPOT_LIBRARY = {
+  "hem:1": {
+    title: "Where each blood cell comes from",
+    svg: `<svg viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(300,20)">
+        <circle cx="50" cy="50" r="42" fill="#a78bfa" />
+        <circle cx="50" cy="50" r="22" fill="#6d28d9" />
+      </g>
+      <path d="M330,180 Q220,230 140,270" stroke="currentColor" opacity="0.35" stroke-width="2.5" fill="none" />
+      <path d="M350,190 L350,260" stroke="currentColor" opacity="0.35" stroke-width="2.5" fill="none" />
+      <path d="M370,180 Q480,230 560,270" stroke="currentColor" opacity="0.35" stroke-width="2.5" fill="none" />
+      <g transform="translate(140,300)"><ellipse cx="0" cy="0" rx="34" ry="20" fill="#ef4444" /><ellipse cx="0" cy="0" rx="16" ry="9" fill="#fca5a5" opacity="0.8" /></g>
+      <g transform="translate(350,300)"><circle cx="0" cy="0" r="30" fill="#bfdbfe" /><path d="M-10,-14 q10,-10 18,0 q8,10 -2,16 q10,6 0,16 q-10,8 -18,-2 q-8,-10 2,-30 z" fill="#1d4ed8" /></g>
+      <g transform="translate(560,300)"><ellipse cx="-10" cy="-6" rx="9" ry="6" fill="#fbbf24" /><ellipse cx="8" cy="2" rx="10" ry="7" fill="#fbbf24" /><ellipse cx="-4" cy="10" rx="8" ry="5" fill="#fbbf24" /></g>
+    </svg>`,
+    points: [
+      { x: 50, y: 21, label: "Stem cell (HSC)", explain: "This is the one cell every blood cell starts as. It sits in the bone marrow and can turn into any of the three types below - it just hasn't decided which one yet." },
+      { x: 20, y: 88, label: "Red blood cell", explain: "Carries oxygen around the body. It has no nucleus and a dented, disc-like shape so it can squeeze through tiny blood vessels." },
+      { x: 50, y: 88, label: "White blood cell", explain: "Part of the immune system - its job is to fight infection. There are several kinds, but they all come from the same starting stem cell." },
+      { x: 80, y: 88, label: "Platelets", explain: "Tiny cell fragments, not full cells, that clump together to stop bleeding when a blood vessel is damaged." },
+    ],
+  },
+};
+
+function HotspotDiagram({ courseId, topicIndex }) {
+  const data = HOTSPOT_LIBRARY[`${courseId}:${topicIndex}`];
+  const [openIdx, setOpenIdx] = useState(null);
+  if (!data) return null;
+  return (
+    <div className="card" style={{ padding: 14, marginTop: 14 }}>
+      <div className="eyebrow" style={{ marginBottom: 4 }}>{data.title}</div>
+      <div style={{ fontSize: 12.5, color: "var(--text-3)", marginBottom: 10 }}>Tap a blue circle to see what it is.</div>
+      <div style={{ position: "relative", width: "100%", maxWidth: 460, margin: "0 auto" }}>
+        <div style={{ width: "100%", color: "var(--text)" }} dangerouslySetInnerHTML={{ __html: data.svg }} />
+        {data.points.map((p, i) => (
+          <button
+            key={i}
+            onClick={() => setOpenIdx(openIdx === i ? null : i)}
+            style={{
+              position: "absolute", left: `${p.x}%`, top: `${p.y}%`, transform: "translate(-50%,-50%)",
+              width: 26, height: 26, borderRadius: "50%", background: "rgba(46,155,255,0.25)",
+              border: "2px solid #2E9BFF", color: "#2E9BFF", fontWeight: 800, fontSize: 12.5,
+              display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
+              animation: openIdx === i ? "none" : "ascendHotspotPulse 1.8s ease-in-out infinite",
+            }}
+          >
+            {i + 1}
+          </button>
+        ))}
+      </div>
+      <style>{`@keyframes ascendHotspotPulse { 0%,100%{box-shadow:0 0 0 0 rgba(46,155,255,0.45)} 50%{box-shadow:0 0 0 8px rgba(46,155,255,0)} }`}</style>
+      {data.points.map((p, i) => openIdx === i && (
+        <div key={i} className="card" style={{ marginTop: 10, borderColor: "#2E9BFF", background: "rgba(46,155,255,0.06)" }}>
+          <div style={{ fontWeight: 700, color: "#2E9BFF", marginBottom: 4 }}>{i + 1}. {p.label}</div>
+          <div style={{ fontSize: 13.5, color: "var(--text-2)", lineHeight: 1.6 }}>{p.explain}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function PasswordInput({ value, onChange, placeholder, label, id, autoComplete = "current-password" }) {
   const [show, setShow] = useState(false);
   return (
@@ -3405,7 +3441,8 @@ function loadMermaid() {
       try {
                 window.mermaid.initialize({
           startOnLoad: false, theme: "dark", securityLevel: "loose",
-          flowchart: { useMaxWidth: true, htmlLabels: true, nodeSpacing: 55, rankSpacing: 65, padding: 16 }
+                    flowchart: { useMaxWidth: true, htmlLabels: true, nodeSpacing: 65, rankSpacing: 75, padding: 18 },
+          themeVariables: { fontSize: "15px" }
         });
         resolve(window.mermaid);
       } catch (e) { reject(e); }
@@ -3498,7 +3535,10 @@ function stripMermaid(code) {
 // classDef/style lines - strips anything it tried, then assigns each node
 // a distinct colour from a fixed palette with white, bold text so labels
 // stay readable regardless of theme or node size.
-const FLOW_PALETTE = ["#8b5cf6", "#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#14b8a6", "#ec4899", "#6366f1"];
+// Spread across the hue wheel (true red, blue, green, amber, purple, orange,
+// pink, teal) rather than several similar blues/teals, so adjacent boxes
+// are always visibly different colours, not just different shades.
+const FLOW_PALETTE = ["#ef4444", "#3b82f6", "#22c55e", "#eab308", "#a855f7", "#f97316", "#ec4899", "#06b6d4"];
 function colorizeMermaid(code) {
   const kept = String(code).split("\n").filter(l => !/^\s*(style|classDef|linkStyle|class)\b/i.test(l.trim()));
   const ids = [];
@@ -3508,7 +3548,7 @@ function colorizeMermaid(code) {
     if (m && !seen.has(m[1]) && !/^end$/i.test(m[1])) { seen.add(m[1]); ids.push(m[1]); }
   });
   if (!ids.length) return kept.join("\n");
-  const defs = FLOW_PALETTE.map((hex, i) => `  classDef c${i} fill:${hex},stroke:${hex},stroke-width:1px,color:#ffffff,font-weight:600;`);
+  const defs = FLOW_PALETTE.map((hex, i) => `  classDef c${i} fill:${hex},stroke:${hex},stroke-width:2px,color:#ffffff,font-weight:700,font-size:15px;`);
   const assigns = ids.map((id, i) => `  class ${id} c${i % FLOW_PALETTE.length};`);
   return kept.join("\n") + "\n" + defs.join("\n") + "\n" + assigns.join("\n");
 }
@@ -3977,65 +4017,106 @@ function AITutor({ topicTitle, context }) {
   const bodyRef = useRef(null);
   useEffect(() => { if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight; }, [msgs, busy]);
 
-  // ---- Voice input: webkitSpeechRecognition (new - no library needed) ----
-    const [listening, setListening] = useState(false);
+  // ---- Voice input: webkitSpeechRecognition, with a live mic-volume meter
+  // (WhatsApp-style rising/falling bars) and a transcript that updates and
+  // self-corrects live as interim results come in, not just at the end. ----
+  const [listening, setListening] = useState(false);
   const [micErr, setMicErr] = useState("");
+  const [level, setLevel] = useState(0); // 0..1 live mic volume for the bars
   const recogRef = useRef(null);
+  const baseInputRef = useRef("");
+  const audioCtxRef = useRef(null);
+  const micStreamRef = useRef(null);
+  const rafRef = useRef(null);
   const speechSupported = typeof window !== "undefined" && (window.SpeechRecognition || window.webkitSpeechRecognition);
 
-  // Stop any in-progress mic capture or speech playback if the student
-  // navigates away from this tutor mid-use - otherwise recognition keeps
-  // listening, or a reply keeps reading aloud, after the component is gone.
+  const startLevelMeter = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      micStreamRef.current = stream;
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      audioCtxRef.current = ctx;
+      const src = ctx.createMediaStreamSource(stream);
+      const analyser = ctx.createAnalyser();
+      analyser.fftSize = 256;
+      src.connect(analyser);
+      const data = new Uint8Array(analyser.frequencyBinCount);
+      const tick = () => {
+        analyser.getByteTimeDomainData(data);
+        let sum = 0;
+        for (let i = 0; i < data.length; i++) { const v = (data[i] - 128) / 128; sum += v * v; }
+        setLevel(Math.min(1, Math.sqrt(sum / data.length) * 4));
+        rafRef.current = requestAnimationFrame(tick);
+      };
+      tick();
+    } catch {}
+  };
+  const stopLevelMeter = () => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    if (micStreamRef.current) micStreamRef.current.getTracks().forEach((t) => t.stop());
+    if (audioCtxRef.current) { try { audioCtxRef.current.close(); } catch {} }
+    setLevel(0);
+  };
+
   useEffect(() => {
     return () => {
       try { if (recogRef.current) recogRef.current.stop(); } catch {}
       try { window.speechSynthesis.cancel(); } catch {}
+      stopLevelMeter();
     };
   }, []);
 
   const startListening = () => {
     if (!speechSupported || listening) return;
     setMicErr("");
+    baseInputRef.current = input;
+    startLevelMeter();
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     const r = new SR();
     r.lang = "en-US";
-    r.interimResults = false;
+    r.interimResults = true; // live, self-correcting transcript
+    r.continuous = true;
     r.maxAlternatives = 1;
+    let finalText = "";
     r.onresult = (e) => {
-      const transcript = e.results[0][0].transcript;
-      setInput((prev) => (prev ? prev + " " : "") + transcript);
+      let interim = "";
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const t = e.results[i][0].transcript;
+        if (e.results[i].isFinal) finalText += t + " ";
+        else interim += t;
+      }
+      const base = baseInputRef.current ? baseInputRef.current + " " : "";
+      setInput((base + finalText + interim).trim());
     };
     r.onerror = (e) => {
-      setListening(false);
+      setListening(false); stopLevelMeter();
       if (e.error === "not-allowed" || e.error === "service-not-allowed") setMicErr("Microphone access denied - allow it in your browser's site settings and try again.");
       else if (e.error === "network") setMicErr("Voice input needs an internet connection.");
       else if (e.error === "no-speech") setMicErr("Didn't catch that - try again.");
       else setMicErr("Could not hear you - try again.");
     };
-    r.onend = () => setListening(false);
+    r.onend = () => { setListening(false); stopLevelMeter(); };
     recogRef.current = r;
     setListening(true);
     r.start();
   };
-  const stopListening = () => { if (recogRef.current) recogRef.current.stop(); setListening(false); };
-  // ---- Voice output: reuses the same speechSynthesis + voice picker the
-  // topic-note "Listen" button and Atlas Play already use. ----
-  const [voiceReplies, setVoiceReplies] = useState(() => {
-    try { return localStorage.getItem("ascend_tutor_voice_replies") === "true"; } catch { return false; }
-  });
-    const [speakingIdx, setSpeakingIdx] = useState(null);
+  const stopListening = () => { if (recogRef.current) recogRef.current.stop(); setListening(false); stopLevelMeter(); };
+
+  // ---- Voice output: tap the play icon on any reply to hear it - no
+  // separate "voice mode" toggle, since that was confusing to discover. ----
+  const [speakingIdx, setSpeakingIdx] = useState(null);
   const tutorVoiceRef = useRef(null);
-  const speakTokenRef = useRef(0); // invalidates a stale onend/onerror if speak() is called again before the voice picker resolves
+  const speakTokenRef = useRef(0);
 
   const speak = async (text, idx) => {
     if (!("speechSynthesis" in window)) return;
     const myToken = ++speakTokenRef.current;
     window.speechSynthesis.cancel();
-    if (speakingIdx === idx) { setSpeakingIdx(null); return; } // tap again to stop
+    if (speakingIdx === idx) { setSpeakingIdx(null); return; }
     let gender = "female";
     try { gender = localStorage.getItem("ascend_voice_gender") || "female"; } catch {}
     if (!tutorVoiceRef.current) tutorVoiceRef.current = await ascendPickVoice(gender);
-    if (speakTokenRef.current !== myToken) return; // superseded while the voice was loading
+    if (speakTokenRef.current !== myToken) return;
     const clean = text.replace(/\s*→\s*/g, " — ");
     const utter = new SpeechSynthesisUtterance(clean);
     if (tutorVoiceRef.current) utter.voice = tutorVoiceRef.current;
@@ -4047,14 +4128,6 @@ function AITutor({ topicTitle, context }) {
     window.speechSynthesis.speak(utter);
   };
 
-  const toggleVoiceReplies = () => {
-    setVoiceReplies((v) => {
-      const next = !v;
-      try { localStorage.setItem("ascend_tutor_voice_replies", String(next)); } catch {}
-      return next;
-    });
-  };
-
   const send = async () => {
     const text = input.trim();
     if (!text || busy) return;
@@ -4064,9 +4137,7 @@ function AITutor({ topicTitle, context }) {
     const apiMsgs = next.slice(1);
     try {
       const reply = await callClaude(sys, apiMsgs.map((m) => ({ role: m.role, content: m.content })), 4096);
-      const finalMsgs = [...next, { role: "assistant", content: reply }];
-      setMsgs(finalMsgs);
-      if (voiceReplies) speak(reply, finalMsgs.length - 1);
+      setMsgs([...next, { role: "assistant", content: reply }]);
     } catch (e) {
       setMsgs([...next, { role: "assistant", content: (e && e.message ? e.message + " " : "") + "The tutor could not respond just now. Please try again in a moment." }]);
     }
@@ -4075,27 +4146,18 @@ function AITutor({ topicTitle, context }) {
 
   return (
     <div className="chat">
-      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 6 }}>
-        <button
-          className="btn btn-sm"
-          style={{ background: voiceReplies ? "var(--amber-dim)" : "var(--bg-3)", color: voiceReplies ? "var(--amber-2)" : "var(--text-2)", border: voiceReplies ? "1px solid rgba(245,185,63,.4)" : "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6, fontSize: 12 }}
-          onClick={toggleVoiceReplies}
-        >
-          <Ic.speaker p={13} /> {voiceReplies ? "Voice mode on" : "Voice mode off"}
-        </button>
-      </div>
       <div className="chat-body" ref={bodyRef}>
         {msgs.map((m, i) => (
           <div key={i} className={"msg " + (m.role === "user" ? "u" : "a")} style={{ position: "relative" }}>
             {m.role === "user" ? m.content : <AIText text={m.content} />}
             {m.role === "assistant" && (
               <button
-                title="Listen to this reply"
+                title="Play this reply"
                 className="iconbtn"
                 style={{ position: "absolute", top: 4, right: 4, width: 24, height: 24, color: speakingIdx === i ? "var(--amber-2)" : "var(--text-3)" }}
                 onClick={() => speak(m.content, i)}
               >
-                <Ic.speaker p={13} />
+                {speakingIdx === i ? <Ic.pause p={13} /> : <Ic.play p={13} />}
               </button>
             )}
           </div>
@@ -4116,7 +4178,16 @@ function AITutor({ topicTitle, context }) {
         )}
         <button className="btn btn-a btn-sm" onClick={send} disabled={busy}><Ic.send p={17} /></button>
       </div>
-            {listening && <div className="mono" style={{ fontSize: 11.5, color: "var(--amber-2)", marginTop: 4 }}>● Listening...</div>}
+      {listening && (
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 6 }}>
+          <div style={{ display: "flex", alignItems: "flex-end", gap: 3, height: 22 }}>
+            {[0.6, 0.9, 1, 0.8, 0.5].map((mult, i) => (
+              <div key={i} style={{ width: 3, borderRadius: 2, background: "var(--amber-2)", height: Math.max(4, mult * level * 20), transition: "height 90ms ease-out" }} />
+            ))}
+          </div>
+          <span className="mono" style={{ fontSize: 11.5, color: "var(--amber-2)" }}>Listening...</span>
+        </div>
+      )}
       {micErr && <div className="mono" style={{ fontSize: 11.5, color: "var(--bad)", marginTop: 4 }}>{micErr}</div>}
     </div>
   );
@@ -5191,10 +5262,10 @@ function TopicView({ app }) {
           </button>
           {(t.note || []).length > 0 && (
             <div style={{ display: "flex", gap: 6, alignItems: "center", position: "relative", flexWrap: "wrap", rowGap: 6 }}>
-              {!listening ? (
+                            {!listening ? (
                 <button
-                  className="btn btn-sm"
-                  style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", display: "flex", alignItems: "center", gap: 6 }}
+                  className="btn btn-sm btn-a"
+                  style={{ display: "flex", alignItems: "center", gap: 6, fontWeight: 700 }}
                   onClick={() => setVoicePickerOpen((o) => !o)}
                 >
                   <Ic.play p={14} /> Listen
@@ -5233,31 +5304,7 @@ function TopicView({ app }) {
                   >
                     <Ic.x p={14} /> Stop
                   </button>
-                                    <button
-                    title="Playback speed"
-                    className="btn btn-sm mono"
-                    style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", padding: "6px 10px", minWidth: 40 }}
-                    onClick={cycleSpeed}
-                  >
-                    {speed}x
-                  </button>
-                                    <button
-                    title="Playback speed"
-                    className="btn btn-sm mono"
-                    style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", padding: "6px 10px", minWidth: 40 }}
-                    onClick={cycleSpeed}
-                  >
-                    {speed}x
-                  </button>
-                                    <button
-                    title="Playback speed"
-                    className="btn btn-sm mono"
-                    style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", padding: "6px 10px", minWidth: 40 }}
-                    onClick={cycleSpeed}
-                  >
-                    {speed}x
-                  </button>
-                  <button
+                                                      <button
                     title="Playback speed"
                     className="btn btn-sm mono"
                     style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", padding: "6px 10px", minWidth: 40 }}
@@ -5409,7 +5456,8 @@ function TopicView({ app }) {
       </div>
       <div className="divider" />
       <div className="eyebrow" style={{ marginBottom: 12 }}>Visualise it</div>
-      <TopicFlowDiagram title={t.title} context={noteContext} />
+            <TopicFlowDiagram title={t.title} context={noteContext} />
+      <HotspotDiagram courseId={t.courseId} topicIndex={t.topicIndex} />
       {ATLAS_TOPICS.has(`${t.courseId}:${t.topicIndex}`) && (
         <div
           className="card hover"
@@ -10491,7 +10539,32 @@ function StudyToolsView({ app }) {
   const [map, setMap] = useState(null);
   const [flowCode, setFlowCode] = useState("");
   const [flowErr, setFlowErr] = useState("");
-  const flowRef = useRef(null);
+    const flowRef = useRef(null);
+  const flowWrapRef = useRef(null);
+  const [flowZoom, setFlowZoom] = useState(1);
+  const pinchDistRef = useRef(null);
+
+  const clampZoom = (z) => Math.min(3, Math.max(0.5, z));
+  const onFlowWheel = (e) => {
+    e.preventDefault();
+    setFlowZoom((z) => clampZoom(z - e.deltaY * 0.0015));
+  };
+  const onFlowTouchStart = (e) => {
+    if (e.touches.length === 2) {
+      const [a, b] = e.touches;
+      pinchDistRef.current = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+    }
+  };
+  const onFlowTouchMove = (e) => {
+    if (e.touches.length === 2 && pinchDistRef.current) {
+      e.preventDefault();
+      const [a, b] = e.touches;
+      const dist = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+      setFlowZoom((z) => clampZoom(z * (dist / pinchDistRef.current)));
+      pinchDistRef.current = dist;
+    }
+  };
+  const onFlowTouchEnd = () => { pinchDistRef.current = null; };
 
   const subject = source === "paste"
     ? `the following material:\n\n${material}`
@@ -10714,9 +10787,27 @@ function StudyToolsView({ app }) {
       )}
       {tab === "flow" && flowCode && (
         <>
-          <p className="note-hint" style={{ margin: "16px 0 10px" }}>Follow the arrows to see how each step leads to the next. Rebuild for a fresh version any time.</p>
-          <div className="card" style={{ marginTop: 4, overflowX: "auto" }}>
-            <div ref={flowRef} style={{ display: "flex", justifyContent: "center", minHeight: 60 }} />
+                    <p className="note-hint" style={{ margin: "16px 0 10px" }}>Pinch, or scroll with Ctrl/Cmd held, to zoom. The diagram stays in place - it won't drag around.</p>
+          <div
+            className="card"
+            ref={flowWrapRef}
+            style={{ marginTop: 4, overflow: "hidden", touchAction: "none", position: "relative" }}
+            onWheel={onFlowWheel}
+            onTouchStart={onFlowTouchStart}
+            onTouchMove={onFlowTouchMove}
+            onTouchEnd={onFlowTouchEnd}
+          >
+            <div style={{ display: "flex", gap: 6, position: "absolute", top: 10, right: 10, zIndex: 2 }}>
+              <button className="btn btn-sm" style={{ background: "var(--bg-3)", border: "1px solid var(--line)", width: 30, height: 30, padding: 0 }} onClick={() => setFlowZoom((z) => clampZoom(z - 0.2))}>−</button>
+              <button className="btn btn-sm mono" style={{ background: "var(--bg-3)", border: "1px solid var(--line)", fontSize: 11, padding: "0 8px" }} onClick={() => setFlowZoom(1)}>{Math.round(flowZoom * 100)}%</button>
+              <button className="btn btn-sm" style={{ background: "var(--bg-3)", border: "1px solid var(--line)", width: 30, height: 30, padding: 0 }} onClick={() => setFlowZoom((z) => clampZoom(z + 0.2))}>+</button>
+            </div>
+            <div style={{ overflow: "hidden", display: "flex", justifyContent: "center", minHeight: 60 }}>
+              <div
+                ref={flowRef}
+                style={{ transform: `scale(${flowZoom})`, transformOrigin: "top center", transition: pinchDistRef.current ? "none" : "transform 120ms ease-out" }}
+              />
+            </div>
             {flowErr && <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 10 }}>{flowErr}</div>}
           </div>
         </>
