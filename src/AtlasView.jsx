@@ -1,24 +1,39 @@
 // AtlasView.jsx
 // ------------------------------------------------------------
-// The Atlas tab - hand-drawn, illustrated diagrams and pathway
-// builders, one per topic, driven entirely by diagrams.js.
+// The Atlas tab - hand-drawn, illustrated diagrams, one per
+// topic, driven entirely by diagrams.js.
 //
 // Nothing here is AI-generated and nothing fetches at runtime -
 // every visual is a fixed SVG, drawn once in diagrams.js and
 // displayed here. No new npm packages: zoom/pan is plain pointer
 // events, narration is the browser's own speechSynthesis (same
 // engine and the same "ascend_voice_gender" preference the
-// existing Listen/podcast feature in App.js already uses),
-// drag-and-drop in the pathway builder is native HTML5 DnD with
-// a tap-to-place fallback for mobile.
+// existing Listen/podcast feature in App.js already uses).
 //
-// SCREENS (per the Atlas spec):
+// Layout (per the latest pass): the play bar sits on top, the
+// same way the Listen bar sits above a topic note's own text.
+// Hitting Play drives the whole seven-ish-phase sequence on its
+// own - no manual stepping required, though pause/resume/speed/
+// step-by-step are all still there for someone who wants to slow
+// down. Below the play bar: the diagram on the left, a fixed
+// topic summary on the right (what the note actually says about
+// this topic - tapping a part of the diagram adds that part's
+// description under the summary without replacing it). The full
+// legend sits below both, since it's reference material you
+// glance at, not something that needs to compete for primary
+// screen space.
+//
+// SCREENS:
 //   1. Course picker   - which courses have visuals
 //   2. Visuals list     - that course's visuals, syllabus order
 //   3. Viewer           - the SVG, zoom/pan, tap-a-label, legend,
-//                         breadcrumb, drill-downs
-//   4. Play             - animated walkthrough synced to narration
-//   5. Builder          - drag-and-arrange pathway (Glycolysis first)
+//                         breadcrumb, drill-downs, Play walkthrough
+//
+// Pathway builders (type: "builder") are deliberately not surfaced
+// here - PathwayBuilder below is kept so the mechanic still works
+// the moment a builder-type entry is registered, but nothing in
+// diagrams.js is a builder right now; that format is being held
+// for its own dedicated tab.
 //
 // Opened from a topic's amber "Open the illustrated diagram" card,
 // this jumps straight to Screen 3 for that topic's diagram. Opened
@@ -117,16 +132,33 @@ const atlasStyles = `
   100% { transform: scale(1); opacity: 1; }
 }
 .atlas-snap { animation: atlasSnap 0.25s ease-out; }
-.atlas-viewer-stage { touch-action: none; cursor: grab; }
+.atlas-viewer-stage { touch-action: none; cursor: grab; position: relative; }
 .atlas-viewer-stage:active { cursor: grabbing; }
 
-/* Legend sits beside the diagram once there's room for both (desktop /
-   tablet landscape); on a narrow phone screen the flex items simply wrap
-   and the legend stacks below the diagram instead - no separate mobile
-   layout to maintain, the same markup adapts both ways. */
-.atlas-stage-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
-.atlas-stage-col { flex: 1 1 320px; min-width: 280px; }
-.atlas-legend-col { flex: 1 1 200px; min-width: 180px; max-height: 320px; overflow-y: auto; }
+/* Play bar - sits above everything, same role as the Listen bar on a
+   topic note. */
+.atlas-playbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.atlas-dots { display: flex; gap: 5px; margin-top: 10px; }
+.atlas-dot { flex: 1; height: 6px; border-radius: 3px; border: none; cursor: pointer; background: var(--line); }
+.atlas-dot.on { background: var(--amber); }
+
+/* Diagram + summary row - side by side once there's room, stacked on a
+   narrow phone screen; same markup, flex-wrap handles both layouts. */
+.atlas-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; }
+.atlas-diagram-col { flex: 1 1 340px; min-width: 280px; }
+.atlas-summary-col { flex: 1 1 280px; min-width: 240px; }
+
+/* Zoom controls float on the diagram itself now, instead of taking a
+   separate full-width row - the row is busy enough with the summary
+   panel beside it. */
+.atlas-zoom-controls { position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; z-index: 2; }
+.atlas-zoom-controls .btn { background: rgba(10,15,26,.55); backdrop-filter: blur(4px); }
+
+/* Legend - full width, below the diagram+summary row, since it's
+   reference material to glance at rather than primary content. */
+.atlas-legend-full .atlas-legend-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 6px; margin-top: 8px;
+}
 
 /* Respect the OS/browser "reduce motion" setting - the pulse/shake/snap
    animations above are convenience feedback, not load-bearing, so turning
@@ -202,8 +234,8 @@ function VisualsList({ courseId, onBack, onOpen }) {
 }
 
 /* ---------------------------------------------------------------- */
-/* Screen 3+4 - the diagram viewer, with zoom/pan, labels, legend,  */
-/* breadcrumb, drill-downs and the Play walkthrough                 */
+/* Screen 3+4 - the diagram viewer: play bar on top, diagram+summary */
+/* row below, legend below that. Zoom/pan live on the diagram panel. */
 /* ---------------------------------------------------------------- */
 function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, app }) {
   const diagram = DIAGRAMS[diagramId];
@@ -253,7 +285,18 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
             if (myToken !== playTokenRef.current) return;
             setActiveStep((s) => {
               const next = s + 1;
-              if (next >= diagram.narration.length) { setPlaying(false); return s; }
+              // A cyclic process (diagram.loop === true, e.g. the cardiac
+              // cycle - a heartbeat has no "end") wraps back to step 0 and
+              // keeps going. A one-shot process (the default) stops on its
+              // final step, same as before.
+              if (next >= diagram.narration.length) {
+                if (diagram.loop) {
+                  speakStep(0);
+                  return 0;
+                }
+                setPlaying(false);
+                return s;
+              }
               speakStep(next);
               return next;
             });
@@ -280,9 +323,13 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       try { window.speechSynthesis.cancel(); } catch {}
       return;
     }
+    // Starting fresh after a full run (one-shot diagram sitting on its
+    // final step) restarts from the top rather than re-speaking the end.
+    const startAt = (!diagram.loop && !paused && activeStep === diagram.narration.length - 1) ? 0 : activeStep;
+    if (startAt !== activeStep) setActiveStep(startAt);
     setPlaying(true);
     setPaused(false);
-    speakStep(activeStep);
+    speakStep(startAt);
   };
 
   const jumpTo = (idx) => {
@@ -298,7 +345,7 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     jumpTo(next);
   };
 
-  /* ---- zoom / pan ---- */
+  /* ---- zoom / pan - unchanged from the original viewer ---- */
   const onWheel = (e) => {
     e.preventDefault();
     const delta = e.deltaY > 0 ? -0.1 : 0.1;
@@ -344,8 +391,8 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     <div style={{ marginTop: 16 }}>
       <style>{atlasStyles}</style>
 
-      {/* breadcrumb + back */}
-      <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 6, marginBottom: 10 }}>
+      {/* breadcrumb + back - navigation stays at the very top */}
+      <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 6, marginBottom: 12 }}>
         <button className="back" style={{ margin: 0 }} onClick={onExit}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: "rotate(180deg)" }}><path d="M5 12h14M13 5l7 7-7 7" /></svg>
           Back
@@ -364,18 +411,28 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
         ))}
       </div>
 
-      {/* zoom controls */}
-      <div style={{ display: "flex", justifyContent: "flex-end", gap: 6, marginBottom: 6 }}>
-        <button className="btn btn-sm" onClick={() => setZoom((z) => Math.max(0.5, +(z - 0.2).toFixed(2)))}>−</button>
-        <button className="btn btn-sm mono" style={{ minWidth: 50 }} onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }}>{Math.round(zoom * 100)}%</button>
-        <button className="btn btn-sm" onClick={() => setZoom((z) => Math.min(3, +(z + 0.2).toFixed(2)))}>+</button>
+      {/* ---- Play bar - on top, like the note's own Listen bar ---- */}
+      <div className="card atlas-playbar">
+        <button className="btn btn-a btn-sm" onClick={handlePlay}>
+          {playing ? "Pause" : paused ? "Resume" : "Play"}
+        </button>
+        <button className="btn btn-g btn-sm" onClick={() => stepBy(-1)} disabled={activeStep === 0}>◀</button>
+        <button className="btn btn-g btn-sm" onClick={() => stepBy(1)} disabled={!diagram.loop && activeStep === diagram.narration.length - 1}>▶</button>
+        <button className="btn btn-g btn-sm mono" onClick={() => setSpeed((s) => (s === 1 ? 1.25 : s === 1.25 ? 0.85 : 1))}>{speed}×</button>
+        <button className="btn btn-g btn-sm" onClick={() => setVoiceOn((v) => !v)}>{voiceOn ? "Voice on" : "Voice off"}</button>
+        <span style={{ flex: 1 }} />
+        <span className="mono" style={{ fontSize: 11.5, color: "var(--text-3)" }}>Step {activeStep + 1} / {diagram.narration.length}</span>
       </div>
+      <div className="atlas-dots">
+        {diagram.narration.map((_, i) => (
+          <button key={i} className={"atlas-dot" + (i <= activeStep ? " on" : "")} onClick={() => jumpTo(i)} title={`Step ${i + 1}`} />
+        ))}
+      </div>
+      <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 8, marginBottom: 14, minHeight: 36 }}>{diagram.narration[activeStep]}</div>
 
-      {/* the stage + legend - side by side once there's room, stacked on a
-          narrow phone screen; same markup, the flex-wrap in atlasStyles
-          handles both layouts without a media query branch in JS. */}
-      <div className="atlas-stage-row">
-        <div className="atlas-stage-col">
+      {/* ---- Diagram (left) + topic summary (right) ---- */}
+      <div className="atlas-row">
+        <div className="atlas-diagram-col">
           <div
             className="card atlas-viewer-stage"
             style={{ padding: 0, overflow: "hidden", height: 320 }}
@@ -385,14 +442,29 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
           >
+            <div className="atlas-zoom-controls">
+              <button className="btn btn-sm" onClick={() => setZoom((z) => Math.max(0.5, +(z - 0.2).toFixed(2)))}>−</button>
+              <button className="btn btn-sm mono" style={{ minWidth: 46 }} onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }}>{Math.round(zoom * 100)}%</button>
+              <button className="btn btn-sm" onClick={() => setZoom((z) => Math.min(3, +(z + 0.2).toFixed(2)))}>+</button>
+            </div>
             <div style={{ width: "100%", height: "100%", transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`, transformOrigin: "center center", transition: dragRef.current ? "none" : "transform 0.15s ease-out" }}>
               {diagram.render({ onLabelClick: setActiveLabelId, activeLabelId, activeStep, onOpenDrill: () => {} })}
             </div>
           </div>
+        </div>
 
-          {/* active label description sits under the stage, full width */}
+        <div className="atlas-summary-col card">
+          <div className="eyebrow" style={{ marginBottom: 6 }}>About this topic</div>
+          {/* Fixed, topic-level summary - stays constant while the animation
+              plays. Pull this from the topic's actual note text (diagram.summary
+              in diagrams.js); falls back to the title if a diagram hasn't had
+              one written yet. */}
+          <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.5 }}>
+            {diagram.summary || diagram.title}
+          </div>
+
           {activeLabel && (
-            <div className="card" style={{ marginTop: 10, borderColor: "rgba(245,185,63,.35)" }}>
+            <div className="card" style={{ marginTop: 12, borderColor: "rgba(245,185,63,.35)" }}>
               <div style={{ fontWeight: 700, fontSize: 14, color: "var(--amber-2)" }}>{activeLabel.name}</div>
               <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 4 }}>{activeLabel.desc}</div>
               {activeLabel.drillTo && (
@@ -403,52 +475,29 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
             </div>
           )}
         </div>
+      </div>
 
-        <div className="atlas-legend-col card">
-          <div className="eyebrow" style={{ marginBottom: 8 }}>Legend</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            {(diagram.labels || []).map((l) => (
-              <button
-                key={l.id}
-                className="btn btn-sm"
-                style={{
-                  justifyContent: "flex-start", textAlign: "left",
-                  background: activeLabelId === l.id ? "var(--amber-dim)" : "transparent",
-                  color: activeLabelId === l.id ? "var(--amber-2)" : "var(--text-2)",
-                  border: "1px solid " + (activeLabelId === l.id ? "rgba(245,185,63,.35)" : "transparent"),
-                }}
-                onClick={() => setActiveLabelId(l.id)}
-              >
-                {l.name}
-              </button>
-            ))}
-          </div>
+      {/* ---- Legend - full width, below the row ---- */}
+      <div className="card atlas-legend-full" style={{ marginTop: 12 }}>
+        <div className="eyebrow">Legend</div>
+        <div className="atlas-legend-grid">
+          {(diagram.labels || []).map((l) => (
+            <button
+              key={l.id}
+              className="btn btn-sm"
+              style={{
+                justifyContent: "flex-start", textAlign: "left",
+                background: activeLabelId === l.id ? "var(--amber-dim)" : "transparent",
+                color: activeLabelId === l.id ? "var(--amber-2)" : "var(--text-2)",
+                border: "1px solid " + (activeLabelId === l.id ? "rgba(245,185,63,.35)" : "transparent"),
+              }}
+              onClick={() => setActiveLabelId(l.id)}
+            >
+              {l.name}
+            </button>
+          ))}
         </div>
       </div>
-
-      {/* play walkthrough */}
-      <div className="divider" />
-      <div className="eyebrow" style={{ marginBottom: 10 }}>Walk through it</div>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-        <button className="btn btn-a btn-sm" onClick={handlePlay}>
-          {playing ? "Pause" : paused ? "Resume" : "Play"}
-        </button>
-        <button className="btn btn-g btn-sm" onClick={() => stepBy(-1)} disabled={activeStep === 0}>◀</button>
-        <button className="btn btn-g btn-sm" onClick={() => stepBy(1)} disabled={activeStep === diagram.narration.length - 1}>▶</button>
-        <button className="btn btn-g btn-sm mono" onClick={() => setSpeed((s) => (s === 1 ? 1.25 : s === 1.25 ? 0.85 : 1))}>{speed}×</button>
-        <button className="btn btn-g btn-sm" onClick={() => setVoiceOn((v) => !v)}>{voiceOn ? "Voice on" : "Voice off"}</button>
-      </div>
-      <div style={{ display: "flex", gap: 5, marginTop: 10 }}>
-        {diagram.narration.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => jumpTo(i)}
-            style={{ flex: 1, height: 6, borderRadius: 3, border: "none", cursor: "pointer", background: i <= activeStep ? "var(--amber)" : "var(--line)" }}
-            title={`Step ${i + 1}`}
-          />
-        ))}
-      </div>
-      <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 8, minHeight: 36 }}>{diagram.narration[activeStep]}</div>
 
       {/* actions */}
       <div className="divider" />
@@ -466,7 +515,9 @@ function Ic_chevR() {
 }
 
 /* ---------------------------------------------------------------- */
-/* Screen 5 - the pathway builder                                   */
+/* Screen 5 - the pathway builder. Not surfaced by any registered   */
+/* diagram right now (see the file header) - kept intact so the     */
+/* mechanic still works the moment a "type: builder" entry returns. */
 /* ---------------------------------------------------------------- */
 function PathwayBuilder({ diagramId, onExit, app }) {
   const diagram = DIAGRAMS[diagramId];
@@ -637,7 +688,7 @@ export default function AtlasView({ app }) {
       </h1>
       {screen === "courses" && (
         <p style={{ color: "var(--text-2)", marginTop: 0, maxWidth: "60ch" }}>
-          Pick a course to see the topics with a hand-drawn, interactive diagram or pathway builder.
+          Pick a course to see the topics with a hand-drawn, interactive diagram.
         </p>
       )}
 

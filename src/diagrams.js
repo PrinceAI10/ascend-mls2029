@@ -371,6 +371,14 @@ export const DIAGRAMS = {
     title: "The Cardiac Cycle — One Heartbeat, Seven Phases",
     topic: { courseId: "ph2", topicIndex: 1 },
     parent: null,
+    // Cyclic process - a heartbeat has no "end", so Play loops continuously
+    // once started rather than stopping after step 7. Compare to a one-shot
+    // process (e.g. Wound Healing, once built) which should NOT set this.
+    loop: true,
+    // Fixed right-panel summary - this should mirror what the actual
+    // Cardiovascular System topic note says, not be written independently.
+    // Placeholder below until the real note text is pasted in for a check.
+    summary: "The heart moves blood through two circuits - pulmonary and systemic - in one coordinated cycle. Each beat has an electrical trigger and a mechanical response: the atria fill and contract first, then the ventricles contract to eject blood, then everything relaxes and refills. The two heart sounds, S1 and S2, mark the two moments every valve in the heart is briefly closed at once.",
     labels: [
       { id: "ra", name: "Right Atrium", desc: "Receives deoxygenated blood from the vena cavae and tops off the right ventricle during atrial systole." },
       { id: "la", name: "Left Atrium", desc: "Receives oxygenated blood from the pulmonary veins and tops off the left ventricle during atrial systole." },
