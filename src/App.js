@@ -3190,7 +3190,10 @@ function loadMermaid() {
     s.src = "https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js";
     s.onload = () => {
       try {
-        window.mermaid.initialize({ startOnLoad: false, theme: "dark", securityLevel: "loose" });
+                window.mermaid.initialize({
+          startOnLoad: false, theme: "dark", securityLevel: "loose",
+          flowchart: { useMaxWidth: true, htmlLabels: true, nodeSpacing: 55, rankSpacing: 65, padding: 16 }
+        });
         resolve(window.mermaid);
       } catch (e) { reject(e); }
     };
@@ -3271,11 +3274,30 @@ function sanitizeMermaid(input) {
 // Last-resort strip: drop styling + edge labels, downgrade decisions to boxes.
 function stripMermaid(code) {
   return String(code).split("\n")
-    .filter(l => !/^\s*(style|classDef|linkStyle|class|click)\b/i.test(l))
+    .filter(l => !/^\s*(style|classDef|linkStyle|class)\b/i.test(l))
     .join("\n")
     .replace(/\|[^|]*\|/g, "")
     .replace(/\{\{([^}]*)\}\}/g, "[$1]")
     .replace(/\{([^}]*)\}/g, "[$1]");
+}
+
+// Colour every node ourselves rather than trust the AI to emit valid
+// classDef/style lines - strips anything it tried, then assigns each node
+// a distinct colour from a fixed palette with white, bold text so labels
+// stay readable regardless of theme or node size.
+const FLOW_PALETTE = ["#8b5cf6", "#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#14b8a6", "#ec4899", "#6366f1"];
+function colorizeMermaid(code) {
+  const kept = String(code).split("\n").filter(l => !/^\s*(style|classDef|linkStyle|class)\b/i.test(l.trim()));
+  const ids = [];
+  const seen = new Set();
+  kept.forEach((l) => {
+    const m = l.trim().match(/^([A-Za-z0-9_]+)\s*(\(\(|\[\[|\[\(|\{\{|\[|\(|\{)/);
+    if (m && !seen.has(m[1]) && !/^end$/i.test(m[1])) { seen.add(m[1]); ids.push(m[1]); }
+  });
+  if (!ids.length) return kept.join("\n");
+  const defs = FLOW_PALETTE.map((hex, i) => `  classDef c${i} fill:${hex},stroke:${hex},stroke-width:1px,color:#ffffff,font-weight:600;`);
+  const assigns = ids.map((id, i) => `  class ${id} c${i % FLOW_PALETTE.length};`);
+  return kept.join("\n") + "\n" + defs.join("\n") + "\n" + assigns.join("\n");
 }
 
 /* Load jsPDF once, on demand, from a CDN - used to let students download an
@@ -4168,9 +4190,9 @@ function TopicFlowDiagram({ title, context }) {
         return svg;
       };
       try {
-        let svg;
-        try { svg = await tryRender(code); }
-        catch { svg = await tryRender(stripMermaid(code)); }
+                let svg;
+        try { svg = await tryRender(colorizeMermaid(code)); }
+        catch { svg = await tryRender(colorizeMermaid(stripMermaid(code))); }
         if (!cancelled && ref.current) { ref.current.innerHTML = svg; setErr(""); }
       } catch (e) {
         if (!cancelled) setErr("This diagram did not render cleanly. Tap Build again for a fresh version.");
@@ -4530,9 +4552,19 @@ function TopicView({ app }) {
   // Exactly which paragraph is being spoken right now ({step, para}; para null = heading).
   const [readingPos, setReadingPos] = useState(null);
   const [voicePickerOpen, setVoicePickerOpen] = useState(false);
-  const [voiceGender, setVoiceGender] = useState(() => {
+    const [voiceGender, setVoiceGender] = useState(() => {
     try { return localStorage.getItem("ascend_voice_gender") || null; } catch { return null; }
   });
+  const [speed, setSpeed] = useState(() => {
+    try { return parseFloat(localStorage.getItem("ascend_voice_speed")) || 1; } catch { return 1; }
+  });
+  const speedRef = useRef(speed);
+  useEffect(() => { speedRef.current = speed; }, [speed]);
+  const cycleSpeed = () => {
+    const next = speed >= 2 ? 1 : speed >= 1.5 ? 2 : 1.5;
+    setSpeed(next);
+    try { localStorage.setItem("ascend_voice_speed", String(next)); } catch {}
+  };
   const listenActiveRef = useRef(false);
   const listenPausedRef = useRef(false);
   const gapTimeoutRef = useRef(null);
@@ -4600,8 +4632,8 @@ function TopicView({ app }) {
     setReadingPos({ step: stepIdx, para: chunk.para == null ? null : chunk.para });
     const myToken = ++speakTokenRef.current;
     const genderKey = voiceGenderRef.current === "male" ? "male" : "female";
-    const utter = new SpeechSynthesisUtterance(chunk.text);
-    utter.rate = (chunk.rate || 0.96) * GENDER_RATE[genderKey];
+        const utter = new SpeechSynthesisUtterance(chunk.text);
+    utter.rate = (chunk.rate || 0.96) * GENDER_RATE[genderKey] * speedRef.current;
     utter.pitch = (chunk.pitch || 1) * GENDER_PITCH[genderKey];
     if (listenVoiceRef.current) utter.voice = listenVoiceRef.current;
 
@@ -4610,7 +4642,7 @@ function TopicView({ app }) {
     watchdogRef.current = setTimeout(() => {
       if (speakTokenRef.current !== myToken || !listenActiveRef.current || listenPausedRef.current) return;
       advanceFrom(stepIdx, chunks, i);
-    }, Math.max(3500, wordCount * 420) + 3000);
+    }, Math.max(3500, (wordCount * 420) / speedRef.current) + 3000);
 
     utter.onend = () => {
       if (speakTokenRef.current !== myToken) return;
@@ -4870,6 +4902,38 @@ function TopicView({ app }) {
                     onClick={stopListening}
                   >
                     <Ic.x p={14} /> Stop
+                  </button>
+                                    <button
+                    title="Playback speed"
+                    className="btn btn-sm mono"
+                    style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", padding: "6px 10px", minWidth: 40 }}
+                    onClick={cycleSpeed}
+                  >
+                    {speed}x
+                  </button>
+                                    <button
+                    title="Playback speed"
+                    className="btn btn-sm mono"
+                    style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", padding: "6px 10px", minWidth: 40 }}
+                    onClick={cycleSpeed}
+                  >
+                    {speed}x
+                  </button>
+                                    <button
+                    title="Playback speed"
+                    className="btn btn-sm mono"
+                    style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", padding: "6px 10px", minWidth: 40 }}
+                    onClick={cycleSpeed}
+                  >
+                    {speed}x
+                  </button>
+                  <button
+                    title="Playback speed"
+                    className="btn btn-sm mono"
+                    style={{ background: "var(--bg-3)", color: "var(--text-2)", border: "1px solid var(--line)", padding: "6px 10px", minWidth: 40 }}
+                    onClick={cycleSpeed}
+                  >
+                    {speed}x
                   </button>
                   <button
                     title="Change voice"
@@ -10196,9 +10260,9 @@ function StudyToolsView({ app }) {
         return svg;
       };
       try {
-        let svg;
-        try { svg = await tryRender(flowCode); }
-        catch { svg = await tryRender(stripMermaid(flowCode)); } // fallback pass
+                let svg;
+        try { svg = await tryRender(colorizeMermaid(flowCode)); }
+        catch { svg = await tryRender(colorizeMermaid(stripMermaid(flowCode))); } // fallback pass
         if (!cancelled && flowRef.current) { flowRef.current.innerHTML = svg; setFlowErr(""); }
       } catch (e) {
         if (!cancelled) setFlowErr("This diagram did not render cleanly. Tap Build again for a fresh version.");
