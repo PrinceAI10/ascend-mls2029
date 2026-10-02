@@ -608,8 +608,7 @@ export default function AtlasView({ app }) {
       if (d) return { screen: "viewer", courseId: openedFromCourseId, diagramId: d.id, breadcrumb: [d.id] };
     }
     return { screen: "courses", courseId: null, diagramId: null, breadcrumb: [] };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      }, []);
 
   const [screen, setScreen] = useState(initial.screen);
   const [courseId, setCourseId] = useState(initial.courseId);
