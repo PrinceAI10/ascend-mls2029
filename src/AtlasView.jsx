@@ -432,10 +432,14 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
       const ratio = dist / (pinchRef.current.dist || 1);
       applyZoom(pinchRef.current.zoom * ratio);
-    } else if (pointers.current.size === 1 && dragRef.current) {
+        } else if (pointers.current.size === 1 && dragRef.current) {
       const dx = e.clientX - dragRef.current.x;
       const dy = e.clientY - dragRef.current.y;
       dragRef.current = { x: e.clientX, y: e.clientY };
+      // Ignore sub-pixel drift from a normal click or trackpad tap - a click
+      // with 1-2px of accidental movement was registering as a pan and
+      // leaving the figure permanently nudged off-center.
+      if (Math.abs(dx) < 1.5 && Math.abs(dy) < 1.5) return;
       setPan((p) => {
         // Clamp total displacement so the figure can be nudged around but
         // never dragged completely out of the visible stage.
@@ -449,10 +453,16 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       });
     }
   };
-  const onPointerUp = (e) => {
+    const onPointerUp = (e) => {
     pointers.current.delete(e.pointerId);
     if (pointers.current.size < 2) pinchRef.current = null;
-    if (pointers.current.size === 0) dragRef.current = null;
+    if (pointers.current.size === 0) {
+      dragRef.current = null;
+      // Snap back to exact center if the user's pan ended within a few px of
+      // home - so a click or a short drag can never leave the figure nudged
+      // slightly off-center and stacking with future zooms.
+      setPan((p) => (Math.hypot(p.x, p.y) < 4 ? { x: 0, y: 0 } : p));
+    }
   };
 
   const activeLabel = diagram.labels?.find((l) => l.id === activeLabelId) || null;
@@ -515,7 +525,7 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
           >
                         <div className="atlas-zoom-controls">
               <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom(zoom - 0.2)}>−</button>
-              <button className="btn btn-sm mono" title="Reset zoom & pan" style={{ minWidth: 46 }} onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }}>{Math.round(zoom * 100)}%</button>
+                            <button className="btn btn-sm mono" title="Reset zoom & pan to center" style={{ minWidth: 62 }} onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }}>⤾ {Math.round(zoom * 100)}%</button>
               <button className="btn btn-sm" title="Zoom in" onClick={() => applyZoom(zoom + 0.2)}>+</button>
             </div>
             <div style={{ width: "100%", height: "100%", transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`, transformOrigin: "center center", transition: dragRef.current ? "none" : "transform 0.15s ease-out" }}>
