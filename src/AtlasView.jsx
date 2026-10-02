@@ -54,6 +54,7 @@ import {
 // diagram itself uses (atlasHeart, atlasLungs, atlasBloodCell, etc.). This
 // way the legend is a real visual key, not just a list of terms.
 const LEGEND_VIEWBOXES = {
+  // Cardiovascular System
   system: "0 0 100 100",
   blood: "0 0 100 100",
   hemostasis: "0 0 100 100",
@@ -64,6 +65,38 @@ const LEGEND_VIEWBOXES = {
   bp: "0 0 100 100",
   lymph: "0 0 100 100",
   whole: "0 0 100 100",
+  // Cardiac Cycle drill-down
+  ra: "0 0 100 100",
+  la: "0 0 100 100",
+  rv: "0 0 100 100",
+  lv: "0 0 100 100",
+  av: "0 0 100 100",
+  sl: "0 0 100 100",
+  svc: "0 0 100 100",
+  pa: "0 0 100 100",
+  pveins: "0 0 100 100",
+  aorta: "0 0 100 100",
+  // Haematopoiesis
+  hsc: "0 0 100 100",
+  cmp: "0 0 100 100",
+  clp: "0 0 100 100",
+  b: "0 0 100 100",
+  t: "0 0 100 100",
+  nk: "0 0 100 100",
+  "myeloid-leaf": "0 0 100 100",
+  gmp: "0 0 100 100",
+  mep: "0 0 100 100",
+  gran: "0 0 100 100",
+  mono: "0 0 100 100",
+  mega: "0 0 100 100",
+  // Erythroid maturation
+  s1: "0 0 100 100",
+  s2: "0 0 100 100",
+  s3: "0 0 100 100",
+  s4: "0 0 100 100",
+  s5: "0 0 100 100",
+  s6: "0 0 100 100",
+  epo: "0 0 100 100",
 };
 
 const LEGEND_SWATCHES = {
@@ -138,7 +171,7 @@ const LEGEND_SWATCHES = {
       <ellipse cx="64" cy="48" rx="10" ry="7" fill="#2F6FED" opacity="0.85" />
     </g>
   ),
-  whole: (active) => (
+    whole: (active) => (
     <g>
       <circle cx="50" cy="30" r="12" fill="#8B5CF6" opacity="0.9" />
       <circle cx="22" cy="72" r="9" fill="#2F6FED" opacity="0.9" />
@@ -146,8 +179,207 @@ const LEGEND_SWATCHES = {
       <path d="M50 40 L22 62 M50 40 L78 62" stroke="var(--text-2)" strokeWidth="1.6" />
     </g>
   ),
-};
 
+  // ---- Cardiac Cycle drill-down ----
+  // A simplified chamber: rounded rect filled blue (right) or red (left),
+  // labeled. Same visual language as the main diagram, scaled to fit 56px.
+  ra: (active) => (
+    <g>
+      <path d="M20 25 Q25 12 40 12 L50 12 L50 55 L20 55 Q18 40 20 25 Z"
+        fill={active ? "#2D7BFF" : "#2F6FED"} stroke="#123F9E" strokeWidth="1.6" />
+      <text x="35" y="38" textAnchor="middle" fontSize="12" fontWeight="700" fill="#fff">RA</text>
+    </g>
+  ),
+  la: (active) => (
+    <g>
+      <path d="M80 25 Q75 12 60 12 L50 12 L50 55 L80 55 Q82 40 80 25 Z"
+        fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.6" />
+      <text x="65" y="38" textAnchor="middle" fontSize="12" fontWeight="700" fill="#fff">LA</text>
+    </g>
+  ),
+  rv: (active) => (
+    <g>
+      <path d="M20 50 Q22 82 42 88 L50 88 L50 45 L20 45 Z"
+        fill={active ? "#2D7BFF" : "#2F6FED"} stroke="#123F9E" strokeWidth="1.6" />
+      <text x="35" y="72" textAnchor="middle" fontSize="12" fontWeight="700" fill="#fff">RV</text>
+    </g>
+  ),
+  lv: (active) => (
+    <g>
+      <path d="M80 50 Q78 82 58 88 L50 88 L50 45 L80 45 Z"
+        fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.6" />
+      <text x="65" y="72" textAnchor="middle" fontSize="12" fontWeight="700" fill="#fff">LV</text>
+    </g>
+  ),
+  av: (active) => (
+    <g>
+      <line x1="25" y1="45" x2="50" y2="55" stroke="#2F6FED" strokeWidth="4" strokeLinecap="round" />
+      <line x1="75" y1="45" x2="50" y2="55" stroke="#C0392B" strokeWidth="4" strokeLinecap="round" />
+      <text x="50" y="26" textAnchor="middle" fontSize="10" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "var(--text-2)"}>A-V</text>
+    </g>
+  ),
+  sl: (active) => (
+    <g>
+      <line x1="25" y1="60" x2="50" y2="45" stroke="#2F6FED" strokeWidth="4" strokeLinecap="round" />
+      <line x1="75" y1="60" x2="50" y2="45" stroke="#C0392B" strokeWidth="4" strokeLinecap="round" />
+      <text x="50" y="84" textAnchor="middle" fontSize="10" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "var(--text-2)"}>S-L</text>
+    </g>
+  ),
+  svc: (active) => (
+    <g>
+      <path d="M35 10 L35 85" stroke="#2D7BFF" strokeWidth="12" strokeLinecap="round" />
+      <path d="M35 10 L35 85" stroke="#B8D0FF" strokeWidth="3" strokeLinecap="round" opacity="0.7" transform="translate(-2,0)" />
+      <text x="68" y="50" textAnchor="middle" fontSize="10" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "var(--text-2)"}>SVC</text>
+    </g>
+  ),
+  pa: (active) => (
+    <g>
+      <path d="M65 10 L65 85" stroke="#2D7BFF" strokeWidth="12" strokeLinecap="round" />
+      <path d="M65 10 L65 85" stroke="#B8D0FF" strokeWidth="3" strokeLinecap="round" opacity="0.7" transform="translate(-2,0)" />
+      <text x="32" y="50" textAnchor="middle" fontSize="10" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "var(--text-2)"}>PA</text>
+    </g>
+  ),
+  pveins: (active) => (
+    <g>
+      <path d="M65 10 L65 85" stroke="#E53935" strokeWidth="12" strokeLinecap="round" />
+      <path d="M65 10 L65 85" stroke="#F5C7C0" strokeWidth="3" strokeLinecap="round" opacity="0.7" transform="translate(-2,0)" />
+      <text x="32" y="50" textAnchor="middle" fontSize="10" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "var(--text-2)"}>PV</text>
+    </g>
+  ),
+  aorta: (active) => (
+    <g>
+      <path d="M35 10 L35 85" stroke="#E53935" strokeWidth="12" strokeLinecap="round" />
+      <path d="M35 10 L35 85" stroke="#F5C7C0" strokeWidth="3" strokeLinecap="round" opacity="0.7" transform="translate(-2,0)" />
+      <text x="68" y="50" textAnchor="middle" fontSize="10" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "var(--text-2)"}>Ao</text>
+    </g>
+  ),
+
+  // ---- Haematopoiesis ----
+  // Cells drawn as filled circles with a lighter nucleus, matching the
+  // atlasCell primitive the main diagram uses.
+  hsc: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="28" fill={active ? "#A78BFA" : "#8B5CF6"} stroke="#5B21B6" strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="12" fill="#E9DFFF" opacity="0.85" />
+    </g>
+  ),
+  cmp: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="26" fill={active ? "#FFC93C" : "#F5B93F"} stroke="#8B6410" strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="10" fill="#FFF0C7" opacity="0.85" />
+    </g>
+  ),
+  clp: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="26" fill={active ? "#2D7BFF" : "#2F6FED"} stroke="#123F9E" strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="10" fill="#C7D8FF" opacity="0.85" />
+    </g>
+  ),
+  b: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="24" fill={active ? "#2D7BFF" : "#2F6FED"} stroke="#123F9E" strokeWidth="1.6" />
+      <text x="50" y="55" textAnchor="middle" fontSize="14" fontWeight="700" fill="#fff">B</text>
+    </g>
+  ),
+  t: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="24" fill={active ? "#2D7BFF" : "#2F6FED"} stroke="#123F9E" strokeWidth="1.6" />
+      <text x="50" y="55" textAnchor="middle" fontSize="14" fontWeight="700" fill="#fff">T</text>
+    </g>
+  ),
+  nk: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="24" fill={active ? "#2D7BFF" : "#2F6FED"} stroke="#123F9E" strokeWidth="1.6" />
+      <text x="50" y="55" textAnchor="middle" fontSize="13" fontWeight="700" fill="#fff">NK</text>
+    </g>
+  ),
+  "myeloid-leaf": (active) => (
+    <g>
+      <ellipse cx="32" cy="40" rx="14" ry="9" fill="#E53935" stroke="#8C1C12" strokeWidth="1" />
+      <circle cx="65" cy="38" r="9" fill="#F5B93F" stroke="#8B6410" strokeWidth="1" />
+      <circle cx="55" cy="68" r="8" fill="#E53935" stroke="#8C1C12" strokeWidth="1" />
+    </g>
+  ),
+  gmp: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="26" fill={active ? "#FFC93C" : "#F5B93F"} stroke="#8B6410" strokeWidth="1.6" />
+      <text x="50" y="55" textAnchor="middle" fontSize="13" fontWeight="700" fill="#1B1405">GMP</text>
+    </g>
+  ),
+  mep: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="26" fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.6" />
+      <text x="50" y="55" textAnchor="middle" fontSize="13" fontWeight="700" fill="#fff">MEP</text>
+    </g>
+  ),
+  gran: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="22" fill={active ? "#FFC93C" : "#F5B93F"} stroke="#8B6410" strokeWidth="1.6" />
+      <circle cx="44" cy="44" r="4" fill="#1B1405" opacity="0.55" />
+      <circle cx="56" cy="44" r="4" fill="#1B1405" opacity="0.55" />
+      <circle cx="50" cy="56" r="4" fill="#1B1405" opacity="0.55" />
+    </g>
+  ),
+  mono: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="22" fill={active ? "#FFC93C" : "#F5B93F"} stroke="#8B6410" strokeWidth="1.6" />
+      <path d="M40 50 Q50 40 60 50 Q50 60 40 50 Z" fill="#1B1405" opacity="0.55" />
+    </g>
+  ),
+  mega: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="26" fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.6" />
+      {[[40, 40], [58, 42], [44, 60], [60, 58]].map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r="4" fill="#F5C7C0" opacity="0.85" />
+      ))}
+    </g>
+  ),
+
+  // ---- Erythroid maturation ----
+  s1: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="28" fill="#D8D0F0" stroke="#5B21B6" strokeWidth="1.5" />
+      <circle cx="50" cy="50" r="14" fill="#8B5CF6" />
+    </g>
+  ),
+  s2: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="27" fill="#B8B0E0" stroke="#5B21B6" strokeWidth="1.5" />
+      <circle cx="50" cy="50" r="12" fill="#8B5CF6" />
+    </g>
+  ),
+  s3: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="26" fill="#D0A0B0" stroke="#8C1C12" strokeWidth="1.5" />
+      <circle cx="50" cy="50" r="10" fill="#8B5CF6" />
+    </g>
+  ),
+  s4: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="25" fill="#F0A8A0" stroke="#8C1C12" strokeWidth="1.5" />
+      <circle cx="50" cy="50" r="8" fill="#5B21B6" />
+    </g>
+  ),
+  s5: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="24" fill="#F0B0A0" stroke="#8C1C12" strokeWidth="1.5" />
+      <path d="M40 50 Q50 44 60 50" stroke="#8B5CF6" strokeWidth="1.5" fill="none" opacity="0.65" />
+      <path d="M42 56 Q50 62 58 56" stroke="#8B5CF6" strokeWidth="1.2" fill="none" opacity="0.5" />
+    </g>
+  ),
+  s6: (active) => (
+    <g>
+      <ellipse cx="50" cy="50" rx="28" ry="18" fill="#E53935" stroke="#8C1C12" strokeWidth="1.5" />
+      <ellipse cx="50" cy="50" rx="14" ry="8" fill="#F5C7C0" opacity="0.75" />
+    </g>
+  ),
+  epo: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="24" fill={active ? "#FFC93C" : "#F5B93F"} stroke="#8B6410" strokeWidth="1.6" />
+      <text x="50" y="55" textAnchor="middle" fontSize="14" fontWeight="700" fill="#1B1405">EPO</text>
+    </g>
+  ),
+};
 /* ---------------------------------------------------------------- */
 /* Narration - a small, self-contained speech helper. Deliberately  */
 /* duplicated (not imported from App.js) to avoid a circular import */
