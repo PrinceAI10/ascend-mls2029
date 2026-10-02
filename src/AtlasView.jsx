@@ -382,8 +382,11 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     // Zoom helper used by the +/- buttons, the wheel, and pinch. Clamps to
   // MIN_ZOOM..MAX_ZOOM and rounds to 2 decimals so the label stays clean.
   const applyZoom = useCallback((nextZoomRaw) => {
-    const next = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, +Number(nextZoomRaw).toFixed(2)));
-    setZoom(next);
+    setZoom((prev) => {
+      const target = typeof nextZoomRaw === "function" ? nextZoomRaw(prev) : nextZoomRaw;
+      const next = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, +Number(target).toFixed(2)));
+      return next;
+    });
   }, []);
 
   useEffect(() => {
@@ -475,10 +478,10 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   // is locked to the center of the stage at all times. Only ZOOM is
   // interactive: mouse wheel on desktop, two-finger pinch on touch, and
   // the +/- buttons. A single-finger drag does nothing.
-    const onWheel = (e) => {
+      const onWheel = (e) => {
     e.preventDefault();
     const delta = e.deltaY > 0 ? -0.08 : 0.08;
-    applyZoom(zoom + delta);
+    applyZoom((z) => z + delta);
   };
 
   const pointers = useRef(new Map());
@@ -586,10 +589,10 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
           >
-            <div className="atlas-zoom-controls">
-                            <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom(zoom - 0.2)}>−</button>
+                        <div className="atlas-zoom-controls" style={{ pointerEvents: "auto", zIndex: 10 }}>
+              <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom((z) => z - 0.2)}>−</button>
               <button className="btn btn-sm mono" title="Reset zoom" style={{ minWidth: 46 }} onClick={() => applyZoom(DEFAULT_ZOOM)}>{Math.round(zoom * 100)}%</button>
-              <button className="btn btn-sm" title="Zoom in" onClick={() => applyZoom(zoom + 0.2)}>+</button>
+              <button className="btn btn-sm" title="Zoom in" onClick={() => applyZoom((z) => z + 0.2)}>+</button>
             </div>
                         <div
               style={{
@@ -634,19 +637,19 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       </div>
 
                   {/* ---- Legend - full width, below the row ---- */}
-      <div className="card atlas-legend-full" style={{ marginTop: 12 }}>
-        <div className="eyebrow">Legend - tap any part to highlight it</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 10 }}>
+            <div className="card atlas-legend-full" style={{ marginTop: 12 }}>
+        <div className="eyebrow">Legend — tap any part to highlight it</div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 10, alignItems: "flex-start" }}>
           {(diagram.labels || []).map((l) => {
             const active = activeLabelId === l.id;
             return (
-              <button
+                            <button
                 key={l.id}
                 className="btn btn-sm"
                 onClick={() => setActiveLabelId(active ? null : l.id)}
                 style={{
                   display: "inline-flex",
-                  alignItems: "center",
+                  alignItems: "flex-start",
                   gap: 8,
                   padding: "6px 12px",
                   textAlign: "left",
@@ -655,6 +658,10 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
                   border: "1px solid " + (active ? ATLAS_COLORS.trunk : "var(--line)"),
                   borderRadius: 10,
                   fontWeight: 600,
+                  alignSelf: "flex-start",
+                  maxWidth: "100%",
+                  whiteSpace: "normal",
+                  height: "auto",
                 }}
               >
                 {/* Live preview of the actual structure from the diagram,
@@ -671,7 +678,17 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
                 <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", lineHeight: 1.15 }}>
                   <span>{l.name}</span>
                   {active && l.desc && (
-                    <span style={{ fontSize: 11, color: "var(--text-2)", marginTop: 3, fontWeight: 400, maxWidth: 260 }}>
+                    <span style={{
+                      display: "block",
+                      fontSize: 11.5,
+                      color: "var(--text-2)",
+                      marginTop: 4,
+                      fontWeight: 400,
+                      lineHeight: 1.5,
+                      whiteSpace: "normal",
+                      wordBreak: "break-word",
+                      maxWidth: 320,
+                    }}>
                       {l.desc}
                     </span>
                   )}
