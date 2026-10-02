@@ -789,31 +789,55 @@ const AVATAR_EXTRAS = {
 };
 
 const AVATAR_OUTFITS = {
-  labcoat: { label: "Lab coat", shape: () => <g><path d="M20,86 Q50,78 80,86 L86,128 L14,128 Z" fill="#F4F6FA" /><rect x="46" y="86" width="8" height="42" fill="#C9D2E0" /><rect x="20" y="86" width="60" height="4" fill="#DCE2EC" /></g> },
-  hoodie: { label: "Hoodie", shape: () => <g><path d="M18,88 Q50,76 82,88 L88,128 L12,128 Z" fill="#3B4A63" /><path d="M34,86 Q50,98 66,86" stroke="#2A3650" strokeWidth="3" fill="none" /></g> },
-  blouse: { label: "Blouse", shape: () => <path d="M22,88 Q50,80 78,88 L82,128 L18,128 Z" fill="#D85A7A" /> },
+  labcoat: { label: "Lab coat", armColor: "#F4F6FA", shape: () => <g><path d="M20,86 Q50,78 80,86 L86,128 L14,128 Z" fill="#F4F6FA" /><rect x="46" y="86" width="8" height="42" fill="#C9D2E0" /><rect x="20" y="86" width="60" height="4" fill="#DCE2EC" /></g> },
+  hoodie: { label: "Hoodie", armColor: "#3B4A63", shape: () => <g><path d="M18,88 Q50,76 82,88 L88,128 L12,128 Z" fill="#3B4A63" /><path d="M34,86 Q50,98 66,86" stroke="#2A3650" strokeWidth="3" fill="none" /></g> },
+  blouse: { label: "Blouse", armColor: "#D85A7A", shape: () => <path d="M22,88 Q50,80 78,88 L82,128 L18,128 Z" fill="#D85A7A" /> },
 };
 
-const DEFAULT_AVATAR = { face: "round", hair: "short", skin: AVATAR_SKIN_TONES[0], hairColor: AVATAR_HAIR_COLORS[0], extra: "none", outfit: "labcoat" };
+// Legs are fixed (always scrub-navy trousers) - only the sneaker is a
+// choice, since the whole point of a sneaker selector is the shoe itself.
+const AVATAR_SNEAKERS = {
+  white: { label: "White", shape: () => <g><rect x="32" y="128" width="12" height="22" fill="#2E3A55" /><rect x="56" y="128" width="12" height="22" fill="#2E3A55" /><ellipse cx="38" cy="153" rx="11" ry="6" fill="#F4F6FA" stroke="#C9D2E0" /><ellipse cx="62" cy="153" rx="11" ry="6" fill="#F4F6FA" stroke="#C9D2E0" /></g> },
+  black: { label: "Black", shape: () => <g><rect x="32" y="128" width="12" height="22" fill="#2E3A55" /><rect x="56" y="128" width="12" height="22" fill="#2E3A55" /><ellipse cx="38" cy="153" rx="11" ry="6" fill="#1B1B1F" /><ellipse cx="62" cy="153" rx="11" ry="6" fill="#1B1B1F" /></g> },
+  amber: { label: "Amber", shape: () => <g><rect x="32" y="128" width="12" height="22" fill="#2E3A55" /><rect x="56" y="128" width="12" height="22" fill="#2E3A55" /><ellipse cx="38" cy="153" rx="11" ry="6" fill="#F5B93F" /><ellipse cx="62" cy="153" rx="11" ry="6" fill="#F5B93F" /></g> },
+};
+
+const DEFAULT_AVATAR = { face: "round", hair: "short", skin: AVATAR_SKIN_TONES[0], hairColor: AVATAR_HAIR_COLORS[0], extra: "none", outfit: "labcoat", sneaker: "white" };
 
 // crop="face" (the default, used in the topbar/leaderboard/forum) frames
 // just the head so existing call sites don't need to change. crop="full"
 // (used in the picker preview and anywhere a full figure makes sense)
 // shows the neck and outfit too.
-function Avatar({ config, size = 36, crop = "face" }) {
+function Avatar({ config, size = 36, crop = "face", wave = 0 }) {
   const c = config || DEFAULT_AVATAR;
   const face = AVATAR_FACES[c.face] || AVATAR_FACES.round;
   const hair = AVATAR_HAIR[c.hair] || AVATAR_HAIR.bald;
   const extra = AVATAR_EXTRAS[c.extra] || AVATAR_EXTRAS.none;
   const outfit = AVATAR_OUTFITS[c.outfit] || AVATAR_OUTFITS.labcoat;
+  const sneaker = AVATAR_SNEAKERS[c.sneaker] || AVATAR_SNEAKERS.white;
   const skin = c.skin || AVATAR_SKIN_TONES[0];
   const hairColor = c.hairColor || AVATAR_HAIR_COLORS[0];
+  const armColor = outfit.armColor || "#F4F6FA";
   const full = crop === "full";
   return (
-    <svg viewBox={full ? "0 0 100 128" : "0 0 100 92"} width={size} height={full ? size * 1.28 : size} style={{ borderRadius: full ? "12px" : "50%", flexShrink: 0, background: "var(--bg-3)" }}>
+    <svg viewBox={full ? "0 0 100 162" : "0 0 100 92"} width={size} height={full ? size * 1.62 : size} style={{ borderRadius: full ? "12px" : "50%", flexShrink: 0, background: "var(--bg-3)" }}>
       {hair.behind && hair.behind(hairColor)}
+      {full && sneaker.shape && sneaker.shape()}
       {full && <rect x="42" y="78" width="16" height="14" fill={skin} />}
       {full && outfit.shape && outfit.shape()}
+      {full && (
+        <path d="M24,90 Q16,108 20,126" stroke={armColor} strokeWidth="11" fill="none" strokeLinecap="round" />
+      )}
+      {full && (
+        <circle cx="19" cy="127" r="5.5" fill={skin} />
+      )}
+      {full && (
+        <g key={wave} style={{ transformOrigin: "76px 90px", transformBox: "view-box", animation: "ascendAvatarWave 1.3s ease-in-out" }}>
+          <path d="M76,90 Q84,108 80,126" stroke={armColor} strokeWidth="11" fill="none" strokeLinecap="round" />
+          <circle cx="80" cy="127" r="5.5" fill={skin} />
+        </g>
+      )}
+      <style>{`@keyframes ascendAvatarWave { 0%,100%{transform:rotate(0deg)} 25%{transform:rotate(-28deg)} 45%{transform:rotate(-12deg)} 65%{transform:rotate(-28deg)} 85%{transform:rotate(-6deg)} }`}</style>
       {face.shape(skin)}
       <circle cx="38" cy="56" r="3.5" fill="#2A2016" />
       <circle cx="62" cy="56" r="3.5" fill="#2A2016" />
@@ -828,10 +852,12 @@ function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
   const [cfg, setCfg] = useState(value || DEFAULT_AVATAR);
   const [genderFilter, setGenderFilter] = useState("all"); // sort hint only - never restricts
   const set = (k, v) => setCfg((c) => ({ ...c, [k]: v }));
-  const visibleHair = Object.entries(AVATAR_HAIR).sort(([, a], [, b]) => {
+    const visibleHair = Object.entries(AVATAR_HAIR).sort(([, a], [, b]) => {
     const rank = (h) => (genderFilter === "all" ? 0 : h.gender === genderFilter || h.gender === "unisex" ? 0 : 1);
     return rank(a) - rank(b);
   });
+    const [spinKey, setSpinKey] = useState(0); // bumping this restarts the CSS spin animation on click
+  const [waveKey, setWaveKey] = useState(0); // bumping this restarts the arm-wave animation on click
   const Section = ({ title, children }) => (
     <div style={{ marginBottom: 18 }}>
       <div className="eyebrow" style={{ marginBottom: 8 }}>{title}</div>
@@ -850,9 +876,23 @@ function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
             <div style={{ fontSize: 13, color: "var(--text-2)", marginTop: 4 }}>Pick a look - you can change it anytime from the topbar.</div>
           </div>
         )}
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: 10 }}>
-          <Avatar config={cfg} size={110} crop="full" />
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: 10, perspective: 700 }}>
+          <div
+            key={spinKey}
+            onClick={() => setSpinKey((k) => k + 1)}
+            title="Tap to spin"
+            style={{ cursor: "pointer", animation: "ascendAvatarBob 2.6s ease-in-out infinite, ascendAvatarSpin 0.7s ease-in-out" }}
+          >
+                        <Avatar config={cfg} size={90} crop="full" wave={waveKey} />
+          </div>
         </div>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: 14 }}>
+          <button className="btn btn-sm btn-g" onClick={() => setWaveKey((k) => k + 1)}>👋 Wave</button>
+        </div>
+        <style>{`
+          @keyframes ascendAvatarBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+          @keyframes ascendAvatarSpin { 0%{transform:rotateY(0deg)} 100%{transform:rotateY(360deg)} }
+        `}</style>
         <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 18 }}>
           {["all", "fem", "masc"].map((g) => (
             <button key={g} className="btn btn-sm" style={{ background: genderFilter === g ? "var(--amber)" : "var(--bg-3)", color: genderFilter === g ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setGenderFilter(g)}>
@@ -877,9 +917,14 @@ function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
             <Tile key={k} active={cfg.hair === k} onClick={() => set("hair", k)}><Avatar config={{ ...cfg, hair: k }} size={40} /></Tile>
           ))}
         </Section>
-        <Section title="Outfit">
+                <Section title="Outfit">
           {Object.keys(AVATAR_OUTFITS).map((k) => (
             <Tile key={k} active={cfg.outfit === k} onClick={() => set("outfit", k)}><Avatar config={{ ...cfg, outfit: k }} size={40} crop="full" /></Tile>
+          ))}
+        </Section>
+        <Section title="Sneakers">
+          {Object.keys(AVATAR_SNEAKERS).map((k) => (
+            <Tile key={k} active={cfg.sneaker === k} onClick={() => set("sneaker", k)}><Avatar config={{ ...cfg, sneaker: k }} size={40} crop="full" /></Tile>
           ))}
         </Section>
         <Section title="Hair colour">
