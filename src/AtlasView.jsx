@@ -266,7 +266,6 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   const [activeStep, setActiveStep] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [paused, setPaused] = useState(false);
-  const [voiceOn, setVoiceOn] = useState(true);
   const [speed, setSpeed] = useState(1);
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
@@ -287,8 +286,8 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
 
   useEffect(() => () => { try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {} }, []);
 
-  const speakStep = useCallback(async (stepIdx) => {
-    if (!voiceOn || !("speechSynthesis" in window)) return;
+    const speakStep = useCallback(async (stepIdx) => {
+    if (!("speechSynthesis" in window)) return;
     const myToken = playTokenRef.current;
     const voice = await pickVoice();
     if (myToken !== playTokenRef.current) return;
@@ -327,25 +326,16 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       });
     };
     window.speechSynthesis.speak(utter);
-  }, [diagram, voiceOn, speed]);
+    }, [diagram, speed]);
 
-  const handlePlay = () => {
+    const handlePlay = () => {
     if (playing) {
-      // Deliberately NOT window.speechSynthesis.pause() - that call is
-      // unreliable across browsers (notably mobile Safari), which is the
-      // same reason the existing Listen feature in App.js avoids it too.
-      // "Pause" here cancels and remembers the current step; "Resume"
-      // re-speaks that step from its start rather than mid-sentence - a
-      // fine trade-off since each step's narration is only a sentence
-      // or two.
       setPlaying(false);
       setPaused(true);
       playTokenRef.current++;
       try { window.speechSynthesis.cancel(); } catch {}
       return;
     }
-    // Starting fresh after a full run (one-shot diagram sitting on its
-    // final step) restarts from the top rather than re-speaking the end.
     const startAt = (!diagram.loop && !paused && activeStep === diagram.narration.length - 1) ? 0 : activeStep;
     if (startAt !== activeStep) setActiveStep(startAt);
     setPlaying(true);
@@ -441,14 +431,28 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       </div>
 
       {/* ---- Play bar - on top, like the note's own Listen bar ---- */}
-      <div className="card atlas-playbar">
-        <button className="btn btn-a btn-sm" onClick={handlePlay}>
-          {playing ? "Pause" : paused ? "Resume" : "Play"}
+            <div className="card atlas-playbar">
+        <button
+          className="btn btn-a btn-sm"
+          onClick={handlePlay}
+          title={playing ? "Pause" : "Play"}
+          aria-label={playing ? "Pause walkthrough" : "Play walkthrough"}
+          style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", padding: "6px 12px", minWidth: 44 }}
+        >
+          {playing ? (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <rect x="6" y="4" width="4" height="16" rx="1" />
+              <rect x="14" y="4" width="4" height="16" rx="1" />
+            </svg>
+          ) : (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          )}
         </button>
-        <button className="btn btn-g btn-sm" onClick={() => stepBy(-1)} disabled={activeStep === 0}>◀</button>
-        <button className="btn btn-g btn-sm" onClick={() => stepBy(1)} disabled={!diagram.loop && activeStep === diagram.narration.length - 1}>▶</button>
-        <button className="btn btn-g btn-sm mono" onClick={() => setSpeed((s) => (s === 1 ? 1.25 : s === 1.25 ? 0.85 : 1))}>{speed}×</button>
-        <button className="btn btn-g btn-sm" onClick={() => setVoiceOn((v) => !v)}>{voiceOn ? "Voice on" : "Voice off"}</button>
+        <button className="btn btn-g btn-sm" onClick={() => stepBy(-1)} disabled={activeStep === 0} aria-label="Previous step">◀</button>
+        <button className="btn btn-g btn-sm" onClick={() => stepBy(1)} disabled={!diagram.loop && activeStep === diagram.narration.length - 1} aria-label="Next step">▶</button>
+        <button className="btn btn-g btn-sm mono" onClick={() => setSpeed((s) => (s === 1 ? 1.25 : s === 1.25 ? 0.85 : 1))} title="Playback speed">{speed}×</button>
         <span style={{ flex: 1 }} />
         <span className="mono" style={{ fontSize: 11.5, color: "var(--text-3)" }}>Step {activeStep + 1} / {diagram.narration.length}</span>
       </div>
