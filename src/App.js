@@ -824,7 +824,7 @@ function Avatar({ config, size = 36, crop = "face" }) {
   );
 }
 
-function AvatarPicker({ value, onSave, onClose, name, onRename }) {
+function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
   const [cfg, setCfg] = useState(value || DEFAULT_AVATAR);
   const [genderFilter, setGenderFilter] = useState("all"); // sort hint only - never restricts
   const set = (k, v) => setCfg((c) => ({ ...c, [k]: v }));
@@ -843,8 +843,14 @@ function AvatarPicker({ value, onSave, onClose, name, onRename }) {
   );
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }} onClick={onClose}>
-      <div className="card" style={{ maxWidth: 480, width: "100%", maxHeight: "86vh", overflow: "auto" }} onClick={(e) => e.stopPropagation()}>
-                <div style={{ display: "flex", justifyContent: "center", marginBottom: 10 }}>
+            <div className="card" style={{ maxWidth: 480, width: "100%", maxHeight: "86vh", overflow: "auto" }} onClick={(e) => e.stopPropagation()}>
+        {firstRun && (
+          <div style={{ textAlign: "center", marginBottom: 14 }}>
+            <div style={{ fontSize: 17, fontWeight: 700 }}>Set up your avatar</div>
+            <div style={{ fontSize: 13, color: "var(--text-2)", marginTop: 4 }}>Pick a look - you can change it anytime from the topbar.</div>
+          </div>
+        )}
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: 10 }}>
           <Avatar config={cfg} size={110} crop="full" />
         </div>
         <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 18 }}>
@@ -891,8 +897,8 @@ function AvatarPicker({ value, onSave, onClose, name, onRename }) {
             <Tile key={k} active={cfg.extra === k} onClick={() => set("extra", k)}><Avatar config={{ ...cfg, extra: k }} size={40} /></Tile>
           ))}
         </Section>
-        <div style={{ display: "flex", gap: 10, marginTop: 6 }}>
-          <button className="btn btn-g" style={{ flex: 1 }} onClick={onClose}>Cancel</button>
+                <div style={{ display: "flex", gap: 10, marginTop: 6 }}>
+          <button className="btn btn-g" style={{ flex: 1 }} onClick={onClose}>{firstRun ? "Skip for now" : "Cancel"}</button>
           <button className="btn btn-a" style={{ flex: 1 }} onClick={() => onSave(cfg)}>Save</button>
         </div>
       </div>
@@ -13683,6 +13689,18 @@ export default function App() {
   const [rateDismissed, setRateDismissed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [avatarPickerOpen, setAvatarPickerOpen] = useState(false);
+
+  // Prompt once for an avatar the first time a student has none - at first
+  // login/signup, or any later session where no avatar was ever set. Skips
+  // silently (never prompts again) once the student explicitly dismisses
+  // it, tracked separately from progress so "skip" doesn't get undone by a
+  // sync/reload; picking an avatar later from the topbar still works fine.
+  useEffect(() => {
+    if (!progress) return;
+    if (progress.avatar) return;
+    try { if (localStorage.getItem("ascend_avatar_skipped") === "true") return; } catch {}
+    setAvatarPickerOpen(true);
+  }, [progress]);
   const [showWelcomeTour, setShowWelcomeTour] = useState(false);
   const [lastTopic, setLastTopic] = useState(null);
   const [showTop, setShowTop] = useState(false);
@@ -15472,12 +15490,16 @@ export default function App() {
                     {progress?.avatar ? <Avatar config={progress.avatar} size={33} /> : (progress?.name?.[0]?.toUpperCase() || "?")}
                   </button>
                 </div>
-                                {avatarPickerOpen && (
+                                                {avatarPickerOpen && (
                   <AvatarPicker
                     value={progress?.avatar}
                     name={progress?.name}
                     onRename={setName}
-                    onClose={() => setAvatarPickerOpen(false)}
+                    firstRun={!progress?.avatar}
+                    onClose={() => {
+                      if (!progress?.avatar) { try { localStorage.setItem("ascend_avatar_skipped", "true"); } catch {} }
+                      setAvatarPickerOpen(false);
+                    }}
                     onSave={(cfg) => { setAvatar(cfg); setAvatarPickerOpen(false); }}
                   />
                 )}
