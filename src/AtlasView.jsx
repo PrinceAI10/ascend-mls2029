@@ -269,7 +269,7 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   const [voiceOn, setVoiceOn] = useState(true);
   const [speed, setSpeed] = useState(1);
   const [zoom, setZoom] = useState(1);
-  
+  const [pan, setPan] = useState({ x: 0, y: 0 });
 
   const playTokenRef = useRef(0);
   const pinchRef = useRef(null);
@@ -280,8 +280,7 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     setActiveStep(0);
     setPlaying(false);
     setPaused(false);
-    setZoom(1);
-    setPan({ x: 0, y: 0 });
+        setZoom(1);
     playTokenRef.current++;
     try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {}
   }, [diagramId]);
@@ -369,29 +368,13 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
 
     /* ---- zoom / pan - center-locked, clamped so the figure can never drift
      fully off-stage ---- */
-  const MIN_ZOOM = 0.5, MAX_ZOOM = 3;
-  const PAN_LIMIT = 260; // max px the figure may be dragged from center at any zoom
+    const MIN_ZOOM = 0.5, MAX_ZOOM = 3;
 
-  // Apply a new zoom AND scale pan by the same ratio, so the point currently
-  // under the viewer's focus stays visually fixed. Without the pan-scaling
-  // step, zooming after a pan would slide the figure away from center.
+  // No pan state anymore - the figure is center-locked by the stage's
+  // own flexbox centering, so zoom just clamps and sets the scale.
   const applyZoom = useCallback((nextZoomRaw) => {
     const nextZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, +nextZoomRaw.toFixed(2)));
-    setZoom((prevZoom) => {
-      if (nextZoom === prevZoom) return prevZoom;
-      const k = nextZoom / prevZoom;
-      setPan((p) => {
-        const nx = p.x * k;
-        const ny = p.y * k;
-        const len = Math.hypot(nx, ny);
-        if (len > PAN_LIMIT) {
-          const s = PAN_LIMIT / len;
-          return { x: nx * s, y: ny * s };
-        }
-        return { x: nx, y: ny };
-      });
-      return nextZoom;
-    });
+    setZoom(nextZoom);
   }, []);
 
 
