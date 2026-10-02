@@ -836,9 +836,32 @@ function Avatar({ config, size = 36, crop = "face", wave = 0 }) {
   );
 }
 
+// Standalone picker helpers - defined at module scope so React treats them as
+// stable component types. They used to be defined inside AvatarPicker, which
+// meant every re-render created brand-new component identities, forcing React
+// to unmount/remount the whole subtree - which is what caused the picker's
+// sections to intermittently render empty (the Male/Female/Hair style
+// content disappearing from the DOM).
+function PickerSection({ title, children }) {
+  return (
+    <div style={{ marginBottom: 18 }}>
+      <div className="eyebrow" style={{ marginBottom: 8 }}>{title}</div>
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>{children}</div>
+    </div>
+  );
+}
+function PickerTile({ active, onClick, children }) {
+  return (
+    <button onClick={onClick} style={{ width: 46, height: 46, borderRadius: 12, border: active ? "2px solid var(--amber)" : "1px solid var(--line)", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0, flexShrink: 0 }}>{children}</button>
+  );
+}
+
 function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
   const [cfg, setCfg] = useState(value || DEFAULT_AVATAR);
-  const [genderFilter, setGenderFilter] = useState(cfg.hair && AVATAR_HAIR[cfg.hair] ? AVATAR_HAIR[cfg.hair].gender : "male");
+    const [genderFilter, setGenderFilter] = useState(() => {
+    const g = cfg.hair && AVATAR_HAIR[cfg.hair] ? AVATAR_HAIR[cfg.hair].gender : null;
+    return g === "female" ? "female" : "male";
+  });
   const set = (k, v) => setCfg((c) => ({ ...c, [k]: v }));
   const visibleHair = Object.entries(AVATAR_HAIR).filter(([, h]) => h.gender === genderFilter);
   const [waveKey, setWaveKey] = useState(0);
@@ -847,15 +870,7 @@ function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
     const t = setTimeout(() => setWaveKey((k) => k + 1), 500);
     return () => clearTimeout(t);
   }, []);
-  const Section = ({ title, children }) => (
-    <div style={{ marginBottom: 18 }}>
-      <div className="eyebrow" style={{ marginBottom: 8 }}>{title}</div>
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>{children}</div>
-    </div>
-  );
-  const Tile = ({ active, onClick, children }) => (
-    <button onClick={onClick} style={{ width: 46, height: 46, borderRadius: 12, border: active ? "2px solid var(--amber)" : "1px solid var(--line)", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0, flexShrink: 0 }}>{children}</button>
-  );
+  
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 10 }} onClick={onClose}>
       <div className="card" style={{ maxWidth: 440, width: "100%", maxHeight: "94dvh", overflowY: "auto", WebkitOverflowScrolling: "touch", boxSizing: "border-box", padding: 16 }} onClick={(e) => e.stopPropagation()}>
@@ -882,31 +897,31 @@ function AvatarPicker({ value, onSave, onClose, name, onRename, firstRun }) {
             </button>
           )}
         </div>
-        <Section title="Hair style">
+                <PickerSection title="Hair style">
           {visibleHair.map(([k, h]) => (
-            <Tile key={k} active={cfg.hair === k} onClick={() => set("hair", k)}><Avatar config={{ ...cfg, hair: k }} size={38} /></Tile>
+            <PickerTile key={k} active={cfg.hair === k} onClick={() => set("hair", k)}><Avatar config={{ ...cfg, hair: k }} size={38} /></PickerTile>
           ))}
-        </Section>
-        <Section title="Outfit">
+        </PickerSection>
+        <PickerSection title="Outfit">
           {Object.keys(AVATAR_OUTFITS).map((k) => (
-            <Tile key={k} active={cfg.outfit === k} onClick={() => set("outfit", k)}><Avatar config={{ ...cfg, outfit: k }} size={38} crop="full" /></Tile>
+            <PickerTile key={k} active={cfg.outfit === k} onClick={() => set("outfit", k)}><Avatar config={{ ...cfg, outfit: k }} size={38} crop="full" /></PickerTile>
           ))}
-        </Section>
-        <Section title="Hair colour">
+        </PickerSection>
+        <PickerSection title="Hair colour">
           {AVATAR_HAIR_COLORS.map((hex) => (
-            <Tile key={hex} active={cfg.hairColor === hex} onClick={() => set("hairColor", hex)}><div style={{ width: 22, height: 22, borderRadius: "50%", background: hex }} /></Tile>
+            <PickerTile key={hex} active={cfg.hairColor === hex} onClick={() => set("hairColor", hex)}><div style={{ width: 22, height: 22, borderRadius: "50%", background: hex }} /></PickerTile>
           ))}
-        </Section>
-        <Section title="Skin tone">
+        </PickerSection>
+        <PickerSection title="Skin tone">
           {AVATAR_SKIN_TONES.map((hex) => (
-            <Tile key={hex} active={cfg.skin === hex} onClick={() => set("skin", hex)}><div style={{ width: 22, height: 22, borderRadius: "50%", background: hex }} /></Tile>
+            <PickerTile key={hex} active={cfg.skin === hex} onClick={() => set("skin", hex)}><div style={{ width: 22, height: 22, borderRadius: "50%", background: hex }} /></PickerTile>
           ))}
-        </Section>
-        <Section title="Extras">
+        </PickerSection>
+        <PickerSection title="Extras">
           {Object.keys(AVATAR_EXTRAS).map((k) => (
-            <Tile key={k} active={cfg.extra === k} onClick={() => set("extra", k)}><Avatar config={{ ...cfg, extra: k }} size={38} /></Tile>
+            <PickerTile key={k} active={cfg.extra === k} onClick={() => set("extra", k)}><Avatar config={{ ...cfg, extra: k }} size={38} /></PickerTile>
           ))}
-        </Section>
+        </PickerSection>
         <div style={{ display: "flex", gap: 10, marginTop: 6 }}>
           <button className="btn btn-g" style={{ flex: 1 }} onClick={onClose}>{firstRun ? "Skip for now" : "Cancel"}</button>
           <button className="btn btn-a" style={{ flex: 1 }} onClick={() => onSave(cfg)}>Save</button>
@@ -3541,11 +3556,22 @@ function stripMermaid(code) {
 const FLOW_PALETTE = ["#ef4444", "#3b82f6", "#22c55e", "#eab308", "#a855f7", "#f97316", "#ec4899", "#06b6d4"];
 function colorizeMermaid(code) {
   const kept = String(code).split("\n").filter(l => !/^\s*(style|classDef|linkStyle|class)\b/i.test(l.trim()));
+  // Was anchored to the START of each line (^), so only a node written as
+  // the very first thing on its own line ever got matched - which is why
+  // only the first box ever got colored. A["Glucose"] --> B["Pyruvate"]
+  // only matched A; B sits mid-line and was invisible to the old regex.
+  // Scanning the whole line (no anchor, with /g + a loop) catches every
+  // node id wherever it's defined, not just line-leading ones.
+  const idPattern = /([A-Za-z0-9_]+)\s*(\(\(|\[\[|\[\(|\{\{|\[|\(|\{)/g;
   const ids = [];
   const seen = new Set();
   kept.forEach((l) => {
-    const m = l.trim().match(/^([A-Za-z0-9_]+)\s*(\(\(|\[\[|\[\(|\{\{|\[|\(|\{)/);
-    if (m && !seen.has(m[1]) && !/^end$/i.test(m[1])) { seen.add(m[1]); ids.push(m[1]); }
+    if (/^(subgraph|end)\b/i.test(l.trim())) return;
+    idPattern.lastIndex = 0;
+    let m;
+    while ((m = idPattern.exec(l))) {
+      if (!seen.has(m[1]) && !/^end$/i.test(m[1])) { seen.add(m[1]); ids.push(m[1]); }
+    }
   });
   if (!ids.length) return kept.join("\n");
   const defs = FLOW_PALETTE.map((hex, i) => `  classDef c${i} fill:${hex},stroke:${hex},stroke-width:2px,color:#ffffff,font-weight:700,font-size:15px;`);
@@ -4017,116 +4043,13 @@ function AITutor({ topicTitle, context }) {
   const bodyRef = useRef(null);
   useEffect(() => { if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight; }, [msgs, busy]);
 
-  // ---- Voice input: webkitSpeechRecognition, with a live mic-volume meter
-  // (WhatsApp-style rising/falling bars) and a transcript that updates and
-  // self-corrects live as interim results come in, not just at the end. ----
-  const [listening, setListening] = useState(false);
-  const [micErr, setMicErr] = useState("");
-  const [level, setLevel] = useState(0); // 0..1 live mic volume for the bars
-  const recogRef = useRef(null);
-  const baseInputRef = useRef("");
-  const audioCtxRef = useRef(null);
-  const micStreamRef = useRef(null);
-  const rafRef = useRef(null);
-  const speechSupported = typeof window !== "undefined" && (window.SpeechRecognition || window.webkitSpeechRecognition);
-
-  const startLevelMeter = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      micStreamRef.current = stream;
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      audioCtxRef.current = ctx;
-      const src = ctx.createMediaStreamSource(stream);
-      const analyser = ctx.createAnalyser();
-      analyser.fftSize = 256;
-      src.connect(analyser);
-      const data = new Uint8Array(analyser.frequencyBinCount);
-      const tick = () => {
-        analyser.getByteTimeDomainData(data);
-        let sum = 0;
-        for (let i = 0; i < data.length; i++) { const v = (data[i] - 128) / 128; sum += v * v; }
-        setLevel(Math.min(1, Math.sqrt(sum / data.length) * 4));
-        rafRef.current = requestAnimationFrame(tick);
-      };
-      tick();
-    } catch {}
-  };
-  const stopLevelMeter = () => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    if (micStreamRef.current) micStreamRef.current.getTracks().forEach((t) => t.stop());
-    if (audioCtxRef.current) { try { audioCtxRef.current.close(); } catch {} }
-    setLevel(0);
-  };
-
+  // Stop any leftover speech if the student navigates away while a reply is
+  // being read. The inline tutor itself has no play button any more (moved
+  // to the dedicated Ask ASCEND AI tab), but a stray utterance from another
+  // screen should never bleed into this one.
   useEffect(() => {
-    return () => {
-      try { if (recogRef.current) recogRef.current.stop(); } catch {}
-      try { window.speechSynthesis.cancel(); } catch {}
-      stopLevelMeter();
-    };
+    return () => { try { window.speechSynthesis.cancel(); } catch {} };
   }, []);
-
-  const startListening = () => {
-    if (!speechSupported || listening) return;
-    setMicErr("");
-    baseInputRef.current = input;
-    startLevelMeter();
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const r = new SR();
-    r.lang = "en-US";
-    r.interimResults = true; // live, self-correcting transcript
-    r.continuous = true;
-    r.maxAlternatives = 1;
-    let finalText = "";
-    r.onresult = (e) => {
-      let interim = "";
-      for (let i = e.resultIndex; i < e.results.length; i++) {
-        const t = e.results[i][0].transcript;
-        if (e.results[i].isFinal) finalText += t + " ";
-        else interim += t;
-      }
-      const base = baseInputRef.current ? baseInputRef.current + " " : "";
-      setInput((base + finalText + interim).trim());
-    };
-    r.onerror = (e) => {
-      setListening(false); stopLevelMeter();
-      if (e.error === "not-allowed" || e.error === "service-not-allowed") setMicErr("Microphone access denied - allow it in your browser's site settings and try again.");
-      else if (e.error === "network") setMicErr("Voice input needs an internet connection.");
-      else if (e.error === "no-speech") setMicErr("Didn't catch that - try again.");
-      else setMicErr("Could not hear you - try again.");
-    };
-    r.onend = () => { setListening(false); stopLevelMeter(); };
-    recogRef.current = r;
-    setListening(true);
-    r.start();
-  };
-  const stopListening = () => { if (recogRef.current) recogRef.current.stop(); setListening(false); stopLevelMeter(); };
-
-  // ---- Voice output: tap the play icon on any reply to hear it - no
-  // separate "voice mode" toggle, since that was confusing to discover. ----
-  const [speakingIdx, setSpeakingIdx] = useState(null);
-  const tutorVoiceRef = useRef(null);
-  const speakTokenRef = useRef(0);
-
-  const speak = async (text, idx) => {
-    if (!("speechSynthesis" in window)) return;
-    const myToken = ++speakTokenRef.current;
-    window.speechSynthesis.cancel();
-    if (speakingIdx === idx) { setSpeakingIdx(null); return; }
-    let gender = "female";
-    try { gender = localStorage.getItem("ascend_voice_gender") || "female"; } catch {}
-    if (!tutorVoiceRef.current) tutorVoiceRef.current = await ascendPickVoice(gender);
-    if (speakTokenRef.current !== myToken) return;
-    const clean = text.replace(/\s*→\s*/g, " — ");
-    const utter = new SpeechSynthesisUtterance(clean);
-    if (tutorVoiceRef.current) utter.voice = tutorVoiceRef.current;
-    utter.pitch = gender === "male" ? 0.82 : 1.12;
-    utter.rate = gender === "male" ? 0.97 : 1;
-    utter.onend = () => { if (speakTokenRef.current === myToken) setSpeakingIdx(null); };
-    utter.onerror = () => { if (speakTokenRef.current === myToken) setSpeakingIdx(null); };
-    setSpeakingIdx(idx);
-    window.speechSynthesis.speak(utter);
-  };
 
   const send = async () => {
     const text = input.trim();
@@ -4148,50 +4071,20 @@ function AITutor({ topicTitle, context }) {
     <div className="chat">
       <div className="chat-body" ref={bodyRef}>
         {msgs.map((m, i) => (
-          <div key={i} className={"msg " + (m.role === "user" ? "u" : "a")} style={{ position: "relative" }}>
+          <div key={i} className={"msg " + (m.role === "user" ? "u" : "a")}>
             {m.role === "user" ? m.content : <AIText text={m.content} />}
-            {m.role === "assistant" && (
-              <button
-                title="Play this reply"
-                className="iconbtn"
-                style={{ position: "absolute", top: 4, right: 4, width: 24, height: 24, color: speakingIdx === i ? "var(--amber-2)" : "var(--text-3)" }}
-                onClick={() => speak(m.content, i)}
-              >
-                {speakingIdx === i ? <Ic.pause p={13} /> : <Ic.play p={13} />}
-              </button>
-            )}
           </div>
         ))}
         {busy && <div className="msg a dots"><span /><span /><span /></div>}
       </div>
       <div className="chat-in">
-        <input value={input} placeholder={listening ? "Listening..." : "Ask a question..."} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} />
-        {speechSupported && (
-          <button
-            title="Speak your question"
-            className="btn btn-sm"
-            style={{ background: listening ? "var(--amber)" : "var(--bg-3)", color: listening ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }}
-            onClick={listening ? stopListening : startListening}
-          >
-            <Ic.mic p={16} />
-          </button>
-        )}
+        <input value={input} placeholder="Ask a question..." onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && send()} />
         <button className="btn btn-a btn-sm" onClick={send} disabled={busy}><Ic.send p={17} /></button>
       </div>
-      {listening && (
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 6 }}>
-          <div style={{ display: "flex", alignItems: "flex-end", gap: 3, height: 22 }}>
-            {[0.6, 0.9, 1, 0.8, 0.5].map((mult, i) => (
-              <div key={i} style={{ width: 3, borderRadius: 2, background: "var(--amber-2)", height: Math.max(4, mult * level * 20), transition: "height 90ms ease-out" }} />
-            ))}
-          </div>
-          <span className="mono" style={{ fontSize: 11.5, color: "var(--amber-2)" }}>Listening...</span>
-        </div>
-      )}
-      {micErr && <div className="mono" style={{ fontSize: 11.5, color: "var(--bad)", marginTop: 4 }}>{micErr}</div>}
     </div>
   );
 }
+
 
 function gradeOf(pct) {
   if (pct >= 70) return { letter: "A", remark: "Excellent", color: "var(--good)" };
@@ -10623,7 +10516,7 @@ function StudyToolsView({ app }) {
     }
   };
 
-  const branchColors = ["var(--amber)", "#5B8DEF", "#4FB477", "#E86A6A", "#B07CE8", "#E0A32E"];
+  const branchColors = ["#F5B93F", "#5B8DEF", "#4FB477", "#E86A6A", "#B07CE8", "#E0A32E"];
 
   const genFlow = async () => {
     if (busy) return;
@@ -11247,18 +11140,50 @@ function AskAIView({ app }) {
       return Array.isArray(raw) ? raw.slice(-60) : [];
     } catch { return []; }
   });
-  const [input, setInput] = useState("");
+    const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
+  const [speakingIdx, setSpeakingIdx] = useState(null);
   const bodyRef = useRef(null);
   const taRef = useRef(null);
+  const askVoiceRef = useRef(null);
+  const askSpeakTokenRef = useRef(0);
   const myCourses = visibleCoursesFor(app.progress);
 
   useEffect(() => {
     try { localStorage.setItem(storeKey, JSON.stringify(msgs.slice(-60))); } catch {}
   }, [msgs]);
-  useEffect(() => {
+    useEffect(() => {
     if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
   }, [msgs, busy]);
+
+  // Stop any in-progress reading when the tab is closed or the student
+  // navigates away, so audio never keeps playing over a screen they left.
+  useEffect(() => () => { try { window.speechSynthesis.cancel(); } catch {} }, []);
+
+  // Read an AI reply aloud. Same voice-picking logic and "ascend_voice_gender"
+  // preference as the Listen/podcast feature, so a student's chosen voice
+  // carries over automatically. Tapping the button while it's already
+  // reading stops it; tapping a different reply's button switches to that
+  // one instead of stacking.
+  const speak = async (text, idx) => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    const myToken = ++askSpeakTokenRef.current;
+    window.speechSynthesis.cancel();
+    if (speakingIdx === idx) { setSpeakingIdx(null); return; }
+    let gender = "female";
+    try { gender = localStorage.getItem("ascend_voice_gender") || "female"; } catch {}
+    if (!askVoiceRef.current) askVoiceRef.current = await ascendPickVoice(gender);
+    if (askSpeakTokenRef.current !== myToken) return;
+    const clean = text.replace(/\s*→\s*/g, " — ");
+    const utter = new SpeechSynthesisUtterance(clean);
+    if (askVoiceRef.current) utter.voice = askVoiceRef.current;
+    utter.pitch = gender === "male" ? 0.82 : 1.12;
+    utter.rate = gender === "male" ? 0.97 : 1;
+    utter.onend = () => { if (askSpeakTokenRef.current === myToken) setSpeakingIdx(null); };
+    utter.onerror = () => { if (askSpeakTokenRef.current === myToken) setSpeakingIdx(null); };
+    setSpeakingIdx(idx);
+    window.speechSynthesis.speak(utter);
+  };
 
   const levelLine = app.progress && app.progress.level
     ? "The student is in Level " + app.progress.level + ", Semester " + (app.progress.semester || 1) + "."
@@ -11347,8 +11272,18 @@ function AskAIView({ app }) {
             </div>
           )}
           {msgs.map((m, i) => (
-            <div key={i} className={"msg " + (m.role === "user" ? "u" : "a")}>
+            <div key={i} className={"msg " + (m.role === "user" ? "u" : "a")} style={{ position: "relative" }}>
               {m.role === "user" ? m.content : <AIText text={m.content} />}
+              {m.role === "assistant" && !m.err && (
+                <button
+                  title={speakingIdx === i ? "Stop reading" : "Read this reply aloud"}
+                  className="iconbtn"
+                  style={{ position: "absolute", top: 4, right: 4, width: 26, height: 26, color: speakingIdx === i ? "var(--amber-2)" : "var(--text-3)" }}
+                  onClick={() => speak(m.content, i)}
+                >
+                  {speakingIdx === i ? <Ic.pause p={13} /> : <Ic.play p={13} />}
+                </button>
+              )}
             </div>
           ))}
           {busy && <div className="msg a dots"><span /><span /><span /></div>}
