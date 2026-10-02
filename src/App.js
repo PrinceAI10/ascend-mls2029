@@ -1885,7 +1885,7 @@ function SlidesView({ app }) {
    ============================================================ */
 import { CONTENT } from "./contentData";
 import AtlasView from "./AtlasView";
-import { DIAGRAMS } from "./diagrams";
+import { DIAGRAMS, diagramForTopic as atlasDiagramForTopic } from "./diagrams";
 
 
 const contentFor = (cid, tid) => CONTENT[`${cid}:${tid}`] || null;
@@ -5558,25 +5558,97 @@ function TopicView({ app, rootCls }) {
       <div className="eyebrow" style={{ marginBottom: 12 }}>Visualise it</div>
             <TopicFlowDiagram title={t.title} context={noteContext} />
       <HotspotDiagram courseId={t.courseId} topicIndex={t.topicIndex} />
-      {ATLAS_TOPICS.has(`${t.courseId}:${t.topicIndex}`) && (
+            {ATLAS_TOPICS.has(`${t.courseId}:${t.topicIndex}`) && (
         <div
           className="card hover"
-          style={{ marginTop: 12, borderColor: "rgba(245,185,63,.35)", background: "var(--amber-dim)", cursor: "pointer" }}
+          style={{
+            marginTop: 12,
+            padding: 0,
+            overflow: "hidden",
+            borderColor: "var(--amber)",
+            background: "linear-gradient(135deg, var(--amber-dim), transparent 70%)",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "stretch",
+            minHeight: 120,
+          }}
           onClick={() => app.go("atlas", { courseId: t.courseId, topicId: t.topicIndex })}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          {/* Thumbnail with play badge - the strong visual signal that this
+              is an animated illustration, not just another text card. */}
+          <div style={{
+            flexShrink: 0,
+            width: 140,
+            position: "relative",
+            background: "var(--bg-2)",
+            borderRight: "1px solid var(--line)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+          }}>
+            {(() => {
+              const d = atlasDiagramForTopic(t.courseId, t.topicIndex);
+              return d && d.type === "diagram"
+                ? d.render({ onLabelClick: () => {}, activeLabelId: null, activeStep: 0, preview: true })
+                : <Ic.atlas p={40} style={{ color: "var(--amber)", opacity: 0.7 }} />;
+            })()}
+            {/* Play triangle badge */}
             <div style={{
-              width: 38, height: 38, borderRadius: 10, flexShrink: 0,
-              background: "rgba(245,185,63,.18)", color: "var(--amber)",
-              display: "flex", alignItems: "center", justifyContent: "center",
+              position: "absolute",
+              bottom: 8,
+              right: 8,
+              width: 34,
+              height: 34,
+              borderRadius: "50%",
+              background: "var(--amber)",
+              color: "#1B1405",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 3px 12px rgba(245,185,63,0.55)",
             }}>
-              <Ic.atlas p={19} />
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
+              </svg>
             </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontWeight: 700, fontSize: 14.5, color: "var(--amber-2)" }}>Open the illustrated diagram</div>
-              <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 2 }}>Walk through this topic as an illustrated animation.</div>
+            {/* Tiny "ANIMATED" pill */}
+            <div style={{
+              position: "absolute",
+              top: 8,
+              left: 8,
+              padding: "2px 8px",
+              borderRadius: 999,
+              background: "rgba(245,185,63,0.95)",
+              color: "#1B1405",
+              fontSize: 9.5,
+              fontWeight: 800,
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+            }}>
+              Animated
             </div>
-            <Ic.chevR p={16} style={{ color: "var(--amber)", flexShrink: 0 }} />
+          </div>
+
+          {/* Text column */}
+          <div style={{ flex: 1, minWidth: 0, padding: "16px 18px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+              <Ic.atlas p={16} style={{ color: "var(--amber)", flexShrink: 0 }} />
+              <span className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--amber)", fontWeight: 700 }}>
+                Illustrated walkthrough
+              </span>
+            </div>
+            <div style={{ fontWeight: 750, fontSize: 16, color: "var(--text)", lineHeight: 1.3 }}>
+              See this topic as an illustrated animation
+            </div>
+            <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 6, lineHeight: 1.5 }}>
+              Every step of the note, drawn and narrated step-by-step — tap any structure to learn what it is.
+            </div>
+          </div>
+
+          {/* Arrow */}
+          <div style={{ display: "flex", alignItems: "center", paddingRight: 16 }}>
+            <Ic.chevR p={22} style={{ color: "var(--amber)" }} />
           </div>
         </div>
       )}
