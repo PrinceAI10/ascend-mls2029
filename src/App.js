@@ -146,8 +146,8 @@ if (typeof window !== 'undefined') {
    ========================================================================= */
 const CSS = `
 :root, .ascend-root{
-  --bg:#121A2E; --bg-2:#172544; --bg-3:#1D2E52; --raised:#223961;
-  --line:#2A3B5C; --line-2:#34486E;
+  --bg:#0A0F1A; --bg-2:#0E1524; --bg-3:#121C2E; --raised:#16213A;
+  --line:#1B283F; --line-2:#243450;
   --text:#EAF0FA; --text-2:#9DAFC9; --text-3:#63748F;
   --amber:#F5B93F; --amber-2:#FFD583; --amber-dim:rgba(245,185,63,.13);
   --good:#54D08A; --good-dim:rgba(84,208,138,.12);
@@ -304,7 +304,7 @@ html.ascend-pacifico-ready .brand-word,html.ascend-pacifico-ready .brand-word-he
 .card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:20px;word-wrap:break-word;overflow:hidden}
 .card.hover{transition:border-color .16s,transform .16s,background .16s;cursor:pointer}
 .card.hover:hover{border-color:var(--line-2);background:var(--bg-3);transform:translateY(-2px)}
-.card-feature{background:linear-gradient(150deg,#243a63 0%,#1d3052 45%,#182847 100%)}
+.card-feature{background:linear-gradient(150deg,#182847 0%,#13203a 45%,#0d1526 100%)}
 .ascend-root.light .card-feature{background:linear-gradient(150deg,#EAEFF7,#DCE4EF)}
 .card-feature.hover:hover{background:linear-gradient(150deg,#1d3252 0%,#172a48 45%,#101a2e 100%)}
 .slide-links{display:flex;flex-direction:column;gap:6px;margin:10px 0 4px}
@@ -317,7 +317,7 @@ html.ascend-pacifico-ready .brand-word,html.ascend-pacifico-ready .brand-word-he
 .ascend-root.light .card-feature.hover:hover{background:linear-gradient(150deg,#E2E9F4,#D2DCEA)}
 .grid{display:grid;gap:14px}
 .hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:20px;
-  background:linear-gradient(160deg,#1f3052 0%,#182847 45%,#132038 100%);padding:30px 26px}
+  background:linear-gradient(160deg,#152036 0%,#0E1728 45%,#0B1120 100%);padding:30px 26px}
 .hero .ridge{position:absolute;inset:0;pointer-events:none;opacity:.9}
 .hero-h{font-size:clamp(24px,4.6vw,36px);max-width:16ch;font-weight:800;letter-spacing:-.03em}
 .hero-h .hl{color:var(--amber)}
@@ -2916,9 +2916,9 @@ function buildShareCardCanvas({ kind, title, subtitle, statLabel, statValue, col
   // ---- Full-bleed backdrop: deep navy with a soft color wash from the
   // milestone's own color, so every card feels tied to its badge color
   // rather than reading as one generic template repainted per event.
-    const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, "#132038");
-  bg.addColorStop(1, "#172544");
+      const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, "#070A11");
+  bg.addColorStop(1, "#0D1420");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
   const wash = ctx.createRadialGradient(W / 2, 60, 40, W / 2, 60, 900);
