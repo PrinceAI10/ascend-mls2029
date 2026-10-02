@@ -737,8 +737,168 @@ const Ic = {
   chat: ({ p = 20, style }) => <I s={p} style={style} d={<path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.8A8 8 0 1 1 21 12z" />} />,
   search: ({ p = 20, style }) => <I s={p} style={style} d={<><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></>} />,
   textSize: ({ p = 20, style }) => <I s={p} style={style} d={<><path d="M4 7V5h11v2" /><path d="M9.5 5v14M7 19h5" /><path d="M15 13h6M18 10v6" /></>} />,
-  users: ({ p = 20, style }) => <I s={p} style={style} d={<><circle cx="8.5" cy="8" r="3.2" /><path d="M2.5 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5" /><path d="M15.5 5.2a3.2 3.2 0 0 1 0 6M17.5 13.7c2.5.5 4 2.4 4 5.3" /></>} />,
+     users: ({ p = 20, style }) => <I s={p} style={style} d={<><circle cx="8.5" cy="8" r="3.2" /><path d="M2.5 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5" /><path d="M15.5 5.2a3.2 3.2 0 0 1 0 6M17.5 13.7c2.5.5 4 2.4 4 5.3" /></>} />,
+ };
+
+/* ============================================================
+   AVATAR SYSTEM
+   ------------------------------------------------------------
+   Instead of 36 separate hand-drawn SVGs (one per face/hair/skin
+   combination), each part is ONE shape drawn once, and skin tone /
+   hair colour are passed in as a fill colour parameter. This gets
+   the same amount of real choice (3 faces x 3 hair x 3 skin x 3
+   hair colours x 2 extras = 162 combinations) from just 6 drawn
+   shapes, so adding a new skin tone or hair colour later is a
+   one-line hex code, not a new drawing.
+   ============================================================ */
+const AVATAR_SKIN_TONES = ["#F5D0B0", "#C68642", "#6B4226"];
+const AVATAR_HAIR_COLORS = ["#1B1210", "#6B4226", "#D9A441"];
+
+const AVATAR_FACES = {
+  round: { label: "Round", shape: (fill) => <ellipse cx="50" cy="54" rx="32" ry="34" fill={fill} /> },
+  oval: { label: "Oval", shape: (fill) => <ellipse cx="50" cy="54" rx="27" ry="38" fill={fill} /> },
+  square: { label: "Square", shape: (fill) => <rect x="20" y="22" width="60" height="66" rx="16" fill={fill} /> },
 };
+
+// "behind" draws under the face (for hair that frames the whole head, like
+// an afro); "front" draws on top (for a hairline/cap that sits above the
+// forehead). A style can use either, both, or neither (bald).
+// "gender" is a sort hint only (which tiles the picker shows first under
+// each toggle) - every style is always selectable by anyone, nothing is
+// actually locked to a gender.
+const AVATAR_HAIR = {
+  bald: { label: "Bald", gender: "unisex", behind: null, front: null },
+  short: { label: "Short", gender: "unisex", behind: null, front: (fill) => <path d="M16,42 Q50,4 84,42 L84,26 Q50,-6 16,26 Z" fill={fill} /> },
+  afro: { label: "Afro", gender: "unisex", behind: (fill) => <circle cx="50" cy="44" r="40" fill={fill} />, front: null },
+  fade: { label: "Fade", gender: "masc", behind: null, front: (fill) => <path d="M20,38 Q50,10 80,38 L80,30 Q50,6 20,30 Z" fill={fill} /> },
+  braids: {
+    label: "Braids", gender: "unisex", behind: null,
+    front: (fill) => <g fill={fill}><path d="M16,30 Q50,2 84,30 L84,22 Q50,-6 16,22 Z" /><rect x="14" y="26" width="6" height="34" rx="3" /><rect x="24" y="20" width="6" height="40" rx="3" /><rect x="70" y="20" width="6" height="40" rx="3" /><rect x="80" y="26" width="6" height="34" rx="3" /></g>
+  },
+  locs: {
+    label: "Locs", gender: "unisex", behind: null,
+    front: (fill) => <g fill={fill}><path d="M16,30 Q50,2 84,30 L84,22 Q50,-6 16,22 Z" /><rect x="18" y="24" width="9" height="42" rx="4" /><rect x="33" y="18" width="9" height="46" rx="4" /><rect x="58" y="18" width="9" height="46" rx="4" /><rect x="73" y="24" width="9" height="42" rx="4" /></g>
+  },
+  bun: { label: "Bun", gender: "fem", behind: (fill) => <circle cx="50" cy="10" r="12" fill={fill} />, front: (fill) => <path d="M18,38 Q50,8 82,38 L82,28 Q50,0 18,28 Z" fill={fill} /> },
+  ponytail: { label: "Ponytail", gender: "fem", behind: (fill) => <path d="M78,30 Q100,40 92,70 Q84,86 76,68 Q74,44 78,30 Z" fill={fill} />, front: (fill) => <path d="M18,40 Q50,6 82,40 L82,28 Q50,-2 18,28 Z" fill={fill} /> },
+};
+
+const AVATAR_EXTRAS = {
+  none: { label: "None", shape: null },
+  glasses: { label: "Glasses", shape: () => <g stroke="#2A2016" strokeWidth="3" fill="none"><circle cx="38" cy="56" r="10" /><circle cx="62" cy="56" r="10" /><line x1="48" y1="56" x2="52" y2="56" /></g> },
+};
+
+const AVATAR_OUTFITS = {
+  labcoat: { label: "Lab coat", shape: () => <g><path d="M20,86 Q50,78 80,86 L86,128 L14,128 Z" fill="#F4F6FA" /><rect x="46" y="86" width="8" height="42" fill="#C9D2E0" /><rect x="20" y="86" width="60" height="4" fill="#DCE2EC" /></g> },
+  hoodie: { label: "Hoodie", shape: () => <g><path d="M18,88 Q50,76 82,88 L88,128 L12,128 Z" fill="#3B4A63" /><path d="M34,86 Q50,98 66,86" stroke="#2A3650" strokeWidth="3" fill="none" /></g> },
+  blouse: { label: "Blouse", shape: () => <path d="M22,88 Q50,80 78,88 L82,128 L18,128 Z" fill="#D85A7A" /> },
+};
+
+const DEFAULT_AVATAR = { face: "round", hair: "short", skin: AVATAR_SKIN_TONES[0], hairColor: AVATAR_HAIR_COLORS[0], extra: "none", outfit: "labcoat" };
+
+// crop="face" (the default, used in the topbar/leaderboard/forum) frames
+// just the head so existing call sites don't need to change. crop="full"
+// (used in the picker preview and anywhere a full figure makes sense)
+// shows the neck and outfit too.
+function Avatar({ config, size = 36, crop = "face" }) {
+  const c = config || DEFAULT_AVATAR;
+  const face = AVATAR_FACES[c.face] || AVATAR_FACES.round;
+  const hair = AVATAR_HAIR[c.hair] || AVATAR_HAIR.bald;
+  const extra = AVATAR_EXTRAS[c.extra] || AVATAR_EXTRAS.none;
+  const outfit = AVATAR_OUTFITS[c.outfit] || AVATAR_OUTFITS.labcoat;
+  const skin = c.skin || AVATAR_SKIN_TONES[0];
+  const hairColor = c.hairColor || AVATAR_HAIR_COLORS[0];
+  const full = crop === "full";
+  return (
+    <svg viewBox={full ? "0 0 100 128" : "0 0 100 92"} width={size} height={full ? size * 1.28 : size} style={{ borderRadius: full ? "12px" : "50%", flexShrink: 0, background: "var(--bg-3)" }}>
+      {hair.behind && hair.behind(hairColor)}
+      {full && <rect x="42" y="78" width="16" height="14" fill={skin} />}
+      {full && outfit.shape && outfit.shape()}
+      {face.shape(skin)}
+      <circle cx="38" cy="56" r="3.5" fill="#2A2016" />
+      <circle cx="62" cy="56" r="3.5" fill="#2A2016" />
+      <path d="M40,70 Q50,78 60,70" stroke="#2A2016" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      {hair.front && hair.front(hairColor)}
+      {extra.shape && extra.shape()}
+    </svg>
+  );
+}
+
+function AvatarPicker({ value, onSave, onClose, name, onRename }) {
+  const [cfg, setCfg] = useState(value || DEFAULT_AVATAR);
+  const [genderFilter, setGenderFilter] = useState("all"); // sort hint only - never restricts
+  const set = (k, v) => setCfg((c) => ({ ...c, [k]: v }));
+  const visibleHair = Object.entries(AVATAR_HAIR).sort(([, a], [, b]) => {
+    const rank = (h) => (genderFilter === "all" ? 0 : h.gender === genderFilter || h.gender === "unisex" ? 0 : 1);
+    return rank(a) - rank(b);
+  });
+  const Section = ({ title, children }) => (
+    <div style={{ marginBottom: 18 }}>
+      <div className="eyebrow" style={{ marginBottom: 8 }}>{title}</div>
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>{children}</div>
+    </div>
+  );
+  const Tile = ({ active, onClick, children }) => (
+    <button onClick={onClick} style={{ width: 48, height: 48, borderRadius: 12, border: active ? "2px solid var(--amber)" : "1px solid var(--line)", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}>{children}</button>
+  );
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }} onClick={onClose}>
+      <div className="card" style={{ maxWidth: 480, width: "100%", maxHeight: "86vh", overflow: "auto" }} onClick={(e) => e.stopPropagation()}>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: 10 }}>
+          <Avatar config={cfg} size={110} crop="full" />
+        </div>
+        <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: 18 }}>
+          {["all", "fem", "masc"].map((g) => (
+            <button key={g} className="btn btn-sm" style={{ background: genderFilter === g ? "var(--amber)" : "var(--bg-3)", color: genderFilter === g ? "#1B1405" : "var(--text-2)", border: "1px solid var(--line)" }} onClick={() => setGenderFilter(g)}>
+              {g === "all" ? "All styles" : g === "fem" ? "Feminine styles first" : "Masculine styles first"}
+            </button>
+          ))}
+        </div>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: 18 }}>
+          {onRename && (
+            <button className="btn btn-sm btn-g" style={{ display: "flex", alignItems: "center", gap: 6 }} onClick={onRename}>
+              <Ic.pencil p={13} /> {name || "Change username"}
+            </button>
+          )}
+        </div>
+        <Section title="Face shape">
+          {Object.keys(AVATAR_FACES).map((k) => (
+            <Tile key={k} active={cfg.face === k} onClick={() => set("face", k)}><Avatar config={{ ...cfg, face: k }} size={40} /></Tile>
+          ))}
+        </Section>
+                <Section title="Hair style">
+          {visibleHair.map(([k]) => (
+            <Tile key={k} active={cfg.hair === k} onClick={() => set("hair", k)}><Avatar config={{ ...cfg, hair: k }} size={40} /></Tile>
+          ))}
+        </Section>
+        <Section title="Outfit">
+          {Object.keys(AVATAR_OUTFITS).map((k) => (
+            <Tile key={k} active={cfg.outfit === k} onClick={() => set("outfit", k)}><Avatar config={{ ...cfg, outfit: k }} size={40} crop="full" /></Tile>
+          ))}
+        </Section>
+        <Section title="Hair colour">
+          {AVATAR_HAIR_COLORS.map((hex) => (
+            <Tile key={hex} active={cfg.hairColor === hex} onClick={() => set("hairColor", hex)}><div style={{ width: 24, height: 24, borderRadius: "50%", background: hex }} /></Tile>
+          ))}
+        </Section>
+        <Section title="Skin tone">
+          {AVATAR_SKIN_TONES.map((hex) => (
+            <Tile key={hex} active={cfg.skin === hex} onClick={() => set("skin", hex)}><div style={{ width: 24, height: 24, borderRadius: "50%", background: hex }} /></Tile>
+          ))}
+        </Section>
+        <Section title="Extras">
+          {Object.keys(AVATAR_EXTRAS).map((k) => (
+            <Tile key={k} active={cfg.extra === k} onClick={() => set("extra", k)}><Avatar config={{ ...cfg, extra: k }} size={40} /></Tile>
+          ))}
+        </Section>
+        <div style={{ display: "flex", gap: 10, marginTop: 6 }}>
+          <button className="btn btn-g" style={{ flex: 1 }} onClick={onClose}>Cancel</button>
+          <button className="btn btn-a" style={{ flex: 1 }} onClick={() => onSave(cfg)}>Save</button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 /* --------------------------- password input ----------------------------- */
 function PasswordInput({ value, onChange, placeholder, label, id, autoComplete = "current-password" }) {
@@ -6054,7 +6214,7 @@ function StageBadges({ xp, achievements }) {
         }}>
           <div className="badge-core" style={{ background: unlocked ? ("radial-gradient(circle at 33% 27%," + shade(rk.c, 45) + "," + rk.c + " 72%)") : "var(--bg-2)" }}>
             {unlocked && <span className="badge-shine" />}
-            <span style={{ zIndex: 1, fontWeight: 800, fontSize: 22, color: unlocked ? "#fff" : "var(--text-3)", textShadow: unlocked ? "0 1px 2px rgba(0,0,0,0.35)" : "none" }}>{rk.name[0]}</span>
+            {rk.avatar ? <Avatar config={rk.avatar} size={40} /> : <span style={{ zIndex: 1, fontWeight: 800, fontSize: 22, color: unlocked ? "#fff" : "var(--text-3)", textShadow: unlocked ? "0 1px 2px rgba(0,0,0,0.35)" : "none" }}>{rk.name[0]}</span>}
             {!unlocked && <span className="badge-lock">{LockIcon("var(--text-3)")}</span>}
           </div>
         </div>
@@ -6340,7 +6500,7 @@ function RanksView({ app }) {
       <div className="card card-feature" style={{ marginTop: 18, display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{ position: "relative", flexShrink: 0 }}>
           <Ring value={r.next ? (app.progress.xp - r.min) / (r.next.min - r.min) : 1} size={64} stroke={6} color={r.c} />
-          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, color: r.c, fontSize: 13 }}>{r.name[0]}</div>
+          {r.avatar ? <Avatar config={r.avatar} size={34} /> : <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, color: r.c, fontSize: 13 }}>{r.name[0]}</div>}
         </div>
         <div>
           <div style={{ fontWeight: 750, fontSize: 18, color: r.c }}>{r.name}</div>
@@ -6407,7 +6567,7 @@ function RanksView({ app }) {
                 )}
               </div>
               <div style={{ position: "relative", flexShrink: 0 }}>
-                <div style={{ width: 34, height: 34, borderRadius: "50%", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 13, color: "var(--text-2)" }}>{p.name[0]}</div>
+                {p.avatar ? <Avatar config={p.avatar} size={34} /> : <div style={{ width: 34, height: 34, borderRadius: "50%", background: "var(--bg-3)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 13, color: "var(--text-2)" }}>{p.name[0]}</div>}
                 <span title={p.online ? "Online now" : "Offline"} style={{ position: "absolute", bottom: -1, right: -1, width: 11, height: 11, borderRadius: "50%", background: p.online ? "#2E9BFF" : "var(--text-3)", border: "2px solid var(--bg-2)", boxShadow: p.online ? "0 0 0 1px #2E9BFF55" : "none" }} />
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
@@ -13522,6 +13682,7 @@ export default function App() {
   const [rateStars, setRateStars] = useState(0);
   const [rateDismissed, setRateDismissed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [avatarPickerOpen, setAvatarPickerOpen] = useState(false);
   const [showWelcomeTour, setShowWelcomeTour] = useState(false);
   const [lastTopic, setLastTopic] = useState(null);
   const [showTop, setShowTop] = useState(false);
@@ -14676,11 +14837,15 @@ export default function App() {
     }
   };
 
-  const toggleBookmark = (cid, tid) => {
+    const toggleBookmark = (cid, tid) => {
     const key = `${cid}:${tid}`;
     const prev = Array.isArray(progress.bookmarks) ? progress.bookmarks : [];
     const next = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key];
     persist({ ...progress, bookmarks: next });
+  };
+
+  const setAvatar = (config) => {
+    persist({ ...progress, avatar: config });
   };
 
   const clearReviewItem = (questionText) => {
@@ -14932,7 +15097,8 @@ export default function App() {
     clearReviewItem,
     gradeReviewItem,
     toggleBookmark, 
-    supaUid, 
+    setAvatar,
+    supaUid,
     courseId: route.courseId, 
     topicId: route.topicId, 
     setName,
@@ -15301,9 +15467,20 @@ export default function App() {
                 <button className="iconbtn" onClick={openNotif} title="Notifications"><Ic.bell p={18} />{unreadCount > 0 && <span className="notif-badge">{unreadCount > 9 ? "9+" : unreadCount}</span>}</button>
                 <span className="chip" data-tour="xp"><span className="val" style={{ color: r.c }}><AnimatedCounter value={progress?.xp || 0} /></span> XP</span>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span className="username" style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
-                  <button className="avatar" onClick={setName} title="Click to change your username">{progress?.name?.[0]?.toUpperCase() || "?"}</button>
+                                    <span className="username" style={{ fontSize: 13, color: "var(--text-2)", fontWeight: 500 }}>{progress?.name || ""}</span>
+                  <button className="avatar" style={{ padding: 0, border: "none", overflow: "hidden" }} onClick={() => setAvatarPickerOpen(true)} title="Change your avatar">
+                    {progress?.avatar ? <Avatar config={progress.avatar} size={33} /> : (progress?.name?.[0]?.toUpperCase() || "?")}
+                  </button>
                 </div>
+                                {avatarPickerOpen && (
+                  <AvatarPicker
+                    value={progress?.avatar}
+                    name={progress?.name}
+                    onRename={setName}
+                    onClose={() => setAvatarPickerOpen(false)}
+                    onSave={(cfg) => { setAvatar(cfg); setAvatarPickerOpen(false); }}
+                  />
+                )}
               </div>
             </div>
           </header>
