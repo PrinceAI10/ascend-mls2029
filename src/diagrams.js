@@ -1382,6 +1382,426 @@ const atlasEmbolus = ({
 };
 
 /* ---------------------------------------------------------------- */
+/* Cell injury / adaptation state — one cell drawn at different     */
+/* pathological states, so the same primitive can show normal,      */
+/* adapted, reversibly injured, irreversibly injured, necrotic, and */
+/* apoptotic cells across the same diagram. The `state` prop picks  */
+/* which visual the cell renders as.                                */
+/*                                                                  */
+/* States:                                                          */
+/*   "normal"       — healthy cell, intact membrane, normal nucleus */
+/*   "hypertrophy"  — larger cell, more cytoplasm (e.g. muscle)     */
+/*   "atrophy"      — smaller cell, shrunken cytoplasm              */
+/*   "hyperplasia"  — cell mid-division, two nuclei                 */
+/*   "metaplasia"   — cell shape changed to a different normal type */
+/*   "reversible"   — swollen cell, blebs on the membrane           */
+/*   "irreversible" — cell with membrane breaks, ER swelling,       */
+/*                    calcium influx (drawn as purple specks)       */
+/*   "necrosis"     — cell ruptured, contents leaking out,          */
+/*                    inflammatory reaction (drawn as a burst)      */
+/*   "apoptosis"    — cell shrinking cleanly, nuclear condensation, */
+/*                    budding into apoptotic bodies                 */
+/* ---------------------------------------------------------------- */
+const atlasCellInjury = ({
+  cx, cy, r = 34,
+  state = "normal",
+  label,
+  highlight = false,
+}) => {
+  const edge = highlight ? ATLAS_COLORS.trunk : "#8B5CF6";
+  const stroke = highlight ? 2.4 : 1.6;
+
+  // Shared cell body — draws the outer membrane with the state-appropriate
+  // fill.
+  const bodyFill = {
+    normal:       "#F8F4EE",
+    hypertrophy:  "#F8F4EE",
+    atrophy:      "#F8F4EE",
+    hyperplasia:  "#F8F4EE",
+    metaplasia:   "#F0F4FF",
+    reversible:   "#FBE9E7",
+    irreversible: "#F5D0D0",
+    necrosis:     "#F5C7C0",
+    apoptosis:    "#E8DFFF",
+  }[state] || "#F8F4EE";
+
+  // State-specific radius. Hypertrophy is bigger, atrophy is smaller,
+  // apoptosis shrinks progressively, necrosis stays the same.
+  const radius = {
+    hypertrophy: r * 1.15,
+    atrophy:     r * 0.7,
+    apoptosis:   r * 0.9,
+  }[state] || r;
+
+  return (
+    <g className={highlight ? "atlas-pulse" : undefined}>
+      {/* ---- Cell body ---- */}
+      <circle cx={cx} cy={cy} r={radius} fill={bodyFill} stroke={edge} strokeWidth={stroke} />
+
+      {/* ---- Normal cell: single round nucleus, mild texture ---- */}
+      {state === "normal" && (
+        <>
+          <circle cx={cx} cy={cy} r={radius * 0.4} fill="url(#atlas-grad-nucleus)" />
+          <circle cx={cx - radius * 0.1} cy={cy - radius * 0.1} r={radius * 0.08} fill="#5B21B6" opacity="0.6" />
+        </>
+      )}
+
+      {/* ---- Hypertrophy: same shape, bigger nucleus, more organelles ---- */}
+      {state === "hypertrophy" && (
+        <>
+          <circle cx={cx} cy={cy} r={radius * 0.42} fill="url(#atlas-grad-nucleus)" />
+          {/* Extra organelles — a few small mitochondria around the nucleus */}
+          {[[-0.55, -0.4], [0.5, -0.45], [-0.5, 0.5], [0.55, 0.45]].map(([dx, dy], i) => (
+            <ellipse key={i} cx={cx + radius * dx} cy={cy + radius * dy} rx={radius * 0.13} ry={radius * 0.08} fill="#E53935" opacity="0.6" />
+          ))}
+        </>
+      )}
+
+      {/* ---- Atrophy: shrunken, still normal-shaped but smaller ---- */}
+      {state === "atrophy" && (
+        <>
+          <circle cx={cx} cy={cy} r={radius * 0.45} fill="url(#atlas-grad-nucleus)" />
+          {/* Autophagic vacuoles — small grey circles, the visual
+             signature of a cell eating its own contents to survive */}
+          {[[-0.55, -0.3], [0.55, 0.35]].map(([dx, dy], i) => (
+            <circle key={i} cx={cx + radius * dx} cy={cy + radius * dy} r={radius * 0.14} fill="#64748B" opacity="0.5" />
+          ))}
+        </>
+      )}
+
+      {/* ---- Hyperplasia: two nuclei, cell caught mid-division ---- */}
+      {state === "hyperplasia" && (
+        <>
+          <circle cx={cx - radius * 0.25} cy={cy} r={radius * 0.28} fill="url(#atlas-grad-nucleus)" />
+          <circle cx={cx + radius * 0.25} cy={cy} r={radius * 0.28} fill="url(#atlas-grad-nucleus)" />
+          {/* Division furrow — a subtle pinch line down the middle */}
+          <path d={`M${cx},${cy - radius * 0.85} Q${cx + radius * 0.15},${cy} ${cx},${cy + radius * 0.85}`} stroke={edge} strokeWidth="1" fill="none" opacity="0.5" />
+        </>
+      )}
+
+      {/* ---- Metaplasia: shape changed to a different normal type ---- */}
+      {state === "metaplasia" && (
+        <>
+          {/* Cell is now a rounded rectangle instead of a circle —
+             columnar / squamous change of type */}
+          <rect x={cx - radius * 0.9} y={cy - radius * 0.6} width={radius * 1.8} height={radius * 1.2} rx={radius * 0.2} fill={bodyFill} stroke={edge} strokeWidth={stroke} />
+          <circle cx={cx} cy={cy} r={radius * 0.32} fill="url(#atlas-grad-nucleus)" />
+          <text x={cx} y={cy + radius * 0.85} textAnchor="middle" fontSize="8" fill="var(--text-2)">new cell type</text>
+        </>
+      )}
+
+      {/* ---- Reversible injury: cell swelling, membrane blebs ---- */}
+      {state === "reversible" && (
+        <>
+          {/* Swollen body outline */}
+          <circle cx={cx} cy={cy} r={radius} fill="none" stroke={edge} strokeWidth={stroke} strokeDasharray="4 2" opacity="0.6" />
+          {/* Membrane blebs — small bubbly protrusions */}
+          {[[-1, -0.3], [0.9, -0.5], [-0.7, 0.7], [0.75, 0.7], [0.1, -1]].map(([dx, dy], i) => (
+            <circle key={i} cx={cx + radius * dx} cy={cy + radius * dy} r={radius * 0.18} fill={bodyFill} stroke={edge} strokeWidth="1.2" />
+          ))}
+          <circle cx={cx} cy={cy} r={radius * 0.4} fill="url(#atlas-grad-nucleus)" opacity="0.85" />
+          {/* Swollen ER — pale internal circles */}
+          {[[-0.4, 0.3], [0.45, 0.15]].map(([dx, dy], i) => (
+            <circle key={i} cx={cx + radius * dx} cy={cy + radius * dy} r={radius * 0.16} fill="#FFFFFF" opacity="0.7" stroke={edge} strokeWidth="0.6" />
+          ))}
+        </>
+      )}
+
+      {/* ---- Irreversible injury: calcium influx, membrane breaks ---- */}
+      {state === "irreversible" && (
+        <>
+          {/* Broken membrane — the outer circle with a visible gap */}
+          <path
+            d={`M${cx - radius},${cy}
+                A${radius},${radius} 0 1 1 ${cx + radius * 0.9},${cy + radius * 0.4}`}
+            fill="none" stroke={edge} strokeWidth={stroke * 1.2}
+          />
+          <circle cx={cx} cy={cy} r={radius} fill="none" stroke={edge} strokeWidth={stroke * 0.6} strokeDasharray="3 5" opacity="0.5" />
+          {/* Damaged nucleus */}
+          <circle cx={cx} cy={cy} r={radius * 0.35} fill="url(#atlas-grad-nucleus)" opacity="0.7" />
+          {/* Calcium specks — small purple dots all over the cell */}
+          {[[-0.5, -0.3], [0.5, -0.5], [-0.6, 0.4], [0.55, 0.5], [0.1, 0.7], [-0.2, -0.6]].map(([dx, dy], i) => (
+            <circle key={i} cx={cx + radius * dx} cy={cy + radius * dy} r={radius * 0.06} fill="#5B21B6" opacity="0.9" />
+          ))}
+        </>
+      )}
+
+      {/* ---- Necrosis: cell ruptured, contents spilling out ---- */}
+      {state === "necrosis" && (
+        <>
+          {/* Burst membrane — irregular outline with breaks */}
+          <path
+            d={`M${cx - radius * 0.9},${cy - radius * 0.5}
+                Q${cx - radius * 1.1},${cy + radius * 0.2} ${cx - radius * 0.4},${cy + radius * 0.9}
+                Q${cx + radius * 0.3},${cy + radius * 1.1} ${cx + radius * 0.95},${cy + radius * 0.4}
+                Q${cx + radius * 1.1},${cy - radius * 0.3} ${cx + radius * 0.4},${cy - radius * 0.9}
+                Q${cx - radius * 0.3},${cy - radius * 1.05} ${cx - radius * 0.9},${cy - radius * 0.5} Z`}
+            fill={bodyFill} stroke="#8C1C12" strokeWidth={stroke * 1.2}
+          />
+          {/* Disintegrated nucleus — several fragments */}
+          {[[-0.3, -0.2], [0.2, -0.3], [0.1, 0.25], [-0.15, 0.35]].map(([dx, dy], i) => (
+            <circle key={i} cx={cx + radius * dx} cy={cy + radius * dy} r={radius * 0.14} fill="url(#atlas-grad-nucleus)" opacity="0.7" />
+          ))}
+          {/* Spilling contents — pale yellow leak out of the membrane */}
+          {[[-1.1, 0.3], [1.05, -0.4], [0.7, 1.05], [-0.8, -0.95]].map(([dx, dy], i) => (
+            <circle key={i} cx={cx + radius * dx} cy={cy + radius * dy} r={radius * 0.12} fill="#FFE38A" stroke="#D89B14" strokeWidth="0.5" />
+          ))}
+          {/* Inflammatory reaction — small pink dots (neutrophils) arriving */}
+          {[[-1.3, -0.6], [1.3, 0.6], [1.1, -0.9]].map(([dx, dy], i) => (
+            <circle key={i} cx={cx + radius * dx} cy={cy + radius * dy} r={radius * 0.09} fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="0.8" />
+          ))}
+        </>
+      )}
+
+      {/* ---- Apoptosis: cell shrinks, nucleus condenses, buds off ---- */}
+      {state === "apoptosis" && (
+        <>
+          {/* Shrinking cell with irregular buds */}
+          <path
+            d={`M${cx - radius * 0.9},${cy}
+                Q${cx - radius},${cy - radius * 0.7} ${cx - radius * 0.3},${cy - radius * 0.9}
+                Q${cx + radius * 0.4},${cy - radius * 1} ${cx + radius * 0.85},${cy - radius * 0.4}
+                Q${cx + radius},${cy + radius * 0.5} ${cx + radius * 0.3},${cy + radius * 0.9}
+                Q${cx - radius * 0.5},${cy + radius * 0.95} ${cx - radius * 0.9},${cy} Z`}
+            fill={bodyFill} stroke={edge} strokeWidth={stroke}
+          />
+          {/* Condensed nucleus — dark and small, the hallmark of apoptosis */}
+          <circle cx={cx} cy={cy} r={radius * 0.25} fill="#5B21B6" />
+          {/* Apoptotic bodies budding off — small pale circles with fragments */}
+          {[[1.2, -0.3], [1.1, 0.5], [-1.15, 0.4]].map(([dx, dy], i) => (
+            <g key={i}>
+              <circle cx={cx + radius * dx} cy={cy + radius * dy} r={radius * 0.18} fill={bodyFill} stroke={edge} strokeWidth="1.2" />
+              <circle cx={cx + radius * dx} cy={cy + radius * dy} r={radius * 0.07} fill="#5B21B6" opacity="0.7" />
+            </g>
+          ))}
+          {/* No inflammatory reaction — that's the key difference from
+             necrosis. No yellow leak, no neutrophils. */}
+        </>
+      )}
+
+      {label && (
+        <text x={cx} y={cy + radius + 18} textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text)">
+          {label}
+        </text>
+      )}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Chromosome — a condensed chromosome drawn as an X-shape, with    */
+/* two sister chromatids joined at a centromere. `condensation`     */
+/* scales how tightly wound it is (0 = diffuse chromatin, 1 =      */
+/* fully condensed metaphase chromosome). `spindle` draws spindle  */
+/* fibres pulling from the centromere outward, showing the         */
+/* chromosome attached to the mitotic spindle. `label` prints      */
+/* text beneath. Used by any diagram that needs to show            */
+/* chromosomes, mitosis, or cell division.                          */
+/* ---------------------------------------------------------------- */
+const atlasChromosome = ({
+  cx, cy, length = 30,
+  condensation = 1,
+  spindle = false,
+  color = "#8B5CF6",
+  highlight = false,
+  label,
+}) => {
+  const edge = highlight ? ATLAS_COLORS.trunk : color;
+  const stroke = highlight ? 3 : 2;
+  // Higher condensation = tighter, shorter, thicker arms.
+  const armLength = length * (1 - condensation * 0.35);
+  const armWidth = 3 + condensation * 3;
+  const centromereR = 3 + condensation * 1.5;
+  return (
+    <g className={highlight ? "atlas-pulse" : undefined}>
+      {/* Spindle fibres — thin lines radiating from centromere to poles */}
+      {spindle && (
+        <g opacity="0.55">
+          <line x1={cx} y1={cy} x2={cx - length * 1.5} y2={cy - length * 0.5} stroke="#64748B" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1={cx} y1={cy} x2={cx + length * 1.5} y2={cy - length * 0.5} stroke="#64748B" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1={cx} y1={cy} x2={cx - length * 1.5} y2={cy + length * 0.5} stroke="#64748B" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1={cx} y1={cy} x2={cx + length * 1.5} y2={cy + length * 0.5} stroke="#64748B" strokeWidth="1" strokeDasharray="3 3" />
+        </g>
+      )}
+      {/* Two sister chromatids — mirrored curved bars meeting at the centromere */}
+      <path
+        d={`M${cx - centromereR * 0.4},${cy - centromereR}
+            Q${cx - armLength * 0.5},${cy - armLength * 0.7} ${cx - armLength * 0.35},${cy - armLength}
+            M${cx + centromereR * 0.4},${cy - centromereR}
+            Q${cx + armLength * 0.5},${cy - armLength * 0.7} ${cx + armLength * 0.35},${cy - armLength}
+            M${cx - centromereR * 0.4},${cy + centromereR}
+            Q${cx - armLength * 0.5},${cy + armLength * 0.7} ${cx - armLength * 0.35},${cy + armLength}
+            M${cx + centromereR * 0.4},${cy + centromereR}
+            Q${cx + armLength * 0.5},${cy + armLength * 0.7} ${cx + armLength * 0.35},${cy + armLength}`}
+        stroke={edge}
+        strokeWidth={armWidth}
+        fill="none"
+        strokeLinecap="round"
+      />
+      {/* Centromere — a small dark dot holding the two chromatids together */}
+      <circle cx={cx} cy={cy} r={centromereR} fill="#5B21B6" stroke={edge} strokeWidth="1" />
+      {label && (
+        <text x={cx} y={cy + armLength + 16} textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text)">
+          {label}
+        </text>
+      )}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Cell cycle — an animated ring showing the four main phases of    */
+/* the cell cycle (G1 → S → G2 → M) with G0 as a side branch.       */
+/* The `activePhase` prop highlights the current phase, and          */
+/* `showCheckpoints` overlays the three control points. Used by      */
+/* any diagram that needs to show the cell cycle, its checkpoints,   */
+/* or its dysregulation in cancer.                                    */
+/* ---------------------------------------------------------------- */
+const atlasCellCycle = ({
+  cx, cy, radius = 100,
+  activePhase = "G1",
+  showCheckpoints = false,
+  showG0 = true,
+  highlight = false,
+}) => {
+  const edge = highlight ? ATLAS_COLORS.trunk : "#5B21B6";
+  // Four phases, each taking one quarter of the ring.
+  // Angles go clockwise starting at top: G1 (top), S (right), G2 (bottom), M (left).
+  const phaseColors = {
+    G1: "#2F6FED",
+    S:  "#8B5CF6",
+    G2: "#E53935",
+    M:  "#F5B93F",
+  };
+  const phases = [
+    { id: "G1", startAngle: -90,  endAngle: 0   },
+    { id: "S",  startAngle: 0,    endAngle: 90  },
+    { id: "G2", startAngle: 90,   endAngle: 180 },
+    { id: "M",  startAngle: 180,  endAngle: 270 },
+  ];
+  const polarToCartesian = (cx, cy, r, deg) => {
+    const rad = (deg * Math.PI) / 180;
+    return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+  };
+  const arcPath = (start, end, r) => {
+    const s = polarToCartesian(cx, cy, r, start);
+    const e = polarToCartesian(cx, cy, r, end);
+    const largeArc = end - start > 180 ? 1 : 0;
+    return `M${s.x},${s.y} A${r},${r} 0 ${largeArc} 1 ${e.x},${e.y}`;
+  };
+  return (
+    <g className={highlight ? "atlas-pulse" : undefined}>
+      {/* The four arc segments of the ring */}
+      {phases.map((p) => {
+        const isActive = activePhase === p.id;
+        const color = phaseColors[p.id];
+        return (
+          <g key={p.id}>
+            <path
+              d={arcPath(p.startAngle, p.endAngle, radius)}
+              fill="none"
+              stroke={isActive ? color : "#E2E8F0"}
+              strokeWidth={isActive ? 22 : 18}
+              strokeLinecap="butt"
+              opacity={isActive ? 1 : 0.6}
+            />
+            {/* Phase label at the midpoint of the arc */}
+            {(() => {
+              const mid = (p.startAngle + p.endAngle) / 2;
+              const pos = polarToCartesian(cx, cy, radius * 0.7, mid);
+              return (
+                <text
+                  x={pos.x} y={pos.y + 5}
+                  textAnchor="middle"
+                  fontSize={isActive ? 18 : 15}
+                  fontWeight="800"
+                  fill={isActive ? color : "var(--text-2)"}
+                >
+                  {p.id}
+                </text>
+              );
+            })()}
+          </g>
+        );
+      })}
+
+      {/* Checkpoints — small diamond markers at the phase boundaries */}
+      {showCheckpoints && (
+        <g>
+          {/* G1/S checkpoint (start of S) */}
+          {(() => {
+            const pos = polarToCartesian(cx, cy, radius, 0);
+            return (
+              <g>
+                <rect x={pos.x - 7} y={pos.y - 7} width="14" height="14" transform={`rotate(45 ${pos.x} ${pos.y})`} fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="1.2" />
+                <text x={pos.x + 14} y={pos.y + 4} fontSize="9" fontWeight="700" fill={ATLAS_COLORS.trunk}>G1/S</text>
+              </g>
+            );
+          })()}
+          {/* G2/M checkpoint (start of M) */}
+          {(() => {
+            const pos = polarToCartesian(cx, cy, radius, 180);
+            return (
+              <g>
+                <rect x={pos.x - 7} y={pos.y - 7} width="14" height="14" transform={`rotate(45 ${pos.x} ${pos.y})`} fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="1.2" />
+                <text x={pos.x - 14} y={pos.y + 4} fontSize="9" fontWeight="700" textAnchor="end" fill={ATLAS_COLORS.trunk}>G2/M</text>
+              </g>
+            );
+          })()}
+          {/* Spindle assembly checkpoint (mid-M) */}
+          {(() => {
+            const pos = polarToCartesian(cx, cy, radius, 225);
+            return (
+              <g>
+                <rect x={pos.x - 5} y={pos.y - 5} width="10" height="10" transform={`rotate(45 ${pos.x} ${pos.y})`} fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="1" />
+              </g>
+            );
+          })()}
+        </g>
+      )}
+
+      {/* G0 side branch — a small offshoot from the G1 phase showing
+         the quiescent state that a cell can enter instead of dividing. */}
+      {showG0 && (
+        <g>
+          <path
+            d={`M${cx - radius * 0.85},${cy - radius * 0.55} Q${cx - radius * 1.6},${cy - radius * 1.2} ${cx - radius * 1.85},${cy - radius * 0.6}`}
+            fill="none"
+            stroke="#64748B"
+            strokeWidth="14"
+            strokeLinecap="round"
+            opacity="0.7"
+          />
+          <text
+            x={cx - radius * 1.65} y={cy - radius * 1.35}
+            textAnchor="middle"
+            fontSize="13"
+            fontWeight="800"
+            fill="#64748B"
+          >
+            G0
+          </text>
+          <text
+            x={cx - radius * 1.65} y={cy - radius * 1.2}
+            textAnchor="middle"
+            fontSize="8"
+            fill="var(--text-2)"
+          >
+            quiescent
+          </text>
+        </g>
+      )}
+
+      {/* Centre label — a small compass rose at the middle to keep the
+         ring from feeling empty. */}
+      <circle cx={cx} cy={cy} r={radius * 0.35} fill="none" stroke={edge} strokeWidth="1" strokeDasharray="4 4" opacity="0.3" />
+      <text x={cx} y={cy + 4} textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">cell</text>
+      <text x={cx} y={cy + 18} textAnchor="middle" fontSize="9" fill="var(--text-3)">cycle</text>
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
 /* Erythroid maturation stage — one red cell precursor, drawn so    */
 /* the actual visible changes across maturation (nucleus shrinking  */
 /* and condensing, cytoplasm shifting blue to pink, nucleus finally */
@@ -3300,7 +3720,7 @@ export const DIAGRAMS = {
       ["tissue-damage"],
       ["granuloma"],
       ["examples"],
-      ["contrast"],
+      ["nec-vs-apop"],
     ],
     viewBox: "0 0 900 620",
     render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
@@ -3863,6 +4283,642 @@ export const DIAGRAMS = {
           {/* Static region labels */}
           <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Haemodynamic disorders</text>
           <text x="450" y="612" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">When flow, vessel, or pressure goes wrong</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     CELLULAR ADAPTATION, CELL INJURY AND CELL DEATH
+     Topic: General Pathology (pat), Topic 02 (index 1).
+     Sixth diagram in the pathology family. Introduces the
+     atlasCellInjury primitive. Reuses atlasWhiteCell,
+     atlasVessel. Covers what cells do under stress: adapt,
+     get injured, and die - two ways.
+     ========================================================= */
+  "pat:cell-injury": {
+    id: "pat:cell-injury",
+    type: "diagram",
+    title: "Cellular Adaptation, Cell Injury and Cell Death",
+    topic: { courseId: "pat", topicIndex: 1 },
+    parent: null,
+    summary: "Every cell in your body is constantly adapting to its environment. When the stress is mild, cells adapt — they get bigger, smaller, multiply, or change type. When the stress is too much, they get injured — first reversibly, then irreversibly. And when the injury can't be repaired, they die. There are two ways cells die: necrosis (messy, inflammatory) and apoptosis (clean, programmed). Every disease in pathology comes back to one of these outcomes.",
+    labels: [
+      { id: "whole",        name: "The Whole Story",       desc: "Adapt → injure → die. Every cell under stress follows this same progression, and every disease sits somewhere on it." },
+      { id: "normal",       name: "Normal Cell",           desc: "Baseline state: intact membrane, normal nucleus, steady-state metabolism. The starting point for every change." },
+      { id: "stressors",    name: "Stressors",             desc: "What pushes a cell away from normal: hypoxia, toxins, infection, physical trauma, radiation, metabolic imbalance." },
+      { id: "adaptation",   name: "Adaptation",            desc: "Reversible change that lets the cell survive. Four main types: hypertrophy, atrophy, hyperplasia, metaplasia." },
+      { id: "reversible",   name: "Reversible Injury",     desc: "Cell swelling, membrane blebs, ER swelling. The cell is struggling but can fully recover if the stress is removed." },
+      { id: "irreversible", name: "Irreversible Injury",   desc: "Membrane breaks, calcium floods in, mitochondria fail. The point of no return — the cell is now committed to dying." },
+      { id: "necrosis",     name: "Necrosis",              desc: "Messy death. The cell ruptures, spills its contents, and triggers inflammation. This is what happens after a heart attack or a severe burn." },
+      { id: "apoptosis",    name: "Apoptosis",             desc: "Clean, programmed death. The cell shrinks, its nucleus condenses, it buds into apoptotic bodies, and it's quietly eaten by macrophages. No inflammation." },
+      { id: "nec-vs-apop",  name: "Necrosis vs Apoptosis", desc: "Necrosis: pathological, inflammatory, cell bursts. Apoptosis: physiological or pathological, silent, cell shrinks." },
+      { id: "clinical",     name: "Clinical Examples",     desc: "Myocardial infarction (necrosis), cancer therapy (apoptosis), muscle hypertrophy from exercise, endometrial atrophy after menopause — every disease has a cellular-level explanation." },
+    ],
+    narration: [
+      "Every cell in your body is constantly adapting to its environment. When conditions change, a cell either adapts, gets injured, or dies. That progression — from adaptation through injury to death — is the underlying story of every disease in pathology.",
+      "The starting point is a normal cell: intact membrane, normal nucleus, balanced metabolism. Stressors push cells away from this state. The classic stressors are hypoxia (not enough oxygen), toxins, infections, physical trauma, radiation, and metabolic imbalances like high glucose.",
+      "When the stress is mild and sustained, cells adapt. There are four main types. Hypertrophy: the cell gets bigger. Atrophy: it gets smaller. Hyperplasia: it multiplies. Metaplasia: it changes into a different normal cell type. Each is a survival strategy.",
+      "If the stress is too severe for adaptation, the cell gets injured. First reversibly — the cell swells, blebs form on its membrane, and the endoplasmic reticulum dilates. Remove the stress now, and the cell fully recovers. There's no permanent damage yet.",
+      "If the stress continues, the injury becomes irreversible. Membranes rupture, calcium floods into the cell, mitochondria fail, and ATP runs out. This is the point of no return. The cell is now committed to dying, even if the stress is removed.",
+      "The cell can die in two main ways. The first is necrosis — the messy kind. The cell ruptures, spills its contents into the surrounding tissue, and triggers an inflammatory response. This is what happens after a heart attack, a severe burn, or a bacterial infection.",
+      "The second way is apoptosis — the clean, programmed kind. The cell shrinks, its nucleus condenses, and it buds into small membrane-bound fragments called apoptotic bodies. These are quietly eaten by macrophages. No inflammation, no mess.",
+      "The difference between the two matters clinically. Necrosis is always pathological and always inflammatory. Apoptosis can be physiological — it's how your body removes old cells and shapes developing tissues — and it's silent. Cancer cells often avoid apoptosis when they should undergo it.",
+      "Both patterns happen everywhere in the body. Myocardial infarction is a classic necrosis — a patch of heart muscle dies from lack of oxygen. Endometrial shedding during menstruation is a classic apoptosis. Muscle hypertrophy from weight training, and atrophy from a cast, are both adaptations.",
+      "Putting it all together: cells adapt to stress, then get injured reversibly, then irreversibly, then die by necrosis or apoptosis. Every disease in pathology is either an adaptation, an injury, a death, or the body's response to one of those. Once you understand this arc, the rest of pathology is variations on it.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["normal"],
+      ["stressors"],
+      ["adaptation"],
+      ["reversible"],
+      ["irreversible"],
+      ["necrosis"],
+      ["apoptosis"],
+      ["nec-vs-apop"],
+      ["clinical"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pat:cell-injury"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // The middle of the diagram holds the current-state cell. Its
+      // state maps from the narration step.
+      const cellState = [
+        "normal",       // step 0 (whole)
+        "normal",       // step 1 (normal)
+        "normal",       // step 2 (stressors)
+        "hypertrophy",  // step 3 (adaptation)
+        "reversible",   // step 4 (reversible)
+        "irreversible", // step 5 (irreversible)
+        "necrosis",     // step 6 (necrosis)
+        "apoptosis",    // step 7 (apoptosis)
+        "normal",       // step 8 (contrast)
+        "normal",       // step 9 (clinical)
+      ][activeStep] || "normal";
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* Background — a soft tissue patch, so the cell reads as
+             sitting inside tissue not floating on blank space. */}
+          <ellipse cx="450" cy="310" rx="400" ry="260" fill="#FBE9E7" opacity="0.25" />
+
+          {/* ---- The main cell in the centre — changes state per step ---- */}
+          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+            {atlasCellInjury({
+              cx: 450, cy: 280, r: 55,
+              state: cellState,
+              highlight: false,
+            })}
+            <circle cx="450" cy="280" r="85" fill="none" {...ring("whole")} pointerEvents="none" />
+          </g>
+
+          {/* ---- Normal-cell label anchor (only on its own step) ---- */}
+          <g style={{ cursor: cur }} onClick={click("normal")} filter={hotFilter("normal")}>
+            {isHot("normal") && (
+              <g pointerEvents="none" filter="url(#atlas-glow)">
+                <text x="450" y="200" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>normal cell</text>
+                <text x="450" y="216" textAnchor="middle" fontSize="9" fill="var(--text-2)">intact membrane · normal nucleus</text>
+              </g>
+            )}
+          </g>
+
+          {/* ---- Stressors inset (only on its own step) ---- */}
+          {isHot("stressors") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="120" width="190" height="140" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="155" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">STRESSORS</text>
+              {["hypoxia", "toxins", "infection", "trauma", "radiation", "metabolic"].map((s, i) => (
+                <text key={i} x="155" y={168 + i * 16} textAnchor="middle" fontSize="9" fill="var(--text-2)">{s}</text>
+              ))}
+            </g>
+          )}
+
+          {/* ---- Adaptation inset — shows the four types as a quad ---- */}
+          {isHot("adaptation") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="120" width="200" height="180" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="160" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">FOUR ADAPTATIONS</text>
+              {["hypertrophy — bigger", "atrophy — smaller", "hyperplasia — more cells", "metaplasia — new type"].map((s, i) => (
+                <text key={i} x="160" y={170 + i * 20} textAnchor="middle" fontSize="9" fill="var(--text-2)">{s}</text>
+              ))}
+              <text x="160" y="275" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">all reversible if stress removed</text>
+            </g>
+          )}
+
+          {/* ---- Reversible injury callout ---- */}
+          {isHot("reversible") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="120" width="200" height="110" rx="14" fill="var(--bg-2)" stroke="#E53935" strokeWidth="2" />
+              <text x="160" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#E53935">REVERSIBLE INJURY</text>
+              <text x="160" y="168" textAnchor="middle" fontSize="9" fill="var(--text-2)">cell swelling</text>
+              <text x="160" y="184" textAnchor="middle" fontSize="9" fill="var(--text-2)">membrane blebs</text>
+              <text x="160" y="200" textAnchor="middle" fontSize="9" fill="var(--text-2)">dilated ER</text>
+              <text x="160" y="220" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">fully recoverable</text>
+            </g>
+          )}
+
+          {/* ---- Irreversible injury callout ---- */}
+          {isHot("irreversible") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="120" width="200" height="125" rx="14" fill="var(--bg-2)" stroke="#8C1C12" strokeWidth="2" />
+              <text x="160" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8C1C12">IRREVERSIBLE INJURY</text>
+              <text x="160" y="168" textAnchor="middle" fontSize="9" fill="var(--text-2)">membrane rupture</text>
+              <text x="160" y="184" textAnchor="middle" fontSize="9" fill="var(--text-2)">calcium influx</text>
+              <text x="160" y="200" textAnchor="middle" fontSize="9" fill="var(--text-2)">mitochondrial failure</text>
+              <text x="160" y="222" textAnchor="middle" fontSize="8.5" fill="#C0392B" fontWeight="700">point of no return</text>
+            </g>
+          )}
+
+          {/* ---- Necrosis vs apoptosis comparison panel ---- */}
+          {(isHot("necrosis") || isHot("apoptosis") || isHot("contrast")) && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="660" y="120" width="200" height="220" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="760" y="145" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>NECROSIS vs APOPTOSIS</text>
+              <text x="760" y="175" textAnchor="middle" fontSize="10" fontWeight="700" fill="#8C1C12">Necrosis</text>
+              <text x="760" y="192" textAnchor="middle" fontSize="9" fill="var(--text-2)">cell bursts</text>
+              <text x="760" y="207" textAnchor="middle" fontSize="9" fill="var(--text-2)">spills contents</text>
+              <text x="760" y="222" textAnchor="middle" fontSize="9" fill="var(--text-2)">inflammation</text>
+              <text x="760" y="237" textAnchor="middle" fontSize="9" fill="var(--text-2)">always pathological</text>
+              <text x="760" y="268" textAnchor="middle" fontSize="10" fontWeight="700" fill="#5B21B6">Apoptosis</text>
+              <text x="760" y="285" textAnchor="middle" fontSize="9" fill="var(--text-2)">cell shrinks</text>
+              <text x="760" y="300" textAnchor="middle" fontSize="9" fill="var(--text-2)">nucleus condenses</text>
+              <text x="760" y="315" textAnchor="middle" fontSize="9" fill="var(--text-2)">no inflammation</text>
+              <text x="760" y="330" textAnchor="middle" fontSize="9" fill="var(--text-2)">can be physiological</text>
+            </g>
+          )}
+
+          {/* ---- Clinical examples inset ---- */}
+          {isHot("clinical") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="120" width="220" height="180" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="170" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>CLINICAL EXAMPLES</text>
+              <text x="170" y="172" textAnchor="middle" fontSize="9" fontWeight="700" fill="#8C1C12">Necrosis</text>
+              <text x="170" y="188" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">myocardial infarction</text>
+              <text x="170" y="202" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">severe burns · gangrene</text>
+              <text x="170" y="228" textAnchor="middle" fontSize="9" fontWeight="700" fill="#5B21B6">Apoptosis</text>
+              <text x="170" y="244" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">endometrial shedding</text>
+              <text x="170" y="258" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">cancer therapy · development</text>
+              <text x="170" y="284" textAnchor="middle" fontSize="9" fontWeight="700" fill="#2F6FED">Adaptation</text>
+              <text x="170" y="298" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">muscle hypertrophy · atrophy</text>
+            </g>
+          )}
+
+          {/* ---- Static region labels ---- */}
+          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Cell under stress</text>
+          <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Adapt → reversible injury → irreversible injury → death (necrosis or apoptosis)</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     CELL CYCLE, CONTROL AND APPLICATIONS
+     Topic: General Pathology (pat), Topic 04 (index 3).
+     Seventh diagram in the pathology family. Introduces the
+     atlasCellCycle and atlasChromosome primitives that
+     pat:10 Neoplasia will reuse. Covers how a cell divides,
+     how that division is controlled, and how the controls are
+     targeted in cancer therapy.
+     ========================================================= */
+  "pat:cell-cycle": {
+    id: "pat:cell-cycle",
+    type: "diagram",
+    title: "The Cell Cycle — Control, Checkpoints, and Cancer",
+    topic: { courseId: "pat", topicIndex: 3 },
+    parent: null,
+    summary: "Every cell that divides goes through the same four-phase cycle: it grows (G1), copies its DNA (S), checks the copy (G2), and divides (M). Three checkpoints — at G1/S, G2/M, and the spindle assembly checkpoint — pause the cycle at each transition and only let it continue if everything is correct. Cancer is what happens when those checkpoints fail. Many chemotherapy drugs work by attacking the cell cycle at specific phases, which is why they kill fast-dividing cells first.",
+    labels: [
+      { id: "whole",        name: "The Whole Cycle",        desc: "Four phases — G1, S, G2, M — plus a resting state (G0). One turn around the ring is one cell division." },
+      { id: "g1",           name: "G1 — Gap 1",             desc: "The cell grows, makes proteins, and prepares to copy its DNA. This is the phase where the cell decides whether to divide at all." },
+      { id: "s",            name: "S — Synthesis",           desc: "The cell copies its entire genome. Each chromosome goes from one chromatid to two identical sister chromatids." },
+      { id: "g2",           name: "G2 — Gap 2",             desc: "The cell checks that the DNA was copied correctly and makes the proteins it will need for division." },
+      { id: "m",            name: "M — Mitosis",            desc: "The cell actually divides: the nucleus splits (mitosis) and the cytoplasm splits (cytokinesis), producing two daughter cells." },
+      { id: "g0",           name: "G0 — Quiescence",        desc: "A resting state outside the cycle. Cells here are not dividing — most of your body's cells are in G0 most of the time." },
+      { id: "checkpoints",  name: "Checkpoints",            desc: "Control points at G1/S, G2/M, and mid-M. Each one pauses the cycle and only lets it continue if the previous phase went correctly." },
+      { id: "cyclins",      name: "Cyclins & CDKs",         desc: "The molecular drivers of the cycle. Cyclins rise and fall through each phase, activating CDKs, which push the cell forward." },
+      { id: "cancer",       name: "Cancer",                 desc: "What happens when checkpoints fail. Cells divide without control, ignore stop signals, and accumulate mutations over time." },
+      { id: "drugs",        name: "Chemotherapy Targets",   desc: "Many chemo drugs attack specific phases. Methotrexate blocks S; vinca alkaloids and taxanes block M. That's why they hit fast-dividing cells hardest." },
+    ],
+    narration: [
+      "Every cell that divides goes through the same four-phase cycle. It grows, copies its DNA, checks the copy, and divides. One full turn produces two daughter cells — each with a complete copy of the genome. The whole thing is controlled by checkpoints that decide whether the cycle continues or pauses.",
+      "The first phase is G1 — Gap 1. The cell grows, builds up its supply of proteins and organelles, and gets ready to copy its DNA. This is also where the cell decides whether to divide at all. If conditions aren't right, it exits the cycle and goes into a resting state called G0.",
+      "In G0, the cell is alive and working but not dividing. Most of the cells in your body are here — liver cells, kidney cells, neurons — quietly doing their jobs. They can stay in G0 for years, or forever. Only when they receive specific signals do they re-enter the cycle at G1.",
+      "If the cell decides to divide, it moves into S phase — Synthesis. It copies its entire genome. Each chromosome goes from being a single chromatid to being two identical sister chromatids joined at a centromere. By the end of S, the cell has double the normal amount of DNA.",
+      "Next is G2 — Gap 2. The cell checks that the DNA was copied correctly, repairs any errors, and makes the proteins it will need for division. It also makes sure the centrosomes have been duplicated. If anything looks wrong, the cell cycle pauses here until it's fixed.",
+      "Then it enters M phase — Mitosis. The chromosomes condense, the nuclear envelope breaks down, the spindle forms, and the sister chromatids are pulled to opposite poles. The cell divides into two daughter cells, each with a complete copy of the genome.",
+      "Running the whole cycle are three checkpoints. The G1/S checkpoint asks: is the DNA damaged? Is the cell big enough? Are the nutrients available? If not, the cycle halts. The G2/M checkpoint asks: was the DNA copied correctly? The spindle assembly checkpoint asks: are all chromosomes attached to the spindle?",
+      "The molecular drivers of all this are cyclins and CDKs. Cyclins rise and fall through the cycle; each one activates a specific CDK. The CDK then phosphorylates target proteins that push the cell into the next phase. When a phase is done, the cyclin is destroyed, and the cycle pauses until the next cyclin is made.",
+      "Cancer is what happens when checkpoints fail. If the G1/S checkpoint is broken, a cell with damaged DNA keeps dividing. If the spindle assembly checkpoint is broken, chromosomes get mis-segregated. Over time, mutations accumulate, and the cell divides without control. This is why so many cancer-causing mutations are in checkpoint genes — p53, RB, cyclins, CDKs.",
+      "Because cancer cells divide faster than most normal cells, many chemotherapy drugs target the cell cycle. Methotrexate and 5-FU block S phase by interfering with DNA synthesis. Vinca alkaloids and taxanes block M phase by disrupting the spindle. That's why chemo hits fast-dividing tissues hardest — hair, gut lining, bone marrow — and why side effects cluster there.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["g1"],
+      ["g0"],
+      ["s"],
+      ["g2"],
+      ["m"],
+      ["checkpoints"],
+      ["cyclins"],
+      ["cancer"],
+      ["drugs"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pat:cell-cycle"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // Which phase of the cycle is highlighted per step.
+      const activePhase = ["G1","G1","G1","S","G2","M","G1","G1","G1","S"][activeStep] || "G1";
+      const showCheckpoints = activeStep === 6 || activeStep === 8 || activeStep === 9;
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* The cell cycle ring — the centrepiece. */}
+          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+            {atlasCellCycle({
+              cx: 450, cy: 300, radius: 150,
+              activePhase,
+              showCheckpoints,
+              showG0: true,
+            })}
+          </g>
+
+          {/* G1 phase label anchor — clickable region over the top-left
+             portion of the ring. */}
+          <g style={{ cursor: cur }} onClick={click("g1")} filter={hotFilter("g1")}>
+            <circle cx="370" cy="200" r="60" fill="none" {...ring("g1")} pointerEvents="none" />
+          </g>
+
+          {/* S phase label anchor */}
+          <g style={{ cursor: cur }} onClick={click("s")} filter={hotFilter("s")}>
+            <circle cx="530" cy="200" r="60" fill="none" {...ring("s")} pointerEvents="none" />
+          </g>
+
+          {/* G2 label anchor */}
+          <g style={{ cursor: cur }} onClick={click("g2")} filter={hotFilter("g2")}>
+            <circle cx="530" cy="400" r="60" fill="none" {...ring("g2")} pointerEvents="none" />
+          </g>
+
+          {/* M label anchor */}
+          <g style={{ cursor: cur }} onClick={click("m")} filter={hotFilter("m")}>
+            <circle cx="370" cy="400" r="60" fill="none" {...ring("m")} pointerEvents="none" />
+          </g>
+
+          {/* G0 label anchor */}
+          <g style={{ cursor: cur }} onClick={click("g0")} filter={hotFilter("g0")}>
+            <circle cx="200" cy="150" r="50" fill="none" {...ring("g0")} pointerEvents="none" />
+          </g>
+
+          {/* Chromosome illustration — shows the change from single
+             chromatid to sister chromatids, drawn to the right of the
+             ring, appearing on S and M steps. */}
+          {(activeStep === 3 || activeStep === 5) && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="690" y="170" width="180" height="180" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="780" y="195" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">
+                {activeStep === 3 ? "AFTER S PHASE" : "IN MITOSIS"}
+              </text>
+              {activeStep === 3 ? (
+                // After S — one chromosome with two sister chromatids
+                <>
+                  <text x="780" y="215" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">two sister chromatids</text>
+                  {atlasChromosome({ cx: 780, cy: 275, length: 42, condensation: 0.4, spindle: false })}
+                </>
+              ) : (
+                // In M — sister chromatids separating on the spindle
+                <>
+                  <text x="780" y="215" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">separating on spindle</text>
+                  {atlasChromosome({ cx: 745, cy: 275, length: 32, condensation: 1, spindle: true })}
+                  {atlasChromosome({ cx: 815, cy: 275, length: 32, condensation: 1, spindle: true })}
+                </>
+              )}
+            </g>
+          )}
+
+          {/* Checkpoints inset — shows the three control points. */}
+          {isHot("checkpoints") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="100" width="220" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="170" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>THREE CHECKPOINTS</text>
+              {[
+                ["G1/S —", "DNA damage? Size? Nutrients?"],
+                ["G2/M —", "DNA copied correctly?"],
+                ["Spindle —", "All chromosomes attached?"],
+              ].map(([h, body], i) => (
+                <g key={i}>
+                  <text x="80" y={155 + i * 30} fontSize="9.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>{h}</text>
+                  <text x="80" y={170 + i * 30} fontSize="8.5" fill="var(--text-2)">{body}</text>
+                </g>
+              ))}
+            </g>
+          )}
+
+          {/* Cyclins & CDKs inset — a small wave diagram showing cyclin
+             levels rising and falling through the cycle. */}
+          {isHot("cyclins") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="100" width="220" height="150" rx="14" fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2" />
+              <text x="170" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#5B21B6">CYCLINS & CDKs</text>
+              {/* A representative wave — cyclin D at G1, E at G1/S, A at S, B at G2/M */}
+              <path
+                d="M75,215 Q95,190 115,215 Q135,185 155,215 Q175,180 195,215 Q215,175 240,215"
+                fill="none" stroke="#8B5CF6" strokeWidth="2.4"
+              />
+              <text x="170" y="235" textAnchor="middle" fontSize="8" fill="var(--text-2)">cyclin levels rise & fall</text>
+            </g>
+          )}
+
+          {/* Cancer inset — a comparison of normal vs dysregulated division. */}
+          {isHot("cancer") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="100" width="220" height="150" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="170" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#C0392B">CANCER</text>
+              <text x="170" y="148" textAnchor="middle" fontSize="9" fill="var(--text-2)">checkpoints fail</text>
+              <text x="170" y="166" textAnchor="middle" fontSize="9" fill="var(--text-2)">cell divides without control</text>
+              <text x="170" y="184" textAnchor="middle" fontSize="9" fill="var(--text-2)">damaged DNA keeps copying</text>
+              <text x="170" y="202" textAnchor="middle" fontSize="9" fill="var(--text-2)">mutations accumulate</text>
+              <text x="170" y="226" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="#8C1C12">p53 · RB · cyclins · CDKs</text>
+            </g>
+          )}
+
+          {/* Drugs inset — chemo drugs and the phase they block. */}
+          {isHot("drugs") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="100" width="240" height="180" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="180" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>CHEMO TARGETS</text>
+              <text x="80" y="155" fontSize="9.5" fontWeight="700" fill="#2F6FED">S phase blockers</text>
+              <text x="80" y="170" fontSize="8.5" fill="var(--text-2)">methotrexate · 5-FU</text>
+              <text x="80" y="196" fontSize="9.5" fontWeight="700" fill="#F5B93F">M phase blockers</text>
+              <text x="80" y="211" fontSize="8.5" fill="var(--text-2)">vinca alkaloids · taxanes</text>
+              <text x="80" y="240" fontSize="9" fontWeight="700" fill={ATLAS_COLORS.trunk}>Why side effects cluster:</text>
+              <text x="80" y="256" fontSize="8.5" fill="var(--text-2)">hair · gut · bone marrow</text>
+              <text x="80" y="270" fontSize="8.5" fill="var(--text-2)">(fastest-dividing tissues)</text>
+            </g>
+          )}
+
+          {/* Static region labels */}
+          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">The cell cycle</text>
+          <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Grow (G1) → copy DNA (S) → check (G2) → divide (M) — with checkpoints controlling every step</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     CELL CYCLE AND NEOPLASIA
+     Topic: General Pathology (pat), Topic 10 (index 9).
+     Eighth and final diagram in the pathology family.
+     Reuses atlasCellCycle and atlasChromosome. Shows the
+     progression from a normal regulated cell cycle to
+     uncontrolled neoplastic growth — the endpoint of every
+     other pathology topic.
+     ========================================================= */
+  "pat:neoplasia": {
+    id: "pat:neoplasia",
+    type: "diagram",
+    title: "Cell Cycle and Neoplasia — When Control Is Lost",
+    topic: { courseId: "pat", topicIndex: 9 },
+    parent: null,
+    summary: "Cancer is not one disease — it's what happens when the normal controls on cell division fail. The cell cycle keeps running, but the checkpoints that should stop it don't. Cells divide when they shouldn't, ignore signals to stop, avoid the programmed death that would normally remove them, and accumulate more mutations with each division. Over years, this produces a tumour: a clone of cells that has escaped every safeguard the body has.",
+    labels: [
+      { id: "whole",       name: "The Whole Picture",      desc: "From a normal regulated cell cycle to a tumour — the endpoint of every other pathology topic." },
+      { id: "normal",      name: "Normal Cell Cycle",      desc: "Regulated division with intact checkpoints. Cells divide when they should, stop when they should, and die when they should." },
+      { id: "checkpoint",  name: "Checkpoint Failure",     desc: "The first step. A mutation disables one of the checkpoints — usually p53 or RB — and cells with damaged DNA start getting through." },
+      { id: "oncogenes",   name: "Oncogenes",              desc: "Genes that drive division — like RAS, MYC. When mutated or overexpressed, they push the cell forward when it should stop." },
+      { id: "tsg",         name: "Tumour Suppressors",     desc: "Genes that stop division — like p53, RB. When both copies are lost, the brakes are gone." },
+      { id: "proliferation", name: "Uncontrolled Proliferation", desc: "Cells divide without the normal signals. They ignore contact inhibition — they pile up instead of stopping at a monolayer." },
+      { id: "apoptosis",   name: "Apoptosis Evasion",      desc: "Normal cells self-destruct when damaged. Cancer cells disable that self-destruct button — often by overexpressing BCL-2 or losing p53." },
+      { id: "angiogenesis", name: "Angiogenesis",          desc: "A tumour can't grow past about 2mm without its own blood supply. It releases VEGF and grows new vessels into itself." },
+      { id: "invasion",    name: "Invasion & Metastasis",  desc: "The final step. Cells break through the basement membrane, travel through blood or lymph, and set up new tumours elsewhere. This is what makes cancer lethal." },
+      { id: "staging",     name: "Staging & Grading",      desc: "How we describe a tumour. Stage is how far it has spread (TNM); grade is how abnormal the cells look. Both guide treatment and prognosis." },
+    ],
+    narration: [
+      "Cancer is not one disease — it's what happens when the normal controls on cell division fail. Every other topic in pathology leads here. Heart attacks kill tissue fast; cancer kills it slowly, by accumulation. Over years, the loss of control produces a tumour: a clone of cells that has escaped every safeguard the body has.",
+      "Start from the normal cell cycle. Cells divide when they receive the right signals, at the right time, and stop when they shouldn't. The three checkpoints — G1/S, G2/M, and the spindle checkpoint — are the control points that prevent damaged cells from dividing. Every checkpoint is enforced by tumour suppressor genes.",
+      "The first step toward cancer is checkpoint failure. A cell accumulates a mutation in a checkpoint gene — most often p53, sometimes RB. That single mutation means the cell no longer stops at G1/S when its DNA is damaged. It copies that damage into both daughter cells, and each daughter has to accumulate more mutations to become a cancer.",
+      "Two families of genes drive the process. Oncogenes are the accelerators — RAS, MYC, and others. When these are mutated or overexpressed, they push the cell forward when it should be stopping. A single mutated copy is enough — they act dominantly. This is why they're called 'gain of function' mutations.",
+      "Tumour suppressor genes are the brakes — p53, RB, BRCA1, APC. When they're working, they stop the cell at checkpoints or trigger its death. When both copies are lost — through mutation, deletion, or silencing — the brakes are gone. This is why tumour suppressors are 'loss of function' and recessive at the cellular level.",
+      "With checkpoints broken, cells start proliferating without the normal signals. They don't stop at a monolayer in culture — they pile up. They keep dividing when growth factors are absent, ignore contact inhibition, and don't respond to the signals that tell normal cells to stop dividing.",
+      "The next thing cancer cells do is evade apoptosis. In a normal cell, DNA damage triggers p53, which triggers the cell's self-destruct. In cancer, that pathway is broken — often p53 is lost, or BCL-2 is overexpressed. Now damaged cells survive when they should have died, accumulating still more mutations.",
+      "As the tumour grows past about two millimetres, it needs its own blood supply. It releases VEGF and grows new vessels into itself — angiogenesis. This is why tumours are often visible on imaging as dense, vascular masses. It's also why some drugs target VEGF: cut off the blood supply and the tumour stalls.",
+      "The final and most dangerous step is invasion and metastasis. Cells break through the basement membrane, invade surrounding tissue, and enter the blood or lymph. They travel to distant sites and set up new tumours. It's not the primary tumour that usually kills; it's the metastases. This is what makes cancer a systemic disease.",
+      "Finally, how we describe a tumour. Stage is how far it has spread — the TNM system: tumour size, node involvement, metastasis. Grade is how abnormal the cells look under the microscope. Both are used to choose treatment and estimate prognosis. The lower the stage and grade, the better the outcome.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["normal"],
+      ["checkpoint"],
+      ["oncogenes"],
+      ["tsg"],
+      ["proliferation"],
+      ["apoptosis"],
+      ["angiogenesis"],
+      ["invasion"],
+      ["staging"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pat:neoplasia"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // Progression: the cell cycle ring on the left becomes progressively
+      // disabled, and the tumour mass on the right grows as the narration
+      // moves through the steps. At the end, both are shown together.
+      const showRing = activeStep < 5;
+      const showTumour = activeStep >= 4;
+      const tumourSize = Math.min(1, Math.max(0, (activeStep - 3) / 6));
+      const ringEnabled = activeStep < 2;
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* ---- LEFT: the cell cycle ring ---- */}
+          {showRing && (
+            <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+              {atlasCellCycle({
+                cx: 280, cy: 300, radius: 130,
+                activePhase: "G1",
+                showCheckpoints: !ringEnabled,
+                showG0: true,
+              })}
+              <circle cx="280" cy="300" r="160" fill="none" {...ring("whole")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* Normal cycle label anchor */}
+          <g style={{ cursor: cur }} onClick={click("normal")} filter={hotFilter("normal")}>
+            <circle cx="280" cy="300" r="140" fill="none" {...ring("normal")} pointerEvents="none" />
+          </g>
+
+          {/* ---- RIGHT: the tumour mass ---- */}
+          {showTumour && (
+            <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+              {(() => {
+                const baseR = 30 + tumourSize * 90;
+                const tcx = 660;
+                const tcy = 320;
+                // A cluster of overlapping circles, growing with tumourSize
+                const cells = [
+                  [0, 0],          [0.5, -0.4],     [-0.5, -0.3],
+                  [0.4, 0.5],      [-0.4, 0.5],     [0, -0.7],
+                  [0.7, 0.1],      [-0.7, 0.1],     [0.2, -0.3],
+                  [-0.2, -0.6],    [0.6, -0.6],     [-0.6, 0.6],
+                ];
+                return (
+                  <g>
+                    {cells.slice(0, Math.max(3, Math.round(cells.length * tumourSize))).map(([dx, dy], i) => (
+                      <circle
+                        key={i}
+                        cx={tcx + dx * baseR}
+                        cy={tcy + dy * baseR * 0.85}
+                        r={baseR * 0.32}
+                        fill="#FBDCDC"
+                        stroke="#C0392B"
+                        strokeWidth="1.6"
+                        opacity="0.85"
+                      />
+                    ))}
+                    {/* Irregular tumour outline */}
+                    <ellipse
+                      cx={tcx}
+                      cy={tcy}
+                      rx={baseR * 1.15}
+                      ry={baseR * 1.05}
+                      fill="none"
+                      stroke="#8C1C12"
+                      strokeWidth="2"
+                      strokeDasharray="6 4"
+                      opacity="0.7"
+                    />
+                  </g>
+                );
+              })()}
+            </g>
+          )}
+
+          {/* Checkpoint failure inset — a broken checkpoint gate. */}
+          {isHot("checkpoint") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="100" width="220" height="130" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="170" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#C0392B">CHECKPOINT FAILURE</text>
+              <text x="170" y="150" textAnchor="middle" fontSize="9" fill="var(--text-2)">usually p53 or RB</text>
+              <text x="170" y="168" textAnchor="middle" fontSize="9" fill="var(--text-2)">damaged DNA keeps copying</text>
+              <text x="170" y="192" textAnchor="middle" fontSize="9.5" fontWeight="700" fill="#8C1C12">first step toward cancer</text>
+              <text x="170" y="212" textAnchor="middle" fontSize="8" fill="var(--text-3)">1 mutation — not yet a tumour</text>
+            </g>
+          )}
+
+          {/* Oncogenes vs TSG inset — the two families side by side. */}
+          {(isHot("oncogenes") || isHot("tsg")) && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="100" width="240" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="180" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>TWO GENE FAMILIES</text>
+              <text x="80" y="152" fontSize="10" fontWeight="700" fill="#C0392B">Oncogenes (accelerator)</text>
+              <text x="80" y="168" fontSize="8.5" fill="var(--text-2)">RAS · MYC · ERBB2</text>
+              <text x="80" y="182" fontSize="8.5" fill="var(--text-2)">gain of function · dominant</text>
+              <text x="80" y="208" fontSize="10" fontWeight="700" fill="#2F6FED">Tumour suppressors (brakes)</text>
+              <text x="80" y="224" fontSize="8.5" fill="var(--text-2)">p53 · RB · BRCA1 · APC</text>
+              <text x="80" y="238" fontSize="8.5" fill="var(--text-2)">loss of function · both copies</text>
+            </g>
+          )}
+
+          {/* Uncontrolled proliferation inset */}
+          {isHot("proliferation") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="100" width="220" height="120" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="170" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#C0392B">UNCONTROLLED GROWTH</text>
+              <text x="170" y="148" textAnchor="middle" fontSize="9" fill="var(--text-2)">no signal needed</text>
+              <text x="170" y="164" textAnchor="middle" fontSize="9" fill="var(--text-2)">ignores contact inhibition</text>
+              <text x="170" y="180" textAnchor="middle" fontSize="9" fill="var(--text-2)">piles up instead of stopping</text>
+              <text x="170" y="204" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="#8C1C12">monolayer → multilayered mass</text>
+            </g>
+          )}
+
+          {/* Apoptosis evasion inset */}
+          {isHot("apoptosis") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="100" width="220" height="130" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="170" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#8B5CF6">APOPTOSIS EVASION</text>
+              <text x="170" y="150" textAnchor="middle" fontSize="9" fill="var(--text-2)">p53 lost — self-destruct gone</text>
+              <text x="170" y="166" textAnchor="middle" fontSize="9" fill="var(--text-2)">or BCL-2 overexpressed</text>
+              <text x="170" y="190" textAnchor="middle" fontSize="9" fontWeight="700" fill="#5B21B6">damaged cells survive</text>
+              <text x="170" y="208" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">mutations accumulate further</text>
+            </g>
+          )}
+
+          {/* Angiogenesis inset */}
+          {isHot("angiogenesis") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="620" y="80" width="240" height="130" rx="14" fill="var(--bg-2)" stroke="#E53935" strokeWidth="2" />
+              <text x="740" y="105" textAnchor="middle" fontSize="11" fontWeight="700" fill="#E53935">ANGIOGENESIS</text>
+              <text x="740" y="128" textAnchor="middle" fontSize="9" fill="var(--text-2)">tumour releases VEGF</text>
+              <text x="740" y="144" textAnchor="middle" fontSize="9" fill="var(--text-2)">new vessels grow into it</text>
+              <text x="740" y="166" textAnchor="middle" fontSize="9" fill="var(--text-2)">needed past ~2 mm</text>
+              <text x="740" y="188" textAnchor="middle" fontSize="9" fontWeight="700" fill="#8C1C12">target of some drugs</text>
+            </g>
+          )}
+
+          {/* Invasion & metastasis inset */}
+          {isHot("invasion") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="100" width="240" height="160" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="180" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#C0392B">INVASION & METASTASIS</text>
+              <text x="80" y="152" fontSize="9.5" fill="var(--text-2)">1. break basement membrane</text>
+              <text x="80" y="170" fontSize="9.5" fill="var(--text-2)">2. invade surrounding tissue</text>
+              <text x="80" y="188" fontSize="9.5" fill="var(--text-2)">3. enter blood or lymph</text>
+              <text x="80" y="206" fontSize="9.5" fill="var(--text-2)">4. travel to distant site</text>
+              <text x="80" y="224" fontSize="9.5" fill="var(--text-2)">5. colonise a new organ</text>
+              <text x="80" y="248" fontSize="9" fontWeight="700" fill="#8C1C12">this is what usually kills</text>
+            </g>
+          )}
+
+          {/* Staging & grading inset */}
+          {isHot("staging") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="100" width="240" height="160" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="180" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>STAGING & GRADING</text>
+              <text x="80" y="155" fontSize="10" fontWeight="700" fill="#2F6FED">Stage (TNM)</text>
+              <text x="80" y="172" fontSize="9" fill="var(--text-2)">T = tumour size</text>
+              <text x="80" y="188" fontSize="9" fill="var(--text-2)">N = node involvement</text>
+              <text x="80" y="204" fontSize="9" fill="var(--text-2)">M = metastasis present</text>
+              <text x="80" y="228" fontSize="10" fontWeight="700" fill="#8B5CF6">Grade</text>
+              <text x="80" y="244" fontSize="9" fill="var(--text-2)">how abnormal the cells look</text>
+            </g>
+          )}
+
+          {/* Static region labels */}
+          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Normal cycle → neoplasia</text>
+          <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Checkpoint failure → uncontrolled growth → invasion → metastasis</text>
         </svg>
       );
     },

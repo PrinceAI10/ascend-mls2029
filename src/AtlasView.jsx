@@ -129,7 +129,8 @@ const LEGEND_VIEWBOXES = {
   "plasma-cell": "0 0 100 100",
   "cytotoxic-t": "0 0 100 100",
   "lymph-node": "0 0 100 100",
-  // Haemodynamic Disorders
+
+  // ---- Haemodynamic Disorders ----
   normal: "0 0 100 100",
   thrombus: "0 0 100 100",
   virchow: "0 0 100 100",
@@ -139,6 +140,31 @@ const LEGEND_VIEWBOXES = {
   haemorrhage: "0 0 100 100",
   shock: "0 0 100 100",
   clinical: "0 0 100 100",
+  // Cell Injury
+  stressors: "0 0 100 100",
+  adaptation: "0 0 100 100",
+  reversible: "0 0 100 100",
+  irreversible: "0 0 100 100",
+  necrosis: "0 0 100 100",
+  apoptosis: "0 0 100 100",
+  "nec-vs-apop": "0 0 100 100",
+  // Cell Cycle
+  g1: "0 0 100 100",
+  s: "0 0 100 100",
+  g2: "0 0 100 100",
+  m: "0 0 100 100",
+  g0: "0 0 100 100",
+  checkpoints: "0 0 100 100",
+  cyclins: "0 0 100 100",
+  cancer: "0 0 100 100",
+  drugs: "0 0 100 100",
+  // Neoplasia
+  checkpoint: "0 0 100 100",
+  oncogenes: "0 0 100 100",
+  tsg: "0 0 100 100",
+  proliferation: "0 0 100 100",
+  invasion: "0 0 100 100",
+  staging: "0 0 100 100",
 };
 
 const LEGEND_SWATCHES = {
@@ -1208,6 +1234,288 @@ const LEGEND_SWATCHES = {
       <text x="50" y="85" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="var(--text)">PE</text>
     </g>
   ),
+
+  // ---- Cell Injury ----
+  stressors: (active) => (
+    <g>
+      {/* A cell (top-left) with arrows pushing in from several sides,
+         showing the stressors that push it away from normal. */}
+      <circle cx="40" cy="40" r="16" fill="#F8F4EE" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
+      <circle cx="40" cy="40" r="6" fill="url(#atlas-grad-nucleus)" />
+      {[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([dx, dy], i) => (
+        <line key={i} x1={40 + dx * 25} y1={40 + dy * 25} x2={40 + dx * 18} y2={40 + dy * 18} stroke="#C0392B" strokeWidth="2.2" strokeLinecap="round" />
+      ))}
+      <text x="50" y="82" textAnchor="middle" fontSize="7" fill="var(--text-2)">stressors</text>
+    </g>
+  ),
+  adaptation: (active) => (
+    <g>
+      {/* Four small cells in a 2x2 grid: bigger, smaller, two nuclei,
+         different shape — the four adaptations. */}
+      <circle cx="28" cy="30" r="12" fill="#F8F4EE" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
+      <circle cx="28" cy="30" r="5" fill="url(#atlas-grad-nucleus)" />
+      <circle cx="72" cy="30" r="7" fill="#F8F4EE" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
+      <circle cx="72" cy="30" r="3" fill="url(#atlas-grad-nucleus)" />
+      <circle cx="28" cy="68" r="11" fill="#F8F4EE" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
+      <circle cx="24" cy="68" r="4" fill="url(#atlas-grad-nucleus)" />
+      <circle cx="32" cy="68" r="4" fill="url(#atlas-grad-nucleus)" />
+      <rect x="60" y="58" width="24" height="18" rx="4" fill="#F0F4FF" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
+      <circle cx="72" cy="67" r="4" fill="url(#atlas-grad-nucleus)" />
+    </g>
+  ),
+  reversible: (active) => (
+    <g>
+      {/* Cell with swelling and blebs but membrane intact. */}
+      <circle cx="50" cy="50" r="24" fill="#FBE9E7" stroke={active ? "#F5B93F" : "#E53935"} strokeWidth="1.6" />
+      {[[-1, -0.4], [0.9, -0.5], [-0.7, 0.7], [0.75, 0.7], [0.1, -1.1]].map(([dx, dy], i) => (
+        <circle key={i} cx={50 + dx * 24} cy={50 + dy * 24} r="5" fill="#FBE9E7" stroke="#E53935" strokeWidth="1" />
+      ))}
+      <circle cx="50" cy="50" r="10" fill="url(#atlas-grad-nucleus)" opacity="0.85" />
+      <text x="50" y="88" textAnchor="middle" fontSize="7" fontWeight="700" fill="#E53935">recoverable</text>
+    </g>
+  ),
+  irreversible: (active) => (
+    <g>
+      {/* Cell with a visibly broken membrane, calcium specks, damaged
+         nucleus. The point of no return. */}
+      <path
+        d="M26,50 A24,24 0 1 1 70,62"
+        fill="none" stroke={active ? "#F5B93F" : "#8C1C12"} strokeWidth="2.4"
+      />
+      <circle cx="50" cy="50" r="24" fill="none" stroke="#8C1C12" strokeWidth="1" strokeDasharray="3 5" opacity="0.5" />
+      <circle cx="50" cy="50" r="9" fill="url(#atlas-grad-nucleus)" opacity="0.7" />
+      {[[-12, -8], [10, -12], [-14, 10], [12, 12], [2, 16]].map(([dx, dy], i) => (
+        <circle key={i} cx={50 + dx} cy={50 + dy} r="1.6" fill="#5B21B6" opacity="0.9" />
+      ))}
+      <text x="50" y="88" textAnchor="middle" fontSize="7" fontWeight="700" fill="#8C1C12">committed to die</text>
+    </g>
+  ),
+  necrosis: (active) => (
+    <g>
+      {/* A ruptured cell with contents spilling out and inflammatory
+         cells around it — the messy death. */}
+      <path
+        d="M22,45 Q18,58 32,72 Q48,80 68,70 Q78,58 72,40 Q62,26 42,26 Q26,32 22,45 Z"
+        fill="#F5C7C0" stroke={active ? "#F5B93F" : "#8C1C12"} strokeWidth="2"
+      />
+      {[[-28, -8], [28, 10], [20, -22], [-22, 20]].map(([dx, dy], i) => (
+        <circle key={i} cx={50 + dx} cy={50 + dy} r="4" fill="#FFE38A" stroke="#D89B14" strokeWidth="0.6" />
+      ))}
+      {[[-34, -22], [34, 20]].map(([dx, dy], i) => (
+        <circle key={i} cx={50 + dx} cy={50 + dy} r="3.5" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="0.8" />
+      ))}
+      <circle cx="46" cy="46" r="5" fill="url(#atlas-grad-nucleus)" opacity="0.7" />
+      <circle cx="56" cy="54" r="4" fill="url(#atlas-grad-nucleus)" opacity="0.65" />
+    </g>
+  ),
+  apoptosis: (active) => (
+    <g>
+      {/* A shrunken cell with a dark condensed nucleus, budding into
+         apoptotic bodies. No inflammatory cells around. */}
+      <path
+        d="M26,50 Q24,38 34,32 Q46,28 58,34 Q68,40 66,52 Q64,64 54,68 Q40,72 32,64 Q26,58 26,50 Z"
+        fill="#E8DFFF" stroke={active ? "#F5B93F" : "#5B21B6"} strokeWidth="2"
+      />
+      <circle cx="46" cy="50" r="7" fill="#5B21B6" />
+      {[[78, 40], [76, 60], [22, 62]].map(([ax, ay], i) => (
+        <g key={i}>
+          <circle cx={ax} cy={ay} r="6" fill="#E8DFFF" stroke={active ? "#F5B93F" : "#5B21B6"} strokeWidth="1.2" />
+          <circle cx={ax} cy={ay} r="2.5" fill="#5B21B6" opacity="0.7" />
+        </g>
+      ))}
+    </g>
+  ),
+  "nec-vs-apop": (active) => (
+    <g>
+      {/* Side-by-side comparison: necrosis (left, crimson) and apoptosis
+         (right, purple). Matches the panel in the diagram. */}
+      <rect x="6" y="20" width="42" height="62" rx="8" fill={active ? "rgba(140,28,18,.22)" : "rgba(140,28,18,.1)"} stroke="#8C1C12" strokeWidth="1.6" />
+      <text x="27" y="36" textAnchor="middle" fontSize="7" fontWeight="800" fill="#8C1C12">NECROSIS</text>
+      <text x="27" y="52" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">bursts</text>
+      <text x="27" y="64" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">inflames</text>
+      <text x="27" y="76" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">pathological</text>
+      <rect x="52" y="20" width="42" height="62" rx="8" fill={active ? "rgba(91,33,182,.22)" : "rgba(91,33,182,.1)"} stroke="#5B21B6" strokeWidth="1.6" />
+      <text x="73" y="36" textAnchor="middle" fontSize="7" fontWeight="800" fill="#5B21B6">APOPTOSIS</text>
+      <text x="73" y="52" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">shrinks</text>
+      <text x="73" y="64" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">silent</text>
+      <text x="73" y="76" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">can be normal</text>
+    </g>
+  ),
+
+  // ---- Cell Cycle ----
+  // Swatches for the cell-cycle diagram. Each mirrors the structure or
+  // concept its tile describes — a phase ring, a resting cell, the
+  // checkpoints, cyclins, cancer, and chemo drug targets.
+  g1: (active) => (
+    <g>
+      {/* G1 phase — the growth phase. A cell enlarging, with a growing
+         cytoplasmic area and a normal nucleus. */}
+      <circle cx="50" cy="50" r="26" fill="#DBE7FF" stroke={active ? "#F5B93F" : "#2F6FED"} strokeWidth="2" />
+      <circle cx="50" cy="50" r="11" fill="url(#atlas-grad-nucleus)" />
+      <text x="50" y="88" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "#2F6FED"}>G1</text>
+    </g>
+  ),
+  s: (active) => (
+    <g>
+      {/* S phase — DNA synthesis. A cell with a chromosome visible
+         inside it, and a "copy" arrow. */}
+      <circle cx="50" cy="50" r="26" fill="#EDE4FF" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="2" />
+      {/* A chromosome inside, drawn as a small X */}
+      <path d="M45,42 L55,58 M55,42 L45,58" stroke="#8B5CF6" strokeWidth="3" strokeLinecap="round" />
+      <text x="50" y="88" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "#8B5CF6"}>S</text>
+    </g>
+  ),
+  g2: (active) => (
+    <g>
+      {/* G2 phase — the check phase. A cell with two chromosomes ready
+         to divide. */}
+      <circle cx="50" cy="50" r="26" fill="#FBDCDC" stroke={active ? "#F5B93F" : "#E53935"} strokeWidth="2" />
+      <path d="M38,42 L46,58 M46,42 L38,58" stroke="#8B5CF6" strokeWidth="2.6" strokeLinecap="round" />
+      <path d="M54,42 L62,58 M62,42 L54,58" stroke="#8B5CF6" strokeWidth="2.6" strokeLinecap="round" />
+      <text x="50" y="88" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "#E53935"}>G2</text>
+    </g>
+  ),
+  m: (active) => (
+    <g>
+      {/* M phase — mitosis. Two daughter cells separating, with a
+         spindle line between them. */}
+      <circle cx="30" cy="50" r="16" fill="#FFF0C7" stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.8" />
+      <circle cx="30" cy="50" r="6" fill="url(#atlas-grad-nucleus)" />
+      <circle cx="70" cy="50" r="16" fill="#FFF0C7" stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.8" />
+      <circle cx="70" cy="50" r="6" fill="url(#atlas-grad-nucleus)" />
+      <path d="M46,50 L54,50" stroke="#D89B14" strokeWidth="1.4" strokeDasharray="3 2" />
+      <text x="50" y="88" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "#D89B14"}>M</text>
+    </g>
+  ),
+  g0: (active) => (
+    <g>
+      {/* G0 — quiescent. A single cell sitting still, with a "z" to
+         suggest dormancy. */}
+      <circle cx="50" cy="50" r="22" fill="#E2E8F0" stroke={active ? "#F5B93F" : "#64748B"} strokeWidth="2" />
+      <circle cx="50" cy="50" r="9" fill="url(#atlas-grad-nucleus)" opacity="0.7" />
+      <text x="74" y="34" textAnchor="middle" fontSize="11" fontWeight="800" fill="#64748B">z</text>
+      <text x="50" y="88" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "#64748B"}>G0</text>
+    </g>
+  ),
+  checkpoints: (active) => (
+    <g>
+      {/* Three diamond markers along a short arc — the checkpoint
+         concept drawn as gate points. */}
+      <path d="M20,70 Q50,10 80,70" fill="none" stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="3" opacity="0.85" />
+      {[
+        [35, 37], [50, 24], [65, 37]
+      ].map(([px, py], i) => (
+        <rect key={i} x={px - 6} y={py - 6} width="12" height="12" transform={`rotate(45 ${px} ${py})`} fill={active ? "#F5B93F" : "#D89B14"} stroke="#8B6410" strokeWidth="1" />
+      ))}
+      <text x="50" y="88" textAnchor="middle" fontSize="8" fontWeight="700" fill="var(--text-2)">3 gates</text>
+    </g>
+  ),
+  cyclins: (active) => (
+    <g>
+      {/* A wave graph showing cyclin levels rising and falling through
+         the cycle. */}
+      <path
+        d="M14,70 Q25,45 36,70 Q47,40 58,70 Q69,35 86,70"
+        fill="none"
+        stroke={active ? "#F5B93F" : "#8B5CF6"}
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+      <text x="50" y="20" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "#8B5CF6"}>CYCLINS</text>
+      <text x="50" y="88" textAnchor="middle" fontSize="7" fill="var(--text-2)">rise & fall</text>
+    </g>
+  ),
+  cancer: (active) => (
+    <g>
+      {/* Cancer — a cluster of cells dividing out of control, with an
+         overlaid "broken" symbol. */}
+      {[[30, 40], [50, 32], [70, 40], [30, 60], [50, 68], [70, 60]].map(([px, py], i) => (
+        <circle key={i} cx={px} cy={py} r="9" fill="#FBDCDC" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="1.6" />
+      ))}
+      <text x="50" y="16" textAnchor="middle" fontSize="10" fontWeight="800" fill="#C0392B">⚠</text>
+      <text x="50" y="88" textAnchor="middle" fontSize="8" fontWeight="700" fill="#C0392B">no control</text>
+    </g>
+  ),
+  drugs: (active) => (
+    <g>
+      {/* Chemo drugs — two pills/drug icons labelled by target phase. */}
+      <rect x="18" y="24" width="26" height="14" rx="7" fill="#2F6FED" stroke="#123F9E" strokeWidth="1.4" />
+      <line x1="31" y1="24" x2="31" y2="38" stroke="#fff" strokeWidth="1" />
+      <text x="31" y="20" textAnchor="middle" fontSize="7" fontWeight="700" fill="#2F6FED">S block</text>
+      <rect x="56" y="24" width="26" height="14" rx="7" fill="#F5B93F" stroke="#8B6410" strokeWidth="1.4" />
+      <line x1="69" y1="24" x2="69" y2="38" stroke="#fff" strokeWidth="1" />
+      <text x="69" y="20" textAnchor="middle" fontSize="7" fontWeight="700" fill="#8B6410">M block</text>
+      <text x="50" y="58" textAnchor="middle" fontSize="7.5" fontWeight="700" fill={active ? "#F5B93F" : "var(--text-2)"}>methotrexate</text>
+      <text x="50" y="70" textAnchor="middle" fontSize="7.5" fontWeight="700" fill={active ? "#F5B93F" : "var(--text-2)"}>vinca · taxanes</text>
+    </g>
+  ),
+
+  // ---- Neoplasia ----
+  // Swatches for the neoplasia diagram. Each mirrors the concept its
+  // tile describes — a broken checkpoint gate, oncogenes as
+  // accelerators, tumour suppressors as brakes, uncontrolled
+  // proliferation, invasion, and staging.
+  checkpoint: (active) => (
+    <g>
+      {/* A broken checkpoint gate — a diamond with a crack through it. */}
+      <rect x="32" y="32" width="36" height="36" transform="rotate(45 50 50)" fill={active ? "rgba(245,185,63,.25)" : "rgba(192,57,43,.2)"} stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="2.2" />
+      <path d="M42,42 L58,58 M58,42 L42,58" stroke="#8C1C12" strokeWidth="2.6" strokeLinecap="round" />
+      <text x="50" y="90" textAnchor="middle" fontSize="8" fontWeight="700" fill="#8C1C12">failed</text>
+    </g>
+  ),
+  oncogenes: (active) => (
+    <g>
+      {/* Oncogene — an accelerator pedal, pushed down. */}
+      <rect x="24" y="34" width="52" height="34" rx="6" fill={active ? "rgba(192,57,43,.25)" : "rgba(192,57,43,.12)"} stroke="#C0392B" strokeWidth="1.8" />
+      <path d="M30,62 L70,42" stroke="#C0392B" strokeWidth="4" strokeLinecap="round" />
+      <text x="50" y="82" textAnchor="middle" fontSize="7.5" fontWeight="800" fill="#C0392B">RAS · MYC</text>
+      <text x="50" y="22" textAnchor="middle" fontSize="7" fill="var(--text-2)">accelerator</text>
+    </g>
+  ),
+  tsg: (active) => (
+    <g>
+      {/* Tumour suppressor — a brake that's been cut. */}
+      <circle cx="50" cy="50" r="22" fill="none" stroke={active ? "#F5B93F" : "#2F6FED"} strokeWidth="3" />
+      <circle cx="50" cy="50" r="8" fill="#2F6FED" />
+      <path d="M32,32 L68,68" stroke="#8C1C12" strokeWidth="2.4" strokeLinecap="round" />
+      <text x="50" y="90" textAnchor="middle" fontSize="7.5" fontWeight="800" fill="#2F6FED">p53 · RB</text>
+      <text x="50" y="16" textAnchor="middle" fontSize="7" fill="var(--text-2)">brakes cut</text>
+    </g>
+  ),
+  proliferation: (active) => (
+    <g>
+      {/* Uncontrolled proliferation — many cells piled into a mass. */}
+      {[[30, 40], [50, 30], [70, 40], [30, 60], [50, 68], [70, 60], [50, 49]].map(([px, py], i) => (
+        <circle key={i} cx={px} cy={py} r="9" fill="#FBDCDC" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="1.4" />
+      ))}
+      <text x="50" y="90" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#C0392B">no stopping</text>
+    </g>
+  ),
+  invasion: (active) => (
+    <g>
+      {/* Invasion — a cluster of cells breaking through a basement
+         membrane line and moving down-right. */}
+      <path d="M14,38 L86,38" stroke={active ? "#F5B93F" : "#B63B2E"} strokeWidth="3" strokeDasharray="6 4" />
+      <circle cx="30" cy="54" r="7" fill="#FBDCDC" stroke="#C0392B" strokeWidth="1.4" />
+      <circle cx="50" cy="58" r="7" fill="#FBDCDC" stroke="#C0392B" strokeWidth="1.4" />
+      <circle cx="70" cy="62" r="7" fill="#FBDCDC" stroke="#C0392B" strokeWidth="1.4" />
+      <path d="M30,54 L50,58 L70,62" stroke="#C0392B" strokeWidth="1.2" fill="none" opacity="0.6" />
+      <text x="50" y="86" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#C0392B">through the wall</text>
+    </g>
+  ),
+  staging: (active) => (
+    <g>
+      {/* Staging — a stack of four labelled bars, TNM. */}
+      <rect x="14" y="14" width="72" height="16" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="25" textAnchor="middle" fontSize="7" fontWeight="700" fill="var(--text)">T — size</text>
+      <rect x="14" y="34" width="72" height="16" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="45" textAnchor="middle" fontSize="7" fontWeight="700" fill="var(--text)">N — nodes</text>
+      <rect x="14" y="54" width="72" height="16" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="65" textAnchor="middle" fontSize="7" fontWeight="700" fill="var(--text)">M — metastasis</text>
+      <rect x="14" y="74" width="72" height="14" rx="3" fill={active ? "rgba(139,92,246,.25)" : "rgba(139,92,246,.12)"} stroke="#8B5CF6" strokeWidth="1.2" />
+      <text x="50" y="84" textAnchor="middle" fontSize="7" fontWeight="700" fill="#8B5CF6">G — grade</text>
+    </g>
+  ),
 };
 
 /* ---------------------------------------------------------------- */
@@ -1594,7 +1902,19 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     };
   }, [diagramId]);
 
-  // Legend auto-scroll during playback.
+  // Legend auto-scroll during playback — but ONLY when the legend is
+  // already in view. If the student is watching the diagram (legend
+  // scrolled off screen), we don't want to yank the page down to the
+  // legend on every step change — that would drag the diagram out of
+  // view mid-animation. The legend still updates its "on" state
+  // silently, so when the student glances down it's already showing
+  // the right tile. We only auto-scroll when the legend is already
+  // partly visible, to nudge the correct tile into full view.
+  //
+  // The check: is any part of the legend container within the
+  // viewport? If yes, scroll the target tile into view (which is
+  // harmless because the legend was already on screen). If no,
+  // skip the scroll entirely.
   useEffect(() => {
     if (!playing) return;
     const focus = diagram.stepFocus[activeStep];
@@ -1603,6 +1923,18 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     const firstWithTile = focus.find((id) => legendRefs.current[id]);
     const node = firstWithTile ? legendRefs.current[firstWithTile] : null;
     if (!node || typeof node.scrollIntoView !== "function") return;
+
+    // Is the legend (or this tile) anywhere near the viewport?
+    // Use the tile's own bounding box — if the tile's top is well
+    // below the fold, or well above it, we skip the scroll.
+    const rect = node.getBoundingClientRect();
+    const viewportH = window.innerHeight || document.documentElement.clientHeight;
+    // Tolerance band: we auto-scroll only if the tile is within
+    // one viewport-height either side of the visible area. Beyond
+    // that, the student has intentionally scrolled away from the
+    // legend (e.g. to watch the diagram) and we leave them alone.
+    const nearViewport = rect.top < viewportH * 1.5 && rect.bottom > -viewportH * 0.5;
+    if (!nearViewport) return;
 
     node.scrollIntoView({
       behavior: "smooth",
@@ -2023,6 +2355,12 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                // In fullscreen, force the wrapper to fill the whole
+                // stage so its centring flex rules actually apply to
+                // the full viewport. In normal (non-fullscreen) mode,
+                // keep the wrapper sized to the SVG's own bounds.
+                width: fullscreen ? "100%" : undefined,
+                height: fullscreen ? "100%" : undefined,
                 maxWidth: "100%",
                 maxHeight: "100%",
                 willChange: "transform",
