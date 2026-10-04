@@ -97,6 +97,14 @@ const LEGEND_VIEWBOXES = {
   s5: "0 0 100 100",
   s6: "0 0 100 100",
   epo: "0 0 100 100",
+  // Lymphatic System
+  capillary: "0 0 100 100",
+  interstitial: "0 0 100 100",
+  lymphcap: "0 0 100 100",
+  vessel: "0 0 100 100",
+  node: "0 0 100 100",
+  lymphocyte: "0 0 100 100",
+  duct: "0 0 100 100",
 };
 
 const LEGEND_SWATCHES = {
@@ -379,6 +387,58 @@ const LEGEND_SWATCHES = {
       <text x="50" y="55" textAnchor="middle" fontSize="14" fontWeight="700" fill="#1B1405">EPO</text>
     </g>
   ),
+
+  // ---- Lymphatic System ----
+  capillary: (active) => (
+    <g>
+      <path d="M14 50 Q50 38 86 50" fill="none" stroke={active ? "#E53935" : "#C0392B"} strokeWidth="10" strokeLinecap="round" />
+      <circle cx="50" cy="66" r="3" fill="#FFE38A" />
+      <circle cx="62" cy="70" r="3" fill="#FFE38A" />
+    </g>
+  ),
+  interstitial: (active) => (
+    <g>
+      <circle cx="30" cy="40" r="6" fill="#FFE38A" opacity={active ? 1 : 0.85} />
+      <circle cx="54" cy="56" r="6" fill="#FFE38A" opacity={active ? 1 : 0.85} />
+      <circle cx="74" cy="34" r="6" fill="#FFE38A" opacity={active ? 1 : 0.85} />
+      <circle cx="40" cy="70" r="6" fill="#FFE38A" opacity={active ? 1 : 0.85} />
+      <circle cx="68" cy="68" r="6" fill="#FFE38A" opacity={active ? 1 : 0.85} />
+    </g>
+  ),
+  lymphcap: (active) => (
+    <g>
+      <path d="M50 12 Q40 45 50 88" fill="none" stroke={active ? "#2D7BFF" : "#2F6FED"} strokeWidth="9" strokeLinecap="round" strokeDasharray="6 5" />
+      <circle cx="50" cy="14" r="7" fill="none" stroke={active ? "#2D7BFF" : "#2F6FED"} strokeWidth="2" />
+    </g>
+  ),
+  vessel: (active) => (
+    <g>
+      <path d="M50 10 Q34 50 50 90" fill="none" stroke={active ? "#2D7BFF" : "#2F6FED"} strokeWidth="9" strokeLinecap="round" strokeDasharray="6 5" />
+      <line x1="38" y1="42" x2="50" y2="50" stroke={active ? "#2D7BFF" : "#2F6FED"} strokeWidth="3.5" strokeLinecap="round" />
+      <line x1="62" y1="42" x2="50" y2="50" stroke={active ? "#2D7BFF" : "#2F6FED"} strokeWidth="3.5" strokeLinecap="round" />
+    </g>
+  ),
+  node: (active) => (
+    <g>
+      <ellipse cx="50" cy="50" rx="30" ry="20" fill={active ? "#2D7BFF" : ATLAS_COLORS.lymphoid} opacity="0.75" />
+      <ellipse cx="50" cy="50" rx="18" ry="11" fill="#0A0F1A" opacity="0.22" />
+    </g>
+  ),
+  lymphocyte: (active) => (
+    <g>
+      <circle cx="34" cy="50" r="16" fill="#F3F1FF" stroke={ATLAS_COLORS.nucleus} strokeWidth="1.6" />
+      <circle cx="34" cy="50" r="8" fill={ATLAS_COLORS.nucleus} opacity="0.75" />
+      <circle cx="68" cy="50" r="16" fill="#F3F1FF" stroke={ATLAS_COLORS.nucleus} strokeWidth="1.6" />
+      <circle cx="68" cy="50" r="8" fill={ATLAS_COLORS.nucleus} opacity="0.75" />
+    </g>
+  ),
+  duct: (active) => (
+    <g>
+      <path d="M30 14 Q46 50 50 86" fill="none" stroke={active ? "#2D7BFF" : "#2F6FED"} strokeWidth="7" strokeLinecap="round" strokeDasharray="5 4" />
+      <path d="M70 14 Q54 50 50 86" fill="none" stroke={active ? "#2D7BFF" : "#2F6FED"} strokeWidth="7" strokeLinecap="round" strokeDasharray="5 4" />
+      <rect x="30" y="80" width="40" height="14" rx="6" fill={ATLAS_COLORS.lymphoid} opacity="0.5" />
+    </g>
+  ),
 };
 /* ---------------------------------------------------------------- */
 /* Narration - a small, self-contained speech helper. Deliberately  */
@@ -503,6 +563,30 @@ const atlasStyles = `
   .atlas-zoom-controls .mono { min-width: 38px !important; font-size: 11.5px; }
 }
 
+/* Step badge - floats top-LEFT of the stage (zoom controls own top-right),
+   visible while watching without needing to look down at the dots row. */
+.atlas-step-badge {
+  position: absolute; top: 8px; left: 8px; z-index: 10;
+  background: rgba(10,15,26,.65); backdrop-filter: blur(6px);
+  color: #fff; font-size: 11.5px; font-weight: 700; letter-spacing: .02em;
+  padding: 5px 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  pointer-events: none; font-family: monospace;
+}
+@media (max-width: 640px) {
+  .atlas-step-badge { top: 6px; left: 6px; font-size: 10.5px; padding: 4px 8px; }
+}
+
+/* Fullscreen - the stage detaches from the row layout and fills the
+   viewport. Everything inside it (zoom controls, step badge, the diagram
+   itself) is unchanged; only the container's own position/size changes. */
+.atlas-stage-fullscreen {
+  position: fixed !important; inset: 0 !important; z-index: 200 !important;
+  height: 100dvh !important; width: 100vw !important; border-radius: 0 !important;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+
 /* Legend - full width, below the diagram+summary row, since it's
    reference material to glance at rather than primary content. */
 .atlas-legend-full .atlas-legend-grid {
@@ -617,9 +701,15 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   const MIN_ZOOM = 0.5;
   const MAX_ZOOM = 3;
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
+  const [fullscreen, setFullscreen] = useState(false);
+  // Muted still advances through the sequence on a timer (roughly how long
+  // the narration would have taken to speak), it just doesn't speak -
+  // Play always starting narration with no silent option was the gap here.
+  const [muted, setMuted] = useState(false);
 
   const playTokenRef = useRef(0);
   const pinchRef = useRef(null);
+  const stageRef = useRef(null);
 
   // Reset local view state whenever a new diagram is opened (drill-down or back)
     // Zoom helper used by the +/- buttons, the wheel, and pinch. Clamps to
@@ -644,47 +734,71 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
 
   useEffect(() => () => { try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {} }, []);
 
-    const speakStep = useCallback(async (stepIdx) => {
-    if (!("speechSynthesis" in window)) return;
-    const myToken = playTokenRef.current;
-    const voice = await pickVoice();
+  useEffect(() => {
+    if (!fullscreen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [fullscreen]);
+
+  const advanceAfterStep = useCallback((myToken) => {
     if (myToken !== playTokenRef.current) return;
+    setPlaying((isPlaying) => {
+      if (isPlaying) {
+        setTimeout(() => {
+          if (myToken !== playTokenRef.current) return;
+          setActiveStep((s) => {
+            const next = s + 1;
+            // A cyclic process (diagram.loop === true, e.g. the cardiac
+            // cycle - a heartbeat has no "end") wraps back to step 0 and
+            // keeps going. A one-shot process (the default) stops on its
+            // final step, same as before.
+            if (next >= diagram.narration.length) {
+              if (diagram.loop) {
+                speakStepRef.current(0);
+                return 0;
+              }
+              setPlaying(false);
+              return s;
+            }
+            speakStepRef.current(next);
+            return next;
+          });
+        }, 350);
+      }
+      return isPlaying;
+    });
+  }, [diagram]);
+
+  const speakStepRef = useRef(() => {});
+  const speakStep = useCallback((stepIdx) => {
     const text = diagram.narration[stepIdx];
     if (!text) return;
-    window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(text);
-    if (voice) utter.voice = voice;
-    utter.rate = speed;
-    utter.onend = () => {
+    const myToken = playTokenRef.current;
+
+    if (muted || !("speechSynthesis" in window)) {
+      // No voice - hold roughly as long as the narration would have taken
+      // to speak (a rough words-per-minute estimate), then advance anyway,
+      // so a muted walkthrough still moves through every step on its own.
+      const words = text.trim().split(/\s+/).length;
+      const ms = Math.max(1200, (words / 2.6) * 1000) / speed;
+      setTimeout(() => advanceAfterStep(myToken), ms);
+      return;
+    }
+
+    (async () => {
+      const voice = await pickVoice();
       if (myToken !== playTokenRef.current) return;
-      setPlaying((isPlaying) => {
-        if (isPlaying) {
-          setTimeout(() => {
-            if (myToken !== playTokenRef.current) return;
-            setActiveStep((s) => {
-              const next = s + 1;
-              // A cyclic process (diagram.loop === true, e.g. the cardiac
-              // cycle - a heartbeat has no "end") wraps back to step 0 and
-              // keeps going. A one-shot process (the default) stops on its
-              // final step, same as before.
-              if (next >= diagram.narration.length) {
-                if (diagram.loop) {
-                  speakStep(0);
-                  return 0;
-                }
-                setPlaying(false);
-                return s;
-              }
-              speakStep(next);
-              return next;
-            });
-          }, 350);
-        }
-        return isPlaying;
-      });
-    };
-    window.speechSynthesis.speak(utter);
-    }, [diagram, speed]);
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+      if (voice) utter.voice = voice;
+      utter.rate = speed;
+      utter.onend = () => advanceAfterStep(myToken);
+      utter.onerror = () => advanceAfterStep(myToken);
+      window.speechSynthesis.speak(utter);
+    })();
+  }, [diagram, speed, muted, advanceAfterStep]);
+  useEffect(() => { speakStepRef.current = speakStep; }, [speakStep]);
 
     const handlePlay = () => {
     if (playing) {
@@ -713,6 +827,36 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     const next = Math.max(0, Math.min(diagram.narration.length - 1, activeStep + delta));
     jumpTo(next);
   };
+
+  const toggleMute = () => setMuted((m) => !m);
+
+  const toggleFullscreen = () => setFullscreen((f) => !f);
+
+  // Keyboard controls - space play/pause, left/right step, Esc exits
+  // fullscreen (or leaves the viewer if not fullscreen). Guarded against
+  // firing while focus is in a text field elsewhere on the page.
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      const tag = (e.target && e.target.tagName) || "";
+      if (tag === "INPUT" || tag === "TEXTAREA" || e.target?.isContentEditable) return;
+      if (e.code === "Space") {
+        e.preventDefault();
+        handlePlay();
+      } else if (e.code === "ArrowLeft") {
+        e.preventDefault();
+        stepBy(-1);
+      } else if (e.code === "ArrowRight") {
+        e.preventDefault();
+        stepBy(1);
+      } else if (e.code === "Escape") {
+        if (fullscreen) setFullscreen(false);
+        else onExit();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fullscreen, activeStep, playing, paused, diagramId]);
 
   
 
@@ -820,6 +964,20 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
         <button className="btn btn-g btn-sm" onClick={() => stepBy(-1)} disabled={activeStep === 0} aria-label="Previous step" title="Previous step">◀</button>
         <button className="btn btn-g btn-sm" onClick={() => stepBy(1)} disabled={!diagram.loop && activeStep === diagram.narration.length - 1} aria-label="Next step" title="Next step">▶</button>
         <button className="btn btn-g btn-sm mono" onClick={() => setSpeed((s) => (s === 1 ? 1.25 : s === 1.25 ? 0.85 : 1))} title="Playback speed" aria-label={"Playback speed " + speed + "x"}>{speed}×</button>
+        <button
+          className="btn btn-g btn-sm"
+          onClick={toggleMute}
+          title={muted ? "Unmute narration" : "Mute narration"}
+          aria-label={muted ? "Unmute narration" : "Mute narration"}
+          aria-pressed={muted}
+          style={muted ? { color: "var(--amber-2)", borderColor: "rgba(245,185,63,.4)" } : undefined}
+        >
+          {muted ? (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z" /><line x1="23" y1="9" x2="17" y2="15" /><line x1="17" y1="9" x2="23" y2="15" /></svg>
+          ) : (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z" /><path d="M15.5 8.5a5 5 0 0 1 0 7" /><path d="M18.5 5.5a9 9 0 0 1 0 13" /></svg>
+          )}
+        </button>
         <span style={{ flex: 1 }} />
                 <span className="mono" style={{ fontSize: 11.5, color: "var(--text-3)", whiteSpace: "nowrap", marginLeft: "auto" }}>Step {activeStep + 1} / {diagram.narration.length}</span>
       </div>
@@ -844,11 +1002,12 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       <div className="atlas-row">
         <div className="atlas-diagram-col">
                     <div
-            className="card atlas-viewer-stage"
+            ref={stageRef}
+            className={"card atlas-viewer-stage" + (fullscreen ? " atlas-stage-fullscreen" : "")}
                         style={{
               padding: 0,
               overflow: "hidden",
-              height: "clamp(240px, 48vh, 560px)",
+              height: fullscreen ? undefined : "clamp(240px, 48vh, 560px)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -860,6 +1019,7 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
           >
+            <div className="atlas-step-badge">Step {activeStep + 1} / {diagram.narration.length}</div>
                                                 <div
               className="atlas-zoom-controls"
               style={{ pointerEvents: "auto", zIndex: 10 }}
@@ -869,6 +1029,13 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
               <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom((z) => z - 0.2)}>−</button>
               <button className="btn btn-sm mono" title="Reset zoom" style={{ minWidth: 46 }} onClick={() => applyZoom(DEFAULT_ZOOM)}>{Math.round(zoom * 100)}%</button>
               <button className="btn btn-sm" title="Zoom in" onClick={() => applyZoom((z) => z + 0.2)}>+</button>
+              <button className="btn btn-sm" title={fullscreen ? "Exit fullscreen" : "Fullscreen"} aria-label={fullscreen ? "Exit fullscreen" : "Expand to fullscreen"} onClick={toggleFullscreen}>
+                {fullscreen ? (
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4M15 3h4a2 2 0 0 1 2 2v4M9 21H5a2 2 0 0 1-2-2v-4M15 21h4a2 2 0 0 0 2-2v-4" /></svg>
+                ) : (
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9V5a2 2 0 0 1 2-2h4M21 9V5a2 2 0 0 0-2-2h-4M3 15v4a2 2 0 0 0 2 2h4M21 15v4a2 2 0 0 1-2 2h-4" /></svg>
+                )}
+              </button>
             </div>
                         <div
               style={{

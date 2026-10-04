@@ -1055,4 +1055,155 @@ export const DIAGRAMS = {
     },
   },
 
+  /* =========================================================
+     LYMPHATIC SYSTEM
+     Topic: Physiology II (ph2), Topic 03 (index 2)
+     Composes almost entirely from existing primitives - atlasVessel
+     (dashed, oxygenated:false, for the lymphatic tubes), atlasLymphNode,
+     atlasFlowArrow, atlasWhiteCell, atlasValve - no new primitive needed.
+     ========================================================= */
+  "ph2:lymphatic-system": {
+    id: "ph2:lymphatic-system",
+    type: "diagram",
+    title: "The Lymphatic System — Drainage and Defence",
+    topic: { courseId: "ph2", topicIndex: 2 },
+    parent: null,
+    summary: "Your lymphatic system has two jobs working at once: it drains the fluid your blood capillaries leave behind in your tissues and returns it to your blood, and along the way it filters that fluid through lymph nodes where immune cells check it for threats. One network, drainage and defence together.",
+    labels: [
+      { id: "whole", name: "The Whole System", desc: "Draining fluid your tissues don't keep, and watching that fluid for threats along the way - two jobs, one network." },
+      { id: "capillary", name: "Blood Capillary", desc: "Lets fluid and small proteins leak into your tissues as blood passes through - a normal, constant process." },
+      { id: "interstitial", name: "Interstitial Fluid", desc: "The fluid left behind in your tissues after blood capillaries reabsorb most, but not all, of what leaked out." },
+      { id: "lymphcap", name: "Lymphatic Capillary", desc: "A blind-ended tube with overlapping, shingle-like walls that let fluid and large proteins in easily, but not back out." },
+      { id: "vessel", name: "Lymph Vessel & Valves", desc: "Carries lymph in one direction only, using valves like your veins. Moved along by your skeletal muscles squeezing as you move - there's no pump here." },
+      { id: "node", name: "Lymph Node", desc: "A bean-shaped filtering station packed with immune cells. Lymph passes through and gets checked for bacteria, debris and abnormal cells." },
+      { id: "lymphocyte", name: "B & T Lymphocytes", desc: "Immune cells living inside the node that inspect what's flowing through and start your immune response if they find a threat." },
+      { id: "duct", name: "Thoracic & Right Lymphatic Ducts", desc: "The two large collecting ducts that empty filtered lymph back into your bloodstream, at large veins near your collarbone." },
+    ],
+    narration: [
+      "Your lymphatic system has two jobs: drain extra fluid out of your tissues and return it to your blood, and do a lot of your immune system's actual work. It's a second, one-way drainage network running alongside your blood vessels.",
+      "Your blood capillaries are leaky on purpose. As blood passes through, some fluid and small proteins get pushed out into the space between your cells. This happens everywhere in your body, all the time.",
+      "That leaked fluid is called interstitial fluid. Most gets reabsorbed straight back into your blood capillaries. But two to four litres a day gets left behind in your tissues and has to go somewhere.",
+      "Lymphatic capillaries handle that. They're tiny, blind-ended tubes next to your blood capillaries. Their walls overlap like loose shingles, letting fluid and even large proteins in easily, but not back out.",
+      "Once fluid enters a lymphatic vessel, it's called lymph. These vessels have one-way valves like your veins. There's no pump here - your skeletal muscles squeeze the vessels as you move, pushing lymph along.",
+      "Lymph passes through lymph nodes along the way, small bean-shaped filtering stations packed with immune cells. As lymph flows through, the node filters out bacteria, debris and abnormal cells before it continues on.",
+      "Those immune cells aren't just filtering. B and T lymphocytes inside the node check what's flowing through for threats. If they recognise something dangerous, your immune response starts right here.",
+      "Filtered lymph eventually drains into one of two large ducts, the thoracic duct or the right lymphatic duct, which empty into large veins near your collarbone. The fluid has officially returned to your blood.",
+      "Fluid leaks from blood capillaries, lymphatic capillaries pick it up, valved vessels and muscle movement push it along, lymph nodes filter it, and two ducts return it to your blood. Drainage and defence, one system.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["capillary"],
+      ["interstitial"],
+      ["lymphcap"],
+      ["vessel"],
+      ["node"],
+      ["lymphocyte"],
+      ["duct"],
+      ["whole"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["ph2:lymphatic-system"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const lastStep = diagram.narration.length - 1;
+      // Nothing dims - every structure stays visible at every step. Only the
+      // structure currently being discussed gets the amber glow, and the
+      // final "whole system" step shows everything with no single glow.
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {atlasDefs()}
+
+          {/* Blood capillary - the leak source */}
+          <g style={{ cursor: cur }} onClick={click("capillary")} filter={hotFilter("capillary")}>
+            {atlasVessel({ d: "M360,90 Q450,78 540,90", oxygenated: true, width: 10 })}
+            {atlasBloodCell({ cx: 450, cy: 85, r: 4, oxygenated: true, animate: true, delay: "0s" })}
+          </g>
+
+          {/* Interstitial fluid - a handful of pale straw-colored droplets
+              in the tissue space between the blood capillary and the
+              lymphatic capillary that's about to pick them up */}
+          <g style={{ cursor: cur }} onClick={click("interstitial")} filter={hotFilter("interstitial")}>
+            {[[400, 128], [430, 142], [460, 130], [490, 144], [415, 158], [475, 160]].map(([dx, dy], i) => (
+              <circle key={i} cx={dx} cy={dy} r="3.2" fill="#FFE38A" opacity="0.85" />
+            ))}
+            <text x="450" y="185" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">interstitial fluid</text>
+          </g>
+
+          {/* Lymphatic capillary - blind-ended, picks the fluid up */}
+          <g style={{ cursor: cur }} onClick={click("lymphcap")} filter={hotFilter("lymphcap")}>
+            {atlasVessel({ d: "M450,150 Q438,195 450,230", oxygenated: false, dashed: true, width: 8 })}
+          </g>
+
+          {/* Main lymph vessel, with a valve, continuing down to the node */}
+          <g style={{ cursor: cur }} onClick={click("vessel")} filter={hotFilter("vessel")}>
+            {atlasVessel({ d: "M450,230 Q428,270 450,300", oxygenated: false, dashed: true, width: 9 })}
+            {atlasValve({ id: "vessel", x: 450, y: 265, open: true, color: ATLAS_COLORS.lymphoid, onLabelClick, activeLabelId, preview })}
+          </g>
+
+          {/* Lymph node, with lymphocytes living inside it */}
+          <g style={{ cursor: cur }} onClick={click("node")} filter={hotFilter("node")}>
+            {atlasLymphNode({ cx: 450, cy: 360, scale: 2.4 })}
+          </g>
+          <g style={{ cursor: cur }} onClick={click("lymphocyte")} filter={hotFilter("lymphocyte")}>
+            {atlasWhiteCell({ cx: 434, cy: 352, r: 6 })}
+            {atlasWhiteCell({ cx: 450, cy: 370, r: 6 })}
+            {atlasWhiteCell({ cx: 466, cy: 354, r: 6 })}
+          </g>
+
+          {/* Vessel continuing out of the node down to the collecting ducts */}
+          <g style={{ cursor: cur }} onClick={click("duct")} filter={hotFilter("duct")}>
+            {atlasVessel({ d: "M450,420 Q470,490 452,540", oxygenated: false, dashed: true, width: 9 })}
+            {atlasFlowArrow({ x1: 452, y1: 540, x2: 452, y2: 558, color: ATLAS_COLORS.lymphoid })}
+          </g>
+
+          {/* Venous system - where the ducts empty back into the blood */}
+          <g style={{ cursor: cur }} onClick={click("duct")} filter={hotFilter("duct")}>
+            <rect x="330" y="558" width="240" height="46" rx="14" fill={ATLAS_COLORS.lymphoid} opacity="0.3" stroke="#123F9E" strokeWidth="1.5" />
+            <text x="450" y="586" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text)">Venous system</text>
+          </g>
+
+          {/* Lymphocyte inset - what the immune cells are actually doing
+              inside the node, connected by a leader line to the node */}
+          {inFocus("lymphocyte") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path d="M490,355 Q560,340 620,330" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" strokeDasharray="4 4" opacity="0.85" />
+              <circle cx="490" cy="355" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="620" y="265" width="180" height="130" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="710" y="288" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>INSPECTING LYMPH</text>
+              {atlasWhiteCell({ cx: 670, cy: 330, r: 14 })}
+              {atlasWhiteCell({ cx: 745, cy: 330, r: 14 })}
+              <text x="670" y="362" textAnchor="middle" fontSize="9" fill="var(--text-2)">B cell</text>
+              <text x="745" y="362" textAnchor="middle" fontSize="9" fill="var(--text-2)">T cell</text>
+              <text x="710" y="378" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">checking for threats</text>
+            </g>
+          )}
+
+          {/* Duct inset - the two named collecting ducts, connected by a
+              leader line down to where they empty into the venous system */}
+          {inFocus("duct") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path d="M410,575 Q320,565 260,540" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" strokeDasharray="4 4" opacity="0.85" />
+              <circle cx="410" cy="575" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="80" y="475" width="180" height="90" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="170" y="497" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>TWO COLLECTING DUCTS</text>
+              <text x="170" y="517" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">Thoracic duct</text>
+              <text x="170" y="533" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">Right lymphatic duct</text>
+              <text x="170" y="552" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">both empty near the collarbone</text>
+            </g>
+          )}
+
+          {/* Static region labels */}
+          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Tissue</text>
+          <text x="450" y="614" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Near the collarbone</text>
+        </svg>
+      );
+    },
+  },
+
 };
