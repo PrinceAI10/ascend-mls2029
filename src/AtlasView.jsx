@@ -165,6 +165,35 @@ const LEGEND_VIEWBOXES = {
   proliferation: "0 0 100 100",
   invasion: "0 0 100 100",
   staging: "0 0 100 100",
+  // Renal Physiology
+  kidney: "0 0 100 100",
+  nephron: "0 0 100 100",
+  glomerulus: "0 0 100 100",
+  pct: "0 0 100 100",
+  loop: "0 0 100 100",
+  dct: "0 0 100 100",
+  collecting: "0 0 100 100",
+  hormones: "0 0 100 100",
+  gfr: "0 0 100 100",
+  // Acid-Base Balance
+  ph: "0 0 100 100",
+  buffers: "0 0 100 100",
+  bicarbonate: "0 0 100 100",
+  hh: "0 0 100 100",
+  "kidney-h": "0 0 100 100",
+  "kidney-hco3": "0 0 100 100",
+  "resp-disorders": "0 0 100 100",
+  "met-disorders": "0 0 100 100",
+  // Digestive System
+  tube: "0 0 100 100",
+  digestion: "0 0 100 100",
+  stomach: "0 0 100 100",
+  "small-intestine": "0 0 100 100",
+  villi: "0 0 100 100",
+  accessory: "0 0 100 100",
+  "large-intestine": "0 0 100 100",
+  portal: "0 0 100 100",
+  "whole-end": "0 0 100 100",
 };
 
 const LEGEND_SWATCHES = {
@@ -177,7 +206,7 @@ const LEGEND_SWATCHES = {
   blood: (active) => (
     <g>
       <ellipse cx="34" cy="50" rx="14" ry="9" fill="#E53935" stroke="#8C1C12" strokeWidth="1" />
-      <circle cx="62" cy="44" r="9" fill="#F3F1FF" stroke={ATLAS_COLORS.nucleus} strokeWidth="1.2" />
+      <circle cx="62" cy="44" r="9" fill="#E4DFFF" stroke={ATLAS_COLORS.nucleus} strokeWidth="1.2" />
       <circle cx="62" cy="44" r="5" fill={ATLAS_COLORS.nucleus} opacity="0.75" />
       <ellipse cx="70" cy="72" rx="8" ry="5" fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="0.8" />
     </g>
@@ -193,14 +222,14 @@ const LEGEND_SWATCHES = {
   ),
   heart: (active) => (
     <g>
-      <path d="M20 30 Q22 12 36 12 Q50 8 50 26 Q50 8 64 12 Q78 12 80 30 Q78 62 50 84 Q22 62 20 30 Z" fill="#FBE9E7" stroke={active ? ATLAS_COLORS.trunk : "#C0392B"} strokeWidth="2" />
+      <path d="M20 30 Q22 12 36 12 Q50 8 50 26 Q50 8 64 12 Q78 12 80 30 Q78 62 50 84 Q22 62 20 30 Z" fill="#F5D0CC" stroke={active ? ATLAS_COLORS.trunk : "#C0392B"} strokeWidth="2" />
       <path d="M20 30 Q22 12 36 12 Q50 8 50 26 Q50 8 64 12 Q78 12 80 30 Z" fill="#2D7BFF" opacity="0.9" />
       <path d="M20 30 Q22 52 50 84 Q78 62 80 30 Q70 44 50 44 Q30 44 20 30 Z" fill="#E53935" opacity="0.9" />
     </g>
   ),
   conduction: (active) => (
     <g>
-      <path d="M20 30 Q22 12 36 12 Q50 8 50 26 Q50 8 64 12 Q78 12 80 30 Q78 62 50 84 Q22 62 20 30 Z" fill="#FBE9E7" stroke="#C0392B" strokeWidth="1.5" />
+      <path d="M20 30 Q22 12 36 12 Q50 8 50 26 Q50 8 64 12 Q78 12 80 30 Q78 62 50 84 Q22 62 20 30 Z" fill="#F5D0CC" stroke="#C0392B" strokeWidth="1.5" />
       <circle cx="34" cy="30" r="5" fill={ATLAS_COLORS.trunk}>
         <animate attributeName="opacity" values="0.4;1;0.4" dur="1.2s" repeatCount="indefinite" />
       </circle>
@@ -325,17 +354,17 @@ const LEGEND_SWATCHES = {
   // ---- Haematopoiesis ----
   hsc: (active) => (
     <g>
-      <circle cx="50" cy="50" r="28" fill="#E9DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="28" fill="#D4C4FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.6" />
       <circle cx="50" cy="50" r="20" fill="url(#atlas-grad-nucleus)" />
       <circle cx="42" cy="44" r="6" fill="#5B21B6" opacity="0.55" />
       <circle cx="56" cy="53" r="5" fill="#5B21B6" opacity="0.5" />
       <circle cx="49" cy="59" r="4" fill="#5B21B6" opacity="0.45" />
-      <circle cx="53" cy="42" r="3" fill="#E9DFFF" opacity="0.9" />
+      <circle cx="53" cy="42" r="3" fill="#D4C4FF" opacity="0.9" />
     </g>
   ),
   cmp: (active) => (
     <g>
-      <circle cx="50" cy="50" r="26" fill="#F8F4EE" stroke={active ? "#FFC93C" : "#F5B93F"} strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="26" fill="#EDE6DC" stroke={active ? "#FFC93C" : "#F5B93F"} strokeWidth="1.6" />
       <circle cx="50" cy="50" r="16" fill="url(#atlas-grad-trunk)" opacity="0.85" />
       <circle cx="45" cy="46" r="3" fill="#000" opacity="0.18" />
       <circle cx="54" cy="53" r="3" fill="#000" opacity="0.15" />
@@ -343,7 +372,7 @@ const LEGEND_SWATCHES = {
   ),
   clp: (active) => (
     <g>
-      <circle cx="50" cy="50" r="26" fill="#F8F4EE" stroke={active ? "#2D7BFF" : "#2F6FED"} strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="26" fill="#EDE6DC" stroke={active ? "#2D7BFF" : "#2F6FED"} strokeWidth="1.6" />
       <circle cx="50" cy="50" r="16" fill="url(#atlas-grad-lymphoid)" opacity="0.85" />
       <circle cx="45" cy="46" r="3" fill="#000" opacity="0.18" />
       <circle cx="54" cy="53" r="3" fill="#000" opacity="0.15" />
@@ -351,19 +380,19 @@ const LEGEND_SWATCHES = {
   ),
   b: (active) => (
     <g>
-      <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="50" cy="50" r="24" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
       <path d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z" fill="#8B5CF6" opacity="0.78" />
     </g>
   ),
   t: (active) => (
     <g>
-      <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="50" cy="50" r="24" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
       <path d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z" fill="#8B5CF6" opacity="0.78" />
     </g>
   ),
   nk: (active) => (
     <g>
-      <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="50" cy="50" r="24" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
       <path d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z" fill="#8B5CF6" opacity="0.78" />
     </g>
   ),
@@ -371,14 +400,14 @@ const LEGEND_SWATCHES = {
     <g>
       <ellipse cx="30" cy="38" rx="16" ry="10" fill="#E53935" stroke="#8C1C12" strokeWidth="1" />
       <ellipse cx="30" cy="38" rx="8" ry="5" fill="#F5C7C0" opacity="0.75" />
-      <circle cx="66" cy="38" r="12" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1" />
+      <circle cx="66" cy="38" r="12" fill="#E4DFFF" stroke="#8B5CF6" strokeWidth="1" />
       <path d="M60 34 Q66 31 70 36 Q72 40 68 43 Q62 45 60 40 Q58 37 60 34 Z" fill="#8B5CF6" opacity="0.78" />
       <ellipse cx="50" cy="68" rx="8" ry="5.5" fill="#F5B93F" stroke="#8B6410" strokeWidth="0.8" />
     </g>
   ),
   gmp: (active) => (
     <g>
-      <circle cx="50" cy="50" r="26" fill="#F8F4EE" stroke={active ? "#FFC93C" : "#F5B93F"} strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="26" fill="#EDE6DC" stroke={active ? "#FFC93C" : "#F5B93F"} strokeWidth="1.6" />
       <circle cx="50" cy="50" r="15" fill="url(#atlas-grad-trunk)" opacity="0.85" />
       <circle cx="45" cy="46" r="3" fill="#000" opacity="0.18" />
       <circle cx="54" cy="53" r="3" fill="#000" opacity="0.15" />
@@ -386,7 +415,7 @@ const LEGEND_SWATCHES = {
   ),
   mep: (active) => (
     <g>
-      <circle cx="50" cy="50" r="26" fill="#F8F4EE" stroke={active ? "#E53935" : "#C0392B"} strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="26" fill="#EDE6DC" stroke={active ? "#E53935" : "#C0392B"} strokeWidth="1.6" />
       <circle cx="50" cy="50" r="15" fill="url(#atlas-grad-erythroid)" opacity="0.85" />
       <circle cx="45" cy="46" r="3" fill="#000" opacity="0.18" />
       <circle cx="54" cy="53" r="3" fill="#000" opacity="0.15" />
@@ -394,14 +423,14 @@ const LEGEND_SWATCHES = {
   ),
   gran: (active) => (
     <g>
-      <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="50" cy="50" r="24" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
       <path d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z" fill="#8B5CF6" opacity="0.78" />
-      <circle cx="49" cy="50" r="3" fill="#F3F1FF" opacity="0.6" />
+      <circle cx="49" cy="50" r="3" fill="#E4DFFF" opacity="0.6" />
     </g>
   ),
   mono: (active) => (
     <g>
-      <circle cx="50" cy="50" r="24" fill="#F8F4EE" stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="24" fill="#EDE6DC" stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.6" />
       <path d="M40 46 Q48 40 58 46 Q62 52 56 58 Q48 62 42 56 Q38 50 40 46 Z" fill="#8B5CF6" opacity="0.78" />
     </g>
   ),
@@ -517,9 +546,9 @@ const LEGEND_SWATCHES = {
   ),
   lymphocyte: (active) => (
     <g>
-      <circle cx="34" cy="50" r="16" fill="#F3F1FF" stroke={ATLAS_COLORS.nucleus} strokeWidth="1.6" />
+      <circle cx="34" cy="50" r="16" fill="#E4DFFF" stroke={ATLAS_COLORS.nucleus} strokeWidth="1.6" />
       <circle cx="34" cy="50" r="8" fill={ATLAS_COLORS.nucleus} opacity="0.75" />
-      <circle cx="68" cy="50" r="16" fill="#F3F1FF" stroke={ATLAS_COLORS.nucleus} strokeWidth="1.6" />
+      <circle cx="68" cy="50" r="16" fill="#E4DFFF" stroke={ATLAS_COLORS.nucleus} strokeWidth="1.6" />
       <circle cx="68" cy="50" r="8" fill={ATLAS_COLORS.nucleus} opacity="0.75" />
     </g>
   ),
@@ -552,9 +581,9 @@ const LEGEND_SWATCHES = {
   ),
   alveolus: (active) => (
     <g>
-      <circle cx="34" cy="48" r="16" fill="#F2EEFF" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth={active ? 2 : 1.2} />
-      <circle cx="66" cy="46" r="16" fill="#F2EEFF" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth={active ? 2 : 1.2} />
-      <circle cx="50" cy="28" r="16" fill="#F2EEFF" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth={active ? 2 : 1.2} />
+      <circle cx="34" cy="48" r="16" fill="#DDD4FF" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth={active ? 2 : 1.2} />
+      <circle cx="66" cy="46" r="16" fill="#DDD4FF" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth={active ? 2 : 1.2} />
+      <circle cx="50" cy="28" r="16" fill="#DDD4FF" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth={active ? 2 : 1.2} />
       <path d="M12,72 Q32,76 50,72 Q68,68 88,72" fill="none" stroke="#E53935" strokeWidth="6" strokeLinecap="round" opacity="0.85" />
       <path d="M12,72 Q32,76 50,72 Q68,68 88,72" fill="none" stroke="#8C1C12" strokeWidth="1.2" strokeLinecap="round" opacity="0.5" />
     </g>
@@ -565,11 +594,11 @@ const LEGEND_SWATCHES = {
          side on top, a bold purple membrane in the middle (the actual
          barrier), red blood side below. Two-way arrows show O₂
          entering and CO₂ leaving — the whole point of the structure. */}
-      <rect x="14" y="16" width="72" height="20" rx="4" fill="#DBE7FF" stroke="#2F6FED" strokeWidth="1.4" />
+      <rect x="14" y="16" width="72" height="20" rx="4" fill="#B8CFFF" stroke="#2F6FED" strokeWidth="1.4" />
       <text x="50" y="30" textAnchor="middle" fontSize="8" fontWeight="800" fill="#123F9E">AIR</text>
       <rect x="14" y="38" width="72" height="6" rx="2" fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"} stroke="#5B21B6" strokeWidth="0.8" />
       <text x="50" y="58" textAnchor="middle" fontSize="6.5" fontWeight="700" fill={active ? "#D89B14" : "#8B5CF6"}>membrane</text>
-      <rect x="14" y="62" width="72" height="20" rx="4" fill="#FBDCDC" stroke="#C0392B" strokeWidth="1.4" />
+      <rect x="14" y="62" width="72" height="20" rx="4" fill="#F5B0B0" stroke="#C0392B" strokeWidth="1.4" />
       <text x="50" y="76" textAnchor="middle" fontSize="8" fontWeight="800" fill="#8C1C12">BLOOD</text>
       <path d="M30,20 L30,62" stroke="#2F6FED" strokeWidth="1.6" strokeDasharray="3 2" fill="none" />
       <polygon points="30,62 27,58 33,58" fill="#2F6FED" />
@@ -646,7 +675,7 @@ const LEGEND_SWATCHES = {
   ),
   innate: (active) => (
     <g>
-      <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="50" cy="50" r="24" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
       <path d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z" fill="#8B5CF6" opacity="0.78" />
     </g>
   ),
@@ -654,14 +683,14 @@ const LEGEND_SWATCHES = {
     <g>
       <path d="M12,54 Q50,44 88,54" fill="none" stroke="#E53935" strokeWidth="10" strokeLinecap="round" opacity="0.7" />
       {[30, 50, 70].map((x, i) => (
-        <circle key={i} cx={x} cy={34 + (i % 2) * 6} r="5" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1" />
+        <circle key={i} cx={x} cy={34 + (i % 2) * 6} r="5" fill="#E4DFFF" stroke="#8B5CF6" strokeWidth="1" />
       ))}
       <text x="50" y="82" textAnchor="middle" fontSize="7.5" fill="var(--text-2)">red · warm · swollen</text>
     </g>
   ),
   apc: (active) => (
     <g>
-      <circle cx="50" cy="50" r="22" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="50" cy="50" r="22" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
       <path d="M42 44 Q50 40 56 46 Q62 44 62 52 Q60 60 50 60 Q42 62 42 54 Q38 48 42 44 Z" fill="#8B5CF6" opacity="0.78" />
       <polygon points="42,30 48,30 45,24" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
       <polygon points="56,32 62,32 59,26" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
@@ -669,7 +698,7 @@ const LEGEND_SWATCHES = {
   ),
   bcell: (active) => (
     <g>
-      <circle cx="50" cy="50" r="22" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="50" cy="50" r="22" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
       <path d="M42 44 Q50 40 56 46 Q62 44 62 52 Q60 60 50 60 Q42 62 42 54 Q38 48 42 44 Z" fill="#8B5CF6" opacity="0.78" />
       <text x="50" y="86" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-2)">B</text>
     </g>
@@ -685,7 +714,7 @@ const LEGEND_SWATCHES = {
   ),
   tcell: (active) => (
     <g>
-      <circle cx="50" cy="50" r="22" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="50" cy="50" r="22" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
       <path d="M42 44 Q50 40 56 46 Q62 44 62 52 Q60 60 50 60 Q42 62 42 54 Q38 48 42 44 Z" fill="#8B5CF6" opacity="0.78" />
       <text x="50" y="86" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-2)">T</text>
     </g>
@@ -693,8 +722,8 @@ const LEGEND_SWATCHES = {
   memory: (active) => (
     <g>
       <rect x="14" y="26" width="72" height="48" rx="10" fill="var(--bg-3)" stroke={active ? "#F5B93F" : ATLAS_COLORS.trunk} strokeWidth="1.6" strokeDasharray="5 4" />
-      <circle cx="36" cy="50" r="9" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1" />
-      <circle cx="64" cy="50" r="9" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1" />
+      <circle cx="36" cy="50" r="9" fill="#E4DFFF" stroke="#8B5CF6" strokeWidth="1" />
+      <circle cx="64" cy="50" r="9" fill="#E4DFFF" stroke="#8B5CF6" strokeWidth="1" />
     </g>
   ),
   lymphnode: (active) => (
@@ -732,14 +761,14 @@ const LEGEND_SWATCHES = {
   recruitment: (active) => (
     <g>
       <path d="M14,42 Q50,36 86,42" fill="none" stroke="#E53935" strokeWidth="12" strokeLinecap="round" />
-      <circle cx="30" cy="38" r="6" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.2" />
-      <circle cx="50" cy="58" r="6" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.2" />
+      <circle cx="30" cy="38" r="6" fill="#E4DFFF" stroke="#8B5CF6" strokeWidth="1.2" />
+      <circle cx="50" cy="58" r="6" fill="#E4DFFF" stroke="#8B5CF6" strokeWidth="1.2" />
       <path d="M50,44 L50,58" stroke="#5B21B6" strokeWidth="0.6" strokeDasharray="2 2" opacity="0.6" />
     </g>
   ),
   phagocytosis: (active) => (
     <g>
-      <circle cx="42" cy="50" r="18" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.4" />
+      <circle cx="42" cy="50" r="18" fill="#E4DFFF" stroke="#8B5CF6" strokeWidth="1.4" />
       <path d="M34,46 Q40,42 46,48 Q50,54 44,56 Q36,54 34,46 Z" fill="#8B5CF6" opacity="0.78" />
       <path d="M64,50 Q70,42 76,50 Q70,58 64,50 Z" fill="none" stroke="#8B5CF6" strokeWidth="1.6" />
       <ellipse cx="72" cy="50" rx="4" ry="2.5" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
@@ -807,7 +836,7 @@ const LEGEND_SWATCHES = {
     <g>
       {/* Macrophage body with a lobed nucleus and a bacterium inside,
          showing the phagocytosing role that gives this phase its name. */}
-      <circle cx="46" cy="50" r="22" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.6" />
+      <circle cx="46" cy="50" r="22" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.6" />
       <path
         d="M38 44 Q46 40 52 46 Q58 44 58 52 Q56 60 48 60 Q40 62 38 54 Q34 48 38 44 Z"
         fill="#8B5CF6" opacity="0.78"
@@ -888,7 +917,7 @@ const LEGEND_SWATCHES = {
       {/* A wound bed with arrows pulling inward from both edges —
          myofibroblasts shrinking the surface area that has to be
          covered. */}
-      <rect x="30" y="30" width="40" height="40" rx="6" fill="#FBE9E7" stroke="#B63B2E" strokeWidth="1.6" strokeDasharray="4 3" />
+      <rect x="30" y="30" width="40" height="40" rx="6" fill="#F5D0CC" stroke="#B63B2E" strokeWidth="1.6" strokeDasharray="4 3" />
       <path d="M6,50 L24,50" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="3.2" strokeLinecap="round" />
       <polygon points="24,50 17,46 17,54" fill={active ? "#F5B93F" : "#C0392B"} />
       <path d="M94,50 L76,50" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="3.2" strokeLinecap="round" />
@@ -900,7 +929,7 @@ const LEGEND_SWATCHES = {
       {/* A pale, elongated scar with fine collagen lines running mostly
          parallel to its surface — the mature endpoint of the healing
          process. */}
-      <ellipse cx="50" cy="50" rx="34" ry="16" fill="#F5E8E0" stroke={active ? "#F5B93F" : "#B8A89E"} strokeWidth="1.8" />
+      <ellipse cx="50" cy="50" rx="34" ry="16" fill="#E8D0C4" stroke={active ? "#F5B93F" : "#B8A89E"} strokeWidth="1.8" />
       {[44, 50, 56].map((y, i) => (
         <path
           key={i}
@@ -922,9 +951,9 @@ const LEGEND_SWATCHES = {
       {/* Two cells side by side: a neutrophil (left, lobed) and a
          macrophage (right, larger, kidney nucleus). Shows the "cell
          change" the tile names. */}
-      <circle cx="30" cy="50" r="16" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.4" />
+      <circle cx="30" cy="50" r="16" fill="#E4DFFF" stroke="#8B5CF6" strokeWidth="1.4" />
       <path d="M22 44 Q28 40 34 44 Q38 48 34 54 Q28 58 22 54 Q18 48 22 44 Z" fill="#8B5CF6" opacity="0.78" />
-      <circle cx="70" cy="50" r="20" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.6" />
+      <circle cx="70" cy="50" r="20" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.6" />
       <path d="M62 46 Q68 42 74 46 Q78 52 72 56 Q64 58 62 52 Q60 48 62 46 Z" fill="#8B5CF6" opacity="0.78" />
       <text x="50" y="86" textAnchor="middle" fontSize="8" fill="var(--text-2)">acute → chronic</text>
     </g>
@@ -934,11 +963,11 @@ const LEGEND_SWATCHES = {
       {/* Three lymphocytes clustered — small round cells with large
          dark nuclei, the adaptive immune cells that accumulate in
          chronic inflammation. */}
-      <circle cx="36" cy="42" r="14" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="36" cy="42" r="14" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
       <circle cx="36" cy="42" r="9" fill="#5B21B6" opacity="0.85" />
-      <circle cx="66" cy="44" r="14" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="66" cy="44" r="14" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
       <circle cx="66" cy="44" r="9" fill="#5B21B6" opacity="0.85" />
-      <circle cx="50" cy="70" r="14" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="50" cy="70" r="14" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
       <circle cx="50" cy="70" r="9" fill="#5B21B6" opacity="0.85" />
     </g>
   ),
@@ -947,7 +976,7 @@ const LEGEND_SWATCHES = {
       {/* A tissue patch with dense parallel collagen strands running
          through it — the scarring that replaces working tissue in
          chronic inflammation. */}
-      <ellipse cx="50" cy="50" rx="34" ry="26" fill="#F5E8E0" stroke={active ? "#F5B93F" : "#B8A89E"} strokeWidth="1.6" />
+      <ellipse cx="50" cy="50" rx="34" ry="26" fill="#E8D0C4" stroke={active ? "#F5B93F" : "#B8A89E"} strokeWidth="1.6" />
       {[34, 44, 54, 64].map((y, i) => (
         <path
           key={i}
@@ -961,7 +990,7 @@ const LEGEND_SWATCHES = {
     <g>
       {/* A tissue patch with a jagged red break through the middle —
          the immune response's own enzymes destroying normal tissue. */}
-      <ellipse cx="50" cy="50" rx="34" ry="26" fill="#FBE9E7" stroke="#B63B2E" strokeWidth="1.6" opacity="0.7" />
+      <ellipse cx="50" cy="50" rx="34" ry="26" fill="#F5D0CC" stroke="#B63B2E" strokeWidth="1.6" opacity="0.7" />
       <path
         d="M24,34 L38,42 L30,52 L44,58 L36,68 M76,34 L62,42 L70,52 L56,58 L64,68"
         fill="none" stroke="#C0392B" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"
@@ -979,7 +1008,7 @@ const LEGEND_SWATCHES = {
         [50, 22], [78, 50], [50, 78], [22, 50]
       ].map(([px, py], i) => (
         <g key={i}>
-          <circle cx={px} cy={py} r="8" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.2" />
+          <circle cx={px} cy={py} r="8" fill="#E4DFFF" stroke="#8B5CF6" strokeWidth="1.2" />
           <path d={`M${px - 3},${py - 2} Q${px},${py - 4} ${px + 3},${py - 2} Q${px + 4},${py + 2} ${px + 1},${py + 3} Q${px - 3},${py + 3} ${px - 3},${py - 2} Z`} fill="#8B5CF6" opacity="0.78" />
         </g>
       ))}
@@ -1040,7 +1069,7 @@ const LEGEND_SWATCHES = {
       {/* Helper T cell — a large white cell with a lobed nucleus and
          a small "Th" tag to distinguish it from the other T-cell
          types at a glance. */}
-      <circle cx="50" cy="50" r="28" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.8" />
+      <circle cx="50" cy="50" r="28" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.8" />
       <path
         d="M38 42 Q48 38 55 44 Q62 42 64 52 Q62 62 52 62 Q42 64 38 54 Q34 46 38 42 Z"
         fill="#8B5CF6" opacity="0.78"
@@ -1053,7 +1082,7 @@ const LEGEND_SWATCHES = {
       {/* B cell — white cell with a lobed nucleus and a small "B" tag,
          plus two small receptor Y-shapes on the surface (the B cell
          receptor) to distinguish it from the other white cells. */}
-      <circle cx="50" cy="50" r="26" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.8" />
+      <circle cx="50" cy="50" r="26" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.8" />
       <path
         d="M40 44 Q48 40 54 46 Q60 44 60 52 Q58 60 50 60 Q42 62 40 54 Q36 48 40 44 Z"
         fill="#8B5CF6" opacity="0.78"
@@ -1068,7 +1097,7 @@ const LEGEND_SWATCHES = {
       {/* Plasma cell — a larger, rounder B cell with an eccentric
          nucleus and a stream of small Y-shaped antibodies being
          released to the right. */}
-      <circle cx="40" cy="50" r="28" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.8" />
+      <circle cx="40" cy="50" r="28" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.8" />
       <circle cx="40" cy="50" r="14" fill="#8B5CF6" opacity="0.78" />
       {[[74, 36], [82, 50], [74, 64]].map(([ax, ay], i) => (
         <path
@@ -1084,7 +1113,7 @@ const LEGEND_SWATCHES = {
       {/* Cytotoxic T cell — a white cell with a lobed nucleus, a small
          "Tc" tag, and a "killer" starburst effect to distinguish it
          from the helper T cell. */}
-      <circle cx="50" cy="50" r="26" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.8" />
+      <circle cx="50" cy="50" r="26" fill="#E4DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.8" />
       <path
         d="M40 44 Q48 40 54 46 Q60 44 60 52 Q58 60 50 60 Q42 62 40 54 Q36 48 40 44 Z"
         fill="#8B5CF6" opacity="0.78"
@@ -1185,7 +1214,7 @@ const LEGEND_SWATCHES = {
     <g>
       {/* A wedge-shaped pale infarct at the end of a blocked vessel. */}
       <path d="M22,20 L22,80" stroke="#E53935" strokeWidth="8" strokeLinecap="round" opacity="0.7" />
-      <path d="M22,30 Q50,30 78,26 L70,74 Q50,70 22,74 Z" fill="#F5E8E0" stroke="#B63B2E" strokeWidth="1.6" />
+      <path d="M22,30 Q50,30 78,26 L70,74 Q50,70 22,74 Z" fill="#E8D0C4" stroke="#B63B2E" strokeWidth="1.6" />
       <text x="50" y="56" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#B63B2E">infarct</text>
     </g>
   ),
@@ -1193,7 +1222,7 @@ const LEGEND_SWATCHES = {
     <g>
       {/* White infarct (left) and red infarct (right), side by side. */}
       <path d="M14,30 L14,72" stroke="#E53935" strokeWidth="6" strokeLinecap="round" opacity="0.7" />
-      <path d="M14,36 Q32,36 44,32 L40,68 Q30,66 14,66 Z" fill="#F5E8E0" stroke="#B63B2E" strokeWidth="1.4" />
+      <path d="M14,36 Q32,36 44,32 L40,68 Q30,66 14,66 Z" fill="#E8D0C4" stroke="#B63B2E" strokeWidth="1.4" />
       <text x="30" y="82" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#B63B2E">white</text>
       <path d="M56,30 L56,72" stroke="#E53935" strokeWidth="6" strokeLinecap="round" opacity="0.7" />
       <path d="M56,36 Q74,36 86,32 L82,68 Q72,66 56,66 Z" fill="#E53935" stroke="#8C1C12" strokeWidth="1.4" opacity="0.8" />
@@ -1240,7 +1269,7 @@ const LEGEND_SWATCHES = {
     <g>
       {/* A cell (top-left) with arrows pushing in from several sides,
          showing the stressors that push it away from normal. */}
-      <circle cx="40" cy="40" r="16" fill="#F8F4EE" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
+      <circle cx="40" cy="40" r="16" fill="#EDE6DC" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
       <circle cx="40" cy="40" r="6" fill="url(#atlas-grad-nucleus)" />
       {[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([dx, dy], i) => (
         <line key={i} x1={40 + dx * 25} y1={40 + dy * 25} x2={40 + dx * 18} y2={40 + dy * 18} stroke="#C0392B" strokeWidth="2.2" strokeLinecap="round" />
@@ -1252,11 +1281,11 @@ const LEGEND_SWATCHES = {
     <g>
       {/* Four small cells in a 2x2 grid: bigger, smaller, two nuclei,
          different shape — the four adaptations. */}
-      <circle cx="28" cy="30" r="12" fill="#F8F4EE" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
+      <circle cx="28" cy="30" r="12" fill="#EDE6DC" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
       <circle cx="28" cy="30" r="5" fill="url(#atlas-grad-nucleus)" />
-      <circle cx="72" cy="30" r="7" fill="#F8F4EE" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
+      <circle cx="72" cy="30" r="7" fill="#EDE6DC" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
       <circle cx="72" cy="30" r="3" fill="url(#atlas-grad-nucleus)" />
-      <circle cx="28" cy="68" r="11" fill="#F8F4EE" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
+      <circle cx="28" cy="68" r="11" fill="#EDE6DC" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
       <circle cx="24" cy="68" r="4" fill="url(#atlas-grad-nucleus)" />
       <circle cx="32" cy="68" r="4" fill="url(#atlas-grad-nucleus)" />
       <rect x="60" y="58" width="24" height="18" rx="4" fill="#F0F4FF" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="1.6" />
@@ -1266,9 +1295,9 @@ const LEGEND_SWATCHES = {
   reversible: (active) => (
     <g>
       {/* Cell with swelling and blebs but membrane intact. */}
-      <circle cx="50" cy="50" r="24" fill="#FBE9E7" stroke={active ? "#F5B93F" : "#E53935"} strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="24" fill="#F5D0CC" stroke={active ? "#F5B93F" : "#E53935"} strokeWidth="1.6" />
       {[[-1, -0.4], [0.9, -0.5], [-0.7, 0.7], [0.75, 0.7], [0.1, -1.1]].map(([dx, dy], i) => (
-        <circle key={i} cx={50 + dx * 24} cy={50 + dy * 24} r="5" fill="#FBE9E7" stroke="#E53935" strokeWidth="1" />
+        <circle key={i} cx={50 + dx * 24} cy={50 + dy * 24} r="5" fill="#F5D0CC" stroke="#E53935" strokeWidth="1" />
       ))}
       <circle cx="50" cy="50" r="10" fill="url(#atlas-grad-nucleus)" opacity="0.85" />
       <text x="50" y="88" textAnchor="middle" fontSize="7" fontWeight="700" fill="#E53935">recoverable</text>
@@ -1302,7 +1331,7 @@ const LEGEND_SWATCHES = {
         <circle key={i} cx={50 + dx} cy={50 + dy} r="4" fill="#FFE38A" stroke="#D89B14" strokeWidth="0.6" />
       ))}
       {[[-34, -22], [34, 20]].map(([dx, dy], i) => (
-        <circle key={i} cx={50 + dx} cy={50 + dy} r="3.5" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="0.8" />
+        <circle key={i} cx={50 + dx} cy={50 + dy} r="3.5" fill="#E4DFFF" stroke="#8B5CF6" strokeWidth="0.8" />
       ))}
       <circle cx="46" cy="46" r="5" fill="url(#atlas-grad-nucleus)" opacity="0.7" />
       <circle cx="56" cy="54" r="4" fill="url(#atlas-grad-nucleus)" opacity="0.65" />
@@ -1314,12 +1343,12 @@ const LEGEND_SWATCHES = {
          apoptotic bodies. No inflammatory cells around. */}
       <path
         d="M26,50 Q24,38 34,32 Q46,28 58,34 Q68,40 66,52 Q64,64 54,68 Q40,72 32,64 Q26,58 26,50 Z"
-        fill="#E8DFFF" stroke={active ? "#F5B93F" : "#5B21B6"} strokeWidth="2"
+        fill="#D4C4FF" stroke={active ? "#F5B93F" : "#5B21B6"} strokeWidth="2"
       />
       <circle cx="46" cy="50" r="7" fill="#5B21B6" />
       {[[78, 40], [76, 60], [22, 62]].map(([ax, ay], i) => (
         <g key={i}>
-          <circle cx={ax} cy={ay} r="6" fill="#E8DFFF" stroke={active ? "#F5B93F" : "#5B21B6"} strokeWidth="1.2" />
+          <circle cx={ax} cy={ay} r="6" fill="#D4C4FF" stroke={active ? "#F5B93F" : "#5B21B6"} strokeWidth="1.2" />
           <circle cx={ax} cy={ay} r="2.5" fill="#5B21B6" opacity="0.7" />
         </g>
       ))}
@@ -1350,7 +1379,7 @@ const LEGEND_SWATCHES = {
     <g>
       {/* G1 phase — the growth phase. A cell enlarging, with a growing
          cytoplasmic area and a normal nucleus. */}
-      <circle cx="50" cy="50" r="26" fill="#DBE7FF" stroke={active ? "#F5B93F" : "#2F6FED"} strokeWidth="2" />
+      <circle cx="50" cy="50" r="26" fill="#B8CFFF" stroke={active ? "#F5B93F" : "#2F6FED"} strokeWidth="2" />
       <circle cx="50" cy="50" r="11" fill="url(#atlas-grad-nucleus)" />
       <text x="50" y="88" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "#2F6FED"}>G1</text>
     </g>
@@ -1359,7 +1388,7 @@ const LEGEND_SWATCHES = {
     <g>
       {/* S phase — DNA synthesis. A cell with a chromosome visible
          inside it, and a "copy" arrow. */}
-      <circle cx="50" cy="50" r="26" fill="#EDE4FF" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="2" />
+      <circle cx="50" cy="50" r="26" fill="#DDD0FF" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="2" />
       {/* A chromosome inside, drawn as a small X */}
       <path d="M45,42 L55,58 M55,42 L45,58" stroke="#8B5CF6" strokeWidth="3" strokeLinecap="round" />
       <text x="50" y="88" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "#8B5CF6"}>S</text>
@@ -1369,7 +1398,7 @@ const LEGEND_SWATCHES = {
     <g>
       {/* G2 phase — the check phase. A cell with two chromosomes ready
          to divide. */}
-      <circle cx="50" cy="50" r="26" fill="#FBDCDC" stroke={active ? "#F5B93F" : "#E53935"} strokeWidth="2" />
+      <circle cx="50" cy="50" r="26" fill="#F5B0B0" stroke={active ? "#F5B93F" : "#E53935"} strokeWidth="2" />
       <path d="M38,42 L46,58 M46,42 L38,58" stroke="#8B5CF6" strokeWidth="2.6" strokeLinecap="round" />
       <path d="M54,42 L62,58 M62,42 L54,58" stroke="#8B5CF6" strokeWidth="2.6" strokeLinecap="round" />
       <text x="50" y="88" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "#E53935"}>G2</text>
@@ -1379,9 +1408,9 @@ const LEGEND_SWATCHES = {
     <g>
       {/* M phase — mitosis. Two daughter cells separating, with a
          spindle line between them. */}
-      <circle cx="30" cy="50" r="16" fill="#FFF0C7" stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.8" />
+      <circle cx="30" cy="50" r="16" fill="#FFE38A" stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.8" />
       <circle cx="30" cy="50" r="6" fill="url(#atlas-grad-nucleus)" />
-      <circle cx="70" cy="50" r="16" fill="#FFF0C7" stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.8" />
+      <circle cx="70" cy="50" r="16" fill="#FFE38A" stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.8" />
       <circle cx="70" cy="50" r="6" fill="url(#atlas-grad-nucleus)" />
       <path d="M46,50 L54,50" stroke="#D89B14" strokeWidth="1.4" strokeDasharray="3 2" />
       <text x="50" y="88" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "#D89B14"}>M</text>
@@ -1391,7 +1420,7 @@ const LEGEND_SWATCHES = {
     <g>
       {/* G0 — quiescent. A single cell sitting still, with a "z" to
          suggest dormancy. */}
-      <circle cx="50" cy="50" r="22" fill="#E2E8F0" stroke={active ? "#F5B93F" : "#64748B"} strokeWidth="2" />
+      <circle cx="50" cy="50" r="22" fill="#C7D0DC" stroke={active ? "#F5B93F" : "#64748B"} strokeWidth="2" />
       <circle cx="50" cy="50" r="9" fill="url(#atlas-grad-nucleus)" opacity="0.7" />
       <text x="74" y="34" textAnchor="middle" fontSize="11" fontWeight="800" fill="#64748B">z</text>
       <text x="50" y="88" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "#64748B"}>G0</text>
@@ -1430,7 +1459,7 @@ const LEGEND_SWATCHES = {
       {/* Cancer — a cluster of cells dividing out of control, with an
          overlaid "broken" symbol. */}
       {[[30, 40], [50, 32], [70, 40], [30, 60], [50, 68], [70, 60]].map(([px, py], i) => (
-        <circle key={i} cx={px} cy={py} r="9" fill="#FBDCDC" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="1.6" />
+        <circle key={i} cx={px} cy={py} r="9" fill="#F5B0B0" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="1.6" />
       ))}
       <text x="50" y="16" textAnchor="middle" fontSize="10" fontWeight="800" fill="#C0392B">⚠</text>
       <text x="50" y="88" textAnchor="middle" fontSize="8" fontWeight="700" fill="#C0392B">no control</text>
@@ -1486,7 +1515,7 @@ const LEGEND_SWATCHES = {
     <g>
       {/* Uncontrolled proliferation — many cells piled into a mass. */}
       {[[30, 40], [50, 30], [70, 40], [30, 60], [50, 68], [70, 60], [50, 49]].map(([px, py], i) => (
-        <circle key={i} cx={px} cy={py} r="9" fill="#FBDCDC" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="1.4" />
+        <circle key={i} cx={px} cy={py} r="9" fill="#F5B0B0" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="1.4" />
       ))}
       <text x="50" y="90" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#C0392B">no stopping</text>
     </g>
@@ -1496,9 +1525,9 @@ const LEGEND_SWATCHES = {
       {/* Invasion — a cluster of cells breaking through a basement
          membrane line and moving down-right. */}
       <path d="M14,38 L86,38" stroke={active ? "#F5B93F" : "#B63B2E"} strokeWidth="3" strokeDasharray="6 4" />
-      <circle cx="30" cy="54" r="7" fill="#FBDCDC" stroke="#C0392B" strokeWidth="1.4" />
-      <circle cx="50" cy="58" r="7" fill="#FBDCDC" stroke="#C0392B" strokeWidth="1.4" />
-      <circle cx="70" cy="62" r="7" fill="#FBDCDC" stroke="#C0392B" strokeWidth="1.4" />
+      <circle cx="30" cy="54" r="7" fill="#F5B0B0" stroke="#C0392B" strokeWidth="1.4" />
+      <circle cx="50" cy="58" r="7" fill="#F5B0B0" stroke="#C0392B" strokeWidth="1.4" />
+      <circle cx="70" cy="62" r="7" fill="#F5B0B0" stroke="#C0392B" strokeWidth="1.4" />
       <path d="M30,54 L50,58 L70,62" stroke="#C0392B" strokeWidth="1.2" fill="none" opacity="0.6" />
       <text x="50" y="86" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#C0392B">through the wall</text>
     </g>
@@ -1514,6 +1543,363 @@ const LEGEND_SWATCHES = {
       <text x="50" y="65" textAnchor="middle" fontSize="7" fontWeight="700" fill="var(--text)">M — metastasis</text>
       <rect x="14" y="74" width="72" height="14" rx="3" fill={active ? "rgba(139,92,246,.25)" : "rgba(139,92,246,.12)"} stroke="#8B5CF6" strokeWidth="1.2" />
       <text x="50" y="84" textAnchor="middle" fontSize="7" fontWeight="700" fill="#8B5CF6">G — grade</text>
+    </g>
+  ),
+
+  // ---- Renal Physiology ----
+  // Swatches for the renal diagram. Each mirrors the structure or
+  // concept its tile describes — the whole kidney, a nephron, a
+  // glomerulus, each tubule segment, hormonal control, and GFR.
+  kidney: (active) => (
+    <g>
+      {/* A bean-shaped kidney. */}
+      <path
+        d="M28,20 Q14,38 22,62 Q32,84 54,86 Q74,86 80,72 Q84,60 74,50 Q64,40 68,30 Q70,20 58,16 Q42,14 28,20 Z"
+        fill="#F5D0CC"
+        stroke={active ? "#F5B93F" : "#B63B2E"}
+        strokeWidth="2"
+      />
+      {/* Renal artery + vein at the hilum */}
+      <line x1="18" y1="52" x2="34" y2="52" stroke="#C0392B" strokeWidth="3" strokeLinecap="round" />
+      <line x1="34" y1="62" x2="20" y2="62" stroke="#2D7BFF" strokeWidth="3" strokeLinecap="round" />
+    </g>
+  ),
+  nephron: (active) => (
+    <g>
+      {/* A stylised nephron — small glomerulus + short coiled tubule. */}
+      <circle cx="32" cy="24" r="8" fill="#EDD4E2" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="1.4" />
+      <circle cx="32" cy="24" r="5" fill="#E53935" opacity="0.75" />
+      <path
+        d="M36,28 Q44,36 36,44 Q28,52 38,60 Q48,68 42,78"
+        fill="none"
+        stroke={active ? "#F5B93F" : "#8B5CF6"}
+        strokeWidth="3.2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M42,78 L42,92"
+        fill="none"
+        stroke={active ? "#F5B93F" : "#8B5CF6"}
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+    </g>
+  ),
+  glomerulus: (active) => (
+    <g>
+      {/* A tangled capillary tuft inside a cup-shaped capsule. */}
+      <path
+        d="M24,22 Q44,12 68,26 Q82,40 68,60 Q44,74 24,60"
+        fill="#EDD4E2"
+        stroke={active ? "#F5B93F" : "#8B5CF6"}
+        strokeWidth="2"
+        opacity="0.6"
+      />
+      <path
+        d="M30,42 Q44,22 58,42 Q72,56 54,62 Q40,68 32,54 Q28,48 30,42 Z"
+        fill="#E53935"
+        stroke="#8C1C12"
+        strokeWidth="1.4"
+        opacity="0.75"
+      />
+      {/* Afferent + efferent arterioles */}
+      <line x1="6" y1="34" x2="28" y2="34" stroke="#C0392B" strokeWidth="3" strokeLinecap="round" />
+      <line x1="28" y1="52" x2="8" y2="52" stroke="#8C1C12" strokeWidth="2.4" strokeLinecap="round" />
+    </g>
+  ),
+  pct: (active) => (
+    <g>
+      {/* A squiggly proximal tubule segment. */}
+      <path
+        d="M14,30 Q28,20 34,34 Q40,48 30,58 Q20,68 34,76 Q48,82 60,74 Q72,62 84,68"
+        fill="none"
+        stroke={active ? "#F5B93F" : "#8B5CF6"}
+        strokeWidth="5"
+        strokeLinecap="round"
+      />
+      <text x="50" y="24" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "#8B5CF6"}>PCT</text>
+    </g>
+  ),
+  loop: (active) => (
+    <g>
+      {/* A hairpin — descending limb down, hairpin turn, ascending
+         limb up. */}
+      <path
+        d="M30,14 L30,72 Q30,86 50,86 Q70,86 70,72 L70,14"
+        fill="none"
+        stroke={active ? "#F5B93F" : "#8B5CF6"}
+        strokeWidth="5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+  ),
+  dct: (active) => (
+    <g>
+      {/* Another small coil, DCT. */}
+      <path
+        d="M20,60 Q14,44 30,38 Q46,34 54,48 Q60,60 50,70 Q40,80 28,74"
+        fill="none"
+        stroke={active ? "#F5B93F" : "#8B5CF6"}
+        strokeWidth="5"
+        strokeLinecap="round"
+      />
+      <text x="50" y="24" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "#8B5CF6"}>DCT</text>
+    </g>
+  ),
+  collecting: (active) => (
+    <g>
+      {/* A straight collecting duct with several nephrons feeding
+         into it at the top. */}
+      <line x1="50" y1="14" x2="50" y2="86" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="6" strokeLinecap="round" />
+      <line x1="20" y1="14" x2="50" y2="34" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round" opacity="0.7" />
+      <line x1="80" y1="14" x2="50" y2="34" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round" opacity="0.7" />
+      <line x1="35" y1="20" x2="50" y2="34" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+      <line x1="65" y1="20" x2="50" y2="34" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+    </g>
+  ),
+  hormones: (active) => (
+    <g>
+      {/* Three small pills arranged in a row — ADH, ALD, RAAS. */}
+      <rect x="10" y="34" width="24" height="14" rx="7" fill="#2F6FED" stroke="#123F9E" strokeWidth="1.2" />
+      <text x="22" y="44" textAnchor="middle" fontSize="6.5" fontWeight="800" fill="#fff">ADH</text>
+      <rect x="38" y="34" width="24" height="14" rx="7" fill="#8B5CF6" stroke="#5B21B6" strokeWidth="1.2" />
+      <text x="50" y="44" textAnchor="middle" fontSize="6.5" fontWeight="800" fill="#fff">ALD</text>
+      <rect x="66" y="34" width="24" height="14" rx="7" fill="#C0392B" stroke="#8C1C12" strokeWidth="1.2" />
+      <text x="78" y="44" textAnchor="middle" fontSize="6.5" fontWeight="800" fill="#fff">RAA</text>
+      <text x="50" y="66" textAnchor="middle" fontSize="7" fontWeight="700" fill="var(--text-2)">hormones</text>
+    </g>
+  ),
+  gfr: (active) => (
+    <g>
+      {/* A flow meter — a dial with 125 on it. */}
+      <circle cx="50" cy="42" r="26" fill="var(--bg-3)" stroke={active ? "#F5B93F" : "#5B21B6"} strokeWidth="2" />
+      <path d="M50,42 L64,26" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="2.4" strokeLinecap="round" />
+      <circle cx="50" cy="42" r="3" fill={active ? "#F5B93F" : "#5B21B6"} />
+      <text x="50" y="82" textAnchor="middle" fontSize="7.5" fontWeight="700" fill={active ? "#F5B93F" : "var(--text-2)"}>125 mL/min</text>
+    </g>
+  ),
+
+  // ---- Acid-Base Balance ----
+  // Swatches for the acid-base diagram. Each mirrors the concept or
+  // structure its tile describes — the pH scale, buffers, the
+  // bicarbonate equation, Henderson-Hasselbalch, kidney H⁺ and HCO₃⁻
+  // handling, and the two families of acid-base disorders.
+  ph: (active) => (
+    <g>
+      {/* The pH strip — a gradient bar with a marker at 7.4. */}
+      <rect x="14" y="40" width="72" height="14" rx="7" fill="url(#atlas-pH-gradient)" stroke={active ? "#F5B93F" : "#5B21B6"} strokeWidth="1.4" />
+      <text x="14" y="70" fontSize="7" fill="var(--text-2)">acidic</text>
+      <text x="86" y="70" textAnchor="end" fontSize="7" fill="var(--text-2)">alkaline</text>
+      <line x1="50" y1="36" x2="50" y2="58" stroke={active ? "#F5B93F" : ATLAS_COLORS.trunk} strokeWidth="2.4" strokeLinecap="round" />
+      <text x="50" y="32" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : ATLAS_COLORS.trunk}>7.4</text>
+    </g>
+  ),
+  buffers: (active) => (
+    <g>
+      {/* Three small labelled pills representing the three main
+         buffers: protein, phosphate, bicarbonate. */}
+      <rect x="10" y="26" width="22" height="14" rx="7" fill="#2F6FED" stroke="#123F9E" strokeWidth="1.2" />
+      <text x="21" y="36" textAnchor="middle" fontSize="5.5" fontWeight="800" fill="#fff">H+</text>
+      <rect x="38" y="26" width="22" height="14" rx="7" fill="#8B5CF6" stroke="#5B21B6" strokeWidth="1.2" />
+      <text x="49" y="36" textAnchor="middle" fontSize="5.5" fontWeight="800" fill="#fff">P</text>
+      <rect x="66" y="26" width="24" height="14" rx="7" fill="#2D7BFF" stroke="#123F9E" strokeWidth="1.2" />
+      <text x="78" y="36" textAnchor="middle" fontSize="5.5" fontWeight="800" fill="#fff">HCO₃</text>
+      <text x="50" y="60" textAnchor="middle" fontSize="7" fontWeight="700" fill={active ? "#F5B93F" : "var(--text-2)"}>mop up acid</text>
+      <text x="50" y="74" textAnchor="middle" fontSize="7" fill="var(--text-2)">in seconds</text>
+    </g>
+  ),
+  bicarbonate: (active) => (
+    <g>
+      {/* The bicarbonate equation, miniaturised. */}
+      <text x="50" y="30" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "var(--text)"}>CO₂ + H₂O</text>
+      <text x="50" y="44" textAnchor="middle" fontSize="7" fill="var(--text-2)">⇌ H₂CO₃ ⇌</text>
+      <text x="50" y="60" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#F5B93F" : "var(--text)"}>H⁺ + HCO₃⁻</text>
+      <text x="50" y="80" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">main blood buffer</text>
+    </g>
+  ),
+  hh: (active) => (
+    <g>
+      {/* Henderson-Hasselbalch equation, boxed. */}
+      <rect x="10" y="26" width="80" height="48" rx="8" fill={active ? "rgba(245,185,63,.18)" : "var(--bg-3)"} stroke={active ? "#F5B93F" : ATLAS_COLORS.trunk} strokeWidth="1.6" />
+      <text x="50" y="46" textAnchor="middle" fontSize="7" fontWeight="800" fill="var(--text)">pH = 6.1 +</text>
+      <text x="50" y="60" textAnchor="middle" fontSize="7" fontWeight="800" fill="var(--text)">log([HCO₃]/CO₂)</text>
+      <text x="50" y="82" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">reads the blood gas</text>
+    </g>
+  ),
+  "kidney-h": (active) => (
+    <g>
+      {/* A tubule segment with H+ ions being secreted into it. */}
+      <path d="M14,50 Q35,44 55,50 Q75,56 86,50" fill="none" stroke="#8B5CF6" strokeWidth="9" strokeLinecap="round" />
+      {[28, 50, 72].map((x, i) => (
+        <g key={i}>
+          <line x1={x} y1="30" x2={x} y2="44" stroke="#C0392B" strokeWidth="2" strokeLinecap="round" />
+          <polygon points={`${x},48 ${x - 3},42 ${x + 3},42`} fill="#C0392B" />
+        </g>
+      ))}
+      <text x="50" y="76" textAnchor="middle" fontSize="7" fontWeight="700" fill={active ? "#F5B93F" : "#C0392B"}>H⁺ secreted</text>
+    </g>
+  ),
+  "kidney-hco3": (active) => (
+    <g>
+      {/* A tubule with bicarbonate being reabsorbed. */}
+      <path d="M14,50 Q35,44 55,50 Q75,56 86,50" fill="none" stroke="#8B5CF6" strokeWidth="9" strokeLinecap="round" />
+      {[28, 50, 72].map((x, i) => (
+        <g key={i}>
+          <line x1={x} y1="70" x2={x} y2="56" stroke="#2F6FED" strokeWidth="2" strokeLinecap="round" />
+          <polygon points={`${x},52 ${x - 3},58 ${x + 3},58`} fill="#2F6FED" />
+        </g>
+      ))}
+      <text x="50" y="86" textAnchor="middle" fontSize="7" fontWeight="700" fill={active ? "#F5B93F" : "#2F6FED"}>HCO₃⁻ reclaimed</text>
+    </g>
+  ),
+  "resp-disorders": (active) => (
+    <g>
+      {/* Two-column comparison: respiratory acidosis and alkalosis. */}
+      <rect x="6" y="20" width="42" height="62" rx="8" fill={active ? "rgba(192,57,43,.22)" : "rgba(192,57,43,.1)"} stroke="#8C1C12" strokeWidth="1.6" />
+      <text x="27" y="36" textAnchor="middle" fontSize="7" fontWeight="800" fill="#8C1C12">ACIDOSIS</text>
+      <text x="27" y="52" textAnchor="middle" fontSize="6" fill="var(--text-2)">↑ CO₂</text>
+      <text x="27" y="66" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">hypoventilation</text>
+      <rect x="52" y="20" width="42" height="62" rx="8" fill={active ? "rgba(47,111,237,.22)" : "rgba(47,111,237,.1)"} stroke="#2F6FED" strokeWidth="1.6" />
+      <text x="73" y="36" textAnchor="middle" fontSize="7" fontWeight="800" fill="#2F6FED">ALKALOSIS</text>
+      <text x="73" y="52" textAnchor="middle" fontSize="6" fill="var(--text-2)">↓ CO₂</text>
+      <text x="73" y="66" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">hyperventilation</text>
+    </g>
+  ),
+  "met-disorders": (active) => (
+    <g>
+      {/* Two-column comparison: metabolic acidosis and alkalosis. */}
+      <rect x="6" y="20" width="42" height="62" rx="8" fill={active ? "rgba(192,57,43,.22)" : "rgba(192,57,43,.1)"} stroke="#8C1C12" strokeWidth="1.6" />
+      <text x="27" y="36" textAnchor="middle" fontSize="7" fontWeight="800" fill="#8C1C12">ACIDOSIS</text>
+      <text x="27" y="52" textAnchor="middle" fontSize="6" fill="var(--text-2)">↓ HCO₃⁻</text>
+      <text x="27" y="66" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">DKA · lactic</text>
+      <rect x="52" y="20" width="42" height="62" rx="8" fill={active ? "rgba(47,111,237,.22)" : "rgba(47,111,237,.1)"} stroke="#2F6FED" strokeWidth="1.6" />
+      <text x="73" y="36" textAnchor="middle" fontSize="7" fontWeight="800" fill="#2F6FED">ALKALOSIS</text>
+      <text x="73" y="52" textAnchor="middle" fontSize="6" fill="var(--text-2)">↑ HCO₃⁻</text>
+      <text x="73" y="66" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">vomiting · diuretics</text>
+    </g>
+  ),
+
+  // ---- Digestive System ----
+  // Swatches for the digestive-system diagram. Each mirrors the
+  // structure or concept its tile describes — the whole tube, the
+  // two kinds of digestion, the stomach, the small and large
+  // intestines, villi, the accessory organs, and the portal
+  // circulation.
+  tube: (active) => (
+    <g>
+      {/* A simplified vertical tube with named segments as small
+         marks along the way. */}
+      <path d="M50,12 L50,88" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="8" strokeLinecap="round" opacity="0.75" />
+      <circle cx="50" cy="20" r="5" fill="#F5D0CC" stroke="#C0392B" strokeWidth="1.2" />
+      <ellipse cx="44" cy="42" rx="9" ry="7" fill="#F5D0CC" stroke="#C0392B" strokeWidth="1.2" />
+      <path d="M50,58 Q46,72 50,82" fill="none" stroke="#F5D0CC" strokeWidth="6" strokeLinecap="round" />
+    </g>
+  ),
+  digestion: (active) => (
+    <g>
+      {/* Two small panels: mechanical (piece breaking apart) and
+         chemical (molecule splitting into two). */}
+      <rect x="6" y="22" width="40" height="56" rx="6" fill={active ? "rgba(47,111,237,.2)" : "rgba(47,111,237,.08)"} stroke="#2F6FED" strokeWidth="1.4" />
+      <path d="M20,42 L30,42 M30,50 L36,50 M22,58 L32,58" stroke="#2F6FED" strokeWidth="2" strokeLinecap="round" />
+      <text x="26" y="72" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#2F6FED">mech</text>
+      <rect x="54" y="22" width="40" height="56" rx="6" fill={active ? "rgba(192,57,43,.2)" : "rgba(192,57,43,.08)"} stroke="#C0392B" strokeWidth="1.4" />
+      <path d="M60,50 L70,50 M78,50 L88,50" stroke="#C0392B" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="65" cy="50" r="3" fill="#C0392B" />
+      <circle cx="83" cy="50" r="3" fill="#C0392B" />
+      <text x="74" y="72" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#C0392B">chem</text>
+    </g>
+  ),
+  stomach: (active) => (
+    <g>
+      {/* A J-shaped stomach. */}
+      <path
+        d="M40,20 Q30,22 24,40 Q18,58 34,72 Q52,82 68,72 Q82,60 74,44 Q68,30 58,26 Q48,22 40,20 Z"
+        fill={active ? "rgba(245,185,63,.25)" : "#F5D0CC"}
+        stroke={active ? "#F5B93F" : "#C0392B"}
+        strokeWidth="2"
+      />
+      {/* A few churn arrows */}
+      <path d="M40,48 Q50,42 60,48 M40,58 Q50,64 60,58" fill="none" stroke="#C0392B" strokeWidth="1.2" opacity="0.7" strokeLinecap="round" />
+    </g>
+  ),
+  "small-intestine": (active) => (
+    <g>
+      {/* A coiled small intestine, drawn as a long wavy line. */}
+      <path
+        d="M14,26 Q30,20 38,32 Q46,44 30,50 Q14,56 26,68 Q38,80 56,74 Q74,68 84,54"
+        fill="none"
+        stroke={active ? "#F5B93F" : "#8B5CF6"}
+        strokeWidth="5.5"
+        strokeLinecap="round"
+      />
+    </g>
+  ),
+  villi: (active) => (
+    <g>
+      {/* Four finger-like villi standing on a base — the surface
+         amplification. */}
+      <path d="M14,80 L86,80" stroke="#B63B2E" strokeWidth="3" strokeLinecap="round" />
+      {[24, 42, 60, 76].map((vx, i) => (
+        <g key={i}>
+          <path d={`M${vx},80 Q${vx - 4},56 ${vx},40 Q${vx + 4},56 ${vx},80 Z`} fill="#F5D0CC" stroke="#C0392B" strokeWidth="1.4" />
+          <path d={`M${vx},74 Q${vx - 2},58 ${vx},48 Q${vx + 2},58 ${vx},74`} fill="none" stroke="#E53935" strokeWidth="1" />
+        </g>
+      ))}
+    </g>
+  ),
+  accessory: (active) => (
+    <g>
+      {/* Three labelled shapes: liver (red), gallbladder (green),
+         pancreas (amber). */}
+      <path d="M8,34 Q18,22 34,26 Q48,22 60,34 Q64,46 50,54 Q30,58 12,50 Q6,44 8,34 Z" fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.4" />
+      <ellipse cx="72" cy="52" rx="10" ry="6" fill="#86EFAC" stroke="#16A34A" strokeWidth="1.2" />
+      <path d="M20,66 Q40,72 60,68 Q76,64 84,70" fill="none" stroke={active ? "#FFC93C" : "#F5B93F"} strokeWidth="7" strokeLinecap="round" />
+      <path d="M20,66 Q40,72 60,68 Q76,64 84,70" fill="none" stroke="#8B6410" strokeWidth="1.4" strokeLinecap="round" opacity="0.5" />
+    </g>
+  ),
+  "large-intestine": (active) => (
+    <g>
+      {/* An arch — up right, across top, down left. */}
+      <path
+        d="M28,82 L28,52 Q28,24 50,24 Q72,24 72,52 L72,82"
+        fill="none"
+        stroke={active ? "#F5B93F" : "#C0392B"}
+        strokeWidth="6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </g>
+  ),
+  portal: (active) => (
+    <g>
+      {/* Gut → Liver → Heart, drawn as three small nodes with arrows. */}
+      <circle cx="16" cy="50" r="8" fill="#F5D0CC" stroke="#C0392B" strokeWidth="1.2" />
+      <line x1="24" y1="50" x2="38" y2="50" stroke="#2F6FED" strokeWidth="2" />
+      <polygon points="38,50 32,46 32,54" fill="#2F6FED" />
+      <circle cx="50" cy="50" r="10" fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.4" />
+      <line x1="60" y1="50" x2="76" y2="50" stroke="#2F6FED" strokeWidth="2" />
+      <polygon points="76,50 70,46 70,54" fill="#2F6FED" />
+      <circle cx="84" cy="50" r="8" fill="#F5D0CC" stroke="#C0392B" strokeWidth="1.2" />
+      <text x="50" y="88" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="var(--text-2)">gut → liver → heart</text>
+    </g>
+  ),
+  "whole-end": (active) => (
+    <g>
+      {/* A compact six-step timeline down the tile. */}
+      {[
+        { y: 14, label: "chew" },
+        { y: 26, label: "acid" },
+        { y: 38, label: "bile + enzymes" },
+        { y: 50, label: "absorb" },
+        { y: 62, label: "liver" },
+        { y: 74, label: "colon" },
+      ].map((s, i) => (
+        <g key={i}>
+          <circle cx="18" cy={s.y} r="4" fill={active ? "#F5B93F" : ATLAS_COLORS.trunk} />
+          <text x="28" y={s.y + 3} fontSize="7" fontWeight="600" fill="var(--text-2)">{s.label}</text>
+        </g>
+      ))}
     </g>
   ),
 };
@@ -2452,14 +2838,29 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
                   flexShrink: 0,
                   alignItems: "center",
                   justifyContent: "center",
-                  background: "var(--bg-2)",
+                  /* Deliberately a fixed off-white, not a theme
+                     variable. Swatches have their own colours and
+                     some use pale fills — if the tile background
+                     matches the theme's --bg-2, pale swatches wash
+                     out completely on light mode. A neutral cream
+                     gives consistent contrast in both themes. */
+                  background: "#FAF8F5",
                   borderRadius: 12,
                   overflow: "hidden",
                   border: active ? "1px solid " + ATLAS_COLORS.trunk : "1px solid var(--line)",
                 }}>
                   <svg viewBox={LEGEND_VIEWBOXES[l.id] || "0 0 100 100"} width="56" height="56">
                     {LEGEND_SWATCHES[l.id] ? LEGEND_SWATCHES[l.id](active) : (
-                      <circle cx="50" cy="50" r="20" fill={active ? ATLAS_COLORS.trunk : "var(--text-3)"} />
+                      /* Missing-swatch fallback. Deliberately loud — a
+                         warning red cross with a small dot, so it's
+                         obvious something is broken rather than an
+                         ambiguous grey circle that could be mistaken
+                         for a legitimate pale swatch. */
+                      <g>
+                        <circle cx="50" cy="50" r="24" fill="#FCD4D4" stroke="#C0392B" strokeWidth="2" />
+                        <line x1="40" y1="40" x2="60" y2="60" stroke="#C0392B" strokeWidth="4" strokeLinecap="round" />
+                        <line x1="60" y1="40" x2="40" y2="60" stroke="#C0392B" strokeWidth="4" strokeLinecap="round" />
+                      </g>
                     )}
                   </svg>
                 </span>

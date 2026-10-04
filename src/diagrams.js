@@ -74,7 +74,7 @@ export const ATLAS_COLORS = {
 export const ATLAS_COURSE_NAMES = {
   hem: "Hematology I",
   ph2: "Physiology II",
-  pat: "Pathology",
+  pat: "General Pathology",
 };
 
 /* ----------------------------- helpers ----------------------------- */
@@ -130,6 +130,11 @@ export const atlasDefs = () => (
     <linearGradient id="atlas-grad-nucleus" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stopColor="#A78BFA" />
       <stop offset="100%" stopColor="#5B21B6" />
+    </linearGradient>
+    <linearGradient id="atlas-pH-gradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stopColor="#C0392B" />
+      <stop offset="50%" stopColor="#16A34A" />
+      <stop offset="100%" stopColor="#2F6FED" />
     </linearGradient>
     <filter id="atlas-shadow" x="-30%" y="-30%" width="160%" height="160%">
       <feDropShadow dx="0" dy="2" stdDeviation="2.4" floodColor="#000" floodOpacity="0.4" />
@@ -1797,6 +1802,465 @@ const atlasCellCycle = ({
       <circle cx={cx} cy={cy} r={radius * 0.35} fill="none" stroke={edge} strokeWidth="1" strokeDasharray="4 4" opacity="0.3" />
       <text x={cx} y={cy + 4} textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">cell</text>
       <text x={cx} y={cy + 18} textAnchor="middle" fontSize="9" fill="var(--text-3)">cycle</text>
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Glomerulus — a tangled knot of capillaries enclosed in a         */
+/* Bowman's capsule, drawn as a coiled red capillary tuft with      */
+/* an outer cup-shaped capsule around it. This is where blood       */
+/* filtration begins: pressure pushes water and small solutes       */
+/* out of the capillary into the capsule, while cells and large     */
+/* proteins stay behind.                                            */
+/* `highlight` rings the whole structure. `showFiltration`          */
+/* overlays arrows pointing outward to show the direction of        */
+/* fluid movement. Used by any renal diagram that needs to show     */
+/* the filtration barrier.                                           */
+/* ---------------------------------------------------------------- */
+const atlasGlomerulus = ({
+  cx, cy, r = 42,
+  showFiltration = false,
+  highlight = false,
+}) => {
+  const edge = highlight ? ATLAS_COLORS.trunk : "#C0392B";
+  const capsuleEdge = highlight ? ATLAS_COLORS.trunk : "#8B5CF6";
+  return (
+    <g className={highlight ? "atlas-pulse" : undefined}>
+      {/* Bowman's capsule — a cup-shaped outline around the tuft,
+         drawn as an open C so the afferent/efferent arterioles can
+         enter from the left. */}
+      <path
+        d={`M${cx - r * 0.7},${cy - r * 0.9}
+            Q${cx + r * 0.1},${cy - r * 1.1} ${cx + r * 0.8},${cy - r * 0.6}
+            Q${cx + r * 1.15},${cy} ${cx + r * 0.8},${cy + r * 0.6}
+            Q${cx + r * 0.1},${cy + r * 1.1} ${cx - r * 0.7},${cy + r * 0.9}`}
+        fill="#F8F0F5"
+        stroke={capsuleEdge}
+        strokeWidth={highlight ? 2.6 : 1.8}
+        fill-opacity="0.4"
+      />
+
+      {/* Afferent arteriole — enters from the left, wider (higher pressure) */}
+      <path
+        d={`M${cx - r * 1.4},${cy - r * 0.35} L${cx - r * 0.55},${cy - r * 0.35}`}
+        stroke="#C0392B"
+        strokeWidth="8"
+        strokeLinecap="round"
+      />
+      {/* Efferent arteriole — exits below the afferent, narrower
+         (higher resistance keeps the pressure inside the tuft up). */}
+      <path
+        d={`M${cx - r * 0.55},${cy + r * 0.35} L${cx - r * 1.4},${cy + r * 0.35}`}
+        stroke="#8C1C12"
+        strokeWidth="5"
+        strokeLinecap="round"
+      />
+
+      {/* Capillary tuft — several coiled loops drawn as overlapping
+         red curves to suggest the tangled ball of capillaries. */}
+      <g>
+        <path
+          d={`M${cx - r * 0.55},${cy - r * 0.35}
+              Q${cx - r * 0.1},${cy - r * 0.85} ${cx + r * 0.3},${cy - r * 0.4}
+              Q${cx + r * 0.6},${cy - r * 0.05} ${cx + r * 0.35},${cy + r * 0.3}
+              Q${cx},${cy + r * 0.7} ${cx - r * 0.2},${cy + r * 0.3}
+              Q${cx - r * 0.5},${cy + r * 0.05} ${cx - r * 0.55},${cy - r * 0.35}`}
+          fill="#E53935"
+          stroke={edge}
+          strokeWidth={highlight ? 2.4 : 1.4}
+          opacity="0.75"
+        />
+        <path
+          d={`M${cx - r * 0.5},${cy - r * 0.2}
+              Q${cx - r * 0.15},${cy - r * 0.5} ${cx + r * 0.15},${cy - r * 0.2}
+              Q${cx + r * 0.4},${cy + r * 0.1} ${cx + r * 0.2},${cy + r * 0.4}
+              Q${cx - r * 0.1},${cy + r * 0.6} ${cx - r * 0.3},${cy + r * 0.3}`}
+          fill="none"
+          stroke="#8C1C12"
+          strokeWidth="1.4"
+          opacity="0.6"
+        />
+        <path
+          d={`M${cx - r * 0.35},${cy - r * 0.05}
+              Q${cx - r * 0.1},${cy - r * 0.35} ${cx + r * 0.15},${cy - r * 0.1}
+              Q${cx + r * 0.35},${cy + r * 0.15} ${cx + r * 0.15},${cy + r * 0.35}`}
+          fill="none"
+          stroke="#F5C7C0"
+          strokeWidth="1.2"
+          opacity="0.8"
+        />
+      </g>
+
+      {/* Filtration arrows — thin arrows pointing from the capillary
+         out through the capsule wall, showing the direction of fluid
+         movement when filtration is happening. */}
+      {showFiltration && (
+        <g>
+          {[[-0.35, -0.6], [0.3, -0.75], [0.75, -0.15], [0.7, 0.45], [0.2, 0.75], [-0.4, 0.6]].map(([dx, dy], i) => {
+            const px = cx + r * dx;
+            const py = cy + r * dy;
+            const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+            return (
+              <g key={i} transform={`translate(${px},${py}) rotate(${angle})`}>
+                <line x1="0" y1="0" x2="14" y2="0" stroke={ATLAS_COLORS.trunk} strokeWidth="1.8" strokeLinecap="round" />
+                <polygon points="14,0 8,-4 8,4" fill={ATLAS_COLORS.trunk} />
+              </g>
+            );
+          })}
+        </g>
+      )}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Nephron — the functional unit of the kidney, drawn as a single   */
+/* continuous tubule that starts at a glomerulus (top-left) and     */
+/* winds its way through four segments: proximal convoluted         */
+/* tubule, loop of Henle (with descending and ascending limbs),     */
+/* distal convoluted tubule, and collecting duct.                   */
+/* `activeSegment` highlights one segment at a time.                */
+/* `highlightSegment` is a convenience prop for marking a segment   */
+/* with a pulsing ring.                                             */
+/* Used by any renal diagram that needs to show the nephron as a    */
+/* whole or as individual tubule segments.                           */
+/* ---------------------------------------------------------------- */
+const atlasNephron = ({
+  cx, cy, scale = 1,
+  activeSegment = null,  // "glomerulus" | "pct" | "descending" | "ascending" | "dct" | "collecting"
+  highlight = false,
+}) => {
+  const segColor = (id) => activeSegment === id ? ATLAS_COLORS.trunk : "#8B5CF6";
+  const segWidth = (id) => activeSegment === id ? 6 : 4;
+  return (
+    <g transform={`translate(${cx},${cy}) scale(${scale})`} className={highlight ? "atlas-pulse" : undefined}>
+      {/* Glomerulus at the top-left — drawn as a small red circle
+         here rather than the full primitive, because at nephron
+         scale the glomerulus is just a dot. */}
+      <g transform="translate(-130,-90)">
+        <circle cx="0" cy="0" r="20" fill="#F8F0F5" stroke={segColor("glomerulus")} strokeWidth="1.6" />
+        <circle cx="0" cy="0" r="12" fill="#E53935" opacity="0.75" />
+        <circle cx="0" cy="0" r="5" fill="#8C1C12" />
+        {activeSegment === "glomerulus" && (
+          <circle cx="0" cy="0" r="26" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="2" strokeDasharray="4 3" />
+        )}
+      </g>
+
+      {/* Proximal convoluted tubule (PCT) — a wavy coil just below
+         the glomerulus, drawn as a squiggly line. */}
+      <path
+        d="M-110,-70 Q-90,-60 -80,-45 Q-70,-30 -85,-15 Q-100,0 -85,15 Q-70,30 -90,45"
+        fill="none"
+        stroke={segColor("pct")}
+        strokeWidth={segWidth("pct")}
+        strokeLinecap="round"
+      />
+      {activeSegment === "pct" && (
+        <circle cx="-88" cy="-15" r="30" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="2" strokeDasharray="4 3" />
+      )}
+
+      {/* Descending limb of the loop of Henle — goes straight down. */}
+      <path
+        d="M-90,45 L-90,140"
+        fill="none"
+        stroke={segColor("descending")}
+        strokeWidth={segWidth("descending")}
+        strokeLinecap="round"
+      />
+      {activeSegment === "descending" && (
+        <circle cx="-90" cy="95" r="24" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="2" strokeDasharray="4 3" />
+      )}
+
+      {/* Hairpin turn at the bottom of the loop. */}
+      <path
+        d="M-90,140 Q-70,165 -50,140"
+        fill="none"
+        stroke={segColor("descending")}
+        strokeWidth={segWidth("descending")}
+        strokeLinecap="round"
+      />
+
+      {/* Ascending limb of the loop of Henle — goes back up. */}
+      <path
+        d="M-50,140 L-50,45"
+        fill="none"
+        stroke={segColor("ascending")}
+        strokeWidth={segWidth("ascending")}
+        strokeLinecap="round"
+      />
+      {activeSegment === "ascending" && (
+        <circle cx="-50" cy="95" r="24" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="2" strokeDasharray="4 3" />
+      )}
+
+      {/* Distal convoluted tubule (DCT) — another coil between the
+         ascending limb and the collecting duct. */}
+      <path
+        d="M-50,45 Q-30,30 -45,10 Q-60,-10 -40,-30"
+        fill="none"
+        stroke={segColor("dct")}
+        strokeWidth={segWidth("dct")}
+        strokeLinecap="round"
+      />
+      {activeSegment === "dct" && (
+        <circle cx="-45" cy="5" r="26" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="2" strokeDasharray="4 3" />
+      )}
+
+      {/* Collecting duct — a straight vertical line running from the
+         DCT down past the loop. Drawn slightly to the right so it
+         doesn't overlap the ascending limb. */}
+      <path
+        d="M-40,-30 L-40,150"
+        fill="none"
+        stroke={segColor("collecting")}
+        strokeWidth={segWidth("collecting") + 2}
+        strokeLinecap="round"
+      />
+      {activeSegment === "collecting" && (
+        <circle cx="-40" cy="60" r="26" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="2" strokeDasharray="4 3" />
+      )}
+
+      {/* Segment labels — small, placed to the sides of each segment. */}
+      <text x="-155" y="-95" fontSize="10" fontWeight="700" fill="var(--text-2)" textAnchor="end">Glomerulus</text>
+      <text x="-105" y="-70" fontSize="10" fontWeight="700" fill="var(--text-2)" textAnchor="end">PCT</text>
+      <text x="-105" y="100" fontSize="10" fontWeight="700" fill="var(--text-2)" textAnchor="end">Descending</text>
+      <text x="-40" y="180" fontSize="10" fontWeight="700" fill="var(--text-2)" textAnchor="middle">Loop of Henle</text>
+      <text x="-30" y="100" fontSize="10" fontWeight="700" fill="var(--text-2)" textAnchor="start">Ascending</text>
+      <text x="-25" y="5" fontSize="10" fontWeight="700" fill="var(--text-2)" textAnchor="start">DCT</text>
+      <text x="-25" y="-40" fontSize="10" fontWeight="700" fill="var(--text-2)" textAnchor="start">Collecting duct</text>
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Buffer system — a small illustration of the bicarbonate buffer   */
+/* equation: CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻, drawn as a three-     */
+/* stage reaction with arrows between them. The `activeStage` prop  */
+/* highlights one stage of the reaction (0 = start, 1 = carbonic    */
+/* acid formation, 2 = dissociation). `pH` shifts the balance by    */
+/* tinting the arrows — lower pH pushes the reaction to the right   */
+/* (more H⁺), higher pH pushes it to the left. Used by any          */
+/* respiratory or renal diagram that needs to show pH chemistry.    */
+/* ---------------------------------------------------------------- */
+const atlasBuffer = ({
+  cx, cy, width = 500, height = 120,
+  activeStage = null,
+  pH = 7.4,
+  highlight = false,
+}) => {
+  const edge = highlight ? ATLAS_COLORS.trunk : "#5B21B6";
+  const stageActive = (i) => activeStage === i;
+  // Low pH (< 7.4) shifts the reaction to the right (more H⁺).
+  // High pH (> 7.4) shifts it to the left (less H⁺).
+  const rightShift = Math.max(0, Math.min(1, (7.4 - pH) / 0.4 + 0.5));
+  const leftShift = 1 - rightShift;
+  return (
+    <g className={highlight ? "atlas-pulse" : undefined}>
+      {/* Stage 1: CO₂ + H₂O */}
+      <g transform={`translate(${cx - width * 0.4},${cy})`}>
+        <rect
+          x="-55" y="-28" width="110" height="56" rx="10"
+          fill={stageActive(0) ? "rgba(245,185,63,.18)" : "var(--bg-3)"}
+          stroke={stageActive(0) ? ATLAS_COLORS.trunk : edge}
+          strokeWidth={stageActive(0) ? 2.4 : 1.6}
+        />
+        <text x="0" y="-4" textAnchor="middle" fontSize="14" fontWeight="800" fill="var(--text)">CO₂ + H₂O</text>
+        <text x="0" y="14" textAnchor="middle" fontSize="9" fill="var(--text-2)">carbon dioxide + water</text>
+      </g>
+
+      {/* Forward arrow 1 */}
+      <g transform={`translate(${cx - width * 0.16},${cy})`}>
+        <line x1="-26" y1="0" x2="26" y2="0" stroke={edge} strokeWidth={2 + rightShift * 1.6} strokeLinecap="round" opacity={0.5 + rightShift * 0.5} />
+        <polygon points="26,0 18,-5 18,5" fill={edge} opacity={0.5 + rightShift * 0.5} />
+        <text x="0" y="-12" textAnchor="middle" fontSize="9" fill="var(--text-2)">carbonic anhydrase</text>
+      </g>
+
+      {/* Stage 2: H₂CO₃ */}
+      <g transform={`translate(${cx},${cy})`}>
+        <rect
+          x="-45" y="-28" width="90" height="56" rx="10"
+          fill={stageActive(1) ? "rgba(245,185,63,.18)" : "var(--bg-3)"}
+          stroke={stageActive(1) ? ATLAS_COLORS.trunk : edge}
+          strokeWidth={stageActive(1) ? 2.4 : 1.6}
+        />
+        <text x="0" y="-4" textAnchor="middle" fontSize="14" fontWeight="800" fill="var(--text)">H₂CO₃</text>
+        <text x="0" y="14" textAnchor="middle" fontSize="9" fill="var(--text-2)">carbonic acid</text>
+      </g>
+
+      {/* Forward arrow 2 */}
+      <g transform={`translate(${cx + width * 0.16},${cy})`}>
+        <line x1="-26" y1="0" x2="26" y2="0" stroke={edge} strokeWidth={2 + rightShift * 1.6} strokeLinecap="round" opacity={0.5 + rightShift * 0.5} />
+        <polygon points="26,0 18,-5 18,5" fill={edge} opacity={0.5 + rightShift * 0.5} />
+        <text x="0" y="-12" textAnchor="middle" fontSize="9" fill="var(--text-2)">dissociation</text>
+      </g>
+
+      {/* Stage 3: H⁺ + HCO₃⁻ */}
+      <g transform={`translate(${cx + width * 0.4},${cy})`}>
+        <rect
+          x="-55" y="-28" width="110" height="56" rx="10"
+          fill={stageActive(2) ? "rgba(245,185,63,.18)" : "var(--bg-3)"}
+          stroke={stageActive(2) ? ATLAS_COLORS.trunk : edge}
+          strokeWidth={stageActive(2) ? 2.4 : 1.6}
+        />
+        <text x="0" y="-4" textAnchor="middle" fontSize="14" fontWeight="800" fill="var(--text)">H⁺ + HCO₃⁻</text>
+        <text x="0" y="14" textAnchor="middle" fontSize="9" fill="var(--text-2)">hydrogen + bicarbonate</text>
+      </g>
+
+      {/* pH indicator — a small strip below the reaction showing
+         where the current pH sits on the acid-base spectrum. */}
+      <g transform={`translate(${cx - 100},${cy + 70})`}>
+        <rect x="0" y="0" width="200" height="14" rx="7" fill="url(#atlas-pH-gradient)" stroke={edge} strokeWidth="1" />
+        <text x="0" y="28" fontSize="8" fill="var(--text-2)">acidic</text>
+        <text x="200" y="28" textAnchor="end" fontSize="8" fill="var(--text-2)">alkaline</text>
+        <text x="100" y="28" textAnchor="middle" fontSize="8" fill="var(--text-2)">7.4</text>
+        {/* Marker showing current pH */}
+        {(() => {
+          const pos = ((pH - 7.0) / 0.8) * 200;
+          return (
+            <g>
+              <line x1={pos} y1="-4" x2={pos} y2="18" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" strokeLinecap="round" />
+              <text x={pos} y="-8" textAnchor="middle" fontSize="10" fontWeight="800" fill={ATLAS_COLORS.trunk}>pH {pH.toFixed(2)}</text>
+            </g>
+          );
+        })()}
+      </g>
+
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* GI Tract — a stylised side view of the whole digestive tube     */
+/* from mouth to rectum, with the accessory organs (liver,          */
+/* pancreas, gallbladder) shown branching off. Segments are         */
+/* clickable: mouth, oesophagus, stomach, small intestine, large    */
+/* intestine, rectum. `activeSegment` highlights one at a time.    */
+/* Used by any diagram that needs to show the digestive system      */
+/* as a whole or as individual segments.                             */
+/* ---------------------------------------------------------------- */
+const atlasGITract = ({
+  cx, cy, scale = 1,
+  activeSegment = null,
+  highlight = false,
+}) => {
+  const segStroke = (id) => activeSegment === id ? ATLAS_COLORS.trunk : "#C0392B";
+  const segFill = (id) => activeSegment === id ? "rgba(245,185,63,.25)" : "#F5D0CC";
+  const segWidth = (id) => activeSegment === id ? 4 : 2.4;
+  return (
+    <g transform={`translate(${cx},${cy}) scale(${scale})`} className={highlight ? "atlas-pulse" : undefined}>
+      {/* Mouth / oral cavity — small oval at the top */}
+      <g>
+        <ellipse
+          cx="-40" cy="-180" rx="26" ry="14"
+          fill={segFill("mouth")} stroke={segStroke("mouth")} strokeWidth={segWidth("mouth")}
+        />
+        <text x="-40" y="-176" textAnchor="middle" fontSize="9" fontWeight="700" fill="var(--text-2)">mouth</text>
+      </g>
+
+      {/* Oesophagus — straight tube from mouth down to stomach */}
+      <path
+        d="M-40,-166 L-40,-100"
+        fill="none" stroke={segStroke("oesophagus")} strokeWidth={segWidth("oesophagus") + 6} strokeLinecap="round"
+        opacity="0.7"
+      />
+      <path
+        d="M-40,-166 L-40,-100"
+        fill="none" stroke={segFill("oesophagus")} strokeWidth={segWidth("oesophagus")} strokeLinecap="round"
+      />
+
+      {/* Stomach — a J-shaped pouch on the left */}
+      <path
+        d="M-40,-100
+           Q-90,-95 -95,-50
+           Q-100,0 -60,20
+           Q-30,30 -20,10
+           Q-10,-10 -30,-40
+           Q-35,-70 -40,-100 Z"
+        fill={segFill("stomach")} stroke={segStroke("stomach")} strokeWidth={segWidth("stomach")}
+      />
+      <text x="-60" y="-35" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-2)">stomach</text>
+
+      {/* Small intestine — a coiled tube in the middle, drawn as a
+         series of loops to suggest the ~6 metres of coiled tube. */}
+      <path
+        d="M-30,15
+           Q10,10 20,35
+           Q30,60 -10,65
+           Q-50,70 -55,95
+           Q-60,120 -20,125
+           Q20,130 25,155
+           Q30,180 -10,185
+           Q-40,190 -40,210"
+        fill="none" stroke={segStroke("small-intestine")} strokeWidth={segWidth("small-intestine") + 3}
+        strokeLinecap="round"
+        strokeDasharray={activeSegment === "small-intestine" ? undefined : "6 3"}
+      />
+      <text x="55" y="90" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-2)">small</text>
+      <text x="55" y="103" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-2)">intestine</text>
+
+      {/* Large intestine — an arch going up right, across the top,
+         and down left, then down to the rectum. */}
+      <path
+        d="M-40,210
+           Q-40,160 -70,140
+           Q-90,120 -90,80
+           Q-90,20 -60,-10
+           Q-30,-40 20,-40
+           Q70,-40 100,-10
+           Q130,20 130,80
+           Q130,140 100,165
+           Q70,190 70,210"
+        fill="none" stroke={segStroke("large-intestine")} strokeWidth={segWidth("large-intestine") + 6}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <text x="130" y="90" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-2)">large</text>
+      <text x="130" y="103" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-2)">intestine</text>
+
+      {/* Rectum / anus — short segment at the bottom */}
+      <path
+        d="M70,210 L70,230"
+        fill="none" stroke={segStroke("rectum")} strokeWidth={segWidth("rectum") + 6} strokeLinecap="round"
+        opacity="0.7"
+      />
+      <path
+        d="M70,210 L70,230"
+        fill="none" stroke={segFill("rectum")} strokeWidth={segWidth("rectum")} strokeLinecap="round"
+      />
+      <text x="95" y="235" fontSize="9" fontWeight="700" fill="var(--text-2)">rectum</text>
+
+      {/* Liver — soft blob on the upper right, with a bile duct line
+         going down to the small intestine */}
+      <g>
+        <path
+          d="M60,-60 Q90,-75 120,-55 Q140,-35 125,-10 Q105,5 80,-5 Q60,-15 60,-60 Z"
+          fill="#F5D0CC"
+          stroke="#8C1C12"
+          strokeWidth="1.6"
+        />
+        <text x="95" y="-30" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-2)">liver</text>
+        {/* Bile duct */}
+        <path d="M90,0 Q80,30 60,50 Q40,65 20,60" fill="none" stroke="#16A34A" strokeWidth="2.4" strokeLinecap="round" strokeDasharray="4 3" />
+      </g>
+
+      {/* Gallbladder — small green pouch attached to the liver */}
+      <ellipse cx="105" cy="5" rx="14" ry="8" fill="#86EFAC" stroke="#16A34A" strokeWidth="1.4" />
+      <text x="105" y="20" textAnchor="middle" fontSize="8" fontWeight="700" fill="#16A34A">gall-</text>
+      <text x="105" y="30" textAnchor="middle" fontSize="8" fontWeight="700" fill="#16A34A">bladder</text>
+
+      {/* Pancreas — elongated organ behind the stomach, with a duct
+         running to the small intestine */}
+      <path
+        d="M-60,20 Q-20,30 20,40 Q50,48 70,42"
+        fill="none" stroke="#F5B93F" strokeWidth="10" strokeLinecap="round"
+      />
+      <path
+        d="M-60,20 Q-20,30 20,40 Q50,48 70,42"
+        fill="none" stroke="#8B6410" strokeWidth="2" strokeLinecap="round" opacity="0.5"
+      />
+      <text x="0" y="60" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-2)">pancreas</text>
+      {/* Pancreatic duct */}
+      <path d="M60,42 Q50,55 30,65" fill="none" stroke="#16A34A" strokeWidth="2" strokeLinecap="round" strokeDasharray="3 3" />
     </g>
   );
 };
@@ -4919,6 +5383,560 @@ export const DIAGRAMS = {
           {/* Static region labels */}
           <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Normal cycle → neoplasia</text>
           <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Checkpoint failure → uncontrolled growth → invasion → metastasis</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     RENAL PHYSIOLOGY — KIDNEY & URINE FORMATION
+     Topic: Physiology II (ph2), Topic 05 (index 4).
+     Opens the renal family. Introduces atlasNephron and
+     atlasGlomerulus. Covers how the kidney filters blood,
+     reabsorbs what the body needs, secretes what it doesn't,
+     and produces urine.
+     ========================================================= */
+  "ph2:renal-physiology": {
+    id: "ph2:renal-physiology",
+    type: "diagram",
+    title: "Renal Physiology — How the Kidney Makes Urine",
+    topic: { courseId: "ph2", topicIndex: 4 },
+    parent: null,
+    summary: "Your kidneys filter your entire blood volume many times a day. They pull out waste, excess water, and excess electrolytes, and they keep what the body actually needs. The whole process happens inside millions of tiny functional units called nephrons. Each nephron filters blood at one end, then reabsorbs and secretes along its tubule, and finally empties what's left as urine. The result is precise control over your body's fluid, electrolytes, and acid-base balance.",
+    labels: [
+      { id: "whole",        name: "The Whole System",        desc: "Filter, reabsorb, secrete, excrete. Four processes that run together in every nephron, all day, every day." },
+      { id: "kidney",       name: "The Kidney",              desc: "Two bean-shaped organs, one on each side of your spine. Each contains about a million nephrons." },
+      { id: "nephron",      name: "The Nephron",             desc: "The functional unit of the kidney. One nephron = one filter + one long tubule + one collecting duct." },
+      { id: "glomerulus",   name: "The Glomerulus",          desc: "A knot of capillaries inside a Bowman's capsule. Blood pressure pushes water and small solutes out — cells and large proteins stay behind." },
+      { id: "pct",          name: "Proximal Convoluted Tubule", desc: "The busiest segment. Reabsorbs about 65% of the filtered water, sodium, glucose and amino acids back into the blood." },
+      { id: "loop",         name: "Loop of Henle",           desc: "Creates a salt gradient in the kidney's inner tissue. Descending limb lets water out; ascending limb pumps salt out but not water." },
+      { id: "dct",          name: "Distal Convoluted Tubule", desc: "Fine-tuning. Reabsorbs sodium and calcium under hormonal control — this is where aldosterone and PTH act." },
+      { id: "collecting",   name: "Collecting Duct",         desc: "Final adjustments. ADH makes it permeable to water; without ADH, it stays impermeable and lots of dilute urine is produced." },
+      { id: "hormones",     name: "Hormonal Control",        desc: "ADH, aldosterone, and the renin-angiotensin system regulate what the tubule reabsorbs and secretes, hour by hour." },
+      { id: "gfr",          name: "Glomerular Filtration Rate", desc: "How much fluid the glomeruli filter per minute — about 125 mL/min in a healthy adult. GFR is the single best measure of kidney function." },
+    ],
+    narration: [
+      "Your kidneys filter your entire blood volume many times a day. They pull out waste, excess water, and excess electrolytes, and they keep what the body actually needs. The result is precise control over fluid balance, electrolyte balance, blood pressure, and acid-base balance. Without the kidneys doing this every minute, you would be dead in days.",
+      "Each kidney contains about a million tiny functional units called nephrons. A nephron is a filter attached to a long, winding tubule. Blood enters the filter, fluid gets pushed out, and the tubule then fine-tunes that fluid — keeping some things and dumping others — before the remainder leaves as urine.",
+      "The filter is the glomerulus. It's a knot of capillaries inside a cup-shaped Bowman's capsule. Blood pressure pushes water, small solutes, and waste out of the capillary into the capsule. Red cells and large proteins can't fit through, so they stay in the blood. What gets pushed out is called the filtrate — about 180 litres a day.",
+      "The filtrate then enters the proximal convoluted tubule — the PCT. This is the busiest segment. It reabsorbs about sixty-five per cent of the water, sodium, glucose and amino acids back into the blood. Glucose and amino acids are reabsorbed completely; if glucose appears in your urine, it means blood glucose has overwhelmed this step, as happens in diabetes.",
+      "Next comes the loop of Henle. It dips down into the inner part of the kidney and comes back up. The descending limb is permeable to water but not to salt; the ascending limb pumps salt out but not water. Together, they create a salt gradient in the kidney's inner tissue — this gradient is what allows you to concentrate your urine.",
+      "The distal convoluted tubule — the DCT — is where fine-tuning happens. It reabsorbs sodium and calcium under hormonal control. Aldosterone tells it to reabsorb more sodium (and excrete potassium in exchange); parathyroid hormone tells it to reabsorb more calcium. Small adjustments here make a big difference to blood composition.",
+      "The collecting duct is the final segment. Several nephrons drain into one collecting duct, which runs down through the kidney to the ureter. The collecting duct is where the hormone ADH acts. When ADH is present, the duct becomes permeable to water and reabsorbs it — concentrated urine. Without ADH, water stays in the duct and lots of dilute urine is produced.",
+      "Three hormones control the whole process. ADH from the pituitary controls water reabsorption in the collecting duct. Aldosterone from the adrenal cortex controls sodium reabsorption and potassium secretion in the DCT. The renin-angiotensin-aldosterone system, activated by the kidney itself, raises blood pressure and sodium reabsorption when the body needs them.",
+      "How much fluid the glomeruli filter per minute is called the glomerular filtration rate, or GFR. In a healthy adult, it's about 125 millilitres per minute — 180 litres a day. That's the whole blood volume filtered about sixty times. GFR is the single best measure of kidney function; when it drops, kidney disease has started.",
+      "Putting it all together: blood is filtered at the glomerulus, the PCT reabsorbs most of what was filtered, the loop of Henle builds a gradient, the DCT fine-tunes under hormonal control, and the collecting duct makes the final adjustment under ADH. What's left becomes urine. Every part of the nephron is essential — if any segment fails, the whole balance breaks down.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["kidney"],
+      ["nephron"],
+      ["glomerulus"],
+      ["pct"],
+      ["loop"],
+      ["dct"],
+      ["collecting"],
+      ["hormones"],
+      ["gfr"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["ph2:renal-physiology"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // Which nephron segment is highlighted at each step.
+      const activeSegment = [
+        null,         // 0 - whole
+        null,         // 1 - kidney
+        null,         // 2 - nephron
+        "glomerulus", // 3 - glomerulus
+        "pct",        // 4 - PCT
+        "descending", // 5 - loop (descending first, then ascending on the same step)
+        "dct",        // 6 - DCT
+        "collecting", // 7 - collecting duct
+        null,         // 8 - hormones
+        null,         // 9 - gfr
+      ][activeStep];
+
+      // On step 5 (loop of Henle), highlight both limbs.
+      const loopActive = activeStep === 5;
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* The nephron — the centrepiece, drawn large. */}
+          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+            {atlasNephron({
+              cx: 500, cy: 280, scale: 1.3,
+              activeSegment: loopActive ? "descending" : activeSegment,
+            })}
+            <rect x="60" y="40" width="780" height="500" fill="none" {...ring("whole")} pointerEvents="none" />
+          </g>
+
+          {/* Nephron label anchor */}
+          <g style={{ cursor: cur }} onClick={click("nephron")} filter={hotFilter("nephron")}>
+            <circle cx="370" cy="280" r="80" fill="none" {...ring("nephron")} pointerEvents="none" />
+          </g>
+
+          {/* Kidney outline — a soft bean shape behind the nephron to
+             suggest the whole organ the nephron sits inside. */}
+          <g style={{ cursor: cur }} onClick={click("kidney")} filter={hotFilter("kidney")}>
+            <path
+              d="M70,120 Q30,200 60,340 Q90,460 180,480 Q260,490 280,440 Q290,410 270,380 Q240,340 250,300 Q260,260 230,220 Q200,180 150,150 Q110,130 70,120 Z"
+              fill="#FBE9E7"
+              stroke={isHot("kidney") ? ATLAS_COLORS.trunk : "#B63B2E"}
+              strokeWidth="2"
+              opacity="0.5"
+            />
+            <text x="150" y="320" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Kidney</text>
+          </g>
+
+          {/* Glomerulus inset — a magnified view of the filtration
+             barrier, shown on the glomerulus step. */}
+          {activeStep === 3 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="80" width="220" height="170" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="750" y="105" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">GLOMERULUS (magnified)</text>
+              {atlasGlomerulus({ cx: 750, cy: 175, r: 45, showFiltration: true, highlight: true })}
+              <text x="750" y="240" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">pressure pushes fluid into capsule</text>
+            </g>
+          )}
+
+          {/* Hormonal control inset — three hormones with arrows
+             pointing to their target segments. */}
+          {isHot("hormones") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="80" width="220" height="180" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="750" y="105" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>HORMONAL CONTROL</text>
+              <text x="660" y="132" fontSize="9.5" fontWeight="700" fill="#2F6FED">ADH</text>
+              <text x="660" y="148" fontSize="8.5" fill="var(--text-2)">collecting duct — water</text>
+              <text x="660" y="176" fontSize="9.5" fontWeight="700" fill="#8B5CF6">Aldosterone</text>
+              <text x="660" y="192" fontSize="8.5" fill="var(--text-2)">DCT — Na reabsorb, K excrete</text>
+              <text x="660" y="220" fontSize="9.5" fontWeight="700" fill="#C0392B">RAAS</text>
+              <text x="660" y="236" fontSize="8.5" fill="var(--text-2)">whole nephron — BP up</text>
+            </g>
+          )}
+
+          {/* GFR inset — a small flow meter showing 125 mL/min. */}
+          {isHot("gfr") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="80" width="220" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="750" y="105" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>GLOMERULAR FILTRATION</text>
+              <text x="750" y="140" textAnchor="middle" fontSize="28" fontWeight="800" fill={ATLAS_COLORS.trunk}>125</text>
+              <text x="750" y="158" textAnchor="middle" fontSize="10" fill="var(--text-2)">mL / min</text>
+              <text x="750" y="185" textAnchor="middle" fontSize="9" fill="var(--text-2)">≈ 180 L / day</text>
+              <text x="750" y="205" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">best measure of kidney function</text>
+            </g>
+          )}
+
+          {/* Static region labels */}
+          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">The nephron — one million per kidney</text>
+          <text x="450" y="605" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Filter → reabsorb → secrete → excrete: the four jobs of the kidney</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     RENAL PHYSIOLOGY — ACID-BASE BALANCE
+     Topic: Physiology II (ph2), Topic 06 (index 5).
+     Second diagram in the renal family. Reuses atlasNephron,
+     atlasGlomerulus. Introduces one new primitive: atlasBuffer.
+     Covers how the body keeps pH in its narrow safe range —
+     buffers, lungs, kidneys — and what happens when each fails.
+     ========================================================= */
+  "ph2:acid-base": {
+    id: "ph2:acid-base",
+    type: "diagram",
+    title: "Renal Physiology — Acid-Base Balance",
+    topic: { courseId: "ph2", topicIndex: 5 },
+    parent: null,
+    summary: "Your body has to keep its pH between 7.35 and 7.45 — a range so narrow that a shift of 0.4 in either direction can kill you. Three systems defend that range: chemical buffers act in seconds, the lungs adjust in minutes, and the kidneys adjust over hours to days. Only the kidneys can actually remove acid from the body, which is why they're the long-term solution. When any of the three systems fails, the result is acidosis or alkalosis — and the kidneys' response tells you what has gone wrong.",
+    labels: [
+      { id: "whole",         name: "The Whole Balance",       desc: "Buffers, lungs, and kidneys working together to keep pH in a range of 7.35 to 7.45. Each system catches what the others miss." },
+      { id: "ph",            name: "pH & Why It Matters",     desc: "The concentration of hydrogen ions in your blood. Small shifts change how every enzyme and protein in your body works." },
+      { id: "buffers",       name: "Chemical Buffers",        desc: "Proteins, phosphate, and bicarbonate act in seconds to mop up excess acid or base. The fastest defence, but limited in capacity." },
+      { id: "bicarbonate",   name: "Bicarbonate Buffer",      desc: "The main buffer in blood. CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻. This equation is the whole story of acid-base chemistry." },
+      { id: "hh",            name: "Henderson-Hasselbalch",   desc: "pH = 6.1 + log([HCO₃⁻]/[CO₂]). The relationship that lets you work out what's wrong from a blood gas." },
+      { id: "lungs",         name: "Lungs — CO₂ Control",     desc: "Breathe faster to blow off CO₂ (raises pH); breathe slower to keep CO₂ (lowers pH). Reacts in minutes — the second line of defence." },
+      { id: "kidney-h",      name: "Kidney — H⁺ Excretion",   desc: "The nephron secretes H⁺ into the tubular fluid, mostly in the PCT and DCT. This is the only way to actually remove acid from the body." },
+      { id: "kidney-hco3",   name: "Kidney — HCO₃⁻ Handling", desc: "The kidney filters bicarbonate, then reabsorbs almost all of it, and generates new bicarbonate when the body needs it." },
+      { id: "resp-disorders", name: "Respiratory Disorders",  desc: "Respiratory acidosis (too much CO₂) or respiratory alkalosis (too little CO₂). The problem is in the lungs." },
+      { id: "met-disorders", name: "Metabolic Disorders",     desc: "Metabolic acidosis (too little HCO₃⁻) or metabolic alkalosis (too much HCO₃⁻). The problem isn't in the lungs — compensation kicks in." },
+    ],
+    narration: [
+      "Your body has to keep its pH between 7.35 and 7.45 — a range so narrow that a shift of 0.4 in either direction can kill you. Three systems defend that range at different speeds: chemical buffers act in seconds, the lungs adjust over minutes, and the kidneys adjust over hours to days. Only the kidneys can actually remove acid from the body, which is why they're the long-term solution.",
+      "pH is the concentration of hydrogen ions in your blood. Even a tiny shift changes the shape and charge of every protein in your body — enzymes stop working, channels stop gating, hormones stop binding. That's why the body defends a narrow range so aggressively, and why any disease that disturbs pH is serious.",
+      "The first line of defence is chemical buffers. Proteins, phosphate, and bicarbonate act within seconds to mop up excess acid or base. They don't remove anything from the body — they just hold onto the extra hydrogen until something else can deal with it. Their capacity is limited, but their speed is unmatched.",
+      "The most important buffer is the bicarbonate system. It runs through a simple equation: CO₂ combines with water to make carbonic acid, which then splits into hydrogen ions and bicarbonate. Every part of that equation can shift up or down depending on what the body needs — add CO₂, and the equation pushes right; remove it, and it pushes left.",
+      "The relationship between these components is captured in the Henderson-Hasselbalch equation: pH equals 6.1 plus the log of bicarbonate concentration divided by CO₂ concentration. This is the equation your blood gas analyser uses. Give it a pH, a bicarbonate, and a CO₂, and it tells you exactly what's wrong and how the body is trying to compensate.",
+      "The lungs are the second line of defence. They control how much CO₂ stays in your blood. Breathe faster and you blow off CO₂ — the equation shifts left, hydrogen ions get consumed, and pH rises. Breathe slower and CO₂ builds up — the equation shifts right, hydrogen ions increase, and pH falls. The lungs react within minutes, so they're the body's rapid-response system.",
+      "The kidneys are the long-term solution. They're the only organ that can actually remove acid from the body — not just buffer it. The nephron secretes hydrogen ions into the tubular fluid, mostly in the proximal and distal tubules. Those hydrogen ions are then either buffered by phosphate or excreted as ammonium, and lost in the urine.",
+      "The kidney also handles bicarbonate. It filters bicarbonate from the blood, then reabsorbs almost all of it in the proximal tubule. More importantly, the kidney can generate brand-new bicarbonate when the body is acidotic — that's how it corrects a long-standing acidosis. Conversely, in alkalosis, the kidney excretes bicarbonate to bring pH back down.",
+      "When something goes wrong with the lungs, you get a respiratory disorder. If the lungs can't blow off CO₂ — from COPD, hypoventilation, or sedation — CO₂ builds up and pH falls: respiratory acidosis. If the lungs blow off too much CO₂ — from hyperventilation, pain, or anxiety — pH rises: respiratory alkalosis.",
+      "When the problem isn't in the lungs, you get a metabolic disorder. Too little bicarbonate (from diabetic ketoacidosis, lactic acidosis, or renal failure) gives you metabolic acidosis. Too much bicarbonate (from vomiting, diuretics, or mineralocorticoid excess) gives you metabolic alkalosis. In both cases, the respiratory system tries to compensate — but only the kidneys can fully correct the problem. Reading a blood gas means looking at all three numbers: pH tells you which way the balance has shifted, CO₂ tells you what the lungs are doing, and bicarbonate tells you what the kidneys are doing.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["ph"],
+      ["buffers"],
+      ["bicarbonate"],
+      ["hh"],
+      ["lungs"],
+      ["kidney-h"],
+      ["kidney-hco3"],
+      ["resp-disorders"],
+      ["met-disorders"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["ph2:acid-base"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // The buffer equation highlight per step.
+      const bufferStage = [null, null, null, 1, 2, null, null, null, null, null][activeStep];
+
+      // The pH value shifts during the respiratory and metabolic
+      // disorder steps, so the indicator moves visibly.
+      const pH = [
+        7.4, 7.4, 7.4, 7.4, 7.4,
+        7.4,   // lungs
+        7.4,   // kidney H+
+        7.4,   // kidney HCO3
+        7.30,  // respiratory acidosis
+        7.48,  // metabolic alkalosis
+      ][activeStep] || 7.4;
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* The buffer equation — the centrepiece of the top half. */}
+          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+            {atlasBuffer({
+              cx: 450, cy: 200,
+              activeStage: bufferStage,
+              pH,
+            })}
+            <rect x="80" y="100" width="740" height="200" fill="none" {...ring("whole")} pointerEvents="none" />
+          </g>
+
+          {/* pH label anchor */}
+          <g style={{ cursor: cur }} onClick={click("ph")} filter={hotFilter("ph")}>
+            <circle cx="450" cy="90" r="50" fill="none" {...ring("ph")} pointerEvents="none" />
+            <text x="450" y="70" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">pH range 7.35 – 7.45</text>
+          </g>
+
+          {/* Buffers label anchor — a small clickable region over the
+             left side of the equation. */}
+          <g style={{ cursor: cur }} onClick={click("buffers")} filter={hotFilter("buffers")}>
+            <circle cx="150" cy="200" r="60" fill="none" {...ring("buffers")} pointerEvents="none" />
+          </g>
+
+          {/* Bicarbonate label anchor */}
+          <g style={{ cursor: cur }} onClick={click("bicarbonate")} filter={hotFilter("bicarbonate")}>
+            <circle cx="600" cy="200" r="60" fill="none" {...ring("bicarbonate")} pointerEvents="none" />
+          </g>
+
+          {/* Henderson-Hasselbalch inset */}
+          {isHot("hh") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="340" width="300" height="110" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="210" y="365" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>HENDERSON-HASSELBALCH</text>
+              <text x="210" y="395" textAnchor="middle" fontSize="14" fontWeight="800" fill="var(--text)">pH = 6.1 + log([HCO₃⁻]/[CO₂])</text>
+              <text x="210" y="420" textAnchor="middle" fontSize="9" fill="var(--text-2)">kidney sets the numerator</text>
+              <text x="210" y="435" textAnchor="middle" fontSize="9" fill="var(--text-2)">lungs set the denominator</text>
+            </g>
+          )}
+
+          {/* Lungs inset — a stylised pair of lungs with arrows. */}
+          {isHot("lungs") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="340" width="200" height="130" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
+              <text x="160" y="365" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#2F6FED">LUNGS · CO₂ CONTROL</text>
+              {/* Two lung shapes */}
+              <path d="M110,390 Q95,400 100,420 Q105,440 125,438 Q135,425 130,400 Q125,388 110,390 Z" fill="#F5A8A0" stroke="#B63B2E" strokeWidth="1.2" />
+              <path d="M170,390 Q185,400 180,420 Q175,440 155,438 Q145,425 150,400 Q155,388 170,390 Z" fill="#F5A8A0" stroke="#B63B2E" strokeWidth="1.2" />
+              <text x="160" y="460" textAnchor="middle" fontSize="8" fill="var(--text-2)">breathe faster → pH up</text>
+            </g>
+          )}
+
+          {/* Kidney H+ secretion inset — a small nephron segment with
+             arrows pointing out to show H+ being secreted into the
+             tubular fluid. */}
+          {isHot("kidney-h") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="340" width="220" height="140" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="170" y="365" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">KIDNEY · H⁺ EXCRETION</text>
+              {/* A tubular segment with H+ arrows going into it */}
+              <path d="M90,405 Q120,395 150,405 Q180,415 210,405" fill="none" stroke="#8B5CF6" strokeWidth="8" strokeLinecap="round" />
+              {[110, 140, 170].map((x, i) => (
+                <g key={i}>
+                  <line x1={x} y1="385" x2={x} y2="397" stroke="#C0392B" strokeWidth="2.4" strokeLinecap="round" />
+                  <polygon points={`${x},400 ${x - 4},393 ${x + 4},393`} fill="#C0392B" />
+                </g>
+              ))}
+              <text x="170" y="445" textAnchor="middle" fontSize="8" fill="var(--text-2)">PCT + DCT secrete H⁺</text>
+              <text x="170" y="460" textAnchor="middle" fontSize="8" fill="var(--text-2)">into tubular fluid</text>
+            </g>
+          )}
+
+          {/* Kidney HCO3 handling inset */}
+          {isHot("kidney-hco3") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="340" width="220" height="140" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
+              <text x="170" y="365" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#2F6FED">KIDNEY · HCO₃⁻ HANDLING</text>
+              <text x="170" y="390" textAnchor="middle" fontSize="9" fill="var(--text-2)">filtered at the glomerulus</text>
+              <text x="170" y="407" textAnchor="middle" fontSize="9" fill="var(--text-2)">reabsorbed ~90% in PCT</text>
+              <text x="170" y="424" textAnchor="middle" fontSize="9" fill="var(--text-2)">new HCO₃⁻ generated when</text>
+              <text x="170" y="439" textAnchor="middle" fontSize="9" fill="var(--text-2)">the body is acidotic</text>
+              <text x="170" y="465" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="#2F6FED">the long-term fix</text>
+            </g>
+          )}
+
+          {/* Respiratory disorders inset — acid/alkaline side by side. */}
+          {isHot("resp-disorders") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="340" width="300" height="140" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="210" y="365" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">RESPIRATORY DISORDERS</text>
+              <text x="80" y="395" fontSize="10" fontWeight="700" fill="#8C1C12">Acidosis</text>
+              <text x="80" y="410" fontSize="8.5" fill="var(--text-2)">↑ CO₂ · hypoventilation</text>
+              <text x="80" y="425" fontSize="8.5" fill="var(--text-2)">COPD · sedation</text>
+              <text x="80" y="455" fontSize="10" fontWeight="700" fill="#2F6FED">Alkalosis</text>
+              <text x="80" y="470" fontSize="8.5" fill="var(--text-2)">↓ CO₂ · hyperventilation</text>
+            </g>
+          )}
+
+          {/* Metabolic disorders inset */}
+          {isHot("met-disorders") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="340" width="300" height="140" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="210" y="365" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">METABOLIC DISORDERS</text>
+              <text x="80" y="395" fontSize="10" fontWeight="700" fill="#8C1C12">Acidosis</text>
+              <text x="80" y="410" fontSize="8.5" fill="var(--text-2)">↓ HCO₃⁻ · DKA · lactic</text>
+              <text x="80" y="425" fontSize="8.5" fill="var(--text-2)">renal failure</text>
+              <text x="80" y="455" fontSize="10" fontWeight="700" fill="#2F6FED">Alkalosis</text>
+              <text x="80" y="470" fontSize="8.5" fill="var(--text-2)">↑ HCO₃⁻ · vomiting · diuretics</text>
+            </g>
+          )}
+
+          {/* Static region labels */}
+          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">The bicarbonate buffer equation</text>
+          <text x="450" y="605" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Buffers (seconds) → lungs (minutes) → kidneys (hours to days)</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     THE DIGESTIVE SYSTEM
+     Topic: Physiology II (ph2), Topic 07 (index 6).
+     Seventh and final diagram in the Physiology II family.
+     Introduces atlasGITract. Reuses atlasVessel for the portal
+     circulation. Covers how food becomes molecules the body
+     can absorb.
+     ========================================================= */
+  "ph2:digestive-system": {
+    id: "ph2:digestive-system",
+    type: "diagram",
+    title: "The Digestive System — From Food to Fuel",
+    topic: { courseId: "ph2", topicIndex: 6 },
+    parent: null,
+    summary: "Your digestive system takes food — large, complex, unusable — and breaks it down into molecules small enough to absorb into your blood. It's a tube about nine metres long, from mouth to anus, with accessory organs that add enzymes, bile, and bicarbonate along the way. Digestion is both mechanical (chewing, churning) and chemical (enzymes cutting molecules apart). Absorption happens mainly in the small intestine, where a vast surface area covered in villi pulls nutrients into the blood. What can't be absorbed is eliminated.",
+    labels: [
+      { id: "whole",          name: "The Whole System",       desc: "A nine-metre tube plus accessory organs. Food in at the top, waste out at the bottom, and absorption happening all along the way." },
+      { id: "tube",           name: "The GI Tube",            desc: "Mouth → oesophagus → stomach → small intestine → large intestine → rectum → anus. One continuous tube, four layers thick." },
+      { id: "digestion",      name: "Mechanical & Chemical",  desc: "Two kinds of breakdown happening together. Mechanical: chewing, churning. Chemical: enzymes splitting molecules apart." },
+      { id: "stomach",        name: "The Stomach",            desc: "A muscular bag that stores food, churns it, and adds acid and pepsin. Protein digestion starts here; nothing is absorbed yet." },
+      { id: "small-intestine", name: "Small Intestine",       desc: "About six metres long, three segments (duodenum, jejunum, ileum). Where 90% of digestion finishes and almost all absorption happens." },
+      { id: "villi",          name: "Villi & Microvilli",     desc: "Finger-like projections lining the small intestine. Each is packed with capillaries and a lymph vessel, giving the gut a surface area the size of a tennis court." },
+      { id: "accessory",      name: "Accessory Organs",       desc: "Liver, gallbladder, and pancreas. They don't carry food, but they add bile, enzymes, and bicarbonate that the gut needs to finish digestion." },
+      { id: "large-intestine", name: "Large Intestine",       desc: "About 1.5 metres long. Absorbs water and electrolytes from what's left, and houses the gut microbiome that ferments fibre." },
+      { id: "portal",         name: "Portal Circulation",     desc: "Blood from the gut doesn't go straight to the heart — it goes to the liver first, through the hepatic portal vein, so the liver can process everything you absorbed." },
+      { id: "whole-end",      name: "Putting It Together",    desc: "Mechanical and chemical digestion, absorption, processing by the liver, and elimination. Every step depends on the one before it." },
+    ],
+    narration: [
+      "Your digestive system takes food — large, complex, unusable — and breaks it down into molecules small enough to absorb into your blood. It's a tube about nine metres long, from mouth to anus, with accessory organs branching off it. Every part of that tube has a specific job, and each job has to happen in the right order.",
+      "The tube itself has four layers, from the inside out: the mucosa, the submucosa, the muscularis, and the serosa. The mucosa does the absorbing and secreting, the muscularis does the churning, and the whole thing is held together by connective tissue. Along the way, the tube is divided into named segments — mouth, oesophagus, stomach, small intestine, large intestine, rectum, anus.",
+      "Digestion happens in two ways at once. Mechanical digestion is chewing, churning, and mixing — it breaks food into smaller pieces but doesn't change the molecules. Chemical digestion uses enzymes to actually split molecules apart — proteins into amino acids, starches into glucose, fats into fatty acids and glycerol. Both kinds happen in every part of the tube that sees food.",
+      "The stomach is a muscular bag. It stores food, churns it into a soupy mix called chyme, and adds gastric juice — hydrochloric acid and the enzyme pepsin. Protein digestion starts here. The acid kills bacteria too. Nothing is absorbed in the stomach; its job is to prepare food for the small intestine, and to release it in controlled amounts.",
+      "The small intestine is where almost everything happens. It's about six metres long, divided into three segments — duodenum, jejunum, and ileum. About ninety per cent of digestion finishes here, and almost all absorption happens here. The duodenum receives bile and pancreatic juice; the jejunum and ileum do the absorbing.",
+      "The inner wall of the small intestine is covered in villi — finger-like projections about a millimetre tall, and each one is covered in even smaller microvilli. This massively increases the surface area for absorption. Every villus has a capillary network inside it, so nutrients absorbed at the surface are immediately picked up by the blood.",
+      "Three organs help without being part of the food-carrying tube. The pancreas makes pancreatic juice — a cocktail of enzymes that digest protein, fat, and carbohydrate, plus bicarbonate to neutralise stomach acid. The liver makes bile, which emulsifies fat. The gallbladder stores bile and releases it when food arrives. All three connect to the duodenum by ducts.",
+      "After the small intestine has extracted what it can, what's left enters the large intestine — about a metre and a half long. Its job is to absorb water and electrolytes. By the time material has passed through, it's changed from watery chyme to solid stool. The large intestine also houses the gut microbiome, which ferments fibre and produces some vitamins.",
+      "Absorbed nutrients don't go straight to the heart. Blood from the gut goes first to the liver, through the hepatic portal vein. This lets the liver process everything you just absorbed — detoxifying, storing, or redistributing — before it reaches the rest of the body. It's why the liver is called the body's chemical factory.",
+      "Putting it all together: mechanical and chemical digestion break food down, absorption pulls nutrients into the blood, the portal circulation takes them to the liver for processing, and whatever can't be absorbed is eliminated as stool. Every step depends on the one before it — a problem at any stage ripples through the whole system, from a missing enzyme to a damaged villus to a blocked duct.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["tube"],
+      ["digestion"],
+      ["stomach"],
+      ["small-intestine"],
+      ["villi"],
+      ["accessory"],
+      ["large-intestine"],
+      ["portal"],
+      ["whole-end"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["ph2:digestive-system"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // Which segment of the GI tract is highlighted at each step.
+      const activeSegment = [
+        null,               // 0 - whole
+        null,               // 1 - tube
+        null,               // 2 - digestion
+        "stomach",          // 3 - stomach
+        "small-intestine",  // 4 - small intestine
+        "small-intestine",  // 5 - villi (still on small intestine)
+        null,               // 6 - accessory organs
+        "large-intestine",  // 7 - large intestine
+        null,               // 8 - portal
+        null,               // 9 - putting it together
+      ][activeStep];
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* The GI tract — the centrepiece. */}
+          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+            {atlasGITract({
+              cx: 380, cy: 320, scale: 1.1,
+              activeSegment,
+            })}
+            <rect x="120" y="60" width="520" height="520" fill="none" {...ring("whole")} pointerEvents="none" />
+          </g>
+
+          {/* Tube label anchor */}
+          <g style={{ cursor: cur }} onClick={click("tube")} filter={hotFilter("tube")}>
+            <circle cx="200" cy="200" r="50" fill="none" {...ring("tube")} pointerEvents="none" />
+          </g>
+
+          {/* Small intestine label anchor */}
+          <g style={{ cursor: cur }} onClick={click("small-intestine")} filter={hotFilter("small-intestine")}>
+            <circle cx="380" cy="420" r="70" fill="none" {...ring("small-intestine")} pointerEvents="none" />
+          </g>
+
+          {/* Villi inset — magnified view of intestinal wall, shown on
+             the villi step. */}
+          {isHot("villi") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="120" width="220" height="180" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="750" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>VILLI (magnified)</text>
+              {/* Four finger-like villi, each with a red capillary loop */}
+              {[680, 710, 740, 770].map((vx, i) => (
+                <g key={i}>
+                  <path d={`M${vx},240 Q${vx - 6},200 ${vx},170 Q${vx + 6},200 ${vx},240 Z`} fill="#F5D0CC" stroke="#C0392B" strokeWidth="1.2" />
+                  <path d={`M${vx},232 Q${vx - 3},210 ${vx},180 Q${vx + 3},210 ${vx},232`} fill="none" stroke="#E53935" strokeWidth="1.2" />
+                </g>
+              ))}
+              <text x="750" y="270" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">each villus has a capillary inside</text>
+            </g>
+          )}
+
+          {/* Accessory organs inset */}
+          {isHot("accessory") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="120" width="220" height="160" rx="14" fill="var(--bg-2)" stroke="#16A34A" strokeWidth="2" />
+              <text x="750" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#16A34A">ACCESSORY ORGANS</text>
+              <text x="660" y="172" fontSize="9.5" fontWeight="700" fill="#C0392B">Liver</text>
+              <text x="660" y="186" fontSize="8.5" fill="var(--text-2)">makes bile</text>
+              <text x="660" y="212" fontSize="9.5" fontWeight="700" fill="#16A34A">Gallbladder</text>
+              <text x="660" y="226" fontSize="8.5" fill="var(--text-2)">stores bile</text>
+              <text x="660" y="252" fontSize="9.5" fontWeight="700" fill="#B8860B">Pancreas</text>
+              <text x="660" y="266" fontSize="8.5" fill="var(--text-2)">enzymes + bicarbonate</text>
+            </g>
+          )}
+
+          {/* Portal circulation inset — a diagram showing blood going
+             gut → liver → heart instead of gut → heart directly. */}
+          {isHot("portal") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="120" width="220" height="180" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
+              <text x="750" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#2F6FED">PORTAL CIRCULATION</text>
+              {/* Gut → Liver → Heart */}
+              <text x="665" y="180" fontSize="9.5" fontWeight="700" fill="var(--text)">gut</text>
+              <line x1="690" y1="178" x2="730" y2="178" stroke="#2F6FED" strokeWidth="2" />
+              <polygon points="730,178 722,174 722,182" fill="#2F6FED" />
+              <text x="740" y="182" fontSize="9.5" fontWeight="700" fill="var(--text)">liver</text>
+              <line x1="770" y1="178" x2="810" y2="178" stroke="#2F6FED" strokeWidth="2" />
+              <polygon points="810,178 802,174 802,182" fill="#2F6FED" />
+              <text x="825" y="182" fontSize="9.5" fontWeight="700" fill="var(--text)">heart</text>
+              <text x="750" y="215" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">hepatic portal vein</text>
+              <text x="750" y="240" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">everything absorbed hits the liver first</text>
+              <text x="750" y="262" textAnchor="middle" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">liver = chemical factory</text>
+            </g>
+          )}
+
+          {/* Digestion inset — mechanical vs chemical, side by side. */}
+          {isHot("digestion") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="120" width="220" height="160" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="750" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>TWO KINDS OF DIGESTION</text>
+              <text x="660" y="175" fontSize="9.5" fontWeight="700" fill="#2F6FED">Mechanical</text>
+              <text x="660" y="190" fontSize="8.5" fill="var(--text-2)">chewing, churning, mixing</text>
+              <text x="660" y="204" fontSize="8.5" fill="var(--text-2)">pieces get smaller</text>
+              <text x="660" y="234" fontSize="9.5" fontWeight="700" fill="#C0392B">Chemical</text>
+              <text x="660" y="249" fontSize="8.5" fill="var(--text-2)">enzymes split molecules</text>
+              <text x="660" y="263" fontSize="8.5" fill="var(--text-2)">proteins → amino acids</text>
+            </g>
+          )}
+
+          {/* Large intestine inset — water absorption. */}
+          {isHot("large-intestine") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="120" width="220" height="140" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="750" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">LARGE INTESTINE</text>
+              <text x="750" y="172" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">absorbs water + electrolytes</text>
+              <text x="750" y="190" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">houses the gut microbiome</text>
+              <text x="750" y="208" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">ferments fibre</text>
+              <text x="750" y="234" textAnchor="middle" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">watery chyme → solid stool</text>
+            </g>
+          )}
+
+          {/* Whole-end recap inset */}
+          {isHot("whole-end") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="120" width="220" height="180" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="750" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>THE WHOLE STORY</text>
+              <text x="660" y="172" fontSize="9" fill="var(--text-2)">1. chew + churn</text>
+              <text x="660" y="190" fontSize="9" fill="var(--text-2)">2. stomach adds acid + pepsin</text>
+              <text x="660" y="208" fontSize="9" fill="var(--text-2)">3. duodenum adds bile + enzymes</text>
+              <text x="660" y="226" fontSize="9" fill="var(--text-2)">4. jejunum + ileum absorb</text>
+              <text x="660" y="244" fontSize="9" fill="var(--text-2)">5. liver processes everything</text>
+              <text x="660" y="262" fontSize="9" fill="var(--text-2)">6. colon reabsorbs water</text>
+            </g>
+          )}
+
+          {/* Static region labels */}
+          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">The digestive tube — mouth to anus</text>
+          <text x="450" y="605" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Chew, churn, split, absorb, process, eliminate</text>
         </svg>
       );
     },
