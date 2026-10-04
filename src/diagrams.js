@@ -66,9 +66,15 @@ export const ATLAS_COLORS = {
 // whenever a diagram is added for a course not yet listed - this is
 // intentionally separate from App.js's own COURSES list so AtlasView
 // never has to import anything back out of App.js.
+//
+// The key is the course id from App.js's COURSES object. The value is
+// what the student sees on the Atlas course-picker card and in the
+// visuals-list back button. Keep these in sync with App.js's own
+// display names - if App.js calls it "Pathology", Atlas should too.
 export const ATLAS_COURSE_NAMES = {
   hem: "Hematology I",
   ph2: "Physiology II",
+  pat: "Pathology",
 };
 
 /* ----------------------------- helpers ----------------------------- */
@@ -1134,6 +1140,7 @@ export const DIAGRAMS = {
     title: "Haematopoiesis — The Complete Tree",
     topic: { courseId: "hem", topicIndex: 1 },
     parent: null,
+    summary: "Haematopoiesis is the process your body uses to make every blood cell it needs, every day, for your whole life. It starts from a single kind of stem cell in your bone marrow that can both copy itself and turn into any of the specialised cells in your blood — red cells that carry oxygen, platelets that stop bleeding, and the many kinds of white cell that fight infection. The process is switched on and driven by growth factors, and it shifts location before birth — starting in the yolk sac, then the liver and spleen, before settling permanently in the marrow. When any part of it breaks, the result is a blood disease.",
     labels: [
       { id: "hsc", name: "Haematopoietic Stem Cell", desc: "The single cell type every blood cell in your body descends from. It can self-renew (make a copy of itself) and differentiate (commit to a lineage) at the same time." },
       { id: "cmp", name: "Common Myeloid Progenitor", desc: "Commits to the myeloid line — red cells, platelets, granulocytes and monocytes. Tap the open-arrow to see this branch in full detail.", drillTo: "hem:haematopoiesis-myeloid" },
@@ -1304,6 +1311,7 @@ export const DIAGRAMS = {
     title: "Myeloid Lineage",
     topic: null,
     parent: "hem:haematopoiesis",
+    summary: "The myeloid lineage is one of the two main branches that come off the haematopoietic stem cell. It is the branch that produces everything except the lymphocytes — red cells that carry oxygen, platelets that stop bleeding, and the fast-acting white cells of innate immunity: neutrophils, eosinophils, basophils and monocytes. Each of those final cell types is committed to at a specific progenitor stage, and each one is driven by its own growth factor. The myeloid branch is where most of the clinically important blood-cell maturation detail lives, because most acquired blood diseases — anaemias, leukaemias, clotting disorders — show up here first.",
     labels: [
       { id: "cmp", name: "Common Myeloid Progenitor", desc: "The trunk of this branch — gives rise to the granulocyte-monocyte line and the megakaryocyte-erythroid line." },
       { id: "gmp", name: "Granulocyte-Monocyte Progenitor", desc: "Commits to neutrophils, eosinophils, basophils and monocytes — the phagocytic and inflammatory cells of innate immunity." },
@@ -1437,6 +1445,7 @@ export const DIAGRAMS = {
     title: "Erythroid Maturation",
     topic: null,
     parent: "hem:haematopoiesis-myeloid",
+    summary: "Erythroid maturation is the six-stage sequence a red cell precursor goes through before it becomes a mature red cell ready to carry oxygen. It starts with the proerythroblast — a large cell with a big nucleus and ribosome-rich blue cytoplasm — and ends with the biconcave, anucleate red cell that circulates for about 120 days. Along the way the cell packs itself full of haemoglobin, its nucleus shrinks and eventually gets extruded, and the cytoplasm shifts from blue to pink as the ribosomes are replaced by haemoglobin. The whole sequence takes about a week, and it is driven by erythropoietin (EPO), the hormone the kidney releases in response to low oxygen.",
     labels: [
       { id: "s1", name: "Proerythroblast", desc: "The first morphologically recognisable red cell precursor. Large nucleus, deeply basophilic cytoplasm." },
       { id: "s2", name: "Basophilic Normoblast", desc: "Cytoplasm still strongly basophilic (ribosome-rich); nucleus begins condensing." },
@@ -2443,7 +2452,7 @@ export const DIAGRAMS = {
       "The whole process is driven by chemical mediators. Histamine, prostaglandins, cytokines, and complement proteins tell vessels to widen, walls to leak, and cells to come. Drugs like ibuprofen work by blocking one of these — prostaglandins — which is why they reduce both pain and inflammation.",
       "Because all this is happening, the inflamed area shows the four cardinal signs: redness from vasodilation, heat from increased blood flow, swelling from the leaky vessels, and pain from the pressure of the swelling plus direct chemical sensitisation of nerve endings. Loss of function often follows.",
       "Once the threat is cleared, the response has to stop. Neutrophils die off, macrophages clean up the debris, and the tissue begins to repair. Normal function returns. This is resolution — the healing phase after the acute response.",
-      "If the trigger persists — a chronic infection, an autoimmune reaction, a foreign body the immune system can't destroy — the response never resolves. Acute becomes chronic: macrophages and lymphocytes replace neutrophils, and the tissue starts to be damaged by the immune response itself. That's why chronic inflammation is the root of many long-term diseases.",
+            "If the trigger persists — a chronic infection, an autoimmune reaction, or a foreign body the immune system can't destroy — the response never resolves. Acute becomes chronic: macrophages and lymphocytes replace neutrophils, and the tissue itself starts to be damaged. That's why chronic inflammation underlies many long-term diseases.",
     ],
     stepFocus: [
       ["whole"],

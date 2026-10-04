@@ -180,12 +180,14 @@ const LEGEND_SWATCHES = {
       <ellipse cx="64" cy="48" rx="10" ry="7" fill="#2F6FED" opacity="0.85" />
     </g>
   ),
-  whole: (active) => (
+    whole: (active) => (
     <g>
-      <circle cx="50" cy="30" r="12" fill="#8B5CF6" opacity="0.9" />
-      <circle cx="22" cy="72" r="9" fill="#2F6FED" opacity="0.9" />
-      <circle cx="78" cy="72" r="9" fill="#E53935" opacity="0.9" />
-      <path d="M50 40 L22 62 M50 40 L78 62" stroke="var(--text-2)" strokeWidth="1.6" />
+      {/* Hub-and-spokes system glyph — one large central node connected
+         to three smaller ones, all outlined for dark-mode visibility. */}
+      <circle cx="50" cy="28" r="14" fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"} stroke="#5B21B6" strokeWidth="1.8" />
+      <circle cx="22" cy="72" r="11" fill="#2F6FED" stroke="#123F9E" strokeWidth="1.8" />
+      <circle cx="78" cy="72" r="11" fill="#E53935" stroke="#8C1C12" strokeWidth="1.8" />
+      <path d="M50 40 L22 62 M50 40 L78 62 M22 62 L78 62" stroke="var(--text-2)" strokeWidth="2.2" strokeLinecap="round" />
     </g>
   ),
 
@@ -498,15 +500,22 @@ const LEGEND_SWATCHES = {
       <path d="M12,72 Q32,76 50,72 Q68,68 88,72" fill="none" stroke="#8C1C12" strokeWidth="1.2" strokeLinecap="round" opacity="0.5" />
     </g>
   ),
-  membrane: (active) => (
+    membrane: (active) => (
     <g>
-      <rect x="20" y="30" width="60" height="14" fill="#E8F0FF" opacity="0.7" />
-      <rect x="20" y="44" width="60" height="3" fill={active ? "#F5B93F" : "#8B5CF6"} />
-      <rect x="20" y="47" width="60" height="14" fill="#FBE9E7" opacity="0.7" />
-      <text x="50" y="24" textAnchor="middle" fontSize="8" fill="var(--text-2)">air</text>
-      <text x="50" y="74" textAnchor="middle" fontSize="8" fill="var(--text-2)">blood</text>
-      <path d="M50,20 L50,34" stroke="#2F6FED" strokeWidth="1.4" />
-      <path d="M50,72 L50,58" stroke="#C0392B" strokeWidth="1.4" />
+      {/* A zoomed cross-section of the respiratory membrane: blue air
+         side on top, a bold purple membrane in the middle (the actual
+         barrier), red blood side below. Two-way arrows show O₂
+         entering and CO₂ leaving — the whole point of the structure. */}
+      <rect x="14" y="16" width="72" height="20" rx="4" fill="#DBE7FF" stroke="#2F6FED" strokeWidth="1.4" />
+      <text x="50" y="30" textAnchor="middle" fontSize="8" fontWeight="800" fill="#123F9E">AIR</text>
+      <rect x="14" y="38" width="72" height="6" rx="2" fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"} stroke="#5B21B6" strokeWidth="0.8" />
+      <text x="50" y="58" textAnchor="middle" fontSize="6.5" fontWeight="700" fill={active ? "#D89B14" : "#8B5CF6"}>membrane</text>
+      <rect x="14" y="62" width="72" height="20" rx="4" fill="#FBDCDC" stroke="#C0392B" strokeWidth="1.4" />
+      <text x="50" y="76" textAnchor="middle" fontSize="8" fontWeight="800" fill="#8C1C12">BLOOD</text>
+      <path d="M30,20 L30,62" stroke="#2F6FED" strokeWidth="1.6" strokeDasharray="3 2" fill="none" />
+      <polygon points="30,62 27,58 33,58" fill="#2F6FED" />
+      <path d="M70,60 L70,18" stroke="#C0392B" strokeWidth="1.6" strokeDasharray="3 2" fill="none" />
+      <polygon points="70,18 67,22 73,22" fill="#C0392B" />
     </g>
   ),
   o2: (active) => (
@@ -525,27 +534,37 @@ const LEGEND_SWATCHES = {
   ),
   control: (active) => (
     <g>
-      <ellipse cx="50" cy="40" rx="20" ry="12" fill="#8B5CF6" opacity="0.75" />
-      <text x="50" y="43" textAnchor="middle" fontSize="8" fontWeight="700" fill="#fff">brain</text>
-      <path d="M50,52 L50,72" stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.6" />
-      <circle cx="50" cy="76" r="5" fill={active ? "#F5B93F" : "#D89B14"} />
-      <text x="50" y="94" textAnchor="middle" fontSize="7.5" fill="var(--text-2)">senses CO₂</text>
+      {/* Brain (top) with two arrows fanning down to sensors — showing
+         the two-way loop between the brainstem and the chemoreceptors
+         that tell it what the blood actually needs. */}
+      <ellipse cx="50" cy="26" rx="22" ry="14" fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"} stroke="#5B21B6" strokeWidth="1.6" />
+      <text x="50" y="30" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? "#0A0F1A" : "#fff"}>brain</text>
+      <path d="M38,40 Q30,58 34,70" stroke={active ? ATLAS_COLORS.trunk : "#D89B14"} strokeWidth="2.2" fill="none" strokeLinecap="round" />
+      <path d="M62,40 Q70,58 66,70" stroke={active ? ATLAS_COLORS.trunk : "#D89B14"} strokeWidth="2.2" fill="none" strokeLinecap="round" />
+      <circle cx="34" cy="74" r="6" fill="#2F6FED" stroke="#123F9E" strokeWidth="1.4" />
+      <circle cx="66" cy="74" r="6" fill="#C0392B" stroke="#8C1C12" strokeWidth="1.4" />
+      <text x="34" y="90" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#2F6FED">O₂</text>
+      <text x="66" y="90" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#C0392B">CO₂</text>
     </g>
   ),
   volumes: (active) => (
     <g>
+      {/* Four lung-volume bars, each labelled with its abbreviation
+         inside the bar, in a distinct colour. Bar widths match the
+         relative magnitude of each volume so the shape alone conveys
+         "which is biggest". A bold header identifies the concept. */}
+      <text x="50" y="14" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? ATLAS_COLORS.trunk : "#2F6FED"} letterSpacing="0.04em">VOLUMES</text>
       {[
-        { y: 22, w: 24, c: "#2F6FED" },
-        { y: 38, w: 44, c: "#2D7BFF" },
-        { y: 54, w: 34, c: "#C0392B" },
-        { y: 70, w: 50, c: "#8C1C12" },
+        { y: 24, w: 20, c: "#2F6FED", label: "TV"  },
+        { y: 40, w: 42, c: "#2D7BFF", label: "IRV" },
+        { y: 56, w: 30, c: "#C0392B", label: "ERV" },
+        { y: 72, w: 48, c: "#8C1C12", label: "RV"  },
       ].map((v, i) => (
-        <rect key={i} x="24" y={v.y} width={v.w} height="7" rx="3" fill={v.c} opacity="0.85" />
+        <g key={i}>
+          <rect x="14" y={v.y} width={v.w} height="11" rx="4" fill={v.c} />
+          <text x={14 + v.w + 6} y={v.y + 8.5} fontSize="8" fontWeight="700" fill="var(--text)">{v.label}</text>
+        </g>
       ))}
-      <text x="80" y="28" fontSize="7" fill="var(--text-2)">TV</text>
-      <text x="80" y="44" fontSize="7" fill="var(--text-2)">IRV</text>
-      <text x="80" y="60" fontSize="7" fill="var(--text-2)">ERV</text>
-      <text x="80" y="76" fontSize="7" fill="var(--text-2)">RV</text>
     </g>
   ),
   pleura: (active) => (
@@ -669,39 +688,53 @@ const LEGEND_SWATCHES = {
   ),
   mediators: (active) => (
     <g>
-      <rect x="14" y="20" width="72" height="60" rx="10" fill="var(--bg-3)" stroke={active ? "#F5B93F" : ATLAS_COLORS.trunk} strokeWidth="1.6" />
-      <text x="50" y="36" textAnchor="middle" fontSize="7" fontWeight="700" fill={active ? "#F5B93F" : ATLAS_COLORS.trunk}>MEDIATORS</text>
+      {/* Warm amber-tinted panel with a bold header and four clear
+         mediator names at readable size. Distinct from the `signs`
+         panel below by colour and by the header wording. */}
+      <rect x="10" y="12" width="80" height="76" rx="12" fill={active ? "rgba(245,185,63,.18)" : "rgba(245,185,63,.08)"} stroke={active ? ATLAS_COLORS.trunk : "#D89B14"} strokeWidth="2" />
+      <text x="50" y="30" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? ATLAS_COLORS.trunk : "#B8860B"} letterSpacing="0.05em">MEDIATORS</text>
       {["histamine", "prostaglandins", "cytokines", "complement"].map((m, i) => (
-        <text key={i} x="50" y={48 + i * 8} textAnchor="middle" fontSize="6" fill="var(--text-2)">{m}</text>
+        <text key={i} x="50" y={46 + i * 10} textAnchor="middle" fontSize="7.5" fontWeight="600" fill="var(--text)">{m}</text>
       ))}
     </g>
   ),
   signs: (active) => (
     <g>
-      <rect x="12" y="20" width="76" height="60" rx="10" fill="var(--bg-3)" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="1.6" />
-      <text x="50" y="36" textAnchor="middle" fontSize="7.5" fontWeight="700" fill={active ? "#F5B93F" : "#C0392B"}>CARDINAL SIGNS</text>
+      {/* Crimson-tinted panel with a bold header and four clear signs.
+         Distinct colour from `mediators` above so the two panels don't
+         read as identical grey boxes. */}
+      <rect x="10" y="12" width="80" height="76" rx="12" fill={active ? "rgba(192,57,43,.18)" : "rgba(192,57,43,.08)"} stroke={active ? ATLAS_COLORS.trunk : "#C0392B"} strokeWidth="2" />
+      <text x="50" y="30" textAnchor="middle" fontSize="9" fontWeight="800" fill={active ? ATLAS_COLORS.trunk : "#C0392B"} letterSpacing="0.05em">SIGNS</text>
       {["redness", "heat", "swelling", "pain"].map((s, i) => (
-        <text key={i} x="50" y={48 + i * 8} textAnchor="middle" fontSize="6.5" fill="var(--text-2)">{s}</text>
+        <text key={i} x="50" y={46 + i * 10} textAnchor="middle" fontSize="7.5" fontWeight="600" fill="var(--text)">{s}</text>
       ))}
     </g>
   ),
-  resolution: (active) => (
+     resolution: (active) => (
     <g>
-      <circle cx="50" cy="50" r="32" fill="none" stroke={active ? "#F5B93F" : "#16A34A"} strokeWidth="2.2" strokeDasharray="6 4" opacity="0.85" />
-      <circle cx="50" cy="50" r="14" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1" />
-      <path d="M44,50 L48,54 L56,44" stroke="#16A34A" strokeWidth="2.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Healing tissue patch — pale mint fill, solid green ring,
+         bold green tick. Reads as "healed and confirmed" even at
+         tile size, in both light and dark themes. */}
+      <circle cx="50" cy="50" r="30" fill="#E8F8EF" stroke={active ? ATLAS_COLORS.trunk : "#16A34A"} strokeWidth="3" />
+      <circle cx="50" cy="50" r="30" fill="none" stroke="#16A34A" strokeWidth="1.2" strokeDasharray="5 4" opacity="0.7" />
+      <path d="M36,50 L46,60 L64,40" stroke="#16A34A" strokeWidth="5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
     </g>
   ),
-  types: (active) => (
+    types: (active) => (
     <g>
-      <rect x="14" y="26" width="34" height="48" rx="6" fill="#FBE9E7" stroke="#C0392B" strokeWidth="1.4" />
-      <text x="31" y="42" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#C0392B">ACUTE</text>
-      <text x="31" y="54" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">hours-days</text>
-      <text x="31" y="64" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">neutrophils</text>
-      <rect x="52" y="26" width="34" height="48" rx="6" fill="#F2EEFF" stroke="#8B5CF6" strokeWidth="1.4" />
-      <text x="69" y="42" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#8B5CF6">CHRONIC</text>
-      <text x="69" y="54" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">weeks-months</text>
-      <text x="69" y="64" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">macrophages</text>
+      {/* Acute vs chronic comparison — two clearly-coloured panels
+         side by side with headers readable at tile size. Crimson for
+         acute (fast, hot), purple for chronic (slow, smouldering). */}
+      <rect x="6" y="16" width="42" height="68" rx="8" fill={active ? "rgba(192,57,43,.22)" : "rgba(192,57,43,.1)"} stroke="#C0392B" strokeWidth="1.8" />
+      <text x="27" y="32" textAnchor="middle" fontSize="8.5" fontWeight="800" fill="#C0392B">ACUTE</text>
+      <text x="27" y="48" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">hours</text>
+      <text x="27" y="60" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">to days</text>
+      <text x="27" y="76" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="var(--text)">neutrophils</text>
+      <rect x="52" y="16" width="42" height="68" rx="8" fill={active ? "rgba(139,92,246,.22)" : "rgba(139,92,246,.1)"} stroke="#8B5CF6" strokeWidth="1.8" />
+      <text x="73" y="32" textAnchor="middle" fontSize="8.5" fontWeight="800" fill="#8B5CF6">CHRONIC</text>
+      <text x="73" y="48" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">weeks</text>
+      <text x="73" y="60" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">to months</text>
+      <text x="73" y="76" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="var(--text)">macrophages</text>
     </g>
   ),
 };
