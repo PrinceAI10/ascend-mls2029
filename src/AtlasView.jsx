@@ -1574,14 +1574,116 @@ function CoursePicker({ onPick }) {
 /* ---------------------------------------------------------------- */
 function VisualsList({ courseId, onBack, onOpen }) {
   const list = diagramsForCourse(courseId);
+  const [query, setQuery] = useState("");
+
+  // Build one searchable string per diagram, once per render. The string
+  // concatenates everything a student might reasonably type to find this
+  // diagram — its title, its topic index, and the name and description of
+  // every label inside it. Label names are what make "heart" find the
+  // Cardiovascular System diagram (the word isn't in its title) and what
+  // make "EPO" find the Erythroid Maturation drill-down. The pre-built
+  // string means we do one lowercase() per diagram per render instead of
+  // one per character per diagram as the user types.
+  const searchIndex = useMemo(
+    () => list.map((d) => ({
+      diagram: d,
+      haystack: [
+        d.title,
+        `topic ${(d.topic?.topicIndex ?? 0) + 1}`,
+        ...(d.labels || []).map((l) => l.name),
+        ...(d.labels || []).map((l) => l.desc || ""),
+      ].join(" ").toLowerCase(),
+    })),
+    [list]
+  );
+
+  const trimmed = query.trim().toLowerCase();
+  const filtered = trimmed
+    ? searchIndex.filter((entry) => entry.haystack.includes(trimmed)).map((entry) => entry.diagram)
+    : list;
+
   return (
     <div style={{ marginTop: 16 }}>
       <button className="back" onClick={onBack}>
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: "rotate(180deg)" }}><path d="M5 12h14M13 5l7 7-7 7" /></svg>
         {ATLAS_COURSE_NAMES[courseId] || courseId}
       </button>
+
+      {/* Search box — only shown when there's more than one diagram in
+         the course. With a single diagram, a search box is dead weight:
+         there's nothing to filter, and it looks like noise. The filter
+         matches on title, topic index, and every label's name and
+         description, so a student who remembers "the one with the
+         heart" or "the one about EPO" can find the right diagram even
+         if they've forgotten its title. */}
+      {list.length > 1 && (
+        <div style={{ position: "relative", marginTop: 10 }}>
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search this course's visuals…"
+            aria-label="Search this course's visuals"
+            style={{
+              width: "100%",
+              padding: "10px 36px 10px 12px",
+              fontSize: 14,
+              borderRadius: 10,
+              border: "1px solid var(--line)",
+              background: "var(--bg-2)",
+              color: "var(--text)",
+              outline: "none",
+              boxSizing: "border-box",
+            }}
+          />
+          {query && (
+            <button
+              onClick={() => setQuery("")}
+              aria-label="Clear search"
+              title="Clear search"
+              style={{
+                position: "absolute",
+                right: 6,
+                top: "50%",
+                transform: "translateY(-50%)",
+                width: 26,
+                height: 26,
+                padding: 0,
+                border: "none",
+                background: "transparent",
+                color: "var(--text-3)",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 6,
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Empty state — shown only when a search is active AND nothing
+         matched. Without this, a query that filters to zero would
+         leave the student looking at a blank page below the back
+         button, with no signal that the list is empty because of
+         their query (and not because the course has no diagrams). */}
+      {trimmed && filtered.length === 0 && (
+        <div className="card" style={{ marginTop: 12, textAlign: "center" }}>
+          <div style={{ fontWeight: 700, fontSize: 14 }}>No visuals match "{query}"</div>
+          <div style={{ color: "var(--text-2)", fontSize: 13, marginTop: 4 }}>
+            Try a shorter term, or clear the search to see all {list.length} visuals.
+          </div>
+          <button className="btn btn-g btn-sm" style={{ marginTop: 10 }} onClick={() => setQuery("")}>
+            Clear search
+          </button>
+        </div>
+      )}
+
       <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 10 }}>
-        {list.map((d) => (
+        {filtered.map((d) => (
           <button key={d.id} className="card hover" style={{ display: "flex", alignItems: "center", gap: 12, textAlign: "left" }} onClick={() => onOpen(d.id)}>
             <div style={{ width: 64, height: 48, borderRadius: 8, overflow: "hidden", background: "var(--bg-3)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
               {d.type === "diagram"
@@ -2629,6 +2731,14 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
             return (
               <button
                 key={l.id}
+                ref={(node) => {
+                  // Callback ref: store the DOM node so the auto-scroll
+                  // effect can find it. On unmount (node === null),
+                  // delete the entry to avoid holding a stale reference
+                  // when a new diagram mounts.
+                  if (node) legendRefs.current[l.id] = node;
+                  else delete legendRefs.current[l.id];
+                }}
                 onClick={() => setActiveLabelId(active ? null : l.id)}
                 style={{
                   display: "flex",
