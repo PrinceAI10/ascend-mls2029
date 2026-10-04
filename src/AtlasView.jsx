@@ -587,6 +587,33 @@ function shuffle(arr) {
 }
 
 const atlasStyles = `
+@keyframes atlasShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  @keyframes atlasShimmer {
+    0%, 100% { background-position: 0 0; }
+  }
+}
+@keyframes atlasShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  @keyframes atlasShimmer {
+    0%, 100% { background-position: 0 0; }
+  }
+}
+@keyframes atlasShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  @keyframes atlasShimmer {
+    0%, 100% { background-position: 0 0; }
+  }
+}
 @keyframes atlasPulse {
   0%, 100% { opacity: 1; }
   50% { opacity: .45; }
@@ -1579,7 +1606,7 @@ function VisualsList({ courseId, onBack, onOpen }) {
 /* Screen 3+4 - the diagram viewer: play bar on top, diagram+summary */
 /* row below, legend below that. Zoom/pan live on the diagram panel. */
 /* ---------------------------------------------------------------- */
-function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, app }) {
+function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill, onExit, onOpenDiagram, app }) {
   const diagram = DIAGRAMS[diagramId];
   const [activeLabelId, setActiveLabelId] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
@@ -1601,9 +1628,25 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   // Play always starting narration with no silent option was the gap here.
   const [muted, setMuted] = useState(false);
 
+  // Diagram paint state - false until the SVG's first frame has actually
+  // painted to the screen. The stage shows a shimmer placeholder while
+  // this is false, so a slow device doesn't leave the student staring at
+  // an empty white box while the drawing renders. Set to true from a
+  // requestAnimationFrame callback that fires after the diagram's
+  // render function has produced its SVG tree.
+  const [painted, setPainted] = useState(false);
+
   const playTokenRef = useRef(0);
   const pinchRef = useRef(null);
   const stageRef = useRef(null);
+
+  // One DOM ref per legend tile, keyed by the label id the tile
+  // represents. Populated by the legend's render below via a callback
+  // ref, read by the auto-scroll effect whenever activeStep changes.
+  // Using useRef rather than useMemo because we want a stable object
+  // identity across renders — the callback ref writes into it, the
+  // effect reads from it, and neither should trigger a re-render.
+  const legendRefs = useRef({});
 
   // Reset local view state whenever a new diagram is opened (drill-down or back)
     // Zoom helper used by the +/- buttons, the wheel, and pinch. Clamps to
@@ -1653,17 +1696,221 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     setActiveStep(restored);
   }, [diagramId, diagram.narration.length]);
 
-  // Persist the current step whenever it changes, so if the student
-  // leaves the viewer and comes back (or reloads the tab), we can
-  // restore where they were. Writes are wrapped in try/catch because
-  // sessionStorage can throw in private-mode Safari when the quota is
-  // hit; a failed write is fine — worst case the student restarts from
-  // step 0 next time, which is exactly the old behaviour.
+  // Flip `painted` to false the instant a new diagram mounts, then back
+  // to true on the next animation frame. The SVG is rendered synchronously
+  // inside the same React commit as this component, so by the time rAF
+  // fires, the browser has already had a chance to paint the SVG's first
+  // frame to the screen. Flipping the flag from an rAF callback (rather
+  // than setting it directly in the effect body) guarantees the placeholder
+  // is visible for at least one frame — otherwise React could batch the
+  // setPainted(false) and setPainted(true) together and the placeholder
+  // would never actually show.
   useEffect(() => {
-    try {
-      sessionStorage.setItem(`ascend_atlas_step_${diagramId}`, String(activeStep));
-    } catch {}
-  }, [activeStep, diagramId]);
+    setPainted(false);
+    let cancelled = false;
+    const raf = requestAnimationFrame(() => {
+      if (!cancelled) setPainted(true);
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+    };
+  }, [diagramId]);
+
+  // Flip `painted` to false the instant a new diagram mounts, then back
+  // to true on the next animation frame. The SVG is rendered synchronously
+  // inside the same React commit as this component, so by the time rAF
+  // fires, the browser has already had a chance to paint the SVG's first
+  // frame to the screen. Flipping the flag from an rAF callback (rather
+  // than setting it directly in the effect body) guarantees the placeholder
+  // is visible for at least one frame — otherwise React could batch the
+  // setPainted(false) and setPainted(true) together and the placeholder
+  // would never actually show.
+  useEffect(() => {
+    setPainted(false);
+    let cancelled = false;
+    const raf = requestAnimationFrame(() => {
+      if (!cancelled) setPainted(true);
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+    };
+  }, [diagramId]);
+
+  // Flip `painted` to false the instant a new diagram mounts, then back
+  // to true on the next animation frame. The SVG is rendered synchronously
+  // inside the same React commit as this component, so by the time rAF
+  // fires, the browser has already had a chance to paint the SVG's first
+  // frame to the screen. Flipping the flag from an rAF callback (rather
+  // than setting it directly in the effect body) guarantees the placeholder
+  // is visible for at least one frame — otherwise React could batch the
+  // setPainted(false) and setPainted(true) together and the placeholder
+  // would never actually show.
+  useEffect(() => {
+    setPainted(false);
+    let cancelled = false;
+    const raf = requestAnimationFrame(() => {
+      if (!cancelled) setPainted(true);
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+    };
+  }, [diagramId]);
+
+  // Flip `painted` to false the instant a new diagram mounts, then back
+  // to true on the next animation frame. The SVG is rendered synchronously
+  // inside the same React commit as this component, so by the time rAF
+  // fires, the browser has already had a chance to paint the SVG's first
+  // frame to the screen. Flipping the flag from an rAF callback (rather
+  // than setting it directly in the effect body) guarantees the placeholder
+  // is visible for at least one frame — otherwise React could batch the
+  // setPainted(false) and setPainted(true) together and the placeholder
+  // would never actually show.
+  useEffect(() => {
+    setPainted(false);
+    let cancelled = false;
+    const raf = requestAnimationFrame(() => {
+      if (!cancelled) setPainted(true);
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+    };
+  }, [diagramId]);
+
+  // Flip `painted` to false the instant a new diagram mounts, then back
+  // to true on the next animation frame. The SVG is rendered synchronously
+  // inside the same React commit as this component, so by the time rAF
+  // fires, the browser has already had a chance to paint the SVG's first
+  // frame to the screen. Flipping the flag from an rAF callback (rather
+  // than setting it directly in the effect body) guarantees the placeholder
+  // is visible for at least one frame — otherwise React could batch the
+  // setPainted(false) and setPainted(true) together and the placeholder
+  // would never actually show.
+  useEffect(() => {
+    setPainted(false);
+    let cancelled = false;
+    const raf = requestAnimationFrame(() => {
+      if (!cancelled) setPainted(true);
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+    };
+  }, [diagramId]);
+
+  // Flip `painted` to false the instant a new diagram mounts, then back
+  // to true on the next animation frame. The SVG is rendered synchronously
+  // inside the same React commit as this component, so by the time rAF
+  // fires, the browser has already had a chance to paint the SVG's first
+  // frame to the screen. Flipping the flag from an rAF callback (rather
+  // than setting it directly in the effect body) guarantees the placeholder
+  // is visible for at least one frame — otherwise React could batch the
+  // setPainted(false) and setPainted(true) together and the placeholder
+  // would never actually show.
+  useEffect(() => {
+    setPainted(false);
+    let cancelled = false;
+    const raf = requestAnimationFrame(() => {
+      if (!cancelled) setPainted(true);
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+    };
+  }, [diagramId]);
+
+  // Flip `painted` to false the instant a new diagram mounts, then back
+  // to true on the next animation frame. The SVG is rendered synchronously
+  // inside the same React commit as this component, so by the time rAF
+  // fires, the browser has already had a chance to paint the SVG's first
+  // frame to the screen. Flipping the flag from an rAF callback (rather
+  // than setting it directly in the effect body) guarantees the placeholder
+  // is visible for at least one frame — otherwise React could batch the
+  // setPainted(false) and setPainted(true) together and the placeholder
+  // would never actually show.
+  useEffect(() => {
+    setPainted(false);
+    let cancelled = false;
+    const raf = requestAnimationFrame(() => {
+      if (!cancelled) setPainted(true);
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+    };
+  }, [diagramId]);
+
+  // Flip `painted` to false the instant a new diagram mounts, then back
+  // to true on the next animation frame. The SVG is rendered synchronously
+  // inside the same React commit as this component, so by the time rAF
+  // fires, the browser has already had a chance to paint the SVG's first
+  // frame to the screen. Flipping the flag from an rAF callback (rather
+  // than setting it directly in the effect body) guarantees the placeholder
+  // is visible for at least one frame — otherwise React could batch the
+  // setPainted(false) and setPainted(true) together and the placeholder
+  // would never actually show.
+  useEffect(() => {
+    setPainted(false);
+    let cancelled = false;
+    const raf = requestAnimationFrame(() => {
+      if (!cancelled) setPainted(true);
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+    };
+  }, [diagramId]);
+
+  // Flip `painted` to false the instant a new diagram mounts, then back
+  // to true on the next animation frame. The SVG is rendered synchronously
+  // inside the same React commit as this component, so by the time rAF
+  // fires, the browser has already had a chance to paint the SVG's first
+  // frame to the screen. Flipping the flag from an rAF callback (rather
+  // than setting it directly in the effect body) guarantees the placeholder
+  // is visible for at least one frame — otherwise React could batch the
+  // setPainted(false) and setPainted(true) together and the placeholder
+  // would never actually show.
+  useEffect(() => {
+    setPainted(false);
+    let cancelled = false;
+    const raf = requestAnimationFrame(() => {
+      if (!cancelled) setPainted(true);
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+    };
+  }, [diagramId]);
+
+  // Legend auto-scroll: when the current step changes, scroll the legend
+  // tile for the first label in that step's focus list into view. Only
+  // fires during playback (not while the student is paused or idle),
+  // and only when the tile is actually out of view — scrollIntoView
+  // with `block: "nearest"` is a no-op if the tile is already visible,
+  // so this never fights the student's own scrolling. Guarded on
+  // `playing` so a student who pauses and manually scrolls the legend
+  // doesn't get yanked back to the current step's tile.
+  useEffect(() => {
+    if (!playing) return;
+    const focus = diagram.stepFocus[activeStep];
+    if (!Array.isArray(focus) || focus.length === 0) return;
+
+    // Prefer the first focus id that has a tile. Fall back to nothing if
+    // none of them do (shouldn't happen given the dev-check in the render
+    // path already warns about missing swatches, but defensive).
+    const firstWithTile = focus.find((id) => legendRefs.current[id]);
+    const node = firstWithTile ? legendRefs.current[firstWithTile] : null;
+    if (!node || typeof node.scrollIntoView !== "function") return;
+
+    node.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "nearest",
+    });
+  }, [activeStep, playing, diagram]);
 
   // Persist the current step whenever it changes, so if the student
   // leaves the viewer and comes back (or reloads the tab), we can
@@ -1688,6 +1935,114 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       sessionStorage.setItem(`ascend_atlas_step_${diagramId}`, String(activeStep));
     } catch {}
   }, [activeStep, diagramId]);
+
+  // Flip `painted` to false the instant a new diagram mounts, then back
+  // to true on the next animation frame. The SVG is rendered synchronously
+  // inside the same React commit as this component, so by the time rAF
+  // fires, the browser has already had a chance to paint the SVG's first
+  // frame to the screen. Flipping the flag from an rAF callback (rather
+  // than setting it directly in the effect body) guarantees the placeholder
+  // is visible for at least one frame — otherwise React could batch the
+  // setPainted(false) and setPainted(true) together and the placeholder
+  // would never actually show.
+  useEffect(() => {
+    setPainted(false);
+    let cancelled = false;
+    const raf = requestAnimationFrame(() => {
+      if (!cancelled) setPainted(true);
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+    };
+  }, [diagramId]);
+
+  // Legend auto-scroll: when the current step changes, scroll the legend
+  // tile for the first label in that step's focus list into view. Only
+  // fires during playback (not while the student is paused or idle),
+  // and only when the tile is actually out of view — scrollIntoView
+  // with `block: "nearest"` is a no-op if the tile is already visible,
+  // so this never fights the student's own scrolling. Guarded on
+  // `playing` so a student who pauses and manually scrolls the legend
+  // doesn't get yanked back to the current step's tile.
+  useEffect(() => {
+    if (!playing) return;
+    const focus = diagram.stepFocus[activeStep];
+    if (!Array.isArray(focus) || focus.length === 0) return;
+
+    // Prefer the first focus id that has a tile. Fall back to nothing if
+    // none of them do (shouldn't happen given the dev-check in the render
+    // path already warns about missing swatches, but defensive).
+    const firstWithTile = focus.find((id) => legendRefs.current[id]);
+    const node = firstWithTile ? legendRefs.current[firstWithTile] : null;
+    if (!node || typeof node.scrollIntoView !== "function") return;
+
+    node.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "nearest",
+    });
+  }, [activeStep, playing, diagram]);
+
+  // Persist the current step whenever it changes, so if the student
+  // leaves the viewer and comes back (or reloads the tab), we can
+  // restore where they were. Writes are wrapped in try/catch because
+  // sessionStorage can throw in private-mode Safari when the quota is
+  // hit; a failed write is fine — worst case the student restarts from
+  // step 0 next time, which is exactly the old behaviour.
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(`ascend_atlas_step_${diagramId}`, String(activeStep));
+    } catch {}
+  }, [activeStep, diagramId]);
+
+  // Flip `painted` to false the instant a new diagram mounts, then back
+  // to true on the next animation frame. The SVG is rendered synchronously
+  // inside the same React commit as this component, so by the time rAF
+  // fires, the browser has already had a chance to paint the SVG's first
+  // frame to the screen. Flipping the flag from an rAF callback (rather
+  // than setting it directly in the effect body) guarantees the placeholder
+  // is visible for at least one frame — otherwise React could batch the
+  // setPainted(false) and setPainted(true) together and the placeholder
+  // would never actually show.
+  useEffect(() => {
+    setPainted(false);
+    let cancelled = false;
+    const raf = requestAnimationFrame(() => {
+      if (!cancelled) setPainted(true);
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+    };
+  }, [diagramId]);
+
+  // Legend auto-scroll: when the current step changes, scroll the legend
+  // tile for the first label in that step's focus list into view. Only
+  // fires during playback (not while the student is paused or idle),
+  // and only when the tile is actually out of view — scrollIntoView
+  // with `block: "nearest"` is a no-op if the tile is already visible,
+  // so this never fights the student's own scrolling. Guarded on
+  // `playing` so a student who pauses and manually scrolls the legend
+  // doesn't get yanked back to the current step's tile.
+  useEffect(() => {
+    if (!playing) return;
+    const focus = diagram.stepFocus[activeStep];
+    if (!Array.isArray(focus) || focus.length === 0) return;
+
+    // Prefer the first focus id that has a tile. Fall back to nothing if
+    // none of them do (shouldn't happen given the dev-check in the render
+    // path already warns about missing swatches, but defensive).
+    const firstWithTile = focus.find((id) => legendRefs.current[id]);
+    const node = firstWithTile ? legendRefs.current[firstWithTile] : null;
+    if (!node || typeof node.scrollIntoView !== "function") return;
+
+    node.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "nearest",
+    });
+  }, [activeStep, playing, diagram]);
 
   // Persist the current step whenever it changes, so if the student
   // leaves the viewer and comes back (or reloads the tab), we can
@@ -1950,6 +2305,23 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     !diagram.loop &&
     activeStep === diagram.narration.length - 1;
 
+  // Neighbour navigation: find this diagram's position in its course's
+  // ordered list. Only diagrams that are directly attached to a topic
+  // count as neighbours — drill-downs (topic: null) are excluded, so a
+  // student finishing the Cardiovascular System diagram is offered the
+  // Lymphatic System diagram next, not the Cardiac Cycle drill-down.
+  //
+  // courseId is null only when the viewer is opened with no course
+  // context at all (shouldn't happen in practice, but guards against
+  // any future entry path that forgets to pass it). If it's null, both
+  // neighbours are null and the nav row simply doesn't render.
+  const courseDiagrams = courseId ? diagramsForCourse(courseId) : [];
+  const myIndex = courseDiagrams.findIndex((d) => d.id === diagramId);
+  const prevDiagram = myIndex > 0 ? courseDiagrams[myIndex - 1] : null;
+  const nextDiagram = myIndex >= 0 && myIndex < courseDiagrams.length - 1
+    ? courseDiagrams[myIndex + 1]
+    : null;
+
   
 
   return (
@@ -2126,7 +2498,39 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
                 )}
               </button>
             </div>
-                                    <div
+                                    {!painted && (
+              /* Shimmer placeholder — fills the stage behind the (not yet
+                 painted) SVG. Sits as an absolute overlay so it doesn't
+                 disturb the layout of the transform wrapper that will
+                 hold the actual diagram. aria-hidden because it's purely
+                 decorative — a screen reader user doesn't need to hear
+                 "loading" for a diagram that will announce itself via
+                 the step counter anyway. */
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  pointerEvents: "none",
+                  zIndex: 1,
+                }}
+              >
+                <div
+                  style={{
+                    width: "60%",
+                    height: "60%",
+                    borderRadius: 16,
+                    background: "linear-gradient(90deg, var(--bg-3) 0%, var(--bg-2) 50%, var(--bg-3) 100%)",
+                    backgroundSize: "200% 100%",
+                    animation: "atlasShimmer 1.4s ease-in-out infinite",
+                  }}
+                />
+              </div>
+            )}
+            <div
               style={{
                 transform: `translate(${panX}px, ${panY}px) scale(${zoom})`,
                 transformOrigin: "center center",
@@ -2138,6 +2542,7 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
                 maxHeight: "100%",
                 willChange: "transform",
                 cursor: "grab",
+                opacity: painted ? 1 : 0,
               }}
             >
               {diagram.render({
@@ -2192,17 +2597,26 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
             {diagram.summary || diagram.title}
           </div>
 
-          {activeLabel && (
-            <div className="card" style={{ marginTop: 12, borderColor: "rgba(245,185,63,.35)" }}>
-              <div style={{ fontWeight: 700, fontSize: 14, color: "var(--amber-2)" }}>{activeLabel.name}</div>
-              <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 4 }}>{activeLabel.desc}</div>
-              {activeLabel.drillTo && (
-                <button className="btn btn-a btn-sm" style={{ marginTop: 8 }} onClick={() => onDrill(activeLabel.drillTo)}>
-                  Open {activeLabel.name} <Ic_chevR />
-                </button>
-              )}
-            </div>
-          )}
+          {/* When a structure is tapped, its name + description appear here.
+              Wrapped in aria-live="polite" so a screen reader announces
+              them the moment they change — otherwise the text is in the
+              DOM but silent, and a student using a screen reader who taps
+              a structure gets no feedback at all. aria-atomic="true" makes
+              the whole block (name + description) get read as one unit,
+              not just the changed nodes. */}
+          <div aria-live="polite" aria-atomic="true">
+            {activeLabel && (
+              <div className="card" style={{ marginTop: 12, borderColor: "rgba(245,185,63,.35)" }}>
+                <div style={{ fontWeight: 700, fontSize: 14, color: "var(--amber-2)" }}>{activeLabel.name}</div>
+                <div style={{ color: "var(--text-2)", fontSize: 13.5, marginTop: 4 }}>{activeLabel.desc}</div>
+                {activeLabel.drillTo && (
+                  <button className="btn btn-a btn-sm" style={{ marginTop: 8 }} onClick={() => onDrill(activeLabel.drillTo)}>
+                    Open {activeLabel.name} <Ic_chevR />
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -2301,6 +2715,40 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
         <button className="btn btn-g" style={{ width: "100%" }} onClick={() => app.go("topic", { courseId: topTopic.courseId, topicId: topTopic.topicIndex })}>
           Read the topic
         </button>
+      )}
+
+      {/* Neighbour navigation — only shows when the viewer was opened from
+         a course's visuals list (so there's a course context to navigate
+         within) AND there's actually a previous or next diagram to move
+         to. A diagram at the start of its course only shows "Next"; a
+         diagram at the end only shows "Previous"; a diagram that's the
+         only one in its course shows neither, and this whole block
+         renders nothing. */}
+      {(prevDiagram || nextDiagram) && (
+        <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+          {prevDiagram ? (
+            <button
+              className="btn btn-g"
+              style={{ flex: 1, textAlign: "left", minWidth: 0 }}
+              onClick={() => onOpenDiagram(prevDiagram.id)}
+              aria-label={`Previous visual: ${prevDiagram.title}`}
+            >
+              <span style={{ display: "block", fontSize: 11, color: "var(--text-3)", fontWeight: 600, marginBottom: 2 }}>← Previous visual</span>
+              <span style={{ display: "block", fontSize: 13, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{prevDiagram.title.split(" — ")[0]}</span>
+            </button>
+          ) : <span style={{ flex: 1 }} />}
+          {nextDiagram ? (
+            <button
+              className="btn btn-g"
+              style={{ flex: 1, textAlign: "right", minWidth: 0 }}
+              onClick={() => onOpenDiagram(nextDiagram.id)}
+              aria-label={`Next visual: ${nextDiagram.title}`}
+            >
+              <span style={{ display: "block", fontSize: 11, color: "var(--text-3)", fontWeight: 600, marginBottom: 2 }}>Next visual →</span>
+              <span style={{ display: "block", fontSize: 13, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{nextDiagram.title.split(" — ")[0]}</span>
+            </button>
+          ) : <span style={{ flex: 1 }} />}
+        </div>
       )}
     </div>
   );
@@ -2518,10 +2966,12 @@ export default function AtlasView({ app }) {
       {screen === "viewer" && diagram && diagram.type === "diagram" && (
         <DiagramViewer
           diagramId={diagramId}
+          courseId={courseId}
           breadcrumb={breadcrumb}
           onBreadcrumb={goToBreadcrumb}
           onDrill={drillInto}
           onExit={exitViewer}
+          onOpenDiagram={openDiagram}
           app={app}
         />
       )}
