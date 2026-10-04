@@ -400,8 +400,8 @@ const atlasVessel = ({
         fill="none"
         strokeLinecap="round"
         strokeDasharray={dashed ? "10 6" : undefined}
-        opacity="0.85"
-        transform="translate(0, -width * 0.18)"
+                opacity="0.85"
+        transform={`translate(0, ${-width * 0.18})`}
       />
     </g>
   );
@@ -734,51 +734,113 @@ export const DIAGRAMS = {
       ["hsc"], ["hsc"], ["hsc", "liver", "spleen"], ["hsc", "cmp", "clp"], ["cmp", "clp"], ["cmp", "clp"],
       ["myeloid-leaf", "b", "t", "nk"], ["cmp", "clp"], ["liver", "spleen"], ["hsc", "cmp", "clp", "myeloid-leaf", "b", "t", "nk"],
     ],
-    viewBox: "0 0 900 500",
+        // Visual staging per step, same role as the Cardiac Cycle's
+    // phaseState - what's visible/emphasised changes as the narration
+    // moves through the real 10 Socratic steps, not just a highlight ring
+    // on an otherwise static picture.
+    stageState: [
+      { hsc: 1,    branches: 0,   leaves: 0,    sites: 0 },
+      { hsc: 1,    branches: 0,   leaves: 0,    sites: 0 },
+      { hsc: 1,    branches: 0,   leaves: 0,    sites: 0.25 },
+      { hsc: 1,    branches: 1,   leaves: 0,    sites: 0 },
+      { hsc: 0.6,  branches: 1,   leaves: 0,    sites: 0 },
+      { hsc: 0.6,  branches: 1,   leaves: 0.15, sites: 0 },
+      { hsc: 0.4,  branches: 0.6, leaves: 1,    sites: 0 },
+      { hsc: 0.4,  branches: 0.6, leaves: 0.6,  sites: 0 },
+      { hsc: 0.3,  branches: 0.4, leaves: 0.4,  sites: 1 },
+      { hsc: 1,    branches: 1,   leaves: 1,    sites: 1 },
+    ],
+    viewBox: "0 0 900 520",
     render: ({ onLabelClick, activeLabelId, activeStep, onOpenDrill, preview }) => {
-      const focus = DIAGRAMS["hem:haematopoiesis"].stepFocus[activeStep] || [];
-      const c = (id, props) => atlasCell({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
-      const o = (id, props) => atlasOrgan({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
+      const diagram = DIAGRAMS["hem:haematopoiesis"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const st = diagram.stageState[activeStep] || diagram.stageState[0];
+      const active = (id) => activeLabelId === id;
+      const ring = (id) => (active(id) ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3 } : { stroke: "transparent", strokeWidth: 0 });
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const pulse = (id) => (!preview && focus.includes(id) ? "atlas-pulse" : "");
+
       return (
-        <svg viewBox="0 0 900 500" width="100%" height="100%">
+        <svg viewBox="0 0 900 520" width="100%" height="100%">
           {atlasDefs()}
-          {atlasFlow("M450,116 Q350,135 260,152")}
-          {atlasFlow("M450,116 Q550,135 640,152")}
-          {atlasFlow("M260,230 Q220,270 195,300")}
-          {atlasFlow("M640,230 Q565,270 495,300")}
-          {atlasFlow("M640,230 Q625,270 605,300")}
-          {atlasFlow("M640,230 Q685,270 710,300")}
 
-          {c("hsc", { cx: 450, cy: 70, r: 46, label: "HSC", sub: "Stem cell", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
-          {c("cmp", { cx: 260, cy: 190, r: 40, label: "CMP", sub: "Myeloid", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim, onOpenDrill: true })}
-          {c("clp", { cx: 640, cy: 190, r: 40, label: "CLP", sub: "Lymphoid", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
+          {/* Marrow cavity backdrop - trabecular bone texture, so the stem
+             cell reads as sitting INSIDE an organ, not floating on blank
+             space. Soft, low-opacity, never competes with the cells. */}
+          <ellipse cx="450" cy="230" rx="420" ry="260" fill="#2B1A14" opacity="0.08" />
+          {[[120,90],[760,110],[90,380],[780,370],[450,40],[200,460],[700,460]].map(([x,y],i) => (
+            <path key={i} d={`M${x},${y} q20,-10 35,10 q-5,20 -30,15 q-15,-10 -5,-25 z`} fill="#8C1C12" opacity="0.06" />
+          ))}
 
-          <g onClick={() => onLabelClick("myeloid-leaf")} style={{ cursor: "pointer" }} className={!preview && focus.includes("myeloid-leaf") ? "atlas-pulse" : ""}>
-            <g transform="translate(165,320)">
-              <ellipse cx="0" cy="0" rx="24" ry="14" fill="url(#atlas-grad-erythroid)" opacity={activeLabelId === "myeloid-leaf" ? 1 : 0.55} />
-              <ellipse cx="0" cy="0" rx="11" ry="6" fill="#F5C7C0" opacity="0.7" />
-            </g>
-            <g transform="translate(205,340)"><circle r="10" fill="url(#atlas-grad-trunk)" opacity={activeLabelId === "myeloid-leaf" ? 1 : 0.55} /></g>
-            <g transform="translate(180,355)"><circle r="12" fill="url(#atlas-grad-erythroid)" opacity={activeLabelId === "myeloid-leaf" ? 0.9 : 0.45} /></g>
-            <text x="195" y="390" textAnchor="middle" fontSize="11.5" fontWeight="700" fill={activeLabelId === "myeloid-leaf" ? ATLAS_COLORS.erythroid : "var(--text)"}>Red cells · platelets</text>
-            <text x="195" y="402" textAnchor="middle" fontSize="9" fill="var(--text-2)">granulocytes · monocytes</text>
+          {/* Flow lines fade in with the branch stage, not always present
+             at full strength - matching the "trunk splits" narration beat. */}
+          <g opacity={st.branches}>
+            {atlasFlow("M450,116 Q350,135 260,152")}
+            {atlasFlow("M450,116 Q550,135 640,152")}
+            {atlasFlow("M260,230 Q220,270 195,300")}
+            {atlasFlow("M640,230 Q565,270 495,300")}
+            {atlasFlow("M640,230 Q625,270 605,300")}
+            {atlasFlow("M640,230 Q685,270 710,300")}
           </g>
 
-          {c("b", { cx: 495, cy: 330, r: 28, label: "B cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
-          {c("t", { cx: 605, cy: 330, r: 28, label: "T cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
-          {c("nk", { cx: 715, cy: 330, r: 28, label: "NK cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
+          {/* Stem cell - illustrated with real nuclear detail (chromatin
+             texture + nucleolus), not a flat circle with a text label. */}
+          <g opacity={st.hsc} className={pulse("hsc")} onClick={click("hsc")} style={{ cursor: cur }}>
+            <circle cx="450" cy="70" r="46" fill="url(#atlas-grad-nucleus)" filter="url(#atlas-shadow)" {...ring("hsc")} />
+            <circle cx="450" cy="70" r="24" fill="#5B21B6" opacity="0.6" />
+            <circle cx="441" cy="62" r="5" fill="#E9DFFF" opacity="0.7" />
+            <circle cx="458" cy="76" r="4" fill="#E9DFFF" opacity="0.6" />
+            <text x="450" y="128" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text)">Stem Cell (HSC)</text>
+          </g>
 
-          {/* Extramedullary sites - new, for step 8 which previously had
-             nothing on the diagram to point at. Drawn lower and set apart
-             to read as "elsewhere in the body," not part of the marrow tree. */}
-          <line x1="450" y1="400" x2="450" y2="430" stroke={ATLAS_COLORS.neutral} strokeWidth="1.6" strokeDasharray="3 4" opacity="0.4" />
-          {o("liver", { cx: 360, cy: 455, w: 130, h: 60, label: "Liver", fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim })}
-          {o("spleen", { cx: 540, cy: 455, w: 110, h: 60, label: "Spleen", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
+          {/* Progenitors - same nucleated-cell treatment, colour-coded */}
+          <g opacity={st.branches} className={pulse("cmp")} onClick={click("cmp")} style={{ cursor: cur }}>
+            <circle cx="260" cy="190" r="40" fill="url(#atlas-grad-trunk)" filter="url(#atlas-shadow)" {...ring("cmp")} />
+            <circle cx="260" cy="190" r="18" fill="#D89B14" opacity="0.6" />
+            {onOpenDrill && <text x="288" y="166" textAnchor="end" fontSize="13" fill={ATLAS_COLORS.trunk}>⤢</text>}
+            <text x="260" y="246" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text)">Myeloid progenitor</text>
+          </g>
+          <g opacity={st.branches} className={pulse("clp")} onClick={click("clp")} style={{ cursor: cur }}>
+            <circle cx="640" cy="190" r="40" fill="url(#atlas-grad-lymphoid)" filter="url(#atlas-shadow)" {...ring("clp")} />
+            <circle cx="640" cy="190" r="18" fill="#123F9E" opacity="0.6" />
+            <text x="640" y="246" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text)">Lymphoid progenitor</text>
+          </g>
+
+          {/* Mature cells - real primitives, not abstract shapes: an actual
+             biconcave red cell, a lobed-nucleus white cell, a granular
+             platelet, same art used throughout the Cardiovascular family. */}
+          <g opacity={st.leaves} className={pulse("myeloid-leaf")} onClick={click("myeloid-leaf")} style={{ cursor: cur }}>
+            {atlasBloodCell({ cx: 150, cy: 320, r: 20, oxygenated: true })}
+            {atlasPlatelet({ cx: 205, cy: 345, r: 9 })}
+            {atlasWhiteCell({ cx: 175, cy: 365, r: 14 })}
+            <text x="178" y="400" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Red cells · platelets</text>
+            <text x="178" y="412" textAnchor="middle" fontSize="9" fill="var(--text-2)">granulocytes · monocytes</text>
+          </g>
+          <g opacity={st.leaves} className={pulse("b")} onClick={click("b")} style={{ cursor: cur }}>
+            {atlasWhiteCell({ cx: 495, cy: 330, r: 22 })}
+            <text x="495" y="366" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">B cells</text>
+          </g>
+          <g opacity={st.leaves} className={pulse("t")} onClick={click("t")} style={{ cursor: cur }}>
+            {atlasWhiteCell({ cx: 605, cy: 330, r: 22 })}
+            <text x="605" y="366" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">T cells</text>
+          </g>
+          <g opacity={st.leaves} className={pulse("nk")} onClick={click("nk")} style={{ cursor: cur }}>
+            {atlasWhiteCell({ cx: 715, cy: 330, r: 22 })}
+            <text x="715" y="366" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">NK cells</text>
+          </g>
+
+          {/* Extramedullary sites - fade in only when the narration reaches
+             step 8, exactly when the body falls back on them. */}
+          <g opacity={st.sites}>
+            <line x1="450" y1="420" x2="450" y2="450" stroke={ATLAS_COLORS.neutral} strokeWidth="1.6" strokeDasharray="3 4" opacity="0.4" />
+            {atlasOrgan({ id: "liver", cx: 360, cy: 475, w: 130, h: 60, label: "Liver", fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim, onLabelClick, activeLabelId, pulsing: !preview && focus.includes("liver") })}
+            {atlasOrgan({ id: "spleen", cx: 540, cy: 475, w: 110, h: 60, label: "Spleen", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim, onLabelClick, activeLabelId, pulsing: !preview && focus.includes("spleen") })}
+          </g>
         </svg>
       );
     },
   },
-
   /* =========================================================
      HAEMATOPOIESIS — myeloid drill-down
      ========================================================= */
@@ -1171,7 +1233,7 @@ export const DIAGRAMS = {
       "Phase six. Once pressure inside the ventricles drops low enough, the valves above them swing open and blood rushes in on its own, no squeezing needed yet. Most of the heart's filling actually happens right here, before the atria even contract again.",
       "Phase seven. Filling slows to a trickle as the pressure inside the heart and the pressure feeding it even out. This is the heart's brief rest before the next beat starts the whole cycle over.",
     ],
-    phaseState: [
+        phaseState: [
       { av: "open",   sl: "closed", ra: 1,    la: 1,    rv: 0.55, lv: 0.55 },
       { av: "closed", sl: "closed", ra: 0.3,  la: 0.3,  rv: 0.85, lv: 0.85 },
       { av: "closed", sl: "open",   ra: 0.3,  la: 0.3,  rv: 0.55, lv: 0.55 },
@@ -1179,6 +1241,19 @@ export const DIAGRAMS = {
       { av: "closed", sl: "closed", ra: 0.4,  la: 0.4,  rv: 0.4,  lv: 0.4  },
       { av: "open",   sl: "closed", ra: 0.6,  la: 0.6,  rv: 0.75, lv: 0.75 },
       { av: "open",   sl: "closed", ra: 0.75, la: 0.75, rv: 0.85, lv: 0.85 },
+    ],
+    // render() here actually drives its highlighting off phaseState, not
+    // stepFocus - but DiagramViewer's dev-check (and the generic pulsing
+    // path every other diagram uses) expects every diagram to have one,
+    // same length as narration. Missing this entirely was the crash.
+    stepFocus: [
+      ["ra", "la", "av"],
+      ["av"],
+      ["sl", "lv", "rv"],
+      ["sl"],
+      ["sl"],
+      ["av"],
+      ["ra", "la"],
     ],
     viewBox: "0 0 900 560",
     render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {

@@ -89,7 +89,9 @@ const LEGEND_VIEWBOXES = {
   mep: "0 0 100 100",
   gran: "0 0 100 100",
   mono: "0 0 100 100",
-  mega: "0 0 100 100",
+    mega: "0 0 100 100",
+  liver: "0 0 100 100",
+  spleen: "0 0 100 100",
   // Erythroid maturation
   s1: "0 0 100 100",
   s2: "0 0 100 100",
@@ -335,12 +337,22 @@ const LEGEND_SWATCHES = {
       <path d="M40 50 Q50 40 60 50 Q50 60 40 50 Z" fill="#1B1405" opacity="0.55" />
     </g>
   ),
-  mega: (active) => (
+    mega: (active) => (
     <g>
       <circle cx="50" cy="50" r="26" fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.6" />
       {[[40, 40], [58, 42], [44, 60], [60, 58]].map(([x, y], i) => (
         <circle key={i} cx={x} cy={y} r="4" fill="#F5C7C0" opacity="0.85" />
       ))}
+    </g>
+  ),
+  liver: (active) => (
+    <g>
+      <path d="M18 38 Q22 20 42 22 Q62 18 78 32 Q86 44 76 56 Q64 68 42 64 Q22 62 18 48 Z" fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.6" />
+    </g>
+  ),
+  spleen: (active) => (
+    <g>
+      <ellipse cx="50" cy="50" rx="26" ry="20" fill={active ? "#2D7BFF" : "#2F6FED"} stroke="#123F9E" strokeWidth="1.6" transform="rotate(-20 50 50)" />
     </g>
   ),
 
@@ -702,6 +714,8 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   const MIN_ZOOM = 0.5;
   const MAX_ZOOM = 3;
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
+  const [panX, setPanX] = useState(0);
+  const [panY, setPanY] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
   // Muted still advances through the sequence on a timer (roughly how long
   // the narration would have taken to speak), it just doesn't speak -
@@ -723,12 +737,14 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     });
   }, []);
 
-  useEffect(() => {
+    useEffect(() => {
     setActiveLabelId(null);
     setActiveStep(0);
     setPlaying(false);
     setPaused(false);
     setZoom(DEFAULT_ZOOM);
+    setPanX(0);
+    setPanY(0);
         playTokenRef.current++;
     cachedVoiceRef.current = undefined;
     try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {}
@@ -909,21 +925,38 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   // is locked to the center of the stage at all times. Only ZOOM is
   // interactive: mouse wheel on desktop, two-finger pinch on touch, and
   // the +/- buttons. A single-finger drag does nothing.
-      const onWheel = (e) => {
-    e.preventDefault();
-    const delta = e.deltaY > 0 ? -0.08 : 0.08;
-    applyZoom((z) => z + delta);
-  };
+        // Wheel listeners are passive by default, so e.preventDefault() inside a
+  // React onWheel prop silently fails (that's the console spam you saw) -
+  // it has to be attached manually with { passive: false } to actually
+  // stop page scroll while zooming.
+  const onWheelRef = useRef(null);
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const handler = (e) => {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? -0.08 : 0.08;
+      applyZoom((z) => z + delta);
+    };
+    onWheelRef.current = handler;
+    el.addEventListener("wheel", handler, { passive: false });
+    return () => el.removeEventListener("wheel", handler);
+  }, [applyZoom]);
 
-  const pointers = useRef(new Map());
-    const onPointerDown = (e) => {
+    const pointers = useRef(new Map());
+  const dragRef = useRef(null); // { startX, startY, panX, panY } for single-pointer drag
+  const onPointerDown = (e) => {
     // Deliberately NOT capturing the pointer for a single touch/click.
     // setPointerCapture routes the eventual `click` event to the stage div
     // instead of the actual target - which is why the +/- zoom buttons
     // never received their click. Capture only once a SECOND finger
     // arrives, which is the only time we actually need it (pinch).
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointers.current.size === 1) {
+      dragRef.current = { startX: e.clientX, startY: e.clientY, panX, panY };
+    }
     if (pointers.current.size === 2) {
+      dragRef.current = null; // a second finger arriving cancels any single-finger drag in progress
       try { e.currentTarget.setPointerCapture?.(e.pointerId); } catch {}
       const pts = [...pointers.current.values()];
       const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
@@ -938,12 +971,19 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
       const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
       const ratio = dist / (pinchRef.current.dist || 1);
       applyZoom(pinchRef.current.zoom * ratio);
+    } else if (pointers.current.size === 1 && dragRef.current) {
+      // Single-finger/mouse drag - pans the diagram. Up/down/left/right
+      // movement, same gesture as any map or image viewer.
+      const dx = e.clientX - dragRef.current.startX;
+      const dy = e.clientY - dragRef.current.startY;
+      setPanX(dragRef.current.panX + dx);
+      setPanY(dragRef.current.panY + dy);
     }
-    // Single-pointer case does nothing on purpose - no dragging.
   };
   const onPointerUp = (e) => {
     pointers.current.delete(e.pointerId);
     if (pointers.current.size < 2) pinchRef.current = null;
+    if (pointers.current.size === 0) dragRef.current = null;
   };
   const activeLabel = diagram.labels?.find((l) => l.id === activeLabelId) || null;
   const topTopic = topLevelTopicOf(diagram);
@@ -1071,7 +1111,7 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
               onClick={(e) => e.stopPropagation()}
             >
               <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom((z) => z - 0.2)}>−</button>
-              <button className="btn btn-sm mono" title="Reset zoom" style={{ minWidth: 46 }} onClick={() => applyZoom(DEFAULT_ZOOM)}>{Math.round(zoom * 100)}%</button>
+                            <button className="btn btn-sm mono" title="Reset view - re-centers and resets zoom" style={{ minWidth: 46 }} onClick={() => { applyZoom(DEFAULT_ZOOM); setPanX(0); setPanY(0); }}>{Math.round(zoom * 100)}%</button>
               <button className="btn btn-sm" title="Zoom in" onClick={() => applyZoom((z) => z + 0.2)}>+</button>
               <button className="btn btn-sm" title={fullscreen ? "Exit fullscreen" : "Fullscreen"} aria-label={fullscreen ? "Exit fullscreen" : "Expand to fullscreen"} onClick={toggleFullscreen}>
                 {fullscreen ? (
@@ -1081,17 +1121,18 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
                 )}
               </button>
             </div>
-                        <div
+                                    <div
               style={{
-                transform: `scale(${zoom})`,
+                transform: `translate(${panX}px, ${panY}px) scale(${zoom})`,
                 transformOrigin: "center center",
-                transition: "transform 0.15s ease-out",
+                transition: dragRef.current ? "none" : "transform 0.15s ease-out",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 maxWidth: "100%",
                 maxHeight: "100%",
                 willChange: "transform",
+                cursor: "grab",
               }}
             >
               {diagram.render({ onLabelClick: setActiveLabelId, activeLabelId, activeStep, onOpenDrill: () => {} })}
