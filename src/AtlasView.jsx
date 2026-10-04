@@ -47,6 +47,7 @@ import {
   diagramsForCourse,
   coursesWithDiagrams,
   diagramForTopic,
+  atlasDefs,
 } from "./diagrams";
 
 // Per-label mini-illustration for the legend. Each entry draws a tiny
@@ -728,9 +729,44 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     setPlaying(false);
     setPaused(false);
     setZoom(DEFAULT_ZOOM);
-    playTokenRef.current++;
+        playTokenRef.current++;
+    cachedVoiceRef.current = undefined;
     try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {}
   }, [diagramId]);
+
+  // Dev-time checks from the rule book (sections 4.1-4.3) - these were
+  // written into the rule book but never actually wired into code. None of
+  // this runs for students; it only warns in the console, so a mismatch is
+  // caught the moment you build the next diagram instead of shipping silently
+  // broken highlighting or grey legend circles.
+  useEffect(() => {
+    if (diagram.narration.length !== diagram.stepFocus.length) {
+      console.warn(
+        `[Atlas] "${diagram.id}": narration has ${diagram.narration.length} steps but stepFocus has ${diagram.stepFocus.length} - highlighting will be out of sync.`
+      );
+    }
+    diagram.narration.forEach((line, i) => {
+      const words = line.trim().split(/\s+/).length;
+      if (words > 50) {
+        console.warn(`[Atlas] "${diagram.id}" step ${i + 1}: narration is ${words} words (limit 50).`);
+      }
+      if (line.includes("→")) {
+        console.warn(`[Atlas] "${diagram.id}" step ${i + 1}: narration contains "→" - the speech engine reads this as "right arrow". Use "to" or a comma instead.`);
+      }
+    });
+    const allFocusIds = new Set(diagram.stepFocus.flat());
+    const labelIds = new Set(diagram.labels.map((l) => l.id));
+    allFocusIds.forEach((id) => {
+      if (!labelIds.has(id)) {
+        console.warn(`[Atlas] "${diagram.id}": stepFocus references label id "${id}" which isn't in labels - it will silently do nothing.`);
+      }
+    });
+    diagram.labels.forEach((l) => {
+      if (!LEGEND_SWATCHES[l.id]) {
+        console.warn(`[Atlas] "${diagram.id}": label "${l.id}" has no entry in LEGEND_SWATCHES - it will show a grey circle in the legend.`);
+      }
+    });
+  }, [diagram]);
 
   useEffect(() => () => { try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {} }, []);
 
@@ -770,7 +806,12 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     });
   }, [diagram]);
 
-  const speakStepRef = useRef(() => {});
+    const speakStepRef = useRef(() => {});
+  // Resolved once per diagram session (on the first spoken step) instead of
+  // re-scanning window.speechSynthesis.getVoices() and re-picking on every
+  // single narration step - the result never changes mid-playback, so
+  // there's no reason to redo that work nine times for a nine-step diagram.
+  const cachedVoiceRef = useRef(undefined); // undefined = not resolved yet, null = resolved to "no voice"
   const speakStep = useCallback((stepIdx) => {
     const text = diagram.narration[stepIdx];
     if (!text) return;
@@ -787,7 +828,10 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     }
 
     (async () => {
-      const voice = await pickVoice();
+      if (cachedVoiceRef.current === undefined) {
+        cachedVoiceRef.current = (await pickVoice()) || null;
+      }
+      const voice = cachedVoiceRef.current;
       if (myToken !== playTokenRef.current) return;
       window.speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance(text);
@@ -1355,10 +1399,23 @@ export default function AtlasView({ app }) {
     setScreen(courseId ? "list" : "courses");
   };
 
-  const diagram = diagramId ? DIAGRAMS[diagramId] : null;
+    const diagram = diagramId ? DIAGRAMS[diagramId] : null;
 
   return (
     <div className="view">
+      {/* One shared <defs> block for every diagram, rendered once here
+          instead of inside each diagram's own <svg>. Previously every
+          diagram defined the SAME gradient/filter ids (atlas-glow,
+          atlas-grad-trunk, etc.) independently, and VisualsList renders
+          several diagrams' thumbnails on screen simultaneously - since
+          SVG element ids are resolved against the whole HTML document,
+          not scoped per-<svg>, that meant N duplicate definitions of the
+          same ids coexisting at once. Harmless today only because every
+          diagram's defs happen to be byte-identical; a single shared
+          copy removes the duplication (and the risk) outright. */}
+      <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
+        {atlasDefs()}
+      </svg>
       <div className="eyebrow">Atlas</div>
       <h1 style={{ fontSize: "clamp(22px,4vw,28px)", margin: "6px 0 4px" }}>
         Illustrated diagrams, topic by topic

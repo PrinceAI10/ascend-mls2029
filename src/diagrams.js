@@ -202,12 +202,22 @@ const atlasFlow = (d, color = ATLAS_COLORS.neutral) => (
   <path d={d} stroke={color} strokeWidth="2" fill="none" opacity="0.5" strokeLinecap="round" />
 );
 
+// atlasOrgan: for the liver/spleen in the extramedullary step - a soft
+// blob shape with a label, same click/pulse/active behaviour as atlasCell.
+const atlasOrgan = ({ id, cx, cy, w, h, label, fill, dim, onLabelClick, activeLabelId, pulsing }) => {
+  const active = activeLabelId === id;
+  return (
+    <g key={id} onClick={() => onLabelClick(id)} style={{ cursor: "pointer" }} className={pulsing ? "atlas-pulse" : ""}>
+      <ellipse cx={cx} cy={cy} rx={w / 2} ry={h / 2} fill={active ? fill : dim} stroke={fill} strokeWidth={active ? 2.6 : 1.6} filter="url(#atlas-shadow)" />
+      <text x={cx} y={cy + 4} textAnchor="middle" fontSize="11.5" fontWeight="700" fill={active ? "#0A0F1A" : "var(--text)"}>{label}</text>
+    </g>
+  );
+};
+
 /* ---------------------------------------------------------------- */
 /* Cardiac cycle - a small valve glyph, reused four times. Not an   */
-/* atlasNode (this diagram isn't a flowchart of boxes - it's one    */
-/* heart whose parts change state), so it gets its own tiny helper, */
-/* same way the erythroid maturation strip above has its own stage  */
-/* layout instead of forcing the tree layout to fit.                */
+/* atlasCell (this diagram isn't a tree of cells - it's one heart   */
+/* whose parts change state), so it gets its own tiny helper.       */
 /* ---------------------------------------------------------------- */
 const atlasValve = ({ id, x, y, open, flip, color, onLabelClick, activeLabelId, preview }) => {
   const active = activeLabelId === id;
@@ -219,8 +229,14 @@ const atlasValve = ({ id, x, y, open, flip, color, onLabelClick, activeLabelId, 
       onClick={preview ? undefined : () => onLabelClick(id)}
       style={{ cursor: preview ? "default" : "pointer" }}
     >
-      <line x1={-spread} y1={-10} x2={0} y2={0} stroke={color} strokeWidth="4" strokeLinecap="round" />
-      <line x1={spread} y1={-10} x2={0} y2={0} stroke={color} strokeWidth="4" strokeLinecap="round" />
+      {/* Leaflets - curved cusps instead of straight lines, which is what
+         an actual valve leaflet looks like (it billows, it isn't a flat
+         flap), filled with a faint wash so they read as tissue with a
+         free edge, not wireframe. */}
+      <path d={`M${-spread},-10 Q${-spread * 0.4},${open ? -2 : 6} 0,0`}
+        fill={color} fillOpacity="0.18" stroke={color} strokeWidth="3.5" strokeLinecap="round" />
+      <path d={`M${spread},-10 Q${spread * 0.4},${open ? -2 : 6} 0,0`}
+        fill={color} fillOpacity="0.18" stroke={color} strokeWidth="3.5" strokeLinecap="round" />
       {open && (
         <path d="M-6,4 L0,12 L6,4" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.8" />
       )}
@@ -247,31 +263,65 @@ const atlasBloodCell = ({ cx, cy, r = 6, oxygenated = true, animate = false, del
       stroke={oxygenated ? "#8C1C12" : "#123F9E"} strokeWidth="0.8" />
     <ellipse cx={cx} cy={cy} rx={r * 0.5} ry={r * 0.3}
       fill={oxygenated ? "#F5C7C0" : "#B8D0FF"} opacity="0.85" />
-    {label && <text x={cx} y={cy - r - 4} textAnchor="middle" fontSize="9" fill="var(--text-2)">{label}</text>}
+    {label && <text x={cx} y={cy - r - 4} textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text-2)">{label}</text>}
   </g>
 );
 
 const atlasWhiteCell = ({ cx, cy, r = 7, label }) => (
   <g>
     <circle cx={cx} cy={cy} r={r} fill="#F3F1FF" stroke={ATLAS_COLORS.nucleus} strokeWidth="1.2" />
-    <circle cx={cx} cy={cy} r={r * 0.55} fill={ATLAS_COLORS.nucleus} opacity="0.75" />
-    {label && <text x={cx} y={cy - r - 4} textAnchor="middle" fontSize="9" fill="var(--text-2)">{label}</text>}
+    {/* Multi-lobed nucleus instead of a plain filled circle - the
+       lobed/segmented shape is what actually distinguishes a white cell
+       under the microscope and in every textbook diagram, not a solid dot. */}
+    <path
+      d={`M${cx - r * 0.5},${cy - r * 0.35}
+          Q${cx - r * 0.1},${cy - r * 0.6} ${cx + r * 0.3},${cy - r * 0.4}
+          Q${cx + r * 0.55},${cy - r * 0.05} ${cx + r * 0.35},${cy + r * 0.3}
+          Q${cx + r * 0.05},${cy + r * 0.55} ${cx - r * 0.3},${cy + r * 0.4}
+          Q${cx - r * 0.6},${cy + r * 0.1} ${cx - r * 0.5},${cy - r * 0.35} Z`}
+      fill={ATLAS_COLORS.nucleus} opacity="0.78" />
+    <circle cx={cx - r * 0.1} cy={cy} r={r * 0.15} fill="#F3F1FF" opacity="0.6" />
+    {label && <text x={cx} y={cy - r - 4} textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text-2)">{label}</text>}
   </g>
 );
 
 const atlasPlatelet = ({ cx, cy, r = 4, label }) => (
   <g>
     <ellipse cx={cx} cy={cy} rx={r} ry={r * 0.7} fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="0.6" />
-    {label && <text x={cx} y={cy - r - 4} textAnchor="middle" fontSize="9" fill="var(--text-2)">{label}</text>}
+    {/* A couple of faint granules - platelets are granular in real life,
+       not a flat solid oval. */}
+    <circle cx={cx - r * 0.25} cy={cy} r={r * 0.15} fill="#8B6410" opacity="0.5" />
+    <circle cx={cx + r * 0.2} cy={cy - r * 0.1} r={r * 0.12} fill="#8B6410" opacity="0.5" />
+    {label && <text x={cx} y={cy - r - 4} textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text-2)">{label}</text>}
   </g>
 );
 
+// Lymph node, upgraded from two flat ellipses to show real internal
+// structure: an outer cortex studded with lymphoid follicles (where B
+// cells cluster), an inner medulla, and the afferent/efferent vessel
+// stubs where lymph actually enters and leaves - the three things every
+// textbook lymph node diagram shows and a plain bean shape never did.
 const atlasLymphNode = ({ cx, cy, scale = 1 }) => (
   <g transform={`translate(${cx},${cy}) scale(${scale})`}>
-    <ellipse cx="0" cy="0" rx="16" ry="11" fill={ATLAS_COLORS.lymphoid} opacity="0.7" />
-    <ellipse cx="0" cy="0" rx="10" ry="6" fill="#0A0F1A" opacity="0.22" />
-    <ellipse cx="-4" cy="-2" rx="3" ry="2" fill="#fff" opacity="0.5" />
-    <ellipse cx="4" cy="2" rx="3" ry="2" fill="#fff" opacity="0.5" />
+    {/* Afferent vessels - multiple, entering the convex side */}
+    <line x1="-26" y1="-14" x2="-17" y2="-7" stroke={ATLAS_COLORS.lymphoid} strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
+    <line x1="-26" y1="0" x2="-17" y2="0" stroke={ATLAS_COLORS.lymphoid} strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
+    <line x1="-26" y1="14" x2="-17" y2="7" stroke={ATLAS_COLORS.lymphoid} strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
+    {/* Efferent vessel - single, leaving at the hilum (concave side) */}
+    <line x1="17" y1="0" x2="27" y2="0" stroke={ATLAS_COLORS.lymphoid} strokeWidth="3" strokeLinecap="round" opacity="0.8" />
+
+    {/* Capsule + cortex (outer region) */}
+    <ellipse cx="0" cy="0" rx="16" ry="11" fill={ATLAS_COLORS.lymphoid} opacity="0.55" stroke="#123F9E" strokeWidth="1" />
+    {/* Medulla (inner region) */}
+    <ellipse cx="2" cy="0" rx="8" ry="5" fill="#0A0F1A" opacity="0.22" />
+
+    {/* Lymphoid follicles - small dark dots ringing the cortex, where
+       B cells actually cluster and proliferate. This is the detail that
+       makes it read as "a filtering organ with structure" rather than
+       "a blue bean". */}
+    {[[-9, -7], [-11, 0], [-9, 7], [0, -9], [0, 9], [6, -7], [7, 7]].map(([fx, fy], i) => (
+      <circle key={i} cx={fx} cy={fy} r="1.6" fill="#0A1F6B" opacity="0.55" />
+    ))}
   </g>
 );
 
@@ -290,11 +340,12 @@ const atlasFlowArrow = ({ x1, y1, x2, y2, color = ATLAS_COLORS.neutral, dashed =
   );
 };
 
-// Anatomical vessel: outer wall, lumen, inner highlight. `oxygenated` picks
-// the color; `dashed` (used for lymph vessels) gives a broken-line look;
-// `width` scales wall + lumen together. The inner highlight gives the tube
-// its round, three-dimensional read - without it, the vessel looks like a
-// flat ribbon instead of a pipe blood can move through.
+// Anatomical vessel: outer wall, lumen, inner highlight, plus (for wider
+// vessels) a visible endothelial boundary line - the thin inner lining
+// every histology diagram shows as a distinct layer from the muscular
+// wall around it, not just "the edge where the color stops."
+// `oxygenated` picks the color; `dashed` (used for lymph vessels) gives a
+// broken-line look; `width` scales wall + lumen together.
 const atlasVessel = ({
   d,
   oxygenated = true,
@@ -325,6 +376,22 @@ const atlasVessel = ({
         strokeLinecap="round"
         strokeDasharray={dashed ? "10 6" : undefined}
       />
+      {/* Endothelial lining - a thin, slightly darker line just inside the
+         lumen edge, only drawn on vessels wide enough for it to read as a
+         layer rather than noise. This is what separates "a filled tube"
+         from "a vessel wall you can see has structure." */}
+      {width >= 9 && (
+        <path
+          d={d}
+          stroke={dark}
+          strokeWidth={Math.max(1, width * 0.08)}
+          fill="none"
+          strokeLinecap="round"
+          strokeDasharray={dashed ? "10 6" : undefined}
+          opacity="0.35"
+          transform={`translate(0, ${width * 0.32})`}
+        />
+      )}
       {/* Inner highlight - offset upward, gives the tube a 3D round read */}
       <path
         d={d}
@@ -348,9 +415,22 @@ const atlasVessel = ({
 // sits - which is why the left lung reads slightly smaller here.
 const atlasLungs = ({ cx, cy, scale = 1, highlight = false }) => {
   const edge = highlight ? ATLAS_COLORS.trunk : "#B63B2E";
-  const edgeW = highlight ? 2.2 : 1.3;
+  const edgeW = highlight ? 2.6 : 1.3;
   return (
-    <g transform={`translate(${cx},${cy}) scale(${scale})`}>
+    <g transform={`translate(${cx},${cy}) scale(${scale})`} className={highlight ? "atlas-pulse" : undefined}>
+      {/* Soft outer glow pass, behind everything, only when active - same
+         double-layer treatment as atlasHeart, so "this is what we're
+         talking about" reads the same way across every primitive instead
+         of each one inventing its own highlight language. */}
+      {highlight && (
+        <>
+          <path d="M-16,-10 Q-38,-16 -52,0 Q-62,18 -58,38 Q-54,58 -36,66 Q-20,70 -12,54 Q-10,32 -12,10 Q-14,-2 -16,-10 Z"
+            fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="7" opacity="0.3" />
+          <path d="M16,-10 Q38,-16 52,0 Q62,18 58,40 Q52,60 34,66 Q18,68 12,50 Q10,28 12,8 Q14,-2 16,-10 Z"
+            fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="7" opacity="0.3" />
+        </>
+      )}
+
       {/* Trachea - cartilaginous rings drawn as small horizontal lines */}
       <path d="M-6,-64 L-6,-30 L6,-30 L6,-64 Z" fill="#E8E2FF" stroke="#8B7CC7" strokeWidth="1" />
       {[-60, -54, -48, -42, -36].map((y, i) => (
@@ -368,6 +448,18 @@ const atlasLungs = ({ cx, cy, scale = 1, highlight = false }) => {
       <path d="M18,-12 Q30,-4 40,8" fill="none" stroke="#8B7CC7" strokeWidth="1.6" opacity="0.8" />
       <path d="M18,-12 Q28,10 36,28" fill="none" stroke="#8B7CC7" strokeWidth="1.6" opacity="0.8" />
       <path d="M18,-12 Q30,22 40,44" fill="none" stroke="#8B7CC7" strokeWidth="1.4" opacity="0.7" />
+
+      {/* Tertiary bronchioles - the finer terminal branches off each
+         secondary bronchus, the level that actually leads into alveoli.
+         A real lung keeps dividing well past what a secondary bronchus
+         diagram shows; a few terminal hairs here is what makes the
+         branching read as a real airway tree instead of stopping short. */}
+      <path d="M-40,8 Q-45,14 -48,22 M-40,8 Q-42,2 -46,-2" fill="none" stroke="#8B7CC7" strokeWidth="0.8" opacity="0.6" strokeLinecap="round" />
+      <path d="M-34,22 Q-40,28 -44,36 M-34,22 Q-30,28 -32,36" fill="none" stroke="#8B7CC7" strokeWidth="0.7" opacity="0.55" strokeLinecap="round" />
+      <path d="M-34,38 Q-38,46 -40,54 M-34,38 Q-28,44 -28,52" fill="none" stroke="#8B7CC7" strokeWidth="0.7" opacity="0.55" strokeLinecap="round" />
+      <path d="M40,8 Q45,14 48,22 M40,8 Q42,2 46,-2" fill="none" stroke="#8B7CC7" strokeWidth="0.8" opacity="0.6" strokeLinecap="round" />
+      <path d="M36,28 Q42,34 46,42 M36,28 Q30,34 30,42" fill="none" stroke="#8B7CC7" strokeWidth="0.7" opacity="0.55" strokeLinecap="round" />
+      <path d="M40,44 Q44,52 44,60 M40,44 Q34,50 32,58" fill="none" stroke="#8B7CC7" strokeWidth="0.7" opacity="0.55" strokeLinecap="round" />
 
       {/* LEFT LUNG - two lobes (superior + inferior) with the cardiac notch
           on the inner (right) side where the heart sits */}
@@ -398,20 +490,33 @@ const atlasLungs = ({ cx, cy, scale = 1, highlight = false }) => {
       {/* Oblique fissure (between middle and inferior lobes) */}
       <path d="M56,26 Q40,34 20,44" fill="none" stroke="#B63B2E" strokeWidth="0.9" opacity="0.7" />
 
-      {/* Alveoli clusters - small blue dots sprinkled inside each lung */}
+      {/* Alveoli - upgraded from flat dots to small grape-like sacs (a
+         cluster of 3-4 tiny circles instead of one), which is actually
+         what an alveolar sac looks like, at a few representative
+         terminal points, plus the original scattered single dots filling
+         in the rest of the lung field so it doesn't look sparse. */}
+      {[[-44, 36], [-40, 58], [44, 36], [40, 58]].map(([x, y], i) => (
+        <g key={`sac${i}`}>
+          <circle cx={x - 2.5} cy={y} r="2" fill="#2D7BFF" opacity="0.6" />
+          <circle cx={x + 2} cy={y - 2} r="2" fill="#2D7BFF" opacity="0.6" />
+          <circle cx={x + 1.5} cy={y + 2.5} r="2" fill="#2D7BFF" opacity="0.6" />
+          <circle cx={x} cy={y} r="1.6" fill="#1B4FC4" opacity="0.7" />
+        </g>
+      ))}
       {[
-        [-38, 24], [-44, 40], [-30, 50], [-46, 56], [-24, 64],
-        [38, 24], [44, 40], [30, 50], [46, 58], [24, 62],
+        [-30, 50], [-24, 64], [-50, 24],
+        [30, 50], [24, 62], [50, 24],
       ].map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r="2.2" fill="#2D7BFF" opacity="0.65" />
+        <circle key={i} cx={x} cy={y} r="2" fill="#2D7BFF" opacity="0.6" />
       ))}
 
-      {/* Lobe labels - light, unobtrusive, positioned inside the shapes */}
-      <text x="-38" y="6" textAnchor="middle" fontSize="6.5" fill="#5A1810" fontWeight="700">SUP</text>
-      <text x="-34" y="52" textAnchor="middle" fontSize="6.5" fill="#5A1810" fontWeight="700">INF</text>
-      <text x="36" y="0" textAnchor="middle" fontSize="6.5" fill="#5A1810" fontWeight="700">SUP</text>
-      <text x="38" y="20" textAnchor="middle" fontSize="6.5" fill="#5A1810" fontWeight="700">MID</text>
-      <text x="36" y="50" textAnchor="middle" fontSize="6.5" fill="#5A1810" fontWeight="700">INF</text>
+      {/* Lobe labels - bumped from 6.5px, which is unreadable at a glance,
+         up to 8.5px. */}
+      <text x="-38" y="6" textAnchor="middle" fontSize="8.5" fill="#5A1810" fontWeight="700">SUP</text>
+      <text x="-34" y="52" textAnchor="middle" fontSize="8.5" fill="#5A1810" fontWeight="700">INF</text>
+      <text x="36" y="0" textAnchor="middle" fontSize="8.5" fill="#5A1810" fontWeight="700">SUP</text>
+      <text x="38" y="20" textAnchor="middle" fontSize="8.5" fill="#5A1810" fontWeight="700">MID</text>
+      <text x="36" y="50" textAnchor="middle" fontSize="8.5" fill="#5A1810" fontWeight="700">INF</text>
     </g>
   );
 };
@@ -474,9 +579,34 @@ const atlasHeart = ({ cx, cy, scale = 1, highlight = false, onDrill }) => (
     <path d="M-8,-6 Q-14,34 -30,58 Q-44,64 -54,48 Q-64,24 -56,-4 Q-48,-16 -32,-12 Z"
       fill="url(#atlas-grad-erythroid)" stroke="#8C1C12" strokeWidth="1.2" />
 
-    {/* Septum - the muscular wall between left and right */}
+        {/* Septum - the muscular wall between left and right */}
     <path d="M-4,-42 Q-2,4 8,48 L4,54 Q-8,10 -10,-40 Z"
       fill="#2B1A14" opacity="0.28" />
+
+    {/* AV valve leaflets - the actual flaps at the atrio-ventricular junction,
+       not just an implied line between chamber shapes. Drawn closed/at-rest;
+       this primitive doesn't animate open/close (that's what the dedicated
+       cardiac-cycle drill-down is for) - these exist so the junction reads
+       as a real valve, not just where two colors happen to touch. */}
+    <path d="M-2,-12 Q6,-6 14,-10 M-2,-12 Q-8,-4 -18,-9"
+      fill="none" stroke="#5A2E24" strokeWidth="1.6" strokeLinecap="round" opacity="0.85" />
+    <path d="M-16,-12 Q-10,-5 -2,-10 M-16,-12 Q-24,-4 -34,-10"
+      fill="none" stroke="#5A2E24" strokeWidth="1.6" strokeLinecap="round" opacity="0.85" />
+
+    {/* Papillary muscles + chordae tendineae - the cone-shaped muscle
+       stubs inside each ventricle wall, with thin tendon lines running up
+       to the valve leaflets above them. This is the detail a textbook
+       diagram always shows and a simplified one never bothers with. */}
+    <path d="M20,30 Q26,24 24,16 Q22,22 16,26 Z" fill="#8C1C12" opacity="0.5" />
+    <path d="M24,16 L14,-9 M24,16 L-2,-10" fill="none" stroke="#5A2E24" strokeWidth="0.9" opacity="0.7" />
+    <path d="M-28,32 Q-22,24 -24,14 Q-27,21 -34,26 Z" fill="#6B130C" opacity="0.5" />
+    <path d="M-24,14 L-18,-9 M-24,14 L-2,-10" fill="none" stroke="#5A2E24" strokeWidth="0.9" opacity="0.7" />
+
+    {/* Trabeculae carneae - the fine muscular ridging on the inside of each
+       ventricle wall. A few short strokes read as texture without turning
+       into visual noise at this scale. */}
+    <path d="M30,20 Q34,28 30,38 M36,6 Q40,16 36,26" fill="none" stroke="#8C1C12" strokeWidth="0.8" opacity="0.4" strokeLinecap="round" />
+    <path d="M-38,22 Q-44,30 -40,40 M-46,8 Q-52,18 -46,28" fill="none" stroke="#6B130C" strokeWidth="0.8" opacity="0.4" strokeLinecap="round" />
 
     {/* Coronary vessels - a couple of small visible branches on the surface */}
     <path d="M-6,-38 Q-20,-24 -34,6 Q-44,26 -50,40"
@@ -484,31 +614,49 @@ const atlasHeart = ({ cx, cy, scale = 1, highlight = false, onDrill }) => (
     <path d="M2,30 Q14,44 26,52"
       fill="none" stroke="#8C1C12" strokeWidth="1.2" opacity="0.65" strokeLinecap="round" />
 
-    {/* Chamber labels - placed inside each chamber, white for contrast */}
-        <text x="18" y="-26" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">RA</text>
-    <text x="-26" y="-26" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">LA</text>
-    <text x="20" y="26" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">RV</text>
-    <text x="-32" y="26" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fff">LV</text>
+    {/* Chamber labels - placed inside each chamber, white for contrast.
+       Bumped up from 9px/7px - too small to read comfortably while
+       actually studying, especially on a phone. */}
+        <text x="18" y="-26" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="#fff">RA</text>
+    <text x="-26" y="-26" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="#fff">LA</text>
+    <text x="20" y="26" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="#fff">RV</text>
+    <text x="-32" y="26" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="#fff">LV</text>
     {/* Vessel labels - small, near the emerging vessels */}
-    <text x="30" y="-80" textAnchor="middle" fontSize="7" fill="var(--text-2)">SVC</text>
-    <text x="-38" y="-80" textAnchor="middle" fontSize="7" fill="var(--text-2)">Aorta</text>
-    <text x="-4" y="-80" textAnchor="middle" fontSize="7" fill="var(--text-2)">PA</text>
+    <text x="30" y="-80" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">SVC</text>
+    <text x="-38" y="-80" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">Aorta</text>
+    <text x="-4" y="-80" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">PA</text>
 
-    {/* Active ring - drawn as a wider outline of the whole heart */}
+    {/* Active ring - previously a single flat outline, which is easy to miss
+       against a busy illustration. Now a double ring (outer soft glow-width
+       stroke + inner crisp stroke) plus the existing atlas-pulse animation
+       class, so "this is what we're talking about right now" is obvious at
+       a glance instead of a thin line you have to look for. */}
     {highlight && (
-      <path
-        d="M-64,-8
-           Q-72,-42 -46,-58
-           Q-16,-72 0,-42
-           Q16,-72 46,-58
-           Q72,-42 64,-8
-           Q60,26 22,58
-           Q0,76 -22,58
-           Q-60,26 -64,-8 Z"
-        fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="3.5"
-        strokeLinejoin="round" />
+      <g className="atlas-pulse">
+        <path
+          d="M-64,-8
+             Q-72,-42 -46,-58
+             Q-16,-72 0,-42
+             Q16,-72 46,-58
+             Q72,-42 64,-8
+             Q60,26 22,58
+             Q0,76 -22,58
+             Q-60,26 -64,-8 Z"
+          fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="7"
+          strokeLinejoin="round" opacity="0.35" />
+        <path
+          d="M-64,-8
+             Q-72,-42 -46,-58
+             Q-16,-72 0,-42
+             Q16,-72 46,-58
+             Q72,-42 64,-8
+             Q60,26 22,58
+             Q0,76 -22,58
+             Q-60,26 -64,-8 Z"
+          fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="3"
+          strokeLinejoin="round" />
+      </g>
     )}
-
     {/* Drill indicator */}
     {onDrill && <text x="58" y="-46" textAnchor="middle" fontSize="13" fill={ATLAS_COLORS.trunk}>⤢</text>}
   </g>
@@ -526,6 +674,20 @@ const atlasConductionPath = ({ cx, cy, scale = 1 }) => (
     <path d="M-4,20 Q14,32 30,40" stroke={ATLAS_COLORS.trunk} strokeWidth="2.5" fill="none" />
     <path d="M-30,40 Q-40,52 -46,52" stroke={ATLAS_COLORS.trunk} strokeWidth="2" fill="none" opacity="0.75" />
     <path d="M30,40 Q40,52 46,52" stroke={ATLAS_COLORS.trunk} strokeWidth="2" fill="none" opacity="0.75" />
+    {/* Purkinje fiber terminal twigs - the conduction path previously
+       stopped at two simple curves, which reads as "wires" rather than
+       the fine fanning network that actually spreads through the
+       ventricular walls. A few short terminal branches at each end fixes
+       that without turning it into visual noise. */}
+    <path d="M-46,52 Q-52,56 -56,58 M-46,52 Q-50,58 -52,64" stroke={ATLAS_COLORS.trunk} strokeWidth="1.2" fill="none" opacity="0.55" strokeLinecap="round" />
+    <path d="M46,52 Q52,56 56,58 M46,52 Q50,58 52,64" stroke={ATLAS_COLORS.trunk} strokeWidth="1.2" fill="none" opacity="0.55" strokeLinecap="round" />
+
+    {/* Labels - SA/AV node identity was previously only implied by
+       position, with nothing printed on the diagram itself. A student
+       glancing at two pulsing dots with no text has to already know
+       which is which; that defeats the point. */}
+    <text x="-36" y="-44" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="var(--text-2)">SA node</text>
+    <text x="-4" y="-18" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="var(--text-2)">AV node</text>
   </g>
 );
 
@@ -535,7 +697,7 @@ export const DIAGRAMS = {
      HAEMATOPOIESIS — top level
      Topic: Hematology I (hem), Topic 02 (index 1)
      ========================================================= */
-  "hem:haematopoiesis": {
+    "hem:haematopoiesis": {
     id: "hem:haematopoiesis",
     type: "diagram",
     title: "Haematopoiesis — The Complete Tree",
@@ -544,33 +706,41 @@ export const DIAGRAMS = {
     labels: [
       { id: "hsc", name: "Haematopoietic Stem Cell", desc: "The single cell type every blood cell in your body descends from. It can self-renew (make a copy of itself) and differentiate (commit to a lineage) at the same time." },
       { id: "cmp", name: "Common Myeloid Progenitor", desc: "Commits to the myeloid line — red cells, platelets, granulocytes and monocytes. Tap the open-arrow to see this branch in full detail.", drillTo: "hem:haematopoiesis-myeloid" },
-      { id: "clp", name: "Common Lymphoid Progenitor", desc: "Commits to the lymphoid line — B cells, T cells and natural killer cells. These are the cells of adaptive and innate immunity." },
-      { id: "myeloid-leaf", name: "Myeloid-derived cells", desc: "Red cells, platelets, granulocytes and monocytes — all downstream of the common myeloid progenitor. Open the CMP branch to see each one." },
+      { id: "clp", name: "Common Lymphoid Progenitor", desc: "Commits to the lymphoid line — B cells, T cells and natural killer cells." },
+      { id: "myeloid-leaf", name: "Myeloid-derived cells", desc: "Red cells, platelets, granulocytes and monocytes — all downstream of the common myeloid progenitor." },
       { id: "b", name: "B Lymphocytes", desc: "Mature in the bone marrow, produce antibodies once activated." },
       { id: "t", name: "T Lymphocytes", desc: "Mature in the thymus, coordinate and carry out cell-mediated immunity." },
       { id: "nk", name: "Natural Killer Cells", desc: "Innate lymphoid cells that kill virus-infected and tumour cells without needing prior sensitisation." },
+      { id: "liver", name: "Liver (extramedullary site)", desc: "A fetal site of blood production. If the marrow is failing, scarred, or overwhelmed, the liver can restart making blood cells — this is why liver enlargement can be a sign of marrow disease." },
+      { id: "spleen", name: "Spleen (extramedullary site)", desc: "Also a fetal site of blood production, and the other organ that can restart haematopoiesis if the marrow can't keep up — causing a palpable, enlarged spleen." },
     ],
+    // Each line maps directly to one of the 10 real Socratic lesson
+    // steps for this topic, in the same order - step 0 here is step 0
+    // there, step 9 here is step 9 there. Rewritten plain-language per
+    // the earlier jargon pass, not a separate invented summary.
     narration: [
-      "Every second of your life, roughly two million red blood cells die and are replaced. All of it starts with one kind of cell.",
-      "The haematopoietic stem cell can do two things at once — make a copy of itself, and give rise to every blood cell you will ever have.",
-      "Before birth this happens in the yolk sac, then the liver, then finally settles permanently in the bone marrow.",
-      "From the stem cell, two broad progenitor lines branch out — the common myeloid progenitor and the common lymphoid progenitor.",
-      "The myeloid progenitor is the trunk for red cells, platelets, granulocytes and monocytes — the cells of oxygen transport and innate defence.",
-      "The lymphoid progenitor is the trunk for B cells, T cells and natural killer cells — the cells of adaptive and innate immunity.",
-      "Each of these lines branches further into progenitors committed to one or two final cell types.",
-      "Growth factors — EPO, G-CSF, thrombopoietin — act at specific branch points, pushing a progenitor to mature down one path.",
-      "By the time a cell reaches the end of a branch it has lost the ability to become anything else. This is terminal differentiation.",
-      "Tap the myeloid progenitor now to see this branch open up in full detail.",
+      "Every day, your bone marrow replaces billions of worn-out blood cells. All of them start from exactly one kind of cell.",
+      "Every blood cell only lives for weeks or months, so something has to keep making new ones - a single type of cell that never runs out: the stem cell.",
+      "In an adult, this all happens inside the bone marrow. But that wasn't always true - before birth, blood was first made in the yolk sac, then the liver and spleen, before finally settling in the marrow for good.",
+      "This one stem cell can become any blood cell - but it has to decide which. That decision happens at a branch point: it commits to becoming either a myeloid progenitor or a lymphoid progenitor.",
+      "How many cells get made depends on growth factors - signals like EPO for red cells or G-CSF for white cells - telling each branch how hard to work.",
+      "When a growth factor locks onto a progenitor cell, it switches on a relay of proteins inside the cell that carries that message to the nucleus, telling it to divide and mature.",
+      "The myeloid line produces red cells, platelets, and the white cells of your immune system's first response. The lymphoid line produces B cells, T cells, and NK cells - the cells of more targeted defence.",
+      "When any part of this breaks, you get a blood disease - too few cells, too many cells, the wrong kind of cell, missing raw materials, or normal cells destroyed too fast.",
+      "If the marrow can't keep up - because it's failing, scarred, or overwhelmed - the body falls back on the sites it used before birth: the liver and spleen can restart making blood cells.",
+      "Putting it all together: one stem cell, two branches, three mature cell families, all driven by growth factors and kept in balance - until something breaks that balance.",
     ],
     stepFocus: [
-      ["hsc"], ["hsc"], ["hsc"], ["hsc", "cmp", "clp"], ["cmp"], ["clp"], ["cmp", "clp"], ["cmp"], ["b", "t", "nk", "myeloid-leaf"], ["cmp"],
+      ["hsc"], ["hsc"], ["hsc", "liver", "spleen"], ["hsc", "cmp", "clp"], ["cmp", "clp"], ["cmp", "clp"],
+      ["myeloid-leaf", "b", "t", "nk"], ["cmp", "clp"], ["liver", "spleen"], ["hsc", "cmp", "clp", "myeloid-leaf", "b", "t", "nk"],
     ],
-        viewBox: "0 0 900 440",
+    viewBox: "0 0 900 500",
     render: ({ onLabelClick, activeLabelId, activeStep, onOpenDrill, preview }) => {
       const focus = DIAGRAMS["hem:haematopoiesis"].stepFocus[activeStep] || [];
       const c = (id, props) => atlasCell({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
+      const o = (id, props) => atlasOrgan({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
       return (
-        <svg viewBox="0 0 900 440" width="100%" height="100%">
+        <svg viewBox="0 0 900 500" width="100%" height="100%">
           {atlasDefs()}
           {atlasFlow("M450,116 Q350,135 260,152")}
           {atlasFlow("M450,116 Q550,135 640,152")}
@@ -579,23 +749,17 @@ export const DIAGRAMS = {
           {atlasFlow("M640,230 Q625,270 605,300")}
           {atlasFlow("M640,230 Q685,270 710,300")}
 
-          {c("hsc", { cx: 450, cy: 70, r: 46, label: "HSC", sub: "Stem cell", fill: ATLAS_COLORS.nucleus, dim: ATLAS_COLORS.nucleusDim })}
+          {c("hsc", { cx: 450, cy: 70, r: 46, label: "HSC", sub: "Stem cell", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
           {c("cmp", { cx: 260, cy: 190, r: 40, label: "CMP", sub: "Myeloid", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim, onOpenDrill: true })}
           {c("clp", { cx: 640, cy: 190, r: 40, label: "CLP", sub: "Lymphoid", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
 
-          {/* myeloid-leaf: one clickable cluster of illustrated cells, same
-              single label/id as before - red cell, platelet, granulocyte */}
           <g onClick={() => onLabelClick("myeloid-leaf")} style={{ cursor: "pointer" }} className={!preview && focus.includes("myeloid-leaf") ? "atlas-pulse" : ""}>
             <g transform="translate(165,320)">
               <ellipse cx="0" cy="0" rx="24" ry="14" fill="url(#atlas-grad-erythroid)" opacity={activeLabelId === "myeloid-leaf" ? 1 : 0.55} />
               <ellipse cx="0" cy="0" rx="11" ry="6" fill="#F5C7C0" opacity="0.7" />
             </g>
-            <g transform="translate(205,340)">
-              <circle r="10" fill="url(#atlas-grad-trunk)" opacity={activeLabelId === "myeloid-leaf" ? 1 : 0.55} />
-            </g>
-            <g transform="translate(180,355)">
-              <circle r="12" fill="url(#atlas-grad-erythroid)" opacity={activeLabelId === "myeloid-leaf" ? 0.9 : 0.45} />
-            </g>
+            <g transform="translate(205,340)"><circle r="10" fill="url(#atlas-grad-trunk)" opacity={activeLabelId === "myeloid-leaf" ? 1 : 0.55} /></g>
+            <g transform="translate(180,355)"><circle r="12" fill="url(#atlas-grad-erythroid)" opacity={activeLabelId === "myeloid-leaf" ? 0.9 : 0.45} /></g>
             <text x="195" y="390" textAnchor="middle" fontSize="11.5" fontWeight="700" fill={activeLabelId === "myeloid-leaf" ? ATLAS_COLORS.erythroid : "var(--text)"}>Red cells · platelets</text>
             <text x="195" y="402" textAnchor="middle" fontSize="9" fill="var(--text-2)">granulocytes · monocytes</text>
           </g>
@@ -603,6 +767,13 @@ export const DIAGRAMS = {
           {c("b", { cx: 495, cy: 330, r: 28, label: "B cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
           {c("t", { cx: 605, cy: 330, r: 28, label: "T cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
           {c("nk", { cx: 715, cy: 330, r: 28, label: "NK cells", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
+
+          {/* Extramedullary sites - new, for step 8 which previously had
+             nothing on the diagram to point at. Drawn lower and set apart
+             to read as "elsewhere in the body," not part of the marrow tree. */}
+          <line x1="450" y1="400" x2="450" y2="430" stroke={ATLAS_COLORS.neutral} strokeWidth="1.6" strokeDasharray="3 4" opacity="0.4" />
+          {o("liver", { cx: 360, cy: 455, w: 130, h: 60, label: "Liver", fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim })}
+          {o("spleen", { cx: 540, cy: 455, w: 110, h: 60, label: "Spleen", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim })}
         </svg>
       );
     },
@@ -646,7 +817,7 @@ export const DIAGRAMS = {
       const n = (id, props) => atlasNode({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
       return (
         <svg viewBox="0 0 900 380" width="100%" height="100%">
-          {atlasDefs()}
+          
           {atlasLine(450, 90, 260, 160)}
           {atlasLine(450, 90, 640, 160)}
           {atlasLine(260, 220, 180, 280)}
@@ -708,7 +879,7 @@ export const DIAGRAMS = {
       const w = 120, gap = 20, startX = 40, y = 120;
       return (
         <svg viewBox="0 0 900 260" width="100%" height="100%">
-          {atlasDefs()}
+          
           {stages.slice(0, -1).map((s, i) => atlasLine(startX + (i + 1) * (w + gap) - gap, y + 25, startX + (i + 1) * (w + gap), y + 25))}
           {n("epo", { x: 520, y: 30, w: 190, h: 40, label: "EPO", sub: "acts here →", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
           {stages.map((s, i) => n(s.id, {
@@ -790,7 +961,7 @@ export const DIAGRAMS = {
 
       return (
         <svg viewBox="0 0 900 620" width="100%" height="100%">
-          {atlasDefs()}
+          
 
           {/* Lungs */}
           <g style={{ cursor: cur }} onClick={click("system")} filter={hotFilter("system")}>
@@ -1022,7 +1193,7 @@ export const DIAGRAMS = {
 
       return (
         <svg viewBox="0 0 900 560" width="100%" height="100%">
-          {atlasDefs()}
+          
           <path d="M560,60 Q600,40 630,100 L630,170 Q600,160 560,160 Z"
             fill="url(#atlas-grad-lymphoid)" opacity="0.6" {...ring("svc")} style={{ cursor: cur }} onClick={click("svc")} />
           <path d="M560,170 Q520,100 460,70 L460,140 Q520,160 560,230 Z"
@@ -1117,7 +1288,7 @@ export const DIAGRAMS = {
 
       return (
         <svg viewBox="0 0 900 620" width="100%" height="100%">
-          {atlasDefs()}
+          
 
           {/* Blood capillary - the leak source */}
           <g style={{ cursor: cur }} onClick={click("capillary")} filter={hotFilter("capillary")}>
