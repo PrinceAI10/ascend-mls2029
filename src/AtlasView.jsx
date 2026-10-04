@@ -106,6 +106,39 @@ const LEGEND_VIEWBOXES = {
   signs: "0 0 100 100",
   resolution: "0 0 100 100",
   types: "0 0 100 100",
+  // Wound Healing
+  macrophages: "0 0 100 100",
+  granulation: "0 0 100 100",
+  angiogenesis: "0 0 100 100",
+  fibroblasts: "0 0 100 100",
+  epithelialisation: "0 0 100 100",
+  contraction: "0 0 100 100",
+  scar: "0 0 100 100",
+  // Chronic Inflammation
+  cells: "0 0 100 100",
+  lymphocytes: "0 0 100 100",
+  fibrosis: "0 0 100 100",
+  "tissue-damage": "0 0 100 100",
+  granuloma: "0 0 100 100",
+  examples: "0 0 100 100",
+  contrast: "0 0 100 100",
+  // Acquired Immune Response
+  mhc: "0 0 100 100",
+  "helper-t": "0 0 100 100",
+  "b-cell": "0 0 100 100",
+  "plasma-cell": "0 0 100 100",
+  "cytotoxic-t": "0 0 100 100",
+  "lymph-node": "0 0 100 100",
+  // Haemodynamic Disorders
+  normal: "0 0 100 100",
+  thrombus: "0 0 100 100",
+  virchow: "0 0 100 100",
+  embolus: "0 0 100 100",
+  infarction: "0 0 100 100",
+  "infarct-types": "0 0 100 100",
+  haemorrhage: "0 0 100 100",
+  shock: "0 0 100 100",
+  clinical: "0 0 100 100",
 };
 
 const LEGEND_SWATCHES = {
@@ -735,6 +768,444 @@ const LEGEND_SWATCHES = {
       <text x="73" y="48" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">weeks</text>
       <text x="73" y="60" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">to months</text>
       <text x="73" y="76" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="var(--text)">macrophages</text>
+    </g>
+  ),
+
+  // ---- Wound Healing ----
+  // Swatches for the wound-healing diagram. Each mirrors the structure
+  // or concept its tile describes — a phagocytosing macrophage, pink
+  // granulation tissue with new capillaries, capillary budding, a
+  // fibroblast laying down collagen, skin cells closing the surface,
+  // wound-edge arrows pulling inward, and a pale mature scar.
+  macrophages: (active) => (
+    <g>
+      {/* Macrophage body with a lobed nucleus and a bacterium inside,
+         showing the phagocytosing role that gives this phase its name. */}
+      <circle cx="46" cy="50" r="22" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.6" />
+      <path
+        d="M38 44 Q46 40 52 46 Q58 44 58 52 Q56 60 48 60 Q40 62 38 54 Q34 48 38 44 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
+      {/* Engulfed bacterium inside the macrophage */}
+      <ellipse cx="46" cy="58" rx="5" ry="3" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
+      {/* A second bacterium being engulfed at the edge */}
+      <path d="M70,50 Q76,42 82,50 Q76,58 70,50 Z" fill="none" stroke="#8B5CF6" strokeWidth="1.6" />
+      <ellipse cx="78" cy="50" rx="4" ry="2.5" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
+    </g>
+  ),
+  granulation: (active) => (
+    <g>
+      {/* Pink granulation tissue patch with three new capillary loops
+         budding into it — the "new pink tissue" that fills a healing
+         wound from the edges. */}
+      <ellipse cx="50" cy="50" rx="36" ry="26" fill={active ? "#F5A8A0" : "#F8B8B0"} stroke="#B63B2E" strokeWidth="1.6" opacity="0.85" />
+      {[
+        [36, 44], [50, 56], [64, 44]
+      ].map(([px, py], i) => (
+        <path
+          key={i}
+          d={`M${px - 7},${py + 5} Q${px},${py - 7} ${px + 7},${py + 5}`}
+          fill="none" stroke="#E53935" strokeWidth="1.8" strokeLinecap="round"
+        />
+      ))}
+    </g>
+  ),
+  angiogenesis: (active) => (
+    <g>
+      {/* A parent vessel with two new capillary branches budding off
+         it — the "new blood supply" that keeps granulation tissue alive. */}
+      <path d="M14,50 L86,50" stroke="#E53935" strokeWidth="6" strokeLinecap="round" />
+      <path d="M14,50 L86,50" stroke="#F5C7C0" strokeWidth="1.6" strokeLinecap="round" opacity="0.85" />
+      <path d="M42,50 Q38,32 28,22" stroke="#E53935" strokeWidth="3.6" fill="none" strokeLinecap="round" />
+      <path d="M42,50 Q38,32 28,22" stroke="#F5C7C0" strokeWidth="1" fill="none" strokeLinecap="round" opacity="0.85" />
+      <path d="M58,50 Q62,32 72,22" stroke="#E53935" strokeWidth="3.6" fill="none" strokeLinecap="round" />
+      <path d="M58,50 Q62,32 72,22" stroke="#F5C7C0" strokeWidth="1" fill="none" strokeLinecap="round" opacity="0.85" />
+    </g>
+  ),
+  fibroblasts: (active) => (
+    <g>
+      {/* A spindle-shaped fibroblast with collagen threads laid down
+         beneath it — the structural protein that gives the wound its
+         strength. */}
+      <ellipse cx="50" cy="38" rx="20" ry="9" fill={active ? "#C7B8E8" : "#D8C7F0"} stroke="#5B21B6" strokeWidth="1.6" transform="rotate(-15 50 38)" />
+      <circle cx="50" cy="38" r="5" fill="#8B5CF6" opacity="0.85" />
+      {/* Collagen threads below, laid down in a wavy pattern */}
+      {[56, 66, 76].map((y, i) => (
+        <path
+          key={i}
+          d={`M14,${y} Q32,${y - 4} 50,${y} Q68,${y + 4} 86,${y}`}
+          fill="none" stroke="#B8A89E" strokeWidth="1.8" strokeLinecap="round"
+        />
+      ))}
+    </g>
+  ),
+  epithelialisation: (active) => (
+    <g>
+      {/* A wound surface with two layers of skin cells sliding in from
+         the edges, shown as rows of small keratinocyte-like cells
+         meeting in the middle. */}
+      <path d="M14,50 L86,50" stroke="#D89B14" strokeWidth="1.4" strokeDasharray="4 3" opacity="0.7" />
+      {[[24, 42], [34, 42], [44, 42]].map(([px, py], i) => (
+        <circle key={`l${i}`} cx={px} cy={py} r="6" fill="#F5C7C0" stroke="#B63B2E" strokeWidth="1.2" />
+      ))}
+      {[[56, 42], [66, 42], [76, 42]].map(([px, py], i) => (
+        <circle key={`r${i}`} cx={px} cy={py} r="6" fill="#F5C7C0" stroke="#B63B2E" strokeWidth="1.2" />
+      ))}
+      {/* Arrow showing the migration meeting in the middle */}
+      <path d="M40,60 L60,60" stroke="#D89B14" strokeWidth="2" strokeLinecap="round" />
+      <polygon points="60,60 53,56 53,64" fill="#D89B14" />
+      <polygon points="40,60 47,56 47,64" fill="#D89B14" />
+    </g>
+  ),
+  contraction: (active) => (
+    <g>
+      {/* A wound bed with arrows pulling inward from both edges —
+         myofibroblasts shrinking the surface area that has to be
+         covered. */}
+      <rect x="30" y="30" width="40" height="40" rx="6" fill="#FBE9E7" stroke="#B63B2E" strokeWidth="1.6" strokeDasharray="4 3" />
+      <path d="M6,50 L24,50" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="3.2" strokeLinecap="round" />
+      <polygon points="24,50 17,46 17,54" fill={active ? "#F5B93F" : "#C0392B"} />
+      <path d="M94,50 L76,50" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="3.2" strokeLinecap="round" />
+      <polygon points="76,50 83,46 83,54" fill={active ? "#F5B93F" : "#C0392B"} />
+    </g>
+  ),
+  scar: (active) => (
+    <g>
+      {/* A pale, elongated scar with fine collagen lines running mostly
+         parallel to its surface — the mature endpoint of the healing
+         process. */}
+      <ellipse cx="50" cy="50" rx="34" ry="16" fill="#F5E8E0" stroke={active ? "#F5B93F" : "#B8A89E"} strokeWidth="1.8" />
+      {[44, 50, 56].map((y, i) => (
+        <path
+          key={i}
+          d={`M22,${y} Q50,${y - 2} 78,${y}`}
+          fill="none" stroke="#B8A89E" strokeWidth="1.2" strokeLinecap="round" opacity="0.85"
+        />
+      ))}
+    </g>
+  ),
+
+  // ---- Chronic Inflammation ----
+  // Swatches for the chronic inflammation diagram. Each mirrors the
+  // structure or concept its tile describes — the cell change from
+  // neutrophils to macrophages, a cluster of lymphocytes, fibrotic
+  // scar tissue, ongoing tissue destruction, a walled-off granuloma,
+  // a stack of disease examples, and an acute-vs-chronic comparison.
+  cells: (active) => (
+    <g>
+      {/* Two cells side by side: a neutrophil (left, lobed) and a
+         macrophage (right, larger, kidney nucleus). Shows the "cell
+         change" the tile names. */}
+      <circle cx="30" cy="50" r="16" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.4" />
+      <path d="M22 44 Q28 40 34 44 Q38 48 34 54 Q28 58 22 54 Q18 48 22 44 Z" fill="#8B5CF6" opacity="0.78" />
+      <circle cx="70" cy="50" r="20" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.6" />
+      <path d="M62 46 Q68 42 74 46 Q78 52 72 56 Q64 58 62 52 Q60 48 62 46 Z" fill="#8B5CF6" opacity="0.78" />
+      <text x="50" y="86" textAnchor="middle" fontSize="8" fill="var(--text-2)">acute → chronic</text>
+    </g>
+  ),
+  lymphocytes: (active) => (
+    <g>
+      {/* Three lymphocytes clustered — small round cells with large
+         dark nuclei, the adaptive immune cells that accumulate in
+         chronic inflammation. */}
+      <circle cx="36" cy="42" r="14" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="36" cy="42" r="9" fill="#5B21B6" opacity="0.85" />
+      <circle cx="66" cy="44" r="14" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="66" cy="44" r="9" fill="#5B21B6" opacity="0.85" />
+      <circle cx="50" cy="70" r="14" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <circle cx="50" cy="70" r="9" fill="#5B21B6" opacity="0.85" />
+    </g>
+  ),
+  fibrosis: (active) => (
+    <g>
+      {/* A tissue patch with dense parallel collagen strands running
+         through it — the scarring that replaces working tissue in
+         chronic inflammation. */}
+      <ellipse cx="50" cy="50" rx="34" ry="26" fill="#F5E8E0" stroke={active ? "#F5B93F" : "#B8A89E"} strokeWidth="1.6" />
+      {[34, 44, 54, 64].map((y, i) => (
+        <path
+          key={i}
+          d={`M20,${y} Q50,${y - 3} 80,${y}`}
+          fill="none" stroke="#B8A89E" strokeWidth="1.6" strokeLinecap="round" opacity="0.9"
+        />
+      ))}
+    </g>
+  ),
+  "tissue-damage": (active) => (
+    <g>
+      {/* A tissue patch with a jagged red break through the middle —
+         the immune response's own enzymes destroying normal tissue. */}
+      <ellipse cx="50" cy="50" rx="34" ry="26" fill="#FBE9E7" stroke="#B63B2E" strokeWidth="1.6" opacity="0.7" />
+      <path
+        d="M24,34 L38,42 L30,52 L44,58 L36,68 M76,34 L62,42 L70,52 L56,58 L64,68"
+        fill="none" stroke="#C0392B" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"
+      />
+      <path d="M44,58 L56,58" stroke="#8C1C12" strokeWidth="2.4" strokeLinecap="round" />
+    </g>
+  ),
+  granuloma: (active) => (
+    <g>
+      {/* A ring of macrophages (small pale cells with purple nuclei)
+         surrounding a central trapped trigger — the walled-off lesion
+         that contains but does not cure a persistent threat. */}
+      <circle cx="50" cy="50" r="30" fill="none" stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="2.4" strokeDasharray="6 4" opacity="0.85" />
+      {[
+        [50, 22], [78, 50], [50, 78], [22, 50]
+      ].map(([px, py], i) => (
+        <g key={i}>
+          <circle cx={px} cy={py} r="8" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.2" />
+          <path d={`M${px - 3},${py - 2} Q${px},${py - 4} ${px + 3},${py - 2} Q${px + 4},${py + 2} ${px + 1},${py + 3} Q${px - 3},${py + 3} ${px - 3},${py - 2} Z`} fill="#8B5CF6" opacity="0.78" />
+        </g>
+      ))}
+      <circle cx="50" cy="50" r="7" fill="#C0392B" stroke="#8C1C12" strokeWidth="1" />
+    </g>
+  ),
+  examples: (active) => (
+    <g>
+      {/* A stack of small cards — one per common chronic-inflammatory
+         condition. Suggests "a list of examples" without needing to
+         spell them out at tile size. */}
+      <rect x="14" y="22" width="72" height="14" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.4" />
+      <rect x="14" y="42" width="72" height="14" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.4" />
+      <rect x="14" y="62" width="72" height="14" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.4" />
+      <text x="50" y="32" textAnchor="middle" fontSize="6" fill="var(--text-2)">arthritis</text>
+      <text x="50" y="52" textAnchor="middle" fontSize="6" fill="var(--text-2)">atherosclerosis</text>
+      <text x="50" y="72" textAnchor="middle" fontSize="6" fill="var(--text-2)">tuberculosis</text>
+    </g>
+  ),
+  contrast: (active) => (
+    <g>
+      {/* Acute (crimson) vs chronic (purple) — a simple two-column
+         comparison, matching the `types` swatch's layout but tuned for
+         the acute/chronic distinction rather than acute/chronic types
+         of inflammation. */}
+      <rect x="6" y="22" width="40" height="58" rx="8" fill={active ? "rgba(192,57,43,.22)" : "rgba(192,57,43,.1)"} stroke="#C0392B" strokeWidth="1.6" />
+      <text x="26" y="38" textAnchor="middle" fontSize="7.5" fontWeight="800" fill="#C0392B">ACUTE</text>
+      <text x="26" y="54" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">days</text>
+      <text x="26" y="68" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">neutrophils</text>
+      <rect x="54" y="22" width="40" height="58" rx="8" fill={active ? "rgba(139,92,246,.22)" : "rgba(139,92,246,.1)"} stroke="#8B5CF6" strokeWidth="1.6" />
+      <text x="74" y="38" textAnchor="middle" fontSize="7.5" fontWeight="800" fill="#8B5CF6">CHRONIC</text>
+      <text x="74" y="54" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">months</text>
+      <text x="74" y="68" textAnchor="middle" fontSize="6.5" fill="var(--text-2)">macrophages</text>
+    </g>
+  ),
+
+  // ---- Acquired Immune Response ----
+  // Swatches for the adaptive-immune-response diagram. Each mirrors
+  // the structure or concept its tile describes — the MHC display
+  // molecule, a helper T cell, a B cell, a plasma cell, a cytotoxic
+  // T cell, and a lymph node.
+  mhc: (active) => (
+    <g>
+      {/* Y-shaped MHC molecule on a cell surface, holding an antigen
+         fragment in its binding groove. */}
+      <path
+        d="M50,70 L50,50 M50,50 L36,34 M50,50 L64,34"
+        stroke={active ? "#F5B93F" : "#8B5CF6"} strokeWidth="5"
+        fill="none" strokeLinecap="round" strokeLinejoin="round"
+      />
+      <polygon points="30,28 42,28 36,16" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.8" />
+      <polygon points="58,28 70,28 64,16" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.8" />
+      <path d="M20,76 L80,76" stroke="#8B5CF6" strokeWidth="2" opacity="0.6" />
+    </g>
+  ),
+  "helper-t": (active) => (
+    <g>
+      {/* Helper T cell — a large white cell with a lobed nucleus and
+         a small "Th" tag to distinguish it from the other T-cell
+         types at a glance. */}
+      <circle cx="50" cy="50" r="28" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.8" />
+      <path
+        d="M38 42 Q48 38 55 44 Q62 42 64 52 Q62 62 52 62 Q42 64 38 54 Q34 46 38 42 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
+      <text x="50" y="90" textAnchor="middle" fontSize="11" fontWeight="800" fill={active ? "#F5B93F" : "#8B5CF6"}>Th</text>
+    </g>
+  ),
+  "b-cell": (active) => (
+    <g>
+      {/* B cell — white cell with a lobed nucleus and a small "B" tag,
+         plus two small receptor Y-shapes on the surface (the B cell
+         receptor) to distinguish it from the other white cells. */}
+      <circle cx="50" cy="50" r="26" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.8" />
+      <path
+        d="M40 44 Q48 40 54 46 Q60 44 60 52 Q58 60 50 60 Q42 62 40 54 Q36 48 40 44 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
+      <path d="M26 32 L26 24 M26 24 L22 20 M26 24 L30 20" stroke="#8B5CF6" strokeWidth="2" fill="none" strokeLinecap="round" />
+      <path d="M74 32 L74 24 M74 24 L70 20 M74 24 L78 20" stroke="#8B5CF6" strokeWidth="2" fill="none" strokeLinecap="round" />
+      <text x="50" y="90" textAnchor="middle" fontSize="11" fontWeight="800" fill={active ? "#F5B93F" : "#8B5CF6"}>B</text>
+    </g>
+  ),
+  "plasma-cell": (active) => (
+    <g>
+      {/* Plasma cell — a larger, rounder B cell with an eccentric
+         nucleus and a stream of small Y-shaped antibodies being
+         released to the right. */}
+      <circle cx="40" cy="50" r="28" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.8" />
+      <circle cx="40" cy="50" r="14" fill="#8B5CF6" opacity="0.78" />
+      {[[74, 36], [82, 50], [74, 64]].map(([ax, ay], i) => (
+        <path
+          key={i}
+          d={`M${ax - 8},${ay} L${ax},${ay} M${ax},${ay} L${ax + 4},${ay - 5} M${ax},${ay} L${ax + 4},${ay + 5}`}
+          stroke="#8B5CF6" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round"
+        />
+      ))}
+    </g>
+  ),
+  "cytotoxic-t": (active) => (
+    <g>
+      {/* Cytotoxic T cell — a white cell with a lobed nucleus, a small
+         "Tc" tag, and a "killer" starburst effect to distinguish it
+         from the helper T cell. */}
+      <circle cx="50" cy="50" r="26" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.8" />
+      <path
+        d="M40 44 Q48 40 54 46 Q60 44 60 52 Q58 60 50 60 Q42 62 40 54 Q36 48 40 44 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
+      {[[-1, 0], [1, 0], [0, -1], [0, 1]].map(([dx, dy], i) => (
+        <line
+          key={i}
+          x1={50 + dx * 26}
+          y1={50 + dy * 26}
+          x2={50 + dx * 34}
+          y2={50 + dy * 34}
+          stroke="#C0392B"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+        />
+      ))}
+      <text x="50" y="90" textAnchor="middle" fontSize="11" fontWeight="800" fill={active ? "#F5B93F" : "#8B5CF6"}>Tc</text>
+    </g>
+  ),
+  "lymph-node": (active) => (
+    <g>
+      {/* Lymph node — bean shape with internal follicles, afferent and
+         efferent vessels. Same visual family as the `lymphnode` swatch
+         from the immune system diagram, but scaled and detailed to
+         show the vessels. */}
+      <line x1="14" y1="34" x2="28" y2="42" stroke="#2D7BFF" strokeWidth="2" strokeLinecap="round" opacity="0.7" />
+      <line x1="14" y1="50" x2="28" y2="50" stroke="#2D7BFF" strokeWidth="2" strokeLinecap="round" opacity="0.7" />
+      <line x1="14" y1="66" x2="28" y2="58" stroke="#2D7BFF" strokeWidth="2" strokeLinecap="round" opacity="0.7" />
+      <line x1="72" y1="50" x2="86" y2="50" stroke="#2D7BFF" strokeWidth="2.4" strokeLinecap="round" opacity="0.8" />
+      <ellipse cx="50" cy="50" rx="24" ry="16" fill={active ? "#2D7BFF" : ATLAS_COLORS.lymphoid} opacity="0.7" stroke="#123F9E" strokeWidth="1.2" />
+      <ellipse cx="50" cy="50" rx="12" ry="7" fill="#0A0F1A" opacity="0.22" />
+      {[[38, 44], [40, 50], [38, 56], [50, 42], [50, 58], [60, 44], [60, 56]].map(([fx, fy], i) => (
+        <circle key={i} cx={fx} cy={fy} r="1.6" fill="#0A1F6B" opacity="0.55" />
+      ))}
+    </g>
+  ),
+
+  // ---- Haemodynamic Disorders ----
+  // Swatches for the haemodynamic disorders diagram. Each mirrors the
+  // structure or concept its tile describes — laminar flow, a wall-
+  // anchored thrombus, Virchow's triad, a travelling embolus, an
+  // infarct wedge, the two types of infarct, a vessel rupture, shock,
+  // and clinical examples.
+  normal: (active) => (
+    <g>
+      {/* Laminar flow — a smooth vessel with streamlined red cells
+         travelling through in neat parallel lines. */}
+      <path d="M10,42 L90,42" stroke="#E53935" strokeWidth="14" strokeLinecap="round" />
+      <path d="M10,42 L90,42" stroke="#F5C7C0" strokeWidth="3" strokeLinecap="round" opacity="0.85" transform="translate(0,-3)" />
+      {[20, 40, 60, 80].map((x, i) => (
+        <ellipse key={i} cx={x} cy="42" rx="4" ry="2.5" fill="#8C1C12" opacity="0.7" />
+      ))}
+      <text x="50" y="68" textAnchor="middle" fontSize="7" fill="var(--text-2)">laminar flow</text>
+    </g>
+  ),
+  thrombus: (active) => (
+    <g>
+      {/* A wall-anchored clot inside a vessel, with lines of Zahn. */}
+      <path d="M10,50 L90,50" stroke="#E53935" strokeWidth="20" strokeLinecap="round" />
+      <path d="M10,50 L90,50" stroke="#F5C7C0" strokeWidth="3" strokeLinecap="round" opacity="0.7" transform="translate(0,-6)" />
+      <path
+        d="M28,60 Q42,32 58,40 Q74,44 76,58 Z"
+        fill="#8C1C12" stroke={active ? "#F5B93F" : "#5A1810"} strokeWidth="1.6"
+      />
+      {[40, 52, 64].map((x, i) => (
+        <path key={i} d={`M${x},56 Q${x + 2},48 ${x},42`} stroke="#F5C7C0" strokeWidth="1" fill="none" opacity="0.65" strokeLinecap="round" />
+      ))}
+      <line x1="40" y1="60" x2="40" y2="66" stroke="#5A1810" strokeWidth="1.4" strokeLinecap="round" />
+      <line x1="60" y1="58" x2="60" y2="64" stroke="#5A1810" strokeWidth="1.4" strokeLinecap="round" />
+    </g>
+  ),
+  virchow: (active) => (
+    <g>
+      {/* Three stacked labels representing Virchow's triad. */}
+      <rect x="10" y="12" width="80" height="20" rx="4" fill={active ? "rgba(245,185,63,.22)" : "rgba(245,185,63,.1)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.4" />
+      <text x="50" y="26" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="var(--text)">1. Stasis</text>
+      <rect x="10" y="40" width="80" height="20" rx="4" fill={active ? "rgba(245,185,63,.22)" : "rgba(245,185,63,.1)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.4" />
+      <text x="50" y="54" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="var(--text)">2. Injury</text>
+      <rect x="10" y="68" width="80" height="20" rx="4" fill={active ? "rgba(245,185,63,.22)" : "rgba(245,185,63,.1)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.4" />
+      <text x="50" y="82" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="var(--text)">3. Hypercoagulable</text>
+    </g>
+  ),
+  embolus: (active) => (
+    <g>
+      {/* A lumpy thrombus fragment travelling downstream, motion lines
+         behind it. */}
+      <path d="M10,52 L90,52" stroke="#E53935" strokeWidth="18" strokeLinecap="round" opacity="0.55" />
+      <path
+        d="M48,42 Q60,34 72,40 Q80,46 74,58 Q64,64 54,58 Q46,52 48,42 Z"
+        fill="#8C1C12" stroke={active ? "#F5B93F" : "#5A1810"} strokeWidth="1.6"
+      />
+      <line x1="38" y1="46" x2="24" y2="46" stroke={active ? "#F5B93F" : "#5A1810"} strokeWidth="1.6" strokeLinecap="round" opacity="0.7" />
+      <line x1="36" y1="52" x2="18" y2="52" stroke={active ? "#F5B93F" : "#5A1810"} strokeWidth="1.6" strokeLinecap="round" opacity="0.6" />
+      <line x1="38" y1="58" x2="24" y2="58" stroke={active ? "#F5B93F" : "#5A1810"} strokeWidth="1.6" strokeLinecap="round" opacity="0.5" />
+    </g>
+  ),
+  infarction: (active) => (
+    <g>
+      {/* A wedge-shaped pale infarct at the end of a blocked vessel. */}
+      <path d="M22,20 L22,80" stroke="#E53935" strokeWidth="8" strokeLinecap="round" opacity="0.7" />
+      <path d="M22,30 Q50,30 78,26 L70,74 Q50,70 22,74 Z" fill="#F5E8E0" stroke="#B63B2E" strokeWidth="1.6" />
+      <text x="50" y="56" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#B63B2E">infarct</text>
+    </g>
+  ),
+  "infarct-types": (active) => (
+    <g>
+      {/* White infarct (left) and red infarct (right), side by side. */}
+      <path d="M14,30 L14,72" stroke="#E53935" strokeWidth="6" strokeLinecap="round" opacity="0.7" />
+      <path d="M14,36 Q32,36 44,32 L40,68 Q30,66 14,66 Z" fill="#F5E8E0" stroke="#B63B2E" strokeWidth="1.4" />
+      <text x="30" y="82" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#B63B2E">white</text>
+      <path d="M56,30 L56,72" stroke="#E53935" strokeWidth="6" strokeLinecap="round" opacity="0.7" />
+      <path d="M56,36 Q74,36 86,32 L82,68 Q72,66 56,66 Z" fill="#E53935" stroke="#8C1C12" strokeWidth="1.4" opacity="0.8" />
+      <text x="72" y="82" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#C0392B">red</text>
+    </g>
+  ),
+  haemorrhage: (active) => (
+    <g>
+      {/* A vessel with a break, blood escaping downward. */}
+      <path d="M10,34 L90,34" stroke="#E53935" strokeWidth="12" strokeLinecap="round" />
+      <path d="M50,40 L50,52" stroke="#8C1C12" strokeWidth="5" strokeLinecap="round" />
+      {[[44, 62], [56, 70], [40, 78], [60, 84]].map(([dx, dy], i) => (
+        <ellipse key={i} cx={dx} cy={dy} rx="5" ry="3.5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.6" />
+      ))}
+    </g>
+  ),
+  shock: (active) => (
+    <g>
+      {/* A small body outline with faded/blue extremities — the visual
+         shorthand for whole-body hypoperfusion. */}
+      <circle cx="50" cy="24" r="10" fill="#F5C7C0" stroke="#B63B2E" strokeWidth="1.4" />
+      <path d="M40,38 Q50,34 60,38 L58,72 Q50,76 42,72 Z" fill="#F5C7C0" stroke="#B63B2E" strokeWidth="1.4" />
+      <circle cx="26" cy="50" r="6" fill="#2F6FED" opacity="0.6" />
+      <circle cx="74" cy="50" r="6" fill="#2F6FED" opacity="0.6" />
+      <text x="50" y="90" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#2F6FED">shock</text>
+    </g>
+  ),
+  clinical: (active) => (
+    <g>
+      {/* Four labelled bars — the four big killers this topic covers. */}
+      <rect x="14" y="14" width="72" height="16" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="25" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="var(--text)">MI</text>
+      <rect x="14" y="34" width="72" height="16" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="45" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="var(--text)">stroke</text>
+      <rect x="14" y="54" width="72" height="16" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="65" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="var(--text)">DVT</text>
+      <rect x="14" y="74" width="72" height="16" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="85" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="var(--text)">PE</text>
     </g>
   ),
 };

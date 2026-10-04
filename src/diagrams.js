@@ -851,6 +851,7 @@ const atlasInflammationScene = ({
   recruitment = false,
   phagocytosis = false,
   resolution = false,
+  chronic = false,
   highlight = false,
 }) => {
   const x0 = cx - width / 2;
@@ -975,6 +976,407 @@ const atlasInflammationScene = ({
           <text x={cx} y={y0 + height - 10} textAnchor="middle" fontSize="9" fontWeight="700" fill="#16A34A">tissue repaired</text>
         </g>
       )}
+
+      {/* Chronic mode — swap the fast neutrophil swarms for a denser,
+         mixed infiltrate of macrophages and lymphocytes, and add a
+         thickened fibrotic rim around the inflamed tissue. That rim
+         is what "chronic" looks like: the body walls off something it
+         can't clear, and the wall itself becomes part of the problem. */}
+      {chronic && (
+        <g>
+          {/* Fibrotic rim — a wavy band around the tissue edge */}
+          <path
+            d={`M${cx - width * 0.42},${cy - height * 0.38}
+                Q${cx},${cy - height * 0.55} ${cx + width * 0.42},${cy - height * 0.38}`}
+            fill="none" stroke="#8B5CF6" strokeWidth="4" opacity="0.55" strokeLinecap="round"
+          />
+          <path
+            d={`M${cx - width * 0.42},${cy + height * 0.38}
+                Q${cx},${cy + height * 0.55} ${cx + width * 0.42},${cy + height * 0.38}`}
+            fill="none" stroke="#8B5CF6" strokeWidth="4" opacity="0.55" strokeLinecap="round"
+          />
+          {/* Dense mixed infiltrate — macrophages and lymphocytes
+             scattered through the tissue. Macrophages = purple nucleus
+             with a kidney shape; lymphocytes = small round dark dot. */}
+          {[
+            [x0 + 50, y0 + 50], [x0 + 90, y0 + 80], [x0 + 60, y0 + 130],
+            [x0 + 140, y0 + 55], [x0 + 180, y0 + 95], [x0 + 160, y0 + 145],
+            [x0 + 220, y0 + 60], [x0 + 250, y0 + 110], [x0 + 230, y0 + 155],
+            [x0 + 110, y0 + 165],
+          ].map(([mx, my], i) => i % 2 === 0 ? (
+            <g key={`m${i}`}>
+              <circle cx={mx} cy={my} r="7" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.2" />
+              <path
+                d={`M${mx - 3},${my - 2} Q${mx},${my - 4} ${mx + 3},${my - 2} Q${mx + 4},${my + 2} ${mx + 1},${my + 3} Q${mx - 3},${my + 3} ${mx - 3},${my - 2} Z`}
+                fill="#8B5CF6" opacity="0.78"
+              />
+            </g>
+          ) : (
+            <circle key={`l${i}`} cx={mx} cy={my} r="5" fill="#5B21B6" opacity="0.85" />
+          ))}
+        </g>
+      )}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Wound healing scene — a slice of tissue with a wound in the      */
+/* middle, drawn so that each phase of healing can be shown by      */
+/* toggling one of the boolean props. The four phases are the       */
+/* standard healing arc: hemostasis (clot forms), inflammation     */
+/* (cleanup by neutrophils/macrophages), proliferation (new tissue  */
+/* grows in from the edges), and remodelling (collagen reorganises  */
+/* and the scar matures). Used by any pathology diagram that        */
+/* needs to show the healing process, and reused by pat:7 (Wound    */
+/* Healing) and any later topic that follows on from inflammation.  */
+/* ---------------------------------------------------------------- */
+const atlasWoundScene = ({
+  cx, cy, width = 260, height = 200,
+  hemostasis = false,
+  inflammation = false,
+  proliferation = false,
+  remodelling = false,
+  highlight = false,
+}) => {
+  const x0 = cx - width / 2;
+  const y0 = cy - height / 2;
+  const woundW = 90;
+  const woundH = 50;
+  const edge = highlight ? ATLAS_COLORS.trunk : "#B63B2E";
+  const edgeW = highlight ? 2.2 : 1.4;
+
+  // The wound gap is the central rectangle. Its visual state changes
+  // through the four phases:
+  //  - hemostasis:    the gap is filled with a dark red clot
+  //  - inflammation:  neutrophils (white cells) swarm around it
+  //  - proliferation: fresh granulation tissue fills from the edges
+  //  - remodelling:   the wound shrinks and a pale scar forms
+  return (
+    <g className={highlight ? "atlas-pulse" : undefined}>
+      {/* Healthy tissue around the wound — a warm pink patch, no hard
+         edges, so it reads as living tissue rather than a rectangle. */}
+      <ellipse cx={cx} cy={cy} rx={width * 0.55} ry={height * 0.55} fill="#FBE9E7" opacity="0.4" />
+      <ellipse cx={cx} cy={cy} rx={width * 0.5} ry={height * 0.5} fill="none" stroke={edge} strokeWidth={edgeW} strokeDasharray="6 6" opacity="0.4" />
+
+      {/* The wound itself — a rectangle gap in the tissue. Its size
+         shrinks as the phases progress (remodelling is smaller than
+         the initial gap), so the shape alone shows healing. */}
+      {(() => {
+        const gw = remodelling ? woundW * 0.45 : woundW;
+        const gh = remodelling ? woundH * 0.4 : woundH;
+        const gx = cx - gw / 2;
+        const gy = cy - gh / 2;
+        return (
+          <>
+            {/* Open wound interior — dark red */
+}
+            <rect
+              x={gx} y={gy} width={gw} height={gh} rx="6"
+              fill={proliferation ? "#F5C7C0" : remodelling ? "#FBE9E7" : "#8C1C12"}
+              stroke={remodelling ? "#B63B2E" : "#5A1810"}
+              strokeWidth="1.6"
+            />
+
+            {/* Hemostasis — a dark red clot filling the wound, with
+               fibrin threads crossing it and platelets at the edges. */}
+            {hemostasis && (
+              <g>
+                <rect
+                  x={gx + 4} y={gy + 4} width={gw - 8} height={gh - 8} rx="4"
+                  fill="#5A1810" opacity="0.85"
+                />
+                {[[gx + 12, gy + gh * 0.3], [gx + 20, gy + gh * 0.7], [gx + gw - 14, gy + gh * 0.4], [gx + gw - 22, gy + gh * 0.7]].map(([px, py], i) => (
+                  <ellipse key={i} cx={px} cy={py} rx="4" ry="2.5" fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="0.6" />
+                ))}
+                <path
+                  d={`M${gx + 8},${gy + gh * 0.5} L${gx + gw - 8},${gy + gh * 0.4}
+                      M${gx + 12},${gy + gh * 0.3} L${gx + gw - 16},${gy + gh * 0.7}
+                      M${gx + 16},${gy + gh * 0.75} L${gx + gw - 12},${gy + gh * 0.3}`}
+                  stroke={ATLAS_COLORS.trunk} strokeWidth="0.9" opacity="0.7" fill="none"
+                />
+              </g>
+            )}
+
+            {/* Inflammation — neutrophils and macrophages swarming in
+               from the tissue around the wound, phagocytosing debris. */}
+            {inflammation && (
+              <g>
+                {[
+                  [gx - 12, gy + gh * 0.3],
+                  [gx - 14, gy + gh * 0.7],
+                  [gx + gw + 12, gy + gh * 0.35],
+                  [gx + gw + 14, gy + gh * 0.7],
+                  [gx + gw * 0.3, gy - 12],
+                  [gx + gw * 0.7, gy - 12],
+                ].map(([px, py], i) => (
+                  <g key={i}>
+                    <circle cx={px} cy={py} r="8" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.2" />
+                    <path
+                      d={`M${px - 4},${py - 3} Q${px - 1},${py - 5} ${px + 2},${py - 3} Q${px + 5},${py - 1} ${px + 3},${py + 2} Q${px},${py + 4} ${px - 3},${py + 2} Q${px - 5},${py - 1} ${px - 4},${py - 3} Z`}
+                      fill="#8B5CF6" opacity="0.78"
+                    />
+                  </g>
+                ))}
+              </g>
+            )}
+
+            {/* Proliferation — pink granulation tissue filling in from
+               the wound edges, with new capillary loops budding into it.
+               Dotted arrows at the edges show the tissue growing inward. */}
+            {proliferation && (
+              <g>
+                {/* Granulation tissue growing from each edge */}
+                <path
+                  d={`M${gx},${gy + 4} Q${gx + gw * 0.3},${gy + gh * 0.5} ${gx},${gy + gh - 4} Z`}
+                  fill="#F5A8A0" opacity="0.75"
+                />
+                <path
+                  d={`M${gx + gw},${gy + 4} Q${gx + gw * 0.7},${gy + gh * 0.5} ${gx + gw},${gy + gh - 4} Z`}
+                  fill="#F5A8A0" opacity="0.75"
+                />
+                {/* New capillary loops budding in — small red arcs */}
+                {[
+                  [gx + gw * 0.25, gy + gh * 0.5],
+                  [gx + gw * 0.5, gy + gh * 0.5],
+                  [gx + gw * 0.75, gy + gh * 0.5],
+                ].map(([px, py], i) => (
+                  <path
+                    key={i}
+                    d={`M${px - 6},${py + 4} Q${px},${py - 6} ${px + 6},${py + 4}`}
+                    fill="none" stroke="#E53935" strokeWidth="1.4" strokeLinecap="round"
+                  />
+                ))}
+              </g>
+            )}
+
+            {/* Remodelling — the wound is now a smaller pale scar, with
+               collagen threads (fine pale lines) reorganising inside it. */}
+            {remodelling && (
+              <g>
+                <rect
+                  x={gx + 2} y={gy + 2} width={gw - 4} height={gh - 4} rx="4"
+                  fill="#F5E8E0" stroke="#D8C8BE" strokeWidth="1"
+                />
+                {/* Collagen threads — thin wavy pale lines running mostly
+                   parallel to the wound surface, as a real scar does. */}
+                <path
+                  d={`M${gx + 4},${gy + gh * 0.35} Q${gx + gw * 0.5},${gy + gh * 0.3} ${gx + gw - 4},${gy + gh * 0.35}
+                      M${gx + 4},${gy + gh * 0.55} Q${gx + gw * 0.5},${gy + gh * 0.5} ${gx + gw - 4},${gy + gh * 0.55}
+                      M${gx + 4},${gy + gh * 0.75} Q${gx + gw * 0.5},${gy + gh * 0.7} ${gx + gw - 4},${gy + gh * 0.75}`}
+                  fill="none" stroke="#B8A89E" strokeWidth="1.1" opacity="0.85" strokeLinecap="round"
+                />
+              </g>
+            )}
+          </>
+        );
+      })()}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Antigen-presenting cell — a dendritic cell or macrophage that    */
+/* has engulfed a threat, chopped it up, and is displaying a        */
+/* fragment of it on its surface inside an MHC molecule. This is    */
+/* the bridge between innate and adaptive immunity — the moment     */
+/* the innate response hands a threat over to T cells. Drawn with   */
+/* the MHC molecule as a Y-shaped surface receptor holding a small  */
+/* red antigen fragment, plus antigen fragments visible on the      */
+/* cell membrane itself. Used by any immune / pathology diagram     */
+/* that needs to show antigen presentation.                          */
+/* ---------------------------------------------------------------- */
+const atlasAPC = ({
+  cx, cy, r = 26,
+  presenting = true,
+  highlight = false,
+}) => {
+  const edge = highlight ? ATLAS_COLORS.trunk : "#8B5CF6";
+  return (
+    <g className={highlight ? "atlas-pulse" : undefined}>
+      {/* Cell body with the same lobed-nucleus treatment as atlasWhiteCell,
+         so the APC reads as a member of the same visual family. */}
+      <circle cx={cx} cy={cy} r={r} fill="#F3F1FF" stroke={edge} strokeWidth={highlight ? 2.4 : 1.6} />
+      <path
+        d={`M${cx - r * 0.5},${cy - r * 0.35}
+            Q${cx - r * 0.1},${cy - r * 0.6} ${cx + r * 0.3},${cy - r * 0.4}
+            Q${cx + r * 0.55},${cy - r * 0.05} ${cx + r * 0.35},${cy + r * 0.3}
+            Q${cx + r * 0.05},${cy + r * 0.55} ${cx - r * 0.3},${cy + r * 0.4}
+            Q${cx - r * 0.6},${cy + r * 0.1} ${cx - r * 0.5},${cy - r * 0.35} Z`}
+        fill="#8B5CF6" opacity="0.78"
+      />
+
+      {/* Dendritic processes — short spiky projections on the surface,
+         the visual signature of a dendritic cell. */}
+      {[[-1, -0.7], [1, -0.7], [-1.1, 0.2], [1.1, 0.2], [-0.7, 1], [0.7, 1]].map(([dx, dy], i) => (
+        <line
+          key={i}
+          x1={cx + dx * r * 0.9}
+          y1={cy + dy * r * 0.9}
+          x2={cx + dx * r * 1.35}
+          y2={cy + dy * r * 1.35}
+          stroke={edge}
+          strokeWidth="2"
+          strokeLinecap="round"
+          opacity="0.85"
+        />
+      ))}
+
+      {/* MHC molecule presenting antigen — a small Y-shaped surface
+         receptor on the top-right of the cell, holding a red
+         antigen fragment in its binding groove. This is what a T cell
+         actually "sees" when it recognises the APC. */}
+      {presenting && (
+        <g transform={`translate(${cx + r * 0.6}, ${cy - r * 0.55})`}>
+          {/* MHC body — Y-shaped, like a small antibody anchored to the cell */}
+          <path
+            d="M0,0 L0,-10 M0,-10 L-7,-18 M0,-10 L7,-18"
+            stroke={edge}
+            strokeWidth="3"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          {/* Antigen fragment — a small red triangle held in the binding groove */}
+          <polygon
+            points="-9,-20 -3,-20 -6,-27"
+            fill="#C0392B"
+            stroke="#8C1C12"
+            strokeWidth="0.8"
+          />
+          <text x="-16" y="-22" fontSize="6.5" fontWeight="700" fill="#C0392B" textAnchor="end">ag</text>
+        </g>
+      )}
+
+      {/* A few antigen fragments scattered on the cell surface — the
+         leftovers from the digestion, still displayed in other MHC
+         molecules. Shown as small red triangles on the membrane. */}
+      {[[-0.5, -0.85], [0.1, -1.05], [0.55, -0.8]].map(([dx, dy], i) => (
+        <polygon
+          key={i}
+          points={`${cx + dx * r - 3},${cy + dy * r} ${cx + dx * r + 3},${cy + dy * r} ${cx + dx * r},${cy + dy * r - 6}`}
+          fill="#C0392B"
+          stroke="#8C1C12"
+          strokeWidth="0.6"
+        />
+      ))}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Thrombus — a clot that has formed inside a vessel while blood    */
+/* is still flowing past it. Drawn as a layered mass anchored to    */
+/* one wall, with the layers (lines of Zahn) that a real antemortem */
+/* thrombus shows on cut section. `occlusive` widens the mass to    */
+/* block the whole lumen; `attached` keeps it wall-anchored (as a   */
+/* true thrombus always is); `embolised` fades the base to show     */
+/* it has broken off and moved on. Used by any pathology diagram    */
+/* that needs to show thrombosis or its complications.               */
+/* ---------------------------------------------------------------- */
+const atlasThrombus = ({
+  cx, cy, length = 80, thickness = 24,
+  occlusive = false,
+  embolised = false,
+  highlight = false,
+}) => {
+  const edge = highlight ? ATLAS_COLORS.trunk : "#8C1C12";
+  // Build the thrombus as a lumpy polygon so it reads as an organic
+  // clot, not a rectangle. Anchored to the bottom wall (positive y).
+  const halfL = length / 2;
+  const th = occlusive ? thickness : thickness * 0.65;
+  return (
+    <g className={highlight ? "atlas-pulse" : undefined}>
+      {/* Body of the clot — a layered, lumpy mass with visible lines of
+         Zahn (the alternating pale/dark bands a real thrombus shows). */}
+      <path
+        d={`M${cx - halfL},${cy + th / 2}
+            Q${cx - halfL * 0.6},${cy - th * 0.4} ${cx - halfL * 0.2},${cy - th * 0.6}
+            Q${cx + halfL * 0.2},${cy - th * 0.7} ${cx + halfL * 0.5},${cy - th * 0.5}
+            Q${cx + halfL * 0.85},${cy - th * 0.2} ${cx + halfL},${cy + th / 2}
+            Z`}
+        fill={embolised ? "url(#atlas-grad-erythroid)" : "#8C1C12"}
+        stroke={edge}
+        strokeWidth={highlight ? 2.4 : 1.4}
+        opacity={embolised ? 0.45 : 1}
+      />
+      {/* Lines of Zahn — pale wavy bands running through the clot. */}
+      {[0.25, 0.5, 0.75].map((frac, i) => (
+        <path
+          key={i}
+          d={`M${cx - halfL + length * frac},${cy + th * 0.3}
+              Q${cx - halfL + length * frac + 4},${cy - th * 0.05}
+              ${cx - halfL + length * frac},${cy - th * 0.35}`}
+          fill="none" stroke="#F5C7C0" strokeWidth="1.4" opacity="0.65" strokeLinecap="round"
+        />
+      ))}
+      {/* Attachment marker — small tether lines into the vessel wall
+         below. Faded if the thrombus has embolised. */}
+      {!embolised && (
+        <g opacity="0.7">
+          <line x1={cx - halfL * 0.5} y1={cy + th / 2} x2={cx - halfL * 0.5} y2={cy + th / 2 + 6} stroke="#5A1810" strokeWidth="1.6" strokeLinecap="round" />
+          <line x1={cx + halfL * 0.4} y1={cy + th / 2} x2={cx + halfL * 0.4} y2={cy + th / 2 + 6} stroke="#5A1810" strokeWidth="1.6" strokeLinecap="round" />
+        </g>
+      )}
+      {/* Occlusive marker — red cells on both sides of the clot, showing
+         the lumen is blocked. Only drawn when occlusive is true. */}
+      {occlusive && (
+        <g>
+          <ellipse cx={cx - halfL - 10} cy={cy + 2} rx="5" ry="3" fill="#E53935" stroke="#8C1C12" strokeWidth="0.6" />
+          <ellipse cx={cx + halfL + 10} cy={cy + 2} rx="5" ry="3" fill="#E53935" stroke="#8C1C12" strokeWidth="0.6" />
+        </g>
+      )}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Embolus — a mass (thrombus fragment, fat droplet, air bubble, or */
+/* tumour fragment) that has broken off, is travelling with the     */
+/* bloodstream, and will lodge downstream once it reaches a vessel  */
+/* too narrow to pass through. Drawn as a small lumpy particle      */
+/* inside a flowing vessel, with motion lines behind it.            */
+/* `type` picks the composition: "thrombus" (dark red clot frag-    */
+/* ment), "fat" (pale yellow droplet), "air" (white circle), or     */
+/* "tumour" (irregular purple mass). Used by any diagram that       */
+/* needs to show embolism.                                           */
+/* ---------------------------------------------------------------- */
+const atlasEmbolus = ({
+  cx, cy, r = 12,
+  type = "thrombus",
+  highlight = false,
+}) => {
+  const palette = {
+    thrombus: { fill: "#8C1C12", stroke: "#5A1810" },
+    fat:      { fill: "#FFE38A", stroke: "#D89B14" },
+    air:      { fill: "#F3F1FF", stroke: "#8B5CF6" },
+    tumour:   { fill: "#8B5CF6", stroke: "#5B21B6" },
+  }[type] || { fill: "#8C1C12", stroke: "#5A1810" };
+  const edge = highlight ? ATLAS_COLORS.trunk : palette.stroke;
+  return (
+    <g className={highlight ? "atlas-pulse" : undefined}>
+      {/* The embolus body — irregular lumpy shape for thrombus / tumour,
+         smooth circle for fat / air. */}
+      {type === "thrombus" || type === "tumour" ? (
+        <path
+          d={`M${cx - r},${cy}
+              Q${cx - r * 0.7},${cy - r * 0.85} ${cx - r * 0.2},${cy - r * 0.7}
+              Q${cx + r * 0.3},${cy - r} ${cx + r * 0.75},${cy - r * 0.4}
+              Q${cx + r},${cy - r * 0.1} ${cx + r * 0.7},${cy + r * 0.5}
+              Q${cx + r * 0.2},${cy + r} ${cx - r * 0.4},${cy + r * 0.7}
+              Q${cx - r * 0.9},${cy + r * 0.4} ${cx - r},${cy} Z`}
+          fill={palette.fill} stroke={edge} strokeWidth={highlight ? 2.2 : 1.4}
+        />
+      ) : (
+        <circle cx={cx} cy={cy} r={r} fill={palette.fill} stroke={edge} strokeWidth={highlight ? 2.2 : 1.4} />
+      )}
+      {/* Motion lines trailing behind (to the left) — showing the
+         embolus is moving with the flow, not stuck in the wall. */}
+      <g opacity="0.55">
+        <line x1={cx - r - 4} y1={cy - 3} x2={cx - r - 14} y2={cy - 3} stroke={edge} strokeWidth="1.6" strokeLinecap="round" />
+        <line x1={cx - r - 3} y1={cy + 2} x2={cx - r - 12} y2={cy + 2} stroke={edge} strokeWidth="1.6" strokeLinecap="round" />
+        <line x1={cx - r - 2} y1={cy + 6} x2={cx - r - 8} y2={cy + 6} stroke={edge} strokeWidth="1.6" strokeLinecap="round" />
+      </g>
     </g>
   );
 };
@@ -2613,6 +3015,854 @@ export const DIAGRAMS = {
           {/* Static region labels */}
           <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Tissue</text>
           <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Fast, general, self-limiting — unless the trigger persists</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     WOUND HEALING
+     Topic: General Pathology (pat), Topic 07 (index 6).
+     Second diagram in the pathology family. Reuses
+     atlasWoundScene (introduced here), atlasInflammationScene,
+     atlasWhiteCell, atlasVessel, atlasPlatelet. Follows on
+     directly from pat:5 (acute inflammation) - this is what
+     happens after the acute response winds down.
+     ========================================================= */
+  "pat:wound-healing": {
+    id: "pat:wound-healing",
+    type: "diagram",
+    title: "Wound Healing — Repair, Regeneration, and Scar",
+    topic: { courseId: "pat", topicIndex: 6 },
+    parent: null,
+    summary: "When tissue is damaged, the body doesn't just patch it — it runs a tightly ordered repair programme. A clot forms first to stop the bleeding, then immune cells clear the debris, then new tissue and new blood vessels grow into the wound, and finally the wound contracts and the collagen reorganises into a mature scar. The whole process takes days to weeks, and it either completes cleanly (healing by first intention) or leaves a larger scar (healing by second intention) depending on how much tissue was lost.",
+    labels: [
+      { id: "whole",         name: "The Whole Process",       desc: "Clot → inflammation → granulation → collagen → contraction → remodelling. Five overlapping phases running one after another." },
+      { id: "hemostasis",    name: "Hemostasis",              desc: "The clot that stops the bleeding and acts as the scaffold everything else builds on." },
+      { id: "inflammation",  name: "Inflammation",            desc: "Neutrophils arrive first to clear bacteria, then macrophages arrive to clean up dead tissue and debris." },
+      { id: "macrophages",   name: "Macrophages",             desc: "The cleanup crew and the foremen. They eat debris and dead neutrophils, and they release the signals that start the next phase." },
+      { id: "granulation",   name: "Granulation Tissue",      desc: "New pink tissue that fills the wound from the edges. It's a mix of new capillaries, fibroblasts, and loose connective tissue." },
+      { id: "angiogenesis",  name: "Angiogenesis",            desc: "New capillaries bud into the granulation tissue, restoring blood supply to the healing wound." },
+      { id: "fibroblasts",   name: "Fibroblasts & Collagen",  desc: "Fibroblasts lay down collagen, the structural protein that will eventually hold the wound together." },
+      { id: "epithelialisation", name: "Epithelialisation",   desc: "Skin cells migrate across the surface of the wound to close it off from the outside world." },
+      { id: "contraction",   name: "Contraction",             desc: "Myofibroblasts pull the wound edges together, shrinking the surface area that has to be covered." },
+      { id: "scar",          name: "Scar Maturation",         desc: "Weeks to months later, the collagen reorganises into a strong, pale, mature scar. The tissue never fully returns to normal." },
+    ],
+    narration: [
+      "Wound healing is the body's repair programme. It runs in four overlapping phases: stop the bleeding, clean up the damage, build new tissue, and remodel it into something strong. Depending on how much tissue was lost, it either heals cleanly with minimal scarring or leaves a larger scar behind.",
+      "Phase one is hemostasis. The moment a vessel is cut, it tightens and platelets rush to the site. They stick together to form a plug, and a fibrin mesh locks the plug in place. That clot is not just a patch — it's the scaffold the whole repair will build on.",
+      "Phase two is inflammation. Neutrophils arrive within minutes, attacking any bacteria that got in. They only last a few hours, then die off and become part of the debris that has to be cleared. In the meantime they've released signals calling the next wave in.",
+      "The macrophages arrive next, and they're the ones who really run the show. They eat the dead neutrophils, eat bacteria and dead tissue, and then release the growth factors that tell the repair to move into its next phase. Without macrophages, healing stalls.",
+      "Phase three begins: the wound starts filling with new tissue. From the edges and from the base, fresh pink granulation tissue grows in. It's soft, it's rich in new blood vessels, and it's what gives a healing wound its characteristic red, bumpy appearance.",
+      "Part of building that new tissue is angiogenesis — new capillary loops bud off existing vessels and grow into the wound. Without new blood supply, the granulation tissue can't survive. This is why a wound with poor circulation heals so slowly.",
+      "Fibroblasts move in alongside the new vessels and start laying down collagen. Collagen is the structural protein that will eventually hold the wound together. Early on it's laid down in a disorganised pattern, which is why fresh scar tissue is weak.",
+      "While all this is happening underneath, the surface of the wound is being closed off. Skin cells from the edges migrate across the top of the granulation tissue, sliding over it until they meet in the middle. This is epithelialisation — it's what makes the wound waterproof again.",
+      "As the wound fills and closes, myofibroblasts — specialised cells with muscle-like properties — pull the wound edges together. This is contraction, and it can shrink the wound surface dramatically. It's helpful for closing large wounds, but it's also why scars can pucker or restrict movement.",
+      "The final phase is remodelling, and it can go on for months. The disorganised collagen is slowly broken down and re-laid in a more organised pattern, the new blood vessels recede, and the wound becomes a pale, firm, mature scar. The tissue is strong, but it will never be exactly what it was before. That's the difference between repair and regeneration.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["hemostasis"],
+      ["inflammation"],
+      ["macrophages"],
+      ["granulation"],
+      ["angiogenesis"],
+      ["fibroblasts"],
+      ["epithelialisation"],
+      ["contraction"],
+      ["scar"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pat:wound-healing"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // The scene evolves as the narration runs. The four boolean
+      // props on atlasWoundScene toggle on as the phase is reached,
+      // so the same tissue patch visually goes from open wound to
+      // clot to inflamed to granulating to scarred.
+      const scene = {
+        hemostasis:    activeStep >= 1,
+        inflammation:  activeStep >= 2,
+        proliferation: activeStep >= 4,
+        remodelling:   activeStep >= 8,
+      };
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* The evolving wound scene — the centrepiece. Everything
+             else (labels, insets, callouts) hangs off this. */}
+          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+            {atlasWoundScene({
+              cx: 450, cy: 320, width: 520, height: 300,
+              ...scene,
+              highlight: false,
+            })}
+          </g>
+
+          {/* Hemostasis anchor — a small callout pointing at the clot
+             inside the wound, only shown on its own step. */}
+          {isHot("hemostasis") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path
+                d="M340,240 Q300,200 260,180"
+                fill="none"
+                stroke={ATLAS_COLORS.trunk}
+                strokeWidth="1.5"
+                strokeDasharray="4 4"
+                opacity="0.85"
+              />
+              <circle cx="340" cy="240" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="90" y="130" width="170" height="70" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="175" y="155" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>CLOT FORMATION</text>
+              <text x="175" y="173" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">platelets + fibrin mesh</text>
+              <text x="175" y="188" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">scaffold for repair</text>
+            </g>
+          )}
+
+          {/* Inflammation label anchor — the diagram's scene already
+             draws the swarming neutrophils, this just labels them. */}
+          <g style={{ cursor: cur }} onClick={click("inflammation")} filter={hotFilter("inflammation")}>
+            <circle cx="620" cy="215" r="55" fill="none" {...ring("inflammation")} pointerEvents="none" />
+            <text x="620" y="160" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">neutrophils arrive</text>
+          </g>
+
+          {/* Macrophage anchor — bottom-right, drawn only when its step
+             is active so the scene doesn't get too busy. */}
+          {isHot("macrophages") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path
+                d="M620,400 Q660,420 700,440"
+                fill="none"
+                stroke={ATLAS_COLORS.trunk}
+                strokeWidth="1.5"
+                strokeDasharray="4 4"
+                opacity="0.85"
+              />
+              <circle cx="620" cy="400" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="690" y="415" width="180" height="80" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="780" y="440" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>MACROPHAGES</text>
+              <text x="780" y="458" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">eat debris and dead</text>
+              <text x="780" y="472" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">neutrophils; then signal</text>
+              <text x="780" y="486" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">the next phase</text>
+            </g>
+          )}
+
+          {/* Granulation label anchor */}
+          <g style={{ cursor: cur }} onClick={click("granulation")} filter={hotFilter("granulation")}>
+            <circle cx="450" cy="320" r="70" fill="none" {...ring("granulation")} pointerEvents="none" />
+          </g>
+          {isHot("granulation") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path
+                d="M380,400 Q340,440 300,470"
+                fill="none"
+                stroke={ATLAS_COLORS.trunk}
+                strokeWidth="1.5"
+                strokeDasharray="4 4"
+                opacity="0.85"
+              />
+              <circle cx="380" cy="400" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="120" y="465" width="180" height="70" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="210" y="490" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>GRANULATION TISSUE</text>
+              <text x="210" y="508" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">new capillaries + fibroblasts</text>
+              <text x="210" y="523" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">+ loose connective tissue</text>
+            </g>
+          )}
+
+          {/* Angiogenesis callout — small loops drawn over the wound
+             area, only when its step is active. */}
+          {isHot("angiogenesis") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="700" y="130" width="160" height="70" rx="12" fill="var(--bg-2)" stroke="#E53935" strokeWidth="2" />
+              <text x="780" y="155" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#E53935">ANGIOGENESIS</text>
+              <text x="780" y="173" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">new capillaries</text>
+              <text x="780" y="188" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">restore blood supply</text>
+            </g>
+          )}
+
+          {/* Fibroblasts / collagen callout */}
+          {isHot("fibroblasts") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="700" y="130" width="160" height="70" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="780" y="155" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">FIBROBLASTS</text>
+              <text x="780" y="173" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">lay down collagen</text>
+              <text x="780" y="188" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">strengthens the wound</text>
+            </g>
+          )}
+
+          {/* Epithelialisation — a top-of-wound indicator, only when
+             its step is active. */}
+          {isHot("epithelialisation") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path
+                d="M400,280 L500,280"
+                stroke="#D89B14"
+                strokeWidth="5"
+                strokeLinecap="round"
+                strokeDasharray="10 4"
+              />
+              <polygon points="500,280 494,276 494,284" fill="#D89B14" />
+              <polygon points="400,280 406,276 406,284" fill="#D89B14" />
+              <text x="450" y="270" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#D89B14">epithelialisation</text>
+              <text x="450" y="258" textAnchor="middle" fontSize="8" fill="var(--text-2)">skin cells close the surface</text>
+            </g>
+          )}
+
+          {/* Contraction callout — arrows pulling the wound edges in. */}
+          {isHot("contraction") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path d="M300,320 L360,320" stroke="#C0392B" strokeWidth="3" strokeLinecap="round" />
+              <polygon points="360,320 353,316 353,324" fill="#C0392B" />
+              <path d="M600,320 L540,320" stroke="#C0392B" strokeWidth="3" strokeLinecap="round" />
+              <polygon points="540,320 547,316 547,324" fill="#C0392B" />
+              <text x="450" y="345" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">contraction</text>
+              <text x="450" y="360" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">myofibroblasts pull the edges in</text>
+            </g>
+          )}
+
+          {/* Scar maturation callout — final phase. */}
+          {isHot("scar") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="700" y="380" width="170" height="90" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="785" y="405" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>MATURE SCAR</text>
+              <text x="785" y="423" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">collagen reorganised</text>
+              <text x="785" y="437" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">blood vessels recede</text>
+              <text x="785" y="451" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">tissue pale and firm</text>
+              <text x="785" y="465" textAnchor="middle" fontSize="8" fill="var(--text-3)">strong, but not original</text>
+            </g>
+          )}
+
+          {/* Static region labels */}
+          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Skin / tissue</text>
+          <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Five overlapping phases — clot, inflame, build, close, remodel</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     CHRONIC INFLAMMATION
+     Topic: General Pathology (pat), Topic 08 (index 7).
+     Third diagram in the pathology family. Reuses
+     atlasInflammationScene with the new `chronic` prop, plus
+     atlasWhiteCell, atlasVessel, atlasAntibody. Follows on
+     directly from pat:5 (acute inflammation) - this is what
+     happens when the trigger never goes away.
+     ========================================================= */
+  "pat:chronic-inflammation": {
+    id: "pat:chronic-inflammation",
+    type: "diagram",
+    title: "Chronic Inflammation — When the Response Never Ends",
+    topic: { courseId: "pat", topicIndex: 7 },
+    parent: null,
+    summary: "Acute inflammation is designed to finish. When it can't — because the trigger persists, the immune system can't clear it, or the response itself becomes self-sustaining — it becomes chronic. The cells change, the timeline stretches out from days to months or years, and the tissue is slowly damaged by the very response meant to protect it. Chronic inflammation underlies many of the long-term diseases of ageing: arthritis, atherosclerosis, inflammatory bowel disease, and more.",
+    labels: [
+      { id: "whole",         name: "The Whole Picture",       desc: "A response that should have ended within days but instead has been running for months, damaging tissue as it goes." },
+      { id: "trigger",       name: "The Persistent Trigger",  desc: "What keeps the response going: an infection the immune system can't clear, a foreign body it can't destroy, or the body's own tissues mistaken for a threat." },
+      { id: "cells",         name: "The Cell Change",         desc: "Neutrophils have long gone. Now the tissue is dominated by macrophages and lymphocytes — slower, longer-lived cells suited to a prolonged fight." },
+      { id: "macrophages",   name: "Macrophages",             desc: "The main cell of chronic inflammation. They keep trying to clear the trigger, keep releasing signals, and keep recruiting more cells — the cycle that never closes." },
+      { id: "lymphocytes",   name: "Lymphocytes",             desc: "T and B cells accumulate in chronic inflammation, driving an ongoing adaptive immune response that can itself damage tissue." },
+      { id: "fibrosis",      name: "Fibrosis",                desc: "Chronic inflammation leads to scarring. Fibroblasts lay down collagen continuously, and the tissue becomes stiff and dysfunctional." },
+      { id: "tissue-damage", name: "Tissue Destruction",      desc: "The macrophages' enzymes and the lymphocytes' signals end up destroying normal tissue. The response itself becomes the disease." },
+      { id: "granuloma",     name: "Granuloma Formation",     desc: "When the trigger can't be destroyed, macrophages wall it off into a granuloma — a ball of immune cells that contains the problem but doesn't fix it." },
+      { id: "examples",      name: "Common Examples",         desc: "Rheumatoid arthritis, atherosclerosis, inflammatory bowel disease, chronic hepatitis, tuberculosis, and many other long-term conditions." },
+      { id: "contrast",      name: "Acute vs Chronic",        desc: "Acute: days, neutrophils, resolves cleanly. Chronic: months to years, macrophages and lymphocytes, ongoing damage and fibrosis." },
+    ],
+    narration: [
+      "Acute inflammation is meant to end. But when the trigger doesn't go away — or when the immune system can't clear it — the response doesn't stop. It changes character, it stretches out over months or years, and it becomes chronic inflammation.",
+      "The trigger can be many things. A chronic infection like tuberculosis, where the bacteria hide inside cells. A foreign body the immune system can't destroy. An autoimmune reaction where the body's own tissues are treated as the enemy. Or a persistent irritant like cigarette smoke or cholesterol plaques.",
+      "When the response shifts from acute to chronic, the cells change. Neutrophils — the fast responders of acute inflammation — have long gone. In their place are macrophages and lymphocytes: slower, longer-lived cells built for a sustained fight.",
+      "Macrophages become the dominant cell. They keep trying to clear the trigger, keep releasing cytokines, and keep calling in more immune cells. This is the cycle that never closes — each macrophage signal recruits another wave that will do the same thing.",
+      "Lymphocytes — T and B cells — also accumulate. They drive an ongoing adaptive immune response against the trigger, and in autoimmune diseases they're the reason the body is attacking itself. Their signals can themselves damage normal tissue.",
+      "Over time, the tissue starts to scar. Fibroblasts receive constant signals to lay down collagen, and the tissue becomes stiff and fibrotic. This is why chronic inflammatory diseases usually end in organ dysfunction — the scarring replaces working tissue.",
+      "Meanwhile, the immune cells' own enzymes and reactive molecules destroy normal tissue around the site. The response meant to protect the tissue ends up being the thing that damages it. This is the paradox at the heart of chronic inflammation.",
+      "When the trigger can't be destroyed, the body tries to wall it off instead. Macrophages cluster around it and fuse into multinucleate giant cells, forming a granuloma. A granuloma contains the problem — like the tubercles of TB — but it never actually resolves it.",
+      "This is why so many long-term diseases come back to chronic inflammation. Rheumatoid arthritis, atherosclerosis, inflammatory bowel disease, chronic hepatitis, tuberculosis, and many others — all share the same underlying mechanism: an inflammatory response that doesn't know how to stop.",
+      "Putting it together: acute inflammation is short and effective, neutrophils do the work, and the tissue returns to normal. Chronic inflammation is long, self-sustaining, dominated by macrophages and lymphocytes, and it damages the tissue it was meant to protect. Same system, two very different outcomes.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["trigger"],
+      ["cells"],
+      ["macrophages"],
+      ["lymphocytes"],
+      ["fibrosis"],
+      ["tissue-damage"],
+      ["granuloma"],
+      ["examples"],
+      ["contrast"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pat:chronic-inflammation"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // The scene shows the chronic infiltrate once we reach the cell-
+      // change step, and stays visible after. The vessel stays visible
+      // but is not the focus any more — in chronic inflammation it's
+      // the tissue that matters, not the blood vessels.
+      const scene = {
+        vasodilation: activeStep >= 2,
+        permeability: activeStep >= 2,
+        recruitment:  false,
+        phagocytosis: false,
+        resolution:   false,
+        chronic:      activeStep >= 2,
+      };
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* The evolving tissue scene — macrophages and lymphocytes
+             infiltrate the tissue as the narration runs. */}
+          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+            {atlasInflammationScene({
+              cx: 450, cy: 320, width: 540, height: 320,
+              ...scene,
+              highlight: false,
+            })}
+          </g>
+
+          {/* Trigger callout — top-left, only on its own step. */}
+          {isHot("trigger") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="100" width="200" height="90" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="160" y="125" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">PERSISTENT TRIGGER</text>
+              <text x="160" y="145" textAnchor="middle" fontSize="9" fill="var(--text-2)">chronic infection</text>
+              <text x="160" y="160" textAnchor="middle" fontSize="9" fill="var(--text-2)">foreign body</text>
+              <text x="160" y="175" textAnchor="middle" fontSize="9" fill="var(--text-2)">autoimmune target</text>
+            </g>
+          )}
+
+          {/* Cells callout — right side, comparison of cell types. */}
+          {isHot("cells") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="670" y="100" width="200" height="120" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="770" y="125" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>THE CELL CHANGE</text>
+              <text x="770" y="146" textAnchor="middle" fontSize="9" fill="var(--text-2)">Acute: neutrophils</text>
+              <text x="770" y="162" textAnchor="middle" fontSize="9" fill="var(--text-2)">Chronic: macrophages</text>
+              <text x="770" y="178" textAnchor="middle" fontSize="9" fill="var(--text-2)">+ lymphocytes</text>
+              <text x="770" y="200" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">slower, longer-lived cells</text>
+            </g>
+          )}
+
+          {/* Macrophages callout */}
+          {isHot("macrophages") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path
+                d="M680,440 Q640,440 620,440"
+                fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
+                strokeDasharray="4 4" opacity="0.85"
+              />
+              <circle cx="620" cy="440" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="680" y="410" width="190" height="80" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="775" y="435" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">MACROPHAGES</text>
+              <text x="775" y="453" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">the dominant cell of chronic</text>
+              <text x="775" y="467" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">inflammation — keep signalling,</text>
+              <text x="775" y="481" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">keep recruiting, cycle never closes</text>
+            </g>
+          )}
+
+          {/* Lymphocytes callout */}
+          {isHot("lymphocytes") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path
+                d="M680,540 Q640,540 620,530"
+                fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
+                strokeDasharray="4 4" opacity="0.85"
+              />
+              <circle cx="620" cy="530" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="680" y="500" width="190" height="80" rx="12" fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2" />
+              <text x="775" y="525" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#5B21B6">LYMPHOCYTES</text>
+              <text x="775" y="543" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">T and B cells accumulate —</text>
+              <text x="775" y="557" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">an ongoing adaptive response,</text>
+              <text x="775" y="571" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">sometimes against self</text>
+            </g>
+          )}
+
+          {/* Fibrosis callout — purple fibrotic strands overlaid. */}
+          {isHot("fibrosis") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="440" width="190" height="90" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="155" y="465" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">FIBROSIS</text>
+              <text x="155" y="483" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">fibroblasts lay down collagen</text>
+              <text x="155" y="497" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">continuously — tissue becomes</text>
+              <text x="155" y="511" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">stiff and loses function</text>
+            </g>
+          )}
+
+          {/* Tissue damage callout */}
+          {isHot("tissue-damage") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <circle cx="450" cy="320" r="220" fill="none" stroke="#C0392B" strokeWidth="3" strokeDasharray="8 6" opacity="0.75" />
+              <rect x="330" y="550" width="240" height="60" rx="12" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="450" y="574" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">TISSUE DESTRUCTION</text>
+              <text x="450" y="592" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">the response itself damages the tissue</text>
+            </g>
+          )}
+
+          {/* Granuloma inset — a small diagram showing the ring of
+             macrophages around a trapped trigger. */}
+          {isHot("granuloma") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="330" y="550" width="240" height="60" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="450" y="574" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">GRANULOMA</text>
+              <text x="450" y="592" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">macrophages wall off the trigger — contains, doesn't cure</text>
+              <circle cx="200" cy="300" r="48" fill="none" stroke="#8B5CF6" strokeWidth="2" strokeDasharray="6 4" opacity="0.8" />
+              {[[200, 252], [200, 348], [152, 300], [248, 300]].map(([px, py], i) => (
+                <circle key={i} cx={px} cy={py} r="9" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.2" />
+              ))}
+              <ellipse cx="200" cy="300" rx="10" ry="6" fill="#C0392B" stroke="#8C1C12" strokeWidth="1" />
+              <text x="200" y="270" textAnchor="middle" fontSize="8" fill="var(--text-2)">walled-off trigger</text>
+            </g>
+          )}
+
+          {/* Examples callout — bottom right, list of common diseases. */}
+          {isHot("examples") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="660" y="150" width="210" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="765" y="175" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>COMMON EXAMPLES</text>
+              {["rheumatoid arthritis", "atherosclerosis", "IBD (Crohn's / UC)", "chronic hepatitis", "tuberculosis"].map((e, i) => (
+                <text key={i} x="765" y={198 + i * 18} textAnchor="middle" fontSize="9" fill="var(--text-2)">{e}</text>
+              ))}
+            </g>
+          )}
+
+          {/* Final contrast callout — acute vs chronic summary. */}
+          {isHot("contrast") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="100" width="240" height="130" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="180" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#C0392B">ACUTE</text>
+              <text x="180" y="145" textAnchor="middle" fontSize="9" fill="var(--text-2)">days</text>
+              <text x="180" y="162" textAnchor="middle" fontSize="9" fill="var(--text-2)">neutrophils</text>
+              <text x="180" y="179" textAnchor="middle" fontSize="9" fill="var(--text-2)">resolves cleanly</text>
+              <rect x="320" y="100" width="240" height="130" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="440" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#8B5CF6">CHRONIC</text>
+              <text x="440" y="145" textAnchor="middle" fontSize="9" fill="var(--text-2)">months to years</text>
+              <text x="440" y="162" textAnchor="middle" fontSize="9" fill="var(--text-2)">macrophages + lymphocytes</text>
+              <text x="440" y="179" textAnchor="middle" fontSize="9" fill="var(--text-2)">ongoing damage + fibrosis</text>
+            </g>
+          )}
+
+          {/* Static region labels */}
+          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Tissue</text>
+          <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">The response that never ends — and damages what it was meant to protect</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     ACQUIRED IMMUNE RESPONSE
+     Topic: General Pathology (pat), Topic 09 (index 8).
+     Fourth diagram in the pathology family. Closes the loop
+     that ph2:immune-system opened: shows how the adaptive
+     immune system is triggered, and what it does once it's
+     running. Reuses atlasAntibody, atlasLymphNode,
+     atlasWhiteCell, atlasBloodCell. Adds one new primitive:
+     atlasAPC (antigen-presenting cell).
+     ========================================================= */
+  "pat:acquired-immune-response": {
+    id: "pat:acquired-immune-response",
+    type: "diagram",
+    title: "The Acquired Immune Response — Precision Defence",
+    topic: { courseId: "pat", topicIndex: 8 },
+    parent: null,
+    summary: "The adaptive — acquired — immune system is the body's precision weapon. Unlike the innate system, which responds the same way to any threat, the adaptive system learns the exact identity of a specific pathogen, builds a defence tailored to it, and remembers it for years. It takes days to spin up the first time, but it's the reason vaccines work: the second time the same pathogen appears, the response is fast, strong, and often stops the infection before you notice it.",
+    labels: [
+      { id: "whole",        name: "The Whole Response",         desc: "Antigen presentation → T cell activation → B cell help → antibody production → memory. One coordinated sequence." },
+      { id: "apc",          name: "Antigen-Presenting Cell",    desc: "A dendritic cell or macrophage that has engulfed a threat, digested it, and is showing a fragment on its surface inside an MHC molecule." },
+      { id: "mhc",          name: "MHC Molecule",               desc: "The molecular 'display tray' an APC uses to hold a piece of antigen so a T cell can recognise it. Different MHC types are why tissue matching matters in transplants." },
+      { id: "helper-t",     name: "Helper T Cell",              desc: "Recognises antigen on the APC and becomes activated. It then releases cytokines that coordinate the whole response — the conductor of the adaptive orchestra." },
+      { id: "b-cell",       name: "B Cell",                     desc: "Recognises antigen directly, but needs confirmation from a helper T cell before it commits. Once activated, it multiplies and produces antibodies." },
+      { id: "plasma-cell",  name: "Plasma Cell",                desc: "What a fully activated B cell becomes. A dedicated antibody factory, producing thousands of identical antibody molecules per second." },
+      { id: "antibody",     name: "Antibodies",                 desc: "Y-shaped proteins that bind one specific antigen. They neutralise pathogens, tag them for destruction, and clump them together for easier clearance." },
+      { id: "cytotoxic-t",  name: "Cytotoxic T Cell",           desc: "Kills cells that are already infected — the ones antibodies can't reach. It recognises infected cells by the viral peptides they display on their own MHC." },
+      { id: "memory",       name: "Memory Cells",               desc: "Long-lived B and T cells left behind after the infection. On second exposure, they respond within hours instead of days — the basis of vaccination." },
+      { id: "lymph-node",   name: "Lymph Node",                 desc: "Where it all happens. APC, helper T cell, B cell and cytotoxic T cell all meet here, in the same physical space, at the same time." },
+    ],
+    narration: [
+      "The adaptive immune system is the body's precision weapon. Unlike the innate system — which responds the same way to any threat — the adaptive system learns the exact identity of a specific pathogen, builds a defence tailored to it, and remembers it for years. The trade-off: it takes days to spin up the first time.",
+      "It starts with an antigen-presenting cell. A dendritic cell or macrophage engulfs a threat, digests it, and displays a fragment of it on its surface. That fragment is held in a specialised molecular tray called an MHC molecule — the same MHC that decides whether organs are compatible in a transplant.",
+      "Helper T cells are the next step. When a helper T cell meets an APC showing the right antigen, it locks onto the MHC-antigen complex and becomes activated. This is the moment the adaptive response actually starts — the innate system has successfully handed the threat over.",
+      "An activated helper T cell then does something critical: it releases cytokines that coordinate everything else. It tells B cells to start making antibodies, tells cytotoxic T cells to start killing, and amplifies the whole response. Helper T cells are the conductors of the adaptive orchestra.",
+      "B cells recognise antigen directly, but they don't commit without confirmation. When a B cell's receptor binds antigen and a helper T cell confirms it, the B cell activates, multiplies, and starts producing antibodies tailored to that exact antigen.",
+      "A fully activated B cell becomes a plasma cell — a dedicated antibody factory. Each plasma cell produces thousands of identical antibody molecules per second. Antibodies pour into the blood and lymph, ready to bind the specific pathogen that started the whole process.",
+      "Antibodies have three main jobs. They neutralise pathogens by physically blocking the parts they need to infect cells. They tag pathogens for destruction by phagocytes and complement. And they clump pathogens together, making them easier to clear.",
+      "Meanwhile, cytotoxic T cells handle the threats antibodies can't reach: cells that are already infected. A cytotoxic T cell recognises an infected cell by the viral peptides it displays on its own MHC, then kills it directly — stopping the virus from spreading.",
+      "Once the infection is under control, most of the activated cells die off. But a small population of long-lived memory B and T cells stays behind. On second exposure to the same pathogen, these memory cells respond within hours instead of days — often so fast that you never notice you were infected. That's the entire basis of vaccination.",
+      "The whole response happens in the lymph node. APC, helper T cell, B cell and cytotoxic T cell all need to meet in the same physical space at the same time. That's what lymph nodes are for — they're the immune system's coordination hubs. Enlarged lymph nodes during an infection are a sign the adaptive response is working.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["apc"],
+      ["mhc"],
+      ["helper-t"],
+      ["b-cell"],
+      ["plasma-cell"],
+      ["antibody"],
+      ["cytotoxic-t"],
+      ["memory"],
+      ["lymph-node"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pat:acquired-immune-response"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* ---- Lymph node — the physical location of the whole scene.
+             Drawn large and centred, with the various cell types around
+             it, so the student reads "this happens in a lymph node". ---- */}
+          <g style={{ cursor: cur }} onClick={click("lymph-node")} filter={hotFilter("lymph-node")}>
+            {atlasLymphNode({ cx: 450, cy: 320, scale: 3.6 })}
+            <circle cx="450" cy="320" r="130" fill="none" {...ring("lymph-node")} pointerEvents="none" />
+            <text x="450" y="470" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-2)">Lymph node — the meeting place</text>
+          </g>
+
+          {/* ---- APC on the left, presenting antigen to a helper T cell ---- */}
+          <g style={{ cursor: cur }} onClick={click("apc")} filter={hotFilter("apc")}>
+            {atlasAPC({ cx: 180, cy: 240, r: 32, presenting: activeStep >= 1, highlight: isHot("apc") })}
+            <text x="180" y="300" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Antigen-presenting cell</text>
+            <text x="180" y="313" textAnchor="middle" fontSize="9" fill="var(--text-2)">shows antigen to T cells</text>
+            <circle cx="180" cy="240" r="52" fill="none" {...ring("apc")} pointerEvents="none" />
+          </g>
+
+          {/* MHC callout — leader line to the APC's MHC molecule. */}
+          {isHot("mhc") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path
+                d="M210,220 Q260,190 310,170"
+                fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
+                strokeDasharray="4 4" opacity="0.85"
+              />
+              <circle cx="210" cy="220" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="60" y="90" width="180" height="80" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="150" y="115" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>MHC MOLECULE</text>
+              <text x="150" y="133" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">molecular display tray</text>
+              <text x="150" y="148" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">holds antigen for T cells</text>
+            </g>
+          )}
+
+          {/* ---- Helper T cell on the top-right, receiving the signal ---- */}
+          <g style={{ cursor: cur }} onClick={click("helper-t")} filter={hotFilter("helper-t")}>
+            {atlasWhiteCell({ cx: 720, cy: 240, r: 26 })}
+            <text x="720" y="295" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Helper T cell</text>
+            <text x="720" y="308" textAnchor="middle" fontSize="9" fill="var(--text-2)">coordinates the response</text>
+            <circle cx="720" cy="240" r="42" fill="none" {...ring("helper-t")} pointerEvents="none" />
+          </g>
+
+          {/* Communication arrows between APC and Helper T */}
+          {activeStep >= 3 && (
+            <g pointerEvents="none">
+              <path
+                d="M215,240 Q400,215 690,240"
+                fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.6"
+                strokeDasharray="5 4" opacity="0.7"
+              />
+              <polygon points="690,240 682,236 682,244" fill={ATLAS_COLORS.trunk} />
+              <text x="450" y="215" textAnchor="middle" fontSize="9" fontWeight="600" fill={ATLAS_COLORS.trunk}>antigen recognition →</text>
+            </g>
+          )}
+
+          {/* ---- B cell on the bottom-left ---- */}
+          <g style={{ cursor: cur }} onClick={click("b-cell")} filter={hotFilter("b-cell")}>
+            {atlasWhiteCell({ cx: 180, cy: 440, r: 26 })}
+            <text x="180" y="495" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">B cell</text>
+            <text x="180" y="508" textAnchor="middle" fontSize="9" fill="var(--text-2)">recognises antigen directly</text>
+            <circle cx="180" cy="440" r="42" fill="none" {...ring("b-cell")} pointerEvents="none" />
+          </g>
+
+          {/* ---- Plasma cell below B cell, only after the B cell is
+             activated by the helper T ---- */}
+          {activeStep >= 5 && (
+            <g style={{ cursor: cur }} onClick={click("plasma-cell")} filter={hotFilter("plasma-cell")}>
+              {atlasWhiteCell({ cx: 320, cy: 540, r: 30 })}
+              <text x="320" y="595" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Plasma cell</text>
+              <text x="320" y="608" textAnchor="middle" fontSize="9" fill="var(--text-2)">antibody factory</text>
+              <circle cx="320" cy="540" r="48" fill="none" {...ring("plasma-cell")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* ---- Antibodies — a cluster shown to the right of the plasma
+             cell, growing as the student progresses past step 7 ---- */}
+          {activeStep >= 6 && (
+            <g style={{ cursor: cur }} onClick={click("antibody")} filter={hotFilter("antibody")}>
+              {[
+                [520, 540, 1.2],
+                [600, 520, 1.4],
+                [680, 545, 1.2],
+                [560, 590, 1.1],
+                [640, 590, 1.3],
+              ].map(([ax, ay, s], i) => (
+                <g key={i}>
+                  {atlasAntibody({ cx: ax, cy: ay, scale: s, bound: false, highlight: isHot("antibody") })}
+                </g>
+              ))}
+              <text x="600" y="625" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Antibodies</text>
+              <circle cx="600" cy="560" r="90" fill="none" {...ring("antibody")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* ---- Cytotoxic T cell on the right ---- */}
+          <g style={{ cursor: cur }} onClick={click("cytotoxic-t")} filter={hotFilter("cytotoxic-t")}>
+            {atlasWhiteCell({ cx: 720, cy: 460, r: 26 })}
+            <text x="720" y="515" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Cytotoxic T cell</text>
+            <text x="720" y="528" textAnchor="middle" fontSize="9" fill="var(--text-2)">kills infected cells</text>
+            <circle cx="720" cy="460" r="42" fill="none" {...ring("cytotoxic-t")} pointerEvents="none" />
+          </g>
+
+          {/* ---- Memory cells inset — bottom right, appears at the end ---- */}
+          {activeStep >= 8 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="660" y="540" width="180" height="60" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" strokeDasharray="5 4" />
+              <text x="750" y="565" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>MEMORY CELLS</text>
+              <text x="750" y="583" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">respond in hours on second exposure</text>
+            </g>
+          )}
+
+          {/* ---- Static region labels ---- */}
+          <text x="450" y="30"  textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Acquired (adaptive) immune response</text>
+          <text x="450" y="612" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Antigen → T cell → B cell → antibody → memory</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     HAEMODYNAMIC DISORDERS
+     Topic: General Pathology (pat), Topic 03 (index 2).
+     Fifth diagram in the pathology family. Reuses atlasVessel,
+     atlasBloodCell, atlasPlatelet. Adds two new primitives:
+     atlasThrombus and atlasEmbolus. Covers the pathologies of
+     blood flow — what happens when the normal circulation
+     goes wrong.
+     ========================================================= */
+  "pat:haemodynamic-disorders": {
+    id: "pat:haemodynamic-disorders",
+    type: "diagram",
+    title: "Haemodynamic Disorders — When Blood Flow Goes Wrong",
+    topic: { courseId: "pat", topicIndex: 2 },
+    parent: null,
+    summary: "Blood has to keep moving, in the right direction, at the right pressure, inside vessels that stay sealed. When any of those fail — a clot forms where it shouldn't, a fragment breaks off and travels, a vessel bursts, or the pressure collapses — the result is a haemodynamic disorder. They include thrombosis, embolism, infarction, haemorrhage, and shock. Together they're responsible for the majority of sudden deaths in adults: heart attacks, strokes, and pulmonary emboli are all haemodynamic.",
+    labels: [
+      { id: "whole",       name: "The Whole Picture",       desc: "Thrombosis, embolism, infarction, haemorrhage, and shock — five faces of the same underlying problem: flow gone wrong." },
+      { id: "normal",      name: "Normal Flow",             desc: "Laminar flow, intact endothelium, balanced clotting. Blood travels smoothly because nothing disturbs it." },
+      { id: "thrombus",    name: "Thrombus",                desc: "A clot that forms inside a vessel while blood is still flowing. Anchored to the wall, and dangerous because it can block the lumen or break off." },
+      { id: "virchow",     name: "Virchow's Triad",         desc: "The three conditions that cause thrombosis: stasis of flow, injury to the vessel wall, and hypercoagulability of the blood." },
+      { id: "embolus",     name: "Embolus",                 desc: "A mass travelling in the bloodstream — usually a fragment of thrombus, but sometimes fat, air, or tumour. It lodges downstream where the vessel narrows." },
+      { id: "infarction",  name: "Infarction",              desc: "Tissue death caused by blocked blood supply. The infarcted tissue is pale (in solid organs) or red (in loose tissue or when flow is restored)." },
+      { id: "infarct-types", name: "Types of Infarct",      desc: "White infarcts occur in solid organs with end-arterial supply (kidney, heart, spleen). Red infarcts occur in loose tissue, dual-supply organs (lung), or after venous occlusion." },
+      { id: "haemorrhage", name: "Haemorrhage",             desc: "Bleeding out of a vessel. Can be external, internal, or into a body cavity. Severity depends on rate, volume, and location — a small bleed in the brain can be fatal." },
+      { id: "shock",       name: "Shock",                   desc: "Whole-body failure of perfusion. Cells don't get enough blood, switch to anaerobic metabolism, and eventually die. Cardiogenic, hypovolaemic, distributive, and obstructive types." },
+      { id: "clinical",    name: "Clinical Examples",       desc: "Myocardial infarction (heart attack), stroke, deep vein thrombosis, pulmonary embolism, and disseminated intravascular coagulation — all haemodynamic disorders." },
+    ],
+    narration: [
+      "Blood has to keep moving, in the right direction, at the right pressure, inside vessels that stay sealed. When any of those fail, the result is a haemodynamic disorder. Together, they account for the majority of sudden deaths in adults — heart attacks, strokes, and pulmonary emboli are all in this family.",
+      "Normal flow is laminar — smooth, layered, undisturbed. The vessel lining is intact, the blood's clotting system is balanced, and nothing is triggering the coagulation cascade. Any deviation from this state is what starts the trouble.",
+      "A thrombus is a clot that forms inside a vessel while blood is still flowing past it. Unlike a clot that forms outside the body or after death, a thrombus is anchored to the vessel wall, and it shows layered bands called lines of Zahn. That anchoring is what makes it dangerous — a free-floating clot would just wash away.",
+      "Three things cause thrombosis, and they're known as Virchow's triad. First, stasis — blood sitting still, as in a long flight or after surgery. Second, injury to the vessel wall — as in atherosclerosis or after a catheter. Third, hypercoagulability — blood that clots too easily, as in pregnancy, cancer, or inherited clotting disorders.",
+      "A thrombus can break off and travel. When it does, it becomes an embolus. Most emboli are fragments of thrombus, but they can also be fat from a fractured bone, air from a surgical or diving accident, or a fragment of tumour. Whatever it's made of, it moves with the bloodstream until it reaches a vessel too narrow to pass.",
+      "When an embolus lodges and blocks flow, the tissue downstream loses its blood supply. If the blockage isn't relieved quickly, that tissue dies. This is infarction — and the dead tissue is called an infarct. Time is tissue: the sooner the blockage is cleared, the more can be saved.",
+      "There are two main types of infarct. White infarcts happen in solid organs with end-arterial supply — the kidney, the heart, the spleen. Blood can't get in from anywhere else, so the tissue becomes pale and anaemic. Red infarcts happen in loose tissue, in organs with dual blood supply like the lung, or after venous occlusion — the tissue becomes engorged with blood that can't escape.",
+      "Haemorrhage is the opposite problem — blood escaping from a vessel. It can be external, internal into a tissue, or into a body cavity. Severity depends on how fast it's bleeding, how much has been lost, and where it's collecting. A small haemorrhage in the brainstem can be fatal; a much larger one in a limb may not be.",
+      "At the whole-body level, if perfusion fails completely, you get shock. Tissues don't get enough blood, cells switch to anaerobic metabolism, lactic acid builds up, and organ function deteriorates. There are four broad types — cardiogenic (the pump has failed), hypovolaemic (not enough blood volume), distributive (vessels are dilated and pressure has collapsed), and obstructive (something is physically preventing flow).",
+      "Putting it together: normal flow is disturbed by Virchow's triad, which produces a thrombus. The thrombus can embolise and travel, blocking a downstream vessel and causing infarction. Vessels can also burst and haemorrhage, and if the whole system fails, shock. Myocardial infarction, stroke, deep vein thrombosis, and pulmonary embolism — the four biggest killers in adult medicine — are all haemodynamic disorders.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["normal"],
+      ["thrombus"],
+      ["virchow"],
+      ["embolus"],
+      ["infarction"],
+      ["infarct-types"],
+      ["haemorrhage"],
+      ["shock"],
+      ["clinical"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pat:haemodynamic-disorders"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // The main vessel runs across the middle. What's in it changes
+      // as the student steps through the phases.
+      const showThrombus  = activeStep >= 2 && activeStep < 4;
+      const showEmbolus   = activeStep >= 4 && activeStep < 5;
+      const showInfarct   = activeStep >= 5 && activeStep < 7;
+      const showHaem      = activeStep === 7;
+      const showShock     = activeStep === 8;
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* Main vessel running across the diagram — the central scene. */}
+          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+            {atlasVessel({ d: "M80,320 Q450,300 820,320", oxygenated: true, width: 40 })}
+            {/* Red cells flowing through, drawn at several positions */}
+            {[
+              [140, 316], [200, 314], [260, 312], [340, 310], [420, 308],
+              [500, 310], [580, 312], [660, 314], [740, 316],
+            ].map(([rx, ry], i) => (
+              <ellipse key={i} cx={rx} cy={ry} rx="6" ry="4" fill="#E53935" stroke="#8C1C12" strokeWidth="0.6" opacity="0.85" />
+            ))}
+            <text x="450" y="380" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-2)">Blood vessel</text>
+          </g>
+
+          {/* Normal flow label anchor */}
+          <g style={{ cursor: cur }} onClick={click("normal")} filter={hotFilter("normal")}>
+            <text x="450" y="290" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)" pointerEvents="none">laminar flow — undisturbed</text>
+          </g>
+
+          {/* Thrombus — appears on steps 3-4, drawn inside the vessel. */}
+          {showThrombus && (
+            <g style={{ cursor: cur }} onClick={click("thrombus")} filter={hotFilter("thrombus")}>
+              {atlasThrombus({
+                cx: 480, cy: 300, length: 120, thickness: 30,
+                occlusive: activeStep >= 3,
+                embolised: false,
+                highlight: isHot("thrombus"),
+              })}
+              <circle cx="480" cy="300" r="80" fill="none" {...ring("thrombus")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* Virchow's triad inset — three labelled circles fanning off
+             the thrombus, shown only on its own step. */}
+          {isHot("virchow") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="80" width="220" height="140" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="170" y="106" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>VIRCHOW'S TRIAD</text>
+              <text x="170" y="128" textAnchor="middle" fontSize="9" fill="var(--text-2)">1. Stasis of flow</text>
+              <text x="170" y="146" textAnchor="middle" fontSize="9" fill="var(--text-2)">2. Endothelial injury</text>
+              <text x="170" y="164" textAnchor="middle" fontSize="9" fill="var(--text-2)">3. Hypercoagulability</text>
+              <text x="170" y="192" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">any one alone can start a clot</text>
+            </g>
+          )}
+
+          {/* Embolus — a fragment travelling downstream from the
+             thrombus position. */}
+          {showEmbolus && (
+            <g style={{ cursor: cur }} onClick={click("embolus")} filter={hotFilter("embolus")}>
+              {atlasEmbolus({
+                cx: 680, cy: 310, r: 18, type: "thrombus",
+                highlight: isHot("embolus"),
+              })}
+              <circle cx="680" cy="310" r="40" fill="none" {...ring("embolus")} pointerEvents="none" />
+              <text x="680" y="360" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text-2)">travelling embolus</text>
+            </g>
+          )}
+
+          {/* Infarction — a wedge of tissue with a blocked vessel
+             leading to it, shown on steps 6-7. */}
+          {showInfarct && (
+            <g style={{ cursor: cur }} onClick={click("infarction")} filter={hotFilter("infarction")}>
+              {/* Downstream vessel narrowing */}
+              {atlasVessel({ d: "M760,320 Q800,400 800,480", oxygenated: true, width: 20 })}
+              {/* Infarct wedge — pale (white infarct) */}
+              <path
+                d="M770,500 L860,540 L830,600 L740,570 Z"
+                fill="#F5E8E0" stroke="#B63B2E" strokeWidth="2"
+              />
+              <text x="800" y="575" textAnchor="middle" fontSize="10" fontWeight="700" fill="#B63B2E">infarct</text>
+              <circle cx="800" cy="540" r="70" fill="none" {...ring("infarction")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* Infarct types inset — the two main types, side by side. */}
+          {isHot("infarct-types") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="440" width="160" height="110" rx="14" fill="var(--bg-2)" stroke="#B63B2E" strokeWidth="2" />
+              <text x="140" y="462" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#B63B2E">WHITE INFARCT</text>
+              <path d="M100,510 L160,490 L180,520 L120,540 Z" fill="#F5E8E0" stroke="#B63B2E" strokeWidth="1.4" />
+              <text x="140" y="545" textAnchor="middle" fontSize="7.5" fill="var(--text-2)">solid organs</text>
+              <rect x="240" y="440" width="160" height="110" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="320" y="462" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">RED INFARCT</text>
+              <path d="M280,510 L340,490 L360,520 L300,540 Z" fill="#E53935" stroke="#8C1C12" strokeWidth="1.4" opacity="0.75" />
+              <text x="320" y="545" textAnchor="middle" fontSize="7.5" fill="var(--text-2)">loose / dual supply</text>
+            </g>
+          )}
+
+          {/* Haemorrhage — a vessel with a break, blood escaping. */}
+          {showHaem && (
+            <g style={{ cursor: cur }} onClick={click("haemorrhage")} filter={hotFilter("haemorrhage")}>
+              {/* Rupture in the vessel */}
+              <path d="M450,320 L450,340" stroke="#8C1C12" strokeWidth="6" strokeLinecap="round" />
+              {/* Blood droplets escaping */}
+              {[[440, 360], [455, 380], [430, 400], [465, 415], [445, 435]].map(([dx, dy], i) => (
+                <ellipse key={i} cx={dx} cy={dy} rx="7" ry="5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.8" opacity="0.9" />
+              ))}
+              <text x="450" y="470" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">haemorrhage</text>
+              <circle cx="450" cy="390" r="70" fill="none" {...ring("haemorrhage")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* Shock — whole-body failure, shown as a body outline with
+             faded/blue-tinted extremities. */}
+          {showShock && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="440" width="220" height="130" rx="14" fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2" />
+              <text x="750" y="465" textAnchor="middle" fontSize="11" fontWeight="700" fill="#5B21B6">SHOCK</text>
+              <text x="750" y="485" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">whole-body failure of perfusion</text>
+              <text x="750" y="503" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">cardiogenic · hypovolaemic</text>
+              <text x="750" y="521" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">distributive · obstructive</text>
+              <text x="750" y="545" textAnchor="middle" fontSize="8" fill="var(--text-3)">cells switch to anaerobic metabolism</text>
+            </g>
+          )}
+
+          {/* Clinical examples — shown on the last step. */}
+          {isHot("clinical") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="80" width="220" height="140" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="170" y="106" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>CLINICAL EXAMPLES</text>
+              <text x="170" y="130" textAnchor="middle" fontSize="9" fill="var(--text-2)">myocardial infarction</text>
+              <text x="170" y="148" textAnchor="middle" fontSize="9" fill="var(--text-2)">stroke</text>
+              <text x="170" y="166" textAnchor="middle" fontSize="9" fill="var(--text-2)">deep vein thrombosis</text>
+              <text x="170" y="184" textAnchor="middle" fontSize="9" fill="var(--text-2)">pulmonary embolism</text>
+              <text x="170" y="202" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">the four biggest killers</text>
+            </g>
+          )}
+
+          {/* Static region labels */}
+          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Haemodynamic disorders</text>
+          <text x="450" y="612" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">When flow, vessel, or pressure goes wrong</text>
         </svg>
       );
     },
