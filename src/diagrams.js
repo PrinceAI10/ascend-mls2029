@@ -692,6 +692,288 @@ const atlasConductionPath = ({ cx, cy, scale = 1 }) => (
 );
 
 /* ---------------------------------------------------------------- */
+/* Alveolus — a thin-walled air sac wrapped by a pulmonary          */
+/* capillary, drawn so the respiratory membrane (the surface where  */
+/* gas exchange actually happens) is visually the thinnest part of  */
+/* the whole structure. A cluster of three alveoli plus a capillary */
+/* threading between them, with red cells on the blood side and a   */
+/* faint O2/CO2 cross-membrane arrow hint in the active state.      */
+/* Used by any respiratory diagram that needs to show gas exchange  */
+/* at the alveolar level.                                            */
+/* ---------------------------------------------------------------- */
+const atlasAlveolus = ({
+  cx, cy, scale = 1,
+  oxygenated = false,
+  highlight = false,
+}) => {
+  // A cluster of three overlapping sacs, sized so the "wall" between
+  // any two adjacent sacs is visibly thin — that thinness is the point.
+  const edge = highlight ? ATLAS_COLORS.trunk : "#B0A8D8";
+  const edgeW = highlight ? 2.2 : 1.2;
+  const sacFill = "#F2EEFF";
+  return (
+    <g transform={`translate(${cx},${cy}) scale(${scale})`} className={highlight ? "atlas-pulse" : undefined}>
+      {/* Three alveolar sacs, drawn back-to-front so the overlap reads
+         as a cluster, not three disconnected circles. */}
+      <circle cx="-18" cy="4"  r="22" fill={sacFill} stroke={edge} strokeWidth={edgeW} />
+      <circle cx="20"  cy="2"  r="22" fill={sacFill} stroke={edge} strokeWidth={edgeW} />
+      <circle cx="1"   cy="-18" r="22" fill={sacFill} stroke={edge} strokeWidth={edgeW} />
+
+      {/* Thin respiratory membrane — a faint double-stroke along the
+         wall of the front sac, so the student can see the "barrier"
+         the gases have to cross is genuinely thin. */}
+      <path
+        d="M-6,14 Q0,18 6,14"
+        fill="none"
+        stroke={edge}
+        strokeWidth="0.8"
+        opacity="0.7"
+      />
+
+      {/* Pulmonary capillary threading past the cluster. Oxygenated
+         (red) on the way back to the heart, deoxygenated (blue) on
+         the way out from the heart — the caller chooses via
+         `oxygenated`. */}
+      <path
+        d="M-56,26 Q-20,30 8,26 Q30,22 56,26"
+        fill="none"
+        stroke={oxygenated ? "#8C1C12" : "#123F9E"}
+        strokeWidth="10"
+        strokeLinecap="round"
+      />
+      <path
+        d="M-56,26 Q-20,30 8,26 Q30,22 56,26"
+        fill="none"
+        stroke={oxygenated ? "#E53935" : "#2D7BFF"}
+        strokeWidth="7"
+        strokeLinecap="round"
+      />
+
+      {/* A couple of red cells in the capillary, at rest position (the
+         parent diagram can add drifting ones if it wants). */}
+      <ellipse cx="-32" cy="26" rx="5" ry="3" fill={oxygenated ? "#E53935" : "#2D7BFF"} stroke={oxygenated ? "#8C1C12" : "#123F9E"} strokeWidth="0.6" />
+      <ellipse cx="30"  cy="26" rx="5" ry="3" fill={oxygenated ? "#E53935" : "#2D7BFF"} stroke={oxygenated ? "#8C1C12" : "#123F9E"} strokeWidth="0.6" />
+
+      {/* Gas-exchange hint — two small arrows crossing the membrane when
+         the sac is highlighted: O2 in, CO2 out. Only shown while
+         highlighted so the resting diagram isn't busy. */}
+      {highlight && (
+        <g>
+          <path d="M-4,2 L-4,-8 M-4,-8 l-3,3 M-4,-8 l3,3" stroke="#2F6FED" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M6,-2 L6,8 M6,8 l-3,-3 M6,8 l3,-3" stroke="#C0392B" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <text x="-14" y="-10" fontSize="8" fontWeight="700" fill="#2F6FED" textAnchor="middle">O₂</text>
+          <text x="16"  y="14"  fontSize="8" fontWeight="700" fill="#C0392B" textAnchor="middle">CO₂</text>
+        </g>
+      )}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Antibody — the Y-shaped protein produced by B cells. Two arms   */
+/* with identical binding sites at the tips, one stem the immune   */
+/* system uses to tag threats for destruction. Drawn with a visible */
+/* hinge so the arms can flex apart, and optional antigen binding   */
+/* when highlighted — the antigen is the small shape the tips       */
+/* recognise. Used by any immune-system diagram that needs to show  */
+/* humoral immunity.                                                 */
+/* ---------------------------------------------------------------- */
+const atlasAntibody = ({
+  cx, cy, scale = 1,
+  bound = false,
+  highlight = false,
+}) => {
+  const edge = highlight ? ATLAS_COLORS.trunk : "#5B21B6";
+  const edgeW = highlight ? 2 : 1.4;
+  return (
+    <g transform={`translate(${cx},${cy}) scale(${scale})`} className={highlight ? "atlas-pulse" : undefined}>
+      {/* Y-shaped antibody body — two arms meeting at a hinge, with a
+         single stem coming down from the hinge. */}
+      <path
+        d="M0,0 L0,22 M0,0 L-22,-22 M0,0 L22,-22"
+        stroke={edge}
+        strokeWidth="5"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {/* Lighter inner fill on the arms, so the shape reads as a protein
+         with a bound structure, not just three lines. */}
+      <path
+        d="M0,0 L0,22 M0,0 L-22,-22 M0,0 L22,-22"
+        stroke="url(#atlas-grad-nucleus)"
+        strokeWidth="2.4"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity="0.75"
+      />
+      {/* Binding sites — the tips of the two arms. Drawn as small notches
+         to suggest the "lock" side of the lock-and-key recognition. */}
+      <circle cx="-22" cy="-22" r="3" fill={edge} />
+      <circle cx="22"  cy="-22" r="3" fill={edge} />
+
+      {/* Antigen — a small triangular shape that fits into the arm tips.
+         Only shown when `bound` is true, so the resting antibody is
+         drawn on its own. */}
+      {bound && (
+        <>
+          <polygon points="-26,-26 -18,-26 -22,-34" fill="#C0392B" stroke="#8C1C12" strokeWidth="1" />
+          <polygon points="18,-26 26,-26 22,-34" fill="#C0392B" stroke="#8C1C12" strokeWidth="1" />
+          <text x="-22" y="-42" textAnchor="middle" fontSize="8" fontWeight="700" fill="#C0392B">antigen</text>
+        </>
+      )}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Acute inflammation scene — a small patch of tissue with a       */
+/* capillary running through it, drawn so that each stage of the   */
+/* inflammatory response can be shown by toggling one of the       */
+/* boolean props. The four cardinal signs (redness, heat, swelling, */
+/* pain) map to specific visual features: vasodilation widens the  */
+/* vessel, increased permeability shows plasma leaking out, cell   */
+/* recruitment shows white cells rolling and squeezing through,    */
+/* and phagocytosis shows a white cell engulfing a bacterium.      */
+/* Used by every pathology diagram in the inflammation family.     */
+/* ---------------------------------------------------------------- */
+const atlasInflammationScene = ({
+  cx, cy, width = 260, height = 200,
+  vasodilation = false,
+  permeability = false,
+  recruitment = false,
+  phagocytosis = false,
+  resolution = false,
+  highlight = false,
+}) => {
+  const x0 = cx - width / 2;
+  const y0 = cy - height / 2;
+  const vesselY = cy + height * 0.05;
+  const vesselW = vasodilation ? 22 : 12;
+  const edge = highlight ? ATLAS_COLORS.trunk : "#B63B2E";
+  const edgeW = highlight ? 2.2 : 1.4;
+
+  return (
+    <g className={highlight ? "atlas-pulse" : undefined}>
+      {/* Tissue background — a soft warm patch, no hard edges, so the
+         scene reads as a slice of the body rather than a rectangle. */}
+      <ellipse cx={cx} cy={cy} rx={width * 0.55} ry={height * 0.55} fill="#FBE9E7" opacity="0.35" />
+      <ellipse cx={cx} cy={cy} rx={width * 0.5}  ry={height * 0.5}  fill="none" stroke={edge} strokeWidth={edgeW} strokeDasharray="6 6" opacity="0.4" />
+
+      {/* Capillary running through the tissue */}
+      <path
+        d={`M${x0 + 10},${vesselY} Q${cx},${vesselY - 8} ${x0 + width - 10},${vesselY}`}
+        fill="none"
+        stroke="#8C1C12"
+        strokeWidth={vesselW + 3}
+        strokeLinecap="round"
+      />
+      <path
+        d={`M${x0 + 10},${vesselY} Q${cx},${vesselY - 8} ${x0 + width - 10},${vesselY}`}
+        fill="none"
+        stroke="#E53935"
+        strokeWidth={vesselW}
+        strokeLinecap="round"
+      />
+      <path
+        d={`M${x0 + 10},${vesselY - 2} Q${cx},${vesselY - 10} ${x0 + width - 10},${vesselY - 2}`}
+        fill="none"
+        stroke="#F5C7C0"
+        strokeWidth={Math.max(1.4, vesselW * 0.3)}
+        strokeLinecap="round"
+        opacity="0.85"
+      />
+
+      {/* Red cells inside the capillary, so it reads as a blood vessel */}
+      {[[x0 + 40, vesselY], [cx - 30, vesselY - 3], [cx + 30, vesselY - 3], [x0 + width - 40, vesselY]].map(([rx, ry], i) => (
+        <ellipse key={i} cx={rx} cy={ry} rx="5" ry="3" fill="#E53935" stroke="#8C1C12" strokeWidth="0.6" />
+      ))}
+
+      {/* Vasodilation indicator — small outward arrows at the vessel
+         edges showing the wall is widening. */}
+      {vasodilation && (
+        <g opacity="0.85">
+          <path d={`M${x0 + 20},${vesselY - 20} L${x0 + 20},${vesselY - 8}`} stroke="#C0392B" strokeWidth="1.6" strokeLinecap="round" />
+          <path d={`M${x0 + 20},${vesselY - 20} l-3,4 M${x0 + 20},${vesselY - 20} l3,4`} stroke="#C0392B" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+          <path d={`M${x0 + width - 20},${vesselY + 22} L${x0 + width - 20},${vesselY + 10}`} stroke="#C0392B" strokeWidth="1.6" strokeLinecap="round" />
+          <path d={`M${x0 + width - 20},${vesselY + 22} l-3,-4 M${x0 + width - 20},${vesselY + 22} l3,-4`} stroke="#C0392B" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+        </g>
+      )}
+
+      {/* Permeability — plasma leaking out of the vessel into the
+         tissue. Yellow droplets, matching the interstitial fluid
+         droplets used elsewhere in the atlas. */}
+      {permeability && (
+        <g opacity="0.9">
+          {[[cx - 30, vesselY + 22], [cx, vesselY + 30], [cx + 30, vesselY + 26], [cx - 12, vesselY + 40], [cx + 18, vesselY + 44]].map(([px, py], i) => (
+            <circle key={i} cx={px} cy={py} r="3.5" fill="#FFE38A" stroke="#D89B14" strokeWidth="0.5" />
+          ))}
+        </g>
+      )}
+
+      {/* Recruitment — white cells rolling along the vessel wall, and
+         one squeezing through the wall into the tissue. */}
+      {recruitment && (
+        <g>
+          {atlasWhiteCell({ cx: x0 + 60, cy: vesselY - 2, r: 9 })}
+          {atlasWhiteCell({ cx: cx + 40, cy: vesselY - 2, r: 9 })}
+          {/* The cell mid-squeeze, half in and half out of the vessel */}
+          <g opacity="0.95">
+            <circle cx={cx + 5} cy={vesselY + 14} r="8" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.2" />
+            <path
+              d={`M${cx},${vesselY + 10} Q${cx + 5},${vesselY + 6} ${cx + 10},${vesselY + 12} Q${cx + 8},${vesselY + 20} ${cx + 2},${vesselY + 22} Q${cx - 3},${vesselY + 18} ${cx},${vesselY + 10} Z`}
+              fill="#8B5CF6" opacity="0.78"
+            />
+          </g>
+          <path d={`M${cx + 5},${vesselY + 6} L${cx + 5},${vesselY + 22}`} stroke="#5B21B6" strokeWidth="0.8" strokeDasharray="2 2" opacity="0.6" />
+        </g>
+      )}
+
+      {/* Phagocytosis — a white cell extending pseudopods around a
+         bacterium, with a second bacterium already internalised. */}
+      {phagocytosis && (
+        <g>
+          <g>
+            {/* Macrophage body */}
+            <circle cx={cx - 40} cy={cy - 30} r="18" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.4" />
+            {/* Lobed nucleus */}
+            <path
+              d={`M${cx - 48},${cy - 34} Q${cx - 42},${cy - 38} ${cx - 38},${cy - 32} Q${cx - 34},${cy - 26} ${cx - 40},${cy - 24} Q${cx - 46},${cy - 26} ${cx - 48},${cy - 34} Z`}
+              fill="#8B5CF6" opacity="0.78"
+            />
+            {/* Pseudomonas around a bacterium */}
+            <path
+              d={`M${cx - 22},${cy - 30} Q${cx - 16},${cy - 38} ${cx - 10},${cy - 30} Q${cx - 16},${cy - 22} ${cx - 22},${cy - 30} Z`}
+              fill="none" stroke="#8B5CF6" strokeWidth="1.6"
+            />
+            {/* The bacterium being engulfed */}
+            <ellipse cx={cx - 14} cy={cy - 30} rx="5" ry="3" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
+            {/* An internalised one already inside */}
+            <ellipse cx={cx - 42} cy={cy - 26} rx="4" ry="2.5" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" opacity="0.7" />
+          </g>
+          <text x={cx - 40} y={cy - 4} textAnchor="middle" fontSize="8" fill="var(--text-2)">phagocytosis</text>
+        </g>
+      )}
+
+      {/* Resolution — a green-ish overlay suggesting the tissue is
+         returning to normal, with a faint "resolved" caption. */}
+      {resolution && (
+        <g>
+          <rect
+            x={x0 + 6} y={y0 + 6} width={width - 12} height={height - 12}
+            rx="14" fill="none"
+            stroke="#16A34A" strokeWidth="2" strokeDasharray="6 4"
+            opacity="0.75"
+          />
+          <text x={cx} y={y0 + height - 10} textAnchor="middle" fontSize="9" fontWeight="700" fill="#16A34A">tissue repaired</text>
+        </g>
+      )}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
 /* Erythroid maturation stage — one red cell precursor, drawn so    */
 /* the actual visible changes across maturation (nucleus shrinking  */
 /* and condensing, cytoplasm shifting blue to pink, nucleus finally */
@@ -1733,6 +2015,595 @@ export const DIAGRAMS = {
           {/* Static region labels */}
           <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Tissue</text>
           <text x="450" y="614" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Near the collarbone</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     RESPIRATORY PHYSIOLOGY
+     Topic: Physiology II (ph2), Topic 01 (index 0).
+     The cardio-respiratory family's second diagram. Reuses
+     atlasLungs (the most detailed primitive in the file),
+     atlasVessel, atlasBloodCell, atlasFlowArrow, and adds one
+     new primitive (atlasAlveolus) for the gas-exchange inset.
+     ========================================================= */
+  "ph2:respiratory-physiology": {
+    id: "ph2:respiratory-physiology",
+    type: "diagram",
+    title: "Respiratory Physiology — Air, Lungs, and Gas Exchange",
+    topic: { courseId: "ph2", topicIndex: 0 },
+    parent: null,
+    summary: "Your body needs oxygen for every cell to make energy, and it has to get rid of the carbon dioxide that's produced as waste. The respiratory system does both: air moves in and out through a branching tree of airways, the oxygen crosses a very thin membrane into the blood at the alveoli, and the blood carries it to the tissues. Getting carbon dioxide out happens the same way, in reverse.",
+    labels: [
+      { id: "whole",       name: "The Whole System",       desc: "Airway, lungs, gas exchange, and the two-way movement of oxygen and carbon dioxide — one integrated system." },
+      { id: "airway",      name: "The Airway",             desc: "Trachea, bronchi, and the branching bronchioles. Warms, moistens, and filters air on the way in." },
+      { id: "lungs",       name: "The Lungs",              desc: "Two elastic organs around the heart. Right lung has three lobes, left has two with a notch where the heart sits." },
+      { id: "alveolus",    name: "The Alveolus",           desc: "A thin-walled air sac at the end of the airway. Surrounded by pulmonary capillaries. This is where gas exchange happens." },
+      { id: "membrane",    name: "Respiratory Membrane",   desc: "The thin barrier between air in the alveolus and blood in the capillary. Oxygen and carbon dioxide diffuse across it." },
+      { id: "o2",          name: "Oxygen Transport",       desc: "Oxygen crosses into the blood, binds haemoglobin in red cells, and is carried to every tissue in the body." },
+      { id: "co2",         name: "Carbon Dioxide Transport", desc: "CO₂ produced by tissues travels back in the blood — mostly as bicarbonate — and is breathed out at the lungs." },
+      { id: "control",     name: "Breathing Control",      desc: "The brainstem sets the rhythm. Chemoreceptors in the brain and major arteries sense CO₂ and O₂ levels and adjust rate and depth." },
+      { id: "volumes",     name: "Lung Volumes",           desc: "Tidal volume, vital capacity, residual volume — the measurable amounts that describe how much air the lungs move and hold." },
+      { id: "pleura",      name: "Pleural Cavity",         desc: "The thin fluid-filled space between the lung and the chest wall. Its surface tension is what makes the lung follow the chest wall's movements." },
+    ],
+    narration: [
+      "Every cell in your body needs oxygen to make energy, and produces carbon dioxide as waste. The respiratory system's job is to bring oxygen in and push carbon dioxide out. It does that with four parts working together: an airway, two lungs, a surface where gas exchange happens, and a control system that sets the rhythm.",
+      "Air comes in through your nose or mouth and travels down the trachea, which splits into two bronchi, one for each lung. Inside each lung, those bronchi keep splitting into smaller and smaller tubes called bronchioles. By the time air reaches the end of this branching tree, it's warm, moist, and filtered.",
+      "Your two lungs sit on either side of your heart. The right lung has three lobes, the left has two — the left is slightly smaller because the heart takes up space on that side. The lungs themselves are elastic: they stretch when air comes in and recoil when it goes out.",
+      "At the very end of each bronchiole are clusters of tiny air sacs called alveoli. There are hundreds of millions of them, and together they give your lungs an enormous surface area — about the size of a tennis court — packed into your chest. This is where the actual gas exchange happens.",
+      "Each alveolus is wrapped in a mesh of tiny blood vessels called pulmonary capillaries. Between the air inside the alveolus and the blood inside the capillary is a barrier just one cell thick — the respiratory membrane. It's so thin that gases can pass straight across it by diffusion.",
+      "Oxygen moves from the air in the alveolus, across the respiratory membrane, into the blood. There it binds to haemoglobin inside red blood cells. Those red cells then carry the oxygen through the heart and out to every tissue in the body, where it's released.",
+      "Carbon dioxide moves the opposite way. Tissues produce it as waste, it travels back in the blood — mostly as bicarbonate dissolved in plasma — and at the lungs it crosses the respiratory membrane into the alveoli and is breathed out.",
+      "Your breathing is controlled by the brainstem, which fires in a steady rhythm. Chemoreceptors in the brain and in major arteries constantly check the levels of carbon dioxide and oxygen in your blood. When CO₂ rises or O₂ drops, they signal the brainstem to breathe faster and deeper.",
+      "The amounts of air your lungs move and hold are measurable. Tidal volume is what you breathe in and out at rest — about half a litre. Vital capacity is the most you can breathe out after a full breath in. Residual volume is the air that stays in the lungs even after you breathe out as hard as you can.",
+      "Putting it all together: air flows in through the airway, reaches the alveoli, oxygen crosses the respiratory membrane into the blood, carbon dioxide crosses back out, and the brainstem adjusts the whole thing based on what the blood actually needs. Breathing, gas exchange, and control — one system, working together.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["airway"],
+      ["lungs"],
+      ["alveolus"],
+      ["membrane"],
+      ["o2"],
+      ["co2"],
+      ["control"],
+      ["volumes"],
+      ["pleura"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["ph2:respiratory-physiology"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* Lungs — the centrepiece. atlasLungs draws trachea, both
+             bronchi, both lungs with their lobes and fissures, and the
+             alveolar clusters at the terminal bronchioles. */}
+          <g style={{ cursor: cur }} onClick={click("lungs")} filter={hotFilter("lungs")}>
+            {atlasLungs({ cx: 450, cy: 210, scale: 1.6, highlight: isHot("lungs") })}
+            <rect x="220" y="40" width="460" height="360" fill="none" {...ring("lungs")} pointerEvents="none" />
+          </g>
+
+          {/* Airway label anchor — the trachea is drawn by atlasLungs;
+             this group just adds the clickable region for the airway
+             narration step. */}
+          <g style={{ cursor: cur }} onClick={click("airway")} filter={hotFilter("airway")}>
+            <ellipse cx="450" cy="90" rx="40" ry="50" fill="none" {...ring("airway")} pointerEvents="none" />
+          </g>
+
+          {/* Alveolus inset — replaces the terminal bronchiole view with
+             a magnified cluster, connected by a leader line to where the
+             alveolar clusters sit inside the lung drawing. */}
+          <g style={{ cursor: cur }} onClick={click("alveolus")} filter={hotFilter("alveolus")}>
+            {atlasAlveolus({ cx: 720, cy: 460, scale: 1.4, oxygenated: true, highlight: isHot("alveolus") })}
+            <circle cx="720" cy="460" r="80" fill="none" {...ring("alveolus")} pointerEvents="none" />
+          </g>
+          <path
+            d="M600,360 Q640,410 700,440"
+            fill="none"
+            stroke={ATLAS_COLORS.neutral}
+            strokeWidth="1.4"
+            strokeDasharray="4 4"
+            opacity="0.5"
+          />
+
+          {/* Respiratory membrane inset — a zoomed cross-section, shown
+             only when its step is active or highlighted. Uses the same
+             alveolus primitive with highlight enabled so the O2/CO2
+             arrows appear, and a bracket showing the thin barrier. */}
+          {isHot("membrane") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path
+                d="M820,420 Q770,440 760,460"
+                fill="none"
+                stroke={ATLAS_COLORS.trunk}
+                strokeWidth="1.5"
+                strokeDasharray="4 4"
+                opacity="0.85"
+              />
+              <circle cx="820" cy="420" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="700" y="530" width="180" height="60" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="790" y="552" textAnchor="middle" fontSize="10" fontWeight="700" fill={ATLAS_COLORS.trunk}>RESPIRATORY MEMBRANE</text>
+              <text x="790" y="570" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">one cell thick — gases diffuse across</text>
+            </g>
+          )}
+
+          {/* Oxygen transport inset — a red cell with haemoglobin carrying
+             O2, shown only when its step is active. */}
+          {isHot("o2") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="70" y="290" width="170" height="100" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="155" y="312" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">OXYGEN TRANSPORT</text>
+              {atlasBloodCell({ cx: 130, cy: 345, r: 16, oxygenated: true })}
+              <text x="175" y="340" fontSize="10" fontWeight="700" fill="#C0392B">O₂</text>
+              <text x="175" y="354" fontSize="8" fill="var(--text-2)">bound to Hb</text>
+              <text x="155" y="378" textAnchor="middle" fontSize="8" fill="var(--text-2)">carried to every tissue</text>
+            </g>
+          )}
+
+          {/* CO2 transport inset — mirrors the O2 inset, showing CO2
+             leaving via the same route in reverse. */}
+          {isHot("co2") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="70" y="410" width="170" height="100" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
+              <text x="155" y="432" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#2F6FED">CO₂ TRANSPORT</text>
+              {atlasBloodCell({ cx: 130, cy: 465, r: 16, oxygenated: false })}
+              <text x="175" y="460" fontSize="10" fontWeight="700" fill="#2F6FED">CO₂</text>
+              <text x="175" y="474" fontSize="8" fill="var(--text-2)">as bicarbonate</text>
+              <text x="155" y="498" textAnchor="middle" fontSize="8" fill="var(--text-2)">exhaled at the lungs</text>
+            </g>
+          )}
+
+          {/* Control inset — brainstem + chemoreceptors, shown only when
+             its step is active. */}
+          {isHot("control") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="700" y="40" width="180" height="110" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="790" y="62" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>BREATHING CONTROL</text>
+              {/* Brainstem icon */}
+              <ellipse cx="770" cy="90" rx="16" ry="10" fill="#8B5CF6" opacity="0.7" />
+              <text x="770" y="93" textAnchor="middle" fontSize="8" fontWeight="700" fill="#fff">brain</text>
+              {/* Chemoreceptor arrow */}
+              <path d="M790,100 Q820,120 810,135" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.6" />
+              <circle cx="810" cy="138" r="4" fill={ATLAS_COLORS.trunk} />
+              <text x="790" y="135" textAnchor="middle" fontSize="8" fill="var(--text-2)">senses CO₂ / O₂</text>
+            </g>
+          )}
+
+          {/* Lung volumes inset — a simple volume diagram, shown only on
+             its step. Draws the four key volumes as horizontal bars. */}
+          {isHot("volumes") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="280" y="500" width="280" height="100" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="420" y="520" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>LUNG VOLUMES</text>
+              {[
+                { label: "TV",  val: 0.10, color: "#2F6FED" },
+                { label: "IRV", val: 0.20, color: "#2D7BFF" },
+                { label: "ERV", val: 0.15, color: "#C0392B" },
+                { label: "RV",  val: 0.25, color: "#8C1C12" },
+              ].map((v, i) => (
+                <g key={i}>
+                  <text x="295" y={545 + i * 12} fontSize="8" fill="var(--text-2)">{v.label}</text>
+                  <rect x="320" y={539 + i * 12} width={v.val * 220} height="7" rx="3" fill={v.color} opacity="0.85" />
+                </g>
+              ))}
+            </g>
+          )}
+
+          {/* Pleural cavity inset — showing the thin fluid-filled space
+             between lung and chest wall, only when its step is active. */}
+          {isHot("pleura") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="650" y="530" width="230" height="60" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="765" y="552" textAnchor="middle" fontSize="10" fontWeight="700" fill={ATLAS_COLORS.trunk}>PLEURAL CAVITY</text>
+              <text x="765" y="570" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">fluid film — lung follows chest wall</text>
+            </g>
+          )}
+
+          {/* Static region labels */}
+          <text x="450" y="30"  textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Airway</text>
+          <text x="450" y="600" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Alveoli · Gas exchange</text>
+          <text x="120" y="260" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">O₂ / CO₂</text>
+          <text x="800" y="260" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Control · Volumes</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     IMMUNE SYSTEM
+     Topic: Physiology II (ph2), Topic 04 (index 3).
+     Completes the cardio / lymphatic / immune family. Reuses
+     atlasLymphNode, atlasWhiteCell, atlasBloodCell, atlasVessel.
+     Adds one new primitive: atlasAntibody.
+     ========================================================= */
+  "ph2:immune-system": {
+    id: "ph2:immune-system",
+    type: "diagram",
+    title: "The Immune System — Innate and Adaptive Defence",
+    topic: { courseId: "ph2", topicIndex: 3 },
+    parent: null,
+    summary: "Your body has two layers of defence against anything that could harm it. The innate immune system is fast, general, and always ready — it responds the same way to any threat. The adaptive immune system is slower to start but precise and long-lasting — it learns the exact identity of a specific threat, remembers it, and responds faster and stronger if it ever sees it again.",
+    labels: [
+      { id: "whole",      name: "The Whole System",          desc: "Two layers of defence working together: fast and general (innate), then slow and precise (adaptive)." },
+      { id: "barrier",    name: "Physical Barriers",         desc: "Skin, mucous membranes, and the linings of your airways and gut. The first line — stop threats from getting in at all." },
+      { id: "innate",     name: "Innate Immune Cells",       desc: "Neutrophils, macrophages, and dendritic cells. Fast responders that attack anything foreign without needing to recognise it specifically." },
+      { id: "inflammation", name: "Inflammation",            desc: "Redness, heat, swelling, pain. The innate response brings immune cells and fluid to the site of an injury or infection." },
+      { id: "apc",        name: "Antigen-Presenting Cell",   desc: "A dendritic cell or macrophage that has engulfed a threat, chopped it up, and is showing a piece of it to the adaptive immune system." },
+      { id: "bcell",      name: "B Cells → Antibodies",      desc: "B cells recognise a specific antigen and produce antibodies — Y-shaped proteins that tag the threat for destruction." },
+      { id: "antibody",   name: "Antibodies",                desc: "Y-shaped proteins with two identical binding sites. Each antibody is specific to one antigen. They neutralise, tag, and clump threats together." },
+      { id: "tcell",      name: "T Cells",                   desc: "Helper T cells coordinate the response; cytotoxic T cells kill infected cells directly. Both need to see antigen first." },
+      { id: "memory",     name: "Memory Cells",              desc: "Long-lived B and T cells left behind after an infection. If the same threat returns, they respond within hours instead of days." },
+      { id: "lymphnode",  name: "Lymph Node",                desc: "Where the adaptive response is organised. B cells, T cells, and antigen-presenting cells all meet here to start the response." },
+    ],
+    narration: [
+      "Your body is under constant attack — bacteria, viruses, parasites, and your own cells going wrong. The immune system is what stops all of that. It works in two layers: one that's fast and general, and one that's slower but far more precise.",
+      "The first layer isn't really cells at all — it's barriers. Your skin, the mucous membranes lining your airways and gut, the acid in your stomach, the tiny hairs in your lungs. These keep most threats out entirely. It's only when something gets past them that the immune cells get involved.",
+      "The innate immune system is the fast responder. Neutrophils and macrophages patrol your tissues and attack anything they recognise as foreign. They don't need to know exactly what a threat is — they respond the same way to any of them. That's what makes them fast, and that's also what makes them general.",
+      "When innate cells detect a threat, they trigger inflammation. Blood vessels widen and become leaky, more immune cells rush in, and the area becomes red, warm, swollen, and painful. It's uncomfortable, but it's the response working — it's how the body brings the fight to the site of infection.",
+      "The innate response can't do it all alone — some threats are too good at hiding. So a special group of innate cells called antigen-presenting cells do something clever: they engulf the threat, chop it into pieces, and carry a piece to the nearest lymph node to show it to the adaptive immune system.",
+      "In the lymph node, B cells wait. Each B cell has receptors that fit one specific antigen — like a lock waiting for one key. When a B cell meets the antigen that fits, it activates, multiplies, and starts producing antibodies.",
+      "Antibodies are Y-shaped proteins that match the antigen they were made for. The two arms of the Y grab onto the threat, and the stem tells other immune cells to destroy it. Antibodies neutralise viruses, clump bacteria together, and tag threats for the rest of the immune system.",
+      "T cells are the other half of the adaptive response. Helper T cells see antigen on the presenting cell and release signals that coordinate the whole response — they tell B cells to make more antibodies, and tell cytotoxic T cells to start killing. Cytotoxic T cells destroy cells that are already infected — the ones the antibodies can't reach.",
+      "After the infection is cleared, most of the activated B and T cells die off. But a few stay behind as memory cells. They're the whole reason vaccines work: if the same threat ever comes back, memory cells recognise it immediately and mount a full response in hours instead of days.",
+      "Putting it all together: barriers stop most threats, innate cells respond fast to whatever gets through, antigen-presenting cells carry evidence to the lymph node, B cells make antibodies against it, T cells coordinate and kill infected cells, and memory cells stay on guard. Fast, general defence and slow, precise defence — working together as one system.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["barrier"],
+      ["innate"],
+      ["inflammation"],
+      ["apc"],
+      ["bcell"],
+      ["antibody"],
+      ["tcell"],
+      ["memory"],
+      ["lymphnode"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["ph2:immune-system"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* Body outline at the base — the whole scene is happening
+             inside a person. A soft neutral silhouette behind
+             everything else, never competes with the cells. */}
+          <ellipse cx="450" cy="330" rx="400" ry="270" fill="#2B1A14" opacity="0.04" />
+
+          {/* ---- Barrier layer at the top ---- */}
+          <g style={{ cursor: cur }} onClick={click("barrier")} filter={hotFilter("barrier")}>
+            {/* Skin surface — a segmented wavy line suggesting the
+               layered barrier of skin and mucous membranes. */}
+            <path
+              d="M100,60 Q200,50 300,60 Q400,70 500,60 Q600,50 700,60 Q800,70 820,60"
+              fill="none"
+              stroke="#B63B2E"
+              strokeWidth="5"
+              strokeLinecap="round"
+            />
+            <path
+              d="M100,72 Q200,62 300,72 Q400,82 500,72 Q600,62 700,72 Q800,82 820,72"
+              fill="none"
+              stroke="#D89B14"
+              strokeWidth="3"
+              strokeLinecap="round"
+              opacity="0.7"
+            />
+            <text x="450" y="45" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-2)">Physical barriers</text>
+          </g>
+
+          {/* ---- Innate cells patrolling below the barrier ---- */}
+          <g style={{ cursor: cur }} onClick={click("innate")} filter={hotFilter("innate")}>
+            {atlasWhiteCell({ cx: 180, cy: 150, r: 18 })}
+            {atlasWhiteCell({ cx: 260, cy: 190, r: 18 })}
+            {atlasWhiteCell({ cx: 340, cy: 160, r: 18 })}
+            <text x="260" y="235" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Innate cells patrolling</text>
+            <text x="260" y="248" textAnchor="middle" fontSize="9" fill="var(--text-2)">neutrophils · macrophages</text>
+          </g>
+
+          {/* ---- Threat — a red spiky particle that shows the danger ---- */}
+          <g>
+            <path
+              d="M600,150 l8,-12 l6,12 l12,2 l-8,10 l2,12 l-12,-4 l-10,8 l0,-12 l-10,-8 l12,-6 z"
+              fill="#C0392B"
+              stroke="#8C1C12"
+              strokeWidth="1.4"
+              opacity="0.9"
+            />
+            <text x="610" y="185" textAnchor="middle" fontSize="9" fill="var(--text-2)">threat</text>
+          </g>
+
+          {/* ---- Inflammation inset — shown when step 4 is active ---- */}
+          {isHot("inflammation") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="270" width="180" height="110" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="150" y="292" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">INFLAMMATION</text>
+              <text x="150" y="310" textAnchor="middle" fontSize="9" fill="var(--text-2)">red · warm · swollen · painful</text>
+              {/* Blood vessel widening, more cells rushing in */}
+              <path d="M80,335 Q150,325 220,335" fill="none" stroke="#E53935" strokeWidth="12" strokeLinecap="round" opacity="0.7" />
+              {atlasWhiteCell({ cx: 120, cy: 355, r: 10 })}
+              {atlasWhiteCell({ cx: 150, cy: 360, r: 10 })}
+              {atlasWhiteCell({ cx: 180, cy: 355, r: 10 })}
+            </g>
+          )}
+
+          {/* ---- Antigen-presenting cell — carries antigen to the node ---- */}
+          <g style={{ cursor: cur }} onClick={click("apc")} filter={hotFilter("apc")}>
+            {atlasWhiteCell({ cx: 620, cy: 280, r: 22 })}
+            {/* Antigen pieces on the surface — small red triangles on the
+               cell membrane, the visual signature of an APC. */}
+            <polygon points="610,262 620,262 615,254" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.8" />
+            <polygon points="630,264 640,264 635,256" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.8" />
+            <text x="620" y="320" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text)">Antigen-presenting cell</text>
+            <text x="620" y="333" textAnchor="middle" fontSize="9" fill="var(--text-2)">shows antigen to T cells</text>
+          </g>
+
+          {/* ---- Lymph node — where the adaptive response is organised ---- */}
+          <g style={{ cursor: cur }} onClick={click("lymphnode")} filter={hotFilter("lymphnode")}>
+            {atlasLymphNode({ cx: 450, cy: 450, scale: 2.4 })}
+            <text x="450" y="510" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Lymph node</text>
+            <text x="450" y="523" textAnchor="middle" fontSize="9" fill="var(--text-2)">where B and T cells meet antigen</text>
+          </g>
+
+          {/* ---- B cells on the left of the node ---- */}
+          <g style={{ cursor: cur }} onClick={click("bcell")} filter={hotFilter("bcell")}>
+            {atlasWhiteCell({ cx: 260, cy: 450, r: 20 })}
+            {atlasWhiteCell({ cx: 300, cy: 480, r: 20 })}
+            <text x="280" y="520" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">B cells</text>
+            <text x="280" y="533" textAnchor="middle" fontSize="9" fill="var(--text-2)">make antibodies</text>
+          </g>
+
+          {/* ---- T cells on the right of the node ---- */}
+          <g style={{ cursor: cur }} onClick={click("tcell")} filter={hotFilter("tcell")}>
+            {atlasWhiteCell({ cx: 600, cy: 450, r: 20 })}
+            {atlasWhiteCell({ cx: 640, cy: 480, r: 20 })}
+            <text x="620" y="520" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">T cells</text>
+            <text x="620" y="533" textAnchor="middle" fontSize="9" fill="var(--text-2)">coordinate · kill infected</text>
+          </g>
+
+          {/* ---- Antibody inset — shown when step 7 is active ---- */}
+          {isHot("antibody") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="420" width="160" height="140" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="140" y="442" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">ANTIBODY</text>
+              {atlasAntibody({ cx: 140, cy: 500, scale: 1.4, bound: true, highlight: true })}
+            </g>
+          )}
+
+          {/* ---- Memory cells — bottom corner, standing guard ---- */}
+          <g style={{ cursor: cur }} onClick={click("memory")} filter={hotFilter("memory")}>
+            <rect x="700" y="520" width="150" height="70" rx="12" fill="var(--bg-3)" stroke={ATLAS_COLORS.trunk} strokeWidth="1.6" strokeDasharray="5 4" opacity="0.85" />
+            <text x="775" y="545" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>MEMORY CELLS</text>
+            <text x="775" y="562" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">stay long after infection</text>
+            <text x="775" y="578" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">respond in hours next time</text>
+          </g>
+
+          {/* Static region labels */}
+          <text x="450" y="600" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Fast, general defence + slow, precise defence</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     ACUTE INFLAMMATION
+     Topic: General Pathology (pat), Topic 05 (index 4).
+     Opens the pathology family. Introduces the reusable
+     atlasInflammationScene primitive that the rest of the
+     family (pat:2, pat:3, pat:7, pat:8, pat:9) will reuse.
+     ========================================================= */
+  "pat:acute-inflammation": {
+    id: "pat:acute-inflammation",
+    type: "diagram",
+    title: "Acute Inflammation — The Body's Rapid Response",
+    topic: { courseId: "pat", topicIndex: 4 },
+    parent: null,
+    summary: "When tissue is injured or infected, the body responds within seconds. Blood vessels widen and become leaky, immune cells rush to the site, and the area becomes red, hot, swollen, and painful. This is acute inflammation — a fast, general response that brings the immune system to where it's needed, then resolves once the threat is dealt with.",
+    labels: [
+      { id: "whole",         name: "The Whole Response",       desc: "Vasodilation, increased permeability, cell recruitment, phagocytosis, and resolution — five stages of one continuous process." },
+      { id: "trigger",       name: "The Trigger",              desc: "Tissue injury, infection, or an immune reaction. Whatever the cause, the response that follows is the same." },
+      { id: "vasodilation",  name: "Vasodilation",             desc: "Blood vessels widen to increase blood flow to the area. This is what causes the redness and heat." },
+      { id: "permeability",  name: "Increased Permeability",   desc: "Vessel walls become leaky, letting plasma and proteins escape into the tissue. This is what causes the swelling." },
+      { id: "recruitment",   name: "Cell Recruitment",         desc: "White cells roll along the vessel wall, then squeeze through the gaps into the tissue to reach the site of injury." },
+      { id: "phagocytosis",  name: "Phagocytosis",             desc: "Neutrophils and macrophages engulf bacteria and debris. This is the clean-up phase of the response." },
+      { id: "mediators",     name: "Chemical Mediators",       desc: "Histamine, prostaglandins, cytokines, and complement proteins drive the whole response — telling vessels to widen, walls to leak, and cells to come." },
+      { id: "signs",         name: "The Cardinal Signs",       desc: "Redness, heat, swelling, pain, and loss of function. Each one is a direct consequence of the changes happening in the tissue." },
+      { id: "resolution",    name: "Resolution",               desc: "Once the threat is cleared, the response winds down, the tissue repairs, and normal function returns. If it doesn't, inflammation becomes chronic." },
+      { id: "types",         name: "Acute vs Chronic",         desc: "Acute inflammation is fast and short-lived, dominated by neutrophils. Chronic inflammation lasts weeks to months, dominated by macrophages and lymphocytes." },
+    ],
+    narration: [
+      "When tissue is injured or infected, the body doesn't wait. Within seconds, it launches a fast, general response designed to bring immune cells and immune proteins to the exact site of damage. That response is acute inflammation.",
+      "The trigger can be almost anything — a cut, a burn, a bacterial infection, an allergic reaction, or even tissue damage from lack of blood flow. Whatever the cause, the inflammatory response that follows is the same.",
+      "The first change is in the blood vessels. They widen, increasing blood flow to the area. This is vasodilation. It's what makes inflamed tissue look red and feel warm — more hot blood is passing through than usual.",
+      "Next, the vessel walls become leaky. They open up gaps between their cells, letting plasma and proteins escape into the surrounding tissue. This is what causes the swelling. The fluid that leaks out also carries antibodies and clotting factors to the site.",
+      "Now white cells can get in. Neutrophils — the fastest immune cells — roll along the inside of the vessel wall, stick, and then squeeze themselves through the gaps between the endothelial cells into the tissue. They're following chemical signals towards the injury.",
+      "Once in the tissue, neutrophils and macrophages do their main job: phagocytosis. They engulf bacteria, dead cells, and debris, and destroy them inside the cell. This is the clean-up phase — where the actual threat gets dealt with.",
+      "The whole process is driven by chemical mediators. Histamine, prostaglandins, cytokines, and complement proteins tell vessels to widen, walls to leak, and cells to come. Drugs like ibuprofen work by blocking one of these — prostaglandins — which is why they reduce both pain and inflammation.",
+      "Because all this is happening, the inflamed area shows the four cardinal signs: redness from vasodilation, heat from increased blood flow, swelling from the leaky vessels, and pain from the pressure of the swelling plus direct chemical sensitisation of nerve endings. Loss of function often follows.",
+      "Once the threat is cleared, the response has to stop. Neutrophils die off, macrophages clean up the debris, and the tissue begins to repair. Normal function returns. This is resolution — the healing phase after the acute response.",
+      "If the trigger persists — a chronic infection, an autoimmune reaction, a foreign body the immune system can't destroy — the response never resolves. Acute becomes chronic: macrophages and lymphocytes replace neutrophils, and the tissue starts to be damaged by the immune response itself. That's why chronic inflammation is the root of many long-term diseases.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["trigger"],
+      ["vasodilation"],
+      ["permeability"],
+      ["recruitment"],
+      ["phagocytosis"],
+      ["mediators"],
+      ["signs"],
+      ["resolution"],
+      ["types"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pat:acute-inflammation"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // The scene in the centre of the diagram evolves as the student
+      // steps through the narration — each stage of the response
+      // toggles one of the scene's boolean props on. This mirrors how
+      // the Cardiovascular and Lymphatic diagrams build up their
+      // overlays step by step.
+      const scene = {
+        vasodilation: activeStep >= 2,
+        permeability: activeStep >= 3,
+        recruitment:  activeStep >= 4,
+        phagocytosis: activeStep >= 5,
+        resolution:   activeStep >= 8 && activeStep < lastStep,
+      };
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* The evolving tissue scene — the centrepiece. Everything
+             else (labels, insets, callouts) hangs off this. */}
+          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+            {atlasInflammationScene({
+              cx: 450, cy: 320, width: 520, height: 300,
+              ...scene,
+              highlight: false,
+            })}
+          </g>
+
+          {/* Trigger — a spiky threat particle entering the tissue from
+             the top-left, only drawn prominently on its own step. */}
+          <g style={{ cursor: cur }} onClick={click("trigger")} filter={hotFilter("trigger")}>
+            <path
+              d="M240,150 l8,-12 l6,12 l12,2 l-8,10 l2,12 l-12,-4 l-10,8 l0,-12 l-10,-8 l12,-6 z"
+              fill="#C0392B"
+              stroke="#8C1C12"
+              strokeWidth="1.4"
+              opacity={isHot("trigger") ? 1 : 0.55}
+            />
+            <text x="260" y="185" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text-2)">injury / infection</text>
+            <circle cx="450" cy="320" r="260" fill="none" {...ring("whole")} pointerEvents="none" />
+          </g>
+
+          {/* Vasodilation label anchor */}
+          <g style={{ cursor: cur }} onClick={click("vasodilation")} filter={hotFilter("vasodilation")}>
+            <circle cx="260" cy="440" r="60" fill="none" {...ring("vasodilation")} pointerEvents="none" />
+            <text x="260" y="530" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text-2)">vasodilation</text>
+          </g>
+
+          {/* Permeability label anchor */}
+          <g style={{ cursor: cur }} onClick={click("permeability")} filter={hotFilter("permeability")}>
+            <circle cx="450" cy="470" r="50" fill="none" {...ring("permeability")} pointerEvents="none" />
+            <text x="450" y="555" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text-2)">permeability</text>
+          </g>
+
+          {/* Recruitment label anchor */}
+          <g style={{ cursor: cur }} onClick={click("recruitment")} filter={hotFilter("recruitment")}>
+            <circle cx="640" cy="440" r="60" fill="none" {...ring("recruitment")} pointerEvents="none" />
+            <text x="640" y="530" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text-2)">cell recruitment</text>
+          </g>
+
+          {/* Phagocytosis label anchor */}
+          <g style={{ cursor: cur }} onClick={click("phagocytosis")} filter={hotFilter("phagocytosis")}>
+            <circle cx="380" cy="220" r="55" fill="none" {...ring("phagocytosis")} pointerEvents="none" />
+            <text x="380" y="165" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text-2)">phagocytosis</text>
+          </g>
+
+          {/* Mediators inset — a small panel listing the four main
+             mediator families, drawn only when its step is active. */}
+          {isHot("mediators") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path
+                d="M700,250 Q720,270 720,300"
+                fill="none"
+                stroke={ATLAS_COLORS.trunk}
+                strokeWidth="1.5"
+                strokeDasharray="4 4"
+                opacity="0.85"
+              />
+              <rect x="690" y="120" width="180" height="110" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="780" y="142" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>CHEMICAL MEDIATORS</text>
+              <text x="780" y="162" textAnchor="middle" fontSize="9" fill="var(--text-2)">histamine</text>
+              <text x="780" y="178" textAnchor="middle" fontSize="9" fill="var(--text-2)">prostaglandins</text>
+              <text x="780" y="194" textAnchor="middle" fontSize="9" fill="var(--text-2)">cytokines</text>
+              <text x="780" y="210" textAnchor="middle" fontSize="9" fill="var(--text-2)">complement</text>
+            </g>
+          )}
+
+          {/* Cardinal signs inset — the four classic signs of acute
+             inflammation, shown as a labelled panel. */}
+          {isHot("signs") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="120" width="180" height="120" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="150" y="142" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">CARDINAL SIGNS</text>
+              {[
+                { sym: "redness",   y: 162 },
+                { sym: "heat",      y: 180 },
+                { sym: "swelling",  y: 198 },
+                { sym: "pain",      y: 216 },
+              ].map((s, i) => (
+                <text key={i} x="150" y={s.y} textAnchor="middle" fontSize="9" fill="var(--text-2)">{s.sym}</text>
+              ))}
+              <text x="150" y="234" textAnchor="middle" fontSize="7.5" fill="var(--text-3)">+ loss of function</text>
+            </g>
+          )}
+
+          {/* Resolution indicator — a green outline appears around the
+             scene once step 9 is reached. Not a box, just a soft ring. */}
+          {isHot("resolution") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <circle
+                cx="450" cy="320" r="230"
+                fill="none" stroke="#16A34A" strokeWidth="3"
+                strokeDasharray="8 6"
+                opacity="0.75"
+              />
+              <text x="450" y="585" textAnchor="middle" fontSize="11" fontWeight="700" fill="#16A34A">tissue returns to normal</text>
+            </g>
+          )}
+
+          {/* Types inset — acute vs chronic comparison, shown on the
+             final narration step. */}
+          {isHot("types") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="700" y="400" width="180" height="120" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="790" y="422" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>ACUTE vs CHRONIC</text>
+              <text x="790" y="446" textAnchor="middle" fontSize="9" fontWeight="700" fill="#C0392B">Acute</text>
+              <text x="790" y="460" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">minutes to days</text>
+              <text x="790" y="474" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">neutrophils dominate</text>
+              <text x="790" y="494" textAnchor="middle" fontSize="9" fontWeight="700" fill="#8B5CF6">Chronic</text>
+              <text x="790" y="508" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">weeks to months</text>
+            </g>
+          )}
+
+          {/* Static region labels */}
+          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Tissue</text>
+          <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Fast, general, self-limiting — unless the trigger persists</text>
         </svg>
       );
     },

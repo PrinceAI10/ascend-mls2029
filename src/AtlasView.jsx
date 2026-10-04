@@ -519,7 +519,304 @@ const LEGEND_SWATCHES = {
       <rect x="30" y="80" width="40" height="14" rx="6" fill={ATLAS_COLORS.lymphoid} opacity="0.5" />
     </g>
   ),
-};
+
+  // ---- Respiratory Physiology ----
+  // Swatches for the respiratory diagram, each matching the actual
+  // structure drawn in the diagram's render. The lungs swatch is a
+  // scaled-down version of atlasLungs; the alveolus swatch matches
+  // atlasAlveolus; the insets (o2, co2, control, volumes, pleura)
+  // each draw a tiny version of what their callout box shows.
+  airway: (active) => (
+    <g>
+      {/* Trachea with cartilage rings, splitting into two bronchi */}
+      <rect x="42" y="10" width="16" height="40" rx="6" fill="#E8E2FF" stroke={active ? "#8B7CC7" : "#8B7CC7"} strokeWidth="1.4" />
+      {[16, 24, 32, 40].map((y, i) => (
+        <line key={i} x1="42" y1={y} x2="58" y2={y} stroke="#8B7CC7" strokeWidth="0.7" opacity="0.7" />
+      ))}
+      <path d="M50,50 Q32,62 26,80" fill="none" stroke="#8B7CC7" strokeWidth="2.4" strokeLinecap="round" />
+      <path d="M50,50 Q68,62 74,80" fill="none" stroke="#8B7CC7" strokeWidth="2.4" strokeLinecap="round" />
+    </g>
+  ),
+  lungs: (active) => (
+    <g>
+      {/* Simplified two-lobe lungs, right + left */}
+      <path
+        d="M46,20 Q34,22 28,40 Q22,60 30,82 Q38,92 46,86 Q50,70 50,50 Q50,32 46,20 Z"
+        fill="#F5A8A0"
+        stroke={active ? "#F5B93F" : "#B63B2E"}
+        strokeWidth={active ? 2 : 1.3}
+      />
+      <path
+        d="M54,20 Q66,22 72,40 Q78,60 70,82 Q62,92 54,86 Q50,70 50,50 Q50,32 54,20 Z"
+        fill="#F5A8A0"
+        stroke={active ? "#F5B93F" : "#B63B2E"}
+        strokeWidth={active ? 2 : 1.3}
+      />
+      <path d="M46,34 Q50,40 54,34" fill="none" stroke="#B63B2E" strokeWidth="0.7" opacity="0.7" />
+      <path d="M46,60 Q50,66 54,60" fill="none" stroke="#B63B2E" strokeWidth="0.7" opacity="0.7" />
+    </g>
+  ),
+  alveolus: (active) => (
+    <g>
+      {/* Cluster of three sacs with a capillary threading past */}
+      <circle cx="34" cy="48" r="16" fill="#F2EEFF" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth={active ? 2 : 1.2} />
+      <circle cx="66" cy="46" r="16" fill="#F2EEFF" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth={active ? 2 : 1.2} />
+      <circle cx="50" cy="28" r="16" fill="#F2EEFF" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth={active ? 2 : 1.2} />
+      <path d="M12,72 Q32,76 50,72 Q68,68 88,72" fill="none" stroke="#E53935" strokeWidth="6" strokeLinecap="round" opacity="0.85" />
+      <path d="M12,72 Q32,76 50,72 Q68,68 88,72" fill="none" stroke="#8C1C12" strokeWidth="1.2" strokeLinecap="round" opacity="0.5" />
+    </g>
+  ),
+  membrane: (active) => (
+    <g>
+      {/* A zoomed cross-section: air on top, thin membrane, blood below */}
+      <rect x="20" y="30" width="60" height="14" fill="#E8F0FF" opacity="0.7" />
+      <rect x="20" y="44" width="60" height="3" fill={active ? "#F5B93F" : "#8B5CF6"} />
+      <rect x="20" y="47" width="60" height="14" fill="#FBE9E7" opacity="0.7" />
+      <text x="50" y="24" textAnchor="middle" fontSize="8" fill="var(--text-2)">air</text>
+      <text x="50" y="74" textAnchor="middle" fontSize="8" fill="var(--text-2)">blood</text>
+      <path d="M50,20 L50,34" stroke="#2F6FED" strokeWidth="1.4" markerEnd="" />
+      <path d="M50,72 L50,58" stroke="#C0392B" strokeWidth="1.4" />
+    </g>
+  ),
+  o2: (active) => (
+    <g>
+      <ellipse cx="50" cy="50" rx="30" ry="18" fill="#E53935" stroke="#8C1C12" strokeWidth="1.4" />
+      <ellipse cx="50" cy="50" rx="14" ry="8" fill="#F5C7C0" opacity="0.75" />
+      <text x="50" y="54" textAnchor="middle" fontSize="11" fontWeight="700" fill="#8C1C12">O₂</text>
+    </g>
+  ),
+  co2: (active) => (
+    <g>
+      <ellipse cx="50" cy="50" rx="30" ry="18" fill="#2D7BFF" stroke="#123F9E" strokeWidth="1.4" />
+      <ellipse cx="50" cy="50" rx="14" ry="8" fill="#B8D0FF" opacity="0.75" />
+      <text x="50" y="54" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">CO₂</text>
+    </g>
+  ),
+  control: (active) => (
+    <g>
+      <ellipse cx="50" cy="40" rx="20" ry="12" fill="#8B5CF6" opacity="0.75" />
+      <text x="50" y="43" textAnchor="middle" fontSize="8" fontWeight="700" fill="#fff">brain</text>
+      <path d="M50,52 L50,72" stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.6" />
+      <circle cx="50" cy="76" r="5" fill={active ? "#F5B93F" : "#D89B14"} />
+      <text x="50" y="94" textAnchor="middle" fontSize="7.5" fill="var(--text-2)">senses CO₂</text>
+    </g>
+  ),
+  volumes: (active) => (
+    <g>
+      {[
+        { y: 22, w: 24, c: "#2F6FED" },
+        { y: 38, w: 44, c: "#2D7BFF" },
+        { y: 54, w: 34, c: "#C0392B" },
+        { y: 70, w: 50, c: "#8C1C12" },
+      ].map((v, i) => (
+        <rect key={i} x="24" y={v.y} width={v.w} height="7" rx="3" fill={v.c} opacity="0.85" />
+      ))}
+      <text x="80" y="28" fontSize="7" fill="var(--text-2)">TV</text>
+      <text x="80" y="44" fontSize="7" fill="var(--text-2)">IRV</text>
+      <text x="80" y="60" fontSize="7" fill="var(--text-2)">ERV</text>
+      <text x="80" y="76" fontSize="7" fill="var(--text-2)">RV</text>
+    </g>
+  ),
+  pleura: (active) => (
+    <g>
+      {/* Two membranes with a thin fluid film between them */}
+      <path d="M20,32 Q50,26 80,32" fill="none" stroke="#B63B2E" strokeWidth="2.5" />
+      <path d="M20,40 Q50,34 80,40" fill="none" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth="2.5" />
+      <path d="M20,58 Q50,52 80,58" fill="none" stroke="#B63B2E" strokeWidth="2.5" />
+      <path d="M20,66 Q50,60 80,66" fill="none" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth="2.5" />
+      <text x="50" y="90" textAnchor="middle" fontSize="8" fill="var(--text-2)">fluid between</text>
+    </g>
+  ),
+
+  // ---- Immune System ----
+  // Swatches for the immune-system diagram. Each mirrors the structure
+  // its tile describes — a barrier wall, a white cell, a widening
+  // vessel with cells rushing in, a cell presenting antigen, a B/T
+  // cell, an antibody, a memory cell, a lymph node.
+  barrier: (active) => (
+    <g>
+      {/* Layered wavy line — the skin/mucous membrane barrier */}
+      <path d="M12,44 Q30,38 50,44 Q70,50 88,44" fill="none" stroke="#B63B2E" strokeWidth="4" strokeLinecap="round" />
+      <path d="M12,52 Q30,46 50,52 Q70,58 88,52" fill="none" stroke="#D89B14" strokeWidth="2.4" strokeLinecap="round" opacity="0.7" />
+      <text x="50" y="76" textAnchor="middle" fontSize="8" fill="var(--text-2)">skin · mucosa</text>
+    </g>
+  ),
+  innate: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <path
+        d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
+    </g>
+  ),
+  inflammation: (active) => (
+    <g>
+      {/* Widening red vessel with cells rushing in */}
+      <path d="M12,54 Q50,44 88,54" fill="none" stroke="#E53935" strokeWidth="10" strokeLinecap="round" opacity="0.7" />
+      {[30, 50, 70].map((x, i) => (
+        <circle key={i} cx={x} cy={34 + (i % 2) * 6} r="5" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1" />
+      ))}
+      <text x="50" y="82" textAnchor="middle" fontSize="7.5" fill="var(--text-2)">red · warm · swollen</text>
+    </g>
+  ),
+  apc: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="22" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <path
+        d="M42 44 Q50 40 56 46 Q62 44 62 52 Q60 60 50 60 Q42 62 42 54 Q38 48 42 44 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
+      {/* Antigen pieces on the surface */}
+      <polygon points="42,30 48,30 45,24" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
+      <polygon points="56,32 62,32 59,26" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
+    </g>
+  ),
+  bcell: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="22" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <path
+        d="M42 44 Q50 40 56 46 Q62 44 62 52 Q60 60 50 60 Q42 62 42 54 Q38 48 42 44 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
+      <text x="50" y="86" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-2)">B</text>
+    </g>
+  ),
+  antibody: (active) => (
+    <g>
+      {/* Miniature Y-shape with antigen binding at the tips */}
+      <path d="M50,66 L50,46 M50,46 L30,26 M50,46 L70,26" stroke={active ? "#F5B93F" : "#5B21B6"} strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="30" cy="26" r="2.5" fill={active ? "#F5B93F" : "#5B21B6"} />
+      <circle cx="70" cy="26" r="2.5" fill={active ? "#F5B93F" : "#5B21B6"} />
+      <polygon points="25,20 33,20 29,13" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
+      <polygon points="67,20 75,20 71,13" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
+    </g>
+  ),
+  tcell: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="22" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <path
+        d="M42 44 Q50 40 56 46 Q62 44 62 52 Q60 60 50 60 Q42 62 42 54 Q38 48 42 44 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
+      <text x="50" y="86" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-2)">T</text>
+    </g>
+  ),
+  memory: (active) => (
+    <g>
+      <rect x="14" y="26" width="72" height="48" rx="10" fill="var(--bg-3)" stroke={active ? "#F5B93F" : ATLAS_COLORS.trunk} strokeWidth="1.6" strokeDasharray="5 4" />
+      <circle cx="36" cy="50" r="9" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1" />
+      <circle cx="64" cy="50" r="9" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1" />
+    </g>
+  ),
+  lymphnode: (active) => (
+    <g>
+      {/* Bean-shape with internal follicles, matching atlasLymphNode */}
+      <ellipse cx="50" cy="50" rx="30" ry="20" fill={active ? "#2D7BFF" : ATLAS_COLORS.lymphoid} opacity="0.75" />
+      <ellipse cx="50" cy="50" rx="17" ry="11" fill="#0A0F1A" opacity="0.22" />
+      {[[-14, -4], [-10, 4], [0, -8], [0, 8], [10, -4], [12, 6]].map(([dx, dy], i) => (
+        <circle key={i} cx={50 + dx} cy={50 + dy} r="1.6" fill="#0A1F6B" opacity="0.55" />
+      ))}
+    </g>
+  ),
+
+  // ---- Acute Inflammation ----
+  // Swatches for the pathology diagram. Each mirrors the structure or
+  // concept its tile describes — a threat particle, a widening vessel,
+  // a leaky wall, a rolling white cell, a phagocytosing macrophage,
+  // a mediator panel, a signs panel, a resolved ring, an acute vs
+  // chronic comparison.
+  trigger: (active) => (
+    <g>
+      {/* Spiky threat particle */}
+      <path
+        d="M50,26 l6,-9 l5,9 l9,2 l-6,7 l2,9 l-9,-3 l-8,6 l0,-9 l-8,-6 l9,-4 z"
+        fill={active ? "#E53935" : "#C0392B"}
+        stroke="#8C1C12"
+        strokeWidth="1.2"
+      />
+    </g>
+  ),
+  vasodilation: (active) => (
+    <g>
+      {/* Vessel wall widening, with outward arrows */}
+      <path d="M14,50 Q50,44 86,50" fill="none" stroke="#E53935" strokeWidth="18" strokeLinecap="round" />
+      <path d="M14,50 Q50,44 86,50" fill="none" stroke="#F5C7C0" strokeWidth="3" strokeLinecap="round" opacity="0.85" />
+      <path d="M30,26 L30,38 M30,26 l-3,4 M30,26 l3,4" stroke="#C0392B" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+      <path d="M70,74 L70,62 M70,74 l-3,-4 M70,74 l3,-4" stroke="#C0392B" strokeWidth="1.4" fill="none" strokeLinecap="round" />
+    </g>
+  ),
+  permeability: (active) => (
+    <g>
+      {/* Vessel with plasma leaking out */}
+      <path d="M14,40 Q50,34 86,40" fill="none" stroke="#E53935" strokeWidth="12" strokeLinecap="round" />
+      {[[40, 60], [50, 70], [60, 60], [45, 80]].map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r="3.5" fill="#FFE38A" stroke="#D89B14" strokeWidth="0.5" />
+      ))}
+    </g>
+  ),
+  recruitment: (active) => (
+    <g>
+      {/* Vessel with a white cell rolling along and one squeezing through */}
+      <path d="M14,42 Q50,36 86,42" fill="none" stroke="#E53935" strokeWidth="12" strokeLinecap="round" />
+      <circle cx="30" cy="38" r="6" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.2" />
+      <circle cx="50" cy="58" r="6" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.2" />
+      <path d="M50,44 L50,58" stroke="#5B21B6" strokeWidth="0.6" strokeDasharray="2 2" opacity="0.6" />
+    </g>
+  ),
+  phagocytosis: (active) => (
+    <g>
+      {/* Macrophage engulfing a bacterium */}
+      <circle cx="42" cy="50" r="18" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.4" />
+      <path
+        d="M34,46 Q40,42 46,48 Q50,54 44,56 Q36,54 34,46 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
+      <path d="M64,50 Q70,42 76,50 Q70,58 64,50 Z" fill="none" stroke="#8B5CF6" strokeWidth="1.6" />
+      <ellipse cx="72" cy="50" rx="4" ry="2.5" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
+    </g>
+  ),
+  mediators: (active) => (
+    <g>
+      <rect x="14" y="20" width="72" height="60" rx="10" fill="var(--bg-3)" stroke={active ? "#F5B93F" : ATLAS_COLORS.trunk} strokeWidth="1.6" />
+      <text x="50" y="36" textAnchor="middle" fontSize="7" fontWeight="700" fill={active ? "#F5B93F" : ATLAS_COLORS.trunk}>MEDIATORS</text>
+      {["histamine", "prostaglandins", "cytokines", "complement"].map((m, i) => (
+        <text key={i} x="50" y={48 + i * 8} textAnchor="middle" fontSize="6" fill="var(--text-2)">{m}</text>
+      ))}
+    </g>
+  ),
+  signs: (active) => (
+    <g>
+      <rect x="12" y="20" width="76" height="60" rx="10" fill="var(--bg-3)" stroke={active ? "#F5B93F" : "#C0392B"} strokeWidth="1.6" />
+      <text x="50" y="36" textAnchor="middle" fontSize="7.5" fontWeight="700" fill={active ? "#F5B93F" : "#C0392B"}>CARDINAL SIGNS</text>
+      {["redness", "heat", "swelling", "pain"].map((s, i) => (
+        <text key={i} x="50" y={48 + i * 8} textAnchor="middle" fontSize="6.5" fill="var(--text-2)">{s}</text>
+      ))}
+    </g>
+  ),
+  resolution: (active) => (
+    <g>
+      {/* Green dashed ring suggesting the tissue has resolved */}
+      <circle cx="50" cy="50" r="32" fill="none" stroke={active ? "#F5B93F" : "#16A34A"} strokeWidth="2.2" strokeDasharray="6 4" opacity="0.85" />
+      <circle cx="50" cy="50" r="14" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1" />
+      <path d="M44,50 L48,54 L56,44" stroke="#16A34A" strokeWidth="2.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    </g>
+  ),
+  types: (active) => (
+    <g>
+      {/* Acute vs chronic side-by-side, split down the middle */}
+      <rect x="14" y="26" width="34" height="48" rx="6" fill="#FBE9E7" stroke="#C0392B" strokeWidth="1.4" />
+      <text x="31" y="42" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#C0392B">ACUTE</text>
+      <text x="31" y="54" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">hours-days</text>
+      <text x="31" y="64" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">neutrophils</text>
+      <rect x="52" y="26" width="34" height="48" rx="6" fill="#F2EEFF" stroke="#8B5CF6" strokeWidth="1.4" />
+      <text x="69" y="42" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#8B5CF6">CHRONIC</text>
+      <text x="69" y="54" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">weeks-months</text>
+      <text x="69" y="64" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">macrophages</text>
+    </g>
+  ),
+};s
+
 /* ---------------------------------------------------------------- */
 /* Narration - a small, self-contained speech helper. Deliberately  */
 /* duplicated (not imported from App.js) to avoid a circular import */
