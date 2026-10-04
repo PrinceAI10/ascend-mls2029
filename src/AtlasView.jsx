@@ -266,83 +266,128 @@ const LEGEND_SWATCHES = {
   ),
 
   // ---- Haematopoiesis ----
-  // Cells drawn as filled circles with a lighter nucleus, matching the
-  // atlasCell primitive the main diagram uses.
+  // Each swatch mirrors the actual primitive the diagram now uses, so
+  // the legend tile is the same cell the student just tapped on the
+  // canvas — cytoplasm rim, textured nucleus, visible nucleolus for a
+  // stem cell; smaller nucleus with no nucleolus for a progenitor;
+  // lobed nucleus for a granulocyte; kidney-shaped nucleus for a
+  // monocyte; multiple nuclei plus budding platelets for a
+  // megakaryocyte. Scaled down to fit the 56×56 tile.
   hsc: (active) => (
     <g>
-      <circle cx="50" cy="50" r="28" fill={active ? "#A78BFA" : "#8B5CF6"} stroke="#5B21B6" strokeWidth="1.6" />
-      <circle cx="50" cy="50" r="12" fill="#E9DFFF" opacity="0.85" />
+      {/* Cytoplasm rim */}
+      <circle cx="50" cy="50" r="28" fill="#E9DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.6" />
+      {/* Large nucleus */}
+      <circle cx="50" cy="50" r="20" fill="url(#atlas-grad-nucleus)" />
+      {/* Chromatin clumps */}
+      <circle cx="42" cy="44" r="6" fill="#5B21B6" opacity="0.55" />
+      <circle cx="56" cy="53" r="5" fill="#5B21B6" opacity="0.5" />
+      <circle cx="49" cy="59" r="4" fill="#5B21B6" opacity="0.45" />
+      {/* Nucleolus */}
+      <circle cx="53" cy="42" r="3" fill="#E9DFFF" opacity="0.9" />
     </g>
   ),
   cmp: (active) => (
     <g>
-      <circle cx="50" cy="50" r="26" fill={active ? "#FFC93C" : "#F5B93F"} stroke="#8B6410" strokeWidth="1.6" />
-      <circle cx="50" cy="50" r="10" fill="#FFF0C7" opacity="0.85" />
+      <circle cx="50" cy="50" r="26" fill="#F8F4EE" stroke={active ? "#FFC93C" : "#F5B93F"} strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="16" fill="url(#atlas-grad-trunk)" opacity="0.85" />
+      <circle cx="45" cy="46" r="3" fill="#000" opacity="0.18" />
+      <circle cx="54" cy="53" r="3" fill="#000" opacity="0.15" />
     </g>
   ),
   clp: (active) => (
     <g>
-      <circle cx="50" cy="50" r="26" fill={active ? "#2D7BFF" : "#2F6FED"} stroke="#123F9E" strokeWidth="1.6" />
-      <circle cx="50" cy="50" r="10" fill="#C7D8FF" opacity="0.85" />
+      <circle cx="50" cy="50" r="26" fill="#F8F4EE" stroke={active ? "#2D7BFF" : "#2F6FED"} strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="16" fill="url(#atlas-grad-lymphoid)" opacity="0.85" />
+      <circle cx="45" cy="46" r="3" fill="#000" opacity="0.18" />
+      <circle cx="54" cy="53" r="3" fill="#000" opacity="0.15" />
     </g>
   ),
   b: (active) => (
     <g>
-      <circle cx="50" cy="50" r="24" fill={active ? "#2D7BFF" : "#2F6FED"} stroke="#123F9E" strokeWidth="1.6" />
-      <text x="50" y="55" textAnchor="middle" fontSize="14" fontWeight="700" fill="#fff">B</text>
+      {/* Lobed nucleus, matching atlasWhiteCell */}
+      <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <path
+        d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
     </g>
   ),
   t: (active) => (
     <g>
-      <circle cx="50" cy="50" r="24" fill={active ? "#2D7BFF" : "#2F6FED"} stroke="#123F9E" strokeWidth="1.6" />
-      <text x="50" y="55" textAnchor="middle" fontSize="14" fontWeight="700" fill="#fff">T</text>
+      <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <path
+        d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
     </g>
   ),
   nk: (active) => (
     <g>
-      <circle cx="50" cy="50" r="24" fill={active ? "#2D7BFF" : "#2F6FED"} stroke="#123F9E" strokeWidth="1.6" />
-      <text x="50" y="55" textAnchor="middle" fontSize="13" fontWeight="700" fill="#fff">NK</text>
+      <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <path
+        d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
     </g>
   ),
   "myeloid-leaf": (active) => (
     <g>
-      <ellipse cx="32" cy="40" rx="14" ry="9" fill="#E53935" stroke="#8C1C12" strokeWidth="1" />
-      <circle cx="65" cy="38" r="9" fill="#F5B93F" stroke="#8B6410" strokeWidth="1" />
-      <circle cx="55" cy="68" r="8" fill="#E53935" stroke="#8C1C12" strokeWidth="1" />
+      {/* Three-quarters of a red cell, half of a white cell, one platelet */}
+      <ellipse cx="30" cy="38" rx="16" ry="10" fill="#E53935" stroke="#8C1C12" strokeWidth="1" />
+      <ellipse cx="30" cy="38" rx="8" ry="5" fill="#F5C7C0" opacity="0.75" />
+      <circle cx="66" cy="38" r="12" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1" />
+      <path d="M60 34 Q66 31 70 36 Q72 40 68 43 Q62 45 60 40 Q58 37 60 34 Z" fill="#8B5CF6" opacity="0.78" />
+      <ellipse cx="50" cy="68" rx="8" ry="5.5" fill="#F5B93F" stroke="#8B6410" strokeWidth="0.8" />
     </g>
   ),
   gmp: (active) => (
     <g>
-      <circle cx="50" cy="50" r="26" fill={active ? "#FFC93C" : "#F5B93F"} stroke="#8B6410" strokeWidth="1.6" />
-      <text x="50" y="55" textAnchor="middle" fontSize="13" fontWeight="700" fill="#1B1405">GMP</text>
+      <circle cx="50" cy="50" r="26" fill="#F8F4EE" stroke={active ? "#FFC93C" : "#F5B93F"} strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="15" fill="url(#atlas-grad-trunk)" opacity="0.85" />
+      <circle cx="45" cy="46" r="3" fill="#000" opacity="0.18" />
+      <circle cx="54" cy="53" r="3" fill="#000" opacity="0.15" />
     </g>
   ),
   mep: (active) => (
     <g>
-      <circle cx="50" cy="50" r="26" fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.6" />
-      <text x="50" y="55" textAnchor="middle" fontSize="13" fontWeight="700" fill="#fff">MEP</text>
+      <circle cx="50" cy="50" r="26" fill="#F8F4EE" stroke={active ? "#E53935" : "#C0392B"} strokeWidth="1.6" />
+      <circle cx="50" cy="50" r="15" fill="url(#atlas-grad-erythroid)" opacity="0.85" />
+      <circle cx="45" cy="46" r="3" fill="#000" opacity="0.18" />
+      <circle cx="54" cy="53" r="3" fill="#000" opacity="0.15" />
     </g>
   ),
   gran: (active) => (
     <g>
-      <circle cx="50" cy="50" r="22" fill={active ? "#FFC93C" : "#F5B93F"} stroke="#8B6410" strokeWidth="1.6" />
-      <circle cx="44" cy="44" r="4" fill="#1B1405" opacity="0.55" />
-      <circle cx="56" cy="44" r="4" fill="#1B1405" opacity="0.55" />
-      <circle cx="50" cy="56" r="4" fill="#1B1405" opacity="0.55" />
+      {/* Lobed nucleus — same as atlasWhiteCell */}
+      <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
+      <path
+        d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
+      <circle cx="49" cy="50" r="3" fill="#F3F1FF" opacity="0.6" />
     </g>
   ),
   mono: (active) => (
     <g>
-      <circle cx="50" cy="50" r="22" fill={active ? "#FFC93C" : "#F5B93F"} stroke="#8B6410" strokeWidth="1.6" />
-      <path d="M40 50 Q50 40 60 50 Q50 60 40 50 Z" fill="#1B1405" opacity="0.55" />
+      {/* Single large cell with a kidney-shaped nucleus — the monocyte's
+         defining morphology, distinct from the lobed granulocyte. */}
+      <circle cx="50" cy="50" r="24" fill="#F8F4EE" stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.6" />
+      <path
+        d="M40 46 Q48 40 58 46 Q62 52 56 58 Q48 62 42 56 Q38 50 40 46 Z"
+        fill="#8B5CF6" opacity="0.78"
+      />
     </g>
   ),
-    mega: (active) => (
+  mega: (active) => (
     <g>
-      <circle cx="50" cy="50" r="26" fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.6" />
-      {[[40, 40], [58, 42], [44, 60], [60, 58]].map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r="4" fill="#F5C7C0" opacity="0.85" />
+      {/* Large multinucleate cell with platelets budding off the edge */}
+      <circle cx="46" cy="50" r="24" fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.6" />
+      {[[40, 42], [52, 44], [44, 58], [54, 56]].map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r="3.5" fill="#5B21B6" opacity="0.75" />
       ))}
+      <ellipse cx="74" cy="42" rx="5" ry="3.5" fill="#F5B93F" stroke="#8B6410" strokeWidth="0.6" />
+      <ellipse cx="78" cy="52" rx="5" ry="3.5" fill="#F5B93F" stroke="#8B6410" strokeWidth="0.6" />
     </g>
   ),
   liver: (active) => (
@@ -357,46 +402,68 @@ const LEGEND_SWATCHES = {
   ),
 
   // ---- Erythroid maturation ----
+  // Each swatch mirrors the atlasErythroidStage primitive: cytoplasm
+  // shifts blue → pink → red as haemoglobin accumulates; the nucleus
+  // shrinks and its chromatin clumps more, then disappears entirely by
+  // the reticulocyte stage; the mature cell is biconcave with a pale
+  // centre. The legend tile is the same progression the diagram shows,
+  // just frozen at one stage per tile.
   s1: (active) => (
     <g>
-      <circle cx="50" cy="50" r="28" fill="#D8D0F0" stroke="#5B21B6" strokeWidth="1.5" />
-      <circle cx="50" cy="50" r="14" fill="#8B5CF6" />
+      {/* Proerythroblast: large nucleus, blue cytoplasm */}
+      <circle cx="50" cy="50" r="28" fill="#9AB4E8" stroke="#123F9E" strokeWidth="1.5" />
+      <circle cx="50" cy="50" r="18" fill="url(#atlas-grad-nucleus)" />
+      <circle cx="45" cy="45" r="4" fill="#5B21B6" opacity="0.35" />
+      <circle cx="55" cy="55" r="3.5" fill="#5B21B6" opacity="0.3" />
     </g>
   ),
   s2: (active) => (
     <g>
-      <circle cx="50" cy="50" r="27" fill="#B8B0E0" stroke="#5B21B6" strokeWidth="1.5" />
-      <circle cx="50" cy="50" r="12" fill="#8B5CF6" />
+      <circle cx="50" cy="50" r="28" fill="#B8C4DC" stroke="#123F9E" strokeWidth="1.5" />
+      <circle cx="50" cy="50" r="16" fill="url(#atlas-grad-nucleus)" />
+      <circle cx="44" cy="44" r="4.5" fill="#5B21B6" opacity="0.4" />
+      <circle cx="56" cy="54" r="4" fill="#5B21B6" opacity="0.35" />
     </g>
   ),
   s3: (active) => (
     <g>
-      <circle cx="50" cy="50" r="26" fill="#D0A0B0" stroke="#8C1C12" strokeWidth="1.5" />
-      <circle cx="50" cy="50" r="10" fill="#8B5CF6" />
+      {/* Polychromatophilic: mixed blue-pink cytoplasm, chromatin denser */}
+      <circle cx="50" cy="50" r="28" fill="#D8B4B8" stroke="#8C1C12" strokeWidth="1.5" />
+      <circle cx="50" cy="50" r="14" fill="url(#atlas-grad-nucleus)" />
+      <circle cx="43" cy="44" r="5" fill="#5B21B6" opacity="0.6" />
+      <circle cx="56" cy="54" r="4.5" fill="#5B21B6" opacity="0.55" />
     </g>
   ),
   s4: (active) => (
     <g>
-      <circle cx="50" cy="50" r="25" fill="#F0A8A0" stroke="#8C1C12" strokeWidth="1.5" />
-      <circle cx="50" cy="50" r="8" fill="#5B21B6" />
+      {/* Orthochromatic: pink cytoplasm, small pyknotic nucleus */}
+      <circle cx="50" cy="50" r="28" fill="#F0A8A0" stroke="#8C1C12" strokeWidth="1.5" />
+      <circle cx="50" cy="50" r="10" fill="url(#atlas-grad-nucleus)" opacity="0.9" />
+      <circle cx="46" cy="47" r="3.5" fill="#5B21B6" opacity="0.7" />
+      <circle cx="54" cy="53" r="3" fill="#5B21B6" opacity="0.65" />
     </g>
   ),
   s5: (active) => (
     <g>
-      <circle cx="50" cy="50" r="24" fill="#F0B0A0" stroke="#8C1C12" strokeWidth="1.5" />
-      <path d="M40 50 Q50 44 60 50" stroke="#8B5CF6" strokeWidth="1.5" fill="none" opacity="0.65" />
-      <path d="M42 56 Q50 62 58 56" stroke="#8B5CF6" strokeWidth="1.2" fill="none" opacity="0.5" />
+      {/* Reticulocyte: no nucleus, residual RNA strands visible */}
+      <circle cx="50" cy="50" r="28" fill="#F0B0A8" stroke="#8C1C12" strokeWidth="1.5" />
+      <path d="M32 48 Q50 40 68 48" stroke="#5B21B6" strokeWidth="1.6" fill="none" opacity="0.65" strokeLinecap="round" />
+      <path d="M34 58 Q50 52 66 58" stroke="#5B21B6" strokeWidth="1.4" fill="none" opacity="0.5" strokeLinecap="round" />
     </g>
   ),
   s6: (active) => (
     <g>
-      <ellipse cx="50" cy="50" rx="28" ry="18" fill="#E53935" stroke="#8C1C12" strokeWidth="1.5" />
-      <ellipse cx="50" cy="50" rx="14" ry="8" fill="#F5C7C0" opacity="0.75" />
+      {/* Mature RBC: biconcave ellipse with central pallor */}
+      <ellipse cx="50" cy="50" rx="30" ry="20" fill="#E53935" stroke="#8C1C12" strokeWidth="1.5" />
+      <ellipse cx="50" cy="50" rx="15" ry="10" fill="#F5C7C0" opacity="0.75" />
     </g>
   ),
   epo: (active) => (
     <g>
-      <circle cx="50" cy="50" r="24" fill={active ? "#FFC93C" : "#F5B93F"} stroke="#8B6410" strokeWidth="1.6" />
+      {/* EPO is a signal, not a cell — drawn as a small circle with the
+         abbreviation, same as before, but coloured to match the
+         diagram's new bracket-style EPO caption. */}
+      <circle cx="50" cy="50" r="22" fill={active ? "#FFC93C" : "#F5B93F"} stroke="#8B6410" strokeWidth="1.6" />
       <text x="50" y="55" textAnchor="middle" fontSize="14" fontWeight="700" fill="#1B1405">EPO</text>
     </g>
   ),
@@ -549,6 +616,818 @@ const atlasStyles = `
 .atlas-dots { display: flex; gap: 5px; margin-top: 10px; }
 .atlas-dot { flex: 1; height: 6px; border-radius: 3px; border: none; cursor: pointer; background: var(--line); }
 .atlas-dot.on { background: var(--amber); }
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
+
+/* The progress bar's fill transition is the only motion it has, so
+   turning it off under reduced-motion is enough to make the bar
+   snap to each new step instead of sliding. */
+@media (prefers-reduced-motion: reduce) {
+  .atlas-progress-fill { transition: none !important; }
+}
 
 /* Diagram + summary row - side by side once there's room, stacked on a
    narrow phone screen; same markup, flex-wrap handles both layouts. */
@@ -737,18 +1616,90 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
     });
   }, []);
 
-    useEffect(() => {
+  // On mount and whenever the diagram changes, restore the last step
+  // the student was on for THIS diagram from sessionStorage (if any),
+  // then reset every other bit of view state. Session storage is the
+  // right scope: it survives page reloads and back-navigation within
+  // the same tab, but a fresh tab or a new browser session starts at
+  // step 0 — which is what a student expects when they come back the
+  // next day.
+  //
+  // The read is guarded against:
+  //   - sessionStorage being unavailable (private mode, disabled)
+  //   - the stored value not parsing as an integer
+  //   - the stored step being outside the current diagram's range
+  //     (e.g. a diagram was edited and now has fewer steps, or a stale
+  //     entry from a diagram that used to have more)
+  // If any of those fail, we fall back to step 0 cleanly.
+  useEffect(() => {
     setActiveLabelId(null);
-    setActiveStep(0);
     setPlaying(false);
     setPaused(false);
     setZoom(DEFAULT_ZOOM);
     setPanX(0);
     setPanY(0);
-        playTokenRef.current++;
+    playTokenRef.current++;
     cachedVoiceRef.current = undefined;
     try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {}
-  }, [diagramId]);
+
+    let restored = 0;
+    try {
+      const raw = sessionStorage.getItem(`ascend_atlas_step_${diagramId}`);
+      const parsed = parseInt(raw, 10);
+      if (Number.isInteger(parsed) && parsed >= 0 && parsed < diagram.narration.length) {
+        restored = parsed;
+      }
+    } catch {}
+    setActiveStep(restored);
+  }, [diagramId, diagram.narration.length]);
+
+  // Persist the current step whenever it changes, so if the student
+  // leaves the viewer and comes back (or reloads the tab), we can
+  // restore where they were. Writes are wrapped in try/catch because
+  // sessionStorage can throw in private-mode Safari when the quota is
+  // hit; a failed write is fine — worst case the student restarts from
+  // step 0 next time, which is exactly the old behaviour.
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(`ascend_atlas_step_${diagramId}`, String(activeStep));
+    } catch {}
+  }, [activeStep, diagramId]);
+
+  // Persist the current step whenever it changes, so if the student
+  // leaves the viewer and comes back (or reloads the tab), we can
+  // restore where they were. Writes are wrapped in try/catch because
+  // sessionStorage can throw in private-mode Safari when the quota is
+  // hit; a failed write is fine — worst case the student restarts from
+  // step 0 next time, which is exactly the old behaviour.
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(`ascend_atlas_step_${diagramId}`, String(activeStep));
+    } catch {}
+  }, [activeStep, diagramId]);
+
+  // Persist the current step whenever it changes, so if the student
+  // leaves the viewer and comes back (or reloads the tab), we can
+  // restore where they were. Writes are wrapped in try/catch because
+  // sessionStorage can throw in private-mode Safari when the quota is
+  // hit; a failed write is fine — worst case the student restarts from
+  // step 0 next time, which is exactly the old behaviour.
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(`ascend_atlas_step_${diagramId}`, String(activeStep));
+    } catch {}
+  }, [activeStep, diagramId]);
+
+  // Persist the current step whenever it changes, so if the student
+  // leaves the viewer and comes back (or reloads the tab), we can
+  // restore where they were. Writes are wrapped in try/catch because
+  // sessionStorage can throw in private-mode Safari when the quota is
+  // hit; a failed write is fine — worst case the student restarts from
+  // step 0 next time, which is exactly the old behaviour.
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(`ascend_atlas_step_${diagramId}`, String(activeStep));
+    } catch {}
+  }, [activeStep, diagramId]);
 
   // Dev-time checks from the rule book (sections 4.1-4.3) - these were
   // written into the rule book but never actually wired into code. None of
@@ -988,6 +1939,19 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
   const activeLabel = diagram.labels?.find((l) => l.id === activeLabelId) || null;
   const topTopic = topLevelTopicOf(diagram);
 
+  // A diagram is "finished" when it's not playing, not paused mid-flight,
+  // and sitting on its last step. For non-looping diagrams that's the
+  // natural end state; for looping diagrams (diagram.loop === true) this
+  // never triggers, because a loop has no "end" — the play button keeps
+  // reading "Play"/"Pause" and never offers "Restart".
+  const isFinished =
+    !playing &&
+    !paused &&
+    !diagram.loop &&
+    activeStep === diagram.narration.length - 1;
+
+  
+
   return (
     <div style={{ marginTop: 16 }}>
       <style>{atlasStyles}</style>
@@ -1018,8 +1982,8 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
         <button
           className="btn btn-a btn-sm"
           onClick={handlePlay}
-          title={playing ? "Pause" : paused ? "Resume" : "Play"}
-          aria-label={playing ? "Pause walkthrough" : paused ? "Resume walkthrough" : "Play walkthrough"}
+          title={playing ? "Pause" : paused ? "Resume" : isFinished ? "Restart" : "Play"}
+          aria-label={playing ? "Pause walkthrough" : paused ? "Resume walkthrough" : isFinished ? "Restart walkthrough from the beginning" : "Play walkthrough"}
           style={{
             display: "inline-flex",
             flexDirection: "column",
@@ -1036,13 +2000,21 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
               <rect x="6" y="4" width="4" height="16" rx="1" />
               <rect x="14" y="4" width="4" height="16" rx="1" />
             </svg>
+          ) : isFinished ? (
+            /* Restart icon — a circular arrow, visually distinct from the
+               play triangle so a finished diagram reads differently from
+               an idle one. */
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M3 12a9 9 0 1 0 3-6.7" />
+              <path d="M3 4v5h5" />
+            </svg>
           ) : (
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M8 5v14l11-7z" />
             </svg>
           )}
           <span style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: "0.02em" }}>
-            {playing ? "Pause" : paused ? "Resume" : "Play"}
+            {playing ? "Pause" : paused ? "Resume" : isFinished ? "Restart" : "Play"}
           </span>
         </button>
         <button className="btn btn-g btn-sm" onClick={() => stepBy(-1)} disabled={activeStep === 0} aria-label="Previous step" title="Previous step">◀</button>
@@ -1063,8 +2035,42 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
           )}
         </button>
         <span style={{ flex: 1 }} />
-                <span className="mono" style={{ fontSize: 11.5, color: "var(--text-3)", whiteSpace: "nowrap", marginLeft: "auto" }}>Step {activeStep + 1} / {diagram.narration.length}</span>
+                <span className="mono" style={{ fontSize: 11.5, color: "var(--text-3)", whiteSpace: "nowrap", marginLeft: "auto" }} aria-live="polite" aria-atomic="true">Step {activeStep + 1} / {diagram.narration.length}</span>
       </div>
+
+      {/* Progress bar - a thin continuous fill from 0% to 100% across
+         the whole width of the play bar area. Deliberately a passive
+         indicator: the dots row below is the tappable jump target, and
+         this bar exists so a student can read playback progress at a
+         glance without counting dots. Placed directly under the play
+         bar card and above the dots row, so the visual order from top
+         to bottom is: controls -> progress -> jumpable dots -> step
+         text -> diagram. */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "relative",
+          height: 4,
+          marginTop: 6,
+          marginBottom: 2,
+          borderRadius: 2,
+          background: "var(--line)",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          className="atlas-progress-fill"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: `${((activeStep + 1) / diagram.narration.length) * 100}%`,
+            background: "var(--amber)",
+            borderRadius: 2,
+            transition: "width 0.25s ease-out",
+          }}
+        />
+      </div>
+
       <div className="atlas-dots">
         {diagram.narration.map((_, i) => (
           <button key={i} className={"atlas-dot" + (i <= activeStep ? " on" : "")} onClick={() => jumpTo(i)} title={`Step ${i + 1}`} />
@@ -1134,7 +2140,44 @@ function DiagramViewer({ diagramId, breadcrumb, onBreadcrumb, onDrill, onExit, a
                 cursor: "grab",
               }}
             >
-              {diagram.render({ onLabelClick: setActiveLabelId, activeLabelId, activeStep, onOpenDrill: () => {} })}
+              {diagram.render({
+                onLabelClick: (labelId) => {
+                  setActiveLabelId(labelId);
+                  // Tap-to-jump: if the tapped label appears in any step's
+                  // stepFocus, advance/rewind the narration to the first
+                  // step that highlights it. If it doesn't appear in any
+                  // step (e.g. a purely descriptive label like "Liver" on
+                  // a step that isn't about the liver), just highlight it
+                  // and leave the narration where it is — no surprising
+                  // jump for a structure the walkthrough never discusses.
+                  const stepIdx = diagram.stepFocus.findIndex(
+                    (focusList) => Array.isArray(focusList) && focusList.includes(labelId)
+                  );
+                  if (stepIdx === -1) return;
+
+                  // Cancel any in-flight narration so the new step's
+                  // speech starts cleanly, and bump the play token so
+                  // the previous step's onend callback can't fire and
+                  // advance us past the step we just jumped to.
+                  playTokenRef.current++;
+                  try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {}
+
+                  setActiveStep(stepIdx);
+
+                  // If the student was mid-playback, restart narration
+                  // from the new step. If they were paused or idle,
+                  // stay paused — jumping is a "look at this" gesture,
+                  // not an implicit "keep playing".
+                  if (playing) {
+                    speakStep(stepIdx);
+                  } else {
+                    setPaused(false);
+                  }
+                },
+                activeLabelId,
+                activeStep,
+                onOpenDrill: () => {},
+              })}
             </div>
           </div>
         </div>

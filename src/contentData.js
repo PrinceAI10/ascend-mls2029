@@ -43,7 +43,7 @@ Crucial insight: the anatomical position is not how a patient is actually lying 
 
 (Hint: think about every joint that could rotate and change a relationship.)
 
-The answer is four conditions. The body stands erect, with the head facing forward and eyes looking straight ahead. The feet are flat on the floor, slightly apart, toes pointing forward. The upper limbs hang down at the sides. And - the one that matters most - the palms face forward, so the thumbs point away from the body.
+The answer is four conditions. The body stands erect, with the head facing forward and the eyes looking straight ahead. The feet are flat on the floor, slightly apart, toes pointing forward. The upper limbs hang down at the sides. And - the one that matters most - the palms face forward, so the thumbs point away from the body.
 
 The most common mistake, by a wide margin, is picturing the arms with palms facing the thighs. That is how a person naturally stands, so it feels right, and it is wrong.
 
@@ -64,7 +64,7 @@ Any plane that is not parallel to one of these three is an oblique plane - a dia
 
 Crucial insight: planes are not just for anatomists with scalpels. Every CT and MRI image you will ever look at is a stack of slices taken in one of these planes, and the radiologist's report names the plane. Learning the planes is learning to read medical imaging.` },
 
-    { q: "The sagittal plane: and what makes one sagittal plane special?",
+    { q: "The sagittal plane: what makes one sagittal plane special?",
       body: `The sagittal plane runs vertically from front to back, dividing the body into a right portion and a left portion.
 
 My Socratic question: is there a special name for the sagittal plane that splits the body into two equal halves?
@@ -161,7 +161,7 @@ Question three: which single plane would a surgeon use to divide that forearm in
 
 Work them out before reading on.
 
-My answers. One: the wound is on the anterior surface of the forearm, distal to the elbow and proximal to the wrist, on the lateral side, and it extends from superficial skin to the deeper muscle. Two: the radius, which is the lateral bone of the forearm; the ulna is medial to it. Three: the frontal, or coronal, plane, since that is the plane that separates anterior from posterior.
+My answers. One: the wound is on the anterior surface of the forearm, distal to the elbow and proximal to the wrist, on the lateral side, and it extends from superficial skin to deeper muscle. Two: the radius, which is the lateral bone of the forearm; the ulna is medial to it. Three: the frontal, or coronal, plane, since that is the plane that separates anterior from posterior.
 
 If those came cleanly, you now hold the spatial language the rest of anatomy is written in. Every topic ahead assumes it.` },
   ],
@@ -26050,7 +26050,7 @@ Crucial insight: laboratory anticoagulants exist to stop the sample clotting so 
     },
     {
       q: "EDTA is the purple topped tube. How does it keep blood liquid, and what does it do to the cells?",
-      body: `EDTA, or ethylenediaminetetraacetic acid, is the anticoagulant in the familiar purple topped tube, and it is the tube used for the full blood count. It keeps blood liquid by a mechanism that is elegant in its simplicity. EDTA is a chelating agent, which means it has a shape that wraps around metal ions and holds them tightly, and the ion it holds most avidly is calcium. By binding the calcium in the sample, EDTA removes the ion that the clotting cascade needs at several of its steps, and the cascade stalls.
+      body: `EDTA, or ethylenediaminetetraacetic acid, is the anticoagulant in the familiar purple-topped tube, and it is the tube used for the full blood count. It keeps blood liquid by a mechanism that is elegant in its simplicity. EDTA is a chelating agent, which means it has a shape that wraps around metal ions and holds them tightly, and the ion it holds most avidly is calcium. By binding the calcium in the sample, EDTA removes the ion that the clotting cascade needs at several of its steps, and the cascade stalls.
 
 My Socratic question: if EDTA removes calcium from the plasma, would that change the concentration of calcium the laboratory measures?
 
@@ -40702,7 +40702,9 @@ My Socratic question: a tube of blood sits on the bench, clotting exactly as it 
 
 The answer is that a clotted sample is a ruined sample. When blood clots in the tube, it consumes the very cells and proteins the laboratory needs to measure. The red cells, white cells and platelets are trapped in the clot and can no longer be counted accurately. The clotting factors are consumed in the reaction. The plasma that remains is serum, not plasma, and it lacks fibrinogen and several other proteins. Every measurement the laboratory wanted to make is either lost or altered.
 
-To prevent this, blood collection tubes contain an anticoagulant - a chemical that prevents or delays clotting - and the tube is mixed immediately after collection so the anticoagulant reaches every part of the sample before clotting can begin. This is why every blood collection tube has a coloured cap, and why that colour tells you exactly which anticoagulant is inside and what tests that tube is suitable for.
+To prevent this, blood collection tubes contain an anticoagulant — a chemical that prevents or delays clotting — and the tube is mixed immediately after collection so the anticoagulant reaches every part of the sample before clotting can begin.
+
+This is why every blood collection tube has a coloured cap, and why that colour tells you exactly which anticoagulant is inside and what tests that tube is suitable for.
 
 Crucial insight: laboratory anticoagulants exist for one reason, to stop the sample clotting so that accurate testing is possible. They are not drugs for the patient; they are chemicals in a tube, chosen for what they preserve rather than for what they remove. The tube colour is the shorthand for which anticoagulant is present, and choosing the right tube is the first skill of blood collection.`
     },
@@ -40716,19 +40718,19 @@ The answer is calcium, in the form of calcium ions in the plasma. Several key st
 
 This is the single most exploited principle in laboratory anticoagulation. If you remove the calcium, or hide it inside a molecule that holds it tightly, the cascade stalls at the very steps that need it. This is precisely how EDTA, citrate and oxalate work.
 
-The other strategies exist in patient therapy, not in tubes: heparin accelerates the body's own inhibitor antithrombin, and warfarin prevents the liver from making the vitamin K dependent factors. Both require the living body, so neither is used inside a blood collection tube.
+The other strategies exist in patient therapy, not in tubes: heparin accelerates the body's own inhibitor antithrombin, and warfarin prevents the liver from making the vitamin K-dependent factors.
 
 Crucial insight: the clotting cascade runs on the surface of activated platelets and depends on calcium ions at several critical steps. Removing the calcium stalls the cascade. This is the principle behind EDTA, citrate and oxalate, the calcium-binding anticoagulants used inside blood collection tubes.`
     },
     {
       q: "EDTA is the purple tube. How does it keep blood liquid, and what does it do to the cells?",
-      body: `EDTA, or ethylenediaminetetraacetic acid, is the anticoagulant in the familiar purple topped tube, and it is the tube used for the full blood count. It keeps blood liquid by a mechanism that is elegant in its simplicity. EDTA is a chelating agent, which means it has a shape that wraps around metal ions and holds them tightly. The ion it holds most avidly is calcium. By binding the calcium in the sample, EDTA removes the ion the cascade needs at several of its steps, and the cascade stalls.
+      body: `EDTA, or ethylenediaminetetraacetic acid, is the anticoagulant in the familiar purple-topped tube, and it is the tube used for the full blood count. It keeps blood liquid by a mechanism that is elegant in its simplicity. EDTA is a chelating agent, which means it has a shape that wraps around metal ions and holds them tightly. The ion it holds most avidly is calcium. By binding the calcium in the sample, EDTA removes the ion the cascade needs at several of its steps, and the cascade stalls.
 
 My Socratic question: EDTA is the tube of choice for the full blood count, and at the bench that means measuring the red cell count, haemoglobin, haematocrit, red cell indices, white cell count, and platelet count. What property of EDTA makes it suitable for measuring cells, and what does it deliberately make unsuitable?
 
 The answer is that by chelating calcium, EDTA preserves the shape and internal contents of the blood cells unusually well. The cells remain intact, the red cell membranes stay stable, and the morphology of white cells and platelets is preserved for examination on the blood film. The purple tube is therefore the tube for the full blood count and for morphological examination.
 
-The cost of this same mechanism is that EDTA interferes with any analyte it binds or that depends on the ions it removes. A calcium measurement on an EDTA sample is meaningless, because the anticoagulant has deliberately bound the very ion being measured. Magnesium and some other ions are affected similarly. EDTA is not a general purpose tube; it is the tube for the full blood count and for a small number of tests chosen because EDTA preserves them well.
+The cost of this same mechanism is that EDTA interferes with any analyte it binds or that depends on the ions it removes. A calcium measurement on an EDTA sample is meaningless, because the anticoagulant has deliberately bound the very ion being measured. Magnesium and some other ions are affected similarly. EDTA is not a general-purpose tube; it is the tube for the full blood count and for a small number of tests chosen because EDTA preserves them well.
 
 At the bench, the student also knows EDTA's practical limits. It draws water into the cells over time, so the cells swell slightly and the red cell indices drift upwards if the sample is delayed. And in a small number of patients EDTA causes platelets to clump, and those clumps are counted as single large particles or missed entirely, producing a falsely low platelet count. This is why a low platelet count in a purple tube must be checked on a blood film, and why a repeat sample in a citrate or heparin tube may be needed to confirm the true count.
 
@@ -40949,7 +40951,7 @@ const T_HEMP_PHLEBOTOMY = {
   note: [
     {
       q: "A blood result is only as trustworthy as the sample it came from. Why does collection deserve a topic of its own?",
-      body: `Almost every diagnosis in haematology begins with a tube of blood. The laboratory may have immaculate analysers, rigorous quality control and expert staff, and yet if the blood in the tube was collected from the wrong patient, drawn into the wrong tube, or left too long on the bench, the result that emerges will be confidently wrong. The analytical phase of testing has been refined for decades, but the pre-analytical phase - everything that happens before the sample reaches the bench - remains the single largest source of laboratory error.
+      body: `Almost every diagnosis in haematology begins with a tube of blood. The laboratory may have immaculate analysers, rigorous quality control and expert staff, and yet if the blood in the tube was collected from the wrong patient, drawn into the wrong tube, or left too long on the bench, the result that emerges will be confidently wrong... The analytical phase of testing has been refined for decades, but the pre-analytical phase — everything that happens before the sample reaches the bench — remains the single largest source of laboratory error.
 
 My Socratic question: if the laboratory measures the sample perfectly, how can the result still be wrong?
 

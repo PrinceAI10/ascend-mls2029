@@ -686,10 +686,159 @@ const atlasConductionPath = ({ cx, cy, scale = 1 }) => (
        position, with nothing printed on the diagram itself. A student
        glancing at two pulsing dots with no text has to already know
        which is which; that defeats the point. */}
-    <text x="-36" y="-44" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="var(--text-2)">SA node</text>
+     <text x="-36" y="-44" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="var(--text-2)">SA node</text>
     <text x="-4" y="-18" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="var(--text-2)">AV node</text>
   </g>
 );
+
+/* ---------------------------------------------------------------- */
+/* Erythroid maturation stage — one red cell precursor, drawn so    */
+/* the actual visible changes across maturation (nucleus shrinking  */
+/* and condensing, cytoplasm shifting blue to pink, nucleus finally */
+/* extruded, residual RNA in the reticulocyte, central pallor in    */
+/* the mature cell) are what a student sees, not a labelled box.    */
+/* `stage` is 1..6, matching the six rows in the erythroid diagram. */
+/* ---------------------------------------------------------------- */
+const atlasErythroidStage = ({
+  id, cx, cy, r = 34, stage, label, sub,
+  onLabelClick, activeLabelId, pulsing, preview,
+}) => {
+  const active = activeLabelId === id;
+  const ring = active ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3 } : { stroke: "transparent", strokeWidth: 0 };
+
+  // Nucleus radius shrinks stage by stage, then goes to zero at stage 5
+  // (extruded) and 6 (mature red cell has no nucleus at all).
+  const nucleusR  = [0.62, 0.55, 0.46, 0.34, 0, 0][stage - 1] * r;
+  const nucleusOp = [1,    1,    1,    0.9,  0, 0][stage - 1];
+
+  // Cytoplasm shifts from ribosome-rich blue (stages 1-2) through a mixed
+  // polychromatophilic shade (stage 3) to haemoglobin-rich pink/red
+  // (stages 4-6) — the exact colour progression a real stained film shows.
+  const cytoFill   = ["#9AB4E8", "#B8C4DC", "#D8B4B8", "#F0A8A0", "#F0B0A8", "#E53935"][stage - 1];
+  const cytoStroke = ["#123F9E", "#123F9E", "#8C1C12", "#8C1C12", "#8C1C12", "#8C1C12"][stage - 1];
+
+  return (
+    <g
+      onClick={preview ? undefined : () => onLabelClick(id)}
+      style={{ cursor: preview ? "default" : "pointer" }}
+      className={pulsing ? "atlas-pulse" : ""}
+    >
+      {stage < 6 ? (
+        <circle cx={cx} cy={cy} r={r} fill={cytoFill} stroke={cytoStroke} strokeWidth="1.6" filter="url(#atlas-shadow)" {...ring} />
+      ) : (
+        // Mature red cell is biconcave, not round — same ellipse ratio as
+        // the existing atlasBloodCell primitive, so the two read as the
+        // same kind of object.
+        <ellipse cx={cx} cy={cy} rx={r} ry={r * 0.62} fill={cytoFill} stroke={cytoStroke} strokeWidth="1.6" filter="url(#atlas-shadow)" {...ring} />
+      )}
+
+      {nucleusR > 0 && (
+        <>
+          <circle cx={cx} cy={cy} r={nucleusR} fill="url(#atlas-grad-nucleus)" opacity={nucleusOp} />
+          {/* Chromatin clumping gets visibly denser from stage 2 onward —
+              this is what "condensing nucleus" actually looks like. */}
+          <circle cx={cx - nucleusR * 0.30} cy={cy - nucleusR * 0.20} r={nucleusR * 0.28} fill="#5B21B6" opacity={stage >= 3 ? 0.6 : 0.35} />
+          <circle cx={cx + nucleusR * 0.25} cy={cy + nucleusR * 0.15} r={nucleusR * 0.22} fill="#5B21B6" opacity={stage >= 3 ? 0.55 : 0.3} />
+        </>
+      )}
+
+      {stage === 5 && (
+        // Reticulocyte — residual ribosomal RNA strands, the single
+        // feature that distinguishes it from a mature red cell on a
+        // supravital stain.
+        <>
+          <path d={`M${cx - r * 0.40},${cy - r * 0.10} Q${cx},${cy - r * 0.35} ${cx + r * 0.40},${cy - r * 0.10}`} fill="none" stroke="#5B21B6" strokeWidth="1.4" opacity="0.65" strokeLinecap="round" />
+          <path d={`M${cx - r * 0.35},${cy + r * 0.20} Q${cx},${cy - r * 0.05} ${cx + r * 0.35},${cy + r * 0.20}`} fill="none" stroke="#5B21B6" strokeWidth="1.2" opacity="0.5" strokeLinecap="round" />
+        </>
+      )}
+
+      {stage === 6 && (
+        // Central pallor — the unmistakable hallmark of a mature red cell
+        // on a peripheral film, caused by its biconcave shape.
+        <ellipse cx={cx} cy={cy} rx={r * 0.5} ry={r * 0.3} fill="#F5C7C0" opacity="0.75" />
+      )}
+
+      {label && <text x={cx} y={cy + r + 18} textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text)">{label}</text>}
+      {sub && <text x={cx} y={cy + r + 31} textAnchor="middle" fontSize="9" fill="var(--text-2)">{sub}</text>}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Haematopoietic stem cell — cytoplasm rim with a large, textured  */
+/* nucleus filling most of the cell (as a real HSC does), a visible */
+/* nucleolus, and irregular chromatin clumps instead of a flat      */
+/* purple bubble. Used for the HSC itself and any other self-       */
+/* renewing stem-like cell in the haematopoiesis family.            */
+/* ---------------------------------------------------------------- */
+const atlasStemCell = ({
+  id, cx, cy, r = 46, label, sub,
+  onLabelClick, activeLabelId, pulsing, onOpenDrill, preview,
+}) => {
+  const active = activeLabelId === id;
+  const ring = active ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3 } : { stroke: "transparent", strokeWidth: 0 };
+  return (
+    <g
+      onClick={preview ? undefined : () => onLabelClick(id)}
+      style={{ cursor: preview ? "default" : "pointer" }}
+      className={pulsing ? "atlas-pulse" : ""}
+    >
+      {/* Cytoplasm — thin, lighter rim around the nucleus, same as a
+          real HSC's narrow cytoplasmic border on a stained film. */}
+      <circle cx={cx} cy={cy} r={r} fill="#E9DFFF" stroke={ATLAS_COLORS.nucleus} strokeWidth="1.6" filter="url(#atlas-shadow)" {...ring} />
+      {/* Nucleus — large, fills most of the cell. */}
+      <circle cx={cx} cy={cy} r={r * 0.72} fill="url(#atlas-grad-nucleus)" />
+      {/* Chromatin texture — irregular darker clumps, not a uniform fill. */}
+      <circle cx={cx - r * 0.28} cy={cy - r * 0.22} r={r * 0.22} fill="#5B21B6" opacity="0.55" />
+      <circle cx={cx + r * 0.20} cy={cy + r * 0.10} r={r * 0.18} fill="#5B21B6" opacity="0.5" />
+      <circle cx={cx - r * 0.05} cy={cy + r * 0.32} r={r * 0.15} fill="#5B21B6" opacity="0.45" />
+      {/* Nucleolus — one small bright spot, always present in a real HSC. */}
+      <circle cx={cx + r * 0.10} cy={cy - r * 0.30} r={r * 0.10} fill="#E9DFFF" opacity="0.9" />
+      {onOpenDrill && <text x={cx + r - 6} y={cy - r + 14} textAnchor="end" fontSize="13" fill={ATLAS_COLORS.trunk}>⤢</text>}
+      {label && <text x={cx} y={cy + r + 16} textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text)">{label}</text>}
+      {sub && <text x={cx} y={cy + r + 30} textAnchor="middle" fontSize="10" fill="var(--text-2)">{sub}</text>}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Lineage-restricted progenitor — same visual family as             */
+/* atlasStemCell, but smaller, no nucleolus, and colour-coded by     */
+/* lineage (amber = trunk/myeloid, blue = lymphoid, crimson =        */
+/* erythroid). Used for CMP, CLP, GMP, MEP — replacing what were     */
+/* previously rounded rectangle boxes in the myeloid drill-down.     */
+/* ---------------------------------------------------------------- */
+const atlasProgenitor = ({
+  id, cx, cy, r = 40, lineage = "trunk", label, sub,
+  onLabelClick, activeLabelId, pulsing, onOpenDrill, preview,
+}) => {
+  const color = lineage === "lymphoid"  ? ATLAS_COLORS.lymphoid
+              : lineage === "erythroid" ? ATLAS_COLORS.erythroid
+              :                           ATLAS_COLORS.trunk;
+  const gradId = GRADIENT_BY_COLOR[color];
+  const active = activeLabelId === id;
+  const ring = active ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3 } : { stroke: "transparent", strokeWidth: 0 };
+  return (
+    <g
+      onClick={preview ? undefined : () => onLabelClick(id)}
+      style={{ cursor: preview ? "default" : "pointer" }}
+      className={pulsing ? "atlas-pulse" : ""}
+    >
+      {/* Cytoplasm — thin lighter rim, matching atlasStemCell. */}
+      <circle cx={cx} cy={cy} r={r} fill="#F8F4EE" stroke={color} strokeWidth="1.6" filter="url(#atlas-shadow)" {...ring} />
+      {/* Nucleus — smaller relative to the cell than in a stem cell,
+          because a committed progenitor's nucleus shrinks as it starts
+          to specialise. */}
+      <circle cx={cx} cy={cy} r={r * 0.62} fill={`url(#${gradId})`} opacity="0.85" />
+      {/* Light chromatin texture — less prominent than the HSC's. */}
+      <circle cx={cx - r * 0.18} cy={cy - r * 0.15} r={r * 0.14} fill="#000" opacity="0.18" />
+      <circle cx={cx + r * 0.14} cy={cy + r * 0.12} r={r * 0.12} fill="#000" opacity="0.15" />
+      {onOpenDrill && <text x={cx + r - 6} y={cy - r + 14} textAnchor="end" fontSize="13" fill={ATLAS_COLORS.trunk}>⤢</text>}
+      {label && <text x={cx} y={cy + r + 16} textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">{label}</text>}
+      {sub && <text x={cx} y={cy + r + 29} textAnchor="middle" fontSize="9" fill="var(--text-2)">{sub}</text>}
+    </g>
+  );
+};
 
 export const DIAGRAMS = {
 
@@ -755,11 +904,7 @@ export const DIAGRAMS = {
       const diagram = DIAGRAMS["hem:haematopoiesis"];
       const focus = diagram.stepFocus[activeStep] || [];
       const st = diagram.stageState[activeStep] || diagram.stageState[0];
-      const active = (id) => activeLabelId === id;
-      const ring = (id) => (active(id) ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3 } : { stroke: "transparent", strokeWidth: 0 });
-      const click = (id) => (preview ? undefined : () => onLabelClick(id));
-      const cur = preview ? "default" : "pointer";
-      const pulse = (id) => (!preview && focus.includes(id) ? "atlas-pulse" : "");
+      const pulsing = (id) => !preview && focus.includes(id);
 
       return (
         <svg viewBox="0 0 900 520" width="100%" height="100%">
@@ -774,68 +919,95 @@ export const DIAGRAMS = {
           ))}
 
           {/* Flow lines fade in with the branch stage, not always present
-             at full strength - matching the "trunk splits" narration beat. */}
+             at full strength - matching the "trunk splits" narration beat.
+             Drawn from the bottom of the HSC to the top of each
+             progenitor, and from each progenitor down to its leaves. */}
           <g opacity={st.branches}>
-            {atlasFlow("M450,116 Q350,135 260,152")}
-            {atlasFlow("M450,116 Q550,135 640,152")}
-            {atlasFlow("M260,230 Q220,270 195,300")}
-            {atlasFlow("M640,230 Q565,270 495,300")}
-            {atlasFlow("M640,230 Q625,270 605,300")}
-            {atlasFlow("M640,230 Q685,270 710,300")}
+            {atlasFlow("M450,120 Q350,140 260,150")}
+            {atlasFlow("M450,120 Q550,140 640,150")}
+            {atlasFlow("M260,232 Q220,270 195,300")}
+            {atlasFlow("M640,232 Q565,270 495,300")}
+            {atlasFlow("M640,232 Q625,270 605,300")}
+            {atlasFlow("M640,232 Q685,270 710,300")}
           </g>
 
-          {/* Stem cell - illustrated with real nuclear detail (chromatin
-             texture + nucleolus), not a flat circle with a text label. */}
-          <g opacity={st.hsc} className={pulse("hsc")} onClick={click("hsc")} style={{ cursor: cur }}>
-            <circle cx="450" cy="70" r="46" fill="url(#atlas-grad-nucleus)" filter="url(#atlas-shadow)" {...ring("hsc")} />
-            <circle cx="450" cy="70" r="24" fill="#5B21B6" opacity="0.6" />
-            <circle cx="441" cy="62" r="5" fill="#E9DFFF" opacity="0.7" />
-            <circle cx="458" cy="76" r="4" fill="#E9DFFF" opacity="0.6" />
-            <text x="450" y="128" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text)">Stem Cell (HSC)</text>
+          {/* Stem cell - proper haematopoietic stem cell with cytoplasm
+             rim, textured chromatin, and a visible nucleolus. Opacity is
+             driven by stageState so it fades as the narration moves past
+             the "one stem cell" opening into the branch-and-specialise
+             middle section, then comes back for the synthesis step. */}
+          <g opacity={st.hsc}>
+            {atlasStemCell({
+              id: "hsc", cx: 450, cy: 70, r: 46,
+              label: "Stem Cell (HSC)",
+              onLabelClick, activeLabelId,
+              pulsing: pulsing("hsc"),
+              preview,
+            })}
           </g>
 
-          {/* Progenitors - same nucleated-cell treatment, colour-coded */}
-          <g opacity={st.branches} className={pulse("cmp")} onClick={click("cmp")} style={{ cursor: cur }}>
-            <circle cx="260" cy="190" r="40" fill="url(#atlas-grad-trunk)" filter="url(#atlas-shadow)" {...ring("cmp")} />
-            <circle cx="260" cy="190" r="18" fill="#D89B14" opacity="0.6" />
-            {onOpenDrill && <text x="288" y="166" textAnchor="end" fontSize="13" fill={ATLAS_COLORS.trunk}>⤢</text>}
-            <text x="260" y="246" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text)">Myeloid progenitor</text>
+          {/* Myeloid progenitor - amber, lineage-restricted, drill-down
+             indicator because it opens the myeloid child diagram. */}
+          <g opacity={st.branches}>
+            {atlasProgenitor({
+              id: "cmp", cx: 260, cy: 190, r: 40, lineage: "trunk",
+              label: "Myeloid progenitor", sub: "CMP",
+              onLabelClick, activeLabelId,
+              pulsing: pulsing("cmp"),
+              onOpenDrill: !!onOpenDrill, preview,
+            })}
           </g>
-          <g opacity={st.branches} className={pulse("clp")} onClick={click("clp")} style={{ cursor: cur }}>
-            <circle cx="640" cy="190" r="40" fill="url(#atlas-grad-lymphoid)" filter="url(#atlas-shadow)" {...ring("clp")} />
-            <circle cx="640" cy="190" r="18" fill="#123F9E" opacity="0.6" />
-            <text x="640" y="246" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text)">Lymphoid progenitor</text>
+
+          {/* Lymphoid progenitor - blue, no drill-down (no child diagram
+             for the lymphoid branch yet). */}
+          <g opacity={st.branches}>
+            {atlasProgenitor({
+              id: "clp", cx: 640, cy: 190, r: 40, lineage: "lymphoid",
+              label: "Lymphoid progenitor", sub: "CLP",
+              onLabelClick, activeLabelId,
+              pulsing: pulsing("clp"),
+              preview,
+            })}
           </g>
 
           {/* Mature cells - real primitives, not abstract shapes: an actual
              biconcave red cell, a lobed-nucleus white cell, a granular
-             platelet, same art used throughout the Cardiovascular family. */}
-          <g opacity={st.leaves} className={pulse("myeloid-leaf")} onClick={click("myeloid-leaf")} style={{ cursor: cur }}>
+             platelet, same art used throughout the Cardiovascular family.
+             The myeloid-leaf cluster groups the four myeloid-derived cell
+             types together on the left, matching where the CMP sits above
+             it, so the eye traces CMP down to its own children. */}
+          <g opacity={st.leaves} className={pulsing("myeloid-leaf") ? "atlas-pulse" : ""} onClick={preview ? undefined : () => onLabelClick("myeloid-leaf")} style={{ cursor: preview ? "default" : "pointer" }}>
             {atlasBloodCell({ cx: 150, cy: 320, r: 20, oxygenated: true })}
             {atlasPlatelet({ cx: 205, cy: 345, r: 9 })}
             {atlasWhiteCell({ cx: 175, cy: 365, r: 14 })}
             <text x="178" y="400" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Red cells · platelets</text>
             <text x="178" y="412" textAnchor="middle" fontSize="9" fill="var(--text-2)">granulocytes · monocytes</text>
           </g>
-          <g opacity={st.leaves} className={pulse("b")} onClick={click("b")} style={{ cursor: cur }}>
+
+          {/* B, T, NK - all three descend from the lymphoid progenitor
+             above them, so their x positions cluster under 640 rather
+             than spreading the full width. */}
+          <g opacity={st.leaves} className={pulsing("b") ? "atlas-pulse" : ""} onClick={preview ? undefined : () => onLabelClick("b")} style={{ cursor: preview ? "default" : "pointer" }}>
             {atlasWhiteCell({ cx: 495, cy: 330, r: 22 })}
             <text x="495" y="366" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">B cells</text>
           </g>
-          <g opacity={st.leaves} className={pulse("t")} onClick={click("t")} style={{ cursor: cur }}>
+          <g opacity={st.leaves} className={pulsing("t") ? "atlas-pulse" : ""} onClick={preview ? undefined : () => onLabelClick("t")} style={{ cursor: preview ? "default" : "pointer" }}>
             {atlasWhiteCell({ cx: 605, cy: 330, r: 22 })}
             <text x="605" y="366" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">T cells</text>
           </g>
-          <g opacity={st.leaves} className={pulse("nk")} onClick={click("nk")} style={{ cursor: cur }}>
+          <g opacity={st.leaves} className={pulsing("nk") ? "atlas-pulse" : ""} onClick={preview ? undefined : () => onLabelClick("nk")} style={{ cursor: preview ? "default" : "pointer" }}>
             {atlasWhiteCell({ cx: 715, cy: 330, r: 22 })}
             <text x="715" y="366" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">NK cells</text>
           </g>
 
           {/* Extramedullary sites - fade in only when the narration reaches
-             step 8, exactly when the body falls back on them. */}
+             step 8, exactly when the body falls back on them. The dashed
+             connector ties them visually back to the marrow where the
+             stem cell lives, rather than floating as two isolated organs. */}
           <g opacity={st.sites}>
             <line x1="450" y1="420" x2="450" y2="450" stroke={ATLAS_COLORS.neutral} strokeWidth="1.6" strokeDasharray="3 4" opacity="0.4" />
-            {atlasOrgan({ id: "liver", cx: 360, cy: 475, w: 130, h: 60, label: "Liver", fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim, onLabelClick, activeLabelId, pulsing: !preview && focus.includes("liver") })}
-            {atlasOrgan({ id: "spleen", cx: 540, cy: 475, w: 110, h: 60, label: "Spleen", fill: ATLAS_COLORS.lymphoid, dim: ATLAS_COLORS.lymphoidDim, onLabelClick, activeLabelId, pulsing: !preview && focus.includes("spleen") })}
+            {atlasOrgan({ id: "liver",  cx: 360, cy: 475, w: 130, h: 60, label: "Liver",  fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim, onLabelClick, activeLabelId, pulsing: pulsing("liver") })}
+            {atlasOrgan({ id: "spleen", cx: 540, cy: 475, w: 110, h: 60, label: "Spleen", fill: ATLAS_COLORS.lymphoid,  dim: ATLAS_COLORS.lymphoidDim,  onLabelClick, activeLabelId, pulsing: pulsing("spleen") })}
           </g>
         </svg>
       );
@@ -876,21 +1048,99 @@ export const DIAGRAMS = {
     viewBox: "0 0 900 380",
     render: ({ onLabelClick, activeLabelId, activeStep, preview }) => {
       const focus = DIAGRAMS["hem:haematopoiesis-myeloid"].stepFocus[activeStep] || [];
-      const n = (id, props) => atlasNode({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
+      const pulsing = (id) => !preview && focus.includes(id);
+
+      // Cell positions — chosen so the flow reads top-to-bottom without
+      // the connecting lines overlapping any of the labels. The r values
+      // shrink slightly as you descend the tree, mirroring how committed
+      // progenitors are visibly smaller than their parent cell.
+      const cmpC  = { cx: 450, cy: 70  };
+      const gmpC  = { cx: 260, cy: 190 };
+      const mepC  = { cx: 640, cy: 190 };
+      const granC = { cx: 130, cy: 320 };
+      const monoC = { cx: 290, cy: 320 };
+      const megaC = { cx: 640, cy: 320 };
+
       return (
         <svg viewBox="0 0 900 380" width="100%" height="100%">
-          
-          {atlasLine(450, 90, 260, 160)}
-          {atlasLine(450, 90, 640, 160)}
-          {atlasLine(260, 220, 180, 280)}
-          {atlasLine(260, 220, 340, 280)}
-          {atlasLine(640, 220, 640, 280)}
-          {n("cmp", { x: 380, y: 30, w: 140, h: 60, label: "CMP", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
-          {n("gmp", { x: 180, y: 160, w: 160, h: 60, label: "GMP", sub: "Granulocyte-monocyte", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
-          {n("mep", { x: 560, y: 160, w: 160, h: 60, label: "MEP", sub: "Megakaryocyte-erythroid", fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim, onOpenDrill: true })}
-          {n("gran", { x: 90, y: 280, w: 140, h: 55, label: "Granulocytes", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
-          {n("mono", { x: 250, y: 280, w: 140, h: 55, label: "Monocytes", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
-          {n("mega", { x: 560, y: 280, w: 160, h: 55, label: "Megakaryocytes", sub: "→ Platelets", fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim })}
+          {/* Connector lines — same four branches as before, now drawn
+              from the bottom of each parent cell to the top of each
+              child cell so the flow direction is unambiguous. */}
+          {atlasLine(cmpC.cx,  cmpC.cy  + 40, gmpC.cx,  gmpC.cy  - 40)}
+          {atlasLine(cmpC.cx,  cmpC.cy  + 40, mepC.cx,  mepC.cy  - 40)}
+          {atlasLine(gmpC.cx,  gmpC.cy  + 40, granC.cx, granC.cy - 40)}
+          {atlasLine(gmpC.cx,  gmpC.cy  + 40, monoC.cx, monoC.cy - 40)}
+          {atlasLine(mepC.cx,  mepC.cy  + 40, megaC.cx, megaC.cy - 40)}
+
+          {/* CMP — the trunk progenitor, amber. */}
+          {atlasProgenitor({
+            id: "cmp", cx: cmpC.cx, cy: cmpC.cy, r: 40, lineage: "trunk",
+            label: "CMP", sub: "common myeloid progenitor",
+            onLabelClick, activeLabelId, pulsing: pulsing("cmp"), preview,
+          })}
+
+          {/* GMP — granulocyte-monocyte branch, still amber (myeloid trunk). */}
+          {atlasProgenitor({
+            id: "gmp", cx: gmpC.cx, cy: gmpC.cy, r: 38, lineage: "trunk",
+            label: "GMP", sub: "granulocyte-monocyte",
+            onLabelClick, activeLabelId, pulsing: pulsing("gmp"), preview,
+          })}
+
+          {/* MEP — megakaryocyte-erythroid branch, crimson. Has the
+              drill-down indicator because it opens the erythroid child. */}
+          {atlasProgenitor({
+            id: "mep", cx: mepC.cx, cy: mepC.cy, r: 38, lineage: "erythroid",
+            label: "MEP", sub: "megakaryocyte-erythroid",
+            onLabelClick, activeLabelId, pulsing: pulsing("mep"),
+            onOpenDrill: true, preview,
+          })}
+
+          {/* Granulocytes — real lobed-nucleus white cells, not a box.
+              Three of them clustered, matching how they'd appear on a film. */}
+          <g onClick={preview ? undefined : () => onLabelClick("gran")} style={{ cursor: preview ? "default" : "pointer" }} className={pulsing("gran") ? "atlas-pulse" : ""}>
+            {atlasWhiteCell({ cx: granC.cx - 20, cy: granC.cy - 4,  r: 15 })}
+            {atlasWhiteCell({ cx: granC.cx + 16, cy: granC.cy - 10, r: 14 })}
+            {atlasWhiteCell({ cx: granC.cx - 2,  cy: granC.cy + 14, r: 14 })}
+            <text x={granC.cx} y={granC.cy + 42} textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Granulocytes</text>
+            <text x={granC.cx} y={granC.cy + 55} textAnchor="middle" fontSize="9" fill="var(--text-2)">neutrophils, eosinophils, basophils</text>
+          </g>
+
+          {/* Monocytes — larger single mononuclear cell, no lobed nucleus
+              (that's what distinguishes it from a granulocyte). */}
+          <g onClick={preview ? undefined : () => onLabelClick("mono")} style={{ cursor: preview ? "default" : "pointer" }} className={pulsing("mono") ? "atlas-pulse" : ""}>
+            <circle cx={monoC.cx} cy={monoC.cy} r="22" fill="#F8F4EE" stroke={ATLAS_COLORS.trunk} strokeWidth="1.6" filter="url(#atlas-shadow)" />
+            {/* Kidney-shaped nucleus — the monocyte's defining morphology. */}
+            <path
+              d={`M${monoC.cx - 10},${monoC.cy - 8}
+                  Q${monoC.cx + 4},${monoC.cy - 14} ${monoC.cx + 12},${monoC.cy - 2}
+                  Q${monoC.cx + 6},${monoC.cy + 12} ${monoC.cx - 6},${monoC.cy + 10}
+                  Q${monoC.cx - 14},${monoC.cy + 2} ${monoC.cx - 10},${monoC.cy - 8} Z`}
+              fill={ATLAS_COLORS.nucleus} opacity="0.78"
+            />
+            <text x={monoC.cx} y={monoC.cy + 42} textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Monocytes</text>
+            <text x={monoC.cx} y={monoC.cy + 55} textAnchor="middle" fontSize="9" fill="var(--text-2)">become macrophages in tissue</text>
+          </g>
+
+          {/* Megakaryocytes → Platelets — a large multinucleate cell with
+              platelets visibly budding off its edge, so the fragmentation
+              is shown happening, not just described in the sub-label. */}
+          <g onClick={preview ? undefined : () => onLabelClick("mega")} style={{ cursor: preview ? "default" : "pointer" }} className={pulsing("mega") ? "atlas-pulse" : ""}>
+            {/* Megakaryocyte body — large, crimson, with several nuclei. */}
+            <circle cx={megaC.cx} cy={megaC.cy} r="30" fill="url(#atlas-grad-erythroid)" stroke="#8C1C12" strokeWidth="1.6" filter="url(#atlas-shadow)" />
+            {[[-8, -6], [6, -8], [0, 6], [10, 4], [-10, 8]].map(([dx, dy], i) => (
+              <circle key={i} cx={megaC.cx + dx} cy={megaC.cy + dy} r="4.5" fill="#5B21B6" opacity="0.75" />
+            ))}
+            {/* Platelets budding off the edge — three on the right side,
+                each with a short trailing line suggesting separation. */}
+            {[[36, -10], [42, 4], [36, 18]].map(([dx, dy], i) => (
+              <g key={i}>
+                <line x1={megaC.cx + 28} y1={megaC.cy + dy * 0.5} x2={megaC.cx + dx - 2} y2={megaC.cy + dy} stroke={ATLAS_COLORS.trunk} strokeWidth="1" strokeDasharray="2 2" opacity="0.7" />
+                <ellipse cx={megaC.cx + dx} cy={megaC.cy + dy} rx="5" ry="3.5" fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="0.6" />
+              </g>
+            ))}
+            <text x={megaC.cx} y={megaC.cy + 50} textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Megakaryocytes</text>
+            <text x={megaC.cx} y={megaC.cy + 63} textAnchor="middle" fontSize="9" fill="var(--text-2)">fragment into platelets</text>
+          </g>
         </svg>
       );
     },
@@ -932,22 +1182,56 @@ export const DIAGRAMS = {
     viewBox: "0 0 900 260",
     render: ({ onLabelClick, activeLabelId, activeStep, preview }) => {
       const focus = DIAGRAMS["hem:haematopoiesis-erythroid"].stepFocus[activeStep] || [];
-      const n = (id, props) => atlasNode({ ...props, id, onLabelClick, activeLabelId, pulsing: !preview && focus.includes(id) });
+      const pulsing = (id) => !preview && focus.includes(id);
       const stages = [
-        { id: "s1", label: "Proerythro-\nblast" }, { id: "s2", label: "Basophilic\nnormoblast" },
-        { id: "s3", label: "Polychromato-\nphilic" }, { id: "s4", label: "Orthochromatic\nnormoblast" },
-        { id: "s5", label: "Reticulocyte" }, { id: "s6", label: "Mature\nRBC" },
+        { id: "s1", label: "Proerythroblast",      sub: "large nucleus, blue cytoplasm" },
+        { id: "s2", label: "Basophilic",           sub: "nucleus condensing" },
+        { id: "s3", label: "Polychromatophilic",   sub: "haemoglobin appearing" },
+        { id: "s4", label: "Orthochromatic",       sub: "nucleus pyknotic" },
+        { id: "s5", label: "Reticulocyte",         sub: "nucleus extruded, RNA left" },
+        { id: "s6", label: "Mature RBC",           sub: "biconcave, no nucleus" },
       ];
-      const w = 120, gap = 20, startX = 40, y = 120;
+      // Each cell is r=34 with 100px horizontal spacing, so the visible
+      // gap between adjacent cells is ~32px — enough that the growing
+      // cytoplasm colours read as separate cells, not a smear.
+      const r = 34, gap = 100, startX = 95, cy = 145;
       return (
         <svg viewBox="0 0 900 260" width="100%" height="100%">
-          
-          {stages.slice(0, -1).map((s, i) => atlasLine(startX + (i + 1) * (w + gap) - gap, y + 25, startX + (i + 1) * (w + gap), y + 25))}
-          {n("epo", { x: 520, y: 30, w: 190, h: 40, label: "EPO", sub: "acts here →", fill: ATLAS_COLORS.trunk, dim: ATLAS_COLORS.trunkDim })}
-          {stages.map((s, i) => n(s.id, {
-            x: startX + i * (w + gap), y, w, h: 65,
-            label: s.label.split("\n")[0], sub: s.label.split("\n")[1] || "",
-            fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim,
+          {/* Flow arrows between consecutive stages, drawn as short
+              dashed strokes with an arrowhead — showing this is a
+              sequence, not six unrelated cells. */}
+          {stages.slice(0, -1).map((_, i) => {
+            const x1 = startX + i * gap + r + 6;
+            const x2 = startX + (i + 1) * gap - r - 6;
+            return atlasFlowArrow({ x1, y1: cy, x2, y2: cy, color: ATLAS_COLORS.trunk });
+          })}
+
+          {/* EPO acts on the later stages, so it sits above stages 4-6
+              with a bracket-style leader rather than a single dot. */}
+          <g>
+            <path
+              d={`M${startX + 3 * gap},50 Q${startX + 4.5 * gap},50 ${startX + 5 * gap},${cy - r - 20}`}
+              fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
+              strokeDasharray="4 4" opacity="0.7"
+            />
+            <circle cx={startX + 5 * gap} cy={cy - r - 20} r="3.5" fill={ATLAS_COLORS.trunk} />
+            <circle cx={startX + 3 * gap} cy="50" r="3.5" fill={ATLAS_COLORS.trunk} />
+            <circle cx={startX + 4 * gap} cy="50" r="3.5" fill={ATLAS_COLORS.trunk} />
+            <text x={startX + 3 * gap} y="34" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>EPO</text>
+            <text x={startX + 3 * gap} y="20" textAnchor="middle" fontSize="9" fill="var(--text-2)">drives the later stages</text>
+          </g>
+
+          {stages.map((s, i) => atlasErythroidStage({
+            id: s.id,
+            cx: startX + i * gap,
+            cy,
+            r,
+            stage: i + 1,
+            label: s.label,
+            sub: s.sub,
+            onLabelClick, activeLabelId,
+            pulsing: pulsing(s.id),
+            preview,
           }))}
         </svg>
       );
@@ -1325,7 +1609,7 @@ export const DIAGRAMS = {
       { id: "lymphocyte", name: "B & T Lymphocytes", desc: "Immune cells living inside the node that inspect what's flowing through and start your immune response if they find a threat." },
       { id: "duct", name: "Thoracic & Right Lymphatic Ducts", desc: "The two large collecting ducts that empty filtered lymph back into your bloodstream, at large veins near your collarbone." },
     ],
-    narration: [
+        narration: [
       "Your lymphatic system has two jobs: drain extra fluid out of your tissues and return it to your blood, and do a lot of your immune system's actual work. It's a second, one-way drainage network running alongside your blood vessels.",
       "Your blood capillaries are leaky on purpose. As blood passes through, some fluid and small proteins get pushed out into the space between your cells. This happens everywhere in your body, all the time.",
       "That leaked fluid is called interstitial fluid. Most gets reabsorbed straight back into your blood capillaries. But two to four litres a day gets left behind in your tissues and has to go somewhere.",
@@ -1334,7 +1618,8 @@ export const DIAGRAMS = {
       "Lymph passes through lymph nodes along the way, small bean-shaped filtering stations packed with immune cells. As lymph flows through, the node filters out bacteria, debris and abnormal cells before it continues on.",
       "Those immune cells aren't just filtering. B and T lymphocytes inside the node check what's flowing through for threats. If they recognise something dangerous, your immune response starts right here.",
       "Filtered lymph eventually drains into one of two large ducts, the thoracic duct or the right lymphatic duct, which empty into large veins near your collarbone. The fluid has officially returned to your blood.",
-      "Fluid leaks from blood capillaries, lymphatic capillaries pick it up, valved vessels and muscle movement push it along, lymph nodes filter it, and two ducts return it to your blood. Drainage and defence, one system.",
+      "When that drainage fails, fluid stays in your tissues and builds up as swelling. This is called oedema. It happens when lymph vessels are blocked, when nodes are removed or scarred, or when the vessels can't pump properly.",
+      "Putting it all together: fluid leaks out of your blood capillaries, the lymphatic capillaries pick it up, valved vessels and muscle movement push it along, lymph nodes filter it, and two ducts return it to your blood. When any part of that chain fails, fluid backs up in the tissue instead.",
     ],
     stepFocus: [
       ["whole"],
@@ -1345,6 +1630,7 @@ export const DIAGRAMS = {
       ["node"],
       ["lymphocyte"],
       ["duct"],
+      ["whole"],
       ["whole"],
     ],
     viewBox: "0 0 900 620",
