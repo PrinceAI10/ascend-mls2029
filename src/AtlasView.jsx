@@ -9,35 +9,6 @@
 // events, narration is the browser's own speechSynthesis (same
 // engine and the same "ascend_voice_gender" preference the
 // existing Listen/podcast feature in App.js already uses).
-//
-// Layout (per the latest pass): the play bar sits on top, the
-// same way the Listen bar sits above a topic note's own text.
-// Hitting Play drives the whole seven-ish-phase sequence on its
-// own - no manual stepping required, though pause/resume/speed/
-// step-by-step are all still there for someone who wants to slow
-// down. Below the play bar: the diagram on the left, a fixed
-// topic summary on the right (what the note actually says about
-// this topic - tapping a part of the diagram adds that part's
-// description under the summary without replacing it). The full
-// legend sits below both, since it's reference material you
-// glance at, not something that needs to compete for primary
-// screen space.
-//
-// SCREENS:
-//   1. Course picker   - which courses have visuals
-//   2. Visuals list     - that course's visuals, syllabus order
-//   3. Viewer           - the SVG, zoom/pan, tap-a-label, legend,
-//                         breadcrumb, drill-downs, Play walkthrough
-//
-// Pathway builders (type: "builder") are deliberately not surfaced
-// here - PathwayBuilder below is kept so the mechanic still works
-// the moment a builder-type entry is registered, but nothing in
-// diagrams.js is a builder right now; that format is being held
-// for its own dedicated tab.
-//
-// Opened from a topic's amber "Open the illustrated diagram" card,
-// this jumps straight to Screen 3 for that topic's diagram. Opened
-// from the nav, it starts at Screen 1.
 // ------------------------------------------------------------
 import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import {
@@ -50,10 +21,7 @@ import {
   atlasDefs,
 } from "./diagrams";
 
-// Per-label mini-illustration for the legend. Each entry draws a tiny
-// version of the actual structure it names, using the SAME primitives the
-// diagram itself uses (atlasHeart, atlasLungs, atlasBloodCell, etc.). This
-// way the legend is a real visual key, not just a list of terms.
+// Per-label mini-illustration for the legend.
 const LEGEND_VIEWBOXES = {
   // Cardiovascular System
   system: "0 0 100 100",
@@ -89,7 +57,7 @@ const LEGEND_VIEWBOXES = {
   mep: "0 0 100 100",
   gran: "0 0 100 100",
   mono: "0 0 100 100",
-    mega: "0 0 100 100",
+  mega: "0 0 100 100",
   liver: "0 0 100 100",
   spleen: "0 0 100 100",
   // Erythroid maturation
@@ -108,6 +76,36 @@ const LEGEND_VIEWBOXES = {
   node: "0 0 100 100",
   lymphocyte: "0 0 100 100",
   duct: "0 0 100 100",
+  // Respiratory Physiology
+  airway: "0 0 100 100",
+  lungs: "0 0 100 100",
+  alveolus: "0 0 100 100",
+  membrane: "0 0 100 100",
+  o2: "0 0 100 100",
+  co2: "0 0 100 100",
+  control: "0 0 100 100",
+  volumes: "0 0 100 100",
+  pleura: "0 0 100 100",
+  // Immune System
+  barrier: "0 0 100 100",
+  innate: "0 0 100 100",
+  inflammation: "0 0 100 100",
+  apc: "0 0 100 100",
+  bcell: "0 0 100 100",
+  antibody: "0 0 100 100",
+  tcell: "0 0 100 100",
+  memory: "0 0 100 100",
+  lymphnode: "0 0 100 100",
+  // Acute Inflammation
+  trigger: "0 0 100 100",
+  vasodilation: "0 0 100 100",
+  permeability: "0 0 100 100",
+  recruitment: "0 0 100 100",
+  phagocytosis: "0 0 100 100",
+  mediators: "0 0 100 100",
+  signs: "0 0 100 100",
+  resolution: "0 0 100 100",
+  types: "0 0 100 100",
 };
 
 const LEGEND_SWATCHES = {
@@ -182,7 +180,7 @@ const LEGEND_SWATCHES = {
       <ellipse cx="64" cy="48" rx="10" ry="7" fill="#2F6FED" opacity="0.85" />
     </g>
   ),
-    whole: (active) => (
+  whole: (active) => (
     <g>
       <circle cx="50" cy="30" r="12" fill="#8B5CF6" opacity="0.9" />
       <circle cx="22" cy="72" r="9" fill="#2F6FED" opacity="0.9" />
@@ -192,8 +190,6 @@ const LEGEND_SWATCHES = {
   ),
 
   // ---- Cardiac Cycle drill-down ----
-  // A simplified chamber: rounded rect filled blue (right) or red (left),
-  // labeled. Same visual language as the main diagram, scaled to fit 56px.
   ra: (active) => (
     <g>
       <path d="M20 25 Q25 12 40 12 L50 12 L50 55 L20 55 Q18 40 20 25 Z"
@@ -266,24 +262,13 @@ const LEGEND_SWATCHES = {
   ),
 
   // ---- Haematopoiesis ----
-  // Each swatch mirrors the actual primitive the diagram now uses, so
-  // the legend tile is the same cell the student just tapped on the
-  // canvas — cytoplasm rim, textured nucleus, visible nucleolus for a
-  // stem cell; smaller nucleus with no nucleolus for a progenitor;
-  // lobed nucleus for a granulocyte; kidney-shaped nucleus for a
-  // monocyte; multiple nuclei plus budding platelets for a
-  // megakaryocyte. Scaled down to fit the 56×56 tile.
   hsc: (active) => (
     <g>
-      {/* Cytoplasm rim */}
       <circle cx="50" cy="50" r="28" fill="#E9DFFF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.6" />
-      {/* Large nucleus */}
       <circle cx="50" cy="50" r="20" fill="url(#atlas-grad-nucleus)" />
-      {/* Chromatin clumps */}
       <circle cx="42" cy="44" r="6" fill="#5B21B6" opacity="0.55" />
       <circle cx="56" cy="53" r="5" fill="#5B21B6" opacity="0.5" />
       <circle cx="49" cy="59" r="4" fill="#5B21B6" opacity="0.45" />
-      {/* Nucleolus */}
       <circle cx="53" cy="42" r="3" fill="#E9DFFF" opacity="0.9" />
     </g>
   ),
@@ -305,35 +290,24 @@ const LEGEND_SWATCHES = {
   ),
   b: (active) => (
     <g>
-      {/* Lobed nucleus, matching atlasWhiteCell */}
       <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
-      <path
-        d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z"
-        fill="#8B5CF6" opacity="0.78"
-      />
+      <path d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z" fill="#8B5CF6" opacity="0.78" />
     </g>
   ),
   t: (active) => (
     <g>
       <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
-      <path
-        d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z"
-        fill="#8B5CF6" opacity="0.78"
-      />
+      <path d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z" fill="#8B5CF6" opacity="0.78" />
     </g>
   ),
   nk: (active) => (
     <g>
       <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
-      <path
-        d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z"
-        fill="#8B5CF6" opacity="0.78"
-      />
+      <path d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z" fill="#8B5CF6" opacity="0.78" />
     </g>
   ),
   "myeloid-leaf": (active) => (
     <g>
-      {/* Three-quarters of a red cell, half of a white cell, one platelet */}
       <ellipse cx="30" cy="38" rx="16" ry="10" fill="#E53935" stroke="#8C1C12" strokeWidth="1" />
       <ellipse cx="30" cy="38" rx="8" ry="5" fill="#F5C7C0" opacity="0.75" />
       <circle cx="66" cy="38" r="12" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1" />
@@ -359,29 +333,19 @@ const LEGEND_SWATCHES = {
   ),
   gran: (active) => (
     <g>
-      {/* Lobed nucleus — same as atlasWhiteCell */}
       <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
-      <path
-        d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z"
-        fill="#8B5CF6" opacity="0.78"
-      />
+      <path d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z" fill="#8B5CF6" opacity="0.78" />
       <circle cx="49" cy="50" r="3" fill="#F3F1FF" opacity="0.6" />
     </g>
   ),
   mono: (active) => (
     <g>
-      {/* Single large cell with a kidney-shaped nucleus — the monocyte's
-         defining morphology, distinct from the lobed granulocyte. */}
       <circle cx="50" cy="50" r="24" fill="#F8F4EE" stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.6" />
-      <path
-        d="M40 46 Q48 40 58 46 Q62 52 56 58 Q48 62 42 56 Q38 50 40 46 Z"
-        fill="#8B5CF6" opacity="0.78"
-      />
+      <path d="M40 46 Q48 40 58 46 Q62 52 56 58 Q48 62 42 56 Q38 50 40 46 Z" fill="#8B5CF6" opacity="0.78" />
     </g>
   ),
   mega: (active) => (
     <g>
-      {/* Large multinucleate cell with platelets budding off the edge */}
       <circle cx="46" cy="50" r="24" fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.6" />
       {[[40, 42], [52, 44], [44, 58], [54, 56]].map(([x, y], i) => (
         <circle key={i} cx={x} cy={y} r="3.5" fill="#5B21B6" opacity="0.75" />
@@ -402,15 +366,8 @@ const LEGEND_SWATCHES = {
   ),
 
   // ---- Erythroid maturation ----
-  // Each swatch mirrors the atlasErythroidStage primitive: cytoplasm
-  // shifts blue → pink → red as haemoglobin accumulates; the nucleus
-  // shrinks and its chromatin clumps more, then disappears entirely by
-  // the reticulocyte stage; the mature cell is biconcave with a pale
-  // centre. The legend tile is the same progression the diagram shows,
-  // just frozen at one stage per tile.
   s1: (active) => (
     <g>
-      {/* Proerythroblast: large nucleus, blue cytoplasm */}
       <circle cx="50" cy="50" r="28" fill="#9AB4E8" stroke="#123F9E" strokeWidth="1.5" />
       <circle cx="50" cy="50" r="18" fill="url(#atlas-grad-nucleus)" />
       <circle cx="45" cy="45" r="4" fill="#5B21B6" opacity="0.35" />
@@ -427,7 +384,6 @@ const LEGEND_SWATCHES = {
   ),
   s3: (active) => (
     <g>
-      {/* Polychromatophilic: mixed blue-pink cytoplasm, chromatin denser */}
       <circle cx="50" cy="50" r="28" fill="#D8B4B8" stroke="#8C1C12" strokeWidth="1.5" />
       <circle cx="50" cy="50" r="14" fill="url(#atlas-grad-nucleus)" />
       <circle cx="43" cy="44" r="5" fill="#5B21B6" opacity="0.6" />
@@ -436,7 +392,6 @@ const LEGEND_SWATCHES = {
   ),
   s4: (active) => (
     <g>
-      {/* Orthochromatic: pink cytoplasm, small pyknotic nucleus */}
       <circle cx="50" cy="50" r="28" fill="#F0A8A0" stroke="#8C1C12" strokeWidth="1.5" />
       <circle cx="50" cy="50" r="10" fill="url(#atlas-grad-nucleus)" opacity="0.9" />
       <circle cx="46" cy="47" r="3.5" fill="#5B21B6" opacity="0.7" />
@@ -445,7 +400,6 @@ const LEGEND_SWATCHES = {
   ),
   s5: (active) => (
     <g>
-      {/* Reticulocyte: no nucleus, residual RNA strands visible */}
       <circle cx="50" cy="50" r="28" fill="#F0B0A8" stroke="#8C1C12" strokeWidth="1.5" />
       <path d="M32 48 Q50 40 68 48" stroke="#5B21B6" strokeWidth="1.6" fill="none" opacity="0.65" strokeLinecap="round" />
       <path d="M34 58 Q50 52 66 58" stroke="#5B21B6" strokeWidth="1.4" fill="none" opacity="0.5" strokeLinecap="round" />
@@ -453,16 +407,12 @@ const LEGEND_SWATCHES = {
   ),
   s6: (active) => (
     <g>
-      {/* Mature RBC: biconcave ellipse with central pallor */}
       <ellipse cx="50" cy="50" rx="30" ry="20" fill="#E53935" stroke="#8C1C12" strokeWidth="1.5" />
       <ellipse cx="50" cy="50" rx="15" ry="10" fill="#F5C7C0" opacity="0.75" />
     </g>
   ),
   epo: (active) => (
     <g>
-      {/* EPO is a signal, not a cell — drawn as a small circle with the
-         abbreviation, same as before, but coloured to match the
-         diagram's new bracket-style EPO caption. */}
       <circle cx="50" cy="50" r="22" fill={active ? "#FFC93C" : "#F5B93F"} stroke="#8B6410" strokeWidth="1.6" />
       <text x="50" y="55" textAnchor="middle" fontSize="14" fontWeight="700" fill="#1B1405">EPO</text>
     </g>
@@ -521,15 +471,9 @@ const LEGEND_SWATCHES = {
   ),
 
   // ---- Respiratory Physiology ----
-  // Swatches for the respiratory diagram, each matching the actual
-  // structure drawn in the diagram's render. The lungs swatch is a
-  // scaled-down version of atlasLungs; the alveolus swatch matches
-  // atlasAlveolus; the insets (o2, co2, control, volumes, pleura)
-  // each draw a tiny version of what their callout box shows.
   airway: (active) => (
     <g>
-      {/* Trachea with cartilage rings, splitting into two bronchi */}
-      <rect x="42" y="10" width="16" height="40" rx="6" fill="#E8E2FF" stroke={active ? "#8B7CC7" : "#8B7CC7"} strokeWidth="1.4" />
+      <rect x="42" y="10" width="16" height="40" rx="6" fill="#E8E2FF" stroke="#8B7CC7" strokeWidth="1.4" />
       {[16, 24, 32, 40].map((y, i) => (
         <line key={i} x1="42" y1={y} x2="58" y2={y} stroke="#8B7CC7" strokeWidth="0.7" opacity="0.7" />
       ))}
@@ -539,26 +483,14 @@ const LEGEND_SWATCHES = {
   ),
   lungs: (active) => (
     <g>
-      {/* Simplified two-lobe lungs, right + left */}
-      <path
-        d="M46,20 Q34,22 28,40 Q22,60 30,82 Q38,92 46,86 Q50,70 50,50 Q50,32 46,20 Z"
-        fill="#F5A8A0"
-        stroke={active ? "#F5B93F" : "#B63B2E"}
-        strokeWidth={active ? 2 : 1.3}
-      />
-      <path
-        d="M54,20 Q66,22 72,40 Q78,60 70,82 Q62,92 54,86 Q50,70 50,50 Q50,32 54,20 Z"
-        fill="#F5A8A0"
-        stroke={active ? "#F5B93F" : "#B63B2E"}
-        strokeWidth={active ? 2 : 1.3}
-      />
+      <path d="M46,20 Q34,22 28,40 Q22,60 30,82 Q38,92 46,86 Q50,70 50,50 Q50,32 46,20 Z" fill="#F5A8A0" stroke={active ? "#F5B93F" : "#B63B2E"} strokeWidth={active ? 2 : 1.3} />
+      <path d="M54,20 Q66,22 72,40 Q78,60 70,82 Q62,92 54,86 Q50,70 50,50 Q50,32 54,20 Z" fill="#F5A8A0" stroke={active ? "#F5B93F" : "#B63B2E"} strokeWidth={active ? 2 : 1.3} />
       <path d="M46,34 Q50,40 54,34" fill="none" stroke="#B63B2E" strokeWidth="0.7" opacity="0.7" />
       <path d="M46,60 Q50,66 54,60" fill="none" stroke="#B63B2E" strokeWidth="0.7" opacity="0.7" />
     </g>
   ),
   alveolus: (active) => (
     <g>
-      {/* Cluster of three sacs with a capillary threading past */}
       <circle cx="34" cy="48" r="16" fill="#F2EEFF" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth={active ? 2 : 1.2} />
       <circle cx="66" cy="46" r="16" fill="#F2EEFF" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth={active ? 2 : 1.2} />
       <circle cx="50" cy="28" r="16" fill="#F2EEFF" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth={active ? 2 : 1.2} />
@@ -568,13 +500,12 @@ const LEGEND_SWATCHES = {
   ),
   membrane: (active) => (
     <g>
-      {/* A zoomed cross-section: air on top, thin membrane, blood below */}
       <rect x="20" y="30" width="60" height="14" fill="#E8F0FF" opacity="0.7" />
       <rect x="20" y="44" width="60" height="3" fill={active ? "#F5B93F" : "#8B5CF6"} />
       <rect x="20" y="47" width="60" height="14" fill="#FBE9E7" opacity="0.7" />
       <text x="50" y="24" textAnchor="middle" fontSize="8" fill="var(--text-2)">air</text>
       <text x="50" y="74" textAnchor="middle" fontSize="8" fill="var(--text-2)">blood</text>
-      <path d="M50,20 L50,34" stroke="#2F6FED" strokeWidth="1.4" markerEnd="" />
+      <path d="M50,20 L50,34" stroke="#2F6FED" strokeWidth="1.4" />
       <path d="M50,72 L50,58" stroke="#C0392B" strokeWidth="1.4" />
     </g>
   ),
@@ -619,7 +550,6 @@ const LEGEND_SWATCHES = {
   ),
   pleura: (active) => (
     <g>
-      {/* Two membranes with a thin fluid film between them */}
       <path d="M20,32 Q50,26 80,32" fill="none" stroke="#B63B2E" strokeWidth="2.5" />
       <path d="M20,40 Q50,34 80,40" fill="none" stroke={active ? "#F5B93F" : "#B0A8D8"} strokeWidth="2.5" />
       <path d="M20,58 Q50,52 80,58" fill="none" stroke="#B63B2E" strokeWidth="2.5" />
@@ -629,13 +559,8 @@ const LEGEND_SWATCHES = {
   ),
 
   // ---- Immune System ----
-  // Swatches for the immune-system diagram. Each mirrors the structure
-  // its tile describes — a barrier wall, a white cell, a widening
-  // vessel with cells rushing in, a cell presenting antigen, a B/T
-  // cell, an antibody, a memory cell, a lymph node.
   barrier: (active) => (
     <g>
-      {/* Layered wavy line — the skin/mucous membrane barrier */}
       <path d="M12,44 Q30,38 50,44 Q70,50 88,44" fill="none" stroke="#B63B2E" strokeWidth="4" strokeLinecap="round" />
       <path d="M12,52 Q30,46 50,52 Q70,58 88,52" fill="none" stroke="#D89B14" strokeWidth="2.4" strokeLinecap="round" opacity="0.7" />
       <text x="50" y="76" textAnchor="middle" fontSize="8" fill="var(--text-2)">skin · mucosa</text>
@@ -644,15 +569,11 @@ const LEGEND_SWATCHES = {
   innate: (active) => (
     <g>
       <circle cx="50" cy="50" r="24" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
-      <path
-        d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z"
-        fill="#8B5CF6" opacity="0.78"
-      />
+      <path d="M40 42 Q48 38 54 44 Q60 42 62 50 Q60 58 52 58 Q44 60 40 52 Q36 46 40 42 Z" fill="#8B5CF6" opacity="0.78" />
     </g>
   ),
   inflammation: (active) => (
     <g>
-      {/* Widening red vessel with cells rushing in */}
       <path d="M12,54 Q50,44 88,54" fill="none" stroke="#E53935" strokeWidth="10" strokeLinecap="round" opacity="0.7" />
       {[30, 50, 70].map((x, i) => (
         <circle key={i} cx={x} cy={34 + (i % 2) * 6} r="5" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1" />
@@ -663,11 +584,7 @@ const LEGEND_SWATCHES = {
   apc: (active) => (
     <g>
       <circle cx="50" cy="50" r="22" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
-      <path
-        d="M42 44 Q50 40 56 46 Q62 44 62 52 Q60 60 50 60 Q42 62 42 54 Q38 48 42 44 Z"
-        fill="#8B5CF6" opacity="0.78"
-      />
-      {/* Antigen pieces on the surface */}
+      <path d="M42 44 Q50 40 56 46 Q62 44 62 52 Q60 60 50 60 Q42 62 42 54 Q38 48 42 44 Z" fill="#8B5CF6" opacity="0.78" />
       <polygon points="42,30 48,30 45,24" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
       <polygon points="56,32 62,32 59,26" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
     </g>
@@ -675,16 +592,12 @@ const LEGEND_SWATCHES = {
   bcell: (active) => (
     <g>
       <circle cx="50" cy="50" r="22" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
-      <path
-        d="M42 44 Q50 40 56 46 Q62 44 62 52 Q60 60 50 60 Q42 62 42 54 Q38 48 42 44 Z"
-        fill="#8B5CF6" opacity="0.78"
-      />
+      <path d="M42 44 Q50 40 56 46 Q62 44 62 52 Q60 60 50 60 Q42 62 42 54 Q38 48 42 44 Z" fill="#8B5CF6" opacity="0.78" />
       <text x="50" y="86" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-2)">B</text>
     </g>
   ),
   antibody: (active) => (
     <g>
-      {/* Miniature Y-shape with antigen binding at the tips */}
       <path d="M50,66 L50,46 M50,46 L30,26 M50,46 L70,26" stroke={active ? "#F5B93F" : "#5B21B6"} strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
       <circle cx="30" cy="26" r="2.5" fill={active ? "#F5B93F" : "#5B21B6"} />
       <circle cx="70" cy="26" r="2.5" fill={active ? "#F5B93F" : "#5B21B6"} />
@@ -695,10 +608,7 @@ const LEGEND_SWATCHES = {
   tcell: (active) => (
     <g>
       <circle cx="50" cy="50" r="22" fill="#F3F1FF" stroke={active ? "#A78BFA" : "#8B5CF6"} strokeWidth="1.4" />
-      <path
-        d="M42 44 Q50 40 56 46 Q62 44 62 52 Q60 60 50 60 Q42 62 42 54 Q38 48 42 44 Z"
-        fill="#8B5CF6" opacity="0.78"
-      />
+      <path d="M42 44 Q50 40 56 46 Q62 44 62 52 Q60 60 50 60 Q42 62 42 54 Q38 48 42 44 Z" fill="#8B5CF6" opacity="0.78" />
       <text x="50" y="86" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text-2)">T</text>
     </g>
   ),
@@ -711,7 +621,6 @@ const LEGEND_SWATCHES = {
   ),
   lymphnode: (active) => (
     <g>
-      {/* Bean-shape with internal follicles, matching atlasLymphNode */}
       <ellipse cx="50" cy="50" rx="30" ry="20" fill={active ? "#2D7BFF" : ATLAS_COLORS.lymphoid} opacity="0.75" />
       <ellipse cx="50" cy="50" rx="17" ry="11" fill="#0A0F1A" opacity="0.22" />
       {[[-14, -4], [-10, 4], [0, -8], [0, 8], [10, -4], [12, 6]].map(([dx, dy], i) => (
@@ -721,25 +630,13 @@ const LEGEND_SWATCHES = {
   ),
 
   // ---- Acute Inflammation ----
-  // Swatches for the pathology diagram. Each mirrors the structure or
-  // concept its tile describes — a threat particle, a widening vessel,
-  // a leaky wall, a rolling white cell, a phagocytosing macrophage,
-  // a mediator panel, a signs panel, a resolved ring, an acute vs
-  // chronic comparison.
   trigger: (active) => (
     <g>
-      {/* Spiky threat particle */}
-      <path
-        d="M50,26 l6,-9 l5,9 l9,2 l-6,7 l2,9 l-9,-3 l-8,6 l0,-9 l-8,-6 l9,-4 z"
-        fill={active ? "#E53935" : "#C0392B"}
-        stroke="#8C1C12"
-        strokeWidth="1.2"
-      />
+      <path d="M50,26 l6,-9 l5,9 l9,2 l-6,7 l2,9 l-9,-3 l-8,6 l0,-9 l-8,-6 l9,-4 z" fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12" strokeWidth="1.2" />
     </g>
   ),
   vasodilation: (active) => (
     <g>
-      {/* Vessel wall widening, with outward arrows */}
       <path d="M14,50 Q50,44 86,50" fill="none" stroke="#E53935" strokeWidth="18" strokeLinecap="round" />
       <path d="M14,50 Q50,44 86,50" fill="none" stroke="#F5C7C0" strokeWidth="3" strokeLinecap="round" opacity="0.85" />
       <path d="M30,26 L30,38 M30,26 l-3,4 M30,26 l3,4" stroke="#C0392B" strokeWidth="1.4" fill="none" strokeLinecap="round" />
@@ -748,7 +645,6 @@ const LEGEND_SWATCHES = {
   ),
   permeability: (active) => (
     <g>
-      {/* Vessel with plasma leaking out */}
       <path d="M14,40 Q50,34 86,40" fill="none" stroke="#E53935" strokeWidth="12" strokeLinecap="round" />
       {[[40, 60], [50, 70], [60, 60], [45, 80]].map(([x, y], i) => (
         <circle key={i} cx={x} cy={y} r="3.5" fill="#FFE38A" stroke="#D89B14" strokeWidth="0.5" />
@@ -757,7 +653,6 @@ const LEGEND_SWATCHES = {
   ),
   recruitment: (active) => (
     <g>
-      {/* Vessel with a white cell rolling along and one squeezing through */}
       <path d="M14,42 Q50,36 86,42" fill="none" stroke="#E53935" strokeWidth="12" strokeLinecap="round" />
       <circle cx="30" cy="38" r="6" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.2" />
       <circle cx="50" cy="58" r="6" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.2" />
@@ -766,12 +661,8 @@ const LEGEND_SWATCHES = {
   ),
   phagocytosis: (active) => (
     <g>
-      {/* Macrophage engulfing a bacterium */}
       <circle cx="42" cy="50" r="18" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.4" />
-      <path
-        d="M34,46 Q40,42 46,48 Q50,54 44,56 Q36,54 34,46 Z"
-        fill="#8B5CF6" opacity="0.78"
-      />
+      <path d="M34,46 Q40,42 46,48 Q50,54 44,56 Q36,54 34,46 Z" fill="#8B5CF6" opacity="0.78" />
       <path d="M64,50 Q70,42 76,50 Q70,58 64,50 Z" fill="none" stroke="#8B5CF6" strokeWidth="1.6" />
       <ellipse cx="72" cy="50" rx="4" ry="2.5" fill="#C0392B" stroke="#8C1C12" strokeWidth="0.6" />
     </g>
@@ -796,7 +687,6 @@ const LEGEND_SWATCHES = {
   ),
   resolution: (active) => (
     <g>
-      {/* Green dashed ring suggesting the tissue has resolved */}
       <circle cx="50" cy="50" r="32" fill="none" stroke={active ? "#F5B93F" : "#16A34A"} strokeWidth="2.2" strokeDasharray="6 4" opacity="0.85" />
       <circle cx="50" cy="50" r="14" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1" />
       <path d="M44,50 L48,54 L56,44" stroke="#16A34A" strokeWidth="2.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
@@ -804,7 +694,6 @@ const LEGEND_SWATCHES = {
   ),
   types: (active) => (
     <g>
-      {/* Acute vs chronic side-by-side, split down the middle */}
       <rect x="14" y="26" width="34" height="48" rx="6" fill="#FBE9E7" stroke="#C0392B" strokeWidth="1.4" />
       <text x="31" y="42" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#C0392B">ACUTE</text>
       <text x="31" y="54" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">hours-days</text>
@@ -818,12 +707,8 @@ const LEGEND_SWATCHES = {
 };
 
 /* ---------------------------------------------------------------- */
-/* Narration - a small, self-contained speech helper. Deliberately  */
-/* duplicated (not imported from App.js) to avoid a circular import */
-/* between App.js and this file. Uses the exact same browser API,   */
-/* the same voice-matching heuristic, and the same localStorage key */
-/* ("ascend_voice_gender") as the existing Listen feature, so a     */
-/* student's voice choice carries over automatically.               */
+/* Narration helper - deliberately duplicated from App.js to avoid  */
+/* a circular import, using the same localStorage key.               */
 /* ---------------------------------------------------------------- */
 const FEMALE_HINTS = ["female", "zira", "samantha", "victoria", "susan", "karen", "moira", "tessa", "fiona", "google us english", "google uk english female", "aria", "jenny", "sonia", "libby", "hazel", "salli", "joanna", "amy"];
 const MALE_HINTS = ["male", "david", "mark", "daniel", "alex", "fred", "google uk english male", "guy", "ryan", "tom", "matthew", "brian", "arthur"];
@@ -893,24 +778,6 @@ const atlasStyles = `
     0%, 100% { background-position: 0 0; }
   }
 }
-@keyframes atlasShimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  @keyframes atlasShimmer {
-    0%, 100% { background-position: 0 0; }
-  }
-}
-@keyframes atlasShimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  @keyframes atlasShimmer {
-    0%, 100% { background-position: 0 0; }
-  }
-}
 @keyframes atlasPulse {
   0%, 100% { opacity: 1; }
   50% { opacity: .45; }
@@ -941,836 +808,22 @@ const atlasStyles = `
 .atlas-dot { flex: 1; height: 6px; border-radius: 3px; border: none; cursor: pointer; background: var(--line); }
 .atlas-dot.on { background: var(--amber); }
 
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
+/* Progress bar fill transition - only motion it has. */
 @media (prefers-reduced-motion: reduce) {
   .atlas-progress-fill { transition: none !important; }
 }
 
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* The progress bar's fill transition is the only motion it has, so
-   turning it off under reduced-motion is enough to make the bar
-   snap to each new step instead of sliding. */
-@media (prefers-reduced-motion: reduce) {
-  .atlas-progress-fill { transition: none !important; }
-}
-
-/* Diagram + summary row - side by side once there's room, stacked on a
-   narrow phone screen; same markup, flex-wrap handles both layouts. */
+/* Diagram + summary row - side by side once there's room. */
 .atlas-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; }
 .atlas-diagram-col { flex: 1 1 340px; min-width: 0; }
 .atlas-summary-col { flex: 1 1 280px; min-width: 0; }
-/* Below 900px, the summary panel stacks UNDER the diagram instead of trying
-   to fit beside it and squeezing the drawing. */
 @media (max-width: 900px) {
   .atlas-row { flex-direction: column; }
   .atlas-diagram-col,
   .atlas-summary-col { flex: 1 1 auto; width: 100%; }
 }
-/* On phones the two columns stack full-width; min-width:0 above stops the
-   flex basis from forcing a phantom horizontal scrollbar on 320px screens. */
 
-/* Zoom controls float on the diagram itself now, instead of taking a
-   separate full-width row - the row is busy enough with the summary
-   panel beside it. */
+/* Zoom controls float on the diagram itself. */
 .atlas-zoom-controls { position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; z-index: 10; }
 .atlas-zoom-controls .btn { background: rgba(10,15,26,.65); backdrop-filter: blur(6px); box-shadow: 0 2px 8px rgba(0,0,0,.25); }
 @media (max-width: 640px) {
@@ -1779,8 +832,7 @@ const atlasStyles = `
   .atlas-zoom-controls .mono { min-width: 38px !important; font-size: 11.5px; }
 }
 
-/* Step badge - floats top-LEFT of the stage (zoom controls own top-right),
-   visible while watching without needing to look down at the dots row. */
+/* Step badge - floats top-LEFT of the stage. */
 .atlas-step-badge {
   position: absolute; top: 8px; left: 8px; z-index: 10;
   background: rgba(10,15,26,.65); backdrop-filter: blur(6px);
@@ -1792,9 +844,7 @@ const atlasStyles = `
   .atlas-step-badge { top: 6px; left: 6px; font-size: 10.5px; padding: 4px 8px; }
 }
 
-/* Fullscreen - the stage detaches from the row layout and fills the
-   viewport. Everything inside it (zoom controls, step badge, the diagram
-   itself) is unchanged; only the container's own position/size changes. */
+/* Fullscreen - the stage detaches and fills the viewport. */
 .atlas-stage-fullscreen {
   position: fixed !important; inset: 0 !important; z-index: 200 !important;
   height: 100dvh !important; width: 100vw !important; border-radius: 0 !important;
@@ -1802,22 +852,13 @@ const atlasStyles = `
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-
-/* Legend - full width, below the diagram+summary row, since it's
-   reference material to glance at rather than primary content. */
+/* Legend - full width, below the diagram+summary row. */
 .atlas-legend-full .atlas-legend-grid {
   display: grid;
-  /* 200px minimum so a longer label like "Atrioventricular (AV) node" fits
-     on one line without colliding with its neighbour. Drops to a single
-     full-width column automatically on phones. */
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  /* 8px between rows, 16px between columns - the tighter 6px gap was
-     letting wrapped labels visibly touch the item below them. */
   gap: 8px 16px;
   margin-top: 10px;
 }
-/* Long labels wrap inside their own cell rather than pushing the cell wider
-   and shoving the row out of alignment. */
 .atlas-legend-full .atlas-legend-grid .btn {
   white-space: normal;
   word-break: break-word;
@@ -1826,9 +867,7 @@ const atlasStyles = `
   min-height: 36px;
 }
 
-/* Respect the OS/browser "reduce motion" setting - the pulse/shake/snap
-   animations above are convenience feedback, not load-bearing, so turning
-   them off here never breaks anything, it just stops moving. */
+/* Respect reduced-motion. */
 @media (prefers-reduced-motion: reduce) {
   .atlas-pulse rect { animation: none !important; opacity: 1 !important; }
   .atlas-shake { animation: none !important; }
@@ -1873,14 +912,6 @@ function VisualsList({ courseId, onBack, onOpen }) {
   const list = diagramsForCourse(courseId);
   const [query, setQuery] = useState("");
 
-  // Build one searchable string per diagram, once per render. The string
-  // concatenates everything a student might reasonably type to find this
-  // diagram — its title, its topic index, and the name and description of
-  // every label inside it. Label names are what make "heart" find the
-  // Cardiovascular System diagram (the word isn't in its title) and what
-  // make "EPO" find the Erythroid Maturation drill-down. The pre-built
-  // string means we do one lowercase() per diagram per render instead of
-  // one per character per diagram as the user types.
   const searchIndex = useMemo(
     () => list.map((d) => ({
       diagram: d,
@@ -1906,13 +937,6 @@ function VisualsList({ courseId, onBack, onOpen }) {
         {ATLAS_COURSE_NAMES[courseId] || courseId}
       </button>
 
-      {/* Search box — only shown when there's more than one diagram in
-         the course. With a single diagram, a search box is dead weight:
-         there's nothing to filter, and it looks like noise. The filter
-         matches on title, topic index, and every label's name and
-         description, so a student who remembers "the one with the
-         heart" or "the one about EPO" can find the right diagram even
-         if they've forgotten its title. */}
       {list.length > 1 && (
         <div style={{ position: "relative", marginTop: 10 }}>
           <input
@@ -1962,11 +986,6 @@ function VisualsList({ courseId, onBack, onOpen }) {
         </div>
       )}
 
-      {/* Empty state — shown only when a search is active AND nothing
-         matched. Without this, a query that filters to zero would
-         leave the student looking at a blank page below the back
-         button, with no signal that the list is empty because of
-         their query (and not because the course has no diagrams). */}
       {trimmed && filtered.length === 0 && (
         <div className="card" style={{ marginTop: 12, textAlign: "center" }}>
           <div style={{ fontWeight: 700, fontSize: 14 }}>No visuals match "{query}"</div>
@@ -2002,8 +1021,7 @@ function VisualsList({ courseId, onBack, onOpen }) {
 }
 
 /* ---------------------------------------------------------------- */
-/* Screen 3+4 - the diagram viewer: play bar on top, diagram+summary */
-/* row below, legend below that. Zoom/pan live on the diagram panel. */
+/* Screen 3+4 - the diagram viewer                                  */
 /* ---------------------------------------------------------------- */
 function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill, onExit, onOpenDiagram, app }) {
   const diagram = DIAGRAMS[diagramId];
@@ -2012,9 +1030,6 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
   const [playing, setPlaying] = useState(false);
   const [paused, setPaused] = useState(false);
   const [speed, setSpeed] = useState(1);
-  // Default zoom sits slightly under 1 so the whole diagram fits comfortably
-  // on first open without the drawing touching the stage edges. The user can
-  // still pinch/wheel/+/− to change it.
   const DEFAULT_ZOOM = 1;
   const MIN_ZOOM = 0.5;
   const MAX_ZOOM = 3;
@@ -2022,34 +1037,14 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
   const [panX, setPanX] = useState(0);
   const [panY, setPanY] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
-  // Muted still advances through the sequence on a timer (roughly how long
-  // the narration would have taken to speak), it just doesn't speak -
-  // Play always starting narration with no silent option was the gap here.
   const [muted, setMuted] = useState(false);
-
-  // Diagram paint state - false until the SVG's first frame has actually
-  // painted to the screen. The stage shows a shimmer placeholder while
-  // this is false, so a slow device doesn't leave the student staring at
-  // an empty white box while the drawing renders. Set to true from a
-  // requestAnimationFrame callback that fires after the diagram's
-  // render function has produced its SVG tree.
   const [painted, setPainted] = useState(false);
 
   const playTokenRef = useRef(0);
   const pinchRef = useRef(null);
   const stageRef = useRef(null);
-
-  // One DOM ref per legend tile, keyed by the label id the tile
-  // represents. Populated by the legend's render below via a callback
-  // ref, read by the auto-scroll effect whenever activeStep changes.
-  // Using useRef rather than useMemo because we want a stable object
-  // identity across renders — the callback ref writes into it, the
-  // effect reads from it, and neither should trigger a re-render.
   const legendRefs = useRef({});
 
-  // Reset local view state whenever a new diagram is opened (drill-down or back)
-    // Zoom helper used by the +/- buttons, the wheel, and pinch. Clamps to
-  // MIN_ZOOM..MAX_ZOOM and rounds to 2 decimals so the label stays clean.
   const applyZoom = useCallback((nextZoomRaw) => {
     setZoom((prev) => {
       const target = typeof nextZoomRaw === "function" ? nextZoomRaw(prev) : nextZoomRaw;
@@ -2058,21 +1053,8 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     });
   }, []);
 
-  // On mount and whenever the diagram changes, restore the last step
-  // the student was on for THIS diagram from sessionStorage (if any),
-  // then reset every other bit of view state. Session storage is the
-  // right scope: it survives page reloads and back-navigation within
-  // the same tab, but a fresh tab or a new browser session starts at
-  // step 0 — which is what a student expects when they come back the
-  // next day.
-  //
-  // The read is guarded against:
-  //   - sessionStorage being unavailable (private mode, disabled)
-  //   - the stored value not parsing as an integer
-  //   - the stored step being outside the current diagram's range
-  //     (e.g. a diagram was edited and now has fewer steps, or a stale
-  //     entry from a diagram that used to have more)
-  // If any of those fail, we fall back to step 0 cleanly.
+  // Reset view state whenever the diagram changes, and restore the last
+  // step for this diagram from sessionStorage.
   useEffect(() => {
     setActiveLabelId(null);
     setPlaying(false);
@@ -2095,15 +1077,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     setActiveStep(restored);
   }, [diagramId, diagram.narration.length]);
 
-  // Flip `painted` to false the instant a new diagram mounts, then back
-  // to true on the next animation frame. The SVG is rendered synchronously
-  // inside the same React commit as this component, so by the time rAF
-  // fires, the browser has already had a chance to paint the SVG's first
-  // frame to the screen. Flipping the flag from an rAF callback (rather
-  // than setting it directly in the effect body) guarantees the placeholder
-  // is visible for at least one frame — otherwise React could batch the
-  // setPainted(false) and setPainted(true) together and the placeholder
-  // would never actually show.
+  // Flip painted false on diagram change, true on next frame.
   useEffect(() => {
     setPainted(false);
     let cancelled = false;
@@ -2116,190 +1090,12 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     };
   }, [diagramId]);
 
-  // Flip `painted` to false the instant a new diagram mounts, then back
-  // to true on the next animation frame. The SVG is rendered synchronously
-  // inside the same React commit as this component, so by the time rAF
-  // fires, the browser has already had a chance to paint the SVG's first
-  // frame to the screen. Flipping the flag from an rAF callback (rather
-  // than setting it directly in the effect body) guarantees the placeholder
-  // is visible for at least one frame — otherwise React could batch the
-  // setPainted(false) and setPainted(true) together and the placeholder
-  // would never actually show.
-  useEffect(() => {
-    setPainted(false);
-    let cancelled = false;
-    const raf = requestAnimationFrame(() => {
-      if (!cancelled) setPainted(true);
-    });
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
-    };
-  }, [diagramId]);
-
-  // Flip `painted` to false the instant a new diagram mounts, then back
-  // to true on the next animation frame. The SVG is rendered synchronously
-  // inside the same React commit as this component, so by the time rAF
-  // fires, the browser has already had a chance to paint the SVG's first
-  // frame to the screen. Flipping the flag from an rAF callback (rather
-  // than setting it directly in the effect body) guarantees the placeholder
-  // is visible for at least one frame — otherwise React could batch the
-  // setPainted(false) and setPainted(true) together and the placeholder
-  // would never actually show.
-  useEffect(() => {
-    setPainted(false);
-    let cancelled = false;
-    const raf = requestAnimationFrame(() => {
-      if (!cancelled) setPainted(true);
-    });
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
-    };
-  }, [diagramId]);
-
-  // Flip `painted` to false the instant a new diagram mounts, then back
-  // to true on the next animation frame. The SVG is rendered synchronously
-  // inside the same React commit as this component, so by the time rAF
-  // fires, the browser has already had a chance to paint the SVG's first
-  // frame to the screen. Flipping the flag from an rAF callback (rather
-  // than setting it directly in the effect body) guarantees the placeholder
-  // is visible for at least one frame — otherwise React could batch the
-  // setPainted(false) and setPainted(true) together and the placeholder
-  // would never actually show.
-  useEffect(() => {
-    setPainted(false);
-    let cancelled = false;
-    const raf = requestAnimationFrame(() => {
-      if (!cancelled) setPainted(true);
-    });
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
-    };
-  }, [diagramId]);
-
-  // Flip `painted` to false the instant a new diagram mounts, then back
-  // to true on the next animation frame. The SVG is rendered synchronously
-  // inside the same React commit as this component, so by the time rAF
-  // fires, the browser has already had a chance to paint the SVG's first
-  // frame to the screen. Flipping the flag from an rAF callback (rather
-  // than setting it directly in the effect body) guarantees the placeholder
-  // is visible for at least one frame — otherwise React could batch the
-  // setPainted(false) and setPainted(true) together and the placeholder
-  // would never actually show.
-  useEffect(() => {
-    setPainted(false);
-    let cancelled = false;
-    const raf = requestAnimationFrame(() => {
-      if (!cancelled) setPainted(true);
-    });
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
-    };
-  }, [diagramId]);
-
-  // Flip `painted` to false the instant a new diagram mounts, then back
-  // to true on the next animation frame. The SVG is rendered synchronously
-  // inside the same React commit as this component, so by the time rAF
-  // fires, the browser has already had a chance to paint the SVG's first
-  // frame to the screen. Flipping the flag from an rAF callback (rather
-  // than setting it directly in the effect body) guarantees the placeholder
-  // is visible for at least one frame — otherwise React could batch the
-  // setPainted(false) and setPainted(true) together and the placeholder
-  // would never actually show.
-  useEffect(() => {
-    setPainted(false);
-    let cancelled = false;
-    const raf = requestAnimationFrame(() => {
-      if (!cancelled) setPainted(true);
-    });
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
-    };
-  }, [diagramId]);
-
-  // Flip `painted` to false the instant a new diagram mounts, then back
-  // to true on the next animation frame. The SVG is rendered synchronously
-  // inside the same React commit as this component, so by the time rAF
-  // fires, the browser has already had a chance to paint the SVG's first
-  // frame to the screen. Flipping the flag from an rAF callback (rather
-  // than setting it directly in the effect body) guarantees the placeholder
-  // is visible for at least one frame — otherwise React could batch the
-  // setPainted(false) and setPainted(true) together and the placeholder
-  // would never actually show.
-  useEffect(() => {
-    setPainted(false);
-    let cancelled = false;
-    const raf = requestAnimationFrame(() => {
-      if (!cancelled) setPainted(true);
-    });
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
-    };
-  }, [diagramId]);
-
-  // Flip `painted` to false the instant a new diagram mounts, then back
-  // to true on the next animation frame. The SVG is rendered synchronously
-  // inside the same React commit as this component, so by the time rAF
-  // fires, the browser has already had a chance to paint the SVG's first
-  // frame to the screen. Flipping the flag from an rAF callback (rather
-  // than setting it directly in the effect body) guarantees the placeholder
-  // is visible for at least one frame — otherwise React could batch the
-  // setPainted(false) and setPainted(true) together and the placeholder
-  // would never actually show.
-  useEffect(() => {
-    setPainted(false);
-    let cancelled = false;
-    const raf = requestAnimationFrame(() => {
-      if (!cancelled) setPainted(true);
-    });
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
-    };
-  }, [diagramId]);
-
-  // Flip `painted` to false the instant a new diagram mounts, then back
-  // to true on the next animation frame. The SVG is rendered synchronously
-  // inside the same React commit as this component, so by the time rAF
-  // fires, the browser has already had a chance to paint the SVG's first
-  // frame to the screen. Flipping the flag from an rAF callback (rather
-  // than setting it directly in the effect body) guarantees the placeholder
-  // is visible for at least one frame — otherwise React could batch the
-  // setPainted(false) and setPainted(true) together and the placeholder
-  // would never actually show.
-  useEffect(() => {
-    setPainted(false);
-    let cancelled = false;
-    const raf = requestAnimationFrame(() => {
-      if (!cancelled) setPainted(true);
-    });
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
-    };
-  }, [diagramId]);
-
-  // Legend auto-scroll: when the current step changes, scroll the legend
-  // tile for the first label in that step's focus list into view. Only
-  // fires during playback (not while the student is paused or idle),
-  // and only when the tile is actually out of view — scrollIntoView
-  // with `block: "nearest"` is a no-op if the tile is already visible,
-  // so this never fights the student's own scrolling. Guarded on
-  // `playing` so a student who pauses and manually scrolls the legend
-  // doesn't get yanked back to the current step's tile.
+  // Legend auto-scroll during playback.
   useEffect(() => {
     if (!playing) return;
     const focus = diagram.stepFocus[activeStep];
     if (!Array.isArray(focus) || focus.length === 0) return;
 
-    // Prefer the first focus id that has a tile. Fall back to nothing if
-    // none of them do (shouldn't happen given the dev-check in the render
-    // path already warns about missing swatches, but defensive).
     const firstWithTile = focus.find((id) => legendRefs.current[id]);
     const node = firstWithTile ? legendRefs.current[firstWithTile] : null;
     if (!node || typeof node.scrollIntoView !== "function") return;
@@ -2311,155 +1107,14 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     });
   }, [activeStep, playing, diagram]);
 
-  // Persist the current step whenever it changes, so if the student
-  // leaves the viewer and comes back (or reloads the tab), we can
-  // restore where they were. Writes are wrapped in try/catch because
-  // sessionStorage can throw in private-mode Safari when the quota is
-  // hit; a failed write is fine — worst case the student restarts from
-  // step 0 next time, which is exactly the old behaviour.
+  // Persist current step to sessionStorage.
   useEffect(() => {
     try {
       sessionStorage.setItem(`ascend_atlas_step_${diagramId}`, String(activeStep));
     } catch {}
   }, [activeStep, diagramId]);
 
-  // Persist the current step whenever it changes, so if the student
-  // leaves the viewer and comes back (or reloads the tab), we can
-  // restore where they were. Writes are wrapped in try/catch because
-  // sessionStorage can throw in private-mode Safari when the quota is
-  // hit; a failed write is fine — worst case the student restarts from
-  // step 0 next time, which is exactly the old behaviour.
-  useEffect(() => {
-    try {
-      sessionStorage.setItem(`ascend_atlas_step_${diagramId}`, String(activeStep));
-    } catch {}
-  }, [activeStep, diagramId]);
-
-  // Flip `painted` to false the instant a new diagram mounts, then back
-  // to true on the next animation frame. The SVG is rendered synchronously
-  // inside the same React commit as this component, so by the time rAF
-  // fires, the browser has already had a chance to paint the SVG's first
-  // frame to the screen. Flipping the flag from an rAF callback (rather
-  // than setting it directly in the effect body) guarantees the placeholder
-  // is visible for at least one frame — otherwise React could batch the
-  // setPainted(false) and setPainted(true) together and the placeholder
-  // would never actually show.
-  useEffect(() => {
-    setPainted(false);
-    let cancelled = false;
-    const raf = requestAnimationFrame(() => {
-      if (!cancelled) setPainted(true);
-    });
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
-    };
-  }, [diagramId]);
-
-  // Legend auto-scroll: when the current step changes, scroll the legend
-  // tile for the first label in that step's focus list into view. Only
-  // fires during playback (not while the student is paused or idle),
-  // and only when the tile is actually out of view — scrollIntoView
-  // with `block: "nearest"` is a no-op if the tile is already visible,
-  // so this never fights the student's own scrolling. Guarded on
-  // `playing` so a student who pauses and manually scrolls the legend
-  // doesn't get yanked back to the current step's tile.
-  useEffect(() => {
-    if (!playing) return;
-    const focus = diagram.stepFocus[activeStep];
-    if (!Array.isArray(focus) || focus.length === 0) return;
-
-    // Prefer the first focus id that has a tile. Fall back to nothing if
-    // none of them do (shouldn't happen given the dev-check in the render
-    // path already warns about missing swatches, but defensive).
-    const firstWithTile = focus.find((id) => legendRefs.current[id]);
-    const node = firstWithTile ? legendRefs.current[firstWithTile] : null;
-    if (!node || typeof node.scrollIntoView !== "function") return;
-
-    node.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "nearest",
-    });
-  }, [activeStep, playing, diagram]);
-
-  // Persist the current step whenever it changes, so if the student
-  // leaves the viewer and comes back (or reloads the tab), we can
-  // restore where they were. Writes are wrapped in try/catch because
-  // sessionStorage can throw in private-mode Safari when the quota is
-  // hit; a failed write is fine — worst case the student restarts from
-  // step 0 next time, which is exactly the old behaviour.
-  useEffect(() => {
-    try {
-      sessionStorage.setItem(`ascend_atlas_step_${diagramId}`, String(activeStep));
-    } catch {}
-  }, [activeStep, diagramId]);
-
-  // Flip `painted` to false the instant a new diagram mounts, then back
-  // to true on the next animation frame. The SVG is rendered synchronously
-  // inside the same React commit as this component, so by the time rAF
-  // fires, the browser has already had a chance to paint the SVG's first
-  // frame to the screen. Flipping the flag from an rAF callback (rather
-  // than setting it directly in the effect body) guarantees the placeholder
-  // is visible for at least one frame — otherwise React could batch the
-  // setPainted(false) and setPainted(true) together and the placeholder
-  // would never actually show.
-  useEffect(() => {
-    setPainted(false);
-    let cancelled = false;
-    const raf = requestAnimationFrame(() => {
-      if (!cancelled) setPainted(true);
-    });
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
-    };
-  }, [diagramId]);
-
-  // Legend auto-scroll: when the current step changes, scroll the legend
-  // tile for the first label in that step's focus list into view. Only
-  // fires during playback (not while the student is paused or idle),
-  // and only when the tile is actually out of view — scrollIntoView
-  // with `block: "nearest"` is a no-op if the tile is already visible,
-  // so this never fights the student's own scrolling. Guarded on
-  // `playing` so a student who pauses and manually scrolls the legend
-  // doesn't get yanked back to the current step's tile.
-  useEffect(() => {
-    if (!playing) return;
-    const focus = diagram.stepFocus[activeStep];
-    if (!Array.isArray(focus) || focus.length === 0) return;
-
-    // Prefer the first focus id that has a tile. Fall back to nothing if
-    // none of them do (shouldn't happen given the dev-check in the render
-    // path already warns about missing swatches, but defensive).
-    const firstWithTile = focus.find((id) => legendRefs.current[id]);
-    const node = firstWithTile ? legendRefs.current[firstWithTile] : null;
-    if (!node || typeof node.scrollIntoView !== "function") return;
-
-    node.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "nearest",
-    });
-  }, [activeStep, playing, diagram]);
-
-  // Persist the current step whenever it changes, so if the student
-  // leaves the viewer and comes back (or reloads the tab), we can
-  // restore where they were. Writes are wrapped in try/catch because
-  // sessionStorage can throw in private-mode Safari when the quota is
-  // hit; a failed write is fine — worst case the student restarts from
-  // step 0 next time, which is exactly the old behaviour.
-  useEffect(() => {
-    try {
-      sessionStorage.setItem(`ascend_atlas_step_${diagramId}`, String(activeStep));
-    } catch {}
-  }, [activeStep, diagramId]);
-
-  // Dev-time checks from the rule book (sections 4.1-4.3) - these were
-  // written into the rule book but never actually wired into code. None of
-  // this runs for students; it only warns in the console, so a mismatch is
-  // caught the moment you build the next diagram instead of shipping silently
-  // broken highlighting or grey legend circles.
+  // Dev-time checks (rule book sections 4.1-4.3).
   useEffect(() => {
     if (diagram.narration.length !== diagram.stepFocus.length) {
       console.warn(
@@ -2506,10 +1161,6 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
           if (myToken !== playTokenRef.current) return;
           setActiveStep((s) => {
             const next = s + 1;
-            // A cyclic process (diagram.loop === true, e.g. the cardiac
-            // cycle - a heartbeat has no "end") wraps back to step 0 and
-            // keeps going. A one-shot process (the default) stops on its
-            // final step, same as before.
             if (next >= diagram.narration.length) {
               if (diagram.loop) {
                 speakStepRef.current(0);
@@ -2527,21 +1178,14 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     });
   }, [diagram]);
 
-    const speakStepRef = useRef(() => {});
-  // Resolved once per diagram session (on the first spoken step) instead of
-  // re-scanning window.speechSynthesis.getVoices() and re-picking on every
-  // single narration step - the result never changes mid-playback, so
-  // there's no reason to redo that work nine times for a nine-step diagram.
-  const cachedVoiceRef = useRef(undefined); // undefined = not resolved yet, null = resolved to "no voice"
+  const speakStepRef = useRef(() => {});
+  const cachedVoiceRef = useRef(undefined);
   const speakStep = useCallback((stepIdx) => {
     const text = diagram.narration[stepIdx];
     if (!text) return;
     const myToken = playTokenRef.current;
 
     if (muted || !("speechSynthesis" in window)) {
-      // No voice - hold roughly as long as the narration would have taken
-      // to speak (a rough words-per-minute estimate), then advance anyway,
-      // so a muted walkthrough still moves through every step on its own.
       const words = text.trim().split(/\s+/).length;
       const ms = Math.max(1200, (words / 2.6) * 1000) / speed;
       setTimeout(() => advanceAfterStep(myToken), ms);
@@ -2565,7 +1209,13 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
   }, [diagram, speed, muted, advanceAfterStep]);
   useEffect(() => { speakStepRef.current = speakStep; }, [speakStep]);
 
-    const handlePlay = () => {
+  const isFinished =
+    !playing &&
+    !paused &&
+    !diagram.loop &&
+    activeStep === diagram.narration.length - 1;
+
+  const handlePlay = () => {
     if (playing) {
       setPlaying(false);
       setPaused(true);
@@ -2573,7 +1223,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
       try { window.speechSynthesis.cancel(); } catch {}
       return;
     }
-    const startAt = (!diagram.loop && !paused && activeStep === diagram.narration.length - 1) ? 0 : activeStep;
+    const startAt = isFinished ? 0 : activeStep;
     if (startAt !== activeStep) setActiveStep(startAt);
     setPlaying(true);
     setPaused(false);
@@ -2594,12 +1244,8 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
   };
 
   const toggleMute = () => setMuted((m) => !m);
-
   const toggleFullscreen = () => setFullscreen((f) => !f);
 
-  // Keyboard controls - space play/pause, left/right step, Esc exits
-  // fullscreen (or leaves the viewer if not fullscreen). Guarded against
-  // firing while focus is in a text field elsewhere on the page.
   useEffect(() => {
     const onKeyDown = (e) => {
       const tag = (e.target && e.target.tagName) || "";
@@ -2620,20 +1266,8 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-    
   }, [fullscreen, activeStep, playing, paused, diagramId]);
 
-  
-
-
-    // Zoom / pointer handling. Panning is deliberately disabled - the figure
-  // is locked to the center of the stage at all times. Only ZOOM is
-  // interactive: mouse wheel on desktop, two-finger pinch on touch, and
-  // the +/- buttons. A single-finger drag does nothing.
-        // Wheel listeners are passive by default, so e.preventDefault() inside a
-  // React onWheel prop silently fails (that's the console spam you saw) -
-  // it has to be attached manually with { passive: false } to actually
-  // stop page scroll while zooming.
   const onWheelRef = useRef(null);
   useEffect(() => {
     const el = stageRef.current;
@@ -2648,20 +1282,15 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     return () => el.removeEventListener("wheel", handler);
   }, [applyZoom]);
 
-    const pointers = useRef(new Map());
-  const dragRef = useRef(null); // { startX, startY, panX, panY } for single-pointer drag
+  const pointers = useRef(new Map());
+  const dragRef = useRef(null);
   const onPointerDown = (e) => {
-    // Deliberately NOT capturing the pointer for a single touch/click.
-    // setPointerCapture routes the eventual `click` event to the stage div
-    // instead of the actual target - which is why the +/- zoom buttons
-    // never received their click. Capture only once a SECOND finger
-    // arrives, which is the only time we actually need it (pinch).
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pointers.current.size === 1) {
       dragRef.current = { startX: e.clientX, startY: e.clientY, panX, panY };
     }
     if (pointers.current.size === 2) {
-      dragRef.current = null; // a second finger arriving cancels any single-finger drag in progress
+      dragRef.current = null;
       try { e.currentTarget.setPointerCapture?.(e.pointerId); } catch {}
       const pts = [...pointers.current.values()];
       const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
@@ -2677,8 +1306,6 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
       const ratio = dist / (pinchRef.current.dist || 1);
       applyZoom(pinchRef.current.zoom * ratio);
     } else if (pointers.current.size === 1 && dragRef.current) {
-      // Single-finger/mouse drag - pans the diagram. Up/down/left/right
-      // movement, same gesture as any map or image viewer.
       const dx = e.clientX - dragRef.current.startX;
       const dy = e.clientY - dragRef.current.startY;
       setPanX(dragRef.current.panX + dx);
@@ -2693,27 +1320,6 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
   const activeLabel = diagram.labels?.find((l) => l.id === activeLabelId) || null;
   const topTopic = topLevelTopicOf(diagram);
 
-  // A diagram is "finished" when it's not playing, not paused mid-flight,
-  // and sitting on its last step. For non-looping diagrams that's the
-  // natural end state; for looping diagrams (diagram.loop === true) this
-  // never triggers, because a loop has no "end" — the play button keeps
-  // reading "Play"/"Pause" and never offers "Restart".
-  const isFinished =
-    !playing &&
-    !paused &&
-    !diagram.loop &&
-    activeStep === diagram.narration.length - 1;
-
-  // Neighbour navigation: find this diagram's position in its course's
-  // ordered list. Only diagrams that are directly attached to a topic
-  // count as neighbours — drill-downs (topic: null) are excluded, so a
-  // student finishing the Cardiovascular System diagram is offered the
-  // Lymphatic System diagram next, not the Cardiac Cycle drill-down.
-  //
-  // courseId is null only when the viewer is opened with no course
-  // context at all (shouldn't happen in practice, but guards against
-  // any future entry path that forgets to pass it). If it's null, both
-  // neighbours are null and the nav row simply doesn't render.
   const courseDiagrams = courseId ? diagramsForCourse(courseId) : [];
   const myIndex = courseDiagrams.findIndex((d) => d.id === diagramId);
   const prevDiagram = myIndex > 0 ? courseDiagrams[myIndex - 1] : null;
@@ -2721,14 +1327,10 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     ? courseDiagrams[myIndex + 1]
     : null;
 
-  
-
   return (
     <div style={{ marginTop: 16 }}>
       <style>{atlasStyles}</style>
 
-      {/* breadcrumb + back - navigation stays at the very top */}
-            <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 6, marginBottom: 12, rowGap: 4 }}></div>
       <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 6, marginBottom: 12 }}>
         <button className="back" style={{ margin: 0 }} onClick={onExit}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: "rotate(180deg)" }}><path d="M5 12h14M13 5l7 7-7 7" /></svg>
@@ -2748,8 +1350,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
         ))}
       </div>
 
-      {/* ---- Play bar - on top, like the note's own Listen bar ---- */}
-                        <div className="card atlas-playbar">
+      <div className="card atlas-playbar">
         <button
           className="btn btn-a btn-sm"
           onClick={handlePlay}
@@ -2772,9 +1373,6 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
               <rect x="14" y="4" width="4" height="16" rx="1" />
             </svg>
           ) : isFinished ? (
-            /* Restart icon — a circular arrow, visually distinct from the
-               play triangle so a finished diagram reads differently from
-               an idle one. */
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M3 12a9 9 0 1 0 3-6.7" />
               <path d="M3 4v5h5" />
@@ -2806,17 +1404,9 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
           )}
         </button>
         <span style={{ flex: 1 }} />
-                <span className="mono" style={{ fontSize: 11.5, color: "var(--text-3)", whiteSpace: "nowrap", marginLeft: "auto" }} aria-live="polite" aria-atomic="true">Step {activeStep + 1} / {diagram.narration.length}</span>
+        <span className="mono" style={{ fontSize: 11.5, color: "var(--text-3)", whiteSpace: "nowrap", marginLeft: "auto" }} aria-live="polite" aria-atomic="true">Step {activeStep + 1} / {diagram.narration.length}</span>
       </div>
 
-      {/* Progress bar - a thin continuous fill from 0% to 100% across
-         the whole width of the play bar area. Deliberately a passive
-         indicator: the dots row below is the tappable jump target, and
-         this bar exists so a student can read playback progress at a
-         glance without counting dots. Placed directly under the play
-         bar card and above the dots row, so the visual order from top
-         to bottom is: controls -> progress -> jumpable dots -> step
-         text -> diagram. */}
       <div
         aria-hidden="true"
         style={{
@@ -2847,7 +1437,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
           <button key={i} className={"atlas-dot" + (i <= activeStep ? " on" : "")} onClick={() => jumpTo(i)} title={`Step ${i + 1}`} />
         ))}
       </div>
-            <div
+      <div
         style={{
           color: "var(--text-2)",
           fontSize: "clamp(13px, 3.4vw, 15px)",
@@ -2859,13 +1449,12 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
       >
         {diagram.narration[activeStep]}
       </div>
-      {/* ---- Diagram (left) + topic summary (right) ---- */}
       <div className="atlas-row">
         <div className="atlas-diagram-col">
-                    <div
+          <div
             ref={stageRef}
             className={"card atlas-viewer-stage" + (fullscreen ? " atlas-stage-fullscreen" : "")}
-                        style={{
+            style={{
               padding: 0,
               overflow: "hidden",
               height: fullscreen ? undefined : "clamp(240px, 48vh, 560px)",
@@ -2880,14 +1469,14 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
             onPointerCancel={onPointerUp}
           >
             <div className="atlas-step-badge">Step {activeStep + 1} / {diagram.narration.length}</div>
-                                                <div
+            <div
               className="atlas-zoom-controls"
               style={{ pointerEvents: "auto", zIndex: 10 }}
               onPointerDown={(e) => e.stopPropagation()}
               onClick={(e) => e.stopPropagation()}
             >
               <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom((z) => z - 0.2)}>−</button>
-                            <button className="btn btn-sm mono" title="Reset view - re-centers and resets zoom" style={{ minWidth: 46 }} onClick={() => { applyZoom(DEFAULT_ZOOM); setPanX(0); setPanY(0); }}>{Math.round(zoom * 100)}%</button>
+              <button className="btn btn-sm mono" title="Reset view - re-centers and resets zoom" style={{ minWidth: 46 }} onClick={() => { applyZoom(DEFAULT_ZOOM); setPanX(0); setPanY(0); }}>{Math.round(zoom * 100)}%</button>
               <button className="btn btn-sm" title="Zoom in" onClick={() => applyZoom((z) => z + 0.2)}>+</button>
               <button className="btn btn-sm" title={fullscreen ? "Exit fullscreen" : "Fullscreen"} aria-label={fullscreen ? "Exit fullscreen" : "Expand to fullscreen"} onClick={toggleFullscreen}>
                 {fullscreen ? (
@@ -2897,14 +1486,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
                 )}
               </button>
             </div>
-                                    {!painted && (
-              /* Shimmer placeholder — fills the stage behind the (not yet
-                 painted) SVG. Sits as an absolute overlay so it doesn't
-                 disturb the layout of the transform wrapper that will
-                 hold the actual diagram. aria-hidden because it's purely
-                 decorative — a screen reader user doesn't need to hear
-                 "loading" for a diagram that will announce itself via
-                 the step counter anyway. */
+            {!painted && (
               <div
                 aria-hidden="true"
                 style={{
@@ -2947,31 +1529,13 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
               {diagram.render({
                 onLabelClick: (labelId) => {
                   setActiveLabelId(labelId);
-                  // Tap-to-jump: if the tapped label appears in any step's
-                  // stepFocus, advance/rewind the narration to the first
-                  // step that highlights it. If it doesn't appear in any
-                  // step (e.g. a purely descriptive label like "Liver" on
-                  // a step that isn't about the liver), just highlight it
-                  // and leave the narration where it is — no surprising
-                  // jump for a structure the walkthrough never discusses.
                   const stepIdx = diagram.stepFocus.findIndex(
                     (focusList) => Array.isArray(focusList) && focusList.includes(labelId)
                   );
                   if (stepIdx === -1) return;
-
-                  // Cancel any in-flight narration so the new step's
-                  // speech starts cleanly, and bump the play token so
-                  // the previous step's onend callback can't fire and
-                  // advance us past the step we just jumped to.
                   playTokenRef.current++;
                   try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {}
-
                   setActiveStep(stepIdx);
-
-                  // If the student was mid-playback, restart narration
-                  // from the new step. If they were paused or idle,
-                  // stay paused — jumping is a "look at this" gesture,
-                  // not an implicit "keep playing".
                   if (playing) {
                     speakStep(stepIdx);
                   } else {
@@ -2988,21 +1552,10 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
 
         <div className="atlas-summary-col card">
           <div className="eyebrow" style={{ marginBottom: 6 }}>About this topic</div>
-          {/* Fixed, topic-level summary - stays constant while the animation
-              plays. Pull this from the topic's actual note text (diagram.summary
-              in diagrams.js); falls back to the title if a diagram hasn't had
-              one written yet. */}
           <div style={{ color: "var(--text-2)", fontSize: 13.5, lineHeight: 1.5 }}>
             {diagram.summary || diagram.title}
           </div>
 
-          {/* When a structure is tapped, its name + description appear here.
-              Wrapped in aria-live="polite" so a screen reader announces
-              them the moment they change — otherwise the text is in the
-              DOM but silent, and a student using a screen reader who taps
-              a structure gets no feedback at all. aria-atomic="true" makes
-              the whole block (name + description) get read as one unit,
-              not just the changed nodes. */}
           <div aria-live="polite" aria-atomic="true">
             {activeLabel && (
               <div className="card" style={{ marginTop: 12, borderColor: "rgba(245,185,63,.35)" }}>
@@ -3019,20 +1572,15 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
         </div>
       </div>
 
-                        {/* ---- Legend - full width, below the row ---- */}
       <div className="card atlas-legend-full" style={{ marginTop: 12 }}>
         <div className="eyebrow">Legend — tap any part to highlight it</div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(160px, 100%), 1fr))", gap: 10, marginTop: 12 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(160px, 100%), 1fr))", gap: 10, marginTop: 12 }}>
           {(diagram.labels || []).map((l) => {
             const active = activeLabelId === l.id;
             return (
               <button
                 key={l.id}
                 ref={(node) => {
-                  // Callback ref: store the DOM node so the auto-scroll
-                  // effect can find it. On unmount (node === null),
-                  // delete the entry to avoid holding a stale reference
-                  // when a new diagram mounts.
                   if (node) legendRefs.current[l.id] = node;
                   else delete legendRefs.current[l.id];
                 }}
@@ -3116,7 +1664,6 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
           })}
         </div>
       </div>
-      {/* actions */}
       <div className="divider" />
       {topTopic && (
         <button className="btn btn-g" style={{ width: "100%" }} onClick={() => app.go("topic", { courseId: topTopic.courseId, topicId: topTopic.topicIndex })}>
@@ -3124,13 +1671,6 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
         </button>
       )}
 
-      {/* Neighbour navigation — only shows when the viewer was opened from
-         a course's visuals list (so there's a course context to navigate
-         within) AND there's actually a previous or next diagram to move
-         to. A diagram at the start of its course only shows "Next"; a
-         diagram at the end only shows "Previous"; a diagram that's the
-         only one in its course shows neither, and this whole block
-         renders nothing. */}
       {(prevDiagram || nextDiagram) && (
         <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
           {prevDiagram ? (
@@ -3166,9 +1706,7 @@ function Ic_chevR() {
 }
 
 /* ---------------------------------------------------------------- */
-/* Screen 5 - the pathway builder. Not surfaced by any registered   */
-/* diagram right now (see the file header) - kept intact so the     */
-/* mechanic still works the moment a "type: builder" entry returns. */
+/* Screen 5 - the pathway builder                                   */
 /* ---------------------------------------------------------------- */
 function PathwayBuilder({ diagramId, onExit, app }) {
   const diagram = DIAGRAMS[diagramId];
@@ -3227,7 +1765,6 @@ function PathwayBuilder({ diagramId, onExit, app }) {
         <i style={{ width: (placed.length / diagram.steps.length) * 100 + "%" }} />
       </div>
 
-      {/* sequence slots */}
       <div
         style={{ display: "flex", flexDirection: "column", gap: 6 }}
         onDragOver={(e) => e.preventDefault()}
@@ -3310,7 +1847,7 @@ export default function AtlasView({ app }) {
       if (d) return { screen: "viewer", courseId: openedFromCourseId, diagramId: d.id, breadcrumb: [d.id] };
     }
     return { screen: "courses", courseId: null, diagramId: null, breadcrumb: [] };
-      }, []);
+  }, []);
 
   const [screen, setScreen] = useState(initial.screen);
   const [courseId, setCourseId] = useState(initial.courseId);
@@ -3321,11 +1858,7 @@ export default function AtlasView({ app }) {
   const openDiagram = (id) => { setDiagramId(id); setBreadcrumb([id]); setScreen("viewer"); };
   const drillInto = (id) => { setDiagramId(id); setBreadcrumb((b) => [...b, id]); };
   const goToBreadcrumb = (i) => { setDiagramId(breadcrumb[i]); setBreadcrumb((b) => b.slice(0, i + 1)); };
-    const exitViewer = () => {
-    // If we're drilled into a child diagram, Back steps UP the breadcrumb
-    // one level at a time instead of bouncing straight out to the list or
-    // topic. Only when we're on the root diagram (breadcrumb length <= 1)
-    // do we actually leave the viewer.
+  const exitViewer = () => {
     if (breadcrumb.length > 1) {
       goToBreadcrumb(breadcrumb.length - 2);
       return;
@@ -3337,20 +1870,10 @@ export default function AtlasView({ app }) {
     setScreen(courseId ? "list" : "courses");
   };
 
-    const diagram = diagramId ? DIAGRAMS[diagramId] : null;
+  const diagram = diagramId ? DIAGRAMS[diagramId] : null;
 
   return (
     <div className="view">
-      {/* One shared <defs> block for every diagram, rendered once here
-          instead of inside each diagram's own <svg>. Previously every
-          diagram defined the SAME gradient/filter ids (atlas-glow,
-          atlas-grad-trunk, etc.) independently, and VisualsList renders
-          several diagrams' thumbnails on screen simultaneously - since
-          SVG element ids are resolved against the whole HTML document,
-          not scoped per-<svg>, that meant N duplicate definitions of the
-          same ids coexisting at once. Harmless today only because every
-          diagram's defs happen to be byte-identical; a single shared
-          copy removes the duplication (and the risk) outright. */}
       <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
         {atlasDefs()}
       </svg>
