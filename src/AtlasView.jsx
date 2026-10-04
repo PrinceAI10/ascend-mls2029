@@ -815,7 +815,7 @@ const LEGEND_SWATCHES = {
       <text x="69" y="64" textAnchor="middle" fontSize="5.5" fill="var(--text-2)">macrophages</text>
     </g>
   ),
-};s
+};
 
 /* ---------------------------------------------------------------- */
 /* Narration - a small, self-contained speech helper. Deliberately  */
