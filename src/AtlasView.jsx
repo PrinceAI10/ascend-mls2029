@@ -3336,7 +3336,19 @@ const atlasStyles = `
   0%, 100% { opacity: 1; }
   50% { opacity: .45; }
 }
-.atlas-pulse rect { animation: atlasPulse 1.1s ease-in-out infinite; }
+/* Pulse every drawable element inside a pulsing group, not just
+   rects. Without this the animation silently did nothing on any
+   diagram that draws circles, ellipses, paths or lines — which is
+   most of them. */
+.atlas-pulse rect,
+.atlas-pulse circle,
+.atlas-pulse ellipse,
+.atlas-pulse path,
+.atlas-pulse line,
+.atlas-pulse polygon,
+.atlas-pulse polyline {
+  animation: atlasPulse 1.1s ease-in-out infinite;
+}
 @keyframes atlasShake {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-5px); }
@@ -3423,7 +3435,16 @@ const atlasStyles = `
 
 /* Respect reduced-motion. */
 @media (prefers-reduced-motion: reduce) {
-  .atlas-pulse rect { animation: none !important; opacity: 1 !important; }
+  .atlas-pulse rect,
+  .atlas-pulse circle,
+  .atlas-pulse ellipse,
+  .atlas-pulse path,
+  .atlas-pulse line,
+  .atlas-pulse polygon,
+  .atlas-pulse polyline {
+    animation: none !important;
+    opacity: 1 !important;
+  }
   .atlas-shake { animation: none !important; }
   .atlas-snap { animation: none !important; }
 }

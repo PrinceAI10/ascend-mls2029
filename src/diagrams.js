@@ -4323,12 +4323,14 @@ export const DIAGRAMS = {
             <ellipse cx="450" cy="90" rx="40" ry="50" fill="none" {...ring("airway")} pointerEvents="none" />
           </g>
 
-          {/* Alveolus inset — replaces the terminal bronchiole view with
-             a magnified cluster, connected by a leader line to where the
-             alveolar clusters sit inside the lung drawing. */}
+          {/* Alveolus inset — magnified cluster, framed as a clear
+             callout so the reader knows it's a zoom-in, not part of the
+             main lung drawing. */}
           <g style={{ cursor: cur }} onClick={click("alveolus")} filter={hotFilter("alveolus")}>
-            {atlasAlveolus({ cx: 720, cy: 460, scale: 1.4, oxygenated: true, highlight: isHot("alveolus") })}
-            <circle cx="720" cy="460" r="80" fill="none" {...ring("alveolus")} pointerEvents="none" />
+            <rect x="630" y="380" width="200" height="170" rx="16" fill="var(--bg-2)" stroke={isHot("alveolus") ? ATLAS_COLORS.trunk : "var(--line)"} strokeWidth="2" />
+            <text x="730" y="400" textAnchor="middle" fontSize="10" fontWeight="800" fill="var(--text-2)" letterSpacing="0.04em">ALVEOLUS — MAGNIFIED</text>
+            {atlasAlveolus({ cx: 730, cy: 480, scale: 1.3, oxygenated: true, highlight: isHot("alveolus") })}
+            <circle cx="730" cy="470" r="80" fill="none" {...ring("alveolus")} pointerEvents="none" />
           </g>
           <path
             d="M600,360 Q640,410 700,440"
@@ -4346,17 +4348,17 @@ export const DIAGRAMS = {
           {isHot("membrane") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <path
-                d="M820,420 Q770,440 760,460"
+                d="M820,420 Q770,440 760,470"
                 fill="none"
                 stroke={ATLAS_COLORS.trunk}
-                strokeWidth="1.5"
+                strokeWidth="1.8"
                 strokeDasharray="4 4"
-                opacity="0.85"
+                opacity="0.95"
               />
-              <circle cx="820" cy="420" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="700" y="530" width="180" height="60" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="790" y="552" textAnchor="middle" fontSize="10" fontWeight="700" fill={ATLAS_COLORS.trunk}>RESPIRATORY MEMBRANE</text>
-              <text x="790" y="570" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">one cell thick — gases diffuse across</text>
+              <circle cx="820" cy="420" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="680" y="555" width="220" height="56" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="790" y="576" textAnchor="middle" fontSize="11" fontWeight="800" fill={ATLAS_COLORS.trunk}>RESPIRATORY MEMBRANE</text>
+              <text x="790" y="596" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">one cell thick — gases diffuse across</text>
             </g>
           )}
 
@@ -4364,12 +4366,12 @@ export const DIAGRAMS = {
              O2, shown only when its step is active. */}
           {isHot("o2") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="70" y="290" width="170" height="100" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="155" y="312" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">OXYGEN TRANSPORT</text>
-              {atlasBloodCell({ cx: 130, cy: 345, r: 16, oxygenated: true })}
-              <text x="175" y="340" fontSize="10" fontWeight="700" fill="#C0392B">O₂</text>
-              <text x="175" y="354" fontSize="8" fill="var(--text-2)">bound to Hb</text>
-              <text x="155" y="378" textAnchor="middle" fontSize="8" fill="var(--text-2)">carried to every tissue</text>
+              <rect x="60" y="285" width="180" height="105" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="150" y="308" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="#C0392B">OXYGEN TRANSPORT</text>
+              {atlasBloodCell({ cx: 120, cy: 345, r: 17, oxygenated: true })}
+              <text x="160" y="340" fontSize="11" fontWeight="800" fill="#C0392B">O₂</text>
+              <text x="160" y="356" fontSize="9" fontWeight="600" fill="var(--text-2)">bound to Hb</text>
+              <text x="150" y="382" textAnchor="middle" fontSize="9" fontStyle="italic" fill="var(--text-2)">carried to every tissue</text>
             </g>
           )}
 
@@ -4377,12 +4379,12 @@ export const DIAGRAMS = {
              leaving via the same route in reverse. */}
           {isHot("co2") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="70" y="410" width="170" height="100" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
-              <text x="155" y="432" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#2F6FED">CO₂ TRANSPORT</text>
-              {atlasBloodCell({ cx: 130, cy: 465, r: 16, oxygenated: false })}
-              <text x="175" y="460" fontSize="10" fontWeight="700" fill="#2F6FED">CO₂</text>
-              <text x="175" y="474" fontSize="8" fill="var(--text-2)">as bicarbonate</text>
-              <text x="155" y="498" textAnchor="middle" fontSize="8" fill="var(--text-2)">exhaled at the lungs</text>
+              <rect x="60" y="405" width="180" height="105" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2.4" />
+              <text x="150" y="428" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="#2F6FED">CO₂ TRANSPORT</text>
+              {atlasBloodCell({ cx: 120, cy: 465, r: 17, oxygenated: false })}
+              <text x="160" y="460" fontSize="11" fontWeight="800" fill="#2F6FED">CO₂</text>
+              <text x="160" y="476" fontSize="9" fontWeight="600" fill="var(--text-2)">as bicarbonate</text>
+              <text x="150" y="502" textAnchor="middle" fontSize="9" fontStyle="italic" fill="var(--text-2)">exhaled at the lungs</text>
             </g>
           )}
 
@@ -4390,15 +4392,13 @@ export const DIAGRAMS = {
              its step is active. */}
           {isHot("control") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="700" y="40" width="180" height="110" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="790" y="62" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>BREATHING CONTROL</text>
-              {/* Brainstem icon */}
-              <ellipse cx="770" cy="90" rx="16" ry="10" fill="#8B5CF6" opacity="0.7" />
-              <text x="770" y="93" textAnchor="middle" fontSize="8" fontWeight="700" fill="#fff">brain</text>
-              {/* Chemoreceptor arrow */}
-              <path d="M790,100 Q820,120 810,135" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.6" />
-              <circle cx="810" cy="138" r="4" fill={ATLAS_COLORS.trunk} />
-              <text x="790" y="135" textAnchor="middle" fontSize="8" fill="var(--text-2)">senses CO₂ / O₂</text>
+              <rect x="690" y="40" width="200" height="115" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="790" y="63" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>BREATHING CONTROL</text>
+              <ellipse cx="770" cy="93" rx="18" ry="11" fill="#8B5CF6" opacity="0.9" />
+              <text x="770" y="97" textAnchor="middle" fontSize="9" fontWeight="800" fill="#fff">brain</text>
+              <path d="M790,104 Q820,123 810,140" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.8" />
+              <circle cx="810" cy="143" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <text x="790" y="140" textAnchor="middle" fontSize="9" fontWeight="600" fill="var(--text-2)">senses CO₂ / O₂</text>
             </g>
           )}
 
@@ -4406,8 +4406,8 @@ export const DIAGRAMS = {
              its step. Draws the four key volumes as horizontal bars. */}
           {isHot("volumes") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="280" y="500" width="280" height="100" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="420" y="520" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>LUNG VOLUMES</text>
+              <rect x="270" y="500" width="300" height="105" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="420" y="522" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>LUNG VOLUMES</text>
               {[
                 { label: "TV",  val: 0.10, color: "#2F6FED" },
                 { label: "IRV", val: 0.20, color: "#2D7BFF" },
@@ -4415,8 +4415,8 @@ export const DIAGRAMS = {
                 { label: "RV",  val: 0.25, color: "#8C1C12" },
               ].map((v, i) => (
                 <g key={i}>
-                  <text x="295" y={545 + i * 12} fontSize="8" fill="var(--text-2)">{v.label}</text>
-                  <rect x="320" y={539 + i * 12} width={v.val * 220} height="7" rx="3" fill={v.color} opacity="0.85" />
+                  <text x="285" y={548 + i * 13} fontSize="9" fontWeight="700" fill="var(--text)">{v.label}</text>
+                  <rect x="320" y={542 + i * 13} width={v.val * 230} height="8" rx="4" fill={v.color} />
                 </g>
               ))}
             </g>
@@ -4426,17 +4426,17 @@ export const DIAGRAMS = {
              between lung and chest wall, only when its step is active. */}
           {isHot("pleura") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="650" y="530" width="230" height="60" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="765" y="552" textAnchor="middle" fontSize="10" fontWeight="700" fill={ATLAS_COLORS.trunk}>PLEURAL CAVITY</text>
-              <text x="765" y="570" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">fluid film — lung follows chest wall</text>
+              <rect x="640" y="530" width="250" height="62" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="765" y="553" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>PLEURAL CAVITY</text>
+              <text x="765" y="573" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">fluid film — lung follows chest wall</text>
             </g>
           )}
 
-          {/* Static region labels */}
-          <text x="450" y="30"  textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Airway</text>
-          <text x="450" y="600" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Alveoli · Gas exchange</text>
-          <text x="120" y="260" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">O₂ / CO₂</text>
-          <text x="800" y="260" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Control · Volumes</text>
+          {/* Static region labels — bold, full-contrast. */}
+          <text x="450" y="30"  textAnchor="middle" fontSize="14" fontWeight="800" fill="var(--text)" pointerEvents="none">Airway</text>
+          <text x="450" y="600" textAnchor="middle" fontSize="14" fontWeight="800" fill="var(--text)" pointerEvents="none">Alveoli · Gas exchange</text>
+          <text x="120" y="260" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text)" pointerEvents="none">O₂ / CO₂</text>
+          <text x="800" y="260" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text)" pointerEvents="none">Control · Volumes</text>
         </svg>
       );
     },
@@ -4508,31 +4508,26 @@ export const DIAGRAMS = {
 
       return (
         <svg viewBox="0 0 900 620" width="100%" height="100%">
-          {/* Body outline at the base — the whole scene is happening
-             inside a person. A soft neutral silhouette behind
-             everything else, never competes with the cells. */}
-          <ellipse cx="450" cy="330" rx="400" ry="270" fill="#2B1A14" opacity="0.04" />
+          {/* The scene sits on the plain canvas — no backdrop wash. */}
 
           {/* ---- Barrier layer at the top ---- */}
           <g style={{ cursor: cur }} onClick={click("barrier")} filter={hotFilter("barrier")}>
-            {/* Skin surface — a segmented wavy line suggesting the
-               layered barrier of skin and mucous membranes. */}
             <path
               d="M100,60 Q200,50 300,60 Q400,70 500,60 Q600,50 700,60 Q800,70 820,60"
               fill="none"
               stroke="#B63B2E"
-              strokeWidth="5"
+              strokeWidth="6"
               strokeLinecap="round"
             />
             <path
-              d="M100,72 Q200,62 300,72 Q400,82 500,72 Q600,62 700,72 Q800,82 820,72"
+              d="M100,74 Q200,64 300,74 Q400,84 500,74 Q600,64 700,74 Q800,84 820,74"
               fill="none"
               stroke="#D89B14"
-              strokeWidth="3"
+              strokeWidth="3.5"
               strokeLinecap="round"
-              opacity="0.7"
+              opacity="0.95"
             />
-            <text x="450" y="45" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-2)">Physical barriers</text>
+            <text x="450" y="42" textAnchor="middle" fontSize="13" fontWeight="800" fill="var(--text)">Physical barriers</text>
           </g>
 
           {/* ---- Innate cells patrolling below the barrier ---- */}
@@ -4556,17 +4551,16 @@ export const DIAGRAMS = {
             <text x="610" y="185" textAnchor="middle" fontSize="9" fill="var(--text-2)">threat</text>
           </g>
 
-          {/* ---- Inflammation inset — shown when step 4 is active ---- */}
+          {/* ---- Inflammation inset ---- */}
           {isHot("inflammation") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="270" width="180" height="110" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="150" y="292" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">INFLAMMATION</text>
-              <text x="150" y="310" textAnchor="middle" fontSize="9" fill="var(--text-2)">red · warm · swollen · painful</text>
-              {/* Blood vessel widening, more cells rushing in */}
-              <path d="M80,335 Q150,325 220,335" fill="none" stroke="#E53935" strokeWidth="12" strokeLinecap="round" opacity="0.7" />
-              {atlasWhiteCell({ cx: 120, cy: 355, r: 10 })}
-              {atlasWhiteCell({ cx: 150, cy: 360, r: 10 })}
-              {atlasWhiteCell({ cx: 180, cy: 355, r: 10 })}
+              <rect x="50" y="265" width="200" height="120" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="150" y="290" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="#C0392B">INFLAMMATION</text>
+              <text x="150" y="308" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">red · warm · swollen · painful</text>
+              <path d="M70,335 Q150,325 230,335" fill="none" stroke="#E53935" strokeWidth="14" strokeLinecap="round" opacity="0.9" />
+              {atlasWhiteCell({ cx: 115, cy: 358, r: 11 })}
+              {atlasWhiteCell({ cx: 150, cy: 362, r: 11 })}
+              {atlasWhiteCell({ cx: 185, cy: 358, r: 11 })}
             </g>
           )}
 
@@ -4604,25 +4598,26 @@ export const DIAGRAMS = {
             <text x="620" y="533" textAnchor="middle" fontSize="9" fill="var(--text-2)">coordinate · kill infected</text>
           </g>
 
-          {/* ---- Antibody inset — shown when step 7 is active ---- */}
+          {/* ---- Antibody inset ---- */}
           {isHot("antibody") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="420" width="160" height="140" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
-              <text x="140" y="442" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">ANTIBODY</text>
-              {atlasAntibody({ cx: 140, cy: 500, scale: 1.4, bound: true, highlight: true })}
+              <rect x="50" y="415" width="180" height="150" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2.4" />
+              <text x="140" y="440" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="#8B5CF6">ANTIBODY</text>
+              <text x="140" y="456" textAnchor="middle" fontSize="9" fill="var(--text-2)">Y-shaped · binds one antigen</text>
+              {atlasAntibody({ cx: 140, cy: 510, scale: 1.5, bound: true, highlight: true })}
             </g>
           )}
 
           {/* ---- Memory cells — bottom corner, standing guard ---- */}
           <g style={{ cursor: cur }} onClick={click("memory")} filter={hotFilter("memory")}>
-            <rect x="700" y="520" width="150" height="70" rx="12" fill="var(--bg-3)" stroke={ATLAS_COLORS.trunk} strokeWidth="1.6" strokeDasharray="5 4" opacity="0.85" />
-            <text x="775" y="545" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>MEMORY CELLS</text>
-            <text x="775" y="562" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">stay long after infection</text>
-            <text x="775" y="578" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">respond in hours next time</text>
+            <rect x="690" y="515" width="170" height="80" rx="12" fill={ATLAS_COLORS.trunkDim} stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+            <text x="775" y="540" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>MEMORY CELLS</text>
+            <text x="775" y="560" textAnchor="middle" fontSize="9.5" fill="var(--text)">stay long after infection</text>
+            <text x="775" y="578" textAnchor="middle" fontSize="9.5" fill="var(--text)">respond in hours next time</text>
           </g>
 
           {/* Static region labels */}
-          <text x="450" y="600" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Fast, general defence + slow, precise defence</text>
+          <text x="450" y="600" textAnchor="middle" fontSize="13" fontWeight="800" fill="var(--text)" pointerEvents="none">Fast, general defence + slow, precise defence</text>
         </svg>
       );
     },
@@ -6426,60 +6421,57 @@ export const DIAGRAMS = {
             <circle cx="370" cy="280" r="80" fill="none" {...ring("nephron")} pointerEvents="none" />
           </g>
 
-          {/* Kidney outline — a soft bean shape behind the nephron to
-             suggest the whole organ the nephron sits inside. */}
+          {/* Kidney outline — the whole organ the nephron sits inside. */}
           <g style={{ cursor: cur }} onClick={click("kidney")} filter={hotFilter("kidney")}>
             <path
               d="M70,120 Q30,200 60,340 Q90,460 180,480 Q260,490 280,440 Q290,410 270,380 Q240,340 250,300 Q260,260 230,220 Q200,180 150,150 Q110,130 70,120 Z"
               fill="#FBE9E7"
               stroke={isHot("kidney") ? ATLAS_COLORS.trunk : "#B63B2E"}
-              strokeWidth="2"
-              opacity="0.5"
+              strokeWidth="2.4"
             />
-            <text x="150" y="320" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Kidney</text>
+            <text x="150" y="320" textAnchor="middle" fontSize="13" fontWeight="800" fill="var(--text)" pointerEvents="none">Kidney</text>
           </g>
 
           {/* Glomerulus inset — a magnified view of the filtration
              barrier, shown on the glomerulus step. */}
           {activeStep === 3 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="640" y="80" width="220" height="170" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="750" y="105" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">GLOMERULUS (magnified)</text>
-              {atlasGlomerulus({ cx: 750, cy: 175, r: 45, showFiltration: true, highlight: true })}
-              <text x="750" y="240" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">pressure pushes fluid into capsule</text>
+              <rect x="630" y="75" width="240" height="185" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="750" y="102" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="#C0392B">GLOMERULUS — MAGNIFIED</text>
+              {atlasGlomerulus({ cx: 750, cy: 185, r: 48, showFiltration: true, highlight: true })}
+              <text x="750" y="250" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">pressure pushes fluid into capsule</text>
             </g>
           )}
 
-          {/* Hormonal control inset — three hormones with arrows
-             pointing to their target segments. */}
+          {/* Hormonal control inset — three hormones with their targets. */}
           {isHot("hormones") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="640" y="80" width="220" height="180" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="750" y="105" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>HORMONAL CONTROL</text>
-              <text x="660" y="132" fontSize="9.5" fontWeight="700" fill="#2F6FED">ADH</text>
-              <text x="660" y="148" fontSize="8.5" fill="var(--text-2)">collecting duct — water</text>
-              <text x="660" y="176" fontSize="9.5" fontWeight="700" fill="#8B5CF6">Aldosterone</text>
-              <text x="660" y="192" fontSize="8.5" fill="var(--text-2)">DCT — Na reabsorb, K excrete</text>
-              <text x="660" y="220" fontSize="9.5" fontWeight="700" fill="#C0392B">RAAS</text>
-              <text x="660" y="236" fontSize="8.5" fill="var(--text-2)">whole nephron — BP up</text>
+              <rect x="630" y="75" width="240" height="195" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="750" y="102" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>HORMONAL CONTROL</text>
+              <text x="655" y="132" fontSize="10.5" fontWeight="800" fill="#2F6FED">ADH</text>
+              <text x="655" y="150" fontSize="9.5" fill="var(--text-2)">collecting duct — water</text>
+              <text x="655" y="178" fontSize="10.5" fontWeight="800" fill="#8B5CF6">Aldosterone</text>
+              <text x="655" y="196" fontSize="9.5" fill="var(--text-2)">DCT — Na reabsorb, K excrete</text>
+              <text x="655" y="224" fontSize="10.5" fontWeight="800" fill="#C0392B">RAAS</text>
+              <text x="655" y="242" fontSize="9.5" fill="var(--text-2)">whole nephron — BP up</text>
             </g>
           )}
 
-          {/* GFR inset — a small flow meter showing 125 mL/min. */}
+          {/* GFR inset — the number, big. */}
           {isHot("gfr") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="640" y="80" width="220" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="750" y="105" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>GLOMERULAR FILTRATION</text>
-              <text x="750" y="140" textAnchor="middle" fontSize="28" fontWeight="800" fill={ATLAS_COLORS.trunk}>125</text>
-              <text x="750" y="158" textAnchor="middle" fontSize="10" fill="var(--text-2)">mL / min</text>
-              <text x="750" y="185" textAnchor="middle" fontSize="9" fill="var(--text-2)">≈ 180 L / day</text>
-              <text x="750" y="205" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">best measure of kidney function</text>
+              <rect x="630" y="75" width="240" height="165" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="750" y="102" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>GLOMERULAR FILTRATION</text>
+              <text x="750" y="148" textAnchor="middle" fontSize="36" fontWeight="800" fill={ATLAS_COLORS.trunk}>125</text>
+              <text x="750" y="168" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">mL / min</text>
+              <text x="750" y="196" textAnchor="middle" fontSize="10" fill="var(--text-2)">≈ 180 L / day</text>
+              <text x="750" y="220" textAnchor="middle" fontSize="9" fontStyle="italic" fill="var(--text-2)">best measure of kidney function</text>
             </g>
           )}
 
           {/* Static region labels */}
-          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">The nephron — one million per kidney</text>
-          <text x="450" y="605" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Filter → reabsorb → secrete → excrete: the four jobs of the kidney</text>
+          <text x="450" y="35" textAnchor="middle" fontSize="14" fontWeight="800" fill="var(--text)" pointerEvents="none">The nephron — one million per kidney</text>
+          <text x="450" y="605" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text)" pointerEvents="none">Filter → reabsorb → secrete → excrete: the four jobs of the kidney</text>
         </svg>
       );
     },
@@ -6596,23 +6588,22 @@ export const DIAGRAMS = {
           {/* Henderson-Hasselbalch inset */}
           {isHot("hh") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="340" width="300" height="110" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="210" y="365" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>HENDERSON-HASSELBALCH</text>
-              <text x="210" y="395" textAnchor="middle" fontSize="14" fontWeight="800" fill="var(--text)">pH = 6.1 + log([HCO₃⁻]/[CO₂])</text>
-              <text x="210" y="420" textAnchor="middle" fontSize="9" fill="var(--text-2)">kidney sets the numerator</text>
-              <text x="210" y="435" textAnchor="middle" fontSize="9" fill="var(--text-2)">lungs set the denominator</text>
+              <rect x="60" y="340" width="320" height="120" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="220" y="365" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>HENDERSON-HASSELBALCH</text>
+              <text x="220" y="395" textAnchor="middle" fontSize="15" fontWeight="800" fill="var(--text)">pH = 6.1 + log([HCO₃⁻]/[CO₂])</text>
+              <text x="220" y="422" textAnchor="middle" fontSize="10" fill="var(--text-2)">kidney sets the numerator</text>
+              <text x="220" y="440" textAnchor="middle" fontSize="10" fill="var(--text-2)">lungs set the denominator</text>
             </g>
           )}
 
           {/* Lungs inset — a stylised pair of lungs with arrows. */}
           {isHot("lungs") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="340" width="200" height="130" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
-              <text x="160" y="365" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#2F6FED">LUNGS · CO₂ CONTROL</text>
-              {/* Two lung shapes */}
-              <path d="M110,390 Q95,400 100,420 Q105,440 125,438 Q135,425 130,400 Q125,388 110,390 Z" fill="#F5A8A0" stroke="#B63B2E" strokeWidth="1.2" />
-              <path d="M170,390 Q185,400 180,420 Q175,440 155,438 Q145,425 150,400 Q155,388 170,390 Z" fill="#F5A8A0" stroke="#B63B2E" strokeWidth="1.2" />
-              <text x="160" y="460" textAnchor="middle" fontSize="8" fill="var(--text-2)">breathe faster → pH up</text>
+              <rect x="60" y="340" width="220" height="140" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2.4" />
+              <text x="170" y="365" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="#2F6FED">LUNGS · CO₂ CONTROL</text>
+              <path d="M115,390 Q98,400 103,422 Q108,444 130,442 Q142,428 136,400 Q130,388 115,390 Z" fill="#F5A8A0" stroke="#B63B2E" strokeWidth="1.6" />
+              <path d="M185,390 Q202,400 197,422 Q192,444 170,442 Q158,428 164,400 Q170,388 185,390 Z" fill="#F5A8A0" stroke="#B63B2E" strokeWidth="1.6" />
+              <text x="170" y="468" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">breathe faster → pH up</text>
             </g>
           )}
 
@@ -6621,107 +6612,105 @@ export const DIAGRAMS = {
              doesn't jump the panel position. */}
           {isHot("kidney-h") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="240" y="420" width="420" height="150" rx="14"
-                fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="450" y="446" textAnchor="middle" fontSize="11"
+              <rect x="240" y="420" width="420" height="155" rx="14"
+                fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="450" y="446" textAnchor="middle" fontSize="11.5"
                 fontWeight="800" fill="#C0392B">KIDNEY · H⁺ EXCRETION</text>
               <path d="M290,510 Q340,500 390,510 Q440,520 490,510 Q540,500 610,510"
-                fill="none" stroke="#8B5CF6" strokeWidth="10" strokeLinecap="round" />
+                fill="none" stroke="#8B5CF6" strokeWidth="12" strokeLinecap="round" />
               {[330, 400, 470, 540].map((x, i) => (
                 <g key={i}>
-                  <line x1={x} y1="482" x2={x} y2="500" stroke="#C0392B"
-                    strokeWidth="2.6" strokeLinecap="round" />
-                  <polygon points={`${x},504 ${x - 4},497 ${x + 4},497`} fill="#C0392B" />
+                  <line x1={x} y1="480" x2={x} y2="500" stroke="#C0392B"
+                    strokeWidth="3" strokeLinecap="round" />
+                  <polygon points={`${x},505 ${x - 5},497 ${x + 5},497`} fill="#C0392B" />
                 </g>
               ))}
-              <text x="450" y="546" textAnchor="middle" fontSize="9"
+              <text x="450" y="548" textAnchor="middle" fontSize="10"
                 fill="var(--text-2)">PCT + DCT secrete H⁺ into tubular fluid</text>
-              <text x="450" y="562" textAnchor="middle" fontSize="8"
-                fontStyle="italic" fill="var(--text-3)">the only way to actually remove acid</text>
+              <text x="450" y="566" textAnchor="middle" fontSize="9"
+                fontStyle="italic" fill="var(--text-2)">the only way to actually remove acid</text>
             </g>
           )}
 
           {/* Kidney HCO3 handling inset — same box as kidney H+ above. */}
           {isHot("kidney-hco3") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="240" y="420" width="420" height="150" rx="14"
-                fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
-              <text x="450" y="448" textAnchor="middle" fontSize="11"
+              <rect x="240" y="420" width="420" height="155" rx="14"
+                fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2.4" />
+              <text x="450" y="448" textAnchor="middle" fontSize="11.5"
                 fontWeight="800" fill="#2F6FED">KIDNEY · HCO₃⁻ HANDLING</text>
-              <text x="260" y="474" fontSize="9.5" fill="var(--text-2)">• filtered at the glomerulus</text>
-              <text x="260" y="492" fontSize="9.5" fill="var(--text-2)">• ~90% reabsorbed in the PCT</text>
-              <text x="260" y="510" fontSize="9.5" fill="var(--text-2)">• new HCO₃⁻ generated when acidotic</text>
-              <text x="260" y="528" fontSize="9.5" fill="var(--text-2)">• excreted in alkalosis</text>
-              <text x="450" y="554" textAnchor="middle" fontSize="9"
+              <text x="260" y="476" fontSize="10.5" fill="var(--text)">• filtered at the glomerulus</text>
+              <text x="260" y="496" fontSize="10.5" fill="var(--text)">• ~90% reabsorbed in the PCT</text>
+              <text x="260" y="516" fontSize="10.5" fill="var(--text)">• new HCO₃⁻ generated when acidotic</text>
+              <text x="260" y="536" fontSize="10.5" fill="var(--text)">• excreted in alkalosis</text>
+              <text x="450" y="562" textAnchor="middle" fontSize="10"
                 fontWeight="700" fill="#2F6FED">the long-term correction</text>
             </g>
           )}
 
-          {/* Respiratory disorders inset — two-column comparison,
-             anchored in the shared bottom-centre box. */}
+          {/* Respiratory disorders inset */}
           {isHot("resp-disorders") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="240" y="420" width="420" height="150" rx="14"
-                fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="450" y="448" textAnchor="middle" fontSize="11"
+              <rect x="240" y="420" width="420" height="155" rx="14"
+                fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="450" y="448" textAnchor="middle" fontSize="11.5"
                 fontWeight="800" fill="#C0392B">RESPIRATORY DISORDERS</text>
-              <rect x="265" y="464" width="180" height="90" rx="8"
-                fill="rgba(140,28,18,0.1)" stroke="#8C1C12" strokeWidth="1.4" />
-              <text x="355" y="486" textAnchor="middle" fontSize="10"
-                fontWeight="700" fill="#8C1C12">Acidosis</text>
-              <text x="355" y="508" textAnchor="middle" fontSize="9"
-                fill="var(--text-2)">↑ CO₂</text>
-              <text x="355" y="524" textAnchor="middle" fontSize="8.5"
+              <rect x="265" y="464" width="180" height="95" rx="8"
+                fill="rgba(140,28,18,0.14)" stroke="#8C1C12" strokeWidth="2" />
+              <text x="355" y="488" textAnchor="middle" fontSize="11"
+                fontWeight="800" fill="#8C1C12">Acidosis</text>
+              <text x="355" y="510" textAnchor="middle" fontSize="10"
+                fontWeight="700" fill="var(--text)">↑ CO₂</text>
+              <text x="355" y="527" textAnchor="middle" fontSize="9.5"
                 fill="var(--text-2)">hypoventilation</text>
-              <text x="355" y="540" textAnchor="middle" fontSize="8"
-                fontStyle="italic" fill="var(--text-3)">COPD · sedation</text>
-              <rect x="455" y="464" width="180" height="90" rx="8"
-                fill="rgba(47,111,237,0.1)" stroke="#2F6FED" strokeWidth="1.4" />
-              <text x="545" y="486" textAnchor="middle" fontSize="10"
-                fontWeight="700" fill="#2F6FED">Alkalosis</text>
-              <text x="545" y="508" textAnchor="middle" fontSize="9"
-                fill="var(--text-2)">↓ CO₂</text>
-              <text x="545" y="524" textAnchor="middle" fontSize="8.5"
+              <text x="355" y="545" textAnchor="middle" fontSize="9"
+                fontStyle="italic" fill="var(--text-2)">COPD · sedation</text>
+              <rect x="455" y="464" width="180" height="95" rx="8"
+                fill="rgba(47,111,237,0.14)" stroke="#2F6FED" strokeWidth="2" />
+              <text x="545" y="488" textAnchor="middle" fontSize="11"
+                fontWeight="800" fill="#2F6FED">Alkalosis</text>
+              <text x="545" y="510" textAnchor="middle" fontSize="10"
+                fontWeight="700" fill="var(--text)">↓ CO₂</text>
+              <text x="545" y="527" textAnchor="middle" fontSize="9.5"
                 fill="var(--text-2)">hyperventilation</text>
-              <text x="545" y="540" textAnchor="middle" fontSize="8"
-                fontStyle="italic" fill="var(--text-3)">pain · anxiety</text>
+              <text x="545" y="545" textAnchor="middle" fontSize="9"
+                fontStyle="italic" fill="var(--text-2)">pain · anxiety</text>
             </g>
           )}
 
-          {/* Metabolic disorders inset — same two-column layout, same
-             shared bottom-centre box. */}
+          {/* Metabolic disorders inset */}
           {isHot("met-disorders") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="240" y="420" width="420" height="150" rx="14"
-                fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
-              <text x="450" y="448" textAnchor="middle" fontSize="11"
+              <rect x="240" y="420" width="420" height="155" rx="14"
+                fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2.4" />
+              <text x="450" y="448" textAnchor="middle" fontSize="11.5"
                 fontWeight="800" fill="#8B5CF6">METABOLIC DISORDERS</text>
-              <rect x="265" y="464" width="180" height="90" rx="8"
-                fill="rgba(140,28,18,0.1)" stroke="#8C1C12" strokeWidth="1.4" />
-              <text x="355" y="486" textAnchor="middle" fontSize="10"
-                fontWeight="700" fill="#8C1C12">Acidosis</text>
-              <text x="355" y="508" textAnchor="middle" fontSize="9"
-                fill="var(--text-2)">↓ HCO₃⁻</text>
-              <text x="355" y="524" textAnchor="middle" fontSize="8.5"
+              <rect x="265" y="464" width="180" height="95" rx="8"
+                fill="rgba(140,28,18,0.14)" stroke="#8C1C12" strokeWidth="2" />
+              <text x="355" y="488" textAnchor="middle" fontSize="11"
+                fontWeight="800" fill="#8C1C12">Acidosis</text>
+              <text x="355" y="510" textAnchor="middle" fontSize="10"
+                fontWeight="700" fill="var(--text)">↓ HCO₃⁻</text>
+              <text x="355" y="527" textAnchor="middle" fontSize="9.5"
                 fill="var(--text-2)">DKA · lactic</text>
-              <text x="355" y="540" textAnchor="middle" fontSize="8"
-                fontStyle="italic" fill="var(--text-3)">renal failure</text>
-              <rect x="455" y="464" width="180" height="90" rx="8"
-                fill="rgba(47,111,237,0.1)" stroke="#2F6FED" strokeWidth="1.4" />
-              <text x="545" y="486" textAnchor="middle" fontSize="10"
-                fontWeight="700" fill="#2F6FED">Alkalosis</text>
-              <text x="545" y="508" textAnchor="middle" fontSize="9"
-                fill="var(--text-2)">↑ HCO₃⁻</text>
-              <text x="545" y="524" textAnchor="middle" fontSize="8.5"
+              <text x="355" y="545" textAnchor="middle" fontSize="9"
+                fontStyle="italic" fill="var(--text-2)">renal failure</text>
+              <rect x="455" y="464" width="180" height="95" rx="8"
+                fill="rgba(47,111,237,0.14)" stroke="#2F6FED" strokeWidth="2" />
+              <text x="545" y="488" textAnchor="middle" fontSize="11"
+                fontWeight="800" fill="#2F6FED">Alkalosis</text>
+              <text x="545" y="510" textAnchor="middle" fontSize="10"
+                fontWeight="700" fill="var(--text)">↑ HCO₃⁻</text>
+              <text x="545" y="527" textAnchor="middle" fontSize="9.5"
                 fill="var(--text-2)">vomiting · diuretics</text>
-              <text x="545" y="540" textAnchor="middle" fontSize="8"
-                fontStyle="italic" fill="var(--text-3)">volume contraction</text>
+              <text x="545" y="545" textAnchor="middle" fontSize="9"
+                fontStyle="italic" fill="var(--text-2)">volume contraction</text>
             </g>
           )}
 
           {/* Static region labels */}
-          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">The bicarbonate buffer equation</text>
-          <text x="450" y="605" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Buffers (seconds) → lungs (minutes) → kidneys (hours to days)</text>
+          <text x="450" y="35" textAnchor="middle" fontSize="14" fontWeight="800" fill="var(--text)" pointerEvents="none">The bicarbonate buffer equation</text>
+          <text x="450" y="605" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text)" pointerEvents="none">Buffers (seconds) → lungs (minutes) → kidneys (hours to days)</text>
         </svg>
       );
     },
