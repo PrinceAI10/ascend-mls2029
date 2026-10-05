@@ -194,6 +194,14 @@ const LEGEND_VIEWBOXES = {
   "large-intestine": "0 0 100 100",
   portal: "0 0 100 100",
   "whole-end": "0 0 100 100",
+  // Blood Anticoagulants
+  cascade: "0 0 100 100",
+  heparin: "0 0 100 100",
+  warfarin: "0 0 100 100",
+  edta: "0 0 100 100",
+  citrate: "0 0 100 100",
+  "lab-heparin": "0 0 100 100",
+  oxalate: "0 0 100 100",
 };
 
 const LEGEND_SWATCHES = {
@@ -1900,6 +1908,95 @@ const LEGEND_SWATCHES = {
           <text x="28" y={s.y + 3} fontSize="7" fontWeight="600" fill="var(--text-2)">{s.label}</text>
         </g>
       ))}
+    </g>
+  ),
+
+  // ---- Blood Anticoagulants ----
+  // Seven swatches for the hem:6 diagram. Each mirrors the structure
+  // or concept its tile describes — the clotting cascade, the two
+  // therapeutic drugs, and the four laboratory tubes.
+
+  cascade: (active) => (
+    <g>
+      {/* Three columns of small factor boxes, converging: the visual
+         shorthand for a cascade with intrinsic and extrinsic routes
+         merging into one common pathway. */}
+      {/* Intrinsic (left) */}
+      <rect x="6" y="22" width="22" height="10" rx="2" fill="#F8F4EE" stroke="#64748B" strokeWidth="1" />
+      <rect x="6" y="40" width="22" height="10" rx="2" fill="#F8F4EE" stroke="#64748B" strokeWidth="1" />
+      <rect x="6" y="58" width="22" height="10" rx="2" fill="#F8F4EE" stroke="#64748B" strokeWidth="1" />
+      {/* Extrinsic (right) */}
+      <rect x="72" y="22" width="22" height="10" rx="2" fill="#F8F4EE" stroke="#64748B" strokeWidth="1" />
+      <rect x="72" y="40" width="22" height="10" rx="2" fill="#F8F4EE" stroke="#64748B" strokeWidth="1" />
+      <rect x="72" y="58" width="22" height="10" rx="2" fill="#F8F4EE" stroke="#64748B" strokeWidth="1" />
+      {/* Convergence on the common pathway */}
+      <path d="M28,27 L44,50 M28,45 L44,50 M28,63 L44,50" stroke="#94A3B8" strokeWidth="1.2" fill="none" />
+      <path d="M72,27 L56,50 M72,45 L56,50 M72,63 L56,50" stroke="#94A3B8" strokeWidth="1.2" fill="none" />
+      {/* Common pathway node — highlighted when active */}
+      <rect x="36" y="45" width="28" height="12" rx="3" fill={active ? ATLAS_COLORS.trunk : "#F5B0B0"} stroke="#8C1C12" strokeWidth="1" />
+      <path d="M50,57 L50,72" stroke="#94A3B8" strokeWidth="1.2" fill="none" />
+      <polygon points="50,76 46,70 54,70" fill="#8C1C12" />
+      <text x="50" y="90" textAnchor="middle" fontSize="7" fontWeight="700" fill="#8C1C12">FIBRIN</text>
+    </g>
+  ),
+  heparin: (active) => (
+    <g>
+      {/* A syringe — heparin's defining form is that it must be given
+         by injection. Amber outline when active. */}
+      <rect x="18" y="40" width="46" height="14" rx="2" fill="#F4F2EE" stroke={active ? ATLAS_COLORS.trunk : "#64748B"} strokeWidth="1.4" />
+      <rect x="24" y="42" width="34" height="10" rx="1" fill={active ? ATLAS_COLORS.trunk : "#94A3B8"} opacity="0.5" />
+      <line x1="64" y1="47" x2="80" y2="47" stroke={active ? ATLAS_COLORS.trunk : "#64748B"} strokeWidth="1.4" strokeLinecap="round" />
+      <line x1="14" y1="47" x2="18" y2="47" stroke={active ? ATLAS_COLORS.trunk : "#64748B"} strokeWidth="2.4" strokeLinecap="round" />
+      {/* Plunger */}
+      <line x1="18" y1="42" x2="18" y2="52" stroke={active ? ATLAS_COLORS.trunk : "#64748B"} strokeWidth="1.4" strokeLinecap="round" />
+      <text x="50" y="80" textAnchor="middle" fontSize="7" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "var(--text-2)"}>IV / SC</text>
+    </g>
+  ),
+  warfarin: (active) => (
+    <g>
+      {/* A tablet — warfarin's defining form is that it's taken orally. */}
+      <circle cx="50" cy="46" r="22" fill="#F4F2EE" stroke={active ? ATLAS_COLORS.trunk : "#64748B"} strokeWidth="1.6" />
+      <line x1="34" y1="46" x2="66" y2="46" stroke={active ? ATLAS_COLORS.trunk : "#64748B"} strokeWidth="1.4" strokeLinecap="round" />
+      <text x="50" y="42" textAnchor="middle" fontSize="7" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "var(--text-2)"}>vit K</text>
+      <text x="50" y="54" textAnchor="middle" fontSize="6" fontWeight="600" fill="var(--text-2)">antagonist</text>
+      <text x="50" y="86" textAnchor="middle" fontSize="7" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "var(--text-2)"}>oral</text>
+    </g>
+  ),
+  edta: (active) => (
+    <g>
+      {/* A test tube with a purple cap — the signature visual of the
+         purple-topped EDTA tube. */}
+      <rect x="36" y="22" width="28" height="58" rx="4" fill="#F4F2EE" stroke={active ? ATLAS_COLORS.trunk : "#94A3B8"} strokeWidth="1.4" />
+      <rect x="36" y="34" width="28" height="46" rx="4" fill="#DDD0FF" opacity="0.55" />
+      <rect x="33" y="18" width="34" height="10" rx="2" fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"} stroke="#5B21B6" strokeWidth="1" />
+      <text x="50" y="92" textAnchor="middle" fontSize="7" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#5B21B6"}>PURPLE</text>
+    </g>
+  ),
+  citrate: (active) => (
+    <g>
+      {/* A test tube with a blue cap — the blue-topped citrate tube. */}
+      <rect x="36" y="22" width="28" height="58" rx="4" fill="#F4F2EE" stroke={active ? ATLAS_COLORS.trunk : "#94A3B8"} strokeWidth="1.4" />
+      <rect x="36" y="34" width="28" height="46" rx="4" fill="#B8CFFF" opacity="0.6" />
+      <rect x="33" y="18" width="34" height="10" rx="2" fill={active ? ATLAS_COLORS.trunk : "#2F6FED"} stroke="#123F9E" strokeWidth="1" />
+      <text x="50" y="92" textAnchor="middle" fontSize="7" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#123F9E"}>BLUE</text>
+    </g>
+  ),
+  "lab-heparin": (active) => (
+    <g>
+      {/* A test tube with a green cap — the green-topped heparin tube. */}
+      <rect x="36" y="22" width="28" height="58" rx="4" fill="#F4F2EE" stroke={active ? ATLAS_COLORS.trunk : "#94A3B8"} strokeWidth="1.4" />
+      <rect x="36" y="34" width="28" height="46" rx="4" fill="#B8F0D0" opacity="0.6" />
+      <rect x="33" y="18" width="34" height="10" rx="2" fill={active ? ATLAS_COLORS.trunk : "#16A34A"} stroke="#0F7A36" strokeWidth="1" />
+      <text x="50" y="92" textAnchor="middle" fontSize="7" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#0F7A36"}>GREEN</text>
+    </g>
+  ),
+  oxalate: (active) => (
+    <g>
+      {/* A test tube with a grey cap — the grey-topped oxalate tube. */}
+      <rect x="36" y="22" width="28" height="58" rx="4" fill="#F4F2EE" stroke={active ? ATLAS_COLORS.trunk : "#94A3B8"} strokeWidth="1.4" />
+      <rect x="36" y="34" width="28" height="46" rx="4" fill="#C7D0DC" opacity="0.55" />
+      <rect x="33" y="18" width="34" height="10" rx="2" fill={active ? ATLAS_COLORS.trunk : "#64748B"} stroke="#334155" strokeWidth="1" />
+      <text x="50" y="92" textAnchor="middle" fontSize="7" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#334155"}>GREY</text>
     </g>
   ),
 };

@@ -2414,6 +2414,190 @@ const atlasProgenitor = ({
   );
 };
 
+/* ---------------------------------------------------------------- */
+/* Clotting cascade — the shared final pathway of blood            */
+/* coagulation, drawn as a simplified three-column flowchart:      */
+/* intrinsic and extrinsic routes converging on the common         */
+/* pathway, which ends in a fibrin mesh.                           */
+/*                                                                  */
+/* The primitive exists to show WHERE each of the three            */
+/* anticoagulant strategies acts:                                  */
+/*                                                                  */
+/*   blockAt="calcium"      — the calcium-dependent assembly       */
+/*                            steps. Used by EDTA, citrate and     */
+/*                            oxalate.                              */
+/*                                                                  */
+/*   blockAt="antithrombin" — the steps antithrombin neutralises.  */
+/*                            Used by heparin.                     */
+/*                                                                  */
+/*   blockAt="vitaminK"     — the factors the liver can't make     */
+/*                            when warfarin blocks vitamin K       */
+/*                            recycling.                            */
+/*                                                                  */
+/* Pass blockAt=null (the default) for the unblocked cascade.      */
+/* Used by any diagram that needs to show where an anticoagulant   */
+/* interferes with clotting.                                        */
+/* ---------------------------------------------------------------- */
+const atlasClottingCascade = ({
+  cx, cy, scale = 1,
+  blockAt = null,
+  showLabels = true,
+  highlight = false,
+}) => {
+  const edge = highlight ? ATLAS_COLORS.trunk : "#64748B";
+  const boxW = 58;
+  const boxH = 24;
+  const rowGap = 34;
+  const leftX = cx - 170;
+  const rightX = cx + 170;
+  const centerX = cx;
+  const topY = cy - 80;
+  const rowXa       = topY + 3 * rowGap;
+  const rowII       = rowXa + rowGap;
+  const rowThrombin = rowII + rowGap;
+  const rowFibrino  = rowThrombin + rowGap;
+  const rowFibrin   = rowFibrino + rowGap;
+
+  // One small labelled box per factor, with optional state markers.
+  const factorNode = (x, y, label, opts = {}) => {
+    const {
+      w = boxW, h = boxH,
+      fill = "#F8F4EE",
+      stroke = "#64748B",
+      textColor = "var(--text)",
+      crossed = false,
+      blocked = false,
+      faded = false,
+    } = opts;
+    return (
+      <g opacity={faded ? 0.35 : 1}>
+        <rect x={x - w / 2} y={y - h / 2} width={w} height={h} rx={6}
+          fill={fill} stroke={stroke} strokeWidth="1.4" />
+        <text x={x} y={y + 1} textAnchor="middle" dominantBaseline="middle"
+          fontSize="9.5" fontWeight="700" fill={textColor}>{label}</text>
+        {crossed && (
+          <g>
+            <line x1={x - 9} y1={y - 9} x2={x + 9} y2={y + 9}
+              stroke="#C0392B" strokeWidth="2.6" strokeLinecap="round" />
+            <line x1={x + 9} y1={y - 9} x2={x - 9} y2={y + 9}
+              stroke="#C0392B" strokeWidth="2.6" strokeLinecap="round" />
+          </g>
+        )}
+        {blocked && (
+          <rect x={x - w / 2 - 4} y={y - h / 2 - 4} width={w + 8} height={h + 8} rx={8}
+            fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="2" strokeDasharray="4 3" />
+        )}
+      </g>
+    );
+  };
+
+  // Short vertical connector with a small arrowhead.
+  const arrowLink = (x1, y1, x2, y2) => {
+    const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+    return (
+      <g>
+        <line x1={x1} y1={y1} x2={x2} y2={y2}
+          stroke="#94A3B8" strokeWidth="1.6" strokeLinecap="round" />
+        <polygon points="0,0 -6,-3 -6,3"
+          transform={`translate(${x2},${y2}) rotate(${angle})`} fill="#94A3B8" />
+      </g>
+    );
+  };
+
+  return (
+    <g className={highlight ? "atlas-pulse" : undefined}>
+
+      {/* Intrinsic pathway — left column */}
+      {factorNode(leftX, topY, "XII")}
+      {arrowLink(leftX, topY + 12, leftX, topY + rowGap - 12)}
+      {factorNode(leftX, topY + rowGap, "XI")}
+      {arrowLink(leftX, topY + rowGap + 12, leftX, topY + 2 * rowGap - 12)}
+      {factorNode(leftX, topY + 2 * rowGap, "IX")}
+      {arrowLink(leftX, topY + 2 * rowGap + 12, centerX - 34, rowXa - 12)}
+
+      {/* Extrinsic pathway — right column */}
+      {factorNode(rightX, topY, "Tissue factor", { w: 90 })}
+      {arrowLink(rightX, topY + 12, rightX, topY + rowGap - 12)}
+      {factorNode(rightX, topY + rowGap, "VII")}
+      {arrowLink(rightX, topY + rowGap + 12, rightX, topY + 2 * rowGap - 12)}
+      {factorNode(rightX, topY + 2 * rowGap, "TF-VIIa")}
+      {arrowLink(rightX, topY + 2 * rowGap + 12, centerX + 34, rowXa - 12)}
+
+      {/* Common pathway — centre column */}
+      {factorNode(centerX, rowXa, "X → Xa", { w: 68 })}
+      {arrowLink(centerX, rowXa + 12, centerX, rowII - 12)}
+      {factorNode(centerX, rowII, "Prothrombin (II)", { w: 100 })}
+      {arrowLink(centerX, rowII + 12, centerX, rowThrombin - 12)}
+      {factorNode(centerX, rowThrombin, "Thrombin", { w: 90 })}
+      {arrowLink(centerX, rowThrombin + 12, centerX, rowFibrino - 12)}
+      {factorNode(centerX, rowFibrino, "Fibrinogen (I)", { w: 100 })}
+      {arrowLink(centerX, rowFibrino + 12, centerX, rowFibrin - 12)}
+      {factorNode(centerX, rowFibrin, "FIBRIN", {
+        w: 70,
+        fill: "#F5B0B0",
+        stroke: "#8C1C12",
+        textColor: "#8C1C12",
+      })}
+
+      {/* Calcium-dependent step markers — IX, TF-VIIa, X→Xa, prothrombin */}
+      {blockAt === "calcium" && (
+        <g pointerEvents="none">
+          {factorNode(leftX, topY + 2 * rowGap, "IX", { crossed: true })}
+          {factorNode(rightX, topY + 2 * rowGap, "TF-VIIa", { crossed: true })}
+          {factorNode(centerX, rowXa, "X → Xa", { crossed: true, w: 68, h: 26 })}
+          {factorNode(centerX, rowII, "Prothrombin (II)", { crossed: true, w: 100, h: 26 })}
+          <text x={rightX + 56} y={rowXa} textAnchor="start"
+            fontSize="10" fontWeight="700" fill="#C0392B">Ca²⁺ removed</text>
+          <text x={rightX + 56} y={rowXa + 14} textAnchor="start"
+            fontSize="8.5" fill="var(--text-2)">EDTA · citrate · oxalate</text>
+        </g>
+      )}
+
+      {/* Antithrombin acceleration markers — Xa and thrombin */}
+      {blockAt === "antithrombin" && (
+        <g pointerEvents="none">
+          {factorNode(centerX, rowXa, "X → Xa", { blocked: true, w: 68, h: 26 })}
+          {factorNode(centerX, rowThrombin, "Thrombin", { blocked: true, w: 90, h: 26 })}
+          <text x={rightX + 56} y={rowXa} textAnchor="start"
+            fontSize="10" fontWeight="700" fill={ATLAS_COLORS.trunk}>Antithrombin boosted</text>
+          <text x={rightX + 56} y={rowXa + 14} textAnchor="start"
+            fontSize="8.5" fill="var(--text-2)">heparin</text>
+        </g>
+      )}
+
+      {/* Vitamin K factor synthesis markers — II, VII, IX, X faded */}
+      {blockAt === "vitaminK" && (
+        <g pointerEvents="none">
+          {factorNode(rightX, topY + rowGap, "VII", { faded: true })}
+          {factorNode(leftX, topY + 2 * rowGap, "IX", { faded: true })}
+          {factorNode(centerX, rowXa, "X → Xa", { faded: true, w: 68, h: 26 })}
+          {factorNode(centerX, rowII, "Prothrombin (II)", { faded: true, w: 100, h: 26 })}
+          <text x={rightX + 56} y={rowXa} textAnchor="start"
+            fontSize="10" fontWeight="700" fill="#2F6FED">Factors II · VII · IX · X</text>
+          <text x={rightX + 56} y={rowXa + 14} textAnchor="start"
+            fontSize="8.5" fill="var(--text-2)">not made by the liver — warfarin</text>
+        </g>
+      )}
+
+      {/* Column band labels */}
+      {showLabels && (
+        <g pointerEvents="none">
+          <text x={leftX} y={topY - 28} textAnchor="middle"
+            fontSize="10" fontWeight="800" fill={edge}>INTRINSIC</text>
+          <text x={rightX} y={topY - 28} textAnchor="middle"
+            fontSize="10" fontWeight="800" fill={edge}>EXTRINSIC</text>
+          <text x={centerX} y={topY - 28} textAnchor="middle"
+            fontSize="10" fontWeight="800" fill={edge}>COMMON PATHWAY</text>
+          <line x1={leftX + 44} y1={topY - 12} x2={leftX + 44} y2={rowXa - 22}
+            stroke={edge} strokeWidth="0.8" strokeDasharray="3 4" opacity="0.4" />
+          <line x1={rightX - 44} y1={topY - 12} x2={rightX - 44} y2={rowXa - 22}
+            stroke={edge} strokeWidth="0.8" strokeDasharray="3 4" opacity="0.4" />
+        </g>
+      )}
+    </g>
+  );
+};
+
 export const DIAGRAMS = {
 
   /* =========================================================
@@ -5937,6 +6121,246 @@ export const DIAGRAMS = {
           {/* Static region labels */}
           <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">The digestive tube — mouth to anus</text>
           <text x="450" y="605" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Chew, churn, split, absorb, process, eliminate</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     BLOOD ANTICOAGULANTS
+     Topic: Hematology I (hem), Topic 06 (index 5).
+     Closes the Hematology I course. Uses the atlasClottingCascade
+     primitive to show WHERE each of the three anticoagulant
+     strategies acts, plus a row of the four laboratory tubes
+     at the bottom. Two arenas — the patient and the tube —
+     shown together.
+     ========================================================= */
+  "hem:6": {
+    id: "hem:6",
+    type: "diagram",
+    title: "Blood Anticoagulants — Drugs, Tubes, and Mechanisms",
+    topic: { courseId: "hem", topicIndex: 5 },
+    parent: null,
+    summary: "Blood is meant to clot — it's the reason you don't bleed out from a paper cut. But clotting becomes dangerous when it happens inside a vessel that's still intact, and it becomes useless when it happens inside a blood sample before the lab can test it. Anticoagulants exist to interfere with the clotting mechanism in both situations. There are three ways to do that: remove the calcium the cascade needs (EDTA, citrate, oxalate), accelerate the body's own inhibitor antithrombin (heparin), or stop the liver from making the vitamin K dependent factors (warfarin). Every anticoagulant you'll meet in this course — whether it's given to a patient or sits inside a blood tube — works through one of those three strategies.",
+    labels: [
+      { id: "whole",       name: "The Whole Picture",       desc: "Two arenas, three strategies. Anticoagulants protect the patient from dangerous clots, and protect the sample from clotting before testing — using the same underlying mechanisms." },
+      { id: "cascade",     name: "The Clotting Cascade",    desc: "The chain of clotting factors that ends in a fibrin mesh. It depends on calcium ions at several key steps — and that dependency is what most anticoagulants exploit." },
+      { id: "heparin",     name: "Heparin",                 desc: "An indirect anticoagulant given by injection. Binds antithrombin and makes it neutralise thrombin and factor Xa far more quickly. Monitored by the activated partial thromboplastin time. Reversed by protamine." },
+      { id: "warfarin",    name: "Warfarin",                desc: "An oral anticoagulant for long-term prevention. Blocks the liver's ability to make vitamin K dependent factors II, VII, IX and X. Monitored by the PT/INR. Reversed by vitamin K." },
+      { id: "edta",        name: "EDTA (purple tube)",       desc: "The tube for the full blood count. Chelates calcium so tightly that the cascade stalls irreversibly. Preserves cell morphology exceptionally well — but interferes with calcium and other ion measurements, and can cause platelet clumping." },
+      { id: "citrate",     name: "Citrate (blue tube)",      desc: "The tube for coagulation tests. Binds calcium weakly and reversibly — so the lab can add calcium back and watch the clot form under controlled conditions. The fill volume must be exact, or the result is invalid." },
+      { id: "lab-heparin", name: "Heparin (green tube)",     desc: "The tube for blood gases and some biochemistry. Leaves calcium in the sample intact, so it interferes with fewer analytes. But it distorts white cell morphology and is unsuitable for the full blood count." },
+      { id: "oxalate",     name: "Oxalate (grey tube)",      desc: "An older calcium chelator, largely obsolete. Damages red cells — causing haemolysis and falsely high potassium — and forms calcium oxalate crystals that interfere with some measurements. Survives in a few specialised glucose and lactate assays." },
+    ],
+    narration: [
+      "Blood is meant to clot — that's the reason you don't bleed out from a paper cut. But clotting becomes dangerous when it happens inside a vessel that's still intact. A clot in a coronary artery causes a heart attack. A clot in a cerebral vessel causes a stroke. And a clot in a deep leg vein can break free, travel to the lungs, and kill within minutes. Anticoagulants exist to slow clotting down when it's happening in the wrong place.",
+      "There's a second reason for anticoagulation that has nothing to do with the patient. When blood is drawn into a tube and left to stand, it clots. The clot consumes the very cells and proteins the lab needs to measure, so a clotted sample is a ruined sample. Every blood collection tube contains something to stop that happening — and the colour of the cap tells you which anticoagulant is inside.",
+      "The first strategy is to remove the calcium the cascade needs. Several clotting factors can't bind to the platelet surface without calcium to bridge them — so take the calcium away and the cascade stalls, even though every factor is still present. This is how EDTA, citrate and oxalate all work, and it's the basis of most laboratory anticoagulation.",
+      "The second strategy is to accelerate the body's own inhibitor. Antithrombin is a protein already in the plasma that neutralises thrombin and factor Xa — but it works too slowly to stop an active clot. Heparin binds antithrombin and changes its shape, making it hundreds of times more effective. Heparin isn't an inhibitor itself — it's an accelerator of an inhibitor that's already there. It's given by injection, acts within minutes, and is monitored by the activated partial thromboplastin time.",
+      "The third strategy is to stop the factors from being made. Warfarin blocks the liver's ability to recycle vitamin K, which it needs to make factors II, VII, IX and X. The already-circulating factors have to decay first, so warfarin takes several days to work — and lasts several days after the last tablet. It's taken by mouth, monitored by the prothrombin time expressed as the INR, and reversed by giving vitamin K.",
+      "Now the laboratory side. Four anticoagulants you'll handle: EDTA, citrate, heparin, and the oxalates. Each preserves some things and interferes with others — so the tube you choose depends on the test you need to run. A tube chosen for the wrong test doesn't just fail — it can produce a result that looks completely plausible and is entirely wrong.",
+      "EDTA is the anticoagulant in the familiar purple-topped tube, and it's the tube for the full blood count. It works by chelating calcium — wrapping around the ion and holding it so tightly that the cascade stalls irreversibly. It preserves red cells, white cells and platelets unusually well, which is why it's the tube of choice for counting and examining them. But it interferes with any measurement of calcium or other ions it binds, and it can cause platelet clumping over time — producing a falsely low platelet count that has to be checked on a blood film.",
+      "Citrate is in the blue-topped tube, and it also binds calcium — but it binds it weakly and reversibly. That's the whole reason it's used for clotting tests. The lab adds calcium back to the citrated plasma, restoring the cascade and letting the clot form under controlled conditions. The test measures how long that clot takes to appear. The one practical requirement: the tube must be filled to the mark, because the blood-to-anticoagulant ratio has to be exact. An underfilled blue tube is over-anticoagulated, and produces falsely prolonged clotting times.",
+      "The other two laboratory anticoagulants round out the picture. Heparin leaves calcium intact, so it's used where a chelator would ruin the measurement — blood gases, some electrolytes, some biochemistry. But it distorts white cell morphology and can't be used for a full blood count. The oxalates also bind calcium, but they damage red cells and form crystals — so they've been largely replaced by EDTA and citrate, surviving only in a few specialised assays.",
+      "Finally, what goes wrong. Anticoagulant artifacts are predictable from the mechanism of the anticoagulant itself. EDTA causes cell swelling and platelet clumping over time, so a delayed sample shows falsely high MCV and falsely low platelets. An underfilled citrate tube is over-anticoagulated, giving falsely prolonged clotting times. Heparin distorts white cells. Oxalate haemolyses red cells and raises potassium falsely. And a sample collected in the wrong tube entirely — an EDTA sample sent for a calcium or a clotting test — cannot be rescued at all, because the anticoagulant has already altered the very thing being measured. Recognising these patterns is what lets you judge whether a result is valid or whether the sample must be recollected.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["whole"],
+      ["cascade"],
+      ["heparin"],
+      ["warfarin"],
+      ["whole", "edta", "citrate", "lab-heparin", "oxalate"],
+      ["edta"],
+      ["citrate"],
+      ["lab-heparin", "oxalate"],
+      ["whole", "edta", "citrate", "lab-heparin", "oxalate"],
+    ],
+    viewBox: "0 0 900 760",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["hem:6"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // Which blockAt mode the cascade is showing per step.
+      const blockAt = [
+        null,             // 0 - whole
+        null,             // 1 - two arenas
+        "calcium",        // 2 - cascade & calcium
+        "antithrombin",   // 3 - heparin
+        "vitaminK",       // 4 - warfarin
+        "calcium",        // 5 - lab anticoagulants overview
+        "calcium",        // 6 - EDTA
+        "calcium",        // 7 - citrate
+        null,             // 8 - heparin + oxalate lab
+        "calcium",        // 9 - artifacts
+      ][activeStep];
+
+      // Tube glyphs — one per lab anticoagulant. Drawn as a small
+      // test tube with a coloured cap, matching the cap colour of the
+      // real collection tube for that anticoagulant.
+      const tube = (id, cx, capColor, bodyColor, label, sub) => {
+        const isFocused = isHot(id);
+        const isActive = activeLabelId === id;
+        const tubeW = 44;
+        const tubeH = 110;
+        const capH = 14;
+        return (
+          <g
+            key={id}
+            style={{ cursor: cur }}
+            onClick={click(id)}
+            filter={isFocused ? "url(#atlas-glow)" : undefined}
+            className={isFocused ? "atlas-pulse" : undefined}
+          >
+            {/* Tube body — pale glass */}
+            <rect
+              x={cx - tubeW / 2}
+              y={600}
+              width={tubeW}
+              height={tubeH}
+              rx={6}
+              fill="#F4F2EE"
+              stroke="#94A3B8"
+              strokeWidth="1.4"
+            />
+            {/* Liquid inside — the anticoagulant solution */}
+            <rect
+              x={cx - tubeW / 2 + 3}
+              y={600 + capH + 6}
+              width={tubeW - 6}
+              height={tubeH - capH - 14}
+              rx={4}
+              fill={bodyColor}
+              opacity="0.35"
+            />
+            {/* Coloured cap */}
+            <rect
+              x={cx - tubeW / 2 - 3}
+              y={600 - 6}
+              width={tubeW + 6}
+              height={capH}
+              rx={3}
+              fill={capColor}
+              stroke={capColor}
+              strokeWidth="1.4"
+            />
+            {/* Label under the tube */}
+            <text
+              x={cx}
+              y={600 + tubeH + 20}
+              textAnchor="middle"
+              fontSize="11.5"
+              fontWeight="700"
+              fill="var(--text)"
+            >
+              {label}
+            </text>
+            <text
+              x={cx}
+              y={600 + tubeH + 34}
+              textAnchor="middle"
+              fontSize="9"
+              fill="var(--text-2)"
+            >
+              {sub}
+            </text>
+            {/* Selection ring */}
+            <rect
+              x={cx - tubeW / 2 - 8}
+              y={600 - 12}
+              width={tubeW + 16}
+              height={tubeH + 20}
+              rx={10}
+              fill="none"
+              {...ring(id)}
+              pointerEvents="none"
+            />
+          </g>
+        );
+      };
+
+      return (
+        <svg viewBox="0 0 900 760" width="100%" height="100%">
+          {/* ---- TOP HALF: the clotting cascade ---- */}
+          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+            {atlasClottingCascade({
+              cx: 400, cy: 200, scale: 1,
+              blockAt,
+              showLabels: true,
+              highlight: false,
+            })}
+          </g>
+
+          {/* Cascade label anchor — a clickable region over the cascade */}
+          <g style={{ cursor: cur }} onClick={click("cascade")} filter={hotFilter("cascade")}>
+            <rect x="30" y="40" width="740" height="380" fill="none" {...ring("cascade")} pointerEvents="none" />
+          </g>
+
+          {/* Heparin inset — shown on its own step */}
+          {isHot("heparin") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="60" width="230" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="755" y="85" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>HEPARIN</text>
+              <text x="755" y="108" textAnchor="middle" fontSize="9" fill="var(--text-2)">indirect anticoagulant —</text>
+              <text x="755" y="123" textAnchor="middle" fontSize="9" fill="var(--text-2)">accelerates antithrombin</text>
+              <text x="755" y="145" textAnchor="middle" fontSize="9" fill="var(--text-2)">given by injection</text>
+              <text x="755" y="160" textAnchor="middle" fontSize="9" fill="var(--text-2)">acts within minutes</text>
+              <text x="755" y="180" textAnchor="middle" fontSize="9" fontWeight="700" fill={ATLAS_COLORS.trunk}>monitored by aPTT</text>
+              <text x="755" y="200" textAnchor="middle" fontSize="8" fill="var(--text-3)">bleeding · HIT (rare, paradoxical)</text>
+            </g>
+          )}
+
+          {/* Warfarin inset — shown on its own step */}
+          {isHot("warfarin") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="60" width="230" height="150" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
+              <text x="755" y="85" textAnchor="middle" fontSize="11" fontWeight="700" fill="#2F6FED">WARFARIN</text>
+              <text x="755" y="108" textAnchor="middle" fontSize="9" fill="var(--text-2)">blocks vitamin K recycling</text>
+              <text x="755" y="123" textAnchor="middle" fontSize="9" fill="var(--text-2)">liver can't make II, VII, IX, X</text>
+              <text x="755" y="145" textAnchor="middle" fontSize="9" fill="var(--text-2)">oral · slow onset and offset</text>
+              <text x="755" y="160" textAnchor="middle" fontSize="9" fill="var(--text-2)">long-term prevention</text>
+              <text x="755" y="180" textAnchor="middle" fontSize="9" fontWeight="700" fill="#2F6FED">monitored by PT / INR</text>
+              <text x="755" y="200" textAnchor="middle" fontSize="8" fill="var(--text-3)">reversed by vitamin K · teratogenic</text>
+            </g>
+          )}
+
+          {/* ---- BOTTOM HALF: the four laboratory tubes ---- */}
+          <text
+            x="450"
+            y="560"
+            textAnchor="middle"
+            fontSize="13"
+            fontWeight="700"
+            fill="var(--text-2)"
+            pointerEvents="none"
+          >
+            Laboratory anticoagulants — colour-coded tubes
+          </text>
+
+          {/* EDTA — purple */}
+          {tube("edta", 190, "#8B5CF6", "#DDD0FF", "EDTA", "purple · FBC")}
+
+          {/* Citrate — blue */}
+          {tube("citrate", 380, "#2F6FED", "#B8CFFF", "Citrate", "blue · coagulation")}
+
+          {/* Lab heparin — green */}
+          {tube("lab-heparin", 570, "#16A34A", "#B8F0D0", "Heparin", "green · blood gases")}
+
+          {/* Oxalate — grey */}
+          {tube("oxalate", 760, "#64748B", "#C7D0DC", "Oxalate", "grey · rare assays")}
+
+          {/* Static region labels */}
+          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">The clotting cascade</text>
+          <text x="450" y="740" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Three strategies · two arenas · match the agent to the purpose</text>
         </svg>
       );
     },
