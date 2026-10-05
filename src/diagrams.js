@@ -3518,6 +3518,17 @@ export const DIAGRAMS = {
       const focus = DIAGRAMS["hem:haematopoiesis-myeloid"].stepFocus[activeStep] || [];
       const pulsing = (id) => !preview && focus.includes(id);
 
+      // Progressive reveal — each row of the tree appears when the
+      // narration first names it, then stays. In preview, everything
+      // is shown so the thumbnail reads as the full tree.
+      const s = preview ? 99 : activeStep;
+
+      const showGMP        = s >= 1;
+      const showMEP        = s >= 1;
+      const showGranulocytes = s >= 3;
+      const showMonocytes  = s >= 3;
+      const showMega       = s >= 5;
+
       // Cell positions — chosen so the flow reads top-to-bottom without
       // the connecting lines overlapping any of the labels. The r values
       // shrink slightly as you descend the tree, mirroring how committed
@@ -3531,84 +3542,82 @@ export const DIAGRAMS = {
 
       return (
         <svg viewBox="0 0 900 380" width="100%" height="100%">
-          {/* Connector lines — same four branches as before, now drawn
-              from the bottom of each parent cell to the top of each
-              child cell so the flow direction is unambiguous. */}
-          {atlasLine(cmpC.cx,  cmpC.cy  + 40, gmpC.cx,  gmpC.cy  - 40)}
-          {atlasLine(cmpC.cx,  cmpC.cy  + 40, mepC.cx,  mepC.cy  - 40)}
-          {atlasLine(gmpC.cx,  gmpC.cy  + 40, granC.cx, granC.cy - 40)}
-          {atlasLine(gmpC.cx,  gmpC.cy  + 40, monoC.cx, monoC.cy - 40)}
-          {atlasLine(mepC.cx,  mepC.cy  + 40, megaC.cx, megaC.cy - 40)}
+          {/* Connector lines appear with their child cells. */}
+          {showGMP && atlasLine(cmpC.cx,  cmpC.cy  + 40, gmpC.cx,  gmpC.cy  - 40)}
+          {showMEP && atlasLine(cmpC.cx,  cmpC.cy  + 40, mepC.cx,  mepC.cy  - 40)}
+          {showGranulocytes && atlasLine(gmpC.cx,  gmpC.cy  + 40, granC.cx, granC.cy - 40)}
+          {showMonocytes && atlasLine(gmpC.cx,  gmpC.cy  + 40, monoC.cx, monoC.cy - 40)}
+          {showMega && atlasLine(mepC.cx,  mepC.cy  + 40, megaC.cx, megaC.cy - 40)}
 
-          {/* CMP — the trunk progenitor, amber. */}
+          {/* CMP — the trunk progenitor, always on screen. */}
           {atlasProgenitor({
             id: "cmp", cx: cmpC.cx, cy: cmpC.cy, r: 40, lineage: "trunk",
             label: "CMP", sub: "common myeloid progenitor",
             onLabelClick, activeLabelId, pulsing: pulsing("cmp"), preview,
           })}
 
-          {/* GMP — granulocyte-monocyte branch, still amber (myeloid trunk). */}
-          {atlasProgenitor({
+          {/* GMP — appears when the CMP is described as splitting. */}
+          {showGMP && atlasProgenitor({
             id: "gmp", cx: gmpC.cx, cy: gmpC.cy, r: 38, lineage: "trunk",
             label: "GMP", sub: "granulocyte-monocyte",
             onLabelClick, activeLabelId, pulsing: pulsing("gmp"), preview,
           })}
 
-          {/* MEP — megakaryocyte-erythroid branch, crimson. Has the
-              drill-down indicator because it opens the erythroid child. */}
-          {atlasProgenitor({
+          {/* MEP — same moment as GMP. Has the drill-down indicator
+              because it opens the erythroid child. */}
+          {showMEP && atlasProgenitor({
             id: "mep", cx: mepC.cx, cy: mepC.cy, r: 38, lineage: "erythroid",
             label: "MEP", sub: "megakaryocyte-erythroid",
             onLabelClick, activeLabelId, pulsing: pulsing("mep"),
             onOpenDrill: true, preview,
           })}
 
-          {/* Granulocytes — real lobed-nucleus white cells, not a box.
-              Three of them clustered, matching how they'd appear on a film. */}
-          <g onClick={preview ? undefined : () => onLabelClick("gran")} style={{ cursor: preview ? "default" : "pointer" }} className={pulsing("gran") ? "atlas-pulse" : ""}>
-            {atlasWhiteCell({ cx: granC.cx - 20, cy: granC.cy - 4,  r: 15 })}
-            {atlasWhiteCell({ cx: granC.cx + 16, cy: granC.cy - 10, r: 14 })}
-            {atlasWhiteCell({ cx: granC.cx - 2,  cy: granC.cy + 14, r: 14 })}
-            <text x={granC.cx} y={granC.cy + 42} textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Granulocytes</text>
-            <text x={granC.cx} y={granC.cy + 55} textAnchor="middle" fontSize="9" fill="var(--text-2)">neutrophils, eosinophils, basophils</text>
-          </g>
+          {/* Granulocytes — appear when the narration reaches the
+              "fast-responding innate cells" beat. */}
+          {showGranulocytes && (
+            <g onClick={preview ? undefined : () => onLabelClick("gran")} style={{ cursor: preview ? "default" : "pointer" }} className={pulsing("gran") ? "atlas-pulse" : ""}>
+              {atlasWhiteCell({ cx: granC.cx - 20, cy: granC.cy - 4,  r: 15 })}
+              {atlasWhiteCell({ cx: granC.cx + 16, cy: granC.cy - 10, r: 14 })}
+              {atlasWhiteCell({ cx: granC.cx - 2,  cy: granC.cy + 14, r: 14 })}
+              <text x={granC.cx} y={granC.cy + 42} textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Granulocytes</text>
+              <text x={granC.cx} y={granC.cy + 55} textAnchor="middle" fontSize="9" fill="var(--text-2)">neutrophils, eosinophils, basophils</text>
+            </g>
+          )}
 
-          {/* Monocytes — larger single mononuclear cell, no lobed nucleus
-              (that's what distinguishes it from a granulocyte). */}
-          <g onClick={preview ? undefined : () => onLabelClick("mono")} style={{ cursor: preview ? "default" : "pointer" }} className={pulsing("mono") ? "atlas-pulse" : ""}>
-            <circle cx={monoC.cx} cy={monoC.cy} r="22" fill="#F8F4EE" stroke={ATLAS_COLORS.trunk} strokeWidth="1.6" filter="url(#atlas-shadow)" />
-            {/* Kidney-shaped nucleus — the monocyte's defining morphology. */}
-            <path
-              d={`M${monoC.cx - 10},${monoC.cy - 8}
-                  Q${monoC.cx + 4},${monoC.cy - 14} ${monoC.cx + 12},${monoC.cy - 2}
-                  Q${monoC.cx + 6},${monoC.cy + 12} ${monoC.cx - 6},${monoC.cy + 10}
-                  Q${monoC.cx - 14},${monoC.cy + 2} ${monoC.cx - 10},${monoC.cy - 8} Z`}
-              fill={ATLAS_COLORS.nucleus} opacity="0.78"
-            />
-            <text x={monoC.cx} y={monoC.cy + 42} textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Monocytes</text>
-            <text x={monoC.cx} y={monoC.cy + 55} textAnchor="middle" fontSize="9" fill="var(--text-2)">become macrophages in tissue</text>
-          </g>
+          {/* Monocytes — appear at the same time as granulocytes. */}
+          {showMonocytes && (
+            <g onClick={preview ? undefined : () => onLabelClick("mono")} style={{ cursor: preview ? "default" : "pointer" }} className={pulsing("mono") ? "atlas-pulse" : ""}>
+              <circle cx={monoC.cx} cy={monoC.cy} r="22" fill="#F8F4EE" stroke={ATLAS_COLORS.trunk} strokeWidth="1.6" filter="url(#atlas-shadow)" />
+              <path
+                d={`M${monoC.cx - 10},${monoC.cy - 8}
+                    Q${monoC.cx + 4},${monoC.cy - 14} ${monoC.cx + 12},${monoC.cy - 2}
+                    Q${monoC.cx + 6},${monoC.cy + 12} ${monoC.cx - 6},${monoC.cy + 10}
+                    Q${monoC.cx - 14},${monoC.cy + 2} ${monoC.cx - 10},${monoC.cy - 8} Z`}
+                fill={ATLAS_COLORS.nucleus} opacity="0.78"
+              />
+              <text x={monoC.cx} y={monoC.cy + 42} textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Monocytes</text>
+              <text x={monoC.cx} y={monoC.cy + 55} textAnchor="middle" fontSize="9" fill="var(--text-2)">become macrophages in tissue</text>
+            </g>
+          )}
 
-          {/* Megakaryocytes → Platelets — a large multinucleate cell with
-              platelets visibly budding off its edge, so the fragmentation
-              is shown happening, not just described in the sub-label. */}
-          <g onClick={preview ? undefined : () => onLabelClick("mega")} style={{ cursor: preview ? "default" : "pointer" }} className={pulsing("mega") ? "atlas-pulse" : ""}>
-            {/* Megakaryocyte body — large, crimson, with several nuclei. */}
-            <circle cx={megaC.cx} cy={megaC.cy} r="30" fill="url(#atlas-grad-erythroid)" stroke="#8C1C12" strokeWidth="1.6" filter="url(#atlas-shadow)" />
-            {[[-8, -6], [6, -8], [0, 6], [10, 4], [-10, 8]].map(([dx, dy], i) => (
-              <circle key={i} cx={megaC.cx + dx} cy={megaC.cy + dy} r="4.5" fill="#5B21B6" opacity="0.75" />
-            ))}
-            {/* Platelets budding off the edge — three on the right side,
-                each with a short trailing line suggesting separation. */}
-            {[[36, -10], [42, 4], [36, 18]].map(([dx, dy], i) => (
-              <g key={i}>
-                <line x1={megaC.cx + 28} y1={megaC.cy + dy * 0.5} x2={megaC.cx + dx - 2} y2={megaC.cy + dy} stroke={ATLAS_COLORS.trunk} strokeWidth="1" strokeDasharray="2 2" opacity="0.7" />
-                <ellipse cx={megaC.cx + dx} cy={megaC.cy + dy} rx="5" ry="3.5" fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="0.6" />
-              </g>
-            ))}
-            <text x={megaC.cx} y={megaC.cy + 50} textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Megakaryocytes</text>
-            <text x={megaC.cx} y={megaC.cy + 63} textAnchor="middle" fontSize="9" fill="var(--text-2)">fragment into platelets</text>
-          </g>
+          {/* Megakaryocytes — appear when the narration describes the
+              MEP splitting into the platelet line. */}
+          {showMega && (
+            <g onClick={preview ? undefined : () => onLabelClick("mega")} style={{ cursor: preview ? "default" : "pointer" }} className={pulsing("mega") ? "atlas-pulse" : ""}>
+              <circle cx={megaC.cx} cy={megaC.cy} r="30" fill="url(#atlas-grad-erythroid)" stroke="#8C1C12" strokeWidth="1.6" filter="url(#atlas-shadow)" />
+              {[[-8, -6], [6, -8], [0, 6], [10, 4], [-10, 8]].map(([dx, dy], i) => (
+                <circle key={i} cx={megaC.cx + dx} cy={megaC.cy + dy} r="4.5" fill="#5B21B6" opacity="0.75" />
+              ))}
+              {[[36, -10], [42, 4], [36, 18]].map(([dx, dy], i) => (
+                <g key={i}>
+                  <line x1={megaC.cx + 28} y1={megaC.cy + dy * 0.5} x2={megaC.cx + dx - 2} y2={megaC.cy + dy} stroke={ATLAS_COLORS.trunk} strokeWidth="1" strokeDasharray="2 2" opacity="0.7" />
+                  <ellipse cx={megaC.cx + dx} cy={megaC.cy + dy} rx="5" ry="3.5" fill={ATLAS_COLORS.trunk} stroke="#8B6410" strokeWidth="0.6" />
+                </g>
+              ))}
+              <text x={megaC.cx} y={megaC.cy + 50} textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Megakaryocytes</text>
+              <text x={megaC.cx} y={megaC.cy + 63} textAnchor="middle" fontSize="9" fill="var(--text-2)">fragment into platelets</text>
+            </g>
+          )}
         </svg>
       );
     },
@@ -3676,79 +3685,101 @@ export const DIAGRAMS = {
         { id: "s5", label: "Reticulocyte",         sub: "nucleus extruded, RNA left" },
         { id: "s6", label: "Mature RBC",           sub: "biconcave, no nucleus" },
       ];
-      // Each cell is r=34 with 100px horizontal spacing, so the visible
-      // gap between adjacent cells is ~32px — enough that the growing
-      // cytoplasm colours read as separate cells, not a smear.
+      // Each cell is r=34 with 100px horizontal spacing.
       const r = 34, gap = 100, startX = 95, cy = 145;
+
+      // Progressive reveal, matched 1-to-1 to the narration:
+      //   idx 0 (intro)                 → 0 stages
+      //   idx 1 (proerythroblast)       → 1
+      //   idx 2 (basophilic)            → 2
+      //   idx 3 (polychromatophilic)    → 3
+      //   idx 4 (orthochromatic)        → 4
+      //   idx 5 (reticulocyte)          → 5
+      //   idx 6 (EPO)                   → 5 stages, EPO bracket appears
+      //   idx 7 (reticulocyte matures)  → 6
+      //   idx 8-9                       → 6, everything stays
+      // Preview mode shows all six so the thumbnail reads as the
+      // complete sequence.
+      const s = preview ? 99 : activeStep;
+
+      const visibleStages = preview ? 6
+        : s >= 7 ? 6
+        : s >= 1 ? s
+        : 0;
+
+      // EPO bracket appears at idx 6 (the "EPO drives the later
+      // stages" line).
+      const showEPO = s >= 6;
+
       return (
         <svg viewBox="0 0 900 260" width="100%" height="100%">
-          {/* Flow arrows between consecutive stages, drawn as short
-              dashed strokes with an arrowhead — showing this is a
-              sequence, not six unrelated cells. */}
+          {/* Flow arrows between consecutive stages — an arrow appears
+              only when both the cell on its left and the cell on its
+              right are already on screen. */}
           {stages.slice(0, -1).map((_, i) => {
+            if (i + 1 >= visibleStages) return null;
             const x1 = startX + i * gap + r + 6;
             const x2 = startX + (i + 1) * gap - r - 6;
             return atlasFlowArrow({ x1, y1: cy, x2, y2: cy, color: ATLAS_COLORS.trunk });
           })}
 
-          {/* EPO acts on the later stages (4, 5, 6). A bracket line runs
-              across the top of those three cells, with downward ticks
-              pointing into each one, and the EPO label sits centred
-              above the bracket. */}
-          <g>
-            {/* Horizontal bracket line spanning stages 4–6 */}
-            <path
-              d={`M${startX + 3 * gap},${cy - r - 40} L${startX + 5 * gap},${cy - r - 40}`}
-              stroke={ATLAS_COLORS.trunk}
-              strokeWidth="2"
-              fill="none"
-              strokeLinecap="round"
-            />
-            {/* Downward ticks, one per covered stage */}
-            {[3, 4, 5].map((i) => (
-              <line
-                key={i}
-                x1={startX + i * gap}
-                y1={cy - r - 40}
-                x2={startX + i * gap}
-                y2={cy - r - 12}
+          {/* EPO bracket — appears at step 7, spans stages 4–6 with
+              downward ticks pointing into each one. */}
+          {showEPO && (
+            <g>
+              <path
+                d={`M${startX + 3 * gap},${cy - r - 40} L${startX + 5 * gap},${cy - r - 40}`}
                 stroke={ATLAS_COLORS.trunk}
                 strokeWidth="2"
+                fill="none"
                 strokeLinecap="round"
               />
-            ))}
-            {/* EPO label centred over the bracket */}
-            <text
-              x={startX + 4 * gap}
-              y={cy - r - 52}
-              textAnchor="middle"
-              fontSize="13"
-              fontWeight="800"
-              fill={ATLAS_COLORS.trunk}
-            >
-              EPO
-            </text>
-            <text
-              x={startX + 4 * gap}
-              y={cy - r - 38}
-              textAnchor="middle"
-              fontSize="9.5"
-              fill="var(--text-2)"
-            >
-              drives the later stages
-            </text>
-          </g>
+              {[3, 4, 5].map((i) => (
+                <line
+                  key={i}
+                  x1={startX + i * gap}
+                  y1={cy - r - 40}
+                  x2={startX + i * gap}
+                  y2={cy - r - 12}
+                  stroke={ATLAS_COLORS.trunk}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              ))}
+              <text
+                x={startX + 4 * gap}
+                y={cy - r - 52}
+                textAnchor="middle"
+                fontSize="13"
+                fontWeight="800"
+                fill={ATLAS_COLORS.trunk}
+              >
+                EPO
+              </text>
+              <text
+                x={startX + 4 * gap}
+                y={cy - r - 38}
+                textAnchor="middle"
+                fontSize="9.5"
+                fill="var(--text-2)"
+              >
+                drives the later stages
+              </text>
+            </g>
+          )}
 
-          {stages.map((s, i) => atlasErythroidStage({
-            id: s.id,
+          {/* Stage cells — each revealed when its narration step
+              arrives, then stays on screen. */}
+          {stages.slice(0, visibleStages).map((stage, i) => atlasErythroidStage({
+            id: stage.id,
             cx: startX + i * gap,
             cy,
             r,
             stage: i + 1,
-            label: s.label,
-            sub: s.sub,
+            label: stage.label,
+            sub: stage.sub,
             onLabelClick, activeLabelId,
-            pulsing: pulsing(s.id),
+            pulsing: pulsing(stage.id),
             preview,
           }))}
         </svg>
@@ -7360,8 +7391,8 @@ export const DIAGRAMS = {
           {atlasDefs()}
 
           {/* Region header */}
-          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700"
-            fill="var(--text-2)" pointerEvents="none">
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">
             A drug acts on one specific target · four classes cover nearly every clinical drug
           </text>
 
@@ -7375,10 +7406,10 @@ export const DIAGRAMS = {
               stroke="#B8A89E" strokeWidth="1.2" opacity="0.55" />
             <line x1="250" y1="295" x2="650" y2="295"
               stroke="#B8A89E" strokeWidth="1.2" opacity="0.55" />
-            <text x="240" y="232" textAnchor="end" fontSize="9" fontWeight="700"
-              fill="var(--text-3)">outside the cell</text>
-            <text x="240" y="308" textAnchor="end" fontSize="9" fontWeight="700"
-              fill="var(--text-3)">inside the cell</text>
+            <text x="240" y="232" textAnchor="end" fontSize="10.5" fontWeight="800"
+              fill="var(--text-2)">outside the cell</text>
+            <text x="240" y="308" textAnchor="end" fontSize="10.5" fontWeight="800"
+              fill="var(--text-2)">inside the cell</text>
 
             {/* The receptor, drawn at the centre of the membrane, at
                the state determined by the current step. Scale 1.6 so
@@ -7546,8 +7577,8 @@ export const DIAGRAMS = {
           {activeStep === 3 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <rect x="640" y="220" width="220" height="200" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="750" y="244" textAnchor="middle" fontSize="10.5"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="750" y="246" textAnchor="middle" fontSize="11.5"
                 fontWeight="800" fill={ATLAS_COLORS.trunk}>FOUR RECEPTOR FAMILIES</text>
               {[
                 ["GPCR", "seconds · 7-TM"],
@@ -7556,9 +7587,9 @@ export const DIAGRAMS = {
                 ["Nuclear", "hours–days"],
               ].map((row, i) => (
                 <g key={i}>
-                  <text x="655" y={274 + i * 32} fontSize="10" fontWeight="700"
+                  <text x="655" y={280 + i * 32} fontSize="10.5" fontWeight="800"
                     fill="var(--text)">{row[0]}</text>
-                  <text x="655" y={288 + i * 32} fontSize="8.5"
+                  <text x="655" y={296 + i * 32} fontSize="9.5"
                     fill="var(--text-2)">{row[1]}</text>
                 </g>
               ))}
@@ -7568,9 +7599,9 @@ export const DIAGRAMS = {
           {/* Ion-channel actions (step 4) */}
           {activeStep === 4 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="640" y="220" width="220" height="180" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="750" y="244" textAnchor="middle" fontSize="10.5"
+              <rect x="640" y="220" width="220" height="185" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="750" y="246" textAnchor="middle" fontSize="11.5"
                 fontWeight="800" fill={ATLAS_COLORS.trunk}>HOW DRUGS ACT</text>
               {[
                 ["Blocker", "plugs the pore"],
@@ -7578,14 +7609,14 @@ export const DIAGRAMS = {
                 ["Modulator", "changes gating"],
               ].map((row, i) => (
                 <g key={i}>
-                  <text x="655" y={274 + i * 34} fontSize="10" fontWeight="700"
+                  <text x="655" y={280 + i * 34} fontSize="10.5" fontWeight="800"
                     fill="var(--text)">{row[0]}</text>
-                  <text x="655" y={288 + i * 34} fontSize="8.5"
+                  <text x="655" y={296 + i * 34} fontSize="9.5"
                     fill="var(--text-2)">{row[1]}</text>
                 </g>
               ))}
-              <text x="655" y="386" fontSize="8.5" fontStyle="italic"
-                fill="var(--text-3)">gating: voltage · ligand · mechanical</text>
+              <text x="750" y="392" textAnchor="middle" fontSize="9.5" fontStyle="italic"
+                fill="var(--text-2)">gating: voltage · ligand · mechanical</text>
             </g>
           )}
 
@@ -7593,8 +7624,8 @@ export const DIAGRAMS = {
           {activeStep === 5 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <rect x="640" y="220" width="220" height="200" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="750" y="244" textAnchor="middle" fontSize="10.5"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="750" y="246" textAnchor="middle" fontSize="11.5"
                 fontWeight="800" fill={ATLAS_COLORS.trunk}>ENZYME INHIBITION</text>
               {[
                 ["Competitive", "at active site · reversible"],
@@ -7602,14 +7633,14 @@ export const DIAGRAMS = {
                 ["Irreversible", "covalent · permanent"],
               ].map((row, i) => (
                 <g key={i}>
-                  <text x="655" y={274 + i * 30} fontSize="10" fontWeight="700"
+                  <text x="655" y={280 + i * 32} fontSize="10.5" fontWeight="800"
                     fill="var(--text)">{row[0]}</text>
-                  <text x="655" y={288 + i * 30} fontSize="8.5"
+                  <text x="655" y={296 + i * 32} fontSize="9.5"
                     fill="var(--text-2)">{row[1]}</text>
                 </g>
               ))}
-              <text x="655" y="394" fontSize="8.5" fontStyle="italic"
-                fill="var(--text-3)">aspirin · statins · ACE-i · penicillin</text>
+              <text x="750" y="400" textAnchor="middle" fontSize="9.5" fontStyle="italic"
+                fill="var(--text-2)">aspirin · statins · ACE-i · penicillin</text>
             </g>
           )}
 
@@ -7617,8 +7648,8 @@ export const DIAGRAMS = {
           {activeStep === 6 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <rect x="640" y="220" width="220" height="200" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="750" y="244" textAnchor="middle" fontSize="10.5"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="750" y="246" textAnchor="middle" fontSize="11.5"
                 fontWeight="800" fill={ATLAS_COLORS.trunk}>DRUGS ON TRANSPORTERS</text>
               {[
                 ["SSRIs", "serotonin transporter"],
@@ -7627,23 +7658,22 @@ export const DIAGRAMS = {
                 ["Digoxin", "Na⁺/K⁺ ATPase"],
               ].map((row, i) => (
                 <g key={i}>
-                  <text x="655" y={274 + i * 30} fontSize="10" fontWeight="700"
+                  <text x="655" y={282 + i * 32} fontSize="10.5" fontWeight="800"
                     fill="var(--text)">{row[0]}</text>
-                  <text x="655" y={288 + i * 30} fontSize="8.5"
+                  <text x="655" y={298 + i * 32} fontSize="9.5"
                     fill="var(--text-2)">{row[1]}</text>
                 </g>
               ))}
             </g>
           )}
 
-                    {/* Binding mechanics (step 7) — sits between the top-left
-             drug/target tile and the bottom-left enzyme tile, sized so
-             there's at least 40px of clear air above and below. */}
+          {/* Binding mechanics (step 7) — sits between the top-left
+             drug/target tile and the bottom-left enzyme tile. */}
           {activeStep === 7 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="210" width="220" height="180" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="170" y="234" textAnchor="middle" fontSize="10.5"
+              <rect x="60" y="210" width="220" height="185" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="170" y="236" textAnchor="middle" fontSize="11.5"
                 fontWeight="800" fill={ATLAS_COLORS.trunk}>WHAT HOLDS A DRUG</text>
               {[
                 ["Ionic", "opposite charges"],
@@ -7652,22 +7682,22 @@ export const DIAGRAMS = {
                 ["Van der Waals", "close atoms"],
               ].map((row, i) => (
                 <g key={i}>
-                  <text x="75" y={262 + i * 24} fontSize="10" fontWeight="700"
+                  <text x="75" y={266 + i * 26} fontSize="10.5" fontWeight="800"
                     fill="var(--text)">{row[0]}</text>
-                  <text x="75" y={276 + i * 24} fontSize="8.5"
+                  <text x="75" y={282 + i * 26} fontSize="9.5"
                     fill="var(--text-2)">{row[1]}</text>
                 </g>
               ))}
-              <text x="170" y="374" textAnchor="middle" fontSize="8"
-                fontStyle="italic" fill="var(--text-3)">affinity = how tight · selectivity = how specific</text>
+              <text x="170" y="382" textAnchor="middle" fontSize="9"
+                fontStyle="italic" fill="var(--text-2)">affinity = how tight · selectivity = how specific</text>
             </g>
           )}
 
           {/* Bottom-of-canvas footer giving the synthesis message on the
              final step (when the clinical tiles above it aren't drawn). */}
           {activeStep === lastStep && (
-            <text x="450" y="612" textAnchor="middle" fontSize="11"
-              fontWeight="600" fill="var(--text-2)" pointerEvents="none">
+            <text x="450" y="612" textAnchor="middle" fontSize="12.5"
+              fontWeight="700" fill="var(--text)" pointerEvents="none">
               Target first · drug second · mechanism · effect · side effects
             </text>
           )}
@@ -9002,7 +9032,7 @@ export const DIAGRAMS = {
       ["whole", "artery", "capillary", "vein", "bp", "microcirc", "lymphatics"],
     ],
     viewBox: "0 0 900 620",
-    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["an2:cardiovascular-system"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -9014,6 +9044,20 @@ export const DIAGRAMS = {
         : { stroke: "transparent", strokeWidth: 0 });
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // Progressive reveal — matches the narration's three structural
+      // beats:
+      //   step 1 (idx 0): the heart alone — "the pump at the centre"
+      //   step 2 (idx 1): the vessel network appears — arteries,
+      //                   capillary bed, venous return
+      //   step 9 (idx 8): the lymphatics appear — "the fourth set of
+      //                   vessels, draining the fluid"
+      // Preview mode shows everything so the thumbnail reads as the
+      // complete network.
+      const s = preview ? 99 : activeStep;
+      const showHeart      = true;          // always on
+      const showVessels    = s >= 1;        // from step 2
+      const showLymphatics = s >= 8;        // from step 9
 
       // A small helper for drawing a vessel in cross-section, reused
       // at step 1 (three vessel types) and step 2 (three artery sizes).
@@ -9060,82 +9104,96 @@ export const DIAGRAMS = {
              across the top, capillary bed in the middle, venous return
              on the right and below, lymphatics running alongside. ---- */}
 
-          {/* Heart */}
-          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
-            {atlasHeart({
-              cx: 130,
-              cy: 300,
-              scale: 0.7,
-              highlight: false,
-            })}
-          </g>
+                    {/* Heart — the pump, on screen from step 1. */}
+          {showHeart && (
+            <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+              {atlasHeart({
+                cx: 130,
+                cy: 300,
+                scale: 0.7,
+                highlight: false,
+              })}
+            </g>
+          )}
 
-          {/* Arterial side — from heart, arcs up and to the right */}
-          <g style={{ cursor: cur }} onClick={click("artery")} filter={hotFilter("artery")}>
-            {atlasVessel({
-              d: "M200,260 Q320,180 450,220",
-              oxygenated: true,
-              width: 18,
-            })}
-            {atlasBloodCell({ cx: 300, cy: 210, r: 5, oxygenated: true, animate: true, delay: "0s" })}
-            {atlasBloodCell({ cx: 380, cy: 210, r: 5, oxygenated: true, animate: true, delay: "0.4s" })}
-            <circle cx="320" cy="210" r="55" fill="none" {...ring("artery")} pointerEvents="none" />
-          </g>
+          {/* Vessel network — arteries, capillary bed, and venous
+              return all appear together at step 2, matching the
+              narration beat "arteries carry blood away, capillaries
+              let it exchange, veins return it". */}
+          {showVessels && (
+          <>
+            {/* Arterial side — from heart, arcs up and to the right */}
+            <g style={{ cursor: cur }} onClick={click("artery")} filter={hotFilter("artery")}>
+              {atlasVessel({
+                d: "M200,260 Q320,180 450,220",
+                oxygenated: true,
+                width: 18,
+              })}
+              {atlasBloodCell({ cx: 300, cy: 210, r: 5, oxygenated: true, animate: true, delay: "0s" })}
+              {atlasBloodCell({ cx: 380, cy: 210, r: 5, oxygenated: true, animate: true, delay: "0.4s" })}
+              <circle cx="320" cy="210" r="55" fill="none" {...ring("artery")} pointerEvents="none" />
+            </g>
 
-          {/* Capillary bed */}
-          <g style={{ cursor: cur }} onClick={click("capillary")} filter={hotFilter("capillary")}>
-            <path
-              d="M450,220 Q500,180 560,220 Q600,260 640,240"
-              fill="none" stroke="#E53935" strokeWidth="3" strokeLinecap="round"
-            />
-            <path
-              d="M450,220 Q490,260 550,280 Q600,300 660,280"
-              fill="none" stroke="#E53935" strokeWidth="3" strokeLinecap="round"
-            />
-            <path
-              d="M560,220 Q580,250 600,280"
-              fill="none" stroke="#E53935" strokeWidth="2.5" strokeLinecap="round"
-            />
-            <path
-              d="M500,180 Q540,220 580,250"
-              fill="none" stroke="#E53935" strokeWidth="2.5" strokeLinecap="round"
-            />
-            <ellipse cx="500" cy="200" rx="4" ry="2.5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.5" />
-            <ellipse cx="540" cy="250" rx="4" ry="2.5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.5" />
-            <ellipse cx="610" cy="270" rx="4" ry="2.5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.5" />
-            <ellipse cx="640" cy="240" rx="4" ry="2.5" fill="#2D7BFF" stroke="#123F9E" strokeWidth="0.5" />
-            <circle cx="550" cy="240" r="80" fill="none" {...ring("capillary")} pointerEvents="none" />
-            <text x="550" y="330" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">Capillary bed</text>
-          </g>
+            {/* Capillary bed */}
+            <g style={{ cursor: cur }} onClick={click("capillary")} filter={hotFilter("capillary")}>
+              <path
+                d="M450,220 Q500,180 560,220 Q600,260 640,240"
+                fill="none" stroke="#E53935" strokeWidth="3" strokeLinecap="round"
+              />
+              <path
+                d="M450,220 Q490,260 550,280 Q600,300 660,280"
+                fill="none" stroke="#E53935" strokeWidth="3" strokeLinecap="round"
+              />
+              <path
+                d="M560,220 Q580,250 600,280"
+                fill="none" stroke="#E53935" strokeWidth="2.5" strokeLinecap="round"
+              />
+              <path
+                d="M500,180 Q540,220 580,250"
+                fill="none" stroke="#E53935" strokeWidth="2.5" strokeLinecap="round"
+              />
+              <ellipse cx="500" cy="200" rx="4" ry="2.5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.5" />
+              <ellipse cx="540" cy="250" rx="4" ry="2.5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.5" />
+              <ellipse cx="610" cy="270" rx="4" ry="2.5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.5" />
+              <ellipse cx="640" cy="240" rx="4" ry="2.5" fill="#2D7BFF" stroke="#123F9E" strokeWidth="0.5" />
+              <circle cx="550" cy="240" r="80" fill="none" {...ring("capillary")} pointerEvents="none" />
+              <text x="550" y="330" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">Capillary bed</text>
+            </g>
 
-          {/* Venous return */}
-          <g style={{ cursor: cur }} onClick={click("vein")} filter={hotFilter("vein")}>
-            {atlasVessel({
-              d: "M660,280 Q750,420 300,500 Q200,500 160,400",
-              oxygenated: false,
-              width: 14,
-            })}
-            {atlasBloodCell({ cx: 620, cy: 380, r: 5, oxygenated: false, animate: true, delay: "0s" })}
-            {atlasBloodCell({ cx: 400, cy: 490, r: 5, oxygenated: false, animate: true, delay: "0.4s" })}
-            <line x1="680" y1="360" x2="700" y2="380" stroke="#123F9E" strokeWidth="2.5" strokeLinecap="round" />
-            <line x1="700" y1="360" x2="680" y2="380" stroke="#123F9E" strokeWidth="2.5" strokeLinecap="round" />
-            <circle cx="620" cy="440" r="75" fill="none" {...ring("vein")} pointerEvents="none" />
-            <text x="720" y="440" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">Veins · valves</text>
-          </g>
+            {/* Venous return — drawn inside the same showVessels wrapper
+                so it appears at the same step as the arteries and the
+                capillary bed. */}
+            <g style={{ cursor: cur }} onClick={click("vein")} filter={hotFilter("vein")}>
+              {atlasVessel({
+                d: "M660,280 Q750,420 300,500 Q200,500 160,400",
+                oxygenated: false,
+                width: 14,
+              })}
+              {atlasBloodCell({ cx: 620, cy: 380, r: 5, oxygenated: false, animate: true, delay: "0s" })}
+              {atlasBloodCell({ cx: 400, cy: 490, r: 5, oxygenated: false, animate: true, delay: "0.4s" })}
+              <line x1="680" y1="360" x2="700" y2="380" stroke="#123F9E" strokeWidth="2.5" strokeLinecap="round" />
+              <line x1="700" y1="360" x2="680" y2="380" stroke="#123F9E" strokeWidth="2.5" strokeLinecap="round" />
+              <circle cx="620" cy="440" r="75" fill="none" {...ring("vein")} pointerEvents="none" />
+              <text x="720" y="440" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">Veins · valves</text>
+            </g>
+          </>
+          )}
 
-          {/* Lymphatics */}
-          <g style={{ cursor: cur }} onClick={click("lymphatics")} filter={hotFilter("lymphatics")}>
-            {atlasVessel({
-              d: "M620,470 Q560,540 440,560 Q330,555 240,520",
-              oxygenated: false,
-              width: 6,
-              dashed: true,
-            })}
-            {atlasLymphNode({ cx: 500, cy: 555, scale: 1.6 })}
-            {atlasLymphNode({ cx: 320, cy: 530, scale: 1.4 })}
-            <circle cx="500" cy="555" r="55" fill="none" {...ring("lymphatics")} pointerEvents="none" />
-            <text x="500" y="610" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">Lymphatics · drainage to the venous system</text>
-          </g>
+          {/* Lymphatics — appear at step 9. */}
+          {showLymphatics && (
+            <g style={{ cursor: cur }} onClick={click("lymphatics")} filter={hotFilter("lymphatics")}>
+              {atlasVessel({
+                d: "M620,470 Q560,540 440,560 Q330,555 240,520",
+                oxygenated: false,
+                width: 6,
+                dashed: true,
+              })}
+              {atlasLymphNode({ cx: 500, cy: 555, scale: 1.6 })}
+              {atlasLymphNode({ cx: 320, cy: 530, scale: 1.4 })}
+              <circle cx="500" cy="555" r="55" fill="none" {...ring("lymphatics")} pointerEvents="none" />
+              <text x="500" y="610" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">Lymphatics · drainage to the venous system</text>
+            </g>
+          )}
 
                     {/* ---- Step-specific insets ----
               Every inset lives inside the same 420×190 box at
@@ -9482,8 +9540,8 @@ export const DIAGRAMS = {
         <svg viewBox="0 0 900 640" width="100%" height="100%">
           {atlasDefs()}
 
-          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700"
-            fill="var(--text-2)" pointerEvents="none">
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">
             One receptor - one ligand - one G-protein - one signal
           </text>
 
@@ -9526,67 +9584,67 @@ export const DIAGRAMS = {
           {isHot("resting") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <path d="M400,280 Q460,290 510,290" fill="none"
-                stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
-                strokeDasharray="4 4" opacity="0.85" />
-              <circle cx="400" cy="280" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="510" y="260" width="220" height="70" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="620" y="286" textAnchor="middle" fontSize="10.5"
-                fontWeight="700" fill={ATLAS_COLORS.trunk}>RESTING STATE</text>
-              <text x="620" y="304" textAnchor="middle" fontSize="9"
-                fill="var(--text-2)">GDP still in place</text>
-              <text x="620" y="318" textAnchor="middle" fontSize="9"
-                fill="var(--text-2)">nothing signalling</text>
+                stroke={ATLAS_COLORS.trunk} strokeWidth="1.8"
+                strokeDasharray="4 4" opacity="0.95" />
+              <circle cx="400" cy="280" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="510" y="260" width="220" height="80" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="620" y="288" textAnchor="middle" fontSize="11.5"
+                fontWeight="800" fill={ATLAS_COLORS.trunk}>RESTING STATE</text>
+              <text x="620" y="308" textAnchor="middle" fontSize="10"
+                fontWeight="600" fill="var(--text-2)">GDP still in place</text>
+              <text x="620" y="326" textAnchor="middle" fontSize="10"
+                fontWeight="600" fill="var(--text-2)">nothing signalling</text>
             </g>
           )}
 
           {isHot("activation") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <path d="M400,280 Q460,290 510,290" fill="none"
-                stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
-                strokeDasharray="4 4" opacity="0.85" />
-              <circle cx="400" cy="280" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="510" y="260" width="220" height="70" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="620" y="286" textAnchor="middle" fontSize="10.5"
-                fontWeight="700" fill={ATLAS_COLORS.trunk}>ACTIVATION</text>
-              <text x="620" y="304" textAnchor="middle" fontSize="9"
-                fill="var(--text-2)">GDP out - GTP in</text>
-              <text x="620" y="318" textAnchor="middle" fontSize="9"
-                fill="var(--text-2)">the molecular switch flips</text>
+                stroke={ATLAS_COLORS.trunk} strokeWidth="1.8"
+                strokeDasharray="4 4" opacity="0.95" />
+              <circle cx="400" cy="280" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="510" y="260" width="220" height="80" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="620" y="288" textAnchor="middle" fontSize="11.5"
+                fontWeight="800" fill={ATLAS_COLORS.trunk}>ACTIVATION</text>
+              <text x="620" y="308" textAnchor="middle" fontSize="10"
+                fontWeight="600" fill="var(--text-2)">GDP out - GTP in</text>
+              <text x="620" y="326" textAnchor="middle" fontSize="10"
+                fontWeight="600" fill="var(--text-2)">the molecular switch flips</text>
             </g>
           )}
 
           {isHot("dissociation") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <path d="M400,300 Q460,310 510,320" fill="none"
-                stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
-                strokeDasharray="4 4" opacity="0.85" />
-              <circle cx="400" cy="300" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="510" y="290" width="230" height="70" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="625" y="316" textAnchor="middle" fontSize="10.5"
-                fontWeight="700" fill={ATLAS_COLORS.trunk}>DISSOCIATION</text>
-              <text x="625" y="334" textAnchor="middle" fontSize="9"
-                fill="var(--text-2)">alpha splits from beta/gamma</text>
-              <text x="625" y="348" textAnchor="middle" fontSize="9"
-                fill="var(--text-2)">both halves go to work</text>
+                stroke={ATLAS_COLORS.trunk} strokeWidth="1.8"
+                strokeDasharray="4 4" opacity="0.95" />
+              <circle cx="400" cy="300" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="510" y="285" width="230" height="80" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="625" y="313" textAnchor="middle" fontSize="11.5"
+                fontWeight="800" fill={ATLAS_COLORS.trunk}>DISSOCIATION</text>
+              <text x="625" y="333" textAnchor="middle" fontSize="10"
+                fontWeight="600" fill="var(--text-2)">alpha splits from beta/gamma</text>
+              <text x="625" y="351" textAnchor="middle" fontSize="10"
+                fontWeight="600" fill="var(--text-2)">both halves go to work</text>
             </g>
           )}
 
           {activeStep >= 5 && (
             <g style={{ cursor: cur }} onClick={click("effector")} filter={hotFilter("effector")}>
               <path d="M330,340 Q400,340 440,340" fill="none"
-                stroke={ATLAS_COLORS.trunk} strokeWidth="2"
-                strokeDasharray="5 4" opacity="0.75" />
-              <polygon points="445,340 438,336 438,344" fill={ATLAS_COLORS.trunk} />
-              <rect x="450" y="310" width="120" height="60" rx="10"
-                fill="var(--bg-3)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="510" y="338" textAnchor="middle" fontSize="11"
+                stroke={ATLAS_COLORS.trunk} strokeWidth="2.2"
+                strokeDasharray="5 4" opacity="0.9" />
+              <polygon points="445,340 438,335 438,345" fill={ATLAS_COLORS.trunk} />
+              <rect x="450" y="310" width="130" height="62" rx="10"
+                fill="var(--bg-3)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="515" y="338" textAnchor="middle" fontSize="12"
                 fontWeight="800" fill={ATLAS_COLORS.trunk}>EFFECTOR</text>
-              <text x="510" y="354" textAnchor="middle" fontSize="8.5"
+              <text x="515" y="356" textAnchor="middle" fontSize="9.5"
                 fill="var(--text-2)">adenylate cyclase</text>
-              <rect x="440" y="300" width="140" height="80" rx="14"
+              <rect x="440" y="300" width="150" height="82" rx="14"
                 fill="none" {...ring("effector")} pointerEvents="none" />
             </g>
           )}
@@ -9611,49 +9669,49 @@ export const DIAGRAMS = {
           {activeStep >= 7 && (
             <g style={{ cursor: cur }} onClick={click("response")} filter={hotFilter("response")}>
               <path d="M690,410 L690,450" fill="none"
-                stroke={ATLAS_COLORS.trunk} strokeWidth="2"
-                strokeDasharray="5 4" opacity="0.75" />
+                stroke={ATLAS_COLORS.trunk} strokeWidth="2.2"
+                strokeDasharray="5 4" opacity="0.9" />
               <polygon points="690,455 687,448 693,448" fill={ATLAS_COLORS.trunk} />
-              <rect x="600" y="460" width="180" height="70" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="690" y="486" textAnchor="middle" fontSize="11"
+              <rect x="595" y="460" width="190" height="80" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="690" y="488" textAnchor="middle" fontSize="12"
                 fontWeight="800" fill={ATLAS_COLORS.trunk}>CELLULAR RESPONSE</text>
-              <text x="690" y="503" textAnchor="middle" fontSize="8.5"
+              <text x="690" y="508" textAnchor="middle" fontSize="9.5"
                 fill="var(--text-2)">enzyme activity - channels - genes</text>
-              <text x="690" y="518" textAnchor="middle" fontSize="8.5"
+              <text x="690" y="526" textAnchor="middle" fontSize="9.5"
                 fill="var(--text-2)">contraction - secretion</text>
-              <circle cx="690" cy="495" r="60" fill="none"
+              <circle cx="690" cy="500" r="62" fill="none"
                 {...ring("response")} pointerEvents="none" />
             </g>
           )}
 
           {isHot("termination") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="480" width="280" height="110" rx="12"
-                fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2" />
-              <text x="200" y="505" textAnchor="middle" fontSize="10.5"
-                fontWeight="700" fill="#5B21B6">TERMINATION</text>
-              <text x="200" y="525" textAnchor="middle" fontSize="9"
-                fill="var(--text-2)">alpha hydrolyses GTP back to GDP</text>
-              <text x="200" y="542" textAnchor="middle" fontSize="9"
-                fill="var(--text-2)">alpha recombines with beta/gamma</text>
-              <text x="200" y="559" textAnchor="middle" fontSize="9"
-                fill="var(--text-2)">receptor returns to resting shape</text>
-              <text x="200" y="579" textAnchor="middle" fontSize="8.5"
-                fontStyle="italic" fill="var(--text-3)">built-in off switch</text>
+              <rect x="55" y="475" width="300" height="120" rx="12"
+                fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2.4" />
+              <text x="205" y="502" textAnchor="middle" fontSize="12"
+                fontWeight="800" fill="#5B21B6">TERMINATION</text>
+              <text x="205" y="524" textAnchor="middle" fontSize="10"
+                fontWeight="600" fill="var(--text-2)">alpha hydrolyses GTP back to GDP</text>
+              <text x="205" y="543" textAnchor="middle" fontSize="10"
+                fontWeight="600" fill="var(--text-2)">alpha recombines with beta/gamma</text>
+              <text x="205" y="562" textAnchor="middle" fontSize="10"
+                fontWeight="600" fill="var(--text-2)">receptor returns to resting shape</text>
+              <text x="205" y="584" textAnchor="middle" fontSize="9.5"
+                fontStyle="italic" fill="var(--text-2)">built-in off switch</text>
             </g>
           )}
 
           {activeStep === lastStep && (
             <g pointerEvents="none">
-              <rect x="60" y="530" width="780" height="80" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="450" y="556" textAnchor="middle" fontSize="11"
-                fontWeight="700" fill={ATLAS_COLORS.trunk}>
+              <rect x="55" y="525" width="790" height="90" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="450" y="555" textAnchor="middle" fontSize="12"
+                fontWeight="800" fill={ATLAS_COLORS.trunk}>
                 bind - activate - exchange GDP for GTP - dissociate - effector - second messenger - response - terminate
               </text>
-              <text x="450" y="580" textAnchor="middle" fontSize="9.5"
-                fill="var(--text-2)">
+              <text x="450" y="582" textAnchor="middle" fontSize="10.5"
+                fontWeight="600" fill="var(--text-2)">
                 Eight steps, one cycle, running in seconds
               </text>
             </g>
@@ -9773,9 +9831,9 @@ export const DIAGRAMS = {
             )}
 
             {/* Labels below the cross-section */}
-            <text x={cx} y={cy + r + 40} textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text)">{label}</text>
+            <text x={cx} y={cy + r + 40} textAnchor="middle" fontSize="14" fontWeight="800" fill="var(--text)">{label}</text>
             {sub && (
-              <text x={cx} y={cy + r + 55} textAnchor="middle" fontSize="9" fill="var(--text-2)">{sub}</text>
+              <text x={cx} y={cy + r + 58} textAnchor="middle" fontSize="10" fill="var(--text-2)">{sub}</text>
             )}
 
             {/* Selection ring, when active */}
@@ -9787,7 +9845,7 @@ export const DIAGRAMS = {
       return (
         <svg viewBox="0 0 900 400" width="100%" height="100%">
           {/* Column labels at the top */}
-          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800" fill="var(--text)" pointerEvents="none">
             Same building blocks · three levels of openness
           </text>
 
@@ -9798,10 +9856,10 @@ export const DIAGRAMS = {
 
           {/* Where each type is found — a small reference row along the bottom */}
           <g pointerEvents="none">
-            <line x1="80" y1="350" x2="820" y2="350" stroke={ATLAS_COLORS.neutral} strokeWidth="0.8" strokeDasharray="4 4" opacity="0.5" />
-            <text x="150" y="375" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">muscle · skin · brain</text>
-            <text x="450" y="375" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">kidney · intestine · glands</text>
-            <text x="750" y="375" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">liver · spleen · bone marrow</text>
+            <line x1="80" y1="350" x2="820" y2="350" stroke={ATLAS_COLORS.neutral} strokeWidth="1" strokeDasharray="4 4" opacity="0.7" />
+            <text x="150" y="378" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text)">muscle · skin · brain</text>
+            <text x="450" y="378" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text)">kidney · intestine · glands</text>
+            <text x="750" y="378" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text)">liver · spleen · bone marrow</text>
           </g>
         </svg>
       );
