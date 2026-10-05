@@ -6379,4 +6379,491 @@ export const DIAGRAMS = {
     },
   },
 
+  /* =========================================================
+     CARDIOVASCULAR SYSTEM
+     Topic: Anatomy II (an2), Topic 11 (index 10).
+     The vessel-network companion to ph2:cardiovascular-system.
+     Where the ph2 diagram teaches how the pump drives flow,
+     this diagram teaches the anatomy of the pipes themselves —
+     arteries, capillaries, veins, blood pressure, redistribution,
+     microcirculation, and lymphatic drainage. Composes entirely
+     from existing primitives. The lymphatics label drills into
+     the existing ph2:lymphatic-system so the student gets the
+     full physiological walkthrough without duplication.
+     ========================================================= */
+  "an2:cardiovascular-system": {
+    id: "an2:cardiovascular-system",
+    type: "diagram",
+    title: "The Cardiovascular System — Pipes, Pressure, and Flow",
+    topic: { courseId: "an2", topicIndex: 10 },
+    parent: null,
+    summary: "The heart is only half of the cardiovascular system. The other half is the vessel network that delivers blood to every tissue and brings it back — arteries that carry blood away under pressure, capillaries that are one cell thick and allow exchange, and veins that return blood to the heart at low pressure with the help of valves and muscle pumps. Blood pressure is the product of how much blood the heart pumps and how strongly the arterioles resist it, and the body adjusts both constantly. The lymphatic system runs alongside it all, returning the fluid that leaks out of the capillaries.",
+    labels: [
+      { id: "whole",      name: "The Whole Network",        desc: "Heart, arteries, capillaries, veins, and lymphatics — one integrated transport system. The heart is the pump; the vessels are the pipes; the lymphatics are the drainage." },
+      { id: "artery",     name: "Arteries",                 desc: "Thick-walled, muscular and elastic tubes that carry blood away from the heart under high pressure. Three types — elastic (conduct), muscular (distribute), and arterioles (resist and control flow)." },
+      { id: "capillary",  name: "Capillaries",              desc: "One-cell-thick vessels where the actual exchange of oxygen, nutrients and waste happens. Three types — continuous, fenestrated, and sinusoidal — reflecting three different exchange needs.", drillTo: "an2:capillary-types" },
+      { id: "vein",       name: "Veins",                    desc: "Thin-walled, low-pressure vessels that return blood to the heart. Contain one-way valves and act as a reservoir holding about 70% of the body's blood volume." },
+      { id: "bp",         name: "Blood Pressure",           desc: "The force blood exerts on artery walls, written systolic over diastolic. Product of cardiac output and peripheral resistance. Controlled second-by-second by the nerves, minute-by-minute by hormones, and hour-by-hour by the kidneys." },
+      { id: "microcirc",  name: "Microcirculation",         desc: "The tug-of-war at the capillary — hydrostatic pressure pushes fluid out at the arterial end, osmotic pressure pulls it in at the venous end. The small residual is drained by the lymphatics." },
+      { id: "lymphatics", name: "Lymphatic Drainage",       desc: "The parallel system that collects the fluid capillaries leave behind, filters it through lymph nodes, and returns it to the blood at the subclavian veins. Tap to see the full lymphatic walkthrough.", drillTo: "ph2:lymphatic-system" },
+    ],
+    narration: [
+      "This is the whole cardiovascular network. The heart is the pump at the centre — but every drop of blood it pushes out has to travel through a branching tree of vessels and find its way back. Arteries carry blood away from the heart. Capillaries let it exchange substances with the tissues. Veins return it. And alongside the whole thing runs a fourth set of vessels — the lymphatics — draining the fluid the capillaries leave behind.",
+      "Every vessel in this network is one of three types. Arteries carry blood away from the heart, under high pressure, with thick muscular and elastic walls. Capillaries are the opposite — microscopic, one cell thick, no muscle at all, because their job is to let substances cross. Veins carry blood back to the heart, at low pressure, with thin walls and one-way valves so blood cannot fall backward.",
+      "Arteries themselves come in three sizes. The largest, closest to the heart, are elastic arteries — their walls stretch with every heartbeat and recoil between beats, smoothing the pulse into a steady flow. Further out are muscular arteries, which distribute blood to specific organs and can partially narrow to shift supply. The smallest are arterioles — thin-walled but packed with smooth muscle, and they are the body's main point of control for blood flow.",
+      "When blood finally reaches a capillary, the pressure has been dropped by the arterioles to a low, safe level — enough to keep blood moving, nowhere near enough to threaten a one-cell-thick wall. That thinness is the whole point. A capillary is the only place in the body where oxygen, glucose, hormones and waste can actually cross between blood and tissue. Every other vessel exists to get blood to and from this one moment.",
+      "Getting blood back to the heart is harder than getting it out. By the time blood leaves the capillaries, its pressure is almost zero — and it still has to travel from your feet, upward, over a metre, to reach the heart. Four things make that possible. Valves inside the vein stop blood from falling back. The muscles in your legs squeeze the deep veins as you walk, pushing blood upward. Breathing creates a pressure difference between your chest and abdomen that pulls blood toward the heart. And when the heart relaxes, it actually sucks blood in. Veins also act as the body's blood reservoir — about seventy per cent of your blood is in them at any moment.",
+      "Blood pressure is what you measure when you take 120 over 80 — the highest and lowest pressures your arteries experience during one heartbeat. It is generated by three things: how much blood the heart pumps out per minute, how strongly the arterioles resist that flow, and how much blood is in the circulation. Pressure equals cardiac output times peripheral resistance. The body controls this on three timescales — nerves adjust within seconds, hormones within minutes, and the kidneys over hours to days.",
+      "The body can send more blood to one organ and less to another at the same moment, even though total output barely changes. It does this by controlling the diameter of the arterioles leading into each tissue. When an arteriole narrows, less blood flows through it. When it widens, more does. And because resistance varies with the fourth power of the radius, a tiny change in diameter produces a large change in flow. That is why the arterioles are the body's favourite control point.",
+      "Inside every capillary, four forces are pulling in different directions. Hydrostatic pressure — the blood pressure inside the capillary — pushes fluid out into the tissue. Colloid osmotic pressure — the pull of proteins in the plasma — pulls fluid back in. Because hydrostatic pressure is higher at the arterial end, fluid leaves the capillary there. Because it has fallen by the venous end, fluid re-enters there. The small volume that is left behind in the tissue is collected by the lymphatics and returned to the blood.",
+      "The lymphatic system runs alongside every blood vessel, and it is easy to forget — but without it the cardiovascular system would fail. Every minute, capillaries leak a small amount of fluid into the tissues. Over a day that adds up to two to four litres. The lymphatics collect it, filter it through lymph nodes where immune cells inspect it for threats, and return it to the blood at the subclavian veins just below the collarbone.",
+      "Every clinical problem in the cardiovascular system maps onto one of the parts you have just seen. Atherosclerosis is a disease of arteries — plaques narrow the vessel, a clot forms on top, and the tissue downstream is starved. Varicose veins are a disease of venous valves — when they fail, blood pools in the legs. Hypertension is a disease of blood pressure control — the numbers look fine but the damage accumulates silently. Oedema is a disease of the microcirculation — when the balance at the capillary is disturbed, fluid builds up in the tissues. And lymphoedema is a disease of lymphatic drainage — when lymph cannot move, the limb swells.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["artery", "capillary", "vein"],
+      ["artery"],
+      ["capillary"],
+      ["vein"],
+      ["bp"],
+      ["artery", "capillary"],
+      ["microcirc"],
+      ["lymphatics"],
+      ["whole", "artery", "capillary", "vein", "bp", "microcirc", "lymphatics"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["an2:cardiovascular-system"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // A small helper for drawing a vessel in cross-section, reused
+      // at step 1 (three vessel types) and step 2 (three artery sizes).
+      const vesselCrossSection = (cx, cy, w, wallThickness, color, label, sub) => (
+        <g>
+          <rect
+            x={cx - w / 2}
+            y={cy - w / 2}
+            width={w}
+            height={w}
+            rx={w / 2}
+            fill="none"
+            stroke={color}
+            strokeWidth={wallThickness}
+          />
+          <circle
+            cx={cx}
+            cy={cy}
+            r={Math.max(2, w / 2 - wallThickness)}
+            fill="#F4F2EE"
+            opacity="0.9"
+          />
+          {w >= 60 && (
+            <ellipse
+              cx={cx}
+              cy={cy}
+              rx={Math.max(3, (w / 2 - wallThickness) * 0.4)}
+              ry={Math.max(2, (w / 2 - wallThickness) * 0.25)}
+              fill="#E53935"
+              stroke="#8C1C12"
+              strokeWidth="0.6"
+            />
+          )}
+          <text x={cx} y={cy + w / 2 + 20} textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text)">{label}</text>
+          {sub && (
+            <text x={cx} y={cy + w / 2 + 34} textAnchor="middle" fontSize="9" fill="var(--text-2)">{sub}</text>
+          )}
+        </g>
+      );
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {/* ---- The whole network — heart on the left, arterial arc
+             across the top, capillary bed in the middle, venous return
+             on the right and below, lymphatics running alongside. ---- */}
+
+          {/* Heart */}
+          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+            {atlasHeart({
+              cx: 130,
+              cy: 300,
+              scale: 0.7,
+              highlight: false,
+            })}
+          </g>
+
+          {/* Arterial side — from heart, arcs up and to the right */}
+          <g style={{ cursor: cur }} onClick={click("artery")} filter={hotFilter("artery")}>
+            {atlasVessel({
+              d: "M200,260 Q320,180 450,220",
+              oxygenated: true,
+              width: 18,
+            })}
+            {atlasBloodCell({ cx: 300, cy: 210, r: 5, oxygenated: true, animate: true, delay: "0s" })}
+            {atlasBloodCell({ cx: 380, cy: 210, r: 5, oxygenated: true, animate: true, delay: "0.4s" })}
+            <circle cx="320" cy="210" r="55" fill="none" {...ring("artery")} pointerEvents="none" />
+          </g>
+
+          {/* Capillary bed */}
+          <g style={{ cursor: cur }} onClick={click("capillary")} filter={hotFilter("capillary")}>
+            <path
+              d="M450,220 Q500,180 560,220 Q600,260 640,240"
+              fill="none" stroke="#E53935" strokeWidth="3" strokeLinecap="round"
+            />
+            <path
+              d="M450,220 Q490,260 550,280 Q600,300 660,280"
+              fill="none" stroke="#E53935" strokeWidth="3" strokeLinecap="round"
+            />
+            <path
+              d="M560,220 Q580,250 600,280"
+              fill="none" stroke="#E53935" strokeWidth="2.5" strokeLinecap="round"
+            />
+            <path
+              d="M500,180 Q540,220 580,250"
+              fill="none" stroke="#E53935" strokeWidth="2.5" strokeLinecap="round"
+            />
+            <ellipse cx="500" cy="200" rx="4" ry="2.5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.5" />
+            <ellipse cx="540" cy="250" rx="4" ry="2.5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.5" />
+            <ellipse cx="610" cy="270" rx="4" ry="2.5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.5" />
+            <ellipse cx="640" cy="240" rx="4" ry="2.5" fill="#2D7BFF" stroke="#123F9E" strokeWidth="0.5" />
+            <circle cx="550" cy="240" r="80" fill="none" {...ring("capillary")} pointerEvents="none" />
+            <text x="550" y="330" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">Capillary bed</text>
+          </g>
+
+          {/* Venous return */}
+          <g style={{ cursor: cur }} onClick={click("vein")} filter={hotFilter("vein")}>
+            {atlasVessel({
+              d: "M660,280 Q750,420 300,500 Q200,500 160,400",
+              oxygenated: false,
+              width: 14,
+            })}
+            {atlasBloodCell({ cx: 620, cy: 380, r: 5, oxygenated: false, animate: true, delay: "0s" })}
+            {atlasBloodCell({ cx: 400, cy: 490, r: 5, oxygenated: false, animate: true, delay: "0.4s" })}
+            <line x1="680" y1="360" x2="700" y2="380" stroke="#123F9E" strokeWidth="2.5" strokeLinecap="round" />
+            <line x1="700" y1="360" x2="680" y2="380" stroke="#123F9E" strokeWidth="2.5" strokeLinecap="round" />
+            <circle cx="620" cy="440" r="75" fill="none" {...ring("vein")} pointerEvents="none" />
+            <text x="720" y="440" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">Veins · valves</text>
+          </g>
+
+          {/* Lymphatics */}
+          <g style={{ cursor: cur }} onClick={click("lymphatics")} filter={hotFilter("lymphatics")}>
+            {atlasVessel({
+              d: "M620,470 Q560,540 440,560 Q330,555 240,520",
+              oxygenated: false,
+              width: 6,
+              dashed: true,
+            })}
+            {atlasLymphNode({ cx: 500, cy: 555, scale: 1.6 })}
+            {atlasLymphNode({ cx: 320, cy: 530, scale: 1.4 })}
+            <circle cx="500" cy="555" r="55" fill="none" {...ring("lymphatics")} pointerEvents="none" />
+            <text x="500" y="610" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">Lymphatics · drainage to the venous system</text>
+          </g>
+
+          {/* ---- Step-specific insets ---- */}
+
+          {/* Step 1 — three vessel types side by side */}
+          {activeStep === 1 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>THE THREE VESSEL TYPES — WALL THICKNESS COMPARED</text>
+              {vesselCrossSection(180, 145, 56, 10, "#C0392B", "Artery", "thick muscular wall")}
+              {vesselCrossSection(450, 145, 32, 4, "#C0392B", "Capillary", "one cell thick")}
+              {vesselCrossSection(720, 145, 48, 5, "#2F6FED", "Vein", "thin wall · valves")}
+            </g>
+          )}
+
+          {/* Step 2 — three artery sizes stacked */}
+          {activeStep === 2 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>THE THREE ARTERY SIZES</text>
+              {vesselCrossSection(180, 145, 72, 14, "#C0392B", "Elastic", "aorta · pulmonary trunk")}
+              {vesselCrossSection(450, 145, 44, 8, "#C0392B", "Muscular", "brachial · femoral")}
+              {vesselCrossSection(720, 145, 24, 4, "#C0392B", "Arteriole", "resistance vessel")}
+            </g>
+          )}
+
+          {/* Step 3 — capillary in cross-section, wall thinness visible */}
+          {activeStep === 3 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>THE CAPILLARY — EXCHANGE SURFACE</text>
+              <rect x="180" y="110" width="500" height="80" rx="10" fill="#F4F2EE" stroke="#C0392B" strokeWidth="3" />
+              <line x1="180" y1="130" x2="680" y2="130" stroke="#8C1C12" strokeWidth="1" opacity="0.6" />
+              <line x1="180" y1="170" x2="680" y2="170" stroke="#8C1C12" strokeWidth="1" opacity="0.6" />
+              <ellipse cx="430" cy="150" rx="20" ry="12" fill="#E53935" stroke="#8C1C12" strokeWidth="0.8" />
+              <circle cx="250" cy="120" r="4" fill="#F5B93F" stroke="#8B6410" strokeWidth="0.6" />
+              <path d="M250,120 L250,150" stroke="#F5B93F" strokeWidth="1.4" strokeDasharray="3 2" />
+              <polygon points="250,150 247,144 253,144" fill="#F5B93F" />
+              <text x="265" y="112" fontSize="8" fontWeight="700" fill="#8B6410">O₂</text>
+              <circle cx="610" cy="180" r="4" fill="#2F6FED" stroke="#123F9E" strokeWidth="0.6" />
+              <path d="M610,180 L610,150" stroke="#2F6FED" strokeWidth="1.4" strokeDasharray="3 2" />
+              <polygon points="610,150 607,156 613,156" fill="#2F6FED" />
+              <text x="595" y="192" fontSize="8" fontWeight="700" fill="#123F9E">CO₂</text>
+              <text x="430" y="205" textAnchor="middle" fontSize="9" fill="var(--text-2)">no muscle · no elastic tissue · one cell thick</text>
+            </g>
+          )}
+
+          {/* Step 4 — venous return mechanisms */}
+          {activeStep === 4 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
+              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill="#2F6FED">HOW BLOOD RETURNS FROM THE FEET</text>
+              {[
+                { x: 155, y: 140, num: "1", label: "Valves", sub: "one-way only" },
+                { x: 340, y: 140, num: "2", label: "Muscle pump", sub: "legs squeeze veins" },
+                { x: 525, y: 140, num: "3", label: "Respiratory pump", sub: "chest pulls blood" },
+                { x: 710, y: 140, num: "4", label: "Heart suction", sub: "atria draw blood in" },
+              ].map((m, i) => (
+                <g key={i}>
+                  <circle cx={m.x - 40} cy={m.y} r="14" fill={ATLAS_COLORS.trunk} />
+                  <text x={m.x - 40} y={m.y + 4} textAnchor="middle" fontSize="12" fontWeight="800" fill="#1B1405">{m.num}</text>
+                  <text x={m.x} y={m.y - 2} fontSize="10" fontWeight="700" fill="var(--text)">{m.label}</text>
+                  <text x={m.x} y={m.y + 12} fontSize="8.5" fill="var(--text-2)">{m.sub}</text>
+                </g>
+              ))}
+            </g>
+          )}
+
+          {/* Step 5 — blood pressure gauge + three determinants */}
+          {activeStep === 5 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>BLOOD PRESSURE — 120 / 80</text>
+              <circle cx="180" cy="145" r="46" fill="var(--bg-3)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <path d="M180,145 L210,115" stroke={ATLAS_COLORS.trunk} strokeWidth="3" strokeLinecap="round" />
+              <circle cx="180" cy="145" r="4" fill={ATLAS_COLORS.trunk} />
+              <text x="180" y="160" textAnchor="middle" fontSize="9" fill="var(--text-2)">mmHg</text>
+              <text x="270" y="120" fontSize="10" fontWeight="700" fill="var(--text)">1. Cardiac output</text>
+              <text x="270" y="135" fontSize="8.5" fill="var(--text-2)">heart rate x stroke volume</text>
+              <text x="270" y="158" fontSize="10" fontWeight="700" fill="var(--text)">2. Peripheral resistance</text>
+              <text x="270" y="173" fontSize="8.5" fill="var(--text-2)">arteriole diameter</text>
+              <text x="270" y="196" fontSize="10" fontWeight="700" fill="var(--text)">3. Blood volume</text>
+              <text x="640" y="145" fontSize="13" fontWeight="800" fill={ATLAS_COLORS.trunk}>BP = CO × PR</text>
+            </g>
+          )}
+
+          {/* Step 6 — two arterioles, one wide one narrow */}
+          {activeStep === 6 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>REDISTRIBUTION — ONE WIDE, ONE NARROW</text>
+              <path d="M140,145 L280,145" stroke="#C0392B" strokeWidth="10" strokeLinecap="round" />
+              <text x="210" y="120" textAnchor="middle" fontSize="9" fontWeight="700" fill="#C0392B">vasodilated</text>
+              <text x="210" y="170" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">more flow</text>
+              <path d="M440,145 L580,145" stroke="#C0392B" strokeWidth="4" strokeLinecap="round" />
+              <text x="510" y="120" textAnchor="middle" fontSize="9" fontWeight="700" fill="#C0392B">vasoconstricted</text>
+              <text x="510" y="170" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">less flow</text>
+              <text x="700" y="145" textAnchor="middle" fontSize="10" fontWeight="700" fill={ATLAS_COLORS.trunk}>R ∝ 1/r⁴</text>
+              <text x="700" y="160" textAnchor="middle" fontSize="8" fill="var(--text-2)">small change, big effect</text>
+            </g>
+          )}
+
+          {/* Step 7 — the four Starling forces at the capillary */}
+          {activeStep === 7 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>STARLING FORCES — OUT AT THE ARTERIAL END, IN AT THE VENOUS END</text>
+              <line x1="140" y1="145" x2="760" y2="145" stroke="#C0392B" strokeWidth="20" strokeLinecap="round" />
+              <line x1="140" y1="145" x2="760" y2="145" stroke="#F5C7C0" strokeWidth="3" strokeLinecap="round" opacity="0.9" />
+              <text x="140" y="112" textAnchor="middle" fontSize="9" fontWeight="700" fill="#C0392B">arterial end</text>
+              <text x="760" y="112" textAnchor="middle" fontSize="9" fontWeight="700" fill="#C0392B">venous end</text>
+              <path d="M220,145 L220,125" stroke="#2F6FED" strokeWidth="2.5" strokeLinecap="round" />
+              <polygon points="220,125 216,132 224,132" fill="#2F6FED" />
+              <text x="220" y="195" textAnchor="middle" fontSize="8.5" fill="#2F6FED">push out (35 mmHg)</text>
+              <path d="M420,125 L420,145" stroke="#8B5CF6" strokeWidth="2.5" strokeLinecap="round" />
+              <polygon points="420,145 416,138 424,138" fill="#8B5CF6" />
+              <text x="420" y="195" textAnchor="middle" fontSize="8.5" fill="#8B5CF6">pull in (25 mmHg)</text>
+              <path d="M620,145 L620,125" stroke="#2F6FED" strokeWidth="2.5" strokeLinecap="round" />
+              <polygon points="620,125 616,132 624,132" fill="#2F6FED" />
+              <text x="620" y="195" textAnchor="middle" fontSize="8.5" fill="#2F6FED">push out (15 mmHg)</text>
+            </g>
+          )}
+
+          {/* Step 8 — lymphatics collecting the fluid that leaked */}
+          {activeStep === 8 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>LYMPHATIC DRAINAGE — 2 TO 4 LITRES A DAY</text>
+              <circle cx="200" cy="145" r="6" fill="#FFE38A" />
+              <circle cx="230" cy="155" r="6" fill="#FFE38A" />
+              <circle cx="260" cy="145" r="6" fill="#FFE38A" />
+              <path d="M290,150 Q360,145 430,150" stroke="#2F6FED" strokeWidth="6" strokeDasharray="6 5" fill="none" strokeLinecap="round" />
+              <circle cx="365" cy="148" r="8" fill="none" stroke="#2F6FED" strokeWidth="2" />
+              <text x="365" y="195" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">lymphatic capillary</text>
+              <ellipse cx="490" cy="150" rx="24" ry="16" fill={ATLAS_COLORS.lymphoid} opacity="0.75" />
+              <ellipse cx="490" cy="150" rx="12" ry="7" fill="#0A0F1A" opacity="0.22" />
+              <text x="490" y="195" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">lymph node</text>
+              <path d="M530,150 Q610,145 680,150" stroke="#2F6FED" strokeWidth="6" strokeDasharray="6 5" fill="none" strokeLinecap="round" />
+              <polygon points="680,150 670,144 670,156" fill="#2F6FED" />
+              <text x="680" y="195" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">to subclavian veins</text>
+            </g>
+          )}
+
+          {/* Static region labels */}
+          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Heart → arteries → capillaries → veins → back to heart</text>
+          <text x="450" y="595" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Pump · pipes · pressure · drainage — one integrated system</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     CAPILLARY TYPES — drill-down child of an2:cardiovascular-system.
+     Opens when the student taps the "capillaries" label on the
+     parent diagram, or the capillary tile in the legend.
+     Draws the three capillary types side by side at high zoom so
+     the structural difference that defines each type — tight
+     junctions, fenestrations, or open gaps — is what the student
+     actually sees. Composes entirely inline; no new primitive.
+     ========================================================= */
+  "an2:capillary-types": {
+    id: "an2:capillary-types",
+    type: "diagram",
+    title: "The Three Capillary Types — Continuous, Fenestrated, Sinusoidal",
+    topic: null,
+    parent: "an2:cardiovascular-system",
+    summary: "Not all capillaries are built the same. A capillary in your muscle has to keep most things out; a capillary in your kidney has to let fluid through fast; a capillary in your liver has to let whole cells and large proteins pass. The body solves this by building the capillary wall in three ways — continuous, fenestrated, and sinusoidal — each one tuned to the exchange needs of the tissue it supplies. This diagram shows all three side by side, at the same zoom, so the structural difference is what you actually see.",
+    labels: [
+      { id: "continuous",  name: "Continuous capillaries",  desc: "Endothelial cells joined by tight junctions. Only small molecules — water, oxygen, glucose — can pass through the gaps between cells. Found in muscle, skin, connective tissue, and the brain (where they form the blood-brain barrier)." },
+      { id: "fenestrated", name: "Fenestrated capillaries", desc: "Endothelial cells with small pores called fenestrations that let larger molecules through — peptides, small proteins, and rapid fluid exchange. Found in the kidney, intestines, and endocrine glands." },
+      { id: "sinusoidal",  name: "Sinusoidal capillaries", desc: "Large gaps between the endothelial cells, with a thin or absent basement membrane. Large proteins, and even whole cells, can pass. Found in the liver, spleen, and bone marrow." },
+    ],
+    narration: [
+      "Every capillary is built from a single layer of endothelial cells sitting on a thin basement membrane. What differs between the three types is how those endothelial cells are joined together. Look at the three walls side by side — the difference is what you can see between the cells, not the cells themselves.",
+      "The first type is the continuous capillary. Its endothelial cells are joined by tight junctions — the cells press against each other and seal the space between them. Only small molecules can cross: water, oxygen, glucose, and small ions. This is the default capillary of muscle, skin, and connective tissue. And in the brain, the tight junctions are reinforced further to form the blood-brain barrier — the strictest version of the same design.",
+      "The second type is the fenestrated capillary. Its endothelial cells have small windows — fenestrations — cut through them. Small molecules and now medium-sized ones can pass: peptides, small proteins, and fluid move across much faster. This is what your kidney needs for filtration, what your intestines need for absorption, and what your endocrine glands need to release their hormones quickly into the blood.",
+      "The third type is the sinusoidal capillary. Its endothelial cells are separated by large gaps, and the basement membrane beneath them is thin or missing entirely. This is the most permissive capillary in the body — large proteins and even whole cells can pass through. That is exactly what your liver needs, so that newly made proteins reach the blood and old red cells are destroyed. It is also what your spleen and bone marrow need, so that new blood cells can leave the marrow and reach the circulation.",
+      "So the three types are the same design at three levels of openness — sealed, porous, and open. A continuous capillary keeps everything except the smallest molecules in the blood. A fenestrated capillary lets medium molecules through. A sinusoidal capillary lets almost everything through. Same building blocks, different permeability, chosen to match the tissue's job. When you meet a capillary in any diagram, this is the question to ask: which of the three is it, and why does this tissue need it that way?",
+    ],
+    stepFocus: [
+      [],
+      ["continuous"],
+      ["fenestrated"],
+      ["sinusoidal"],
+      ["continuous", "fenestrated", "sinusoidal"],
+    ],
+    viewBox: "0 0 900 400",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["an2:capillary-types"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 4 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id);
+
+      // Draws one capillary cross-section in the given x column. Each
+      // one is a tube-within-a-tube: pale lumen inside, a ring of
+      // endothelial cells around it, and a very thin basement membrane
+      // outside. The three types differ only in how the endothelial
+      // ring is drawn — solid for continuous, dotted for fenestrated,
+      // and broken for sinusoidal.
+      const capillaryCrossSection = (cx, cy, r, type, label, sub, focused) => {
+        return (
+          <g
+            style={{ cursor: cur }}
+            onClick={click(type)}
+            filter={focused ? "url(#atlas-glow)" : undefined}
+          >
+            {/* Basement membrane — the thin outer layer */}
+            <circle cx={cx} cy={cy} r={r + 4} fill="none" stroke="#B8A89E" strokeWidth="1.5" opacity="0.7" />
+
+            {/* Endothelial cell ring — drawn differently per type */}
+            {type === "continuous" && (
+              <circle cx={cx} cy={cy} r={r} fill="none" stroke="#C0392B" strokeWidth="6" />
+            )}
+            {type === "fenestrated" && (
+              <circle
+                cx={cx}
+                cy={cy}
+                r={r}
+                fill="none"
+                stroke="#C0392B"
+                strokeWidth="6"
+                strokeDasharray="14 5"
+              />
+            )}
+            {type === "sinusoidal" && (
+              <g>
+                {/* Four arc segments with large gaps between them */}
+                <path
+                  d={`M${cx - r * 0.7},${cy - r * 0.7} A${r},${r} 0 0 1 ${cx + r * 0.7},${cy - r * 0.7}`}
+                  fill="none" stroke="#C0392B" strokeWidth="6" strokeLinecap="round"
+                />
+                <path
+                  d={`M${cx + r * 0.7},${cy + r * 0.7} A${r},${r} 0 0 1 ${cx - r * 0.7},${cy + r * 0.7}`}
+                  fill="none" stroke="#C0392B" strokeWidth="6" strokeLinecap="round"
+                />
+              </g>
+            )}
+
+            {/* Lumen — pale interior */}
+            <circle cx={cx} cy={cy} r={Math.max(2, r - 5)} fill="#F4F2EE" opacity="0.9" />
+
+            {/* One red cell inside the lumen, at rest position */}
+            <ellipse
+              cx={cx}
+              cy={cy}
+              rx={Math.max(4, r * 0.35)}
+              ry={Math.max(3, r * 0.22)}
+              fill="#E53935"
+              stroke="#8C1C12"
+              strokeWidth="0.6"
+            />
+
+            {/* Whole-cell and large-molecule hints for sinusoidal */}
+            {type === "sinusoidal" && (
+              <>
+                <circle cx={cx + r + 14} cy={cy - 6} r="5" fill="#E4DFFF" stroke="#8B5CF6" strokeWidth="1" />
+                <circle cx={cx - r - 14} cy={cy + 6} r="4" fill="#F5B93F" stroke="#8B6410" strokeWidth="0.8" />
+              </>
+            )}
+
+            {/* Labels below the cross-section */}
+            <text x={cx} y={cy + r + 40} textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text)">{label}</text>
+            {sub && (
+              <text x={cx} y={cy + r + 55} textAnchor="middle" fontSize="9" fill="var(--text-2)">{sub}</text>
+            )}
+
+            {/* Selection ring, when active */}
+            <circle cx={cx} cy={cy} r={r + 20} fill="none" {...ring(type)} pointerEvents="none" />
+          </g>
+        );
+      };
+
+      return (
+        <svg viewBox="0 0 900 400" width="100%" height="100%">
+          {/* Column labels at the top */}
+          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">
+            Same building blocks · three levels of openness
+          </text>
+
+          {/* Three cross-sections, evenly spaced */}
+          {capillaryCrossSection(150, 200, 60, "continuous",  "Continuous",  "tight junctions · only small molecules", isHot("continuous"))}
+          {capillaryCrossSection(450, 200, 60, "fenestrated", "Fenestrated", "pores · medium molecules cross",       isHot("fenestrated"))}
+          {capillaryCrossSection(750, 200, 60, "sinusoidal",  "Sinusoidal",  "large gaps · cells and proteins",     isHot("sinusoidal"))}
+
+          {/* Where each type is found — a small reference row along the bottom */}
+          <g pointerEvents="none">
+            <line x1="80" y1="350" x2="820" y2="350" stroke={ATLAS_COLORS.neutral} strokeWidth="0.8" strokeDasharray="4 4" opacity="0.5" />
+            <text x="150" y="375" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">muscle · skin · brain</text>
+            <text x="450" y="375" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">kidney · intestine · glands</text>
+            <text x="750" y="375" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">liver · spleen · bone marrow</text>
+          </g>
+        </svg>
+      );
+    },
+  },
+
 };

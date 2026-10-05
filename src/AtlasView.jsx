@@ -202,6 +202,10 @@ const LEGEND_VIEWBOXES = {
   citrate: "0 0 100 100",
   "lab-heparin": "0 0 100 100",
   oxalate: "0 0 100 100",
+  // capillary types drill-down (child of an2:cardiovascular-system)
+  continuous: "0 0 100 100",
+  fenestrated: "0 0 100 100",
+  sinusoidal: "0 0 100 100",
 };
 
 const LEGEND_SWATCHES = {
@@ -1997,6 +2001,75 @@ const LEGEND_SWATCHES = {
       <rect x="36" y="34" width="28" height="46" rx="4" fill="#C7D0DC" opacity="0.55" />
       <rect x="33" y="18" width="34" height="10" rx="2" fill={active ? ATLAS_COLORS.trunk : "#64748B"} stroke="#334155" strokeWidth="1" />
       <text x="50" y="92" textAnchor="middle" fontSize="7" fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#334155"}>GREY</text>
+    </g>
+  ),
+
+  // ---- Capillary types drill-down ----
+  // Three swatches mirroring the capillaryCrossSection helper inside
+  // the an2:capillary-types diagram. Each is a cross-section of a
+  // capillary wall: pale lumen inside, one red cell, a thin basement
+  // membrane outside, and the endothelial ring drawn to match the
+  // type — solid for continuous, dotted for fenestrated, broken for
+  // sinusoidal. The ring is the only thing that changes between them,
+  // which is the whole point of the diagram.
+  continuous: (active) => (
+    <g>
+      {/* Basement membrane — thin outer ring */}
+      <circle cx="50" cy="50" r="36" fill="none" stroke="#B8A89E" strokeWidth="1.4" opacity="0.7" />
+      {/* Endothelial cell ring — solid for continuous */}
+      <circle cx="50" cy="50" r="30" fill="none" stroke={active ? ATLAS_COLORS.trunk : "#C0392B"} strokeWidth="4" />
+      {/* Lumen — pale interior */}
+      <circle cx="50" cy="50" r="26" fill="#F4F2EE" opacity="0.9" />
+      {/* One red cell inside the lumen */}
+      <ellipse cx="50" cy="50" rx="11" ry="7" fill="#E53935" stroke="#8C1C12" strokeWidth="0.7" />
+    </g>
+  ),
+  fenestrated: (active) => (
+    <g>
+      {/* Basement membrane — thin outer ring */}
+      <circle cx="50" cy="50" r="36" fill="none" stroke="#B8A89E" strokeWidth="1.4" opacity="0.7" />
+      {/* Endothelial cell ring — dashed for fenestrated */}
+      <circle
+        cx="50"
+        cy="50"
+        r="30"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#C0392B"}
+        strokeWidth="4"
+        strokeDasharray="8 4"
+      />
+      {/* Lumen — pale interior */}
+      <circle cx="50" cy="50" r="26" fill="#F4F2EE" opacity="0.9" />
+      {/* One red cell inside the lumen */}
+      <ellipse cx="50" cy="50" rx="11" ry="7" fill="#E53935" stroke="#8C1C12" strokeWidth="0.7" />
+    </g>
+  ),
+  sinusoidal: (active) => (
+    <g>
+      {/* Basement membrane — thin outer ring */}
+      <circle cx="50" cy="50" r="36" fill="none" stroke="#B8A89E" strokeWidth="1.4" opacity="0.7" />
+      {/* Endothelial cell ring — broken arcs with large gaps */}
+      <path
+        d="M29,29 A30,30 0 0 1 71,29"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#C0392B"}
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+      <path
+        d="M71,71 A30,30 0 0 1 29,71"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#C0392B"}
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+      {/* Lumen — pale interior */}
+      <circle cx="50" cy="50" r="26" fill="#F4F2EE" opacity="0.9" />
+      {/* One red cell inside the lumen */}
+      <ellipse cx="50" cy="50" rx="11" ry="7" fill="#E53935" stroke="#8C1C12" strokeWidth="0.7" />
+      {/* A whole cell outside — the defining feature of a sinusoidal
+         capillary is that whole cells can pass through it */}
+      <circle cx="86" cy="50" r="4" fill="#E4DFFF" stroke="#8B5CF6" strokeWidth="1" />
     </g>
   ),
 };
