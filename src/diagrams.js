@@ -75,6 +75,7 @@ export const ATLAS_COURSE_NAMES = {
   hem: "Hematology I",
   ph2: "Physiology II",
   pat: "General Pathology",
+  an2: "Anatomy II",
 };
 
 /* ----------------------------- helpers ----------------------------- */
@@ -2593,6 +2594,237 @@ const atlasClottingCascade = ({
           <line x1={rightX - 44} y1={topY - 12} x2={rightX - 44} y2={rowXa - 22}
             stroke={edge} strokeWidth="0.8" strokeDasharray="3 4" opacity="0.4" />
         </g>
+      )}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Receptor — the cell-surface protein that is the body's own       */
+/* signalling molecule, and the largest drug-target class. Drawn as */
+/* a seven-transmembrane serpentine (GPCR-style) crossing the       */
+/* membrane seven times, with an extracellular ligand-binding        */
+/* pocket at the top and an intracellular G-protein coupling site    */
+/* at the bottom. The seven crossings are the molecular signature    */
+/* of the largest receptor family, and once a student sees them the  */
+/* shape is unmistakable the next time it appears - which is the     */
+/* whole point of drawing the primitive rather than a generic blob.  */
+/*                                                                   */
+/* The `occupancy` prop is what lets a single diagram show the four  */
+/* receptor-based drug actions without redrawing:                    */
+/*   "agonist"   — the drug (green) is bound in the pocket and a     */
+/*                 downstream arrow is drawn, showing activation.    */
+/*   "antagonist"— the drug (red) is bound in the pocket, no         */
+/*                 downstream arrow is drawn — blocked.              */
+/*   "partial"   — the drug (amber) is bound and a shorter, faded    */
+/*                 downstream arrow is drawn.                        */
+/*   "inverse"   — the drug (purple) is bound and a downward-out    */
+/*                 arrow is drawn, showing baseline suppression.     */
+/*   null        — empty pocket, resting receptor.                   */
+/*                                                                   */
+/* Used by any diagram that needs to show a drug acting on a        */
+/* receptor - the largest target class in clinical pharmacology.     */
+/* ---------------------------------------------------------------- */
+const atlasReceptor = ({
+  cx, cy, scale = 1,
+  occupancy = null,
+  highlight = false,
+}) => {
+  const edge = highlight ? ATLAS_COLORS.trunk : "#5B21B6";
+  const stroke = highlight ? 2.6 : 1.6;
+  // The seven-transmembrane serpentine is drawn as one continuous path
+  // that weaves back and forth across the membrane band. Each vertical
+  // segment is a "transmembrane helix"; each top/bottom bend is an
+  // extracellular or intracellular loop. This is the canonical GPCR
+  // topology diagram in every pharmacology textbook, at 100x smaller
+  // scale.
+  const T = 11;   // horizontal spacing between helices
+  const H = 34;   // total membrane band height
+  const W = T * 6; // span across all 7 helices
+  const x0 = -W / 2;
+  const yTop = -H / 2;
+  const yBot = H / 2;
+  const helixPath = [
+    `M${x0},${yBot}`,
+    `L${x0},${yTop}`,
+    `Q${x0 + T / 2},${yTop - 6} ${x0 + T},${yTop}`,
+    `L${x0 + T},${yBot}`,
+    `Q${x0 + T * 1.5},${yBot + 6} ${x0 + T * 2},${yBot}`,
+    `L${x0 + T * 2},${yTop}`,
+    `Q${x0 + T * 2.5},${yTop - 6} ${x0 + T * 3},${yTop}`,
+    `L${x0 + T * 3},${yBot}`,
+    `Q${x0 + T * 3.5},${yBot + 6} ${x0 + T * 4},${yBot}`,
+    `L${x0 + T * 4},${yTop}`,
+    `Q${x0 + T * 4.5},${yTop - 6} ${x0 + T * 5},${yTop}`,
+    `L${x0 + T * 5},${yBot}`,
+    `Q${x0 + T * 5.5},${yBot + 6} ${x0 + T * 6},${yBot}`,
+    `L${x0 + T * 6},${yTop}`,
+  ].join(" ");
+  // Drug colour follows its action, so a student reading the diagram
+  // does not have to check a key - the colour IS the message.
+  const drugColor = occupancy === "agonist" ? "#2F8F4E"
+                  : occupancy === "antagonist" ? "#C0392B"
+                  : occupancy === "partial" ? ATLAS_COLORS.trunk
+                  : occupancy === "inverse" ? "#8B5CF6"
+                  : null;
+  return (
+    <g transform={`translate(${cx},${cy}) scale(${scale})`}
+      className={highlight ? "atlas-pulse" : undefined}>
+      {/* Membrane band - two pale parallel lines, so the receptor reads
+         as sitting IN a membrane rather than floating. Very low opacity
+         so it never competes with the protein itself. */}
+      <rect x={x0 - 18} y={yTop} width={W + 36} height={H}
+        fill="#F5E8E0" opacity="0.35" />
+      <line x1={x0 - 18} y1={yTop} x2={x0 + W + 18} y2={yTop}
+        stroke="#B8A89E" strokeWidth="1" opacity="0.55" />
+      <line x1={x0 - 18} y1={yBot} x2={x0 + W + 18} y2={yBot}
+        stroke="#B8A89E" strokeWidth="1" opacity="0.55" />
+      {/* Outside / inside labels, tiny, so the student knows which side
+         is which without a legend lookup. */}
+      <text x={x0 - 22} y={yTop - 4} textAnchor="end"
+        fontSize="7.5" fontWeight="700" fill="var(--text-3)">outside</text>
+      <text x={x0 - 22} y={yBot + 9} textAnchor="end"
+        fontSize="7.5" fontWeight="700" fill="var(--text-3)">inside</text>
+
+      {/* The seven-transmembrane serpentine - the visual signature of
+         the receptor. Drawn on top of the membrane band. */}
+      <path d={helixPath} fill="none" stroke={edge}
+        strokeWidth={stroke * 2.4} strokeLinejoin="round" strokeLinecap="round" />
+
+      {/* Extracellular ligand-binding pocket - a shallow cup between
+         the first two extracellular loops, drawn as a filled arc so
+         it reads as a specific STRUCTURE the drug slots into, not
+         just "the top of the protein". */}
+      <path
+        d={`M${x0 + T * 0.6},${yTop - 10} Q${x0 + T * 1.5},${yTop - 20} ${x0 + T * 2.4},${yTop - 10}`}
+        fill="none" stroke={edge} strokeWidth={stroke * 1.6}
+        strokeLinecap="round" />
+
+      {/* The drug, when bound. Drawn as a small hexagon sitting in the
+         pocket, so it reads as "one specific molecule in one specific
+         site" - which is the whole story of drug-receptor binding. */}
+      {drugColor && (
+        <g>
+          <polygon
+            points={`${x0 + T * 1.5},${yTop - 18} ${x0 + T * 1.5 + 6},${yTop - 15} ${x0 + T * 1.5 + 6},${yTop - 8} ${x0 + T * 1.5},${yTop - 5} ${x0 + T * 1.5 - 6},${yTop - 8} ${x0 + T * 1.5 - 6},${yTop - 15}`}
+            fill={drugColor} stroke="#0A0F1A" strokeWidth="0.6" opacity="0.9" />
+          <text x={x0 + T * 1.5} y={yTop - 26} textAnchor="middle"
+            fontSize="7.5" fontWeight="700" fill={drugColor}>drug</text>
+        </g>
+      )}
+
+      {/* Intracellular G-protein coupling site, drawn only when the
+         receptor is activated - i.e. agonist or partial agonist. An
+         antagonist / inverse agonist bound receptor draws NO G-protein
+         arrow, because the whole point is that binding happened and
+         signalling did not. */}
+      {(occupancy === "agonist" || occupancy === "partial") && (
+        <g>
+          <circle cx={x0 + T * 3} cy={yBot + 20} r="7"
+            fill={occupancy === "agonist" ? "#2F8F4E" : ATLAS_COLORS.trunk}
+            opacity={occupancy === "agonist" ? 0.9 : 0.55}
+            stroke="#0A0F1A" strokeWidth="0.5" />
+          <text x={x0 + T * 3} y={yBot + 22} textAnchor="middle"
+            fontSize="6.5" fontWeight="800" fill="#0A0F1A">G</text>
+          <path
+            d={`M${x0 + T * 3},${yBot + 6} L${x0 + T * 3},${yBot + 12}`}
+            stroke={occupancy === "agonist" ? "#2F8F4E" : ATLAS_COLORS.trunk}
+            strokeWidth="2" strokeLinecap="round" opacity={occupancy === "agonist" ? 1 : 0.55} />
+          <polygon
+            points={`${x0 + T * 3},${yBot + 14} ${x0 + T * 3 - 3},${yBot + 10} ${x0 + T * 3 + 3},${yBot + 10}`}
+            fill={occupancy === "agonist" ? "#2F8F4E" : ATLAS_COLORS.trunk}
+            opacity={occupancy === "agonist" ? 1 : 0.55} />
+        </g>
+      )}
+
+      {/* Inverse-agonist downstream marker - a downward arrow, showing
+         suppression of baseline activity. */}
+      {occupancy === "inverse" && (
+        <g>
+          <path d={`M${x0 + T * 3},${yBot + 12} L${x0 + T * 3},${yBot + 20}`}
+            stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round" />
+          <polygon
+            points={`${x0 + T * 3},${yBot + 22} ${x0 + T * 3 - 3},${yBot + 18} ${x0 + T * 3 + 3},${yBot + 18}`}
+            fill="#8B5CF6" />
+        </g>
+      )}
+
+      {/* Antagonist marker - a small red X drawn just outside the pocket,
+         reinforcing visually that "bound but blocked" is different from
+         "not bound". Only drawn when occupancy is "antagonist". */}
+      {occupancy === "antagonist" && (
+        <g>
+          <line x1={x0 + T * 1.5 - 4} y1={yTop - 3} x2={x0 + T * 1.5 + 4} y2={yTop + 5}
+            stroke="#C0392B" strokeWidth="1.8" strokeLinecap="round" />
+          <line x1={x0 + T * 1.5 + 4} y1={yTop - 3} x2={x0 + T * 1.5 - 4} y2={yTop + 5}
+            stroke="#C0392B" strokeWidth="1.8" strokeLinecap="round" />
+        </g>
+      )}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Drug — a single small molecule, drawn as a hexagon carrying a    */
+/* short side-chain, floating in solution or docked at a target.     */
+/* The hexagon + side-chain is the universal shorthand for "a small  */
+/* organic drug molecule" in every pharmacology diagram, and drawing */
+/* the drug as a distinct visual object (rather than "a circle")    */
+/* makes the interaction between drug and target legible at tile    */
+/* size, which matters because most of this course is about that    */
+/* interaction.                                                      */
+/*                                                                  */
+/* The `action` prop picks the colour, matching the convention set  */
+/* by atlasReceptor's `occupancy` prop:                              */
+/*   "agonist"   — green — activates the target                     */
+/*   "antagonist"— red   — blocks the target                        */
+/*   "partial"   — amber — weakly activates                          */
+/*   "inverse"   — purple— suppresses baseline activity              */
+/*   "inhibit"   — red   — blocks an enzyme (used for enzymes)       */
+/*   "block"     — red   — blocks a channel or transporter           */
+/*   null        — slate — a drug with no action assigned yet        */
+/*                                                                  */
+/* A tiny `label` prop prints text above the drug, for the cases    */
+/* where the specific drug name is the point (aspirin, statins...).  */
+/* Used by any diagram that needs to show a specific drug acting on  */
+/* a specific target.                                                 */
+/* ---------------------------------------------------------------- */
+const atlasDrug = ({
+  cx, cy, scale = 1,
+  action = null,
+  label,
+  highlight = false,
+}) => {
+  const color = action === "agonist" ? "#2F8F4E"
+              : action === "antagonist" ? "#C0392B"
+              : action === "partial" ? ATLAS_COLORS.trunk
+              : action === "inverse" ? "#8B5CF6"
+              : action === "inhibit" ? "#C0392B"
+              : action === "block" ? "#C0392B"
+              : "#64748B";
+  const stroke = highlight ? "#F5B93F" : "#0A0F1A";
+  const r = 10;
+  // Hexagon vertices, computed once.
+  const hex = Array.from({ length: 6 }, (_, i) => {
+    const a = (Math.PI / 3) * i - Math.PI / 2;
+    return `${r * Math.cos(a)},${r * Math.sin(a)}`;
+  }).join(" ");
+  return (
+    <g transform={`translate(${cx},${cy}) scale(${scale})`}
+      className={highlight ? "atlas-pulse" : undefined}>
+      {/* Small side-chain stub, giving the drug a slightly irregular
+         outline so it doesn't read as a perfect geometric hexagon.
+         Real drugs are lumpy; the stub is a one-line reminder of that. */}
+      <line x1={r * 0.8} y1={-r * 0.5} x2={r * 1.5} y2={-r * 0.5}
+        stroke={color} strokeWidth="3" strokeLinecap="round" />
+      <circle cx={r * 1.7} cy={-r * 0.5} r="2.5" fill={color} stroke="#0A0F1A" strokeWidth="0.5" />
+      {/* Hexagon body */}
+      <polygon points={hex} fill={color} stroke={stroke}
+        strokeWidth={highlight ? 2 : 1} opacity="0.92" />
+      {/* Label above the drug */}
+      {label && (
+        <text x="0" y={-r - 8} textAnchor="middle"
+          fontSize="8" fontWeight="700" fill={color}>{label}</text>
       )}
     </g>
   );
@@ -6395,7 +6627,7 @@ export const DIAGRAMS = {
     id: "an2:cardiovascular-system",
     type: "diagram",
     title: "The Cardiovascular System — Pipes, Pressure, and Flow",
-    topic: { courseId: "an2", topicIndex: 10 },
+    topic: { courseId: "an2", topicIndex: 8 },
     parent: null,
     summary: "The heart is only half of the cardiovascular system. The other half is the vessel network that delivers blood to every tissue and brings it back — arteries that carry blood away under pressure, capillaries that are one cell thick and allow exchange, and veins that return blood to the heart at low pressure with the help of valves and muscle pumps. Blood pressure is the product of how much blood the heart pumps and how strongly the arterioles resist it, and the body adjusts both constantly. The lymphatic system runs alongside it all, returning the fluid that leaks out of the capillaries.",
     labels: [

@@ -206,6 +206,11 @@ const LEGEND_VIEWBOXES = {
   continuous: "0 0 100 100",
   fenestrated: "0 0 100 100",
   sinusoidal: "0 0 100 100",
+  // an2:cardiovascular-system labels
+  artery: "0 0 100 100",
+  vein: "0 0 100 100",
+  microcirc: "0 0 100 100",
+  lymphatics: "0 0 100 100",
 };
 
 const LEGEND_SWATCHES = {
@@ -2070,6 +2075,86 @@ const LEGEND_SWATCHES = {
       {/* A whole cell outside — the defining feature of a sinusoidal
          capillary is that whole cells can pass through it */}
       <circle cx="86" cy="50" r="4" fill="#E4DFFF" stroke="#8B5CF6" strokeWidth="1" />
+    </g>
+  ),
+
+  // ---- an2:cardiovascular-system labels ----
+  // Four swatches for the label ids that were introduced by
+  // an2:cardiovascular-system but never given swatches (the rule
+  // book requires every new label id to ship with one). Each is
+  // drawn to match the shape it points at inside that diagram, in
+  // the same visual language as the primitives used there.
+
+  // Arteries — a cross-section with a thick muscular wall. The
+  // star feature is wall thickness: arteries have a lot more of it
+  // than veins or capillaries, and that difference is the point.
+  artery: (active) => (
+    <g>
+      {/* Outer wall — thick muscular ring, crimson */}
+      <circle cx="50" cy="50" r="34" fill="none" stroke={active ? ATLAS_COLORS.trunk : "#C0392B"} strokeWidth="12" />
+      {/* Endothelial lining — a thin darker line inside the wall */}
+      <circle cx="50" cy="50" r="27" fill="none" stroke="#8C1C12" strokeWidth="1" opacity="0.5" />
+      {/* Lumen — pale interior */}
+      <circle cx="50" cy="50" r="25" fill="#F4F2EE" opacity="0.95" />
+      {/* Two red cells inside the lumen, showing the vessel is a conduit */}
+      <ellipse cx="44" cy="50" rx="7" ry="4.5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.6" />
+      <ellipse cx="60" cy="50" rx="7" ry="4.5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.6" />
+    </g>
+  ),
+
+  // Veins — same cross-section language but thin-walled, blue, with
+  // a one-way valve glyph below. The valve is what defines a vein:
+  // arteries don't need one, veins can't function without one.
+  vein: (active) => (
+    <g>
+      {/* Outer wall — thin blue ring */}
+      <circle cx="50" cy="42" r="26" fill="none" stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"} strokeWidth="5" />
+      {/* Lumen — pale interior */}
+      <circle cx="50" cy="42" r="23" fill="#F4F2EE" opacity="0.95" />
+      {/* One red cell inside, plus one blue cell showing return flow */}
+      <ellipse cx="42" cy="42" rx="6" ry="4" fill="#2D7BFF" stroke="#123F9E" strokeWidth="0.6" />
+      <ellipse cx="58" cy="42" rx="6" ry="4" fill="#2D7BFF" stroke="#123F9E" strokeWidth="0.6" />
+      {/* One-way valve — two leaflets meeting in a V, the visual
+         signature of a vein. Below the cross-section, small. */}
+      <line x1="36" y1="82" x2="50" y2="72" stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"} strokeWidth="3" strokeLinecap="round" />
+      <line x1="64" y1="82" x2="50" y2="72" stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"} strokeWidth="3" strokeLinecap="round" />
+    </g>
+  ),
+
+  // Microcirculation — a capillary with two opposing forces drawn
+  // explicitly. Push-out arrow at the arterial end (hydrostatic),
+  // pull-in arrow at the venous end (osmotic). Matches the
+  // step-7 Starling-forces inset in the parent diagram.
+  microcirc: (active) => (
+    <g>
+      {/* Capillary tube — a single thin red stroke */}
+      <line x1="14" y1="50" x2="86" y2="50" stroke="#E53935" strokeWidth="8" strokeLinecap="round" />
+      <line x1="14" y1="50" x2="86" y2="50" stroke="#8C1C12" strokeWidth="1" strokeLinecap="round" opacity="0.4" transform="translate(0,-2)" />
+      {/* Push-out arrow at the left (arterial) end */}
+      <line x1="28" y1="50" x2="28" y2="30" stroke="#2F6FED" strokeWidth="2.4" strokeLinecap="round" />
+      <polygon points="28,26 24,33 32,33" fill="#2F6FED" />
+      {/* Pull-in arrow at the right (venous) end */}
+      <line x1="72" y1="30" x2="72" y2="50" stroke="#8B5CF6" strokeWidth="2.4" strokeLinecap="round" />
+      <polygon points="72,54 68,47 76,47" fill="#8B5CF6" />
+    </g>
+  ),
+
+  // Lymphatic drainage — a dashed blue lymph vessel feeding into a
+  // small lymph node. Matches the atlasVessel(dashed) + atlasLymphNode
+  // pairing used inside the an2:cardiovascular-system diagram itself.
+  lymphatics: (active) => (
+    <g>
+      {/* Lymph vessel — dashed blue, entering from the left */}
+      <path d="M10,50 Q26,44 40,50" fill="none" stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"} strokeWidth="5" strokeDasharray="5 4" strokeLinecap="round" />
+      {/* Lymph node — bean shape with internal follicles, matching the
+         atlasLymphNode primitive's visual language */}
+      <ellipse cx="60" cy="50" rx="22" ry="15" fill={active ? ATLAS_COLORS.trunk : ATLAS_COLORS.lymphoid} opacity="0.75" stroke="#123F9E" strokeWidth="1.2" />
+      <ellipse cx="60" cy="50" rx="11" ry="7" fill="#0A0F1A" opacity="0.22" />
+      {[[52, 45], [54, 50], [52, 55], [63, 44], [63, 56], [70, 47], [70, 53]].map(([fx, fy], i) => (
+        <circle key={i} cx={fx} cy={fy} r="1.4" fill="#0A1F6B" opacity="0.55" />
+      ))}
+      {/* Efferent vessel — a short dash leaving on the right */}
+      <path d="M82,50 Q88,50 92,50" fill="none" stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"} strokeWidth="4" strokeDasharray="4 3" strokeLinecap="round" opacity="0.8" />
     </g>
   ),
 };
