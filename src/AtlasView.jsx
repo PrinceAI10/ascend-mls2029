@@ -211,7 +211,7 @@ const LEGEND_VIEWBOXES = {
   vein: "0 0 100 100",
   microcirc: "0 0 100 100",
   lymphatics: "0 0 100 100",
-  // pha:2 (pharmacology i) labels
+   // pha:2 (pharmacology i) labels
   target: "0 0 100 100",
   receptor: "0 0 100 100",
   ionchannel: "0 0 100 100",
@@ -221,6 +221,58 @@ const LEGEND_VIEWBOXES = {
   conform: "0 0 100 100",
   cascade: "0 0 100 100",
   clinical: "0 0 100 100",
+  // pha:3 (GPCR signalling) labels — the ones not shared with pha:2
+  ligand: "0 0 100 100",
+  gprotein: "0 0 100 100",
+  resting: "0 0 100 100",
+  activation: "0 0 100 100",
+  dissociation: "0 0 100 100",
+  effector: "0 0 100 100",
+  secondmessenger: "0 0 100 100",
+  response: "0 0 100 100",
+  termination: "0 0 100 100",
+  // pha:4 (dose-response curve) labels
+  curve: "0 0 100 100",
+  shape: "0 0 100 100",
+  ec50: "0 0 100 100",
+  emax: "0 0 100 100",
+  ceiling: "0 0 100 100",
+  competitive: "0 0 100 100",
+  noncompetitive: "0 0 100 100",
+  selectivity: "0 0 100 100",
+  ti: "0 0 100 100",
+  tolerance: "0 0 100 100",
+  // pha:5 (pharmacokinetics) labels
+  absorption: "0 0 100 100",
+  route: "0 0 100 100",
+  membrane: "0 0 100 100",
+  firstpass: "0 0 100 100",
+  bioavail: "0 0 100 100",
+  distribution: "0 0 100 100",
+  metabolism: "0 0 100 100",
+  excretion: "0 0 100 100",
+  halflife: "0 0 100 100",
+  // pha:4 (dose-response curve) labels
+  curve: "0 0 100 100",
+  shape: "0 0 100 100",
+  ec50: "0 0 100 100",
+  emax: "0 0 100 100",
+  ceiling: "0 0 100 100",
+  competitive: "0 0 100 100",
+  noncompetitive: "0 0 100 100",
+  selectivity: "0 0 100 100",
+  ti: "0 0 100 100",
+  tolerance: "0 0 100 100",
+  // pha:5 (pharmacokinetics) labels
+  absorption: "0 0 100 100",
+  route: "0 0 100 100",
+  membrane: "0 0 100 100",
+  firstpass: "0 0 100 100",
+  bioavail: "0 0 100 100",
+  distribution: "0 0 100 100",
+  metabolism: "0 0 100 100",
+  excretion: "0 0 100 100",
+  halflife: "0 0 100 100",
   // pha:6 (adrenergic) + pha:7 (cholinergic) labels
   synthesis: "0 0 100 100",
   storage: "0 0 100 100",
@@ -2771,6 +2823,694 @@ const LEGEND_SWATCHES = {
         fontStyle="italic" fill="var(--text-3)">milliseconds · fastest enzyme</text>
     </g>
   ),
+
+  // ============================================================
+  // pha:3 (GPCR Signalling) swatches
+  // ============================================================
+  // Every swatch below mirrors a step in the GPCR signalling cycle
+  // that pha:3 walks through, drawn in the same visual language as
+  // the atlasGPCR and atlasSecondMessenger primitives in diagrams.js
+  // — the serpentine, the alpha/beta/gamma subunits, the effector
+  // box, the second-messenger node. Only `receptor` is shared with
+  // pha:2 (the same serpentine serves both topics); everything else
+  // is specific to this cycle.
+
+  // Ligand — a small hexagonal molecule approaching an open binding
+  // pocket, matching the drug hexagon used across the pharmacology
+  // family. Placed below the pocket so the "approaching" beat reads
+  // even at tile size.
+  ligand: (active) => (
+    <g>
+      {/* The open binding pocket — a shallow arc at the top */}
+      <path
+        d="M30,26 Q50,14 70,26"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#5B21B6"}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+      <text x="50" y="46" textAnchor="middle" fontSize="7"
+        fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "var(--text-2)"}>pocket</text>
+      {/* The ligand — a small hexagon below, arrow pointing up to the pocket */}
+      <polygon
+        points="44,66 50,62 56,66 56,74 50,78 44,74"
+        fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"}
+        stroke="#0A0F1A"
+        strokeWidth="0.8"
+      />
+      <path
+        d="M50,58 L50,50"
+        stroke={active ? ATLAS_COLORS.trunk : "#2F8F4E"}
+        strokeWidth="1.8"
+        strokeDasharray="3 2"
+        strokeLinecap="round"
+      />
+      <polygon
+        points="50,46 47,52 53,52"
+        fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"}
+      />
+      <text x="50" y="92" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">the signalling molecule</text>
+    </g>
+  ),
+
+  // G-protein — the heterotrimer. Alpha (purple) and beta/gamma (blue)
+  // drawn as two ellipses side by side, with the alpha carrying a GDP
+  // tag underneath. This is the same shape the student sees in the
+  // hero at pha:3, step 2.
+  gprotein: (active) => (
+    <g>
+      <ellipse cx="36" cy="40" rx="15" ry="11"
+        fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+        stroke="#0A0F1A" strokeWidth="0.8" />
+      <text x="36" y="44" textAnchor="middle" fontSize="10"
+        fontWeight="800" fill="#0A0F1A">a</text>
+      <ellipse cx="66" cy="40" rx="15" ry="11"
+        fill={active ? ATLAS_COLORS.trunk : "#2F6FED"}
+        stroke="#0A0F1A" strokeWidth="0.8" />
+      <text x="66" y="44" textAnchor="middle" fontSize="10"
+        fontWeight="800" fill="#fff">bg</text>
+      <text x="36" y="64" textAnchor="middle" fontSize="7"
+        fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#5B21B6"}>GDP</text>
+      <text x="50" y="86" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">heterotrimer · alpha + beta/gamma</text>
+    </g>
+  ),
+
+  // Resting state — intact G-protein with GDP still in place, drawn
+  // inside a dashed ring to show "nothing is signalling". Matches the
+  // resting state the hero shows at step 3.
+  resting: (active) => (
+    <g>
+      <circle
+        cx="50" cy="46" r="30"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#64748B"}
+        strokeWidth="2"
+        strokeDasharray="5 4"
+      />
+      <ellipse cx="40" cy="44" rx="13" ry="9"
+        fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+        stroke="#0A0F1A" strokeWidth="0.8" opacity="0.9" />
+      <text x="40" y="48" textAnchor="middle" fontSize="9"
+        fontWeight="800" fill="#0A0F1A">a</text>
+      <ellipse cx="62" cy="44" rx="11" ry="9"
+        fill={active ? ATLAS_COLORS.trunk : "#2F6FED"}
+        stroke="#0A0F1A" strokeWidth="0.8" opacity="0.9" />
+      <text x="50" y="76" textAnchor="middle" fontSize="8"
+        fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#5B21B6"}>GDP</text>
+      <text x="50" y="92" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">off · nothing signalling</text>
+    </g>
+  ),
+
+  // Activation — GDP out, GTP in. Alpha subunit drawn with a GTP tag
+  // and a green accent, matching the way atlasGPCR draws the active
+  // alpha. A short arrow shows GDP being replaced.
+  activation: (active) => (
+    <g>
+      <ellipse cx="42" cy="42" rx="18" ry="12"
+        fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"}
+        stroke="#0A0F1A" strokeWidth="0.8" />
+      <text x="42" y="46" textAnchor="middle" fontSize="10"
+        fontWeight="800" fill="#0A0F1A">a</text>
+      <text x="42" y="64" textAnchor="middle" fontSize="8"
+        fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"}>GTP</text>
+      <path
+        d="M66,42 L78,42"
+        stroke={active ? ATLAS_COLORS.trunk : "#2F8F4E"}
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <polygon points="84,42 76,38 76,46"
+        fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"} />
+      <text x="50" y="88" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">GDP out · GTP in</text>
+    </g>
+  ),
+
+  // Dissociation — alpha (left, purple-green) splitting from
+  // beta/gamma (right, blue), with a dashed line between them.
+  dissociation: (active) => (
+    <g>
+      <ellipse cx="28" cy="46" rx="15" ry="10"
+        fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+        stroke="#0A0F1A" strokeWidth="0.8" />
+      <text x="28" y="50" textAnchor="middle" fontSize="9"
+        fontWeight="800" fill="#0A0F1A">a</text>
+      <ellipse cx="72" cy="46" rx="15" ry="10"
+        fill={active ? ATLAS_COLORS.trunk : "#2F6FED"}
+        stroke="#0A0F1A" strokeWidth="0.8" />
+      <text x="72" y="50" textAnchor="middle" fontSize="9"
+        fontWeight="800" fill="#fff">bg</text>
+      <path
+        d="M45,46 L55,46"
+        stroke="var(--text-3)"
+        strokeWidth="1.4"
+        strokeDasharray="3 2"
+      />
+      <text x="50" y="82" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">two halves go to work</text>
+    </g>
+  ),
+
+  // Effector — the enzyme box the alpha subunit switches on. Drawn as
+  // a filled rounded rect with EFFECTOR inside and the enzyme name
+  // under it, matching the shape the student sees at pha:3, step 6.
+  effector: (active) => (
+    <g>
+      <rect
+        x="12" y="30" width="76" height="40" rx="10"
+        fill="var(--bg-3)"
+        stroke={active ? ATLAS_COLORS.trunk : "#5B21B6"}
+        strokeWidth="2"
+      />
+      <text x="50" y="50" textAnchor="middle" fontSize="10"
+        fontWeight="800" fill={active ? ATLAS_COLORS.trunk : "#5B21B6"}>EFFECTOR</text>
+      <text x="50" y="62" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">adenylate cyclase</text>
+      <text x="50" y="88" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">alpha turns it on</text>
+    </g>
+  ),
+
+  // Second messenger — a filled rounded box with the cAMP label big
+  // in the middle and the companion messengers as a small caption.
+  // Matches atlasSecondMessenger's node exactly.
+  secondmessenger: (active) => (
+    <g>
+      <rect
+        x="14" y="28" width="72" height="44" rx="10"
+        fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+        stroke={active ? ATLAS_COLORS.trunk : "#5B21B6"}
+        strokeWidth="2"
+        opacity="0.92"
+      />
+      <text x="50" y="52" textAnchor="middle" fontSize="15"
+        fontWeight="800" fill="#fff">cAMP</text>
+      <text x="50" y="65" textAnchor="middle" fontSize="7"
+        fontWeight="700" fill="#fff" opacity="0.9">IP3 · DAG</text>
+      <text x="50" y="90" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">the signal inside the cell</text>
+    </g>
+  ),
+
+  // Cellular response — the end-effect box, matching the shape and
+  // wording the hero shows at pha:3, step 8.
+  response: (active) => (
+    <g>
+      <rect
+        x="10" y="28" width="80" height="42" rx="10"
+        fill="var(--bg-2)"
+        stroke={active ? ATLAS_COLORS.trunk : "#5B21B6"}
+        strokeWidth="2"
+      />
+      <text x="50" y="48" textAnchor="middle" fontSize="9"
+        fontWeight="800" fill={active ? ATLAS_COLORS.trunk : "#5B21B6"}>RESPONSE</text>
+      <text x="50" y="60" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">enzyme · channels · genes</text>
+      <text x="50" y="88" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">the drug's actual effect</text>
+    </g>
+  ),
+
+  // Termination — the alpha subunit with GTP → GDP labelled below it,
+  // matching the last beat of the GPCR cycle. The GTP → GDP text is
+  // the whole message of this swatch, so it's drawn large and amber.
+  termination: (active) => (
+    <g>
+      <ellipse
+        cx="50" cy="42" rx="22" ry="14"
+        fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+        stroke="#0A0F1A"
+        strokeWidth="0.8"
+      />
+      <text x="50" y="47" textAnchor="middle" fontSize="12"
+        fontWeight="800" fill="#0A0F1A">a</text>
+      <text x="50" y="72" textAnchor="middle" fontSize="9"
+        fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#5B21B6"}>
+        GTP → GDP
+      </text>
+      <text x="50" y="90" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">built-in off switch</text>
+    </g>
+  ),
+
+  // ============================================================
+  // pha:4 (Dose-response curve) swatches
+  // ============================================================
+  // Every swatch below draws a mini version of the sigmoid curve
+  // the student sees on the canvas, so the tile teaches the shape
+  // at the same time as the label. They use the same red/blue/amber
+  // palette as atlasDoseResponseCurve itself, so a student clicking
+  // back and forth between the tile and the plot sees one visual
+  // language, not two.
+
+  // The curve itself — one clean sigmoid, amber, no overlays.
+  curve: (active) => (
+    <g>
+      <path
+        d="M14,86 Q20,86 30,84 Q42,80 50,60 Q58,40 70,26 Q80,18 86,16"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"}
+        strokeWidth="2.6"
+        strokeLinecap="round"
+      />
+      <circle cx="50" cy="60" r="3" fill={active ? ATLAS_COLORS.trunk : "#2F6FED"} />
+      <text x="50" y="98" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">the sigmoid</text>
+    </g>
+  ),
+
+  // The sigmoid shape, with the three phases annotated. Flat-steep-flat
+  // is the message of this tile.
+  shape: (active) => (
+    <g>
+      <path
+        d="M14,86 Q20,86 30,84 Q42,80 50,60 Q58,40 70,26 Q80,18 86,16"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+      <text x="22" y="82" fontSize="6" fontWeight="700" fill="var(--text-3)">flat</text>
+      <text x="50" y="56" fontSize="6" fontWeight="700" fill="#8B5CF6">steep</text>
+      <text x="80" y="22" fontSize="6" fontWeight="700" fill="var(--text-3)">flat</text>
+      <text x="50" y="98" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">S-shape</text>
+    </g>
+  ),
+
+  // EC50 — the same curve, with the 50% line drawn in and the crossing
+  // marked with a dot.
+  ec50: (active) => (
+    <g>
+      <path
+        d="M14,86 Q20,86 30,84 Q42,80 50,60 Q58,40 70,26 Q80,18 86,16"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+      <line x1="14" y1="60" x2="86" y2="60"
+        stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"}
+        strokeWidth="0.9" strokeDasharray="3 3" opacity="0.75" />
+      <line x1="50" y1="60" x2="50" y2="86"
+        stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"}
+        strokeWidth="0.9" strokeDasharray="3 3" opacity="0.75" />
+      <circle cx="50" cy="60" r="3" fill={active ? ATLAS_COLORS.trunk : "#2F6FED"} />
+      <text x="56" y="56" fontSize="7" fontWeight="800"
+        fill={active ? ATLAS_COLORS.trunk : "#2F6FED"}>EC50</text>
+      <text x="50" y="98" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">potency</text>
+    </g>
+  ),
+
+  // Emax — the same curve reaching full height, with the ceiling
+  // labelled. Uses the green accent atlasDoseResponseCurve uses for
+  // "this is the maximum".
+  emax: (active) => (
+    <g>
+      <path
+        d="M14,86 Q20,86 30,84 Q42,80 50,60 Q58,40 70,26 Q80,18 86,16"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#16A34A"}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+      <line x1="14" y1="16" x2="86" y2="16"
+        stroke={active ? ATLAS_COLORS.trunk : "#16A34A"}
+        strokeWidth="0.9" strokeDasharray="3 3" opacity="0.75" />
+      <text x="80" y="12" fontSize="7" fontWeight="800"
+        fill={active ? ATLAS_COLORS.trunk : "#16A34A"}>Emax</text>
+      <text x="50" y="98" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">efficacy</text>
+    </g>
+  ),
+
+  // Ceiling effect — the top portion of the curve shaded, showing
+  // "no additional benefit past here". Crimson, matching the render.
+  ceiling: (active) => (
+    <g>
+      <rect x="14" y="14" width="72" height="12" rx="2"
+        fill={active ? ATLAS_COLORS.trunk : "#C0392B"} opacity="0.18" />
+      <path
+        d="M14,86 Q20,86 30,84 Q42,80 50,60 Q58,40 70,26 Q80,18 86,16"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#C0392B"}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+      <text x="50" y="22" textAnchor="middle" fontSize="6"
+        fontWeight="700" fill="#C0392B">no benefit</text>
+      <text x="50" y="98" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">the ceiling</text>
+    </g>
+  ),
+
+  // Competitive antagonism — the base curve in amber, plus a dashed
+  // copy shifted right (same height). The rightward shift is the whole
+  // message of this swatch.
+  competitive: (active) => (
+    <g>
+      <path
+        d="M14,86 Q20,86 30,84 Q42,80 50,60 Q58,40 70,26 Q80,18 86,16"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#64748B"}
+        strokeWidth="2"
+        strokeLinecap="round"
+        opacity="0.55"
+      />
+      <path
+        d="M24,86 Q34,86 42,84 Q52,80 60,60 Q68,40 78,26 Q84,20 86,18"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeDasharray="5 3"
+      />
+      <text x="66" y="98" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">shifts right</text>
+    </g>
+  ),
+
+  // Non-competitive antagonism — the base curve plus a dashed copy at
+  // the same position but reduced height. The drop is the message.
+  noncompetitive: (active) => (
+    <g>
+      <path
+        d="M14,86 Q20,86 30,84 Q42,80 50,60 Q58,40 70,26 Q80,18 86,16"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#64748B"}
+        strokeWidth="2"
+        strokeLinecap="round"
+        opacity="0.55"
+      />
+      <path
+        d="M14,86 Q20,86 30,84 Q42,82 50,70 Q58,56 70,48 Q80,44 86,42"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#C0392B"}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeDasharray="5 3"
+      />
+      <text x="50" y="98" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">drops Emax</text>
+    </g>
+  ),
+
+  // Selectivity — the on-target curve (amber) plus a second curve
+  // far to the right (crimson), with the gap between them labelled.
+  selectivity: (active) => (
+    <g>
+      <path
+        d="M14,86 Q20,86 26,84 Q34,80 40,60 Q46,40 54,26 Q64,18 86,16"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : ATLAS_COLORS.trunk}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+      <path
+        d="M44,86 Q54,86 62,84 Q72,80 78,60 Q82,44 86,32"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#C0392B"}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeDasharray="4 3"
+      />
+      <path d="M46,50 L74,50" stroke="var(--text-3)"
+        strokeWidth="1" strokeDasharray="3 3" />
+      <text x="60" y="46" textAnchor="middle" fontSize="6" fontWeight="700"
+        fill="var(--text-2)">selectivity</text>
+      <text x="50" y="98" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">on-target vs off-target</text>
+    </g>
+  ),
+
+  // Therapeutic index — two curves side by side, the gap between their
+  // midpoints labelled. Amber is effect, crimson is toxicity.
+  ti: (active) => (
+    <g>
+      <path
+        d="M14,86 Q20,86 26,84 Q34,80 40,60 Q46,40 56,26 Q66,18 86,16"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#16A34A"}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+      <path
+        d="M14,86 Q20,86 30,84 Q42,80 52,60 Q60,40 70,26 Q80,18 86,16"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#C0392B"}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeDasharray="4 3"
+      />
+      <path d="M40,62 L52,62" stroke={ATLAS_COLORS.trunk}
+        strokeWidth="2.4" strokeLinecap="round" />
+      <text x="46" y="58" textAnchor="middle" fontSize="6" fontWeight="700"
+        fill={ATLAS_COLORS.trunk}>TI</text>
+      <text x="50" y="98" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">TD50 / ED50</text>
+    </g>
+  ),
+
+  // Tolerance — three curves: first dose, after weeks, after months.
+  // Each one shifted right and lower than the last.
+  tolerance: (active) => (
+    <g>
+      <path
+        d="M14,86 Q20,86 24,84 Q30,80 36,60 Q44,40 54,26 Q66,18 86,16"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#64748B"}
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        opacity="0.45"
+      />
+      <path
+        d="M14,86 Q20,86 26,84 Q34,80 42,60 Q50,44 60,34 Q72,28 86,26"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#64748B"}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeDasharray="4 3"
+        opacity="0.7"
+      />
+      <path
+        d="M14,86 Q22,86 30,84 Q40,80 50,68 Q60,58 70,50 Q80,46 86,44"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : ATLAS_COLORS.trunk}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+      <text x="50" y="98" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">curve drifts</text>
+    </g>
+  ),
+
+  // ============================================================
+  // pha:5 (Pharmacokinetics) swatches
+  // ============================================================
+  // Every swatch below mirrors a stage of the ADME diagram: a
+  // tablet (route), a gut wall with villi (absorption), a capillary
+  // lumen with a membrane (membrane), a liver with a portal arrow
+  // (first-pass), an F label (bioavailability), a spreading Vd
+  // (distribution), a liver with phase I/II (metabolism), a
+  // glomerulus (excretion), and a decay curve (half-life).
+
+  // Route — a small tablet with a few route names below it. The tablet
+  // is the same shape used everywhere else in the pharmacology family.
+  route: (active) => (
+    <g>
+      <ellipse cx="50" cy="34" rx="22" ry="12"
+        fill={active ? ATLAS_COLORS.trunk : "#F5A8A0"}
+        stroke="#8C1C12" strokeWidth="1.4" />
+      <line x1="34" y1="34" x2="66" y2="34"
+        stroke="#8C1C12" strokeWidth="0.9" opacity="0.6" />
+      <text x="50" y="58" textAnchor="middle" fontSize="7" fontWeight="700"
+        fill="var(--text-2)">oral · IV · IM</text>
+      <text x="50" y="70" textAnchor="middle" fontSize="7" fontWeight="700"
+        fill="var(--text-2)">SC · SL · inh</text>
+      <text x="50" y="88" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">how the drug gets in</text>
+    </g>
+  ),
+
+  // Absorption — a gut wall with villi, and a drug molecule crossing
+  // from the lumen above into the blood below.
+  absorption: (active) => (
+    <g>
+      <rect x="10" y="24" width="80" height="34" rx="4"
+        fill="var(--bg-3)" stroke="#C0392B" strokeWidth="1.2" />
+      <text x="50" y="44" textAnchor="middle" fontSize="7" fontWeight="700"
+        fill="#C0392B">gut lumen</text>
+      {[22, 34, 46, 58, 70].map((vx, i) => (
+        <path key={i}
+          d={`M${vx},58 Q${vx + 2},66 ${vx + 4},58`}
+          fill="none" stroke="#C0392B" strokeWidth="1.4" strokeLinecap="round" />
+      ))}
+      {/* A drug molecule crossing the wall */}
+      <polygon points="44,60 50,56 56,60 56,68 50,72 44,68"
+        fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"}
+        stroke="#0A0F1A" strokeWidth="0.6" />
+      <path d="M50,78 L50,84" stroke={active ? ATLAS_COLORS.trunk : "#2F8F4E"}
+        strokeWidth="1.4" strokeDasharray="2 2" strokeLinecap="round" />
+      <polygon points="50,88 47,83 53,83"
+        fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"} />
+      <text x="50" y="98" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">into the blood</text>
+    </g>
+  ),
+
+  // Membrane — a lipid bilayer with a small drug crossing. The two
+  // rows of circles are the phospholipid heads; the drug is drawn as
+  // the same hexagon used everywhere else.
+  membrane: (active) => (
+    <g>
+      {[18, 28, 38, 48, 58, 68, 78].map((hx, i) => (
+        <circle key={`top${i}`} cx={hx} cy="34" r="4"
+          fill="#F5B93F" stroke="#8B6410" strokeWidth="0.6" opacity="0.7" />
+      ))}
+      {[18, 28, 38, 48, 58, 68, 78].map((hx, i) => (
+        <circle key={`bot${i}`} cx={hx} cy="52" r="4"
+          fill="#F5B93F" stroke="#8B6410" strokeWidth="0.6" opacity="0.7" />
+      ))}
+      <line x1="10" y1="43" x2="90" y2="43"
+        stroke="#B8A89E" strokeWidth="0.6" opacity="0.6" />
+      <polygon points="44,32 50,28 56,32 56,40 50,44 44,40"
+        fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"}
+        stroke="#0A0F1A" strokeWidth="0.6"
+        transform="translate(0,14)" />
+      <text x="50" y="74" textAnchor="middle" fontSize="7" fontWeight="700"
+        fill="var(--text-2)">lipid bilayer</text>
+      <text x="50" y="88" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">lipophilic drugs cross</text>
+    </g>
+  ),
+
+  // First-pass — the liver with a portal-vein arrow going in and a
+  // smaller systemic arrow coming out. The "gut → liver → heart"
+  // three-stage beat, drawn in one tile.
+  firstpass: (active) => (
+    <g>
+      <ellipse cx="50" cy="42" rx="26" ry="16"
+        fill={active ? "#E53935" : "#C0392B"}
+        stroke="#8C1C12" strokeWidth="1.4" />
+      <text x="50" y="46" textAnchor="middle" fontSize="8" fontWeight="700"
+        fill="#fff">liver</text>
+      <path d="M14,30 L28,32" stroke="#2F6FED" strokeWidth="2"
+        strokeLinecap="round" />
+      <polygon points="28,32 22,28 22,36" fill="#2F6FED" />
+      <text x="14" y="26" fontSize="5.5" fill="#2F6FED" textAnchor="middle">portal</text>
+      <path d="M72,52 L86,52" stroke="#2F6FED" strokeWidth="2"
+        strokeLinecap="round" />
+      <polygon points="86,52 80,48 80,56" fill="#2F6FED" />
+      <text x="86" y="64" fontSize="5.5" fill="#2F6FED" textAnchor="middle">systemic</text>
+      <text x="50" y="82" textAnchor="middle" fontSize="7" fontWeight="700"
+        fill="var(--text-2)">liver first</text>
+    </g>
+  ),
+
+  // Bioavailability — a big F, with "fraction reaching systemic
+  // circulation" as the caption. One-letter-and-a-caption is the
+  // clearest way to draw a numberless pharmacokinetic parameter.
+  bioavail: (active) => (
+    <g>
+      <text x="50" y="58" textAnchor="middle" fontSize="40"
+        fontWeight="800"
+        fill={active ? ATLAS_COLORS.trunk : "#F5B93F"}>F</text>
+      <text x="50" y="76" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">fraction reaching systemic</text>
+      <text x="50" y="88" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">circulation unchanged</text>
+    </g>
+  ),
+
+  // Distribution — a body outline with the drug spreading from a
+  // central blood vessel out into the tissues. Vd is drawn as a
+  // hatched region suggesting "volume".
+  distribution: (active) => (
+    <g>
+      <circle cx="50" cy="24" r="9" fill="#F5C7C0" stroke="#B63B2E" strokeWidth="1.2" />
+      <path d="M40,38 Q50,34 60,38 L58,74 Q50,78 42,74 Z"
+        fill="#F5C7C0" stroke="#B63B2E" strokeWidth="1.2" />
+      {[[26, 50], [74, 50], [30, 68], [70, 68]].map(([px, py], i) => (
+        <circle key={i} cx={px} cy={py} r="3.5"
+          fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+          opacity="0.75" />
+      ))}
+      <text x="50" y="94" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">Vd · into tissues</text>
+    </g>
+  ),
+
+  // Metabolism — the liver with Phase I and Phase II labels, and a
+  // drug molecule going in and a conjugated metabolite coming out.
+  metabolism: (active) => (
+    <g>
+      <ellipse cx="50" cy="44" rx="26" ry="16"
+        fill={active ? "#E53935" : "#C0392B"}
+        stroke="#8C1C12" strokeWidth="1.4" />
+      <text x="50" y="48" textAnchor="middle" fontSize="8" fontWeight="700"
+        fill="#fff">liver</text>
+      <text x="50" y="70" textAnchor="middle" fontSize="7" fontWeight="700"
+        fill="#8C1C12">Phase I → Phase II</text>
+      <text x="50" y="84" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">CYP450 · conjugation</text>
+      <text x="50" y="98" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">metabolite → excretable</text>
+    </g>
+  ),
+
+  // Excretion — a stylised glomerulus with filtration arrows. Same
+  // visual as the atlasGlomerulus primitive at reduced scale.
+  excretion: (active) => (
+    <g>
+      <path
+        d="M26,32 Q50,20 74,32 Q82,44 74,58 Q50,70 26,58 Q18,44 26,32 Z"
+        fill="#EDD4E2" stroke={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+        strokeWidth="1.8" opacity="0.65"
+      />
+      <path
+        d="M32,48 Q42,32 56,48 Q66,58 52,62 Q42,64 34,58 Q30,54 32,48 Z"
+        fill={active ? "#E53935" : "#C0392B"} stroke="#8C1C12"
+        strokeWidth="1.2" opacity="0.75"
+      />
+      {[[16, 30], [84, 30], [16, 58], [84, 58]].map(([px, py], i) => (
+        <path key={i}
+          d={`M${px},${py} L${px + (px < 50 ? 8 : -8)},${py}`}
+          stroke={ATLAS_COLORS.trunk} strokeWidth="1.6"
+          strokeLinecap="round" />
+      ))}
+      <text x="50" y="88" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">filter · secrete · reabsorb</text>
+    </g>
+  ),
+
+  // Half-life — the exponential decay curve with the 50% line drawn
+  // in. Same shape as the mini plot the render draws at pha:5.
+  halflife: (active) => (
+    <g>
+      <line x1="14" y1="86" x2="86" y2="86"
+        stroke="#64748B" strokeWidth="0.8" />
+      <line x1="14" y1="14" x2="14" y2="86"
+        stroke="#64748B" strokeWidth="0.8" />
+      <path
+        d="M14,18 Q24,20 30,40 Q40,62 52,76 Q66,84 86,86"
+        fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#F5B93F"}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+      <line x1="14" y1="52" x2="32" y2="52"
+        stroke={active ? ATLAS_COLORS.trunk : "#F5B93F"}
+        strokeWidth="0.8" strokeDasharray="3 2" opacity="0.75" />
+      <text x="32" y="48" fontSize="6" fontWeight="700"
+        fill={active ? ATLAS_COLORS.trunk : "#F5B93F"}>50%</text>
+      <text x="50" y="98" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">t½ · elimination</text>
+    </g>
+  ),
 };
 
 /* ---------------------------------------------------------------- */
@@ -3176,27 +3916,16 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     };
   }, [diagramId]);
 
-  // Legend auto-scroll during playback — only nudges when the legend
-  // is already near the viewport, so it never yanks the page mid-step.
+  // Legend highlight is handled purely by the amber ring around the tile
+  // in the legend grid below — no auto-scroll at all. the diagram stage
+  // above the legend is what the student is watching during playback,
+  // and yanking the page (especially on mobile, where the legend sits
+  // below the fold) makes the diagram jump out of view. if the legend
+  // scrolls into view, the student can scroll it themselves. this effect
+  // is intentionally a no-op now, kept only so the label refs stay
+  // registered and future per-tile behaviour has a natural home.
   useEffect(() => {
-    if (!playing) return;
-    const focus = diagram.stepFocus[activeStep];
-    if (!Array.isArray(focus) || focus.length === 0) return;
-
-    const firstWithTile = focus.find((id) => legendRefs.current[id]);
-    const node = firstWithTile ? legendRefs.current[firstWithTile] : null;
-    if (!node || typeof node.scrollIntoView !== "function") return;
-
-    const rect = node.getBoundingClientRect();
-    const viewportH = window.innerHeight || document.documentElement.clientHeight;
-    const nearViewport = rect.top < viewportH * 1.5 && rect.bottom > -viewportH * 0.5;
-    if (!nearViewport) return;
-
-    node.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "nearest",
-    });
+    // Intentionally does nothing. See comment above.
   }, [activeStep, playing, diagram]);
 
   // Persist current step to sessionStorage.
@@ -3231,8 +3960,17 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
       }
     });
     diagram.labels.forEach((l) => {
-      if (!LEGEND_SWATCHES[l.id]) {
-        console.warn(`[Atlas] "${diagram.id}": label "${l.id}" has no entry in LEGEND_SWATCHES - it will show a grey circle in the legend.`);
+      const hasSwatch = !!LEGEND_SWATCHES[l.id];
+      const hasViewBox = !!LEGEND_VIEWBOXES[l.id];
+      if (!hasSwatch || !hasViewBox) {
+        const missing = [];
+        if (!hasSwatch) missing.push("LEGEND_SWATCHES");
+        if (!hasViewBox) missing.push("LEGEND_VIEWBOXES");
+        console.warn(
+          `[Atlas] "${diagram.id}": label "${l.id}" (${l.name}) missing from ${missing.join(
+            " and "
+          )} — legend tile will show a placeholder.`
+        );
       }
     });
 
@@ -3295,13 +4033,33 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
   // of reaching into setPlaying's reducer), and clears the watchdog so
   // the timer can't double-fire the same step after the speech event
   // has already done so.
-    const advanceAfterStep = useCallback((myToken) => {
+    // Tracks the last step index that has already been advanced past, so
+    // that the speech engine's onend event and the watchdog timer cannot
+    // BOTH advance the same step. Without this, a slow voice could fire
+    // the watchdog early, advance once, and then fire onend on the same
+    // utterance — advancing a second time and putting the diagram one
+    // step ahead of the narration for the rest of the run.
+    const advancedStepRef = useRef(-1);
+
+    const advanceAfterStep = useCallback((myToken, finishedStepIdx) => {
+    // Stale run — a new play/jump/speak cycle has started.
     if (myToken !== playTokenRef.current) return;
+
+    // Speech has been paused, stopped, or the diagram was left.
+    if (!playingRef.current) return;
+
+    // Already advanced past this exact step. This is the single line
+    // that stops the double-advance race. Whichever of onend or the
+    // watchdog fires first wins; the second is a no-op.
+    if (finishedStepIdx === advancedStepRef.current) return;
+    advancedStepRef.current = finishedStepIdx;
+
+    // Clear the watchdog — its job for this step is done either way.
     if (watchdogRef.current) {
       clearTimeout(watchdogRef.current);
       watchdogRef.current = null;
     }
-    if (!playingRef.current) return;
+
     setTimeout(() => {
       if (myToken !== playTokenRef.current) return;
       if (!playingRef.current) return;
@@ -3326,7 +4084,12 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
   const speakStep = useCallback((stepIdx) => {
     const text = diagram.narration[stepIdx];
     if (!text) return;
+
+    // Capture the current token AND the step index this utterance is
+    // responsible for. Both are carried through to advanceAfterStep so
+    // it can refuse to advance twice for the same step.
     const myToken = playTokenRef.current;
+    const finishedStepIdx = stepIdx;
 
     if (watchdogRef.current) {
       clearTimeout(watchdogRef.current);
@@ -3337,16 +4100,31 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     const baseMs = Math.max(1200, (words / 2.6) * 1000);
     const estimatedMs = baseMs / speed;
 
-    const armWatchdog = (ms) => {
+    // Armed when a step begins speaking but speech never actually
+    // starts (mobile Safari sometimes silently drops a speak() call
+    // that arrives while another is still finishing). Disarmed the
+    // moment onstart fires, so after that ONLY onend can advance the
+    // step. This is what stops the watchdog from stealing the advance
+    // on slow voices.
+    const armStartupWatchdog = (ms) => {
       if (watchdogRef.current) clearTimeout(watchdogRef.current);
       watchdogRef.current = setTimeout(() => {
         watchdogRef.current = null;
-        advanceAfterStep(myToken);
+        // Speech never started — advance so the diagram doesn't freeze.
+        advanceAfterStep(myToken, finishedStepIdx);
       }, ms);
     };
 
+    // When the diagram is muted (or there's no speech engine at all),
+    // there's no onend to listen for — the estimated duration IS the
+    // step duration. Use a fixed generous multiplier so the diagram
+    // and the on-screen narration text at least stay in lockstep.
     if (muted || !("speechSynthesis" in window)) {
-      armWatchdog(estimatedMs);
+      if (watchdogRef.current) clearTimeout(watchdogRef.current);
+      watchdogRef.current = setTimeout(() => {
+        watchdogRef.current = null;
+        advanceAfterStep(myToken, finishedStepIdx);
+      }, estimatedMs * 1.15 + 400);
       return;
     }
 
@@ -3357,13 +4135,31 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
       const voice = cachedVoiceRef.current;
       if (myToken !== playTokenRef.current) return;
       window.speechSynthesis.cancel();
+
       const utter = new SpeechSynthesisUtterance(text);
       if (voice) utter.voice = voice;
       utter.rate = speed;
-      utter.onend = () => advanceAfterStep(myToken);
-      utter.onerror = () => advanceAfterStep(myToken);
+
+      // The moment speech actually starts, the watchdog is no longer
+      // needed — onend will fire when the utterance finishes, and it
+      // will fire with the correct step index because we captured it
+      // above. Disarming the watchdog here is the whole fix.
+      utter.onstart = () => {
+        if (watchdogRef.current) {
+          clearTimeout(watchdogRef.current);
+          watchdogRef.current = null;
+        }
+      };
+      utter.onend = () => advanceAfterStep(myToken, finishedStepIdx);
+      utter.onerror = () => advanceAfterStep(myToken, finishedStepIdx);
+
       window.speechSynthesis.speak(utter);
-      armWatchdog(estimatedMs * 1.8 + 1500);
+
+      // Arm the startup watchdog — only fires if onstart never fires,
+      // which happens on some Android Chrome builds when the speech
+      // queue is stuck. If onstart does fire, this timer is cleared
+      // and the step advances only when the utterance actually ends.
+      armStartupWatchdog(2200);
     })();
   }, [diagram, speed, muted, advanceAfterStep]);
 
@@ -3640,7 +4436,18 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
             style={{
               padding: 0,
               overflow: "hidden",
-              height: fullscreen ? undefined : "clamp(240px, 48vh, 560px)",
+              // Explicit, non-collapsing height. Previously `clamp(240px,
+              // 48vh, 560px)` could resolve to 0 on some iOS Safari and
+              // Android Chrome builds when the parent card had no definite
+              // height — the SVG then had nothing to size itself against,
+              // and every diagram "disappeared" at once. `minHeight` here
+              // guarantees the stage is always at least 240px tall, and
+              // `height` uses a plain vh unit as the primary value (with
+              // a clamp as the enhanced value only when the browser
+              // supports it, via the second declaration).
+              height: fullscreen ? undefined : "48vh",
+              minHeight: fullscreen ? undefined : 240,
+              maxHeight: fullscreen ? undefined : 560,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -3705,17 +4512,26 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
             */}
             <div
               data-atlas-diagram={diagram.id}
-                            style={{
+              style={{
                 transform: `translate(${panX}px, ${panY}px) scale(${zoom})`,
                 transformOrigin: "center center",
                 transition: dragRef.current ? "none" : "transform 0.15s ease-out",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                width: "100%",
-                height: "100%",
-                maxWidth: "100%",
-                maxHeight: "100%",
+                // position:absolute + inset:0 guarantees this wrapper has a
+                // definite, non-collapsing box to sit inside, no matter how
+                // the flex parent resolves its own height. Combined with the
+                // stage's explicit minHeight above, the SVG always has a
+                // real box to scale against, on every browser we've tested.
+                position: "absolute",
+                inset: 0,
+                // minWidth/minHeight of 0 lets the SVG shrink inside a flex
+                // container without the browser falling back to the SVG's
+                // intrinsic size — this is what caused the "diagram too big
+                // on mobile / nothing renders at all" seesaw.
+                minWidth: 0,
+                minHeight: 0,
                 willChange: "transform",
                 cursor: "grab",
                 opacity: painted ? 1 : 0,
@@ -3814,14 +4630,50 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
                   overflow: "hidden",
                   border: active ? "1px solid " + ATLAS_COLORS.trunk : "1px solid var(--line)",
                 }}>
-                  <svg viewBox={LEGEND_VIEWBOXES[l.id] || "0 0 100 100"} width="56" height="56">
-                    {LEGEND_SWATCHES[l.id] ? LEGEND_SWATCHES[l.id](active) : (
-                      <g>
-                        <circle cx="50" cy="50" r="24" fill="#FCD4D4" stroke="#C0392B" strokeWidth="2" />
-                        <line x1="40" y1="40" x2="60" y2="60" stroke="#C0392B" strokeWidth="4" strokeLinecap="round" />
-                        <line x1="60" y1="40" x2="40" y2="60" stroke="#C0392B" strokeWidth="4" strokeLinecap="round" />
-                      </g>
-                    )}
+                  <svg
+                    viewBox={LEGEND_VIEWBOXES[l.id] || "0 0 100 100"}
+                    width="56"
+                    height="56"
+                    preserveAspectRatio="xMidYMid meet"
+                  >
+                    {LEGEND_SWATCHES[l.id]
+                      ? LEGEND_SWATCHES[l.id](active)
+                      : (
+                        // Fallback swatch: a neutral, unmistakably-deliberate
+                        // placeholder — a soft grey tile with the label's
+                        // initials, not a red X on pink. The red X read as
+                        // "broken / error" to a student, which was itself a
+                        // UX bug. The grey tile reads as "still being drawn",
+                        // which is honest and quiet.
+                        <g>
+                          <rect
+                            x="10" y="10" width="80" height="80" rx="14"
+                            fill="var(--bg-3)"
+                            stroke="var(--line)"
+                            strokeWidth="1.6"
+                            strokeDasharray="5 4"
+                          />
+                          <text
+                            x="50" y="55"
+                            textAnchor="middle"
+                            dominantBaseline="middle"
+                            fontSize="28"
+                            fontWeight="800"
+                            fill="var(--text-3)"
+                          >
+                            {(() => {
+                              // Two-letter initials from the label name,
+                              // e.g. "Alpha-1 Receptors" → "AR".
+                              const words = (l.name || l.id || "?")
+                                .split(/[\s\-_]+/)
+                                .filter(Boolean);
+                              if (words.length === 0) return "?";
+                              if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+                              return (words[0][0] + words[1][0]).toUpperCase();
+                            })()}
+                          </text>
+                        </g>
+                      )}
                   </svg>
                 </span>
                 <span style={{ fontSize: 12.5, lineHeight: 1.3, fontWeight: 700 }}>{l.name}</span>

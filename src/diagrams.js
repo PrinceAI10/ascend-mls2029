@@ -3667,7 +3667,23 @@ export const DIAGRAMS = {
       "This whole sequence — proerythroblast to mature red cell — takes about a week in a healthy bone marrow.",
     ],
     stepFocus: [
-      [], ["s1"], ["s2"], ["s3"], ["s4"], ["s5"], ["epo", "s4", "s5"], ["s5"], ["s6"], ["s1", "s2", "s3", "s4", "s5", "s6"],
+      // Step 1 - intro, nothing specific to highlight yet.
+      [],
+      ["s1"],
+      ["s2"],
+      ["s3"],
+      ["s4"],
+      ["s5"],
+      // Step 7 - EPO drives the later stages (4, 5, 6), so all three
+      // are highlighted together with the EPO label.
+      ["epo", "s4", "s5", "s6"],
+      // Step 8 - "After one to two days circulating, the reticulocyte
+      // loses its remaining RNA and becomes a fully mature red cell."
+      // Both the reticulocyte and the mature RBC are the subject.
+      ["s5", "s6"],
+      ["s6"],
+      // Step 10 - the synthesis line, everything visible.
+      ["s1", "s2", "s3", "s4", "s5", "s6"],
     ],
     viewBox: "0 0 900 260",
     render: ({ onLabelClick, activeLabelId, activeStep, preview }) => {
@@ -5097,7 +5113,11 @@ export const DIAGRAMS = {
       ["tissue-damage"],
       ["granuloma"],
       ["examples"],
-      ["nec-vs-apop"],
+      // step 10 is the acute-vs-chronic summary line. the render draws
+      // its comparison panel when `contrast` is in focus; that label id
+      // is defined in this diagram's labels array, it was just never
+      // referenced by any stepfocus entry — so the panel never appeared.
+      ["contrast"],
     ],
     viewBox: "0 0 900 620",
     render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
@@ -5170,11 +5190,11 @@ export const DIAGRAMS = {
                 strokeDasharray="4 4" opacity="0.85"
               />
               <circle cx="620" cy="440" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="680" y="410" width="190" height="80" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
-              <text x="775" y="435" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">MACROPHAGES</text>
-              <text x="775" y="453" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">the dominant cell of chronic</text>
-              <text x="775" y="467" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">inflammation — keep signalling,</text>
-              <text x="775" y="481" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">keep recruiting, cycle never closes</text>
+              <rect x="730" y="60" width="160" height="90" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="810" y="84" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">MACROPHAGES</text>
+              <text x="810" y="102" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">the dominant cell of</text>
+              <text x="810" y="116" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">chronic inflammation</text>
+              <text x="810" y="138" textAnchor="middle" fontSize="8" fontStyle="italic" fill="var(--text-3)">cycle never closes</text>
             </g>
           )}
 
@@ -5187,22 +5207,22 @@ export const DIAGRAMS = {
                 strokeDasharray="4 4" opacity="0.85"
               />
               <circle cx="620" cy="530" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="680" y="500" width="190" height="80" rx="12" fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2" />
-              <text x="775" y="525" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#5B21B6">LYMPHOCYTES</text>
-              <text x="775" y="543" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">T and B cells accumulate —</text>
-              <text x="775" y="557" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">an ongoing adaptive response,</text>
-              <text x="775" y="571" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">sometimes against self</text>
+              <rect x="730" y="170" width="160" height="90" rx="12" fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2" />
+              <text x="810" y="194" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#5B21B6">LYMPHOCYTES</text>
+              <text x="810" y="212" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">T and B cells accumulate</text>
+              <text x="810" y="226" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">ongoing adaptive response</text>
+              <text x="810" y="248" textAnchor="middle" fontSize="8" fontStyle="italic" fill="var(--text-3)">sometimes against self</text>
             </g>
           )}
 
           {/* Fibrosis callout — purple fibrotic strands overlaid. */}
           {isHot("fibrosis") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="440" width="190" height="90" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
-              <text x="155" y="465" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">FIBROSIS</text>
-              <text x="155" y="483" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">fibroblasts lay down collagen</text>
-              <text x="155" y="497" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">continuously — tissue becomes</text>
-              <text x="155" y="511" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">stiff and loses function</text>
+              <rect x="40" y="60" width="170" height="90" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="125" y="84" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">FIBROSIS</text>
+              <text x="125" y="102" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">fibroblasts lay down collagen</text>
+              <text x="125" y="116" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">continuously — tissue becomes</text>
+              <text x="125" y="130" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">stiff and loses function</text>
             </g>
           )}
 
@@ -5235,10 +5255,10 @@ export const DIAGRAMS = {
           {/* Examples callout — bottom right, list of common diseases. */}
           {isHot("examples") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="660" y="150" width="210" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="765" y="175" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>COMMON EXAMPLES</text>
+              <rect x="730" y="280" width="160" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="810" y="304" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>COMMON EXAMPLES</text>
               {["rheumatoid arthritis", "atherosclerosis", "IBD (Crohn's / UC)", "chronic hepatitis", "tuberculosis"].map((e, i) => (
-                <text key={i} x="765" y={198 + i * 18} textAnchor="middle" fontSize="9" fill="var(--text-2)">{e}</text>
+                <text key={i} x="810" y={326 + i * 18} textAnchor="middle" fontSize="8" fill="var(--text-2)">{e}</text>
               ))}
             </g>
           )}
@@ -5713,7 +5733,11 @@ export const DIAGRAMS = {
       ["irreversible"],
       ["necrosis"],
       ["apoptosis"],
-      ["nec-vs-apop"],
+      // Step 9 narration is "The difference between the two matters
+      // clinically..." — that's the comparison panel, which the render
+      // shows when either necrosis or apoptosis is in focus. Both are
+      // listed so the panel is unambiguously on for this step.
+      ["necrosis", "apoptosis"],
       ["clinical"],
     ],
     viewBox: "0 0 900 620",
@@ -6132,9 +6156,15 @@ export const DIAGRAMS = {
       // Progression: the cell cycle ring on the left becomes progressively
       // disabled, and the tumour mass on the right grows as the narration
       // moves through the steps. At the end, both are shown together.
+      //
+      // tumourSize uses an ease-out curve so the mass grows in a way
+      // that reads as "cells accumulating" — fast early, slowing as it
+      // fills the space — rather than the linear ramp that made step 4
+      // jump from nothing to a third of full size in one frame.
       const showRing = activeStep < 5;
       const showTumour = activeStep >= 4;
-      const tumourSize = Math.min(1, Math.max(0, (activeStep - 3) / 6));
+      const rawT = Math.min(1, Math.max(0, (activeStep - 3) / 6));
+      const tumourSize = Math.pow(rawT, 0.6); // ease-out
       const ringEnabled = activeStep < 2;
 
       return (
@@ -6142,19 +6172,19 @@ export const DIAGRAMS = {
           {/* ---- LEFT: the cell cycle ring ---- */}
           {showRing && (
             <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
-              {atlasCellCycle({
-                cx: 280, cy: 300, radius: 130,
+                {atlasCellCycle({
+                cx: 280, cy: 400, radius: 100,
                 activePhase: "G1",
                 showCheckpoints: !ringEnabled,
                 showG0: true,
               })}
-              <circle cx="280" cy="300" r="160" fill="none" {...ring("whole")} pointerEvents="none" />
+              <circle cx="280" cy="400" r="130" fill="none" {...ring("whole")} pointerEvents="none" />
             </g>
           )}
 
           {/* Normal cycle label anchor */}
           <g style={{ cursor: cur }} onClick={click("normal")} filter={hotFilter("normal")}>
-            <circle cx="280" cy="300" r="140" fill="none" {...ring("normal")} pointerEvents="none" />
+            <circle cx="280" cy="400" r="110" fill="none" {...ring("normal")} pointerEvents="none" />
           </g>
 
           {/* ---- RIGHT: the tumour mass ---- */}
@@ -6173,7 +6203,7 @@ export const DIAGRAMS = {
                 ];
                 return (
                   <g>
-                    {cells.slice(0, Math.max(3, Math.round(cells.length * tumourSize))).map(([dx, dy], i) => (
+                    {cells.slice(0, Math.max(2, Math.round(cells.length * tumourSize))).map(([dx, dy], i) => (
                       <circle
                         key={i}
                         cx={tcx + dx * baseR}
@@ -6589,62 +6619,106 @@ export const DIAGRAMS = {
             </g>
           )}
 
-          {/* Kidney H+ secretion inset — a small nephron segment with
-             arrows pointing out to show H+ being secreted into the
-             tubular fluid. */}
+          {/* Kidney H+ secretion inset — moved to the same bottom-centre
+             box that every other step panel uses, so stepping 5→6→7
+             doesn't jump the panel position. */}
           {isHot("kidney-h") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="340" width="220" height="140" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="170" y="365" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">KIDNEY · H⁺ EXCRETION</text>
-              {/* A tubular segment with H+ arrows going into it */}
-              <path d="M90,405 Q120,395 150,405 Q180,415 210,405" fill="none" stroke="#8B5CF6" strokeWidth="8" strokeLinecap="round" />
-              {[110, 140, 170].map((x, i) => (
+              <rect x="240" y="420" width="420" height="150" rx="14"
+                fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="450" y="446" textAnchor="middle" fontSize="11"
+                fontWeight="800" fill="#C0392B">KIDNEY · H⁺ EXCRETION</text>
+              <path d="M290,510 Q340,500 390,510 Q440,520 490,510 Q540,500 610,510"
+                fill="none" stroke="#8B5CF6" strokeWidth="10" strokeLinecap="round" />
+              {[330, 400, 470, 540].map((x, i) => (
                 <g key={i}>
-                  <line x1={x} y1="385" x2={x} y2="397" stroke="#C0392B" strokeWidth="2.4" strokeLinecap="round" />
-                  <polygon points={`${x},400 ${x - 4},393 ${x + 4},393`} fill="#C0392B" />
+                  <line x1={x} y1="482" x2={x} y2="500" stroke="#C0392B"
+                    strokeWidth="2.6" strokeLinecap="round" />
+                  <polygon points={`${x},504 ${x - 4},497 ${x + 4},497`} fill="#C0392B" />
                 </g>
               ))}
-              <text x="170" y="445" textAnchor="middle" fontSize="8" fill="var(--text-2)">PCT + DCT secrete H⁺</text>
-              <text x="170" y="460" textAnchor="middle" fontSize="8" fill="var(--text-2)">into tubular fluid</text>
+              <text x="450" y="546" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">PCT + DCT secrete H⁺ into tubular fluid</text>
+              <text x="450" y="562" textAnchor="middle" fontSize="8"
+                fontStyle="italic" fill="var(--text-3)">the only way to actually remove acid</text>
             </g>
           )}
 
-          {/* Kidney HCO3 handling inset */}
+          {/* Kidney HCO3 handling inset — same box as kidney H+ above. */}
           {isHot("kidney-hco3") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="340" width="220" height="140" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
-              <text x="170" y="365" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#2F6FED">KIDNEY · HCO₃⁻ HANDLING</text>
-              <text x="170" y="390" textAnchor="middle" fontSize="9" fill="var(--text-2)">filtered at the glomerulus</text>
-              <text x="170" y="407" textAnchor="middle" fontSize="9" fill="var(--text-2)">reabsorbed ~90% in PCT</text>
-              <text x="170" y="424" textAnchor="middle" fontSize="9" fill="var(--text-2)">new HCO₃⁻ generated when</text>
-              <text x="170" y="439" textAnchor="middle" fontSize="9" fill="var(--text-2)">the body is acidotic</text>
-              <text x="170" y="465" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="#2F6FED">the long-term fix</text>
+              <rect x="240" y="420" width="420" height="150" rx="14"
+                fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
+              <text x="450" y="448" textAnchor="middle" fontSize="11"
+                fontWeight="800" fill="#2F6FED">KIDNEY · HCO₃⁻ HANDLING</text>
+              <text x="260" y="474" fontSize="9.5" fill="var(--text-2)">• filtered at the glomerulus</text>
+              <text x="260" y="492" fontSize="9.5" fill="var(--text-2)">• ~90% reabsorbed in the PCT</text>
+              <text x="260" y="510" fontSize="9.5" fill="var(--text-2)">• new HCO₃⁻ generated when acidotic</text>
+              <text x="260" y="528" fontSize="9.5" fill="var(--text-2)">• excreted in alkalosis</text>
+              <text x="450" y="554" textAnchor="middle" fontSize="9"
+                fontWeight="700" fill="#2F6FED">the long-term correction</text>
             </g>
           )}
 
-          {/* Respiratory disorders inset — acid/alkaline side by side. */}
+          {/* Respiratory disorders inset — two-column comparison,
+             anchored in the shared bottom-centre box. */}
           {isHot("resp-disorders") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="340" width="300" height="140" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="210" y="365" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">RESPIRATORY DISORDERS</text>
-              <text x="80" y="395" fontSize="10" fontWeight="700" fill="#8C1C12">Acidosis</text>
-              <text x="80" y="410" fontSize="8.5" fill="var(--text-2)">↑ CO₂ · hypoventilation</text>
-              <text x="80" y="425" fontSize="8.5" fill="var(--text-2)">COPD · sedation</text>
-              <text x="80" y="455" fontSize="10" fontWeight="700" fill="#2F6FED">Alkalosis</text>
-              <text x="80" y="470" fontSize="8.5" fill="var(--text-2)">↓ CO₂ · hyperventilation</text>
+              <rect x="240" y="420" width="420" height="150" rx="14"
+                fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="450" y="448" textAnchor="middle" fontSize="11"
+                fontWeight="800" fill="#C0392B">RESPIRATORY DISORDERS</text>
+              <rect x="265" y="464" width="180" height="90" rx="8"
+                fill="rgba(140,28,18,0.1)" stroke="#8C1C12" strokeWidth="1.4" />
+              <text x="355" y="486" textAnchor="middle" fontSize="10"
+                fontWeight="700" fill="#8C1C12">Acidosis</text>
+              <text x="355" y="508" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">↑ CO₂</text>
+              <text x="355" y="524" textAnchor="middle" fontSize="8.5"
+                fill="var(--text-2)">hypoventilation</text>
+              <text x="355" y="540" textAnchor="middle" fontSize="8"
+                fontStyle="italic" fill="var(--text-3)">COPD · sedation</text>
+              <rect x="455" y="464" width="180" height="90" rx="8"
+                fill="rgba(47,111,237,0.1)" stroke="#2F6FED" strokeWidth="1.4" />
+              <text x="545" y="486" textAnchor="middle" fontSize="10"
+                fontWeight="700" fill="#2F6FED">Alkalosis</text>
+              <text x="545" y="508" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">↓ CO₂</text>
+              <text x="545" y="524" textAnchor="middle" fontSize="8.5"
+                fill="var(--text-2)">hyperventilation</text>
+              <text x="545" y="540" textAnchor="middle" fontSize="8"
+                fontStyle="italic" fill="var(--text-3)">pain · anxiety</text>
             </g>
           )}
 
-          {/* Metabolic disorders inset */}
+          {/* Metabolic disorders inset — same two-column layout, same
+             shared bottom-centre box. */}
           {isHot("met-disorders") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="340" width="300" height="140" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
-              <text x="210" y="365" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">METABOLIC DISORDERS</text>
-              <text x="80" y="395" fontSize="10" fontWeight="700" fill="#8C1C12">Acidosis</text>
-              <text x="80" y="410" fontSize="8.5" fill="var(--text-2)">↓ HCO₃⁻ · DKA · lactic</text>
-              <text x="80" y="425" fontSize="8.5" fill="var(--text-2)">renal failure</text>
-              <text x="80" y="455" fontSize="10" fontWeight="700" fill="#2F6FED">Alkalosis</text>
-              <text x="80" y="470" fontSize="8.5" fill="var(--text-2)">↑ HCO₃⁻ · vomiting · diuretics</text>
+              <rect x="240" y="420" width="420" height="150" rx="14"
+                fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="450" y="448" textAnchor="middle" fontSize="11"
+                fontWeight="800" fill="#8B5CF6">METABOLIC DISORDERS</text>
+              <rect x="265" y="464" width="180" height="90" rx="8"
+                fill="rgba(140,28,18,0.1)" stroke="#8C1C12" strokeWidth="1.4" />
+              <text x="355" y="486" textAnchor="middle" fontSize="10"
+                fontWeight="700" fill="#8C1C12">Acidosis</text>
+              <text x="355" y="508" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">↓ HCO₃⁻</text>
+              <text x="355" y="524" textAnchor="middle" fontSize="8.5"
+                fill="var(--text-2)">DKA · lactic</text>
+              <text x="355" y="540" textAnchor="middle" fontSize="8"
+                fontStyle="italic" fill="var(--text-3)">renal failure</text>
+              <rect x="455" y="464" width="180" height="90" rx="8"
+                fill="rgba(47,111,237,0.1)" stroke="#2F6FED" strokeWidth="1.4" />
+              <text x="545" y="486" textAnchor="middle" fontSize="10"
+                fontWeight="700" fill="#2F6FED">Alkalosis</text>
+              <text x="545" y="508" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">↑ HCO₃⁻</text>
+              <text x="545" y="524" textAnchor="middle" fontSize="8.5"
+                fill="var(--text-2)">vomiting · diuretics</text>
+              <text x="545" y="540" textAnchor="middle" fontSize="8"
+                fontStyle="italic" fill="var(--text-3)">volume contraction</text>
             </g>
           )}
 
@@ -6894,15 +6968,31 @@ export const DIAGRAMS = {
       "And here's the whole picture at once. Three strategies act on the cascade - remove calcium, accelerate antithrombin, or block vitamin K. Four laboratory tubes each use one of those strategies to preserve a specific test. Match the agent to the purpose, and you get a valid sample. Mismatch it, and the anticoagulant itself becomes the source of the error.",
     ],
     stepFocus: [
+      // Step 1 is "This is the clotting cascade..." — cascade highlighted.
       ["cascade"],
+      // Step 2 is "The whole cascade is a relay..." — cascade stays on.
       ["cascade"],
+      // Step 3 is "Look at the red X's... four of these steps have
+      // the same requirement: calcium ions." — cascade + the calcium
+      // strategy, which the render shows via blockAt="calcium" for
+      // this step. Keeping cascade in focus is correct.
       ["cascade"],
+      // Step 4 is "Now the X's are gone... This is where heparin acts."
       ["heparin", "cascade"],
+      // Step 5 is "Here, four factors have faded: II, VII, IX, and X...
+      // Warfarin blocks that recycling step."
       ["warfarin", "cascade"],
+      // Step 6 is "Now we switch arenas - from the patient to the
+      // laboratory... four colour-coded tubes."
       ["whole", "edta", "citrate", "lab-heparin", "oxalate"],
+      // Step 7 is "First tube: EDTA, the purple one."
       ["edta", "cascade"],
+      // Step 8 is "Next: citrate, the blue tube."
       ["citrate", "cascade"],
+      // Step 9 is "The last two tubes are the ones we haven't talked
+      // about yet. The green tube is heparin... The grey tube is oxalate."
       ["lab-heparin", "oxalate", "cascade"],
+      // Step 10 is "And here's the whole picture at once."
       ["whole", "edta", "citrate", "lab-heparin", "oxalate"],
     ],
     viewBox: "0 0 900 620",
@@ -6944,7 +7034,10 @@ export const DIAGRAMS = {
         const tubeW = 50;
         const tubeH = 54;
         const capH = 10;
-        const cx = 748;
+        // Moved from 748 to 770 to buy horizontal air between the
+        // cascade's right edge and the tube column — on narrow mobile
+        // viewports the two were beginning to touch.
+        const cx = 770;
         return (
           <g
             key={id}
@@ -6985,9 +7078,12 @@ export const DIAGRAMS = {
               stroke={capColor}
               strokeWidth="1.2"
             />
-            {/* Label to the right of the tube */}
+            {/* Label to the right of the tube — anchored 30px from the
+               tube's right edge rather than 33px, gaining three more
+               pixels of horizontal breathing room without changing
+               the visual rhythm. */}
             <text
-              x={cx + tubeW / 2 + 8}
+              x={cx + tubeW / 2 + 6}
               y={y + 22}
               textAnchor="start"
               fontSize="12"
@@ -6997,7 +7093,7 @@ export const DIAGRAMS = {
               {label}
             </text>
             <text
-              x={cx + tubeW / 2 + 8}
+              x={cx + tubeW / 2 + 6}
               y={y + 38}
               textAnchor="start"
               fontSize="9.5"
@@ -7007,7 +7103,7 @@ export const DIAGRAMS = {
             </text>
             {/* Mechanism tag */}
             <text
-              x={cx + tubeW / 2 + 8}
+              x={cx + tubeW / 2 + 6}
               y={y + 52}
               textAnchor="start"
               fontSize="8.5"
@@ -7016,12 +7112,14 @@ export const DIAGRAMS = {
             >
               {blocks}
             </text>
-            {/* Selection ring */}
+            {/* Selection ring — width tightened to match the tube + label
+               region so it doesn't extend past the SVG right edge now
+               that the tube column sits at 770. */}
             <rect
-              x={cx - tubeW / 2 - 8}
-              y={y - 10}
-              width={tubeW + 16 + 130}
-              height={tubeH + 18}
+              x={cx - tubeW / 2 - 6}
+              y={y - 8}
+              width={tubeW + 12 + 110}
+              height={tubeH + 16}
               rx={10}
               fill="none"
               {...ring(id)}
@@ -7532,13 +7630,14 @@ export const DIAGRAMS = {
             </g>
           )}
 
-          {/* Binding mechanics (step 7) — shown on the left column,
-             since the right column is empty on this step. */}
+                    {/* Binding mechanics (step 7) — sits between the top-left
+             drug/target tile and the bottom-left enzyme tile, sized so
+             there's at least 40px of clear air above and below. */}
           {activeStep === 7 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="220" width="220" height="200" rx="12"
+              <rect x="60" y="210" width="220" height="180" rx="12"
                 fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="170" y="244" textAnchor="middle" fontSize="10.5"
+              <text x="170" y="234" textAnchor="middle" fontSize="10.5"
                 fontWeight="800" fill={ATLAS_COLORS.trunk}>WHAT HOLDS A DRUG</text>
               {[
                 ["Ionic", "opposite charges"],
@@ -7547,14 +7646,14 @@ export const DIAGRAMS = {
                 ["Van der Waals", "close atoms"],
               ].map((row, i) => (
                 <g key={i}>
-                  <text x="75" y={274 + i * 30} fontSize="10" fontWeight="700"
+                  <text x="75" y={262 + i * 24} fontSize="10" fontWeight="700"
                     fill="var(--text)">{row[0]}</text>
-                  <text x="75" y={288 + i * 30} fontSize="8.5"
+                  <text x="75" y={276 + i * 24} fontSize="8.5"
                     fill="var(--text-2)">{row[1]}</text>
                 </g>
               ))}
-              <text x="75" y="394" fontSize="8.5" fontStyle="italic"
-                fill="var(--text-3)">affinity = how tight · selectivity = how specific</text>
+              <text x="170" y="374" textAnchor="middle" fontSize="8"
+                fontStyle="italic" fill="var(--text-3)">affinity = how tight · selectivity = how specific</text>
             </g>
           )}
 
@@ -7625,8 +7724,15 @@ export const DIAGRAMS = {
       ["curve", "shape"],
       ["curve", "ec50", "shape"],
       ["curve", "ec50"],
-      ["curve", "emax"],
+      // Step 5 narration compares two drugs at the SAME Emax with
+      // different EC50s — so this is the potency comparison, not the
+      // efficacy comparison. `emax` was the wrong id.
+      ["curve", "ec50"],
+      // Step 6 narration is the ceiling effect — the flat top past
+      // which no additional benefit is available.
       ["curve", "ceiling"],
+      // Step 7 narration walks through competitive and non-competitive
+      // antagonism and the render draws both overlays.
       ["curve", "competitive", "noncompetitive"],
       ["curve", "selectivity"],
       ["curve", "ti"],
@@ -7777,7 +7883,7 @@ export const DIAGRAMS = {
                 labelSide: "above",
               })}
               <text
-                x={plotX + plotW / 2} y={plotY + plotH * 0.5 + 40}
+                x={plotX + plotW / 2} y={plotY + plotH + 55}
                 textAnchor="middle" fontSize="10.5" fontWeight="800"
                 fill={ATLAS_COLORS.trunk}
               >
@@ -7885,7 +7991,7 @@ export const DIAGRAMS = {
                 labelSide: "above",
               })}
               <text
-                x={plotX + plotW / 2} y={plotY + plotH * 0.5 + 48}
+                x={plotX + plotW / 2} y={plotY + plotH + 55}
                 textAnchor="middle" fontSize="10.5" fontWeight="800"
                 fill={ATLAS_COLORS.trunk}
               >
@@ -7912,7 +8018,7 @@ export const DIAGRAMS = {
                 labelSide: "above",
               })}
               <text
-                x={plotX + plotW / 2} y={plotY + plotH * 0.5 + 52}
+                x={plotX + plotW / 2} y={plotY + plotH + 55}
                 textAnchor="middle" fontSize="11" fontWeight="800" fill="#5B21B6"
               >
                 therapeutic index = TD50 / ED50
@@ -8203,29 +8309,133 @@ export const DIAGRAMS = {
           </g>
 
           {/* ---- Step-specific detail panels ---- */}
+
+          {/* Step 3 - route of administration. Lists the routes the
+             narration names, plus the fastest-onset one flagged. */}
+          {isHot("route") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="480" width="300" height="110" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="210" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>ROUTE OF ADMINISTRATION</text>
+              <text x="75" y="524" fontSize="9" fill="var(--text-2)">Oral · IV · IM · SC · sublingual</text>
+              <text x="75" y="538" fontSize="9" fill="var(--text-2)">Rectal · inhaled · topical</text>
+              <text x="75" y="558" fontSize="9" fill="var(--text-2)">IV = 100% bioavailability, fastest</text>
+              <text x="75" y="572" fontSize="9" fill="var(--text-2)">Sublingual bypasses the liver</text>
+              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">route sets onset and first-pass exposure</text>
+            </g>
+          )}
+
+          {/* Step 4 - crossing membranes. The existing panel. */}
           {isHot("membrane") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="480" width="300" height="100" rx="12"
+              <rect x="60" y="480" width="300" height="110" rx="12"
                 fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
               <text x="210" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>CROSSING MEMBRANES</text>
               <text x="75" y="524" fontSize="9" fill="var(--text-2)">Lipid-soluble, small, uncharged - crosses</text>
               <text x="75" y="538" fontSize="9" fill="var(--text-2)">Water-soluble, large, ionised - blocked</text>
               <text x="75" y="558" fontSize="9" fill="var(--text-2)">Weak acid - absorbed in stomach (aspirin)</text>
               <text x="75" y="572" fontSize="9" fill="var(--text-2)">Weak base - absorbed in intestine (morphine)</text>
+              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">pH + pKa decide which form dominates</text>
+            </g>
+          )}
+
+          {/* Step 5 - first-pass effect. The liver blocks the drug
+             before it reaches the systemic circulation. */}
+          {isHot("firstpass") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="480" width="300" height="110" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="210" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>FIRST-PASS EFFECT</text>
+              <text x="75" y="524" fontSize="9" fill="var(--text-2)">Gut blood → portal vein → liver</text>
+              <text x="75" y="538" fontSize="9" fill="var(--text-2)">Liver removes a fraction of the drug</text>
+              <text x="75" y="558" fontSize="9" fill="var(--text-2)">Why nitroglycerin is sublingual</text>
+              <text x="75" y="572" fontSize="9" fill="var(--text-2)">Why oral morphine needs high doses</text>
+              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">why lidocaine is never given orally</text>
+            </g>
+          )}
+
+          {/* Step 6 - bioavailability. The fraction reaching the
+             systemic circulation unchanged. */}
+          {isHot("bioavail") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="480" width="300" height="110" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="210" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>BIOAVAILABILITY (F)</text>
+              <text x="75" y="524" fontSize="9" fill="var(--text-2)">Fraction of dose reaching</text>
+              <text x="75" y="538" fontSize="9" fill="var(--text-2)">systemic circulation unchanged</text>
+              <text x="75" y="558" fontSize="9" fill="var(--text-2)">IV: F = 100% (by definition)</text>
+              <text x="75" y="572" fontSize="9" fill="var(--text-2)">Oral: usually well below 100%</text>
+              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">depends on formulation, food, gut, liver</text>
+            </g>
+          )}
+
+          {/* Step 7 - distribution and volume of distribution. */}
+          {isHot("distribution") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="480" width="320" height="110" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="220" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>DISTRIBUTION & Vd</text>
+              <text x="75" y="524" fontSize="9" fill="var(--text-2)">Vd = total drug in body ÷ plasma conc.</text>
+              <text x="75" y="538" fontSize="9" fill="var(--text-2)">High Vd: digoxin ~500 L (widely distributed)</text>
+              <text x="75" y="558" fontSize="9" fill="var(--text-2)">Low Vd: warfarin ~8 L (stays in blood)</text>
+              <text x="75" y="572" fontSize="9" fill="var(--text-2)">Only the free fraction leaves the blood</text>
+              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">protein binding keeps drug in the plasma</text>
+            </g>
+          )}
+
+          {/* Step 8 - metabolism. Phase I and Phase II, CYP450. */}
+          {isHot("metabolism") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="480" width="320" height="110" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="220" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>METABOLISM - PHASES I & II</text>
+              <text x="75" y="524" fontSize="9" fill="var(--text-2)">Phase I: oxidation (CYP450), reduction, hydrolysis</text>
+              <text x="75" y="538" fontSize="9" fill="var(--text-2)">adds/exposes a functional group</text>
+              <text x="75" y="558" fontSize="9" fill="var(--text-2)">Phase II: conjugation (glucuronic acid, sulfate)</text>
+              <text x="75" y="572" fontSize="9" fill="var(--text-2)">makes the metabolite water-soluble</text>
+              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">inducers speed up · inhibitors slow down</text>
+            </g>
+          )}
+
+          {/* Step 9 - excretion. Three renal processes. */}
+          {isHot("excretion") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="480" width="320" height="110" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="220" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>RENAL EXCRETION</text>
+              <text x="75" y="524" fontSize="9" fill="var(--text-2)">1. Glomerular filtration - small, unbound drugs</text>
+              <text x="75" y="538" fontSize="9" fill="var(--text-2)">2. Tubular secretion - carrier proteins, for</text>
+              <text x="75" y="552" fontSize="9" fill="var(--text-2)">   protein-bound drugs too large to filter</text>
+              <text x="75" y="572" fontSize="9" fill="var(--text-2)">3. Tubular reabsorption - lipid-soluble, uncharged</text>
+              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">alkalinising urine speeds aspirin out in overdose</text>
+            </g>
+          )}
+
+          {/* Step 10 - half-life and interactions. Existing table. */}
+          {activeStep === 9 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="380" y="460" width="500" height="120" rx="12"
+                fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="630" y="484" textAnchor="middle" fontSize="10.5" fontWeight="800" fill="#C0392B">DRUG INTERACTIONS - ADME STAGES</text>
+              <text x="395" y="504" fontSize="9" fill="var(--text-2)">Absorption: antacids reduce antibiotic uptake</text>
+              <text x="395" y="518" fontSize="9" fill="var(--text-2)">Distribution: aspirin displaces warfarin from albumin</text>
+              <text x="395" y="532" fontSize="9" fill="var(--text-2)">Metabolism: rifampicin induces CYP; erythromycin inhibits CYP</text>
+              <text x="395" y="546" fontSize="9" fill="var(--text-2)">Excretion: probenecid reduces penicillin elimination</text>
+              <text x="395" y="562" fontSize="9" fill="var(--text-2)">Effect: additive · synergistic · antagonistic</text>
             </g>
           )}
 
           {/* Drug interaction table on step 9 */}
           {activeStep === 9 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="380" y="480" width="500" height="110" rx="12"
+              <rect x="380" y="460" width="500" height="120" rx="12"
                 fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="630" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill="#C0392B">DRUG INTERACTIONS - ADME STAGES</text>
-              <text x="395" y="524" fontSize="9" fill="var(--text-2)">Absorption: antacids reduce antibiotic uptake</text>
-              <text x="395" y="538" fontSize="9" fill="var(--text-2)">Distribution: aspirin displaces warfarin from albumin</text>
-              <text x="395" y="552" fontSize="9" fill="var(--text-2)">Metabolism: rifampicin induces CYP; erythromycin inhibits CYP</text>
-              <text x="395" y="566" fontSize="9" fill="var(--text-2)">Excretion: probenecid reduces penicillin elimination</text>
-              <text x="395" y="582" fontSize="9" fill="var(--text-2)">Effect: additive · synergistic · antagonistic</text>
+              <text x="630" y="484" textAnchor="middle" fontSize="10.5" fontWeight="800" fill="#C0392B">DRUG INTERACTIONS - ADME STAGES</text>
+              <text x="395" y="504" fontSize="9" fill="var(--text-2)">Absorption: antacids reduce antibiotic uptake</text>
+              <text x="395" y="518" fontSize="9" fill="var(--text-2)">Distribution: aspirin displaces warfarin from albumin</text>
+              <text x="395" y="532" fontSize="9" fill="var(--text-2)">Metabolism: rifampicin induces CYP; erythromycin inhibits CYP</text>
+              <text x="395" y="546" fontSize="9" fill="var(--text-2)">Excretion: probenecid reduces penicillin elimination</text>
+              <text x="395" y="562" fontSize="9" fill="var(--text-2)">Effect: additive · synergistic · antagonistic</text>
             </g>
           )}
 
@@ -8376,7 +8586,7 @@ export const DIAGRAMS = {
              pathway is four enzymes, so the panel lists them in order
              with the rate-limiting one flagged. */}
           {isHot("synthesis") && callout(
-            "synthesis", 40, 100, 220, 130,
+            "synthesis", 20, 100, 210, 130,
             "SYNTHESIS",
             ["tyrosine → L-DOPA → dopamine → NA", "tyrosine hydroxylase = rate-limiting", "4 enzymes, all inside the terminal"],
             "#F5B93F"
@@ -8405,7 +8615,7 @@ export const DIAGRAMS = {
              student sees the taxonomy before the four per-subtype
              panels that follow. */}
           {isHot("receptors") && callout(
-            "receptors", 640, 100, 220, 140,
+            "receptors", 660, 100, 220, 140,
             "FIVE SUBTYPES",
             ["alpha-1 · alpha-2", "beta-1 · beta-2 · beta-3", "each a different GPCR", "different tissue, different signal"],
             "#5B21B6"
@@ -8649,7 +8859,7 @@ export const DIAGRAMS = {
              important distinction in the topic: fast ion channels vs
              slow GPCRs. Panel lays them side by side. */}
           {isHot("receptors") && callout(
-            "receptors", 640, 100, 220, 140,
+            "receptors", 660, 100, 220, 140,
             "TWO FAMILIES",
             ["nicotinic - ion channel", "  milliseconds, ligand-gated", "muscarinic - GPCR", "  seconds, second messengers"],
             "#5B21B6"
@@ -8921,144 +9131,242 @@ export const DIAGRAMS = {
             <text x="500" y="610" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">Lymphatics · drainage to the venous system</text>
           </g>
 
-          {/* ---- Step-specific insets ---- */}
+                    {/* ---- Step-specific insets ----
+              Every inset lives inside the same 420×190 box at
+              x=240, y=50 — centred horizontally, near the top, so the
+              whole hero diagram below stays visible. On mobile the
+              SVG scales to fit the viewport width, so a narrower box
+              keeps the text readable instead of collapsing to 4pt. */}
 
-          {/* Step 1 — three vessel types side by side */}
+          {/* Step 1 — three vessel types, wall thickness compared */}
           {activeStep === 1 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>THE THREE VESSEL TYPES — WALL THICKNESS COMPARED</text>
-              {vesselCrossSection(180, 145, 56, 10, "#C0392B", "Artery", "thick muscular wall")}
-              {vesselCrossSection(450, 145, 32, 4, "#C0392B", "Capillary", "one cell thick")}
-              {vesselCrossSection(720, 145, 48, 5, "#2F6FED", "Vein", "thin wall · valves")}
+              <rect x="240" y="50" width="420" height="190" rx="14"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="76" textAnchor="middle" fontSize="11"
+                fontWeight="700" fill={ATLAS_COLORS.trunk}>
+                THREE VESSEL TYPES - WALL THICKNESS
+              </text>
+              {vesselCrossSection(320, 145, 40, 8, "#C0392B", "Artery", "thick muscular")}
+              {vesselCrossSection(450, 145, 22, 3, "#C0392B", "Capillary", "one cell thick")}
+              {vesselCrossSection(580, 145, 36, 4, "#2F6FED", "Vein", "thin · valves")}
             </g>
           )}
 
           {/* Step 2 — three artery sizes stacked */}
           {activeStep === 2 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>THE THREE ARTERY SIZES</text>
-              {vesselCrossSection(180, 145, 72, 14, "#C0392B", "Elastic", "aorta · pulmonary trunk")}
-              {vesselCrossSection(450, 145, 44, 8, "#C0392B", "Muscular", "brachial · femoral")}
-              {vesselCrossSection(720, 145, 24, 4, "#C0392B", "Arteriole", "resistance vessel")}
+              <rect x="240" y="50" width="420" height="190" rx="14"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="76" textAnchor="middle" fontSize="11"
+                fontWeight="700" fill={ATLAS_COLORS.trunk}>
+                THREE ARTERY SIZES
+              </text>
+              {vesselCrossSection(320, 145, 52, 10, "#C0392B", "Elastic", "aorta")}
+              {vesselCrossSection(450, 145, 32, 6, "#C0392B", "Muscular", "brachial · femoral")}
+              {vesselCrossSection(580, 145, 18, 3, "#C0392B", "Arteriole", "resistance vessel")}
             </g>
           )}
 
-          {/* Step 3 — capillary in cross-section, wall thinness visible */}
+          {/* Step 3 — capillary in cross-section */}
           {activeStep === 3 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>THE CAPILLARY — EXCHANGE SURFACE</text>
-              <rect x="180" y="110" width="500" height="80" rx="10" fill="#F4F2EE" stroke="#C0392B" strokeWidth="3" />
-              <line x1="180" y1="130" x2="680" y2="130" stroke="#8C1C12" strokeWidth="1" opacity="0.6" />
-              <line x1="180" y1="170" x2="680" y2="170" stroke="#8C1C12" strokeWidth="1" opacity="0.6" />
-              <ellipse cx="430" cy="150" rx="20" ry="12" fill="#E53935" stroke="#8C1C12" strokeWidth="0.8" />
-              <circle cx="250" cy="120" r="4" fill="#F5B93F" stroke="#8B6410" strokeWidth="0.6" />
-              <path d="M250,120 L250,150" stroke="#F5B93F" strokeWidth="1.4" strokeDasharray="3 2" />
-              <polygon points="250,150 247,144 253,144" fill="#F5B93F" />
-              <text x="265" y="112" fontSize="8" fontWeight="700" fill="#8B6410">O₂</text>
-              <circle cx="610" cy="180" r="4" fill="#2F6FED" stroke="#123F9E" strokeWidth="0.6" />
-              <path d="M610,180 L610,150" stroke="#2F6FED" strokeWidth="1.4" strokeDasharray="3 2" />
-              <polygon points="610,150 607,156 613,156" fill="#2F6FED" />
-              <text x="595" y="192" fontSize="8" fontWeight="700" fill="#123F9E">CO₂</text>
-              <text x="430" y="205" textAnchor="middle" fontSize="9" fill="var(--text-2)">no muscle · no elastic tissue · one cell thick</text>
+              <rect x="240" y="50" width="420" height="190" rx="14"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="76" textAnchor="middle" fontSize="11"
+                fontWeight="700" fill={ATLAS_COLORS.trunk}>
+                THE CAPILLARY - EXCHANGE SURFACE
+              </text>
+              <rect x="280" y="100" width="340" height="60" rx="10"
+                fill="#F4F2EE" stroke="#C0392B" strokeWidth="2.4" />
+              <line x1="280" y1="115" x2="620" y2="115"
+                stroke="#8C1C12" strokeWidth="0.8" opacity="0.6" />
+              <line x1="280" y1="145" x2="620" y2="145"
+                stroke="#8C1C12" strokeWidth="0.8" opacity="0.6" />
+              <ellipse cx="450" cy="130" rx="16" ry="9"
+                fill="#E53935" stroke="#8C1C12" strokeWidth="0.8" />
+              <circle cx="335" cy="108" r="3.5"
+                fill="#F5B93F" stroke="#8B6410" strokeWidth="0.5" />
+              <path d="M335,108 L335,128" stroke="#F5B93F"
+                strokeWidth="1.2" strokeDasharray="3 2" />
+              <polygon points="335,128 332,123 338,123" fill="#F5B93F" />
+              <text x="348" y="102" fontSize="7" fontWeight="700" fill="#8B6410">O₂</text>
+              <circle cx="565" cy="152" r="3.5"
+                fill="#2F6FED" stroke="#123F9E" strokeWidth="0.5" />
+              <path d="M565,152 L565,132" stroke="#2F6FED"
+                strokeWidth="1.2" strokeDasharray="3 2" />
+              <polygon points="565,132 562,137 568,137" fill="#2F6FED" />
+              <text x="550" y="162" fontSize="7" fontWeight="700" fill="#123F9E">CO₂</text>
+              <text x="450" y="180" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">
+                no muscle · no elastic tissue · one cell thick
+              </text>
             </g>
           )}
 
-          {/* Step 4 — venous return mechanisms */}
+          {/* Step 4 — venous return mechanisms, two columns × two rows */}
           {activeStep === 4 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
-              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill="#2F6FED">HOW BLOOD RETURNS FROM THE FEET</text>
+              <rect x="240" y="50" width="420" height="190" rx="14"
+                fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
+              <text x="450" y="76" textAnchor="middle" fontSize="11"
+                fontWeight="700" fill="#2F6FED">
+                HOW BLOOD RETURNS FROM THE FEET
+              </text>
               {[
-                { x: 155, y: 140, num: "1", label: "Valves", sub: "one-way only" },
-                { x: 340, y: 140, num: "2", label: "Muscle pump", sub: "legs squeeze veins" },
-                { x: 525, y: 140, num: "3", label: "Respiratory pump", sub: "chest pulls blood" },
-                { x: 710, y: 140, num: "4", label: "Heart suction", sub: "atria draw blood in" },
+                { x: 300, y: 120, num: "1", label: "Valves",        sub: "one-way only" },
+                { x: 450, y: 120, num: "2", label: "Muscle pump",   sub: "legs squeeze veins" },
+                { x: 600, y: 120, num: "3", label: "Resp. pump",    sub: "chest pulls blood" },
+                { x: 450, y: 190, num: "4", label: "Heart suction", sub: "atria draw blood in" },
               ].map((m, i) => (
                 <g key={i}>
-                  <circle cx={m.x - 40} cy={m.y} r="14" fill={ATLAS_COLORS.trunk} />
-                  <text x={m.x - 40} y={m.y + 4} textAnchor="middle" fontSize="12" fontWeight="800" fill="#1B1405">{m.num}</text>
-                  <text x={m.x} y={m.y - 2} fontSize="10" fontWeight="700" fill="var(--text)">{m.label}</text>
-                  <text x={m.x} y={m.y + 12} fontSize="8.5" fill="var(--text-2)">{m.sub}</text>
+                  <circle cx={m.x - 40} cy={m.y} r="12" fill={ATLAS_COLORS.trunk} />
+                  <text x={m.x - 40} y={m.y + 4} textAnchor="middle"
+                    fontSize="12" fontWeight="800" fill="#1B1405">{m.num}</text>
+                  <text x={m.x} y={m.y - 2} fontSize="9.5" fontWeight="700"
+                    fill="var(--text)">{m.label}</text>
+                  <text x={m.x} y={m.y + 12} fontSize="8"
+                    fill="var(--text-2)">{m.sub}</text>
                 </g>
               ))}
             </g>
           )}
 
-          {/* Step 5 — blood pressure gauge + three determinants */}
+          {/* Step 5 — blood pressure, determinants as vertical list */}
           {activeStep === 5 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>BLOOD PRESSURE — 120 / 80</text>
-              <circle cx="180" cy="145" r="46" fill="var(--bg-3)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <path d="M180,145 L210,115" stroke={ATLAS_COLORS.trunk} strokeWidth="3" strokeLinecap="round" />
-              <circle cx="180" cy="145" r="4" fill={ATLAS_COLORS.trunk} />
-              <text x="180" y="160" textAnchor="middle" fontSize="9" fill="var(--text-2)">mmHg</text>
-              <text x="270" y="120" fontSize="10" fontWeight="700" fill="var(--text)">1. Cardiac output</text>
-              <text x="270" y="135" fontSize="8.5" fill="var(--text-2)">heart rate x stroke volume</text>
-              <text x="270" y="158" fontSize="10" fontWeight="700" fill="var(--text)">2. Peripheral resistance</text>
-              <text x="270" y="173" fontSize="8.5" fill="var(--text-2)">arteriole diameter</text>
-              <text x="270" y="196" fontSize="10" fontWeight="700" fill="var(--text)">3. Blood volume</text>
-              <text x="640" y="145" fontSize="13" fontWeight="800" fill={ATLAS_COLORS.trunk}>BP = CO × PR</text>
+              <rect x="240" y="50" width="420" height="190" rx="14"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="76" textAnchor="middle" fontSize="11"
+                fontWeight="700" fill={ATLAS_COLORS.trunk}>
+                BLOOD PRESSURE - 120 / 80
+              </text>
+              <circle cx="330" cy="145" r="38" fill="var(--bg-3)"
+                stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <path d="M330,145 L354,121" stroke={ATLAS_COLORS.trunk}
+                strokeWidth="2.6" strokeLinecap="round" />
+              <circle cx="330" cy="145" r="3.5" fill={ATLAS_COLORS.trunk} />
+              <text x="330" y="158" textAnchor="middle" fontSize="8"
+                fill="var(--text-2)">mmHg</text>
+              <text x="400" y="110" fontSize="9.5" fontWeight="700"
+                fill="var(--text)">1. Cardiac output</text>
+              <text x="400" y="124" fontSize="8" fill="var(--text-2)">HR x stroke volume</text>
+              <text x="400" y="146" fontSize="9.5" fontWeight="700"
+                fill="var(--text)">2. Peripheral resistance</text>
+              <text x="400" y="160" fontSize="8" fill="var(--text-2)">arteriole diameter</text>
+              <text x="400" y="182" fontSize="9.5" fontWeight="700"
+                fill="var(--text)">3. Blood volume</text>
+              <text x="400" y="196" fontSize="8" fill="var(--text-2)">salt + water balance</text>
+              <text x="600" y="150" textAnchor="middle" fontSize="13"
+                fontWeight="800" fill={ATLAS_COLORS.trunk}>BP = CO × PR</text>
             </g>
           )}
 
-          {/* Step 6 — two arterioles, one wide one narrow */}
+          {/* Step 6 — redistribution, two arterioles */}
           {activeStep === 6 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>REDISTRIBUTION — ONE WIDE, ONE NARROW</text>
-              <path d="M140,145 L280,145" stroke="#C0392B" strokeWidth="10" strokeLinecap="round" />
-              <text x="210" y="120" textAnchor="middle" fontSize="9" fontWeight="700" fill="#C0392B">vasodilated</text>
-              <text x="210" y="170" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">more flow</text>
-              <path d="M440,145 L580,145" stroke="#C0392B" strokeWidth="4" strokeLinecap="round" />
-              <text x="510" y="120" textAnchor="middle" fontSize="9" fontWeight="700" fill="#C0392B">vasoconstricted</text>
-              <text x="510" y="170" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">less flow</text>
-              <text x="700" y="145" textAnchor="middle" fontSize="10" fontWeight="700" fill={ATLAS_COLORS.trunk}>R ∝ 1/r⁴</text>
-              <text x="700" y="160" textAnchor="middle" fontSize="8" fill="var(--text-2)">small change, big effect</text>
+              <rect x="240" y="50" width="420" height="190" rx="14"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="76" textAnchor="middle" fontSize="11"
+                fontWeight="700" fill={ATLAS_COLORS.trunk}>
+                REDISTRIBUTION - ONE WIDE, ONE NARROW
+              </text>
+              <path d="M280,130 L400,130" stroke="#C0392B"
+                strokeWidth="10" strokeLinecap="round" />
+              <text x="340" y="112" textAnchor="middle" fontSize="9"
+                fontWeight="700" fill="#C0392B">vasodilated</text>
+              <text x="340" y="152" textAnchor="middle" fontSize="8"
+                fill="var(--text-2)">more flow</text>
+              <path d="M480,130 L600,130" stroke="#C0392B"
+                strokeWidth="4" strokeLinecap="round" />
+              <text x="540" y="112" textAnchor="middle" fontSize="9"
+                fontWeight="700" fill="#C0392B">vasoconstricted</text>
+              <text x="540" y="152" textAnchor="middle" fontSize="8"
+                fill="var(--text-2)">less flow</text>
+              <text x="450" y="200" textAnchor="middle" fontSize="11"
+                fontWeight="700" fill={ATLAS_COLORS.trunk}>
+                R ∝ 1 / r⁴
+              </text>
+              <text x="450" y="216" textAnchor="middle" fontSize="8"
+                fill="var(--text-2)">small change in radius, big change in flow</text>
             </g>
           )}
 
-          {/* Step 7 — the four Starling forces at the capillary */}
+          {/* Step 7 — Starling forces */}
           {activeStep === 7 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>STARLING FORCES — OUT AT THE ARTERIAL END, IN AT THE VENOUS END</text>
-              <line x1="140" y1="145" x2="760" y2="145" stroke="#C0392B" strokeWidth="20" strokeLinecap="round" />
-              <line x1="140" y1="145" x2="760" y2="145" stroke="#F5C7C0" strokeWidth="3" strokeLinecap="round" opacity="0.9" />
-              <text x="140" y="112" textAnchor="middle" fontSize="9" fontWeight="700" fill="#C0392B">arterial end</text>
-              <text x="760" y="112" textAnchor="middle" fontSize="9" fontWeight="700" fill="#C0392B">venous end</text>
-              <path d="M220,145 L220,125" stroke="#2F6FED" strokeWidth="2.5" strokeLinecap="round" />
-              <polygon points="220,125 216,132 224,132" fill="#2F6FED" />
-              <text x="220" y="195" textAnchor="middle" fontSize="8.5" fill="#2F6FED">push out (35 mmHg)</text>
-              <path d="M420,125 L420,145" stroke="#8B5CF6" strokeWidth="2.5" strokeLinecap="round" />
-              <polygon points="420,145 416,138 424,138" fill="#8B5CF6" />
-              <text x="420" y="195" textAnchor="middle" fontSize="8.5" fill="#8B5CF6">pull in (25 mmHg)</text>
-              <path d="M620,145 L620,125" stroke="#2F6FED" strokeWidth="2.5" strokeLinecap="round" />
-              <polygon points="620,125 616,132 624,132" fill="#2F6FED" />
-              <text x="620" y="195" textAnchor="middle" fontSize="8.5" fill="#2F6FED">push out (15 mmHg)</text>
+              <rect x="240" y="50" width="420" height="190" rx="14"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="76" textAnchor="middle" fontSize="11"
+                fontWeight="700" fill={ATLAS_COLORS.trunk}>
+                STARLING FORCES AT THE CAPILLARY
+              </text>
+              <line x1="280" y1="145" x2="620" y2="145"
+                stroke="#C0392B" strokeWidth="16" strokeLinecap="round" />
+              <line x1="280" y1="145" x2="620" y2="145"
+                stroke="#F5C7C0" strokeWidth="2.4"
+                strokeLinecap="round" opacity="0.9" />
+              <text x="280" y="115" textAnchor="middle" fontSize="8"
+                fontWeight="700" fill="#C0392B">arterial end</text>
+              <text x="620" y="115" textAnchor="middle" fontSize="8"
+                fontWeight="700" fill="#C0392B">venous end</text>
+              <path d="M340,145 L340,128" stroke="#2F6FED"
+                strokeWidth="2.2" strokeLinecap="round" />
+              <polygon points="340,128 336,134 344,134" fill="#2F6FED" />
+              <text x="340" y="180" textAnchor="middle" fontSize="7.5"
+                fill="#2F6FED">push out (35)</text>
+              <path d="M450,128 L450,145" stroke="#8B5CF6"
+                strokeWidth="2.2" strokeLinecap="round" />
+              <polygon points="450,145 446,139 454,139" fill="#8B5CF6" />
+              <text x="450" y="180" textAnchor="middle" fontSize="7.5"
+                fill="#8B5CF6">pull in (25)</text>
+              <path d="M560,145 L560,128" stroke="#2F6FED"
+                strokeWidth="2.2" strokeLinecap="round" />
+              <polygon points="560,128 556,134 564,134" fill="#2F6FED" />
+              <text x="560" y="180" textAnchor="middle" fontSize="7.5"
+                fill="#2F6FED">push out (15)</text>
+              <text x="450" y="205" textAnchor="middle" fontSize="8"
+                fontStyle="italic" fill="var(--text-3)">
+                residual fluid → lymphatics
+              </text>
             </g>
           )}
 
-          {/* Step 8 — lymphatics collecting the fluid that leaked */}
+          {/* Step 8 — lymphatics collecting the leaked fluid */}
           {activeStep === 8 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="60" width="780" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="450" y="88" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>LYMPHATIC DRAINAGE — 2 TO 4 LITRES A DAY</text>
-              <circle cx="200" cy="145" r="6" fill="#FFE38A" />
-              <circle cx="230" cy="155" r="6" fill="#FFE38A" />
-              <circle cx="260" cy="145" r="6" fill="#FFE38A" />
-              <path d="M290,150 Q360,145 430,150" stroke="#2F6FED" strokeWidth="6" strokeDasharray="6 5" fill="none" strokeLinecap="round" />
-              <circle cx="365" cy="148" r="8" fill="none" stroke="#2F6FED" strokeWidth="2" />
-              <text x="365" y="195" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">lymphatic capillary</text>
-              <ellipse cx="490" cy="150" rx="24" ry="16" fill={ATLAS_COLORS.lymphoid} opacity="0.75" />
-              <ellipse cx="490" cy="150" rx="12" ry="7" fill="#0A0F1A" opacity="0.22" />
-              <text x="490" y="195" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">lymph node</text>
-              <path d="M530,150 Q610,145 680,150" stroke="#2F6FED" strokeWidth="6" strokeDasharray="6 5" fill="none" strokeLinecap="round" />
-              <polygon points="680,150 670,144 670,156" fill="#2F6FED" />
-              <text x="680" y="195" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">to subclavian veins</text>
+              <rect x="240" y="50" width="420" height="190" rx="14"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="76" textAnchor="middle" fontSize="11"
+                fontWeight="700" fill={ATLAS_COLORS.trunk}>
+                LYMPHATIC DRAINAGE - 2 TO 4 L / DAY
+              </text>
+              <circle cx="330" cy="130" r="5" fill="#FFE38A" />
+              <circle cx="350" cy="140" r="5" fill="#FFE38A" />
+              <circle cx="370" cy="130" r="5" fill="#FFE38A" />
+              <path d="M390,135 Q430,130 470,135"
+                stroke="#2F6FED" strokeWidth="5" strokeDasharray="5 4"
+                fill="none" strokeLinecap="round" />
+              <circle cx="430" cy="132" r="7" fill="none"
+                stroke="#2F6FED" strokeWidth="2" />
+              <text x="430" y="170" textAnchor="middle" fontSize="7.5"
+                fill="var(--text-2)">lymphatic capillary</text>
+              <ellipse cx="510" cy="135" rx="20" ry="13"
+                fill={ATLAS_COLORS.lymphoid} opacity="0.75" />
+              <ellipse cx="510" cy="135" rx="10" ry="6"
+                fill="#0A0F1A" opacity="0.22" />
+              <text x="510" y="170" textAnchor="middle" fontSize="7.5"
+                fill="var(--text-2)">lymph node</text>
+              <path d="M540,135 Q570,130 600,135"
+                stroke="#2F6FED" strokeWidth="5" strokeDasharray="5 4"
+                fill="none" strokeLinecap="round" />
+              <polygon points="600,135 592,131 592,139" fill="#2F6FED" />
+              <text x="600" y="170" textAnchor="middle" fontSize="7.5"
+                fill="var(--text-2)">subclavian veins</text>
+              <text x="450" y="210" textAnchor="middle" fontSize="8"
+                fontStyle="italic" fill="var(--text-3)">
+                without this, tissue would oedema
+              </text>
             </g>
           )}
 
