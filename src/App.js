@@ -1884,7 +1884,7 @@ function SlidesView({ app }) {
    ============================================================ */
 import { CONTENT } from "./contentData";
 import AtlasView from "./AtlasView";
-import VitroView from "./VitroView";
+import VitroView, { recordVitroAttempt, VITRO_COMPETENCIES } from "./VitroView";
 import { DIAGRAMS, diagramForTopic as atlasDiagramForTopic } from "./diagrams";
 
 
@@ -4731,7 +4731,26 @@ const ATLAS_TOPICS = new Set(
     .filter((d) => d.topic)
     .map((d) => `${d.topic.courseId}:${d.topic.topicIndex}`)
 );
-
+// Summarise a student's VITRO record for a practical: how many
+// competencies they've passed out of how many the practical has.
+// Returns null if they have never attempted it, so the topic card
+// can decide whether to render the badge at all.
+function vitroSummaryFor(progress, courseId, topicIndex) {
+  if (!progress || !progress.vitroAttempts) return null;
+  const key = `${courseId}:${topicIndex}`;
+  const entry = progress.vitroAttempts[key];
+  if (!entry) return null;
+  const competencies = VITRO_COMPETENCIES[key] || [];
+  if (competencies.length === 0) return null;
+  const passed = competencies.filter(
+    (c) => entry.best && entry.best[c.id] === true
+  ).length;
+  return {
+    passed,
+    total: competencies.length,
+    attempts: entry.attempts || 1,
+  };
+}
 // Courses whose topics are practicals, so each topic card in these
 // courses earns a "Practise in VITRO" button. Five of the six are
 // marked only by their course id (the "P" suffix in the code and
@@ -5837,6 +5856,48 @@ function CourseView({ app }) {
                   </span>
                 </button>
               )}
+              {isPractical && (() => {
+                const summary = vitroSummaryFor(app.progress, c.id, idx);
+                if (!summary) return null;
+                const allPassed = summary.passed === summary.total;
+                return (
+                  <div
+                    style={{
+                      marginTop: 4,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 6,
+                      fontSize: 11.5,
+                      color: allPassed ? "var(--good)" : "var(--text-2)",
+                      paddingLeft: 2,
+                    }}
+                  >
+                    <span
+                      aria-hidden
+                      style={{
+                        width: 5,
+                        height: 5,
+                        borderRadius: "50%",
+                        background: allPassed ? "var(--good)" : "var(--amber)",
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span style={{ fontWeight: 600 }}>
+                      {allPassed
+                        ? `VITRO · all ${summary.total} competencies passed`
+                        : `VITRO · ${summary.passed} of ${summary.total} competencies passed`}
+                    </span>
+                    {summary.attempts > 1 && (
+                      <span
+                        className="mono"
+                        style={{ color: "var(--text-3)", fontSize: 10.5 }}
+                      >
+                        · {summary.attempts} attempts
+                      </span>
+                    )}
+                  </div>
+                );
+              })()}
             </div>
           );
         })}
@@ -15542,7 +15603,12 @@ export default function App() {
     setName,
     setLevelSemester,
     openLevelPicker: () => setLevelPickerOpen(true),
-    setReadingXp,
+    recordVitroAttempt: (scriptId, competencyMap) => {
+      const current = progressRef.current || progress;
+      if (!current) return;
+      const updated = recordVitroAttempt(current, scriptId, competencyMap);
+      persist(updated);
+    },
     setPasscoXp,
     awardForumXp,
     forumCourse: route.forumCourse,

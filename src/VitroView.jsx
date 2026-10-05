@@ -287,25 +287,17 @@ function VitroDonning({ onPass, avatarConfig }) {
   const [placed, setPlaced] = useState([]);
   const [error, setError] = useState(null);
   const [gownPending, setGownPending] = useState(false);
-  // The id of the item currently animating onto the figure, or
-  // null. Drives the CSS keyframe animation class and blocks
-  // further taps until the animation settles.
   const [animating, setAnimating] = useState(null);
 
   const nextStep = DONNING_STEPS[placed.length] || null;
   const done = placed.length === DONNING_STEPS.length;
 
-  // Duration each per-item animation runs before the item is
-  // considered placed. Kept in one constant so a slower or
-  // snappier feel is a one-line change.
   const ANIM_MS = 550;
 
-  // Short, clinical instruction lines. One per step. Shown only
-  // in the headline strip above the cart, never as a paragraph.
   const STEP_HEADLINES = {
     wash: "Wash your hands.",
     gown: "Put on the lab coat.",
-    mask: "Fit the mask.",
+    mask: "Fit the mask — nose and mouth.",
     eye: "Put on the eyewear.",
     gloves: "Put on the gloves — last.",
   };
@@ -352,6 +344,12 @@ function VitroDonning({ onPass, avatarConfig }) {
     : "M44,30 Q44,18 60,18 Q76,18 76,30 Q72,23 60,23 Q48,23 44,30 Z";
 
   const has = (id) => placed.includes(id) || animating === id;
+
+  // Theme-aware stroke for the figure's outline. Reads from the
+  // CSS custom property so it flips with dark/light/system.
+  // The figure's *identity* colours (skin, hair) stay as the
+  // student set them — a person, not a UI element.
+  const figureStroke = "var(--line-2)";
 
   return (
     <div style={{ marginTop: 16 }}>
@@ -407,7 +405,7 @@ function VitroDonning({ onPass, avatarConfig }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "minmax(160px, 220px) 1fr",
+          gridTemplateColumns: "minmax(170px, 240px) 1fr",
           gap: 16,
           marginTop: 16,
           alignItems: "start",
@@ -423,75 +421,267 @@ function VitroDonning({ onPass, avatarConfig }) {
             background: "var(--bg-2)",
           }}
         >
+          {/*
+            The figure is drawn as a single continuous human
+            silhouette — sloped shoulders, tapered waist, flared
+            hips, narrowing legs, angled feet. Front-facing,
+            stylised at roughly five heads tall so the face
+            features, mask and eyewear stay legible at phone
+            size. Arms hang naturally and end in hands that
+            gloves can land on. Nothing about this is a diagram
+            of a person; it is a person, drawn the way the rest
+            of ASCEND draws things — shape first, tokens for
+            theme, identity colours for the student.
+
+            Layer order (bottom to top):
+              legs → feet → arms → hands → torso → head → hair
+              → face → mask → eyewear → gloves → wash → error
+          */}
           <svg
-            viewBox="0 0 120 220"
+            viewBox="0 0 140 240"
             width="100%"
-            style={{ maxWidth: 180, display: "block" }}
+            style={{ maxWidth: 200, display: "block" }}
             role="img"
             aria-label={done ? "You, fully dressed in PPE" : "You, being dressed in PPE"}
           >
-            <circle cx="60" cy="34" r="18" fill={skin} />
-            <path d={hairPath} fill={hairColor} />
+            {/* ---- Legs: one continuous trouser shape, tapering
+                 from hip to ankle. Drawn as a single silhouette
+                 (both legs) so the crotch reads as a real gap,
+                 not a seam between two rectangles. ---- */}
+            <path
+              d="
+                M56,150
+                L56,206
+                Q56,214 60,214
+                L66,214
+                Q70,214 70,206
+                L70,158
+                Q70,156 72,156
+                Q74,156 74,158
+                L74,206
+                Q74,214 78,214
+                L84,214
+                Q88,214 88,206
+                L88,150
+                Z
+              "
+              fill="var(--bg-3)"
+              stroke={figureStroke}
+              strokeWidth="1"
+              strokeLinejoin="round"
+            />
 
-            {!has("mask") && (
-              <g className="vitro-anim-fade">
-                <circle cx="53" cy="32" r="2.2" fill="#2A2016" />
-                <circle cx="67" cy="32" r="2.2" fill="#2A2016" />
+            {/* ---- Feet: angled outward, attached at the ankles.
+                 Drawn as two rounded shapes widening at the toe. ---- */}
+            <path
+              d="M56,214 Q54,220 60,222 L68,222 Q72,222 70,214 Z"
+              fill="var(--bg-3)"
+              stroke={figureStroke}
+              strokeWidth="1"
+            />
+            <path
+              d="M70,214 Q68,222 74,222 L82,222 Q88,222 84,214 Z"
+              fill="var(--bg-3)"
+              stroke={figureStroke}
+              strokeWidth="1"
+            />
+
+            {/* ---- Arms: hang from the shoulder, gentle curve at
+                 the elbow, ending in a wrist. Drawn as thick
+                 strokes so they read as limbs, not lines. The
+                 sleeve colour matches whatever is on the torso
+                 — outfit colour before the lab coat, coat white
+                 after. ---- */}
+            <path
+              d="M46,78 Q34,108 34,146"
+              stroke={has("gown") ? "#F4F6FA" : outfitColor}
+              strokeWidth="12"
+              strokeLinecap="round"
+              fill="none"
+            />
+            <path
+              d="M94,78 Q106,108 106,146"
+              stroke={has("gown") ? "#F4F6FA" : outfitColor}
+              strokeWidth="12"
+              strokeLinecap="round"
+              fill="none"
+            />
+
+            {/* ---- Hands: real hands, not dots. Drawn as small
+                 rounded shapes with a hint of a thumb so gloves
+                 have a shape to cover. Skin tone from the
+                 student's avatar. ---- */}
+            <g>
+              <path
+                d="M28,146 Q24,146 24,150 L24,158 Q24,162 28,162 L36,162 Q40,162 40,158 L40,150 Q40,146 36,146 Z"
+                fill={skin}
+                stroke={figureStroke}
+                strokeWidth="1"
+              />
+              <path
+                d="M100,146 Q96,146 96,150 L96,158 Q96,162 100,162 L108,162 Q112,162 112,158 L112,150 Q112,146 108,146 Z"
+                fill={skin}
+                stroke={figureStroke}
+                strokeWidth="1"
+              />
+            </g>
+
+            {/* ---- Torso: shoulders slope, chest broadens,
+                 waist tapers, hips flare. One continuous path,
+                 not a rectangle. Before the lab coat it takes
+                 the student's outfit colour; after it, lab-coat
+                 white. When the coat is being animated on, this
+                 whole path slides in from the upper left. ---- */}
+            <path
+              className={animating === "gown" ? "vitro-anim-coat" : ""}
+              d="
+                M42,72
+                Q52,62 60,62
+                L80,62
+                Q88,62 98,72
+                Q104,82 106,102
+                Q108,124 106,150
+                L88,150
+                Q88,132 86,116
+                Q84,104 82,98
+                Q80,110 80,128
+                L80,150
+                L60,150
+                L60,128
+                Q60,110 58,98
+                Q56,104 54,116
+                Q52,132 52,150
+                L34,150
+                Q32,124 34,102
+                Q36,82 42,72
+                Z
+              "
+              fill={has("gown") ? "#F4F6FA" : outfitColor}
+              stroke={figureStroke}
+              strokeWidth="1"
+              strokeLinejoin="round"
+            />
+
+            {/* ---- Lab-coat detail: when the coat is on, add the
+                 open front and lapels. Drawn over the torso path
+                 so it reads as a garment, not a flat fill. ---- */}
+            {has("gown") && (
+              <g
+                className={animating === "gown" ? "vitro-anim-fade" : "vitro-anim-fade"}
+                stroke={figureStroke}
+                strokeWidth="1"
+                fill="none"
+                strokeLinejoin="round"
+              >
+                {/* Open front — a V from the collar down to the
+                    waist, showing the underlayer beneath */}
                 <path
-                  d="M54,41 Q60,45 66,41"
-                  stroke="#2A2016"
-                  strokeWidth="1.8"
-                  fill="none"
-                  strokeLinecap="round"
+                  d="M62,66 L70,96 L78,66"
+                  fill="var(--bg-2)"
+                  stroke={figureStroke}
+                  strokeWidth="1"
                 />
+                {/* Lapel edges */}
+                <path d="M62,66 Q64,74 66,84" />
+                <path d="M78,66 Q76,74 74,84" />
               </g>
             )}
 
+            {/* ---- Neck: a short connecting shape between the
+                 shoulders and the head, so the head does not
+                 float above the torso. ---- */}
             <path
-              d="M32,60 Q60,50 88,60 L92,150 L28,150 Z"
-              fill={has("gown") ? "#F4F6FA" : outfitColor}
-              stroke="#1B283F"
+              d="M64,60 L64,54 Q64,52 70,52 Q76,52 76,54 L76,60 Z"
+              fill={skin}
+              stroke={figureStroke}
               strokeWidth="1"
-              className={animating === "gown" ? "vitro-anim-coat" : ""}
             />
 
-            <rect x="40" y="150" width="14" height="56" fill="#2E3A55" />
-            <rect x="66" y="150" width="14" height="56" fill="#2E3A55" />
+            {/* ---- Head: a slightly taller-than-wide oval, not a
+                 perfect circle, so it reads as a head. ---- */}
+            <ellipse cx="70" cy="36" rx="18" ry="20" fill={skin} stroke={figureStroke} strokeWidth="1" />
 
-            <ellipse cx="47" cy="208" rx="11" ry="5" fill="#1B1B1F" />
-            <ellipse cx="73" cy="208" rx="11" ry="5" fill="#1B1B1F" />
+            {/* ---- Hair: sits over the top and sides of the head.
+                 Silhouette cue from the student's hair family
+                 (fuller for female styles, closer for male),
+                 colour from the student's hair colour. ---- */}
+            <path
+              d={
+                isFemale
+                  ? "M52,34 Q52,14 70,14 Q88,14 88,34 Q84,22 70,22 Q56,22 52,34 Z"
+                  : "M54,32 Q54,18 70,18 Q86,18 86,32 Q82,24 70,24 Q58,24 54,32 Z"
+              }
+              fill={hairColor}
+            />
 
+            {/* ---- Face: dot eyes and a gentle smile. Never
+                 covered by the mask — the mask sits below the
+                 eye row. ---- */}
+            <g className="vitro-anim-fade">
+              <circle cx="62" cy="34" r="2.2" fill="#2A2016" />
+              <circle cx="78" cy="34" r="2.2" fill="#2A2016" />
+              <path
+                d="M63,43 Q70,47 77,43"
+                stroke="#2A2016"
+                strokeWidth="1.8"
+                fill="none"
+                strokeLinecap="round"
+              />
+            </g>
+
+            {/* ---- Mask: covers nose and mouth only. Top edge at
+                 y=40 sits two units below the eye row at y=34,
+                 so the eyes stay clear. Bottom at y=52 hugs the
+                 jawline. Side edges tuck behind the ears at
+                 x=52 and x=88. ---- */}
             {has("mask") && (
               <path
                 className={animating === "mask" ? "vitro-anim-mask" : ""}
-                d="M44,28 Q60,38 76,28 L74,44 Q60,50 46,44 Z"
+                d="M52,40 Q70,48 88,40 L86,52 Q70,56 54,52 Z"
                 fill="#E8EDF5"
-                stroke="#1B283F"
+                stroke={figureStroke}
                 strokeWidth="1"
+                strokeLinejoin="round"
               />
             )}
 
+            {/* ---- Eyewear: sits over the eye row, above the
+                 mask top edge. ---- */}
             {has("eye") && (
               <g
                 className={animating === "eye" ? "vitro-anim-eye" : ""}
                 stroke="#2A2016"
-                strokeWidth="2.4"
+                strokeWidth="2.2"
                 fill="none"
                 strokeLinecap="round"
               >
-                <rect x="46" y="24" width="12" height="9" rx="3" />
-                <rect x="62" y="24" width="12" height="9" rx="3" />
-                <line x1="58" y1="28" x2="62" y2="28" />
+                <rect x="54" y="27" width="13" height="10" rx="3" />
+                <rect x="73" y="27" width="13" height="10" rx="3" />
+                <line x1="67" y1="32" x2="73" y2="32" />
               </g>
             )}
 
+            {/* ---- Gloves: land on the hands, matching their
+                 shape. Drawn after the hands so they cover them
+                 cleanly. ---- */}
             {has("gloves") && (
               <g className={animating === "gloves" ? "vitro-anim-glove" : ""}>
-                <circle cx="28" cy="152" r="7" fill="#5B8DEF" />
-                <circle cx="92" cy="152" r="7" fill="#5B8DEF" />
+                <path
+                  d="M28,146 Q24,146 24,150 L24,158 Q24,162 28,162 L36,162 Q40,162 40,158 L40,150 Q40,146 36,146 Z"
+                  fill="#5B8DEF"
+                  stroke={figureStroke}
+                  strokeWidth="1"
+                />
+                <path
+                  d="M100,146 Q96,146 96,150 L96,158 Q96,162 100,162 L108,162 Q112,162 112,158 L112,150 Q112,146 108,146 Z"
+                  fill="#5B8DEF"
+                  stroke={figureStroke}
+                  strokeWidth="1"
+                />
               </g>
             )}
 
+            {/* ---- Hand hygiene sparkle: near the hands ---- */}
             {has("wash") && !has("gloves") && (
               <g
                 className={animating === "wash" ? "vitro-anim-wash" : ""}
@@ -500,15 +690,16 @@ function VitroDonning({ onPass, avatarConfig }) {
                 strokeWidth="1.8"
                 strokeLinecap="round"
               >
-                <path d="M26 148 l0 -5 M23 150 l-5 -3 M29 150 l5 -3" />
-                <path d="M94 148 l0 -5 M91 150 l-5 -3 M97 150 l5 -3" />
+                <path d="M26 142 l0 -5 M23 144 l-5 -3 M29 144 l5 -3" />
+                <path d="M110 142 l0 -5 M107 144 l-5 -3 M113 144 l5 -3" />
               </g>
             )}
 
+            {/* ---- Contamination spot: on the left shoulder ---- */}
             {error && (
               <g>
-                <circle cx="88" cy="66" r="5" fill="#F0776A" opacity="0.9" />
-                <circle cx="90" cy="68" r="2" fill="#F0776A" opacity="0.6" />
+                <circle cx="98" cy="78" r="5" fill="#F0776A" opacity="0.9" />
+                <circle cx="100" cy="80" r="2" fill="#F0776A" opacity="0.6" />
               </g>
             )}
           </svg>
@@ -858,8 +1049,137 @@ const VITRO_SCRIPTS = {
     // as a lesson.
     outcome:
       "PCV is 0.31 L/L (31%), which is below the adult female reference range of 0.36–0.46 L/L. This is anaemia. The next step in a real lab would be a full blood count and a blood film to work out whether this is a microcytic, normocytic or macrocytic anaemia — the PCV alone tells you that she is anaemic, not why.",
+    // The interpretation question. Scored as its own competency,
+    // because interpretation is what the practical is for.
+    interpretation: {
+      question:
+        "The PCV is 0.31 L/L. Given the adult female reference range of 0.36–0.46 L/L, how do you report this?",
+      options: [
+        "Normal — within reference range.",
+        "Below reference range — this is anaemia.",
+        "Above reference range — this is polycythaemia.",
+        "Cannot be interpreted from a PCV alone.",
+      ],
+      correctIndex: 1,
+      // Why each wrong option is wrong, specific to this result.
+      wrongFeedback: {
+        0: "0.31 L/L is below 0.36 L/L. The result is not normal. Reference range is the whole point of running the test — always compare the number against it, not against what looks like a reasonable figure.",
+        2: "Above reference would mean a PCV higher than 0.46 L/L in an adult female. 0.31 is well below that. Anaemia is the low end, polycythaemia the high end — check which side of the range the number sits on.",
+        3: "A PCV on its own can absolutely be interpreted — that is what the reference range is for. 0.31 L/L against a range of 0.36–0.46 L/L reads as anaemia. What the PCV cannot tell you is the cause. That is a different question.",
+      },
+    },
   },
 };
+
+// ------------------------------------------------------------------
+// VITRO_COMPETENCIES — the named skills each practical trains,
+// keyed the same way as VITRO_SCRIPTS. Every practical has its
+// own set; the bench scores against whichever set the loaded
+// script points at.
+//
+// Each competency is assessed independently: passed or not-yet-
+// passed. This is the vocabulary an MLS curriculum already uses
+// — "competent at tube selection", "not yet competent at result
+// interpretation" — not a points score.
+// ------------------------------------------------------------------
+const VITRO_COMPETENCIES = {
+  "ph2p:2": [
+    {
+      id: "tube_selection",
+      label: "Tube selection",
+      description:
+        "Chose EDTA (purple) for a haematology sample, not a tube meant for another purpose.",
+    },
+    {
+      id: "sample_handling",
+      label: "Sample handling",
+      description:
+        "Labelled, filled, sealed and loaded the capillary in the correct order without skipping a step.",
+    },
+    {
+      id: "instrument_operation",
+      label: "Instrument operation",
+      description:
+        "Ran the microhaematocrit centrifuge once the sample was loaded.",
+    },
+    {
+      id: "result_interpretation",
+      label: "Result interpretation",
+      description:
+        "Read the PCV against the reference range, weighed the pregnancy confound, and correctly identified the result as anaemia.",
+    },
+    {
+      id: "reportable_action",
+      label: "Reportable action",
+      description:
+        "Escalated the abnormal result to the requesting clinician with a suggestion for further testing, rather than filing or repeating it.",
+    },
+  ],
+};
+
+// ------------------------------------------------------------------
+// recordVitroAttempt — fold a finished VITRO attempt into the
+// student's progress object.
+//
+// Stored shape on progress:
+//
+//   progress.vitroAttempts = {
+//     "ph2p:2": {
+//       attempts: 3,
+//       lastAttemptAt: 1728...,
+//       best: {
+//         tube_selection: true,
+//         sample_handling: true,
+//         instrument_operation: true,
+//         result_interpretation: false,
+//       },
+//     },
+//   }
+//
+// "best" preserves the best-ever result per competency. Once a
+// student has passed a competency, a later failed attempt does
+// not un-pass it. That matches how an MLS competency record
+// works: you demonstrate competence once and it stays
+// demonstrated. The attempt counter still increments, so the
+// record shows how many times the student has run it.
+//
+// Returns a NEW progress object. The caller decides when to
+// persist it — this function does not save anything.
+// ------------------------------------------------------------------
+function recordVitroAttempt(progress, scriptId, competencyMap) {
+  if (!progress || !scriptId || !competencyMap) return progress;
+
+  const prev = progress.vitroAttempts || {};
+  const prevEntry = prev[scriptId] || {
+    attempts: 0,
+    lastAttemptAt: null,
+    best: {},
+  };
+
+  // Fold this attempt's competency map into "best". A true value
+  // wins over anything; a false value only sticks if there is no
+  // previous true. undefined values are ignored.
+  const nextBest = { ...prevEntry.best };
+  Object.keys(competencyMap).forEach((k) => {
+    const v = competencyMap[k];
+    if (v === true) nextBest[k] = true;
+    else if (v === false && nextBest[k] !== true) nextBest[k] = false;
+  });
+
+  const nextEntry = {
+    attempts: prevEntry.attempts + 1,
+    lastAttemptAt: Date.now(),
+    best: nextBest,
+  };
+
+  return {
+    ...progress,
+    vitroAttempts: {
+      ...prev,
+      [scriptId]: nextEntry,
+    },
+  };
+}
 
 // ------------------------------------------------------------------
 // VitroTubeSvg — one tube drawn as an SVG shape, coloured by cap.
@@ -914,44 +1234,315 @@ function VitroTubeSvg({ cap, filled, size = 46 }) {
 }
 
 // ------------------------------------------------------------------
-// VitroTubeBench — the reusable tube-and-sample bench.
+// VitroCentrifugeSvg — the microhaematocrit centrifuge, drawn
+// on the bench. Three visual states, driven by props:
 //
-// Takes a script and renders:
-//   1. The patient card (who the sample is from)
-//   2. The request card (what was asked for)
-//   3. The tube rack (every tube type on the shelf)
-//   4. The worktop (the picked tube, then the drawn sample)
-//   5. The analyser (tappable once the sample has been drawn)
-//   6. The outcome panel (the result, and the wrong-tube branch
-//      when the student picked wrong)
+//   state="idle"    — lid closed, rotor still, LED off.
+//   state="loaded"  — lid closed, rotor carrying two
+//                     capillaries in opposite slots, LED dim.
+//   state="spin"    — lid closed, rotor rotating (a rotation
+//                     animation on the rotor group), LED
+//                     blinking.
 //
-// One bench, many scripts — the bench itself never changes; the
-// script decides what appears on it.
+// A readout panel on the front of the machine shows the result
+// once the spin has completed. Before that it reads "—".
 //
-// No scoring here. Competency scoring is Step 5. This step only
-// proves the bench renders and the tube-pick branch works.
+// All chassis colours use theme tokens so the machine flips
+// with dark/light/system. Only the rotor LED and the readout
+// text stay literal (a real LED is a real LED).
 // ------------------------------------------------------------------
-function VitroTubeBench({ script, courseId, app }) {
-  // phase: rack → picked (with wrong feedback) → stepping → run
-  //   rack      — choosing a tube
-  //   picked    — tube chosen, feedback shown, "Begin bench steps" appears
-  //   stepping  — walking through script.benchSteps one at a time
-  //   run       — analyser has been run, result + outcome shown
+function VitroCentrifugeSvg({ state = "idle", result = null }) {
+  const spinning = state === "spin";
+  const loaded = state === "loaded" || spinning;
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 8,
+      }}
+    >
+      <style>{`
+        @keyframes vitro-rotor-spin {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
+        }
+        @keyframes vitro-led-blink {
+          0%, 100% { opacity: 1 }
+          50%      { opacity: 0.25 }
+        }
+        .vitro-rotor-spinning {
+          animation: vitro-rotor-spin 0.35s linear infinite;
+          transform-origin: 100px 78px;
+        }
+        .vitro-led-on  { animation: vitro-led-blink 0.6s ease-in-out infinite }
+      `}</style>
+
+      <svg
+        viewBox="0 0 200 160"
+        width="100%"
+        style={{ maxWidth: 260, display: "block" }}
+        role="img"
+        aria-label={
+          spinning
+            ? "Centrifuge spinning"
+            : loaded
+            ? "Centrifuge loaded, ready to spin"
+            : "Centrifuge idle"
+        }
+      >
+        {/* Base — a rounded trapezoid so the machine reads as a
+            bench-top device, not a box. */}
+        <path
+          d="M22,60 Q100,54 178,60 L184,146 Q100,152 16,146 Z"
+          fill="var(--bg-3)"
+          stroke="var(--line-2)"
+          strokeWidth="1.2"
+        />
+
+        {/* Lid — a domed shape, sits on top of the base. Drawn
+            closed in every state (the lid only opens at the load
+            step, which is a step we render separately). */}
+        <path
+          d="M30,60 Q100,26 170,60 L170,66 L30,66 Z"
+          fill="var(--bg-2)"
+          stroke="var(--line-2)"
+          strokeWidth="1.2"
+        />
+
+        {/* Rim line separating lid from body */}
+        <line
+          x1="30"
+          y1="66"
+          x2="170"
+          y2="66"
+          stroke="var(--line-2)"
+          strokeWidth="1"
+        />
+
+        {/* Rotor — a disc set into the top of the machine, seen
+            from slightly above so the slots are visible. Spins
+            when state === "spin". */}
+        <g className={spinning ? "vitro-rotor-spinning" : ""}>
+          <circle
+            cx="100"
+            cy="78"
+            r="28"
+            fill="var(--bg-2)"
+            stroke="var(--line-2)"
+            strokeWidth="1.2"
+          />
+          <circle
+            cx="100"
+            cy="78"
+            r="6"
+            fill="var(--bg-3)"
+            stroke="var(--line-2)"
+            strokeWidth="1"
+          />
+          {/* Two slots, diametrically opposed */}
+          <rect
+            x="92"
+            y="70"
+            width="6"
+            height="16"
+            rx="2"
+            fill="var(--bg-3)"
+            stroke="var(--line-2)"
+            strokeWidth="0.8"
+          />
+          <rect
+            x="102"
+            y="70"
+            width="6"
+            height="16"
+            rx="2"
+            fill="var(--bg-3)"
+            stroke="var(--line-2)"
+            strokeWidth="0.8"
+          />
+          {/* Loaded capillaries, if the machine is loaded or
+              spinning. Drawn as small red rectangles in the
+              slots so the machine reads as "carrying a sample". */}
+          {loaded && (
+            <>
+              <rect
+                x="93"
+                y="71"
+                width="4"
+                height="14"
+                rx="1"
+                fill="#8E2E2A"
+              />
+              <rect
+                x="103"
+                y="71"
+                width="4"
+                height="14"
+                rx="1"
+                fill="#8E2E2A"
+              />
+            </>
+          )}
+        </g>
+
+        {/* Readout panel on the body — result or dash */}
+        <rect
+          x="40"
+          y="112"
+          width="120"
+          height="22"
+          rx="4"
+          fill="var(--bg-2)"
+          stroke="var(--line-2)"
+          strokeWidth="1"
+        />
+        <text
+          x="100"
+          y="127"
+          textAnchor="middle"
+          fontFamily="var(--mono, monospace)"
+          fontSize="11"
+          fontWeight="700"
+          fill={result ? "var(--amber-2)" : "var(--text-3)"}
+        >
+          {result ? result : "—"}
+        </text>
+
+        {/* Power LED — blinks while spinning */}
+        <circle
+          className={spinning ? "vitro-led-on" : ""}
+          cx="176"
+          cy="120"
+          r="3"
+          fill={spinning ? "#54D08A" : "#3B4A63"}
+        />
+      </svg>
+    </div>
+  );
+}
+
+// ------------------------------------------------------------------
+// VitroCapillarySvg — one microhaematocrit capillary tube.
+//
+// Three fill states driven by props:
+//
+//   fill="empty"   — clear glass, no sample.
+//   fill="partial" — glass with red sample in the bottom
+//                    quarter (used mid-animation).
+//   fill="full"    — glass filled with red to about
+//                    three-quarters, exactly the fill level
+//                    the instruction teaches.
+//
+//   sealed         — the dry (top) end carries a clay plug.
+//
+// The body uses theme-neutral glass colouring, so it reads as
+// glass on both dark and light backgrounds.
+// ------------------------------------------------------------------
+function VitroCapillarySvg({ fill = "empty", sealed = false, height = 120 }) {
+  const fillHeight =
+    fill === "full" ? 78 : fill === "partial" ? 24 : 0;
+  return (
+    <svg
+      viewBox="0 0 14 130"
+      width={(height / 130) * 14}
+      style={{ display: "block" }}
+      role="img"
+      aria-label={
+        sealed
+          ? "Sealed capillary"
+          : fill === "full"
+          ? "Filled capillary"
+          : "Empty capillary"
+      }
+    >
+      {/* Glass tube */}
+      <rect
+        x="4"
+        y="0"
+        width="6"
+        height="130"
+        rx="3"
+        fill="var(--bg-2)"
+        stroke="var(--line-2)"
+        strokeWidth="0.8"
+        opacity="0.9"
+      />
+      {/* Blood column, filled from the bottom up */}
+      {fillHeight > 0 && (
+        <rect
+          x="5"
+          y={126 - fillHeight}
+          width="4"
+          height={fillHeight}
+          rx="2"
+          fill="#8E2E2A"
+          style={{ transition: "height 600ms ease-out, y 600ms ease-out" }}
+        />
+      )}
+      {/* Sealing clay plug at the top (dry) end */}
+      {sealed && (
+        <rect
+          x="3.5"
+          y="0"
+          width="7"
+          height="8"
+          rx="2"
+          fill="#C4A57B"
+          stroke="var(--line-2)"
+          strokeWidth="0.6"
+        />
+      )}
+    </svg>
+  );
+}
+
+// ------------------------------------------------------------------
+// VitroTubeBench — the reusable tube-and-sample bench, rebuilt
+// as a real simulation.
+//
+// Every bench step now happens visibly on the bench. The student
+// is not reading past a paragraph and tapping "Done"; they are
+// watching the tube get labelled, the capillary fill, the
+// seal go on, the sample get loaded into the centrifuge, and the
+// rotor spin. Actions produce state; state produces the picture.
+//
+// The competency profile is unchanged from Step 5 — the tracking
+// rides on exactly the same actions.
+// ------------------------------------------------------------------
+function VitroTubeBench({ script, courseId, app, onComplete }) {
+  // phase: rack → picked → labelling → filling → sealing →
+  //        loading → spinning → interpret → results
   const [phase, setPhase] = useState("rack");
   const [pickedTube, setPickedTube] = useState(null);
   const [wrongFeedback, setWrongFeedback] = useState(null);
   const [analyserRan, setAnalyserRan] = useState(false);
-  // Index of the current bench step when phase === "stepping". The
-  // bench walks this forward one tap at a time; the analyser only
-  // becomes reachable once it reaches the end.
   const [stepIdx, setStepIdx] = useState(0);
+
+  // Per-bench-step visual state. Each one is a boolean that
+  // flips when the student performs that step, and the SVG
+  // reads from it to draw the right picture.
+  const [labelled, setLabelled] = useState(false);
+  const [capillaryFill, setCapillaryFill] = useState("empty");
+  const [capillarySealed, setCapillarySealed] = useState(false);
+  const [centrifugeLoaded, setCentrifugeLoaded] = useState(false);
+
+  const [competency, setCompetency] = useState({
+    tube_selection: undefined,
+    sample_handling: undefined,
+    instrument_operation: undefined,
+    result_interpretation: undefined,
+  });
+  const [interpPick, setInterpPick] = useState(null);
+  const [actionPick, setActionPick] = useState(null);
 
   const steps = Array.isArray(script && script.benchSteps)
     ? script.benchSteps
     : null;
+  const interpretation =
+    script && script.interpretation ? script.interpretation : null;
 
-  // If the script identity ever changes, reset the whole bench so
-  // a second practical doesn't inherit the first one's state.
   const scriptId = script && script.id ? script.id : "";
   useEffect(() => {
     setPhase("rack");
@@ -959,6 +1550,18 @@ function VitroTubeBench({ script, courseId, app }) {
     setWrongFeedback(null);
     setAnalyserRan(false);
     setStepIdx(0);
+    setLabelled(false);
+    setCapillaryFill("empty");
+    setCapillarySealed(false);
+    setCentrifugeLoaded(false);
+    setCompetency({
+      tube_selection: undefined,
+      sample_handling: undefined,
+      instrument_operation: undefined,
+      result_interpretation: undefined,
+    });
+    setInterpPick(null);
+    setActionPick(null);
   }, [scriptId]);
 
   const goBack = () => {
@@ -975,9 +1578,14 @@ function VitroTubeBench({ script, courseId, app }) {
     if (phase !== "rack") return;
     setPickedTube(cap);
     if (cap === script.correctTube) {
+      setCompetency((c) => ({
+        ...c,
+        tube_selection: c.tube_selection === false ? false : true,
+      }));
       setWrongFeedback(null);
       setPhase("picked");
     } else {
+      setCompetency((c) => ({ ...c, tube_selection: false }));
       setWrongFeedback({
         cap,
         message:
@@ -990,33 +1598,94 @@ function VitroTubeBench({ script, courseId, app }) {
     }
   };
 
-  // "Begin bench steps" — called after a correct tube is picked.
-  // If the script provides benchSteps, we walk through them; if
-  // it doesn't (as with the placeholder script), we jump straight
-  // to the analyser, preserving the simplified Step 3 flow.
   const beginSteps = () => {
     if (phase !== "picked") return;
     if (steps && steps.length > 0) {
       setStepIdx(0);
-      setPhase("stepping");
+      setPhase("labelling");
     } else {
-      setPhase("run");
+      setPhase("spinning");
     }
   };
 
-  const advanceStep = () => {
-    if (phase !== "stepping") return;
-    if (stepIdx + 1 < steps.length) {
-      setStepIdx(stepIdx + 1);
-    } else {
-      // Last step done — release the analyser.
-      setPhase("run");
-    }
+  // Each step is triggered by a specific button, and does exactly
+  // one visible thing on the bench, then advances the phase.
+  const doLabel = () => {
+    if (phase !== "labelling") return;
+    setLabelled(true);
+    setTimeout(() => {
+      setStepIdx(1);
+      setPhase("filling");
+    }, 500);
   };
 
-  const runAnalyser = () => {
-    if (phase !== "run") return;
+  const doFill = () => {
+    if (phase !== "filling") return;
+    setCapillaryFill("partial");
+    setTimeout(() => setCapillaryFill("full"), 120);
+    setTimeout(() => {
+      setStepIdx(2);
+      setPhase("sealing");
+    }, 800);
+  };
+
+  const doSeal = () => {
+    if (phase !== "sealing") return;
+    setCapillarySealed(true);
+    setTimeout(() => {
+      setStepIdx(3);
+      setPhase("loading");
+    }, 500);
+  };
+
+  const doLoad = () => {
+    if (phase !== "loading") return;
+    setCentrifugeLoaded(true);
+    setCompetency((c) => ({ ...c, sample_handling: true }));
+    setTimeout(() => {
+      setStepIdx(4);
+      setPhase("spinning");
+    }, 600);
+  };
+
+  const doSpin = () => {
+    if (phase !== "spinning" || analyserRan) return;
     setAnalyserRan(true);
+    setCompetency((c) => ({ ...c, instrument_operation: true }));
+    // The spin animation runs for 3s; the readout appears at
+    // the end, and the phase advances to interpretation/results.
+        setTimeout(() => {
+      setPhase(interpretation ? "interpret" : "results");
+    }, 3000);
+  };
+
+  const answerInterpretation = (idx) => {
+    if (interpPick !== null) return;
+    setInterpPick(idx);
+    setCompetency((c) => ({
+      ...c,
+      result_interpretation: idx === interpretation.correctIndex,
+    }));
+  };
+
+  const answerAction = (idx) => {
+    if (actionPick !== null) return;
+    setActionPick(idx);
+    setCompetency((c) => ({
+      ...c,
+      reportable_action: idx === script.reportableAction.correctIndex,
+    }));
+  };
+
+  const goToResults = () => {
+    setPhase("results");
+    // Report the finished attempt upward, once. The parent folds
+    // it into progress and persists. This is the only place
+    // VitroTubeBench talks to the outside world — everything
+    // else is internal state.
+    if (typeof onComplete === "function") {
+      onComplete(script.id, competency);
+    }
   };
 
   const resetBench = () => {
@@ -1025,14 +1694,45 @@ function VitroTubeBench({ script, courseId, app }) {
     setWrongFeedback(null);
     setAnalyserRan(false);
     setStepIdx(0);
+    setLabelled(false);
+    setCapillaryFill("empty");
+    setCapillarySealed(false);
+    setCentrifugeLoaded(false);
+    setCompetency({
+      tube_selection: undefined,
+      sample_handling: undefined,
+      instrument_operation: undefined,
+      result_interpretation: undefined,
+    });
+    setInterpPick(null);
+    setActionPick(null);
   };
 
   const correct = pickedTube && pickedTube === script.correctTube;
+  const centrifugeState =
+    phase === "spinning" && !analyserRan
+      ? "spin"
+      : centrifugeLoaded
+      ? "loaded"
+      : "idle";
+  const todayLabel = new Date().toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+
+  // The headline for the current bench step. Short, clinical.
+  const benchHeadline = {
+    labelling: "Label the tube.",
+    filling: "Fill the capillary.",
+    sealing: "Seal the dry end.",
+    loading: "Load the centrifuge.",
+    spinning: analyserRan ? "Reading the result." : "Spin the sample.",
+  }[phase];
 
   return (
     <div style={{ marginTop: 16 }}>
-      {/* Header strip — patient + request, always visible so the
-          student is never guessing what they are being asked to do. */}
+      {/* Header strip — patient + request, always visible. */}
       <div
         className="card"
         style={{
@@ -1073,8 +1773,24 @@ function VitroTubeBench({ script, courseId, app }) {
         </div>
       </div>
 
-      {/* The worktop — tube rack on the left, picked tube / analyser
-          on the right. Stacks on phones. */}
+      {/* Bench headline — short, clinical, above the bench. */}
+      {benchHeadline && (
+        <div
+          className="card"
+          style={{
+            marginTop: 12,
+            borderColor: "var(--amber)",
+            padding: "12px 16px",
+          }}
+        >
+          <div style={{ fontWeight: 750, fontSize: 15 }}>
+            {benchHeadline}
+          </div>
+        </div>
+      )}
+
+      {/* The bench — tube rack on the left, worktop on the right.
+          Stacks on phones. */}
       <div
         style={{
           display: "grid",
@@ -1143,8 +1859,6 @@ function VitroTubeBench({ script, courseId, app }) {
             })}
           </div>
 
-          {/* Reference — tappable details of each tube. Kept
-              collapsed by default so the rack is the focus. */}
           <details
             style={{
               marginTop: 12,
@@ -1195,7 +1909,7 @@ function VitroTubeBench({ script, courseId, app }) {
           </details>
         </div>
 
-        {/* ---- Worktop: picked tube + analyser ---- */}
+        {/* ---- Worktop ---- */}
         <div className="card" style={{ padding: 14 }}>
           <div className="eyebrow" style={{ marginBottom: 10 }}>
             Worktop
@@ -1213,20 +1927,46 @@ function VitroTubeBench({ script, courseId, app }) {
             </div>
           )}
 
+          {/* Picked tube — always visible once chosen */}
           {pickedTube && (
             <div
               style={{
                 display: "flex",
-                alignItems: "center",
+                alignItems: "flex-start",
                 gap: 12,
                 marginBottom: 12,
               }}
             >
-              <VitroTubeSvg
-                cap={pickedTube}
-                filled={phase === "stepping" || phase === "run"}
-                size={44}
-              />
+              <div style={{ position: "relative" }}>
+                <VitroTubeSvg
+                  cap={pickedTube}
+                  filled={phase !== "picked" && phase !== "rack"}
+                  size={44}
+                />
+                {labelled && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 12,
+                      left: 6,
+                      padding: "1px 4px",
+                      borderRadius: 3,
+                      background: "#FFFFFF",
+                      border: "0.5px solid var(--line-2)",
+                      fontSize: 5,
+                      fontWeight: 700,
+                      color: "#1B1405",
+                      lineHeight: 1.1,
+                      textAlign: "center",
+                      maxWidth: 24,
+                    }}
+                  >
+                    {script.patientLabel.split(" ")[0]}
+                    <br />
+                    {todayLabel}
+                  </div>
+                )}
+              </div>
               <div style={{ minWidth: 0 }}>
                 <div style={{ fontWeight: 650, fontSize: 13.5 }}>
                   {TUBE_LIBRARY[pickedTube].label}
@@ -1238,37 +1978,15 @@ function VitroTubeBench({ script, courseId, app }) {
                     marginTop: 2,
                   }}
                 >
-                  {phase === "stepping" || phase === "run"
-                    ? "Sample drawn."
-                    : "Tube selected — draw the sample."}
+                  {labelled
+                    ? `Labelled · ${script.patientLabel.split(" ")[0]} · ${todayLabel}`
+                    : "Tube selected."}
                 </div>
               </div>
             </div>
           )}
 
-          {phase === "picked" && correct && (
-            <>
-              <div
-                style={{
-                  color: "var(--text-2)",
-                  fontSize: 13,
-                  lineHeight: 1.55,
-                  marginBottom: 10,
-                }}
-              >
-                {script.correctTubesFeedback}
-              </div>
-              <button
-                className="btn btn-a btn-sm"
-                onClick={beginSteps}
-              >
-                {steps && steps.length > 0
-                  ? "Begin bench steps"
-                  : "Draw the sample"}
-              </button>
-            </>
-          )}
-
+          {/* Interpret feedback on wrong-tube pick */}
           {phase === "picked" && !correct && wrongFeedback && (
             <div
               style={{
@@ -1296,33 +2014,121 @@ function VitroTubeBench({ script, courseId, app }) {
             </div>
           )}
 
-          {phase === "run" && (
-            <div style={{ marginTop: 4 }}>
+          {/* Correct-tube confirmation */}
+          {phase === "picked" && correct && (
+            <>
               <div
-                className="eyebrow"
-                style={{ marginBottom: 8 }}
+                style={{
+                  color: "var(--text-2)",
+                  fontSize: 13,
+                  lineHeight: 1.55,
+                  marginBottom: 10,
+                }}
               >
-                {script.analyser.label}
+                {script.correctTubesFeedback}
+              </div>
+              <button
+                className="btn btn-a btn-sm"
+                onClick={beginSteps}
+              >
+                Begin the practical
+              </button>
+            </>
+          )}
+
+          {/* ---- Step: labelling ---- */}
+          {phase === "labelling" && (
+            <div>
+              <div
+                style={{
+                  color: "var(--text-2)",
+                  fontSize: 13,
+                  lineHeight: 1.55,
+                  marginBottom: 12,
+                }}
+              >
+                {steps[0].instruction}
+              </div>
+              <button className="btn btn-a btn-sm" onClick={doLabel}>
+                Write the label
+              </button>
+            </div>
+          )}
+
+          {/* ---- Step: filling ---- */}
+          {phase === "filling" && (
+            <div>
+              <div
+                style={{
+                  color: "var(--text-2)",
+                  fontSize: 13,
+                  lineHeight: 1.55,
+                  marginBottom: 12,
+                }}
+              >
+                {steps[1].instruction}
+              </div>
+              <button className="btn btn-a btn-sm" onClick={doFill}>
+                Fill the capillary
+              </button>
+            </div>
+          )}
+
+          {/* ---- Step: sealing ---- */}
+          {phase === "sealing" && (
+            <div>
+              <div
+                style={{
+                  color: "var(--text-2)",
+                  fontSize: 13,
+                  lineHeight: 1.55,
+                  marginBottom: 12,
+                }}
+              >
+                {steps[2].instruction}
+              </div>
+              <button className="btn btn-a btn-sm" onClick={doSeal}>
+                Seal the dry end
+              </button>
+            </div>
+          )}
+
+          {/* ---- Step: loading ---- */}
+          {phase === "loading" && (
+            <div>
+              <div
+                style={{
+                  color: "var(--text-2)",
+                  fontSize: 13,
+                  lineHeight: 1.55,
+                  marginBottom: 12,
+                }}
+              >
+                {steps[3].instruction}
+              </div>
+              <button className="btn btn-a btn-sm" onClick={doLoad}>
+                Load the centrifuge
+              </button>
+            </div>
+          )}
+
+          {/* ---- Step: spinning ---- */}
+          {phase === "spinning" && (
+            <div>
+              <div
+                style={{
+                  color: "var(--text-2)",
+                  fontSize: 13,
+                  lineHeight: 1.55,
+                  marginBottom: 12,
+                }}
+              >
+                {script.analyser.action}
               </div>
               {!analyserRan && (
-                <>
-                  <div
-                    style={{
-                      color: "var(--text-2)",
-                      fontSize: 13,
-                      lineHeight: 1.55,
-                      marginBottom: 10,
-                    }}
-                  >
-                    {script.analyser.action}
-                  </div>
-                  <button
-                    className="btn btn-a btn-sm"
-                    onClick={runAnalyser}
-                  >
-                    Run the analyser
-                  </button>
-                </>
+                <button className="btn btn-a btn-sm" onClick={doSpin}>
+                  Start the spin
+                </button>
               )}
               {analyserRan && (
                 <>
@@ -1357,79 +2163,458 @@ function VitroTubeBench({ script, courseId, app }) {
             </div>
           )}
 
-          {phase === "stepping" && steps && steps[stepIdx] && (
-            <div>
-              <div
-                className="eyebrow"
-                style={{ marginBottom: 8 }}
-              >
-                Bench step {stepIdx + 1} of {steps.length}
-              </div>
+          {/* ---- Capillary, when it exists ---- */}
+          {(phase === "filling" ||
+            phase === "sealing" ||
+            phase === "loading" ||
+            phase === "spinning") && (
+            <div
+              style={{
+                marginTop: 14,
+                display: "flex",
+                alignItems: "flex-end",
+                gap: 20,
+                justifyContent: "center",
+                padding: "10px 0",
+                borderTop: "1px solid var(--line)",
+              }}
+            >
               <div
                 style={{
-                  fontWeight: 700,
-                  fontSize: 14,
-                  marginBottom: 6,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 4,
                 }}
               >
-                {steps[stepIdx].label}
+                <VitroCapillarySvg
+                  fill={capillaryFill}
+                  sealed={capillarySealed}
+                  height={100}
+                />
+                <div
+                  className="mono"
+                  style={{
+                    fontSize: 10,
+                    color: "var(--text-3)",
+                    letterSpacing: "0.03em",
+                  }}
+                >
+                  CAPILLARY
+                </div>
               </div>
-              <div
-                style={{
-                  color: "var(--text-2)",
-                  fontSize: 13,
-                  lineHeight: 1.6,
-                  marginBottom: 12,
-                }}
-              >
-                {steps[stepIdx].instruction}
-              </div>
-              <button
-                className="btn btn-a btn-sm"
-                onClick={advanceStep}
-              >
-                {stepIdx + 1 < steps.length
-                  ? "Done — next step"
-                  : "Done — ready to spin"}
-              </button>
+              <VitroCentrifugeSvg
+                state={centrifugeState}
+                result={analyserRan ? script.analyser.result : null}
+              />
             </div>
           )}
         </div>
       </div>
 
-      {/* Outcome strip — what Step 5 will replace with the scored
-          results screen. For now, this is a plain readout that
-          states the result and, for PCV, the interpretation. */}
-      {analyserRan && script.outcome && (
+      {/* ---- Interpretation ---- */}
+            {/* ---- Interpretation: question 1 ---- */}
+      {phase === "interpret" && interpretation && (
         <div
           className="card"
           style={{
             marginTop: 12,
             borderColor: "var(--amber-2)",
-            background: "var(--amber-dim)",
-            padding: 14,
+            padding: 16,
           }}
         >
           <div
             className="eyebrow"
-            style={{ color: "var(--amber-2)", marginBottom: 6 }}
+            style={{ color: "var(--amber-2)", marginBottom: 8 }}
           >
             Interpretation
           </div>
           <div
             style={{
-              color: "var(--text)",
-              fontSize: 13.5,
-              lineHeight: 1.6,
+              fontWeight: 700,
+              fontSize: 14.5,
+              lineHeight: 1.5,
+              marginBottom: 14,
             }}
           >
-            {script.outcome}
+            {interpretation.question}
+          </div>
+          <div style={{ display: "grid", gap: 8 }}>
+            {interpretation.options.map((opt, i) => {
+              const picked = interpPick === i;
+              const isCorrect = i === interpretation.correctIndex;
+              const reveal = interpPick !== null;
+              return (
+                <button
+                  key={i}
+                  onClick={() => answerInterpretation(i)}
+                  disabled={reveal}
+                  className="card hover"
+                  style={{
+                    textAlign: "left",
+                    padding: "12px 14px",
+                    cursor: reveal ? "default" : "pointer",
+                    border: reveal
+                      ? isCorrect
+                        ? "1.5px solid var(--good)"
+                        : picked
+                        ? "1.5px solid var(--bad)"
+                        : "1px solid var(--line)"
+                      : "1px solid var(--line)",
+                    background: reveal
+                      ? isCorrect
+                        ? "var(--good-dim)"
+                        : picked
+                        ? "var(--bad-dim)"
+                        : "var(--bg-2)"
+                      : "var(--bg-2)",
+                    color: "var(--text)",
+                    fontSize: 13.5,
+                    lineHeight: 1.55,
+                  }}
+                >
+                  {opt}
+                </button>
+              );
+            })}
+          </div>
+
+          {interpPick !== null && (
+            <div style={{ marginTop: 14 }}>
+              <div
+                style={{
+                  color:
+                    interpPick === interpretation.correctIndex
+                      ? "var(--good)"
+                      : "var(--bad)",
+                  fontWeight: 700,
+                  fontSize: 13.5,
+                  marginBottom: 6,
+                }}
+              >
+                {interpPick === interpretation.correctIndex
+                  ? "Correct."
+                  : "Not this."}
+              </div>
+              <div
+                style={{
+                  color: "var(--text-2)",
+                  fontSize: 13.5,
+                  lineHeight: 1.65,
+                }}
+              >
+                {interpPick === interpretation.correctIndex
+                  ? "The result is below reference range. Pregnancy lowers PCV modestly, but not to 0.31 L/L, and her haemoglobin of 9.4 g/dL confirms anaemia. The correct action is to report the result as anaemia, not to normalise it because of pregnancy."
+                  : interpretation.wrongFeedback[interpPick]}
+              </div>
+              <button
+                className="btn btn-a btn-sm"
+                style={{ marginTop: 12 }}
+                onClick={() => setPhase("action")}
+              >
+                Next question
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ---- Interpretation: question 2, the reportable action ---- */}
+      {phase === "action" && script.reportableAction && (
+        <div
+          className="card"
+          style={{
+            marginTop: 12,
+            borderColor: "var(--amber-2)",
+            padding: 16,
+          }}
+        >
+          <div
+            className="eyebrow"
+            style={{ color: "var(--amber-2)", marginBottom: 8 }}
+          >
+            Reportable action
+          </div>
+          <div
+            style={{
+              fontWeight: 700,
+              fontSize: 14.5,
+              lineHeight: 1.5,
+              marginBottom: 14,
+            }}
+          >
+            {script.reportableAction.question}
+          </div>
+          <div style={{ display: "grid", gap: 8 }}>
+            {script.reportableAction.options.map((opt, i) => {
+              const picked = actionPick === i;
+              const isCorrect = i === script.reportableAction.correctIndex;
+              const reveal = actionPick !== null;
+              return (
+                <button
+                  key={i}
+                  onClick={() => answerAction(i)}
+                  disabled={reveal}
+                  className="card hover"
+                  style={{
+                    textAlign: "left",
+                    padding: "12px 14px",
+                    cursor: reveal ? "default" : "pointer",
+                    border: reveal
+                      ? isCorrect
+                        ? "1.5px solid var(--good)"
+                        : picked
+                        ? "1.5px solid var(--bad)"
+                        : "1px solid var(--line)"
+                      : "1px solid var(--line)",
+                    background: reveal
+                      ? isCorrect
+                        ? "var(--good-dim)"
+                        : picked
+                        ? "var(--bad-dim)"
+                        : "var(--bg-2)"
+                      : "var(--bg-2)",
+                    color: "var(--text)",
+                    fontSize: 13.5,
+                    lineHeight: 1.55,
+                  }}
+                >
+                  {opt}
+                </button>
+              );
+            })}
+          </div>
+
+          {actionPick !== null && (
+            <div style={{ marginTop: 14 }}>
+              <div
+                style={{
+                  color:
+                    actionPick === script.reportableAction.correctIndex
+                      ? "var(--good)"
+                      : "var(--bad)",
+                  fontWeight: 700,
+                  fontSize: 13.5,
+                  marginBottom: 6,
+                }}
+              >
+                {actionPick === script.reportableAction.correctIndex
+                  ? "Correct."
+                  : "Not this."}
+              </div>
+              <div
+                style={{
+                  color: "var(--text-2)",
+                  fontSize: 13.5,
+                  lineHeight: 1.65,
+                }}
+              >
+                {actionPick === script.reportableAction.correctIndex
+                  ? script.outcome
+                  : script.reportableAction.wrongFeedback[actionPick]}
+              </div>
+              <button
+                className="btn btn-a btn-sm"
+                style={{ marginTop: 12 }}
+                onClick={goToResults}
+              >
+                See your competencies
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ---- Results ---- */}
+      {phase === "results" && (
+        <div style={{ marginTop: 12 }}>
+          <div
+            className="card"
+            style={{
+              borderColor: "var(--amber)",
+              padding: 18,
+            }}
+          >
+            <div
+              className="eyebrow"
+              style={{ color: "var(--amber-2)", marginBottom: 6 }}
+            >
+              Competencies
+            </div>
+            <div
+              style={{
+                fontSize: 14.5,
+                fontWeight: 700,
+                marginBottom: 4,
+              }}
+            >
+              What you demonstrated
+            </div>
+            <div
+              style={{
+                color: "var(--text-3)",
+                fontSize: 12.5,
+                marginBottom: 16,
+              }}
+            >
+              Each competency is assessed independently.
+            </div>
+
+            {(() => {
+              const list =
+                VITRO_COMPETENCIES[script.id] ||
+                VITRO_COMPETENCIES["ph2p:2"] ||
+                [];
+              const failedIds = list
+                .filter((comp) => competency[comp.id] === false)
+                .map((comp) => comp.id);
+              return (
+                <>
+                  <div style={{ display: "grid", gap: 10 }}>
+                    {list.map((comp) => {
+                      const state = competency[comp.id];
+                      const passed = state === true;
+                      const failed = state === false;
+                      return (
+                        <div
+                          key={comp.id}
+                          style={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            gap: 12,
+                            padding: "10px 12px",
+                            borderRadius: 10,
+                            border: passed
+                              ? "1px solid var(--good)"
+                              : failed
+                              ? "1px solid var(--bad)"
+                              : "1px solid var(--line)",
+                            background: passed
+                              ? "var(--good-dim)"
+                              : failed
+                              ? "var(--bad-dim)"
+                              : "var(--bg-2)",
+                          }}
+                        >
+                          <span
+                            aria-hidden
+                            style={{
+                              flexShrink: 0,
+                              width: 20,
+                              height: 20,
+                              borderRadius: 5,
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              background: passed
+                                ? "var(--good)"
+                                : failed
+                                ? "var(--bad)"
+                                : "var(--bg-3)",
+                              color: passed
+                                ? "#08210F"
+                                : failed
+                                ? "#2A0A06"
+                                : "var(--text-3)",
+                              fontSize: 12,
+                              fontWeight: 800,
+                            }}
+                          >
+                            {passed ? "✓" : failed ? "✕" : "–"}
+                          </span>
+                          <div style={{ minWidth: 0 }}>
+                            <div
+                              style={{
+                                fontWeight: 700,
+                                fontSize: 13.5,
+                                marginBottom: 2,
+                              }}
+                            >
+                              {comp.label}
+                            </div>
+                            <div
+                              style={{
+                                color: "var(--text-2)",
+                                fontSize: 12.5,
+                                lineHeight: 1.5,
+                              }}
+                            >
+                              {comp.description}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {failedIds.length > 0 && (
+                    <div
+                      style={{
+                        marginTop: 16,
+                        paddingTop: 14,
+                        borderTop: "1px solid var(--line)",
+                      }}
+                    >
+                      <div
+                        style={{
+                          color: "var(--text-2)",
+                          fontSize: 13,
+                          lineHeight: 1.6,
+                          marginBottom: 10,
+                        }}
+                      >
+                        You have a not-yet-passed competency. Read the
+                        theory that covers it, then come back and run
+                        the practical again.
+                      </div>
+                      <button
+                        className="btn btn-g btn-sm"
+                        onClick={() => {
+                          if (
+                            app &&
+                            typeof app.go === "function" &&
+                            courseId
+                          ) {
+                            app.go("topic", {
+                              courseId,
+                              topicId: app.practicalId,
+                            });
+                          }
+                        }}
+                      >
+                        Read the theory behind this
+                      </button>
+                    </div>
+                  )}
+
+                  <div
+                    style={{
+                      marginTop: 16,
+                      display: "flex",
+                      gap: 8,
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <button
+                      className="btn btn-a btn-sm"
+                      onClick={resetBench}
+                    >
+                      Try again
+                    </button>
+                    <button
+                      className="btn btn-g btn-sm"
+                      onClick={goBack}
+                    >
+                      Back to the course
+                    </button>
+                  </div>
+                </>
+              );
+            })()}
           </div>
         </div>
       )}
 
-      {/* Back — always available, so a student who has finished or
-          wants out isn't trapped on the bench. */}
       <button
         className="btn btn-g btn-sm"
         style={{ marginTop: 14 }}
@@ -1516,6 +2701,18 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
         script={scriptForThisPractical}
         courseId={courseId}
         app={app}
+        onComplete={(scriptId, competencyMap) => {
+          // The bench has finished an attempt. Fold the result
+          // into progress and persist via the parent's normal
+          // save path. The parent (App.js) has persist() on the
+          // app object already — see Step 1's app definition.
+          if (
+            app &&
+            typeof app.recordVitroAttempt === "function"
+          ) {
+            app.recordVitroAttempt(scriptId, competencyMap);
+          }
+        }}
       />
     );
   }
@@ -1579,6 +2776,10 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
 // id and title through `app` (fed from the route object), so this
 // component knows which practical was requested and which course
 // it belongs to.
+// Named export alongside the default. App.js imports this so a
+// completed VITRO attempt can be folded into progress without
+// duplicating the merge logic.
+export { recordVitroAttempt, VITRO_COMPETENCIES };
 // ------------------------------------------------------------------
 export default function VitroView({ app }) {
   const practicalId =
