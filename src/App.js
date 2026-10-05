@@ -1885,6 +1885,7 @@ function SlidesView({ app }) {
    ============================================================ */
 import { CONTENT } from "./contentData";
 import AtlasView from "./AtlasView";
+import VitroView from "./VitroView";
 import { DIAGRAMS, diagramForTopic as atlasDiagramForTopic } from "./diagrams";
 
 
@@ -4732,6 +4733,23 @@ const ATLAS_TOPICS = new Set(
     .map((d) => `${d.topic.courseId}:${d.topic.topicIndex}`)
 );
 
+// Courses whose topics are practicals, so each topic card in these
+// courses earns a "Practise in VITRO" button. Five of the six are
+// marked only by their course id (the "P" suffix in the code and
+// the practical-sounding topic titles); only micp and hemp also
+// carry contentMode: "practical-application", so a flag-based gate
+// would miss the other four. A hardcoded Set is the honest shape
+// of the data today — if the COURSES entries ever gain a
+// practical: true flag, delete this and gate on that instead.
+const PRACTICAL_COURSE_IDS = new Set([
+  "phyp",
+  "bcp",
+  "ph2p",
+  "micp",
+  "hemp",
+  "bc2p",
+]);
+
 function TopicView({ app, rootCls }) {
   const t = contentFor(app.courseId, app.topicId);
   const c = courseById(app.courseId);
@@ -5749,10 +5767,11 @@ function CourseView({ app }) {
           const tc = contentFor(c.id, idx);
           const done = !!app.progress.completed?.[`${c.id}:${idx}`];
           const state = done ? "done" : tc ? "active" : "pending";
+          const isPractical = PRACTICAL_COURSE_IDS.has(c.id);
           return (
             <div className={"node " + state} key={idx}>
               <div className="dot">{done ? <Ic.check p={12} /> : <Ic.up p={12} />}</div>
-              <button className="card hover" style={{ width: "100%", textAlign: "left", opacity: tc ? 1 : .82 }} onClick={() => app.go("topic", { courseId: c.id, topicId: idx })}>
+              <button className="card hover" style={{ width: "100%", textAlign: "left", opacity: tc ? 1 : .82, marginBottom: isPractical ? 8 : 0 }} onClick={() => app.go("topic", { courseId: c.id, topicId: idx })}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
                   <div>
                     <div className="mono" style={{ fontSize: 11, color: done ? "var(--good)" : tc ? "var(--amber)" : "var(--text-3)" }}>TOPIC {String(idx + 1).padStart(2, "0")} · {done ? "DONE" : tc ? "READY" : "PREVIEW"}</div>
@@ -5769,6 +5788,56 @@ function CourseView({ app }) {
                   <Ic.chevR p={20} />
                 </div>
               </button>
+              {isPractical && (
+                <button
+                  className="card hover"
+                  style={{
+                    width: "100%",
+                    textAlign: "left",
+                    padding: "10px 14px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                    background: "var(--bg-2)",
+                    borderColor: "var(--line-2)",
+                  }}
+                  onClick={() => app.go("vitro", { courseId: c.id, practicalId: idx, practicalTitle: title })}
+                >
+                  <span
+                    aria-hidden
+                    style={{
+                      width: 22,
+                      height: 22,
+                      borderRadius: 6,
+                      background: "var(--amber-dim)",
+                      color: "var(--amber)",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M9 3h6M10 3v6.5L5.2 18a1.5 1.5 0 0 0 1.3 2.3h11a1.5 1.5 0 0 0 1.3-2.3L14 9.5V3" />
+                      <path d="M7.5 14h9" />
+                    </svg>
+                  </span>
+                  <span style={{ fontWeight: 650, fontSize: 13.5, color: "var(--text)" }}>
+                    Practise in VITRO
+                  </span>
+                  <span
+                    className="mono"
+                    style={{
+                      marginLeft: "auto",
+                      fontSize: 10.5,
+                      color: "var(--text-3)",
+                      letterSpacing: "0.04em",
+                    }}
+                  >
+                    LAB
+                  </span>
+                </button>
+              )}
             </div>
           );
         })}
@@ -15469,6 +15538,8 @@ export default function App() {
     supaUid,
     courseId: route.courseId, 
     topicId: route.topicId, 
+    practicalId: route.practicalId,
+    practicalTitle: route.practicalTitle,
     setName,
     setLevelSemester,
     openLevelPicker: () => setLevelPickerOpen(true),
@@ -15519,6 +15590,7 @@ export default function App() {
       case "resources": return <ResourcesView />;
       case "slides": return <SlidesView app={app} />;
       case "atlas": return <AtlasView app={app} />;
+      case "vitro": return <VitroView app={app} />;
       case "askai": return <AskAIView app={app} />;
       case "lamla": return <LAMLAView app={app} />;
       case "feedback": return <FeedbackView />;
