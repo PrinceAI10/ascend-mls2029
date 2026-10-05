@@ -76,6 +76,7 @@ export const ATLAS_COURSE_NAMES = {
   ph2: "Physiology II",
   pat: "General Pathology",
   an2: "Anatomy II",
+  pha: "Pharmacology I",
 };
 
 /* ----------------------------- helpers ----------------------------- */
@@ -6606,6 +6607,448 @@ export const DIAGRAMS = {
              tube sub-labels, giving the tube row its own clean band. */}
           <text x="350" y="30" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">The clotting cascade</text>
           <text x="450" y="755" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Three strategies · two arenas · match the agent to the purpose</text>
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     TARGETS OF DRUG ACTION — the Pharmacology family's opening diagram.
+     Topic: Pharmacology I (pha), Topic 02 (index 1).
+     Draws a receptor in a cell membrane at the centre of the canvas,
+     with four small target-class tiles around it (receptor, ion channel,
+     enzyme, transporter) that light up per step. Uses the new
+     atlasReceptor and atlasDrug primitives plus the existing
+     atlasWhiteCell and atlasVessel vocabulary. Walks through all
+     ten steps of the topic note in order.
+     ========================================================= */
+  "pha:2": {
+    id: "pha:2",
+    type: "diagram",
+    title: "Targets of Drug Action — Receptors, Channels, Enzymes and Transporters",
+    topic: { courseId: "pha", topicIndex: 1 },
+    parent: null,
+    summary: "A drug does not act on the whole body. It acts on one specific protein target — a receptor, an ion channel, an enzyme or a transporter — and where that target is found is where the drug works. Receptors are the largest and most important class, because they are the body's own signalling molecules; a drug acting on a receptor hijacks existing communication rather than introducing a new one. Understanding the four target classes, how binding produces a conformational change, and how that change becomes a cellular response is the entire foundation of pharmacology.",
+    labels: [
+      { id: "whole",       name: "The Whole Picture",   desc: "A drug, a target, and the chain from binding to response. Every drug decision starts here." },
+      { id: "target",      name: "The Drug Target",      desc: "The specific protein a drug binds to produce its effect. Four classes make up nearly every target in clinical use." },
+      { id: "receptor",    name: "Receptors",            desc: "The body's own signalling molecules. The largest drug-target class — around a third of prescription drugs act on them. Drugs mimic the natural ligand (agonist) or block it (antagonist)." },
+      { id: "ionchannel",  name: "Ion Channels",         desc: "Proteins with a hole through them that let specific ions cross the membrane. Drugs block, open or modulate them. Local anaesthetics, calcium channel blockers and antiarrhythmics all act here." },
+      { id: "enzyme",      name: "Enzymes",              desc: "Proteins that catalyse biochemical reactions. Drugs usually inhibit them — competitively, non-competitively, or irreversibly. Aspirin, statins, ACE inhibitors and penicillin are all enzyme inhibitors." },
+      { id: "transporter", name: "Transporters",         desc: "Proteins that move substances across membranes. Drugs block them to control concentration at a site. SSRIs, SGLT2 inhibitors and proton pump inhibitors act on transporters." },
+      { id: "binding",     name: "Binding — Affinity & Selectivity", desc: "A drug is held to its target by weak bonds — ionic, hydrogen, hydrophobic, van der Waals. Affinity is how tightly it binds; selectivity is how well it distinguishes its target from others." },
+      { id: "conform",     name: "Conformational Change", desc: "The receptor changes shape when a drug binds. That shape change is the signal. Agonists stabilise the active shape; antagonists lock the inactive shape." },
+      { id: "cascade",     name: "Signalling Cascade",   desc: "The chain from receptor to cellular response. Amplification means a few bound receptors trigger a large response. Specificity and side effects both follow from which pathway is activated where." },
+      { id: "clinical",    name: "Clinical Synthesis",   desc: "Every prescription is target-based thinking: what process is failing, which target corrects it, which drug hits that target, how does binding produce the effect, what side effects follow." },
+    ],
+    narration: [
+      "A drug enters the body, circulates through every tissue, and yet produces one specific effect while leaving most of the body untouched. Something has to be selecting it. That something is a target.",
+      "A drug target is a specific molecular structure - usually a protein - that the drug binds to. Four classes make up nearly every drug target in clinical use. Receptors are the body's own signalling molecules that hormones and neurotransmitters act on. Ion channels are proteins with a hole through them that let specific ions cross membranes. Enzymes catalyse biochemical reactions. Transporters move substances across membranes. If a tissue does not express the target, the drug has no effect there.",
+      "Receptors are the largest drug-target class, and around a third of prescription drugs act on them. The reason is that they are the body's own communication system - a drug acting on a receptor is not introducing a new signal, it is hijacking an existing one. Drugs that act here can be agonists, mimicking the natural ligand and activating the receptor, or antagonists, binding without activating and blocking the natural ligand. Partial agonists activate weakly; inverse agonists suppress baseline activity.",
+      "Not all receptors are the same. There are four families. G-protein coupled receptors, or GPCRs, are seven-transmembrane proteins that activate a G-protein and second messenger cascade, acting within seconds. Ion channel receptors are themselves ion channels - ligand binding opens them and ions flow, acting in milliseconds. Enzyme-linked receptors have intrinsic enzyme activity, usually tyrosine kinase, acting over minutes to hours. Nuclear receptors bind lipid-soluble ligands and change gene expression directly, acting over hours to days.",
+      "Ion channels are the second target class, and they carry every electrical signal in the body. Drugs act on them in three main ways. Blockers plug the channel - local anaesthetics block sodium channels, calcium channel blockers like nifedipine lower blood pressure, and amiodarone blocks potassium channels. Openers keep the channel open longer, like minoxidil for hypertension. Modulators change the channel's gating behaviour. Ion channels themselves can be voltage-gated, ligand-gated, or mechanically gated.",
+      "Enzymes are the third target class. Most enzyme drugs are inhibitors, and they come in three types. Competitive inhibitors compete with the substrate at the active site, and can be overcome by raising substrate concentration - statins are competitive. Non-competitive inhibitors bind elsewhere and change the enzyme's shape. Irreversible inhibitors form a covalent bond and permanently inactivate the enzyme - aspirin and penicillin are irreversible. Enzyme drugs include ACE inhibitors, methotrexate and allopurinol.",
+      "Transporters are the fourth target class. They move substances across membranes, and blocking one controls the concentration of a substance at a specific site. Selective serotonin reuptake inhibitors raise serotonin in the synapse. SGLT2 inhibitors block glucose reabsorption in the kidney, so glucose is excreted in the urine. Proton pump inhibitors block the gastric H+/K+ ATPase, reducing stomach acid. Digoxin inhibits the sodium-potassium pump in cardiac muscle.",
+      "A drug does not bind its target by accident. Binding depends on shape, chemistry, and weak bonds - ionic, hydrogen, hydrophobic, and van der Waals. None of them is individually strong, but together they add up. Affinity is how tightly the drug binds; selectivity is how well it distinguishes its intended target from others. Selectivity is rarely perfect, and the ratio between on-target and off-target binding determines the drug's therapeutic window and its side-effect profile.",
+      "Binding is not just a chemical event - it is a physical one. When a drug binds a receptor, the receptor changes shape. That shape change is the whole point of the interaction. Agonists stabilise the active shape, switching the receptor on. Antagonists lock the inactive shape, holding it off. Two drugs can bind the same receptor with the same affinity and produce opposite effects, because one stabilises the active shape and the other stabilises the inactive one.",
+      "The response to a drug is not produced by the binding itself, but by the signalling cascade that binding triggers. GPCRs activate G-proteins that produce second messengers like cAMP, IP3 and DAG. Ion channel receptors let ions through and change the cell's electrical state. Enzyme-linked receptors phosphorylate downstream proteins. Nuclear receptors change gene transcription directly. Each cascade amplifies the signal, so a small amount of drug binding can produce a large cellular response. Side effects arise when the drug binds off-target, or binds the same receptor in the wrong tissue.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["whole", "target"],
+      ["receptor", "target"],
+      ["receptor"],
+      ["ionchannel"],
+      ["enzyme"],
+      ["transporter"],
+      ["binding"],
+      ["conform", "receptor"],
+      ["cascade", "receptor"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pha:2"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // Which receptor occupancy to draw in the central hero at this step.
+      // Steps 1-2: resting. Step 3: agonist (illustrates the note's own
+      // example of what an agonist does). Step 4: partial (so the student
+      // sees the four families drawn around a weakly-activated receptor).
+      // Step 8: agonist (conformational change - active shape). Step 9-10:
+      // agonist (the cascade is running).
+      const occupancy =
+        activeStep === 3 ? "agonist"
+        : activeStep === 4 ? "partial"
+        : activeStep === 8 ? "agonist"
+        : activeStep === 9 ? "agonist"
+        : activeStep === 10 ? "agonist"
+        : null;
+
+      // A small helper for drawing the four surrounding target-class tiles.
+      // Each tile is a rounded box with a mini illustration inside, plus a
+      // short label. Matches the inset convention from Section 14 of the
+      // rule book (rounded corners, amber border when active).
+      const tile = (id, x, y, w, h, label, sub, drawInner) => {
+        const active = inFocus(id);
+        const selected = activeLabelId === id;
+        const strokeColor = selected ? ATLAS_COLORS.trunk : (active ? ATLAS_COLORS.trunk : "var(--line-2)");
+        const strokeW = selected ? 3 : (active ? 2 : 1.2);
+        return (
+          <g
+            style={{ cursor: cur }}
+            onClick={click(id)}
+            filter={active && activeStep !== lastStep ? "url(#atlas-glow)" : undefined}
+          >
+            <rect x={x} y={y} width={w} height={h} rx={12}
+              fill="var(--bg-2)" stroke={strokeColor} strokeWidth={strokeW} />
+            {/* Inner illustration area */}
+            <g transform={`translate(${x + w / 2}, ${y + h * 0.42})`}>
+              {drawInner()}
+            </g>
+            {/* Label below illustration */}
+            <text x={x + w / 2} y={y + h - 24} textAnchor="middle"
+              fontSize="11.5" fontWeight="700" fill="var(--text)">{label}</text>
+            {sub && (
+              <text x={x + w / 2} y={y + h - 10} textAnchor="middle"
+                fontSize="8.5" fill="var(--text-2)">{sub}</text>
+            )}
+            {/* Selection ring */}
+            <rect x={x - 6} y={y - 6} width={w + 12} height={h + 12} rx={16}
+              fill="none" {...ring(id)} pointerEvents="none" />
+          </g>
+        );
+      };
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {atlasDefs()}
+
+          {/* Region header */}
+          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700"
+            fill="var(--text-2)" pointerEvents="none">
+            A drug acts on one specific target · four classes cover nearly every clinical drug
+          </text>
+
+          {/* ---- The central hero: a cell membrane with a receptor ---- */}
+          <g style={{ cursor: cur }} onClick={click("receptor")} filter={hotFilter("receptor")}>
+            {/* Membrane band — a soft rectangle behind the receptor,
+               showing the cell's outer boundary */}
+            <rect x="250" y="235" width="400" height="60" rx="6"
+              fill="#F5E8E0" opacity="0.35" />
+            <line x1="250" y1="235" x2="650" y2="235"
+              stroke="#B8A89E" strokeWidth="1.2" opacity="0.55" />
+            <line x1="250" y1="295" x2="650" y2="295"
+              stroke="#B8A89E" strokeWidth="1.2" opacity="0.55" />
+            <text x="240" y="232" textAnchor="end" fontSize="9" fontWeight="700"
+              fill="var(--text-3)">outside the cell</text>
+            <text x="240" y="308" textAnchor="end" fontSize="9" fontWeight="700"
+              fill="var(--text-3)">inside the cell</text>
+
+            {/* The receptor, drawn at the centre of the membrane, at
+               the state determined by the current step. Scale 1.6 so
+               the seven helices are readable at this canvas size. */}
+            {atlasReceptor({ cx: 450, cy: 265, scale: 1.6, occupancy })}
+
+            {/* A free-floating drug approaching the receptor at steps
+               0 and 1, so the "drug finds its target" beat has a
+               molecule to look at. Hidden once binding is on-screen. */}
+            {(activeStep === 0 || activeStep === 1) && (
+              <g>
+                {atlasDrug({ cx: 300, cy: 200, scale: 1.1, action: "agonist", label: "drug" })}
+                {/* Dashed arrow from drug to receptor, showing approach */}
+                <path d="M330,210 Q380,235 420,240"
+                  fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.6"
+                  strokeDasharray="5 4" opacity="0.75" />
+                <polygon points="424,242 416,238 418,246"
+                  fill={ATLAS_COLORS.trunk} opacity="0.85" />
+              </g>
+            )}
+          </g>
+
+          {/* ---- Signalling cascade at step 9: a chain of arrows running
+             from the receptor down into the cell, ending in a response
+             label. Only drawn on its own step and the finale. ---- */}
+          {(activeStep === 9 || activeStep === 10) && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              {/* First messenger node (G-protein) */}
+              <circle cx="450" cy="360" r="18" fill="#2F8F4E" opacity="0.85"
+                stroke="#0A0F1A" strokeWidth="1" />
+              <text x="450" y="364" textAnchor="middle" fontSize="10.5"
+                fontWeight="800" fill="#0A0F1A">G</text>
+              <text x="450" y="336" textAnchor="middle" fontSize="9"
+                fontWeight="700" fill="#2F8F4E">G-protein</text>
+              {/* Arrow G → second messenger */}
+              <path d="M450,382 L450,400" stroke="#2F8F4E" strokeWidth="2.2"
+                strokeLinecap="round" />
+              <polygon points="450,406 445,398 455,398" fill="#2F8F4E" />
+              {/* Second messenger node */}
+              <circle cx="450" cy="432" r="26" fill="var(--bg-3)"
+                stroke="#8B5CF6" strokeWidth="2" />
+              <text x="450" y="430" textAnchor="middle" fontSize="10"
+                fontWeight="800" fill="#8B5CF6">cAMP</text>
+              <text x="450" y="442" textAnchor="middle" fontSize="8"
+                fill="var(--text-2)">IP3 · DAG</text>
+              <text x="450" y="410" textAnchor="middle" fontSize="9"
+                fontWeight="700" fill="#8B5CF6">second messenger</text>
+              {/* Arrow → response */}
+              <path d="M450,462 L450,480" stroke="#8B5CF6" strokeWidth="2.2"
+                strokeLinecap="round" />
+              <polygon points="450,486 445,478 455,478" fill="#8B5CF6" />
+              {/* Response label */}
+              <rect x="370" y="494" width="160" height="34" rx="10"
+                fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
+              <text x="450" y="516" textAnchor="middle" fontSize="11.5"
+                fontWeight="700" fill="#8B5CF6">cellular response</text>
+            </g>
+          )}
+
+          {/* ---- Clinical synthesis tiles (step 10 only) — three worked
+             examples from the note, drawn side by side along the bottom. ---- */}
+          {activeStep === 10 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              {/* Beta-blocker */}
+              <g>
+                <rect x="70" y="540" width="240" height="60" rx="12"
+                  fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+                <text x="190" y="562" textAnchor="middle" fontSize="10"
+                  fontWeight="800" fill={ATLAS_COLORS.trunk}>BETA-BLOCKER</text>
+                <text x="190" y="578" textAnchor="middle" fontSize="8.5"
+                  fill="var(--text-2)">antagonist on β-receptors</text>
+                <text x="190" y="592" textAnchor="middle" fontSize="8.5"
+                  fill="var(--text-2)">lowers heart rate + force</text>
+              </g>
+              {/* SGLT2 inhibitor */}
+              <g>
+                <rect x="330" y="540" width="240" height="60" rx="12"
+                  fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+                <text x="450" y="562" textAnchor="middle" fontSize="10"
+                  fontWeight="800" fill={ATLAS_COLORS.trunk}>SGLT2 INHIBITOR</text>
+                <text x="450" y="578" textAnchor="middle" fontSize="8.5"
+                  fill="var(--text-2)">blocks glucose reabsorption</text>
+                <text x="450" y="592" textAnchor="middle" fontSize="8.5"
+                  fill="var(--text-2)">glucose excreted in urine</text>
+              </g>
+              {/* Digoxin */}
+              <g>
+                <rect x="590" y="540" width="240" height="60" rx="12"
+                  fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+                <text x="710" y="562" textAnchor="middle" fontSize="10"
+                  fontWeight="800" fill={ATLAS_COLORS.trunk}>DIGOXIN</text>
+                <text x="710" y="578" textAnchor="middle" fontSize="8.5"
+                  fill="var(--text-2)">inhibits Na+/K+ ATPase</text>
+                <text x="710" y="592" textAnchor="middle" fontSize="8.5"
+                  fill="var(--text-2)">raises Ca²⁺ · stronger beats</text>
+              </g>
+            </g>
+          )}
+
+          {/* ---- Four target-class tiles, placed around the central
+             hero. Always visible (so the student sees the taxonomy
+             from step 1) but only glow on their own step or the intro. ---- */}
+
+          {/* Top-left tile — the whole picture (intro only). Doubles as
+             the entry-point tile for step 1. */}
+          {tile("whole", 60, 60, 200, 130, "Drug + target", "the whole picture", () => (
+            <g>
+              {atlasDrug({ cx: -34, cy: 8, scale: 1, action: "agonist" })}
+              <path d="M-16,8 L14,8" stroke={ATLAS_COLORS.trunk}
+                strokeWidth="2" strokeDasharray="4 3" />
+              <polygon points="18,8 12,5 12,11" fill={ATLAS_COLORS.trunk} />
+              <circle cx="34" cy="8" r="14" fill="var(--bg-3)"
+                stroke="#5B21B6" strokeWidth="1.6" />
+              <text x="34" y="12" textAnchor="middle" fontSize="9"
+                fontWeight="700" fill="#5B21B6">T</text>
+            </g>
+          ))}
+
+          {/* Top-right tile — ion channel (its own step) */}
+          {tile("ionchannel", 640, 60, 200, 130, "Ion channel", "block · open · modulate", () => (
+            <g>
+              {/* A simple channel: two side walls with a pore between
+                 them, plus a small ion travelling through */}
+              <rect x="-18" y="-20" width="10" height="40" rx="3"
+                fill="#C0392B" opacity="0.85" />
+              <rect x="8" y="-20" width="10" height="40" rx="3"
+                fill="#C0392B" opacity="0.85" />
+              <circle cx="0" cy="-4" r="4" fill="#2F6FED" opacity="0.85" />
+              <circle cx="0" cy="8" r="4" fill="#2F6FED" opacity="0.85" />
+            </g>
+          ))}
+
+          {/* Bottom-left tile — enzyme (its own step) */}
+          {tile("enzyme", 60, 430, 200, 130, "Enzyme", "competitive · non-comp · irreversible", () => (
+            <g>
+              {/* A "Pac-Man" style enzyme with a substrate slot */}
+              <path d="M0,0 m-22,0 a22,22 0 1,0 44,0 a22,22 0 1,0 -44,0 Z M-2,-2 L16,-12 L16,12 Z"
+                fill={ATLAS_COLORS.trunk} opacity="0.85" />
+              <circle cx="20" cy="0" r="6" fill="#C0392B"
+                stroke="#0A0F1A" strokeWidth="0.6" />
+            </g>
+          ))}
+
+          {/* Bottom-right tile — transporter (its own step) */}
+          {tile("transporter", 640, 430, 200, 130, "Transporter", "SSRI · SGLT2 · PPI", () => (
+            <g>
+              {/* A hairpin-shaped transporter flipping a small circle from
+                 outside (top) to inside (bottom) */}
+              <path d="M-16,-22 L-16,22 L16,22 L16,-10"
+                fill="none" stroke="#2F6FED" strokeWidth="3"
+                strokeLinecap="round" strokeLinejoin="round" />
+              <circle cx="-16" cy="-28" r="5" fill={ATLAS_COLORS.trunk}
+                stroke="#0A0F1A" strokeWidth="0.6" />
+              <circle cx="16" cy="10" r="5" fill={ATLAS_COLORS.trunk}
+                stroke="#0A0F1A" strokeWidth="0.6" />
+            </g>
+          ))}
+
+          {/* ---- Steps 3, 4, 5, 6 also need small inset panels showing
+             the sub-taxonomy (receptor families, ion-channel gating,
+             enzyme inhibition types, transporter examples). Drawn as
+             a single right-column panel that changes content per step. ---- */}
+
+          {/* Receptor families (step 3) */}
+          {activeStep === 3 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="220" width="220" height="200" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="750" y="244" textAnchor="middle" fontSize="10.5"
+                fontWeight="800" fill={ATLAS_COLORS.trunk}>FOUR RECEPTOR FAMILIES</text>
+              {[
+                ["GPCR", "seconds · 7-TM"],
+                ["Ion channel", "milliseconds"],
+                ["Enzyme-linked", "minutes–hours"],
+                ["Nuclear", "hours–days"],
+              ].map((row, i) => (
+                <g key={i}>
+                  <text x="655" y={274 + i * 32} fontSize="10" fontWeight="700"
+                    fill="var(--text)">{row[0]}</text>
+                  <text x="655" y={288 + i * 32} fontSize="8.5"
+                    fill="var(--text-2)">{row[1]}</text>
+                </g>
+              ))}
+            </g>
+          )}
+
+          {/* Ion-channel actions (step 4) */}
+          {activeStep === 4 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="220" width="220" height="180" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="750" y="244" textAnchor="middle" fontSize="10.5"
+                fontWeight="800" fill={ATLAS_COLORS.trunk}>HOW DRUGS ACT</text>
+              {[
+                ["Blocker", "plugs the pore"],
+                ["Opener", "holds it open"],
+                ["Modulator", "changes gating"],
+              ].map((row, i) => (
+                <g key={i}>
+                  <text x="655" y={274 + i * 34} fontSize="10" fontWeight="700"
+                    fill="var(--text)">{row[0]}</text>
+                  <text x="655" y={288 + i * 34} fontSize="8.5"
+                    fill="var(--text-2)">{row[1]}</text>
+                </g>
+              ))}
+              <text x="655" y="386" fontSize="8.5" fontStyle="italic"
+                fill="var(--text-3)">gating: voltage · ligand · mechanical</text>
+            </g>
+          )}
+
+          {/* Enzyme inhibition (step 5) */}
+          {activeStep === 5 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="220" width="220" height="200" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="750" y="244" textAnchor="middle" fontSize="10.5"
+                fontWeight="800" fill={ATLAS_COLORS.trunk}>ENZYME INHIBITION</text>
+              {[
+                ["Competitive", "at active site · reversible"],
+                ["Non-competitive", "elsewhere · shape change"],
+                ["Irreversible", "covalent · permanent"],
+              ].map((row, i) => (
+                <g key={i}>
+                  <text x="655" y={274 + i * 30} fontSize="10" fontWeight="700"
+                    fill="var(--text)">{row[0]}</text>
+                  <text x="655" y={288 + i * 30} fontSize="8.5"
+                    fill="var(--text-2)">{row[1]}</text>
+                </g>
+              ))}
+              <text x="655" y="394" fontSize="8.5" fontStyle="italic"
+                fill="var(--text-3)">aspirin · statins · ACE-i · penicillin</text>
+            </g>
+          )}
+
+          {/* Transporter examples (step 6) */}
+          {activeStep === 6 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="220" width="220" height="200" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="750" y="244" textAnchor="middle" fontSize="10.5"
+                fontWeight="800" fill={ATLAS_COLORS.trunk}>DRUGS ON TRANSPORTERS</text>
+              {[
+                ["SSRIs", "serotonin transporter"],
+                ["SGLT2-i", "glucose reabsorption"],
+                ["PPIs", "gastric H⁺/K⁺ ATPase"],
+                ["Digoxin", "Na⁺/K⁺ ATPase"],
+              ].map((row, i) => (
+                <g key={i}>
+                  <text x="655" y={274 + i * 30} fontSize="10" fontWeight="700"
+                    fill="var(--text)">{row[0]}</text>
+                  <text x="655" y={288 + i * 30} fontSize="8.5"
+                    fill="var(--text-2)">{row[1]}</text>
+                </g>
+              ))}
+            </g>
+          )}
+
+          {/* Binding mechanics (step 7) — shown on the left column,
+             since the right column is empty on this step. */}
+          {activeStep === 7 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="220" width="220" height="200" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="170" y="244" textAnchor="middle" fontSize="10.5"
+                fontWeight="800" fill={ATLAS_COLORS.trunk}>WHAT HOLDS A DRUG</text>
+              {[
+                ["Ionic", "opposite charges"],
+                ["Hydrogen", "polar groups"],
+                ["Hydrophobic", "non-polar regions"],
+                ["Van der Waals", "close atoms"],
+              ].map((row, i) => (
+                <g key={i}>
+                  <text x="75" y={274 + i * 30} fontSize="10" fontWeight="700"
+                    fill="var(--text)">{row[0]}</text>
+                  <text x="75" y={288 + i * 30} fontSize="8.5"
+                    fill="var(--text-2)">{row[1]}</text>
+                </g>
+              ))}
+              <text x="75" y="394" fontSize="8.5" fontStyle="italic"
+                fill="var(--text-3)">affinity = how tight · selectivity = how specific</text>
+            </g>
+          )}
+
+          {/* Bottom-of-canvas footer giving the synthesis message on the
+             final step (when the clinical tiles above it aren't drawn). */}
+          {activeStep === lastStep && (
+            <text x="450" y="612" textAnchor="middle" fontSize="11"
+              fontWeight="600" fill="var(--text-2)" pointerEvents="none">
+              Target first · drug second · mechanism · effect · side effects
+            </text>
+          )}
+
+          {/* Whole-diagram interactive label — a clickable region behind
+             everything so tapping empty space selects "whole". */}
+          <rect x="0" y="0" width="900" height="620"
+            fill="transparent" style={{ cursor: cur }}
+            onClick={click("whole")} pointerEvents="all" />
         </svg>
       );
     },

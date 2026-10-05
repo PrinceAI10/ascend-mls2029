@@ -211,6 +211,16 @@ const LEGEND_VIEWBOXES = {
   vein: "0 0 100 100",
   microcirc: "0 0 100 100",
   lymphatics: "0 0 100 100",
+  // pha:2 (pharmacology i) labels
+  target: "0 0 100 100",
+  receptor: "0 0 100 100",
+  ionchannel: "0 0 100 100",
+  enzyme: "0 0 100 100",
+  transporter: "0 0 100 100",
+  binding: "0 0 100 100",
+  conform: "0 0 100 100",
+  cascade: "0 0 100 100",
+  clinical: "0 0 100 100",
 };
 
 const LEGEND_SWATCHES = {
@@ -2157,6 +2167,173 @@ const LEGEND_SWATCHES = {
       <path d="M82,50 Q88,50 92,50" fill="none" stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"} strokeWidth="4" strokeDasharray="4 3" strokeLinecap="round" opacity="0.8" />
     </g>
   ),
+
+  // ---- pha:2 (Pharmacology I) labels ----
+  // Nine swatches mirroring the tiles and hero in the pha:2 diagram.
+  // Each is drawn in the same visual language the student saw on the
+  // canvas: receptors as seven-transmembrane proteins, channels as a
+  // pore, enzymes as a Pac-Man shape, transporters as a hairpin, plus
+  // a binding-mechanics tile, a conformational-change tile, a
+  // cascade tile, and a clinical tile.
+
+  // The whole picture — a drug meeting a target
+  target: (active) => (
+    <g>
+      {/* Drug hexagon on the left */}
+      <polygon points="26,44 30,38 36,38 40,44 36,50 30,50" fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"} stroke="#0A0F1A" strokeWidth="0.8" />
+      {/* Arrow to target */}
+      <path d="M42,44 L56,44" stroke={ATLAS_COLORS.trunk} strokeWidth="2" strokeDasharray="3 2" strokeLinecap="round" />
+      <polygon points="60,44 54,41 54,47" fill={ATLAS_COLORS.trunk} />
+      {/* Target circle */}
+      <circle cx="72" cy="44" r="14" fill="var(--bg-3)" stroke="#5B21B6" strokeWidth="1.6" />
+      <text x="72" y="48" textAnchor="middle" fontSize="11" fontWeight="800" fill="#5B21B6">T</text>
+    </g>
+  ),
+
+  // Receptors — the seven-transmembrane serpentine in a membrane band,
+  // matching atlasReceptor's visual signature
+  receptor: (active) => (
+    <g>
+      {/* Membrane band */}
+      <rect x="12" y="38" width="76" height="24" fill="#F5E8E0" opacity="0.4" />
+      <line x1="12" y1="38" x2="88" y2="38" stroke="#B8A89E" strokeWidth="0.8" opacity="0.55" />
+      <line x1="12" y1="62" x2="88" y2="62" stroke="#B8A89E" strokeWidth="0.8" opacity="0.55" />
+      {/* Serpentine */}
+      <path
+        d="M22,62 L22,38 Q26,32 30,38 L30,62 Q34,68 38,62 L38,38 Q42,32 46,38 L46,62 Q50,68 54,62 L54,38 Q58,32 62,38 L62,62 Q66,68 70,62 L70,38 Q74,32 78,38 L78,62"
+        fill="none" stroke={active ? ATLAS_COLORS.trunk : "#5B21B6"}
+        strokeWidth="2.6" strokeLinejoin="round" strokeLinecap="round" />
+      {/* A small drug shape in the ligand-binding pocket */}
+      <circle cx="50" cy="30" r="4" fill="#2F8F4E" stroke="#0A0F1A" strokeWidth="0.6" />
+    </g>
+  ),
+
+  // Ion channel — a pore between two walls with an ion travelling
+  ionchannel: (active) => (
+    <g>
+      {/* Two walls forming the channel */}
+      <rect x="32" y="24" width="10" height="52" rx="3"
+        fill={active ? ATLAS_COLORS.trunk : "#C0392B"} opacity="0.85" />
+      <rect x="58" y="24" width="10" height="52" rx="3"
+        fill={active ? ATLAS_COLORS.trunk : "#C0392B"} opacity="0.85" />
+      {/* Pore label */}
+      <text x="50" y="52" textAnchor="middle" fontSize="7"
+        fontWeight="700" fill="var(--text-3)">pore</text>
+      {/* Two ions travelling through */}
+      <circle cx="50" cy="32" r="4" fill="#2F6FED" opacity="0.9" />
+      <circle cx="50" cy="46" r="4" fill="#2F6FED" opacity="0.75" />
+      {/* A blocker drug plugging the top of the pore (active state) */}
+      {active && (
+        <circle cx="50" cy="22" r="5" fill="#C0392B" stroke="#0A0F1A" strokeWidth="0.6" />
+      )}
+    </g>
+  ),
+
+  // Enzyme — a Pac-Man shape with a substrate slot
+  enzyme: (active) => (
+    <g>
+      <path
+        d="M50,50 m-24,0 a24,24 0 1,0 48,0 a24,24 0 1,0 -48,0 Z M48,48 L66,38 L66,58 Z"
+        fill={active ? ATLAS_COLORS.trunk : "#F5B93F"} opacity="0.85"
+        stroke="#8B6410" strokeWidth="1" />
+      {/* Substrate about to enter the active site */}
+      <circle cx="74" cy="48" r="5" fill="#C0392B"
+        stroke="#0A0F1A" strokeWidth="0.6" />
+    </g>
+  ),
+
+  // Transporter — a hairpin flipping a circle from outside to inside
+  transporter: (active) => (
+    <g>
+      <path d="M34,22 L34,78 L66,78 L66,38" fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"} strokeWidth="4"
+        strokeLinecap="round" strokeLinejoin="round" />
+      {/* Ion on the outside (above), then inside (below) */}
+      <circle cx="34" cy="16" r="5" fill={active ? ATLAS_COLORS.trunk : "#F5B93F"} stroke="#0A0F1A" strokeWidth="0.6" />
+      <circle cx="66" cy="60" r="5" fill={active ? ATLAS_COLORS.trunk : "#F5B93F"} stroke="#0A0F1A" strokeWidth="0.6" />
+    </g>
+  ),
+
+  // Binding — a panel listing the four weak-bond types
+  binding: (active) => (
+    <g>
+      <rect x="14" y="18" width="72" height="64" rx="10"
+        fill={active ? "rgba(245,185,63,.18)" : "rgba(245,185,63,.08)"}
+        stroke={active ? ATLAS_COLORS.trunk : "#D89B14"} strokeWidth="2" />
+      <text x="50" y="34" textAnchor="middle" fontSize="9" fontWeight="800"
+        fill={active ? ATLAS_COLORS.trunk : "#B8860B"} letterSpacing="0.04em">BINDING</text>
+      {["ionic", "hydrogen", "hydrophobic", "van der Waals"].map((m, i) => (
+        <text key={i} x="50" y={48 + i * 10} textAnchor="middle" fontSize="7"
+          fontWeight="600" fill="var(--text)">{m}</text>
+      ))}
+    </g>
+  ),
+
+  // Conformational change — a receptor shown in two states with arrows
+  conform: (active) => (
+    <g>
+      {/* Inactive receptor (left) */}
+      <path d="M14,30 Q18,22 24,30 L24,70 Q18,78 14,70 Z"
+        fill="none" stroke={active ? ATLAS_COLORS.trunk : "#64748B"}
+        strokeWidth="3" strokeLinejoin="round" />
+      {/* Arrow */}
+      <path d="M30,50 L44,50" stroke={ATLAS_COLORS.trunk}
+        strokeWidth="2" strokeLinecap="round" />
+      <polygon points="48,50 42,47 42,53" fill={ATLAS_COLORS.trunk} />
+      {/* Active receptor (right) — wider, opened shape */}
+      <path d="M56,20 Q68,28 70,50 Q68,72 56,80"
+        fill="none" stroke={active ? ATLAS_COLORS.trunk : "#2F8F4E"}
+        strokeWidth="3" strokeLinecap="round" />
+      <path d="M56,20 Q46,28 44,50 Q46,72 56,80"
+        fill="none" stroke={active ? ATLAS_COLORS.trunk : "#2F8F4E"}
+        strokeWidth="3" strokeLinecap="round" />
+      {/* Drug at the active state (green dot) */}
+      <circle cx="56" cy="50" r="4" fill="#2F8F4E" stroke="#0A0F1A" strokeWidth="0.6" />
+    </g>
+  ),
+
+  // Cascade — three stacked nodes with arrows, matching the diagram's
+  // step-9 G → cAMP → response chain
+  cascade: (active) => (
+    <g>
+      {/* G-protein node */}
+      <circle cx="50" cy="22" r="9" fill="#2F8F4E" opacity="0.85" stroke="#0A0F1A" strokeWidth="0.6" />
+      <text x="50" y="25" textAnchor="middle" fontSize="7" fontWeight="800" fill="#0A0F1A">G</text>
+      <path d="M50,32 L50,40" stroke="#2F8F4E" strokeWidth="2" strokeLinecap="round" />
+      <polygon points="50,44 46,38 54,38" fill="#2F8F4E" />
+      {/* Second messenger */}
+      <circle cx="50" cy="54" r="12" fill="var(--bg-3)" stroke="#8B5CF6" strokeWidth="1.6" />
+      <text x="50" y="58" textAnchor="middle" fontSize="7" fontWeight="800" fill="#8B5CF6">cAMP</text>
+      <path d="M50,66 L50,74" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round" />
+      <polygon points="50,78 46,72 54,72" fill="#8B5CF6" />
+      {/* Response */}
+      <rect x="28" y="80" width="44" height="14" rx="5"
+        fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="1.4" />
+      <text x="50" y="90" textAnchor="middle" fontSize="7" fontWeight="700"
+        fill="#8B5CF6">response</text>
+    </g>
+  ),
+
+  // Clinical — a small stack of three worked-example cards
+  clinical: (active) => (
+    <g>
+      <rect x="14" y="18" width="72" height="16" rx="4"
+        fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"}
+        stroke={active ? ATLAS_COLORS.trunk : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="29" textAnchor="middle" fontSize="7" fontWeight="700"
+        fill="var(--text)">beta-blocker</text>
+      <rect x="14" y="40" width="72" height="16" rx="4"
+        fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"}
+        stroke={active ? ATLAS_COLORS.trunk : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="51" textAnchor="middle" fontSize="7" fontWeight="700"
+        fill="var(--text)">SGLT2 inhibitor</text>
+      <rect x="14" y="62" width="72" height="16" rx="4"
+        fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"}
+        stroke={active ? ATLAS_COLORS.trunk : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="73" textAnchor="middle" fontSize="7" fontWeight="700"
+        fill="var(--text)">digoxin</text>
+    </g>
+  ),
 };
 
 /* ---------------------------------------------------------------- */
@@ -2498,6 +2675,18 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
   const stageRef = useRef(null);
   const legendRefs = useRef({});
 
+  // Mirror of `playing` for use inside callbacks that can't close over
+  // the current render's value (speech `onend`, watchdog timers).
+  // Kept in sync by the effect below.
+  const playingRef = useRef(false);
+  useEffect(() => {
+    playingRef.current = playing;
+  }, [playing]);
+
+  // Watchdog handle — the timer that fires if the speech engine never
+  // calls us back. Cleared whenever a new step starts or playback stops.
+  const watchdogRef = useRef(null);
+
   const applyZoom = useCallback((nextZoomRaw) => {
     setZoom((prev) => {
       const target = typeof nextZoomRaw === "function" ? nextZoomRaw(prev) : nextZoomRaw;
@@ -2517,6 +2706,10 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     setPanY(0);
     playTokenRef.current++;
     cachedVoiceRef.current = undefined;
+    if (watchdogRef.current) {
+      clearTimeout(watchdogRef.current);
+      watchdogRef.current = null;
+    }
     try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {}
 
     let restored = 0;
@@ -2543,19 +2736,8 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     };
   }, [diagramId]);
 
-  // Legend auto-scroll during playback — but ONLY when the legend is
-  // already in view. If the student is watching the diagram (legend
-  // scrolled off screen), we don't want to yank the page down to the
-  // legend on every step change — that would drag the diagram out of
-  // view mid-animation. The legend still updates its "on" state
-  // silently, so when the student glances down it's already showing
-  // the right tile. We only auto-scroll when the legend is already
-  // partly visible, to nudge the correct tile into full view.
-  //
-  // The check: is any part of the legend container within the
-  // viewport? If yes, scroll the target tile into view (which is
-  // harmless because the legend was already on screen). If no,
-  // skip the scroll entirely.
+  // Legend auto-scroll during playback — only nudges when the legend
+  // is already near the viewport, so it never yanks the page mid-step.
   useEffect(() => {
     if (!playing) return;
     const focus = diagram.stepFocus[activeStep];
@@ -2565,15 +2747,8 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     const node = firstWithTile ? legendRefs.current[firstWithTile] : null;
     if (!node || typeof node.scrollIntoView !== "function") return;
 
-    // Is the legend (or this tile) anywhere near the viewport?
-    // Use the tile's own bounding box — if the tile's top is well
-    // below the fold, or well above it, we skip the scroll.
     const rect = node.getBoundingClientRect();
     const viewportH = window.innerHeight || document.documentElement.clientHeight;
-    // Tolerance band: we auto-scroll only if the tile is within
-    // one viewport-height either side of the visible area. Beyond
-    // that, the student has intentionally scrolled away from the
-    // legend (e.g. to watch the diagram) and we leave them alone.
     const nearViewport = rect.top < viewportH * 1.5 && rect.bottom > -viewportH * 0.5;
     if (!nearViewport) return;
 
@@ -2591,7 +2766,8 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     } catch {}
   }, [activeStep, diagramId]);
 
-  // Dev-time checks (rule book sections 4.1-4.3).
+  // Dev-time checks (rule book sections 4.1-4.3). Unchanged from the
+  // original file — kept here so the file stays self-consistent.
   useEffect(() => {
     if (diagram.narration.length !== diagram.stepFocus.length) {
       console.warn(
@@ -2604,7 +2780,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
         console.warn(`[Atlas] "${diagram.id}" step ${i + 1}: narration is ${words} words (limit 50).`);
       }
       if (line.includes("→")) {
-        console.warn(`[Atlas] "${diagram.id}" step ${i + 1}: narration contains "→" - the speech engine reads this as "right arrow". Use "to" or a comma instead.`);
+        console.warn(`[Atlas] "${diagram.id}" step ${i + 1}: narration contains an arrow character - the speech engine reads this as "right arrow". Use "to" or a comma instead.`);
       }
     });
     const allFocusIds = new Set(diagram.stepFocus.flat());
@@ -2620,19 +2796,6 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
       }
     });
 
-    // Text-overlap heuristic. After paint, walk every <text> element
-    // inside the diagram's SVG and check for bounding-box collisions
-    // with other <text> elements. Reports pairs that overlap by more
-    // than 30% of the smaller element's area. This catches the most
-    // common overlap pattern — labels colliding with labels — which is
-    // what caused the hem:6 tube row collision and what future
-    // diagrams are most likely to hit.
-    //
-    // Deferred to a timer so the SVG has actually painted and
-    // getBBox() returns real dimensions rather than zeros.
-    //
-    // Silent when nothing overlaps. Only prints to the console when
-    // there's a real problem worth fixing.
     const overlapTimer = setTimeout(() => {
       const wrapper = document.querySelector(`[data-atlas-diagram="${diagram.id}"]`);
       if (!wrapper) return;
@@ -2647,15 +2810,10 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
             boxes.push({
               el: t,
               label: (t.textContent || "").trim().slice(0, 30),
-              x: b.x,
-              y: b.y,
-              w: b.width,
-              h: b.height,
+              x: b.x, y: b.y, w: b.width, h: b.height,
             });
           }
-        } catch {
-          // getBBox can throw on elements not yet attached to the DOM
-        }
+        } catch {}
       });
 
       const reported = new Set();
@@ -2671,9 +2829,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
             const key = a.label + "::" + b.label;
             if (!reported.has(key)) {
               reported.add(key);
-              console.warn(
-                `[Atlas] "${diagram.id}": text overlap between "${a.label}" and "${b.label}"`
-              );
+              console.warn(`[Atlas] "${diagram.id}": text overlap between "${a.label}" and "${b.label}"`);
             }
           }
         }
@@ -2683,7 +2839,10 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     return () => clearTimeout(overlapTimer);
   }, [diagram]);
 
-  useEffect(() => () => { try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {} }, []);
+  useEffect(() => () => {
+    if (watchdogRef.current) clearTimeout(watchdogRef.current);
+    try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {}
+  }, []);
 
   useEffect(() => {
     if (!fullscreen) return;
@@ -2692,42 +2851,70 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     return () => { document.body.style.overflow = prev; };
   }, [fullscreen]);
 
+  // advanceAfterStep — reads playingRef.current synchronously (instead
+  // of reaching into setPlaying's reducer), and clears the watchdog so
+  // the timer can't double-fire the same step after the speech event
+  // has already done so.
   const advanceAfterStep = useCallback((myToken) => {
     if (myToken !== playTokenRef.current) return;
-    setPlaying((isPlaying) => {
-      if (isPlaying) {
-        setTimeout(() => {
-          if (myToken !== playTokenRef.current) return;
-          setActiveStep((s) => {
-            const next = s + 1;
-            if (next >= diagram.narration.length) {
-              if (diagram.loop) {
-                speakStepRef.current(0);
-                return 0;
-              }
-              setPlaying(false);
-              return s;
-            }
-            speakStepRef.current(next);
-            return next;
-          });
-        }, 350);
-      }
-      return isPlaying;
-    });
+    if (watchdogRef.current) {
+      clearTimeout(watchdogRef.current);
+      watchdogRef.current = null;
+    }
+    if (!playingRef.current) return;
+
+    setTimeout(() => {
+      if (myToken !== playTokenRef.current) return;
+      if (!playingRef.current) return;
+      setActiveStep((s) => {
+        const next = s + 1;
+        if (next >= diagram.narration.length) {
+          if (diagram.loop) {
+            speakStepRef.current(0);
+            return 0;
+          }
+          setPlaying(false);
+          return s;
+        }
+        speakStepRef.current(next);
+        return next;
+      });
+    }, 250);
   }, [diagram]);
 
   const speakStepRef = useRef(() => {});
   const cachedVoiceRef = useRef(undefined);
+
   const speakStep = useCallback((stepIdx) => {
     const text = diagram.narration[stepIdx];
     if (!text) return;
     const myToken = playTokenRef.current;
 
+    // Clear any pending watchdog before starting a new step.
+    if (watchdogRef.current) {
+      clearTimeout(watchdogRef.current);
+      watchdogRef.current = null;
+    }
+
+    // Estimated duration. Used both for the muted path (which has no
+    // speech event to rely on) and as the safety-net watchdog when
+    // speech is enabled — some mobile browsers drop `onend` silently,
+    // and without this the sequence stalls on step 1 forever.
+    const words = text.trim().split(/\s+/).length;
+    const baseMs = Math.max(1200, (words / 2.6) * 1000);
+    const estimatedMs = baseMs / speed;
+
+    const armWatchdog = (ms) => {
+      if (watchdogRef.current) clearTimeout(watchdogRef.current);
+      watchdogRef.current = setTimeout(() => {
+        watchdogRef.current = null;
+        advanceAfterStep(myToken);
+      }, ms);
+    };
+
+    // Muted, or the browser has no speech engine: rely purely on timing.
     if (muted || !("speechSynthesis" in window)) {
-      const words = text.trim().split(/\s+/).length;
-      const ms = Math.max(1200, (words / 2.6) * 1000) / speed;
-      setTimeout(() => advanceAfterStep(myToken), ms);
+      armWatchdog(estimatedMs);
       return;
     }
 
@@ -2744,8 +2931,15 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
       utter.onend = () => advanceAfterStep(myToken);
       utter.onerror = () => advanceAfterStep(myToken);
       window.speechSynthesis.speak(utter);
+
+      // Safety net: give the speech engine the estimated duration plus
+      // 80% slack. If `onend` hasn't fired by then (Safari mobile is
+      // the usual offender), advance anyway. Whichever fires first
+      // clears the other, so we never double-advance.
+      armWatchdog(estimatedMs * 1.8 + 1500);
     })();
   }, [diagram, speed, muted, advanceAfterStep]);
+
   useEffect(() => { speakStepRef.current = speakStep; }, [speakStep]);
 
   const isFinished =
@@ -2759,6 +2953,10 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
       setPlaying(false);
       setPaused(true);
       playTokenRef.current++;
+      if (watchdogRef.current) {
+        clearTimeout(watchdogRef.current);
+        watchdogRef.current = null;
+      }
       try { window.speechSynthesis.cancel(); } catch {}
       return;
     }
@@ -2766,11 +2964,29 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     if (startAt !== activeStep) setActiveStep(startAt);
     setPlaying(true);
     setPaused(false);
-    speakStep(startAt);
+    // speakStep is called from the effect below once playing flips
+    // true and playingRef has been updated.
   };
+
+  // Kick the first speech line as soon as `playing` flips true, so
+  // playingRef.current is guaranteed to be in sync before speakStep
+  // reads it inside advanceAfterStep.
+  const wasPlayingRef = useRef(false);
+  useEffect(() => {
+    if (playing && !wasPlayingRef.current) {
+      wasPlayingRef.current = true;
+      speakStep(activeStep);
+    } else if (!playing && wasPlayingRef.current) {
+      wasPlayingRef.current = false;
+    }
+  }, [playing, activeStep, speakStep]);
 
   const jumpTo = (idx) => {
     playTokenRef.current++;
+    if (watchdogRef.current) {
+      clearTimeout(watchdogRef.current);
+      watchdogRef.current = null;
+    }
     try { window.speechSynthesis.cancel(); } catch {}
     setActiveStep(idx);
     if (playing) speakStep(idx);
@@ -2856,6 +3072,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     if (pointers.current.size < 2) pinchRef.current = null;
     if (pointers.current.size === 0) dragRef.current = null;
   };
+
   const activeLabel = diagram.labels?.find((l) => l.id === activeLabelId) || null;
   const topTopic = topLevelTopicOf(diagram);
 
@@ -2877,13 +3094,13 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
         </button>
         {breadcrumb.map((id, i) => (
           <React.Fragment key={id}>
-            <span className="mono" style={{ color: "var(--text-3)", fontSize: 12 }}>›</span>
+            <span className="mono" style={{ color: "var(--text-3)", fontSize: 12 }}>&rsaquo;</span>
             <button
               className="mono"
               style={{ background: "none", border: "none", cursor: i === breadcrumb.length - 1 ? "default" : "pointer", color: i === breadcrumb.length - 1 ? "var(--amber-2)" : "var(--text-2)", fontSize: 12, fontWeight: i === breadcrumb.length - 1 ? 700 : 500, padding: 0 }}
               onClick={() => i !== breadcrumb.length - 1 && onBreadcrumb(i)}
             >
-              {DIAGRAMS[id].title.split(" — ")[0]}
+              {DIAGRAMS[id].title.split(" \u2014 ")[0]}
             </button>
           </React.Fragment>
         ))}
@@ -2925,9 +3142,9 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
             {playing ? "Pause" : paused ? "Resume" : isFinished ? "Restart" : "Play"}
           </span>
         </button>
-        <button className="btn btn-g btn-sm" onClick={() => stepBy(-1)} disabled={activeStep === 0} aria-label="Previous step" title="Previous step">◀</button>
-        <button className="btn btn-g btn-sm" onClick={() => stepBy(1)} disabled={!diagram.loop && activeStep === diagram.narration.length - 1} aria-label="Next step" title="Next step">▶</button>
-        <button className="btn btn-g btn-sm mono" onClick={() => setSpeed((s) => (s === 1 ? 1.25 : s === 1.25 ? 0.85 : 1))} title="Playback speed" aria-label={"Playback speed " + speed + "x"}>{speed}×</button>
+        <button className="btn btn-g btn-sm" onClick={() => stepBy(-1)} disabled={activeStep === 0} aria-label="Previous step" title="Previous step">&#9664;</button>
+        <button className="btn btn-g btn-sm" onClick={() => stepBy(1)} disabled={!diagram.loop && activeStep === diagram.narration.length - 1} aria-label="Next step" title="Next step">&#9654;</button>
+        <button className="btn btn-g btn-sm mono" onClick={() => setSpeed((s) => (s === 1 ? 1.25 : s === 1.25 ? 0.85 : 1))} title="Playback speed" aria-label={"Playback speed " + speed + "x"}>{speed}&times;</button>
         <button
           className="btn btn-g btn-sm"
           onClick={toggleMute}
@@ -3014,7 +3231,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
               onPointerDown={(e) => e.stopPropagation()}
               onClick={(e) => e.stopPropagation()}
             >
-              <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom((z) => z - 0.2)}>−</button>
+              <button className="btn btn-sm" title="Zoom out" onClick={() => applyZoom((z) => z - 0.2)}>&minus;</button>
               <button className="btn btn-sm mono" title="Reset view - re-centers and resets zoom" style={{ minWidth: 46 }} onClick={() => { applyZoom(DEFAULT_ZOOM); setPanX(0); setPanY(0); }}>{Math.round(zoom * 100)}%</button>
               <button className="btn btn-sm" title="Zoom in" onClick={() => applyZoom((z) => z + 0.2)}>+</button>
               <button className="btn btn-sm" title={fullscreen ? "Exit fullscreen" : "Fullscreen"} aria-label={fullscreen ? "Exit fullscreen" : "Expand to fullscreen"} onClick={toggleFullscreen}>
@@ -3050,6 +3267,15 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
                 />
               </div>
             )}
+            {/*
+              Wrapper fix: this div now has width:100% and height:100%
+              in BOTH fullscreen and non-fullscreen modes. On mobile,
+              the previous version left both undefined in normal mode,
+              which collapsed the SVG to zero height on iOS Safari and
+              some Android Chrome builds. Setting them explicitly here
+              means the SVG's own width="100%" height="100%" resolves
+              against a definite parent box.
+            */}
             <div
               data-atlas-diagram={diagram.id}
               style={{
@@ -3059,12 +3285,8 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                // In fullscreen, force the wrapper to fill the whole
-                // stage so its centring flex rules actually apply to
-                // the full viewport. In normal (non-fullscreen) mode,
-                // keep the wrapper sized to the SVG's own bounds.
-                width: fullscreen ? "100%" : undefined,
-                height: fullscreen ? "100%" : undefined,
+                width: "100%",
+                height: "100%",
                 maxWidth: "100%",
                 maxHeight: "100%",
                 willChange: "transform",
@@ -3080,6 +3302,10 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
                   );
                   if (stepIdx === -1) return;
                   playTokenRef.current++;
+                  if (watchdogRef.current) {
+                    clearTimeout(watchdogRef.current);
+                    watchdogRef.current = null;
+                  }
                   try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {}
                   setActiveStep(stepIdx);
                   if (playing) {
@@ -3119,7 +3345,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
       </div>
 
       <div className="card atlas-legend-full" style={{ marginTop: 12 }}>
-        <div className="eyebrow">Legend — tap any part to highlight it</div>
+        <div className="eyebrow">Legend &mdash; tap any part to highlight it</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(160px, 100%), 1fr))", gap: 10, marginTop: 12 }}>
           {(diagram.labels || []).map((l) => {
             const active = activeLabelId === l.id;
@@ -3156,12 +3382,6 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
                   flexShrink: 0,
                   alignItems: "center",
                   justifyContent: "center",
-                  /* Deliberately a fixed off-white, not a theme
-                     variable. Swatches have their own colours and
-                     some use pale fills — if the tile background
-                     matches the theme's --bg-2, pale swatches wash
-                     out completely on light mode. A neutral cream
-                     gives consistent contrast in both themes. */
                   background: "#FAF8F5",
                   borderRadius: 12,
                   overflow: "hidden",
@@ -3169,11 +3389,6 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
                 }}>
                   <svg viewBox={LEGEND_VIEWBOXES[l.id] || "0 0 100 100"} width="56" height="56">
                     {LEGEND_SWATCHES[l.id] ? LEGEND_SWATCHES[l.id](active) : (
-                      /* Missing-swatch fallback. Deliberately loud — a
-                         warning red cross with a small dot, so it's
-                         obvious something is broken rather than an
-                         ambiguous grey circle that could be mistaken
-                         for a legitimate pale swatch. */
                       <g>
                         <circle cx="50" cy="50" r="24" fill="#FCD4D4" stroke="#C0392B" strokeWidth="2" />
                         <line x1="40" y1="40" x2="60" y2="60" stroke="#C0392B" strokeWidth="4" strokeLinecap="round" />
@@ -3217,7 +3432,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
                       gap: 5,
                     }}
                   >
-                    Open {DIAGRAMS[l.drillTo]?.title?.split(" — ")[0] || l.name} →
+                    Open {DIAGRAMS[l.drillTo]?.title?.split(" \u2014 ")[0] || l.name} &rarr;
                   </button>
                 )}
               </button>
@@ -3241,8 +3456,8 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
               onClick={() => onOpenDiagram(prevDiagram.id)}
               aria-label={`Previous visual: ${prevDiagram.title}`}
             >
-              <span style={{ display: "block", fontSize: 11, color: "var(--text-3)", fontWeight: 600, marginBottom: 2 }}>← Previous visual</span>
-              <span style={{ display: "block", fontSize: 13, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{prevDiagram.title.split(" — ")[0]}</span>
+              <span style={{ display: "block", fontSize: 11, color: "var(--text-3)", fontWeight: 600, marginBottom: 2 }}>&larr; Previous visual</span>
+              <span style={{ display: "block", fontSize: 13, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{prevDiagram.title.split(" \u2014 ")[0]}</span>
             </button>
           ) : <span style={{ flex: 1 }} />}
           {nextDiagram ? (
@@ -3252,8 +3467,8 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
               onClick={() => onOpenDiagram(nextDiagram.id)}
               aria-label={`Next visual: ${nextDiagram.title}`}
             >
-              <span style={{ display: "block", fontSize: 11, color: "var(--text-3)", fontWeight: 600, marginBottom: 2 }}>Next visual →</span>
-              <span style={{ display: "block", fontSize: 13, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{nextDiagram.title.split(" — ")[0]}</span>
+              <span style={{ display: "block", fontSize: 11, color: "var(--text-3)", fontWeight: 600, marginBottom: 2 }}>Next visual &rarr;</span>
+              <span style={{ display: "block", fontSize: 13, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{nextDiagram.title.split(" \u2014 ")[0]}</span>
             </button>
           ) : <span style={{ flex: 1 }} />}
         </div>
