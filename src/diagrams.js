@@ -191,7 +191,7 @@ const atlasNode = ({ id, x, y, w, h, label, sub, fill, dim, onLabelClick, active
 };
 
 const atlasLine = (x1, y1, x2, y2, color = ATLAS_COLORS.neutral) => (
-  <line key={`${x1}-${y1}-${x2}-${y2}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth="1.6" opacity="0.55" />
+  <line key={`${x1}-${y1}-${x2}-${y2}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth="2" opacity="0.85" />
 );
 
 // atlasCell: same clickable/pulsing/active-highlight wrapper as atlasNode,
@@ -212,7 +212,7 @@ const atlasCell = ({ id, cx, cy, r, fill, dim, label, sub, onLabelClick, activeL
 };
 
 const atlasFlow = (d, color = ATLAS_COLORS.neutral) => (
-  <path d={d} stroke={color} strokeWidth="2" fill="none" opacity="0.5" strokeLinecap="round" />
+  <path d={d} stroke={color} strokeWidth="2.4" fill="none" opacity="0.85" strokeLinecap="round" />
 );
 
 // atlasOrgan: for the liver/spleen in the extramedullary step - a soft
@@ -317,33 +317,30 @@ const atlasPlatelet = ({ cx, cy, r = 4, label }) => (
 const atlasLymphNode = ({ cx, cy, scale = 1 }) => (
   <g transform={`translate(${cx},${cy}) scale(${scale})`}>
     {/* Afferent vessels - multiple, entering the convex side */}
-    <line x1="-26" y1="-14" x2="-17" y2="-7" stroke={ATLAS_COLORS.lymphoid} strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
-    <line x1="-26" y1="0" x2="-17" y2="0" stroke={ATLAS_COLORS.lymphoid} strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
-    <line x1="-26" y1="14" x2="-17" y2="7" stroke={ATLAS_COLORS.lymphoid} strokeWidth="2.5" strokeLinecap="round" opacity="0.7" />
+    <line x1="-26" y1="-14" x2="-17" y2="-7" stroke={ATLAS_COLORS.lymphoid} strokeWidth="2.8" strokeLinecap="round" opacity="0.9" />
+    <line x1="-26" y1="0" x2="-17" y2="0" stroke={ATLAS_COLORS.lymphoid} strokeWidth="2.8" strokeLinecap="round" opacity="0.9" />
+    <line x1="-26" y1="14" x2="-17" y2="7" stroke={ATLAS_COLORS.lymphoid} strokeWidth="2.8" strokeLinecap="round" opacity="0.9" />
     {/* Efferent vessel - single, leaving at the hilum (concave side) */}
-    <line x1="17" y1="0" x2="27" y2="0" stroke={ATLAS_COLORS.lymphoid} strokeWidth="3" strokeLinecap="round" opacity="0.8" />
+    <line x1="17" y1="0" x2="27" y2="0" stroke={ATLAS_COLORS.lymphoid} strokeWidth="3.4" strokeLinecap="round" opacity="1" />
 
     {/* Capsule + cortex (outer region) */}
-    <ellipse cx="0" cy="0" rx="16" ry="11" fill={ATLAS_COLORS.lymphoid} opacity="0.55" stroke="#123F9E" strokeWidth="1" />
+    <ellipse cx="0" cy="0" rx="16" ry="11" fill={ATLAS_COLORS.lymphoid} opacity="0.85" stroke="#123F9E" strokeWidth="1.6" />
     {/* Medulla (inner region) */}
-    <ellipse cx="2" cy="0" rx="8" ry="5" fill="#0A0F1A" opacity="0.22" />
+    <ellipse cx="2" cy="0" rx="8" ry="5" fill="#0A0F1A" opacity="0.35" />
 
-    {/* Lymphoid follicles - small dark dots ringing the cortex, where
-       B cells actually cluster and proliferate. This is the detail that
-       makes it read as "a filtering organ with structure" rather than
-       "a blue bean". */}
+    {/* Lymphoid follicles - small dark dots ringing the cortex */}
     {[[-9, -7], [-11, 0], [-9, 7], [0, -9], [0, 9], [6, -7], [7, 7]].map(([fx, fy], i) => (
-      <circle key={i} cx={fx} cy={fy} r="1.6" fill="#0A1F6B" opacity="0.55" />
+      <circle key={i} cx={fx} cy={fy} r="1.9" fill="#0A1F6B" opacity="0.75" />
     ))}
   </g>
 );
 
 const atlasFlowArrow = ({ x1, y1, x2, y2, color = ATLAS_COLORS.neutral, dashed = false }) => {
   const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
-  const headLen = 10;
+  const headLen = 12;
   return (
     <g>
-      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth="2"
+      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth="2.2"
         strokeLinecap="round" strokeDasharray={dashed ? "4 4" : undefined} />
       <polygon
         points={`0,0 ${-headLen},${-headLen/2} ${-headLen},${headLen/2}`}
@@ -2300,12 +2297,12 @@ const atlasErythroidStage = ({
       className={pulsing ? "atlas-pulse" : ""}
     >
       {stage < 6 ? (
-        <circle cx={cx} cy={cy} r={r} fill={cytoFill} stroke={cytoStroke} strokeWidth="1.6" filter="url(#atlas-shadow)" {...ring} />
+        <circle cx={cx} cy={cy} r={r} fill={cytoFill} stroke={cytoStroke} strokeWidth="2.2" filter="url(#atlas-shadow)" {...ring} />
       ) : (
         // Mature red cell is biconcave, not round — same ellipse ratio as
         // the existing atlasBloodCell primitive, so the two read as the
         // same kind of object.
-        <ellipse cx={cx} cy={cy} rx={r} ry={r * 0.62} fill={cytoFill} stroke={cytoStroke} strokeWidth="1.6" filter="url(#atlas-shadow)" {...ring} />
+        <ellipse cx={cx} cy={cy} rx={r} ry={r * 0.62} fill={cytoFill} stroke={cytoStroke} strokeWidth="2.2" filter="url(#atlas-shadow)" {...ring} />
       )}
 
       {nucleusR > 0 && (
@@ -3371,100 +3368,60 @@ export const DIAGRAMS = {
       ["hsc"], ["hsc"], ["hsc", "liver", "spleen"], ["hsc", "cmp", "clp"], ["cmp", "clp"], ["cmp", "clp"],
       ["myeloid-leaf", "b", "t", "nk"], ["cmp", "clp"], ["liver", "spleen"], ["hsc", "cmp", "clp", "myeloid-leaf", "b", "t", "nk"],
     ],
-        // Visual staging per step, same role as the Cardiac Cycle's
-    // phaseState - what's visible/emphasised changes as the narration
-    // moves through the real 10 Socratic steps, not just a highlight ring
-    // on an otherwise static picture.
-    stageState: [
-      { hsc: 1,    branches: 0,   leaves: 0,    sites: 0 },
-      { hsc: 1,    branches: 0,   leaves: 0,    sites: 0 },
-      { hsc: 1,    branches: 0,   leaves: 0,    sites: 0.25 },
-      { hsc: 1,    branches: 1,   leaves: 0,    sites: 0 },
-      { hsc: 0.6,  branches: 1,   leaves: 0,    sites: 0 },
-      { hsc: 0.6,  branches: 1,   leaves: 0.15, sites: 0 },
-      { hsc: 0.4,  branches: 0.6, leaves: 1,    sites: 0 },
-      { hsc: 0.4,  branches: 0.6, leaves: 0.6,  sites: 0 },
-      { hsc: 0.3,  branches: 0.4, leaves: 0.4,  sites: 1 },
-      { hsc: 1,    branches: 1,   leaves: 1,    sites: 1 },
-    ],
     viewBox: "0 0 900 520",
-    render: ({ onLabelClick, activeLabelId, activeStep, onOpenDrill, preview }) => {
+      render: ({ onLabelClick, activeLabelId, activeStep, onOpenDrill, preview }) => {
       const diagram = DIAGRAMS["hem:haematopoiesis"];
       const focus = diagram.stepFocus[activeStep] || [];
-      const st = diagram.stageState[activeStep] || diagram.stageState[0];
       const pulsing = (id) => !preview && focus.includes(id);
 
       return (
         <svg viewBox="0 0 900 520" width="100%" height="100%">
           {atlasDefs()}
 
-          {/* Marrow cavity backdrop - trabecular bone texture, so the stem
-             cell reads as sitting INSIDE an organ, not floating on blank
-             space. Soft, low-opacity, never competes with the cells. */}
-          <ellipse cx="450" cy="230" rx="420" ry="260" fill="#2B1A14" opacity="0.08" />
-          {[[120,90],[760,110],[90,380],[780,370],[450,40],[200,460],[700,460]].map(([x,y],i) => (
-            <path key={i} d={`M${x},${y} q20,-10 35,10 q-5,20 -30,15 q-15,-10 -5,-25 z`} fill="#8C1C12" opacity="0.06" />
-          ))}
-
-          {/* Flow lines fade in with the branch stage, not always present
-             at full strength - matching the "trunk splits" narration beat.
+          {/* Flow lines - always fully visible, so the eye can trace the
+             trunk-splits-to-branches structure from the very first frame.
              Drawn from the bottom of the HSC to the top of each
              progenitor, and from each progenitor down to its leaves. */}
-          <g opacity={st.branches}>
-            {atlasFlow("M450,120 Q350,140 260,150")}
-            {atlasFlow("M450,120 Q550,140 640,150")}
-            {atlasFlow("M260,232 Q220,270 195,300")}
-            {atlasFlow("M640,232 Q565,270 495,300")}
-            {atlasFlow("M640,232 Q625,270 605,300")}
-            {atlasFlow("M640,232 Q685,270 710,300")}
-          </g>
+          {atlasFlow("M450,120 Q350,140 260,150")}
+          {atlasFlow("M450,120 Q550,140 640,150")}
+          {atlasFlow("M260,232 Q220,270 195,300")}
+          {atlasFlow("M640,232 Q565,270 495,300")}
+          {atlasFlow("M640,232 Q625,270 605,300")}
+          {atlasFlow("M640,232 Q685,270 710,300")}
 
-          {/* Stem cell - proper haematopoietic stem cell with cytoplasm
-             rim, textured chromatin, and a visible nucleolus. Opacity is
-             driven by stageState so it fades as the narration moves past
-             the "one stem cell" opening into the branch-and-specialise
-             middle section, then comes back for the synthesis step. */}
-          <g opacity={st.hsc}>
-            {atlasStemCell({
-              id: "hsc", cx: 450, cy: 70, r: 46,
-              label: "Stem Cell (HSC)",
-              onLabelClick, activeLabelId,
-              pulsing: pulsing("hsc"),
-              preview,
-            })}
-          </g>
+          {/* Stem cell - full opacity, always. Only the amber ring moves
+             during playback, driven by stepFocus. */}
+          {atlasStemCell({
+            id: "hsc", cx: 450, cy: 70, r: 46,
+            label: "Stem Cell (HSC)",
+            onLabelClick, activeLabelId,
+            pulsing: pulsing("hsc"),
+            preview,
+          })}
 
           {/* Myeloid progenitor - amber, lineage-restricted, drill-down
              indicator because it opens the myeloid child diagram. */}
-          <g opacity={st.branches}>
-            {atlasProgenitor({
-              id: "cmp", cx: 260, cy: 190, r: 40, lineage: "trunk",
-              label: "Myeloid progenitor", sub: "CMP",
-              onLabelClick, activeLabelId,
-              pulsing: pulsing("cmp"),
-              onOpenDrill: !!onOpenDrill, preview,
-            })}
-          </g>
+          {atlasProgenitor({
+            id: "cmp", cx: 260, cy: 190, r: 40, lineage: "trunk",
+            label: "Myeloid progenitor", sub: "CMP",
+            onLabelClick, activeLabelId,
+            pulsing: pulsing("cmp"),
+            onOpenDrill: !!onOpenDrill, preview,
+          })}
 
           {/* Lymphoid progenitor - blue, no drill-down (no child diagram
              for the lymphoid branch yet). */}
-          <g opacity={st.branches}>
-            {atlasProgenitor({
-              id: "clp", cx: 640, cy: 190, r: 40, lineage: "lymphoid",
-              label: "Lymphoid progenitor", sub: "CLP",
-              onLabelClick, activeLabelId,
-              pulsing: pulsing("clp"),
-              preview,
-            })}
-          </g>
+          {atlasProgenitor({
+            id: "clp", cx: 640, cy: 190, r: 40, lineage: "lymphoid",
+            label: "Lymphoid progenitor", sub: "CLP",
+            onLabelClick, activeLabelId,
+            pulsing: pulsing("clp"),
+            preview,
+          })}
 
-          {/* Mature cells - real primitives, not abstract shapes: an actual
-             biconcave red cell, a lobed-nucleus white cell, a granular
-             platelet, same art used throughout the Cardiovascular family.
-             The myeloid-leaf cluster groups the four myeloid-derived cell
-             types together on the left, matching where the CMP sits above
-             it, so the eye traces CMP down to its own children. */}
-          <g opacity={st.leaves} className={pulsing("myeloid-leaf") ? "atlas-pulse" : ""} onClick={preview ? undefined : () => onLabelClick("myeloid-leaf")} style={{ cursor: preview ? "default" : "pointer" }}>
+          {/* Myeloid-derived mature cells - red cell, platelet, white cell
+             clustered together, labelled underneath. */}
+          <g className={pulsing("myeloid-leaf") ? "atlas-pulse" : ""} onClick={preview ? undefined : () => onLabelClick("myeloid-leaf")} style={{ cursor: preview ? "default" : "pointer" }}>
             {atlasBloodCell({ cx: 150, cy: 320, r: 20, oxygenated: true })}
             {atlasPlatelet({ cx: 205, cy: 345, r: 9 })}
             {atlasWhiteCell({ cx: 175, cy: 365, r: 14 })}
@@ -3472,31 +3429,27 @@ export const DIAGRAMS = {
             <text x="178" y="412" textAnchor="middle" fontSize="9" fill="var(--text-2)">granulocytes · monocytes</text>
           </g>
 
-          {/* B, T, NK - all three descend from the lymphoid progenitor
-             above them, so their x positions cluster under 640 rather
-             than spreading the full width. */}
-          <g opacity={st.leaves} className={pulsing("b") ? "atlas-pulse" : ""} onClick={preview ? undefined : () => onLabelClick("b")} style={{ cursor: preview ? "default" : "pointer" }}>
+          {/* B, T, NK cells. */}
+          <g className={pulsing("b") ? "atlas-pulse" : ""} onClick={preview ? undefined : () => onLabelClick("b")} style={{ cursor: preview ? "default" : "pointer" }}>
             {atlasWhiteCell({ cx: 495, cy: 330, r: 22 })}
             <text x="495" y="366" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">B cells</text>
           </g>
-          <g opacity={st.leaves} className={pulsing("t") ? "atlas-pulse" : ""} onClick={preview ? undefined : () => onLabelClick("t")} style={{ cursor: preview ? "default" : "pointer" }}>
+          <g className={pulsing("t") ? "atlas-pulse" : ""} onClick={preview ? undefined : () => onLabelClick("t")} style={{ cursor: preview ? "default" : "pointer" }}>
             {atlasWhiteCell({ cx: 605, cy: 330, r: 22 })}
             <text x="605" y="366" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">T cells</text>
           </g>
-          <g opacity={st.leaves} className={pulsing("nk") ? "atlas-pulse" : ""} onClick={preview ? undefined : () => onLabelClick("nk")} style={{ cursor: preview ? "default" : "pointer" }}>
+          <g className={pulsing("nk") ? "atlas-pulse" : ""} onClick={preview ? undefined : () => onLabelClick("nk")} style={{ cursor: preview ? "default" : "pointer" }}>
             {atlasWhiteCell({ cx: 715, cy: 330, r: 22 })}
             <text x="715" y="366" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">NK cells</text>
           </g>
 
-          {/* Extramedullary sites - fade in only when the narration reaches
-             step 8, exactly when the body falls back on them. The dashed
-             connector ties them visually back to the marrow where the
-             stem cell lives, rather than floating as two isolated organs. */}
-          <g opacity={st.sites}>
-            <line x1="450" y1="420" x2="450" y2="450" stroke={ATLAS_COLORS.neutral} strokeWidth="1.6" strokeDasharray="3 4" opacity="0.4" />
-            {atlasOrgan({ id: "liver",  cx: 360, cy: 475, w: 130, h: 60, label: "Liver",  fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim, onLabelClick, activeLabelId, pulsing: pulsing("liver") })}
-            {atlasOrgan({ id: "spleen", cx: 540, cy: 475, w: 110, h: 60, label: "Spleen", fill: ATLAS_COLORS.lymphoid,  dim: ATLAS_COLORS.lymphoidDim,  onLabelClick, activeLabelId, pulsing: pulsing("spleen") })}
-          </g>
+          {/* Extramedullary sites - liver and spleen, always visible.
+             The dashed connector ties them visually back to the marrow
+             where the stem cell lives, rather than floating as two
+             isolated organs. */}
+          <line x1="450" y1="420" x2="450" y2="450" stroke={ATLAS_COLORS.neutral} strokeWidth="1.6" strokeDasharray="3 4" opacity="0.4" />
+          {atlasOrgan({ id: "liver",  cx: 360, cy: 475, w: 130, h: 60, label: "Liver",  fill: ATLAS_COLORS.erythroid, dim: ATLAS_COLORS.erythroidDim, onLabelClick, activeLabelId, pulsing: pulsing("liver") })}
+          {atlasOrgan({ id: "spleen", cx: 540, cy: 475, w: 110, h: 60, label: "Spleen", fill: ATLAS_COLORS.lymphoid,  dim: ATLAS_COLORS.lymphoidDim,  onLabelClick, activeLabelId, pulsing: pulsing("spleen") })}
         </svg>
       );
     },
@@ -3712,19 +3665,52 @@ export const DIAGRAMS = {
             return atlasFlowArrow({ x1, y1: cy, x2, y2: cy, color: ATLAS_COLORS.trunk });
           })}
 
-          {/* EPO acts on the later stages, so it sits above stages 4-6
-              with a bracket-style leader rather than a single dot. */}
+          {/* EPO acts on the later stages (4, 5, 6). A bracket line runs
+              across the top of those three cells, with downward ticks
+              pointing into each one, and the EPO label sits centred
+              above the bracket. */}
           <g>
+            {/* Horizontal bracket line spanning stages 4–6 */}
             <path
-              d={`M${startX + 3 * gap},50 Q${startX + 4.5 * gap},50 ${startX + 5 * gap},${cy - r - 20}`}
-              fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
-              strokeDasharray="4 4" opacity="0.7"
+              d={`M${startX + 3 * gap},${cy - r - 40} L${startX + 5 * gap},${cy - r - 40}`}
+              stroke={ATLAS_COLORS.trunk}
+              strokeWidth="2"
+              fill="none"
+              strokeLinecap="round"
             />
-            <circle cx={startX + 5 * gap} cy={cy - r - 20} r="3.5" fill={ATLAS_COLORS.trunk} />
-            <circle cx={startX + 3 * gap} cy="50" r="3.5" fill={ATLAS_COLORS.trunk} />
-            <circle cx={startX + 4 * gap} cy="50" r="3.5" fill={ATLAS_COLORS.trunk} />
-            <text x={startX + 3 * gap} y="34" textAnchor="middle" fontSize="12" fontWeight="700" fill={ATLAS_COLORS.trunk}>EPO</text>
-            <text x={startX + 3 * gap} y="20" textAnchor="middle" fontSize="9" fill="var(--text-2)">drives the later stages</text>
+            {/* Downward ticks, one per covered stage */}
+            {[3, 4, 5].map((i) => (
+              <line
+                key={i}
+                x1={startX + i * gap}
+                y1={cy - r - 40}
+                x2={startX + i * gap}
+                y2={cy - r - 12}
+                stroke={ATLAS_COLORS.trunk}
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            ))}
+            {/* EPO label centred over the bracket */}
+            <text
+              x={startX + 4 * gap}
+              y={cy - r - 52}
+              textAnchor="middle"
+              fontSize="13"
+              fontWeight="800"
+              fill={ATLAS_COLORS.trunk}
+            >
+              EPO
+            </text>
+            <text
+              x={startX + 4 * gap}
+              y={cy - r - 38}
+              textAnchor="middle"
+              fontSize="9.5"
+              fill="var(--text-2)"
+            >
+              drives the later stages
+            </text>
           </g>
 
           {stages.map((s, i) => atlasErythroidStage({
@@ -3844,7 +3830,7 @@ export const DIAGRAMS = {
 
           {/* Body region */}
           <g style={{ cursor: cur }} onClick={click("bp")} filter={hotFilter("bp")}>
-            <rect x="250" y="530" width="400" height="60" rx="14" fill="#F5B93F" opacity="0.35" stroke="#D89B14" strokeWidth="1.5" />
+            <rect x="250" y="530" width="400" height="60" rx="14" fill={ATLAS_COLORS.trunkDim} stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
             <text x="450" y="566" textAnchor="middle" fontSize="14" fontWeight="700" fill="var(--text)">Whole body · tissues</text>
           </g>
 
@@ -3875,66 +3861,62 @@ export const DIAGRAMS = {
             </g>
           )}
 
-                    {/* Hemostasis inset - a callout box connected by a leader line to
-              the systemic vessel, showing what's happening at a wound site
-              on the same vessel blood is flowing through. */}
+                    {/* Hemostasis inset — drawn in the top-left, clear of the heart. */}
           {inFocus("hemostasis") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              {/* Leader line from the inset up to the systemic vessel */}
+              {/* Leader line from the inset to the systemic vessel */}
               <path
-                d="M150,270 Q180,240 250,220 Q290,215 300,240"
+                d="M240,300 Q280,290 320,280"
                 fill="none"
                 stroke={ATLAS_COLORS.trunk}
-                strokeWidth="1.5"
+                strokeWidth="1.6"
                 strokeDasharray="4 4"
-                opacity="0.85"
+                opacity="0.9"
               />
-              <circle cx="300" cy="240" r="4" fill={ATLAS_COLORS.trunk} />
-              {/* Callout box with rounded corners */}
-              <rect x="70" y="270" width="160" height="130" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="150" y="292" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>VESSEL INJURY</text>
-                            <text x="150" y="305" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">platelet plug + fibrin mesh</text>
+              <circle cx="320" cy="280" r="4" fill={ATLAS_COLORS.trunk} />
+              {/* Callout box */}
+              <rect x="60" y="230" width="180" height="140" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.2" />
+              <text x="150" y="254" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>VESSEL INJURY</text>
+              <text x="150" y="268" textAnchor="middle" fontSize="9" fill="var(--text-2)">platelet plug + fibrin mesh</text>
               {/* Damaged vessel segment */}
-              <line x1="90" y1="340" x2="210" y2="340" stroke="#8C1C12" strokeWidth="16" strokeLinecap="round" />
-              <line x1="90" y1="340" x2="210" y2="340" stroke="url(#atlas-grad-erythroid)" strokeWidth="13" strokeLinecap="round" />
+              <line x1="80" y1="305" x2="220" y2="305" stroke="#8C1C12" strokeWidth="16" strokeLinecap="round" />
+              <line x1="80" y1="305" x2="220" y2="305" stroke="url(#atlas-grad-erythroid)" strokeWidth="13" strokeLinecap="round" />
               {/* The wound - a small gap with platelets converging */}
-              <line x1="150" y1="332" x2="150" y2="348" stroke="var(--bg-2)" strokeWidth="6" />
-              {atlasPlatelet({ cx: 138, cy: 344, r: 5 })}
-              {atlasPlatelet({ cx: 150, cy: 346, r: 5 })}
-              {atlasPlatelet({ cx: 162, cy: 344, r: 5 })}
-              {/* Fibrin mesh - thin criss-crossing threads over the plug */}
-              <path d="M140,340 L160,352 M140,352 L160,340" stroke={ATLAS_COLORS.trunk} strokeWidth="1" opacity="0.8" />
+              <line x1="150" y1="297" x2="150" y2="313" stroke="var(--bg-2)" strokeWidth="6" />
+              {atlasPlatelet({ cx: 138, cy: 309, r: 5 })}
+              {atlasPlatelet({ cx: 150, cy: 311, r: 5 })}
+              {atlasPlatelet({ cx: 162, cy: 309, r: 5 })}
+              {/* Fibrin mesh */}
+              <path d="M140,305 L160,317 M140,317 L160,305" stroke={ATLAS_COLORS.trunk} strokeWidth="1.2" opacity="0.9" />
               {/* Platelet plug arrow */}
-              {atlasFlowArrow({ x1: 150, y1: 358, x2: 150, y2: 380, color: ATLAS_COLORS.trunk })}
-              <text x="150" y="393" textAnchor="middle" fontSize="9" fill="var(--text-2)">plug seals the wound</text>
+              {atlasFlowArrow({ x1: 150, y1: 325, x2: 150, y2: 348, color: ATLAS_COLORS.trunk })}
+              <text x="150" y="362" textAnchor="middle" fontSize="9" fill="var(--text-2)">plug seals the wound</text>
             </g>
           )}
 
-                    {/* Flow inset - connected by a leader line to the aorta, showing
-              the pressure gradient that drives flow through the same vessel
-              the student is already looking at. */}
+                    {/* Flow inset — drawn in the top-right, clear of the aorta. */}
           {inFocus("flow") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               {/* Leader line from the inset leftward to the systemic vessel */}
               <path
-                d="M670,330 Q640,340 620,380 Q615,400 620,440"
+                d="M660,300 Q625,310 610,340 Q605,380 620,420"
                 fill="none"
                 stroke={ATLAS_COLORS.trunk}
-                strokeWidth="1.5"
+                strokeWidth="1.6"
                 strokeDasharray="4 4"
-                opacity="0.85"
+                opacity="0.9"
               />
-              <circle cx="620" cy="440" r="4" fill={ATLAS_COLORS.trunk} />
+              <circle cx="620" cy="420" r="4" fill={ATLAS_COLORS.trunk} />
               {/* Callout box */}
-              <rect x="670" y="270" width="180" height="130" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="760" y="292" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>FLOW · PRESSURE</text>
-                            <text x="760" y="305" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">flow = ΔP ÷ resistance</text>
+              <rect x="660" y="230" width="200" height="140" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.2" />
+              <text x="760" y="254" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>FLOW · PRESSURE</text>
+              <text x="760" y="268" textAnchor="middle" fontSize="9" fill="var(--text-2)">flow = ΔP ÷ resistance</text>
               {/* Vessel segment showing the pressure gradient */}
-              <path d="M690,340 L830,340" stroke="#8C1C12" strokeWidth="16" strokeLinecap="round" />
-              <path d="M690,340 L830,340" stroke="url(#atlas-grad-erythroid)" strokeWidth="13" strokeLinecap="round" />
-              {atlasFlowArrow({ x1: 700, y1: 358, x2: 820, y2: 358, color: "#E53935" })}
-              <text x="690" y="380" textAnchor="middle" fontSize="9" fill="var(--text-2)">high P</text>
-              <text x="830" y="380" textAnchor="middle" fontSize="9" fill="var(--text-2)">lower P</text>
+              <path d="M680,305 L840,305" stroke="#8C1C12" strokeWidth="16" strokeLinecap="round" />
+              <path d="M680,305 L840,305" stroke="url(#atlas-grad-erythroid)" strokeWidth="13" strokeLinecap="round" />
+              {atlasFlowArrow({ x1: 690, y1: 325, x2: 830, y2: 325, color: "#E53935" })}
+              <text x="680" y="348" textAnchor="middle" fontSize="9" fill="var(--text-2)">high P</text>
+              <text x="840" y="348" textAnchor="middle" fontSize="9" fill="var(--text-2)">lower P</text>
             </g>
           )}
 
@@ -3945,23 +3927,24 @@ export const DIAGRAMS = {
           {inFocus("bp") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               {/* Brain callout - top */}
-              <path d="M450,435 L450,480" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" strokeDasharray="4 4" opacity="0.85" />
-              <circle cx="450" cy="435" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="380" y="480" width="140" height="32" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" />
-              <text x="450" y="500" textAnchor="middle" fontSize="10" fill={ATLAS_COLORS.trunk} fontWeight="700">Brain · nerves</text>
+              <path d="M450,435 L450,480" stroke={ATLAS_COLORS.trunk} strokeWidth="1.8" strokeDasharray="4 4" opacity="0.9" />
+              <circle cx="450" cy="435" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="370" y="480" width="160" height="36" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="502" textAnchor="middle" fontSize="11" fill={ATLAS_COLORS.trunk} fontWeight="800">Brain · nerves</text>
 
               {/* Kidney callout - left side */}
-              <path d="M250,560 Q220,540 210,500 Q205,480 210,460" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" strokeDasharray="4 4" opacity="0.85" />
-              <circle cx="250" cy="560" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="150" y="420" width="120" height="40" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" />
-              <text x="210" y="438" textAnchor="middle" fontSize="10" fill={ATLAS_COLORS.trunk} fontWeight="700">Kidneys</text>
-                            <text x="210" y="450" textAnchor="middle" fontSize="8" fill="var(--text-2)">renin · aldosterone</text>
+              <path d="M250,560 Q220,540 210,500 Q205,480 210,460" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.8" strokeDasharray="4 4" opacity="0.9" />
+              <circle cx="250" cy="560" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="140" y="418" width="140" height="44" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="210" y="438" textAnchor="middle" fontSize="11" fill={ATLAS_COLORS.trunk} fontWeight="800">Kidneys</text>
+              <text x="210" y="452" textAnchor="middle" fontSize="9" fill="var(--text-2)">renin · aldosterone</text>
+
               {/* Adrenal callout - right side */}
-              <path d="M650,560 Q680,540 690,500 Q695,480 690,460" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" strokeDasharray="4 4" opacity="0.85" />
-              <circle cx="650" cy="560" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="640" y="420" width="120" height="40" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" />
-              <text x="700" y="438" textAnchor="middle" fontSize="10" fill={ATLAS_COLORS.trunk} fontWeight="700">Adrenal</text>
-                            <text x="700" y="450" textAnchor="middle" fontSize="8" fill="var(--text-2)">adrenaline</text>
+              <path d="M650,560 Q680,540 690,500 Q695,480 690,460" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.8" strokeDasharray="4 4" opacity="0.9" />
+              <circle cx="650" cy="560" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="630" y="418" width="140" height="44" rx="10" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="700" y="438" textAnchor="middle" fontSize="11" fill={ATLAS_COLORS.trunk} fontWeight="800">Adrenal</text>
+              <text x="700" y="452" textAnchor="middle" fontSize="9" fill="var(--text-2)">adrenaline</text>
             </g>
           )}
 
@@ -3977,13 +3960,13 @@ export const DIAGRAMS = {
             </g>
           )}
 
-          {/* Static region labels */}
-                    <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Lungs</text>
-          <text x="450" y="614" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Body</text>
-          <text x="120" y="220" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Blood</text>
-          <text x="800" y="220" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Hemostasis</text>
-          <text x="805" y="470" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Flow · BP</text>
-          <text x="120" y="570" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Lymphatics</text>
+          {/* Static region labels — bold, full-contrast. */}
+          <text x="450" y="35" textAnchor="middle" fontSize="14" fontWeight="800" fill="var(--text)" pointerEvents="none">Lungs</text>
+          <text x="450" y="614" textAnchor="middle" fontSize="14" fontWeight="800" fill="var(--text)" pointerEvents="none">Body</text>
+          <text x="120" y="220" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text)" pointerEvents="none">Blood</text>
+          <text x="800" y="220" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text)" pointerEvents="none">Hemostasis</text>
+          <text x="805" y="470" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text)" pointerEvents="none">Flow · BP</text>
+          <text x="120" y="570" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text)" pointerEvents="none">Lymphatics</text>
         </svg>
       );
     },
@@ -4024,13 +4007,16 @@ export const DIAGRAMS = {
       "Phase seven. Filling slows to a trickle as the pressure inside the heart and the pressure feeding it even out. This is the heart's brief rest before the next beat starts the whole cycle over.",
     ],
         phaseState: [
-      { av: "open",   sl: "closed", ra: 1,    la: 1,    rv: 0.55, lv: 0.55 },
-      { av: "closed", sl: "closed", ra: 0.3,  la: 0.3,  rv: 0.85, lv: 0.85 },
-      { av: "closed", sl: "open",   ra: 0.3,  la: 0.3,  rv: 0.55, lv: 0.55 },
-      { av: "closed", sl: "open",   ra: 0.3,  la: 0.3,  rv: 0.4,  lv: 0.4  },
-      { av: "closed", sl: "closed", ra: 0.4,  la: 0.4,  rv: 0.4,  lv: 0.4  },
-      { av: "open",   sl: "closed", ra: 0.6,  la: 0.6,  rv: 0.75, lv: 0.75 },
-      { av: "open",   sl: "closed", ra: 0.75, la: 0.75, rv: 0.85, lv: 0.85 },
+      // Chamber opacities drive the animation: brighter = actively
+      // filling or contracting, dimmer = relaxing or emptying.
+      // Floor is 0.75 so no chamber ever reads as ghost-like.
+      { av: "open",   sl: "closed", ra: 1,    la: 1,    rv: 0.78, lv: 0.78 },
+      { av: "closed", sl: "closed", ra: 0.78, la: 0.78, rv: 1,    lv: 1    },
+      { av: "closed", sl: "open",   ra: 0.78, la: 0.78, rv: 0.88, lv: 0.88 },
+      { av: "closed", sl: "open",   ra: 0.78, la: 0.78, rv: 0.78, lv: 0.78 },
+      { av: "closed", sl: "closed", ra: 0.8,  la: 0.8,  rv: 0.8,  lv: 0.8  },
+      { av: "open",   sl: "closed", ra: 0.88, la: 0.88, rv: 0.9,  lv: 0.9  },
+      { av: "open",   sl: "closed", ra: 1,    la: 1,    rv: 1,    lv: 1    },
     ],
     // render() here actually drives its highlighting off phaseState, not
     // stepFocus - but DiagramViewer's dev-check (and the generic pulsing
@@ -4060,13 +4046,13 @@ export const DIAGRAMS = {
         <svg viewBox="0 0 900 560" width="100%" height="100%">
           
           <path d="M560,60 Q600,40 630,100 L630,170 Q600,160 560,160 Z"
-            fill="url(#atlas-grad-lymphoid)" opacity="0.6" {...ring("svc")} style={{ cursor: cur }} onClick={click("svc")} />
+            fill="url(#atlas-grad-lymphoid)" opacity="0.88" {...ring("svc")} style={{ cursor: cur }} onClick={click("svc")} />
           <path d="M560,170 Q520,100 460,70 L460,140 Q520,160 560,230 Z"
-            fill="url(#atlas-grad-lymphoid)" opacity={s.sl === "open" ? 0.9 : 0.5} {...ring("pa")} style={{ cursor: cur }} onClick={click("pa")} />
+            fill="url(#atlas-grad-lymphoid)" opacity={s.sl === "open" ? 1 : 0.78} {...ring("pa")} style={{ cursor: cur }} onClick={click("pa")} />
           <path d="M340,60 Q300,40 270,100 L270,170 Q300,160 340,160 Z"
-            fill="url(#atlas-grad-erythroid)" opacity="0.6" {...ring("pveins")} style={{ cursor: cur }} onClick={click("pveins")} />
+            fill="url(#atlas-grad-erythroid)" opacity="0.88" {...ring("pveins")} style={{ cursor: cur }} onClick={click("pveins")} />
           <path d="M340,170 Q380,90 440,60 L440,130 Q390,160 340,230 Z"
-            fill="url(#atlas-grad-erythroid)" opacity={s.sl === "open" ? 0.9 : 0.5} {...ring("aorta")} style={{ cursor: cur }} onClick={click("aorta")} />
+            fill="url(#atlas-grad-erythroid)" opacity={s.sl === "open" ? 1 : 0.78} {...ring("aorta")} style={{ cursor: cur }} onClick={click("aorta")} />
           <ellipse cx="590" cy="190" rx="95" ry="70" fill="url(#atlas-grad-lymphoid)" opacity={s.ra}
             filter="url(#atlas-shadow)" {...ring("ra")} style={{ cursor: cur }} onClick={click("ra")} />
           <ellipse cx="310" cy="190" rx="95" ry="70" fill="url(#atlas-grad-erythroid)" opacity={s.la}
@@ -4077,15 +4063,25 @@ export const DIAGRAMS = {
             fill="url(#atlas-grad-lymphoid)" opacity={s.rv} filter="url(#atlas-shadow)" {...ring("rv")} style={{ cursor: cur }} onClick={click("rv")} />
           <path d="M430,290 Q430,440 330,510 Q230,470 210,370 Q200,290 270,275 Q360,255 430,290 Z"
             fill="url(#atlas-grad-erythroid)" opacity={s.lv} filter="url(#atlas-shadow)" {...ring("lv")} style={{ cursor: cur }} onClick={click("lv")} />
-          <line x1="450" y1="280" x2="450" y2="500" stroke={ATLAS_COLORS.neutral} strokeWidth="6" strokeLinecap="round" opacity="0.5" />
+          <line x1="450" y1="280" x2="450" y2="500" stroke={ATLAS_COLORS.neutral} strokeWidth="6" strokeLinecap="round" opacity="0.85" />
           {atlasValve({ id: "sl", x: 560, y: 210, open: s.sl === "open", color: ATLAS_COLORS.lymphoid, onLabelClick, activeLabelId, preview })}
           {atlasValve({ id: "sl", x: 360, y: 210, open: s.sl === "open", flip: true, color: ATLAS_COLORS.erythroid, onLabelClick, activeLabelId, preview })}
-          {activeStep === 1 && <text x="450" y="300" textAnchor="middle" fontSize="22" fontWeight="700" fill={ATLAS_COLORS.trunk}>S1</text>}
-          {activeStep === 4 && <text x="450" y="300" textAnchor="middle" fontSize="22" fontWeight="700" fill={ATLAS_COLORS.trunk}>S2</text>}
-          <text x="590" y="194" textAnchor="middle" fontSize="13" fill="#fff" opacity="0.85" pointerEvents="none">RA</text>
-          <text x="310" y="194" textAnchor="middle" fontSize="13" fill="#fff" opacity="0.85" pointerEvents="none">LA</text>
-          <text x="560" y="400" textAnchor="middle" fontSize="13" fill="#fff" opacity="0.85" pointerEvents="none">RV</text>
-          <text x="320" y="400" textAnchor="middle" fontSize="13" fill="#fff" opacity="0.85" pointerEvents="none">LV</text>
+          {activeStep === 1 && (
+            <g pointerEvents="none">
+              <rect x="395" y="20" width="110" height="40" rx="10" fill={ATLAS_COLORS.trunkDim} stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="47" textAnchor="middle" fontSize="18" fontWeight="800" fill={ATLAS_COLORS.trunk}>S1 — lub</text>
+            </g>
+          )}
+          {activeStep === 4 && (
+            <g pointerEvents="none">
+              <rect x="395" y="20" width="110" height="40" rx="10" fill={ATLAS_COLORS.trunkDim} stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="47" textAnchor="middle" fontSize="18" fontWeight="800" fill={ATLAS_COLORS.trunk}>S2 — dub</text>
+            </g>
+          )}
+          <text x="590" y="194" textAnchor="middle" fontSize="14" fill="#fff" fontWeight="800" opacity="1" pointerEvents="none">RA</text>
+          <text x="310" y="194" textAnchor="middle" fontSize="14" fill="#fff" fontWeight="800" opacity="1" pointerEvents="none">LA</text>
+          <text x="560" y="400" textAnchor="middle" fontSize="14" fill="#fff" fontWeight="800" opacity="1" pointerEvents="none">RV</text>
+          <text x="320" y="400" textAnchor="middle" fontSize="14" fill="#fff" fontWeight="800" opacity="1" pointerEvents="none">LV</text>
         </svg>
       );
     },
@@ -4163,14 +4159,15 @@ export const DIAGRAMS = {
             {atlasBloodCell({ cx: 450, cy: 85, r: 4, oxygenated: true, animate: true, delay: "0s" })}
           </g>
 
-          {/* Interstitial fluid - a handful of pale straw-colored droplets
-              in the tissue space between the blood capillary and the
-              lymphatic capillary that's about to pick them up */}
+          {/* Interstitial fluid - droplets between the blood capillary
+              and the lymphatic capillary. Bright amber with a darker
+              outline so they read as "the fluid that leaked out", not
+              as background noise. */}
           <g style={{ cursor: cur }} onClick={click("interstitial")} filter={hotFilter("interstitial")}>
             {[[400, 128], [430, 142], [460, 130], [490, 144], [415, 158], [475, 160]].map(([dx, dy], i) => (
-              <circle key={i} cx={dx} cy={dy} r="3.2" fill="#FFE38A" opacity="0.85" />
+              <circle key={i} cx={dx} cy={dy} r="4" fill="#FFC93C" stroke="#8B6410" strokeWidth="1" />
             ))}
-            <text x="450" y="185" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">interstitial fluid</text>
+            <text x="450" y="182" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text)">interstitial fluid</text>
           </g>
 
           {/* Lymphatic capillary - blind-ended, picks the fluid up */}
@@ -4202,23 +4199,23 @@ export const DIAGRAMS = {
 
           {/* Venous system - where the ducts empty back into the blood */}
           <g style={{ cursor: cur }} onClick={click("duct")} filter={hotFilter("duct")}>
-            <rect x="330" y="558" width="240" height="46" rx="14" fill={ATLAS_COLORS.lymphoid} opacity="0.3" stroke="#123F9E" strokeWidth="1.5" />
-            <text x="450" y="586" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text)">Venous system</text>
+            <rect x="330" y="558" width="240" height="46" rx="14" fill={ATLAS_COLORS.lymphoidDim} stroke={ATLAS_COLORS.lymphoid} strokeWidth="2" />
+            <text x="450" y="586" textAnchor="middle" fontSize="13" fontWeight="800" fill="var(--text)">Venous system</text>
           </g>
 
           {/* Lymphocyte inset - what the immune cells are actually doing
               inside the node, connected by a leader line to the node */}
           {inFocus("lymphocyte") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <path d="M490,355 Q560,340 620,330" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" strokeDasharray="4 4" opacity="0.85" />
-              <circle cx="490" cy="355" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="620" y="265" width="180" height="130" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="710" y="288" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>INSPECTING LYMPH</text>
-              {atlasWhiteCell({ cx: 670, cy: 330, r: 14 })}
-              {atlasWhiteCell({ cx: 745, cy: 330, r: 14 })}
-              <text x="670" y="362" textAnchor="middle" fontSize="9" fill="var(--text-2)">B cell</text>
-              <text x="745" y="362" textAnchor="middle" fontSize="9" fill="var(--text-2)">T cell</text>
-              <text x="710" y="378" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">checking for threats</text>
+              <path d="M490,355 Q560,340 620,330" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.8" strokeDasharray="4 4" opacity="0.95" />
+              <circle cx="490" cy="355" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="620" y="265" width="180" height="130" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="710" y="288" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>INSPECTING LYMPH</text>
+              {atlasWhiteCell({ cx: 670, cy: 330, r: 15 })}
+              {atlasWhiteCell({ cx: 745, cy: 330, r: 15 })}
+              <text x="670" y="362" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text)">B cell</text>
+              <text x="745" y="362" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text)">T cell</text>
+              <text x="710" y="380" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">checking for threats</text>
             </g>
           )}
 
@@ -4226,13 +4223,13 @@ export const DIAGRAMS = {
               leader line down to where they empty into the venous system */}
           {inFocus("duct") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <path d="M410,575 Q320,565 260,540" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5" strokeDasharray="4 4" opacity="0.85" />
-              <circle cx="410" cy="575" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="80" y="475" width="180" height="90" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="170" y="497" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>TWO COLLECTING DUCTS</text>
-              <text x="170" y="517" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">Thoracic duct</text>
-              <text x="170" y="533" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">Right lymphatic duct</text>
-              <text x="170" y="552" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">both empty near the collarbone</text>
+              <path d="M410,575 Q320,565 260,540" fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.8" strokeDasharray="4 4" opacity="0.95" />
+              <circle cx="410" cy="575" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="80" y="475" width="190" height="92" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="175" y="498" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>TWO COLLECTING DUCTS</text>
+              <text x="175" y="520" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text)">Thoracic duct</text>
+              <text x="175" y="536" textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text)">Right lymphatic duct</text>
+              <text x="175" y="556" textAnchor="middle" fontSize="9" fontStyle="italic" fill="var(--text-2)">both empty near the collarbone</text>
             </g>
           )}
 
@@ -7034,10 +7031,11 @@ export const DIAGRAMS = {
         const tubeW = 50;
         const tubeH = 54;
         const capH = 10;
-        // Moved from 748 to 770 to buy horizontal air between the
-        // cascade's right edge and the tube column — on narrow mobile
-        // viewports the two were beginning to touch.
-        const cx = 770;
+        // Tube column at x=720. Combined with the label offset that
+        // starts at cx + 25 + 6 = 751, every mechanism tag now sits
+        // comfortably inside the 900-wide viewBox instead of being
+        // clipped off the right edge.
+        const cx = 720;
         return (
           <g
             key={id}
@@ -7078,12 +7076,9 @@ export const DIAGRAMS = {
               stroke={capColor}
               strokeWidth="1.2"
             />
-            {/* Label to the right of the tube — anchored 30px from the
-               tube's right edge rather than 33px, gaining three more
-               pixels of horizontal breathing room without changing
-               the visual rhythm. */}
+            {/* Label to the right of the tube. */}
             <text
-              x={cx + tubeW / 2 + 6}
+              x={cx + tubeW / 2 + 8}
               y={y + 22}
               textAnchor="start"
               fontSize="12"
@@ -7093,7 +7088,7 @@ export const DIAGRAMS = {
               {label}
             </text>
             <text
-              x={cx + tubeW / 2 + 6}
+              x={cx + tubeW / 2 + 8}
               y={y + 38}
               textAnchor="start"
               fontSize="9.5"
@@ -7101,9 +7096,9 @@ export const DIAGRAMS = {
             >
               {sub}
             </text>
-            {/* Mechanism tag */}
+            {/* Mechanism tag — kept short so it never clips the right edge. */}
             <text
-              x={cx + tubeW / 2 + 6}
+              x={cx + tubeW / 2 + 8}
               y={y + 52}
               textAnchor="start"
               fontSize="8.5"
@@ -7112,13 +7107,11 @@ export const DIAGRAMS = {
             >
               {blocks}
             </text>
-            {/* Selection ring — width tightened to match the tube + label
-               region so it doesn't extend past the SVG right edge now
-               that the tube column sits at 770. */}
+            {/* Selection ring — sized to match the tube + its label region. */}
             <rect
               x={cx - tubeW / 2 - 6}
               y={y - 8}
-              width={tubeW + 12 + 110}
+              width={tubeW + 12 + 140}
               height={tubeH + 16}
               rx={10}
               fill="none"
@@ -7198,7 +7191,7 @@ export const DIAGRAMS = {
           )}
 
           {/* ---- The four lab tubes, stacked on the right ---- */}
-          <text x="830" y="52" textAnchor="middle" fontSize="12" fontWeight="700"
+          <text x="800" y="52" textAnchor="middle" fontSize="12" fontWeight="700"
             fill="var(--text-2)" pointerEvents="none">
             Laboratory tubes
           </text>
@@ -7206,22 +7199,22 @@ export const DIAGRAMS = {
           {/* EDTA - purple - blocks calcium (irreversibly) */}
           {tube("edta", 90, "#8B5CF6", "#DDD0FF",
             "EDTA", "purple · full blood count",
-            "Ca2+ chelator · irreversible")}
+            "Ca²⁺ · irreversible")}
 
           {/* Citrate - blue - blocks calcium (reversibly) */}
           {tube("citrate", 200, "#2F6FED", "#B8CFFF",
             "Citrate", "blue · coagulation tests",
-            "Ca2+ chelator · reversible")}
+            "Ca²⁺ · reversible")}
 
           {/* Lab heparin - green - accelerates antithrombin */}
           {tube("lab-heparin", 310, "#16A34A", "#B8F0D0",
             "Heparin", "green · blood gases",
-            "Antithrombin accelerator")}
+            "Antithrombin boost")}
 
           {/* Oxalate - grey - blocks calcium (older method) */}
           {tube("oxalate", 420, "#64748B", "#C7D0DC",
             "Oxalate", "grey · rare assays",
-            "Ca2+ chelator · obsolete")}
+            "Ca²⁺ · obsolete")}
 
           {/* Static footer */}
           <text x="450" y="600" textAnchor="middle" fontSize="11"
