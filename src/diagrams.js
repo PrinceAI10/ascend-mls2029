@@ -8462,7 +8462,7 @@ export const DIAGRAMS = {
       ["reuptake"],
     ],
     viewBox: "0 0 900 620",
-    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+        render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pha:6"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -8475,130 +8475,230 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
+      // Which synapse state to draw for the current step.
       const synapseState =
         activeStep === 3 ? "releasing"
         : activeStep === 4 ? "bound"
         : activeStep === 9 ? "reuptake"
         : null;
 
-      const callout = (id, x, y, w, h, title, body, accent) => {
+      // A single centred panel, full width. Replaces the old left/right
+      // callout pairs, which clipped at the 900px viewBox edge. Sits at
+      // x=80 with width=740 — 80px margin each side, nothing clips.
+      // Body lines are centred and evenly spaced, one per row.
+      const panel = (id, title, body, accent) => {
         const active = isHot(id);
         const selected = activeLabelId === id;
+        const strokeColor = selected ? ATLAS_COLORS.trunk
+                          : active ? ATLAS_COLORS.trunk
+                          : "var(--line)";
+        const strokeW = selected ? 3 : active ? 2.4 : 1.6;
+        const lines = Array.isArray(body) ? body : [body];
         return (
-          <g style={{ cursor: cur }} onClick={click(id)} filter={active ? "url(#atlas-glow)" : undefined}>
-            <rect x={x} y={y} width={w} height={h} rx={12}
+          <g
+            style={{ cursor: cur }}
+            onClick={click(id)}
+            filter={active ? "url(#atlas-glow)" : undefined}
+          >
+            <rect
+              x={80} y={500} width={740} height={240} rx={16}
               fill="var(--bg-2)"
-              stroke={selected ? ATLAS_COLORS.trunk : active ? ATLAS_COLORS.trunk : "var(--line-2)"}
-              strokeWidth={selected ? 3 : active ? 2.4 : 1.4} />
-            <text x={x + 14} y={y + 24} fontSize="12" fontWeight="800" fill={accent}>{title}</text>
-            {(Array.isArray(body) ? body : [body]).map((line, i) => (
-              <text key={i} x={x + 14} y={y + 44 + i * 15} fontSize="10" fontWeight="600" fill="var(--text-2)">{line}</text>
+              stroke={strokeColor}
+              strokeWidth={strokeW}
+            />
+            <text
+              x={450} y={546}
+              textAnchor="middle"
+              fontSize="16" fontWeight="800"
+              fill={accent} letterSpacing="0.04em"
+            >
+              {title}
+            </text>
+            {lines.map((line, i) => (
+              <text
+                key={i}
+                x={450} y={594 + i * 26}
+                textAnchor="middle"
+                fontSize="13" fontWeight="600"
+                fill="var(--text-2)"
+              >
+                {line}
+              </text>
             ))}
-            <rect x={x - 6} y={y - 6} width={w + 12} height={h + 12} rx={16}
-              fill="none" {...ring(id)} pointerEvents="none" />
+            <rect
+              x={72} y={492} width={756} height={256} rx={20}
+              fill="none" {...ring(id)}
+              pointerEvents="none"
+            />
           </g>
         );
       };
 
       return (
-        <svg viewBox="0 0 900 620" width="100%" height="100%">
+        <svg viewBox="0 0 900 780" width="100%" height="100%">
           {atlasDefs()}
 
-          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
-            fill="var(--text)" pointerEvents="none">
+          <text
+            x={450} y={30}
+            textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none"
+          >
             The adrenergic synapse — where every adrenergic drug acts
           </text>
 
-          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+          {/* The synapse hero, top-centre. Smaller than before so the
+              panel below has room. */}
+          <g
+            style={{ cursor: cur }}
+            onClick={click("whole")}
+            filter={hotFilter("whole")}
+          >
             {atlasSynapse({
-              cx: 450, cy: 300, scale: 1.4,
+              cx: 450, cy: 240, scale: 1.2,
               transmitter: "noradrenaline",
               state: synapseState,
               drugAction: null,
               highlight: false,
             })}
-            <rect x="270" y="120" width="360" height="320"
-              fill="none" {...ring("whole")} pointerEvents="none" />
+            <rect
+              x="300" y="80" width="300" height="300"
+              fill="none" {...ring("whole")}
+              pointerEvents="none"
+            />
           </g>
 
-          {isHot("synthesis") && callout(
-            "synthesis", 20, 100, 215, 140,
+          {/* One panel per step. Only the active one renders. */}
+
+          {activeStep === 0 && panel(
+            "whole",
+            "THE WHOLE SYNAPSE",
+            [
+              "Sympathetic neuron releases noradrenaline onto its target",
+              "Every adrenergic drug acts at one specific step of this cycle",
+            ],
+            "#F5B93F"
+          )}
+
+          {activeStep === 1 && panel(
+            "synthesis",
             "SYNTHESIS",
-            ["tyrosine → L-DOPA → dopamine → NA", "tyrosine hydroxylase = rate-limiting", "4 enzymes, all inside the terminal"],
+            [
+              "tyrosine → L-DOPA → dopamine → noradrenaline",
+              "tyrosine hydroxylase is the rate-limiting step",
+              "four enzymes, all inside the nerve terminal",
+            ],
             "#F5B93F"
           )}
 
-          {isHot("storage") && callout(
-            "storage", 20, 260, 215, 120,
+          {activeStep === 2 && panel(
+            "storage",
             "VESICULAR STORAGE",
-            ["NA packed into vesicles", "reserpine blocks storage", "depletes the neuron over days"],
+            [
+              "noradrenaline packed into vesicles in the terminal",
+              "reserpine blocks storage — the vesicles empty",
+              "over days, the neuron runs out of transmitter",
+            ],
             "#F5B93F"
           )}
 
-          {isHot("release") && callout(
-            "release", 20, 400, 215, 130,
+          {activeStep === 3 && panel(
+            "release",
             "CALCIUM-TRIGGERED RELEASE",
-            ["action potential → Ca²⁺ entry", "vesicles fuse with membrane", "exocytosis into the cleft"],
+            [
+              "action potential opens voltage-gated Ca²⁺ channels",
+              "calcium entry tells vesicles to fuse with the membrane",
+              "exocytosis dumps noradrenaline into the synaptic cleft",
+            ],
             "#F5B93F"
           )}
 
-          {isHot("receptors") && callout(
-            "receptors", 660, 100, 220, 150,
+          {activeStep === 4 && panel(
+            "receptors",
             "FIVE SUBTYPES",
-            ["alpha-1 · alpha-2", "beta-1 · beta-2 · beta-3", "each a different GPCR", "different tissue, different signal"],
+            [
+              "two families, five subtypes — alpha and beta",
+              "alpha-1 · alpha-2 · beta-1 · beta-2 · beta-3",
+              "each is a different GPCR, in a different tissue",
+              "this is why one molecule produces so many different effects",
+            ],
             "#5B21B6"
           )}
 
-          {isHot("alpha1") && callout(
-            "alpha1", 660, 100, 220, 140,
-            "ALPHA-1",
-            ["Gq-coupled", "vasoconstriction · pupil dilation", "bladder sphincter · liver", "prazosin · doxazosin block"],
+          {activeStep === 5 && panel(
+            "alpha1",
+            "ALPHA-1 RECEPTORS",
+            [
+              "Gq-coupled",
+              "vascular smooth muscle — vasoconstriction",
+              "iris — pupil dilation · bladder sphincter — contraction",
+              "liver — glycogenolysis",
+              "blocked by prazosin, doxazosin, tamsulosin",
+            ],
             "#C0392B"
           )}
 
-          {isHot("alpha2") && callout(
-            "alpha2", 660, 260, 220, 140,
-            "ALPHA-2",
-            ["Gi-coupled, presynaptic", "autoreceptor — reduces release", "platelets — aggregation", "clonidine · methyldopa"],
+          {activeStep === 6 && panel(
+            "alpha2",
+            "ALPHA-2 RECEPTORS",
+            [
+              "Gi-coupled, presynaptic — an autoreceptor",
+              "activation reduces further noradrenaline release",
+              "a negative feedback loop — the self-brake",
+              "also on platelets — aggregation",
+              "agonists: clonidine, methyldopa",
+            ],
             "#8B5CF6"
           )}
 
-          {isHot("beta1") && callout(
-            "beta1", 660, 100, 220, 140,
-            "BETA-1",
-            ["Gs-coupled, mainly cardiac", "↑ rate · force · conduction", "kidney — renin release", "metoprolol · atenolol block"],
+          {activeStep === 7 && panel(
+            "beta1",
+            "BETA-1 RECEPTORS",
+            [
+              "Gs-coupled, mainly cardiac",
+              "increase heart rate, force of contraction,",
+              "and conduction velocity",
+              "also on the kidney — stimulate renin release",
+              "blocked by atenolol, metoprolol, bisoprolol",
+            ],
             "#2F6FED"
           )}
 
-          {isHot("beta2") && callout(
-            "beta2", 660, 260, 220, 150,
-            "BETA-2",
-            ["Gs-coupled, bronchial + vascular", "bronchodilation · vasodilation", "uterus · skeletal muscle", "salbutamol · salmeterol"],
+          {activeStep === 8 && panel(
+            "beta2",
+            "BETA-2 RECEPTORS",
+            [
+              "Gs-coupled, mainly bronchial and vascular",
+              "bronchodilation · vasodilation",
+              "also on the uterus (relaxation) and skeletal muscle",
+              "agonists: salbutamol, salmeterol",
+              "propranolol blocks them too — dangerous in asthma",
+            ],
             "#2F8F4E"
           )}
 
-          {isHot("reuptake") && (
-            <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="660" y="420" width="220" height="160" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
-              <text x="676" y="446" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>REUPTAKE & METABOLISM</text>
-              <text x="676" y="470" fontSize="10" fontWeight="600" fill="var(--text-2)">uptake 1 — into nerve terminal (main)</text>
-              <text x="676" y="488" fontSize="10" fontWeight="600" fill="var(--text-2)">uptake 2 — into non-neuronal tissue</text>
-              <text x="676" y="506" fontSize="10" fontWeight="600" fill="var(--text-2)">MAO — inside the neuron</text>
-              <text x="676" y="524" fontSize="10" fontWeight="600" fill="var(--text-2)">COMT — in the tissue</text>
-              <text x="676" y="548" fontSize="10.5" fontWeight="700" fill="#C0392B">tricyclics · cocaine block uptake 1</text>
-              <text x="676" y="566" fontSize="10" fontWeight="600" fill="var(--text-2)">NA stays in the cleft longer</text>
-            </g>
+          {activeStep === 9 && panel(
+            "reuptake",
+            "REUPTAKE & METABOLISM",
+            [
+              "uptake 1 — into the nerve terminal (the main route)",
+              "uptake 2 — into non-neuronal tissue",
+              "MAO — metabolises noradrenaline inside the neuron",
+              "COMT — metabolises it in the tissue",
+              "tricyclics and cocaine block uptake 1",
+              "noradrenaline stays in the cleft longer",
+            ],
+            "#F5B93F"
           )}
 
           {activeStep === lastStep && (
-            <text x="450" y="608" textAnchor="middle" fontSize="12.5"
-              fontWeight="700" fill="var(--text)" pointerEvents="none">
-              Synthesis · storage · release · receptors · reuptake — every adrenergic drug acts at one of these five steps
+            <text
+              x={450} y={762}
+              textAnchor="middle" fontSize="11.5" fontWeight="600"
+              fill="var(--text-3)" pointerEvents="none"
+            >
+              Synthesis · storage · release · receptors · reuptake
             </text>
           )}
-
-
         </svg>
       );
     },
@@ -8659,7 +8759,7 @@ export const DIAGRAMS = {
       ["ache"],
     ],
     viewBox: "0 0 900 620",
-        render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+            render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pha:7"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -8672,129 +8772,228 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
+      // Which synapse state to draw for the current step.
       const synapseState =
         activeStep === 3 ? "releasing"
         : activeStep === 4 ? "bound"
         : null;
 
-      const callout = (id, x, y, w, h, title, body, accent) => {
+      // A single centred panel, full width. Same layout as pha:6's panel
+      // so the two diagrams feel like siblings. Sits at x=80 with
+      // width=740 — 80px margin each side, nothing clips.
+      const panel = (id, title, body, accent) => {
         const active = isHot(id);
         const selected = activeLabelId === id;
+        const strokeColor = selected ? ATLAS_COLORS.trunk
+                          : active ? ATLAS_COLORS.trunk
+                          : "var(--line)";
+        const strokeW = selected ? 3 : active ? 2.4 : 1.6;
+        const lines = Array.isArray(body) ? body : [body];
         return (
-          <g style={{ cursor: cur }} onClick={click(id)} filter={active ? "url(#atlas-glow)" : undefined}>
-            <rect x={x} y={y} width={w} height={h} rx={12}
+          <g
+            style={{ cursor: cur }}
+            onClick={click(id)}
+            filter={active ? "url(#atlas-glow)" : undefined}
+          >
+            <rect
+              x={80} y={500} width={740} height={240} rx={16}
               fill="var(--bg-2)"
-              stroke={selected ? ATLAS_COLORS.trunk : active ? ATLAS_COLORS.trunk : "var(--line-2)"}
-              strokeWidth={selected ? 3 : active ? 2.4 : 1.4} />
-            <text x={x + 14} y={y + 24} fontSize="12" fontWeight="800" fill={accent}>{title}</text>
-            {(Array.isArray(body) ? body : [body]).map((line, i) => (
-              <text key={i} x={x + 14} y={y + 44 + i * 15} fontSize="10" fontWeight="600" fill="var(--text-2)">{line}</text>
+              stroke={strokeColor}
+              strokeWidth={strokeW}
+            />
+            <text
+              x={450} y={546}
+              textAnchor="middle"
+              fontSize="16" fontWeight="800"
+              fill={accent} letterSpacing="0.04em"
+            >
+              {title}
+            </text>
+            {lines.map((line, i) => (
+              <text
+                key={i}
+                x={450} y={594 + i * 26}
+                textAnchor="middle"
+                fontSize="13" fontWeight="600"
+                fill="var(--text-2)"
+              >
+                {line}
+              </text>
             ))}
-            <rect x={x - 6} y={y - 6} width={w + 12} height={h + 12} rx={16}
-              fill="none" {...ring(id)} pointerEvents="none" />
+            <rect
+              x={72} y={492} width={756} height={256} rx={20}
+              fill="none" {...ring(id)}
+              pointerEvents="none"
+            />
           </g>
         );
       };
 
       return (
-        <svg viewBox="0 0 900 620" width="100%" height="100%">
+        <svg viewBox="0 0 900 780" width="100%" height="100%">
           {atlasDefs()}
 
-          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
-            fill="var(--text)" pointerEvents="none">
+          <text
+            x={450} y={30}
+            textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none"
+          >
             The cholinergic synapse — same anatomy, different transmitter
           </text>
 
-          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+          {/* The synapse hero, top-centre. Blue ACh vesicles instead of
+              the amber NA vesicles pha:6 uses. */}
+          <g
+            style={{ cursor: cur }}
+            onClick={click("whole")}
+            filter={hotFilter("whole")}
+          >
             {atlasSynapse({
-              cx: 450, cy: 300, scale: 1.4,
+              cx: 450, cy: 240, scale: 1.2,
               transmitter: "acetylcholine",
               state: synapseState,
               drugAction: null,
               highlight: false,
             })}
-            <rect x="270" y="120" width="360" height="320"
-              fill="none" {...ring("whole")} pointerEvents="none" />
+            <rect
+              x="300" y="80" width="300" height="300"
+              fill="none" {...ring("whole")}
+              pointerEvents="none"
+            />
           </g>
 
-          {isHot("synthesis") && callout(
-            "synthesis", 20, 100, 215, 130,
-            "SYNTHESIS — ONE STEP",
-            ["choline + acetyl-CoA → ACh", "enzyme: ChAT", "rate-limited by choline supply", "vs noradrenaline's 4 steps"],
+          {/* One panel per step. Only the active one renders. */}
+
+          {activeStep === 0 && panel(
+            "whole",
+            "THE WHOLE SYNAPSE",
+            [
+              "Parasympathetic neuron releases acetylcholine onto its target",
+              "Same anatomy as the adrenergic synapse — different transmitter",
+            ],
             "#F5B93F"
           )}
 
-          {isHot("storage") && callout(
-            "storage", 20, 260, 215, 120,
+          {activeStep === 1 && panel(
+            "synthesis",
+            "ACETYLCHOLINE SYNTHESIS — ONE STEP",
+            [
+              "choline + acetyl-CoA → acetylcholine",
+              "enzyme: choline acetyltransferase (ChAT)",
+              "rate-limited by choline supply",
+              "one step — vs noradrenaline's four",
+            ],
+            "#F5B93F"
+          )}
+
+          {activeStep === 2 && panel(
+            "storage",
             "VESICULAR STORAGE",
-            ["VAChT packs ACh into vesicles", "vesamicol blocks VAChT", "research tool, not clinical"],
+            [
+              "VAChT packs acetylcholine into vesicles",
+              "vesamicol blocks VAChT — a research tool",
+              "clinically, storage isn't the drug target",
+            ],
             "#F5B93F"
           )}
 
-          {isHot("release") && callout(
-            "release", 20, 400, 215, 140,
+          {activeStep === 3 && panel(
+            "release",
             "CALCIUM-TRIGGERED RELEASE",
-            ["Ca²⁺ entry → vesicle fusion", "SNARE proteins required", "botulinum cleaves SNAREs", "→ flaccid paralysis"],
+            [
+              "calcium entry triggers vesicle fusion — same as adrenergic",
+              "vesicles need SNARE proteins to fuse",
+              "botulinum toxin cleaves SNAREs",
+              "no SNARE, no release — flaccid paralysis",
+            ],
             "#F5B93F"
           )}
 
-          {isHot("receptors") && callout(
-            "receptors", 660, 100, 220, 150,
-            "TWO FAMILIES",
-            ["nicotinic — ion channel", "  milliseconds, ligand-gated", "muscarinic — GPCR", "  seconds, second messengers"],
+          {activeStep === 4 && panel(
+            "receptors",
+            "TWO RECEPTOR FAMILIES",
+            [
+              "nicotinic — ligand-gated ion channel, milliseconds",
+              "muscarinic — G-protein coupled receptor, seconds",
+              "different structure, different speed, different drugs",
+              "this is the most important distinction in the topic",
+            ],
             "#5B21B6"
           )}
 
-          {isHot("nicotinic") && callout(
-            "nicotinic", 660, 100, 220, 160,
-            "NICOTINIC (nAChR)",
-            ["ligand-gated ion channel", "5 subunits around a pore", "Nm: neuromuscular junction", "Nn: ganglia + adrenal medulla", "curare · hexamethonium block"],
+          {activeStep === 5 && panel(
+            "nicotinic",
+            "NICOTINIC RECEPTORS (nAChR)",
+            [
+              "ligand-gated ion channel — five subunits around a pore",
+              "Nm — neuromuscular junction, triggers muscle contraction",
+              "Nn — autonomic ganglia and adrenal medulla",
+              "activated by nicotine",
+              "blocked by curare, hexamethonium, neuromuscular blockers",
+            ],
             "#C0392B"
           )}
 
-          {isHot("muscarinic") && callout(
-            "muscarinic", 660, 280, 220, 160,
-            "MUSCARINIC (mAChR)",
-            ["G-protein coupled · M1–M5", "M1, M3, M5 → Gq", "M2, M4 → Gi", "smooth muscle · heart · glands", "muscarine activates · atropine blocks"],
+          {activeStep === 6 && panel(
+            "muscarinic",
+            "MUSCARINIC RECEPTORS (mAChR)",
+            [
+              "G-protein coupled — subtypes M1 to M5",
+              "M1, M3, M5 → Gq-coupled",
+              "M2, M4 → Gi-coupled",
+              "found on smooth muscle, cardiac muscle, glands, CNS",
+              "activated by muscarine · blocked by atropine",
+            ],
             "#8B5CF6"
           )}
 
-          {isHot("m2") && callout(
-            "m2", 660, 100, 220, 130,
-            "M2 — CARDIAC",
-            ["Gi-coupled · SA + AV nodes", "activation slows heart rate", "the vagal brake", "atropine for bradycardia"],
+          {activeStep === 7 && panel(
+            "m2",
+            "M2 — CARDIAC MUSCARINIC",
+            [
+              "Gi-coupled, on the SA and AV nodes",
+              "activation slows heart rate — the vagal brake",
+              "atropine removes the brake, so heart rate rises",
+              "first-line treatment for symptomatic bradycardia",
+            ],
             "#2F6FED"
           )}
 
-          {isHot("m3") && callout(
-            "m3", 660, 260, 220, 160,
+          {activeStep === 8 && panel(
+            "m3",
             "M3 — SMOOTH MUSCLE & GLANDS",
-            ["Gq-coupled", "bronchoconstriction · gut motility", "salivation · lacrimation · urination", "pupil constriction", "atropine blocks — hence dry mouth,"],
+            [
+              "Gq-coupled",
+              "activation: bronchoconstriction, gut motility,",
+              "salivation, lacrimation, urination, pupil constriction",
+              "atropine blocks them — hence dry mouth,",
+              "constipation, urinary retention, blurred vision",
+            ],
             "#2F8F4E"
           )}
 
-          {isHot("ache") && (
-            <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="660" y="440" width="220" height="150" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
-              <text x="676" y="466" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>ACETYLCHOLINESTERASE</text>
-              <text x="676" y="490" fontSize="10" fontWeight="600" fill="var(--text-2)">hydrolyses ACh → choline + acetate</text>
-              <text x="676" y="508" fontSize="10" fontWeight="600" fill="var(--text-2)">milliseconds — the fastest in the body</text>
-              <text x="676" y="532" fontSize="10.5" fontWeight="700" fill="#C0392B">inhibitors:</text>
-              <text x="676" y="550" fontSize="10" fontWeight="600" fill="var(--text-2)">neostigmine · physostigmine</text>
-              <text x="676" y="566" fontSize="10" fontWeight="600" fill="var(--text-2)">donepezil · organophosphates</text>
-              <text x="676" y="584" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">antidote: atropine + pralidoxime</text>
-            </g>
+          {activeStep === 9 && panel(
+            "ache",
+            "ACETYLCHOLINESTERASE (AChE)",
+            [
+              "hydrolyses acetylcholine → choline + acetate",
+              "milliseconds — one of the fastest enzymes in the body",
+              "inhibited by neostigmine, physostigmine, donepezil",
+              "organophosphates also inhibit it — insecticides, nerve agents",
+              "antidote: atropine + pralidoxime",
+            ],
+            "#F5B93F"
           )}
 
           {activeStep === lastStep && (
-            <text x="450" y="608" textAnchor="middle" fontSize="12.5"
-              fontWeight="700" fill="var(--text)" pointerEvents="none">
-              Same synapse as adrenergic · different transmitter · different receptors · different drugs
+            <text
+              x={450} y={762}
+              textAnchor="middle" fontSize="11.5" fontWeight="600"
+              fill="var(--text-3)" pointerEvents="none"
+            >
+              Same synapse · different transmitter · different receptors · different drugs
             </text>
           )}
-
-
         </svg>
       );
     },
