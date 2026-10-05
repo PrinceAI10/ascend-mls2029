@@ -47,7 +47,7 @@
 // 6. Every completed practical links back to the theory that
 //    covers the errors the student made.
 // ------------------------------------------------------------
-import React from "react";
+import React, { useState } from "react";
 
 // ------------------------------------------------------------------
 // The four bench families. Each is a distinct interaction model,
