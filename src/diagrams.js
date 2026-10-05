@@ -6953,7 +6953,7 @@ export const DIAGRAMS = {
     summary: "Blood is meant to clot - it's the reason you don't bleed out from a paper cut. But clotting becomes dangerous when it happens inside a vessel that's still intact, and it becomes useless when it happens inside a blood sample before the lab can test it. Anticoagulants interfere with the clotting mechanism in both situations. There are three ways to do that: remove the calcium the cascade needs (EDTA, citrate, oxalate), accelerate the body's own inhibitor antithrombin (heparin), or stop the liver from making the vitamin K dependent factors (warfarin). Every anticoagulant you meet - whether given to a patient or sitting inside a blood tube - works through one of those three strategies.",
     labels: [
       { id: "whole",       name: "The Whole Picture",       desc: "Two arenas, three strategies. Anticoagulants protect the patient from dangerous clots, and protect the sample from clotting before testing - using the same underlying mechanisms." },
-      { id: "cascade",     name: "The Clotting Cascade",    desc: "The chain of clotting factors that ends in a fibrin mesh. It depends on calcium ions at several key steps - and that dependency is what most anticoagulants exploit." },
+      { id: "clotting-cascade", name: "The Clotting Cascade", desc: "The chain of clotting factors that ends in a fibrin mesh. It depends on calcium ions at several key steps - and that dependency is what most anticoagulants exploit." },
       { id: "heparin",     name: "Heparin",                 desc: "An indirect anticoagulant given by injection. Binds antithrombin and makes it neutralise thrombin and factor Xa far more quickly. Monitored by the activated partial thromboplastin time. Reversed by protamine." },
       { id: "warfarin",    name: "Warfarin",                desc: "An oral anticoagulant for long-term prevention. Blocks the liver's ability to make vitamin K dependent factors II, VII, IX and X. Monitored by the PT/INR. Reversed by vitamin K." },
       { id: "edta",        name: "EDTA (purple tube)",       desc: "The tube for the full blood count. Chelates calcium so tightly that the cascade stalls irreversibly. Preserves cell morphology exceptionally well - but interferes with calcium and other ion measurements, and can cause platelet clumping." },
@@ -6975,29 +6975,29 @@ export const DIAGRAMS = {
     ],
     stepFocus: [
       // Step 1 is "This is the clotting cascade..." — cascade highlighted.
-      ["cascade"],
+      ["clotting-cascade"],
       // Step 2 is "The whole cascade is a relay..." — cascade stays on.
-      ["cascade"],
+      ["clotting-cascade"],
       // Step 3 is "Look at the red X's... four of these steps have
       // the same requirement: calcium ions." — cascade + the calcium
       // strategy, which the render shows via blockAt="calcium" for
       // this step. Keeping cascade in focus is correct.
-      ["cascade"],
+      ["clotting-cascade"],
       // Step 4 is "Now the X's are gone... This is where heparin acts."
-      ["heparin", "cascade"],
+      ["heparin", "clotting-cascade"],
       // Step 5 is "Here, four factors have faded: II, VII, IX, and X...
       // Warfarin blocks that recycling step."
-      ["warfarin", "cascade"],
+      ["warfarin", "clotting-cascade"],
       // Step 6 is "Now we switch arenas - from the patient to the
       // laboratory... four colour-coded tubes."
       ["whole", "edta", "citrate", "lab-heparin", "oxalate"],
       // Step 7 is "First tube: EDTA, the purple one."
-      ["edta", "cascade"],
+      ["edta", "clotting-cascade"],
       // Step 8 is "Next: citrate, the blue tube."
-      ["citrate", "cascade"],
+      ["citrate", "clotting-cascade"],
       // Step 9 is "The last two tubes are the ones we haven't talked
       // about yet. The green tube is heparin... The grey tube is oxalate."
-      ["lab-heparin", "oxalate", "cascade"],
+      ["lab-heparin", "oxalate", "clotting-cascade"],
       // Step 10 is "And here's the whole picture at once."
       ["whole", "edta", "citrate", "lab-heparin", "oxalate"],
     ],
@@ -7140,7 +7140,7 @@ export const DIAGRAMS = {
           </text>
 
           {/* ---- The clotting cascade, top-left ---- */}
-          <g style={{ cursor: cur }} onClick={click("cascade")} filter={hotFilter("cascade")}>
+          <g style={{ cursor: cur }} onClick={click("clotting-cascade")} filter={hotFilter("clotting-cascade")}>
             {atlasClottingCascade({
               cx: 260, cy: 210, scale: 0.78,
               blockAt,
@@ -7148,7 +7148,7 @@ export const DIAGRAMS = {
               highlight: false,
             })}
             <rect x="20" y="60" width="500" height="350"
-              fill="none" {...ring("cascade")} pointerEvents="none" />
+              fill="none" {...ring("clotting-cascade")} pointerEvents="none" />
           </g>
 
           {/* Cascade region label */}
@@ -8104,7 +8104,6 @@ export const DIAGRAMS = {
       { id: "halflife",    name: "Half-Life & Dosing",      desc: "Time for plasma concentration to fall by half. Sets dosing interval, time to steady state (4-5 half-lives), and time to elimination after stopping." },
     ],
     narration: [
-      "A drug enters the body. Where does it go, and how does it eventually leave? You have learned how a drug acts on its target - pharmacodynamics. But there is an earlier and equally important question: how does the drug get to the target in the first place, and what happens to it afterwards? That is pharmacokinetics - the study of what the body does to the drug.",
       "The pharmacokinetic journey is summarised by four letters: ADME. Absorption is movement of the drug from its site of administration into the bloodstream. Distribution is its subsequent movement from blood into tissues and organs. Metabolism is its chemical modification, primarily in the liver. Excretion is removal of the drug and its metabolites from the body, primarily by the kidneys. Four stages, in that order, for every drug.",
       "The route of administration determines how fast the drug is absorbed and how much reaches the bloodstream. Oral is the most common - absorbed mainly in the small intestine, but the drug must survive stomach acid, cross the gut wall, and pass through the liver before reaching the systemic circulation. Intravenous puts the drug directly into the bloodstream with 100 per cent bioavailability and the fastest onset. Intramuscular absorbs rapidly but not instantly. Subcutaneous absorbs more slowly, which suits insulin and heparin. Sublingual absorbs directly into the bloodstream and bypasses the liver. Rectal is useful when the patient is vomiting or unconscious. Inhaled is fast because the lungs have enormous surface area and rich blood supply. Topical is usually local.",
       "Every movement of a drug through the body involves crossing a membrane. What determines whether it can cross? Lipid-soluble, small, uncharged drugs cross easily - the membrane is itself a lipid bilayer, so a lipophilic drug simply dissolves through. Water-soluble, large, or ionised drugs cannot. Whether a drug is ionised depends on the pH around it relative to its own pKa: a weak acid is more unionised in an acidic environment, a weak base is more unionised in an alkaline one. This is the pH-partition hypothesis. Aspirin, a weak acid, is absorbed partly in the acidic stomach. Morphine, a weak base, is absorbed mainly in the alkaline intestine.",

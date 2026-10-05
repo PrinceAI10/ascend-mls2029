@@ -195,7 +195,7 @@ const LEGEND_VIEWBOXES = {
   portal: "0 0 100 100",
   "whole-end": "0 0 100 100",
   // Blood Anticoagulants
-  cascade: "0 0 100 100",
+  "clotting-cascade": "0 0 100 100",
   heparin: "0 0 100 100",
   warfarin: "0 0 100 100",
   edta: "0 0 100 100",
@@ -1981,7 +1981,7 @@ const LEGEND_SWATCHES = {
   // or concept its tile describes — the clotting cascade, the two
   // therapeutic drugs, and the four laboratory tubes.
 
-  cascade: (active) => (
+  "clotting-cascade": (active) => (
     <g>
       {/* Three columns of small factor boxes, converging: the visual
          shorthand for a cascade with intrinsic and extrinsic routes
@@ -4204,21 +4204,17 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
             style={{
               padding: 0,
               overflow: "hidden",
-              // Explicit, non-collapsing height. Previously `clamp(240px,
-              // 48vh, 560px)` could resolve to 0 on some iOS Safari and
-              // Android Chrome builds when the parent card had no definite
-              // height — the SVG then had nothing to size itself against,
-              // and every diagram "disappeared" at once. `minHeight` here
-              // guarantees the stage is always at least 240px tall, and
-              // `height` uses a plain vh unit as the primary value (with
-              // a clamp as the enhanced value only when the browser
-              // supports it, via the second declaration).
+              // Explicit, non-collapsing height. minHeight guarantees the
+              // stage is always at least 240px tall on mobile. Fullscreen
+              // drops the height/maxHeight caps entirely and uses 100dvh
+              // via the .atlas-stage-fullscreen class.
               height: fullscreen ? undefined : "48vh",
               minHeight: fullscreen ? undefined : 240,
               maxHeight: fullscreen ? undefined : 560,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              // No flex centring here. The SVG wrapper below uses its own
+              // absolute-positioned box and letterboxes itself. Flex
+              // centring on this element was fighting the absolute wrapper
+              // and drifting the visual centre under pan/zoom.
               position: "relative",
             }}
             onPointerDown={onPointerDown}
@@ -4284,22 +4280,18 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
                 transform: `translate(${panX}px, ${panY}px) scale(${zoom})`,
                 transformOrigin: "center center",
                 transition: dragRef.current ? "none" : "transform 0.15s ease-out",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                // position:absolute + inset:0 guarantees this wrapper has a
-                // definite, non-collapsing box to sit inside, no matter how
-                // the flex parent resolves its own height. Combined with the
-                // stage's explicit minHeight above, the SVG always has a
-                // real box to scale against, on every browser we've tested.
+                // Absolutely positioned to fill the stage. The SVG inside
+                // sizes itself against this definite box. No flex - flex
+                // centring here fought the pan/zoom transform and caused
+                // the visual centre to drift when zoomed.
                 position: "absolute",
                 inset: 0,
-                // minWidth/minHeight of 0 lets the SVG shrink inside a flex
-                // container without the browser falling back to the SVG's
-                // intrinsic size — this is what caused the "diagram too big
-                // on mobile / nothing renders at all" seesaw.
-                minWidth: 0,
-                minHeight: 0,
+                // Explicit width/height so the SVG's width="100%" height=
+                // "100%" has a definite parent to resolve against, on
+                // every browser. Without these, some mobile builds
+                // collapse the wrapper to zero and the diagram vanishes.
+                width: "100%",
+                height: "100%",
                 willChange: "transform",
                 cursor: "grab",
                 opacity: painted ? 1 : 0,
