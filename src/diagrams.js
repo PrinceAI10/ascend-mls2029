@@ -41,7 +41,131 @@ if (typeof document !== "undefined" && !document.getElementById("atlas-drift-key
       [style*="atlasDrift"] { animation: none !important; }
     }
   `;
-  document.head.appendChild(style);
+    document.head.appendChild(style);
+}
+
+/* ---------------------------------------------------------------- */
+/* useReveal — progressive build-up helper                          */
+/*                                                                  */
+/* A plain function, not a React hook: no state, no effects, no     */
+/* dependencies. Named `use...` so callers know it belongs at the   */
+/* top of a diagram's render body.                                  */
+/*                                                                  */
+/* Usage inside a diagram's render:                                 */
+/*                                                                  */
+/*   const reveal = useReveal(activeStep, preview, {                */
+/*     cmp: 0, gmp: 1, mep: 1, gran: 3, mono: 3, mega: 5,           */
+/*   });                                                            */
+/*   {reveal("gmp") && atlasProgenitor({ ... })}                    */
+/*                                                                  */
+/* Any id not in the map is treated as "always visible" (threshold  */
+/* 0). In preview mode every element is visible, so the thumbnail   */
+/* reads as the completed diagram.                                  */
+/*                                                                  */
+/* A copy of this function also lives in AtlasView.jsx, where it    */
+/* is exported for reference — but AtlasView imports from this      */
+/* module, so this module cannot import it back. Keeping the         */
+/* definition here is what avoids a circular dependency.            */
+/* ---------------------------------------------------------------- */
+function useReveal(activeStep, preview, map = {}) {
+  return (id) => {
+    if (preview) return true;
+    const threshold = map[id] ?? 0;
+    return activeStep >= threshold;
+  };
+}
+
+/* ---------------------------------------------------------------- */
+/* useReveal — progressive build-up helper                          */
+/*                                                                  */
+/* A plain function, not a React hook: no state, no effects, no     */
+/* dependencies. Named `use...` so callers know it belongs at the   */
+/* top of a diagram's render body.                                  */
+/*                                                                  */
+/* Usage inside a diagram's render:                                 */
+/*                                                                  */
+/*   const reveal = useReveal(activeStep, preview, {                */
+/*     cmp: 0, gmp: 1, mep: 1, gran: 3, mono: 3, mega: 5,           */
+/*   });                                                            */
+/*   {reveal("gmp") && atlasProgenitor({ ... })}                    */
+/*                                                                  */
+/* Any id not in the map is treated as "always visible" (threshold  */
+/* 0). In preview mode every element is visible, so the thumbnail   */
+/* reads as the completed diagram.                                  */
+/*                                                                  */
+/* A copy of this function also lives in AtlasView.jsx, where it    */
+/* is exported for reference — but AtlasView imports from this      */
+/* module, so this module cannot import it back. Keeping the         */
+/* definition here is what avoids a circular dependency.            */
+/* ---------------------------------------------------------------- */
+function useReveal(activeStep, preview, map = {}) {
+  return (id) => {
+    if (preview) return true;
+    const threshold = map[id] ?? 0;
+    return activeStep >= threshold;
+  };
+}
+
+/* ---------------------------------------------------------------- */
+/* useReveal — progressive build-up helper                          */
+/*                                                                  */
+/* A plain function, not a React hook: no state, no effects, no     */
+/* dependencies. Named `use...` so callers know it belongs at the   */
+/* top of a diagram's render body.                                  */
+/*                                                                  */
+/* Usage inside a diagram's render:                                 */
+/*                                                                  */
+/*   const reveal = useReveal(activeStep, preview, {                */
+/*     cmp: 0, gmp: 1, mep: 1, gran: 3, mono: 3, mega: 5,           */
+/*   });                                                            */
+/*   {reveal("gmp") && atlasProgenitor({ ... })}                    */
+/*                                                                  */
+/* Any id not in the map is treated as "always visible" (threshold  */
+/* 0). In preview mode every element is visible, so the thumbnail   */
+/* reads as the completed diagram.                                  */
+/*                                                                  */
+/* A copy of this function also lives in AtlasView.jsx, where it    */
+/* is exported for reference — but AtlasView imports from this      */
+/* module, so this module cannot import it back. Keeping the         */
+/* definition here is what avoids a circular dependency.            */
+/* ---------------------------------------------------------------- */
+function useReveal(activeStep, preview, map = {}) {
+  return (id) => {
+    if (preview) return true;
+    const threshold = map[id] ?? 0;
+    return activeStep >= threshold;
+  };
+}
+
+/* ---------------------------------------------------------------- */
+/* useReveal — progressive build-up helper                          */
+/*                                                                  */
+/* A plain function, not a React hook: no state, no effects, no     */
+/* dependencies. Named `use...` so callers know it belongs at the   */
+/* top of a diagram's render body.                                  */
+/*                                                                  */
+/* Usage inside a diagram's render:                                 */
+/*                                                                  */
+/*   const reveal = useReveal(activeStep, preview, {                */
+/*     cmp: 0, gmp: 1, mep: 1, gran: 3, mono: 3, mega: 5,           */
+/*   });                                                            */
+/*   {reveal("gmp") && atlasProgenitor({ ... })}                    */
+/*                                                                  */
+/* Any id not in the map is treated as "always visible" (threshold  */
+/* 0). In preview mode every element is visible, so the thumbnail   */
+/* reads as the completed diagram.                                  */
+/*                                                                  */
+/* A copy of this function also lives in AtlasView.jsx, where it    */
+/* is exported for reference — but AtlasView imports from this      */
+/* module, so this module cannot import it back. Keeping the         */
+/* definition here is what avoids a circular dependency.            */
+/* ---------------------------------------------------------------- */
+function useReveal(activeStep, preview, map = {}) {
+  return (id) => {
+    if (preview) return true;
+    const threshold = map[id] ?? 0;
+    return activeStep >= threshold;
+  };
 }
 
 // Small, deliberately limited palette on top of the app's existing
@@ -3519,15 +3643,16 @@ export const DIAGRAMS = {
       const pulsing = (id) => !preview && focus.includes(id);
 
       // Progressive reveal — each row of the tree appears when the
-      // narration first names it, then stays. In preview, everything
-      // is shown so the thumbnail reads as the full tree.
-      const s = preview ? 99 : activeStep;
-
-      const showGMP        = s >= 1;
-      const showMEP        = s >= 1;
-      const showGranulocytes = s >= 3;
-      const showMonocytes  = s >= 3;
-      const showMega       = s >= 5;
+      // narration first names it, then stays. Map keys are the same
+      // ids used by stepFocus and by the atlasProgenitor calls below.
+      const reveal = useReveal(activeStep, preview, {
+        cmp: 0,
+        gmp: 1,
+        mep: 1,
+        gran: 3,
+        mono: 3,
+        mega: 5,
+      });
 
       // Cell positions — chosen so the flow reads top-to-bottom without
       // the connecting lines overlapping any of the labels. The r values
@@ -3543,11 +3668,11 @@ export const DIAGRAMS = {
       return (
         <svg viewBox="0 0 900 380" width="100%" height="100%">
           {/* Connector lines appear with their child cells. */}
-          {showGMP && atlasLine(cmpC.cx,  cmpC.cy  + 40, gmpC.cx,  gmpC.cy  - 40)}
-          {showMEP && atlasLine(cmpC.cx,  cmpC.cy  + 40, mepC.cx,  mepC.cy  - 40)}
-          {showGranulocytes && atlasLine(gmpC.cx,  gmpC.cy  + 40, granC.cx, granC.cy - 40)}
-          {showMonocytes && atlasLine(gmpC.cx,  gmpC.cy  + 40, monoC.cx, monoC.cy - 40)}
-          {showMega && atlasLine(mepC.cx,  mepC.cy  + 40, megaC.cx, megaC.cy - 40)}
+          {reveal("gmp") && atlasLine(cmpC.cx,  cmpC.cy  + 40, gmpC.cx,  gmpC.cy  - 40)}
+          {reveal("mep") && atlasLine(cmpC.cx,  cmpC.cy  + 40, mepC.cx,  mepC.cy  - 40)}
+          {reveal("gran") && atlasLine(gmpC.cx,  gmpC.cy  + 40, granC.cx, granC.cy - 40)}
+          {reveal("mono") && atlasLine(gmpC.cx,  gmpC.cy  + 40, monoC.cx, monoC.cy - 40)}
+          {reveal("mega") && atlasLine(mepC.cx,  mepC.cy  + 40, megaC.cx, megaC.cy - 40)}
 
           {/* CMP — the trunk progenitor, always on screen. */}
           {atlasProgenitor({
@@ -3557,7 +3682,7 @@ export const DIAGRAMS = {
           })}
 
           {/* GMP — appears when the CMP is described as splitting. */}
-          {showGMP && atlasProgenitor({
+          {reveal("gmp") && atlasProgenitor({
             id: "gmp", cx: gmpC.cx, cy: gmpC.cy, r: 38, lineage: "trunk",
             label: "GMP", sub: "granulocyte-monocyte",
             onLabelClick, activeLabelId, pulsing: pulsing("gmp"), preview,
@@ -3565,7 +3690,7 @@ export const DIAGRAMS = {
 
           {/* MEP — same moment as GMP. Has the drill-down indicator
               because it opens the erythroid child. */}
-          {showMEP && atlasProgenitor({
+          {reveal("mep") && atlasProgenitor({
             id: "mep", cx: mepC.cx, cy: mepC.cy, r: 38, lineage: "erythroid",
             label: "MEP", sub: "megakaryocyte-erythroid",
             onLabelClick, activeLabelId, pulsing: pulsing("mep"),
@@ -3574,7 +3699,7 @@ export const DIAGRAMS = {
 
           {/* Granulocytes — appear when the narration reaches the
               "fast-responding innate cells" beat. */}
-          {showGranulocytes && (
+          {reveal("gran") && (
             <g onClick={preview ? undefined : () => onLabelClick("gran")} style={{ cursor: preview ? "default" : "pointer" }} className={pulsing("gran") ? "atlas-pulse" : ""}>
               {atlasWhiteCell({ cx: granC.cx - 20, cy: granC.cy - 4,  r: 15 })}
               {atlasWhiteCell({ cx: granC.cx + 16, cy: granC.cy - 10, r: 14 })}
@@ -3585,7 +3710,7 @@ export const DIAGRAMS = {
           )}
 
           {/* Monocytes — appear at the same time as granulocytes. */}
-          {showMonocytes && (
+          {reveal("mono") && (
             <g onClick={preview ? undefined : () => onLabelClick("mono")} style={{ cursor: preview ? "default" : "pointer" }} className={pulsing("mono") ? "atlas-pulse" : ""}>
               <circle cx={monoC.cx} cy={monoC.cy} r="22" fill="#F8F4EE" stroke={ATLAS_COLORS.trunk} strokeWidth="1.6" filter="url(#atlas-shadow)" />
               <path
@@ -3602,7 +3727,7 @@ export const DIAGRAMS = {
 
           {/* Megakaryocytes — appear when the narration describes the
               MEP splitting into the platelet line. */}
-          {showMega && (
+          {reveal("mega") && (
             <g onClick={preview ? undefined : () => onLabelClick("mega")} style={{ cursor: preview ? "default" : "pointer" }} className={pulsing("mega") ? "atlas-pulse" : ""}>
               <circle cx={megaC.cx} cy={megaC.cy} r="30" fill="url(#atlas-grad-erythroid)" stroke="#8C1C12" strokeWidth="1.6" filter="url(#atlas-shadow)" />
               {[[-8, -6], [6, -8], [0, 6], [10, 4], [-10, 8]].map(([dx, dy], i) => (
@@ -4731,7 +4856,7 @@ export const DIAGRAMS = {
       ["types"],
     ],
     viewBox: "0 0 900 620",
-    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+        render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pat:acute-inflammation"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -4744,11 +4869,6 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
-      // The scene in the centre of the diagram evolves as the student
-      // steps through the narration — each stage of the response
-      // toggles one of the scene's boolean props on. This mirrors how
-      // the Cardiovascular and Lymphatic diagrams build up their
-      // overlays step by step.
       const scene = {
         vasodilation: activeStep >= 2,
         permeability: activeStep >= 3,
@@ -4759,8 +4879,10 @@ export const DIAGRAMS = {
 
       return (
         <svg viewBox="0 0 900 620" width="100%" height="100%">
-          {/* The evolving tissue scene — the centrepiece. Everything
-             else (labels, insets, callouts) hangs off this. */}
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">Acute Inflammation</text>
+
+          {/* ---- The evolving tissue scene ---- */}
           <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
             {atlasInflammationScene({
               cx: 450, cy: 320, width: 520, height: 300,
@@ -4769,114 +4891,107 @@ export const DIAGRAMS = {
             })}
           </g>
 
-          {/* Trigger — a spiky threat particle entering the tissue from
-             the top-left, only drawn prominently on its own step. */}
+          {/* Trigger */}
           <g style={{ cursor: cur }} onClick={click("trigger")} filter={hotFilter("trigger")}>
             <path
               d="M240,150 l8,-12 l6,12 l12,2 l-8,10 l2,12 l-12,-4 l-10,8 l0,-12 l-10,-8 l12,-6 z"
               fill="#C0392B"
               stroke="#8C1C12"
-              strokeWidth="1.4"
-              opacity={isHot("trigger") ? 1 : 0.55}
+              strokeWidth="1.6"
+              opacity={isHot("trigger") ? 1 : 0.75}
             />
-            <text x="260" y="185" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text-2)">injury / infection</text>
+            <text x="260" y="188" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="var(--text)">injury / infection</text>
             <circle cx="450" cy="320" r="260" fill="none" {...ring("whole")} pointerEvents="none" />
           </g>
 
           {/* Vasodilation label anchor */}
           <g style={{ cursor: cur }} onClick={click("vasodilation")} filter={hotFilter("vasodilation")}>
             <circle cx="260" cy="440" r="60" fill="none" {...ring("vasodilation")} pointerEvents="none" />
-            <text x="260" y="530" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text-2)">vasodilation</text>
+            <text x="260" y="530" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="var(--text)">vasodilation</text>
           </g>
 
           {/* Permeability label anchor */}
           <g style={{ cursor: cur }} onClick={click("permeability")} filter={hotFilter("permeability")}>
             <circle cx="450" cy="470" r="50" fill="none" {...ring("permeability")} pointerEvents="none" />
-            <text x="450" y="555" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text-2)">permeability</text>
+            <text x="450" y="555" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="var(--text)">permeability</text>
           </g>
 
           {/* Recruitment label anchor */}
           <g style={{ cursor: cur }} onClick={click("recruitment")} filter={hotFilter("recruitment")}>
             <circle cx="640" cy="440" r="60" fill="none" {...ring("recruitment")} pointerEvents="none" />
-            <text x="640" y="530" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text-2)">cell recruitment</text>
+            <text x="640" y="530" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="var(--text)">cell recruitment</text>
           </g>
 
           {/* Phagocytosis label anchor */}
           <g style={{ cursor: cur }} onClick={click("phagocytosis")} filter={hotFilter("phagocytosis")}>
             <circle cx="380" cy="220" r="55" fill="none" {...ring("phagocytosis")} pointerEvents="none" />
-            <text x="380" y="165" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text-2)">phagocytosis</text>
+            <text x="380" y="165" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="var(--text)">phagocytosis</text>
           </g>
 
-          {/* Mediators inset — a small panel listing the four main
-             mediator families, drawn only when its step is active. */}
+          {/* Mediators inset */}
           {isHot("mediators") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <path
                 d="M700,250 Q720,270 720,300"
                 fill="none"
                 stroke={ATLAS_COLORS.trunk}
-                strokeWidth="1.5"
+                strokeWidth="1.8"
                 strokeDasharray="4 4"
-                opacity="0.85"
+                opacity="0.95"
               />
-              <rect x="690" y="120" width="180" height="110" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="780" y="142" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>CHEMICAL MEDIATORS</text>
-              <text x="780" y="162" textAnchor="middle" fontSize="9" fill="var(--text-2)">histamine</text>
-              <text x="780" y="178" textAnchor="middle" fontSize="9" fill="var(--text-2)">prostaglandins</text>
-              <text x="780" y="194" textAnchor="middle" fontSize="9" fill="var(--text-2)">cytokines</text>
-              <text x="780" y="210" textAnchor="middle" fontSize="9" fill="var(--text-2)">complement</text>
+              <rect x="690" y="120" width="180" height="120" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="780" y="144" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>CHEMICAL MEDIATORS</text>
+              <text x="780" y="166" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">histamine</text>
+              <text x="780" y="183" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">prostaglandins</text>
+              <text x="780" y="200" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">cytokines</text>
+              <text x="780" y="217" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">complement</text>
             </g>
           )}
 
-          {/* Cardinal signs inset — the four classic signs of acute
-             inflammation, shown as a labelled panel. */}
+          {/* Cardinal signs inset */}
           {isHot("signs") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="120" width="180" height="120" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="150" y="142" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">CARDINAL SIGNS</text>
+              <rect x="60" y="120" width="180" height="130" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="150" y="144" textAnchor="middle" fontSize="12" fontWeight="800" fill="#C0392B">CARDINAL SIGNS</text>
               {[
-                { sym: "redness",   y: 162 },
-                { sym: "heat",      y: 180 },
-                { sym: "swelling",  y: 198 },
-                { sym: "pain",      y: 216 },
+                { sym: "redness",   y: 168 },
+                { sym: "heat",      y: 186 },
+                { sym: "swelling",  y: 204 },
+                { sym: "pain",      y: 222 },
               ].map((s, i) => (
-                <text key={i} x="150" y={s.y} textAnchor="middle" fontSize="9" fill="var(--text-2)">{s.sym}</text>
+                <text key={i} x="150" y={s.y} textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">{s.sym}</text>
               ))}
-              <text x="150" y="234" textAnchor="middle" fontSize="7.5" fill="var(--text-3)">+ loss of function</text>
+              <text x="150" y="242" textAnchor="middle" fontSize="9" fontStyle="italic" fill="var(--text-2)">+ loss of function</text>
             </g>
           )}
 
-          {/* Resolution indicator — a green outline appears around the
-             scene once step 9 is reached. Not a box, just a soft ring. */}
+          {/* Resolution ring */}
           {isHot("resolution") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <circle
                 cx="450" cy="320" r="230"
-                fill="none" stroke="#16A34A" strokeWidth="3"
+                fill="none" stroke="#16A34A" strokeWidth="3.5"
                 strokeDasharray="8 6"
-                opacity="0.75"
+                opacity="0.9"
               />
-              <text x="450" y="585" textAnchor="middle" fontSize="11" fontWeight="700" fill="#16A34A">tissue returns to normal</text>
+              <text x="450" y="585" textAnchor="middle" fontSize="12" fontWeight="800" fill="#16A34A">tissue returns to normal</text>
             </g>
           )}
 
-          {/* Types inset — acute vs chronic comparison, shown on the
-             final narration step. */}
+          {/* Types inset */}
           {isHot("types") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="700" y="400" width="180" height="120" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="790" y="422" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>ACUTE vs CHRONIC</text>
-              <text x="790" y="446" textAnchor="middle" fontSize="9" fontWeight="700" fill="#C0392B">Acute</text>
-              <text x="790" y="460" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">minutes to days</text>
-              <text x="790" y="474" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">neutrophils dominate</text>
-              <text x="790" y="494" textAnchor="middle" fontSize="9" fontWeight="700" fill="#8B5CF6">Chronic</text>
-              <text x="790" y="508" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">weeks to months</text>
+              <rect x="700" y="400" width="180" height="125" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="790" y="424" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>ACUTE vs CHRONIC</text>
+              <text x="790" y="450" textAnchor="middle" fontSize="10.5" fontWeight="800" fill="#C0392B">Acute</text>
+              <text x="790" y="466" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">minutes to days</text>
+              <text x="790" y="482" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">neutrophils dominate</text>
+              <text x="790" y="502" textAnchor="middle" fontSize="10.5" fontWeight="800" fill="#8B5CF6">Chronic</text>
+              <text x="790" y="518" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">weeks to months</text>
             </g>
           )}
 
-          {/* Static region labels */}
-          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Tissue</text>
-          <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Fast, general, self-limiting — unless the trigger persists</text>
+          <text x="450" y="610" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Fast, general, self-limiting — unless the trigger persists</text>
         </svg>
       );
     },
@@ -4935,7 +5050,7 @@ export const DIAGRAMS = {
       ["scar"],
     ],
     viewBox: "0 0 900 620",
-    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+        render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pat:wound-healing"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -4948,10 +5063,6 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
-      // The scene evolves as the narration runs. The four boolean
-      // props on atlasWoundScene toggle on as the phase is reached,
-      // so the same tissue patch visually goes from open wound to
-      // clot to inflamed to granulating to scarred.
       const scene = {
         hemostasis:    activeStep >= 1,
         inflammation:  activeStep >= 2,
@@ -4961,8 +5072,10 @@ export const DIAGRAMS = {
 
       return (
         <svg viewBox="0 0 900 620" width="100%" height="100%">
-          {/* The evolving wound scene — the centrepiece. Everything
-             else (labels, insets, callouts) hangs off this. */}
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">Wound Healing</text>
+
+          {/* The evolving wound scene */}
           <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
             {atlasWoundScene({
               cx: 450, cy: 320, width: 520, height: 300,
@@ -4971,51 +5084,49 @@ export const DIAGRAMS = {
             })}
           </g>
 
-          {/* Hemostasis anchor — a small callout pointing at the clot
-             inside the wound, only shown on its own step. */}
+          {/* Hemostasis callout */}
           {isHot("hemostasis") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <path
                 d="M340,240 Q300,200 260,180"
                 fill="none"
                 stroke={ATLAS_COLORS.trunk}
-                strokeWidth="1.5"
+                strokeWidth="1.8"
                 strokeDasharray="4 4"
-                opacity="0.85"
+                opacity="0.95"
               />
-              <circle cx="340" cy="240" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="90" y="130" width="170" height="70" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="175" y="155" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>CLOT FORMATION</text>
-              <text x="175" y="173" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">platelets + fibrin mesh</text>
-              <text x="175" y="188" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">scaffold for repair</text>
+              <circle cx="340" cy="240" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="60" y="60" width="190" height="90" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="155" y="84" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>CLOT FORMATION</text>
+              <text x="155" y="106" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">platelets + fibrin mesh</text>
+              <text x="155" y="122" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">scaffold for repair</text>
+              <text x="155" y="140" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">the wound's first phase</text>
             </g>
           )}
 
-          {/* Inflammation label anchor — the diagram's scene already
-             draws the swarming neutrophils, this just labels them. */}
+          {/* Inflammation label anchor */}
           <g style={{ cursor: cur }} onClick={click("inflammation")} filter={hotFilter("inflammation")}>
             <circle cx="620" cy="215" r="55" fill="none" {...ring("inflammation")} pointerEvents="none" />
-            <text x="620" y="160" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--text-2)">neutrophils arrive</text>
+            <text x="620" y="160" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="var(--text)">neutrophils arrive</text>
           </g>
 
-          {/* Macrophage anchor — bottom-right, drawn only when its step
-             is active so the scene doesn't get too busy. */}
+          {/* Macrophage callout */}
           {isHot("macrophages") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <path
                 d="M620,400 Q660,420 700,440"
                 fill="none"
                 stroke={ATLAS_COLORS.trunk}
-                strokeWidth="1.5"
+                strokeWidth="1.8"
                 strokeDasharray="4 4"
-                opacity="0.85"
+                opacity="0.95"
               />
-              <circle cx="620" cy="400" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="690" y="415" width="180" height="80" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="780" y="440" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>MACROPHAGES</text>
-              <text x="780" y="458" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">eat debris and dead</text>
-              <text x="780" y="472" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">neutrophils; then signal</text>
-              <text x="780" y="486" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">the next phase</text>
+              <circle cx="620" cy="400" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="720" y="60" width="160" height="100" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="800" y="84" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>MACROPHAGES</text>
+              <text x="800" y="104" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">eat debris and dead</text>
+              <text x="800" y="119" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">neutrophils; then signal</text>
+              <text x="800" y="134" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">the next phase</text>
             </g>
           )}
 
@@ -5029,84 +5140,83 @@ export const DIAGRAMS = {
                 d="M380,400 Q340,440 300,470"
                 fill="none"
                 stroke={ATLAS_COLORS.trunk}
-                strokeWidth="1.5"
+                strokeWidth="1.8"
                 strokeDasharray="4 4"
-                opacity="0.85"
+                opacity="0.95"
               />
-              <circle cx="380" cy="400" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="120" y="465" width="180" height="70" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="210" y="490" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>GRANULATION TISSUE</text>
-              <text x="210" y="508" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">new capillaries + fibroblasts</text>
-              <text x="210" y="523" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">+ loose connective tissue</text>
+              <circle cx="380" cy="400" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="60" y="490" width="200" height="86" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="160" y="514" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>GRANULATION TISSUE</text>
+              <text x="160" y="534" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">new capillaries + fibroblasts</text>
+              <text x="160" y="550" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">+ loose connective tissue</text>
+              <text x="160" y="568" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">fills the wound from the edges</text>
             </g>
           )}
 
-          {/* Angiogenesis callout — small loops drawn over the wound
-             area, only when its step is active. */}
+          {/* Angiogenesis callout */}
           {isHot("angiogenesis") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="700" y="130" width="160" height="70" rx="12" fill="var(--bg-2)" stroke="#E53935" strokeWidth="2" />
-              <text x="780" y="155" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#E53935">ANGIOGENESIS</text>
-              <text x="780" y="173" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">new capillaries</text>
-              <text x="780" y="188" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">restore blood supply</text>
+              <rect x="720" y="60" width="160" height="90" rx="12" fill="var(--bg-2)" stroke="#E53935" strokeWidth="2.4" />
+              <text x="800" y="84" textAnchor="middle" fontSize="12" fontWeight="800" fill="#E53935">ANGIOGENESIS</text>
+              <text x="800" y="104" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">new capillaries</text>
+              <text x="800" y="120" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">restore blood supply</text>
+              <text x="800" y="138" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">feeds the new tissue</text>
             </g>
           )}
 
-          {/* Fibroblasts / collagen callout */}
+          {/* Fibroblasts callout */}
           {isHot("fibroblasts") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="700" y="130" width="160" height="70" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
-              <text x="780" y="155" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">FIBROBLASTS</text>
-              <text x="780" y="173" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">lay down collagen</text>
-              <text x="780" y="188" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">strengthens the wound</text>
+              <rect x="720" y="60" width="160" height="90" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2.4" />
+              <text x="800" y="84" textAnchor="middle" fontSize="12" fontWeight="800" fill="#8B5CF6">FIBROBLASTS</text>
+              <text x="800" y="104" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">lay down collagen</text>
+              <text x="800" y="120" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">strengthens the wound</text>
+              <text x="800" y="138" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">the structural protein</text>
             </g>
           )}
 
-          {/* Epithelialisation — a top-of-wound indicator, only when
-             its step is active. */}
+          {/* Epithelialisation indicator */}
           {isHot("epithelialisation") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <path
                 d="M400,280 L500,280"
                 stroke="#D89B14"
-                strokeWidth="5"
+                strokeWidth="5.5"
                 strokeLinecap="round"
                 strokeDasharray="10 4"
               />
-              <polygon points="500,280 494,276 494,284" fill="#D89B14" />
-              <polygon points="400,280 406,276 406,284" fill="#D89B14" />
-              <text x="450" y="270" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#D89B14">epithelialisation</text>
-              <text x="450" y="258" textAnchor="middle" fontSize="8" fill="var(--text-2)">skin cells close the surface</text>
+              <polygon points="500,280 494,275 494,285" fill="#D89B14" />
+              <polygon points="400,280 406,275 406,285" fill="#D89B14" />
+              <text x="450" y="270" textAnchor="middle" fontSize="12" fontWeight="800" fill="#D89B14">epithelialisation</text>
+              <text x="450" y="256" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">skin cells close the surface</text>
             </g>
           )}
 
-          {/* Contraction callout — arrows pulling the wound edges in. */}
+          {/* Contraction callout */}
           {isHot("contraction") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <path d="M300,320 L360,320" stroke="#C0392B" strokeWidth="3" strokeLinecap="round" />
-              <polygon points="360,320 353,316 353,324" fill="#C0392B" />
-              <path d="M600,320 L540,320" stroke="#C0392B" strokeWidth="3" strokeLinecap="round" />
-              <polygon points="540,320 547,316 547,324" fill="#C0392B" />
-              <text x="450" y="345" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">contraction</text>
-              <text x="450" y="360" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">myofibroblasts pull the edges in</text>
+              <path d="M300,320 L360,320" stroke="#C0392B" strokeWidth="3.5" strokeLinecap="round" />
+              <polygon points="360,320 353,315 353,325" fill="#C0392B" />
+              <path d="M600,320 L540,320" stroke="#C0392B" strokeWidth="3.5" strokeLinecap="round" />
+              <polygon points="540,320 547,315 547,325" fill="#C0392B" />
+              <text x="450" y="345" textAnchor="middle" fontSize="12" fontWeight="800" fill="#C0392B">contraction</text>
+              <text x="450" y="362" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">myofibroblasts pull the edges in</text>
             </g>
           )}
 
-          {/* Scar maturation callout — final phase. */}
+          {/* Mature scar callout */}
           {isHot("scar") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="700" y="380" width="170" height="90" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="785" y="405" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>MATURE SCAR</text>
-              <text x="785" y="423" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">collagen reorganised</text>
-              <text x="785" y="437" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">blood vessels recede</text>
-              <text x="785" y="451" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">tissue pale and firm</text>
-              <text x="785" y="465" textAnchor="middle" fontSize="8" fill="var(--text-3)">strong, but not original</text>
+              <rect x="720" y="490" width="170" height="100" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="805" y="514" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>MATURE SCAR</text>
+              <text x="805" y="534" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">collagen reorganised</text>
+              <text x="805" y="549" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">blood vessels recede</text>
+              <text x="805" y="564" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">tissue pale and firm</text>
+              <text x="805" y="580" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">strong, but not original</text>
             </g>
           )}
 
-          {/* Static region labels */}
-          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Skin / tissue</text>
-          <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Five overlapping phases — clot, inflame, build, close, remodel</text>
+          <text x="450" y="610" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Five overlapping phases — clot, inflame, build, close, remodel</text>
         </svg>
       );
     },
@@ -5169,7 +5279,7 @@ export const DIAGRAMS = {
       ["contrast"],
     ],
     viewBox: "0 0 900 620",
-    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+        render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pat:chronic-inflammation"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -5182,10 +5292,6 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
-      // The scene shows the chronic infiltrate once we reach the cell-
-      // change step, and stays visible after. The vessel stays visible
-      // but is not the focus any more — in chronic inflammation it's
-      // the tissue that matters, not the blood vessels.
       const scene = {
         vasodilation: activeStep >= 2,
         permeability: activeStep >= 2,
@@ -5197,8 +5303,10 @@ export const DIAGRAMS = {
 
       return (
         <svg viewBox="0 0 900 620" width="100%" height="100%">
-          {/* The evolving tissue scene — macrophages and lymphocytes
-             infiltrate the tissue as the narration runs. */}
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">Chronic Inflammation</text>
+
+          {/* The evolving tissue scene */}
           <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
             {atlasInflammationScene({
               cx: 450, cy: 320, width: 540, height: 320,
@@ -5207,135 +5315,127 @@ export const DIAGRAMS = {
             })}
           </g>
 
-          {/* Trigger callout — top-left, only on its own step. */}
+          {/* Trigger callout */}
           {isHot("trigger") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="100" width="200" height="90" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="160" y="125" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">PERSISTENT TRIGGER</text>
-              <text x="160" y="145" textAnchor="middle" fontSize="9" fill="var(--text-2)">chronic infection</text>
-              <text x="160" y="160" textAnchor="middle" fontSize="9" fill="var(--text-2)">foreign body</text>
-              <text x="160" y="175" textAnchor="middle" fontSize="9" fill="var(--text-2)">autoimmune target</text>
+              <rect x="55" y="60" width="200" height="100" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="155" y="86" textAnchor="middle" fontSize="12" fontWeight="800" fill="#C0392B">PERSISTENT TRIGGER</text>
+              <text x="155" y="108" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">chronic infection</text>
+              <text x="155" y="124" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">foreign body</text>
+              <text x="155" y="140" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">autoimmune target</text>
             </g>
           )}
 
-          {/* Cells callout — right side, comparison of cell types. */}
+          {/* Cells callout */}
           {isHot("cells") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="670" y="100" width="200" height="120" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="770" y="125" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>THE CELL CHANGE</text>
-              <text x="770" y="146" textAnchor="middle" fontSize="9" fill="var(--text-2)">Acute: neutrophils</text>
-              <text x="770" y="162" textAnchor="middle" fontSize="9" fill="var(--text-2)">Chronic: macrophages</text>
-              <text x="770" y="178" textAnchor="middle" fontSize="9" fill="var(--text-2)">+ lymphocytes</text>
-              <text x="770" y="200" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">slower, longer-lived cells</text>
+              <rect x="700" y="60" width="180" height="135" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="790" y="86" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>THE CELL CHANGE</text>
+              <text x="790" y="108" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">Acute: neutrophils</text>
+              <text x="790" y="124" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">Chronic: macrophages</text>
+              <text x="790" y="140" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">+ lymphocytes</text>
+              <text x="790" y="162" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">slower, longer-lived cells</text>
             </g>
           )}
 
           {/* Macrophages callout */}
           {isHot("macrophages") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <path
-                d="M680,440 Q640,440 620,440"
-                fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
-                strokeDasharray="4 4" opacity="0.85"
-              />
-              <circle cx="620" cy="440" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="730" y="60" width="160" height="90" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
-              <text x="810" y="84" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">MACROPHAGES</text>
-              <text x="810" y="102" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">the dominant cell of</text>
-              <text x="810" y="116" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">chronic inflammation</text>
-              <text x="810" y="138" textAnchor="middle" fontSize="8" fontStyle="italic" fill="var(--text-3)">cycle never closes</text>
+              <path d="M680,440 Q660,440 640,440" fill="none"
+                stroke={ATLAS_COLORS.trunk} strokeWidth="1.8"
+                strokeDasharray="4 4" opacity="0.95" />
+              <circle cx="640" cy="440" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="700" y="60" width="180" height="135" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2.4" />
+              <text x="790" y="86" textAnchor="middle" fontSize="12" fontWeight="800" fill="#8B5CF6">MACROPHAGES</text>
+              <text x="790" y="108" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">the dominant cell of</text>
+              <text x="790" y="124" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">chronic inflammation</text>
+              <text x="790" y="146" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">cycle never closes</text>
             </g>
           )}
 
           {/* Lymphocytes callout */}
           {isHot("lymphocytes") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <path
-                d="M680,540 Q640,540 620,530"
-                fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
-                strokeDasharray="4 4" opacity="0.85"
-              />
-              <circle cx="620" cy="530" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="730" y="170" width="160" height="90" rx="12" fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2" />
-              <text x="810" y="194" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#5B21B6">LYMPHOCYTES</text>
-              <text x="810" y="212" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">T and B cells accumulate</text>
-              <text x="810" y="226" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">ongoing adaptive response</text>
-              <text x="810" y="248" textAnchor="middle" fontSize="8" fontStyle="italic" fill="var(--text-3)">sometimes against self</text>
+              <path d="M680,540 Q660,540 640,530" fill="none"
+                stroke={ATLAS_COLORS.trunk} strokeWidth="1.8"
+                strokeDasharray="4 4" opacity="0.95" />
+              <circle cx="640" cy="530" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="700" y="210" width="180" height="135" rx="14" fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2.4" />
+              <text x="790" y="236" textAnchor="middle" fontSize="12" fontWeight="800" fill="#5B21B6">LYMPHOCYTES</text>
+              <text x="790" y="258" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">T and B cells accumulate</text>
+              <text x="790" y="274" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">ongoing adaptive response</text>
+              <text x="790" y="296" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">sometimes against self</text>
             </g>
           )}
 
-          {/* Fibrosis callout — purple fibrotic strands overlaid. */}
+          {/* Fibrosis callout */}
           {isHot("fibrosis") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="40" y="60" width="170" height="90" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
-              <text x="125" y="84" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">FIBROSIS</text>
-              <text x="125" y="102" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">fibroblasts lay down collagen</text>
-              <text x="125" y="116" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">continuously — tissue becomes</text>
-              <text x="125" y="130" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">stiff and loses function</text>
+              <rect x="40" y="60" width="170" height="100" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2.4" />
+              <text x="125" y="86" textAnchor="middle" fontSize="12" fontWeight="800" fill="#8B5CF6">FIBROSIS</text>
+              <text x="125" y="108" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">fibroblasts lay down collagen</text>
+              <text x="125" y="124" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">continuously — tissue becomes</text>
+              <text x="125" y="140" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">stiff and loses function</text>
             </g>
           )}
 
           {/* Tissue damage callout */}
           {isHot("tissue-damage") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <circle cx="450" cy="320" r="220" fill="none" stroke="#C0392B" strokeWidth="3" strokeDasharray="8 6" opacity="0.75" />
-              <rect x="330" y="550" width="240" height="60" rx="12" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="450" y="574" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">TISSUE DESTRUCTION</text>
-              <text x="450" y="592" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">the response itself damages the tissue</text>
+              <circle cx="450" cy="320" r="220" fill="none" stroke="#C0392B" strokeWidth="3.5" strokeDasharray="8 6" opacity="0.9" />
+              <rect x="320" y="550" width="260" height="66" rx="12" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="450" y="574" textAnchor="middle" fontSize="12" fontWeight="800" fill="#C0392B">TISSUE DESTRUCTION</text>
+              <text x="450" y="596" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">the response itself damages the tissue</text>
             </g>
           )}
 
-          {/* Granuloma inset — a small diagram showing the ring of
-             macrophages around a trapped trigger. */}
+          {/* Granuloma inset */}
           {isHot("granuloma") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="330" y="550" width="240" height="60" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
-              <text x="450" y="574" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">GRANULOMA</text>
-              <text x="450" y="592" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">macrophages wall off the trigger — contains, doesn't cure</text>
-              <circle cx="200" cy="300" r="48" fill="none" stroke="#8B5CF6" strokeWidth="2" strokeDasharray="6 4" opacity="0.8" />
+              <rect x="320" y="550" width="260" height="66" rx="12" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2.4" />
+              <text x="450" y="574" textAnchor="middle" fontSize="12" fontWeight="800" fill="#8B5CF6">GRANULOMA</text>
+              <text x="450" y="596" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">macrophages wall off the trigger — contains, doesn't cure</text>
+              <circle cx="200" cy="300" r="48" fill="none" stroke="#8B5CF6" strokeWidth="2.4" strokeDasharray="6 4" opacity="0.9" />
               {[[200, 252], [200, 348], [152, 300], [248, 300]].map(([px, py], i) => (
-                <circle key={i} cx={px} cy={py} r="9" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.2" />
+                <circle key={i} cx={px} cy={py} r="9" fill="#F3F1FF" stroke="#8B5CF6" strokeWidth="1.4" />
               ))}
-              <ellipse cx="200" cy="300" rx="10" ry="6" fill="#C0392B" stroke="#8C1C12" strokeWidth="1" />
-              <text x="200" y="270" textAnchor="middle" fontSize="8" fill="var(--text-2)">walled-off trigger</text>
+              <ellipse cx="200" cy="300" rx="10" ry="6" fill="#C0392B" stroke="#8C1C12" strokeWidth="1.2" />
+              <text x="200" y="270" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">walled-off trigger</text>
             </g>
           )}
 
-          {/* Examples callout — bottom right, list of common diseases. */}
+          {/* Examples callout */}
           {isHot("examples") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="730" y="280" width="160" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="810" y="304" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>COMMON EXAMPLES</text>
+              <rect x="700" y="370" width="180" height="160" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="790" y="396" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>COMMON EXAMPLES</text>
               {["rheumatoid arthritis", "atherosclerosis", "IBD (Crohn's / UC)", "chronic hepatitis", "tuberculosis"].map((e, i) => (
-                <text key={i} x="810" y={326 + i * 18} textAnchor="middle" fontSize="8" fill="var(--text-2)">{e}</text>
+                <text key={i} x="790" y={420 + i * 20} textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">{e}</text>
               ))}
             </g>
           )}
 
-          {/* Final contrast callout — acute vs chronic summary. */}
+          {/* Contrast callout */}
           {isHot("contrast") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="100" width="240" height="130" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="180" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#C0392B">ACUTE</text>
-              <text x="180" y="145" textAnchor="middle" fontSize="9" fill="var(--text-2)">days</text>
-              <text x="180" y="162" textAnchor="middle" fontSize="9" fill="var(--text-2)">neutrophils</text>
-              <text x="180" y="179" textAnchor="middle" fontSize="9" fill="var(--text-2)">resolves cleanly</text>
-              <rect x="320" y="100" width="240" height="130" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
-              <text x="440" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#8B5CF6">CHRONIC</text>
-              <text x="440" y="145" textAnchor="middle" fontSize="9" fill="var(--text-2)">months to years</text>
-              <text x="440" y="162" textAnchor="middle" fontSize="9" fill="var(--text-2)">macrophages + lymphocytes</text>
-              <text x="440" y="179" textAnchor="middle" fontSize="9" fill="var(--text-2)">ongoing damage + fibrosis</text>
+              <rect x="55" y="60" width="240" height="140" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="175" y="86" textAnchor="middle" fontSize="13" fontWeight="800" fill="#C0392B">ACUTE</text>
+              <text x="175" y="110" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">days</text>
+              <text x="175" y="128" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">neutrophils</text>
+              <text x="175" y="146" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">resolves cleanly</text>
+              <rect x="320" y="60" width="240" height="140" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2.4" />
+              <text x="440" y="86" textAnchor="middle" fontSize="13" fontWeight="800" fill="#8B5CF6">CHRONIC</text>
+              <text x="440" y="110" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">months to years</text>
+              <text x="440" y="128" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">macrophages + lymphocytes</text>
+              <text x="440" y="146" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">ongoing damage + fibrosis</text>
             </g>
           )}
 
-          {/* Static region labels */}
-          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Tissue</text>
-          <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">The response that never ends — and damages what it was meant to protect</text>
+          <text x="450" y="610" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text-2)" pointerEvents="none">The response that never ends — and damages what it was meant to protect</text>
         </svg>
       );
     },
   },
-
   /* =========================================================
      ACQUIRED IMMUNE RESPONSE
      Topic: General Pathology (pat), Topic 09 (index 8).
@@ -5390,7 +5490,7 @@ export const DIAGRAMS = {
       ["lymph-node"],
     ],
     viewBox: "0 0 900 620",
-    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+        render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pat:acquired-immune-response"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -5405,45 +5505,47 @@ export const DIAGRAMS = {
 
       return (
         <svg viewBox="0 0 900 620" width="100%" height="100%">
-          {/* ---- Lymph node — the physical location of the whole scene.
-             Drawn large and centred, with the various cell types around
-             it, so the student reads "this happens in a lymph node". ---- */}
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">The Acquired Immune Response</text>
+
+          {/* Lymph node — the physical location of the whole scene. */}
           <g style={{ cursor: cur }} onClick={click("lymph-node")} filter={hotFilter("lymph-node")}>
             {atlasLymphNode({ cx: 450, cy: 320, scale: 3.6 })}
             <circle cx="450" cy="320" r="130" fill="none" {...ring("lymph-node")} pointerEvents="none" />
-            <text x="450" y="470" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-2)">Lymph node — the meeting place</text>
+            <text x="450" y="480" textAnchor="middle" fontSize="12.5" fontWeight="800" fill="var(--text)">Lymph node — the meeting place</text>
           </g>
 
-          {/* ---- APC on the left, presenting antigen to a helper T cell ---- */}
+          {/* APC on the left */}
           <g style={{ cursor: cur }} onClick={click("apc")} filter={hotFilter("apc")}>
             {atlasAPC({ cx: 180, cy: 240, r: 32, presenting: activeStep >= 1, highlight: isHot("apc") })}
-            <text x="180" y="300" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Antigen-presenting cell</text>
-            <text x="180" y="313" textAnchor="middle" fontSize="9" fill="var(--text-2)">shows antigen to T cells</text>
+            <text x="180" y="300" textAnchor="middle" fontSize="12" fontWeight="800" fill="var(--text)">Antigen-presenting cell</text>
+            <text x="180" y="316" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">shows antigen to T cells</text>
             <circle cx="180" cy="240" r="52" fill="none" {...ring("apc")} pointerEvents="none" />
           </g>
 
-          {/* MHC callout — leader line to the APC's MHC molecule. */}
+          {/* MHC callout */}
           {isHot("mhc") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <path
                 d="M210,220 Q260,190 310,170"
-                fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
-                strokeDasharray="4 4" opacity="0.85"
+                fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.8"
+                strokeDasharray="4 4" opacity="0.95"
               />
-              <circle cx="210" cy="220" r="4" fill={ATLAS_COLORS.trunk} />
-              <rect x="60" y="90" width="180" height="80" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="150" y="115" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>MHC MOLECULE</text>
-              <text x="150" y="133" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">molecular display tray</text>
-              <text x="150" y="148" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">holds antigen for T cells</text>
+              <circle cx="210" cy="220" r="4.5" fill={ATLAS_COLORS.trunk} />
+              <rect x="55" y="60" width="200" height="100" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="155" y="86" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>MHC MOLECULE</text>
+              <text x="155" y="108" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">molecular display tray</text>
+              <text x="155" y="124" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">holds antigen for T cells</text>
+              <text x="155" y="146" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">the "hand" that shows the threat</text>
             </g>
           )}
 
-          {/* ---- Helper T cell on the top-right, receiving the signal ---- */}
+          {/* Helper T cell */}
           <g style={{ cursor: cur }} onClick={click("helper-t")} filter={hotFilter("helper-t")}>
-            {atlasWhiteCell({ cx: 720, cy: 240, r: 26 })}
-            <text x="720" y="295" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Helper T cell</text>
-            <text x="720" y="308" textAnchor="middle" fontSize="9" fill="var(--text-2)">coordinates the response</text>
-            <circle cx="720" cy="240" r="42" fill="none" {...ring("helper-t")} pointerEvents="none" />
+            {atlasWhiteCell({ cx: 720, cy: 240, r: 28 })}
+            <text x="720" y="295" textAnchor="middle" fontSize="12" fontWeight="800" fill="var(--text)">Helper T cell</text>
+            <text x="720" y="311" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">coordinates the response</text>
+            <circle cx="720" cy="240" r="45" fill="none" {...ring("helper-t")} pointerEvents="none" />
           </g>
 
           {/* Communication arrows between APC and Helper T */}
@@ -5451,35 +5553,33 @@ export const DIAGRAMS = {
             <g pointerEvents="none">
               <path
                 d="M215,240 Q400,215 690,240"
-                fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="1.6"
-                strokeDasharray="5 4" opacity="0.7"
+                fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="2"
+                strokeDasharray="5 4" opacity="0.85"
               />
-              <polygon points="690,240 682,236 682,244" fill={ATLAS_COLORS.trunk} />
-              <text x="450" y="215" textAnchor="middle" fontSize="9" fontWeight="600" fill={ATLAS_COLORS.trunk}>antigen recognition →</text>
+              <polygon points="690,240 682,235 682,245" fill={ATLAS_COLORS.trunk} />
+              <text x="450" y="215" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>antigen recognition →</text>
             </g>
           )}
 
-          {/* ---- B cell on the bottom-left ---- */}
+          {/* B cell */}
           <g style={{ cursor: cur }} onClick={click("b-cell")} filter={hotFilter("b-cell")}>
-            {atlasWhiteCell({ cx: 180, cy: 440, r: 26 })}
-            <text x="180" y="495" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">B cell</text>
-            <text x="180" y="508" textAnchor="middle" fontSize="9" fill="var(--text-2)">recognises antigen directly</text>
-            <circle cx="180" cy="440" r="42" fill="none" {...ring("b-cell")} pointerEvents="none" />
+            {atlasWhiteCell({ cx: 180, cy: 440, r: 28 })}
+            <text x="180" y="498" textAnchor="middle" fontSize="12" fontWeight="800" fill="var(--text)">B cell</text>
+            <text x="180" y="514" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">recognises antigen directly</text>
+            <circle cx="180" cy="440" r="45" fill="none" {...ring("b-cell")} pointerEvents="none" />
           </g>
 
-          {/* ---- Plasma cell below B cell, only after the B cell is
-             activated by the helper T ---- */}
+          {/* Plasma cell — appears at step 5+ */}
           {activeStep >= 5 && (
             <g style={{ cursor: cur }} onClick={click("plasma-cell")} filter={hotFilter("plasma-cell")}>
-              {atlasWhiteCell({ cx: 320, cy: 540, r: 30 })}
-              <text x="320" y="595" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Plasma cell</text>
-              <text x="320" y="608" textAnchor="middle" fontSize="9" fill="var(--text-2)">antibody factory</text>
-              <circle cx="320" cy="540" r="48" fill="none" {...ring("plasma-cell")} pointerEvents="none" />
+              {atlasWhiteCell({ cx: 320, cy: 540, r: 32 })}
+              <text x="320" y="600" textAnchor="middle" fontSize="12" fontWeight="800" fill="var(--text)">Plasma cell</text>
+              <text x="320" y="616" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">antibody factory</text>
+              <circle cx="320" cy="540" r="52" fill="none" {...ring("plasma-cell")} pointerEvents="none" />
             </g>
           )}
 
-          {/* ---- Antibodies — a cluster shown to the right of the plasma
-             cell, growing as the student progresses past step 7 ---- */}
+          {/* Antibodies — appear at step 6+ */}
           {activeStep >= 6 && (
             <g style={{ cursor: cur }} onClick={click("antibody")} filter={hotFilter("antibody")}>
               {[
@@ -5493,31 +5593,29 @@ export const DIAGRAMS = {
                   {atlasAntibody({ cx: ax, cy: ay, scale: s, bound: false, highlight: isHot("antibody") })}
                 </g>
               ))}
-              <text x="600" y="625" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Antibodies</text>
-              <circle cx="600" cy="560" r="90" fill="none" {...ring("antibody")} pointerEvents="none" />
+              <text x="600" y="628" textAnchor="middle" fontSize="12" fontWeight="800" fill="var(--text)">Antibodies</text>
+              <circle cx="600" cy="560" r="95" fill="none" {...ring("antibody")} pointerEvents="none" />
             </g>
           )}
 
-          {/* ---- Cytotoxic T cell on the right ---- */}
+          {/* Cytotoxic T cell */}
           <g style={{ cursor: cur }} onClick={click("cytotoxic-t")} filter={hotFilter("cytotoxic-t")}>
-            {atlasWhiteCell({ cx: 720, cy: 460, r: 26 })}
-            <text x="720" y="515" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text)">Cytotoxic T cell</text>
-            <text x="720" y="528" textAnchor="middle" fontSize="9" fill="var(--text-2)">kills infected cells</text>
-            <circle cx="720" cy="460" r="42" fill="none" {...ring("cytotoxic-t")} pointerEvents="none" />
+            {atlasWhiteCell({ cx: 720, cy: 460, r: 28 })}
+            <text x="720" y="518" textAnchor="middle" fontSize="12" fontWeight="800" fill="var(--text)">Cytotoxic T cell</text>
+            <text x="720" y="534" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">kills infected cells</text>
+            <circle cx="720" cy="460" r="45" fill="none" {...ring("cytotoxic-t")} pointerEvents="none" />
           </g>
 
-          {/* ---- Memory cells inset — bottom right, appears at the end ---- */}
+          {/* Memory cells inset — appears at step 8+ */}
           {activeStep >= 8 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="660" y="540" width="180" height="60" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" strokeDasharray="5 4" />
-              <text x="750" y="565" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>MEMORY CELLS</text>
-              <text x="750" y="583" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">respond in hours on second exposure</text>
+              <rect x="700" y="545" width="180" height="66" rx="12" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="790" y="568" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>MEMORY CELLS</text>
+              <text x="790" y="590" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">respond in hours on second exposure</text>
             </g>
           )}
 
-          {/* ---- Static region labels ---- */}
-          <text x="450" y="30"  textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Acquired (adaptive) immune response</text>
-          <text x="450" y="612" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Antigen → T cell → B cell → antibody → memory</text>
+          <text x="450" y="612" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Antigen → T cell → B cell → antibody → memory</text>
         </svg>
       );
     },
@@ -5576,7 +5674,7 @@ export const DIAGRAMS = {
       ["clinical"],
     ],
     viewBox: "0 0 900 620",
-    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+        render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pat:haemodynamic-disorders"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -5589,8 +5687,6 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
-      // The main vessel runs across the middle. What's in it changes
-      // as the student steps through the phases.
       const showThrombus  = activeStep >= 2 && activeStep < 4;
       const showEmbolus   = activeStep >= 4 && activeStep < 5;
       const showInfarct   = activeStep >= 5 && activeStep < 7;
@@ -5599,25 +5695,27 @@ export const DIAGRAMS = {
 
       return (
         <svg viewBox="0 0 900 620" width="100%" height="100%">
-          {/* Main vessel running across the diagram — the central scene. */}
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">Haemodynamic Disorders</text>
+
+          {/* Main vessel */}
           <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
             {atlasVessel({ d: "M80,320 Q450,300 820,320", oxygenated: true, width: 40 })}
-            {/* Red cells flowing through, drawn at several positions */}
             {[
               [140, 316], [200, 314], [260, 312], [340, 310], [420, 308],
               [500, 310], [580, 312], [660, 314], [740, 316],
             ].map(([rx, ry], i) => (
-              <ellipse key={i} cx={rx} cy={ry} rx="6" ry="4" fill="#E53935" stroke="#8C1C12" strokeWidth="0.6" opacity="0.85" />
+              <ellipse key={i} cx={rx} cy={ry} rx="6" ry="4" fill="#E53935" stroke="#8C1C12" strokeWidth="0.8" opacity="0.9" />
             ))}
-            <text x="450" y="380" textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-2)">Blood vessel</text>
+            <text x="450" y="380" textAnchor="middle" fontSize="12.5" fontWeight="800" fill="var(--text)">Blood vessel</text>
           </g>
 
-          {/* Normal flow label anchor */}
+          {/* Normal flow label */}
           <g style={{ cursor: cur }} onClick={click("normal")} filter={hotFilter("normal")}>
-            <text x="450" y="290" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)" pointerEvents="none">laminar flow — undisturbed</text>
+            <text x="450" y="290" textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text-2)" pointerEvents="none">laminar flow — undisturbed</text>
           </g>
 
-          {/* Thrombus — appears on steps 3-4, drawn inside the vessel. */}
+          {/* Thrombus */}
           {showThrombus && (
             <g style={{ cursor: cur }} onClick={click("thrombus")} filter={hotFilter("thrombus")}>
               {atlasThrombus({
@@ -5630,105 +5728,95 @@ export const DIAGRAMS = {
             </g>
           )}
 
-          {/* Virchow's triad inset — three labelled circles fanning off
-             the thrombus, shown only on its own step. */}
+          {/* Virchow's triad inset */}
           {isHot("virchow") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="80" width="220" height="140" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="170" y="106" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>VIRCHOW'S TRIAD</text>
-              <text x="170" y="128" textAnchor="middle" fontSize="9" fill="var(--text-2)">1. Stasis of flow</text>
-              <text x="170" y="146" textAnchor="middle" fontSize="9" fill="var(--text-2)">2. Endothelial injury</text>
-              <text x="170" y="164" textAnchor="middle" fontSize="9" fill="var(--text-2)">3. Hypercoagulability</text>
-              <text x="170" y="192" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">any one alone can start a clot</text>
+              <rect x="55" y="60" width="240" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="175" y="88" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>VIRCHOW'S TRIAD</text>
+              <text x="175" y="112" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">1. Stasis of flow</text>
+              <text x="175" y="132" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">2. Endothelial injury</text>
+              <text x="175" y="152" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">3. Hypercoagulability</text>
+              <text x="175" y="184" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">any one alone can start a clot</text>
             </g>
           )}
 
-          {/* Embolus — a fragment travelling downstream from the
-             thrombus position. */}
+          {/* Embolus */}
           {showEmbolus && (
             <g style={{ cursor: cur }} onClick={click("embolus")} filter={hotFilter("embolus")}>
               {atlasEmbolus({
                 cx: 680, cy: 310, r: 18, type: "thrombus",
                 highlight: isHot("embolus"),
               })}
-              <circle cx="680" cy="310" r="40" fill="none" {...ring("embolus")} pointerEvents="none" />
-              <text x="680" y="360" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text-2)">travelling embolus</text>
+              <circle cx="680" cy="310" r="42" fill="none" {...ring("embolus")} pointerEvents="none" />
+              <text x="680" y="362" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="var(--text)">travelling embolus</text>
             </g>
           )}
 
-          {/* Infarction — a wedge of tissue with a blocked vessel
-             leading to it, shown on steps 6-7. */}
+          {/* Infarction */}
           {showInfarct && (
             <g style={{ cursor: cur }} onClick={click("infarction")} filter={hotFilter("infarction")}>
-              {/* Downstream vessel narrowing */}
               {atlasVessel({ d: "M760,320 Q800,400 800,480", oxygenated: true, width: 20 })}
-              {/* Infarct wedge — pale (white infarct) */}
               <path
                 d="M770,500 L860,540 L830,600 L740,570 Z"
-                fill="#F5E8E0" stroke="#B63B2E" strokeWidth="2"
+                fill="#F5E8E0" stroke="#B63B2E" strokeWidth="2.4"
               />
-              <text x="800" y="575" textAnchor="middle" fontSize="10" fontWeight="700" fill="#B63B2E">infarct</text>
+              <text x="800" y="575" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="#B63B2E">infarct</text>
               <circle cx="800" cy="540" r="70" fill="none" {...ring("infarction")} pointerEvents="none" />
             </g>
           )}
 
-          {/* Infarct types inset — the two main types, side by side. */}
+          {/* Infarct types inset */}
           {isHot("infarct-types") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="440" width="160" height="110" rx="14" fill="var(--bg-2)" stroke="#B63B2E" strokeWidth="2" />
-              <text x="140" y="462" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#B63B2E">WHITE INFARCT</text>
-              <path d="M100,510 L160,490 L180,520 L120,540 Z" fill="#F5E8E0" stroke="#B63B2E" strokeWidth="1.4" />
-              <text x="140" y="545" textAnchor="middle" fontSize="7.5" fill="var(--text-2)">solid organs</text>
-              <rect x="240" y="440" width="160" height="110" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="320" y="462" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">RED INFARCT</text>
-              <path d="M280,510 L340,490 L360,520 L300,540 Z" fill="#E53935" stroke="#8C1C12" strokeWidth="1.4" opacity="0.75" />
-              <text x="320" y="545" textAnchor="middle" fontSize="7.5" fill="var(--text-2)">loose / dual supply</text>
+              <rect x="55" y="440" width="170" height="120" rx="14" fill="var(--bg-2)" stroke="#B63B2E" strokeWidth="2.4" />
+              <text x="140" y="466" textAnchor="middle" fontSize="12" fontWeight="800" fill="#B63B2E">WHITE INFARCT</text>
+              <path d="M100,516 L160,496 L180,526 L120,546 Z" fill="#F5E8E0" stroke="#B63B2E" strokeWidth="1.6" />
+              <text x="140" y="552" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">solid organs</text>
+              <rect x="245" y="440" width="170" height="120" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="330" y="466" textAnchor="middle" fontSize="12" fontWeight="800" fill="#C0392B">RED INFARCT</text>
+              <path d="M290,516 L350,496 L370,526 L310,546 Z" fill="#E53935" stroke="#8C1C12" strokeWidth="1.6" opacity="0.85" />
+              <text x="330" y="552" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">loose / dual supply</text>
             </g>
           )}
 
-          {/* Haemorrhage — a vessel with a break, blood escaping. */}
+          {/* Haemorrhage */}
           {showHaem && (
             <g style={{ cursor: cur }} onClick={click("haemorrhage")} filter={hotFilter("haemorrhage")}>
-              {/* Rupture in the vessel */}
-              <path d="M450,320 L450,340" stroke="#8C1C12" strokeWidth="6" strokeLinecap="round" />
-              {/* Blood droplets escaping */}
+              <path d="M450,320 L450,340" stroke="#8C1C12" strokeWidth="8" strokeLinecap="round" />
               {[[440, 360], [455, 380], [430, 400], [465, 415], [445, 435]].map(([dx, dy], i) => (
-                <ellipse key={i} cx={dx} cy={dy} rx="7" ry="5" fill="#E53935" stroke="#8C1C12" strokeWidth="0.8" opacity="0.9" />
+                <ellipse key={i} cx={dx} cy={dy} rx="8" ry="5.5" fill="#E53935" stroke="#8C1C12" strokeWidth="1" opacity="0.95" />
               ))}
-              <text x="450" y="470" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">haemorrhage</text>
+              <text x="450" y="470" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="#C0392B">haemorrhage</text>
               <circle cx="450" cy="390" r="70" fill="none" {...ring("haemorrhage")} pointerEvents="none" />
             </g>
           )}
 
-          {/* Shock — whole-body failure, shown as a body outline with
-             faded/blue-tinted extremities. */}
+          {/* Shock inset */}
           {showShock && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="640" y="440" width="220" height="130" rx="14" fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2" />
-              <text x="750" y="465" textAnchor="middle" fontSize="11" fontWeight="700" fill="#5B21B6">SHOCK</text>
-              <text x="750" y="485" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">whole-body failure of perfusion</text>
-              <text x="750" y="503" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">cardiogenic · hypovolaemic</text>
-              <text x="750" y="521" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">distributive · obstructive</text>
-              <text x="750" y="545" textAnchor="middle" fontSize="8" fill="var(--text-3)">cells switch to anaerobic metabolism</text>
+              <rect x="640" y="440" width="240" height="140" rx="14" fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2.4" />
+              <text x="760" y="468" textAnchor="middle" fontSize="12" fontWeight="800" fill="#5B21B6">SHOCK</text>
+              <text x="760" y="490" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">whole-body failure of perfusion</text>
+              <text x="760" y="508" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">cardiogenic · hypovolaemic</text>
+              <text x="760" y="526" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">distributive · obstructive</text>
+              <text x="760" y="552" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">cells switch to anaerobic metabolism</text>
             </g>
           )}
 
-          {/* Clinical examples — shown on the last step. */}
+          {/* Clinical examples */}
           {isHot("clinical") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="80" width="220" height="140" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="170" y="106" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>CLINICAL EXAMPLES</text>
-              <text x="170" y="130" textAnchor="middle" fontSize="9" fill="var(--text-2)">myocardial infarction</text>
-              <text x="170" y="148" textAnchor="middle" fontSize="9" fill="var(--text-2)">stroke</text>
-              <text x="170" y="166" textAnchor="middle" fontSize="9" fill="var(--text-2)">deep vein thrombosis</text>
-              <text x="170" y="184" textAnchor="middle" fontSize="9" fill="var(--text-2)">pulmonary embolism</text>
-              <text x="170" y="202" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">the four biggest killers</text>
+              <rect x="55" y="60" width="240" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="175" y="88" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>CLINICAL EXAMPLES</text>
+              <text x="175" y="112" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">myocardial infarction</text>
+              <text x="175" y="130" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">stroke</text>
+              <text x="175" y="148" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">deep vein thrombosis</text>
+              <text x="175" y="166" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">pulmonary embolism</text>
+              <text x="175" y="192" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">the four biggest killers</text>
             </g>
           )}
 
-          {/* Static region labels */}
-          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Haemodynamic disorders</text>
-          <text x="450" y="612" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">When flow, vessel, or pressure goes wrong</text>
+          <text x="450" y="612" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text-2)" pointerEvents="none">When flow, vessel, or pressure goes wrong</text>
         </svg>
       );
     },
@@ -5790,7 +5878,7 @@ export const DIAGRAMS = {
       ["clinical"],
     ],
     viewBox: "0 0 900 620",
-    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+        render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pat:cell-injury"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -5803,8 +5891,6 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
-      // The middle of the diagram holds the current-state cell. Its
-      // state maps from the narration step.
       const cellState = [
         "normal",       // step 0 (whole)
         "normal",       // step 1 (normal)
@@ -5820,11 +5906,10 @@ export const DIAGRAMS = {
 
       return (
         <svg viewBox="0 0 900 620" width="100%" height="100%">
-          {/* Background — a soft tissue patch, so the cell reads as
-             sitting inside tissue not floating on blank space. */}
-          <ellipse cx="450" cy="310" rx="400" ry="260" fill="#FBE9E7" opacity="0.25" />
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">Cell Injury & Cell Death</text>
 
-          {/* ---- The main cell in the centre — changes state per step ---- */}
+          {/* The main cell in the centre */}
           <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
             {atlasCellInjury({
               cx: 450, cy: 280, r: 55,
@@ -5834,100 +5919,97 @@ export const DIAGRAMS = {
             <circle cx="450" cy="280" r="85" fill="none" {...ring("whole")} pointerEvents="none" />
           </g>
 
-          {/* ---- Normal-cell label anchor (only on its own step) ---- */}
+          {/* Normal-cell label anchor */}
           <g style={{ cursor: cur }} onClick={click("normal")} filter={hotFilter("normal")}>
             {isHot("normal") && (
               <g pointerEvents="none" filter="url(#atlas-glow)">
-                <text x="450" y="200" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>normal cell</text>
-                <text x="450" y="216" textAnchor="middle" fontSize="9" fill="var(--text-2)">intact membrane · normal nucleus</text>
+                <text x="450" y="180" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>normal cell</text>
+                <text x="450" y="198" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">intact membrane · normal nucleus</text>
               </g>
             )}
           </g>
 
-          {/* ---- Stressors inset (only on its own step) ---- */}
+          {/* Stressors inset */}
           {isHot("stressors") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="120" width="190" height="140" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="155" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#C0392B">STRESSORS</text>
+              <rect x="55" y="120" width="190" height="150" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="150" y="146" textAnchor="middle" fontSize="12" fontWeight="800" fill="#C0392B">STRESSORS</text>
               {["hypoxia", "toxins", "infection", "trauma", "radiation", "metabolic"].map((s, i) => (
-                <text key={i} x="155" y={168 + i * 16} textAnchor="middle" fontSize="9" fill="var(--text-2)">{s}</text>
+                <text key={i} x="150" y={170 + i * 17} textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">{s}</text>
               ))}
             </g>
           )}
 
-          {/* ---- Adaptation inset — shows the four types as a quad ---- */}
+          {/* Adaptation inset */}
           {isHot("adaptation") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="120" width="200" height="180" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
-              <text x="160" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">FOUR ADAPTATIONS</text>
+              <rect x="55" y="120" width="200" height="190" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2.4" />
+              <text x="155" y="146" textAnchor="middle" fontSize="12" fontWeight="800" fill="#8B5CF6">FOUR ADAPTATIONS</text>
               {["hypertrophy — bigger", "atrophy — smaller", "hyperplasia — more cells", "metaplasia — new type"].map((s, i) => (
-                <text key={i} x="160" y={170 + i * 20} textAnchor="middle" fontSize="9" fill="var(--text-2)">{s}</text>
+                <text key={i} x="155" y={172 + i * 20} textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">{s}</text>
               ))}
-              <text x="160" y="275" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">all reversible if stress removed</text>
+              <text x="155" y="282" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">all reversible if stress removed</text>
             </g>
           )}
 
-          {/* ---- Reversible injury callout ---- */}
+          {/* Reversible injury callout */}
           {isHot("reversible") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="120" width="200" height="110" rx="14" fill="var(--bg-2)" stroke="#E53935" strokeWidth="2" />
-              <text x="160" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#E53935">REVERSIBLE INJURY</text>
-              <text x="160" y="168" textAnchor="middle" fontSize="9" fill="var(--text-2)">cell swelling</text>
-              <text x="160" y="184" textAnchor="middle" fontSize="9" fill="var(--text-2)">membrane blebs</text>
-              <text x="160" y="200" textAnchor="middle" fontSize="9" fill="var(--text-2)">dilated ER</text>
-              <text x="160" y="220" textAnchor="middle" fontSize="8.5" fill="var(--text-3)">fully recoverable</text>
+              <rect x="55" y="120" width="200" height="120" rx="14" fill="var(--bg-2)" stroke="#E53935" strokeWidth="2.4" />
+              <text x="155" y="146" textAnchor="middle" fontSize="12" fontWeight="800" fill="#E53935">REVERSIBLE INJURY</text>
+              <text x="155" y="170" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">cell swelling</text>
+              <text x="155" y="186" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">membrane blebs</text>
+              <text x="155" y="202" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">dilated ER</text>
+              <text x="155" y="222" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">fully recoverable</text>
             </g>
           )}
 
-          {/* ---- Irreversible injury callout ---- */}
+          {/* Irreversible injury callout */}
           {isHot("irreversible") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="120" width="200" height="125" rx="14" fill="var(--bg-2)" stroke="#8C1C12" strokeWidth="2" />
-              <text x="160" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8C1C12">IRREVERSIBLE INJURY</text>
-              <text x="160" y="168" textAnchor="middle" fontSize="9" fill="var(--text-2)">membrane rupture</text>
-              <text x="160" y="184" textAnchor="middle" fontSize="9" fill="var(--text-2)">calcium influx</text>
-              <text x="160" y="200" textAnchor="middle" fontSize="9" fill="var(--text-2)">mitochondrial failure</text>
-              <text x="160" y="222" textAnchor="middle" fontSize="8.5" fill="#C0392B" fontWeight="700">point of no return</text>
+              <rect x="55" y="120" width="200" height="140" rx="14" fill="var(--bg-2)" stroke="#8C1C12" strokeWidth="2.4" />
+              <text x="155" y="146" textAnchor="middle" fontSize="12" fontWeight="800" fill="#8C1C12">IRREVERSIBLE INJURY</text>
+              <text x="155" y="170" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">membrane rupture</text>
+              <text x="155" y="186" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">calcium influx</text>
+              <text x="155" y="202" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">mitochondrial failure</text>
+              <text x="155" y="228" textAnchor="middle" fontSize="10" fontWeight="800" fill="#C0392B">point of no return</text>
             </g>
           )}
 
-          {/* ---- Necrosis vs apoptosis comparison panel ---- */}
+          {/* Necrosis vs apoptosis comparison panel */}
           {(isHot("necrosis") || isHot("apoptosis") || isHot("contrast")) && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="660" y="120" width="200" height="220" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="760" y="145" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>NECROSIS vs APOPTOSIS</text>
-              <text x="760" y="175" textAnchor="middle" fontSize="10" fontWeight="700" fill="#8C1C12">Necrosis</text>
-              <text x="760" y="192" textAnchor="middle" fontSize="9" fill="var(--text-2)">cell bursts</text>
-              <text x="760" y="207" textAnchor="middle" fontSize="9" fill="var(--text-2)">spills contents</text>
-              <text x="760" y="222" textAnchor="middle" fontSize="9" fill="var(--text-2)">inflammation</text>
-              <text x="760" y="237" textAnchor="middle" fontSize="9" fill="var(--text-2)">always pathological</text>
-              <text x="760" y="268" textAnchor="middle" fontSize="10" fontWeight="700" fill="#5B21B6">Apoptosis</text>
-              <text x="760" y="285" textAnchor="middle" fontSize="9" fill="var(--text-2)">cell shrinks</text>
-              <text x="760" y="300" textAnchor="middle" fontSize="9" fill="var(--text-2)">nucleus condenses</text>
-              <text x="760" y="315" textAnchor="middle" fontSize="9" fill="var(--text-2)">no inflammation</text>
-              <text x="760" y="330" textAnchor="middle" fontSize="9" fill="var(--text-2)">can be physiological</text>
+              <rect x="680" y="120" width="200" height="220" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="780" y="146" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>NECROSIS vs APOPTOSIS</text>
+              <text x="780" y="176" textAnchor="middle" fontSize="11" fontWeight="800" fill="#8C1C12">Necrosis</text>
+              <text x="780" y="194" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">cell bursts</text>
+              <text x="780" y="210" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">spills contents</text>
+              <text x="780" y="226" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">inflammation</text>
+              <text x="780" y="242" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">always pathological</text>
+              <text x="780" y="274" textAnchor="middle" fontSize="11" fontWeight="800" fill="#5B21B6">Apoptosis</text>
+              <text x="780" y="292" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">cell shrinks</text>
+              <text x="780" y="308" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">nucleus condenses</text>
+              <text x="780" y="324" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">no inflammation</text>
             </g>
           )}
 
-          {/* ---- Clinical examples inset ---- */}
+          {/* Clinical examples inset */}
           {isHot("clinical") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="120" width="220" height="180" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="170" y="145" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>CLINICAL EXAMPLES</text>
-              <text x="170" y="172" textAnchor="middle" fontSize="9" fontWeight="700" fill="#8C1C12">Necrosis</text>
-              <text x="170" y="188" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">myocardial infarction</text>
-              <text x="170" y="202" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">severe burns · gangrene</text>
-              <text x="170" y="228" textAnchor="middle" fontSize="9" fontWeight="700" fill="#5B21B6">Apoptosis</text>
-              <text x="170" y="244" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">endometrial shedding</text>
-              <text x="170" y="258" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">cancer therapy · development</text>
-              <text x="170" y="284" textAnchor="middle" fontSize="9" fontWeight="700" fill="#2F6FED">Adaptation</text>
-              <text x="170" y="298" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">muscle hypertrophy · atrophy</text>
+              <rect x="55" y="120" width="220" height="190" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="165" y="146" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>CLINICAL EXAMPLES</text>
+              <text x="165" y="172" textAnchor="middle" fontSize="11" fontWeight="800" fill="#8C1C12">Necrosis</text>
+              <text x="165" y="190" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">myocardial infarction</text>
+              <text x="165" y="206" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">severe burns · gangrene</text>
+              <text x="165" y="232" textAnchor="middle" fontSize="11" fontWeight="800" fill="#5B21B6">Apoptosis</text>
+              <text x="165" y="250" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">endometrial shedding</text>
+              <text x="165" y="266" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">cancer therapy · development</text>
+              <text x="165" y="292" textAnchor="middle" fontSize="11" fontWeight="800" fill="#2F6FED">Adaptation</text>
+              <text x="165" y="308" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">muscle hypertrophy · atrophy</text>
             </g>
           )}
 
-          {/* ---- Static region labels ---- */}
-          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Cell under stress</text>
-          <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Adapt → reversible injury → irreversible injury → death (necrosis or apoptosis)</text>
+          <text x="450" y="610" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Adapt → reversible injury → irreversible injury → death (necrosis or apoptosis)</text>
         </svg>
       );
     },
@@ -5986,7 +6068,7 @@ export const DIAGRAMS = {
       ["drugs"],
     ],
     viewBox: "0 0 900 620",
-    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+        render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pat:cell-cycle"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -5999,13 +6081,15 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
-      // Which phase of the cycle is highlighted per step.
       const activePhase = ["G1","G1","G1","S","G2","M","G1","G1","G1","S"][activeStep] || "G1";
       const showCheckpoints = activeStep === 6 || activeStep === 8 || activeStep === 9;
 
       return (
         <svg viewBox="0 0 900 620" width="100%" height="100%">
-          {/* The cell cycle ring — the centrepiece. */}
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">The Cell Cycle</text>
+
+          {/* The cell cycle ring — the centrepiece */}
           <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
             {atlasCellCycle({
               cx: 450, cy: 300, radius: 150,
@@ -6015,122 +6099,105 @@ export const DIAGRAMS = {
             })}
           </g>
 
-          {/* G1 phase label anchor — clickable region over the top-left
-             portion of the ring. */}
+          {/* Phase label anchors */}
           <g style={{ cursor: cur }} onClick={click("g1")} filter={hotFilter("g1")}>
             <circle cx="370" cy="200" r="60" fill="none" {...ring("g1")} pointerEvents="none" />
           </g>
-
-          {/* S phase label anchor */}
           <g style={{ cursor: cur }} onClick={click("s")} filter={hotFilter("s")}>
             <circle cx="530" cy="200" r="60" fill="none" {...ring("s")} pointerEvents="none" />
           </g>
-
-          {/* G2 label anchor */}
           <g style={{ cursor: cur }} onClick={click("g2")} filter={hotFilter("g2")}>
             <circle cx="530" cy="400" r="60" fill="none" {...ring("g2")} pointerEvents="none" />
           </g>
-
-          {/* M label anchor */}
           <g style={{ cursor: cur }} onClick={click("m")} filter={hotFilter("m")}>
             <circle cx="370" cy="400" r="60" fill="none" {...ring("m")} pointerEvents="none" />
           </g>
-
-          {/* G0 label anchor */}
           <g style={{ cursor: cur }} onClick={click("g0")} filter={hotFilter("g0")}>
             <circle cx="200" cy="150" r="50" fill="none" {...ring("g0")} pointerEvents="none" />
           </g>
 
-          {/* Chromosome illustration — shows the change from single
-             chromatid to sister chromatids, drawn to the right of the
-             ring, appearing on S and M steps. */}
+          {/* Chromosome illustration */}
           {(activeStep === 3 || activeStep === 5) && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="690" y="170" width="180" height="180" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
-              <text x="780" y="195" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#8B5CF6">
+              <rect x="690" y="170" width="180" height="190" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2.4" />
+              <text x="780" y="196" textAnchor="middle" fontSize="12" fontWeight="800" fill="#8B5CF6">
                 {activeStep === 3 ? "AFTER S PHASE" : "IN MITOSIS"}
               </text>
               {activeStep === 3 ? (
-                // After S — one chromosome with two sister chromatids
                 <>
-                  <text x="780" y="215" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">two sister chromatids</text>
-                  {atlasChromosome({ cx: 780, cy: 275, length: 42, condensation: 0.4, spindle: false })}
+                  <text x="780" y="218" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">two sister chromatids</text>
+                  {atlasChromosome({ cx: 780, cy: 280, length: 42, condensation: 0.4, spindle: false })}
                 </>
               ) : (
-                // In M — sister chromatids separating on the spindle
                 <>
-                  <text x="780" y="215" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">separating on spindle</text>
-                  {atlasChromosome({ cx: 745, cy: 275, length: 32, condensation: 1, spindle: true })}
-                  {atlasChromosome({ cx: 815, cy: 275, length: 32, condensation: 1, spindle: true })}
+                  <text x="780" y="218" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">separating on spindle</text>
+                  {atlasChromosome({ cx: 745, cy: 280, length: 32, condensation: 1, spindle: true })}
+                  {atlasChromosome({ cx: 815, cy: 280, length: 32, condensation: 1, spindle: true })}
                 </>
               )}
             </g>
           )}
 
-          {/* Checkpoints inset — shows the three control points. */}
+          {/* Checkpoints inset */}
           {isHot("checkpoints") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="100" width="220" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="170" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>THREE CHECKPOINTS</text>
+              <rect x="55" y="100" width="230" height="165" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="170" y="128" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>THREE CHECKPOINTS</text>
               {[
                 ["G1/S —", "DNA damage? Size? Nutrients?"],
                 ["G2/M —", "DNA copied correctly?"],
                 ["Spindle —", "All chromosomes attached?"],
               ].map(([h, body], i) => (
                 <g key={i}>
-                  <text x="80" y={155 + i * 30} fontSize="9.5" fontWeight="700" fill={ATLAS_COLORS.trunk}>{h}</text>
-                  <text x="80" y={170 + i * 30} fontSize="8.5" fill="var(--text-2)">{body}</text>
+                  <text x="70" y={158 + i * 32} fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>{h}</text>
+                  <text x="70" y={174 + i * 32} fontSize="10" fontWeight="600" fill="var(--text-2)">{body}</text>
                 </g>
               ))}
             </g>
           )}
 
-          {/* Cyclins & CDKs inset — a small wave diagram showing cyclin
-             levels rising and falling through the cycle. */}
+          {/* Cyclins & CDKs inset */}
           {isHot("cyclins") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="100" width="220" height="150" rx="14" fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2" />
-              <text x="170" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#5B21B6">CYCLINS & CDKs</text>
-              {/* A representative wave — cyclin D at G1, E at G1/S, A at S, B at G2/M */}
+              <rect x="55" y="100" width="230" height="165" rx="14" fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2.4" />
+              <text x="170" y="128" textAnchor="middle" fontSize="12" fontWeight="800" fill="#5B21B6">CYCLINS & CDKs</text>
               <path
-                d="M75,215 Q95,190 115,215 Q135,185 155,215 Q175,180 195,215 Q215,175 240,215"
-                fill="none" stroke="#8B5CF6" strokeWidth="2.4"
+                d="M75,220 Q95,195 115,220 Q135,190 155,220 Q175,185 195,220 Q215,180 240,220"
+                fill="none" stroke="#8B5CF6" strokeWidth="2.8"
               />
-              <text x="170" y="235" textAnchor="middle" fontSize="8" fill="var(--text-2)">cyclin levels rise & fall</text>
+              <text x="170" y="245" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">cyclin levels rise & fall</text>
             </g>
           )}
 
-          {/* Cancer inset — a comparison of normal vs dysregulated division. */}
+          {/* Cancer inset */}
           {isHot("cancer") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="100" width="220" height="150" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="170" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#C0392B">CANCER</text>
-              <text x="170" y="148" textAnchor="middle" fontSize="9" fill="var(--text-2)">checkpoints fail</text>
-              <text x="170" y="166" textAnchor="middle" fontSize="9" fill="var(--text-2)">cell divides without control</text>
-              <text x="170" y="184" textAnchor="middle" fontSize="9" fill="var(--text-2)">damaged DNA keeps copying</text>
-              <text x="170" y="202" textAnchor="middle" fontSize="9" fill="var(--text-2)">mutations accumulate</text>
-              <text x="170" y="226" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="#8C1C12">p53 · RB · cyclins · CDKs</text>
+              <rect x="55" y="100" width="230" height="165" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="170" y="128" textAnchor="middle" fontSize="12" fontWeight="800" fill="#C0392B">CANCER</text>
+              <text x="170" y="152" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">checkpoints fail</text>
+              <text x="170" y="170" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">cell divides without control</text>
+              <text x="170" y="188" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">damaged DNA keeps copying</text>
+              <text x="170" y="206" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">mutations accumulate</text>
+              <text x="170" y="234" textAnchor="middle" fontSize="10.5" fontWeight="800" fill="#8C1C12">p53 · RB · cyclins · CDKs</text>
             </g>
           )}
 
-          {/* Drugs inset — chemo drugs and the phase they block. */}
+          {/* Drugs inset */}
           {isHot("drugs") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="100" width="240" height="180" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="180" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>CHEMO TARGETS</text>
-              <text x="80" y="155" fontSize="9.5" fontWeight="700" fill="#2F6FED">S phase blockers</text>
-              <text x="80" y="170" fontSize="8.5" fill="var(--text-2)">methotrexate · 5-FU</text>
-              <text x="80" y="196" fontSize="9.5" fontWeight="700" fill="#F5B93F">M phase blockers</text>
-              <text x="80" y="211" fontSize="8.5" fill="var(--text-2)">vinca alkaloids · taxanes</text>
-              <text x="80" y="240" fontSize="9" fontWeight="700" fill={ATLAS_COLORS.trunk}>Why side effects cluster:</text>
-              <text x="80" y="256" fontSize="8.5" fill="var(--text-2)">hair · gut · bone marrow</text>
-              <text x="80" y="270" fontSize="8.5" fill="var(--text-2)">(fastest-dividing tissues)</text>
+              <rect x="55" y="100" width="250" height="200" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="180" y="128" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>CHEMO TARGETS</text>
+              <text x="72" y="160" fontSize="10.5" fontWeight="800" fill="#2F6FED">S phase blockers</text>
+              <text x="72" y="178" fontSize="10" fontWeight="600" fill="var(--text-2)">methotrexate · 5-FU</text>
+              <text x="72" y="206" fontSize="10.5" fontWeight="800" fill="#F5B93F">M phase blockers</text>
+              <text x="72" y="224" fontSize="10" fontWeight="600" fill="var(--text-2)">vinca alkaloids · taxanes</text>
+              <text x="72" y="254" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>Why side effects cluster:</text>
+              <text x="72" y="272" fontSize="10" fontWeight="600" fill="var(--text-2)">hair · gut · bone marrow</text>
+              <text x="72" y="288" fontSize="10" fontWeight="600" fill="var(--text-2)">(fastest-dividing tissues)</text>
             </g>
           )}
 
-          {/* Static region labels */}
-          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">The cell cycle</text>
-          <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Grow (G1) → copy DNA (S) → check (G2) → divide (M) — with checkpoints controlling every step</text>
+          <text x="450" y="610" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Grow (G1) → copy DNA (S) → check (G2) → divide (M) — checkpoints control every step</text>
         </svg>
       );
     },
@@ -6189,7 +6256,7 @@ export const DIAGRAMS = {
       ["staging"],
     ],
     viewBox: "0 0 900 620",
-    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+        render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pat:neoplasia"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -6202,26 +6269,21 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
-      // Progression: the cell cycle ring on the left becomes progressively
-      // disabled, and the tumour mass on the right grows as the narration
-      // moves through the steps. At the end, both are shown together.
-      //
-      // tumourSize uses an ease-out curve so the mass grows in a way
-      // that reads as "cells accumulating" — fast early, slowing as it
-      // fills the space — rather than the linear ramp that made step 4
-      // jump from nothing to a third of full size in one frame.
       const showRing = activeStep < 5;
       const showTumour = activeStep >= 4;
       const rawT = Math.min(1, Math.max(0, (activeStep - 3) / 6));
-      const tumourSize = Math.pow(rawT, 0.6); // ease-out
+      const tumourSize = Math.pow(rawT, 0.6);
       const ringEnabled = activeStep < 2;
 
       return (
         <svg viewBox="0 0 900 620" width="100%" height="100%">
-          {/* ---- LEFT: the cell cycle ring ---- */}
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">Cell Cycle and Neoplasia</text>
+
+          {/* LEFT: the cell cycle ring */}
           {showRing && (
             <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
-                {atlasCellCycle({
+              {atlasCellCycle({
                 cx: 280, cy: 400, radius: 100,
                 activePhase: "G1",
                 showCheckpoints: !ringEnabled,
@@ -6236,14 +6298,13 @@ export const DIAGRAMS = {
             <circle cx="280" cy="400" r="110" fill="none" {...ring("normal")} pointerEvents="none" />
           </g>
 
-          {/* ---- RIGHT: the tumour mass ---- */}
+          {/* RIGHT: the growing tumour mass */}
           {showTumour && (
             <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
               {(() => {
                 const baseR = 30 + tumourSize * 90;
                 const tcx = 660;
                 const tcy = 320;
-                // A cluster of overlapping circles, growing with tumourSize
                 const cells = [
                   [0, 0],          [0.5, -0.4],     [-0.5, -0.3],
                   [0.4, 0.5],      [-0.4, 0.5],     [0, -0.7],
@@ -6260,11 +6321,10 @@ export const DIAGRAMS = {
                         r={baseR * 0.32}
                         fill="#FBDCDC"
                         stroke="#C0392B"
-                        strokeWidth="1.6"
-                        opacity="0.85"
+                        strokeWidth="2"
+                        opacity="0.95"
                       />
                     ))}
-                    {/* Irregular tumour outline */}
                     <ellipse
                       cx={tcx}
                       cy={tcy}
@@ -6272,9 +6332,9 @@ export const DIAGRAMS = {
                       ry={baseR * 1.05}
                       fill="none"
                       stroke="#8C1C12"
-                      strokeWidth="2"
+                      strokeWidth="2.4"
                       strokeDasharray="6 4"
-                      opacity="0.7"
+                      opacity="0.85"
                     />
                   </g>
                 );
@@ -6282,99 +6342,97 @@ export const DIAGRAMS = {
             </g>
           )}
 
-          {/* Checkpoint failure inset — a broken checkpoint gate. */}
+          {/* Checkpoint failure inset */}
           {isHot("checkpoint") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="100" width="220" height="130" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="170" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#C0392B">CHECKPOINT FAILURE</text>
-              <text x="170" y="150" textAnchor="middle" fontSize="9" fill="var(--text-2)">usually p53 or RB</text>
-              <text x="170" y="168" textAnchor="middle" fontSize="9" fill="var(--text-2)">damaged DNA keeps copying</text>
-              <text x="170" y="192" textAnchor="middle" fontSize="9.5" fontWeight="700" fill="#8C1C12">first step toward cancer</text>
-              <text x="170" y="212" textAnchor="middle" fontSize="8" fill="var(--text-3)">1 mutation — not yet a tumour</text>
+              <rect x="55" y="60" width="230" height="150" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="170" y="86" textAnchor="middle" fontSize="12" fontWeight="800" fill="#C0392B">CHECKPOINT FAILURE</text>
+              <text x="170" y="112" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">usually p53 or RB</text>
+              <text x="170" y="132" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">damaged DNA keeps copying</text>
+              <text x="170" y="160" textAnchor="middle" fontSize="11" fontWeight="800" fill="#8C1C12">first step toward cancer</text>
+              <text x="170" y="184" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">1 mutation — not yet a tumour</text>
             </g>
           )}
 
-          {/* Oncogenes vs TSG inset — the two families side by side. */}
+          {/* Oncogenes vs TSG inset */}
           {(isHot("oncogenes") || isHot("tsg")) && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="100" width="240" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="180" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>TWO GENE FAMILIES</text>
-              <text x="80" y="152" fontSize="10" fontWeight="700" fill="#C0392B">Oncogenes (accelerator)</text>
-              <text x="80" y="168" fontSize="8.5" fill="var(--text-2)">RAS · MYC · ERBB2</text>
-              <text x="80" y="182" fontSize="8.5" fill="var(--text-2)">gain of function · dominant</text>
-              <text x="80" y="208" fontSize="10" fontWeight="700" fill="#2F6FED">Tumour suppressors (brakes)</text>
-              <text x="80" y="224" fontSize="8.5" fill="var(--text-2)">p53 · RB · BRCA1 · APC</text>
-              <text x="80" y="238" fontSize="8.5" fill="var(--text-2)">loss of function · both copies</text>
+              <rect x="55" y="60" width="250" height="165" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="180" y="86" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>TWO GENE FAMILIES</text>
+              <text x="72" y="114" fontSize="10.5" fontWeight="800" fill="#C0392B">Oncogenes (accelerator)</text>
+              <text x="72" y="132" fontSize="10" fontWeight="600" fill="var(--text-2)">RAS · MYC · ERBB2</text>
+              <text x="72" y="148" fontSize="10" fontWeight="600" fill="var(--text-2)">gain of function · dominant</text>
+              <text x="72" y="176" fontSize="10.5" fontWeight="800" fill="#2F6FED">Tumour suppressors (brakes)</text>
+              <text x="72" y="194" fontSize="10" fontWeight="600" fill="var(--text-2)">p53 · RB · BRCA1 · APC</text>
+              <text x="72" y="210" fontSize="10" fontWeight="600" fill="var(--text-2)">loss of function · both copies</text>
             </g>
           )}
 
           {/* Uncontrolled proliferation inset */}
           {isHot("proliferation") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="100" width="220" height="120" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="170" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#C0392B">UNCONTROLLED GROWTH</text>
-              <text x="170" y="148" textAnchor="middle" fontSize="9" fill="var(--text-2)">no signal needed</text>
-              <text x="170" y="164" textAnchor="middle" fontSize="9" fill="var(--text-2)">ignores contact inhibition</text>
-              <text x="170" y="180" textAnchor="middle" fontSize="9" fill="var(--text-2)">piles up instead of stopping</text>
-              <text x="170" y="204" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="#8C1C12">monolayer → multilayered mass</text>
+              <rect x="55" y="60" width="230" height="140" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="170" y="86" textAnchor="middle" fontSize="12" fontWeight="800" fill="#C0392B">UNCONTROLLED GROWTH</text>
+              <text x="170" y="112" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">no signal needed</text>
+              <text x="170" y="130" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">ignores contact inhibition</text>
+              <text x="170" y="148" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">piles up instead of stopping</text>
+              <text x="170" y="178" textAnchor="middle" fontSize="10" fontWeight="800" fill="#8C1C12">monolayer → multilayered mass</text>
             </g>
           )}
 
           {/* Apoptosis evasion inset */}
           {isHot("apoptosis") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="100" width="220" height="130" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2" />
-              <text x="170" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#8B5CF6">APOPTOSIS EVASION</text>
-              <text x="170" y="150" textAnchor="middle" fontSize="9" fill="var(--text-2)">p53 lost — self-destruct gone</text>
-              <text x="170" y="166" textAnchor="middle" fontSize="9" fill="var(--text-2)">or BCL-2 overexpressed</text>
-              <text x="170" y="190" textAnchor="middle" fontSize="9" fontWeight="700" fill="#5B21B6">damaged cells survive</text>
-              <text x="170" y="208" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">mutations accumulate further</text>
+              <rect x="55" y="60" width="230" height="150" rx="14" fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2.4" />
+              <text x="170" y="86" textAnchor="middle" fontSize="12" fontWeight="800" fill="#8B5CF6">APOPTOSIS EVASION</text>
+              <text x="170" y="112" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">p53 lost — self-destruct gone</text>
+              <text x="170" y="130" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">or BCL-2 overexpressed</text>
+              <text x="170" y="158" textAnchor="middle" fontSize="11" fontWeight="800" fill="#5B21B6">damaged cells survive</text>
+              <text x="170" y="182" textAnchor="middle" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">mutations accumulate further</text>
             </g>
           )}
 
-          {/* Angiogenesis inset */}
+          {/* Angiogenesis inset — top-right, sits clear of the tumour */}
           {isHot("angiogenesis") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="620" y="80" width="240" height="130" rx="14" fill="var(--bg-2)" stroke="#E53935" strokeWidth="2" />
-              <text x="740" y="105" textAnchor="middle" fontSize="11" fontWeight="700" fill="#E53935">ANGIOGENESIS</text>
-              <text x="740" y="128" textAnchor="middle" fontSize="9" fill="var(--text-2)">tumour releases VEGF</text>
-              <text x="740" y="144" textAnchor="middle" fontSize="9" fill="var(--text-2)">new vessels grow into it</text>
-              <text x="740" y="166" textAnchor="middle" fontSize="9" fill="var(--text-2)">needed past ~2 mm</text>
-              <text x="740" y="188" textAnchor="middle" fontSize="9" fontWeight="700" fill="#8C1C12">target of some drugs</text>
+              <rect x="620" y="30" width="240" height="140" rx="14" fill="var(--bg-2)" stroke="#E53935" strokeWidth="2.4" />
+              <text x="740" y="56" textAnchor="middle" fontSize="12" fontWeight="800" fill="#E53935">ANGIOGENESIS</text>
+              <text x="740" y="82" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">tumour releases VEGF</text>
+              <text x="740" y="100" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">new vessels grow into it</text>
+              <text x="740" y="124" textAnchor="middle" fontSize="10.5" fontWeight="600" fill="var(--text)">needed past ~2 mm</text>
+              <text x="740" y="152" textAnchor="middle" fontSize="10.5" fontWeight="800" fill="#8C1C12">target of some drugs</text>
             </g>
           )}
 
           {/* Invasion & metastasis inset */}
           {isHot("invasion") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="100" width="240" height="160" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="180" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill="#C0392B">INVASION & METASTASIS</text>
-              <text x="80" y="152" fontSize="9.5" fill="var(--text-2)">1. break basement membrane</text>
-              <text x="80" y="170" fontSize="9.5" fill="var(--text-2)">2. invade surrounding tissue</text>
-              <text x="80" y="188" fontSize="9.5" fill="var(--text-2)">3. enter blood or lymph</text>
-              <text x="80" y="206" fontSize="9.5" fill="var(--text-2)">4. travel to distant site</text>
-              <text x="80" y="224" fontSize="9.5" fill="var(--text-2)">5. colonise a new organ</text>
-              <text x="80" y="248" fontSize="9" fontWeight="700" fill="#8C1C12">this is what usually kills</text>
+              <rect x="55" y="60" width="250" height="180" rx="14" fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="180" y="86" textAnchor="middle" fontSize="12" fontWeight="800" fill="#C0392B">INVASION & METASTASIS</text>
+              <text x="72" y="114" fontSize="10.5" fontWeight="600" fill="var(--text)">1. break basement membrane</text>
+              <text x="72" y="134" fontSize="10.5" fontWeight="600" fill="var(--text)">2. invade surrounding tissue</text>
+              <text x="72" y="154" fontSize="10.5" fontWeight="600" fill="var(--text)">3. enter blood or lymph</text>
+              <text x="72" y="174" fontSize="10.5" fontWeight="600" fill="var(--text)">4. travel to distant site</text>
+              <text x="72" y="194" fontSize="10.5" fontWeight="600" fill="var(--text)">5. colonise a new organ</text>
+              <text x="72" y="222" fontSize="10.5" fontWeight="800" fill="#8C1C12">this is what usually kills</text>
             </g>
           )}
 
           {/* Staging & grading inset */}
           {isHot("staging") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="100" width="240" height="160" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="180" y="125" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>STAGING & GRADING</text>
-              <text x="80" y="155" fontSize="10" fontWeight="700" fill="#2F6FED">Stage (TNM)</text>
-              <text x="80" y="172" fontSize="9" fill="var(--text-2)">T = tumour size</text>
-              <text x="80" y="188" fontSize="9" fill="var(--text-2)">N = node involvement</text>
-              <text x="80" y="204" fontSize="9" fill="var(--text-2)">M = metastasis present</text>
-              <text x="80" y="228" fontSize="10" fontWeight="700" fill="#8B5CF6">Grade</text>
-              <text x="80" y="244" fontSize="9" fill="var(--text-2)">how abnormal the cells look</text>
+              <rect x="55" y="60" width="250" height="180" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="180" y="86" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>STAGING & GRADING</text>
+              <text x="72" y="118" fontSize="11" fontWeight="800" fill="#2F6FED">Stage (TNM)</text>
+              <text x="72" y="138" fontSize="10.5" fontWeight="600" fill="var(--text)">T = tumour size</text>
+              <text x="72" y="156" fontSize="10.5" fontWeight="600" fill="var(--text)">N = node involvement</text>
+              <text x="72" y="174" fontSize="10.5" fontWeight="600" fill="var(--text)">M = metastasis present</text>
+              <text x="72" y="202" fontSize="11" fontWeight="800" fill="#8B5CF6">Grade</text>
+              <text x="72" y="222" fontSize="10.5" fontWeight="600" fill="var(--text)">how abnormal the cells look</text>
             </g>
           )}
 
-          {/* Static region labels */}
-          <text x="450" y="35" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Normal cycle → neoplasia</text>
-          <text x="450" y="610" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Checkpoint failure → uncontrolled growth → invasion → metastasis</text>
+          <text x="450" y="612" textAnchor="middle" fontSize="12.5" fontWeight="700" fill="var(--text-2)" pointerEvents="none">Checkpoint failure → uncontrolled growth → invasion → metastasis</text>
         </svg>
       );
     },
@@ -7704,9 +7762,7 @@ export const DIAGRAMS = {
 
           {/* Whole-diagram interactive label — a clickable region behind
              everything so tapping empty space selects "whole". */}
-                    <rect x="0" y="0" width="900" height="640"
-            fill="transparent" style={{ cursor: cur }}
-            onClick={click("receptor")} pointerEvents="all" />
+                   
         </svg>
       );
     },
@@ -7763,7 +7819,7 @@ export const DIAGRAMS = {
       // Step 5 narration compares two drugs at the SAME Emax with
       // different EC50s — so this is the potency comparison, not the
       // efficacy comparison. `emax` was the wrong id.
-      ["curve", "ec50"],
+      ["curve", "emax"],
       // Step 6 narration is the ceiling effect — the flat top past
       // which no additional benefit is available.
       ["curve", "ceiling"],
@@ -7797,8 +7853,8 @@ export const DIAGRAMS = {
         <svg viewBox="0 0 900 620" width="100%" height="100%">
           {atlasDefs()}
 
-          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700"
-            fill="var(--text-2)" pointerEvents="none">
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">
             One curve - every quantity in pharmacology is a property of it
           </text>
 
@@ -7808,11 +7864,11 @@ export const DIAGRAMS = {
                 <line
                   x1={plotX} y1={plotY + plotH - frac * plotH}
                   x2={plotX + plotW} y2={plotY + plotH - frac * plotH}
-                  stroke="#94A3B8" strokeWidth="0.6" strokeDasharray="3 4" opacity="0.4"
+                  stroke="#94A3B8" strokeWidth="0.8" strokeDasharray="3 4" opacity="0.6"
                 />
                 <text
-                  x={plotX - 12} y={plotY + plotH - frac * plotH + 4}
-                  textAnchor="end" fontSize="10" fill="var(--text-2)"
+                  x={plotX - 14} y={plotY + plotH - frac * plotH + 5}
+                  textAnchor="end" fontSize="11" fontWeight="700" fill="var(--text)"
                 >
                   {Math.round(frac * 100)}%
                 </text>
@@ -7821,24 +7877,24 @@ export const DIAGRAMS = {
             <line
               x1={plotX} y1={plotY + plotH}
               x2={plotX + plotW} y2={plotY + plotH}
-              stroke="#64748B" strokeWidth="1.4"
+              stroke="#64748B" strokeWidth="1.8"
             />
             <line
               x1={plotX} y1={plotY}
               x2={plotX} y2={plotY + plotH}
-              stroke="#64748B" strokeWidth="1.4"
+              stroke="#64748B" strokeWidth="1.8"
             />
             <text
-              x={plotX + plotW / 2} y={plotY + plotH + 30}
-              textAnchor="middle" fontSize="12" fontWeight="700"
-              fill="var(--text-2)"
+              x={plotX + plotW / 2} y={plotY + plotH + 34}
+              textAnchor="middle" fontSize="13.5" fontWeight="800"
+              fill="var(--text)"
             >
               log dose
             </text>
             <text
               x={plotX - 60} y={plotY + plotH / 2}
-              textAnchor="middle" fontSize="12" fontWeight="700"
-              fill="var(--text-2)"
+              textAnchor="middle" fontSize="13.5" fontWeight="800"
+              fill="var(--text)"
               transform={`rotate(-90 ${plotX - 60} ${plotY + plotH / 2})`}
             >
               response (% of max)
@@ -8099,15 +8155,13 @@ export const DIAGRAMS = {
           )}
 
           {activeStep === lastStep && (
-            <text x="450" y="612" textAnchor="middle" fontSize="11"
-              fontWeight="600" fill="var(--text-2)" pointerEvents="none">
+            <text x="450" y="612" textAnchor="middle" fontSize="12.5"
+              fontWeight="700" fill="var(--text)" pointerEvents="none">
               Potency · efficacy · ceiling · antagonism · selectivity · therapeutic index · tolerance
             </text>
           )}
 
-          <rect x="0" y="0" width="900" height="620"
-            fill="transparent" style={{ cursor: cur }}
-            onClick={click("curve")} pointerEvents="all" />
+
         </svg>
       );
     },
@@ -8165,10 +8219,10 @@ export const DIAGRAMS = {
       ["distribution"],
       ["metabolism"],
       ["excretion"],
-      ["halflife"],
+      ["whole"],
     ],
     viewBox: "0 0 900 620",
-    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+        render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pha:5"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -8181,11 +8235,10 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
-      // A small orange tablet, drawn once and reused.
       const tablet = (x, y, scale = 1) => (
         <g transform={`translate(${x},${y}) scale(${scale})`}>
-          <ellipse cx="0" cy="0" rx="14" ry="8" fill="#F5A8A0" stroke="#8C1C12" strokeWidth="1.2" />
-          <line x1="-8" y1="0" x2="8" y2="0" stroke="#8C1C12" strokeWidth="0.8" opacity="0.6" />
+          <ellipse cx="0" cy="0" rx="14" ry="8" fill="#F5A8A0" stroke="#8C1C12" strokeWidth="1.6" />
+          <line x1="-8" y1="0" x2="8" y2="0" stroke="#8C1C12" strokeWidth="1" opacity="0.7" />
         </g>
       );
 
@@ -8193,70 +8246,65 @@ export const DIAGRAMS = {
         <svg viewBox="0 0 900 620" width="100%" height="100%">
           {atlasDefs()}
 
-          <text x="450" y="28" textAnchor="middle" fontSize="13" fontWeight="700"
-            fill="var(--text-2)" pointerEvents="none">
+          <text x="450" y="28" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">
             ADME - the journey of a drug through the body
           </text>
 
           {/* ---- Route column (left) ---- */}
           <g style={{ cursor: cur }} onClick={click("route")} filter={hotFilter("route")}>
-            <text x="60" y="60" fontSize="11" fontWeight="800" fill="var(--text-2)">Route</text>
+            <text x="60" y="60" fontSize="12" fontWeight="800" fill="var(--text)">Route</text>
             {tablet(70, 95, 1.1)}
-            <text x="70" y="120" textAnchor="middle" fontSize="9" fill="var(--text-2)">oral · IV · IM</text>
-            <text x="70" y="132" textAnchor="middle" fontSize="9" fill="var(--text-2)">SC · SL · rectal</text>
-            <text x="70" y="144" textAnchor="middle" fontSize="9" fill="var(--text-2)">inhaled · topical</text>
+            <text x="70" y="122" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">oral · IV · IM</text>
+            <text x="70" y="136" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">SC · SL · rectal</text>
+            <text x="70" y="150" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">inhaled · topical</text>
             <rect x="20" y="70" width="100" height="90" rx="10"
               fill="none" {...ring("route")} pointerEvents="none" />
           </g>
 
-          {/* Arrow: route -> absorption */}
           {atlasFlowArrow({ x1: 125, y1: 105, x2: 195, y2: 105, color: ATLAS_COLORS.trunk })}
 
           {/* ---- Absorption zone (gut) ---- */}
           <g style={{ cursor: cur }} onClick={click("absorption")} filter={hotFilter("absorption")}>
             <rect x="205" y="55" width="140" height="110" rx="12"
-              fill="var(--bg-3)" stroke="#C0392B" strokeWidth="1.8" />
-            <text x="275" y="80" textAnchor="middle" fontSize="11" fontWeight="800" fill="#C0392B">Absorption</text>
-            <text x="275" y="98" textAnchor="middle" fontSize="9" fill="var(--text-2)">gut wall</text>
-            <text x="275" y="112" textAnchor="middle" fontSize="9" fill="var(--text-2)">small intestine</text>
-            <text x="275" y="126" textAnchor="middle" fontSize="9" fill="var(--text-2)">stomach (weak acids)</text>
-            {/* Small gut villi */}
+              fill="var(--bg-3)" stroke="#C0392B" strokeWidth="2.2" />
+            <text x="275" y="80" textAnchor="middle" fontSize="12" fontWeight="800" fill="#C0392B">Absorption</text>
+            <text x="275" y="100" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">gut wall</text>
+            <text x="275" y="115" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">small intestine</text>
+            <text x="275" y="130" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">stomach (weak acids)</text>
             {[235, 250, 265, 280, 295, 310].map((vx, i) => (
-              <path key={i} d={`M${vx},150 Q${vx + 3},140 ${vx + 6},150`} fill="none" stroke="#C0392B" strokeWidth="1" opacity="0.6" />
+              <path key={i} d={`M${vx},150 Q${vx + 3},140 ${vx + 6},150`} fill="none" stroke="#C0392B" strokeWidth="1.2" opacity="0.8" />
             ))}
             <rect x="205" y="55" width="140" height="110" rx="12"
               fill="none" {...ring("absorption")} pointerEvents="none" />
           </g>
 
-          {/* Arrow: absorption -> first-pass liver */}
           {atlasFlowArrow({ x1: 350, y1: 105, x2: 420, y2: 105, color: ATLAS_COLORS.trunk })}
 
           {/* ---- First-pass liver (small) ---- */}
           <g style={{ cursor: cur }} onClick={click("firstpass")} filter={hotFilter("firstpass")}>
-            <text x="460" y="80" textAnchor="middle" fontSize="9.5" fontWeight="700" fill="#8C1C12">first-pass</text>
+            <text x="460" y="80" textAnchor="middle" fontSize="10" fontWeight="700" fill="#8C1C12">first-pass</text>
             {atlasOrgan({ id: "fp-liver", cx: 460, cy: 115, w: 70, h: 40, label: "Liver",
               fill: "#C0392B", dim: "rgba(192,57,43,.14)",
               onLabelClick, activeLabelId, pulsing: false })}
-            <text x="460" y="150" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">portal vein</text>
+            <text x="460" y="152" textAnchor="middle" fontSize="9" fontWeight="600" fill="var(--text-2)">portal vein</text>
             <rect x="415" y="70" width="90" height="90" rx="10"
               fill="none" {...ring("firstpass")} pointerEvents="none" />
           </g>
 
-          {/* Arrow: first-pass -> systemic blood */}
           {atlasFlowArrow({ x1: 515, y1: 105, x2: 580, y2: 105, color: ATLAS_COLORS.trunk })}
 
           {/* ---- Bioavailability badge ---- */}
           <g style={{ cursor: cur }} onClick={click("bioavail")} filter={hotFilter("bioavail")}>
             <rect x="590" y="75" width="120" height="60" rx="12"
-              fill="var(--bg-3)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-            <text x="650" y="98" textAnchor="middle" fontSize="11" fontWeight="800" fill={ATLAS_COLORS.trunk}>Bioavailability</text>
-            <text x="650" y="115" textAnchor="middle" fontSize="9" fill="var(--text-2)">F = fraction reaching</text>
-            <text x="650" y="127" textAnchor="middle" fontSize="9" fill="var(--text-2)">systemic circulation</text>
+              fill="var(--bg-3)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.2" />
+            <text x="650" y="98" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>Bioavailability</text>
+            <text x="650" y="115" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">F = fraction reaching</text>
+            <text x="650" y="129" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">systemic circulation</text>
             <rect x="590" y="75" width="120" height="60" rx="12"
               fill="none" {...ring("bioavail")} pointerEvents="none" />
           </g>
 
-          {/* Arrow: bioavail -> systemic circulation vessel */}
           {atlasFlowArrow({ x1: 715, y1: 105, x2: 800, y2: 105, color: ATLAS_COLORS.trunk })}
 
           {/* ---- Systemic circulation vessel segment (top-right) ---- */}
@@ -8264,26 +8312,22 @@ export const DIAGRAMS = {
             {atlasVessel({ d: "M810,105 Q860,105 870,150 Q870,220 830,240", oxygenated: true, width: 16 })}
             {atlasBloodCell({ cx: 840, cy: 130, r: 5, oxygenated: true, animate: true, delay: "0s" })}
             {atlasBloodCell({ cx: 855, cy: 200, r: 5, oxygenated: true, animate: true, delay: "0.6s" })}
-            <text x="870" y="85" textAnchor="middle" fontSize="10" fontWeight="700" fill="#C0392B">bloodstream</text>
+            <text x="870" y="85" textAnchor="middle" fontSize="11" fontWeight="700" fill="#C0392B">bloodstream</text>
           </g>
 
-          {/* ---- Distribution zone (mid-right): organs the drug enters ---- */}
+          {/* ---- Distribution zone (mid-right) ---- */}
           <g style={{ cursor: cur }} onClick={click("distribution")} filter={hotFilter("distribution")}>
-            <text x="500" y="200" fontSize="11" fontWeight="800" fill="#8B5CF6">Distribution - Vd</text>
-            {/* Heart */}
+            <text x="500" y="200" fontSize="12" fontWeight="800" fill="#8B5CF6">Distribution - Vd</text>
             {atlasHeart({ cx: 590, cy: 260, scale: 0.32, highlight: false })}
-            <text x="590" y="310" textAnchor="middle" fontSize="9" fill="var(--text-2)">heart</text>
-            {/* Brain (soft circle) */}
-            <ellipse cx="450" cy="260" rx="34" ry="28" fill="#E9DFFF" stroke="#8B5CF6" strokeWidth="1.6" opacity="0.85" />
-            <text x="450" y="263" textAnchor="middle" fontSize="10" fontWeight="700" fill="#5B21B6">brain</text>
-            <text x="450" y="310" textAnchor="middle" fontSize="9" fill="var(--text-2)">BBB limits entry</text>
-            {/* Fat (soft blob) */}
+            <text x="590" y="310" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">heart</text>
+            <ellipse cx="450" cy="260" rx="34" ry="28" fill="#E9DFFF" stroke="#8B5CF6" strokeWidth="1.8" opacity="0.9" />
+            <text x="450" y="263" textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#5B21B6">brain</text>
+            <text x="450" y="310" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">BBB limits entry</text>
             {atlasOrgan({ id: "fat", cx: 730, cy: 260, w: 70, h: 45, label: "fat",
               fill: "#8B5CF6", dim: "rgba(139,92,246,.14)",
               onLabelClick, activeLabelId, pulsing: false })}
-            <text x="730" y="310" textAnchor="middle" fontSize="9" fill="var(--text-2)">lipophilic drugs</text>
-            {/* Text: Vd explanation */}
-            <text x="590" y="340" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">Vd = total drug in body / plasma concentration</text>
+            <text x="730" y="310" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">lipophilic drugs</text>
+            <text x="590" y="342" textAnchor="middle" fontSize="10" fontWeight="600" fill="var(--text-2)">Vd = total drug in body / plasma concentration</text>
             <rect x="420" y="215" width="350" height="135" rx="14"
               fill="none" {...ring("distribution")} pointerEvents="none" />
           </g>
@@ -8291,208 +8335,174 @@ export const DIAGRAMS = {
           {/* ---- Metabolism (liver, mid-bottom-left) ---- */}
           <g style={{ cursor: cur }} onClick={click("metabolism")} filter={hotFilter("metabolism")}>
             <rect x="60" y="330" width="240" height="130" rx="12"
-              fill="var(--bg-3)" stroke="#8C1C12" strokeWidth="1.8" />
-            <text x="180" y="355" textAnchor="middle" fontSize="11" fontWeight="800" fill="#8C1C12">Metabolism</text>
+              fill="var(--bg-3)" stroke="#8C1C12" strokeWidth="2.2" />
+            <text x="180" y="355" textAnchor="middle" fontSize="12" fontWeight="800" fill="#8C1C12">Metabolism</text>
             {atlasOrgan({ id: "met-liver", cx: 120, cy: 400, w: 60, h: 45, label: "liver",
               fill: "#C0392B", dim: "rgba(192,57,43,.14)",
               onLabelClick, activeLabelId, pulsing: false })}
-            <text x="230" y="390" textAnchor="middle" fontSize="9.5" fontWeight="700" fill="#8C1C12">Phase I</text>
-            <text x="230" y="404" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">CYP450 oxidation</text>
-            <text x="230" y="420" textAnchor="middle" fontSize="9.5" fontWeight="700" fill="#8C1C12">Phase II</text>
-            <text x="230" y="434" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">conjugation</text>
+            <text x="230" y="390" textAnchor="middle" fontSize="10" fontWeight="700" fill="#8C1C12">Phase I</text>
+            <text x="230" y="405" textAnchor="middle" fontSize="9" fontWeight="600" fill="var(--text-2)">CYP450 oxidation</text>
+            <text x="230" y="424" textAnchor="middle" fontSize="10" fontWeight="700" fill="#8C1C12">Phase II</text>
+            <text x="230" y="439" textAnchor="middle" fontSize="9" fontWeight="600" fill="var(--text-2)">conjugation</text>
             <rect x="60" y="330" width="240" height="130" rx="12"
               fill="none" {...ring("metabolism")} pointerEvents="none" />
           </g>
 
-          {/* Arrow: metabolism -> excretion */}
           {atlasFlowArrow({ x1: 305, y1: 395, x2: 380, y2: 395, color: ATLAS_COLORS.trunk })}
 
           {/* ---- Excretion (kidney, bottom-centre) ---- */}
           <g style={{ cursor: cur }} onClick={click("excretion")} filter={hotFilter("excretion")}>
             <rect x="390" y="330" width="200" height="130" rx="12"
-              fill="var(--bg-3)" stroke="#2F6FED" strokeWidth="1.8" />
-            <text x="490" y="355" textAnchor="middle" fontSize="11" fontWeight="800" fill="#2F6FED">Excretion</text>
+              fill="var(--bg-3)" stroke="#2F6FED" strokeWidth="2.2" />
+            <text x="490" y="355" textAnchor="middle" fontSize="12" fontWeight="800" fill="#2F6FED">Excretion</text>
             {atlasGlomerulus({ cx: 440, cy: 400, r: 32, showFiltration: false, highlight: false })}
-            <text x="540" y="385" textAnchor="middle" fontSize="9" fill="var(--text-2)">filtration</text>
-            <text x="540" y="400" textAnchor="middle" fontSize="9" fill="var(--text-2)">secretion</text>
-            <text x="540" y="415" textAnchor="middle" fontSize="9" fill="var(--text-2)">reabsorption</text>
+            <text x="540" y="385" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">filtration</text>
+            <text x="540" y="400" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">secretion</text>
+            <text x="540" y="415" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">reabsorption</text>
             <rect x="390" y="330" width="200" height="130" rx="12"
               fill="none" {...ring("excretion")} pointerEvents="none" />
           </g>
 
-          {/* Arrow: excretion -> half-life plot */}
           {atlasFlowArrow({ x1: 595, y1: 395, x2: 665, y2: 395, color: ATLAS_COLORS.trunk })}
 
           {/* ---- Half-life decay curve (bottom-right) ---- */}
           <g style={{ cursor: cur }} onClick={click("halflife")} filter={hotFilter("halflife")}>
             <rect x="670" y="330" width="210" height="130" rx="12"
-              fill="var(--bg-3)" stroke={ATLAS_COLORS.trunk} strokeWidth="1.8" />
-            <text x="775" y="352" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>Half-life</text>
-            {/* Axes */}
-            <line x1="690" y1="435" x2="860" y2="435" stroke="#64748B" strokeWidth="1" />
-            <line x1="690" y1="365" x2="690" y2="435" stroke="#64748B" strokeWidth="1" />
-            {/* Decay curve - exponential from 100% down to ~3% over 5 half-lives */}
+              fill="var(--bg-3)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.2" />
+            <text x="775" y="352" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>Half-life</text>
+            <line x1="690" y1="435" x2="860" y2="435" stroke="#64748B" strokeWidth="1.4" />
+            <line x1="690" y1="365" x2="690" y2="435" stroke="#64748B" strokeWidth="1.4" />
             <path
               d="M690,365 Q710,375 720,395 Q735,415 745,425 Q765,435 860,435"
-              fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="2.2" strokeLinecap="round"
+              fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" strokeLinecap="round"
             />
-            {/* 50% marker */}
-            <line x1="690" y1="400" x2="720" y2="400" stroke={ATLAS_COLORS.trunk} strokeWidth="0.8" strokeDasharray="3 2" opacity="0.7" />
-            <text x="710" y="392" textAnchor="middle" fontSize="7.5" fill={ATLAS_COLORS.trunk} fontWeight="700">50%</text>
-            <text x="775" y="450" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">~5 half-lives to eliminate</text>
+            <line x1="690" y1="400" x2="720" y2="400" stroke={ATLAS_COLORS.trunk} strokeWidth="1" strokeDasharray="3 2" opacity="0.9" />
+            <text x="710" y="392" textAnchor="middle" fontSize="9" fill={ATLAS_COLORS.trunk} fontWeight="700">50%</text>
+            <text x="775" y="452" textAnchor="middle" fontSize="9.5" fontWeight="600" fill="var(--text-2)">~5 half-lives to eliminate</text>
             <rect x="670" y="330" width="210" height="130" rx="12"
               fill="none" {...ring("halflife")} pointerEvents="none" />
           </g>
 
           {/* ---- Step-specific detail panels ---- */}
 
-          {/* Step 3 - route of administration. Lists the routes the
-             narration names, plus the fastest-onset one flagged. */}
           {isHot("route") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="480" width="300" height="110" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="210" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>ROUTE OF ADMINISTRATION</text>
-              <text x="75" y="524" fontSize="9" fill="var(--text-2)">Oral · IV · IM · SC · sublingual</text>
-              <text x="75" y="538" fontSize="9" fill="var(--text-2)">Rectal · inhaled · topical</text>
-              <text x="75" y="558" fontSize="9" fill="var(--text-2)">IV = 100% bioavailability, fastest</text>
-              <text x="75" y="572" fontSize="9" fill="var(--text-2)">Sublingual bypasses the liver</text>
-              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">route sets onset and first-pass exposure</text>
+              <rect x="60" y="480" width="300" height="115" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="210" y="506" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>ROUTE OF ADMINISTRATION</text>
+              <text x="75" y="528" fontSize="10" fontWeight="600" fill="var(--text-2)">Oral · IV · IM · SC · sublingual</text>
+              <text x="75" y="544" fontSize="10" fontWeight="600" fill="var(--text-2)">Rectal · inhaled · topical</text>
+              <text x="75" y="564" fontSize="10" fontWeight="600" fill="var(--text-2)">IV = 100% bioavailability, fastest</text>
+              <text x="75" y="580" fontSize="10" fontWeight="600" fill="var(--text-2)">Sublingual bypasses the liver</text>
+              <text x="75" y="594" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">route sets onset and first-pass exposure</text>
             </g>
           )}
 
-          {/* Step 4 - crossing membranes. The existing panel. */}
           {isHot("membrane") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="480" width="300" height="110" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="210" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>CROSSING MEMBRANES</text>
-              <text x="75" y="524" fontSize="9" fill="var(--text-2)">Lipid-soluble, small, uncharged - crosses</text>
-              <text x="75" y="538" fontSize="9" fill="var(--text-2)">Water-soluble, large, ionised - blocked</text>
-              <text x="75" y="558" fontSize="9" fill="var(--text-2)">Weak acid - absorbed in stomach (aspirin)</text>
-              <text x="75" y="572" fontSize="9" fill="var(--text-2)">Weak base - absorbed in intestine (morphine)</text>
-              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">pH + pKa decide which form dominates</text>
+              <rect x="60" y="480" width="300" height="115" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="210" y="506" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>CROSSING MEMBRANES</text>
+              <text x="75" y="528" fontSize="10" fontWeight="600" fill="var(--text-2)">Lipid-soluble, small, uncharged — crosses</text>
+              <text x="75" y="544" fontSize="10" fontWeight="600" fill="var(--text-2)">Water-soluble, large, ionised — blocked</text>
+              <text x="75" y="564" fontSize="10" fontWeight="600" fill="var(--text-2)">Weak acid — absorbed in stomach (aspirin)</text>
+              <text x="75" y="580" fontSize="10" fontWeight="600" fill="var(--text-2)">Weak base — absorbed in intestine (morphine)</text>
+              <text x="75" y="594" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">pH + pKa decide which form dominates</text>
             </g>
           )}
 
-          {/* Step 5 - first-pass effect. The liver blocks the drug
-             before it reaches the systemic circulation. */}
           {isHot("firstpass") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="480" width="300" height="110" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="210" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>FIRST-PASS EFFECT</text>
-              <text x="75" y="524" fontSize="9" fill="var(--text-2)">Gut blood → portal vein → liver</text>
-              <text x="75" y="538" fontSize="9" fill="var(--text-2)">Liver removes a fraction of the drug</text>
-              <text x="75" y="558" fontSize="9" fill="var(--text-2)">Why nitroglycerin is sublingual</text>
-              <text x="75" y="572" fontSize="9" fill="var(--text-2)">Why oral morphine needs high doses</text>
-              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">why lidocaine is never given orally</text>
+              <rect x="60" y="480" width="300" height="115" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="210" y="506" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>FIRST-PASS EFFECT</text>
+              <text x="75" y="528" fontSize="10" fontWeight="600" fill="var(--text-2)">Gut blood → portal vein → liver</text>
+              <text x="75" y="544" fontSize="10" fontWeight="600" fill="var(--text-2)">Liver removes a fraction of the drug</text>
+              <text x="75" y="564" fontSize="10" fontWeight="600" fill="var(--text-2)">Why nitroglycerin is sublingual</text>
+              <text x="75" y="580" fontSize="10" fontWeight="600" fill="var(--text-2)">Why oral morphine needs high doses</text>
+              <text x="75" y="594" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">why lidocaine is never given orally</text>
             </g>
           )}
 
-          {/* Step 6 - bioavailability. The fraction reaching the
-             systemic circulation unchanged. */}
           {isHot("bioavail") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="480" width="300" height="110" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="210" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>BIOAVAILABILITY (F)</text>
-              <text x="75" y="524" fontSize="9" fill="var(--text-2)">Fraction of dose reaching</text>
-              <text x="75" y="538" fontSize="9" fill="var(--text-2)">systemic circulation unchanged</text>
-              <text x="75" y="558" fontSize="9" fill="var(--text-2)">IV: F = 100% (by definition)</text>
-              <text x="75" y="572" fontSize="9" fill="var(--text-2)">Oral: usually well below 100%</text>
-              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">depends on formulation, food, gut, liver</text>
+              <rect x="60" y="480" width="300" height="115" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="210" y="506" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>BIOAVAILABILITY (F)</text>
+              <text x="75" y="528" fontSize="10" fontWeight="600" fill="var(--text-2)">Fraction of dose reaching</text>
+              <text x="75" y="544" fontSize="10" fontWeight="600" fill="var(--text-2)">systemic circulation unchanged</text>
+              <text x="75" y="564" fontSize="10" fontWeight="600" fill="var(--text-2)">IV: F = 100% (by definition)</text>
+              <text x="75" y="580" fontSize="10" fontWeight="600" fill="var(--text-2)">Oral: usually well below 100%</text>
+              <text x="75" y="594" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">depends on formulation, food, gut, liver</text>
             </g>
           )}
 
-          {/* Step 7 - distribution and volume of distribution. */}
           {isHot("distribution") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="480" width="320" height="110" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="220" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>DISTRIBUTION & Vd</text>
-              <text x="75" y="524" fontSize="9" fill="var(--text-2)">Vd = total drug in body ÷ plasma conc.</text>
-              <text x="75" y="538" fontSize="9" fill="var(--text-2)">High Vd: digoxin ~500 L (widely distributed)</text>
-              <text x="75" y="558" fontSize="9" fill="var(--text-2)">Low Vd: warfarin ~8 L (stays in blood)</text>
-              <text x="75" y="572" fontSize="9" fill="var(--text-2)">Only the free fraction leaves the blood</text>
-              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">protein binding keeps drug in the plasma</text>
+              <rect x="60" y="480" width="320" height="115" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="220" y="506" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>DISTRIBUTION & Vd</text>
+              <text x="75" y="528" fontSize="10" fontWeight="600" fill="var(--text-2)">Vd = total drug in body ÷ plasma conc.</text>
+              <text x="75" y="544" fontSize="10" fontWeight="600" fill="var(--text-2)">High Vd: digoxin ~500 L (widely distributed)</text>
+              <text x="75" y="564" fontSize="10" fontWeight="600" fill="var(--text-2)">Low Vd: warfarin ~8 L (stays in blood)</text>
+              <text x="75" y="580" fontSize="10" fontWeight="600" fill="var(--text-2)">Only the free fraction leaves the blood</text>
+              <text x="75" y="594" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">protein binding keeps drug in the plasma</text>
             </g>
           )}
 
-          {/* Step 8 - metabolism. Phase I and Phase II, CYP450. */}
           {isHot("metabolism") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="480" width="320" height="110" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="220" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>METABOLISM - PHASES I & II</text>
-              <text x="75" y="524" fontSize="9" fill="var(--text-2)">Phase I: oxidation (CYP450), reduction, hydrolysis</text>
-              <text x="75" y="538" fontSize="9" fill="var(--text-2)">adds/exposes a functional group</text>
-              <text x="75" y="558" fontSize="9" fill="var(--text-2)">Phase II: conjugation (glucuronic acid, sulfate)</text>
-              <text x="75" y="572" fontSize="9" fill="var(--text-2)">makes the metabolite water-soluble</text>
-              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">inducers speed up · inhibitors slow down</text>
+              <rect x="60" y="480" width="320" height="115" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="220" y="506" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>METABOLISM — PHASES I & II</text>
+              <text x="75" y="528" fontSize="10" fontWeight="600" fill="var(--text-2)">Phase I: oxidation (CYP450), reduction, hydrolysis</text>
+              <text x="75" y="544" fontSize="10" fontWeight="600" fill="var(--text-2)">adds/exposes a functional group</text>
+              <text x="75" y="564" fontSize="10" fontWeight="600" fill="var(--text-2)">Phase II: conjugation (glucuronic acid, sulfate)</text>
+              <text x="75" y="580" fontSize="10" fontWeight="600" fill="var(--text-2)">makes the metabolite water-soluble</text>
+              <text x="75" y="594" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">inducers speed up · inhibitors slow down</text>
             </g>
           )}
 
-          {/* Step 9 - excretion. Three renal processes. */}
           {isHot("excretion") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="60" y="480" width="320" height="110" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="220" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>RENAL EXCRETION</text>
-              <text x="75" y="524" fontSize="9" fill="var(--text-2)">1. Glomerular filtration - small, unbound drugs</text>
-              <text x="75" y="538" fontSize="9" fill="var(--text-2)">2. Tubular secretion - carrier proteins, for</text>
-              <text x="75" y="552" fontSize="9" fill="var(--text-2)">   protein-bound drugs too large to filter</text>
-              <text x="75" y="572" fontSize="9" fill="var(--text-2)">3. Tubular reabsorption - lipid-soluble, uncharged</text>
-              <text x="75" y="586" fontSize="8.5" fontStyle="italic" fill="var(--text-3)">alkalinising urine speeds aspirin out in overdose</text>
+              <rect x="60" y="480" width="320" height="115" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="220" y="506" textAnchor="middle" fontSize="11.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>RENAL EXCRETION</text>
+              <text x="75" y="528" fontSize="10" fontWeight="600" fill="var(--text-2)">1. Glomerular filtration — small, unbound drugs</text>
+              <text x="75" y="544" fontSize="10" fontWeight="600" fill="var(--text-2)">2. Tubular secretion — carrier proteins, for</text>
+              <text x="75" y="560" fontSize="10" fontWeight="600" fill="var(--text-2)">   protein-bound drugs too large to filter</text>
+              <text x="75" y="580" fontSize="10" fontWeight="600" fill="var(--text-2)">3. Tubular reabsorption — lipid-soluble, uncharged</text>
+              <text x="75" y="594" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">alkalinising urine speeds aspirin out in overdose</text>
             </g>
           )}
 
-          {/* Step 10 - half-life and interactions. Existing table. */}
           {activeStep === 9 && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="380" y="460" width="500" height="120" rx="12"
-                fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="630" y="484" textAnchor="middle" fontSize="10.5" fontWeight="800" fill="#C0392B">DRUG INTERACTIONS - ADME STAGES</text>
-              <text x="395" y="504" fontSize="9" fill="var(--text-2)">Absorption: antacids reduce antibiotic uptake</text>
-              <text x="395" y="518" fontSize="9" fill="var(--text-2)">Distribution: aspirin displaces warfarin from albumin</text>
-              <text x="395" y="532" fontSize="9" fill="var(--text-2)">Metabolism: rifampicin induces CYP; erythromycin inhibits CYP</text>
-              <text x="395" y="546" fontSize="9" fill="var(--text-2)">Excretion: probenecid reduces penicillin elimination</text>
-              <text x="395" y="562" fontSize="9" fill="var(--text-2)">Effect: additive · synergistic · antagonistic</text>
+              <rect x="380" y="460" width="500" height="125" rx="12"
+                fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2.4" />
+              <text x="630" y="486" textAnchor="middle" fontSize="11.5" fontWeight="800" fill="#C0392B">DRUG INTERACTIONS — ADME STAGES</text>
+              <text x="395" y="508" fontSize="10" fontWeight="600" fill="var(--text-2)">Absorption: antacids reduce antibiotic uptake</text>
+              <text x="395" y="524" fontSize="10" fontWeight="600" fill="var(--text-2)">Distribution: aspirin displaces warfarin from albumin</text>
+              <text x="395" y="540" fontSize="10" fontWeight="600" fill="var(--text-2)">Metabolism: rifampicin induces CYP; erythromycin inhibits CYP</text>
+              <text x="395" y="556" fontSize="10" fontWeight="600" fill="var(--text-2)">Excretion: probenecid reduces penicillin elimination</text>
+              <text x="395" y="574" fontSize="10" fontWeight="600" fill="var(--text-2)">Effect: additive · synergistic · antagonistic</text>
             </g>
           )}
 
-          {/* Drug interaction table on step 9 */}
-          {activeStep === 9 && (
-            <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="380" y="460" width="500" height="120" rx="12"
-                fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
-              <text x="630" y="484" textAnchor="middle" fontSize="10.5" fontWeight="800" fill="#C0392B">DRUG INTERACTIONS - ADME STAGES</text>
-              <text x="395" y="504" fontSize="9" fill="var(--text-2)">Absorption: antacids reduce antibiotic uptake</text>
-              <text x="395" y="518" fontSize="9" fill="var(--text-2)">Distribution: aspirin displaces warfarin from albumin</text>
-              <text x="395" y="532" fontSize="9" fill="var(--text-2)">Metabolism: rifampicin induces CYP; erythromycin inhibits CYP</text>
-              <text x="395" y="546" fontSize="9" fill="var(--text-2)">Excretion: probenecid reduces penicillin elimination</text>
-              <text x="395" y="562" fontSize="9" fill="var(--text-2)">Effect: additive · synergistic · antagonistic</text>
-            </g>
-          )}
-
-          {/* Final-step footer */}
           {activeStep === lastStep && (
-            <text x="450" y="608" textAnchor="middle" fontSize="11"
-              fontWeight="600" fill="var(--text-2)" pointerEvents="none">
-              What dose · by what route · how often - every answer lives in ADME
+            <text x="450" y="608" textAnchor="middle" fontSize="12.5"
+              fontWeight="700" fill="var(--text)" pointerEvents="none">
+              What dose · by what route · how often — every answer lives in ADME
             </text>
           )}
 
-          {/* Whole-canvas clickable region */}
-          <rect x="0" y="0" width="900" height="620"
-            fill="transparent" style={{ cursor: cur }}
-            onClick={click("whole")} pointerEvents="all" />
+
         </svg>
       );
     },
   },
 
-  /* =========================================================
+    /* =========================================================
      ADRENERGIC PHARMACOLOGY
      Topic: Pharmacology I (pha), Topic 06 (index 5).
      First diagram to use atlasSynapse. Ten steps covering the
@@ -8501,8 +8511,8 @@ export const DIAGRAMS = {
      the note uses to teach each one. Every step of the drug's
      journey is a place where a drug can act.
      ========================================================= */
-  "pha:6": {
-    id: "pha:6",
+"pha:6": {
+    id: "pha:6",  
     type: "diagram",
     title: "Adrenergic Pharmacology - Noradrenaline and the Sympathetic Synapse",
     topic: { courseId: "pha", topicIndex: 5 },
@@ -8558,22 +8568,12 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
-      // The synapse animates through the narrative. Steps 4 (release),
-      // 5 (binding), and 10 (reuptake) each set a visible state on the
-      // shared atlasSynapse primitive, so the anatomy actually changes
-      // at the moment the narration reaches that beat - not just the
-      // glow around a static picture.
       const synapseState =
         activeStep === 3 ? "releasing"
         : activeStep === 4 ? "bound"
         : activeStep === 9 ? "reuptake"
         : null;
 
-      // One reusable callout box, used for every step that needs an
-      // explanatory panel alongside the hero. The `active` flag drives
-      // both the glow filter and the accent border, so the same helper
-      // covers both the "this is what we're talking about" state and
-      // the "this is selected" state without a second component.
       const callout = (id, x, y, w, h, title, body, accent) => {
         const active = isHot(id);
         const selected = activeLabelId === id;
@@ -8582,10 +8582,10 @@ export const DIAGRAMS = {
             <rect x={x} y={y} width={w} height={h} rx={12}
               fill="var(--bg-2)"
               stroke={selected ? ATLAS_COLORS.trunk : active ? ATLAS_COLORS.trunk : "var(--line-2)"}
-              strokeWidth={selected ? 3 : active ? 2 : 1.2} />
-            <text x={x + 12} y={y + 22} fontSize="10.5" fontWeight="800" fill={accent}>{title}</text>
+              strokeWidth={selected ? 3 : active ? 2.4 : 1.4} />
+            <text x={x + 14} y={y + 24} fontSize="12" fontWeight="800" fill={accent}>{title}</text>
             {(Array.isArray(body) ? body : [body]).map((line, i) => (
-              <text key={i} x={x + 12} y={y + 40 + i * 14} fontSize="8.5" fill="var(--text-2)">{line}</text>
+              <text key={i} x={x + 14} y={y + 44 + i * 15} fontSize="10" fontWeight="600" fill="var(--text-2)">{line}</text>
             ))}
             <rect x={x - 6} y={y - 6} width={w + 12} height={h + 12} rx={16}
               fill="none" {...ring(id)} pointerEvents="none" />
@@ -8597,15 +8597,11 @@ export const DIAGRAMS = {
         <svg viewBox="0 0 900 620" width="100%" height="100%">
           {atlasDefs()}
 
-          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700"
-            fill="var(--text-2)" pointerEvents="none">
-            The adrenergic synapse - where every adrenergic drug acts
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">
+            The adrenergic synapse — where every adrenergic drug acts
           </text>
 
-          {/* The hero synapse, drawn by the shared atlasSynapse primitive
-             at the centre of the canvas. Transmitter is noradrenaline, so
-             the vesicles render amber. The state changes per step so the
-             anatomy visibly moves as the narration moves. */}
           <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
             {atlasSynapse({
               cx: 450, cy: 300, scale: 1.4,
@@ -8618,121 +8614,89 @@ export const DIAGRAMS = {
               fill="none" {...ring("whole")} pointerEvents="none" />
           </g>
 
-          {/* Step 2 - synthesis callout, top-left. The noradrenaline
-             pathway is four enzymes, so the panel lists them in order
-             with the rate-limiting one flagged. */}
           {isHot("synthesis") && callout(
-            "synthesis", 20, 100, 210, 130,
+            "synthesis", 20, 100, 215, 140,
             "SYNTHESIS",
             ["tyrosine → L-DOPA → dopamine → NA", "tyrosine hydroxylase = rate-limiting", "4 enzymes, all inside the terminal"],
             "#F5B93F"
           )}
 
-          {/* Step 3 - storage callout, mid-left. Reserpine is the one
-             clinical drug that acts here, so it's named. */}
           {isHot("storage") && callout(
-            "storage", 40, 260, 220, 110,
+            "storage", 20, 260, 215, 120,
             "VESICULAR STORAGE",
             ["NA packed into vesicles", "reserpine blocks storage", "depletes the neuron over days"],
             "#F5B93F"
           )}
 
-          {/* Step 4 - release callout, bottom-left. The synapse itself
-             shows the fusing vesicle at the same time. */}
           {isHot("release") && callout(
-            "release", 40, 400, 220, 120,
+            "release", 20, 400, 215, 130,
             "CALCIUM-TRIGGERED RELEASE",
             ["action potential → Ca²⁺ entry", "vesicles fuse with membrane", "exocytosis into the cleft"],
             "#F5B93F"
           )}
 
-          {/* Step 5 - the receptor overview panel, top-right. Five
-             subtypes listed with their signalling family, so the
-             student sees the taxonomy before the four per-subtype
-             panels that follow. */}
           {isHot("receptors") && callout(
-            "receptors", 660, 100, 220, 140,
+            "receptors", 660, 100, 220, 150,
             "FIVE SUBTYPES",
             ["alpha-1 · alpha-2", "beta-1 · beta-2 · beta-3", "each a different GPCR", "different tissue, different signal"],
             "#5B21B6"
           )}
 
-          {/* Step 6 - alpha-1 panel. Location, effect, and one blocking
-             drug, matching the note's own clinical framing. */}
           {isHot("alpha1") && callout(
-            "alpha1", 640, 100, 220, 130,
+            "alpha1", 660, 100, 220, 140,
             "ALPHA-1",
             ["Gq-coupled", "vasoconstriction · pupil dilation", "bladder sphincter · liver", "prazosin · doxazosin block"],
             "#C0392B"
           )}
 
-          {/* Step 7 - alpha-2 panel. The presynaptic autoreceptor
-             concept is the single most important thing to hold onto
-             here, so it's the first line of the panel. */}
           {isHot("alpha2") && callout(
-            "alpha2", 640, 240, 220, 130,
+            "alpha2", 660, 260, 220, 140,
             "ALPHA-2",
-            ["Gi-coupled, presynaptic", "autoreceptor - reduces release", "platelets - aggregation", "clonidine · methyldopa"],
+            ["Gi-coupled, presynaptic", "autoreceptor — reduces release", "platelets — aggregation", "clonidine · methyldopa"],
             "#8B5CF6"
           )}
 
-          {/* Step 8 - beta-1 panel. Cardiac effects, plus the kidney's
-             renin release, which is the mechanism behind beta-blockers
-             lowering blood pressure. */}
           {isHot("beta1") && callout(
-            "beta1", 640, 100, 220, 130,
+            "beta1", 660, 100, 220, 140,
             "BETA-1",
-            ["Gs-coupled, mainly cardiac", "↑ rate · force · conduction", "kidney - renin release", "metoprolol · atenolol block"],
+            ["Gs-coupled, mainly cardiac", "↑ rate · force · conduction", "kidney — renin release", "metoprolol · atenolol block"],
             "#2F6FED"
           )}
 
-          {/* Step 9 - beta-2 panel. Includes the asthma-relevance beat
-             from the note, since that's the clinical scenario the
-             student will be tested on. */}
           {isHot("beta2") && callout(
-            "beta2", 640, 240, 220, 140,
+            "beta2", 660, 260, 220, 150,
             "BETA-2",
             ["Gs-coupled, bronchial + vascular", "bronchodilation · vasodilation", "uterus · skeletal muscle", "salbutamol · salmeterol"],
             "#2F8F4E"
           )}
 
-          {/* Step 10 - reuptake and metabolism panel. Drawn at the
-             bottom-right of the canvas so it doesn't overlap the
-             hero synapse. The synapse itself shows the reuptake arrow
-             at the same time. */}
           {isHot("reuptake") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="640" y="400" width="220" height="150" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="652" y="424" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>REUPTAKE & METABOLISM</text>
-              <text x="652" y="446" fontSize="8.5" fill="var(--text-2)">uptake 1 - into nerve terminal (main)</text>
-              <text x="652" y="462" fontSize="8.5" fill="var(--text-2)">uptake 2 - into non-neuronal tissue</text>
-              <text x="652" y="478" fontSize="8.5" fill="var(--text-2)">MAO - inside the neuron</text>
-              <text x="652" y="494" fontSize="8.5" fill="var(--text-2)">COMT - in the tissue</text>
-              <text x="652" y="520" fontSize="9" fontWeight="700" fill="#C0392B">tricyclics · cocaine block uptake 1</text>
-              <text x="652" y="538" fontSize="8.5" fill="var(--text-2)">NA stays in the cleft longer</text>
+              <rect x="660" y="420" width="220" height="160" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="676" y="446" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>REUPTAKE & METABOLISM</text>
+              <text x="676" y="470" fontSize="10" fontWeight="600" fill="var(--text-2)">uptake 1 — into nerve terminal (main)</text>
+              <text x="676" y="488" fontSize="10" fontWeight="600" fill="var(--text-2)">uptake 2 — into non-neuronal tissue</text>
+              <text x="676" y="506" fontSize="10" fontWeight="600" fill="var(--text-2)">MAO — inside the neuron</text>
+              <text x="676" y="524" fontSize="10" fontWeight="600" fill="var(--text-2)">COMT — in the tissue</text>
+              <text x="676" y="548" fontSize="10.5" fontWeight="700" fill="#C0392B">tricyclics · cocaine block uptake 1</text>
+              <text x="676" y="566" fontSize="10" fontWeight="600" fill="var(--text-2)">NA stays in the cleft longer</text>
             </g>
           )}
 
-          {/* Final synthesis footer, on the last step only - the same
-             "one sentence that ties it together" convention used by
-             every other finished diagram. */}
           {activeStep === lastStep && (
-            <text x="450" y="608" textAnchor="middle" fontSize="11"
-              fontWeight="600" fill="var(--text-2)" pointerEvents="none">
-              Synthesis · storage · release · receptors · reuptake - every adrenergic drug acts at one of these five steps
+            <text x="450" y="608" textAnchor="middle" fontSize="12.5"
+              fontWeight="700" fill="var(--text)" pointerEvents="none">
+              Synthesis · storage · release · receptors · reuptake — every adrenergic drug acts at one of these five steps
             </text>
           )}
 
-          {/* Whole-canvas clickable region so tapping empty space
-             selects "whole", matching the pattern in pha:4 and pha:5. */}
-          <rect x="0" y="0" width="900" height="620"
-            fill="transparent" style={{ cursor: cur }}
-            onClick={click("whole")} pointerEvents="all" />
+
         </svg>
       );
     },
   },
+  
 
   /* =========================================================
      CHOLINERGIC PHARMACOLOGY
@@ -8788,7 +8752,7 @@ export const DIAGRAMS = {
       ["ache"],
     ],
     viewBox: "0 0 900 620",
-    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+        render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pha:7"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -8801,20 +8765,11 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
-      // The synapse animates through the narrative. Step 4 (release)
-      // and step 5 (binding) each set a visible state on the shared
-      // atlasSynapse primitive, so the anatomy actually changes at
-      // the moment the narration reaches that beat.
       const synapseState =
         activeStep === 3 ? "releasing"
         : activeStep === 4 ? "bound"
         : null;
 
-      // Same callout helper as pha:6 - one component, reused for
-      // every step that needs an explanatory panel alongside the
-      // hero. `active` drives both the glow filter and the accent
-      // border, so the same helper covers the "currently being
-      // discussed" state and the "selected" state.
       const callout = (id, x, y, w, h, title, body, accent) => {
         const active = isHot(id);
         const selected = activeLabelId === id;
@@ -8823,10 +8778,10 @@ export const DIAGRAMS = {
             <rect x={x} y={y} width={w} height={h} rx={12}
               fill="var(--bg-2)"
               stroke={selected ? ATLAS_COLORS.trunk : active ? ATLAS_COLORS.trunk : "var(--line-2)"}
-              strokeWidth={selected ? 3 : active ? 2 : 1.2} />
-            <text x={x + 12} y={y + 22} fontSize="10.5" fontWeight="800" fill={accent}>{title}</text>
+              strokeWidth={selected ? 3 : active ? 2.4 : 1.4} />
+            <text x={x + 14} y={y + 24} fontSize="12" fontWeight="800" fill={accent}>{title}</text>
             {(Array.isArray(body) ? body : [body]).map((line, i) => (
-              <text key={i} x={x + 12} y={y + 40 + i * 14} fontSize="8.5" fill="var(--text-2)">{line}</text>
+              <text key={i} x={x + 14} y={y + 44 + i * 15} fontSize="10" fontWeight="600" fill="var(--text-2)">{line}</text>
             ))}
             <rect x={x - 6} y={y - 6} width={w + 12} height={h + 12} rx={16}
               fill="none" {...ring(id)} pointerEvents="none" />
@@ -8838,16 +8793,11 @@ export const DIAGRAMS = {
         <svg viewBox="0 0 900 620" width="100%" height="100%">
           {atlasDefs()}
 
-          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700"
-            fill="var(--text-2)" pointerEvents="none">
-            The cholinergic synapse - same anatomy, different transmitter
+          <text x="450" y="30" textAnchor="middle" fontSize="14" fontWeight="800"
+            fill="var(--text)" pointerEvents="none">
+            The cholinergic synapse — same anatomy, different transmitter
           </text>
 
-          {/* The hero synapse, drawn by the shared atlasSynapse primitive.
-             Transmitter is acetylcholine, so the vesicles render blue.
-             Same size, same position, same primitive as pha:6 - the
-             student sees the same shape with a different colour, which
-             is exactly the mental model we want them to hold. */}
           <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
             {atlasSynapse({
               cx: 450, cy: 300, scale: 1.4,
@@ -8860,120 +8810,84 @@ export const DIAGRAMS = {
               fill="none" {...ring("whole")} pointerEvents="none" />
           </g>
 
-          {/* Step 2 - synthesis callout. The note is explicit that this
-             is one step, in contrast to noradrenaline's four - that
-             contrast is the panel's whole reason for existing. */}
           {isHot("synthesis") && callout(
-            "synthesis", 40, 100, 220, 120,
-            "SYNTHESIS - ONE STEP",
+            "synthesis", 20, 100, 215, 130,
+            "SYNTHESIS — ONE STEP",
             ["choline + acetyl-CoA → ACh", "enzyme: ChAT", "rate-limited by choline supply", "vs noradrenaline's 4 steps"],
             "#F5B93F"
           )}
 
-          {/* Step 3 - storage callout. Names VAChT and flags that
-             vesamicol is a research tool, not clinical - which is
-             exactly what the note says. */}
           {isHot("storage") && callout(
-            "storage", 40, 250, 220, 110,
+            "storage", 20, 260, 215, 120,
             "VESICULAR STORAGE",
             ["VAChT packs ACh into vesicles", "vesamicol blocks VAChT", "research tool, not clinical"],
             "#F5B93F"
           )}
 
-          {/* Step 4 - release callout. Botulinum toxin is the star
-             here, so it's the last line - the consequence of blocking
-             release. The synapse itself shows a fusing vesicle at the
-             same time. */}
           {isHot("release") && callout(
-            "release", 40, 390, 220, 130,
+            "release", 20, 400, 215, 140,
             "CALCIUM-TRIGGERED RELEASE",
             ["Ca²⁺ entry → vesicle fusion", "SNARE proteins required", "botulinum cleaves SNAREs", "→ flaccid paralysis"],
             "#F5B93F"
           )}
 
-          {/* Step 5 - receptor families overview. The single most
-             important distinction in the topic: fast ion channels vs
-             slow GPCRs. Panel lays them side by side. */}
           {isHot("receptors") && callout(
-            "receptors", 660, 100, 220, 140,
+            "receptors", 660, 100, 220, 150,
             "TWO FAMILIES",
-            ["nicotinic - ion channel", "  milliseconds, ligand-gated", "muscarinic - GPCR", "  seconds, second messengers"],
+            ["nicotinic — ion channel", "  milliseconds, ligand-gated", "muscarinic — GPCR", "  seconds, second messengers"],
             "#5B21B6"
           )}
 
-          {/* Step 6 - nicotinic receptors panel. Location-heavy,
-             because the student needs the three sites (NMJ, ganglia,
-             adrenal medulla) recalled together. */}
           {isHot("nicotinic") && callout(
-            "nicotinic", 640, 100, 220, 150,
+            "nicotinic", 660, 100, 220, 160,
             "NICOTINIC (nAChR)",
             ["ligand-gated ion channel", "5 subunits around a pore", "Nm: neuromuscular junction", "Nn: ganglia + adrenal medulla", "curare · hexamethonium block"],
             "#C0392B"
           )}
 
-          {/* Step 7 - muscarinic overview. Lays out the G-protein
-             coupling pattern so that M2 (Gi) and M3 (Gq) below can
-             slot into it naturally. */}
           {isHot("muscarinic") && callout(
-            "muscarinic", 640, 270, 220, 150,
+            "muscarinic", 660, 280, 220, 160,
             "MUSCARINIC (mAChR)",
-            ["G-protein coupled · M1-M5", "M1, M3, M5 → Gq", "M2, M4 → Gi", "smooth muscle · heart · glands · CNS", "muscarine activates · atropine blocks"],
+            ["G-protein coupled · M1–M5", "M1, M3, M5 → Gq", "M2, M4 → Gi", "smooth muscle · heart · glands", "muscarine activates · atropine blocks"],
             "#8B5CF6"
           )}
 
-          {/* Step 8 - M2 panel. Cardiac only, with atropine's clinical
-             use (bradycardia) called out explicitly. */}
           {isHot("m2") && callout(
-            "m2", 640, 100, 220, 120,
-            "M2 - CARDIAC",
+            "m2", 660, 100, 220, 130,
+            "M2 — CARDIAC",
             ["Gi-coupled · SA + AV nodes", "activation slows heart rate", "the vagal brake", "atropine for bradycardia"],
             "#2F6FED"
           )}
 
-          {/* Step 9 - M3 panel. Glandular and smooth-muscle targets,
-             with the atropine side-effect chain spelled out at the
-             bottom - the note's own teaching point. */}
           {isHot("m3") && callout(
-            "m3", 640, 240, 220, 150,
-            "M3 - SMOOTH MUSCLE & GLANDS",
-            ["Gq-coupled", "bronchoconstriction · gut motility", "salivation · lacrimation · urination", "pupil constriction", "atropine blocks - hence dry mouth,"],
+            "m3", 660, 260, 220, 160,
+            "M3 — SMOOTH MUSCLE & GLANDS",
+            ["Gq-coupled", "bronchoconstriction · gut motility", "salivation · lacrimation · urination", "pupil constriction", "atropine blocks — hence dry mouth,"],
             "#2F8F4E"
           )}
 
-          {/* Step 10 - acetylcholinesterase panel. Drawn at the
-             bottom-right, mirroring pha:6's reuptake panel position.
-             Names the therapeutic inhibitors and the toxic one, so
-             the student leaves with the full picture of what this
-             enzyme's inhibition does. */}
           {isHot("ache") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="640" y="420" width="220" height="150" rx="12"
-                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="652" y="444" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>ACETYLCHOLINESTERASE</text>
-              <text x="652" y="464" fontSize="8.5" fill="var(--text-2)">hydrolyses ACh → choline + acetate</text>
-              <text x="652" y="480" fontSize="8.5" fill="var(--text-2)">milliseconds - the fastest in the body</text>
-              <text x="652" y="502" fontSize="9" fontWeight="700" fill="#C0392B">inhibitors:</text>
-              <text x="652" y="518" fontSize="8.5" fill="var(--text-2)">neostigmine · physostigmine</text>
-              <text x="652" y="532" fontSize="8.5" fill="var(--text-2)">donepezil · organophosphates</text>
-              <text x="652" y="552" fontSize="8" fontStyle="italic" fill="var(--text-3)">antidote: atropine + pralidoxime</text>
+              <rect x="660" y="440" width="220" height="150" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
+              <text x="676" y="466" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>ACETYLCHOLINESTERASE</text>
+              <text x="676" y="490" fontSize="10" fontWeight="600" fill="var(--text-2)">hydrolyses ACh → choline + acetate</text>
+              <text x="676" y="508" fontSize="10" fontWeight="600" fill="var(--text-2)">milliseconds — the fastest in the body</text>
+              <text x="676" y="532" fontSize="10.5" fontWeight="700" fill="#C0392B">inhibitors:</text>
+              <text x="676" y="550" fontSize="10" fontWeight="600" fill="var(--text-2)">neostigmine · physostigmine</text>
+              <text x="676" y="566" fontSize="10" fontWeight="600" fill="var(--text-2)">donepezil · organophosphates</text>
+              <text x="676" y="584" fontSize="9.5" fontStyle="italic" fill="var(--text-2)">antidote: atropine + pralidoxime</text>
             </g>
           )}
 
-          {/* Final synthesis footer, on the last step only. The
-             contrast line is the one-sentence takeaway that ties the
-             whole topic together. */}
           {activeStep === lastStep && (
-            <text x="450" y="608" textAnchor="middle" fontSize="11"
-              fontWeight="600" fill="var(--text-2)" pointerEvents="none">
+            <text x="450" y="608" textAnchor="middle" fontSize="12.5"
+              fontWeight="700" fill="var(--text)" pointerEvents="none">
               Same synapse as adrenergic · different transmitter · different receptors · different drugs
             </text>
           )}
 
-          {/* Whole-canvas clickable region so tapping empty space
-             selects "whole", matching the pattern in pha:4-pha:6. */}
-          <rect x="0" y="0" width="900" height="620"
-            fill="transparent" style={{ cursor: cur }}
-            onClick={click("whole")} pointerEvents="all" />
+
         </svg>
       );
     },
@@ -8995,7 +8909,7 @@ export const DIAGRAMS = {
     id: "an2:cardiovascular-system",
     type: "diagram",
     title: "The Cardiovascular System — Pipes, Pressure, and Flow",
-    topic: { courseId: "an2", topicIndex: 8 },
+    topic: { courseId: "an2", topicIndex: 10 },
     parent: null,
     summary: "The heart is only half of the cardiovascular system. The other half is the vessel network that delivers blood to every tissue and brings it back — arteries that carry blood away under pressure, capillaries that are one cell thick and allow exchange, and veins that return blood to the heart at low pressure with the help of valves and muscle pumps. Blood pressure is the product of how much blood the heart pumps and how strongly the arterioles resist it, and the body adjusts both constantly. The lymphatic system runs alongside it all, returning the fluid that leaks out of the capillaries.",
     labels: [
@@ -9717,9 +9631,7 @@ export const DIAGRAMS = {
             </g>
           )}
 
-          <rect x="0" y="0" width="900" height="640"
-            fill="transparent" style={{ cursor: cur }}
-            onClick={click("receptor")} pointerEvents="all" />
+
         </svg>
       );
     },

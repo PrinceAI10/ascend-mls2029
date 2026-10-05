@@ -4327,7 +4327,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
                 },
                 activeLabelId,
                 activeStep,
-                onOpenDrill: () => {},
+                onOpenDrill: onDrill,
               })}
             </div>
           </div>
