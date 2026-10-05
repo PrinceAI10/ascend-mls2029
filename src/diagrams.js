@@ -2788,8 +2788,216 @@ const atlasReceptor = ({
 /* A tiny `label` prop prints text above the drug, for the cases    */
 /* where the specific drug name is the point (aspirin, statins...).  */
 /* Used by any diagram that needs to show a specific drug acting on  */
-/* a specific target.                                                 */
+/* a specific target.                                                */
 /* ---------------------------------------------------------------- */
+
+/* ---------------------------------------------------------------- */
+/* GPCR - the same seven-transmembrane receptor as atlasReceptor,    */
+/* but drawn as a whole signalling unit: the receptor in its         */
+/* membrane, plus a heterotrimeric G-protein (alpha, beta, gamma)    */
+/* sitting underneath it, cycling between resting and active states. */
+/*                                                                   */
+/* atlasReceptor answers "what does the drug bind to?" - this        */
+/* primitive answers "what happens next?". It composes the same      */
+/* receptor at a smaller scale and adds the G-protein beneath it,    */
+/* so a diagram can show the whole canonical GPCR signalling         */
+/* assembly without redrawing the serpentine.                        */
+/*                                                                   */
+/* `state` prop:                                                     */
+/*   "resting"     - GDP-bound alpha subunit docked at the receptor  */
+/*   "active"      - GTP-bound alpha subunit, beta/gamma dissociated */
+/*   "hydrolysing" - alpha returning to GDP, heading back to betagamma*/
+/*   null          - no G-protein drawn, just the receptor alone     */
+/*                                                                   */
+/* The subunits are drawn in distinct colours so the student can     */
+/* follow each one separately across the cycle - the single hardest  */
+/* part of GPCR signalling to hold onto in a static diagram.         */
+/* ---------------------------------------------------------------- */
+const atlasGPCR = ({
+  cx, cy, scale = 1,
+  occupancy = null,
+  state = null,
+  highlight = false,
+}) => {
+  const gAlphaColor = state === "active" ? "#2F8F4E"
+                    : state === "hydrolysing" ? ATLAS_COLORS.trunk
+                    : "#8B5CF6";
+  const gBetaGammaColor = "#2F6FED";
+  return (
+    <g transform={`translate(${cx},${cy}) scale(${scale})`}>
+      {/* The receptor itself, drawn by the existing primitive at 0.7
+         scale so there's room for the G-protein beneath it. */}
+      {atlasReceptor({
+        cx: 0, cy: 0, scale: 0.7,
+        occupancy,
+        highlight,
+      })}
+
+      {/* G-protein, drawn only when a state is requested. */}
+      {state && (
+        <g transform="translate(0, 62)">
+          {/* Alpha subunit */}
+          <g
+            className={state === "active" ? "atlas-pulse" : undefined}
+            style={state === "hydrolysing"
+              ? { animation: "atlasDrift 2.5s ease-in-out infinite" }
+              : undefined}
+          >
+            <ellipse
+              cx={state === "active" ? -22 : -12}
+              cy={state === "active" ? 6 : 0}
+              rx="13" ry="9"
+              fill={gAlphaColor}
+              stroke="#0A0F1A" strokeWidth="0.8"
+              opacity="0.92"
+            />
+            <text
+              x={state === "active" ? -22 : -12}
+              y={state === "active" ? 9 : 3}
+              textAnchor="middle" fontSize="9" fontWeight="800"
+              fill="#0A0F1A"
+            >
+              alpha
+            </text>
+            {/* Nucleotide tag - GDP vs GTP is the whole point of the cycle */}
+            <text
+              x={state === "active" ? -22 : -12}
+              y={state === "active" ? 22 : 16}
+              textAnchor="middle" fontSize="7.5" fontWeight="700"
+              fill={gAlphaColor}
+            >
+              {state === "active" ? "GTP" : "GDP"}
+            </text>
+          </g>
+
+          {/* Beta/gamma pair - drawn as one blob, since they travel
+             together and two labelled circles collide at this scale. */}
+          <g
+            className={state === "active" ? "atlas-pulse" : undefined}
+            style={state === "hydrolysing"
+              ? { animation: "atlasDrift 2.5s ease-in-out infinite", animationDelay: "0.3s" }
+              : undefined}
+          >
+            <ellipse
+              cx={state === "active" ? 22 : 12}
+              cy={state === "active" ? 6 : 0}
+              rx="14" ry="9"
+              fill={gBetaGammaColor}
+              stroke="#0A0F1A" strokeWidth="0.8"
+              opacity="0.92"
+            />
+            <text
+              x={state === "active" ? 22 : 12}
+              y={state === "active" ? 9 : 3}
+              textAnchor="middle" fontSize="9" fontWeight="800"
+              fill="#fff"
+            >
+              bg
+            </text>
+          </g>
+
+          {/* State caption below the assembly */}
+          <text
+            x="0" y="34"
+            textAnchor="middle" fontSize="8.5" fontWeight="700"
+            fill={gAlphaColor}
+          >
+            {state === "resting"     ? "resting - GDP"
+            : state === "active"     ? "active - GTP"
+            : state === "hydrolysing"? "hydrolysing - GDP"
+            : ""}
+          </text>
+        </g>
+      )}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
+/* Second messenger - a labelled node for the small intracellular    */
+/* molecules a GPCR produces when its G-protein activates an         */
+/* effector enzyme. Each messenger is a rounded box with its own     */
+/* abbreviation, its own colour, and a one-line role caption, so a   */
+/* diagram can drop one in wherever a cascade branch happens.        */
+/*                                                                   */
+/* `messenger` prop:                                                 */
+/*   "cAMP"  - adenylate cyclase product, activates PKA              */
+/*   "IP3"   - phospholipase C product, releases Ca from the ER      */
+/*   "DAG"   - phospholipase C product, activates PKC                */
+/*   "Ca2+"  - the calcium signal itself                             */
+/*   "cGMP"  - guanylate cyclase product, activates PKG              */
+/*                                                                   */
+/* `role` prop overrides the default caption.                        */
+/*                                                                   */
+/* Coordinates: cx, cy are the CENTRE of the node, matching the      */
+/* convention used by atlasDrug and atlasReceptor, not the           */
+/* top-left corner used by the factor boxes in atlasClottingCascade. */
+/* ---------------------------------------------------------------- */
+const atlasSecondMessenger = ({
+  cx, cy, scale = 1,
+  messenger = "cAMP",
+  role,
+  highlight = false,
+}) => {
+  const palette = {
+    cAMP:  { fill: "#8B5CF6", stroke: "#5B21B6", label: "cAMP",
+             caption: "activates PKA" },
+    IP3:   { fill: "#2F6FED", stroke: "#123F9E", label: "IP3",
+             caption: "releases Ca from ER" },
+    DAG:   { fill: "#C0392B", stroke: "#8C1C12", label: "DAG",
+             caption: "activates PKC" },
+    "Ca2+":{ fill: ATLAS_COLORS.trunk, stroke: "#8B6410", label: "Ca",
+             caption: "calcium signal" },
+    cGMP:  { fill: "#16A34A", stroke: "#0F7A36", label: "cGMP",
+             caption: "activates PKG" },
+  }[messenger] || { fill: "#64748B", stroke: "#334155",
+                    label: messenger, caption: "" };
+  const edge = highlight ? ATLAS_COLORS.trunk : palette.stroke;
+  const stroke = highlight ? 3 : 1.8;
+  return (
+    <g
+      transform={`translate(${cx},${cy}) scale(${scale})`}
+      className={highlight ? "atlas-pulse" : undefined}
+    >
+      <rect
+        x="-34" y="-20" width="68" height="40" rx="10"
+        fill={palette.fill} stroke={edge} strokeWidth={stroke}
+        opacity="0.92"
+      />
+      <text
+        x="0" y="2"
+        textAnchor="middle" dominantBaseline="middle"
+        fontSize="16" fontWeight="800" fill="#fff"
+      >
+        {palette.label}
+      </text>
+      <text
+        x="0" y="34"
+        textAnchor="middle" fontSize="9.5" fontWeight="700"
+        fill={palette.fill}
+      >
+        {role || palette.caption}
+      </text>
+    </g>
+    );
+};
+
+/* ----------------------------------------------------------------
+ * Drug - a single small molecule, drawn as a hexagon carrying a
+ * short side-chain, floating in solution or docked at a target.
+ * The hexagon plus side-chain is the universal shorthand for "a
+ * small organic drug molecule" in every pharmacology diagram.
+ *
+ * The `action` prop picks the colour, matching the convention set
+ * by atlasReceptor's `occupancy` prop:
+ *   "agonist"   - green  - activates the target
+ *   "antagonist"- red    - blocks the target
+ *   "partial"   - amber  - weakly activates
+ *   "inverse"   - purple - suppresses baseline activity
+ *   "inhibit"   - red    - blocks an enzyme
+ *   "block"     - red    - blocks a channel or transporter
+ *   null        - slate  - no action assigned yet
+ * ---------------------------------------------------------------- */
 const atlasDrug = ({
   cx, cy, scale = 1,
   action = null,
@@ -6398,8 +6606,8 @@ export const DIAGRAMS = {
       "And here's the whole picture at once. Three strategies act on the cascade — remove calcium, accelerate antithrombin, or block vitamin K. Four laboratory tubes each use one of those strategies to preserve a specific test. Match the agent to the purpose, and you get a valid sample. Mismatch it, and the anticoagulant itself becomes the source of the error.",
     ],
     stepFocus: [
-      ["whole"],
-      ["whole"],
+      ["cascade"],
+      ["cascade"],
       ["cascade"],
       ["heparin"],
       ["warfarin"],
@@ -6425,9 +6633,9 @@ export const DIAGRAMS = {
 
       // Which blockAt mode the cascade is showing per step.
       const blockAt = [
-        null,             // 0 - whole
-        null,             // 1 - two arenas
-        "calcium",        // 2 - cascade & calcium
+        null,             // 0 - cascade introduced (unblocked)
+        null,             // 1 - cascade as a relay (still unblocked)
+        "calcium",        // 2 - calcium-dependent steps
         "antithrombin",   // 3 - heparin
         "vitaminK",       // 4 - warfarin
         "calcium",        // 5 - lab anticoagulants overview
@@ -7400,6 +7608,280 @@ export const DIAGRAMS = {
      junctions, fenestrations, or open gaps — is what the student
      actually sees. Composes entirely inline; no new primitive.
      ========================================================= */
+    /* =========================================================
+     GPCR SIGNALLING - the Pharmacology family's second diagram.
+     Topic: Pharmacology I (pha), Topic 03 (index 2).
+     ========================================================= */
+  "pha:3": {
+    id: "pha:3",
+    type: "diagram",
+    title: "GPCR Signalling - From Drug Binding to Cellular Response",
+    topic: { courseId: "pha", topicIndex: 2 },
+    parent: null,
+    summary: "G-protein coupled receptors are the single largest family of drug targets in clinical medicine - around a third of all prescription drugs act on one. The signalling cycle is the same for every GPCR: a ligand binds the receptor, the receptor changes shape, a G-protein underneath it swaps GDP for GTP, the alpha subunit breaks away from beta/gamma, one of them activates an effector enzyme, that enzyme makes a second messenger, and the second messenger triggers a cellular response. Then the whole thing resets.",
+    labels: [
+      { id: "receptor",        name: "The Receptor",       desc: "A seven-transmembrane protein in the cell membrane. The extracellular pocket binds the ligand; the intracellular face couples to the G-protein." },
+      { id: "ligand",          name: "The Ligand",         desc: "The signalling molecule that binds the receptor's extracellular pocket. Different ligands produce different responses." },
+      { id: "gprotein",        name: "The G-Protein",      desc: "A heterotrimer of alpha, beta and gamma subunits. The alpha subunit carries the on/off switch: GDP means off, GTP means on." },
+      { id: "resting",         name: "Resting State",      desc: "The receptor sits empty, the G-protein is intact, and the alpha subunit carries GDP. Nothing is signalling." },
+      { id: "activation",      name: "Activation",         desc: "Ligand binds the receptor, the receptor changes shape, and the alpha subunit swaps GDP for GTP." },
+      { id: "dissociation",    name: "Dissociation",       desc: "Once alpha is GTP-bound, it detaches from beta/gamma. Both halves can activate separate effectors." },
+      { id: "effector",        name: "Effector Enzyme",    desc: "The target the alpha subunit activates - usually adenylate cyclase or phospholipase C." },
+      { id: "secondmessenger", name: "Second Messenger",   desc: "The small intracellular molecule the effector produces - cAMP, IP3, DAG, or calcium." },
+      { id: "response",        name: "Cellular Response",  desc: "The end effect inside the cell - altered enzyme activity, ion channel opening, gene expression, or muscle contraction." },
+      { id: "termination",     name: "Termination",        desc: "The alpha subunit hydrolyses GTP back to GDP, recombines with beta/gamma, and the system returns to rest." },
+    ],
+    narration: [
+      "This is the GPCR signalling cycle. G-protein coupled receptors are the largest family of drug targets in medicine - around a third of all prescription drugs act on one. Once you understand it, you understand how beta-blockers, antihistamines, opioids, and hundreds of other drugs actually work.",
+      "The receptor sits in the cell membrane with seven transmembrane helices. It has two ends that matter. On the outside, an extracellular pocket that binds the ligand. On the inside, a coupling site that grabs the G-protein. The G-protein is a three-part molecule - alpha, beta, and gamma - that sits just inside the membrane.",
+      "In the resting state, nothing is signalling. The receptor is empty. The G-protein is intact. And the alpha subunit is holding a molecule of GDP. GDP means off. GTP means on. That single molecular difference is the whole switch.",
+      "When a ligand binds the extracellular pocket, the receptor changes shape. That shape change is transmitted through the membrane to the intracellular face, and the G-protein feels it. The alpha subunit is induced to release its GDP and pick up a GTP instead. That's the moment the signal turns on.",
+      "Once the alpha subunit is GTP-bound, it detaches from beta and gamma. The heterotrimer splits. Both halves go on to do their own jobs - alpha activates an effector enzyme, and beta/gamma activates its own separate targets. For now, follow alpha.",
+      "The alpha subunit finds its effector enzyme - usually adenylate cyclase or phospholipase C - and turns it on. This is where amplification happens. A single activated receptor can turn on many G-proteins, and each effector can produce thousands of second messenger molecules per second.",
+      "The second messenger is the small molecule the effector produces - cAMP, IP3, DAG, or calcium. These are the messengers that actually carry the signal deeper into the cell. cAMP activates protein kinase A. IP3 releases calcium from the ER. DAG activates protein kinase C.",
+      "The cellular response is the point of the whole cycle. Altered enzyme activity. Ion channels opening or closing. Gene expression changed. Muscle contracting or relaxing. This is what the drug actually does - several steps removed from the binding event that started it.",
+      "The last step is termination. The alpha subunit has an enzyme built into it - it slowly hydrolyses its own GTP back to GDP. Once GDP is back in place, alpha recombines with beta/gamma, the receptor returns to its resting shape, and the system is ready to fire again.",
+      "Putting it all together: ligand binds, receptor activates, GDP becomes GTP, alpha dissociates, effector fires, second messenger is produced, cellular response happens, and the system resets. Eight steps, one cycle, running in seconds.",
+    ],
+    stepFocus: [
+      ["receptor"],
+      ["receptor", "gprotein"],
+      ["resting", "gprotein"],
+      ["ligand", "activation"],
+      ["dissociation", "gprotein"],
+      ["effector", "gprotein"],
+      ["secondmessenger"],
+      ["response"],
+      ["termination"],
+      ["receptor", "ligand", "gprotein", "effector", "secondmessenger", "response"],
+    ],
+    viewBox: "0 0 900 640",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pha:3"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      const gpcrState = [
+        null,
+        null,
+        "resting",
+        null,
+        "active",
+        "active",
+        "active",
+        "active",
+        "hydrolysing",
+        "resting",
+      ][activeStep] || null;
+
+      const occupancy = activeStep >= 3 && activeStep < 9 ? "agonist" : null;
+
+      const messenger = [
+        null, null, null, null, null,
+        "cAMP",
+        "cAMP",
+        "cAMP",
+        null,
+        "cAMP",
+      ][activeStep];
+
+      return (
+        <svg viewBox="0 0 900 640" width="100%" height="100%">
+          {atlasDefs()}
+
+          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700"
+            fill="var(--text-2)" pointerEvents="none">
+            One receptor - one ligand - one G-protein - one signal
+          </text>
+
+          <g style={{ cursor: cur }} onClick={click("receptor")} filter={hotFilter("receptor")}>
+            {atlasGPCR({
+              cx: 250, cy: 200, scale: 1.6,
+              occupancy,
+              state: gpcrState,
+              highlight: false,
+            })}
+            <rect x="120" y="80" width="260" height="300"
+              fill="none" {...ring("receptor")} pointerEvents="none" />
+          </g>
+
+          <g style={{ cursor: cur }} onClick={click("ligand")} filter={hotFilter("ligand")}>
+            {activeStep >= 3 && activeStep < 9 && (
+              <text x="250" y="120" textAnchor="middle"
+                fontSize="9" fontWeight="700" fill="#2F8F4E">
+                ligand bound
+              </text>
+            )}
+            {activeStep < 3 && (
+              <>
+                <text x="250" y="60" textAnchor="middle"
+                  fontSize="10" fontWeight="700" fill="var(--text-2)">
+                  ligand
+                </text>
+                <path d="M250,70 L250,90" stroke={ATLAS_COLORS.trunk}
+                  strokeWidth="2" strokeDasharray="3 2" />
+                <polygon points="250,95 247,88 253,88" fill={ATLAS_COLORS.trunk} />
+              </>
+            )}
+          </g>
+
+          <g style={{ cursor: cur }} onClick={click("gprotein")} filter={hotFilter("gprotein")}>
+            <circle cx="250" cy="330" r="60" fill="none"
+              {...ring("gprotein")} pointerEvents="none" />
+          </g>
+
+          {isHot("resting") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path d="M400,280 Q460,290 510,290" fill="none"
+                stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
+                strokeDasharray="4 4" opacity="0.85" />
+              <circle cx="400" cy="280" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="510" y="260" width="220" height="70" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="620" y="286" textAnchor="middle" fontSize="10.5"
+                fontWeight="700" fill={ATLAS_COLORS.trunk}>RESTING STATE</text>
+              <text x="620" y="304" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">GDP still in place</text>
+              <text x="620" y="318" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">nothing signalling</text>
+            </g>
+          )}
+
+          {isHot("activation") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path d="M400,280 Q460,290 510,290" fill="none"
+                stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
+                strokeDasharray="4 4" opacity="0.85" />
+              <circle cx="400" cy="280" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="510" y="260" width="220" height="70" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="620" y="286" textAnchor="middle" fontSize="10.5"
+                fontWeight="700" fill={ATLAS_COLORS.trunk}>ACTIVATION</text>
+              <text x="620" y="304" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">GDP out - GTP in</text>
+              <text x="620" y="318" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">the molecular switch flips</text>
+            </g>
+          )}
+
+          {isHot("dissociation") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <path d="M400,300 Q460,310 510,320" fill="none"
+                stroke={ATLAS_COLORS.trunk} strokeWidth="1.5"
+                strokeDasharray="4 4" opacity="0.85" />
+              <circle cx="400" cy="300" r="4" fill={ATLAS_COLORS.trunk} />
+              <rect x="510" y="290" width="230" height="70" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="625" y="316" textAnchor="middle" fontSize="10.5"
+                fontWeight="700" fill={ATLAS_COLORS.trunk}>DISSOCIATION</text>
+              <text x="625" y="334" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">alpha splits from beta/gamma</text>
+              <text x="625" y="348" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">both halves go to work</text>
+            </g>
+          )}
+
+          {activeStep >= 5 && (
+            <g style={{ cursor: cur }} onClick={click("effector")} filter={hotFilter("effector")}>
+              <path d="M330,340 Q400,340 440,340" fill="none"
+                stroke={ATLAS_COLORS.trunk} strokeWidth="2"
+                strokeDasharray="5 4" opacity="0.75" />
+              <polygon points="445,340 438,336 438,344" fill={ATLAS_COLORS.trunk} />
+              <rect x="450" y="310" width="120" height="60" rx="10"
+                fill="var(--bg-3)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="510" y="338" textAnchor="middle" fontSize="11"
+                fontWeight="800" fill={ATLAS_COLORS.trunk}>EFFECTOR</text>
+              <text x="510" y="354" textAnchor="middle" fontSize="8.5"
+                fill="var(--text-2)">adenylate cyclase</text>
+              <rect x="440" y="300" width="140" height="80" rx="14"
+                fill="none" {...ring("effector")} pointerEvents="none" />
+            </g>
+          )}
+
+          {activeStep >= 5 && messenger && (
+            <g style={{ cursor: cur }} onClick={click("secondmessenger")}
+              filter={hotFilter("secondmessenger")}>
+              <path d="M570,340 L610,340" fill="none"
+                stroke={ATLAS_COLORS.trunk} strokeWidth="2"
+                strokeDasharray="5 4" opacity="0.75" />
+              <polygon points="615,340 608,336 608,344" fill={ATLAS_COLORS.trunk} />
+              {atlasSecondMessenger({
+                cx: 690, cy: 340, scale: 1,
+                messenger,
+                highlight: false,
+              })}
+              <circle cx="690" cy="340" r="55" fill="none"
+                {...ring("secondmessenger")} pointerEvents="none" />
+            </g>
+          )}
+
+          {activeStep >= 7 && (
+            <g style={{ cursor: cur }} onClick={click("response")} filter={hotFilter("response")}>
+              <path d="M690,410 L690,450" fill="none"
+                stroke={ATLAS_COLORS.trunk} strokeWidth="2"
+                strokeDasharray="5 4" opacity="0.75" />
+              <polygon points="690,455 687,448 693,448" fill={ATLAS_COLORS.trunk} />
+              <rect x="600" y="460" width="180" height="70" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="690" y="486" textAnchor="middle" fontSize="11"
+                fontWeight="800" fill={ATLAS_COLORS.trunk}>CELLULAR RESPONSE</text>
+              <text x="690" y="503" textAnchor="middle" fontSize="8.5"
+                fill="var(--text-2)">enzyme activity - channels - genes</text>
+              <text x="690" y="518" textAnchor="middle" fontSize="8.5"
+                fill="var(--text-2)">contraction - secretion</text>
+              <circle cx="690" cy="495" r="60" fill="none"
+                {...ring("response")} pointerEvents="none" />
+            </g>
+          )}
+
+          {isHot("termination") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="480" width="280" height="110" rx="12"
+                fill="var(--bg-2)" stroke="#5B21B6" strokeWidth="2" />
+              <text x="200" y="505" textAnchor="middle" fontSize="10.5"
+                fontWeight="700" fill="#5B21B6">TERMINATION</text>
+              <text x="200" y="525" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">alpha hydrolyses GTP back to GDP</text>
+              <text x="200" y="542" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">alpha recombines with beta/gamma</text>
+              <text x="200" y="559" textAnchor="middle" fontSize="9"
+                fill="var(--text-2)">receptor returns to resting shape</text>
+              <text x="200" y="579" textAnchor="middle" fontSize="8.5"
+                fontStyle="italic" fill="var(--text-3)">built-in off switch</text>
+            </g>
+          )}
+
+          {activeStep === lastStep && (
+            <g pointerEvents="none">
+              <rect x="60" y="530" width="780" height="80" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="450" y="556" textAnchor="middle" fontSize="11"
+                fontWeight="700" fill={ATLAS_COLORS.trunk}>
+                bind - activate - exchange GDP for GTP - dissociate - effector - second messenger - response - terminate
+              </text>
+              <text x="450" y="580" textAnchor="middle" fontSize="9.5"
+                fill="var(--text-2)">
+                Eight steps, one cycle, running in seconds
+              </text>
+            </g>
+          )}
+
+          <rect x="0" y="0" width="900" height="640"
+            fill="transparent" style={{ cursor: cur }}
+            onClick={click("receptor")} pointerEvents="all" />
+        </svg>
+      );
+    },
+  },
+
   "an2:capillary-types": {
     id: "an2:capillary-types",
     type: "diagram",

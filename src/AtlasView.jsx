@@ -2334,6 +2334,165 @@ const LEGEND_SWATCHES = {
         fill="var(--text)">digoxin</text>
     </g>
   ),
+
+  // ---- pha:3 (GPCR signalling) labels ----
+  // Ten swatches mirroring the components of the GPCR signalling
+  // cycle diagram. Each is drawn in the same visual language the
+  // student sees on the canvas: the receptor as a serpentine in a
+  // membrane, the G-protein as alpha + beta/gamma subunits, the
+  // second messenger as a coloured box, and so on.
+
+  // The receptor - seven-transmembrane serpentine in a membrane band
+  receptor: (active) => (
+    <g>
+      <rect x="12" y="38" width="76" height="24" fill="#F5E8E0" opacity="0.4" />
+      <line x1="12" y1="38" x2="88" y2="38" stroke="#B8A89E" strokeWidth="0.8" opacity="0.55" />
+      <line x1="12" y1="62" x2="88" y2="62" stroke="#B8A89E" strokeWidth="0.8" opacity="0.55" />
+      <path
+        d="M22,62 L22,38 Q26,32 30,38 L30,62 Q34,68 38,62 L38,38 Q42,32 46,38 L46,62 Q50,68 54,62 L54,38 Q58,32 62,38 L62,62 Q66,68 70,62 L70,38 Q74,32 78,38 L78,62"
+        fill="none" stroke={active ? ATLAS_COLORS.trunk : "#5B21B6"}
+        strokeWidth="2.6" strokeLinejoin="round" strokeLinecap="round" />
+      <circle cx="50" cy="30" r="4" fill="#2F8F4E" stroke="#0A0F1A" strokeWidth="0.6" />
+    </g>
+  ),
+
+  // The ligand - a small hexagonal molecule approaching the pocket
+  ligand: (active) => (
+    <g>
+      <polygon points="42,44 46,38 54,38 58,44 54,50 46,50"
+        fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"}
+        stroke="#0A0F1A" strokeWidth="0.8" />
+      <path d="M62,44 L74,44" stroke={ATLAS_COLORS.trunk}
+        strokeWidth="2" strokeDasharray="3 2" strokeLinecap="round" />
+      <polygon points="78,44 72,41 72,47" fill={ATLAS_COLORS.trunk} />
+    </g>
+  ),
+
+  // The G-protein - alpha and beta/gamma subunits beneath a receptor stub
+  gprotein: (active) => (
+    <g>
+      <ellipse cx="36" cy="38" rx="14" ry="10"
+        fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+        stroke="#0A0F1A" strokeWidth="0.8" />
+      <text x="36" y="42" textAnchor="middle" fontSize="9"
+        fontWeight="800" fill="#0A0F1A">a</text>
+      <text x="36" y="56" textAnchor="middle" fontSize="7"
+        fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}>GDP</text>
+      <ellipse cx="66" cy="38" rx="15" ry="10"
+        fill={active ? ATLAS_COLORS.trunk : "#2F6FED"}
+        stroke="#0A0F1A" strokeWidth="0.8" />
+      <text x="66" y="42" textAnchor="middle" fontSize="9"
+        fontWeight="800" fill="#fff">bg</text>
+    </g>
+  ),
+
+  // Resting state - intact G-protein with GDP still in place
+  resting: (active) => (
+    <g>
+      <circle cx="50" cy="50" r="28" fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#64748B"}
+        strokeWidth="2" strokeDasharray="5 4" />
+      <ellipse cx="42" cy="48" rx="12" ry="8"
+        fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+        stroke="#0A0F1A" strokeWidth="0.8" opacity="0.9" />
+      <text x="42" y="51" textAnchor="middle" fontSize="8"
+        fontWeight="800" fill="#0A0F1A">a</text>
+      <ellipse cx="62" cy="48" rx="10" ry="8"
+        fill={active ? ATLAS_COLORS.trunk : "#2F6FED"}
+        stroke="#0A0F1A" strokeWidth="0.8" opacity="0.9" />
+      <text x="50" y="76" textAnchor="middle" fontSize="8"
+        fontWeight="700" fill="var(--text-2)">GDP</text>
+    </g>
+  ),
+
+  // Activation - GDP out, GTP in
+  activation: (active) => (
+    <g>
+      <ellipse cx="34" cy="44" rx="16" ry="11"
+        fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+        stroke="#0A0F1A" strokeWidth="0.8" />
+      <text x="34" y="48" textAnchor="middle" fontSize="10"
+        fontWeight="800" fill="#0A0F1A">a</text>
+      <text x="34" y="62" textAnchor="middle" fontSize="8"
+        fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"}>GTP</text>
+      <path d="M56,44 L70,44" stroke={ATLAS_COLORS.trunk}
+        strokeWidth="2" strokeLinecap="round" />
+      <polygon points="76,44 68,40 68,48" fill={ATLAS_COLORS.trunk} />
+    </g>
+  ),
+
+  // Dissociation - alpha splits from beta/gamma
+  dissociation: (active) => (
+    <g>
+      <ellipse cx="28" cy="50" rx="14" ry="9"
+        fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+        stroke="#0A0F1A" strokeWidth="0.8" />
+      <text x="28" y="53" textAnchor="middle" fontSize="9"
+        fontWeight="800" fill="#0A0F1A">a</text>
+      <ellipse cx="74" cy="50" rx="14" ry="9"
+        fill={active ? ATLAS_COLORS.trunk : "#2F6FED"}
+        stroke="#0A0F1A" strokeWidth="0.8" />
+      <text x="74" y="53" textAnchor="middle" fontSize="9"
+        fontWeight="800" fill="#fff">bg</text>
+      <path d="M46,50 L56,50" stroke="var(--text-3)"
+        strokeWidth="1.4" strokeDasharray="3 2" />
+    </g>
+  ),
+
+  // Effector enzyme - a labelled enzyme box the alpha subunit activates
+  effector: (active) => (
+    <g>
+      <rect x="16" y="34" width="68" height="34" rx="8"
+        fill="var(--bg-3)"
+        stroke={active ? ATLAS_COLORS.trunk : "#5B21B6"}
+        strokeWidth="2" />
+      <text x="50" y="52" textAnchor="middle" fontSize="9"
+        fontWeight="800" fill={active ? ATLAS_COLORS.trunk : "#5B21B6"}>EFFECTOR</text>
+      <text x="50" y="64" textAnchor="middle" fontSize="7"
+        fill="var(--text-2)">adenylate cyclase</text>
+    </g>
+  ),
+
+  // Second messenger - a coloured rounded box with a nucleotide label
+  secondmessenger: (active) => (
+    <g>
+      <rect x="16" y="30" width="68" height="40" rx="10"
+        fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+        stroke={active ? ATLAS_COLORS.trunk : "#5B21B6"}
+        strokeWidth="2" opacity="0.92" />
+      <text x="50" y="52" textAnchor="middle" fontSize="14"
+        fontWeight="800" fill="#fff">cAMP</text>
+      <text x="50" y="66" textAnchor="middle" fontSize="7"
+        fontWeight="700" fill="#fff" opacity="0.9">IP3 · DAG</text>
+    </g>
+  ),
+
+  // Cellular response - the end-effect box
+  response: (active) => (
+    <g>
+      <rect x="10" y="32" width="80" height="36" rx="10"
+        fill="var(--bg-2)"
+        stroke={active ? ATLAS_COLORS.trunk : "#5B21B6"}
+        strokeWidth="2" />
+      <text x="50" y="50" textAnchor="middle" fontSize="9"
+        fontWeight="800" fill={active ? ATLAS_COLORS.trunk : "#5B21B6"}>RESPONSE</text>
+      <text x="50" y="62" textAnchor="middle" fontSize="7"
+        fill="var(--text-2)">enzyme · channels · genes</text>
+    </g>
+  ),
+
+  // Termination - GTP returning to GDP, with an arrow showing the reset
+  termination: (active) => (
+    <g>
+      <ellipse cx="50" cy="44" rx="20" ry="13"
+        fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+        stroke="#0A0F1A" strokeWidth="0.8" />
+      <text x="50" y="48" textAnchor="middle" fontSize="11"
+        fontWeight="800" fill="#0A0F1A">a</text>
+      <text x="50" y="70" textAnchor="middle" fontSize="8"
+        fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#5B21B6"}>GTP → GDP</text>
+    </g>
+  ),
 };
 
 /* ---------------------------------------------------------------- */
@@ -2670,21 +2829,20 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
   const [muted, setMuted] = useState(false);
   const [painted, setPainted] = useState(false);
 
-  const playTokenRef = useRef(0);
+    const playTokenRef = useRef(0);
   const pinchRef = useRef(null);
   const stageRef = useRef(null);
   const legendRefs = useRef({});
 
-  // Mirror of `playing` for use inside callbacks that can't close over
-  // the current render's value (speech `onend`, watchdog timers).
-  // Kept in sync by the effect below.
+  // Mirror of `playing` readable synchronously from callbacks that
+  // would otherwise see a stale render's value. Kept in sync by the
+  // effect further down.
   const playingRef = useRef(false);
-  useEffect(() => {
-    playingRef.current = playing;
-  }, [playing]);
 
-  // Watchdog handle — the timer that fires if the speech engine never
-  // calls us back. Cleared whenever a new step starts or playback stops.
+  // Watchdog handle. Armed when a step begins speaking; cleared when
+  // the speech event fires or the step advances. On mobile, where
+  // speechSynthesis.onend is unreliable, this is what actually drives
+  // the highlight forward.
   const watchdogRef = useRef(null);
 
   const applyZoom = useCallback((nextZoomRaw) => {
@@ -2697,6 +2855,10 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
 
   // Reset view state whenever the diagram changes, and restore the last
   // step for this diagram from sessionStorage.
+    useEffect(() => {
+    playingRef.current = playing;
+  }, [playing]);
+
   useEffect(() => {
     setActiveLabelId(null);
     setPlaying(false);
@@ -2855,14 +3017,13 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
   // of reaching into setPlaying's reducer), and clears the watchdog so
   // the timer can't double-fire the same step after the speech event
   // has already done so.
-  const advanceAfterStep = useCallback((myToken) => {
+    const advanceAfterStep = useCallback((myToken) => {
     if (myToken !== playTokenRef.current) return;
     if (watchdogRef.current) {
       clearTimeout(watchdogRef.current);
       watchdogRef.current = null;
     }
     if (!playingRef.current) return;
-
     setTimeout(() => {
       if (myToken !== playTokenRef.current) return;
       if (!playingRef.current) return;
@@ -2884,22 +3045,16 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
 
   const speakStepRef = useRef(() => {});
   const cachedVoiceRef = useRef(undefined);
-
   const speakStep = useCallback((stepIdx) => {
     const text = diagram.narration[stepIdx];
     if (!text) return;
     const myToken = playTokenRef.current;
 
-    // Clear any pending watchdog before starting a new step.
     if (watchdogRef.current) {
       clearTimeout(watchdogRef.current);
       watchdogRef.current = null;
     }
 
-    // Estimated duration. Used both for the muted path (which has no
-    // speech event to rely on) and as the safety-net watchdog when
-    // speech is enabled — some mobile browsers drop `onend` silently,
-    // and without this the sequence stalls on step 1 forever.
     const words = text.trim().split(/\s+/).length;
     const baseMs = Math.max(1200, (words / 2.6) * 1000);
     const estimatedMs = baseMs / speed;
@@ -2912,7 +3067,6 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
       }, ms);
     };
 
-    // Muted, or the browser has no speech engine: rely purely on timing.
     if (muted || !("speechSynthesis" in window)) {
       armWatchdog(estimatedMs);
       return;
@@ -2931,11 +3085,6 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
       utter.onend = () => advanceAfterStep(myToken);
       utter.onerror = () => advanceAfterStep(myToken);
       window.speechSynthesis.speak(utter);
-
-      // Safety net: give the speech engine the estimated duration plus
-      // 80% slack. If `onend` hasn't fired by then (Safari mobile is
-      // the usual offender), advance anyway. Whichever fires first
-      // clears the other, so we never double-advance.
       armWatchdog(estimatedMs * 1.8 + 1500);
     })();
   }, [diagram, speed, muted, advanceAfterStep]);
@@ -3278,7 +3427,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
             */}
             <div
               data-atlas-diagram={diagram.id}
-              style={{
+                            style={{
                 transform: `translate(${panX}px, ${panY}px) scale(${zoom})`,
                 transformOrigin: "center center",
                 transition: dragRef.current ? "none" : "transform 0.15s ease-out",
