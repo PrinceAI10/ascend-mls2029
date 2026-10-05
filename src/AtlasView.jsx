@@ -221,6 +221,21 @@ const LEGEND_VIEWBOXES = {
   conform: "0 0 100 100",
   cascade: "0 0 100 100",
   clinical: "0 0 100 100",
+  // pha:6 (adrenergic) + pha:7 (cholinergic) labels
+  synthesis: "0 0 100 100",
+  storage: "0 0 100 100",
+  release: "0 0 100 100",
+  receptors: "0 0 100 100",
+  alpha1: "0 0 100 100",
+  alpha2: "0 0 100 100",
+  beta1: "0 0 100 100",
+  beta2: "0 0 100 100",
+  reuptake: "0 0 100 100",
+  nicotinic: "0 0 100 100",
+  muscarinic: "0 0 100 100",
+  m2: "0 0 100 100",
+  m3: "0 0 100 100",
+  ache: "0 0 100 100",
 };
 
 const LEGEND_SWATCHES = {
@@ -2491,6 +2506,269 @@ const LEGEND_SWATCHES = {
         fontWeight="800" fill="#0A0F1A">a</text>
       <text x="50" y="70" textAnchor="middle" fontSize="8"
         fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#5B21B6"}>GTP → GDP</text>
+    </g>
+  ),
+
+  // ============================================================
+  // pha:6 (Adrenergic Pharmacology) + pha:7 (Cholinergic) swatches
+  // ============================================================
+  // Every swatch below mirrors the shape the student sees on the
+  // canvas for that label. The rule book requires each label id to
+  // ship with its own swatch, and these follow the same visual
+  // language as the corresponding panel or anatomy inside the
+  // diagram itself - so recognising the swatch teaches the diagram.
+
+  // Synthesis - the four-step noradrenaline pathway, drawn as a
+  // labelled arrow chain. Matches the synthesis callout in pha:6.
+  synthesis: (active) => (
+    <g>
+      <text x="50" y="16" textAnchor="middle" fontSize="7"
+        fontWeight="800" fill={active ? ATLAS_COLORS.trunk : "var(--text-2)"}>SYNTHESIS</text>
+      {["tyr", "DOPA", "DA", "NA"].map((label, i) => (
+        <g key={i}>
+          <rect x={3 + i * 24} y={34} width="20" height="16" rx="4"
+            fill={active ? "rgba(245,185,63,.25)" : "var(--bg-3)"}
+            stroke={active ? ATLAS_COLORS.trunk : "#94A3B8"} strokeWidth="1" />
+          <text x={13 + i * 24} y={45} textAnchor="middle" fontSize="6.5"
+            fontWeight="700" fill="var(--text)">{label}</text>
+          {i < 3 && (
+            <path d={`M${23 + i * 24},42 L${27 + i * 24},42`}
+              stroke={active ? ATLAS_COLORS.trunk : "#94A3B8"} strokeWidth="1.2" />
+          )}
+        </g>
+      ))}
+      <text x="50" y="68" textAnchor="middle" fontSize="6"
+        fill="var(--text-2)">4 enzymes in order</text>
+      <text x="50" y="82" textAnchor="middle" fontSize="6"
+        fontStyle="italic" fill="var(--text-3)">rate-limited at step 1</text>
+    </g>
+  ),
+
+  // Storage - vesicles packed inside the presynaptic terminal.
+  // Matches the storage callout in pha:6.
+  storage: (active) => (
+    <g>
+      <path d="M18,22 L82,22 L82,72 L18,72 Z"
+        fill="#F2EEFF" stroke={active ? ATLAS_COLORS.trunk : "#5B21B6"} strokeWidth="1.6" />
+      {[[34, 40], [50, 34], [66, 40], [42, 56], [58, 56]].map(([vx, vy], i) => (
+        <circle key={i} cx={vx} cy={vy} r="6"
+          fill={active ? ATLAS_COLORS.trunk : "#F5B93F"} stroke="#8B6410" strokeWidth="0.8" />
+      ))}
+      <text x="50" y="88" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">vesicles in the terminal</text>
+    </g>
+  ),
+
+  // Release - a vesicle fusing with the membrane, transmitter
+  // spilling into the cleft. Matches pha:6's release callout.
+  release: (active) => (
+    <g>
+      <line x1="14" y1="42" x2="86" y2="42"
+        stroke={active ? ATLAS_COLORS.trunk : "#5B21B6"} strokeWidth="3" strokeLinecap="round" />
+      <path d="M40,42 Q40,30 50,30 Q60,30 60,42"
+        fill="none" stroke={active ? ATLAS_COLORS.trunk : "#F5B93F"} strokeWidth="2.4" strokeLinecap="round" />
+      {[[30, 62], [42, 68], [56, 64], [70, 70], [48, 78]].map(([tx, ty], i) => (
+        <circle key={i} cx={tx} cy={ty} r="3"
+          fill={active ? ATLAS_COLORS.trunk : "#F5B93F"} stroke="#8B6410" strokeWidth="0.5" />
+      ))}
+      <text x="50" y="90" textAnchor="middle" fontSize="6"
+        fill="var(--text-2)">exocytosis into the cleft</text>
+    </g>
+  ),
+
+  // Receptors - a five-subtype overview drawn as small receptor
+  // glyphs on a membrane line. Matches pha:6's receptor overview.
+  receptors: (active) => (
+    <g>
+      <line x1="14" y1="58" x2="86" y2="58"
+        stroke={active ? ATLAS_COLORS.trunk : "#5B21B6"} strokeWidth="2" strokeLinecap="round" />
+      {["α1", "α2", "β1", "β2", "β3"].map((label, i) => (
+        <g key={i}>
+          <path d={`M${20 + i * 15},56 L${20 + i * 15},46 M${20 + i * 15},46 L${17 + i * 15},40 M${20 + i * 15},46 L${23 + i * 15},40`}
+            stroke={active ? ATLAS_COLORS.trunk : "#5B21B6"} strokeWidth="1.4" fill="none"
+            strokeLinecap="round" strokeLinejoin="round" />
+          <text x={20 + i * 15} y="30" textAnchor="middle" fontSize="7"
+            fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "var(--text-2)"}>{label}</text>
+        </g>
+      ))}
+      <text x="50" y="80" textAnchor="middle" fontSize="6.5"
+        fill="var(--text-2)">five adrenoceptor subtypes</text>
+    </g>
+  ),
+
+  // Alpha-1 - Gq-coupled receptor on a vessel, contraction.
+  alpha1: (active) => (
+    <g>
+      <path d="M36,56 L36,40 M36,40 L30,32 M36,40 L42,32"
+        stroke={active ? ATLAS_COLORS.trunk : "#C0392B"} strokeWidth="3" fill="none"
+        strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="36" cy="24" r="4" fill={active ? ATLAS_COLORS.trunk : "#F5B93F"} stroke="#0A0F1A" strokeWidth="0.6" />
+      <text x="66" y="38" fontSize="10" fontWeight="800" fill={active ? ATLAS_COLORS.trunk : "#C0392B"}>α1</text>
+      <text x="66" y="50" fontSize="6.5" fill="var(--text-2)">Gq · vasoconstriction</text>
+      <text x="66" y="62" fontSize="6" fill="var(--text-3)">prazosin blocks</text>
+    </g>
+  ),
+
+  // Alpha-2 - Gi-coupled presynaptic autoreceptor, self-brake.
+  alpha2: (active) => (
+    <g>
+      <path d="M36,56 L36,40 M36,40 L30,32 M36,40 L42,32"
+        stroke={active ? ATLAS_COLORS.trunk : "#8B5CF6"} strokeWidth="3" fill="none"
+        strokeLinecap="round" strokeLinejoin="round" />
+      {/* A "no-release" symbol above the receptor to show the autoreceptor self-brake */}
+      <circle cx="36" cy="18" r="7" fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#8B5CF6"} strokeWidth="1.6" strokeDasharray="3 2" />
+      <text x="66" y="38" fontSize="10" fontWeight="800" fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}>α2</text>
+      <text x="66" y="50" fontSize="6.5" fill="var(--text-2)">Gi · autoreceptor</text>
+      <text x="66" y="62" fontSize="6" fill="var(--text-3)">clonidine · methyldopa</text>
+    </g>
+  ),
+
+  // Beta-1 - Gs-coupled cardiac receptor, drawn with a heart.
+  beta1: (active) => (
+    <g>
+      <path d="M36,56 L36,40 M36,40 L30,32 M36,40 L42,32"
+        stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"} strokeWidth="3" fill="none"
+        strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M30,22 Q36,14 42,22 Q36,26 30,22 Z"
+        fill={active ? ATLAS_COLORS.trunk : "#E53935"} opacity="0.85" />
+      <text x="66" y="38" fontSize="10" fontWeight="800" fill={active ? ATLAS_COLORS.trunk : "#2F6FED"}>β1</text>
+      <text x="66" y="50" fontSize="6.5" fill="var(--text-2)">Gs · cardiac</text>
+      <text x="66" y="62" fontSize="6" fill="var(--text-3)">metoprolol · atenolol</text>
+    </g>
+  ),
+
+  // Beta-2 - Gs-coupled receptor, drawn with lung tissue to show
+  // the bronchial target.
+  beta2: (active) => (
+    <g>
+      <path d="M36,56 L36,40 M36,40 L30,32 M36,40 L42,32"
+        stroke={active ? ATLAS_COLORS.trunk : "#2F8F4E"} strokeWidth="3" fill="none"
+        strokeLinecap="round" strokeLinejoin="round" />
+      {/* Two lung-shape lobes to show the bronchial target */}
+      <path d="M26,20 Q30,14 34,20 Q34,26 30,26 Q26,26 26,20 Z"
+        fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"} opacity="0.8" />
+      <path d="M38,20 Q42,14 46,20 Q46,26 42,26 Q38,26 38,20 Z"
+        fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"} opacity="0.8" />
+      <text x="66" y="38" fontSize="10" fontWeight="800" fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"}>β2</text>
+      <text x="66" y="50" fontSize="6.5" fill="var(--text-2)">Gs · bronchial</text>
+      <text x="66" y="62" fontSize="6" fill="var(--text-3)">salbutamol · salmeterol</text>
+    </g>
+  ),
+
+  // Reuptake - NET with an arrow pulling NA back into the terminal.
+  reuptake: (active) => (
+    <g>
+      <path d="M30,66 Q36,54 42,66" fill="none"
+        stroke={active ? ATLAS_COLORS.trunk : "#2F6FED"} strokeWidth="3" strokeLinecap="round" />
+      <path d="M36,58 L36,30"
+        stroke={active ? ATLAS_COLORS.trunk : "#F5B93F"}
+        strokeWidth="2" strokeDasharray="3 2" strokeLinecap="round" />
+      <polygon points="36,26 32,33 40,33" fill={active ? ATLAS_COLORS.trunk : "#F5B93F"} />
+      <text x="50" y="88" textAnchor="middle" fontSize="6.5"
+        fontWeight="700" fill="var(--text-2)">uptake 1 · NET</text>
+      <text x="50" y="98" textAnchor="middle" fontSize="6"
+        fontStyle="italic" fill="var(--text-3)">tricyclics · cocaine</text>
+    </g>
+  ),
+
+  // Nicotinic - a ligand-gated ion channel in cross-section, with
+  // ions passing through the pore. Matches pha:7's nicotinic panel.
+  nicotinic: (active) => (
+    <g>
+      <rect x="26" y="22" width="8" height="52" rx="2"
+        fill={active ? ATLAS_COLORS.trunk : "#C0392B"} opacity="0.85" />
+      <rect x="66" y="22" width="8" height="52" rx="2"
+        fill={active ? ATLAS_COLORS.trunk : "#C0392B"} opacity="0.85" />
+      <text x="50" y="50" textAnchor="middle" fontSize="6"
+        fontWeight="700" fill="var(--text-3)">pore</text>
+      <circle cx="50" cy="32" r="4" fill="#2F6FED" opacity="0.9" />
+      <circle cx="50" cy="46" r="4" fill="#2F6FED" opacity="0.75" />
+      <text x="50" y="88" textAnchor="middle" fontSize="6.5"
+        fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#C0392B"}>nicotinic · ion channel</text>
+      <text x="50" y="98" textAnchor="middle" fontSize="6"
+        fill="var(--text-2)">fast · milliseconds</text>
+    </g>
+  ),
+
+  // Muscarinic - a GPCR serpentine in a membrane, with a small
+  // signalling arrow pointing down into the cell. Matches pha:7's
+  // muscarinic panel.
+  muscarinic: (active) => (
+    <g>
+      {/* Membrane band */}
+      <rect x="10" y="38" width="80" height="22" fill="#F5E8E0" opacity="0.4" />
+      <line x1="10" y1="38" x2="90" y2="38"
+        stroke="#B8A89E" strokeWidth="0.8" opacity="0.55" />
+      <line x1="10" y1="60" x2="90" y2="60"
+        stroke="#B8A89E" strokeWidth="0.8" opacity="0.55" />
+      {/* Seven-transmembrane serpentine - simplified version */}
+      <path
+        d="M20,60 L20,38 Q24,32 28,38 L28,60 Q32,66 36,60 L36,38 Q40,32 44,38 L44,60 Q48,66 52,60 L52,38 Q56,32 60,38 L60,60 Q64,66 68,60 L68,38 Q72,32 76,38 L76,60"
+        fill="none" stroke={active ? ATLAS_COLORS.trunk : "#8B5CF6"}
+        strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" />
+      {/* Downstream arrow to show second-messenger signalling */}
+      <path d="M48,62 L48,72"
+        stroke={active ? ATLAS_COLORS.trunk : "#8B5CF6"} strokeWidth="2" strokeLinecap="round" />
+      <polygon points="48,76 44,70 52,70" fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"} />
+      <text x="50" y="90" textAnchor="middle" fontSize="6.5"
+        fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#8B5CF6"}>muscarinic · GPCR</text>
+      <text x="50" y="99" textAnchor="middle" fontSize="6"
+        fill="var(--text-2)">slower · seconds</text>
+    </g>
+  ),
+
+  // M2 - cardiac muscarinic. A heart shape labelled M2, with the
+  // "vagal brake" caption the note uses.
+  m2: (active) => (
+    <g>
+      <path d="M50,44 Q36,44 36,56 Q36,70 50,70 Q64,70 64,56 Q64,44 50,44 Z"
+        fill={active ? ATLAS_COLORS.trunk : "#E53935"} opacity="0.85" />
+      <text x="50" y="62" textAnchor="middle" fontSize="11"
+        fontWeight="800" fill="#fff">M2</text>
+      <text x="50" y="86" textAnchor="middle" fontSize="6.5"
+        fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "#2F6FED"}>cardiac · Gi</text>
+      <text x="50" y="97" textAnchor="middle" fontSize="6"
+        fill="var(--text-2)">vagal brake · atropine</text>
+    </g>
+  ),
+
+  // M3 - glandular and smooth-muscle muscarinic. Drawn as a
+  // glandular/smooth-muscle wave to show the target tissue.
+  m3: (active) => (
+    <g>
+      <path
+        d="M20,54 Q28,42 36,54 Q44,66 52,54 Q60,42 68,54 Q76,66 84,54"
+        fill="none" stroke={active ? ATLAS_COLORS.trunk : "#2F8F4E"}
+        strokeWidth="3" strokeLinecap="round" />
+      <text x="50" y="30" textAnchor="middle" fontSize="11"
+        fontWeight="800" fill={active ? ATLAS_COLORS.trunk : "#2F8F4E"}>M3</text>
+      <text x="50" y="80" textAnchor="middle" fontSize="6.5"
+        fontWeight="700" fill="var(--text-2)">smooth muscle · glands</text>
+      <text x="50" y="92" textAnchor="middle" fontSize="6"
+        fill="var(--text-2)">Gq · atropine blocks</text>
+    </g>
+  ),
+
+  // AChE - an enzyme breaking ACh into two fragments. Drawn with
+  // a Pac-Man-style enzyme body and two small product dots, matching
+  // the way the note describes hydrolysis into choline + acetate.
+  ache: (active) => (
+    <g>
+      {/* Enzyme Pac-Man body */}
+      <path
+        d="M50,40 m-20,0 a20,20 0 1,0 40,0 a20,20 0 1,0 -40,0 Z M48,38 L62,30 L62,50 Z"
+        fill={active ? ATLAS_COLORS.trunk : "#F5B93F"} opacity="0.85"
+        stroke="#8B6410" strokeWidth="1" />
+      {/* Products of hydrolysis floating out to the right */}
+      <circle cx="76" cy="34" r="3" fill={active ? ATLAS_COLORS.trunk : "#2F6FED"} stroke="#0A0F1A" strokeWidth="0.5" />
+      <circle cx="82" cy="48" r="3" fill={active ? ATLAS_COLORS.trunk : "#2F6FED"} stroke="#0A0F1A" strokeWidth="0.5" />
+      <text x="50" y="72" textAnchor="middle" fontSize="6.5"
+        fontWeight="700" fill={active ? ATLAS_COLORS.trunk : "var(--text-2)"}>acetylcholinesterase</text>
+      <text x="50" y="84" textAnchor="middle" fontSize="6"
+        fill="var(--text-2)">ACh → choline + acetate</text>
+      <text x="50" y="96" textAnchor="middle" fontSize="6"
+        fontStyle="italic" fill="var(--text-3)">milliseconds · fastest enzyme</text>
     </g>
   ),
 };

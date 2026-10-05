@@ -2766,6 +2766,88 @@ const atlasReceptor = ({
 };
 
 /* ---------------------------------------------------------------- */
+/* Dose-response curve - the sigmoid plot that underlies every      */
+/* quantitative concept in pharmacology. Draws one curve inside a   */
+/* plot area, parameterised by EC50 (where it crosses 50% of max)   */
+/* and Emax (how high it rises). Supports shift-right (competitive  */
+/* antagonism), Emax-reduction (non-competitive antagonism), and    */
+/* fade (for tolerance overlays).                                   */
+/*                                                                   */
+/* Props:                                                            */
+/*   x, y, w, h       - plot area (top-left corner + width + height) */
+/*   ec50             - log-dose at which response is 50% of Emax   */
+/*                      (0 = centre, negative = more potent,        */
+/*                      positive = less potent)                     */
+/*   emax             - peak height as fraction of plot height      */
+/*                      (1 = full agonist, 0.6 = partial agonist)   */
+/*   color            - stroke colour; if omitted, uses trunk        */
+/*   dashed           - dashed stroke for comparison overlays        */
+/*   faded            - low opacity, for showing a previous state    */
+/*   label            - text label near the curve's midpoint         */
+/*   labelSide        - "left" | "right" | "above" | "below"        */
+/* ---------------------------------------------------------------- */
+const atlasDoseResponseCurve = ({
+  x, y, w, h,
+  ec50 = 0,
+  emax = 1,
+  color = ATLAS_COLORS.trunk,
+  dashed = false,
+  faded = false,
+  label = null,
+  labelSide = "above",
+}) => {
+  const logToX = (logDose) => x + ((logDose + 2) / 4) * w;
+  const respToY = (resp) => y + h - resp * h;
+
+  const points = [];
+  for (let i = 0; i <= 60; i++) {
+    const logDose = -2 + (i / 60) * 4;
+    const dose = Math.pow(10, logDose);
+    const ec50Linear = Math.pow(10, ec50);
+    const response = emax * (dose / (ec50Linear + dose));
+    points.push([logToX(logDose), respToY(response)]);
+  }
+  const path = points.map((p, i) => (i === 0 ? `M${p[0]},${p[1]}` : `L${p[0]},${p[1]}`)).join(" ");
+
+  const ec50x = logToX(ec50);
+  const ec50y = respToY(emax * 0.5);
+  const midX = logToX(ec50);
+  const midY = respToY(emax * 0.5);
+  const labelPos = {
+    above: { lx: midX, ly: midY - 24, anchor: "middle" },
+    below: { lx: midX, ly: midY + 26, anchor: "middle" },
+    left:  { lx: midX - 8, ly: midY + 4,  anchor: "end" },
+    right: { lx: midX + 8, ly: midY + 4,  anchor: "start" },
+  }[labelSide];
+
+  return (
+    <g opacity={faded ? 0.35 : 1}>
+      <path
+        d={path}
+        fill="none"
+        stroke={color}
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeDasharray={dashed ? "6 4" : undefined}
+      />
+      <circle cx={ec50x} cy={ec50y} r="3.5" fill={color} stroke="#0A0F1A" strokeWidth="0.6" />
+      {label && (
+        <text
+          x={labelPos.lx}
+          y={labelPos.ly}
+          textAnchor={labelPos.anchor}
+          fontSize="10.5"
+          fontWeight="700"
+          fill={color}
+        >
+          {label}
+        </text>
+      )}
+    </g>
+  );
+};
+
+/* ---------------------------------------------------------------- */
 /* Drug — a single small molecule, drawn as a hexagon carrying a    */
 /* short side-chain, floating in solution or docked at a target.     */
 /* The hexagon + side-chain is the universal shorthand for "a small  */
@@ -3034,6 +3116,212 @@ const atlasDrug = ({
       {label && (
         <text x="0" y={-r - 8} textAnchor="middle"
           fontSize="8" fontWeight="700" fill={color}>{label}</text>
+      )}
+    </g>
+  );
+};
+
+/* ----------------------------------------------------------------
+ * Synapse - the junction between two neurons where a
+ * neurotransmitter is released from the presynaptic terminal,
+ * crosses the cleft, and binds receptors on the postsynaptic
+ * membrane. This is the anatomical site where every adrenergic
+ * and cholinergic drug acts.
+ *
+ * `transmitter` prop picks the visual identity:
+ *   "noradrenaline" - amber vesicles, adrenergic synapse
+ *   "acetylcholine" - blue vesicles, cholinergic synapse
+ *   null            - slate vesicles, unspecified
+ *
+ * `state` prop:
+ *   "resting"     - vesicles docked, no release
+ *   "releasing"   - vesicle fusing with membrane, transmitter in cleft
+ *   "bound"       - transmitter bound to postsynaptic receptors
+ *   "reuptake"    - transmitter being taken back into the terminal
+ *   null          - just the anatomy, no active state
+ *
+ * `drugAction` prop (optional) - shows a drug acting at the synapse:
+ *   "blocker"     - red X over the postsynaptic receptors
+ *   "reuptake"    - a blocker arrow stopping the reuptake transporter
+ *   "agonist"     - green molecule binding the receptors
+ *   "inhibitor"   - red molecule on the presynaptic terminal
+ *   null          - no drug shown
+ * ---------------------------------------------------------------- */
+const atlasSynapse = ({
+  cx, cy, scale = 1,
+  transmitter = null,
+  state = null,
+  drugAction = null,
+  highlight = false,
+}) => {
+  const vesicleColor = transmitter === "noradrenaline" ? ATLAS_COLORS.trunk
+                     : transmitter === "acetylcholine" ? "#2F6FED"
+                     : "#64748B";
+  const vesicleStroke = transmitter === "noradrenaline" ? "#8B6410"
+                      : transmitter === "acetylcholine" ? "#123F9E"
+                      : "#334155";
+  const transmitterLabel = transmitter === "noradrenaline" ? "NA"
+                         : transmitter === "acetylcholine" ? "ACh"
+                         : "NT";
+  const edge = highlight ? ATLAS_COLORS.trunk : "#5B21B6";
+
+  // The two membranes run horizontally; the cleft is the gap between
+  // them. Presynaptic terminal on top, postsynaptic membrane below.
+  const presynapticY = cy - 32;
+  const postsynapticY = cy + 32;
+  const terminalWidth = 90;
+  const terminalHeight = 36;
+
+  // Receptors drawn on the postsynaptic membrane as small Y-shapes.
+  const receptorXs = [-30, -10, 10, 30];
+
+  return (
+    <g transform={`translate(${cx},${cy}) scale(${scale})`}
+      className={highlight ? "atlas-pulse" : undefined}>
+
+      {/* --- Presynaptic terminal (bulb at the top) --- */}
+      {/* Terminal body */}
+      <path
+        d={`M${-terminalWidth / 2},${presynapticY - terminalHeight}
+            Q${-terminalWidth / 2},${presynapticY - terminalHeight - 14} ${-terminalWidth / 2 + 14},${presynapticY - terminalHeight - 18}
+            L${terminalWidth / 2 - 14},${presynapticY - terminalHeight - 18}
+            Q${terminalWidth / 2},${presynapticY - terminalHeight - 14} ${terminalWidth / 2},${presynapticY - terminalHeight}
+            L${terminalWidth / 2},${presynapticY}
+            L${-terminalWidth / 2},${presynapticY} Z`}
+        fill="#F2EEFF" stroke={edge} strokeWidth="1.8"
+      />
+      {/* Axon entering from the top */}
+      <path
+        d={`M-6,${presynapticY - terminalHeight - 18} L-6,${presynapticY - terminalHeight - 40}
+            M6,${presynapticY - terminalHeight - 18} L6,${presynapticY - terminalHeight - 40}`}
+        stroke={edge} strokeWidth="2.4" strokeLinecap="round" fill="none"
+      />
+
+      {/* Vesicles inside the terminal */}
+      {[
+        [-24, presynapticY - 26],
+        [-4, presynapticY - 22],
+        [18, presynapticY - 26],
+      ].map(([vx, vy], i) => (
+        <circle key={i} cx={vx} cy={vy} r="6"
+          fill={vesicleColor} stroke={vesicleStroke} strokeWidth="1"
+          opacity="0.9" />
+      ))}
+
+      {/* One vesicle fusing with the presynaptic membrane during release */}
+      {(state === "releasing" || state === "bound") && (
+        <g>
+          {/* The vesicle opening into the cleft */}
+          <path
+            d={`M-4,${presynapticY - 4} Q-4,${presynapticY + 6} 4,${presynapticY + 6} Q12,${presynapticY + 6} 12,${presynapticY - 4}`}
+            fill="none" stroke={vesicleColor} strokeWidth="3" strokeLinecap="round"
+          />
+          {/* Transmitter molecules in the cleft */}
+          {[[-20, presynapticY + 20], [-6, presynapticY + 28], [8, presynapticY + 22], [22, presynapticY + 26], [0, presynapticY + 40]].map(([tx, ty], i) => (
+            <circle key={i} cx={tx} cy={ty} r="3"
+              fill={vesicleColor} stroke={vesicleStroke} strokeWidth="0.6"
+              opacity="0.9" />
+          ))}
+        </g>
+      )}
+
+      {/* --- Synaptic cleft label (thin band between the two membranes) --- */}
+      <text x={terminalWidth / 2 + 8} y={cy + 2} textAnchor="start"
+        fontSize="7.5" fontWeight="700" fill="var(--text-3)">
+        cleft
+      </text>
+
+      {/* --- Postsynaptic membrane (bottom) --- */}
+      <path
+        d={`M${-terminalWidth / 2},${postsynapticY} L${terminalWidth / 2},${postsynapticY}`}
+        stroke={edge} strokeWidth="3" strokeLinecap="round"
+      />
+      {/* A patch of the postsynaptic cell body below the membrane */}
+      <path
+        d={`M${-terminalWidth / 2},${postsynapticY} L${-terminalWidth / 2},${postsynapticY + 24}
+            Q${-terminalWidth / 2},${postsynapticY + 30} ${-terminalWidth / 2 + 8},${postsynapticY + 30}
+            L${terminalWidth / 2 - 8},${postsynapticY + 30}
+            Q${terminalWidth / 2},${postsynapticY + 30} ${terminalWidth / 2},${postsynapticY + 24}
+            L${terminalWidth / 2},${postsynapticY} Z`}
+        fill="#F2EEFF" stroke={edge} strokeWidth="1.4"
+      />
+
+      {/* Postsynaptic receptors - small Y-shapes on the membrane */}
+      {receptorXs.map((rx, i) => (
+        <path
+          key={i}
+          d={`M${rx},${postsynapticY - 2} L${rx},${postsynapticY - 12}
+              M${rx},${postsynapticY - 12} L${rx - 5},${postsynapticY - 20}
+              M${rx},${postsynapticY - 12} L${rx + 5},${postsynapticY - 20}`}
+          stroke={edge} strokeWidth="2.2" fill="none"
+          strokeLinecap="round" strokeLinejoin="round"
+        />
+      ))}
+
+      {/* Transmitter bound to receptors (state = "bound") */}
+      {state === "bound" && receptorXs.map((rx, i) => (
+        <circle key={i} cx={rx} cy={postsynapticY - 22} r="3.5"
+          fill={vesicleColor} stroke={vesicleStroke} strokeWidth="0.8" />
+      ))}
+
+      {/* Reuptake transporter (a small hairpin on the presynaptic side) */}
+      <path
+        d={`M${terminalWidth / 2 - 30},${presynapticY + 4}
+            Q${terminalWidth / 2 - 24},${presynapticY + 16} ${terminalWidth / 2 - 18},${presynapticY + 4}`}
+        fill="none" stroke="#2F6FED" strokeWidth="2.4" strokeLinecap="round"
+      />
+
+      {/* Reuptake: transmitter being pulled back up */}
+      {state === "reuptake" && (
+        <g>
+          <path
+            d={`M${terminalWidth / 2 - 24},${cy + 4} L${terminalWidth / 2 - 24},${presynapticY + 6}`}
+            stroke={vesicleColor} strokeWidth="1.6" strokeDasharray="3 2"
+            fill="none"
+          />
+          <polygon points={`${terminalWidth / 2 - 24},${presynapticY + 4} ${terminalWidth / 2 - 27},${presynapticY + 10} ${terminalWidth / 2 - 21},${presynapticY + 10}`}
+            fill={vesicleColor} />
+        </g>
+      )}
+
+      {/* Transmitter label */}
+      <text x={-terminalWidth / 2 - 8} y={cy + 2} textAnchor="end"
+        fontSize="9" fontWeight="800" fill={vesicleColor}>
+        {transmitterLabel}
+      </text>
+
+      {/* --- Drug action overlays --- */}
+
+      {/* Blocker - red X over the postsynaptic receptors */}
+      {drugAction === "blocker" && (
+        <g>
+          <line x1={-terminalWidth / 2} y1={postsynapticY - 26} x2={terminalWidth / 2} y2={postsynapticY - 2}
+            stroke="#C0392B" strokeWidth="2.4" strokeLinecap="round" opacity="0.85" />
+          <line x1={-terminalWidth / 2} y1={postsynapticY - 2} x2={terminalWidth / 2} y2={postsynapticY - 26}
+            stroke="#C0392B" strokeWidth="2.4" strokeLinecap="round" opacity="0.85" />
+        </g>
+      )}
+
+      {/* Reuptake blocker - red X over the reuptake transporter */}
+      {drugAction === "reuptake" && (
+        <g>
+          <line x1={terminalWidth / 2 - 32} y1={presynapticY + 2} x2={terminalWidth / 2 - 16} y2={presynapticY + 14}
+            stroke="#C0392B" strokeWidth="2.4" strokeLinecap="round" />
+          <line x1={terminalWidth / 2 - 16} y1={presynapticY + 2} x2={terminalWidth / 2 - 32} y2={presynapticY + 14}
+            stroke="#C0392B" strokeWidth="2.4" strokeLinecap="round" />
+        </g>
+      )}
+
+      {/* Agonist - green circles binding the postsynaptic receptors */}
+      {drugAction === "agonist" && receptorXs.map((rx, i) => (
+        <circle key={i} cx={rx} cy={postsynapticY - 22} r="4"
+          fill="#2F8F4E" stroke="#0A0F1A" strokeWidth="0.6" />
+      ))}
+
+      {/* Inhibitor - red molecule on the presynaptic terminal */}
+      {drugAction === "inhibitor" && (
+        <circle cx={0} cy={presynapticY - 30} r="5"
+          fill="#C0392B" stroke="#0A0F1A" strokeWidth="0.6" />
       )}
     </g>
   );
@@ -7281,6 +7569,1162 @@ export const DIAGRAMS = {
 
           {/* Whole-diagram interactive label — a clickable region behind
              everything so tapping empty space selects "whole". */}
+                    <rect x="0" y="0" width="900" height="640"
+            fill="transparent" style={{ cursor: cur }}
+            onClick={click("receptor")} pointerEvents="all" />
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     QUANTITATIVE DRUG-RECEPTOR INTERACTIONS
+     Topic: Pharmacology I (pha), Topic 04 (index 3).
+     The fourth diagram in the Pharmacology family. Uses the new
+     atlasDoseResponseCurve primitive. Ten steps, all of them
+     modifications of one sigmoid curve: the student sees the
+     shape, then its labels, then comparisons (potency, efficacy),
+     then the ceiling, then antagonism overlays, then selectivity,
+     then the therapeutic index, then tolerance, then the whole
+     picture.
+     ========================================================= */
+  "pha:4": {
+    id: "pha:4",
+    type: "diagram",
+    title: "Quantitative Drug-Receptor Interactions - The Dose-Response Curve",
+    topic: { courseId: "pha", topicIndex: 3 },
+    parent: null,
+    summary: "A drug produces an effect. The quantitative question is: how much effect, from how much drug? The relationship between dose and effect is not linear - it is a sigmoid curve, and every quantity pharmacologists care about is a property of that curve. Potency is where the curve crosses 50% of maximum. Efficacy is how high it rises. The ceiling is where it flattens. Antagonism is how it shifts or drops when another drug is present. The therapeutic index is the gap between the effect curve and the toxicity curve. Tolerance is the curve migrating over time.",
+    labels: [
+      { id: "curve",         name: "The Dose-Response Curve",     desc: "Plot of response against dose. Sigmoid in shape. The single most important quantitative tool in pharmacology." },
+      { id: "shape",         name: "The Sigmoid Shape",           desc: "S-shaped, not linear. Flat at the bottom (few receptors bound), steep in the middle (most receptors binding), flat at the top (all receptors saturated)." },
+      { id: "ec50",          name: "EC50 - Potency",              desc: "The dose that produces 50% of the maximum effect. A lower EC50 means more potent - less drug needed for the same effect." },
+      { id: "emax",          name: "Emax - Efficacy",             desc: "The maximum effect the drug can produce, reached when all receptors are saturated. Does not increase with more drug. Separates full agonists from partial agonists." },
+      { id: "ceiling",       name: "The Ceiling Effect",          desc: "The point beyond which additional drug produces no additional benefit - only side effects. Every drug has a maximum therapeutic dose." },
+      { id: "competitive",   name: "Competitive Antagonism",      desc: "Antagonist binds reversibly at the same site as the agonist. The curve shifts right; Emax unchanged. Enough agonist can overcome the block." },
+      { id: "noncompetitive", name: "Non-Competitive Antagonism", desc: "Antagonist binds at a different site, or irreversibly. The curve drops; Emax reduced. No amount of extra agonist can overcome the block." },
+      { id: "selectivity",   name: "Selectivity & Side Effects",  desc: "No drug binds only its intended target. Off-target binding produces side effects. The selectivity profile is the ratio between on-target and off-target affinities." },
+      { id: "ti",            name: "Therapeutic Index",           desc: "TD50 divided by ED50. High TI = wide safety margin (penicillin). Low TI = narrow margin (digoxin, warfarin, lithium). Low-TI drugs need monitoring." },
+      { id: "tolerance",     name: "Decreased Responsiveness",    desc: "The curve migrating right and dropping over time. Tolerance, tachyphylaxis, desensitisation, downregulation - the body adapting to continued drug presence." },
+    ],
+    narration: [
+      "A drug produces an effect. Can we actually predict how much effect, from how much drug? In the last topic you learned how a drug binding its receptor triggers a signalling cascade. But pharmacology is not just about whether a drug works - it is about how much it works, and at what dose. The relationship between dose and effect is not linear. It follows a specific curve, and this diagram is that curve.",
+      "Plot dose on the x-axis and effect on the y-axis and you get an S-shape - a sigmoid. It is flat at the bottom, steep in the middle, and flat at the top. The shape is receptor occupancy. At low doses few receptors are occupied, so the effect is small. As the dose rises more receptors bind, and the effect rises steeply. At the top, all receptors are saturated, and increasing the dose further produces no additional effect. That flat top is the saturation point.",
+      "Now the labels. Three features carry almost all the clinical meaning. The threshold dose, at the very bottom, is the minimum dose at which any effect is detectable. The slope, in the middle, tells you how sensitive the effect is to small dose changes - a steep slope means small dose changes produce large effect changes. And the EC50 - the dose at which the effect reaches 50 per cent of its maximum - is the number that quantifies potency. A lower EC50 means the drug reaches half its effect at a lower dose, so it is more potent.",
+      "Two drugs can have the same maximum effect but different potency. Here is drug A and drug B - both reach the same height, but drug A crosses 50 per cent at a lower dose. Drug A is more potent. It is not stronger, and it is not better. It just means you need less of it to get the same effect. Potency matters clinically because a smaller dose can mean smaller side effects, less pill burden, less injection volume, and lower manufacturing cost. But it does not tell you what the drug can achieve.",
+      "That is what efficacy tells you. Efficacy is the maximum effect the drug can produce, measured by Emax - how high the curve rises. Drug A here can lower blood pressure by 40 millimetres of mercury at best. Drug B can only lower it by 20. Drug A has higher efficacy. A high-efficacy drug can be used for severe conditions. A low-efficacy drug may still be useful, but only where a small effect is all that is needed. This is the difference between a full agonist and a partial agonist - the full agonist has high Emax, the partial agonist has lower Emax even at full receptor occupancy.",
+      "The top of the curve is the ceiling effect. Once the drug has reached its Emax, giving more produces no additional benefit - only side effects. The shaded region here represents the doses past the ceiling. Nothing therapeutically useful happens there. This is why the maximum therapeutic dose of a drug is the dose that produces the maximum effect with acceptable side effects - not the highest dose that can physically be given. Partial agonists have a lower ceiling than full agonists. That is why buprenorphine produces analgesia with less respiratory depression than morphine - its ceiling is lower.",
+      "Now antagonism. A competitive antagonist binds reversibly at the same site as the agonist. Look at the dashed curve - it is shifted to the right, but the height is the same. More agonist is needed to reach the same effect, but with enough agonist the maximum is still achievable. This is what beta-blockers do at beta-adrenergic receptors. A non-competitive antagonist binds at a different site, or irreversibly. Look at the second dashed curve - it drops. The maximum effect itself is reduced, and no amount of extra agonist can bring it back.",
+      "Now selectivity. A drug that is designed for one receptor still binds other receptors with lower affinity. Those off-target interactions are the source of side effects. Here is the main effect curve, and here is a second curve drawn to the far right - it represents the drug's off-target binding, which only becomes significant at doses well above the therapeutic range. The gap between the curves is the selectivity. Because selectivity is never perfect, drugs have a selectivity profile - highest affinity for the intended target, lower affinity for others. That profile is what explains why beta-blockers cause bronchospasm in asthmatics and antihistamines cause drowsiness.",
+      "Now the therapeutic index. Two curves on the same graph - the green one is the therapeutic effect, the red one is the toxic effect. The gap between their midpoints - their EC50s - is the therapeutic index. High therapeutic index means the toxic dose is far above the effective dose, and there is room for error. Penicillin has a very high therapeutic index. Low therapeutic index means the toxic dose sits close to the effective dose. Digoxin, warfarin, lithium, phenytoin - all low therapeutic index drugs. They require careful dosing, and they require plasma monitoring, because the safe range is narrow.",
+      "Now, what happens over time. The body adapts to the continued presence of a drug. Look at these three curves - first dose, after weeks, after months. The curve migrates right and drops. That is tolerance. The same dose produces less effect because the receptors have been desensitised, downregulated, or the body has compensated through its own homeostatic mechanisms. This is not a failure of the drug - it is a response of the body. It is why long-term therapy requires careful dose adjustment, why withdrawal symptoms occur when drugs are stopped abruptly, and why cross-tolerance exists between drugs in the same class.",
+      "And here is the whole picture at once. Every quantity in this topic is a property of the curve. Potency is where it crosses 50 per cent. Efficacy is how high it rises. The ceiling is where it flattens. Antagonism is how it shifts or drops when another drug is present. Selectivity is a second curve off to the side. The therapeutic index is the gap between the effect curve and the toxicity curve. Tolerance is the curve migrating over time. Once you know a drug's dose-response curve, you know what a dose will do - and you know how to prescribe safely.",
+    ],
+    stepFocus: [
+      ["curve"],
+      ["curve", "shape"],
+      ["curve", "ec50", "shape"],
+      ["curve", "ec50"],
+      ["curve", "emax"],
+      ["curve", "ceiling"],
+      ["curve", "competitive", "noncompetitive"],
+      ["curve", "selectivity"],
+      ["curve", "ti"],
+      ["curve", "tolerance"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pha:4"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      const plotX = 100;
+      const plotY = 90;
+      const plotW = 640;
+      const plotH = 400;
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {atlasDefs()}
+
+          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700"
+            fill="var(--text-2)" pointerEvents="none">
+            One curve - every quantity in pharmacology is a property of it
+          </text>
+
+          <g pointerEvents="none">
+            {[0.25, 0.5, 0.75, 1].map((frac, i) => (
+              <g key={i}>
+                <line
+                  x1={plotX} y1={plotY + plotH - frac * plotH}
+                  x2={plotX + plotW} y2={plotY + plotH - frac * plotH}
+                  stroke="#94A3B8" strokeWidth="0.6" strokeDasharray="3 4" opacity="0.4"
+                />
+                <text
+                  x={plotX - 12} y={plotY + plotH - frac * plotH + 4}
+                  textAnchor="end" fontSize="10" fill="var(--text-2)"
+                >
+                  {Math.round(frac * 100)}%
+                </text>
+              </g>
+            ))}
+            <line
+              x1={plotX} y1={plotY + plotH}
+              x2={plotX + plotW} y2={plotY + plotH}
+              stroke="#64748B" strokeWidth="1.4"
+            />
+            <line
+              x1={plotX} y1={plotY}
+              x2={plotX} y2={plotY + plotH}
+              stroke="#64748B" strokeWidth="1.4"
+            />
+            <text
+              x={plotX + plotW / 2} y={plotY + plotH + 30}
+              textAnchor="middle" fontSize="12" fontWeight="700"
+              fill="var(--text-2)"
+            >
+              log dose
+            </text>
+            <text
+              x={plotX - 60} y={plotY + plotH / 2}
+              textAnchor="middle" fontSize="12" fontWeight="700"
+              fill="var(--text-2)"
+              transform={`rotate(-90 ${plotX - 60} ${plotY + plotH / 2})`}
+            >
+              response (% of max)
+            </text>
+          </g>
+
+          {activeStep <= 2 && (
+            <g style={{ cursor: cur }} onClick={click("curve")} filter={hotFilter("curve")}>
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: 0, emax: 1,
+                color: ATLAS_COLORS.trunk,
+              })}
+              <rect x={plotX - 40} y={plotY - 20} width={plotW + 80} height={plotH + 60}
+                fill="none" {...ring("curve")} pointerEvents="none" />
+            </g>
+          )}
+
+          {isHot("shape") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <text x={plotX + 20} y={plotY + plotH - 8}
+                fontSize="10.5" fontWeight="700" fill="#2F6FED">
+                threshold dose
+              </text>
+              <text x={plotX + plotW * 0.35} y={plotY + plotH * 0.25}
+                fontSize="10.5" fontWeight="700" fill="#8B5CF6">
+                slope (steep = sensitive)
+              </text>
+              <text x={plotX + plotW * 0.7} y={plotY + 18}
+                fontSize="10.5" fontWeight="700" fill="#16A34A">
+                Emax (maximum effect)
+              </text>
+              <text x={plotX + plotW - 12} y={plotY + 34}
+                textAnchor="end" fontSize="9.5" fill="var(--text-2)">
+                receptors saturated
+              </text>
+            </g>
+          )}
+
+          {isHot("ec50") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <line
+                x1={plotX} y1={plotY + plotH * 0.5}
+                x2={plotX + plotW} y2={plotY + plotH * 0.5}
+                stroke={ATLAS_COLORS.trunk} strokeWidth="1.2"
+                strokeDasharray="4 4" opacity="0.7"
+              />
+              <line
+                x1={plotX + plotW / 2} y1={plotY + plotH * 0.5}
+                x2={plotX + plotW / 2} y2={plotY + plotH}
+                stroke={ATLAS_COLORS.trunk} strokeWidth="1.2"
+                strokeDasharray="4 4" opacity="0.7"
+              />
+              <text
+                x={plotX + plotW / 2 + 8} y={plotY + plotH * 0.5 - 8}
+                fontSize="11" fontWeight="800" fill={ATLAS_COLORS.trunk}
+              >
+                EC50
+              </text>
+            </g>
+          )}
+
+          {activeStep === 3 && (
+            <g style={{ cursor: cur }} onClick={click("ec50")} filter={hotFilter("ec50")}>
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: 0.8, emax: 1,
+                color: "#2F6FED",
+                dashed: true,
+                label: "Drug B (less potent)",
+                labelSide: "above",
+              })}
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: -0.5, emax: 1,
+                color: ATLAS_COLORS.trunk,
+                label: "Drug A (more potent)",
+                labelSide: "above",
+              })}
+              <text
+                x={plotX + plotW / 2} y={plotY + plotH * 0.5 + 40}
+                textAnchor="middle" fontSize="10.5" fontWeight="800"
+                fill={ATLAS_COLORS.trunk}
+              >
+                same Emax - different EC50 = different potency
+              </text>
+            </g>
+          )}
+
+          {activeStep === 4 && (
+            <g style={{ cursor: cur }} onClick={click("emax")} filter={hotFilter("emax")}>
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: 0, emax: 1,
+                color: "#16A34A",
+                label: "Full agonist (Emax 100%)",
+                labelSide: "above",
+              })}
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: 0, emax: 0.6,
+                color: "#8B5CF6",
+                dashed: true,
+                label: "Partial agonist (Emax 60%)",
+                labelSide: "below",
+              })}
+              <text
+                x={plotX + plotW - 24} y={plotY + plotH * 0.2}
+                textAnchor="end" fontSize="10.5" fontWeight="800" fill="#8B5CF6"
+              >
+                efficacy gap
+              </text>
+            </g>
+          )}
+
+          {activeStep === 5 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: 0, emax: 1,
+                color: ATLAS_COLORS.trunk,
+              })}
+              <rect
+                x={plotX} y={plotY}
+                width={plotW} height={plotH * 0.05}
+                fill="#C0392B" opacity="0.15"
+              />
+              <text
+                x={plotX + plotW / 2} y={plotY + plotH * 0.05 + 16}
+                textAnchor="middle" fontSize="11" fontWeight="800" fill="#C0392B"
+              >
+                no additional benefit - only side effects
+              </text>
+              <text
+                x={plotX + plotW - 12} y={plotY - 8}
+                textAnchor="end" fontSize="10.5" fontWeight="800" fill="#C0392B"
+              >
+                therapeutic ceiling
+              </text>
+            </g>
+          )}
+
+          {activeStep === 6 && (
+            <g style={{ cursor: cur }} onClick={click("competitive")} filter={hotFilter("competitive")}>
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: -0.5, emax: 1,
+                color: ATLAS_COLORS.trunk,
+                label: "agonist alone",
+                labelSide: "above",
+              })}
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: 0.8, emax: 1,
+                color: "#2F6FED",
+                dashed: true,
+                label: "with competitive antagonist",
+                labelSide: "above",
+              })}
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: -0.5, emax: 0.6,
+                color: "#C0392B",
+                dashed: true,
+                label: "with non-competitive antagonist",
+                labelSide: "below",
+              })}
+            </g>
+          )}
+
+          {activeStep === 7 && (
+            <g style={{ cursor: cur }} onClick={click("selectivity")} filter={hotFilter("selectivity")}>
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: -1.2, emax: 1,
+                color: ATLAS_COLORS.trunk,
+                label: "intended target",
+                labelSide: "above",
+              })}
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: 1.2, emax: 0.9,
+                color: "#C0392B",
+                dashed: true,
+                label: "off-target (side effects)",
+                labelSide: "above",
+              })}
+              <text
+                x={plotX + plotW / 2} y={plotY + plotH * 0.5 + 48}
+                textAnchor="middle" fontSize="10.5" fontWeight="800"
+                fill={ATLAS_COLORS.trunk}
+              >
+                selectivity = the gap between the curves
+              </text>
+            </g>
+          )}
+
+          {activeStep === 8 && (
+            <g style={{ cursor: cur }} onClick={click("ti")} filter={hotFilter("ti")}>
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: -0.6, emax: 1,
+                color: "#16A34A",
+                label: "therapeutic effect",
+                labelSide: "above",
+              })}
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: 0.6, emax: 1,
+                color: "#C0392B",
+                dashed: true,
+                label: "toxic effect",
+                labelSide: "above",
+              })}
+              <text
+                x={plotX + plotW / 2} y={plotY + plotH * 0.5 + 52}
+                textAnchor="middle" fontSize="11" fontWeight="800" fill="#5B21B6"
+              >
+                therapeutic index = TD50 / ED50
+              </text>
+            </g>
+          )}
+
+          {activeStep === 9 && (
+            <g style={{ cursor: cur }} onClick={click("tolerance")} filter={hotFilter("tolerance")}>
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: -0.8, emax: 1,
+                color: ATLAS_COLORS.trunk,
+                faded: true,
+                label: "first dose",
+                labelSide: "above",
+              })}
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: 0, emax: 0.75,
+                color: ATLAS_COLORS.trunk,
+                faded: true,
+                dashed: true,
+                label: "after weeks",
+                labelSide: "above",
+              })}
+              {atlasDoseResponseCurve({
+                x: plotX, y: plotY, w: plotW, h: plotH,
+                ec50: 0.8, emax: 0.5,
+                color: ATLAS_COLORS.trunk,
+                label: "after months",
+                labelSide: "above",
+              })}
+              <text
+                x={plotX + plotW / 2} y={plotY + plotH + 55}
+                textAnchor="middle" fontSize="10.5" fontWeight="800"
+                fill={ATLAS_COLORS.trunk}
+              >
+                tolerance = curve migrating right and down
+              </text>
+            </g>
+          )}
+
+          {activeStep === lastStep && (
+            <text x="450" y="612" textAnchor="middle" fontSize="11"
+              fontWeight="600" fill="var(--text-2)" pointerEvents="none">
+              Potency · efficacy · ceiling · antagonism · selectivity · therapeutic index · tolerance
+            </text>
+          )}
+
+          <rect x="0" y="0" width="900" height="620"
+            fill="transparent" style={{ cursor: cur }}
+            onClick={click("curve")} pointerEvents="all" />
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     PHARMACOKINETICS
+     Topic: Pharmacology I (pha), Topic 05 (index 4).
+     The fifth diagram in the Pharmacology family. Ten steps
+     covering ADME plus bioavailability, half-life, drug
+     interactions, and the prescribing framework. Composes from
+     existing primitives - atlasFlowArrow, atlasVessel, atlasOrgan,
+     atlasHeart, atlasGlomerulus - plus one inline half-life decay
+     curve. No new primitive.
+     ========================================================= */
+  "pha:5": {
+    id: "pha:5",
+    type: "diagram",
+    title: "Pharmacokinetics - What the Body Does to the Drug",
+    topic: { courseId: "pha", topicIndex: 4 },
+    parent: null,
+    summary: "Pharmacokinetics is the study of what the body does to a drug. It answers four questions in sequence: how does the drug get in (absorption), where does it go (distribution), how is it chemically changed (metabolism), and how does it leave (excretion). Together these are ADME. On top of that sit bioavailability - how much of the dose actually reaches the bloodstream - and half-life - how long the drug stays around. Every prescribing decision rests on these numbers.",
+    labels: [
+      { id: "whole",       name: "The Whole Picture",       desc: "ADME - absorption, distribution, metabolism, excretion. Four stages that every drug passes through." },
+      { id: "absorption",  name: "Absorption",              desc: "Movement of the drug from its site of administration into the bloodstream. Determined by route, formulation, and the drug's physicochemical properties." },
+      { id: "route",       name: "Route of Administration", desc: "Oral, IV, IM, SC, sublingual, rectal, inhaled, topical. Each has a different onset, bioavailability, and first-pass exposure." },
+      { id: "membrane",    name: "Crossing Membranes",      desc: "Lipid-soluble, small, uncharged drugs cross easily. Ionised, large, water-soluble drugs do not. pH and pKa decide which form dominates." },
+      { id: "firstpass",   name: "First-Pass Effect",       desc: "Blood from the gut goes through the liver before reaching the systemic circulation. The liver removes a fraction of the drug on the way through." },
+      { id: "bioavail",    name: "Bioavailability (F)",     desc: "The fraction of an administered dose that reaches the systemic circulation unchanged. IV is 100% by definition. Oral is usually less." },
+      { id: "distribution", name: "Distribution & Vd",      desc: "The drug moves from blood into tissues. Volume of distribution (Vd) is the theoretical volume it would need to be diluted into to give the observed plasma concentration." },
+      { id: "metabolism",  name: "Metabolism",              desc: "Chemical modification, mainly in the liver. Phase I adds a functional group via cytochrome P450. Phase II conjugates with a water-soluble molecule." },
+      { id: "excretion",   name: "Excretion",               desc: "Removal from the body, mainly by the kidney. Three processes: glomerular filtration, tubular secretion, tubular reabsorption." },
+      { id: "halflife",    name: "Half-Life & Dosing",      desc: "Time for plasma concentration to fall by half. Sets dosing interval, time to steady state (4-5 half-lives), and time to elimination after stopping." },
+    ],
+    narration: [
+      "A drug enters the body. Where does it go, and how does it eventually leave? You have learned how a drug acts on its target - pharmacodynamics. But there is an earlier and equally important question: how does the drug get to the target in the first place, and what happens to it afterwards? That is pharmacokinetics - the study of what the body does to the drug.",
+      "The pharmacokinetic journey is summarised by four letters: ADME. Absorption is movement of the drug from its site of administration into the bloodstream. Distribution is its subsequent movement from blood into tissues and organs. Metabolism is its chemical modification, primarily in the liver. Excretion is removal of the drug and its metabolites from the body, primarily by the kidneys. Four stages, in that order, for every drug.",
+      "The route of administration determines how fast the drug is absorbed and how much reaches the bloodstream. Oral is the most common - absorbed mainly in the small intestine, but the drug must survive stomach acid, cross the gut wall, and pass through the liver before reaching the systemic circulation. Intravenous puts the drug directly into the bloodstream with 100 per cent bioavailability and the fastest onset. Intramuscular absorbs rapidly but not instantly. Subcutaneous absorbs more slowly, which suits insulin and heparin. Sublingual absorbs directly into the bloodstream and bypasses the liver. Rectal is useful when the patient is vomiting or unconscious. Inhaled is fast because the lungs have enormous surface area and rich blood supply. Topical is usually local.",
+      "Every movement of a drug through the body involves crossing a membrane. What determines whether it can cross? Lipid-soluble, small, uncharged drugs cross easily - the membrane is itself a lipid bilayer, so a lipophilic drug simply dissolves through. Water-soluble, large, or ionised drugs cannot. Whether a drug is ionised depends on the pH around it relative to its own pKa: a weak acid is more unionised in an acidic environment, a weak base is more unionised in an alkaline one. This is the pH-partition hypothesis. Aspirin, a weak acid, is absorbed partly in the acidic stomach. Morphine, a weak base, is absorbed mainly in the alkaline intestine.",
+      "When a drug is given orally, only a fraction of the dose reaches the systemic circulation. Some is lost in the gut, some is metabolised by the gut wall, and some is metabolised by the liver before the drug ever reaches the general circulation. Blood from the gut does not go directly to the heart - it goes through the liver first via the hepatic portal vein. The liver removes a fraction of the drug on the way through. This is the first-pass effect, and it is why nitroglycerin is given sublingually, why oral morphine needs to be several times higher than IV morphine, and why lidocaine is never given orally at all.",
+      "The fraction of an administered dose that actually reaches the systemic circulation unchanged is called bioavailability - F. For an intravenous dose, F is 100 per cent by definition, because none of it is lost. For an oral dose, F is usually well below 100 per cent, sometimes far below, once first-pass metabolism has taken its share. Bioavailability depends on the drug's formulation, on food, on gastric emptying time, on intestinal motility, and on the state of the patient's liver. A drug with low or unpredictable bioavailability is a drug whose oral dose has to be adjusted carefully, or the route changed entirely.",
+      "Once a drug is in the bloodstream, it does not stay there. It distributes into tissues - the brain, the fat, the muscle, the organs. How widely it spreads is captured by its volume of distribution - Vd - the theoretical volume of fluid into which the total amount of drug in the body would need to be diluted to produce the concentration actually measured in plasma. A high Vd, as with digoxin at roughly 500 litres, means the drug has distributed widely into tissues and its plasma concentration is low. A low Vd, as with warfarin at roughly 8 litres, means the drug has stayed mostly in the blood and its plasma concentration is high. Lipophilic drugs distribute widely; hydrophilic drugs stay in extracellular fluid; heavily protein-bound drugs stay largely in the blood, because only the free fraction can leave.",
+      "Most drugs are not excreted unchanged - they are first chemically modified by the body. This is metabolism, and it happens in two phases. Phase I reactions introduce or expose a functional group on the drug molecule - usually by oxidation, reduction, or hydrolysis - and the cytochrome P450 family does most of the oxidising. These reactions often inactivate the drug, and they can also convert an inactive prodrug into its active form. Phase II reactions then conjugate the drug, or its Phase I metabolite, with a large water-soluble molecule such as glucuronic acid, sulfate, or glutathione. The conjugate is almost always inactive and easily excreted by the kidneys or in bile. The liver is the main site. Enzyme induction speeds metabolism up and reduces drug effect. Enzyme inhibition slows it down and increases both effect and the risk of toxicity.",
+      "After metabolism, the drug and its metabolites must be removed from the body. The kidneys are the main excretory organ. Excretion uses the same three processes that produce urine: glomerular filtration, tubular secretion, and tubular reabsorption. Glomerular filtration passes small, unbound drugs into the tubular fluid. Tubular secretion actively transports drugs from blood into the tubular fluid using carrier proteins - this is the main route for protein-bound drugs, which are too large to be filtered. Tubular reabsorption returns lipid-soluble, unionised drugs back into the blood, while water-soluble, ionised drugs stay in the urine and are excreted. Kidney disease reduces excretion and causes drugs to accumulate. Urine pH can be manipulated to enhance excretion - alkalinising the urine speeds up aspirin elimination in overdose.",
+      "How quickly does a drug's effect wear off? The key parameter is half-life - the time it takes for the plasma concentration to fall by half. After one half-life, 50 per cent remains. After two, 25 per cent. After three, 12.5 per cent. After five half-lives, less than 5 per cent remains, which counts as effectively complete elimination. A drug with a 4-hour half-life is essentially gone after about 20 hours. Half-life governs dosing: it sets the dosing interval, the time to reach steady state when starting or changing a dose - roughly 4 to 5 half-lives - and the time to eliminate the drug after stopping. Steady state is the point at which drug input equals drug elimination and plasma concentration stops rising. A loading dose is a larger initial dose that reaches therapeutic concentration quickly. The maintenance dose keeps it there, and it is calculated from clearance.",
+      "Patients often take several drugs at once, and one drug can change the behaviour of another. These are drug interactions, and they are one of the most important causes of preventable harm in medicine. Pharmacokinetic interactions occur at any of the four ADME stages. Antacids can reduce absorption of certain antibiotics. Aspirin can displace warfarin from plasma proteins, increasing the free active concentration. Enzyme inducers such as rifampicin, carbamazepine, and phenytoin speed up metabolism of other drugs sharing the same enzymes, reducing their effect. Enzyme inhibitors such as ketoconazole, erythromycin, and cimetidine slow metabolism down, increasing effect and toxicity. Probenecid reduces renal excretion of penicillin. Pharmacodynamic interactions work at the level of effect: additive when two drugs with similar effects sum up, synergistic when the combined effect exceeds the sum, and antagonistic when two drugs oppose each other. Every prescriber must consider drug interactions with every new prescription.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["whole", "absorption", "distribution", "metabolism", "excretion"],
+      ["route"],
+      ["membrane"],
+      ["firstpass"],
+      ["bioavail"],
+      ["distribution"],
+      ["metabolism"],
+      ["excretion"],
+      ["halflife"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pha:5"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // A small orange tablet, drawn once and reused.
+      const tablet = (x, y, scale = 1) => (
+        <g transform={`translate(${x},${y}) scale(${scale})`}>
+          <ellipse cx="0" cy="0" rx="14" ry="8" fill="#F5A8A0" stroke="#8C1C12" strokeWidth="1.2" />
+          <line x1="-8" y1="0" x2="8" y2="0" stroke="#8C1C12" strokeWidth="0.8" opacity="0.6" />
+        </g>
+      );
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {atlasDefs()}
+
+          <text x="450" y="28" textAnchor="middle" fontSize="13" fontWeight="700"
+            fill="var(--text-2)" pointerEvents="none">
+            ADME - the journey of a drug through the body
+          </text>
+
+          {/* ---- Route column (left) ---- */}
+          <g style={{ cursor: cur }} onClick={click("route")} filter={hotFilter("route")}>
+            <text x="60" y="60" fontSize="11" fontWeight="800" fill="var(--text-2)">Route</text>
+            {tablet(70, 95, 1.1)}
+            <text x="70" y="120" textAnchor="middle" fontSize="9" fill="var(--text-2)">oral · IV · IM</text>
+            <text x="70" y="132" textAnchor="middle" fontSize="9" fill="var(--text-2)">SC · SL · rectal</text>
+            <text x="70" y="144" textAnchor="middle" fontSize="9" fill="var(--text-2)">inhaled · topical</text>
+            <rect x="20" y="70" width="100" height="90" rx="10"
+              fill="none" {...ring("route")} pointerEvents="none" />
+          </g>
+
+          {/* Arrow: route -> absorption */}
+          {atlasFlowArrow({ x1: 125, y1: 105, x2: 195, y2: 105, color: ATLAS_COLORS.trunk })}
+
+          {/* ---- Absorption zone (gut) ---- */}
+          <g style={{ cursor: cur }} onClick={click("absorption")} filter={hotFilter("absorption")}>
+            <rect x="205" y="55" width="140" height="110" rx="12"
+              fill="var(--bg-3)" stroke="#C0392B" strokeWidth="1.8" />
+            <text x="275" y="80" textAnchor="middle" fontSize="11" fontWeight="800" fill="#C0392B">Absorption</text>
+            <text x="275" y="98" textAnchor="middle" fontSize="9" fill="var(--text-2)">gut wall</text>
+            <text x="275" y="112" textAnchor="middle" fontSize="9" fill="var(--text-2)">small intestine</text>
+            <text x="275" y="126" textAnchor="middle" fontSize="9" fill="var(--text-2)">stomach (weak acids)</text>
+            {/* Small gut villi */}
+            {[235, 250, 265, 280, 295, 310].map((vx, i) => (
+              <path key={i} d={`M${vx},150 Q${vx + 3},140 ${vx + 6},150`} fill="none" stroke="#C0392B" strokeWidth="1" opacity="0.6" />
+            ))}
+            <rect x="205" y="55" width="140" height="110" rx="12"
+              fill="none" {...ring("absorption")} pointerEvents="none" />
+          </g>
+
+          {/* Arrow: absorption -> first-pass liver */}
+          {atlasFlowArrow({ x1: 350, y1: 105, x2: 420, y2: 105, color: ATLAS_COLORS.trunk })}
+
+          {/* ---- First-pass liver (small) ---- */}
+          <g style={{ cursor: cur }} onClick={click("firstpass")} filter={hotFilter("firstpass")}>
+            <text x="460" y="80" textAnchor="middle" fontSize="9.5" fontWeight="700" fill="#8C1C12">first-pass</text>
+            {atlasOrgan({ id: "fp-liver", cx: 460, cy: 115, w: 70, h: 40, label: "Liver",
+              fill: "#C0392B", dim: "rgba(192,57,43,.14)",
+              onLabelClick, activeLabelId, pulsing: false })}
+            <text x="460" y="150" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">portal vein</text>
+            <rect x="415" y="70" width="90" height="90" rx="10"
+              fill="none" {...ring("firstpass")} pointerEvents="none" />
+          </g>
+
+          {/* Arrow: first-pass -> systemic blood */}
+          {atlasFlowArrow({ x1: 515, y1: 105, x2: 580, y2: 105, color: ATLAS_COLORS.trunk })}
+
+          {/* ---- Bioavailability badge ---- */}
+          <g style={{ cursor: cur }} onClick={click("bioavail")} filter={hotFilter("bioavail")}>
+            <rect x="590" y="75" width="120" height="60" rx="12"
+              fill="var(--bg-3)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+            <text x="650" y="98" textAnchor="middle" fontSize="11" fontWeight="800" fill={ATLAS_COLORS.trunk}>Bioavailability</text>
+            <text x="650" y="115" textAnchor="middle" fontSize="9" fill="var(--text-2)">F = fraction reaching</text>
+            <text x="650" y="127" textAnchor="middle" fontSize="9" fill="var(--text-2)">systemic circulation</text>
+            <rect x="590" y="75" width="120" height="60" rx="12"
+              fill="none" {...ring("bioavail")} pointerEvents="none" />
+          </g>
+
+          {/* Arrow: bioavail -> systemic circulation vessel */}
+          {atlasFlowArrow({ x1: 715, y1: 105, x2: 800, y2: 105, color: ATLAS_COLORS.trunk })}
+
+          {/* ---- Systemic circulation vessel segment (top-right) ---- */}
+          <g style={{ cursor: cur }} onClick={click("distribution")} filter={hotFilter("distribution")}>
+            {atlasVessel({ d: "M810,105 Q860,105 870,150 Q870,220 830,240", oxygenated: true, width: 16 })}
+            {atlasBloodCell({ cx: 840, cy: 130, r: 5, oxygenated: true, animate: true, delay: "0s" })}
+            {atlasBloodCell({ cx: 855, cy: 200, r: 5, oxygenated: true, animate: true, delay: "0.6s" })}
+            <text x="870" y="85" textAnchor="middle" fontSize="10" fontWeight="700" fill="#C0392B">bloodstream</text>
+          </g>
+
+          {/* ---- Distribution zone (mid-right): organs the drug enters ---- */}
+          <g style={{ cursor: cur }} onClick={click("distribution")} filter={hotFilter("distribution")}>
+            <text x="500" y="200" fontSize="11" fontWeight="800" fill="#8B5CF6">Distribution - Vd</text>
+            {/* Heart */}
+            {atlasHeart({ cx: 590, cy: 260, scale: 0.32, highlight: false })}
+            <text x="590" y="310" textAnchor="middle" fontSize="9" fill="var(--text-2)">heart</text>
+            {/* Brain (soft circle) */}
+            <ellipse cx="450" cy="260" rx="34" ry="28" fill="#E9DFFF" stroke="#8B5CF6" strokeWidth="1.6" opacity="0.85" />
+            <text x="450" y="263" textAnchor="middle" fontSize="10" fontWeight="700" fill="#5B21B6">brain</text>
+            <text x="450" y="310" textAnchor="middle" fontSize="9" fill="var(--text-2)">BBB limits entry</text>
+            {/* Fat (soft blob) */}
+            {atlasOrgan({ id: "fat", cx: 730, cy: 260, w: 70, h: 45, label: "fat",
+              fill: "#8B5CF6", dim: "rgba(139,92,246,.14)",
+              onLabelClick, activeLabelId, pulsing: false })}
+            <text x="730" y="310" textAnchor="middle" fontSize="9" fill="var(--text-2)">lipophilic drugs</text>
+            {/* Text: Vd explanation */}
+            <text x="590" y="340" textAnchor="middle" fontSize="9.5" fill="var(--text-2)">Vd = total drug in body / plasma concentration</text>
+            <rect x="420" y="215" width="350" height="135" rx="14"
+              fill="none" {...ring("distribution")} pointerEvents="none" />
+          </g>
+
+          {/* ---- Metabolism (liver, mid-bottom-left) ---- */}
+          <g style={{ cursor: cur }} onClick={click("metabolism")} filter={hotFilter("metabolism")}>
+            <rect x="60" y="330" width="240" height="130" rx="12"
+              fill="var(--bg-3)" stroke="#8C1C12" strokeWidth="1.8" />
+            <text x="180" y="355" textAnchor="middle" fontSize="11" fontWeight="800" fill="#8C1C12">Metabolism</text>
+            {atlasOrgan({ id: "met-liver", cx: 120, cy: 400, w: 60, h: 45, label: "liver",
+              fill: "#C0392B", dim: "rgba(192,57,43,.14)",
+              onLabelClick, activeLabelId, pulsing: false })}
+            <text x="230" y="390" textAnchor="middle" fontSize="9.5" fontWeight="700" fill="#8C1C12">Phase I</text>
+            <text x="230" y="404" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">CYP450 oxidation</text>
+            <text x="230" y="420" textAnchor="middle" fontSize="9.5" fontWeight="700" fill="#8C1C12">Phase II</text>
+            <text x="230" y="434" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">conjugation</text>
+            <rect x="60" y="330" width="240" height="130" rx="12"
+              fill="none" {...ring("metabolism")} pointerEvents="none" />
+          </g>
+
+          {/* Arrow: metabolism -> excretion */}
+          {atlasFlowArrow({ x1: 305, y1: 395, x2: 380, y2: 395, color: ATLAS_COLORS.trunk })}
+
+          {/* ---- Excretion (kidney, bottom-centre) ---- */}
+          <g style={{ cursor: cur }} onClick={click("excretion")} filter={hotFilter("excretion")}>
+            <rect x="390" y="330" width="200" height="130" rx="12"
+              fill="var(--bg-3)" stroke="#2F6FED" strokeWidth="1.8" />
+            <text x="490" y="355" textAnchor="middle" fontSize="11" fontWeight="800" fill="#2F6FED">Excretion</text>
+            {atlasGlomerulus({ cx: 440, cy: 400, r: 32, showFiltration: false, highlight: false })}
+            <text x="540" y="385" textAnchor="middle" fontSize="9" fill="var(--text-2)">filtration</text>
+            <text x="540" y="400" textAnchor="middle" fontSize="9" fill="var(--text-2)">secretion</text>
+            <text x="540" y="415" textAnchor="middle" fontSize="9" fill="var(--text-2)">reabsorption</text>
+            <rect x="390" y="330" width="200" height="130" rx="12"
+              fill="none" {...ring("excretion")} pointerEvents="none" />
+          </g>
+
+          {/* Arrow: excretion -> half-life plot */}
+          {atlasFlowArrow({ x1: 595, y1: 395, x2: 665, y2: 395, color: ATLAS_COLORS.trunk })}
+
+          {/* ---- Half-life decay curve (bottom-right) ---- */}
+          <g style={{ cursor: cur }} onClick={click("halflife")} filter={hotFilter("halflife")}>
+            <rect x="670" y="330" width="210" height="130" rx="12"
+              fill="var(--bg-3)" stroke={ATLAS_COLORS.trunk} strokeWidth="1.8" />
+            <text x="775" y="352" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>Half-life</text>
+            {/* Axes */}
+            <line x1="690" y1="435" x2="860" y2="435" stroke="#64748B" strokeWidth="1" />
+            <line x1="690" y1="365" x2="690" y2="435" stroke="#64748B" strokeWidth="1" />
+            {/* Decay curve - exponential from 100% down to ~3% over 5 half-lives */}
+            <path
+              d="M690,365 Q710,375 720,395 Q735,415 745,425 Q765,435 860,435"
+              fill="none" stroke={ATLAS_COLORS.trunk} strokeWidth="2.2" strokeLinecap="round"
+            />
+            {/* 50% marker */}
+            <line x1="690" y1="400" x2="720" y2="400" stroke={ATLAS_COLORS.trunk} strokeWidth="0.8" strokeDasharray="3 2" opacity="0.7" />
+            <text x="710" y="392" textAnchor="middle" fontSize="7.5" fill={ATLAS_COLORS.trunk} fontWeight="700">50%</text>
+            <text x="775" y="450" textAnchor="middle" fontSize="8.5" fill="var(--text-2)">~5 half-lives to eliminate</text>
+            <rect x="670" y="330" width="210" height="130" rx="12"
+              fill="none" {...ring("halflife")} pointerEvents="none" />
+          </g>
+
+          {/* ---- Step-specific detail panels ---- */}
+          {isHot("membrane") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="60" y="480" width="300" height="100" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="210" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>CROSSING MEMBRANES</text>
+              <text x="75" y="524" fontSize="9" fill="var(--text-2)">Lipid-soluble, small, uncharged - crosses</text>
+              <text x="75" y="538" fontSize="9" fill="var(--text-2)">Water-soluble, large, ionised - blocked</text>
+              <text x="75" y="558" fontSize="9" fill="var(--text-2)">Weak acid - absorbed in stomach (aspirin)</text>
+              <text x="75" y="572" fontSize="9" fill="var(--text-2)">Weak base - absorbed in intestine (morphine)</text>
+            </g>
+          )}
+
+          {/* Drug interaction table on step 9 */}
+          {activeStep === 9 && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="380" y="480" width="500" height="110" rx="12"
+                fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+              <text x="630" y="504" textAnchor="middle" fontSize="10.5" fontWeight="800" fill="#C0392B">DRUG INTERACTIONS - ADME STAGES</text>
+              <text x="395" y="524" fontSize="9" fill="var(--text-2)">Absorption: antacids reduce antibiotic uptake</text>
+              <text x="395" y="538" fontSize="9" fill="var(--text-2)">Distribution: aspirin displaces warfarin from albumin</text>
+              <text x="395" y="552" fontSize="9" fill="var(--text-2)">Metabolism: rifampicin induces CYP; erythromycin inhibits CYP</text>
+              <text x="395" y="566" fontSize="9" fill="var(--text-2)">Excretion: probenecid reduces penicillin elimination</text>
+              <text x="395" y="582" fontSize="9" fill="var(--text-2)">Effect: additive · synergistic · antagonistic</text>
+            </g>
+          )}
+
+          {/* Final-step footer */}
+          {activeStep === lastStep && (
+            <text x="450" y="608" textAnchor="middle" fontSize="11"
+              fontWeight="600" fill="var(--text-2)" pointerEvents="none">
+              What dose · by what route · how often - every answer lives in ADME
+            </text>
+          )}
+
+          {/* Whole-canvas clickable region */}
+          <rect x="0" y="0" width="900" height="620"
+            fill="transparent" style={{ cursor: cur }}
+            onClick={click("whole")} pointerEvents="all" />
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     ADRENERGIC PHARMACOLOGY
+     Topic: Pharmacology I (pha), Topic 06 (index 5).
+     First diagram to use atlasSynapse. Ten steps covering the
+     full noradrenaline life cycle - synthesis, storage, release,
+     receptor families, and reuptake - plus the clinical scenarios
+     the note uses to teach each one. Every step of the drug's
+     journey is a place where a drug can act.
+     ========================================================= */
+  "pha:6": {
+    id: "pha:6",
+    type: "diagram",
+    title: "Adrenergic Pharmacology - Noradrenaline and the Sympathetic Synapse",
+    topic: { courseId: "pha", topicIndex: 5 },
+    parent: null,
+    summary: "The adrenergic synapse is where sympathetic neurons release noradrenaline onto their target cells. Noradrenaline is made from tyrosine in four enzymatic steps, stored in vesicles, released by calcium-triggered exocytosis, and cleared by reuptake and enzymatic breakdown. It binds five receptor subtypes - alpha-1, alpha-2, beta-1, beta-2, and beta-3 - each found in different tissues and coupled to a different downstream signal. Every adrenergic drug, from salbutamol to propranolol to cocaine, acts at one specific step in that cycle or on one specific receptor subtype.",
+    labels: [
+      { id: "whole",      name: "The Whole Synapse",           desc: "The junction where a sympathetic neuron talks to its target. Adrenergic pharmacology studies the drugs that mimic, block, or modify this conversation." },
+      { id: "synthesis",  name: "Noradrenaline Synthesis",     desc: "Tyrosine is taken up into the nerve terminal and converted to L-DOPA by tyrosine hydroxylase - the rate-limiting step. L-DOPA becomes dopamine, and dopamine inside the vesicle becomes noradrenaline." },
+      { id: "storage",    name: "Vesicular Storage",           desc: "Noradrenaline is packed into storage vesicles in the nerve terminal, waiting for a signal. Reserpine blocks this step, depleting the neuron of transmitter over days." },
+      { id: "release",    name: "Calcium-Triggered Release",   desc: "An action potential opens calcium channels; calcium entry triggers vesicles to fuse with the membrane and release noradrenaline into the cleft by exocytosis." },
+      { id: "receptors",  name: "Adrenoceptor Families",       desc: "Two families, five subtypes - alpha-1, alpha-2, beta-1, beta-2, beta-3. Each is a different GPCR, in a different tissue, coupled to a different signal. This is why one molecule produces so many different effects." },
+      { id: "alpha1",     name: "Alpha-1 Receptors",           desc: "Gq-coupled. Vascular smooth muscle (vasoconstriction), iris (pupil dilation), bladder sphincter (contraction), liver (glycogenolysis). Blocked by prazosin, doxazosin, tamsulosin." },
+      { id: "alpha2",     name: "Alpha-2 Receptors",           desc: "Gi-coupled, presynaptic autoreceptor. Activation reduces further noradrenaline release - a negative feedback loop. Also on platelets (aggregation). Agonists: clonidine, methyldopa." },
+      { id: "beta1",      name: "Beta-1 Receptors",            desc: "Gs-coupled, mainly cardiac. Increase heart rate, force of contraction, and conduction velocity. Also on the kidney, where they stimulate renin release. Blocked by atenolol, metoprolol, bisoprolol." },
+      { id: "beta2",      name: "Beta-2 Receptors",            desc: "Gs-coupled, mainly bronchial and vascular smooth muscle (bronchodilation, vasodilation). Also on the uterus (relaxation) and skeletal muscle (tremor, glycogenolysis). Agonists: salbutamol, salmeterol." },
+      { id: "reuptake",   name: "Reuptake & Metabolism",       desc: "Noradrenaline is removed by three mechanisms: uptake 1 into the nerve terminal (the main one), uptake 2 into non-neuronal tissue, and metabolism by MAO and COMT. Tricyclics and cocaine block uptake 1." },
+    ],
+    narration: [
+      "Your body has two great control systems - the nervous system, which is fast and electrical, and the endocrine system, which is slower and hormonal. Adrenergic pharmacology sits at the intersection: it studies the drugs that act on the sympathetic branch of the autonomic nervous system - the fight or flight branch.",
+      "Noradrenaline does not appear from nowhere. It is made inside the nerve terminal from the amino acid tyrosine, in four enzymatic steps. Tyrosine becomes L-DOPA, in the rate-limiting step catalysed by tyrosine hydroxylase. L-DOPA becomes dopamine. Dopamine is taken into vesicles. And inside the vesicle, it is finally converted into noradrenaline by dopamine beta-hydroxylase.",
+      "Once made, noradrenaline is stored in vesicles in the nerve terminal, waiting for the nerve to fire. This is the supply depot. Drugs like reserpine block the storage step - they empty the vesicles, and over days the neuron runs out of transmitter even though it can still make it.",
+      "When an action potential arrives, it opens voltage-gated calcium channels in the presynaptic membrane. Calcium floods in, and the rise in calcium is what tells the vesicles to fuse with the membrane. They dump their noradrenaline into the synaptic cleft by exocytosis - a burst release of transmitter onto the target.",
+      "Across the cleft, noradrenaline binds adrenergic receptors. But not all receptors are the same. There are two families, alpha and beta, and five main subtypes: alpha-1, alpha-2, beta-1, beta-2, and beta-3. Each is a different GPCR, in a different tissue, coupled to a different downstream signal.",
+      "Alpha-1 receptors are Gq-coupled. They sit on vascular smooth muscle, where they cause vasoconstriction; on the iris, where they dilate the pupil; on the bladder sphincter, where they contract it; and on the liver, where they trigger glycogenolysis. Blocking them causes vasodilation, which is why prazosin and doxazosin lower blood pressure.",
+      "Alpha-2 receptors are Gi-coupled and sit presynaptically, on the nerve terminal itself. They act as autoreceptors - a self-brake. When noradrenaline binds them, it reduces further release. Clonidine and methyldopa are alpha-2 agonists, and they lower blood pressure by reducing sympathetic outflow from the brainstem.",
+      "Beta-1 receptors are Gs-coupled and sit mainly on the heart. They increase heart rate, force of contraction, and conduction velocity. They also sit on the kidney, where they stimulate renin release. Blocking them slows the heart and lowers blood pressure - metoprolol and atenolol are used for hypertension, angina, and heart failure.",
+      "Beta-2 receptors are Gs-coupled and sit on bronchial smooth muscle, where they cause bronchodilation, and on vascular smooth muscle, where they cause vasodilation. They also sit on the uterus and on skeletal muscle. Salbutamol activates them to treat asthma. Non-selective beta-blockers like propranolol block them too - which is why they are dangerous in asthma.",
+      "After noradrenaline has done its job, it is cleared from the cleft by three mechanisms. Uptake 1 - reuptake into the nerve terminal - is the main one, and it is what cocaine and tricyclic antidepressants block. Uptake 2 takes some into non-neuronal tissue. And the enzymes MAO and COMT metabolise whatever is left.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["synthesis"],
+      ["storage"],
+      ["release"],
+      ["receptors"],
+      ["alpha1"],
+      ["alpha2"],
+      ["beta1"],
+      ["beta2"],
+      ["reuptake"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pha:6"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // The synapse animates through the narrative. Steps 4 (release),
+      // 5 (binding), and 10 (reuptake) each set a visible state on the
+      // shared atlasSynapse primitive, so the anatomy actually changes
+      // at the moment the narration reaches that beat - not just the
+      // glow around a static picture.
+      const synapseState =
+        activeStep === 3 ? "releasing"
+        : activeStep === 4 ? "bound"
+        : activeStep === 9 ? "reuptake"
+        : null;
+
+      // One reusable callout box, used for every step that needs an
+      // explanatory panel alongside the hero. The `active` flag drives
+      // both the glow filter and the accent border, so the same helper
+      // covers both the "this is what we're talking about" state and
+      // the "this is selected" state without a second component.
+      const callout = (id, x, y, w, h, title, body, accent) => {
+        const active = isHot(id);
+        const selected = activeLabelId === id;
+        return (
+          <g style={{ cursor: cur }} onClick={click(id)} filter={active ? "url(#atlas-glow)" : undefined}>
+            <rect x={x} y={y} width={w} height={h} rx={12}
+              fill="var(--bg-2)"
+              stroke={selected ? ATLAS_COLORS.trunk : active ? ATLAS_COLORS.trunk : "var(--line-2)"}
+              strokeWidth={selected ? 3 : active ? 2 : 1.2} />
+            <text x={x + 12} y={y + 22} fontSize="10.5" fontWeight="800" fill={accent}>{title}</text>
+            {(Array.isArray(body) ? body : [body]).map((line, i) => (
+              <text key={i} x={x + 12} y={y + 40 + i * 14} fontSize="8.5" fill="var(--text-2)">{line}</text>
+            ))}
+            <rect x={x - 6} y={y - 6} width={w + 12} height={h + 12} rx={16}
+              fill="none" {...ring(id)} pointerEvents="none" />
+          </g>
+        );
+      };
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {atlasDefs()}
+
+          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700"
+            fill="var(--text-2)" pointerEvents="none">
+            The adrenergic synapse - where every adrenergic drug acts
+          </text>
+
+          {/* The hero synapse, drawn by the shared atlasSynapse primitive
+             at the centre of the canvas. Transmitter is noradrenaline, so
+             the vesicles render amber. The state changes per step so the
+             anatomy visibly moves as the narration moves. */}
+          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+            {atlasSynapse({
+              cx: 450, cy: 300, scale: 1.4,
+              transmitter: "noradrenaline",
+              state: synapseState,
+              drugAction: null,
+              highlight: false,
+            })}
+            <rect x="270" y="120" width="360" height="320"
+              fill="none" {...ring("whole")} pointerEvents="none" />
+          </g>
+
+          {/* Step 2 - synthesis callout, top-left. The noradrenaline
+             pathway is four enzymes, so the panel lists them in order
+             with the rate-limiting one flagged. */}
+          {isHot("synthesis") && callout(
+            "synthesis", 40, 100, 220, 130,
+            "SYNTHESIS",
+            ["tyrosine → L-DOPA → dopamine → NA", "tyrosine hydroxylase = rate-limiting", "4 enzymes, all inside the terminal"],
+            "#F5B93F"
+          )}
+
+          {/* Step 3 - storage callout, mid-left. Reserpine is the one
+             clinical drug that acts here, so it's named. */}
+          {isHot("storage") && callout(
+            "storage", 40, 260, 220, 110,
+            "VESICULAR STORAGE",
+            ["NA packed into vesicles", "reserpine blocks storage", "depletes the neuron over days"],
+            "#F5B93F"
+          )}
+
+          {/* Step 4 - release callout, bottom-left. The synapse itself
+             shows the fusing vesicle at the same time. */}
+          {isHot("release") && callout(
+            "release", 40, 400, 220, 120,
+            "CALCIUM-TRIGGERED RELEASE",
+            ["action potential → Ca²⁺ entry", "vesicles fuse with membrane", "exocytosis into the cleft"],
+            "#F5B93F"
+          )}
+
+          {/* Step 5 - the receptor overview panel, top-right. Five
+             subtypes listed with their signalling family, so the
+             student sees the taxonomy before the four per-subtype
+             panels that follow. */}
+          {isHot("receptors") && callout(
+            "receptors", 640, 100, 220, 140,
+            "FIVE SUBTYPES",
+            ["alpha-1 · alpha-2", "beta-1 · beta-2 · beta-3", "each a different GPCR", "different tissue, different signal"],
+            "#5B21B6"
+          )}
+
+          {/* Step 6 - alpha-1 panel. Location, effect, and one blocking
+             drug, matching the note's own clinical framing. */}
+          {isHot("alpha1") && callout(
+            "alpha1", 640, 100, 220, 130,
+            "ALPHA-1",
+            ["Gq-coupled", "vasoconstriction · pupil dilation", "bladder sphincter · liver", "prazosin · doxazosin block"],
+            "#C0392B"
+          )}
+
+          {/* Step 7 - alpha-2 panel. The presynaptic autoreceptor
+             concept is the single most important thing to hold onto
+             here, so it's the first line of the panel. */}
+          {isHot("alpha2") && callout(
+            "alpha2", 640, 240, 220, 130,
+            "ALPHA-2",
+            ["Gi-coupled, presynaptic", "autoreceptor - reduces release", "platelets - aggregation", "clonidine · methyldopa"],
+            "#8B5CF6"
+          )}
+
+          {/* Step 8 - beta-1 panel. Cardiac effects, plus the kidney's
+             renin release, which is the mechanism behind beta-blockers
+             lowering blood pressure. */}
+          {isHot("beta1") && callout(
+            "beta1", 640, 100, 220, 130,
+            "BETA-1",
+            ["Gs-coupled, mainly cardiac", "↑ rate · force · conduction", "kidney - renin release", "metoprolol · atenolol block"],
+            "#2F6FED"
+          )}
+
+          {/* Step 9 - beta-2 panel. Includes the asthma-relevance beat
+             from the note, since that's the clinical scenario the
+             student will be tested on. */}
+          {isHot("beta2") && callout(
+            "beta2", 640, 240, 220, 140,
+            "BETA-2",
+            ["Gs-coupled, bronchial + vascular", "bronchodilation · vasodilation", "uterus · skeletal muscle", "salbutamol · salmeterol"],
+            "#2F8F4E"
+          )}
+
+          {/* Step 10 - reuptake and metabolism panel. Drawn at the
+             bottom-right of the canvas so it doesn't overlap the
+             hero synapse. The synapse itself shows the reuptake arrow
+             at the same time. */}
+          {isHot("reuptake") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="400" width="220" height="150" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="652" y="424" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>REUPTAKE & METABOLISM</text>
+              <text x="652" y="446" fontSize="8.5" fill="var(--text-2)">uptake 1 - into nerve terminal (main)</text>
+              <text x="652" y="462" fontSize="8.5" fill="var(--text-2)">uptake 2 - into non-neuronal tissue</text>
+              <text x="652" y="478" fontSize="8.5" fill="var(--text-2)">MAO - inside the neuron</text>
+              <text x="652" y="494" fontSize="8.5" fill="var(--text-2)">COMT - in the tissue</text>
+              <text x="652" y="520" fontSize="9" fontWeight="700" fill="#C0392B">tricyclics · cocaine block uptake 1</text>
+              <text x="652" y="538" fontSize="8.5" fill="var(--text-2)">NA stays in the cleft longer</text>
+            </g>
+          )}
+
+          {/* Final synthesis footer, on the last step only - the same
+             "one sentence that ties it together" convention used by
+             every other finished diagram. */}
+          {activeStep === lastStep && (
+            <text x="450" y="608" textAnchor="middle" fontSize="11"
+              fontWeight="600" fill="var(--text-2)" pointerEvents="none">
+              Synthesis · storage · release · receptors · reuptake - every adrenergic drug acts at one of these five steps
+            </text>
+          )}
+
+          {/* Whole-canvas clickable region so tapping empty space
+             selects "whole", matching the pattern in pha:4 and pha:5. */}
+          <rect x="0" y="0" width="900" height="620"
+            fill="transparent" style={{ cursor: cur }}
+            onClick={click("whole")} pointerEvents="all" />
+        </svg>
+      );
+    },
+  },
+
+  /* =========================================================
+     CHOLINERGIC PHARMACOLOGY
+     Topic: Pharmacology I (pha), Topic 07 (index 6).
+     Reuses atlasSynapse from pha:6 - the same anatomy, the same
+     hero position, the same callout pattern. Only the transmitter
+     changes (blue ACh vesicles instead of amber NA vesicles) and
+     the story changes (two receptor families, one enzyme, one
+     neuromuscular junction). Ten steps covering the full
+     acetylcholine life cycle.
+     ========================================================= */
+  "pha:7": {
+    id: "pha:7",
+    type: "diagram",
+    title: "Cholinergic Pharmacology - Acetylcholine and the Parasympathetic Synapse",
+    topic: { courseId: "pha", topicIndex: 6 },
+    parent: null,
+    summary: "The cholinergic synapse is where parasympathetic neurons release acetylcholine. ACh is made in one step from choline and acetyl-CoA, packed into vesicles, released by calcium-triggered exocytosis, and broken down in the cleft by acetylcholinesterase - one of the fastest enzymes in the body. It binds two receptor families with completely different pharmacology: nicotinic receptors are ion channels (fast, milliseconds), and muscarinic receptors are GPCRs (slower, seconds). Every cholinergic drug - pilocarpine, neostigmine, atropine, suxamethonium - acts at one specific step in that cycle or on one specific receptor family.",
+    labels: [
+      { id: "whole",      name: "The Whole Synapse",           desc: "Same anatomy as the adrenergic synapse - but the transmitter, receptors, breakdown enzyme, and drugs are all different. Acetylcholine handles rest-and-digest and skeletal muscle contraction." },
+      { id: "synthesis",  name: "Acetylcholine Synthesis",     desc: "Choline (taken up from extracellular fluid) + acetyl-CoA → ACh, catalysed by choline acetyltransferase - ChAT. One step, fast, and rate-limited by choline supply." },
+      { id: "storage",    name: "Vesicular Storage",           desc: "ACh is packed into vesicles by VAChT - vesicular acetylcholine transporter. Vesamicol blocks this step, but it's a research tool, not a clinical drug." },
+      { id: "release",    name: "Calcium-Triggered Release",   desc: "Same mechanism as the adrenergic synapse - calcium entry triggers vesicle fusion. But botulinum toxin acts here, cleaving the SNARE proteins vesicles need to fuse." },
+      { id: "receptors",  name: "Cholinergic Receptors",       desc: "Two families - nicotinic (ionotropic, milliseconds) and muscarinic (GPCR, seconds). Different structure, different speed, different tissues, different drugs. This is the single most important distinction in the topic." },
+      { id: "nicotinic",  name: "Nicotinic Receptors",         desc: "Ligand-gated ion channels - five subunits around a central pore. At the neuromuscular junction (Nm), autonomic ganglia (Nn), and the CNS. Activated by nicotine, blocked by curare, hexamethonium, and the neuromuscular blockers." },
+      { id: "muscarinic", name: "Muscarinic Receptors",        desc: "G-protein coupled receptors - M1 to M5. Found on smooth muscle, cardiac muscle, glands, and the CNS. M1, M3, M5 are Gq-coupled; M2, M4 are Gi-coupled. Activated by muscarine, blocked by atropine." },
+      { id: "m2",         name: "M2 - Cardiac",                desc: "Gi-coupled, on the SA and AV nodes. Activation slows heart rate - the vagal brake. Atropine removes the brake and is used for symptomatic bradycardia." },
+      { id: "m3",         name: "M3 - Smooth Muscle & Glands", desc: "Gq-coupled. Bronchoconstriction, gut motility, salivation, lacrimation, urination, pupil constriction. Blocked by atropine - which is why atropine's side effects are dry mouth, constipation, and blurred vision." },
+      { id: "ache",       name: "Acetylcholinesterase",        desc: "The enzyme that breaks ACh into choline and acetate in the cleft - one of the fastest enzymes in the body. Inhibited by neostigmine, physostigmine, donepezil, and the organophosphate insecticides and nerve agents." },
+    ],
+    narration: [
+      "The cholinergic synapse has the same anatomy as the adrenergic synapse you saw in the last topic. But the transmitter is different, the receptors are different, and the drugs are different. Instead of noradrenaline, the parasympathetic neuron releases acetylcholine - and that one molecule handles both rest-and-digest and skeletal muscle contraction.",
+      "Acetylcholine is made in one step. Choline, taken up from the extracellular fluid, combines with acetyl-CoA inside the nerve terminal. The enzyme is choline acetyltransferase - ChAT. The reaction is fast, and it's rate-limited by how much choline is available, not by enzyme activity.",
+      "Once made, ACh is packed into vesicles by a transporter called VAChT - vesicular acetylcholine transporter. This is the same idea as VMAT for noradrenaline. Vesamicol blocks VAChT, but it's a research tool, not a clinical drug. Clinically, storage isn't the target.",
+      "When an action potential arrives, calcium enters the presynaptic terminal and triggers vesicle fusion - exactly the same mechanism as the adrenergic synapse. But here's where botulinum toxin acts. It cleaves the SNARE proteins that vesicles need to fuse with the membrane. No SNARE, no release, no signal - and that's flaccid paralysis.",
+      "Across the cleft, ACh binds one of two receptor families. This is the single most important distinction in cholinergic pharmacology. Nicotinic receptors are ion channels - they open fast, in milliseconds. Muscarinic receptors are GPCRs - they signal slower, through second messengers. Different structure, different speed, different drugs.",
+      "Nicotinic receptors sit at three key places. At the neuromuscular junction, where they trigger muscle contraction. In autonomic ganglia, where they relay signals between neurons. And in the adrenal medulla. They're activated by nicotine, blocked by curare which causes paralysis, and blocked by hexamethonium which blocks ganglia.",
+      "Muscarinic receptors are GPCRs, and there are five subtypes. In practice, you need M2 and M3. M2 sits on the heart. M3 sits on smooth muscle and glands. Both are blocked by atropine - and every one of atropine's side effects is predictable from blocking those two subtypes.",
+      "M2 receptors are Gi-coupled and sit on the SA and AV nodes. Activating them slows heart rate - that's the vagal brake. Blocking them with atropine removes the brake, so heart rate goes up. This is why atropine is the first-line treatment for symptomatic bradycardia.",
+      "M3 receptors are Gq-coupled and sit on smooth muscle and glands. Activating them causes bronchoconstriction, increased gut motility, salivation, lacrimation, and urination. Blocking them causes the opposite - dry mouth, constipation, urinary retention, and blurred vision. That's the classic anticholinergic side-effect profile.",
+      "Finally, acetylcholine is broken down in the cleft by acetylcholinesterase - AChE. It hydrolyses ACh into choline and acetate in milliseconds - one of the fastest reactions in the body. Inhibiting it with neostigmine, donepezil, or organophosphates leaves ACh in the cleft longer, amplifying the signal. That's the mechanism behind both therapeutic effects and the cholinergic crisis of organophosphate poisoning.",
+    ],
+    stepFocus: [
+      ["whole"],
+      ["synthesis"],
+      ["storage"],
+      ["release"],
+      ["receptors"],
+      ["nicotinic"],
+      ["muscarinic"],
+      ["m2"],
+      ["m3"],
+      ["ache"],
+    ],
+    viewBox: "0 0 900 620",
+    render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+      const diagram = DIAGRAMS["pha:7"];
+      const focus = diagram.stepFocus[activeStep] || [];
+      const inFocus = (id) => focus.includes(id);
+      const lastStep = diagram.narration.length - 1;
+      const click = (id) => (preview ? undefined : () => onLabelClick(id));
+      const cur = preview ? "default" : "pointer";
+      const ring = (id) => (activeLabelId === id
+        ? { stroke: ATLAS_COLORS.trunk, strokeWidth: 3.5 }
+        : { stroke: "transparent", strokeWidth: 0 });
+      const isHot = (id) => inFocus(id) && activeStep !== lastStep;
+      const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
+
+      // The synapse animates through the narrative. Step 4 (release)
+      // and step 5 (binding) each set a visible state on the shared
+      // atlasSynapse primitive, so the anatomy actually changes at
+      // the moment the narration reaches that beat.
+      const synapseState =
+        activeStep === 3 ? "releasing"
+        : activeStep === 4 ? "bound"
+        : null;
+
+      // Same callout helper as pha:6 - one component, reused for
+      // every step that needs an explanatory panel alongside the
+      // hero. `active` drives both the glow filter and the accent
+      // border, so the same helper covers the "currently being
+      // discussed" state and the "selected" state.
+      const callout = (id, x, y, w, h, title, body, accent) => {
+        const active = isHot(id);
+        const selected = activeLabelId === id;
+        return (
+          <g style={{ cursor: cur }} onClick={click(id)} filter={active ? "url(#atlas-glow)" : undefined}>
+            <rect x={x} y={y} width={w} height={h} rx={12}
+              fill="var(--bg-2)"
+              stroke={selected ? ATLAS_COLORS.trunk : active ? ATLAS_COLORS.trunk : "var(--line-2)"}
+              strokeWidth={selected ? 3 : active ? 2 : 1.2} />
+            <text x={x + 12} y={y + 22} fontSize="10.5" fontWeight="800" fill={accent}>{title}</text>
+            {(Array.isArray(body) ? body : [body]).map((line, i) => (
+              <text key={i} x={x + 12} y={y + 40 + i * 14} fontSize="8.5" fill="var(--text-2)">{line}</text>
+            ))}
+            <rect x={x - 6} y={y - 6} width={w + 12} height={h + 12} rx={16}
+              fill="none" {...ring(id)} pointerEvents="none" />
+          </g>
+        );
+      };
+
+      return (
+        <svg viewBox="0 0 900 620" width="100%" height="100%">
+          {atlasDefs()}
+
+          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700"
+            fill="var(--text-2)" pointerEvents="none">
+            The cholinergic synapse - same anatomy, different transmitter
+          </text>
+
+          {/* The hero synapse, drawn by the shared atlasSynapse primitive.
+             Transmitter is acetylcholine, so the vesicles render blue.
+             Same size, same position, same primitive as pha:6 - the
+             student sees the same shape with a different colour, which
+             is exactly the mental model we want them to hold. */}
+          <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
+            {atlasSynapse({
+              cx: 450, cy: 300, scale: 1.4,
+              transmitter: "acetylcholine",
+              state: synapseState,
+              drugAction: null,
+              highlight: false,
+            })}
+            <rect x="270" y="120" width="360" height="320"
+              fill="none" {...ring("whole")} pointerEvents="none" />
+          </g>
+
+          {/* Step 2 - synthesis callout. The note is explicit that this
+             is one step, in contrast to noradrenaline's four - that
+             contrast is the panel's whole reason for existing. */}
+          {isHot("synthesis") && callout(
+            "synthesis", 40, 100, 220, 120,
+            "SYNTHESIS - ONE STEP",
+            ["choline + acetyl-CoA → ACh", "enzyme: ChAT", "rate-limited by choline supply", "vs noradrenaline's 4 steps"],
+            "#F5B93F"
+          )}
+
+          {/* Step 3 - storage callout. Names VAChT and flags that
+             vesamicol is a research tool, not clinical - which is
+             exactly what the note says. */}
+          {isHot("storage") && callout(
+            "storage", 40, 250, 220, 110,
+            "VESICULAR STORAGE",
+            ["VAChT packs ACh into vesicles", "vesamicol blocks VAChT", "research tool, not clinical"],
+            "#F5B93F"
+          )}
+
+          {/* Step 4 - release callout. Botulinum toxin is the star
+             here, so it's the last line - the consequence of blocking
+             release. The synapse itself shows a fusing vesicle at the
+             same time. */}
+          {isHot("release") && callout(
+            "release", 40, 390, 220, 130,
+            "CALCIUM-TRIGGERED RELEASE",
+            ["Ca²⁺ entry → vesicle fusion", "SNARE proteins required", "botulinum cleaves SNAREs", "→ flaccid paralysis"],
+            "#F5B93F"
+          )}
+
+          {/* Step 5 - receptor families overview. The single most
+             important distinction in the topic: fast ion channels vs
+             slow GPCRs. Panel lays them side by side. */}
+          {isHot("receptors") && callout(
+            "receptors", 640, 100, 220, 140,
+            "TWO FAMILIES",
+            ["nicotinic - ion channel", "  milliseconds, ligand-gated", "muscarinic - GPCR", "  seconds, second messengers"],
+            "#5B21B6"
+          )}
+
+          {/* Step 6 - nicotinic receptors panel. Location-heavy,
+             because the student needs the three sites (NMJ, ganglia,
+             adrenal medulla) recalled together. */}
+          {isHot("nicotinic") && callout(
+            "nicotinic", 640, 100, 220, 150,
+            "NICOTINIC (nAChR)",
+            ["ligand-gated ion channel", "5 subunits around a pore", "Nm: neuromuscular junction", "Nn: ganglia + adrenal medulla", "curare · hexamethonium block"],
+            "#C0392B"
+          )}
+
+          {/* Step 7 - muscarinic overview. Lays out the G-protein
+             coupling pattern so that M2 (Gi) and M3 (Gq) below can
+             slot into it naturally. */}
+          {isHot("muscarinic") && callout(
+            "muscarinic", 640, 270, 220, 150,
+            "MUSCARINIC (mAChR)",
+            ["G-protein coupled · M1-M5", "M1, M3, M5 → Gq", "M2, M4 → Gi", "smooth muscle · heart · glands · CNS", "muscarine activates · atropine blocks"],
+            "#8B5CF6"
+          )}
+
+          {/* Step 8 - M2 panel. Cardiac only, with atropine's clinical
+             use (bradycardia) called out explicitly. */}
+          {isHot("m2") && callout(
+            "m2", 640, 100, 220, 120,
+            "M2 - CARDIAC",
+            ["Gi-coupled · SA + AV nodes", "activation slows heart rate", "the vagal brake", "atropine for bradycardia"],
+            "#2F6FED"
+          )}
+
+          {/* Step 9 - M3 panel. Glandular and smooth-muscle targets,
+             with the atropine side-effect chain spelled out at the
+             bottom - the note's own teaching point. */}
+          {isHot("m3") && callout(
+            "m3", 640, 240, 220, 150,
+            "M3 - SMOOTH MUSCLE & GLANDS",
+            ["Gq-coupled", "bronchoconstriction · gut motility", "salivation · lacrimation · urination", "pupil constriction", "atropine blocks - hence dry mouth,"],
+            "#2F8F4E"
+          )}
+
+          {/* Step 10 - acetylcholinesterase panel. Drawn at the
+             bottom-right, mirroring pha:6's reuptake panel position.
+             Names the therapeutic inhibitors and the toxic one, so
+             the student leaves with the full picture of what this
+             enzyme's inhibition does. */}
+          {isHot("ache") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <rect x="640" y="420" width="220" height="150" rx="12"
+                fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="652" y="444" fontSize="10.5" fontWeight="800" fill={ATLAS_COLORS.trunk}>ACETYLCHOLINESTERASE</text>
+              <text x="652" y="464" fontSize="8.5" fill="var(--text-2)">hydrolyses ACh → choline + acetate</text>
+              <text x="652" y="480" fontSize="8.5" fill="var(--text-2)">milliseconds - the fastest in the body</text>
+              <text x="652" y="502" fontSize="9" fontWeight="700" fill="#C0392B">inhibitors:</text>
+              <text x="652" y="518" fontSize="8.5" fill="var(--text-2)">neostigmine · physostigmine</text>
+              <text x="652" y="532" fontSize="8.5" fill="var(--text-2)">donepezil · organophosphates</text>
+              <text x="652" y="552" fontSize="8" fontStyle="italic" fill="var(--text-3)">antidote: atropine + pralidoxime</text>
+            </g>
+          )}
+
+          {/* Final synthesis footer, on the last step only. The
+             contrast line is the one-sentence takeaway that ties the
+             whole topic together. */}
+          {activeStep === lastStep && (
+            <text x="450" y="608" textAnchor="middle" fontSize="11"
+              fontWeight="600" fill="var(--text-2)" pointerEvents="none">
+              Same synapse as adrenergic · different transmitter · different receptors · different drugs
+            </text>
+          )}
+
+          {/* Whole-canvas clickable region so tapping empty space
+             selects "whole", matching the pattern in pha:4-pha:6. */}
           <rect x="0" y="0" width="900" height="620"
             fill="transparent" style={{ cursor: cur }}
             onClick={click("whole")} pointerEvents="all" />
