@@ -6206,10 +6206,12 @@ export const DIAGRAMS = {
 
       // Tube glyphs — one per lab anticoagulant. Drawn as a small
       // test tube with a coloured cap, matching the cap colour of the
-      // real collection tube for that anticoagulant.
+      // real collection tube for that anticoagulant. Anchored at
+      // tubeTopY, which is set below the cascade area and above the
+      // footer text so nothing overlaps.
+      const tubeTopY = 580;
       const tube = (id, cx, capColor, bodyColor, label, sub) => {
         const isFocused = isHot(id);
-        const isActive = activeLabelId === id;
         const tubeW = 44;
         const tubeH = 110;
         const capH = 14;
@@ -6224,7 +6226,7 @@ export const DIAGRAMS = {
             {/* Tube body — pale glass */}
             <rect
               x={cx - tubeW / 2}
-              y={600}
+              y={tubeTopY}
               width={tubeW}
               height={tubeH}
               rx={6}
@@ -6235,17 +6237,17 @@ export const DIAGRAMS = {
             {/* Liquid inside — the anticoagulant solution */}
             <rect
               x={cx - tubeW / 2 + 3}
-              y={600 + capH + 6}
+              y={tubeTopY + capH + 6}
               width={tubeW - 6}
               height={tubeH - capH - 14}
               rx={4}
               fill={bodyColor}
               opacity="0.35"
             />
-            {/* Coloured cap */}
+                        {/* Coloured cap */}
             <rect
               x={cx - tubeW / 2 - 3}
-              y={600 - 6}
+              y={tubeTopY - 6}
               width={tubeW + 6}
               height={capH}
               rx={3}
@@ -6256,7 +6258,7 @@ export const DIAGRAMS = {
             {/* Label under the tube */}
             <text
               x={cx}
-              y={600 + tubeH + 20}
+              y={tubeTopY + tubeH + 20}
               textAnchor="middle"
               fontSize="11.5"
               fontWeight="700"
@@ -6266,17 +6268,17 @@ export const DIAGRAMS = {
             </text>
             <text
               x={cx}
-              y={600 + tubeH + 34}
+              y={tubeTopY + tubeH + 34}
               textAnchor="middle"
               fontSize="9"
               fill="var(--text-2)"
             >
               {sub}
             </text>
-            {/* Selection ring */}
+                        {/* Selection ring */}
             <rect
               x={cx - tubeW / 2 - 8}
-              y={600 - 12}
+              y={tubeTopY - 12}
               width={tubeW + 16}
               height={tubeH + 20}
               rx={10}
@@ -6291,9 +6293,12 @@ export const DIAGRAMS = {
       return (
         <svg viewBox="0 0 900 760" width="100%" height="100%">
           {/* ---- TOP HALF: the clotting cascade ---- */}
+          {/* Cascade drawn at cx 350, giving the right-edge captions
+             (which extend from the cascade's right column at x ≈ 520)
+             clear space before the insets at x 640. */}
           <g style={{ cursor: cur }} onClick={click("whole")} filter={hotFilter("whole")}>
             {atlasClottingCascade({
-              cx: 400, cy: 200, scale: 1,
+              cx: 350, cy: 200, scale: 1,
               blockAt,
               showLabels: true,
               highlight: false,
@@ -6302,40 +6307,46 @@ export const DIAGRAMS = {
 
           {/* Cascade label anchor — a clickable region over the cascade */}
           <g style={{ cursor: cur }} onClick={click("cascade")} filter={hotFilter("cascade")}>
-            <rect x="30" y="40" width="740" height="380" fill="none" {...ring("cascade")} pointerEvents="none" />
+            <rect x="30" y="40" width="620" height="380" fill="none" {...ring("cascade")} pointerEvents="none" />
           </g>
 
-          {/* Heparin inset — shown on its own step */}
+          {/* Heparin inset — shown on its own step. Positioned below the
+             cascade and above the tube row, so it never collides with
+             the cascade captions or the tube labels. */}
           {isHot("heparin") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="640" y="60" width="230" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
-              <text x="755" y="85" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>HEPARIN</text>
-              <text x="755" y="108" textAnchor="middle" fontSize="9" fill="var(--text-2)">indirect anticoagulant —</text>
-              <text x="755" y="123" textAnchor="middle" fontSize="9" fill="var(--text-2)">accelerates antithrombin</text>
-              <text x="755" y="145" textAnchor="middle" fontSize="9" fill="var(--text-2)">given by injection</text>
-              <text x="755" y="160" textAnchor="middle" fontSize="9" fill="var(--text-2)">acts within minutes</text>
-              <text x="755" y="180" textAnchor="middle" fontSize="9" fontWeight="700" fill={ATLAS_COLORS.trunk}>monitored by aPTT</text>
-              <text x="755" y="200" textAnchor="middle" fontSize="8" fill="var(--text-3)">bleeding · HIT (rare, paradoxical)</text>
+              <rect x="640" y="410" width="230" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2" />
+              <text x="755" y="435" textAnchor="middle" fontSize="11" fontWeight="700" fill={ATLAS_COLORS.trunk}>HEPARIN</text>
+              <text x="755" y="458" textAnchor="middle" fontSize="9" fill="var(--text-2)">indirect anticoagulant —</text>
+              <text x="755" y="473" textAnchor="middle" fontSize="9" fill="var(--text-2)">accelerates antithrombin</text>
+              <text x="755" y="495" textAnchor="middle" fontSize="9" fill="var(--text-2)">given by injection</text>
+              <text x="755" y="510" textAnchor="middle" fontSize="9" fill="var(--text-2)">acts within minutes</text>
+              <text x="755" y="530" textAnchor="middle" fontSize="9" fontWeight="700" fill={ATLAS_COLORS.trunk}>monitored by aPTT</text>
+              <text x="755" y="550" textAnchor="middle" fontSize="8" fill="var(--text-3)">bleeding · HIT (rare, paradoxical)</text>
             </g>
           )}
 
-          {/* Warfarin inset — shown on its own step */}
+          {/* Warfarin inset — shown on its own step. Same position as the
+             heparin inset; only one is displayed at a time. */}
           {isHot("warfarin") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
-              <rect x="640" y="60" width="230" height="150" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
-              <text x="755" y="85" textAnchor="middle" fontSize="11" fontWeight="700" fill="#2F6FED">WARFARIN</text>
-              <text x="755" y="108" textAnchor="middle" fontSize="9" fill="var(--text-2)">blocks vitamin K recycling</text>
-              <text x="755" y="123" textAnchor="middle" fontSize="9" fill="var(--text-2)">liver can't make II, VII, IX, X</text>
-              <text x="755" y="145" textAnchor="middle" fontSize="9" fill="var(--text-2)">oral · slow onset and offset</text>
-              <text x="755" y="160" textAnchor="middle" fontSize="9" fill="var(--text-2)">long-term prevention</text>
-              <text x="755" y="180" textAnchor="middle" fontSize="9" fontWeight="700" fill="#2F6FED">monitored by PT / INR</text>
-              <text x="755" y="200" textAnchor="middle" fontSize="8" fill="var(--text-3)">reversed by vitamin K · teratogenic</text>
+              <rect x="640" y="410" width="230" height="150" rx="14" fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
+              <text x="755" y="435" textAnchor="middle" fontSize="11" fontWeight="700" fill="#2F6FED">WARFARIN</text>
+              <text x="755" y="458" textAnchor="middle" fontSize="9" fill="var(--text-2)">blocks vitamin K recycling</text>
+              <text x="755" y="473" textAnchor="middle" fontSize="9" fill="var(--text-2)">liver can't make II, VII, IX, X</text>
+              <text x="755" y="495" textAnchor="middle" fontSize="9" fill="var(--text-2)">oral · slow onset and offset</text>
+              <text x="755" y="510" textAnchor="middle" fontSize="9" fill="var(--text-2)">long-term prevention</text>
+              <text x="755" y="530" textAnchor="middle" fontSize="9" fontWeight="700" fill="#2F6FED">monitored by PT / INR</text>
+              <text x="755" y="550" textAnchor="middle" fontSize="8" fill="var(--text-3)">reversed by vitamin K · teratogenic</text>
             </g>
           )}
 
           {/* ---- BOTTOM HALF: the four laboratory tubes ---- */}
+          {/* Lab header sits left of the insets. The insets occupy
+             x 640–870 when shown; the header is centered at x 300 so
+             it spans roughly x 0–600 and never collides with them. */}
           <text
-            x="450"
+            x="300"
             y="560"
             textAnchor="middle"
             fontSize="13"
@@ -6358,9 +6369,11 @@ export const DIAGRAMS = {
           {/* Oxalate — grey */}
           {tube("oxalate", 760, "#64748B", "#C7D0DC", "Oxalate", "grey · rare assays")}
 
-          {/* Static region labels */}
-          <text x="450" y="30" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">The clotting cascade</text>
-          <text x="450" y="740" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Three strategies · two arenas · match the agent to the purpose</text>
+          {/* Static region labels. The cascade header centers on the
+             cascade's new x position (350). The footer sits below the
+             tube sub-labels, giving the tube row its own clean band. */}
+          <text x="350" y="30" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--text-2)" pointerEvents="none">The clotting cascade</text>
+          <text x="450" y="755" textAnchor="middle" fontSize="11" fontWeight="600" fill="var(--text-2)" pointerEvents="none">Three strategies · two arenas · match the agent to the purpose</text>
         </svg>
       );
     },

@@ -2461,6 +2461,68 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
         console.warn(`[Atlas] "${diagram.id}": label "${l.id}" has no entry in LEGEND_SWATCHES - it will show a grey circle in the legend.`);
       }
     });
+
+    // Text-overlap heuristic. After paint, walk every <text> element
+    // inside the diagram's SVG and check for bounding-box collisions
+    // with other <text> elements. Reports pairs that overlap by more
+    // than 30% of the smaller element's area. This catches the most
+    // common overlap pattern — labels colliding with labels — which is
+    // what caused the hem:6 tube row collision and what future
+    // diagrams are most likely to hit.
+    //
+    // Deferred to a timer so the SVG has actually painted and
+    // getBBox() returns real dimensions rather than zeros.
+    //
+    // Silent when nothing overlaps. Only prints to the console when
+    // there's a real problem worth fixing.
+    const overlapTimer = setTimeout(() => {
+      const wrapper = document.querySelector(`[data-atlas-diagram="${diagram.id}"]`);
+      if (!wrapper) return;
+      const texts = Array.from(wrapper.querySelectorAll("text"));
+      if (texts.length < 2) return;
+
+      const boxes = [];
+      texts.forEach((t) => {
+        try {
+          const b = t.getBBox();
+          if (b.width > 0 && b.height > 0) {
+            boxes.push({
+              el: t,
+              label: (t.textContent || "").trim().slice(0, 30),
+              x: b.x,
+              y: b.y,
+              w: b.width,
+              h: b.height,
+            });
+          }
+        } catch {
+          // getBBox can throw on elements not yet attached to the DOM
+        }
+      });
+
+      const reported = new Set();
+      for (let i = 0; i < boxes.length; i++) {
+        for (let j = i + 1; j < boxes.length; j++) {
+          const a = boxes[i];
+          const b = boxes[j];
+          const overlapX = Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x));
+          const overlapY = Math.max(0, Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y));
+          const overlapArea = overlapX * overlapY;
+          const smallerArea = Math.min(a.w * a.h, b.w * b.h);
+          if (smallerArea > 0 && overlapArea / smallerArea > 0.3) {
+            const key = a.label + "::" + b.label;
+            if (!reported.has(key)) {
+              reported.add(key);
+              console.warn(
+                `[Atlas] "${diagram.id}": text overlap between "${a.label}" and "${b.label}"`
+              );
+            }
+          }
+        }
+      }
+    }, 500);
+
+    return () => clearTimeout(overlapTimer);
   }, [diagram]);
 
   useEffect(() => () => { try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {} }, []);
@@ -2831,6 +2893,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
               </div>
             )}
             <div
+              data-atlas-diagram={diagram.id}
               style={{
                 transform: `translate(${panX}px, ${panY}px) scale(${zoom})`,
                 transformOrigin: "center center",
