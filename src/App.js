@@ -751,8 +751,7 @@ const Ic = {
    shapes, so adding a new skin tone or hair colour later is a
    one-line hex code, not a new drawing.
    ============================================================ */
-const AVATAR_SKIN_TONES = ["#F5D0B0", "#C68642", "#6B4226"];
-const AVATAR_HAIR_COLORS = ["#1B1210", "#6B4226", "#D9A441"];
+import { AVATAR_SKIN_TONES, AVATAR_HAIR_COLORS, AVATAR_OUTFIT_COLORS } from "./avatarConstants";
 
 // Face shape is locked to one standard circle - no picker section, no
 // decision for the student to make here.
@@ -949,10 +948,10 @@ const AVATAR_EXTRAS = {
 };
 
 const AVATAR_OUTFITS = {
-  labcoat: { label: "Lab coat", armColor: "#F4F6FA", shape: () => <g><path d="M20,86 Q50,78 80,86 L86,128 L14,128 Z" fill="#F4F6FA" /><rect x="46" y="86" width="8" height="42" fill="#C9D2E0" /><rect x="20" y="86" width="60" height="4" fill="#DCE2EC" /></g> },
-  hoodie: { label: "Hoodie", armColor: "#3B4A63", shape: () => <g><path d="M18,88 Q50,76 82,88 L88,128 L12,128 Z" fill="#3B4A63" /><path d="M34,86 Q50,98 66,86" stroke="#2A3650" strokeWidth="3" fill="none" /></g> },
-  blouse: { label: "Blouse", armColor: "#D85A7A", shape: () => <path d="M22,88 Q50,80 78,88 L82,128 L18,128 Z" fill="#D85A7A" /> },
-  scrubs: { label: "Scrubs", armColor: "#4C6B5A", shape: () => <path d="M20,88 Q50,80 80,88 L84,128 L16,128 Z" fill="#4C6B5A" /> },
+  labcoat: { label: "Lab coat", armColor: AVATAR_OUTFIT_COLORS.labcoat, shape: () => <g><path d="M20,86 Q50,78 80,86 L86,128 L14,128 Z" fill="#F4F6FA" /><rect x="46" y="86" width="8" height="42" fill="#C9D2E0" /><rect x="20" y="86" width="60" height="4" fill="#DCE2EC" /></g> },
+  hoodie: { label: "Hoodie", armColor: AVATAR_OUTFIT_COLORS.hoodie, shape: () => <g><path d="M18,88 Q50,76 82,88 L88,128 L12,128 Z" fill="#3B4A63" /><path d="M34,86 Q50,98 66,86" stroke="#2A3650" strokeWidth="3" fill="none" /></g> },
+  blouse: { label: "Blouse", armColor: AVATAR_OUTFIT_COLORS.blouse, shape: () => <path d="M22,88 Q50,80 78,88 L82,128 L18,128 Z" fill="#D85A7A" /> },
+  scrubs: { label: "Scrubs", armColor: AVATAR_OUTFIT_COLORS.scrubs, shape: () => <path d="M20,88 Q50,80 80,88 L84,128 L16,128 Z" fill="#4C6B5A" /> },
 };
 
 // Sneakers removed entirely per feedback - feet now render as one fixed
