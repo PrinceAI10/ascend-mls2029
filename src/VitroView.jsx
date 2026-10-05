@@ -284,83 +284,126 @@ const DONNING_ORDER_ERRORS = {
 };
 
 function VitroDonning({ onPass, avatarConfig }) {
-  const [placed, setPlaced] = useState([]); // ids placed so far, in correct order
-  const [error, setError] = useState(null); // { id, message } — cleared on next correct tap
-  // The gown step has two beats: the first tap teaches the lab-coat
-  // rule, the second commits it. This flag records that the student
-  // has seen the teaching beat but has not yet put the coat on.
+  const [placed, setPlaced] = useState([]);
+  const [error, setError] = useState(null);
   const [gownPending, setGownPending] = useState(false);
+  // The id of the item currently animating onto the figure, or
+  // null. Drives the CSS keyframe animation class and blocks
+  // further taps until the animation settles.
+  const [animating, setAnimating] = useState(null);
 
   const nextStep = DONNING_STEPS[placed.length] || null;
   const done = placed.length === DONNING_STEPS.length;
 
+  // Duration each per-item animation runs before the item is
+  // considered placed. Kept in one constant so a slower or
+  // snappier feel is a one-line change.
+  const ANIM_MS = 550;
+
+  // Short, clinical instruction lines. One per step. Shown only
+  // in the headline strip above the cart, never as a paragraph.
+  const STEP_HEADLINES = {
+    wash: "Wash your hands.",
+    gown: "Put on the lab coat.",
+    mask: "Fit the mask.",
+    eye: "Put on the eyewear.",
+    gloves: "Put on the gloves — last.",
+  };
+
   const tap = (id) => {
-    // Already placed? Ignore. Prevents double-counting on fast taps.
     if (placed.includes(id)) return;
-    // Correct next item: accept, clear any lingering error.
+    if (animating) return;
     if (nextStep && id === nextStep.id) {
-      // ---- Gown sub-step: teach first, then commit ----
       if (id === "gown" && !gownPending) {
         setGownPending(true);
         setError(null);
         return;
       }
-      const nextPlaced = [...placed, id];
-      setPlaced(nextPlaced);
       setError(null);
-      if (id === "gown") setGownPending(false);
-      if (nextPlaced.length === DONNING_STEPS.length) {
-        // Small beat so the student sees the fully-dressed figure
-        // before the screen changes underneath them.
-        setTimeout(() => onPass && onPass(), 700);
+      setAnimating(id);
+      setTimeout(() => {
+        setPlaced((prev) => [...prev, id]);
+        setAnimating(null);
+        if (id === "gown") setGownPending(false);
+      }, ANIM_MS);
+      if (placed.length + 1 === DONNING_STEPS.length) {
+        setTimeout(() => onPass && onPass(), ANIM_MS + 400);
       }
       return;
     }
-    // Wrong item: specific explanation, then they retry this step.
     const wrongItem = DONNING_STEPS.find((s) => s.id === id);
     const skipped = nextStep;
     const entry = DONNING_ORDER_ERRORS[id];
     const message =
       entry && entry.why
         ? entry.why
-        : `${wrongItem ? wrongItem.label : "That"} is not the next step. You need to put on ${skipped ? skipped.label.toLowerCase() : "the next item"} first.`;
+        : `${wrongItem ? wrongItem.label : "That"} is not the next step. ${skipped ? skipped.label + " first." : ""}`.trim();
     setError({ id, message });
   };
 
+  const cfg = (avatarConfig && typeof avatarConfig === "object") ? avatarConfig : {};
+  const skin = cfg.skin && AVATAR_SKIN_TONES.includes(cfg.skin) ? cfg.skin : AVATAR_SKIN_TONES[0];
+  const hairColor = cfg.hairColor && AVATAR_HAIR_COLORS.includes(cfg.hairColor) ? cfg.hairColor : AVATAR_HAIR_COLORS[0];
+  const outfitColor = (cfg.outfit && AVATAR_OUTFIT_COLORS[cfg.outfit]) ? AVATAR_OUTFIT_COLORS[cfg.outfit] : AVATAR_OUTFIT_COLORS.labcoat;
+  const FEMALE_HAIR_IDS = ["braids", "ponytail", "wig", "bun"];
+  const isFemale = FEMALE_HAIR_IDS.includes(cfg.hair);
+  const hairPath = isFemale
+    ? "M42,30 Q42,14 60,14 Q78,14 78,30 Q74,20 60,20 Q46,20 42,30 Z"
+    : "M44,30 Q44,18 60,18 Q76,18 76,30 Q72,23 60,23 Q48,23 44,30 Z";
+
+  const has = (id) => placed.includes(id) || animating === id;
+
   return (
     <div style={{ marginTop: 16 }}>
-      <div
-        className="card"
-        style={{ borderColor: "var(--amber)", padding: 20 }}
-      >
-        <div
-          className="eyebrow"
-          style={{ color: "var(--amber-2)", marginBottom: 8 }}
-        >
+      <style>{`
+        @keyframes vitro-fade-in { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes vitro-coat-in {
+          from { transform: translate(-40px, -20px); opacity: 0 }
+          to   { transform: translate(0, 0);         opacity: 1 }
+        }
+        @keyframes vitro-mask-in {
+          from { transform: translateY(-30px); opacity: 0 }
+          to   { transform: translateY(0);     opacity: 1 }
+        }
+        @keyframes vitro-eye-in {
+          from { transform: translateX(30px); opacity: 0 }
+          to   { transform: translateX(0);    opacity: 1 }
+        }
+        @keyframes vitro-glove-in {
+          from { transform: translateY(30px) scale(0.6); opacity: 0 }
+          to   { transform: translateY(0)    scale(1);   opacity: 1 }
+        }
+        @keyframes vitro-wash-pulse {
+          0%   { opacity: 0; transform: scale(0.6) }
+          40%  { opacity: 1; transform: scale(1.15) }
+          100% { opacity: 1; transform: scale(1) }
+        }
+        .vitro-anim-coat  { animation: vitro-coat-in  550ms cubic-bezier(.2,.9,.3,1) both }
+        .vitro-anim-mask  { animation: vitro-mask-in  550ms cubic-bezier(.2,.9,.3,1) both }
+        .vitro-anim-eye   { animation: vitro-eye-in   550ms cubic-bezier(.2,.9,.3,1) both }
+        .vitro-anim-glove { animation: vitro-glove-in 550ms cubic-bezier(.2,.9,.3,1) both }
+        .vitro-anim-wash  { animation: vitro-wash-pulse 550ms ease-out both }
+        .vitro-anim-fade  { animation: vitro-fade-in 300ms ease-out both }
+      `}</style>
+
+      <div className="card" style={{ borderColor: "var(--amber)", padding: 18 }}>
+        <div className="eyebrow" style={{ color: "var(--amber-2)", marginBottom: 6 }}>
           Donning check
         </div>
-        <div style={{ fontWeight: 700, fontSize: 15.5, lineHeight: 1.4 }}>
-          Before you enter the lab
+        <div style={{ fontWeight: 750, fontSize: 16, lineHeight: 1.35 }}>
+          {done
+            ? "PPE complete. Correct order."
+            : nextStep
+            ? STEP_HEADLINES[nextStep.id]
+            : "Ready."}
         </div>
-        <div
-          style={{
-            color: "var(--text-2)",
-            fontSize: 13.5,
-            marginTop: 8,
-            lineHeight: 1.55,
-            maxWidth: "60ch",
-          }}
-        >
-          Put on your lab coat, mask, eyewear and gloves in the
-          correct order — hand hygiene first, lab coat next, mask and
-          eyewear after, gloves last. Tap each item on the cart
-          below. If you get the order wrong, the app will tell you
-          exactly which step went wrong and why, and you retry that
-          step.
-        </div>
+        {!done && nextStep && (
+          <div style={{ color: "var(--text-3)", fontSize: 12, marginTop: 6 }}>
+            Step {placed.length + 1} of {DONNING_STEPS.length}
+          </div>
+        )}
       </div>
 
-      {/* Figure + cart. Two-column on wide screens, stacked on phones. */}
       <div
         style={{
           display: "grid",
@@ -370,7 +413,6 @@ function VitroDonning({ onPass, avatarConfig }) {
           alignItems: "start",
         }}
       >
-        {/* ---- The figure ---- */}
         <div
           className="card"
           style={{
@@ -381,151 +423,99 @@ function VitroDonning({ onPass, avatarConfig }) {
             background: "var(--bg-2)",
           }}
         >
-          {/*
-            The figure is drawn as the student's own avatar where
-            that avatar exists — same skin tone, same hair colour,
-            same outfit colour, same gender cue (via hair style
-            family). Hair style itself is drawn generically rather
-            than replicating the exact avatar shape, because the
-            avatar is a 3/4 profile and the donning figure is
-            front-on; reproducing the exact silhouette would look
-            wrong. What travels is what reads correctly at a glance
-            from a different angle: colour and bulk.
+          <svg
+            viewBox="0 0 120 220"
+            width="100%"
+            style={{ maxWidth: 180, display: "block" }}
+            role="img"
+            aria-label={done ? "You, fully dressed in PPE" : "You, being dressed in PPE"}
+          >
+            <circle cx="60" cy="34" r="18" fill={skin} />
+            <path d={hairPath} fill={hairColor} />
 
-            Fallbacks: if the student never set an avatar, we use
-            the same defaults the rest of the app uses (skin tone
-            index 0, hair colour index 0, lab coat colour) so the
-            figure never falls back to a broken state.
-          */}
-          {(() => {
-            const cfg = (avatarConfig && typeof avatarConfig === "object") ? avatarConfig : {};
-            const skin = cfg.skin && AVATAR_SKIN_TONES.includes(cfg.skin)
-              ? cfg.skin
-              : AVATAR_SKIN_TONES[0];
-            const hairColor = cfg.hairColor && AVATAR_HAIR_COLORS.includes(cfg.hairColor)
-              ? cfg.hairColor
-              : AVATAR_HAIR_COLORS[0];
-            const outfitColor = (cfg.outfit && AVATAR_OUTFIT_COLORS[cfg.outfit])
-              ? AVATAR_OUTFIT_COLORS[cfg.outfit]
-              : AVATAR_OUTFIT_COLORS.labcoat;
-            // Gender cue: the hair list in App.js is gender-tagged.
-            // We infer from the style id rather than storing gender
-            // separately on the avatar config (it isn't — App.js
-            // uses a genderFilter state at picker-time only, and
-            // the config itself doesn't carry the gender).
-            // "braids", "ponytail", "wig", "bun" are the female set;
-            // everything else is male or neutral.
-            const FEMALE_HAIR_IDS = ["braids", "ponytail", "wig", "bun"];
-            const isFemale = FEMALE_HAIR_IDS.includes(cfg.hair);
-            // A subtle silhouette cue so the figure reads as the
-            // student's own gender without being caricature. For
-            // male, hair volume sits lower and closer to the head;
-            // for female, slightly higher and fuller. Both are
-            // single paths — one shape, one variable.
-            const hairPath = isFemale
-              ? "M42,30 Q42,14 60,14 Q78,14 78,30 Q74,20 60,20 Q46,20 42,30 Z"
-              : "M44,30 Q44,18 60,18 Q76,18 76,30 Q72,23 60,23 Q48,23 44,30 Z";
-            return (
-              <svg
-                viewBox="0 0 120 220"
-                width="100%"
-                style={{ maxWidth: 180, display: "block" }}
-                role="img"
-                aria-label={
-                  done
-                    ? "You, fully dressed in PPE"
-                    : "You, being dressed in PPE"
-                }
-              >
-                {/* Head — skin tone from the avatar config */}
-                <circle cx="60" cy="34" r="18" fill={skin} />
-
-                {/* Hair — colour and silhouette family from the
-                    avatar config. Drawn behind the head so the
-                    face is not covered. */}
-                <path d={hairPath} fill={hairColor} />
-
-                {/* Torso — the student's outfit colour when the
-                    gown is not yet on, the gown when it is */}
+            {!has("mask") && (
+              <g className="vitro-anim-fade">
+                <circle cx="53" cy="32" r="2.2" fill="#2A2016" />
+                <circle cx="67" cy="32" r="2.2" fill="#2A2016" />
                 <path
-                  d="M32,60 Q60,50 88,60 L92,150 L28,150 Z"
-                  fill={placed.includes("gown") ? "#F4F6FA" : outfitColor}
-                  stroke="#1B283F"
-                  strokeWidth="1"
+                  d="M54,41 Q60,45 66,41"
+                  stroke="#2A2016"
+                  strokeWidth="1.8"
+                  fill="none"
+                  strokeLinecap="round"
                 />
+              </g>
+            )}
 
-                {/* Legs — dark scrubs trousers, matching the
-                    standard lab legwear */}
-                <rect x="40" y="150" width="14" height="56" fill="#2E3A55" />
-                <rect x="66" y="150" width="14" height="56" fill="#2E3A55" />
+            <path
+              d="M32,60 Q60,50 88,60 L92,150 L28,150 Z"
+              fill={has("gown") ? "#F4F6FA" : outfitColor}
+              stroke="#1B283F"
+              strokeWidth="1"
+              className={animating === "gown" ? "vitro-anim-coat" : ""}
+            />
 
-                {/* Feet */}
-                <ellipse cx="47" cy="208" rx="11" ry="5" fill="#1B1B1F" />
-                <ellipse cx="73" cy="208" rx="11" ry="5" fill="#1B1B1F" />
+            <rect x="40" y="150" width="14" height="56" fill="#2E3A55" />
+            <rect x="66" y="150" width="14" height="56" fill="#2E3A55" />
 
-                {/* Mask */}
-                {placed.includes("mask") && (
-                  <path
-                    d="M44,32 Q60,42 76,32 L74,44 Q60,50 46,44 Z"
-                    fill="#E8EDF5"
-                    stroke="#1B283F"
-                    strokeWidth="1"
-                  />
-                )}
+            <ellipse cx="47" cy="208" rx="11" ry="5" fill="#1B1B1F" />
+            <ellipse cx="73" cy="208" rx="11" ry="5" fill="#1B1B1F" />
 
-                {/* Eyewear */}
-                {placed.includes("eye") && (
-                  <g
-                    stroke="#2A2016"
-                    strokeWidth="2.4"
-                    fill="none"
-                    strokeLinecap="round"
-                  >
-                    <rect x="42" y="22" width="14" height="10" rx="3" />
-                    <rect x="64" y="22" width="14" height="10" rx="3" />
-                    <line x1="56" y1="27" x2="64" y2="27" />
-                  </g>
-                )}
+            {has("mask") && (
+              <path
+                className={animating === "mask" ? "vitro-anim-mask" : ""}
+                d="M44,28 Q60,38 76,28 L74,44 Q60,50 46,44 Z"
+                fill="#E8EDF5"
+                stroke="#1B283F"
+                strokeWidth="1"
+              />
+            )}
 
-                {/* Gloves — one visible cuff over each hand */}
-                {placed.includes("gloves") && (
-                  <>
-                    <circle cx="28" cy="152" r="7" fill="#5B8DEF" />
-                    <circle cx="92" cy="152" r="7" fill="#5B8DEF" />
-                  </>
-                )}
+            {has("eye") && (
+              <g
+                className={animating === "eye" ? "vitro-anim-eye" : ""}
+                stroke="#2A2016"
+                strokeWidth="2.4"
+                fill="none"
+                strokeLinecap="round"
+              >
+                <rect x="46" y="24" width="12" height="9" rx="3" />
+                <rect x="62" y="24" width="12" height="9" rx="3" />
+                <line x1="58" y1="28" x2="62" y2="28" />
+              </g>
+            )}
 
-                {/* Hand hygiene — a subtle sparkle on each hand,
-                    hinting clean. Hidden once gloves go on. */}
-                {placed.includes("wash") && !placed.includes("gloves") && (
-                  <g
-                    fill="none"
-                    stroke="#54D08A"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                  >
-                    <path d="M26 148 l0 -4 M24 150 l-4 -2 M28 150 l4 -2" />
-                    <path d="M94 148 l0 -4 M92 150 l-4 -2 M96 150 l4 -2" />
-                  </g>
-                )}
+            {has("gloves") && (
+              <g className={animating === "gloves" ? "vitro-anim-glove" : ""}>
+                <circle cx="28" cy="152" r="7" fill="#5B8DEF" />
+                <circle cx="92" cy="152" r="7" fill="#5B8DEF" />
+              </g>
+            )}
 
-                {/* Contamination spot when an out-of-order tap
-                    happens. Cleared the moment the student taps
-                    the correct next item. */}
-                {error && (
-                  <g>
-                    <circle cx="88" cy="66" r="5" fill="#F0776A" opacity="0.9" />
-                    <circle cx="90" cy="68" r="2" fill="#F0776A" opacity="0.6" />
-                  </g>
-                )}
-              </svg>
-            );
-          })()}
+            {has("wash") && !has("gloves") && (
+              <g
+                className={animating === "wash" ? "vitro-anim-wash" : ""}
+                fill="none"
+                stroke="#54D08A"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              >
+                <path d="M26 148 l0 -5 M23 150 l-5 -3 M29 150 l5 -3" />
+                <path d="M94 148 l0 -5 M91 150 l-5 -3 M97 150 l5 -3" />
+              </g>
+            )}
+
+            {error && (
+              <g>
+                <circle cx="88" cy="66" r="5" fill="#F0776A" opacity="0.9" />
+                <circle cx="90" cy="68" r="2" fill="#F0776A" opacity="0.6" />
+              </g>
+            )}
+          </svg>
         </div>
 
-        {/* ---- The cart ---- */}
         <div>
-                    <div
+          <div
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
@@ -537,11 +527,12 @@ function VitroDonning({ onPass, avatarConfig }) {
               const isNext = nextStep && nextStep.id === s.id;
               const wasErrored = error && error.id === s.id;
               const isPendingGown = s.id === "gown" && gownPending && !isPlaced;
+              const isAnimatingNow = animating === s.id;
               return (
                 <button
                   key={s.id}
                   onClick={() => tap(s.id)}
-                  disabled={isPlaced}
+                  disabled={isPlaced || !!animating}
                   style={{
                     textAlign: "left",
                     padding: "10px 12px",
@@ -550,6 +541,8 @@ function VitroDonning({ onPass, avatarConfig }) {
                       ? "1.5px solid var(--bad)"
                       : isPendingGown
                       ? "1.5px solid var(--amber-2)"
+                      : isAnimatingNow
+                      ? "1.5px solid var(--good)"
                       : isNext
                       ? "1.5px solid var(--amber)"
                       : isPlaced
@@ -561,9 +554,11 @@ function VitroDonning({ onPass, avatarConfig }) {
                       ? "var(--bad-dim)"
                       : isPendingGown
                       ? "var(--amber-dim)"
+                      : isAnimatingNow
+                      ? "var(--good-dim)"
                       : "var(--bg-3)",
                     color: isPlaced ? "var(--text-3)" : "var(--text)",
-                    cursor: isPlaced ? "default" : "pointer",
+                    cursor: isPlaced || animating ? "default" : "pointer",
                     display: "flex",
                     alignItems: "center",
                     gap: 8,
@@ -580,11 +575,15 @@ function VitroDonning({ onPass, avatarConfig }) {
                         ? "var(--good-dim)"
                         : isPendingGown
                         ? "var(--amber)"
+                        : isAnimatingNow
+                        ? "var(--good)"
                         : "var(--bg-2)",
                       color: isPlaced
                         ? "var(--good)"
                         : isPendingGown
                         ? "#1B1405"
+                        : isAnimatingNow
+                        ? "#08210F"
                         : "var(--text-3)",
                       display: "inline-flex",
                       alignItems: "center",
@@ -604,9 +603,6 @@ function VitroDonning({ onPass, avatarConfig }) {
             })}
           </div>
 
-          {/* Gown teaching beat — appears the first time the student
-              taps "Gown", before the coat is actually placed. Makes
-              the lab-coat rule explicit rather than assumed. */}
           {gownPending && !placed.includes("gown") && (
             <div
               className="card"
@@ -617,39 +613,18 @@ function VitroDonning({ onPass, avatarConfig }) {
                 padding: 14,
               }}
             >
-              <div
-                className="eyebrow"
-                style={{ color: "var(--amber-2)", marginBottom: 6 }}
-              >
-                The lab coat is not optional
+              <div style={{ fontWeight: 750, fontSize: 14.5, marginBottom: 6 }}>
+                The lab coat is not optional.
               </div>
-              <div
-                style={{
-                  color: "var(--text-2)",
-                  fontSize: 13.5,
-                  lineHeight: 1.6,
-                }}
-              >
-                In a real laboratory, your own clothing is not lab-safe.
-                Hoodies, blouses and street clothes are not PPE — the
-                lab coat is. It is the outer layer everyone sees, and
-                it goes on over a clean underlayer, covering whatever
-                you walked in wearing.
+              <div style={{ color: "var(--text-2)", fontSize: 13, lineHeight: 1.55 }}>
+                Your own clothes are not lab-safe. The lab coat is the outer layer. It goes on over a clean underlayer.
               </div>
-              <div
-                style={{
-                  color: "var(--text)",
-                  fontSize: 13.5,
-                  marginTop: 8,
-                  fontWeight: 600,
-                }}
-              >
+              <div style={{ color: "var(--text)", fontSize: 13, marginTop: 8, fontWeight: 650 }}>
                 Tap "Lab coat" again to put it on.
               </div>
             </div>
           )}
 
-          {/* Error panel. Specific, named, never generic. */}
           {error && (
             <div
               className="card"
@@ -660,38 +635,20 @@ function VitroDonning({ onPass, avatarConfig }) {
                 padding: 14,
               }}
             >
-              <div
-                className="eyebrow"
-                style={{ color: "var(--bad)", marginBottom: 6 }}
-              >
-                That step is out of order
+              <div style={{ fontWeight: 750, fontSize: 14, color: "var(--bad)", marginBottom: 6 }}>
+                Out of order.
               </div>
-              <div
-                style={{
-                  color: "var(--text-2)",
-                  fontSize: 13.5,
-                  lineHeight: 1.6,
-                }}
-              >
+              <div style={{ color: "var(--text-2)", fontSize: 13, lineHeight: 1.55 }}>
                 {error.message}
               </div>
               {nextStep && (
-                <div
-                  style={{
-                    color: "var(--text)",
-                    fontSize: 13.5,
-                    marginTop: 8,
-                    fontWeight: 600,
-                  }}
-                >
-                  Do this next: {nextStep.label.toLowerCase()} — {nextStep.why}
+                <div style={{ color: "var(--text)", fontSize: 13, marginTop: 8, fontWeight: 650 }}>
+                  Next: {nextStep.label}. {nextStep.why}
                 </div>
               )}
             </div>
           )}
 
-          {/* Success panel — the flag is already stored; this is the
-              last thing the student sees before the placeholder. */}
           {done && (
             <div
               className="card"
@@ -702,24 +659,11 @@ function VitroDonning({ onPass, avatarConfig }) {
                 padding: 14,
               }}
             >
-              <div
-                className="eyebrow"
-                style={{ color: "var(--good)", marginBottom: 6 }}
-              >
-                PPE complete
+              <div style={{ fontWeight: 750, fontSize: 14, color: "var(--good)", marginBottom: 6 }}>
+                PPE complete.
               </div>
-              <div
-                style={{
-                  color: "var(--text-2)",
-                  fontSize: 13.5,
-                  lineHeight: 1.6,
-                }}
-              >
-                Lab coat on, mask sealed, eyewear up, gloves on last —
-                the correct order. You will not see this check again
-                for the rest of this session; next time you open the
-                app, it re-gates, because the point is muscle memory,
-                not a one-off.
+              <div style={{ color: "var(--text-2)", fontSize: 13, lineHeight: 1.55 }}>
+                Lab coat, mask, eyewear, gloves — correct order. Re-gates next session.
               </div>
             </div>
           )}
@@ -728,7 +672,6 @@ function VitroDonning({ onPass, avatarConfig }) {
     </div>
   );
 }
-
 // ------------------------------------------------------------------
 // TUBE_LIBRARY — every tube type a student will meet in an MLS
 // lab, keyed by the colour of its cap. This is the reference
