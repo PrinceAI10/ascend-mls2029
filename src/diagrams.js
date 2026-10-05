@@ -8462,7 +8462,7 @@ export const DIAGRAMS = {
       ["reuptake"],
     ],
     viewBox: "0 0 900 620",
-        render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+            render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pha:6"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -8475,235 +8475,271 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
-      // Which synapse state to draw for the current step.
-      const synapseState =
-        activeStep === 3 ? "releasing"
-        : activeStep === 4 ? "bound"
-        : activeStep === 9 ? "reuptake"
-        : null;
+      // ---- Layout constants. Everything sits on this grid. ----
+      const TERMINAL_CX = 230;   // centre-x of the nerve terminal
+      const TERMINAL_CY = 320;   // centre-y of the nerve terminal
+      const MEMBRANE_X = 620;    // x of the postsynaptic membrane line
 
-      // A single centred panel, full width. Replaces the old left/right
-      // callout pairs, which clipped at the 900px viewBox edge. Sits at
-      // x=80 with width=740 — 80px margin each side, nothing clips.
-      // Body lines are centred and evenly spaced, one per row.
-      const panel = (id, title, body, accent) => {
-        const active = isHot(id);
-        const selected = activeLabelId === id;
-        const strokeColor = selected ? ATLAS_COLORS.trunk
-                          : active ? ATLAS_COLORS.trunk
-                          : "var(--line)";
-        const strokeW = selected ? 3 : active ? 2.4 : 1.6;
-        const lines = Array.isArray(body) ? body : [body];
-        return (
-          <g
-            style={{ cursor: cur }}
-            onClick={click(id)}
-            filter={active ? "url(#atlas-glow)" : undefined}
-          >
-            <rect
-              x={80} y={500} width={740} height={240} rx={16}
-              fill="var(--bg-2)"
-              stroke={strokeColor}
-              strokeWidth={strokeW}
-            />
-            <text
-              x={450} y={546}
-              textAnchor="middle"
-              fontSize="16" fontWeight="800"
-              fill={accent} letterSpacing="0.04em"
-            >
-              {title}
-            </text>
-            {lines.map((line, i) => (
-              <text
-                key={i}
-                x={450} y={594 + i * 26}
-                textAnchor="middle"
-                fontSize="13" fontWeight="600"
-                fill="var(--text-2)"
-              >
-                {line}
-              </text>
-            ))}
-            <rect
-              x={72} y={492} width={756} height={256} rx={20}
-              fill="none" {...ring(id)}
-              pointerEvents="none"
-            />
-          </g>
-        );
-      };
+      // ---- Vesicle fill changes colour per step so the state is visible ----
+      // step 1 (synthesis)  → amber, being built
+      // step 2 (storage)    → solid amber inside the vesicle
+      // step 3 (release)    → emptying into the cleft
+      // steps 4-8 (recs)    → steady
+      // step 9 (reuptake)   → blue, being pulled back
+      const vesicleFill =
+        activeStep === 9 ? "#2D7BFF"
+        : "#F5B93F";
+      const vesicleOpacity =
+        activeStep === 3 ? 0.4    // emptying
+        : 1;
+      const releaseDots = activeStep === 3;   // show transmitter in the cleft
+      const boundDots = activeStep === 4;     // show transmitter on receptors
 
       return (
-        <svg viewBox="0 0 900 780" width="100%" height="100%">
+        <svg viewBox="0 0 900 720" width="100%" height="100%">
           {atlasDefs()}
 
+          {/* Header */}
           <text
-            x={450} y={30}
+            x={450} y={32}
             textAnchor="middle" fontSize="14" fontWeight="800"
             fill="var(--text)" pointerEvents="none"
           >
-            The adrenergic synapse — where every adrenergic drug acts
+            The adrenergic synapse — noradrenaline, five receptor subtypes
           </text>
 
-          {/* The synapse hero, top-centre. Smaller than before so the
-              panel below has room. */}
+          {/* ---------- Presynaptic nerve terminal, left ---------- */}
+          {/* The terminal body: a rounded bulb shape. Click selects "whole". */}
           <g
             style={{ cursor: cur }}
             onClick={click("whole")}
             filter={hotFilter("whole")}
           >
-            {atlasSynapse({
-              cx: 450, cy: 240, scale: 1.2,
-              transmitter: "noradrenaline",
-              state: synapseState,
-              drugAction: null,
-              highlight: false,
-            })}
-            <rect
-              x="300" y="80" width="300" height="300"
-              fill="none" {...ring("whole")}
-              pointerEvents="none"
+            <path
+              d="M110,180
+                 Q70,240 70,320
+                 Q70,400 110,460
+                 Q160,510 230,510
+                 Q300,510 350,460
+                 Q390,410 390,320
+                 Q390,230 350,180
+                 Q300,130 230,130
+                 Q160,130 110,180 Z"
+              fill="#F2EEFF"
+              stroke="#5B21B6"
+              strokeWidth="2"
             />
+            {/* Axon stub entering from the top-left */}
+            <path
+              d="M130,80 L130,140
+                 M170,80 L170,140
+                 M130,80 L170,80"
+              fill="none"
+              stroke="#5B21B6"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <text x={230} y={110} textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text-2)">
+              nerve terminal
+            </text>
+            <rect x={60} y={70} width={350} height={460} fill="none" {...ring("whole")} pointerEvents="none" />
           </g>
 
-          {/* One panel per step. Only the active one renders. */}
-
-          {activeStep === 0 && panel(
-            "whole",
-            "THE WHOLE SYNAPSE",
-            [
-              "Sympathetic neuron releases noradrenaline onto its target",
-              "Every adrenergic drug acts at one specific step of this cycle",
-            ],
-            "#F5B93F"
-          )}
-
-          {activeStep === 1 && panel(
-            "synthesis",
-            "SYNTHESIS",
-            [
-              "tyrosine → L-DOPA → dopamine → noradrenaline",
-              "tyrosine hydroxylase is the rate-limiting step",
-              "four enzymes, all inside the nerve terminal",
-            ],
-            "#F5B93F"
-          )}
-
-          {activeStep === 2 && panel(
-            "storage",
-            "VESICULAR STORAGE",
-            [
-              "noradrenaline packed into vesicles in the terminal",
-              "reserpine blocks storage — the vesicles empty",
-              "over days, the neuron runs out of transmitter",
-            ],
-            "#F5B93F"
-          )}
-
-          {activeStep === 3 && panel(
-            "release",
-            "CALCIUM-TRIGGERED RELEASE",
-            [
-              "action potential opens voltage-gated Ca²⁺ channels",
-              "calcium entry tells vesicles to fuse with the membrane",
-              "exocytosis dumps noradrenaline into the synaptic cleft",
-            ],
-            "#F5B93F"
-          )}
-
-          {activeStep === 4 && panel(
-            "receptors",
-            "FIVE SUBTYPES",
-            [
-              "two families, five subtypes — alpha and beta",
-              "alpha-1 · alpha-2 · beta-1 · beta-2 · beta-3",
-              "each is a different GPCR, in a different tissue",
-              "this is why one molecule produces so many different effects",
-            ],
-            "#5B21B6"
-          )}
-
-          {activeStep === 5 && panel(
-            "alpha1",
-            "ALPHA-1 RECEPTORS",
-            [
-              "Gq-coupled",
-              "vascular smooth muscle — vasoconstriction",
-              "iris — pupil dilation · bladder sphincter — contraction",
-              "liver — glycogenolysis",
-              "blocked by prazosin, doxazosin, tamsulosin",
-            ],
-            "#C0392B"
-          )}
-
-          {activeStep === 6 && panel(
-            "alpha2",
-            "ALPHA-2 RECEPTORS",
-            [
-              "Gi-coupled, presynaptic — an autoreceptor",
-              "activation reduces further noradrenaline release",
-              "a negative feedback loop — the self-brake",
-              "also on platelets — aggregation",
-              "agonists: clonidine, methyldopa",
-            ],
-            "#8B5CF6"
-          )}
-
-          {activeStep === 7 && panel(
-            "beta1",
-            "BETA-1 RECEPTORS",
-            [
-              "Gs-coupled, mainly cardiac",
-              "increase heart rate, force of contraction,",
-              "and conduction velocity",
-              "also on the kidney — stimulate renin release",
-              "blocked by atenolol, metoprolol, bisoprolol",
-            ],
-            "#2F6FED"
-          )}
-
-          {activeStep === 8 && panel(
-            "beta2",
-            "BETA-2 RECEPTORS",
-            [
-              "Gs-coupled, mainly bronchial and vascular",
-              "bronchodilation · vasodilation",
-              "also on the uterus (relaxation) and skeletal muscle",
-              "agonists: salbutamol, salmeterol",
-              "propranolol blocks them too — dangerous in asthma",
-            ],
-            "#2F8F4E"
-          )}
-
-          {activeStep === 9 && panel(
-            "reuptake",
-            "REUPTAKE & METABOLISM",
-            [
-              "uptake 1 — into the nerve terminal (the main route)",
-              "uptake 2 — into non-neuronal tissue",
-              "MAO — metabolises noradrenaline inside the neuron",
-              "COMT — metabolises it in the tissue",
-              "tricyclics and cocaine block uptake 1",
-              "noradrenaline stays in the cleft longer",
-            ],
-            "#F5B93F"
-          )}
-
-          {activeStep === lastStep && (
-            <text
-              x={450} y={762}
-              textAnchor="middle" fontSize="11.5" fontWeight="600"
-              fill="var(--text-3)" pointerEvents="none"
+          {/* ---------- Step 1: synthesis chain inside the terminal ---------- */}
+          {isHot("synthesis") && (
+            <g
+              style={{ cursor: cur }}
+              onClick={click("synthesis")}
+              filter="url(#atlas-glow)"
             >
-              Synthesis · storage · release · receptors · reuptake
-            </text>
+              {/* Four small labelled boxes strung across the terminal, showing
+                  the enzyme chain tyrosine → L-DOPA → dopamine → NA. */}
+              {[
+                { x: 100, y: 220, label: "tyrosine" },
+                { x: 180, y: 220, label: "L-DOPA" },
+                { x: 260, y: 220, label: "dopamine" },
+                { x: 340, y: 220, label: "NA" },
+              ].map((b, i) => (
+                <g key={i}>
+                  <rect x={b.x - 32} y={b.y - 14} width={64} height={28} rx={8}
+                    fill="var(--bg-2)" stroke="#F5B93F" strokeWidth="1.6" />
+                  <text x={b.x} y={b.y + 4} textAnchor="middle" fontSize="10.5" fontWeight="700" fill="var(--text)">
+                    {b.label}
+                  </text>
+                  {i < 3 && (
+                    <path d={`M${b.x + 34},${b.y} L${b.x + 46},${b.y}`}
+                      stroke="#F5B93F" strokeWidth="1.8" strokeLinecap="round" />
+                  )}
+                </g>
+              ))}
+              <text x={230} y={192} textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#F5B93F">
+                tyrosine hydroxylase = rate-limiting
+              </text>
+              <rect x={62} y={180} width={336} height={110} fill="none" {...ring("synthesis")} pointerEvents="none" />
+            </g>
           )}
-        </svg>
+
+          {/* ---------- Step 2: vesicle storage ---------- */}
+          {isHot("storage") && (
+            <g
+              style={{ cursor: cur }}
+              onClick={click("storage")}
+              filter="url(#atlas-glow)"
+            >
+              {/* A vesicle, large, filled with noradrenaline dots. */}
+              <circle cx={230} cy={400} r={48}
+                fill="var(--bg-2)" stroke="#F5B93F" strokeWidth="2.4" />
+              {[[-20,-12],[-6,-18],[14,-14],[20,4],[8,18],[-10,20],[-22,4],[-6,2],[6,8]].map(([dx,dy], i) => (
+                <circle key={i} cx={230+dx} cy={400+dy} r={4} fill="#F5B93F" opacity="0.9" />
+              ))}
+              <text x={230} y={470} textAnchor="middle" fontSize="11" fontWeight="700" fill="#F5B93F">
+                storage vesicle
+              </text>
+              <text x={230} y={488} textAnchor="middle" fontSize="10" fill="var(--text-2)">
+                reserpine empties these
+              </text>
+              <rect x={160} y={342} width={140} height={160} fill="none" {...ring("storage")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* ---------- Step 3: calcium-triggered release ---------- */}
+          {isHot("release") && (
+            <g
+              style={{ cursor: cur }}
+              onClick={click("release")}
+              filter="url(#atlas-glow)"
+            >
+              {/* Ca²⁺ channel in the terminal membrane facing the cleft */}
+              <rect x={372} y={300} width={20} height={56} rx={4}
+                fill="var(--bg-2)" stroke="#F5B93F" strokeWidth="2" />
+              <text x={382} y={288} textAnchor="middle" fontSize="9" fontWeight="700" fill="#F5B93F">
+                Ca²⁺
+              </text>
+              {/* Ca²⁺ ions flowing in */}
+              {[[392, 320], [400, 328], [392, 336]].map(([dx, dy], i) => (
+                <circle key={i} cx={dx} cy={dy} r="3.5" fill="#F5B93F" stroke="#8B6410" strokeWidth="0.6" />
+              ))}
+              {/* Vesicle at the membrane, fusing */}
+              <circle cx={352} cy={328} r={22}
+                fill="#F5B93F" opacity="0.5" stroke="#F5B93F" strokeWidth="1.6" />
+              <text x={230} y={176} textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#F5B93F">
+                Ca²⁺ entry triggers vesicle fusion
+              </text>
+              <rect x={320} y={280} width={100} height={92} fill="none" {...ring("release")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* ---------- Postsynaptic membrane, right ---------- */}
+          {/* Four receptor glyphs along the membrane, one per subtype. */}
+          {[
+            { id: "alpha1", y: 200, label: "α₁", color: "#C0392B" },
+            { id: "alpha2", y: 300, label: "α₂", color: "#8B5CF6" },
+            { id: "beta1",  y: 400, label: "β₁", color: "#2F6FED" },
+            { id: "beta2",  y: 500, label: "β₂", color: "#2F8F4E" },
+          ].map((rec) => {
+            const hot = isHot(rec.id) || isHot("receptors");
+            return (
+              <g
+                key={rec.id}
+                style={{ cursor: cur }}
+                onClick={click(rec.id)}
+                filter={hot && isHot(rec.id) ? "url(#atlas-glow)" : undefined}
+                opacity={hot ? 1 : 0.55}
+              >
+                {/* Membrane stub */}
+                <rect x={MEMBRANE_X} y={rec.y - 14} width={80} height={28} rx={6}
+                  fill="var(--bg-2)" stroke={rec.color} strokeWidth="2" />
+                {/* Receptor body — a small serpentine inside the membrane */}
+                <path
+                  d={`M${MEMBRANE_X + 14},${rec.y + 10} L${MEMBRANE_X + 14},${rec.y - 10}
+                      Q${MEMBRANE_X + 20},${rec.y - 16} ${MEMBRANE_X + 26},${rec.y - 10}
+                      L${MEMBRANE_X + 26},${rec.y + 10}
+                      Q${MEMBRANE_X + 32},${rec.y + 16} ${MEMBRANE_X + 38},${rec.y + 10}
+                      L${MEMBRANE_X + 38},${rec.y - 10}
+                      Q${MEMBRANE_X + 44},${rec.y - 16} ${MEMBRANE_X + 50},${rec.y - 10}
+                      L${MEMBRANE_X + 50},${rec.y + 10}`}
+                  fill="none" stroke={rec.color} strokeWidth="2"
+                  strokeLinejoin="round" strokeLinecap="round"
+                />
+                <text x={MEMBRANE_X + 90} y={rec.y + 4} textAnchor="start" fontSize="12" fontWeight="800" fill={rec.color}>
+                  {rec.label}
+                </text>
+                {activeLabelId === rec.id && (
+                  <rect x={MEMBRANE_X - 4} y={rec.y - 22} width={120} height={44} rx={10} fill="none" {...ring(rec.id)} pointerEvents="none" />
+                )}
+              </g>
+            );
+          })}
+
+          {/* ---------- Noradrenaline in the cleft (release + bound steps) ---------- */}
+          {(releaseDots || boundDots) && (
+            <g pointerEvents="none">
+              {[[430, 250], [450, 300], [430, 350], [460, 400], [445, 450], [470, 500]].map(([dx, dy], i) => (
+                <circle key={i} cx={dx} cy={dy} r="4" fill={vesicleFill} stroke="#8B6410" strokeWidth="0.6" opacity="0.9" />
+              ))}
+              {boundDots && [
+                { x: MEMBRANE_X - 8, y: 200 },
+                { x: MEMBRANE_X - 8, y: 300 },
+                { x: MEMBRANE_X - 8, y: 400 },
+                { x: MEMBRANE_X - 8, y: 500 },
+              ].map((p, i) => (
+                <circle key={`b${i}`} cx={p.x} cy={p.y} r="4.5" fill={vesicleFill} stroke="#8B6410" strokeWidth="0.6" />
+              ))}
+            </g>
+          )}
+
+          {/* ---------- Step 9: reuptake arrow ---------- */}
+          {isHot("reuptake") && (
+            <g
+              style={{ cursor: cur }}
+              onClick={click("reuptake")}
+              filter="url(#atlas-glow)"
+            >
+              {/* Arrow from the cleft back into the terminal */}
+              <path
+                d={`M${MEMBRANE_X - 40},280 Q420,240 400,328`}
+                fill="none" stroke="#2D7BFF" strokeWidth="2.6"
+                strokeDasharray="6 4" strokeLinecap="round"
+              />
+              <polygon points="400,328 388,318 400,312" fill="#2D7BFF" />
+              <text x={490} y={260} textAnchor="middle" fontSize="11" fontWeight="700" fill="#2D7BFF">
+                uptake 1
+              </text>
+              <text x={490} y={276} textAnchor="middle" fontSize="10" fill="var(--text-2)">
+                blocked by tricyclics, cocaine
+              </text>
+              {/* Ring around the terminal + cleft to show the whole route */}
+              <rect x={60} y={160} width={700} height={400} fill="none" {...ring("reuptake")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* ---------- Step 4 (receptors overview): faint label over the four glyphs ---------- */}
+          {isHot("receptors") && !isHot("alpha1") && !isHot("alpha2") && !isHot("beta1") && !isHot("beta2") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <text x={720} y={140} textAnchor="middle" fontSize="12" fontWeight="800" fill="#5B21B6">
+                FIVE SUBTYPES
+              </text>
+              <text x={720} y={158} textAnchor="middle" fontSize="10" fill="var(--text-2)">
+                each a different GPCR
+              </text>
+              <rect x={640} y={110} width={180} height={420} fill="none" {...ring("receptors")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* ---------- Footer with the step summary ---------- */}
+          <text
+            x={450} y={700}
+            textAnchor="middle" fontSize="11.5" fontWeight="600"
+            fill="var(--text-3)" pointerEvents="none"
+          >
+            Synthesis · storage · release · receptors · reuptake
+          </text>
+            </svg>
       );
     },
   },
-  
+
 
   /* =========================================================
      CHOLINERGIC PHARMACOLOGY
@@ -8759,7 +8795,7 @@ export const DIAGRAMS = {
       ["ache"],
     ],
     viewBox: "0 0 900 620",
-            render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
+                render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
       const diagram = DIAGRAMS["pha:7"];
       const focus = diagram.stepFocus[activeStep] || [];
       const inFocus = (id) => focus.includes(id);
@@ -8772,228 +8808,316 @@ export const DIAGRAMS = {
       const isHot = (id) => inFocus(id) && activeStep !== lastStep;
       const hotFilter = (id) => (isHot(id) ? "url(#atlas-glow)" : undefined);
 
-      // Which synapse state to draw for the current step.
-      const synapseState =
-        activeStep === 3 ? "releasing"
-        : activeStep === 4 ? "bound"
-        : null;
+      // ---- Layout constants ----
+      const NMJ_CX = 330;         // centre-x of the motor neuron terminal
+      const NMJ_TOP = 90;         // top of the terminal bulb
+      const MUSCLE_TOP = 520;     // top of the muscle fibre
+      const RECEPTORS_Y = 500;    // y of the nicotinic receptors on the end plate
 
-      // A single centred panel, full width. Same layout as pha:6's panel
-      // so the two diagrams feel like siblings. Sits at x=80 with
-      // width=740 — 80px margin each side, nothing clips.
-      const panel = (id, title, body, accent) => {
-        const active = isHot(id);
-        const selected = activeLabelId === id;
-        const strokeColor = selected ? ATLAS_COLORS.trunk
-                          : active ? ATLAS_COLORS.trunk
-                          : "var(--line)";
-        const strokeW = selected ? 3 : active ? 2.4 : 1.6;
-        const lines = Array.isArray(body) ? body : [body];
-        return (
-          <g
-            style={{ cursor: cur }}
-            onClick={click(id)}
-            filter={active ? "url(#atlas-glow)" : undefined}
-          >
-            <rect
-              x={80} y={500} width={740} height={240} rx={16}
-              fill="var(--bg-2)"
-              stroke={strokeColor}
-              strokeWidth={strokeW}
-            />
-            <text
-              x={450} y={546}
-              textAnchor="middle"
-              fontSize="16" fontWeight="800"
-              fill={accent} letterSpacing="0.04em"
-            >
-              {title}
-            </text>
-            {lines.map((line, i) => (
-              <text
-                key={i}
-                x={450} y={594 + i * 26}
-                textAnchor="middle"
-                fontSize="13" fontWeight="600"
-                fill="var(--text-2)"
-              >
-                {line}
-              </text>
-            ))}
-            <rect
-              x={72} y={492} width={756} height={256} rx={20}
-              fill="none" {...ring(id)}
-              pointerEvents="none"
-            />
-          </g>
-        );
-      };
+      // ---- Step-driven visual state ----
+      const vesicleFill = "#2F6FED";                    // ACh vesicles are blue
+      const releaseDots = activeStep === 3;             // transmitter in the cleft
+      const boundDots = activeStep === 4;               // transmitter on receptors
+      const acheActive = activeStep === 9;              // enzyme sits in the cleft
 
       return (
-        <svg viewBox="0 0 900 780" width="100%" height="100%">
+        <svg viewBox="0 0 900 720" width="100%" height="100%">
           {atlasDefs()}
 
+          {/* Header */}
           <text
-            x={450} y={30}
+            x={450} y={32}
             textAnchor="middle" fontSize="14" fontWeight="800"
             fill="var(--text)" pointerEvents="none"
           >
-            The cholinergic synapse — same anatomy, different transmitter
+            The cholinergic synapse — the neuromuscular junction and beyond
           </text>
 
-          {/* The synapse hero, top-centre. Blue ACh vesicles instead of
-              the amber NA vesicles pha:6 uses. */}
+          {/* ============================================================
+              PART 1 — the neuromuscular junction (left two-thirds)
+              Motor neuron terminal above, muscle fibre below, cleft between.
+              ============================================================ */}
+
+          {/* ---- Motor neuron terminal ---- */}
           <g
             style={{ cursor: cur }}
             onClick={click("whole")}
             filter={hotFilter("whole")}
           >
-            {atlasSynapse({
-              cx: 450, cy: 240, scale: 1.2,
-              transmitter: "acetylcholine",
-              state: synapseState,
-              drugAction: null,
-              highlight: false,
-            })}
-            <rect
-              x="300" y="80" width="300" height="300"
-              fill="none" {...ring("whole")}
-              pointerEvents="none"
+            {/* Terminal bulb */}
+            <path
+              d={`M${NMJ_CX - 110},${NMJ_TOP + 60}
+                 Q${NMJ_CX - 130},${NMJ_TOP + 140} ${NMJ_CX - 100},${NMJ_TOP + 220}
+                 Q${NMJ_CX - 60},${NMJ_TOP + 280} ${NMJ_CX},${NMJ_TOP + 280}
+                 Q${NMJ_CX + 60},${NMJ_TOP + 280} ${NMJ_CX + 100},${NMJ_TOP + 220}
+                 Q${NMJ_CX + 130},${NMJ_TOP + 140} ${NMJ_CX + 110},${NMJ_TOP + 60}
+                 Q${NMJ_CX + 60},${NMJ_TOP + 10} ${NMJ_CX},${NMJ_TOP + 10}
+                 Q${NMJ_CX - 60},${NMJ_TOP + 10} ${NMJ_CX - 110},${NMJ_TOP + 60} Z`}
+              fill="#F2EEFF"
+              stroke="#5B21B6"
+              strokeWidth="2"
             />
+            {/* Axon entering from the top */}
+            <path
+              d={`M${NMJ_CX - 12},${NMJ_TOP - 40} L${NMJ_CX - 12},${NMJ_TOP + 20}
+                 M${NMJ_CX + 12},${NMJ_TOP - 40} L${NMJ_CX + 12},${NMJ_TOP + 20}
+                 M${NMJ_CX - 12},${NMJ_TOP - 40} L${NMJ_CX + 12},${NMJ_TOP - 40}`}
+              fill="none"
+              stroke="#5B21B6"
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <text x={NMJ_CX} y={NMJ_TOP - 55} textAnchor="middle" fontSize="11.5" fontWeight="700" fill="var(--text-2)">
+              motor neuron
+            </text>
+            <rect x={NMJ_CX - 160} y={NMJ_TOP - 60} width={320} height={370} fill="none" {...ring("whole")} pointerEvents="none" />
           </g>
 
-          {/* One panel per step. Only the active one renders. */}
-
-          {activeStep === 0 && panel(
-            "whole",
-            "THE WHOLE SYNAPSE",
-            [
-              "Parasympathetic neuron releases acetylcholine onto its target",
-              "Same anatomy as the adrenergic synapse — different transmitter",
-            ],
-            "#F5B93F"
-          )}
-
-          {activeStep === 1 && panel(
-            "synthesis",
-            "ACETYLCHOLINE SYNTHESIS — ONE STEP",
-            [
-              "choline + acetyl-CoA → acetylcholine",
-              "enzyme: choline acetyltransferase (ChAT)",
-              "rate-limited by choline supply",
-              "one step — vs noradrenaline's four",
-            ],
-            "#F5B93F"
-          )}
-
-          {activeStep === 2 && panel(
-            "storage",
-            "VESICULAR STORAGE",
-            [
-              "VAChT packs acetylcholine into vesicles",
-              "vesamicol blocks VAChT — a research tool",
-              "clinically, storage isn't the drug target",
-            ],
-            "#F5B93F"
-          )}
-
-          {activeStep === 3 && panel(
-            "release",
-            "CALCIUM-TRIGGERED RELEASE",
-            [
-              "calcium entry triggers vesicle fusion — same as adrenergic",
-              "vesicles need SNARE proteins to fuse",
-              "botulinum toxin cleaves SNAREs",
-              "no SNARE, no release — flaccid paralysis",
-            ],
-            "#F5B93F"
-          )}
-
-          {activeStep === 4 && panel(
-            "receptors",
-            "TWO RECEPTOR FAMILIES",
-            [
-              "nicotinic — ligand-gated ion channel, milliseconds",
-              "muscarinic — G-protein coupled receptor, seconds",
-              "different structure, different speed, different drugs",
-              "this is the most important distinction in the topic",
-            ],
-            "#5B21B6"
-          )}
-
-          {activeStep === 5 && panel(
-            "nicotinic",
-            "NICOTINIC RECEPTORS (nAChR)",
-            [
-              "ligand-gated ion channel — five subunits around a pore",
-              "Nm — neuromuscular junction, triggers muscle contraction",
-              "Nn — autonomic ganglia and adrenal medulla",
-              "activated by nicotine",
-              "blocked by curare, hexamethonium, neuromuscular blockers",
-            ],
-            "#C0392B"
-          )}
-
-          {activeStep === 6 && panel(
-            "muscarinic",
-            "MUSCARINIC RECEPTORS (mAChR)",
-            [
-              "G-protein coupled — subtypes M1 to M5",
-              "M1, M3, M5 → Gq-coupled",
-              "M2, M4 → Gi-coupled",
-              "found on smooth muscle, cardiac muscle, glands, CNS",
-              "activated by muscarine · blocked by atropine",
-            ],
-            "#8B5CF6"
-          )}
-
-          {activeStep === 7 && panel(
-            "m2",
-            "M2 — CARDIAC MUSCARINIC",
-            [
-              "Gi-coupled, on the SA and AV nodes",
-              "activation slows heart rate — the vagal brake",
-              "atropine removes the brake, so heart rate rises",
-              "first-line treatment for symptomatic bradycardia",
-            ],
-            "#2F6FED"
-          )}
-
-          {activeStep === 8 && panel(
-            "m3",
-            "M3 — SMOOTH MUSCLE & GLANDS",
-            [
-              "Gq-coupled",
-              "activation: bronchoconstriction, gut motility,",
-              "salivation, lacrimation, urination, pupil constriction",
-              "atropine blocks them — hence dry mouth,",
-              "constipation, urinary retention, blurred vision",
-            ],
-            "#2F8F4E"
-          )}
-
-          {activeStep === 9 && panel(
-            "ache",
-            "ACETYLCHOLINESTERASE (AChE)",
-            [
-              "hydrolyses acetylcholine → choline + acetate",
-              "milliseconds — one of the fastest enzymes in the body",
-              "inhibited by neostigmine, physostigmine, donepezil",
-              "organophosphates also inhibit it — insecticides, nerve agents",
-              "antidote: atropine + pralidoxime",
-            ],
-            "#F5B93F"
-          )}
-
-          {activeStep === lastStep && (
-            <text
-              x={450} y={762}
-              textAnchor="middle" fontSize="11.5" fontWeight="600"
-              fill="var(--text-3)" pointerEvents="none"
+          {/* ---- Step 1: ACh synthesis inside the terminal ---- */}
+          {isHot("synthesis") && (
+            <g
+              style={{ cursor: cur }}
+              onClick={click("synthesis")}
+              filter="url(#atlas-glow)"
             >
-              Same synapse · different transmitter · different receptors · different drugs
-            </text>
+              {/* Two reactants merging into one product */}
+              <rect x={NMJ_CX - 80} y={200} width={50} height={26} rx={6}
+                fill="var(--bg-2)" stroke="#F5B93F" strokeWidth="1.6" />
+              <text x={NMJ_CX - 55} y={218} textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text)">
+                choline
+              </text>
+              <text x={NMJ_CX - 18} y={216} textAnchor="middle" fontSize="14" fontWeight="800" fill="#F5B93F">
+                +
+              </text>
+              <rect x={NMJ_CX + 2} y={200} width={62} height={26} rx={6}
+                fill="var(--bg-2)" stroke="#F5B93F" strokeWidth="1.6" />
+              <text x={NMJ_CX + 33} y={218} textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text)">
+                acetyl-CoA
+              </text>
+              <path d={`M${NMJ_CX + 66},213 L${NMJ_CX + 88},213`}
+                stroke="#F5B93F" strokeWidth="2" strokeLinecap="round" />
+              <polygon points={`${NMJ_CX + 92},213 ${NMJ_CX + 84},209 ${NMJ_CX + 84},217`} fill="#F5B93F" />
+              <rect x={NMJ_CX + 96} y={200} width={36} height={26} rx={6}
+                fill="var(--bg-2)" stroke="#F5B93F" strokeWidth="1.6" />
+              <text x={NMJ_CX + 114} y={218} textAnchor="middle" fontSize="10" fontWeight="700" fill="var(--text)">
+                ACh
+              </text>
+              <text x={NMJ_CX} y={186} textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#F5B93F">
+                one step — enzyme: ChAT
+              </text>
+              <text x={NMJ_CX} y={248} textAnchor="middle" fontSize="9.5" fill="var(--text-2)">
+                rate-limited by choline supply
+              </text>
+              <rect x={NMJ_CX - 90} y={178} width={250} height={84} fill="none" {...ring("synthesis")} pointerEvents="none" />
+            </g>
           )}
+
+          {/* ---- Step 2: vesicle storage ---- */}
+          {isHot("storage") && (
+            <g
+              style={{ cursor: cur }}
+              onClick={click("storage")}
+              filter="url(#atlas-glow)"
+            >
+              <circle cx={NMJ_CX} cy={300} r={46}
+                fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2.4" />
+              {[[-20,-10],[-6,-16],[14,-12],[20,4],[8,18],[-10,18],[-22,2],[-4,2],[6,6]].map(([dx,dy], i) => (
+                <circle key={i} cx={NMJ_CX+dx} cy={300+dy} r={4} fill="#2F6FED" opacity="0.9" />
+              ))}
+              <text x={NMJ_CX} y={368} textAnchor="middle" fontSize="11" fontWeight="700" fill="#2F6FED">
+                storage vesicle
+              </text>
+              <text x={NMJ_CX} y={384} textAnchor="middle" fontSize="10" fill="var(--text-2)">
+                packed by VAChT — vesamicol blocks it
+              </text>
+              <rect x={NMJ_CX - 70} y={242} width={140} height={156} fill="none" {...ring("storage")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* ---- Step 3: calcium-triggered release ---- */}
+          {isHot("release") && (
+            <g
+              style={{ cursor: cur }}
+              onClick={click("release")}
+              filter="url(#atlas-glow)"
+            >
+              {/* Ca²⁺ channel in the terminal membrane */}
+              <rect x={NMJ_CX - 12} y={NMJ_TOP + 260} width={24} height={44} rx={4}
+                fill="var(--bg-2)" stroke="#2F6FED" strokeWidth="2" />
+              <text x={NMJ_CX} y={NMJ_TOP + 250} textAnchor="middle" fontSize="9" fontWeight="700" fill="#2F6FED">
+                Ca²⁺
+              </text>
+              {/* Ca²⁺ ions entering */}
+              {[[NMJ_CX + 20, NMJ_TOP + 300], [NMJ_CX + 28, NMJ_TOP + 310], [NMJ_CX + 20, NMJ_TOP + 320]].map(([dx, dy], i) => (
+                <circle key={i} cx={dx} cy={dy} r="3.5" fill="#2F6FED" stroke="#123F9E" strokeWidth="0.6" />
+              ))}
+              {/* Vesicle fusing with the membrane */}
+              <circle cx={NMJ_CX - 30} cy={NMJ_TOP + 310} r={22}
+                fill="#2F6FED" opacity="0.5" stroke="#2F6FED" strokeWidth="1.6" />
+              <text x={NMJ_CX} y={NMJ_TOP + 385} textAnchor="middle" fontSize="10.5" fontWeight="700" fill="#2F6FED">
+                SNARE proteins fuse the vesicle
+              </text>
+              <text x={NMJ_CX} y={NMJ_TOP + 402} textAnchor="middle" fontSize="10" fill="#C0392B">
+                botulinum cleaves SNAREs — flaccid paralysis
+              </text>
+              <rect x={NMJ_CX - 60} y={NMJ_TOP + 240} width={130} height={180} fill="none" {...ring("release")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* ---- Muscle fibre (end plate) below the cleft ---- */}
+          <g
+            style={{ cursor: cur }}
+            onClick={click("whole")}
+          >
+            {/* Muscle fibre body */}
+            <rect x={100} y={MUSCLE_TOP} width={560} height={120} rx={20}
+              fill="#FBE9E7" stroke="#B63B2E" strokeWidth="2" />
+            <text x={380} y={MUSCLE_TOP + 110} textAnchor="middle" fontSize="12" fontWeight="700" fill="var(--text-2)">
+              muscle fibre
+            </text>
+          </g>
+
+          {/* ---- Nicotinic receptors on the end plate ---- */}
+          {[
+            { id: "nicotinic", x: 220, y: RECEPTORS_Y },
+            { id: "nicotinic", x: 290, y: RECEPTORS_Y },
+            { id: "nicotinic", x: 360, y: RECEPTORS_Y },
+            { id: "nicotinic", x: 430, y: RECEPTORS_Y },
+            { id: "nicotinic", x: 500, y: RECEPTORS_Y },
+          ].map((rec, i) => {
+            const hot = isHot("nicotinic");
+            return (
+              <g
+                key={i}
+                style={{ cursor: cur }}
+                onClick={click("nicotinic")}
+                filter={hot ? "url(#atlas-glow)" : undefined}
+                opacity={hot || activeStep < 5 ? 1 : 0.55}
+              >
+                {/* Receptor glyph: a small pore through the end-plate */}
+                <rect x={rec.x - 8} y={rec.y - 16} width={16} height={32} rx={4}
+                  fill="var(--bg-2)" stroke="#C0392B" strokeWidth="2" />
+                <circle cx={rec.x} cy={rec.y} r={4} fill="#C0392B" opacity="0.6" />
+              </g>
+            );
+          })}
+          {/* Nicotinic label */}
+          {isHot("nicotinic") && (
+            <g pointerEvents="none" filter="url(#atlas-glow)">
+              <text x={380} y={MUSCLE_TOP - 20} textAnchor="middle" fontSize="11.5" fontWeight="800" fill="#C0392B">
+                NICOTINIC (Nm) — ligand-gated ion channel
+              </text>
+              <text x={380} y={MUSCLE_TOP - 4} textAnchor="middle" fontSize="10" fill="var(--text-2)">
+                opens in milliseconds — triggers contraction
+              </text>
+              <rect x={200} y={RECEPTORS_Y - 30} width={320} height={60} fill="none" {...ring("nicotinic")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* ---- Transmitter in the cleft (release + bound steps) ---- */}
+          {(releaseDots || boundDots) && (
+            <g pointerEvents="none">
+              {[[240, 450], [290, 460], [340, 450], [390, 460], [440, 450], [490, 460]].map(([dx, dy], i) => (
+                <circle key={i} cx={dx} cy={dy} r="4" fill={vesicleFill} stroke="#123F9E" strokeWidth="0.6" opacity="0.9" />
+              ))}
+              {boundDots && [220, 290, 360, 430, 500].map((x, i) => (
+                <circle key={`b${i}`} cx={x} cy={RECEPTORS_Y - 22} r="4.5" fill={vesicleFill} stroke="#123F9E" strokeWidth="0.6" />
+              ))}
+            </g>
+          )}
+
+          {/* ============================================================
+              PART 2 — right-hand column: autonomic ganglion inset + AChE
+              These appear only on the steps that discuss them.
+              ============================================================ */}
+
+          {/* ---- Step 6 (muscarinic) + steps 7-8 (M2, M3): autonomic inset ---- */}
+          {(isHot("muscarinic") || isHot("m2") || isHot("m3")) && (
+            <g
+              style={{ cursor: cur }}
+              onClick={click(isHot("m2") ? "m2" : isHot("m3") ? "m3" : "muscarinic")}
+              filter="url(#atlas-glow)"
+            >
+              <rect x={700} y={180} width={170} height={300} rx={12}
+                fill="var(--bg-2)" stroke="#8B5CF6" strokeWidth="2.4" />
+              <text x={785} y={206} textAnchor="middle" fontSize="11" fontWeight="800" fill="#8B5CF6">
+                MUSCARINIC (mAChR)
+              </text>
+              <text x={785} y={222} textAnchor="middle" fontSize="9.5" fill="var(--text-2)">
+                on smooth muscle + glands
+              </text>
+              {/* Two subtype glyphs, one per row */}
+              {[
+                { id: "m2", y: 280, label: "M2", sub: "heart · Gi" },
+                { id: "m3", y: 400, label: "M3", sub: "smooth muscle · Gq" },
+              ].map((m) => {
+                const mHot = isHot(m.id) || isHot("muscarinic");
+                return (
+                  <g
+                    key={m.id}
+                    style={{ cursor: cur }}
+                    onClick={(e) => { e.stopPropagation(); click(m.id)(); }}
+                    opacity={mHot ? 1 : 0.5}
+                  >
+                    <circle cx={785} cy={m.y} r={30}
+                      fill="var(--bg-3)" stroke="#8B5CF6" strokeWidth="2" />
+                    <text x={785} y={m.y + 4} textAnchor="middle" fontSize="13" fontWeight="800" fill="#8B5CF6">
+                      {m.label}
+                    </text>
+                    <text x={785} y={m.y + 46} textAnchor="middle" fontSize="9.5" fill="var(--text-2)">
+                      {m.sub}
+                    </text>
+                  </g>
+                );
+              })}
+              <text x={785} y={458} textAnchor="middle" fontSize="9.5" fill="var(--text-2)">
+                atropine blocks
+              </text>
+              <rect x={700} y={180} width={170} height={300} fill="none" {...ring(isHot("m2") ? "m2" : isHot("m3") ? "m3" : "muscarinic")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* ---- Step 9: acetylcholinesterase in the cleft ---- */}
+          {acheActive && (
+            <g
+              style={{ cursor: cur }}
+              onClick={click("ache")}
+              filter="url(#atlas-glow)"
+            >
+              {/* Enzyme glyph: a Pac-Man shape at the cleft centre */}
+              <path
+                d="M620,460 m-28,0 a28,28 0 1,0 56,0 a28,28 0 1,0 -56,0 Z
+                   M616,458 L640,445 L640,472 Z"
+                fill="#F5B93F" opacity="0.85" stroke="#8B6410" strokeWidth="1.4"
+              />
+              <text x={620} y={510} textAnchor="middle" fontSize="11" fontWeight="800" fill="#F5B93F">
+                AChE
+              </text>
+              <text x={620} y={526} textAnchor="middle" fontSize="9.5" fill="var(--text-2)">
+                breaks ACh into choline + acetate
+              </text>
+              <text x={620} y={542} textAnchor="middle" fontSize="9.5" fill="#C0392B">
+                inhibited by neostigmine, donepezil
+              </text>
+              <text x={620} y={558} textAnchor="middle" fontSize="9.5" fill="#C0392B">
+                organophosphates → cholinergic crisis
+              </text>
+              <text x={620} y={574} textAnchor="middle" fontSize="9" fontStyle="italic" fill="var(--text-2)">
+                antidote: atropine + pralidoxime
+              </text>
+              <rect x={580} y={420} width={80} height={80} fill="none" {...ring("ache")} pointerEvents="none" />
+            </g>
+          )}
+
+          {/* ---------- Footer ---------- */}
+          <text
+            x={450} y={700}
+            textAnchor="middle" fontSize="11.5" fontWeight="600"
+            fill="var(--text-3)" pointerEvents="none"
+          >
+            Synthesis · storage · release · nicotinic · muscarinic · AChE
+          </text>
         </svg>
       );
     },
@@ -9883,5 +10007,4 @@ export const DIAGRAMS = {
       );
     },
   },
-
 };
