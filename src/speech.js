@@ -47,6 +47,12 @@ const MALE_HINTS = [
 // (voiceschanged). Cache it once and reuse forever.
 let voicesCache = null;
 
+// Resolved voice per gender. Once we know which voice the device
+// will use for "male" and "female", we never need to await
+// pickVoice() again — and skipping that await is what stops the
+// mobile audio session from closing between consecutive chunks.
+const voiceByGender = { male: undefined, female: undefined };
+
 function getVoices() {
   return new Promise((resolve) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
@@ -236,12 +242,53 @@ function installVisibilityHandler() {
 //     silently drops the speak() call. Cleared the moment onstart
 //     fires, so it can never race onend into a double-advance.
 // ------------------------------------------------------------
-function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
+// True on phones and tablets. Used to pick the "one utterance per
+// step" path for mobile narration, where each speechSynthesis.speak()
+// call opens and closes its own audio session and the open-close
+// cycle between consecutive calls is audible as a stutter. Desktop
+// engines hold one audio session across multiple speak() calls, so
+// chunk-by-chunk reading is smooth there and stays unchanged.
+const IS_MOBILE =
+  typeof navigator !== "undefined" &&
+  /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || "");
+
+function speak(text, { onStart, onEnd, rate = 1, gender = null, chunks = null } = {}) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) {
     if (onEnd) onEnd();
     return;
   }
-  const clean = String(text || "").trim();
+  // On mobile, if the caller passed an array of chunks, join them
+  // into one continuous utterance so the phone's speech engine holds
+  // a single audio session for the whole step. This is exactly the
+  // behaviour the laptop already gets for free — the desktop engine
+  // concatenates consecutive utterances into one audio pipeline,
+  // whereas the mobile engine opens and closes a new session for
+  // each one. Joining the text reproduces the laptop's smoothness
+  // on the phone, at the cost of the per-paragraph highlight (which
+  // desktop still gets, because desktop keeps the chunk-by-chunk path).
+  let spokenText = String(text || "").trim();
+  let onStartHook = null;
+  let onEndHook = null;
+
+  if (IS_MOBILE && Array.isArray(chunks) && chunks.length > 1) {
+    // Join with a comma-space so the speech engine inserts its own
+    // natural pause at each boundary. A comma is the softest
+    // punctuation the engine accepts, so the resulting read is a
+    // continuous flow with light breaths rather than a stutter.
+    spokenText = chunks
+      .map((c) => (c && c.text ? c.text.trim() : ""))
+      .filter(Boolean)
+      .join(" ");
+
+    // Fire onStart once, when the first chunk's text begins. Fire
+    // onEnd once, when the whole joined utterance finishes. The
+    // caller's onStart/onEnd see one speak() call for the step,
+    // exactly as they would if the app had spoken one long line.
+  } else {
+    // Desktop path (or single-chunk input): unchanged behaviour.
+  }
+
+  const clean = spokenText;
   if (!clean) {
     if (onEnd) onEnd();
     return;
@@ -249,8 +296,17 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
 
   installVisibilityHandler();
 
-  // Cancel anything in flight.
-  try { window.speechSynthesis.cancel(); } catch {}
+  // Cancel anything in flight — but ONLY if something actually is
+  // in flight. On mobile, calling cancel() on an idle speech queue
+  // tears down and re-establishes the audio session, which inserts
+  // 100-300ms of silence before the next utterance can start. That
+  // silence is the second half of the mobile stutter. Skip the
+  // cancel when there's nothing to cancel.
+  try {
+    if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+      window.speechSynthesis.cancel();
+    }
+  } catch {}
 
   const words = clean.split(/\s+/).length;
   const finishMs = Math.max(6000, (words / 2.0) * 1000 * 1.6 + 3000) / rate;
@@ -285,7 +341,17 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
 
   (async () => {
     const g = gender || readGender();
-    const voice = await pickVoice(g);
+
+    // Cached voice — the resolved voice for this gender doesn't
+    // change, so on every chunk after the first we can skip the
+    // await entirely. On mobile that await is the scheduling hop
+    // the browser uses to close the audio session, which is what
+    // makes the second half of the stutter.
+    let voice = voiceByGender[g];
+    if (voice === undefined) {
+      voice = await pickVoice(g);
+      voiceByGender[g] = voice || null;
+    }
 
     const utter = new SpeechSynthesisUtterance(clean);
     if (voice) utter.voice = voice;

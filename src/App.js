@@ -5124,19 +5124,29 @@ function TopicView({ app, rootCls }) {
     setReadingPos({ step: stepIdx, para: chunk.para == null ? null : chunk.para });
     const myToken = ++speakTokenRef.current;
 
-    // The shared speak() takes care of voice picking, the
-    // keep-alive, the watchdog, and the pause/resume on tab
-    // visibility. We just supply the text and the completion
-    // callback. The pause and speed multipliers are folded
-    // into the rate we pass.
+    // Mobile: join the whole step's chunks and speak them as one
+    // continuous utterance, so the phone's speech engine holds a
+    // single audio session for the entire step. Desktop keeps the
+    // chunk-by-chunk path (which it can afford, because the desktop
+    // engine concatenates consecutive utterances into one audio
+    // pipeline anyway). The decision is made inside speech.js —
+    // here we just hand over the whole chunks array, and speech.js
+    // either joins them (mobile) or speaks the one at index i
+    // (desktop / single chunk).
+    //
+    // Only the FIRST chunk in the step should trigger the join; a
+    // later chunk arriving mid-step (from advanceFrom's gap
+    // timeout) still needs to play. So: if i === 0, offer the whole
+    // step; otherwise offer just this chunk. Both cases call the
+    // same shared speak().
+    const offerWholeStep = i === 0;
     const rate = (chunk.rate || 0.94) * speedRef.current;
 
     sharedSpeak(chunk.text, {
       rate,
       gender: voiceGenderRef.current,
+      chunks: offerWholeStep ? chunks : null,
       onStart: () => {
-        // Token check in case a newer chunk has been queued
-        // while this one was loading.
         if (speakTokenRef.current !== myToken) {
           sharedStopSpeaking();
         }
@@ -5144,7 +5154,14 @@ function TopicView({ app, rootCls }) {
       onEnd: () => {
         if (speakTokenRef.current !== myToken) return;
         if (!listenActiveRef.current || listenPausedRef.current) return;
-        gapTimeoutRef.current = setTimeout(() => advanceFrom(stepIdx, chunks, i), chunk.pauseAfterMs || 400);
+        // When the whole step was spoken as one utterance, the step
+        // is done — advance to the next step instead of waiting for
+        // a "next chunk" that will never come.
+        if (offerWholeStep) {
+          advanceFrom(stepIdx, chunks, chunks.length - 1);
+        } else {
+          gapTimeoutRef.current = setTimeout(() => advanceFrom(stepIdx, chunks, i), chunk.pauseAfterMs || 400);
+        }
       },
     });
   }, [advanceFrom]);
