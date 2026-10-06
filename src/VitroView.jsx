@@ -407,9 +407,7 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
   const coatNeckY = 84;
   const coatVPointY = 150;
 
-  // Sleeve cuff pinned to the hand anchor itself — guarantees full coverage
-  // to the wrist regardless of shoulder width, so gloves overlay cleanly
-  // on top of the cuff rather than on bare forearm.
+  // Sleeve cuff pinned to the hand anchor itself.
   const cuffY = handY - 10;
 
   const label = isFemale
@@ -440,28 +438,20 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
     );
   };
 
-  // A single braided strand: a tapering ribbon path plus short diagonal
-  // cross-ties along its length, so it reads as an actual plait rather
-  // than a flat blob of colour. Drawn from a scalp-root point down to an
-  // end point, with a slight S-curve for a natural hang.
   const Braid = ({ rootX, rootY, endX, endY, width, curve }) => {
     const midX = rootX + (endX - rootX) * 0.5 + curve;
     const midY = rootY + (endY - rootY) * 0.5;
     const w1 = width;
     const w2 = width * 0.55;
-    // outline of the tapering strand
     const outline = `M${rootX - w1 / 2},${rootY}
       Q${midX - w1 / 2 + curve * 0.3},${midY} ${endX - w2 / 2},${endY}
       Q${endX},${endY + 3} ${endX + w2 / 2},${endY}
       Q${midX + w1 / 2 + curve * 0.3},${midY} ${rootX + w1 / 2},${rootY}
       Z`;
-    // cross-tie ticks evenly along the strand to suggest plait texture
     const ties = [];
     const steps = 5;
     for (let i = 1; i < steps; i++) {
       const t = i / steps;
-      const px = rootX + (midX - rootX) * t * 1.0 + (endX - midX) * Math.max(0, t - 0.5) * 2 * 0;
-      // simple linear interpolation through root->mid->end via quadratic approx
       const qx = (1 - t) * (1 - t) * rootX + 2 * (1 - t) * t * midX + t * t * endX;
       const qy = (1 - t) * (1 - t) * rootY + 2 * (1 - t) * t * midY + t * t * endY;
       const tickW = w1 - (w1 - w2) * t;
@@ -558,7 +548,9 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
         strokeLinejoin="round"
       />
 
-      {/* ---------- 4. Collar of the underlayer ---------- */}
+      {/* ---------- 4. Collar of the underlayer (only matters for "street"
+           stage — once the coat goes on in step 11, the coat's solid
+           closed neckline sits on top and fully hides this) ---------- */}
       <path d={`M${cx - 6},${neckTopY + 10} L${cx},${neckTopY} L${cx + 6},${neckTopY + 10} Z`} fill={underlayer} stroke="var(--line-2)" strokeWidth="1.5" strokeLinejoin="round" />
 
       {/* ---------- 5. Neck ---------- */}
@@ -570,7 +562,6 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
       {/* ---------- 7. Hair ---------- */}
       {isFemale ? (
         <>
-          {/* scalp cap with a visible centre parting, close to the head */}
           <path
             d="M49,38 Q47,19 70,17 Q93,19 91,38 Q91,27 70,23 Q49,27 49,38 Z"
             fill={hair}
@@ -578,24 +569,16 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
             strokeWidth="1.3"
             strokeLinejoin="round"
           />
-          <line x1="70" y1="17.5" x2="70" y2="27" stroke="var(--bg-1, #0000)" strokeWidth="0" />
           <line x1="70" y1="18" x2="70" y2="26" stroke="var(--line-2)" strokeWidth="0.6" opacity="0.4" />
-
-          {/* five neat cornrows running back from the hairline into braids —
-              each a tapering, tied strand with plait cross-ties, ending
-              clearly above the shoulder line per lab safety rules */}
           <Braid rootX={52} rootY={30} endX={47} endY={70} width={5.5} curve={-3} />
           <Braid rootX={59} rootY={23} endX={51} endY={74} width={5} curve={-2} />
           <Braid rootX={81} rootY={23} endX={89} endY={74} width={5} curve={2} />
           <Braid rootX={88} rootY={30} endX={93} endY={70} width={5.5} curve={3} />
-
-          {/* small end-bands tying off each outer braid, like real cornrows */}
           <ellipse cx="47" cy="70" rx="3.2" ry="1.8" fill="var(--line-2)" opacity="0.55" />
           <ellipse cx="93" cy="70" rx="3.2" ry="1.8" fill="var(--line-2)" opacity="0.55" />
         </>
       ) : (
         <>
-          {/* taper fade: short, close-cropped crown */}
           <path
             d="M51,37 Q51,23 70,21 Q89,23 89,37 Q89,28 70,26 Q51,28 51,37 Z"
             fill={hair}
@@ -629,34 +612,27 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
       {/* ---------- 11. Lab coat (donned only) ---------- */}
       {stage === "donned" && (
         <>
-          {/* sleeves — pinned to the hand anchor, covering the full arm */}
-          <path
-            d={`M${shoulderXLeft - 2},${shoulderY - 1} Q${cx - shoulderHalf - 9},${shoulderY + 46} ${handXLeft - 2},${cuffY - 4}
-                L${handXLeft + 9},${cuffY - 4}
-                Q${cx - shoulderHalf - 1},${shoulderY + 44} ${shoulderXLeft + 9},${shoulderY - 1} Z`}
-            fill={coatShade}
-            stroke="var(--line-2)"
-            strokeWidth="1.8"
-            strokeLinejoin="round"
-          />
-          <path
-            d={`M${shoulderXRight + 2},${shoulderY - 1} Q${cx + shoulderHalf + 9},${shoulderY + 46} ${handXRight + 2},${cuffY - 4}
-                L${handXRight - 9},${cuffY - 4}
-                Q${cx + shoulderHalf + 1},${shoulderY + 44} ${shoulderXRight - 9},${shoulderY - 1} Z`}
-            fill={coatShade}
-            stroke="var(--line-2)"
-            strokeWidth="1.8"
-            strokeLinejoin="round"
-          />
+          {/* sleeves — drawn as thick stroked paths over the EXACT same
+              curve as the arms, with a wider stroke than the arm's own
+              outline (13) so no underlayer colour can peek through at any
+              point along the bend, all the way down to the wrist */}
+          <path d={`M${shoulderXLeft},${shoulderY + 4} Q${cx - shoulderHalf - 6},${shoulderY + 48} ${handXLeft},${cuffY}`} fill="none" stroke="var(--line-2)" strokeWidth="17" strokeLinecap="round" />
+          <path d={`M${shoulderXLeft},${shoulderY + 4} Q${cx - shoulderHalf - 6},${shoulderY + 48} ${handXLeft},${cuffY}`} fill="none" stroke={coatShade} strokeWidth="14.5" strokeLinecap="round" />
+          <path d={`M${shoulderXRight},${shoulderY + 4} Q${cx + shoulderHalf + 6},${shoulderY + 48} ${handXRight},${cuffY}`} fill="none" stroke="var(--line-2)" strokeWidth="17" strokeLinecap="round" />
+          <path d={`M${shoulderXRight},${shoulderY + 4} Q${cx + shoulderHalf + 6},${shoulderY + 48} ${handXRight},${cuffY}`} fill="none" stroke={coatShade} strokeWidth="14.5" strokeLinecap="round" />
 
-          {/* wrist cuffs — wrap fully around the wrist so the sleeve closes
-              right up to the hand; gloves then overlay on top of this */}
-          <ellipse cx={handXLeft} cy={cuffY} rx="7.5" ry="5" fill={coatColor} stroke="var(--line-2)" strokeWidth="1.3" />
-          <line x1={handXLeft - 6} y1={cuffY + 1} x2={handXLeft + 6} y2={cuffY + 1} stroke="var(--line-2)" strokeWidth="0.6" opacity="0.5" />
-          <ellipse cx={handXRight} cy={cuffY} rx="7.5" ry="5" fill={coatColor} stroke="var(--line-2)" strokeWidth="1.3" />
-          <line x1={handXRight - 6} y1={cuffY + 1} x2={handXRight + 6} y2={cuffY + 1} stroke="var(--line-2)" strokeWidth="0.6" opacity="0.5" />
+          {/* wrist cuffs — enlarged so they fully wrap the wrist and sit
+              flush against the hand anchor, leaving no gap for the shirt
+              colour to show before the glove overlay lands on top */}
+          <ellipse cx={handXLeft} cy={cuffY + 2} rx="8.5" ry="7" fill={coatColor} stroke="var(--line-2)" strokeWidth="1.3" />
+          <line x1={handXLeft - 7} y1={cuffY + 3} x2={handXLeft + 7} y2={cuffY + 3} stroke="var(--line-2)" strokeWidth="0.6" opacity="0.5" />
+          <ellipse cx={handXRight} cy={cuffY + 2} rx="8.5" ry="7" fill={coatColor} stroke="var(--line-2)" strokeWidth="1.3" />
+          <line x1={handXRight - 7} y1={cuffY + 3} x2={handXRight + 7} y2={cuffY + 3} stroke="var(--line-2)" strokeWidth="0.6" opacity="0.5" />
 
-          {/* coat body — shoulders to mid-thigh, full torso coverage */}
+          {/* coat body — shoulders to mid-thigh. Neckline is now a solid,
+              closed edge (no centre dip) so the underlayer collar/shirt is
+              completely hidden; only bare neck above and trousers below
+              the hem remain visible, as intended */}
           <path
             d={`M${cx - collarHalf - 6},${coatNeckY - 6}
                 L${cx - coatShoulderHalf},${coatNeckY}
@@ -664,7 +640,7 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
                 L${cx + coatHemHalf},${coatHemY}
                 Q${cx + coatChestHalf},${(coatNeckY + hipY) / 2} ${cx + coatShoulderHalf},${coatNeckY}
                 L${cx + collarHalf + 6},${coatNeckY - 6}
-                L${cx},${coatNeckY + 10}
+                Q${cx},${coatNeckY - 2} ${cx - collarHalf - 6},${coatNeckY - 6}
                 Z`}
             fill={coatColor}
             stroke="var(--line-2)"
@@ -672,7 +648,8 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
             strokeLinejoin="round"
           />
 
-          {/* lapels */}
+          {/* lapel fold-lines — decorative stitching on the solid coat
+              surface, not a cut-out, so nothing underneath shows through */}
           <path d={`M${cx - collarHalf - 6},${coatNeckY - 6} L${cx - 7},${coatVPointY}`} fill="none" stroke="var(--line-2)" strokeWidth="1.5" />
           <path d={`M${cx + collarHalf + 6},${coatNeckY - 6} L${cx + 7},${coatVPointY}`} fill="none" stroke="var(--line-2)" strokeWidth="1.5" />
 
@@ -683,10 +660,9 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
           <path d={`M${cx - coatShoulderHalf + 4},${coatNeckY + 6} Q${cx - coatChestHalf + 4},${(coatNeckY + hipY) / 2} ${cx - coatHemHalf + 4},${coatHemY - 4}`} fill="none" stroke="var(--line-2)" strokeWidth="0.8" opacity="0.45" />
           <path d={`M${cx + coatShoulderHalf - 4},${coatNeckY + 6} Q${cx + coatChestHalf - 4},${(coatNeckY + hipY) / 2} ${cx + coatHemHalf - 4},${coatHemY - 4}`} fill="none" stroke="var(--line-2)" strokeWidth="0.8" opacity="0.45" />
 
-          {/* ---------- MLS crest — sits high on the wearer's left chest
-               (x > 70), just below the lapel line, like a school crest ---------- */}
+          {/* ---------- MLS crest — high on the wearer's left chest (x > 70),
+               like a school crest, red + black microscope ---------- */}
           <g transform={`translate(${cx + 13}, 96)`}>
-            {/* small shield-shaped crest backing */}
             <path
               d="M-8,-7 L8,-7 L8,2 Q8,8 0,11 Q-8,8 -8,2 Z"
               fill={coatShade}
@@ -701,7 +677,6 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
               strokeDasharray="1 0.8"
               opacity="0.5"
             />
-            {/* microscope emblem, scaled to fit the crest, red + black */}
             <g strokeLinecap="round" strokeLinejoin="round" fill="none" transform="translate(0,-0.5) scale(0.82)">
               <line x1="-5.5" y1="5.5" x2="4.5" y2="5.5" stroke={mlsRed} strokeWidth="1.3" />
               <line x1="-4" y1="1.5" x2="3" y2="1.5" stroke={mlsRed} strokeWidth="1.1" />
@@ -2519,7 +2494,7 @@ const VITRO_SCRIPTS = {
     // description of the instruction.
     narration: {
       intro:
-        "Here is the request. Antenatal clinic, Tuesday morning. You have a patient: Grace Owusu, 34 years old, 34 weeks pregnant. The midwife has sent her for a packed cell volume test, or PCV. At her first booking appointment her haemoglobin was 10.8 grams per decilitre. Today she says she has felt more and more tired for the past 3 weeks, and she gets short of breath when she moves around. When you look at her, she is pale. The midwife has written this note: \"Query anaemia. Please measure PCV today and report to the antenatal team.\" Before you pick a tube, say out loud, in one sentence, which tube you need and why. If you cannot say why, read the theory again before you run the test.",
+        "Here is the request. Antenatal clinic, Tuesday morning. You have a patient: Grace Owusu, 34 years old, 34 weeks pregnant. The midwife has sent her for a packed cell volume test, or PCV. At her first booking appointment her haemoglobin was 10.8 grams per decilitre. Today she says she has felt more and more tired for the past 3 weeks, and she gets short of breath when she moves around. When you look at her, she is pale. The midwife has written this note: \"Query anaemia. Please measure PCV today and report to the antenatal team.\" When you are ready, tap one of the tubes in the tube rack to pick it.",
       afterWrongTube:
         "That tube is not right for this test. Read the explanation that just appeared on the screen, then tap the button that says Try another tube and pick again.",
       afterCorrectTube:
@@ -4266,6 +4241,7 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
     if (interpPick !== null) return;
     setInterpPick(idx);
     const wasCorrect = idx === interpretation.correctIndex;
+    console.log("INTERP", { idx, correctIndex: interpretation.correctIndex, wasCorrect, scriptId });
     setCompetency((c) => ({
       ...c,
       result_interpretation: wasCorrect,
