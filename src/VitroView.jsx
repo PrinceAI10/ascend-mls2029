@@ -2484,7 +2484,8 @@ const VITRO_SCRIPTS = {
     id: "ph2p:2",
     title: "Estimation of Packed Cell Volume (Haematocrit)",
     patientLabel: "Grace Owusu · 34 F",
-  request:
+    correctTube: "purple",
+    request:
   "Antenatal clinic, Tuesday morning. You have a patient: Grace Owusu, 34 years old, 34 weeks pregnant. The midwife has sent her for a packed cell volume test, or PCV. At her first booking appointment her haemoglobin was 10.8 grams per decilitre. Today she says she has felt more and more tired for the past 3 weeks, and she gets short of breath when she moves around. When you look at her, she is pale. The midwife has written this note: \"Query anaemia. Please measure PCV today and report to the antenatal team.\" Before you pick a tube, say out loud, in one sentence, which tube you need and why. If you cannot say why, read the theory again before you run the test.",
     // Narrator lines — spoken aloud as the bench advances.
     // Plain English, clinical register, short. Read by the
@@ -4182,7 +4183,7 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
   };
 
   const pickTube = (cap) => {
-     if (phase !== "rack") return;
+    if (phase !== "rack") return;
     setPickedTube(cap);
     if (cap === script.correctTube) {
       setCompetency((c) => ({
