@@ -14144,16 +14144,13 @@ export default function App() {
   // any update that shipped while they were away, then land them back on the
   // exact page they left - see the resume/visibilitychange effect below.
   const [resuming, setResuming] = useState(false);
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
   // Accessibility: reading text size, independent of theme. Cycles small/normal/large
   // and is applied as a zoom on the main content column (see rootCls/.main below).
   const [fontScale, setFontScale] = useState(() => {
     try { return window.localStorage.getItem("ascend_font_scale") || "normal"; } catch (e) { return "normal"; }
   });
-  // When theme === "system", the app follows the OS day/night setting live.
-  const [systemDark, setSystemDark] = useState(() => {
-    try { return !window.matchMedia || window.matchMedia("(prefers-color-scheme: dark)").matches; } catch (e) { return true; }
-  });
+  
   const [notifOpen, setNotifOpen] = useState(false);
   // Level/semester switcher popup, opened from the small bar on Courses.
   // Rendered at the App root (below, alongside notifOpen's panel) rather
@@ -14878,7 +14875,7 @@ export default function App() {
 
     (async () => {
       const t = await store.get("ascend_theme");
-      if (t === "light" || t === "dark" || t === "system") setTheme(t);
+      if (t === "light" || t === "dark") setTheme(t);
 
       try {
         const { data } = await supabase.auth.getSession();
@@ -15117,10 +15114,11 @@ export default function App() {
     }
   };
 
-  // Cycle: Dark -> Light -> System (follow OS day/night) -> Dark ...
+  // Toggle: Light <-> Dark. Purely a user choice now - the app no longer
+  // auto-switches based on OS or time-of-day, it just remembers the last
+  // choice the student made (defaulting to light on first launch).
   const toggleTheme = () => {
-    const order = ["dark", "light", "system"];
-    const t = order[(order.indexOf(theme) + 1) % order.length];
+    const t = theme === "light" ? "dark" : "light";
     setTheme(t); store.set("ascend_theme", t);
   };
   // Accessibility: cycle reading text size. Small -> Normal -> Large -> Small ...
@@ -15131,16 +15129,9 @@ export default function App() {
     try { window.localStorage.setItem("ascend_font_scale", t); } catch (e) {}
   };
   const fontScaleZoom = fontScale === "small" ? 0.9 : fontScale === "large" ? 1.18 : 1;
-  // The theme actually rendered. In "system" mode it tracks the OS setting.
-  const effectiveTheme = theme === "system" ? (systemDark ? "dark" : "light") : theme;
-  // Listen for OS day/night changes so "system" mode updates without a reload.
-  useEffect(() => {
-    if (!window.matchMedia) return;
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const handler = (e) => setSystemDark(e.matches);
-    try { mq.addEventListener("change", handler); } catch (e1) { try { mq.addListener(handler); } catch (e2) {} }
-    return () => { try { mq.removeEventListener("change", handler); } catch (e1) { try { mq.removeListener(handler); } catch (e2) {} } };
-  }, []);
+  // The theme actually rendered - purely whatever the student last chose
+  // (or light, on first launch).
+  const effectiveTheme = theme;
   // Keep the mobile browser chrome (theme-color) matching the rendered theme.
   useEffect(() => {
     try {
@@ -15968,7 +15959,7 @@ export default function App() {
                 <span className="chip streakchip" data-tour="streak"><Ic.flame p={15} /><span className="val"><AnimatedCounter value={progress?.streak || 0} /></span></span>
                 <button className="iconbtn" onClick={() => go("search")} title="Search all courses"><Ic.search p={17} /></button>
                 <button className="iconbtn" onClick={toggleFontScale} title={"Text size: " + (fontScale === "small" ? "Small" : fontScale === "large" ? "Large" : "Normal") + " (tap to change)"}><Ic.textSize p={17} /></button>
-                <button className="iconbtn" onClick={toggleTheme} title={theme === "system" ? "Theme: System (follows day/night)" : theme === "light" ? "Theme: Light" : "Theme: Dark"}>{theme === "system" ? <Ic.monitor p={17} /> : theme === "light" ? <Ic.sun p={17} /> : <Ic.moon p={17} />}</button>
+                <button className="iconbtn" onClick={toggleTheme} title={theme === "light" ? "Theme: Light" : "Theme: Dark"}>{theme === "light" ? <Ic.sun p={17} /> : <Ic.moon p={17} />}</button>
                 <button className="iconbtn" onClick={openNotif} title="Notifications"><Ic.bell p={18} />{unreadCount > 0 && <span className="notif-badge">{unreadCount > 9 ? "9+" : unreadCount}</span>}</button>
                 <span className="chip" data-tour="xp"><span className="val" style={{ color: r.c }}><AnimatedCounter value={progress?.xp || 0} /></span> XP</span>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
