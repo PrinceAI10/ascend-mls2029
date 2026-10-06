@@ -156,10 +156,16 @@ function startKeepAlive() {
         typeof window !== "undefined" &&
         window.speechSynthesis &&
         window.speechSynthesis.speaking &&
-        !window.speechSynthesis.paused
+        !window.speechSynthesis.paused &&
+        !window.speechSynthesis.pending
       ) {
-        window.speechSynthesis.pause();
-        window.speechSynthesis.resume();
+        // Chrome-desktop only. On Android this nudge is audible.
+        const ua = navigator.userAgent || "";
+        const isAndroid = /Android/i.test(ua);
+        if (!isAndroid) {
+          window.speechSynthesis.pause();
+          window.speechSynthesis.resume();
+        }
       }
     } catch {}
   }, 3000);
@@ -243,31 +249,77 @@ function installVisibilityHandler() {
 //     fires, so it can never race onend into a double-advance.
 // ------------------------------------------------------------
 
-function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
+// ------------------------------------------------------------
+// speak(text, { chunks, onStart, onEnd, rate, gender })
+//
+// If `chunks` is provided as an array of { text, rate, pitch,
+// pauseAfterMs } entries, the utterance joins them into one
+// continuous read on mobile (single audio session, no cancel
+// between chunks, no audible gap) and speaks them as one
+// sequenced pipeline on desktop. onStart fires when the first
+// chunk's audio begins; onEnd fires once, when the last chunk
+// has finished. That single onEnd is what TopicView's step
+// advance relies on - a per-chunk onEnd would advance mid-step.
+//
+// If `chunks` is null/undefined, this falls back to the original
+// single-string behaviour, which is what Atlas and Vitro use.
+// ------------------------------------------------------------
+function speak(text, { chunks = null, onStart, onEnd, rate = 1, gender = null } = {}) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) {
     if (onEnd) onEnd();
     return;
   }
-  const clean = String(text || "").trim();
-  if (!clean) {
+
+  // Normalise the call into a list of "segments". A segment is
+  // { text, rate, pitch, pauseAfterMs }. When the caller passed
+  // no `chunks`, we make a single segment out of `text` so the
+  // rest of the function only has one shape to handle.
+  const segments = (() => {
+    if (Array.isArray(chunks) && chunks.length > 0) {
+      return chunks
+        .map((c) => ({
+          text: String(c && c.text ? c.text : "").trim(),
+          rate: typeof c?.rate === "number" ? c.rate : 1,
+          pitch: typeof c?.pitch === "number" ? c.pitch : null,
+          pauseAfterMs: typeof c?.pauseAfterMs === "number" ? c.pauseAfterMs : 0,
+        }))
+        .filter((s) => s.text.length > 0);
+    }
+    const single = String(text || "").trim();
+    return single ? [{ text: single, rate: 1, pitch: null, pauseAfterMs: 0 }] : [];
+  })();
+
+  if (segments.length === 0) {
     if (onEnd) onEnd();
     return;
   }
 
   installVisibilityHandler();
 
-  // Cancel anything in flight. Unconditional — the conditional
-  // version I tried skipped the cancel when the engine reported
-  // idle, but some mobile engines report idle for a few hundred
-  // ms before they've actually released the audio session, and
-  // the next speak() call then queued behind a session that was
-  // still tearing down. The unconditional cancel is what the
-  // engine actually wants.
+  // Cancel anything in flight. Unconditional - see the original
+  // note: some mobile engines report idle before the audio
+  // session has actually been released, and a conditional cancel
+  // then queues behind a session that is still tearing down.
   try { window.speechSynthesis.cancel(); } catch {}
 
-  const words = clean.split(/\s+/).length;
+  // On mobile, join every segment into one continuous string
+  // (single audio session). On desktop, join them too - desktop
+  // Chrome concatenates consecutive utterances cleanly anyway,
+  // and the join removes the per-chunk cancel entirely, which is
+  // what caused the chop. The per-chunk `rate`/`pitch` values are
+  // averaged/dropped in the join because Web Speech has no SSML
+  // support and cannot vary prosody mid-utterance.
+  //
+  // Pauses are converted to commas, which the engine renders as a
+  // short natural gap. This is the closest thing to a silent beat
+  // that the API allows.
+  const joined = segments
+    .map((s) => s.text)
+    .join(", ");
+
+  const words = joined.split(/\s+/).length;
   const finishMs = Math.max(6000, (words / 2.0) * 1000 * 1.6 + 3000) / rate;
-  const STARTUP_MS = 4500;
+  const STARTUP_MS = 15000;
 
   let finished = false;
   let started = false;
@@ -288,32 +340,34 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
     if (onEnd) onEnd();
   };
 
-
-
   (async () => {
     const g = gender || readGender();
 
-    // Cached voice — the resolved voice for this gender doesn't
-    // change, so on every chunk after the first we can skip the
-    // await entirely. On mobile that await is the scheduling hop
-    // the browser uses to close the audio session, which is what
-    // makes the second half of the stutter.
+    // Cached voice - the resolved voice for this gender doesn't
+    // change, so on every chunk after the first we skip the await
+    // entirely. On mobile that await is the scheduling hop the
+    // browser uses to close the audio session.
     let voice = voiceByGender[g];
     if (voice === undefined) {
       voice = await pickVoice(g);
       voiceByGender[g] = voice || null;
     }
 
-    const utter = new SpeechSynthesisUtterance(clean);
+    const utter = new SpeechSynthesisUtterance(joined);
     if (voice) utter.voice = voice;
-    // Gender-tinted pitch/rate, same values every copy of the
-    // code used. A male voice gets a deeper, slightly slower read.
+    // Gender-tinted pitch/rate. When the caller passed chunks, use
+    // the first segment's rate/pitch as the utterance's prosody -
+    // mid-utterance variation isn't possible via the API, and the
+    // first segment is the one carrying the step heading.
+    const firstSeg = segments[0];
+    const segRate = firstSeg && firstSeg.rate ? firstSeg.rate : 1;
+    const segPitch = firstSeg && typeof firstSeg.pitch === "number" ? firstSeg.pitch : null;
     if (g === "male") {
-      utter.pitch = 0.85;
-      utter.rate = 0.80 * rate;
+      utter.pitch = segPitch != null ? segPitch : 0.9;
+      utter.rate = 1.0 * rate * segRate;
     } else {
-      utter.pitch = 1.1;
-      utter.rate = 0.82 * rate;
+      utter.pitch = segPitch != null ? segPitch : 1.05;
+      utter.rate = 1.0 * rate * segRate;
     }
 
     utter.onstart = () => {
@@ -323,7 +377,7 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
       if (startupTimer) { clearTimeout(startupTimer); startupTimer = null; }
       finishTimer = setTimeout(finish, finishMs);
       startKeepAlive();
-      visibility.currentText = clean;
+      visibility.currentText = joined;
       if (onStart) onStart();
     };
     utter.onend = finish;
@@ -337,10 +391,7 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
     }
 
     // Arm the startup watchdog AFTER speak() has been called.
-    // Arming it earlier was the bug that skipped step 1 on mobile:
-    // the async IIFE hadn't reached the speak() call yet, so the
-    // timer fired with `started` still false and advanced the
-    // step before anything was actually spoken.
+    // Arming it earlier was the bug that skipped step 1 on mobile.
     startupTimer = setTimeout(() => {
       startupTimer = null;
       if (!started) finish();
@@ -408,20 +459,27 @@ function queueTick() {
   queue.idleTicks = 0;
   if (visibility.pausedByUs) return;
   const elapsed = Date.now() - queue.currentStartedAt;
-  if (elapsed > MAX_QUEUED_UTTER_MS && queue.queuedText) {
+  if (elapsed > MAX_QUEUED_UTTER_MS) {
+    // Force-cancel a stuck utterance whether or not anything is
+    // queued behind it. Previously this only fired when
+    // queue.queuedText existed, so a single utterance whose
+    // onend never came would block every future speakQueued()
+    // call for the rest of the session.
     try { window.speechSynthesis.cancel(); } catch {}
     queue.currentUtter = null;
     const cutCb = queue.currentOnEnd;
     queue.currentOnEnd = null;
     if (cutCb) { try { cutCb(); } catch {} }
-    const next = queue.queuedText;
-    const nextCb = queue.queuedOnEnd;
-    queue.queuedText = null;
-    queue.queuedOnEnd = null;
-    setTimeout(() => {
-      queue.currentOnEnd = nextCb;
-      speakQueuedNow(next);
-    }, QUEUE_BEAT_MS);
+    if (queue.queuedText) {
+      const next = queue.queuedText;
+      const nextCb = queue.queuedOnEnd;
+      queue.queuedText = null;
+      queue.queuedOnEnd = null;
+      setTimeout(() => {
+        queue.currentOnEnd = nextCb;
+        speakQueuedNow(next);
+      }, QUEUE_BEAT_MS);
+    }
   }
 }
 
@@ -452,11 +510,11 @@ function speakQueuedNow(text) {
   const g = readGender();
   const utter = new SpeechSynthesisUtterance(clean);
   if (g === "male") {
-    utter.pitch = 0.85;
-    utter.rate = 0.80;
+    utter.pitch = 0.9;
+    utter.rate = 1.0;
   } else {
-    utter.pitch = 1.1;
-    utter.rate = 0.82;
+    utter.pitch = 1.05;
+    utter.rate = 1.0;
   }
   // Use the cached voice — the same cache speak() uses. If it's
   // not resolved yet, kick off the fetch and use the voice next
@@ -517,6 +575,20 @@ function speakQueued(text, { onEnd, onStart, rate = 1, gender = null } = {}) {
 
   if (queue.currentUtter) {
     // Something is already speaking. Queue this line.
+    //
+    // If a line is already queued and we're about to replace it,
+    // fire the outgoing line's onEnd first. Otherwise whatever
+    // callback was waiting on the replaced line never fires and
+    // the caller hangs forever. A queued line that gets replaced
+    // never speaks, so this is its only chance to signal "I'm
+    // done" - and "I never played" is closer to done than to
+    // pending.
+    if (queue.queuedOnEnd && typeof queue.queuedOnEnd === "function") {
+      const dropped = queue.queuedOnEnd;
+      queue.queuedOnEnd = null;
+      queue.queuedOnStart = null;
+      try { dropped(); } catch {}
+    }
     queue.queuedText = clean;
     queue.queuedOnEnd = typeof onEnd === "function" ? onEnd : null;
     queue.queuedOnStart = typeof onStart === "function" ? onStart : null;

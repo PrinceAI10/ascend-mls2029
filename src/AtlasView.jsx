@@ -139,7 +139,7 @@ const LEGEND_VIEWBOXES = {
   "infarct-types": "0 0 100 100",
   haemorrhage: "0 0 100 100",
   shock: "0 0 100 100",
-  clinical: "0 0 100 100",
+  "clinical-examples": "0 0 100 100",
   // Cell Injury
   stressors: "0 0 100 100",
   adaptation: "0 0 100 100",
@@ -220,7 +220,7 @@ const LEGEND_VIEWBOXES = {
   binding: "0 0 100 100",
   conform: "0 0 100 100",
   cascade: "0 0 100 100",
-  clinical: "0 0 100 100",
+  "clinical-synthesis": "0 0 100 100",
   // pha:3 (GPCR signalling) labels — the ones not shared with pha:2
   ligand: "0 0 100 100",
   gprotein: "0 0 100 100",
@@ -1321,6 +1321,18 @@ const LEGEND_SWATCHES = {
       <circle cx="26" cy="50" r="6" fill="#2F6FED" opacity="0.6" />
       <circle cx="74" cy="50" r="6" fill="#2F6FED" opacity="0.6" />
       <text x="50" y="90" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#2F6FED">shock</text>
+    </g>
+  ),
+  "clinical-examples": (active) => (
+    <g>
+      <rect x="14" y="14" width="72" height="16" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="25" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="var(--text)">MI</text>
+      <rect x="14" y="34" width="72" height="16" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="45" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="var(--text)">stroke</text>
+      <rect x="14" y="54" width="72" height="16" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="65" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="var(--text)">DVT</text>
+      <rect x="14" y="74" width="72" height="16" rx="3" fill={active ? "rgba(245,185,63,.25)" : "rgba(245,185,63,.12)"} stroke={active ? "#F5B93F" : "#D89B14"} strokeWidth="1.2" />
+      <text x="50" y="85" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="var(--text)">PE</text>
     </g>
   ),
   clinical: (active) => (
@@ -3829,8 +3841,21 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
       return;
     }
 
-    // The shared speak() takes care of voice picking, the
-    // keep-alive, the startup watchdog, and the token guard.
+    // The shared speak() takes care of voice picking, the keep-alive,
+    // the startup watchdog, and the token guard. But speech.js's own
+    // watchdog only fires onEnd if onstart never fired; it does NOT
+    // cover the case where onstart fired and onend is then dropped
+    // (which some mobile engines do). The watchdog below is Atlas's
+    // own belt-and-braces for that specific case: sized to the
+    // utterance's word count, generous enough never to fire early.
+    const words = text.trim().split(/\s+/).length;
+    const finishMs = Math.max(6000, (words / 2.0) * 1000 * 1.6 + 3000) / speed;
+    if (watchdogRef.current) clearTimeout(watchdogRef.current);
+    watchdogRef.current = setTimeout(() => {
+      watchdogRef.current = null;
+      advanceAfterStep(myToken, finishedStepIdx);
+    }, finishMs);
+
     sharedSpeak(text, {
       rate: speed,
       onEnd: () => advanceAfterStep(myToken, finishedStepIdx),

@@ -5554,7 +5554,7 @@ export const DIAGRAMS = {
       { id: "infarct-types", name: "Types of Infarct",      desc: "White infarcts occur in solid organs with end-arterial supply (kidney, heart, spleen). Red infarcts occur in loose tissue, dual-supply organs (lung), or after venous occlusion." },
       { id: "haemorrhage", name: "Haemorrhage",             desc: "Bleeding out of a vessel. Can be external, internal, or into a body cavity. Severity depends on rate, volume, and location — a small bleed in the brain can be fatal." },
       { id: "shock",       name: "Shock",                   desc: "Whole-body failure of perfusion. Cells don't get enough blood, switch to anaerobic metabolism, and eventually die. Cardiogenic, hypovolaemic, distributive, and obstructive types." },
-      { id: "clinical",    name: "Clinical Examples",       desc: "Myocardial infarction (heart attack), stroke, deep vein thrombosis, pulmonary embolism, and disseminated intravascular coagulation — all haemodynamic disorders." },
+      { id: "clinical-examples", name: "Clinical Examples", desc: "Myocardial infarction (heart attack), stroke, deep vein thrombosis, pulmonary embolism, and disseminated intravascular coagulation — all haemodynamic disorders." },
     ],
     narration: [
       "Blood has to keep moving, in the right direction, at the right pressure, inside vessels that stay sealed. When any of those fail, the result is a haemodynamic disorder. Together, they account for the majority of sudden deaths in adults — heart attacks, strokes, and pulmonary emboli are all in this family.",
@@ -5578,7 +5578,7 @@ export const DIAGRAMS = {
       ["infarct-types"],
       ["haemorrhage"],
       ["shock"],
-      ["clinical"],
+      ["clinical-examples"],
     ],
     viewBox: "0 0 900 620",
         render: ({ onLabelClick, activeLabelId, activeStep = 0, preview }) => {
@@ -5711,7 +5711,7 @@ export const DIAGRAMS = {
           )}
 
           {/* Clinical examples */}
-          {isHot("clinical") && (
+          {isHot("clinical-examples") && (
             <g pointerEvents="none" filter="url(#atlas-glow)">
               <rect x="55" y="60" width="240" height="150" rx="14" fill="var(--bg-2)" stroke={ATLAS_COLORS.trunk} strokeWidth="2.4" />
               <text x="175" y="88" textAnchor="middle" fontSize="12" fontWeight="800" fill={ATLAS_COLORS.trunk}>CLINICAL EXAMPLES</text>
@@ -7262,7 +7262,7 @@ export const DIAGRAMS = {
       { id: "binding",     name: "Binding — Affinity & Selectivity", desc: "A drug is held to its target by weak bonds — ionic, hydrogen, hydrophobic, van der Waals. Affinity is how tightly it binds; selectivity is how well it distinguishes its target from others." },
       { id: "conform",     name: "Conformational Change", desc: "The receptor changes shape when a drug binds. That shape change is the signal. Agonists stabilise the active shape; antagonists lock the inactive shape." },
       { id: "cascade",     name: "Signalling Cascade",   desc: "The chain from receptor to cellular response. Amplification means a few bound receptors trigger a large response. Specificity and side effects both follow from which pathway is activated where." },
-      { id: "clinical",    name: "Clinical Synthesis",   desc: "Every prescription is target-based thinking: what process is failing, which target corrects it, which drug hits that target, how does binding produce the effect, what side effects follow." },
+      { id: "clinical-synthesis", name: "Clinical Synthesis", desc: "Every prescription is target-based thinking: what process is failing, which target corrects it, which drug hits that target, how does binding produce the effect, what side effects follow." },
     ],
     narration: [
       "A drug enters the body, circulates through every tissue, and yet produces one specific effect while leaving most of the body untouched. Something has to be selecting it. That something is a target.",

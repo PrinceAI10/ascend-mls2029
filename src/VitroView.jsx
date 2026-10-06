@@ -52,7 +52,7 @@
 //    covers the errors the student made.
 // ------------------------------------------------------------
 import React, { useState, useEffect, useRef } from "react";
-import { speakQueued as sharedSpeakQueued, stopSpeaking as sharedStopSpeaking, isSpeaking as sharedIsSpeaking } from "./speech";
+import { speak as sharedSpeak, stopSpeaking as sharedStopSpeaking, isSpeaking as sharedIsSpeaking } from "./speech";
 
 // ------------------------------------------------------------------
 // The four bench families. Each is a distinct interaction model,
@@ -2665,11 +2665,10 @@ const VITRO_COMPETENCIES = {
 // ------------------------------------------------------------------
 // Bench narration. Reads each step aloud through the same Web
 // Speech voices the podcast feature already uses (see App.js's
-// ascendPickVoice). One utterance at a time, cancel on stop,
-// no queuing — the narrator is meant to guide, not to lecture
-// over the student.
+// ascendPickVoice). One utterance at a time, cancel on new line —
+// the narrator is meant to guide, not to lecture over the student.
 //
-//   vitroSpeak(text, onEnd?)
+//   vitroSpeak(text, onEnd, onStart)
 //     — speaks text, calls onEnd when done (or on error), so the
 //       caller can advance or wait. Cancels whatever is already
 //       speaking first, so step transitions never stack.
@@ -2678,16 +2677,15 @@ const VITRO_COMPETENCIES = {
 //     — cancels whatever is speaking, silently. Called when the
 //       bench unmounts, or when the student mutes.
 // ------------------------------------------------------------------
-// VITRO's narration now runs on the shared speech engine
-// (speech.js). These thin wrappers preserve the exact call
-// signatures every component in this file already uses, so no
-// component below this point needs to change.
-//
-// The shared speakQueued uses a single options object; these
-// wrappers keep the positional (text, onEnd, onStart) shape
-// VITRO was written against.
+// VITRO's narration runs on the shared speech engine (speech.js).
+// These thin wrappers preserve the positional (text, onEnd,
+// onStart) call shape every component in this file uses. They
+// route to speak(), not speakQueued() — VITRO wants each new
+// line to interrupt the last, because the screen has already
+// moved on by the time the next line is spoken. Queueing here
+// caused the narration to drift behind the bench.
 function vitroSpeak(text, onEnd, onStart) {
-  sharedSpeakQueued(text, { onEnd, onStart });
+  sharedSpeak(text, { onEnd, onStart });
 }
 function vitroStopSpeaking() {
   sharedStopSpeaking();
@@ -4037,12 +4035,12 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
         vitroSpeak(readingLine, () => {
           setTimeout(() => {
             setPhase(interpretation ? "interpret" : "results");
-          }, 1800);
+          }, 300);
         });
       } else {
         setTimeout(() => {
           setPhase(interpretation ? "interpret" : "results");
-        }, 1800);
+        }, 300);
       }
     }, 3000 + ROTOR_SETTLE_MS);
   };
@@ -5377,11 +5375,13 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
     try {
       sessionStorage.setItem(doffedKey, "1");
     } catch {}
+    // Navigate first, then set state. Setting state before the
+    // route change causes one render of the bench branch before
+    // VitroView unmounts, which flashes the worktop on screen
+    // for a frame after the student has already left the lab.
+    goBack();
     setDoffed(true);
     setLeaving(false);
-    // Navigate the student back to the course after doffing
-    // completes.
-    goBack();
   };
 
   const pickScientist = (sex) => {
