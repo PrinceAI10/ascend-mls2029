@@ -5149,11 +5149,9 @@ function TopicView({ app, rootCls }) {
     // to the next step from there. Passing `chunks` only on the
     // first call keeps the desktop fallback (chunk-by-chunk) off,
     // since speak() already speaks the joined string.
-    const offerWholeStep = i === 0;
     sharedSpeak(chunk.text, {
       rate,
       gender: voiceGenderRef.current,
-      chunks: offerWholeStep ? chunks : null,
       onStart: () => {
         if (speakTokenRef.current !== myToken) {
           sharedStopSpeaking();
@@ -5162,13 +5160,7 @@ function TopicView({ app, rootCls }) {
       onEnd: () => {
         if (speakTokenRef.current !== myToken) return;
         if (!listenActiveRef.current || listenPausedRef.current) return;
-        if (offerWholeStep) {
-          // Whole step was spoken as one utterance. Advance
-          // straight to the next step.
-          advanceFrom(stepIdx, chunks, chunks.length - 1);
-        } else {
-          gapTimeoutRef.current = setTimeout(() => advanceFrom(stepIdx, chunks, i), chunk.pauseAfterMs || 400);
-        }
+        gapTimeoutRef.current = setTimeout(() => advanceFrom(stepIdx, chunks, i), chunk.pauseAfterMs || 400);
       },
     });
   }, [advanceFrom]);

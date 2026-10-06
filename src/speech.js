@@ -137,12 +137,8 @@ function startKeepAlive() {
         !window.speechSynthesis.paused &&
         !window.speechSynthesis.pending
       ) {
-        const ua = navigator.userAgent || "";
-        const isAndroid = /Android/i.test(ua);
-        if (!isAndroid) {
-          window.speechSynthesis.pause();
-          window.speechSynthesis.resume();
-        }
+        window.speechSynthesis.pause();
+        window.speechSynthesis.resume();
       }
     } catch {}
   }, 3000);
@@ -204,45 +200,18 @@ function installVisibilityHandler() {
 // If `chunks` is not provided, `text` is spoken as a single
 // utterance. That path is what Atlas and VITRO use.
 // ------------------------------------------------------------
-function speak(text, { chunks = null, onStart, onEnd, rate = 1, gender = null } = {}) {
+function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) {
     if (onEnd) onEnd();
     return;
   }
 
-  // Build the string to speak. Two shapes in, one shape out.
-  let fullText = "";
-  let firstChunkRate = 1;
-  let firstChunkPitch = null;
-  let wordCount = 0;
-
-  if (Array.isArray(chunks) && chunks.length > 0) {
-    const pieces = [];
-    for (let i = 0; i < chunks.length; i++) {
-      const c = chunks[i];
-      if (!c) continue;
-      const t = String(c.text || "").trim();
-      if (!t) continue;
-      pieces.push(t);
-      if (pieces.length === 1) {
-        if (typeof c.rate === "number" && c.rate > 0) firstChunkRate = c.rate;
-        if (typeof c.pitch === "number") firstChunkPitch = c.pitch;
-      }
-    }
-    // Join with a period-space so the engine treats each piece as
-    // its own sentence boundary and gives a natural beat. Commas
-    // were too short a beat. Periods are the correct pause unit.
-    fullText = pieces.join(". ").replace(/\.\.+/g, ".");
-  } else {
-    fullText = String(text || "").trim();
-  }
-
+  const fullText = String(text || "").trim();
   if (!fullText) {
     if (onEnd) onEnd();
     return;
   }
-
-  wordCount = fullText.split(/\s+/).length;
+  const wordCount = fullText.split(/\s+/).length;
 
   installVisibilityHandler();
 
@@ -262,7 +231,7 @@ function speak(text, { chunks = null, onStart, onEnd, rate = 1, gender = null } 
   //
   // Startup watchdog: 15 seconds. Covers a cold mobile engine
   // loading a voice for the first time.
-  const finishMs = Math.max(12000, (wordCount * 2500) + 5000) / (rate * firstChunkRate);
+  const finishMs = Math.max(12000, (wordCount * 2500) + 5000) / rate;
   const STARTUP_MS = 15000;
 
   let finished = false;
@@ -303,12 +272,12 @@ function speak(text, { chunks = null, onStart, onEnd, rate = 1, gender = null } 
     const utter = new SpeechSynthesisUtterance(fullText);
     if (voice) utter.voice = voice;
 
-    if (g === "male") {
-      utter.pitch = firstChunkPitch != null ? firstChunkPitch : 0.9;
-      utter.rate = 1.0 * rate * firstChunkRate;
+        if (g === "male") {
+      utter.pitch = 0.9;
+      utter.rate = 1.0 * rate;
     } else {
-      utter.pitch = firstChunkPitch != null ? firstChunkPitch : 1.05;
-      utter.rate = 1.0 * rate * firstChunkRate;
+      utter.pitch = 1.05;
+      utter.rate = 1.0 * rate;
     }
 
     utter.onstart = () => {
@@ -432,13 +401,13 @@ function speakQueuedNow(text) {
   }
   const g = readGender();
   const utter = new SpeechSynthesisUtterance(clean);
-  if (g === "male") {
-    utter.pitch = 0.9;
-    utter.rate = 1.0;
-  } else {
-    utter.pitch = 1.05;
-    utter.rate = 1.0;
-  }
+     if (g === "male") {
+      utter.pitch = 0.9;
+      utter.rate = 1.0 * rate;
+    } else {
+      utter.pitch = 1.05;
+      utter.rate = 1.0 * rate;
+    }
   let voice = voiceByGender[g];
   if (voice === undefined) {
     pickVoice(g).then((v) => { voiceByGender[g] = v || null; });
