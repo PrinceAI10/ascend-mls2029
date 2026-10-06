@@ -3851,42 +3851,42 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
             return steps && steps[2] ? steps[2].instruction : null;
           case "loading":
             return steps && steps[3] ? steps[3].instruction : null;
-                  case "spinning":
-          // The reading line is spoken by doSpin AFTER the rotor
-          // has stopped. Never here - if the effect also speaks
-          // it, the line plays twice (once during the spin, once
-          // after). So the effect only speaks the pre-spin
-          // instruction.
-          return analyserRan ? null : script.analyser.action;
-        case "interpret":
-          // Handled specially below — the question and its
-          // options are read in full, not just a header line.
-          return null;
-        case "action":
-          // Handled specially below.
-          return null;
-        case "results":
-          return narration.results;
-        default:
-          return null;
-      }
-    })();
+          case "spinning":
+            // The pre-spin instruction is spoken once, before
+            // the tap, by the dedicated effect below. Nothing
+            // fires here so the line can never be spoken over
+            // a spin in progress.
+            return null;
+          case "interpret":
+            return null;
+          case "action":
+            return null;
+          case "results":
+            return narration.results;
+          default:
+            return null;
+        }
+      })();
       if (line) vitroSpeak(line);
-
-      // The two scored questions are NOT read aloud. The
-      // student reads them on screen. This matches the brief:
-      // the voice guides the lab procedure, the student reads
-      // the questions and thinks about them.
-      //
-      // Nothing to do for interpret/action here — the switch
-      // above already returns null for those phases, so no
-      // line fires. The `interpPick`/`actionPick` dependencies
-      // were only needed when the questions were spoken; kept
-      // in the array so the effect still re-runs when they
-      // change (harmless, no line to speak).
     }, 250);
     return () => clearTimeout(timer);
   }, [phase, analyserRan, muted, stepIdx, interpPick, actionPick]);
+
+  // Dedicated effect for the pre-spin instruction. Fires once,
+  // the moment the spinning phase begins and the spin has not
+  // yet been started. Once analyserRan is true, this effect
+  // does nothing - doSpin owns every line from there.
+  useEffect(() => {
+    if (muted) return;
+    if (phase !== "spinning") return;
+    if (analyserRan) return;
+    const instruction = script && script.analyser && script.analyser.action;
+    if (!instruction) return;
+    const timer = setTimeout(() => {
+      vitroSpeak(instruction);
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [phase, analyserRan, muted, script]);
 
   // Stop the voice the moment the student leaves the bench.
   useEffect(() => {
@@ -3894,6 +3894,13 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
   }, []);
 
   const goBack = () => {
+    // Cancel the voice FIRST, before any navigation logic. This
+    // is what makes the button always responsive: even if a
+    // narration line is mid-flight, or a spin timer is pending,
+    // or a phase transition is mid-render, the tap stops the
+    // audio immediately and any pending piece sequencer
+    // abandons itself on its next token check.
+    vitroStopSpeaking();
     // If the parent passed onLeave, it means the student is on
     // the way out of the lab — the parent handles the doffing
     // gate before actually navigating. Otherwise (no parent
@@ -5421,6 +5428,11 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
   };
 
   const goBack = () => {
+    // Cancel any in-flight narration before navigating. Same
+    // reasoning as the bench's goBack - makes the back button
+    // responsive even if a line is mid-sentence or a phase
+    // transition is in progress.
+    vitroStopSpeaking();
     if (app && typeof app.go === "function") {
       if (courseId) {
         app.go("course", { courseId });
