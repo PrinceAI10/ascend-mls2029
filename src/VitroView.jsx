@@ -1970,7 +1970,7 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
       }
     })();
     if (line) vitroSpeak(line);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [phase, analyserRan, muted]);
 
   // Stop the voice the moment the student leaves the bench.
