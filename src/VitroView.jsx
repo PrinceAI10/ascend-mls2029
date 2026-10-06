@@ -739,7 +739,649 @@ function VitroCharacterPicker({ onPick }) {
     </div>
   );
 }
+// ------------------------------------------------------------------
+// VitroEnterLab — the transition screen between donning and the
+// bench. The student sees their scientist, fully dressed, standing
+// at the lab door. The voice tells them to tap the button that
+// says Enter the lab. When they do, the bench renders.
+//
+// This exists so that the moment of entering the lab is a
+// discrete action, not an implicit one. In a real lab, you do
+// not slide from the changing area onto the bench — you walk in
+// through a door. The screen mirrors that.
+// ------------------------------------------------------------------
+function VitroEnterLab({ character, onEnter, speak }) {
+  const isFemale = character === "female";
+  const ENTER_KEY = "ascend_vitro_enter_prompt_played";
 
+  useEffect(() => {
+    if (typeof speak !== "function") return;
+    let alreadyPlayed = false;
+    try {
+      alreadyPlayed = sessionStorage.getItem(ENTER_KEY) === "1";
+    } catch {}
+    if (alreadyPlayed) return;
+    try {
+      sessionStorage.setItem(ENTER_KEY, "1");
+    } catch {}
+    speak(
+      "Your personal protective equipment is on and correctly fitted. The door to the laboratory is in front of you. Tap the button that says Enter the lab to walk in and begin the practical."
+    );
+  }, [speak]);
+
+  return (
+    <div style={{ marginTop: 16 }}>
+      <div
+        className="card"
+        style={{
+          borderColor: "var(--amber)",
+          padding: 20,
+          background: "var(--bg-2)",
+        }}
+      >
+        <div
+          className="eyebrow"
+          style={{ color: "var(--amber-2)", marginBottom: 6 }}
+        >
+          VITRO · Step 3 of 3
+        </div>
+        <div style={{ fontWeight: 750, fontSize: 16, lineHeight: 1.35 }}>
+          You are at the lab door.
+        </div>
+        <div
+          style={{
+            color: "var(--text-2)",
+            fontSize: 13.5,
+            marginTop: 10,
+            lineHeight: 1.6,
+            maxWidth: "60ch",
+          }}
+        >
+          Your PPE is on and correctly fitted. Walk into the
+          laboratory and stand at the bench. The practical will begin
+          the moment you enter.
+        </div>
+      </div>
+
+      <div
+        style={{
+          marginTop: 16,
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "center",
+          gap: 24,
+        }}
+      >
+        <VitroScientistSvg sex={isFemale ? "female" : "male"} stage="donned" height={220} />
+      </div>
+
+      <div style={{ marginTop: 16, textAlign: "center" }}>
+        <button
+          className="btn btn-a"
+          style={{ padding: "12px 26px", fontSize: 15 }}
+          onClick={() => onEnter && onEnter()}
+        >
+          Enter the lab
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ------------------------------------------------------------------
+// VitroDoffing — the gating check a student runs when leaving
+// the lab. It is the reverse of donning, with one hazard:
+// gloves come off first, and they come off without contaminating
+// the hands.
+//
+// Order (the correct one): gloves, eyewear, lab coat, mask,
+// hand hygiene. Removing the lab coat before the eyewear would
+// mean reaching up past a clean face with contaminated sleeves;
+// removing the mask before the coat would mean the coat sleeves
+// brush a bare face. That is why the order matters.
+//
+// The screen structure mirrors VitroDonning: figure on the
+// left, cart on the right, step headline with a short
+// instruction, a voice that names the button, error panel
+// with a specific explanation for each out-of-order tap.
+// ------------------------------------------------------------------
+const DOFFING_STEPS = [
+  {
+    id: "gloves",
+    label: "Gloves",
+    why: "Gloves come off first, before anything else. They are the most contaminated item on you. Remove them by peeling them inside-out from the wrist, without touching your skin.",
+  },
+  {
+    id: "eye",
+    label: "Eyewear",
+    why: "Eyewear comes off next, after the gloves. With bare hands that are washed or at least not glove-contaminated, you can handle the eyewear frame safely.",
+  },
+  {
+    id: "gown",
+    label: "Lab coat",
+    why: "The lab coat comes off after the eyewear. You unfasten it, pull it away from your shoulders without touching your face, and fold it inside-out for disposal or laundering.",
+  },
+  {
+    id: "mask",
+    label: "Mask",
+    why: "The mask comes off after the coat. Hold the mask by its ties or elastics, not the fabric — the front of the mask is the most contaminated side.",
+  },
+  {
+    id: "wash",
+    label: "Hand hygiene",
+    why: "Hand hygiene is last, always. Even after you have removed all PPE, you wash your hands again. This is the single most important step in the whole doffing sequence.",
+  },
+];
+
+const DOFFING_INSTRUCTIONS = {
+  gloves:
+    "Peel the gloves off inside-out, one at a time. Never touch your bare skin with the outside of a glove.",
+  eye:
+    "Remove the eyewear by the arms or the frame, not the lenses. Do not touch your face.",
+  gown:
+    "Unfasten the coat, pull it off by the shoulders, and fold it inside-out so the contaminated side stays inside.",
+  mask:
+    "Hold the mask by the ear loops or ties. Do not touch the fabric at the front.",
+  wash:
+    "Wash your hands with soap and water. Dry them fully with a paper towel.",
+};
+
+const DOFFING_NARRATION = {
+  welcome:
+    "You are leaving the laboratory. Before you go, you need to remove your personal protective equipment in the correct order. There are five steps. The order matters even more here than when you put the equipment on, because the outside of everything you are wearing is contaminated. I will talk you through it. When you are ready to begin, tap the Gloves button on the right.",
+  step: {
+    gloves:
+      "First, the gloves. They come off before anything else, because they are the most contaminated item on you. Peel them off inside-out, so the outside of the glove ends up on the inside. Do not touch your bare skin with the outside of a glove. Tap the Gloves button on the right.",
+    eye:
+      "Next, the eyewear. Remove it by the frame, not the lenses. Your hands are bare now, so be careful not to touch your face. Tap the Eyewear button on the right.",
+    gown:
+      "Next, the lab coat. Unfasten it and pull it off by the shoulders. Fold it inside-out so the contaminated side stays inside. Tap the Lab coat button on the right.",
+    mask:
+      "Next, the mask. Hold it by the ear loops or the ties only. Do not touch the front of the mask, which is the most contaminated part. Tap the Mask button on the right.",
+    wash:
+      "Finally, hand hygiene. Even after all your PPE is off, you wash your hands one more time. This is the single most important step in doffing. Tap the Hand hygiene button on the right.",
+  },
+  wrongOrder: (nextLabel) =>
+    `Not yet. That item does not come off next. The next item is ${nextLabel}. Tap the ${nextLabel} button on the right. If you are not sure why the order matters, the error panel on the screen explains what went wrong.`,
+  complete:
+    "You have doffed your personal protective equipment correctly, in the right order. You are ready to leave the laboratory. Well done.",
+};
+
+function VitroDoffing({ character, onPass, speak, stopSpeaking }) {
+  const [removed, setRemoved] = useState([]);
+  const [error, setError] = useState(null);
+  const [animating, setAnimating] = useState(null);
+  const welcomeSpokenRef = useRef(false);
+
+  const nextStep = DOFFING_STEPS[removed.length] || null;
+  const done = removed.length === DOFFING_STEPS.length;
+
+  const ANIM_MS = 550;
+
+  const STEP_HEADLINES = {
+    gloves: "Remove the gloves.",
+    eye: "Remove the eyewear.",
+    gown: "Remove the lab coat.",
+    mask: "Remove the mask.",
+    wash: "Wash your hands.",
+  };
+
+  const DOFFING_ORDER_ERRORS = {
+    eye: "The gloves come off first. They are the most contaminated item — everything else stays on until the gloves are gone.",
+    gown:
+      "The eyewear comes off before the coat. If you unfasten the coat while the eyewear is still on, your sleeves brush past the frame and the eye shield, and you contaminate the coat with what was on the shield.",
+    mask:
+      "The coat comes off before the mask. The sleeves of a lab coat are the most contaminated part of the coat — reaching up to unhook a mask with those sleeves still on spreads contamination to your face.",
+    wash:
+      "Hand hygiene comes last, always. It goes after every item has been removed, so that whatever was on the outside of your PPE ends up down the drain, not on your hands.",
+  };
+
+  // in doffing, an item is on the figure until it is removed.
+  // so `has` here means "this item is still visible on the
+  // figure" — the opposite of its meaning in vitrodonning.
+  const has = (id) => !removed.includes(id);
+
+  // Welcome line — once per session. Same sessionStorage pattern
+  // as the donning welcome, so a refresh mid-doffing does not
+  // replay it.
+  const DOFFING_WELCOME_KEY = "ascend_vitro_doffing_welcome_played";
+  useEffect(() => {
+    if (typeof speak !== "function") return;
+
+    let alreadyPlayed = false;
+    try {
+      alreadyPlayed = sessionStorage.getItem(DOFFING_WELCOME_KEY) === "1";
+    } catch {}
+
+    if (alreadyPlayed) {
+      welcomeSpokenRef.current = true;
+      return;
+    }
+
+    // Only consume the session flag if the voice actually
+    // started. Same onstart trick as the donning welcome.
+    let started = false;
+    let timer = null;
+    speak(
+      DOFFING_NARRATION.welcome,
+      () => {},
+      () => {
+        started = true;
+        if (timer) clearTimeout(timer);
+        welcomeSpokenRef.current = true;
+        try {
+          sessionStorage.setItem(DOFFING_WELCOME_KEY, "1");
+        } catch {}
+      }
+    );
+    timer = setTimeout(() => {
+      if (!started) welcomeSpokenRef.current = true;
+    }, 500);
+
+    return () => {
+      if (timer) clearTimeout(timer);
+      if (typeof stopSpeaking === "function") stopSpeaking();
+    };
+  }, [speak, stopSpeaking]);
+
+  // Step guidance — silent on the first step (welcome covers it).
+  useEffect(() => {
+    if (typeof speak !== "function") return;
+    if (animating) return;
+    if (removed.length === 0) return;
+    if (removed.length >= DOFFING_STEPS.length) return;
+    const upcoming = DOFFING_STEPS[removed.length];
+    if (!upcoming) return;
+    const line = DOFFING_NARRATION.step[upcoming.id];
+    if (line) speak(line);
+  }, [removed.length, animating, speak]);
+
+  const tap = (id) => {
+    if (removed.includes(id)) return;
+    if (animating) return;
+    if (nextStep && id === nextStep.id) {
+      setError(null);
+      setAnimating(id);
+      setTimeout(() => {
+        setRemoved((prev) => [...prev, id]);
+        setAnimating(null);
+      }, ANIM_MS);
+      if (removed.length + 1 === DOFFING_STEPS.length) {
+        if (typeof speak === "function") {
+          speak(DOFFING_NARRATION.complete, () => {
+            setTimeout(() => {
+              if (typeof onPass === "function") onPass();
+            }, 500);
+          });
+        } else {
+          setTimeout(() => {
+            if (typeof onPass === "function") onPass();
+          }, ANIM_MS + 800);
+        }
+      }
+      return;
+    }
+    const skipped = nextStep;
+    const entry = DOFFING_ORDER_ERRORS[id];
+    const message =
+      entry ||
+      `That is not the next item. Remove ${skipped ? skipped.label : "the next item"} first.`;
+    setError({ id, message });
+    if (typeof speak === "function" && skipped) {
+      speak(DOFFING_NARRATION.wrongOrder(skipped.label));
+    }
+  };
+
+  const isFemale = character === "female";
+
+  return (
+    <div style={{ marginTop: 16 }}>
+      <div className="card" style={{ borderColor: "var(--amber)", padding: 18 }}>
+        <div
+          className="eyebrow"
+          style={{ color: "var(--amber-2)", marginBottom: 6 }}
+        >
+          Doffing check
+        </div>
+        <div style={{ fontWeight: 750, fontSize: 16, lineHeight: 1.35 }}>
+          {done
+            ? "PPE removed. Correct order."
+            : nextStep
+            ? STEP_HEADLINES[nextStep.id]
+            : "Ready."}
+        </div>
+        {!done && nextStep && (
+          <div style={{ color: "var(--text-3)", fontSize: 12, marginTop: 6 }}>
+            Step {removed.length + 1} of {DOFFING_STEPS.length}
+          </div>
+        )}
+        {!done && nextStep && DOFFING_INSTRUCTIONS[nextStep.id] && (
+          <div
+            style={{
+              color: "var(--text-2)",
+              fontSize: 13,
+              lineHeight: 1.6,
+              marginTop: 10,
+              maxWidth: "60ch",
+            }}
+          >
+            {DOFFING_INSTRUCTIONS[nextStep.id]}
+          </div>
+        )}
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "minmax(170px, 240px) 1fr",
+          gap: 16,
+          marginTop: 16,
+          alignItems: "start",
+        }}
+      >
+        <div
+          className="card"
+          style={{
+            padding: 12,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "var(--bg-2)",
+          }}
+        >
+          <div style={{ position: "relative" }}>
+            <VitroScientistSvg
+              sex={isFemale ? "female" : "male"}
+              stage={has("gown") ? "donned" : "street"}
+              height={220}
+            />
+            {/* Mask, if still on */}
+            {has("mask") && (
+              <svg
+                viewBox="0 0 140 260"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  pointerEvents: "none",
+                  opacity: animating === "mask" ? 0 : 1,
+                  transition: "opacity 550ms ease-out",
+                }}
+              >
+                <path
+                  d="M52,50 Q70,58 88,50 L86,64 Q70,68 54,64 Z"
+                  fill="#E8EDF5"
+                  stroke="var(--line-2)"
+                  strokeWidth="1"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            )}
+            {/* Eyewear, if still on */}
+            {has("eye") && (
+              <svg
+                viewBox="0 0 140 260"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  pointerEvents: "none",
+                  opacity: animating === "eye" ? 0 : 1,
+                  transition: "opacity 550ms ease-out",
+                }}
+              >
+                <g
+                  stroke="#2A2016"
+                  strokeWidth="2.2"
+                  fill="none"
+                  strokeLinecap="round"
+                >
+                  <rect x="54" y="37" width="13" height="11" rx="3" />
+                  <rect x="73" y="37" width="13" height="11" rx="3" />
+                  <line x1="67" y1="42" x2="73" y2="42" />
+                </g>
+              </svg>
+            )}
+            {/* Gloves, if still on */}
+            {has("gloves") && (
+              <svg
+                viewBox="0 0 140 260"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  pointerEvents: "none",
+                  opacity: animating === "gloves" ? 0 : 1,
+                  transition: "opacity 550ms ease-out",
+                }}
+              >
+                <g>
+                  <path
+                    d="M24,170 Q21,175 23,182 L23,187 Q23,191 28,191 L36,191 Q42,191 42,187 L42,171 Q42,165 36,165 Q30,165 26,167 Q24,168 24,170 Z"
+                    fill="#5B8DEF"
+                    stroke="var(--line-2)"
+                    strokeWidth="1"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M116,170 Q119,175 117,182 L117,187 Q117,191 112,191 L104,191 Q98,191 98,187 L98,171 Q98,165 104,165 Q110,165 114,167 Q116,168 116,170 Z"
+                    fill="#5B8DEF"
+                    stroke="var(--line-2)"
+                    strokeWidth="1"
+                    strokeLinejoin="round"
+                  />
+                </g>
+              </svg>
+            )}
+            {/* Hand hygiene sparkle after wash */}
+            {animating === "wash" && (
+              <svg
+                viewBox="0 0 140 260"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  pointerEvents: "none",
+                }}
+              >
+                <g
+                  className="vitro-anim-wash"
+                  fill="none"
+                  stroke="#54D08A"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                >
+                  <path d="M26 166 l0 -5 M23 168 l-5 -3 M29 168 l5 -3" />
+                  <path d="M110 166 l0 -5 M107 168 l-5 -3 M113 168 l5 -3" />
+                </g>
+              </svg>
+            )}
+            {/* Contamination spot on wrong tap */}
+            {error && (
+              <svg
+                viewBox="0 0 140 260"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  pointerEvents: "none",
+                }}
+              >
+                <g>
+                  <circle cx="98" cy="96" r="5" fill="#F0776A" opacity="0.9" />
+                  <circle cx="100" cy="98" r="2" fill="#F0776A" opacity="0.6" />
+                </g>
+              </svg>
+            )}
+          </div>
+        </div>
+
+        <div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
+              gap: 8,
+            }}
+          >
+            {DOFFING_STEPS.map((s) => {
+              const isPlaced = removed.includes(s.id);
+              const isNext = nextStep && nextStep.id === s.id;
+              const wasErrored = error && error.id === s.id;
+              const isAnimatingNow = animating === s.id;
+              return (
+                <button
+                  key={s.id}
+                  onClick={() => tap(s.id)}
+                  disabled={isPlaced || !!animating}
+                  style={{
+                    textAlign: "left",
+                    padding: "10px 12px",
+                    borderRadius: 10,
+                    border: wasErrored
+                      ? "1.5px solid var(--bad)"
+                      : isAnimatingNow
+                      ? "1.5px solid var(--good)"
+                      : isNext
+                      ? "1.5px solid var(--amber)"
+                      : isPlaced
+                      ? "1px solid var(--line)"
+                      : "1px solid var(--line-2)",
+                    background: isPlaced
+                      ? "var(--bg-2)"
+                      : wasErrored
+                      ? "var(--bad-dim)"
+                      : isAnimatingNow
+                      ? "var(--good-dim)"
+                      : "var(--bg-3)",
+                    color: isPlaced ? "var(--text-3)" : "var(--text)",
+                    cursor: isPlaced || animating ? "default" : "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    transition: "border-color .15s, background .15s",
+                  }}
+                >
+                  <span
+                    aria-hidden
+                    style={{
+                      width: 18,
+                      height: 18,
+                      borderRadius: 5,
+                      background: isPlaced
+                        ? "var(--good-dim)"
+                        : isAnimatingNow
+                        ? "var(--good)"
+                        : "var(--bg-2)",
+                      color: isPlaced
+                        ? "var(--good)"
+                        : isAnimatingNow
+                        ? "#08210F"
+                        : "var(--text-3)",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      fontSize: 11,
+                      fontWeight: 700,
+                    }}
+                  >
+                    {isPlaced ? "✓" : ""}
+                  </span>
+                  <span style={{ fontWeight: 650, fontSize: 13.5 }}>
+                    {s.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {error && (
+            <div
+              className="card"
+              style={{
+                marginTop: 12,
+                borderColor: "var(--bad)",
+                background: "var(--bad-dim)",
+                padding: 14,
+              }}
+            >
+              <div
+                style={{
+                  fontWeight: 750,
+                  fontSize: 14,
+                  color: "var(--bad)",
+                  marginBottom: 6,
+                }}
+              >
+                Out of order.
+              </div>
+              <div
+                style={{
+                  color: "var(--text-2)",
+                  fontSize: 13,
+                  lineHeight: 1.55,
+                }}
+              >
+                {error.message}
+              </div>
+              {nextStep && (
+                <div
+                  style={{
+                    color: "var(--text)",
+                    fontSize: 13,
+                    marginTop: 8,
+                    fontWeight: 650,
+                  }}
+                >
+                  Next: {nextStep.label}. {nextStep.why}
+                </div>
+              )}
+            </div>
+          )}
+
+          {done && (
+            <div
+              className="card"
+              style={{
+                marginTop: 12,
+                borderColor: "var(--good)",
+                background: "var(--good-dim)",
+                padding: 14,
+              }}
+            >
+              <div
+                style={{
+                  fontWeight: 750,
+                  fontSize: 14,
+                  color: "var(--good)",
+                  marginBottom: 6,
+                }}
+              >
+                PPE removed. Correct order.
+              </div>
+              <div
+                style={{
+                  color: "var(--text-2)",
+                  fontSize: 13,
+                  lineHeight: 1.55,
+                }}
+              >
+                Gloves, eyewear, lab coat, mask, hand hygiene. That
+                is the correct doffing order. You are ready to leave.
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 // ------------------------------------------------------------------
 // VitroDonning — the gating check every student runs before
 // entering any bench.
@@ -797,6 +1439,27 @@ const DONNING_STEPS = [
   },
 ];
 
+// ------------------------------------------------------------------
+// STEP_INSTRUCTIONS — the visible paragraph under each donning
+// headline. The headline is the name of the step; this is the
+// one-sentence instruction that tells the student what they are
+// about to do and why. The narrator reads the full guidance
+// aloud; this is the on-screen shorthand so the student can
+// follow silently.
+// ------------------------------------------------------------------
+const STEP_INSTRUCTIONS = {
+  wash:
+    "Wash your hands with soap and water, or with alcohol gel if hands are not visibly soiled. Dry them fully before anything else goes on.",
+  gown:
+    "Put on your lab coat before the mask or eyewear. Fasten it, then move on — the coat is the outer layer over your own clothes.",
+  mask:
+    "Fit the mask over nose and mouth. Press the metal strip at the top so it seals against the bridge of your nose.",
+  eye:
+    "Put on the eyewear over your eyes. Adjust the fit now, before the gloves go on.",
+  gloves:
+    "Put on one pair of gloves, and only now. Everything from this point on is treated as contaminated.",
+};
+
 // Which item was attempted out of order, and what the student
 // should actually do first. Keyed by the id of the item that was
 // tapped too early, with the id of the item they skipped.
@@ -832,8 +1495,12 @@ const DONNING_NARRATION = {
     gloves:
       "Finally, gloves. One pair, once, and only now. From this point on, your hands are the barrier. Everything you touch from here until you take them off must be treated as contaminated. Tap the Gloves button on the right to put them on.",
   },
-  wrongOrder:
-    "Not yet. That is not the next item in the sequence. Look at the cart on the right and tap the item that is highlighted with an amber border. If you are not sure why the order matters, the error panel on the screen explains what went wrong.",
+  // wrongOrder is a function, not a string. It takes the label
+  // of the item that should have been tapped next, and builds
+  // a spoken correction that names the actual button. A student
+  // who taps the wrong item hears precisely which button to tap.
+  wrongOrder: (nextLabel) =>
+    `Not yet. That item does not come next. The next item is ${nextLabel}. Tap the ${nextLabel} button on the right. If you are not sure why the order matters, the error panel on the screen explains what went wrong.`,
   complete:
     "Your personal protective equipment is on correctly, in the right order. You are ready to enter the laboratory. I will take you there now.",
 };
@@ -1000,8 +1667,10 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
         ? entry.why
         : `${wrongItem ? wrongItem.label : "That"} is not the next step. ${skipped ? skipped.label + " first." : ""}`.trim();
     setError({ id, message });
-    if (typeof speak === "function") {
-      speak(DONNING_NARRATION.wrongOrder);
+    if (typeof speak === "function" && skipped) {
+      // Name the actual button the student should have tapped,
+      // so the correction is actionable rather than descriptive.
+      speak(DONNING_NARRATION.wrongOrder(skipped.label));
     }
   };
 
@@ -1074,7 +1743,24 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
           animation: vitro-clay-drop 400ms cubic-bezier(.2,.9,.3,1) both;
           transform-origin: center top;
         }
-
+        @keyframes vitro-tube-wipe {
+          0%   { transform: translate(0, 0) rotate(0deg) }
+          30%  { transform: translate(-6px, 6px) rotate(-6deg) }
+          60%  { transform: translate(-4px, 4px) rotate(4deg) }
+          100% { transform: translate(0, 0) rotate(0deg) }
+        }
+        .vitro-anim-tube-wipe {
+          animation: vitro-tube-wipe 700ms ease-in-out both;
+          transform-origin: center bottom;
+        }
+        @keyframes vitro-capillary-seal {
+          0%   { transform: translate(0, 0) }
+          40%  { transform: translate(0, 12px) }
+          100% { transform: translate(0, 0) }
+        }
+        .vitro-anim-capillary-seal {
+          animation: vitro-capillary-seal 700ms ease-in-out both;
+        }
       `}</style>
 
       <div className="card" style={{ borderColor: "var(--amber)", padding: 18 }}>
@@ -1091,6 +1777,19 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
         {!done && nextStep && (
           <div style={{ color: "var(--text-3)", fontSize: 12, marginTop: 6 }}>
             Step {placed.length + 1} of {DONNING_STEPS.length}
+          </div>
+        )}
+        {!done && nextStep && STEP_INSTRUCTIONS[nextStep.id] && (
+          <div
+            style={{
+              color: "var(--text-2)",
+              fontSize: 13,
+              lineHeight: 1.6,
+              marginTop: 10,
+              maxWidth: "60ch",
+            }}
+          >
+            {STEP_INSTRUCTIONS[nextStep.id]}
           </div>
         )}
         {welcomeBlocked && !done && (
@@ -1144,10 +1843,11 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
                   width: "100%",
                   height: "100%",
                   pointerEvents: "none",
+                  opacity: animating === "mask" ? 0 : 1,
+                  transition: "opacity 550ms ease-out",
                 }}
               >
                 <path
-                  className={animating === "mask" ? "vitro-anim-mask" : ""}
                   d="M52,50 Q70,58 88,50 L86,64 Q70,68 54,64 Z"
                   fill="#E8EDF5"
                   stroke="var(--line-2)"
@@ -1166,10 +1866,11 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
                   width: "100%",
                   height: "100%",
                   pointerEvents: "none",
+                  opacity: animating === "eye" ? 0 : 1,
+                  transition: "opacity 550ms ease-out",
                 }}
               >
                 <g
-                  className={animating === "eye" ? "vitro-anim-eye" : ""}
                   stroke="#2A2016"
                   strokeWidth="2.2"
                   fill="none"
@@ -1194,23 +1895,24 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
                 }}
               >
                 <g className={animating === "gloves" ? "vitro-anim-glove" : ""}>
-                  {/* Left glove — wraps the whole hand: fingertips at
-                      top (y 166), thumb bulge on the outer side
-                      (x 21), wrist cuff at bottom (y 190).
-                      Encloses the hand shape entirely, so no skin
-                      shows through. */}
+                  {/* Left glove — traced on the same hand
+                      silhouette as VitroScientistSvg's `Hand`
+                      component, expanded 2px on every side so no
+                      skin shows through, with a rolled cuff at
+                      the wrist. Reads as a glove because it is
+                      literally the hand shape, covered. */}
                   <path
                     d="
-                      M23,168
-                      Q21,172 22,178
-                      L22,184
-                      Q22,190 28,190
-                      L36,190
-                      Q42,190 42,184
-                      L42,170
-                      Q42,164 36,164
-                      Q30,164 26,166
-                      Q24,166 23,168
+                      M24,170
+                      Q21,175 23,182
+                      L23,187
+                      Q23,191 28,191
+                      L36,191
+                      Q42,191 42,187
+                      L42,171
+                      Q42,165 36,165
+                      Q30,165 26,167
+                      Q24,168 24,170
                       Z
                     "
                     fill="#5B8DEF"
@@ -1218,27 +1920,46 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
                     strokeWidth="1"
                     strokeLinejoin="round"
                   />
-                  {/* Fingertip ridges, so the glove reads as a glove */}
+                  {/* Finger creases — three short lines so the
+                      glove reads as having fingers, not a mitt */}
                   <path
-                    d="M25,167 Q26,165 28,165 M31,165 Q32,163 34,164"
+                    d="M26,169 Q27,166 29,166 M31,166 Q32,164 34,165 M36,167 Q37,165 39,166"
                     fill="none"
                     stroke="var(--line-2)"
                     strokeWidth="0.5"
+                    opacity="0.55"
+                  />
+                  {/* Thumb line, tracing the hand's thumb */}
+                  <path
+                    d="M24,173 Q22,177 24,181"
+                    fill="none"
+                    stroke="var(--line-2)"
+                    strokeWidth="0.7"
+                    opacity="0.7"
+                  />
+                  {/* Wrist cuff */}
+                  <line
+                    x1="23"
+                    y1="187"
+                    x2="42"
+                    y2="187"
+                    stroke="var(--line-2)"
+                    strokeWidth="0.8"
                     opacity="0.6"
                   />
-                  {/* Right glove — mirrored */}
+                  {/* Right glove — mirrored on the right hand */}
                   <path
                     d="
-                      M117,168
-                      Q119,172 118,178
-                      L118,184
-                      Q118,190 112,190
-                      L104,190
-                      Q98,190 98,184
-                      L98,170
-                      Q98,164 104,164
-                      Q110,164 114,166
-                      Q116,166 117,168
+                      M116,170
+                      Q119,175 117,182
+                      L117,187
+                      Q117,191 112,191
+                      L104,191
+                      Q98,191 98,187
+                      L98,171
+                      Q98,165 104,165
+                      Q110,165 114,167
+                      Q116,168 116,170
                       Z
                     "
                     fill="#5B8DEF"
@@ -1247,10 +1968,26 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
                     strokeLinejoin="round"
                   />
                   <path
-                    d="M115,167 Q114,165 112,165 M109,165 Q108,163 106,164"
+                    d="M114,169 Q113,166 111,166 M109,166 Q108,164 106,165 M104,167 Q103,165 101,166"
                     fill="none"
                     stroke="var(--line-2)"
                     strokeWidth="0.5"
+                    opacity="0.55"
+                  />
+                  <path
+                    d="M116,173 Q118,177 116,181"
+                    fill="none"
+                    stroke="var(--line-2)"
+                    strokeWidth="0.7"
+                    opacity="0.7"
+                  />
+                  <line
+                    x1="98"
+                    y1="187"
+                    x2="117"
+                    y2="187"
+                    stroke="var(--line-2)"
+                    strokeWidth="0.8"
                     opacity="0.6"
                   />
                 </g>
@@ -1562,11 +2299,11 @@ const VITRO_SCRIPTS = {
     // description of the instruction.
     narration: {
       intro:
-        "This is the packed cell volume practical. The patient is Grace Owusu, a woman in her eighth month of pregnancy, referred to us by the antenatal clinic. Read her history on the card in front of you before you do anything else. When you are ready, choose a tube from the rack. Think about which tube will keep her blood exactly as it is inside her body, and pick that one.",
+        "This is the packed cell volume practical. The patient is Grace Owusu, a woman in her eighth month of pregnancy, referred to us by the antenatal clinic. Read her history on the card in front of you before you do anything else. When you are ready, tap one of the tubes in the tube rack to pick it. Think about which tube will keep her blood exactly as it is inside her body, and pick that one.",
       afterWrongTube:
-        "That tube is not right for this test. Read the explanation that just appeared on the screen, then tap Try another tube and pick again.",
+        "That tube is not right for this test. Read the explanation that just appeared on the screen, then tap the button that says Try another tube and pick again.",
       afterCorrectTube:
-        "Correct. You have chosen the EDTA tube, purple top. Inside the tube is a chemical called EDTA, sprayed onto the wall as a thin film. When the blood hits it, the EDTA grabs the calcium in the blood. Calcium is what makes blood clot, so with the calcium held, the blood stays liquid. Just as importantly, the red cells keep their exact shape. This is the tube this test was designed around. Now tap Begin the practical to move to the bench.",
+        "Correct. You have chosen the EDTA tube, purple top. Inside the tube is a chemical called EDTA, sprayed onto the wall as a thin film. When the blood hits it, the EDTA grabs the calcium in the blood. Calcium is what makes blood clot, so with the calcium held, the blood stays liquid. Just as importantly, the red cells keep their exact shape. This is the tube this test was designed around. Now tap the button that says Begin the practical to move to the bench.",
       labelling:
         "Step one, labelling. Pick up the pen and write on the tube. Her name, the date and time you took the sample, and your initials. Do this at the bedside, before you leave the patient. A mislabelled tube is thrown away and the sample is taken again. Tap the button that says Write the label.",
       filling:
@@ -1578,13 +2315,13 @@ const VITRO_SCRIPTS = {
       spinning:
         "Step five, spinning the sample. The centrifuge will run for five minutes at twelve thousand g. Then you will read the packed cell column against the reader card. Tap the button that says Start the spin.",
       reading:
-        "The spin is complete. Read the packed cell volume against the reference range shown on the readout. Now look at the question that has just appeared below, and answer it.",
+        "The spin is complete. The readout on the centrifuge shows your result, and the reference range is written underneath it. Now a question has appeared below. Read the question on the screen, and when you are ready, tap the option that you think is the correct answer.",
       interpret:
-        "Question one. Read the question and the four options on the screen, then tap the answer you think is correct. This is the question the whole practical exists for.",
+        "Question one. Read the question and the four options on the screen, then tap the option you think is correct. This is the question the whole practical exists for.",
       action:
-        "Question two. You have already reported the value. Now read the question on the screen and tap the answer that tells you what the next professional action should be.",
+        "Question two. You have already reported the value. Read the question on the screen, and tap the option that tells you what the next professional action should be.",
       results:
-        "The practical is complete. Every competency is shown below, and each was assessed independently. If you want to run the practical again, tap Try again. To return to the course, tap Back to the course.",
+        "The practical is complete. Every competency is shown below, and each was assessed independently. If you want to run the practical again, tap the button that says Try again. When you are finished and ready to leave, tap the button that says Leave the lab.",
     },
     // Tube-by-tube feedback for the wrong picks. Each message names
     // the tube, says why it is wrong for this practical specifically,
@@ -1965,6 +2702,44 @@ function vitroIsSpeaking() {
   } catch {
     return false;
   }
+}
+
+// ------------------------------------------------------------------
+// vitroReadMcq — reads an MCQ aloud: the question stem, then each
+// option prefixed with its letter, then a closing line telling
+// the student which button to tap. Used by the two scored
+// questions on the bench.
+//
+// The student can tap an option at any point. The engine queues
+// the lines in order, so if they answer mid-read, the letter
+// they tapped still registers and the remaining narration
+// finishes speaking before the outcome line plays.
+//
+//   header — e.g. "Question one" or "Question two"
+//   stem   — the question text
+//   options — array of option strings
+//   onEnd   — called when the whole read is finished
+// ------------------------------------------------------------------
+function vitroReadMcq(header, stem, options, onEnd) {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+    if (typeof onEnd === "function") onEnd();
+    return;
+  }
+  const letters = ["A", "B", "C", "D", "E"];
+  // Build the entire read as one utterance. This is deliberate:
+  // sentence-by-sentence queuing would let a student's answer
+  // cut the read between options, leaving them unsure which
+  // letter was which. One utterance means the read either plays
+  // whole or is skipped as a whole.
+  const parts = [];
+  if (header) parts.push(header + ".");
+  if (stem) parts.push(stem);
+  (options || []).forEach((opt, i) => {
+    parts.push("Option " + (letters[i] || String(i + 1)) + ". " + opt);
+  });
+  parts.push("When you are ready, tap the option you think is correct.");
+  const full = parts.join(" ");
+  vitroSpeak(full, onEnd);
 }
 
 // ------------------------------------------------------------------
@@ -2522,7 +3297,7 @@ function VitroReaderCardSvg({ size = 90 }) {
 // The competency profile is unchanged from Step 5 — the tracking
 // rides on exactly the same actions.
 // ------------------------------------------------------------------
-function VitroTubeBench({ script, courseId, app, onComplete }) {
+function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
   // phase: rack → picked → labelling → filling → sealing →
   //        loading → spinning → interpret → results
   const [phase, setPhase] = useState("rack");
@@ -2538,6 +3313,9 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
   const [animatingLabel, setAnimatingLabel] = useState(false);
   // Flips true for 400ms right when the seal is going on.
   const [animatingSeal, setAnimatingSeal] = useState(false);
+  // Flips true briefly while the tube is being wiped on the
+  // gauze during the fill step.
+  const [animatingFill, setAnimatingFill] = useState(false);
   // One-way latch: set true the moment the spin button is tapped
   // and never unset. Prevents a fast double-tap from re-entering
   // the spin handler while the animation is running.
@@ -2632,22 +3410,48 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
             return steps && steps[2] ? steps[2].instruction : null;
           case "loading":
             return steps && steps[3] ? steps[3].instruction : null;
-          case "spinning":
-            return analyserRan ? narration.reading : script.analyser.action;
-          case "interpret":
-            return narration.interpret;
-          case "action":
-            return narration.action;
-          case "results":
-            return narration.results;
-          default:
-            return null;
-        }
-      })();
+                  case "spinning":
+          return analyserRan ? narration.reading : script.analyser.action;
+        case "interpret":
+          // Handled specially below — the question and its
+          // options are read in full, not just a header line.
+          return null;
+        case "action":
+          // Handled specially below.
+          return null;
+        case "results":
+          return narration.results;
+        default:
+          return null;
+      }
+    })();
       if (line) vitroSpeak(line);
+
+      // The two scored questions read the stem and every option
+      // aloud, so the student hears what they are choosing
+      // between. Not part of the switch above because reading
+      // an MCQ is a different shape from reading a one-line
+      // instruction.
+      if (phase === "interpret" && interpretation && interpPick === null) {
+        vitroReadMcq(
+          "Question one",
+          interpretation.question,
+          interpretation.options
+        );
+      } else if (
+        phase === "action" &&
+        script.reportableAction &&
+        actionPick === null
+      ) {
+        vitroReadMcq(
+          "Question two",
+          script.reportableAction.question,
+          script.reportableAction.options
+        );
+      }
     }, 250);
     return () => clearTimeout(timer);
-  }, [phase, analyserRan, muted, stepIdx]);
+  }, [phase, analyserRan, muted, stepIdx, interpPick, actionPick]);
 
   // Stop the voice the moment the student leaves the bench.
   useEffect(() => {
@@ -2655,6 +3459,16 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
   }, []);
 
   const goBack = () => {
+    // If the parent passed onLeave, it means the student is on
+    // the way out of the lab — the parent handles the doffing
+    // gate before actually navigating. Otherwise (no parent
+    // handler) we navigate directly, which is the pre-doffing
+    // behaviour and is still correct for a student who has
+    // already doffed this session.
+    if (typeof onLeave === "function") {
+      onLeave();
+      return;
+    }
     if (app && typeof app.go === "function") {
       if (courseId) {
         app.go("course", { courseId });
@@ -2715,23 +3529,33 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
 
   const doFill = () => {
     if (phase !== "filling") return;
-    setCapillaryFill("partial");
-    setTimeout(() => setCapillaryFill("full"), 120);
+    // Wipe the tube against the gauze first — a visible action,
+    // so the student sees the wipe that the instruction names.
+    setAnimatingFill(true);
+    setTimeout(() => setAnimatingFill(false), 700);
+    // Then fill the capillary.
+    setTimeout(() => setCapillaryFill("partial"), 300);
+    setTimeout(() => setCapillaryFill("full"), 500);
     setTimeout(() => {
       setStepIdx(2);
       setPhase("sealing");
-    }, 800);
+    }, 1100);
   };
 
   const doSeal = () => {
     if (phase !== "sealing") return;
+    // Push the capillary down into the clay, then bring it back
+    // up with the plug in place. The clay-drop animation inside
+    // VitroCapillarySvg handles the plug itself; the wipe
+    // animation here is the visible "into the block and back"
+    // motion the instruction describes.
     setAnimatingSeal(true);
     setCapillarySealed(true);
     setTimeout(() => setAnimatingSeal(false), 700);
     setTimeout(() => {
       setStepIdx(3);
       setPhase("loading");
-    }, 900);
+    }, 1100);
   };
 
   const doLoad = () => {
@@ -2755,27 +3579,65 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
     setSpinInProgress(true);
     setAnalyserRan(true);
     setCompetency((c) => ({ ...c, instrument_operation: true }));
+
+    // Speak the "reading" line once the spin animation has
+    // visually completed. Then, when that line has finished
+    // speaking, advance to the question. This replaces the old
+    // fixed 3-second timer, which was advancing the phase while
+    // the "spinning" narration was still playing — that is what
+    // caused the chop right before the questions.
+    const readingLine = (script.narration && script.narration.reading) || "";
     setTimeout(() => {
-      setPhase(interpretation ? "interpret" : "results");
+      if (readingLine) {
+        vitroSpeak(readingLine, () => {
+          setTimeout(() => {
+            setPhase(interpretation ? "interpret" : "results");
+          }, 350);
+        });
+      } else {
+        setPhase(interpretation ? "interpret" : "results");
+      }
     }, 3000);
   };
 
   const answerInterpretation = (idx) => {
     if (interpPick !== null) return;
     setInterpPick(idx);
+    const wasCorrect = idx === interpretation.correctIndex;
     setCompetency((c) => ({
       ...c,
-      result_interpretation: idx === interpretation.correctIndex,
+      result_interpretation: wasCorrect,
     }));
+    // Announce the outcome, then tell the student to tap the
+    // Next question button — so the button they're about to
+    // press is named before they press it.
+    const outcomeLine = wasCorrect
+      ? "That is correct. When you are ready, tap the button that says Next question to continue."
+      : "That is not correct. Read the explanation on the screen, then tap the button that says Next question to continue.";
+    // Cut whatever is still being read (the tail of the MCQ
+    // read-aloud, if the student tapped early) and speak the
+    // outcome immediately. The outcome is what matters now;
+    // the rest of the read is stale.
+    vitroStopSpeaking();
+    vitroSpeak(outcomeLine);
   };
 
   const answerAction = (idx) => {
     if (actionPick !== null) return;
     setActionPick(idx);
+    const wasCorrect = idx === script.reportableAction.correctIndex;
     setCompetency((c) => ({
       ...c,
-      reportable_action: idx === script.reportableAction.correctIndex,
+      reportable_action: wasCorrect,
     }));
+    // Announce the outcome, then name the button the student
+    // is about to tap — See your competencies — before they
+    // tap it.
+    const outcomeLine = wasCorrect
+      ? "That is correct. When you are ready, tap the button that says See your competencies to finish the practical."
+      : "That is not correct. Read the explanation on the screen, then tap the button that says See your competencies to finish the practical.";
+    vitroStopSpeaking();
+    vitroSpeak(outcomeLine);
   };
 
   const goToResults = () => {
@@ -3092,7 +3954,13 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
             >
               <div
                 style={{ position: "relative" }}
-                className={animatingLabel ? "vitro-anim-tube-shake" : ""}
+                className={
+                  animatingLabel
+                    ? "vitro-anim-tube-shake"
+                    : animatingFill
+                    ? "vitro-anim-tube-wipe"
+                    : ""
+                }
               >
                 <VitroTubeSvg
                   cap={pickedTube}
@@ -3370,6 +4238,7 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
                     alignItems: "center",
                     gap: 4,
                   }}
+                  className={animatingSeal ? "vitro-anim-capillary-seal" : ""}
                 >
                   <VitroCapillarySvg
                     fill={capillaryFill}
@@ -3878,7 +4747,7 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
                       className="btn btn-g btn-sm"
                       onClick={goBack}
                     >
-                      Back to the course
+                      Leave the lab
                     </button>
                   </div>
                 </>
@@ -3893,7 +4762,7 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
         style={{ marginTop: 14 }}
         onClick={goBack}
       >
-        Back to the course
+        Leave the lab
       </button>
     </div>
   );
@@ -3919,6 +4788,8 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
 function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
   const donnedKey = "ascend_vitro_donned";
   const scientistKey = "ascend_vitro_scientist";
+  const enteredKey = "ascend_vitro_entered";
+  const doffedKey = "ascend_vitro_doffed";
 
   const [donned, setDonned] = useState(() => {
     try {
@@ -3927,6 +4798,36 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
       return false;
     }
   });
+
+  // Whether the student has pressed "Enter the lab". After this
+  // is true the bench renders. Kept per session so a student
+  // who walks away from the bench and comes back does not have
+  // to re-enter through the door.
+  const [entered, setEntered] = useState(() => {
+    try {
+      return sessionStorage.getItem(enteredKey) === "1";
+    } catch {
+      return false;
+    }
+  });
+
+  // Whether the student has already doffed this session.
+  // Doffing fires once per session, on the way out of the last
+  // practical the student runs. Same per-session pattern as
+  // the donning gate.
+  const [doffed, setDoffed] = useState(() => {
+    try {
+      return sessionStorage.getItem(doffedKey) === "1";
+    } catch {
+      return false;
+    }
+  });
+
+  // Set this to true when the student has finished the bench
+  // and wants to leave. The placeholder then either shows
+  // doffing (if not yet doffed) or navigates them straight back
+  // to the course.
+  const [leaving, setLeaving] = useState(false);
 
   // Which scientist the student is running this session as.
   // null before they pick, then "male" or "female". Kept in
@@ -3946,6 +4847,24 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
       sessionStorage.setItem(donnedKey, "1");
     } catch {}
     setDonned(true);
+  };
+
+  const enterLab = () => {
+    try {
+      sessionStorage.setItem(enteredKey, "1");
+    } catch {}
+    setEntered(true);
+  };
+
+  const finishDoffing = () => {
+    try {
+      sessionStorage.setItem(doffedKey, "1");
+    } catch {}
+    setDoffed(true);
+    setLeaving(false);
+    // Navigate the student back to the course after doffing
+    // completes.
+    goBack();
   };
 
   const pickScientist = (sex) => {
@@ -3985,7 +4904,35 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
     );
   }
 
-  // ---- Stage 3: the bench ----
+  // ---- Stage 3: enter the lab ----
+  // Donning is complete. Before the bench, the student presses
+  // Enter the lab. This mirrors the real transition from the
+  // changing area into the laboratory itself.
+  if (!entered) {
+    return (
+      <VitroEnterLab
+        character={character}
+        onEnter={enterLab}
+        speak={vitroSpeak}
+      />
+    );
+  }
+
+  // ---- Stage 4: leaving the lab / doffing ----
+  // The student has left the bench (via Back to the course).
+  // If they have not doffed this session, they doff now.
+  if (leaving && !doffed) {
+    return (
+      <VitroDoffing
+        character={character}
+        onPass={finishDoffing}
+        speak={vitroSpeak}
+        stopSpeaking={vitroStopSpeaking}
+      />
+    );
+  }
+
+  // ---- Stage 5: the bench ----
   const practicalKey =
     courseId !== null && app && app.practicalId !== undefined
       ? `${courseId}:${app.practicalId}`
@@ -4008,6 +4955,7 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
             app.recordVitroAttempt(scriptId, competencyMap);
           }
         }}
+        onLeave={() => setLeaving(true)}
       />
     );
   }
