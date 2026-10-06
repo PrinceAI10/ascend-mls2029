@@ -51,8 +51,7 @@
 // 6. Every completed practical links back to the theory that
 //    covers the errors the student made.
 // ------------------------------------------------------------
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import { AVATAR_SKIN_TONES, AVATAR_HAIR_COLORS, AVATAR_OUTFIT_COLORS } from "./avatarConstants";
+import React, { useState, useEffect, useRef } from "react";
 
 // ------------------------------------------------------------------
 // The four bench families. Each is a distinct interaction model,
@@ -4051,6 +4050,7 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
   });
   const [interpPick, setInterpPick] = useState(null);
   const [actionPick, setActionPick] = useState(null);
+  const [showReport, setShowReport] = useState(false);
 
   const correct = pickedTube && pickedTube === script.correctTube;
 
@@ -4368,7 +4368,6 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
   // "See your competencies" now opens the lab report first.
   // The competencies are the last thing the student sees, after
   // the report has been reviewed and submitted.
-  const [showReport, setShowReport] = useState(false);
   const openReport = () => setShowReport(true);
   const submitReport = () => {
     setShowReport(false);

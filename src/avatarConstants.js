@@ -1,13 +1,16 @@
 // avatarConstants.js
 // ------------------------------------------------------------
-// Small, shared constants from the avatar system, extracted
-// here so both App.js (which defines the avatar picker) and
-// VitroView.jsx (which draws the student's avatar on the
-// donning bench) can read the same source of truth without
-// importing from each other and creating a circular import.
+// Small, shared constants from the student avatar system,
+// extracted here so App.js (which defines the avatar picker)
+// can read them without a circular import.
+//
+// Note: VITRO no longer reads from this file. The two VITRO
+// scientists are fixed identities with their own palette,
+// defined inside VitroScientistSvg in VitroView.jsx. That
+// palette is deliberately not tied to the student's avatar.
 //
 // If a new skin tone or hair colour is ever added, add it
-// here — App.js and VITRO both pick it up automatically.
+// here — App.js picks it up automatically.
 // ------------------------------------------------------------
 
 export const AVATAR_SKIN_TONES = ["#F5D0B0", "#C68642", "#6B4226"];
