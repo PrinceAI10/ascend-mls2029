@@ -2510,9 +2510,8 @@ const VITRO_SCRIPTS = {
     id: "ph2p:2",
     title: "Estimation of Packed Cell Volume (Haematocrit)",
     patientLabel: "Grace Owusu · 34 F",
-    request:
-    "Antenatal clinic, Tuesday morning. Grace Owusu, a 34-year-old woman at 34 weeks' gestation, has been referred by the midwife for a packed cell volume. Her booking haemoglobin was 10.8 grams per decilitre. Today she reports 3 weeks of progressive tiredness and shortness of breath on exertion. On examination she is pale. The midwife's note reads: \"Query anaemia. Please measure PCV today and report to the antenatal team.\" Before you pick a tube, say out loud in one sentence which tube you need and why. If you cannot say the reason, read the theory again before you run the test.",
-    correctTube: "purple",
+  request:
+  "Antenatal clinic, Tuesday morning. You have a patient: Grace Owusu, 34 years old, 34 weeks pregnant. The midwife has sent her for a packed cell volume test, or PCV. At her first booking appointment her haemoglobin was 10.8 grams per decilitre. Today she says she has felt more and more tired for the past 3 weeks, and she gets short of breath when she moves around. When you look at her, she is pale. The midwife has written this note: \"Query anaemia. Please measure PCV today and report to the antenatal team.\" Before you pick a tube, say out loud, in one sentence, which tube you need and why. If you cannot say why, read the theory again before you run the test.",
     // Narrator lines — spoken aloud as the bench advances.
     // Plain English, clinical register, short. Read by the
     // student's chosen podcast voice (see App.js's
@@ -2520,7 +2519,7 @@ const VITRO_SCRIPTS = {
     // description of the instruction.
     narration: {
       intro:
-        "Here is the request. Antenatal clinic, Tuesday morning. Grace Owusu, a thirty-four-year-old woman at thirty-four weeks' gestation, has been referred by the midwife for a packed cell volume. Her booking haemoglobin was ten point eight grams per decilitre. Today she reports three weeks of progressive tiredness and shortness of breath on exertion. On examination she is pale. The midwife's note reads: Query anaemia. Please measure PCV today and report to the antenatal team. When you are ready, tap one of the tubes in the tube rack to pick it.",
+        "Here is the request. Antenatal clinic, Tuesday morning. You have a patient: Grace Owusu, 34 years old, 34 weeks pregnant. The midwife has sent her for a packed cell volume test, or PCV. At her first booking appointment her haemoglobin was 10.8 grams per decilitre. Today she says she has felt more and more tired for the past 3 weeks, and she gets short of breath when she moves around. When you look at her, she is pale. The midwife has written this note: \"Query anaemia. Please measure PCV today and report to the antenatal team.\" Before you pick a tube, say out loud, in one sentence, which tube you need and why. If you cannot say why, read the theory again before you run the test.",
       afterWrongTube:
         "That tube is not right for this test. Read the explanation that just appeared on the screen, then tap the button that says Try another tube and pick again.",
       afterCorrectTube:
