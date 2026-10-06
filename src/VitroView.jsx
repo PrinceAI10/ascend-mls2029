@@ -216,6 +216,430 @@ function VitroHome() {
 }
 
 // ------------------------------------------------------------------
+// VitroScientistSvg — one medical laboratory scientist, drawn
+// as a full-body SVG. Two figures exist, male and female, and
+// they are distinct people, not the same figure with a hair
+// swap. The male is broader at the shoulders and straighter at
+// the hip; the female is narrower at the shoulder, tapered at
+// the waist, and wider at the hip. Each has a fixed palette so
+// the two read as colleagues — two different scientists in the
+// same lab — not one scientist drawn twice.
+
+// Props:
+//   sex      — "male" | "female"
+//   stage    — "street"  (before donning, in their own clothes)
+//              "donned"  (in lab coat, after the coat goes on)
+//   height   — overall pixel height of the SVG
+//
+// Both figures share the same skeleton: head, neck, torso, arms,
+// hands, legs, feet. What differs is the silhouette path and
+// the proportions, plus the hair shape. Everything else is the
+// same drawing, tuned by two numbers.
+// ------------------------------------------------------------------
+function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
+  const isFemale = sex === "female";
+
+  // Fixed palettes. Two distinct identities, not derived from
+  // the student's avatar — that's the point of choosing.
+  const skin = isFemale ? "#C68642" : "#6B4226";
+  const hair = isFemale ? "#1B1210" : "#1B1210";
+  const underlayer = isFemale ? "#4C6B5A" : "#3E5E7A";
+  const labCoat = "#F4F6FA";
+  const trousers = isFemale ? "#2E3A55" : "#2E3A55";
+  const shoes = "#1B1B1F";
+
+  // Body outline stroke, theme-aware so the figure flips with
+  // dark / light / system.
+  const outline = "var(--line-2)";
+
+  // The torso silhouette. Female: narrower at the shoulder,
+  // tapered at the waist, wider at the hip. Male: broader at
+  // the shoulder, straighter down, narrower at the hip.
+  const torsoPath = isFemale
+    ? `
+        M46,96
+        Q52,80 62,76
+        L78,76
+        Q88,80 94,96
+        Q100,108 100,128
+        Q100,146 96,168
+        L84,168
+        Q86,148 86,132
+        Q86,118 84,110
+        Q82,120 82,132
+        L82,168
+        L58,168
+        L58,132
+        Q58,120 56,110
+        Q54,118 54,132
+        Q54,148 56,168
+        L44,168
+        Q40,146 40,128
+        Q40,108 46,96
+        Z
+      `
+    : `
+        M40,96
+        Q48,78 62,74
+        L78,74
+        Q92,78 100,96
+        Q106,110 106,132
+        Q106,150 104,168
+        L86,168
+        Q88,148 88,132
+        Q88,118 86,108
+        Q84,118 84,132
+        L84,168
+        L56,168
+        L56,132
+        Q56,118 54,108
+        Q52,118 52,132
+        Q52,148 54,168
+        L36,168
+        Q34,150 34,132
+        Q34,110 40,96
+        Z
+      `;
+
+  // The lab coat shape, drawn over the torso path when stage
+  // is "donned". Open collar so the underlayer's collar peeks
+  // through — a lab coat is worn open at the collar, not sealed
+  // to the throat.
+  const coatPath = isFemale
+    ? `
+        M42,94
+        Q50,78 62,74
+        L66,80
+        L74,80
+        L78,74
+        Q90,78 98,94
+        Q102,108 102,130
+        Q102,148 100,168
+        L40,168
+        Q38,148 38,130
+        Q38,108 42,94
+        Z
+      `
+    : `
+        M38,94
+        Q48,76 62,72
+        L66,78
+        L74,78
+        L78,72
+        Q92,76 102,94
+        Q108,108 108,132
+        Q108,150 106,168
+        L34,168
+        Q32,150 32,132
+        Q32,108 38,94
+        Z
+      `;
+
+  // Hair shapes. Front-on head, so the hair is a crown that
+  // comes down over the ears on both sides. The female version
+  // is slightly fuller at the sides.
+  const hairPath = isFemale
+    ? "M48,44 Q48,16 70,16 Q92,16 92,44 Q88,28 70,26 Q52,28 48,44 Z"
+    : "M50,42 Q50,20 70,20 Q90,20 90,42 Q86,28 70,28 Q54,28 50,42 Z";
+
+  return (
+    <svg
+      viewBox="0 0 140 260"
+      width={(height / 260) * 140}
+      style={{ display: "block" }}
+      role="img"
+      aria-label={isFemale ? "Female medical laboratory scientist" : "Male medical laboratory scientist"}
+    >
+      {/* ---- LEGS: tapered from hip to ankle ---- */}
+      <path
+        d="
+          M56,168
+          L56,224
+          Q56,232 60,232
+          L66,232
+          Q70,232 70,224
+          L70,176
+          Q70,174 72,174
+          Q74,174 74,176
+          L74,224
+          Q74,232 78,232
+          L84,232
+          Q88,232 88,224
+          L88,168
+          Z
+        "
+        fill={trousers}
+        stroke={outline}
+        strokeWidth="1"
+        strokeLinejoin="round"
+      />
+
+      {/* ---- SHOES: turned out, laced ---- */}
+      <path
+        d="M54,232 Q52,240 58,243 L68,243 Q72,243 71,232 Z"
+        fill={shoes}
+        stroke={outline}
+        strokeWidth="1"
+      />
+      <path
+        d="M72,232 Q71,243 75,243 L85,243 Q90,240 86,232 Z"
+        fill={shoes}
+        stroke={outline}
+        strokeWidth="1"
+      />
+      <line x1="58" y1="238" x2="68" y2="238" stroke={outline} strokeWidth="0.6" />
+      <line x1="75" y1="238" x2="85" y2="238" stroke={outline} strokeWidth="0.6" />
+
+      {/* ---- TORSO: underlayer. Covered by the coat when donned. ---- */}
+      <path
+        d={torsoPath}
+        fill={underlayer}
+        stroke={outline}
+        strokeWidth="1"
+        strokeLinejoin="round"
+      />
+      {/* Collar of the underlayer — reads as a shirt, and shows
+          through the open lab coat collar when the coat is on. */}
+      <path
+        d="M64,78 Q70,86 76,78 Q74,82 70,82 Q66,82 64,78 Z"
+        fill={underlayer}
+        stroke={outline}
+        strokeWidth="0.8"
+      />
+
+      {/* ---- NECK ---- */}
+      <path
+        d="M64,74 L64,66 Q64,64 70,64 Q76,64 76,66 L76,74 Z"
+        fill={skin}
+        stroke={outline}
+        strokeWidth="1"
+      />
+
+      {/* ---- HEAD ---- */}
+      <ellipse
+        cx="70"
+        cy="46"
+        rx={isFemale ? 18 : 19}
+        ry={isFemale ? 21 : 22}
+        fill={skin}
+        stroke={outline}
+        strokeWidth="1"
+      />
+
+      {/* ---- HAIR ---- */}
+      <path d={hairPath} fill={hair} />
+
+      {/* ---- FACE ---- */}
+      <circle cx="62" cy="44" r="2.4" fill="#2A2016" />
+      <circle cx="78" cy="44" r="2.4" fill="#2A2016" />
+      <path
+        d="M63,54 Q70,58 77,54"
+        stroke="#2A2016"
+        strokeWidth="1.8"
+        fill="none"
+        strokeLinecap="round"
+      />
+
+      {/* ---- ARMS: hang from the shoulder, curve at the elbow.
+           Sleeve colour matches the underlayer before the coat,
+           coat white after. ---- */}
+      <path
+        d="M44,100 Q32,132 34,170"
+        stroke={stage === "donned" ? labCoat : underlayer}
+        strokeWidth="13"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <path
+        d="M96,100 Q108,132 106,170"
+        stroke={stage === "donned" ? labCoat : underlayer}
+        strokeWidth="13"
+        strokeLinecap="round"
+        fill="none"
+      />
+
+      {/* ---- HANDS: rounded palm, hint of a thumb ---- */}
+      <path
+        d="M28,170 Q24,170 24,174 L24,184 Q24,188 28,188 L36,188 Q40,188 40,184 L40,174 Q40,170 36,170 Z"
+        fill={skin}
+        stroke={outline}
+        strokeWidth="1"
+      />
+      <path
+        d="M100,170 Q96,170 96,174 L96,184 Q96,188 100,188 L108,188 Q112,188 112,184 L112,174 Q112,170 108,170 Z"
+        fill={skin}
+        stroke={outline}
+        strokeWidth="1"
+      />
+
+      {/* ---- LAB COAT: only when stage === "donned" ---- */}
+      {stage === "donned" && (
+        <g>
+          <path
+            d={coatPath}
+            fill={labCoat}
+            stroke={outline}
+            strokeWidth="1"
+            strokeLinejoin="round"
+          />
+          {/* Left lapel */}
+          <path
+            d="M62,74 L66,80 L64,104"
+            stroke={outline}
+            strokeWidth="0.8"
+            fill="none"
+            strokeLinejoin="round"
+          />
+          {/* Right lapel */}
+          <path
+            d="M78,74 L74,80 L76,104"
+            stroke={outline}
+            strokeWidth="0.8"
+            fill="none"
+            strokeLinejoin="round"
+          />
+          {/* Front seam */}
+          <line
+            x1="70"
+            y1="80"
+            x2="70"
+            y2="168"
+            stroke={outline}
+            strokeWidth="0.6"
+            strokeDasharray="2 2"
+            opacity="0.55"
+          />
+          {/* Pocket */}
+          <rect
+            x={isFemale ? "48" : "46"}
+            y="140"
+            width="12"
+            height="10"
+            rx="1.5"
+            fill="none"
+            stroke={outline}
+            strokeWidth="0.7"
+          />
+        </g>
+      )}
+    </svg>
+  );
+}
+
+// ------------------------------------------------------------------
+// VitroCharacterPicker — the "choose your medical laboratory
+// scientist" screen. Two figures, side by side, one male and one
+// female. Tapping either selects it and calls onPick("male" |
+// "female"). The caller stores the choice and moves to the next
+// step.
+//
+// No persistence here — the picker is dumb. Whoever renders it
+// decides how long the choice lasts (the placeholder keeps it
+// per session).
+// ------------------------------------------------------------------
+function VitroCharacterPicker({ onPick }) {
+  const [hovered, setHovered] = useState(null);
+
+  const Card = ({ sex, label }) => {
+    const hover = hovered === sex;
+    return (
+      <button
+        onClick={() => onPick && onPick(sex)}
+        onMouseEnter={() => setHovered(sex)}
+        onMouseLeave={() => setHovered(null)}
+        onFocus={() => setHovered(sex)}
+        onBlur={() => setHovered(null)}
+        className="card hover"
+        style={{
+          textAlign: "center",
+          padding: "18px 14px 16px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 12,
+          cursor: "pointer",
+          border: hover ? "1.5px solid var(--amber)" : "1px solid var(--line)",
+          background: hover ? "var(--bg-3)" : "var(--bg-2)",
+          transition: "border-color .15s, background .15s, transform .15s",
+          transform: hover ? "translateY(-2px)" : "none",
+        }}
+        aria-label={"Choose the " + label.toLowerCase() + " medical laboratory scientist"}
+      >
+        <div
+          style={{
+            padding: 8,
+            borderRadius: 12,
+            background: "var(--bg)",
+            border: "1px solid var(--line)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <VitroScientistSvg sex={sex} stage="street" height={200} />
+        </div>
+        <div style={{ fontWeight: 750, fontSize: 14.5, marginTop: 2 }}>
+          {label}
+        </div>
+        <div
+          style={{
+            color: "var(--text-3)",
+            fontSize: 12,
+            lineHeight: 1.5,
+            maxWidth: "26ch",
+          }}
+        >
+          Medical laboratory scientist
+        </div>
+      </button>
+    );
+  };
+
+  return (
+    <div style={{ marginTop: 16 }}>
+      <div
+        className="card"
+        style={{ borderColor: "var(--amber)", padding: 18 }}
+      >
+        <div
+          className="eyebrow"
+          style={{ color: "var(--amber-2)", marginBottom: 6 }}
+        >
+          VITRO · Step 1 of 3
+        </div>
+        <div style={{ fontWeight: 750, fontSize: 16, lineHeight: 1.35 }}>
+          Choose your medical laboratory scientist.
+        </div>
+        <div
+          style={{
+            color: "var(--text-2)",
+            fontSize: 13,
+            marginTop: 8,
+            lineHeight: 1.55,
+            maxWidth: "60ch",
+          }}
+        >
+          You will run every practical in this session as the scientist
+          you pick. The choice lasts until you close the app.
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 14,
+          marginTop: 16,
+        }}
+      >
+        <Card sex="male" label="Male" />
+        <Card sex="female" label="Female" />
+      </div>
+    </div>
+  );
+}
+
+// ------------------------------------------------------------------
 // VitroDonning — the gating check every student runs before
 // entering any bench.
 //
@@ -283,7 +707,7 @@ const DONNING_ORDER_ERRORS = {
   wash: null, // wash is the first step, so it can never be too early
 };
 
-function VitroDonning({ onPass, avatarConfig }) {
+function VitroDonning({ onPass, character }) {
   const [placed, setPlaced] = useState([]);
   const [error, setError] = useState(null);
   const [gownPending, setGownPending] = useState(false);
@@ -333,23 +757,18 @@ function VitroDonning({ onPass, avatarConfig }) {
     setError({ id, message });
   };
 
-  const cfg = (avatarConfig && typeof avatarConfig === "object") ? avatarConfig : {};
-  const skin = cfg.skin && AVATAR_SKIN_TONES.includes(cfg.skin) ? cfg.skin : AVATAR_SKIN_TONES[0];
-  const hairColor = cfg.hairColor && AVATAR_HAIR_COLORS.includes(cfg.hairColor) ? cfg.hairColor : AVATAR_HAIR_COLORS[0];
-  const outfitColor = (cfg.outfit && AVATAR_OUTFIT_COLORS[cfg.outfit]) ? AVATAR_OUTFIT_COLORS[cfg.outfit] : AVATAR_OUTFIT_COLORS.labcoat;
-  const FEMALE_HAIR_IDS = ["braids", "ponytail", "wig", "bun"];
-  const isFemale = FEMALE_HAIR_IDS.includes(cfg.hair);
-  const hairPath = isFemale
-    ? "M42,30 Q42,14 60,14 Q78,14 78,30 Q74,20 60,20 Q46,20 42,30 Z"
-    : "M44,30 Q44,18 60,18 Q76,18 76,30 Q72,23 60,23 Q48,23 44,30 Z";
+  // The picked scientist drives the figure. The donning check
+  // no longer reads the student's ASCEND avatar — the two
+  // scientists are their own fixed identities, chosen on the
+  // picker screen a moment ago.
+  const isFemale = character === "female";
 
   const has = (id) => placed.includes(id) || animating === id;
 
-  // Theme-aware stroke for the figure's outline. Reads from the
-  // CSS custom property so it flips with dark/light/system.
-  // The figure's *identity* colours (skin, hair) stay as the
-  // student set them — a person, not a UI element.
-  const figureStroke = "var(--line-2)";
+  // The donning figure no longer carries its own outline colour
+  // or identity colours — both come from VitroScientistSvg, which
+  // owns its own palette. This used to hold a `figureStroke`
+  // constant for the inline figure; that figure is gone now.
 
   return (
     <div style={{ marginTop: 16 }}>
@@ -421,288 +840,135 @@ function VitroDonning({ onPass, avatarConfig }) {
             background: "var(--bg-2)",
           }}
         >
-          {/*
-            The figure is drawn as a single continuous human
-            silhouette — sloped shoulders, tapered waist, flared
-            hips, narrowing legs, angled feet. Front-facing,
-            stylised at roughly five heads tall so the face
-            features, mask and eyewear stay legible at phone
-            size. Arms hang naturally and end in hands that
-            gloves can land on. Nothing about this is a diagram
-            of a person; it is a person, drawn the way the rest
-            of ASCEND draws things — shape first, tokens for
-            theme, identity colours for the student.
-
-            Layer order (bottom to top):
-              legs → feet → arms → hands → torso → head → hair
-              → face → mask → eyewear → gloves → wash → error
-          */}
-          <svg
-            viewBox="0 0 140 240"
-            width="100%"
-            style={{ maxWidth: 200, display: "block" }}
-            role="img"
-            aria-label={done ? "You, fully dressed in PPE" : "You, being dressed in PPE"}
-          >
-            {/* ---- Legs: one continuous trouser shape, tapering
-                 from hip to ankle. Drawn as a single silhouette
-                 (both legs) so the crotch reads as a real gap,
-                 not a seam between two rectangles. ---- */}
-            <path
-              d="
-                M56,150
-                L56,206
-                Q56,214 60,214
-                L66,214
-                Q70,214 70,206
-                L70,158
-                Q70,156 72,156
-                Q74,156 74,158
-                L74,206
-                Q74,214 78,214
-                L84,214
-                Q88,214 88,206
-                L88,150
-                Z
-              "
-              fill="var(--bg-3)"
-              stroke={figureStroke}
-              strokeWidth="1"
-              strokeLinejoin="round"
+          {/* The picked scientist, dressed as they were when
+              they walked into the lab. PPE is layered on top
+              of this shared figure — the base body is drawn
+              once, so the two scientist identities can never
+              drift apart across sessions. */}
+          <div style={{ position: "relative" }}>
+            <VitroScientistSvg
+              sex={isFemale ? "female" : "male"}
+              stage={has("gown") ? "donned" : "street"}
+              height={220}
             />
 
-            {/* ---- Feet: angled outward, attached at the ankles.
-                 Drawn as two rounded shapes widening at the toe. ---- */}
-            <path
-              d="M56,214 Q54,220 60,222 L68,222 Q72,222 70,214 Z"
-              fill="var(--bg-3)"
-              stroke={figureStroke}
-              strokeWidth="1"
-            />
-            <path
-              d="M70,214 Q68,222 74,222 L82,222 Q88,222 84,214 Z"
-              fill="var(--bg-3)"
-              stroke={figureStroke}
-              strokeWidth="1"
-            />
-
-            {/* ---- Arms: hang from the shoulder, gentle curve at
-                 the elbow, ending in a wrist. Drawn as thick
-                 strokes so they read as limbs, not lines. The
-                 sleeve colour matches whatever is on the torso
-                 — outfit colour before the lab coat, coat white
-                 after. ---- */}
-            <path
-              d="M46,78 Q34,108 34,146"
-              stroke={has("gown") ? "#F4F6FA" : outfitColor}
-              strokeWidth="12"
-              strokeLinecap="round"
-              fill="none"
-            />
-            <path
-              d="M94,78 Q106,108 106,146"
-              stroke={has("gown") ? "#F4F6FA" : outfitColor}
-              strokeWidth="12"
-              strokeLinecap="round"
-              fill="none"
-            />
-
-            {/* ---- Hands: real hands, not dots. Drawn as small
-                 rounded shapes with a hint of a thumb so gloves
-                 have a shape to cover. Skin tone from the
-                 student's avatar. ---- */}
-            <g>
-              <path
-                d="M28,146 Q24,146 24,150 L24,158 Q24,162 28,162 L36,162 Q40,162 40,158 L40,150 Q40,146 36,146 Z"
-                fill={skin}
-                stroke={figureStroke}
-                strokeWidth="1"
-              />
-              <path
-                d="M100,146 Q96,146 96,150 L96,158 Q96,162 100,162 L108,162 Q112,162 112,158 L112,150 Q112,146 108,146 Z"
-                fill={skin}
-                stroke={figureStroke}
-                strokeWidth="1"
-              />
-            </g>
-
-            {/* ---- Torso: shoulders slope, chest broadens,
-                 waist tapers, hips flare. One continuous path,
-                 not a rectangle. Before the lab coat it takes
-                 the student's outfit colour; after it, lab-coat
-                 white. When the coat is being animated on, this
-                 whole path slides in from the upper left. ---- */}
-            <path
-              className={animating === "gown" ? "vitro-anim-coat" : ""}
-              d="
-                M42,72
-                Q52,62 60,62
-                L80,62
-                Q88,62 98,72
-                Q104,82 106,102
-                Q108,124 106,150
-                L88,150
-                Q88,132 86,116
-                Q84,104 82,98
-                Q80,110 80,128
-                L80,150
-                L60,150
-                L60,128
-                Q60,110 58,98
-                Q56,104 54,116
-                Q52,132 52,150
-                L34,150
-                Q32,124 34,102
-                Q36,82 42,72
-                Z
-              "
-              fill={has("gown") ? "#F4F6FA" : outfitColor}
-              stroke={figureStroke}
-              strokeWidth="1"
-              strokeLinejoin="round"
-            />
-
-            {/* ---- Lab-coat detail: when the coat is on, add the
-                 open front and lapels. Drawn over the torso path
-                 so it reads as a garment, not a flat fill. ---- */}
-            {has("gown") && (
-              <g
-                className={animating === "gown" ? "vitro-anim-fade" : "vitro-anim-fade"}
-                stroke={figureStroke}
-                strokeWidth="1"
-                fill="none"
-                strokeLinejoin="round"
-              >
-                {/* Open front — a V from the collar down to the
-                    waist, showing the underlayer beneath */}
-                <path
-                  d="M62,66 L70,96 L78,66"
-                  fill="var(--bg-2)"
-                  stroke={figureStroke}
-                  strokeWidth="1"
-                />
-                {/* Lapel edges */}
-                <path d="M62,66 Q64,74 66,84" />
-                <path d="M78,66 Q76,74 74,84" />
-              </g>
-            )}
-
-            {/* ---- Neck: a short connecting shape between the
-                 shoulders and the head, so the head does not
-                 float above the torso. ---- */}
-            <path
-              d="M64,60 L64,54 Q64,52 70,52 Q76,52 76,54 L76,60 Z"
-              fill={skin}
-              stroke={figureStroke}
-              strokeWidth="1"
-            />
-
-            {/* ---- Head: a slightly taller-than-wide oval, not a
-                 perfect circle, so it reads as a head. ---- */}
-            <ellipse cx="70" cy="36" rx="18" ry="20" fill={skin} stroke={figureStroke} strokeWidth="1" />
-
-            {/* ---- Hair: sits over the top and sides of the head.
-                 Silhouette cue from the student's hair family
-                 (fuller for female styles, closer for male),
-                 colour from the student's hair colour. ---- */}
-            <path
-              d={
-                isFemale
-                  ? "M52,34 Q52,14 70,14 Q88,14 88,34 Q84,22 70,22 Q56,22 52,34 Z"
-                  : "M54,32 Q54,18 70,18 Q86,18 86,32 Q82,24 70,24 Q58,24 54,32 Z"
-              }
-              fill={hairColor}
-            />
-
-            {/* ---- Face: dot eyes and a gentle smile. Never
-                 covered by the mask — the mask sits below the
-                 eye row. ---- */}
-            <g className="vitro-anim-fade">
-              <circle cx="62" cy="34" r="2.2" fill="#2A2016" />
-              <circle cx="78" cy="34" r="2.2" fill="#2A2016" />
-              <path
-                d="M63,43 Q70,47 77,43"
-                stroke="#2A2016"
-                strokeWidth="1.8"
-                fill="none"
-                strokeLinecap="round"
-              />
-            </g>
-
-            {/* ---- Mask: covers nose and mouth only. Top edge at
-                 y=40 sits two units below the eye row at y=34,
-                 so the eyes stay clear. Bottom at y=52 hugs the
-                 jawline. Side edges tuck behind the ears at
-                 x=52 and x=88. ---- */}
             {has("mask") && (
-              <path
-                className={animating === "mask" ? "vitro-anim-mask" : ""}
-                d="M52,40 Q70,48 88,40 L86,52 Q70,56 54,52 Z"
-                fill="#E8EDF5"
-                stroke={figureStroke}
-                strokeWidth="1"
-                strokeLinejoin="round"
-              />
+              <svg
+                viewBox="0 0 140 260"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  pointerEvents: "none",
+                }}
+              >
+                <path
+                  className={animating === "mask" ? "vitro-anim-mask" : ""}
+                  d="M52,50 Q70,58 88,50 L86,64 Q70,68 54,64 Z"
+                  fill="#E8EDF5"
+                  stroke="var(--line-2)"
+                  strokeWidth="1"
+                  strokeLinejoin="round"
+                />
+              </svg>
             )}
 
-            {/* ---- Eyewear: sits over the eye row, above the
-                 mask top edge. ---- */}
             {has("eye") && (
-              <g
-                className={animating === "eye" ? "vitro-anim-eye" : ""}
-                stroke="#2A2016"
-                strokeWidth="2.2"
-                fill="none"
-                strokeLinecap="round"
+              <svg
+                viewBox="0 0 140 260"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  pointerEvents: "none",
+                }}
               >
-                <rect x="54" y="27" width="13" height="10" rx="3" />
-                <rect x="73" y="27" width="13" height="10" rx="3" />
-                <line x1="67" y1="32" x2="73" y2="32" />
-              </g>
+                <g
+                  className={animating === "eye" ? "vitro-anim-eye" : ""}
+                  stroke="#2A2016"
+                  strokeWidth="2.2"
+                  fill="none"
+                  strokeLinecap="round"
+                >
+                  <rect x="54" y="37" width="13" height="11" rx="3" />
+                  <rect x="73" y="37" width="13" height="11" rx="3" />
+                  <line x1="67" y1="42" x2="73" y2="42" />
+                </g>
+              </svg>
             )}
 
-            {/* ---- Gloves: land on the hands, matching their
-                 shape. Drawn after the hands so they cover them
-                 cleanly. ---- */}
             {has("gloves") && (
-              <g className={animating === "gloves" ? "vitro-anim-glove" : ""}>
-                <path
-                  d="M28,146 Q24,146 24,150 L24,158 Q24,162 28,162 L36,162 Q40,162 40,158 L40,150 Q40,146 36,146 Z"
-                  fill="#5B8DEF"
-                  stroke={figureStroke}
-                  strokeWidth="1"
-                />
-                <path
-                  d="M100,146 Q96,146 96,150 L96,158 Q96,162 100,162 L108,162 Q112,162 112,158 L112,150 Q112,146 108,146 Z"
-                  fill="#5B8DEF"
-                  stroke={figureStroke}
-                  strokeWidth="1"
-                />
-              </g>
-            )}
-
-            {/* ---- Hand hygiene sparkle: near the hands ---- */}
-            {has("wash") && !has("gloves") && (
-              <g
-                className={animating === "wash" ? "vitro-anim-wash" : ""}
-                fill="none"
-                stroke="#54D08A"
-                strokeWidth="1.8"
-                strokeLinecap="round"
+              <svg
+                viewBox="0 0 140 260"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  pointerEvents: "none",
+                }}
               >
-                <path d="M26 142 l0 -5 M23 144 l-5 -3 M29 144 l5 -3" />
-                <path d="M110 142 l0 -5 M107 144 l-5 -3 M113 144 l5 -3" />
-              </g>
+                <g className={animating === "gloves" ? "vitro-anim-glove" : ""}>
+                  <path
+                    d="M28,170 Q24,170 24,174 L24,184 Q24,188 28,188 L36,188 Q40,188 40,184 L40,174 Q40,170 36,170 Z"
+                    fill="#5B8DEF"
+                    stroke="var(--line-2)"
+                    strokeWidth="1"
+                  />
+                  <path
+                    d="M100,170 Q96,170 96,174 L96,184 Q96,188 100,188 L108,188 Q112,188 112,184 L112,174 Q112,170 108,170 Z"
+                    fill="#5B8DEF"
+                    stroke="var(--line-2)"
+                    strokeWidth="1"
+                  />
+                </g>
+              </svg>
             )}
 
-            {/* ---- Contamination spot: on the left shoulder ---- */}
-            {error && (
-              <g>
-                <circle cx="98" cy="78" r="5" fill="#F0776A" opacity="0.9" />
-                <circle cx="100" cy="80" r="2" fill="#F0776A" opacity="0.6" />
-              </g>
+            {has("wash") && !has("gloves") && (
+              <svg
+                viewBox="0 0 140 260"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  pointerEvents: "none",
+                }}
+              >
+                <g
+                  className={animating === "wash" ? "vitro-anim-wash" : ""}
+                  fill="none"
+                  stroke="#54D08A"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                >
+                  <path d="M26 166 l0 -5 M23 168 l-5 -3 M29 168 l5 -3" />
+                  <path d="M110 166 l0 -5 M107 168 l-5 -3 M113 168 l5 -3" />
+                </g>
+              </svg>
             )}
-          </svg>
+
+            {error && (
+              <svg
+                viewBox="0 0 140 260"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  pointerEvents: "none",
+                }}
+              >
+                <g>
+                  <circle cx="98" cy="96" r="5" fill="#F0776A" opacity="0.9" />
+                  <circle cx="100" cy="98" r="2" fill="#F0776A" opacity="0.6" />
+                </g>
+              </svg>
+            )}
+          </div>
         </div>
 
         <div>
@@ -989,6 +1255,37 @@ const VITRO_SCRIPTS = {
     request:
       "A 34-year-old female presents with fatigue and pallor. Request: packed cell volume (PCV) on a fresh venous sample.",
     correctTube: "purple",
+    // Narrator lines — spoken aloud as the bench advances.
+    // Plain English, clinical register, short. Read by the
+    // student's chosen podcast voice (see App.js's
+    // ascendPickVoice). Each line is the instruction, not a
+    // description of the instruction.
+    narration: {
+      intro:
+        "You are about to run an estimation of packed cell volume. Read the patient history and the request on the card before you do anything else. The patient is Ama Mensah, a thirty four year old woman with fatigue and pallor. The clinician has asked for a packed cell volume. The correct answer depends on which tube you pick.",
+      afterWrongTube:
+        "That tube is not right for this test. Read the explanation carefully before you try again.",
+      afterCorrectTube:
+        "Correct. You have chosen the EDTA tube, purple top. EDTA chelates calcium irreversibly, so the blood will not clot, and the red cells are preserved exactly as they were in the patient's circulation. Pick a different tube and the whole result is worthless. Now, begin the practical.",
+      labelling:
+        "Step one. Label the tube. Write the patient's name, the date and time of collection, and your initials. Do this at the bedside, in the patient's presence, before you leave her side. A mislabelled tube is a rejected tube. Tap the button to write the label.",
+      filling:
+        "Step two. Fill the capillary. Take a heparinised microhaematocrit capillary and fill it to about three quarters. Then wipe the outside clean against gauze. Blood on the outside will contaminate the centrifuge. Tap the button to fill the capillary.",
+      sealing:
+        "Step three. Seal the dry end. Push the dry end of the capillary into sealing clay, or fit a plastic cap. Never seal the end that touched the blood. Sealing the wet end traps an air bubble and destroys the column. Tap the button to seal the tube.",
+      loading:
+        "Step four. Load the centrifuge. Put the capillary into the rotor with the sealed end pressed against the rubber gasket. Load a second, balanced capillary in the opposite slot. A single capillary unbalances the rotor at twelve thousand g and can damage the machine. Tap the button to load the sample.",
+      spinning:
+        "Step five. Spin the sample. The centrifuge will run for five minutes at twelve thousand g. Then you will read the packed cell column against the reader card. Red cells at the bottom, a thin buffy coat above them, and plasma at the top. Tap the button to start the spin.",
+      reading:
+        "The spin is complete. Read the packed cell volume against the haematocrit reader card, and compare the number to the reference range shown on the readout. Then answer the question that follows.",
+      interpret:
+        "Question one. Read it carefully before you answer. This is the question the whole practical exists for.",
+      action:
+        "Question two. You have already reported the value. Now decide what the next professional action on this result should be.",
+      results:
+        "The practical is complete. Every competency is assessed independently. Look at what you demonstrated, then either try again or go back to the course.",
+    },
     // Tube-by-tube feedback for the wrong picks. Each message names
     // the tube, says why it is wrong for this practical specifically,
     // and points at the correct one. No generic "incorrect."
@@ -1116,6 +1413,73 @@ const VITRO_COMPETENCIES = {
     },
   ],
 };
+
+// ------------------------------------------------------------------
+// Bench narration. Reads each step aloud through the same Web
+// Speech voices the podcast feature already uses (see App.js's
+// ascendPickVoice). One utterance at a time, cancel on stop,
+// no queuing — the narrator is meant to guide, not to lecture
+// over the student.
+//
+//   vitroSpeak(text, onEnd?)
+//     — speaks text, calls onEnd when done (or on error), so the
+//       caller can advance or wait. Cancels whatever is already
+//       speaking first, so step transitions never stack.
+//
+//   vitroStopSpeaking()
+//     — cancels whatever is speaking, silently. Called when the
+//       bench unmounts, or when the student mutes.
+// ------------------------------------------------------------------
+function vitroSpeak(text, onEnd) {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+    if (typeof onEnd === "function") onEnd();
+    return;
+  }
+  try {
+    window.speechSynthesis.cancel();
+  } catch {}
+  const clean = String(text || "").replace(/\s*—\s*/g, ", ");
+  const utter = new SpeechSynthesisUtterance(clean);
+  // Same voice preference as the podcast feature. A student who
+  // chose a female voice for Listen hears a female voice here.
+  let gender = "female";
+  try {
+    gender = window.localStorage.getItem("ascend_voice_gender") || "female";
+  } catch {}
+  utter.pitch = gender === "male" ? 0.85 : 1.1;
+  utter.rate = 0.97;
+  // Try to attach the same named voice ascendPickVoice would
+  // pick. Done synchronously from the cached voice list if it's
+  // already populated, which it will be by the time the student
+  // reaches the bench — the podcast feature populated it earlier.
+  try {
+    const voices = window.speechSynthesis.getVoices() || [];
+    const englishVoices = voices.filter((v) => /^en/i.test(v.lang));
+    const pool = englishVoices.length ? englishVoices : voices;
+    const hints =
+      gender === "male"
+        ? ["male", "david", "mark", "daniel", "alex", "fred", "guy", "ryan", "tom"]
+        : ["female", "zira", "samantha", "victoria", "susan", "karen", "aria", "jenny", "joanna"];
+    const match = pool.find((v) =>
+      hints.some((h) => v.name.toLowerCase().includes(h))
+    );
+    if (match) utter.voice = match;
+  } catch {}
+  if (typeof onEnd === "function") {
+    utter.onend = onEnd;
+    utter.onerror = onEnd;
+  }
+  try {
+    window.speechSynthesis.speak(utter);
+  } catch {}
+}
+
+function vitroStopSpeaking() {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  try {
+    window.speechSynthesis.cancel();
+  } catch {}
+}
 
 // ------------------------------------------------------------------
 // recordVitroAttempt — fold a finished VITRO attempt into the
@@ -1519,6 +1883,9 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
   const [wrongFeedback, setWrongFeedback] = useState(null);
   const [analyserRan, setAnalyserRan] = useState(false);
   const [stepIdx, setStepIdx] = useState(0);
+  // Narration on by default. A student can mute from the bench
+  // header; the choice lasts for the session on this bench only.
+  const [muted, setMuted] = useState(false);
 
   // Per-bench-step visual state. Each one is a boolean that
   // flips when the student performs that step, and the SVG
@@ -1536,6 +1903,8 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
   });
   const [interpPick, setInterpPick] = useState(null);
   const [actionPick, setActionPick] = useState(null);
+
+  const correct = pickedTube && pickedTube === script.correctTube;
 
   const steps = Array.isArray(script && script.benchSteps)
     ? script.benchSteps
@@ -1563,6 +1932,51 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
     setInterpPick(null);
     setActionPick(null);
   }, [scriptId]);
+
+  // ---- Narration ----
+  // Speak the line for the current phase whenever the phase
+  // changes. Cancels whatever was speaking first, so a fast
+  // student tapping through does not stack voices.
+  const narration = (script && script.narration) || {};
+  useEffect(() => {
+    if (muted) {
+      vitroStopSpeaking();
+      return;
+    }
+    const line = (() => {
+      switch (phase) {
+        case "rack":
+          return narration.intro;
+        case "picked":
+          return correct ? narration.afterCorrectTube : narration.afterWrongTube;
+        case "labelling":
+          return narration.labelling;
+        case "filling":
+          return narration.filling;
+        case "sealing":
+          return narration.sealing;
+        case "loading":
+          return narration.loading;
+        case "spinning":
+          return analyserRan ? narration.reading : narration.spinning;
+        case "interpret":
+          return narration.interpret;
+        case "action":
+          return narration.action;
+        case "results":
+          return narration.results;
+        default:
+          return null;
+      }
+    })();
+    if (line) vitroSpeak(line);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, analyserRan, muted]);
+
+  // Stop the voice the moment the student leaves the bench.
+  useEffect(() => {
+    return () => vitroStopSpeaking();
+  }, []);
 
   const goBack = () => {
     if (app && typeof app.go === "function") {
@@ -1708,7 +2122,7 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
     setActionPick(null);
   };
 
-  const correct = pickedTube && pickedTube === script.correctTube;
+  
   const centrifugeState =
     phase === "spinning" && !analyserRan
       ? "spin"
@@ -1732,7 +2146,8 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
 
   return (
     <div style={{ marginTop: 16 }}>
-      {/* Header strip — patient + request, always visible. */}
+      {/* Header strip — patient + request, always visible.
+          Carries a mute button for the narrator voice. */}
       <div
         className="card"
         style={{
@@ -1741,6 +2156,48 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
           background: "var(--bg-2)",
         }}
       >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            gap: 12,
+            marginBottom: 10,
+          }}
+        >
+          <div
+            className="eyebrow"
+            style={{ color: "var(--amber-2)", margin: 0 }}
+          >
+            VITRO · Simulation
+          </div>
+          <button
+            onClick={() => {
+              setMuted((m) => {
+                const next = !m;
+                if (next) vitroStopSpeaking();
+                return next;
+              });
+            }}
+            title={muted ? "Narration muted — tap to unmute" : "Narration on — tap to mute"}
+            style={{
+              background: "none",
+              border: "1px solid var(--line)",
+              borderRadius: 8,
+              padding: "4px 10px",
+              color: muted ? "var(--text-3)" : "var(--amber-2)",
+              fontSize: 11.5,
+              fontWeight: 700,
+              letterSpacing: "0.03em",
+              cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 5,
+            }}
+          >
+            {muted ? "MUTED" : "NARRATING"}
+          </button>
+        </div>
         <div style={{ display: "grid", gap: 8 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <span
@@ -2644,20 +3101,42 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
 // a rebuild.
 // ------------------------------------------------------------------
 function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
-  const sessionKey = "ascend_vitro_donned";
+  const donnedKey = "ascend_vitro_donned";
+  const scientistKey = "ascend_vitro_scientist";
+
   const [donned, setDonned] = useState(() => {
     try {
-      return sessionStorage.getItem(sessionKey) === "1";
+      return sessionStorage.getItem(donnedKey) === "1";
     } catch {
       return false;
     }
   });
 
+  // Which scientist the student is running this session as.
+  // null before they pick, then "male" or "female". Kept in
+  // sessionStorage so a navigation away and back does not
+  // re-ask — but a fresh session does.
+  const [character, setCharacter] = useState(() => {
+    try {
+      const v = sessionStorage.getItem(scientistKey);
+      return v === "male" || v === "female" ? v : null;
+    } catch {
+      return null;
+    }
+  });
+
   const passDonning = () => {
     try {
-      sessionStorage.setItem(sessionKey, "1");
+      sessionStorage.setItem(donnedKey, "1");
     } catch {}
     setDonned(true);
+  };
+
+  const pickScientist = (sex) => {
+    try {
+      sessionStorage.setItem(scientistKey, sex);
+    } catch {}
+    setCharacter(sex);
   };
 
   const goBack = () => {
@@ -2670,23 +3149,22 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
     }
   };
 
+  // ---- Stage 1: choose a scientist ----
+  if (!character) {
+    return <VitroCharacterPicker onPick={pickScientist} />;
+  }
+
+  // ---- Stage 2: donning ----
   if (!donned) {
     return (
       <VitroDonning
         onPass={passDonning}
-        avatarConfig={app && app.progress ? app.progress.avatar : null}
+        character={character}
       />
     );
   }
 
-  // Real script lookup. Keyed by `${courseId}:${topicIndex}` so a
-  // script survives a topic being inserted above it in the
-  // TOPICS array — same discipline as Atlas's DIAGRAMS map.
-  //
-  // If there is no script for this practical yet, the value is
-  // undefined and the placeholder below renders the "Bench in
-  // build" card, exactly as before. Adding a practical is a
-  // one-entry edit to VITRO_SCRIPTS; nothing else here changes.
+  // ---- Stage 3: the bench ----
   const practicalKey =
     courseId !== null && app && app.practicalId !== undefined
       ? `${courseId}:${app.practicalId}`
@@ -2702,10 +3180,6 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
         courseId={courseId}
         app={app}
         onComplete={(scriptId, competencyMap) => {
-          // The bench has finished an attempt. Fold the result
-          // into progress and persist via the parent's normal
-          // save path. The parent (App.js) has persist() on the
-          // app object already — see Step 1's app definition.
           if (
             app &&
             typeof app.recordVitroAttempt === "function"
