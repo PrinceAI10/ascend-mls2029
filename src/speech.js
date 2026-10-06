@@ -124,33 +124,11 @@ function readGender() {
 // prevents that. Desktop-only: on Android the nudge is audible.
 // Singleton so two callers can't run two competing keep-alives.
 // ------------------------------------------------------------
-const keepAlive = { timer: null };
-
-function startKeepAlive() {
-  if (keepAlive.timer) return;
-  keepAlive.timer = setInterval(() => {
-    try {
-      if (
-        typeof window !== "undefined" &&
-        window.speechSynthesis &&
-        window.speechSynthesis.speaking &&
-        !window.speechSynthesis.paused &&
-        !window.speechSynthesis.pending
-      ) {
-        try { console.log("[speech] keep-alive nudge | t:", Date.now() % 100000); } catch {}
-        window.speechSynthesis.pause();
-        window.speechSynthesis.resume();
-      }
-    } catch {}
-  }, 3000);
-}
-
-function stopKeepAlive() {
-  if (keepAlive.timer) {
-    clearInterval(keepAlive.timer);
-    keepAlive.timer = null;
-  }
-}
+// Keep-alive is gone entirely. Mobile long-utterance stability
+// is handled by the sentence-sequencer inside speak() below,
+// which never needs to nudge the engine.
+function startKeepAlive() {}
+function stopKeepAlive() {}
 
 // ------------------------------------------------------------
 // Pause/resume on tab visibility.
@@ -180,14 +158,15 @@ function installVisibilityHandler() {
     if (!visibility.pausedByUs) return;
     visibility.pausedByUs = false;
     const resumeText = visibility.currentText;
-    try { window.speechSynthesis.resume(); } catch {}
-    setTimeout(() => {
-      if (window.speechSynthesis.paused && resumeText) {
-        try { window.speechSynthesis.cancel(); } catch {}
-        visibility.currentText = null;
-        speak(resumeText, {});
-      }
-    }, 400);
+    // Never try to resume. On iOS Safari, on Android Chrome, and
+    // on desktop Chrome, resume() after more than a few seconds
+    // produces silence or a stutter. The only reliable recovery
+    // is to cancel and re-speak the line from its start.
+    try { window.speechSynthesis.cancel(); } catch {}
+    visibility.currentText = null;
+    if (resumeText) {
+      speak(resumeText, {});
+    }
   });
 }
 
@@ -201,8 +180,68 @@ function installVisibilityHandler() {
 // If `chunks` is not provided, `text` is spoken as a single
 // utterance. That path is what Atlas and VITRO use.
 // ------------------------------------------------------------
+// ------------------------------------------------------------
+// speak(text, { onStart, onEnd, rate, gender })
+//
+// On desktop, this is one utterance, plain speak/onstart/onend.
+// That's the shape that already works on the laptop, unchanged.
+//
+// On mobile, this splits the text into sentence-bounded pieces
+// and speaks them as a sequence. Each piece is short enough
+// that no mobile engine cuts it off. Between pieces there is
+// no cancel() - the engine queues each new utterance behind
+// the previous one, which is what produces continuous audio
+// without the keep-alive tick.
+//
+// On any platform, if onend does not fire within the watchdog
+// window for a piece, that piece is force-finished and the
+// sequence advances. That's the safety net that catches the
+// "silent onend" bug.
+// ------------------------------------------------------------
+
+// Split into sentence-sized pieces. Kept short on purpose -
+// anything longer than ~20 seconds risks being cut off by
+// Android Chrome or iOS Safari, both of which are the two
+// engines this path exists to protect.
+function _splitSentences(text) {
+  const s = String(text || "").replace(/\s+/g, " ").trim();
+  if (!s) return [];
+  // Split on sentence-enders, keeping the punctuation with the
+  // preceding clause. Falls back to comma-splitting if a single
+  // "sentence" is still very long.
+  const rough = s.split(/(?<=[.!?])\s+(?=[A-Z"'(])/g);
+  const out = [];
+  for (const piece of rough) {
+    const t = piece.trim();
+    if (!t) continue;
+    if (t.split(/\s+/).length <= 40) {
+      out.push(t);
+      continue;
+    }
+    // Long piece - split further on commas/semicolons.
+    const parts = t.split(/(?<=[,;])\s+/g);
+    let buf = "";
+    for (const p of parts) {
+      const candidate = buf ? buf + " " + p : p;
+      if (candidate.split(/\s+/).length > 40 && buf) {
+        out.push(buf);
+        buf = p;
+      } else {
+        buf = candidate;
+      }
+    }
+    if (buf) out.push(buf);
+  }
+  return out;
+}
+
+function _isMobileUA() {
+  if (typeof navigator === "undefined") return false;
+  const ua = navigator.userAgent || "";
+  return /Android|iPhone|iPad|iPod|Mobile|Silk|Kindle/i.test(ua);
+}
+
 function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
-  try { console.log("[speech] speak called:", String(text || "").slice(0, 60), "| rate:", rate, "| gender:", gender, "| t:", Date.now() % 100000); } catch {}
   if (typeof window === "undefined" || !("speechSynthesis" in window)) {
     if (onEnd) onEnd();
     return;
@@ -213,99 +252,165 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
     if (onEnd) onEnd();
     return;
   }
-  const wordCount = fullText.split(/\s+/).length;
 
   installVisibilityHandler();
 
-  // Unconditional cancel. Some mobile engines report idle for a
-  // few hundred ms before the audio session has actually been
-  // released, and a conditional cancel then queues behind a
-  // session that is still tearing down.
+  // Unconditional cancel. Same reasoning as before: some engines
+  // report idle before the previous session is fully released.
   try { window.speechSynthesis.cancel(); } catch {}
 
-  // Watchdog sizing.
-  //
-  // Finish watchdog: word-count based, deliberately generous.
-  // A slow voice reads at about 2 words per second. A very slow
-  // voice reads at 1.5. The floor is 12 seconds and the base
-  // formula gives 2.5 seconds of speaking time per word plus 5
-  // seconds of slack. Nothing real hits this.
-  //
-  // Startup watchdog: 15 seconds. Covers a cold mobile engine
-  // loading a voice for the first time.
-  const finishMs = Math.max(12000, (wordCount * 2500) + 5000) / rate;
-  const STARTUP_MS = 15000;
-
   let finished = false;
-  let started = false;
-  let finishTimer = null;
-  let startupTimer = null;
-
-  const clearTimers = () => {
-    if (startupTimer) { clearTimeout(startupTimer); startupTimer = null; }
-    if (finishTimer) { clearTimeout(finishTimer); finishTimer = null; }
-  };
-
   const finish = () => {
     if (finished) return;
     finished = true;
-    clearTimers();
-    stopKeepAlive();
     visibility.currentText = null;
-    try { console.log("[speech] finish fired | t:", Date.now() % 100000); } catch {}
     if (onEnd) onEnd();
   };
 
+  const isMobile = _isMobileUA();
+
+  // ---- DESKTOP PATH: one utterance, plain speak/onend. ----
+  if (!isMobile) {
+    const words = fullText.split(/\s+/).length;
+    const finishMs = Math.max(12000, words * 2500 + 5000) / rate;
+    const STARTUP_MS = 15000;
+
+    let started = false;
+    let finishTimer = null;
+    let startupTimer = null;
+    const clearTimers = () => {
+      if (startupTimer) { clearTimeout(startupTimer); startupTimer = null; }
+      if (finishTimer) { clearTimeout(finishTimer); finishTimer = null; }
+    };
+
+    (async () => {
+      const g = gender || readGender();
+      let voice = voiceByGender[g];
+      if (voice === undefined) {
+        voice = await pickVoice(g);
+        voiceByGender[g] = voice || null;
+      }
+      if (finished) return;
+
+      const utter = new SpeechSynthesisUtterance(fullText);
+      if (voice) utter.voice = voice;
+      if (g === "male") {
+        utter.pitch = 0.9;
+        utter.rate = 1.0 * rate;
+      } else {
+        utter.pitch = 1.05;
+        utter.rate = 1.0 * rate;
+      }
+
+      utter.onstart = () => {
+        started = true;
+        if (startupTimer) { clearTimeout(startupTimer); startupTimer = null; }
+        finishTimer = setTimeout(() => {
+          if (!finished) { finished = true; clearTimers(); visibility.currentText = null; }
+          if (onEnd) onEnd();
+        }, finishMs);
+        visibility.currentText = fullText;
+        if (onStart) onStart();
+      };
+      utter.onend = () => {
+        if (finished) return;
+        finished = true;
+        clearTimers();
+        visibility.currentText = null;
+        if (onEnd) onEnd();
+      };
+      utter.onerror = utter.onend;
+
+      try { window.speechSynthesis.speak(utter); }
+      catch { if (!finished) { finished = true; clearTimers(); } if (onEnd) onEnd(); return; }
+
+      startupTimer = setTimeout(() => {
+        startupTimer = null;
+        if (!started) { if (!finished) { finished = true; clearTimers(); } if (onEnd) onEnd(); }
+      }, STARTUP_MS);
+    })();
+    return;
+  }
+
+  // ---- MOBILE PATH: sequence of short utterances. ----
+  const pieces = _splitSentences(fullText);
+  if (pieces.length === 0) {
+    if (onEnd) onEnd();
+    return;
+  }
+
+  // Per-piece watchdog. A piece that never fires onend is
+  // force-skipped so the sequence can't deadlock.
+  const PER_PIECE_FLOOR_MS = 8000;
+  const PER_WORD_MS = 800; // very generous; real TTS is ~500ms/word
+
   (async () => {
     const g = gender || readGender();
-
-    // Use the cached voice if we have it. If not, we must await
-    // pickVoice(), but only once per gender per session.
     let voice = voiceByGender[g];
     if (voice === undefined) {
       voice = await pickVoice(g);
       voiceByGender[g] = voice || null;
     }
-
-    // If a newer speak() call came in while we awaited the voice,
-    // abandon this one. Prevents a stale utterance from firing on
-    // top of the current one.
     if (finished) return;
 
-    const utter = new SpeechSynthesisUtterance(fullText);
-    if (voice) utter.voice = voice;
+    let onStartFired = false;
 
-        if (g === "male") {
-      utter.pitch = 0.9;
-      utter.rate = 1.0 * rate;
-    } else {
-      utter.pitch = 1.05;
-      utter.rate = 1.0 * rate;
-    }
+    const speakPiece = (idx) => {
+      if (finished) return;
+      if (idx >= pieces.length) {
+        finished = true;
+        visibility.currentText = null;
+        if (onEnd) onEnd();
+        return;
+      }
 
-    utter.onstart = () => {
-      started = true;
-      try { console.log("[speech] onstart | t:", Date.now() % 100000); } catch {}
-      if (startupTimer) { clearTimeout(startupTimer); startupTimer = null; }
-      finishTimer = setTimeout(finish, finishMs);
-      startKeepAlive();
-      visibility.currentText = fullText;
-      if (onStart) onStart();
+      const piece = pieces[idx];
+      const words = piece.split(/\s+/).length;
+      const pieceTimeoutMs = Math.max(PER_PIECE_FLOOR_MS, words * PER_WORD_MS) / rate;
+
+      const utter = new SpeechSynthesisUtterance(piece);
+      if (voice) utter.voice = voice;
+      if (g === "male") {
+        utter.pitch = 0.9;
+        utter.rate = 1.0 * rate;
+      } else {
+        utter.pitch = 1.05;
+        utter.rate = 1.0 * rate;
+      }
+
+      let pieceDone = false;
+      let pieceTimer = null;
+
+      const advance = () => {
+        if (pieceDone) return;
+        pieceDone = true;
+        if (pieceTimer) { clearTimeout(pieceTimer); pieceTimer = null; }
+        // Small beat between pieces so the join sounds natural,
+        // not spliced.
+        setTimeout(() => speakPiece(idx + 1), 60);
+      };
+
+      utter.onstart = () => {
+        if (!onStartFired) {
+          onStartFired = true;
+          visibility.currentText = fullText;
+          if (onStart) onStart();
+        }
+      };
+      utter.onend = advance;
+      utter.onerror = advance;
+
+      try {
+        window.speechSynthesis.speak(utter);
+      } catch {
+        advance();
+        return;
+      }
+
+      pieceTimer = setTimeout(advance, pieceTimeoutMs);
     };
-    utter.onend = finish;
-    utter.onerror = finish;
 
-    try {
-      window.speechSynthesis.speak(utter);
-    } catch {
-      finish();
-      return;
-    }
-
-    startupTimer = setTimeout(() => {
-      startupTimer = null;
-      if (!started) finish();
-    }, STARTUP_MS);
+    speakPiece(0);
   })();
 }
 
