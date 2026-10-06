@@ -374,10 +374,7 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
 
   const cx = 70;
 
-  // ---- Fixed anchors — head/shoulder/hand/waist/hip/ankle/foot positions
-  // stay put so the parent's mask/eyewear/glove overlays still line up.
-  // Eye spacing is widened slightly (per latest note) so goggles read fully
-  // across the face — head centre, radius and y are untouched.
+  // ---- Fixed anchors — do not move; parent overlays depend on these ----
   const headCy = 46;
   const headR = 20;
   const eyeY = 44;
@@ -392,8 +389,8 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
   const handXLeft = 32;
   const handXRight = 108;
 
-  // ---- Sex-specific silhouette (shoulders / waist / hip / neck only) ----
-  const shoulderHalf = isFemale ? 27 : 34; // ~54 vs ~68 across
+  // ---- Sex-specific silhouette ----
+  const shoulderHalf = isFemale ? 27 : 34;
   const waistHalf = isFemale ? 14 : 23;
   const hipHalf = isFemale ? 26 : 18;
   const collarHalf = 7;
@@ -402,7 +399,7 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
   const shoulderXLeft = cx - shoulderHalf + 6;
   const shoulderXRight = cx + shoulderHalf - 6;
 
-  // ---- Coat geometry — hangs from shoulders, mid-thigh hem ----
+  // ---- Coat geometry ----
   const coatShoulderHalf = shoulderHalf + 5;
   const coatChestHalf = shoulderHalf + 8;
   const coatHemHalf = shoulderHalf + 4;
@@ -410,19 +407,15 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
   const coatNeckY = 84;
   const coatVPointY = 150;
 
-  // Sleeve/cuff endpoint — identical rule for both sexes so the coat always
-  // reaches the wrist fully (this is the female coverage-gap fix: the cuff
-  // target is pinned to the hand anchor itself, not derived from shoulder
-  // width, so a narrower shoulder can never leave the sleeve short).
+  // Sleeve cuff pinned to the hand anchor itself — guarantees full coverage
+  // to the wrist regardless of shoulder width, so gloves overlay cleanly
+  // on top of the cuff rather than on bare forearm.
   const cuffY = handY - 10;
 
   const label = isFemale
     ? "Female medical laboratory scientist"
     : "Male medical laboratory scientist";
 
-  // Five-fingered hand, kept inside the fixed anchor bounding box
-  // (handX ± 9, handY ± 11) so glove overlays still sit correctly and wrap
-  // fully around the hand shape underneath.
   const Hand = ({ hx, hy, mirrored }) => {
     const d = mirrored ? -1 : 1;
     return (
@@ -442,8 +435,54 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
         <path d={`M${hx - 5 * d},${hy - 8} Q${hx - 5 * d},${hy - 12} ${hx - 3 * d},${hy - 12}`} fill="none" stroke="var(--line-2)" strokeWidth="1" strokeLinecap="round" />
         <path d={`M${hx - 2 * d},${hy - 9} Q${hx - 2 * d},${hy - 13} ${hx},${hy - 13}`} fill="none" stroke="var(--line-2)" strokeWidth="1" strokeLinecap="round" />
         <path d={`M${hx + 1 * d},${hy - 9} Q${hx + 1 * d},${hy - 13} ${hx + 3 * d},${hy - 13}`} fill="none" stroke="var(--line-2)" strokeWidth="1" strokeLinecap="round" />
-        {/* thumb */}
         <path d={`M${hx - 6 * d},${hy - 6} Q${hx - 11 * d},${hy - 5} ${hx - 10 * d},${hy + 1}`} fill="none" stroke="var(--line-2)" strokeWidth="2.4" strokeLinecap="round" />
+      </g>
+    );
+  };
+
+  // A single braided strand: a tapering ribbon path plus short diagonal
+  // cross-ties along its length, so it reads as an actual plait rather
+  // than a flat blob of colour. Drawn from a scalp-root point down to an
+  // end point, with a slight S-curve for a natural hang.
+  const Braid = ({ rootX, rootY, endX, endY, width, curve }) => {
+    const midX = rootX + (endX - rootX) * 0.5 + curve;
+    const midY = rootY + (endY - rootY) * 0.5;
+    const w1 = width;
+    const w2 = width * 0.55;
+    // outline of the tapering strand
+    const outline = `M${rootX - w1 / 2},${rootY}
+      Q${midX - w1 / 2 + curve * 0.3},${midY} ${endX - w2 / 2},${endY}
+      Q${endX},${endY + 3} ${endX + w2 / 2},${endY}
+      Q${midX + w1 / 2 + curve * 0.3},${midY} ${rootX + w1 / 2},${rootY}
+      Z`;
+    // cross-tie ticks evenly along the strand to suggest plait texture
+    const ties = [];
+    const steps = 5;
+    for (let i = 1; i < steps; i++) {
+      const t = i / steps;
+      const px = rootX + (midX - rootX) * t * 1.0 + (endX - midX) * Math.max(0, t - 0.5) * 2 * 0;
+      // simple linear interpolation through root->mid->end via quadratic approx
+      const qx = (1 - t) * (1 - t) * rootX + 2 * (1 - t) * t * midX + t * t * endX;
+      const qy = (1 - t) * (1 - t) * rootY + 2 * (1 - t) * t * midY + t * t * endY;
+      const tickW = w1 - (w1 - w2) * t;
+      ties.push(
+        <line
+          key={i}
+          x1={qx - tickW / 2.4}
+          y1={qy - 1.1}
+          x2={qx + tickW / 2.4}
+          y2={qy + 1.1}
+          stroke="var(--line-2)"
+          strokeWidth="0.6"
+          opacity="0.55"
+          strokeLinecap="round"
+        />
+      );
+    }
+    return (
+      <g>
+        <path d={outline} fill={hair} stroke="var(--line-2)" strokeWidth="1" strokeLinejoin="round" />
+        {ties}
       </g>
     );
   };
@@ -531,33 +570,28 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
       {/* ---------- 7. Hair ---------- */}
       {isFemale ? (
         <>
-          {/* full scalp cap */}
+          {/* scalp cap with a visible centre parting, close to the head */}
           <path
-            d="M48,40 Q46,20 70,18 Q94,20 92,40 Q92,28 70,24 Q48,28 48,40 Z"
+            d="M49,38 Q47,19 70,17 Q93,19 91,38 Q91,27 70,23 Q49,27 49,38 Z"
             fill={hair}
             stroke="var(--line-2)"
             strokeWidth="1.3"
             strokeLinejoin="round"
           />
-          {/* left braid — ends above the shoulder line (lab safety: tied hair clear of the shoulder) */}
-          <path
-            d={`M53,40 Q47,55 48,68 Q48,74 50,78 L54,78 Q53,74 52,63 Q52,50 57,42 Z`}
-            fill={hair}
-            stroke="var(--line-2)"
-            strokeWidth="1.2"
-            strokeLinejoin="round"
-          />
-          {/* braid plait texture */}
-          <path d="M50,47 L54,45 M50,53 L54,51 M50,59 L54,57 M50,65 L54,63 M50,71 L54,69" stroke="var(--line-2)" strokeWidth="0.7" opacity="0.5" strokeLinecap="round" />
-          {/* right braid — mirrored, also ends above the shoulder */}
-          <path
-            d={`M87,40 Q93,55 92,68 Q92,74 90,78 L86,78 Q87,74 88,63 Q88,50 83,42 Z`}
-            fill={hair}
-            stroke="var(--line-2)"
-            strokeWidth="1.2"
-            strokeLinejoin="round"
-          />
-          <path d="M90,47 L86,45 M90,53 L86,51 M90,59 L86,57 M90,65 L86,63 M90,71 L86,69" stroke="var(--line-2)" strokeWidth="0.7" opacity="0.5" strokeLinecap="round" />
+          <line x1="70" y1="17.5" x2="70" y2="27" stroke="var(--bg-1, #0000)" strokeWidth="0" />
+          <line x1="70" y1="18" x2="70" y2="26" stroke="var(--line-2)" strokeWidth="0.6" opacity="0.4" />
+
+          {/* five neat cornrows running back from the hairline into braids —
+              each a tapering, tied strand with plait cross-ties, ending
+              clearly above the shoulder line per lab safety rules */}
+          <Braid rootX={52} rootY={30} endX={47} endY={70} width={5.5} curve={-3} />
+          <Braid rootX={59} rootY={23} endX={51} endY={74} width={5} curve={-2} />
+          <Braid rootX={81} rootY={23} endX={89} endY={74} width={5} curve={2} />
+          <Braid rootX={88} rootY={30} endX={93} endY={70} width={5.5} curve={3} />
+
+          {/* small end-bands tying off each outer braid, like real cornrows */}
+          <ellipse cx="47" cy="70" rx="3.2" ry="1.8" fill="var(--line-2)" opacity="0.55" />
+          <ellipse cx="93" cy="70" rx="3.2" ry="1.8" fill="var(--line-2)" opacity="0.55" />
         </>
       ) : (
         <>
@@ -569,13 +603,10 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
             strokeWidth="1.3"
             strokeLinejoin="round"
           />
-          {/* fade gradation at the temples, built from flat layered shapes
-              (no gradient fills) so the hair visually melts into the skin */}
           <path d="M51,37 Q48,40 49,44 Q50,41 52,38 Z" fill={hair} opacity="0.45" />
           <path d="M49,43 Q47.5,46.5 50,48 Q49.5,45.5 51,43.5 Z" fill={hair} opacity="0.2" />
           <path d="M89,37 Q92,40 91,44 Q90,41 88,38 Z" fill={hair} opacity="0.45" />
           <path d="M91,43 Q92.5,46.5 90,48 Q90.5,45.5 89,43.5 Z" fill={hair} opacity="0.2" />
-          {/* clean barber line-up at the front hairline */}
           <path d="M60,23.5 Q70,21.5 80,23.5" fill="none" stroke="var(--line-2)" strokeWidth="0.6" opacity="0.5" />
         </>
       )}
@@ -598,9 +629,7 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
       {/* ---------- 11. Lab coat (donned only) ---------- */}
       {stage === "donned" && (
         <>
-          {/* sleeves — pinned to the hand anchor itself (cuffY), not to
-              shoulder width, so the narrower female silhouette still gets
-              full-length coverage all the way to the wrist */}
+          {/* sleeves — pinned to the hand anchor, covering the full arm */}
           <path
             d={`M${shoulderXLeft - 2},${shoulderY - 1} Q${cx - shoulderHalf - 9},${shoulderY + 46} ${handXLeft - 2},${cuffY - 4}
                 L${handXLeft + 9},${cuffY - 4}
@@ -620,14 +649,14 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
             strokeLinejoin="round"
           />
 
-          {/* wrist cuffs — wrap fully around the wrist so the sleeve reads
-              as closed all the way to the hand, not fading out short */}
+          {/* wrist cuffs — wrap fully around the wrist so the sleeve closes
+              right up to the hand; gloves then overlay on top of this */}
           <ellipse cx={handXLeft} cy={cuffY} rx="7.5" ry="5" fill={coatColor} stroke="var(--line-2)" strokeWidth="1.3" />
           <line x1={handXLeft - 6} y1={cuffY + 1} x2={handXLeft + 6} y2={cuffY + 1} stroke="var(--line-2)" strokeWidth="0.6" opacity="0.5" />
           <ellipse cx={handXRight} cy={cuffY} rx="7.5" ry="5" fill={coatColor} stroke="var(--line-2)" strokeWidth="1.3" />
           <line x1={handXRight - 6} y1={cuffY + 1} x2={handXRight + 6} y2={cuffY + 1} stroke="var(--line-2)" strokeWidth="0.6" opacity="0.5" />
 
-          {/* coat body — hangs from shoulders, mild flare at chest, tapers slightly to the hem at mid-thigh */}
+          {/* coat body — shoulders to mid-thigh, full torso coverage */}
           <path
             d={`M${cx - collarHalf - 6},${coatNeckY - 6}
                 L${cx - coatShoulderHalf},${coatNeckY}
@@ -654,23 +683,35 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
           <path d={`M${cx - coatShoulderHalf + 4},${coatNeckY + 6} Q${cx - coatChestHalf + 4},${(coatNeckY + hipY) / 2} ${cx - coatHemHalf + 4},${coatHemY - 4}`} fill="none" stroke="var(--line-2)" strokeWidth="0.8" opacity="0.45" />
           <path d={`M${cx + coatShoulderHalf - 4},${coatNeckY + 6} Q${cx + coatChestHalf - 4},${(coatNeckY + hipY) / 2} ${cx + coatHemHalf - 4},${coatHemY - 4}`} fill="none" stroke="var(--line-2)" strokeWidth="0.8" opacity="0.45" />
 
-          {/* ---------- MLS pocket + microscope emblem — wearer's left chest (x > 70) ---------- */}
-          <rect x="78" y="150" width="18" height="14" rx="2" fill={coatShade} stroke="var(--line-2)" strokeWidth="1.2" />
-          <line x1="79" y1="152" x2="95" y2="152" stroke="var(--line-2)" strokeWidth="0.8" opacity="0.6" />
-          <rect x="79.5" y="151.5" width="15" height="11" rx="1.5" fill="none" stroke="var(--line-2)" strokeWidth="0.5" strokeDasharray="1.2 1" opacity="0.5" />
-
-          {/* microscope, solid red + black for a clean, visible embroidered look */}
-          <g strokeLinecap="round" strokeLinejoin="round" fill="none">
-            {/* base + stage + column — red */}
-            <line x1="82" y1="161.5" x2="92" y2="161.5" stroke={mlsRed} strokeWidth="1.3" />
-            <line x1="83.5" y1="157.5" x2="90.5" y2="157.5" stroke={mlsRed} strokeWidth="1.1" />
-            <line x1="87" y1="161.5" x2="87" y2="158.3" stroke={mlsRed} strokeWidth="1.1" />
-            {/* arm, body tube, eyepiece, objective — black */}
-            <path d="M89,148.5 Q92,152 90.5,157.5 Q89.5,160 86.5,161.5" stroke={mlsBlack} strokeWidth="1" />
-            <line x1="89" y1="148.5" x2="85.5" y2="157" stroke={mlsBlack} strokeWidth="1.2" />
-            <line x1="89.8" y1="147" x2="87.5" y2="147.6" stroke={mlsBlack} strokeWidth="1.4" />
-            <line x1="85.5" y1="157" x2="86.3" y2="157.5" stroke={mlsBlack} strokeWidth="1.4" />
-            <circle cx="90.5" cy="153.5" r="1" fill={mlsBlack} stroke="none" />
+          {/* ---------- MLS crest — sits high on the wearer's left chest
+               (x > 70), just below the lapel line, like a school crest ---------- */}
+          <g transform={`translate(${cx + 13}, 96)`}>
+            {/* small shield-shaped crest backing */}
+            <path
+              d="M-8,-7 L8,-7 L8,2 Q8,8 0,11 Q-8,8 -8,2 Z"
+              fill={coatShade}
+              stroke="var(--line-2)"
+              strokeWidth="1"
+            />
+            <path
+              d="M-6.5,-5.5 L6.5,-5.5 L6.5,1.5 Q6.5,6.5 0,9 Q-6.5,6.5 -6.5,1.5 Z"
+              fill="none"
+              stroke="var(--line-2)"
+              strokeWidth="0.4"
+              strokeDasharray="1 0.8"
+              opacity="0.5"
+            />
+            {/* microscope emblem, scaled to fit the crest, red + black */}
+            <g strokeLinecap="round" strokeLinejoin="round" fill="none" transform="translate(0,-0.5) scale(0.82)">
+              <line x1="-5.5" y1="5.5" x2="4.5" y2="5.5" stroke={mlsRed} strokeWidth="1.3" />
+              <line x1="-4" y1="1.5" x2="3" y2="1.5" stroke={mlsRed} strokeWidth="1.1" />
+              <line x1="-0.5" y1="5.5" x2="-0.5" y2="2.3" stroke={mlsRed} strokeWidth="1.1" />
+              <path d="M1.5,-7.5 Q4.5,-4 3,1.5 Q2,4 -1,5.5" stroke={mlsBlack} strokeWidth="1" />
+              <line x1="1.5" y1="-7.5" x2="-2" y2="1" stroke={mlsBlack} strokeWidth="1.2" />
+              <line x1="2.3" y1="-9" x2="0" y2="-8.4" stroke={mlsBlack} strokeWidth="1.4" />
+              <line x1="-2" y1="1" x2="-1.2" y2="1.5" stroke={mlsBlack} strokeWidth="1.4" />
+              <circle cx="3" cy="-2.5" r="1" fill={mlsBlack} stroke="none" />
+            </g>
           </g>
         </>
       )}
