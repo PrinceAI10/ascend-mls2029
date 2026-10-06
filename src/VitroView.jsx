@@ -239,20 +239,19 @@ function VitroHome() {
 function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
   const isFemale = sex === "female";
 
-  // Identity colours — literal hex, not theme tokens, since these represent
-  // the person rather than UI chrome.
+  // ---- Identity colours (literal hex — represent the person/garment) ----
   const skin = isFemale ? "#C68642" : "#6B4226";
   const hair = "#1B1210";
   const underlayer = isFemale ? "#4C6B5A" : "#3E5E7A";
   const trousers = "#2E3A55";
   const shoeColor = "#1B1B1F";
   const coatColor = "#F4F6FA";
+  const coatShade = "#E8EDF5";
   const faceDot = "#2A2016";
 
   const cx = 70;
 
-  // Shared anchors — these stay identical across sexes so the parent's
-  // mask / eyewear / glove overlays always land correctly.
+  // ---- Fixed anchors — do not move, parent overlays depend on these ----
   const headCy = 46;
   const headR = 20;
   const eyeY = 44;
@@ -262,29 +261,83 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
   const ankleY = 226;
   const footY = 243;
   const handY = 179;
+  const handXLeft = 32;
+  const handXRight = 108;
 
-  // Sex-specific silhouette widths — only shoulders, waist, hip and neck
-  // length vary, per spec.
-  const shoulderHalf = isFemale ? 27 : 34;
-  const waistHalf = isFemale ? 15 : 24;
-  const hipHalf = isFemale ? 27 : 19;
+  // ---- Sex-specific silhouette (shoulders / waist / hip / neck only) ----
+  const shoulderHalf = isFemale ? 27 : 34; // ~54 vs ~68 across
+  const waistHalf = isFemale ? 14 : 23;
+  const hipHalf = isFemale ? 26 : 18;
   const collarHalf = 7;
   const neckTopY = isFemale ? 60 : 68;
 
-  const handXLeft = 32;
-  const handXRight = 108;
-  const shoulderXLeft = cx - shoulderHalf + 7;
-  const shoulderXRight = cx + shoulderHalf - 7;
+  const shoulderXLeft = cx - shoulderHalf + 6;
+  const shoulderXRight = cx + shoulderHalf - 6;
 
-  // Lab coat geometry (only used when donned).
-  const coatShoulderHalf = shoulderHalf + 6;
-  const coatHemHalf = waistHalf + 15;
-  const coatHemY = 206;
-  const coatNotchY = shoulderY + 16;
+  // ---- Coat geometry — hangs from shoulders, mid-thigh hem (y ~200) ----
+  const coatShoulderHalf = shoulderHalf + 5;
+  const coatChestHalf = shoulderHalf + 8; // slight outward flare at chest
+  const coatHemHalf = shoulderHalf + 4; // tapers only slightly toward hem
+  const coatHemY = 200;
+  const coatNeckY = 84;
+  const coatVPointY = 150; // lapel V reaches about sternum
 
   const label = isFemale
     ? "Female medical laboratory scientist"
     : "Male medical laboratory scientist";
+
+  // Simple five-finger hand, drawn inside the fixed anchor bounding box
+  // (cx ± 9, cy ± 11) so the parent's glove overlay still lands correctly.
+  const Hand = ({ hx, hy, mirrored }) => {
+    const d = mirrored ? -1 : 1;
+    return (
+      <g>
+        {/* palm */}
+        <path
+          d={`M${hx - 6 * d},${hy - 8}
+              Q${hx - 9 * d},${hy - 2} ${hx - 8 * d},${hy + 6}
+              Q${hx - 6 * d},${hy + 11} ${hx},${hy + 11}
+              Q${hx + 7 * d},${hy + 10} ${hx + 7 * d},${hy + 2}
+              Q${hx + 7 * d},${hy - 7} ${hx + 2 * d},${hy - 9}
+              Z`}
+          fill={skin}
+          stroke="var(--line-2)"
+          strokeWidth="1.4"
+          strokeLinejoin="round"
+        />
+        {/* four fingers together, short rounded lines at the top of the hand */}
+        <path
+          d={`M${hx - 5 * d},${hy - 8} Q${hx - 5 * d},${hy - 12} ${hx - 3 * d},${hy - 12}`}
+          fill="none"
+          stroke="var(--line-2)"
+          strokeWidth="1"
+          strokeLinecap="round"
+        />
+        <path
+          d={`M${hx - 2 * d},${hy - 9} Q${hx - 2 * d},${hy - 13} ${hx},${hy - 13}`}
+          fill="none"
+          stroke="var(--line-2)"
+          strokeWidth="1"
+          strokeLinecap="round"
+        />
+        <path
+          d={`M${hx + 1 * d},${hy - 9} Q${hx + 1 * d},${hy - 13} ${hx + 3 * d},${hy - 13}`}
+          fill="none"
+          stroke="var(--line-2)"
+          strokeWidth="1"
+          strokeLinecap="round"
+        />
+        {/* thumb, angled outward */}
+        <path
+          d={`M${hx - 6 * d},${hy - 6} Q${hx - 11 * d},${hy - 5} ${hx - 10 * d},${hy + 1}`}
+          fill="none"
+          stroke="var(--line-2)"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+        />
+      </g>
+    );
+  };
 
   return (
     <svg
@@ -312,41 +365,50 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
         strokeWidth="2"
         strokeLinejoin="round"
       />
+      {/* waistband — subtle darker line, not a bar */}
       <line
         x1={cx - waistHalf + 2}
-        y1={waistY + 1}
+        y1={waistY}
         x2={cx + waistHalf - 2}
-        y2={waistY + 1}
-        stroke="#1B283F"
-        strokeWidth="2"
-        opacity="0.35"
+        y2={waistY}
+        stroke="var(--line-2)"
+        strokeWidth="1"
+        opacity="0.5"
       />
 
       {/* ---------- 2. Shoes ---------- */}
       <path
-        d={`M${cx - 15},${ankleY} L${cx - 3},${ankleY} L${cx - 3},${footY - 3} L${cx - 22},${footY} Q${cx - 26},${footY - 4} ${cx - 15},${ankleY} Z`}
+        d={`M${cx - 15},${ankleY} L${cx - 3},${ankleY} L${cx - 3},${footY - 5}
+            Q${cx - 6},${footY - 1} ${cx - 12},${footY}
+            Q${cx - 20},${footY + 0.5} ${cx - 24},${footY - 5}
+            Q${cx - 25},${footY - 9} ${cx - 15},${ankleY} Z`}
         fill={shoeColor}
         stroke="var(--line-2)"
         strokeWidth="1.5"
         strokeLinejoin="round"
       />
+      <line x1={cx - 22} y1={footY - 2} x2={cx - 6} y2={footY - 2.5} stroke="var(--bg-2)" strokeWidth="0.8" opacity="0.6" />
       <path
-        d={`M${cx + 15},${ankleY} L${cx + 3},${ankleY} L${cx + 3},${footY - 3} L${cx + 22},${footY} Q${cx + 26},${footY - 4} ${cx + 15},${ankleY} Z`}
+        d={`M${cx + 15},${ankleY} L${cx + 3},${ankleY} L${cx + 3},${footY - 5}
+            Q${cx + 6},${footY - 1} ${cx + 12},${footY}
+            Q${cx + 20},${footY + 0.5} ${cx + 24},${footY - 5}
+            Q${cx + 25},${footY - 9} ${cx + 15},${ankleY} Z`}
         fill={shoeColor}
         stroke="var(--line-2)"
         strokeWidth="1.5"
         strokeLinejoin="round"
       />
+      <line x1={cx + 6} y1={footY - 2.5} x2={cx + 22} y2={footY - 2} stroke="var(--bg-2)" strokeWidth="0.8" opacity="0.6" />
 
       {/* ---------- 3. Torso underlayer (shirt) ---------- */}
       <path
-        d={`M${shoulderXLeft - 7},${shoulderY}
-            Q${cx - shoulderHalf - 4},${shoulderY + 22} ${cx - waistHalf},${waistY}
+        d={`M${shoulderXLeft - 6},${shoulderY}
+            Q${cx - shoulderHalf - 3},${shoulderY + 22} ${cx - waistHalf},${waistY}
             L${cx - collarHalf},${neckTopY + 10}
             L${cx},${neckTopY + 16}
             L${cx + collarHalf},${neckTopY + 10}
             L${cx + waistHalf},${waistY}
-            Q${cx + shoulderHalf + 4},${shoulderY + 22} ${shoulderXRight + 7},${shoulderY}
+            Q${cx + shoulderHalf + 3},${shoulderY + 22} ${shoulderXRight + 6},${shoulderY}
             L${cx + collarHalf + 2},${shoulderY - 6}
             L${cx},${shoulderY + 6}
             L${cx - collarHalf - 2},${shoulderY - 6}
@@ -379,14 +441,7 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
       />
 
       {/* ---------- 6. Head ---------- */}
-      <circle
-        cx={cx}
-        cy={headCy}
-        r={headR}
-        fill={skin}
-        stroke="var(--line-2)"
-        strokeWidth="2"
-      />
+      <circle cx={cx} cy={headCy} r={headR} fill={skin} stroke="var(--line-2)" strokeWidth="2" />
 
       {/* ---------- 7. Hair ---------- */}
       {isFemale ? (
@@ -412,155 +467,160 @@ function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
       )}
 
       {/* ---------- 8. Face ---------- */}
-      <circle cx={cx - 7} cy={eyeY} r="2.4" fill={faceDot} />
-      <circle cx={cx + 7} cy={eyeY} r="2.4" fill={faceDot} />
-      <path
-        d="M63,54 Q70,58 77,54"
-        fill="none"
-        stroke={faceDot}
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
+      <circle cx={63} cy={eyeY} r="2.4" fill={faceDot} />
+      <circle cx={77} cy={eyeY} r="2.4" fill={faceDot} />
+      <path d="M63,54 Q70,58 77,54" fill="none" stroke={faceDot} strokeWidth="2" strokeLinecap="round" />
 
-      {/* ---------- 9. Arms (thick strokes, outline then fill) ---------- */}
+      {/* ---------- 9. Arms ---------- */}
       <path
-        d={`M${shoulderXLeft},${shoulderY + 6} Q${cx - shoulderHalf - 6},${shoulderY + 48} ${handXLeft},${handY}`}
+        d={`M${shoulderXLeft},${shoulderY + 6} Q${cx - shoulderHalf - 6},${shoulderY + 48} ${handXLeft},${handY - 10}`}
         fill="none"
         stroke="var(--line-2)"
         strokeWidth="13"
         strokeLinecap="round"
       />
       <path
-        d={`M${shoulderXLeft},${shoulderY + 6} Q${cx - shoulderHalf - 6},${shoulderY + 48} ${handXLeft},${handY}`}
+        d={`M${shoulderXLeft},${shoulderY + 6} Q${cx - shoulderHalf - 6},${shoulderY + 48} ${handXLeft},${handY - 10}`}
         fill="none"
         stroke={underlayer}
         strokeWidth="10"
         strokeLinecap="round"
       />
       <path
-        d={`M${shoulderXRight},${shoulderY + 6} Q${cx + shoulderHalf + 6},${shoulderY + 48} ${handXRight},${handY}`}
+        d={`M${shoulderXRight},${shoulderY + 6} Q${cx + shoulderHalf + 6},${shoulderY + 48} ${handXRight},${handY - 10}`}
         fill="none"
         stroke="var(--line-2)"
         strokeWidth="13"
         strokeLinecap="round"
       />
       <path
-        d={`M${shoulderXRight},${shoulderY + 6} Q${cx + shoulderHalf + 6},${shoulderY + 48} ${handXRight},${handY}`}
+        d={`M${shoulderXRight},${shoulderY + 6} Q${cx + shoulderHalf + 6},${shoulderY + 48} ${handXRight},${handY - 10}`}
         fill="none"
         stroke={underlayer}
         strokeWidth="10"
         strokeLinecap="round"
       />
 
-      {/* ---------- 10. Hands ---------- */}
-      <ellipse
-        cx={handXLeft}
-        cy={handY}
-        rx="9"
-        ry="11"
-        fill={skin}
-        stroke="var(--line-2)"
-        strokeWidth="1.5"
-      />
-      <path
-        d={`M${handXLeft + 7},${handY - 4} Q${handXLeft + 12},${handY - 2} ${handXLeft + 8},${handY + 4}`}
-        fill="none"
-        stroke="var(--line-2)"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
-      <ellipse
-        cx={handXRight}
-        cy={handY}
-        rx="9"
-        ry="11"
-        fill={skin}
-        stroke="var(--line-2)"
-        strokeWidth="1.5"
-      />
-      <path
-        d={`M${handXRight - 7},${handY - 4} Q${handXRight - 12},${handY - 2} ${handXRight - 8},${handY + 4}`}
-        fill="none"
-        stroke="var(--line-2)"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
+      {/* ---------- 10. Hands — five-fingered, same bounding box as before ---------- */}
+      <Hand hx={handXLeft} hy={handY} mirrored={true} />
+      <Hand hx={handXRight} hy={handY} mirrored={false} />
 
       {/* ---------- 11. Lab coat (donned only) ---------- */}
       {stage === "donned" && (
         <>
+          {/* sleeves — drawn first/underneath, slightly different shade than torso */}
           <path
-            d={`M${cx - coatShoulderHalf},${shoulderY - 2}
-                L${cx - coatHemHalf},${coatHemY}
+            d={`M${shoulderXLeft - 2},${shoulderY - 1} Q${cx - shoulderHalf - 9},${shoulderY + 46} ${handXLeft - 2},${handY - 14}
+                L${handXLeft + 9},${handY - 14}
+                Q${cx - shoulderHalf - 1},${shoulderY + 44} ${shoulderXLeft + 9},${shoulderY - 1} Z`}
+            fill={coatShade}
+            stroke="var(--line-2)"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+          />
+          <path
+            d={`M${shoulderXRight + 2},${shoulderY - 1} Q${cx + shoulderHalf + 9},${shoulderY + 46} ${handXRight + 2},${handY - 14}
+                L${handXRight - 9},${handY - 14}
+                Q${cx + shoulderHalf + 1},${shoulderY + 44} ${shoulderXRight - 9},${shoulderY - 1} Z`}
+            fill={coatShade}
+            stroke="var(--line-2)"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+          />
+
+          {/* coat body — hangs from shoulders, mild flare at chest, tapers slightly to hem at mid-thigh */}
+          <path
+            d={`M${cx - collarHalf - 6},${coatNeckY - 6}
+                L${cx - coatShoulderHalf},${coatNeckY}
+                Q${cx - coatChestHalf},${(coatNeckY + hipY) / 2} ${cx - coatHemHalf},${coatHemY}
                 L${cx + coatHemHalf},${coatHemY}
-                L${cx + coatShoulderHalf},${shoulderY - 2}
-                L${cx + collarHalf + 5},${shoulderY - 12}
-                L${cx},${coatNotchY}
-                L${cx - collarHalf - 5},${shoulderY - 12}
+                Q${cx + coatChestHalf},${(coatNeckY + hipY) / 2} ${cx + coatShoulderHalf},${coatNeckY}
+                L${cx + collarHalf + 6},${coatNeckY - 6}
+                L${cx},${coatNeckY + 10}
                 Z`}
             fill={coatColor}
             stroke="var(--line-2)"
             strokeWidth="2"
             strokeLinejoin="round"
           />
+
+          {/* lapels — V from collar to sternum */}
           <path
-            d={`M${cx - collarHalf - 5},${shoulderY - 12} L${cx - 9},${waistY}`}
+            d={`M${cx - collarHalf - 6},${coatNeckY - 6} L${cx - 7},${coatVPointY}`}
             fill="none"
             stroke="var(--line-2)"
             strokeWidth="1.5"
           />
           <path
-            d={`M${cx + collarHalf + 5},${shoulderY - 12} L${cx + 9},${waistY}`}
+            d={`M${cx + collarHalf + 6},${coatNeckY - 6} L${cx + 7},${coatVPointY}`}
             fill="none"
             stroke="var(--line-2)"
             strokeWidth="1.5"
           />
-          <line
-            x1={cx}
-            y1={coatNotchY}
-            x2={cx}
-            y2={coatHemY}
+
+          {/* front seam, from the V point down to the hem */}
+          <line x1={cx} y1={coatVPointY} x2={cx} y2={coatHemY - 4} stroke="var(--line-2)" strokeWidth="1" opacity="0.7" />
+
+          {/* side seams — structure, not a flat fill */}
+          <path
+            d={`M${cx - coatShoulderHalf + 4},${coatNeckY + 6} Q${cx - coatChestHalf + 4},${(coatNeckY + hipY) / 2} ${cx - coatHemHalf + 4},${coatHemY - 4}`}
+            fill="none"
             stroke="var(--line-2)"
-            strokeWidth="1.2"
+            strokeWidth="0.8"
+            opacity="0.45"
           />
+          <path
+            d={`M${cx + coatShoulderHalf - 4},${coatNeckY + 6} Q${cx + coatChestHalf - 4},${(coatNeckY + hipY) / 2} ${cx + coatHemHalf - 4},${coatHemY - 4}`}
+            fill="none"
+            stroke="var(--line-2)"
+            strokeWidth="0.8"
+            opacity="0.45"
+          />
+
+          {/* ---------- MLS pocket + microscope embroidery — wearer's left chest, x > 70 ---------- */}
           <rect
-            x={cx - 26}
-            y={150}
-            width="16"
-            height="12"
-            rx="1.5"
-            fill="#E8EDF5"
+            x="78"
+            y="150"
+            width="18"
+            height="14"
+            rx="2"
+            fill={coatShade}
             stroke="var(--line-2)"
             strokeWidth="1.2"
           />
-          {/* Embroidered microscope — MLS professional mark.
-              Stitched in the same line colour as the coat
-              outline, at low opacity, so it reads as thread
-              on the pocket rather than a printed patch. */}
-          <g
-            transform={`translate(${cx - 24},152)`}
+          {/* pocket top edge + perimeter stitch lines */}
+          <line x1="79" y1="152" x2="95" y2="152" stroke="var(--line-2)" strokeWidth="0.8" opacity="0.6" />
+          <rect
+            x="79.5"
+            y="151.5"
+            width="15"
+            height="11"
+            rx="1.5"
             fill="none"
             stroke="var(--line-2)"
-            strokeWidth="0.7"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity="0.75"
-          >
-            {/* Eyepiece */}
-            <path d="M6,1.2 L6,3.4" />
-            <path d="M5.2,3.4 L6.8,3.4" />
-            {/* Body tube */}
-            <path d="M5.6,3.4 L5.6,6.4" />
-            <path d="M6.4,3.4 L6.4,6.4" />
-            {/* Stage */}
-            <path d="M3.2,6.4 L8.8,6.4" />
-            {/* Objective */}
-            <path d="M6,6.4 L6,7.8" />
-            {/* Arm and base */}
-            <path d="M8.4,4 L8.4,8" />
-            <path d="M2.6,8 L9.4,8" />
-            {/* Focus knob */}
-            <circle cx="7.4" cy="5.2" r="0.5" />
+            strokeWidth="0.5"
+            strokeDasharray="1.2 1"
+            opacity="0.5"
+          />
+
+          {/* microscope emblem, centred on pocket, box ~14w x 16h, centred at (87, 155) */}
+          <g stroke="var(--line-2)" strokeOpacity="0.85" strokeWidth="0.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            {/* base */}
+            <line x1="82" y1="161.5" x2="92" y2="161.5" strokeWidth="1.1" />
+            {/* stage */}
+            <line x1="83.5" y1="157.5" x2="90.5" y2="157.5" strokeWidth="1" />
+            {/* arm, curving from tube top down to base, right side */}
+            <path d="M89,148.5 Q92,152 90.5,157.5 Q89.5,160 86.5,161.5" />
+            {/* body tube, angled ~15° off vertical */}
+            <line x1="89" y1="148.5" x2="85.5" y2="157" strokeWidth="1.1" />
+            {/* eyepiece on top of tube */}
+            <line x1="89.8" y1="147" x2="87.5" y2="147.6" strokeWidth="1.3" />
+            {/* objective lens, pointing down from tube to stage */}
+            <line x1="85.5" y1="157" x2="86.3" y2="157.5" strokeWidth="1.3" />
+            {/* focus knob on the arm */}
+            <circle cx="90.5" cy="153.5" r="1" fill="var(--line-2)" fillOpacity="0.85" stroke="none" />
+            {/* column linking base to stage */}
+            <line x1="87" y1="161.5" x2="87" y2="158.3" strokeWidth="1" />
           </g>
         </>
       )}
@@ -802,16 +862,17 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
   // The welcome fires ONCE PER SESSION. A page refresh during
   // the same sitting does not replay it; closing the tab or
   // PWA and reopening does, because sessionStorage is scoped
-  // to the tab's lifetime. Same idea as the donning gate
-  // itself — the session is the unit.
+  // to the tab's lifetime.
   //
-  // Browsers block speech synthesis until the page has seen
-  // at least one user gesture, so a student who lands directly
-  // on this screen (a refresh, or a resumed PWA) would miss
-  // the welcome. The retry below fires on the first tap
-  // anywhere on the screen, once, and only if the welcome has
-  // not already been spoken this session.
+  // Browsers block speech synthesis until the page has seen a
+  // user gesture. In practice, the student tapped a scientist
+  // card to get here, so autoplay is usually unlocked. If it
+  // is not (a hard refresh, or a resumed PWA), a small
+  // "Play introduction" button appears so the student can
+  // start the welcome themselves. That button only appears if
+  // autoplay was blocked.
   const WELCOME_KEY = "ascend_vitro_welcome_played";
+  const [welcomeBlocked, setWelcomeBlocked] = useState(false);
   useEffect(() => {
     if (typeof speak !== "function") return;
 
@@ -825,24 +886,35 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
       return;
     }
 
-    // Mark it as played before we attempt playback, so a very
-    // fast refresh during the utterance does not replay it.
-    try {
-      sessionStorage.setItem(WELCOME_KEY, "1");
-    } catch {}
-    welcomeSpokenRef.current = true;
+    // Attempt playback. Only mark the session as seen AFTER
+    // the browser confirms it actually began speaking — a
+    // blocked attempt should not consume the session flag.
+    const started = speak(DONNING_NARRATION.welcome);
+    if (started) {
+      welcomeSpokenRef.current = true;
+      try {
+        sessionStorage.setItem(WELCOME_KEY, "1");
+      } catch {}
+    } else {
+      setWelcomeBlocked(true);
+    }
 
-    const ok = speak(DONNING_NARRATION.welcome);
-    // If the browser blocked autoplay, do not retry on this
-    // screen — the student has already been marked as having
-    // heard the welcome this session, which is what matters.
-    // A blocked first attempt is rare; the gesture that got
-    // them here (tapping the scientist) has usually unlocked
-    // it already.
     return () => {
       if (typeof stopSpeaking === "function") stopSpeaking();
     };
   }, [speak, stopSpeaking]);
+
+  const playWelcomeManually = () => {
+    if (typeof speak !== "function") return;
+    const started = speak(DONNING_NARRATION.welcome);
+    if (started) {
+      setWelcomeBlocked(false);
+      welcomeSpokenRef.current = true;
+      try {
+        sessionStorage.setItem(WELCOME_KEY, "1");
+      } catch {}
+    }
+  };
 
   // Speak the next step's guidance whenever a new step becomes
   // active. Silent when animating (a step is in progress) or
@@ -974,6 +1046,15 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
           <div style={{ color: "var(--text-3)", fontSize: 12, marginTop: 6 }}>
             Step {placed.length + 1} of {DONNING_STEPS.length}
           </div>
+        )}
+        {welcomeBlocked && !done && (
+          <button
+            className="btn btn-g btn-sm"
+            style={{ marginTop: 12 }}
+            onClick={playWelcomeManually}
+          >
+            ▶ Play introduction
+          </button>
         )}
       </div>
 
@@ -1377,9 +1458,9 @@ const VITRO_SCRIPTS = {
   "ph2p:2": {
     id: "ph2p:2",
     title: "Estimation of Packed Cell Volume (Haematocrit)",
-    patientLabel: "Ama Mensah · 34 F",
+    patientLabel: "Grace Owusu · 34 F",
     request:
-      "Ama Mensah is a 34-year-old woman in her eighth month of pregnancy. She came to the antenatal clinic today complaining of tiredness that has been getting worse over the last few weeks, and of feeling short of breath when she walks upstairs. Her conjunctivae are pale. Her midwife has asked us to measure her packed cell volume — the percentage of her blood that is made up of red cells — from a fresh venous sample, so the team can decide whether she is anaemic. Before you pick a tube: say out loud, in one sentence, which tube you need and why. If you cannot say the reason, read the theory again before you run the test.",
+      "Antenatal clinic, Tuesday morning. Grace Owusu, a thirty-four-year-old woman at thirty-four weeks' gestation, has been referred by the midwife for a packed cell volume. Her booking haemoglobin was ten point eight grams per decilitre. Today she reports three weeks of progressive tiredness and shortness of breath on exertion. On examination she is pale. The midwife's note reads: \"Query anaemia. Please measure PCV today and report to the antenatal team.\" Before you pick a tube, say out loud in one sentence which tube you need and why. If you cannot say the reason, read the theory again before you run the test.",
     correctTube: "purple",
     // Narrator lines — spoken aloud as the bench advances.
     // Plain English, clinical register, short. Read by the
@@ -1388,29 +1469,29 @@ const VITRO_SCRIPTS = {
     // description of the instruction.
     narration: {
       intro:
-        "You are about to run an estimation of packed cell volume. Read the patient history and the request on the card before you do anything else. The patient is Ama Mensah, a thirty four year old woman with fatigue and pallor. The clinician has asked for a packed cell volume. The correct answer depends on which tube you pick.",
+        "This is the packed cell volume practical. The patient is Grace Owusu, a woman in her eighth month of pregnancy, referred to us by the antenatal clinic. Read her history on the card in front of you before you do anything else. When you are ready, choose a tube from the rack. Think about which tube will keep her blood exactly as it is inside her body, and pick that one.",
       afterWrongTube:
-        "That tube is not right for this test. Read the explanation carefully before you try again.",
+        "That tube is not right for this test. Read the explanation that just appeared on the screen, then tap Try another tube and pick again.",
       afterCorrectTube:
-        "Correct. You have chosen the EDTA tube, purple top. EDTA chelates calcium irreversibly, so the blood will not clot, and the red cells are preserved exactly as they were in the patient's circulation. Pick a different tube and the whole result is worthless. Now, begin the practical.",
+        "Correct. You have chosen the EDTA tube, purple top. Inside the tube is a chemical called EDTA, sprayed onto the wall as a thin film. When the blood hits it, the EDTA grabs the calcium in the blood. Calcium is what makes blood clot, so with the calcium held, the blood stays liquid. Just as importantly, the red cells keep their exact shape. This is the tube this test was designed around. Now tap Begin the practical to move to the bench.",
       labelling:
-        "Step one. Label the tube. Write the patient's name, the date and time of collection, and your initials. Do this at the bedside, in the patient's presence, before you leave her side. A mislabelled tube is a rejected tube. Tap the button to write the label.",
+        "Step one, labelling. Pick up the pen and write on the tube. Her name, the date and time you took the sample, and your initials. Do this at the bedside, before you leave the patient. A mislabelled tube is thrown away and the sample is taken again. Tap the button that says Write the label.",
       filling:
-        "Step two. Fill the capillary. Take a heparinised microhaematocrit capillary and fill it to about three quarters. Then wipe the outside clean against gauze. Blood on the outside will contaminate the centrifuge. Tap the button to fill the capillary.",
+        "Step two, filling the capillary. A capillary tube is a thin glass tube, narrower than a drinking straw. You hold it against the drop of blood and the blood rises up on its own. Let it fill about three quarters of the way. Tap the button that says Fill the capillary.",
       sealing:
-        "Step three. Seal the dry end. Push the dry end of the capillary into sealing clay, or fit a plastic cap. Never seal the end that touched the blood. Sealing the wet end traps an air bubble and destroys the column. Tap the button to seal the tube.",
+        "Step three, sealing the dry end. One end of the tube touched the blood. The other end is dry. Push the dry end into the sealing clay. The clay plugs that end so nothing escapes when the tube spins. Tap the button that says Seal the dry end.",
       loading:
-        "Step four. Load the centrifuge. Put the capillary into the rotor with the sealed end pressed against the rubber gasket. Load a second, balanced capillary in the opposite slot. A single capillary unbalances the rotor at twelve thousand g and can damage the machine. Tap the button to load the sample.",
+        "Step four, loading the centrifuge. Put your tube into one of the holes in the rotor, sealed end outward. Then put a second, empty capillary in the hole directly opposite, to balance the machine. Tap the button that says Load the centrifuge.",
       spinning:
-        "Step five. Spin the sample. The centrifuge will run for five minutes at twelve thousand g. Then you will read the packed cell column against the reader card. Red cells at the bottom, a thin buffy coat above them, and plasma at the top. Tap the button to start the spin.",
+        "Step five, spinning the sample. The centrifuge will run for five minutes at twelve thousand g. Then you will read the packed cell column against the reader card. Tap the button that says Start the spin.",
       reading:
-        "The spin is complete. Read the packed cell volume against the haematocrit reader card, and compare the number to the reference range shown on the readout. Then answer the question that follows.",
+        "The spin is complete. Read the packed cell volume against the reference range shown on the readout. Now look at the question that has just appeared below, and answer it.",
       interpret:
-        "Question one. Read it carefully before you answer. This is the question the whole practical exists for.",
+        "Question one. Read the question and the four options on the screen, then tap the answer you think is correct. This is the question the whole practical exists for.",
       action:
-        "Question two. You have already reported the value. Now decide what the next professional action on this result should be.",
+        "Question two. You have already reported the value. Now read the question on the screen and tap the answer that tells you what the next professional action should be.",
       results:
-        "The practical is complete. Every competency is assessed independently. Look at what you demonstrated, then either try again or go back to the course.",
+        "The practical is complete. Every competency is shown below, and each was assessed independently. If you want to run the practical again, tap Try again. To return to the course, tap Back to the course.",
     },
     // Tube-by-tube feedback for the wrong picks. Each message names
     // the tube, says why it is wrong for this practical specifically,
@@ -1425,7 +1506,7 @@ const VITRO_SCRIPTS = {
     // What the student sees when the correct tube is picked. Teaches
     // the reason, not just the fact.
     correctTubesFeedback:
-      "Correct — the purple-top tube. Inside it is a chemical called EDTA, sprayed onto the wall as a thin film. When the blood hits it, the EDTA grabs the calcium in the blood. Calcium is what makes blood clot, so with the calcium held, the blood stays liquid. Just as importantly, the red cells keep their exact shape so the machine can measure them properly. This is the tube this test was designed around.",
+      "Correct — the purple-top tube. Inside it is a chemical called EDTA, sprayed onto the wall as a thin film. When the blood hits it, the EDTA grabs the calcium in the blood. Calcium is what makes blood clot, so with the calcium held, the blood stays liquid. Just as importantly, the red cells keep their exact shape, so when you load the tube into the centrifuge later, they will pack down into a clean column you can measure. This is the tube the practical was designed around.",
     // What the student has to do at the bench after picking the
     // tube, in order. Each step is a button they tap; the bench
     // tracks progress and only unlocks the analyser at the right
@@ -1447,7 +1528,7 @@ const VITRO_SCRIPTS = {
         id: "seal",
         label: "Seal the dry end",
         instruction:
-          "One end of the tube has touched the blood. The other end is still dry. Push the dry end into a block of sealing clay — the clay plugs that end and stops blood escaping when the tube spins. Never seal the wet end: the plug would push air into the tube and break the column of blood.",
+          "One end of the tube has touched the blood. The other end is still dry. Push the dry end into a block of sealing clay. The clay plugs that end and stops blood escaping when the tube spins. Never seal the wet end: the plug would push air into the tube and break the column of blood.",
       },
       {
         id: "load",
@@ -1471,39 +1552,39 @@ const VITRO_SCRIPTS = {
     // this becomes a scored competency check; for now it is read
     // as a lesson.
     outcome:
-      "Ama's packed cell volume is 0.31. The normal range for a non-pregnant woman is 0.36 to 0.46, so she is below the range — she is anaemic. Her haemoglobin of 9.4 g/dL agrees. The number tells us she is anaemic; it does not tell us why. To find the cause, the clinician needs two more tests: a full blood count, which will show the size of her red cells, and a blood film, which lets a scientist look at the cells under the microscope. Those two together will point at iron deficiency, folate deficiency, or something else. That is the next step, and the report we send should say so.",
+      "Grace's packed cell volume is 0.31. The normal range for a non-pregnant woman is 0.36 to 0.46, so she is below the range — she is anaemic. Her haemoglobin of 9.4 g/dL, down from 10.8 at booking, agrees. The number tells us she is anaemic; it does not tell us why. To find the cause, the clinician needs two more tests: a full blood count, which will show the size of her red cells, and a blood film, which lets a scientist look at the cells under the microscope. Those two together will point at iron deficiency, folate deficiency, or something else. That is the next step, and the report we send should say so.",
     // The interpretation question. Scored as its own competency,
     // because interpretation is what the practical is for.
         interpretation: {
       question:
-        "Ama's packed cell volume reads 0.31 L/L. The normal range for a non-pregnant woman is 0.36 to 0.46 L/L. She is 34 weeks pregnant, and pregnancy does lower the packed cell volume slightly by diluting the blood. Taking that into account, what does her result mean?",
+        "Grace Owusu's packed cell volume reads 0.31. The reference range for a non-pregnant adult woman is 0.36 to 0.46. She is 34 weeks pregnant, and in late pregnancy the plasma volume expands, which lowers the packed cell volume slightly. Her booking haemoglobin was 10.8 g/dL. Her current haemoglobin is 9.4 g/dL. How do you interpret the result on the report form?",
       options: [
-        "Normal for late pregnancy; record it and take no further action now.",
-        "Below the normal range; this is anaemia and it must be reported as such.",
-        "Too low to comment on; the sample should be taken again and re-run.",
-        "Above the normal range; this is a high red cell count caused by pregnancy.",
+        "Expected in late pregnancy; record as normal for gestation and take no action.",
+        "Below the reference range for her gestation; report as anaemia and flag it.",
+        "Uninterpretable without a repeat sample; hold the result and recollect venous blood.",
+        "Above the reference range for a pregnant woman; report as gestational polycythaemia.",
       ],
       correctIndex: 1,
       wrongFeedback: {
-        0: "Pregnancy does dilute the blood and lower the packed cell volume a little, but not down to 0.31. That figure is well below the normal range even after allowing for the effect of pregnancy. Calling it normal would mean a real problem gets filed without anyone acting on it — which is exactly what a laboratory result is supposed to prevent.",
-        2: "The result can be commented on. The reference range exists precisely so a number like 0.31 can be judged against it, and against her clinical picture — tiredness, breathlessness, pale conjunctivae. Asking for a new sample is not the right response; the sample is fine, the result is real, and it should be reported.",
-        3: "Pregnancy lowers the packed cell volume, it does not raise it. And 0.31 is below the normal range, not above it. Reading the number against the range — and then allowing for how pregnancy shifts that range — is the whole skill being tested here.",
+        0: "Pregnancy does dilute the blood and lower the packed cell volume slightly, but not as far as 0.31, and not with a haemoglobin that has fallen from 10.8 to 9.4 g/dL over the same period. Filing this as normal would mean a real problem goes back to the antenatal team with no comment on it — which is the one thing a laboratory result exists to prevent.",
+        2: "The result can absolutely be interpreted. That is what the reference range is for. 0.31 against a range of 0.36 to 0.46 reads clearly as below range, and her falling haemoglobin supports that reading. Asking for a new sample is not the right action; the sample is valid, the result is real, and it should be reported to the clinician.",
+        3: "Pregnancy lowers the packed cell volume, it does not raise it. And 0.31 is below the reference range, not above it. Reading the number against the range — and then allowing for how pregnancy shifts that range — is the whole skill being tested here.",
       },
     },
     reportableAction: {
       question:
-        "You have written the result on the report form and marked it as below the normal range. What is the next thing you actually do with it?",
+        "The result has been written on the report form and marked as below the reference range. The antenatal team will not review it until their next clinic in four days. What is the next thing you do with this result?",
       options: [
-        "File the report; the clinician will read the antenatal results at the next clinic.",
-        "Run the test again on a second sample to be sure before reporting anything.",
-        "Send the result to the clinician and suggest a full blood count and a blood film.",
-        "Phone the clinician now, as a same-hour emergency, because the value is critical.",
+        "File the report for the antenatal team to read at their next scheduled clinic.",
+        "Run the test again on a second venous sample to confirm the finding first.",
+        "Send the result now and suggest a full blood count and a blood film to find the cause.",
+        "Telephone the antenatal team immediately as a same-hour critical result call.",
       ],
       correctIndex: 2,
       wrongFeedback: {
-        0: "Filing without flagging is how abnormal results get missed. The clinician asked for this test because they were already worried — tiredness, breathlessness, pallor. A result that confirms their suspicion is the one thing they need to see. It does not sit in a pile waiting for the next antenatal clinic.",
-        1: "Repeating the sample adds nothing. The result makes sense — she is a pregnant woman with the symptoms and signs of anaemia, and a haemoglobin that fits. What is missing is not a repeat packed cell volume; it is the tests that will tell us why she is anaemic. Repeating without escalating just delays that.",
-        3: "This is not a same-hour emergency. A result that would require a phone call within the hour is one where the patient is in immediate danger — for example, a packed cell volume so low she needs blood right now. Ama's result is significant, but she is walking and talking, and the correct action is a routine report with a suggestion that the clinician order further tests.",
+        0: "Filing without flagging is how abnormal results get missed. The midwife specifically asked us to measure the packed cell volume today and report to the antenatal team. The result confirms her suspicion. It needs to go back to her now, not sit in a folder until the next clinic.",
+        1: "Repeating the sample adds nothing. The result is consistent with her clinical picture — falling haemoglobin, tiredness, breathlessness, pallor. What is missing is not a repeat packed cell volume, it is the tests that will tell us why she is anaemic. Repeating without escalating just delays the answer the clinician needs.",
+        3: "This is not a same-hour emergency. A result that requires a phone call within the hour is one where the patient is in immediate danger — for example, a packed cell volume so low she needs blood right now. Grace's result is significant, but she is walking and talking, and the correct action is a routine report that suggests further tests, not an emergency call.",
       },
     },
   },
@@ -1571,58 +1652,176 @@ const VITRO_COMPETENCIES = {
 //     — cancels whatever is speaking, silently. Called when the
 //       bench unmounts, or when the student mutes.
 // ------------------------------------------------------------------
-function vitroSpeak(text, onEnd) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) {
-    if (typeof onEnd === "function") onEnd();
-    return false;
-  }
-  try {
-    window.speechSynthesis.cancel();
-  } catch {}
-  const clean = String(text || "").replace(/\s*—\s*/g, ", ");
-  const utter = new SpeechSynthesisUtterance(clean);
-  // Same voice preference as the podcast feature. A student who
-  // chose a female voice for Listen hears a female voice here.
-  let gender = "female";
-  try {
-    gender = window.localStorage.getItem("ascend_voice_gender") || "female";
-  } catch {}
-  utter.pitch = gender === "male" ? 0.85 : 1.1;
-  utter.rate = 0.97;
-  // Try to attach the same named voice ascendPickVoice would
-  // pick. Done synchronously from the cached voice list if it's
-  // already populated, which it will be by the time the student
-  // reaches the bench — the podcast feature populated it earlier.
+// ------------------------------------------------------------------
+// Vitro narration engine.
+//
+// One utterance is a unit. The engine lets a sentence finish
+// before starting the next one, with a short silence between
+// them. That is the whole point: cutting speech mid-sentence
+// is what makes an app sound broken, and every transition in
+// this file — donning to bench, bench to question, question to
+// question — has to sound like narration, not like a switch.
+//
+//   playNext = the line currently being spoken, if any
+//   queued   = the line waiting to speak, if any
+//   MAX_WAIT = if the current line has been going longer than
+//              this, cut it and move on. Prevents a very long
+//              sentence from blocking the student's progress.
+//
+// External API, unchanged from the caller's point of view:
+//
+//   vitroSpeak(text)      — request a line
+//   vitroStopSpeaking()   — silence immediately
+//   vitroIsSpeaking()     — true if anything is currently audible
+//
+// Every request replaces the queue. Only one line is ever
+// pending. A second call before the first has finished will
+// not stack lines; it will wait for the current line, then
+// speak the newest request.
+// ------------------------------------------------------------------
+const VITRO_SPEAK_BEAT_MS = 350;
+const VITRO_MAX_WAIT_MS = 3200;
+
+const vitroEngine = {
+  currentUtter: null,
+  queuedText: null,
+  queuedStartedAt: 0,
+  currentStartedAt: 0,
+  tickHandle: null,
+  gender: "female",
+};
+
+// Pick a good voice for the chosen gender, once per session.
+function vitroPickVoice() {
   try {
     const voices = window.speechSynthesis.getVoices() || [];
     const englishVoices = voices.filter((v) => /^en/i.test(v.lang));
     const pool = englishVoices.length ? englishVoices : voices;
     const hints =
-      gender === "male"
-        ? ["male", "david", "mark", "daniel", "alex", "fred", "guy", "ryan", "tom"]
-        : ["female", "zira", "samantha", "victoria", "susan", "karen", "aria", "jenny", "joanna"];
-    const match = pool.find((v) =>
-      hints.some((h) => v.name.toLowerCase().includes(h))
-    );
-    if (match) utter.voice = match;
-  } catch {}
-  if (typeof onEnd === "function") {
-    utter.onend = onEnd;
-    utter.onerror = onEnd;
+      vitroEngine.gender === "male"
+        ? ["male", "david", "mark", "daniel", "alex", "fred", "guy", "ryan", "tom", "george"]
+        : ["female", "zira", "samantha", "victoria", "susan", "karen", "aria", "jenny", "joanna", "libby", "sonia"];
+    return pool.find((v) => hints.some((h) => v.name.toLowerCase().includes(h))) || null;
+  } catch {
+    return null;
   }
+}
+
+// Build and speak one utterance. Returns true if speech began.
+function vitroSpeakNow(text) {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
+  const clean = String(text || "").replace(/\s*—\s*/g, ", ");
+  const utter = new SpeechSynthesisUtterance(clean);
+  utter.pitch = vitroEngine.gender === "male" ? 0.85 : 1.1;
+  utter.rate = 0.97;
+  const voice = vitroPickVoice();
+  if (voice) utter.voice = voice;
+
+  vitroEngine.currentUtter = utter;
+  vitroEngine.currentStartedAt = Date.now();
+
+  utter.onend = vitroEngine.onEnd;
+  utter.onerror = vitroEngine.onEnd;
+
   try {
     window.speechSynthesis.speak(utter);
     return true;
   } catch {
+    vitroEngine.currentUtter = null;
     return false;
   }
 }
 
+// Called when an utterance ends, naturally or otherwise.
+// Hands control to the next queued line, or clears the queue.
+vitroEngine.onEnd = function () {
+  vitroEngine.currentUtter = null;
+  if (vitroEngine.queuedText) {
+    // Brief beat, then speak the pending line.
+    setTimeout(() => {
+      const next = vitroEngine.queuedText;
+      vitroEngine.queuedText = null;
+      if (next) vitroSpeakNow(next);
+    }, VITRO_SPEAK_BEAT_MS);
+  }
+};
+
+// Called periodically while a line is speaking, to enforce
+// the MAX_WAIT cap and drain the queue if the browser fails
+// to fire onend (which happens occasionally on some mobile
+// speech engines).
+function vitroSpeakTick() {
+  if (!vitroEngine.currentUtter) {
+    // Nothing is speaking. Drain queue if there is anything.
+    if (vitroEngine.queuedText) {
+      const next = vitroEngine.queuedText;
+      vitroEngine.queuedText = null;
+      vitroSpeakNow(next);
+    }
+    return;
+  }
+  const elapsed = Date.now() - vitroEngine.currentStartedAt;
+  if (elapsed > VITRO_MAX_WAIT_MS && vitroEngine.queuedText) {
+    // Current line has overrun. Cut it, then speak the queue.
+    try {
+      window.speechSynthesis.cancel();
+    } catch {}
+    vitroEngine.currentUtter = null;
+    const next = vitroEngine.queuedText;
+    vitroEngine.queuedText = null;
+    setTimeout(() => vitroSpeakNow(next), VITRO_SPEAK_BEAT_MS);
+  }
+}
+
+function vitroStartTicker() {
+  if (vitroEngine.tickHandle) return;
+  vitroEngine.tickHandle = setInterval(vitroSpeakTick, 400);
+}
+
+function vitroSpeak(text, onEnd) {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+    if (typeof onEnd === "function") onEnd();
+    return false;
+  }
+  // Refresh the gender preference at every call, so a student
+  // who changes the podcast voice mid-session hears the change
+  // on the next line.
+  try {
+    vitroEngine.gender = window.localStorage.getItem("ascend_voice_gender") || "female";
+  } catch {}
+  vitroStartTicker();
+
+  const clean = String(text || "").trim();
+  if (!clean) return false;
+
+  if (vitroEngine.currentUtter) {
+    // Something is speaking. Queue the new line; it will play
+    // when the current one finishes naturally, or when the
+    // ticker decides the current line has overrun.
+    vitroEngine.queuedText = clean;
+    vitroEngine.queuedStartedAt = Date.now();
+    return true;
+  }
+
+  return vitroSpeakNow(clean);
+}
+
 function vitroStopSpeaking() {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  vitroEngine.queuedText = null;
+  vitroEngine.currentUtter = null;
   try {
     window.speechSynthesis.cancel();
   } catch {}
+}
+
+function vitroIsSpeaking() {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
+  try {
+    return window.speechSynthesis.speaking;
+  } catch {
+    return false;
+  }
 }
 
 // ------------------------------------------------------------------
@@ -2055,6 +2254,118 @@ function VitroCapillarySvg({ fill = "empty", sealed = false, height = 120 }) {
   );
 }
 
+// ------------------------------------------------------------------
+// Three small bench objects. Each is drawn the same way as the
+// tube and capillary — plain SVG, one palette, theme tokens for
+// anything that should flip, literal colour only for the object's
+// own identity (gauze is white, clay is tan, the reader card is
+// white with a red scale).
+//
+// These exist because the narrator names them. If the voice says
+// "wipe the tube with gauze", there has to be gauze on the bench.
+// Naming an object that isn't there is the fastest way to lose a
+// student.
+// ------------------------------------------------------------------
+function VitroGauzeSvg({ size = 60 }) {
+  return (
+    <svg
+      viewBox="0 0 60 40"
+      width={size}
+      style={{ display: "block" }}
+      role="img"
+      aria-label="Gauze square"
+    >
+      {/* A stack of two gauze squares, offset, with a woven
+          cross-hatch so it reads as gauze and not a napkin. */}
+      <rect x="4" y="6" width="44" height="30" rx="2" fill="#E8EDF5" stroke="var(--line-2)" strokeWidth="1" opacity="0.75" />
+      <rect x="8" y="2" width="44" height="30" rx="2" fill="#F4F6FA" stroke="var(--line-2)" strokeWidth="1" />
+      {/* Weave: horizontal threads */}
+      {[7, 12, 17, 22, 27].map((y) => (
+        <line key={"h" + y} x1="10" y1={y} x2="50" y2={y} stroke="var(--line-2)" strokeWidth="0.4" opacity="0.4" />
+      ))}
+      {/* Weave: vertical threads */}
+      {[14, 20, 26, 32, 38, 44].map((x) => (
+        <line key={"v" + x} x1={x} y1="4" x2={x} y2="30" stroke="var(--line-2)" strokeWidth="0.4" opacity="0.4" />
+      ))}
+    </svg>
+  );
+}
+
+function VitroSealingClaySvg({ size = 56 }) {
+  return (
+    <svg
+      viewBox="0 0 56 40"
+      width={size}
+      style={{ display: "block" }}
+      role="img"
+      aria-label="Sealing clay block"
+    >
+      {/* The clay block: a rounded rectangle in clay-tan, with
+          a couple of small pits on top where previous capillaries
+          were pressed in. */}
+      <rect x="4" y="14" width="48" height="22" rx="4" fill="#C4A57B" stroke="#8A6E45" strokeWidth="1.2" />
+      <ellipse cx="18" cy="15" rx="3.5" ry="1.4" fill="#8A6E45" opacity="0.6" />
+      <ellipse cx="30" cy="15" rx="3.5" ry="1.4" fill="#8A6E45" opacity="0.6" />
+      <ellipse cx="42" cy="15" rx="3.5" ry="1.4" fill="#8A6E45" opacity="0.6" />
+      {/* A soft highlight across the top of the block */}
+      <ellipse cx="28" cy="17" rx="22" ry="2" fill="#E0C89C" opacity="0.5" />
+    </svg>
+  );
+}
+
+function VitroReaderCardSvg({ size = 90 }) {
+  return (
+    <svg
+      viewBox="0 0 90 50"
+      width={size}
+      style={{ display: "block" }}
+      role="img"
+      aria-label="Haematocrit reader card"
+    >
+      {/* A white card with a red scale. This is the physical
+          reader card a student holds the spun capillary against. */}
+      <rect x="2" y="4" width="86" height="42" rx="3" fill="#F4F6FA" stroke="var(--line-2)" strokeWidth="1" />
+      {/* Red scale bar */}
+      <rect x="8" y="10" width="74" height="8" rx="1" fill="#8E2E2A" opacity="0.85" />
+      {/* Tick marks and numbers down the scale */}
+      {[0, 10, 20, 30, 40, 50, 60, 70].map((v, i) => (
+        <g key={i}>
+          <line
+            x1={8 + i * 10.5}
+            y1="10"
+            x2={8 + i * 10.5}
+            y2="6"
+            stroke="var(--line-2)"
+            strokeWidth="0.6"
+          />
+          <text
+            x={8 + i * 10.5}
+            y="34"
+            textAnchor="middle"
+            fontFamily="Arial, sans-serif"
+            fontSize="6"
+            fontWeight="700"
+            fill="var(--text-2)"
+          >
+            {v}
+          </text>
+        </g>
+      ))}
+      {/* Label under the scale */}
+      <text
+        x="45"
+        y="43"
+        textAnchor="middle"
+        fontFamily="Arial, sans-serif"
+        fontSize="4.6"
+        fontWeight="600"
+        fill="var(--text-3)"
+      >
+        HAEMATOCRIT READER
+      </text>
+    </svg>
+  );
+}
 // ------------------------------------------------------------------
 // VitroTubeBench — the reusable tube-and-sample bench, rebuilt
 // as a real simulation.
@@ -2871,7 +3182,12 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
             </div>
           )}
 
-          {/* ---- Capillary, when it exists ---- */}
+          {/* ---- Bench objects ----
+              Everything the narrator names appears here. Each
+              object appears the moment the step that uses it
+              becomes active, and stays visible while that step
+              and later steps are in progress. Nothing the voice
+              says is invisible to the student. */}
           {(phase === "filling" ||
             phase === "sealing" ||
             phase === "loading" ||
@@ -2879,42 +3195,140 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
             <div
               style={{
                 marginTop: 14,
-                display: "flex",
-                alignItems: "flex-end",
-                gap: 20,
-                justifyContent: "center",
-                padding: "10px 0",
+                paddingTop: 12,
                 borderTop: "1px solid var(--line)",
+                display: "flex",
+                flexDirection: "column",
+                gap: 14,
               }}
             >
+              {/* Row 1: capillary + gauze (fill step) */}
               <div
                 style={{
                   display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: 4,
+                  alignItems: "flex-end",
+                  gap: 24,
+                  justifyContent: "center",
+                  flexWrap: "wrap",
                 }}
               >
-                <VitroCapillarySvg
-                  fill={capillaryFill}
-                  sealed={capillarySealed}
-                  height={100}
-                />
                 <div
-                  className="mono"
                   style={{
-                    fontSize: 10,
-                    color: "var(--text-3)",
-                    letterSpacing: "0.03em",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 4,
                   }}
                 >
-                  CAPILLARY
+                  <VitroCapillarySvg
+                    fill={capillaryFill}
+                    sealed={capillarySealed}
+                    height={100}
+                  />
+                  <div
+                    className="mono"
+                    style={{
+                      fontSize: 10,
+                      color: "var(--text-3)",
+                      letterSpacing: "0.03em",
+                    }}
+                  >
+                    CAPILLARY
+                  </div>
                 </div>
+
+                {/* Gauze appears while filling or sealing is
+                    the active step, since the instruction tells
+                    the student to wipe the tube on gauze. */}
+                {(phase === "filling" || phase === "sealing") && (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: 4,
+                    }}
+                  >
+                    <VitroGauzeSvg size={64} />
+                    <div
+                      className="mono"
+                      style={{
+                        fontSize: 10,
+                        color: "var(--text-3)",
+                        letterSpacing: "0.03em",
+                      }}
+                    >
+                      GAUZE
+                    </div>
+                  </div>
+                )}
+
+                {/* Sealing clay appears while sealing is the
+                    active step, so the student can see what the
+                    voice names. */}
+                {phase === "sealing" && (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: 4,
+                    }}
+                  >
+                    <VitroSealingClaySvg size={62} />
+                    <div
+                      className="mono"
+                      style={{
+                        fontSize: 10,
+                        color: "var(--text-3)",
+                        letterSpacing: "0.03em",
+                      }}
+                    >
+                      SEALING CLAY
+                    </div>
+                  </div>
+                )}
               </div>
-              <VitroCentrifugeSvg
-                state={centrifugeState}
-                result={analyserRan ? script.analyser.result : null}
-              />
+
+              {/* Row 2: centrifuge, then reader card beside it
+                  once the spin has run and the student is about
+                  to read the result. */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                  gap: 20,
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                }}
+              >
+                <VitroCentrifugeSvg
+                  state={centrifugeState}
+                  result={analyserRan ? script.analyser.result : null}
+                />
+                {analyserRan && (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: 4,
+                    }}
+                  >
+                    <VitroReaderCardSvg size={96} />
+                    <div
+                      className="mono"
+                      style={{
+                        fontSize: 10,
+                        color: "var(--text-3)",
+                        letterSpacing: "0.03em",
+                      }}
+                    >
+                      READER CARD
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>
