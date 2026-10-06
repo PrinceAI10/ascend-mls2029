@@ -187,33 +187,33 @@ html, body {
 .ascend-root.light{
   --bg:#F4F6FA; --bg-2:#FFFFFF; --bg-3:#EDF1F7; --raised:#FFFFFF;
   --line:#E2E7F0; --line-2:#CED7E4;
-  --text:#131922; --text-2:#4B5A70; --text-3:#657080;
-  --amber:#936610; --amber-2:#956408; --amber-dim:rgba(231,162,31,.14);
-  --good:#187E4B; --good-dim:rgba(30,158,94,.12);
-  --bad:#C54129; --bad-dim:rgba(212,72,47,.10);
+  --text:#131922; --text-2:#4B5A70; --text-3:#7C8798;
+  --amber:#E7A21F; --amber-2:#B4790A; --amber-dim:rgba(231,162,31,.14);
+  --good:#1E9E5E; --good-dim:rgba(30,158,94,.12);
+  --bad:#D4482F; --bad-dim:rgba(212,72,47,.10);
 }
 .ascend-root.light .opt.correct{color:var(--text)}
 .ascend-root.light .opt.correct{background:rgba(30,158,94,.20);border-color:var(--good);color:var(--text)}
 .ascend-root.light .opt.wrong{background:rgba(212,72,47,.16);border-color:var(--bad);color:var(--text)}
 .ascend-root.light .hero{background:linear-gradient(160deg,#E8EDF5 0%,#D5DDE8 60%)}
-.ascend-root.light .hero-h .hl{color:var(--amber-2)}
-.ascend-root.light .hero-p{color:var(--text-2)}
+.ascend-root.light .hero-h .hl{color:#B4790A}
+.ascend-root.light .hero-p{color:#4B5A70}
 .ascend-root.light .msg.a{background:var(--bg-3);color:var(--text)}
-.ascend-root.light .msg.u{background:var(--amber-dim);color:var(--amber-2)}
+.ascend-root.light .msg.u{background:var(--amber-dim);color:#B4790A}
 .ascend-root.light .topbar{background:rgba(244,246,250,.92)}
 .ascend-root.light .lesson-p{color:var(--text)}
-.ascend-root.light .lesson-q{color:var(--amber-2)}
+.ascend-root.light .lesson-q{color:#B4790A}
 .ascend-root.light .qa-a{color:var(--text)}
-.ascend-root.light .qa-a:before{color:var(--good)}
+.ascend-root.light .qa-a:before{color:#1E9E5E}
 .ascend-root.light .opt{background:var(--bg-2)}
-.ascend-root.light .day-tag{color:var(--amber-2);background:rgba(231,162,31,.14)}
+.ascend-root.light .day-tag{color:#B4790A;background:rgba(231,162,31,.14)}
 .ascend-root.light .notif-panel,.ascend-root.light .notif-head,.ascend-root.light .notif-item{background:var(--bg-2)}
 .ascend-root.light .plan-in,.ascend-root.light .qbox,.ascend-root.light .chat-in input,.ascend-root.light .auth-input{background:var(--bg-2);color:var(--text)}
 .ascend-root.light .auth-card{background:var(--bg-2)}
 .ascend-root.light .seg{background:var(--bg-3)}
 .ascend-root.light .avatar{background:linear-gradient(150deg,#D5DDE8,#B8C4D4);color:#1B1405}
-.ascend-root.light .navi{color:var(--text-2)}
-.ascend-root.light .navi.on{background:rgba(231,162,31,.14);color:var(--amber-2)}
+.ascend-root.light .navi{color:#4B5A70}
+.ascend-root.light .navi.on{background:rgba(231,162,31,.14);color:#B4790A}
 .ascend-root.light .mobile-sidebar{background:var(--bg-2)}
 .shell{display:flex;min-height:100vh;max-width:1440px;margin:0 auto;width:100%}
 .side{display:none}
