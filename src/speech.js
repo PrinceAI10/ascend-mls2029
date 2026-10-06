@@ -242,53 +242,13 @@ function installVisibilityHandler() {
 //     silently drops the speak() call. Cleared the moment onstart
 //     fires, so it can never race onend into a double-advance.
 // ------------------------------------------------------------
-// True on phones and tablets. Used to pick the "one utterance per
-// step" path for mobile narration, where each speechSynthesis.speak()
-// call opens and closes its own audio session and the open-close
-// cycle between consecutive calls is audible as a stutter. Desktop
-// engines hold one audio session across multiple speak() calls, so
-// chunk-by-chunk reading is smooth there and stays unchanged.
-const IS_MOBILE =
-  typeof navigator !== "undefined" &&
-  /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || "");
 
-function speak(text, { onStart, onEnd, rate = 1, gender = null, chunks = null } = {}) {
+function speak(text, { onStart, onEnd, rate = 1, gender = null } = {}) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) {
     if (onEnd) onEnd();
     return;
   }
-  // On mobile, if the caller passed an array of chunks, join them
-  // into one continuous utterance so the phone's speech engine holds
-  // a single audio session for the whole step. This is exactly the
-  // behaviour the laptop already gets for free — the desktop engine
-  // concatenates consecutive utterances into one audio pipeline,
-  // whereas the mobile engine opens and closes a new session for
-  // each one. Joining the text reproduces the laptop's smoothness
-  // on the phone, at the cost of the per-paragraph highlight (which
-  // desktop still gets, because desktop keeps the chunk-by-chunk path).
-  let spokenText = String(text || "").trim();
-  let onStartHook = null;
-  let onEndHook = null;
-
-  if (IS_MOBILE && Array.isArray(chunks) && chunks.length > 1) {
-    // Join with a comma-space so the speech engine inserts its own
-    // natural pause at each boundary. A comma is the softest
-    // punctuation the engine accepts, so the resulting read is a
-    // continuous flow with light breaths rather than a stutter.
-    spokenText = chunks
-      .map((c) => (c && c.text ? c.text.trim() : ""))
-      .filter(Boolean)
-      .join(" ");
-
-    // Fire onStart once, when the first chunk's text begins. Fire
-    // onEnd once, when the whole joined utterance finishes. The
-    // caller's onStart/onEnd see one speak() call for the step,
-    // exactly as they would if the app had spoken one long line.
-  } else {
-    // Desktop path (or single-chunk input): unchanged behaviour.
-  }
-
-  const clean = spokenText;
+  const clean = String(text || "").trim();
   if (!clean) {
     if (onEnd) onEnd();
     return;
@@ -296,17 +256,14 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null, chunks = null } 
 
   installVisibilityHandler();
 
-  // Cancel anything in flight — but ONLY if something actually is
-  // in flight. On mobile, calling cancel() on an idle speech queue
-  // tears down and re-establishes the audio session, which inserts
-  // 100-300ms of silence before the next utterance can start. That
-  // silence is the second half of the mobile stutter. Skip the
-  // cancel when there's nothing to cancel.
-  try {
-    if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
-      window.speechSynthesis.cancel();
-    }
-  } catch {}
+  // Cancel anything in flight. Unconditional — the conditional
+  // version I tried skipped the cancel when the engine reported
+  // idle, but some mobile engines report idle for a few hundred
+  // ms before they've actually released the audio session, and
+  // the next speak() call then queued behind a session that was
+  // still tearing down. The unconditional cancel is what the
+  // engine actually wants.
+  try { window.speechSynthesis.cancel(); } catch {}
 
   const words = clean.split(/\s+/).length;
   const finishMs = Math.max(6000, (words / 2.0) * 1000 * 1.6 + 3000) / rate;
@@ -331,13 +288,7 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null, chunks = null } 
     if (onEnd) onEnd();
   };
 
-  // If speech never actually starts, we still need to finish.
-  // Otherwise a diagram/reader would freeze waiting on a
-  // dropped utterance.
-  startupTimer = setTimeout(() => {
-    startupTimer = null;
-    if (!started) finish();
-  }, STARTUP_MS);
+
 
   (async () => {
     const g = gender || readGender();
@@ -382,7 +333,18 @@ function speak(text, { onStart, onEnd, rate = 1, gender = null, chunks = null } 
       window.speechSynthesis.speak(utter);
     } catch {
       finish();
+      return;
     }
+
+    // Arm the startup watchdog AFTER speak() has been called.
+    // Arming it earlier was the bug that skipped step 1 on mobile:
+    // the async IIFE hadn't reached the speak() call yet, so the
+    // timer fired with `started` still false and advanced the
+    // step before anything was actually spoken.
+    startupTimer = setTimeout(() => {
+      startupTimer = null;
+      if (!started) finish();
+    }, STARTUP_MS);
   })();
 }
 
@@ -496,9 +458,16 @@ function speakQueuedNow(text) {
     utter.pitch = 1.1;
     utter.rate = 0.82;
   }
-  pickVoice(g).then((voice) => {
-    if (voice) utter.voice = voice;
-  });
+  // Use the cached voice — the same cache speak() uses. If it's
+  // not resolved yet, kick off the fetch and use the voice next
+  // time. This removes the promise hop that made the utterance
+  // start on the default voice and never switch on some engines.
+  let voice = voiceByGender[g];
+  if (voice === undefined) {
+    pickVoice(g).then((v) => { voiceByGender[g] = v || null; });
+  } else if (voice) {
+    utter.voice = voice;
+  }
   queue.currentUtter = utter;
   queue.currentStartedAt = Date.now();
   queue.currentText = clean;
