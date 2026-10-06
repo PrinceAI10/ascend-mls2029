@@ -357,7 +357,326 @@ function VitroBenchStyles() {
 // the proportions, plus the hair shape. Everything else is the
 // same drawing, tuned by two numbers.
 // ------------------------------------------------------------------
+function VitroScientistSvg({ sex = "male", stage = "street", height = 220 }) {
+  const isFemale = sex === "female";
 
+  // ---- Identity colours (literal hex — represent the person/garment) ----
+  const skin = isFemale ? "#C68642" : "#6B4226";
+  const hair = "#1B1210";
+  const underlayer = isFemale ? "#4C6B5A" : "#3E5E7A";
+  const trousers = "#2E3A55";
+  const shoeColor = "#1B1B1F";
+  const coatColor = "#F4F6FA";
+  const coatShade = "#E8EDF5";
+  const faceDot = "#2A2016";
+  const mlsRed = "#B91C1C";
+  const mlsBlack = "#1A1A1A";
+
+  const cx = 70;
+
+  // ---- Fixed anchors — head/shoulder/hand/waist/hip/ankle/foot positions
+  // stay put so the parent's mask/eyewear/glove overlays still line up.
+  // Eye spacing is widened slightly (per latest note) so goggles read fully
+  // across the face — head centre, radius and y are untouched.
+  const headCy = 46;
+  const headR = 20;
+  const eyeY = 44;
+  const eyeXLeft = 60;
+  const eyeXRight = 80;
+  const shoulderY = 82;
+  const waistY = 130;
+  const hipY = 150;
+  const ankleY = 226;
+  const footY = 243;
+  const handY = 179;
+  const handXLeft = 32;
+  const handXRight = 108;
+
+  // ---- Sex-specific silhouette (shoulders / waist / hip / neck only) ----
+  const shoulderHalf = isFemale ? 27 : 34; // ~54 vs ~68 across
+  const waistHalf = isFemale ? 14 : 23;
+  const hipHalf = isFemale ? 26 : 18;
+  const collarHalf = 7;
+  const neckTopY = isFemale ? 60 : 68;
+
+  const shoulderXLeft = cx - shoulderHalf + 6;
+  const shoulderXRight = cx + shoulderHalf - 6;
+
+  // ---- Coat geometry — hangs from shoulders, mid-thigh hem ----
+  const coatShoulderHalf = shoulderHalf + 5;
+  const coatChestHalf = shoulderHalf + 8;
+  const coatHemHalf = shoulderHalf + 4;
+  const coatHemY = 200;
+  const coatNeckY = 84;
+  const coatVPointY = 150;
+
+  // Sleeve/cuff endpoint — identical rule for both sexes so the coat always
+  // reaches the wrist fully (this is the female coverage-gap fix: the cuff
+  // target is pinned to the hand anchor itself, not derived from shoulder
+  // width, so a narrower shoulder can never leave the sleeve short).
+  const cuffY = handY - 10;
+
+  const label = isFemale
+    ? "Female medical laboratory scientist"
+    : "Male medical laboratory scientist";
+
+  // Five-fingered hand, kept inside the fixed anchor bounding box
+  // (handX ± 9, handY ± 11) so glove overlays still sit correctly and wrap
+  // fully around the hand shape underneath.
+  const Hand = ({ hx, hy, mirrored }) => {
+    const d = mirrored ? -1 : 1;
+    return (
+      <g>
+        <path
+          d={`M${hx - 6 * d},${hy - 8}
+              Q${hx - 9 * d},${hy - 2} ${hx - 8 * d},${hy + 6}
+              Q${hx - 6 * d},${hy + 11} ${hx},${hy + 11}
+              Q${hx + 7 * d},${hy + 10} ${hx + 7 * d},${hy + 2}
+              Q${hx + 7 * d},${hy - 7} ${hx + 2 * d},${hy - 9}
+              Z`}
+          fill={skin}
+          stroke="var(--line-2)"
+          strokeWidth="1.4"
+          strokeLinejoin="round"
+        />
+        <path d={`M${hx - 5 * d},${hy - 8} Q${hx - 5 * d},${hy - 12} ${hx - 3 * d},${hy - 12}`} fill="none" stroke="var(--line-2)" strokeWidth="1" strokeLinecap="round" />
+        <path d={`M${hx - 2 * d},${hy - 9} Q${hx - 2 * d},${hy - 13} ${hx},${hy - 13}`} fill="none" stroke="var(--line-2)" strokeWidth="1" strokeLinecap="round" />
+        <path d={`M${hx + 1 * d},${hy - 9} Q${hx + 1 * d},${hy - 13} ${hx + 3 * d},${hy - 13}`} fill="none" stroke="var(--line-2)" strokeWidth="1" strokeLinecap="round" />
+        {/* thumb */}
+        <path d={`M${hx - 6 * d},${hy - 6} Q${hx - 11 * d},${hy - 5} ${hx - 10 * d},${hy + 1}`} fill="none" stroke="var(--line-2)" strokeWidth="2.4" strokeLinecap="round" />
+      </g>
+    );
+  };
+
+  return (
+    <svg
+      viewBox="0 0 140 260"
+      width={(height / 260) * 140}
+      style={{ display: "block" }}
+      role="img"
+      aria-label={label}
+    >
+      {/* ---------- 1. Legs (trousers) ---------- */}
+      <path
+        d={`M${cx - waistHalf},${waistY}
+            L${cx - hipHalf},${hipY}
+            L${cx - 13},${ankleY}
+            L${cx - 4},${ankleY}
+            L${cx - 3},${hipY + 10}
+            L${cx + 3},${hipY + 10}
+            L${cx + 4},${ankleY}
+            L${cx + 13},${ankleY}
+            L${cx + hipHalf},${hipY}
+            L${cx + waistHalf},${waistY}
+            Z`}
+        fill={trousers}
+        stroke="var(--line-2)"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <line x1={cx - waistHalf + 2} y1={waistY} x2={cx + waistHalf - 2} y2={waistY} stroke="var(--line-2)" strokeWidth="1" opacity="0.5" />
+
+      {/* ---------- 2. Shoes ---------- */}
+      <path
+        d={`M${cx - 15},${ankleY} L${cx - 3},${ankleY} L${cx - 3},${footY - 5}
+            Q${cx - 6},${footY - 1} ${cx - 12},${footY}
+            Q${cx - 20},${footY + 0.5} ${cx - 24},${footY - 5}
+            Q${cx - 25},${footY - 9} ${cx - 15},${ankleY} Z`}
+        fill={shoeColor}
+        stroke="var(--line-2)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <line x1={cx - 22} y1={footY - 2} x2={cx - 6} y2={footY - 2.5} stroke="var(--bg-2)" strokeWidth="0.8" opacity="0.6" />
+      <path
+        d={`M${cx + 15},${ankleY} L${cx + 3},${ankleY} L${cx + 3},${footY - 5}
+            Q${cx + 6},${footY - 1} ${cx + 12},${footY}
+            Q${cx + 20},${footY + 0.5} ${cx + 24},${footY - 5}
+            Q${cx + 25},${footY - 9} ${cx + 15},${ankleY} Z`}
+        fill={shoeColor}
+        stroke="var(--line-2)"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <line x1={cx + 6} y1={footY - 2.5} x2={cx + 22} y2={footY - 2} stroke="var(--bg-2)" strokeWidth="0.8" opacity="0.6" />
+
+      {/* ---------- 3. Torso underlayer (shirt) ---------- */}
+      <path
+        d={`M${shoulderXLeft - 6},${shoulderY}
+            Q${cx - shoulderHalf - 3},${shoulderY + 22} ${cx - waistHalf},${waistY}
+            L${cx - collarHalf},${neckTopY + 10}
+            L${cx},${neckTopY + 16}
+            L${cx + collarHalf},${neckTopY + 10}
+            L${cx + waistHalf},${waistY}
+            Q${cx + shoulderHalf + 3},${shoulderY + 22} ${shoulderXRight + 6},${shoulderY}
+            L${cx + collarHalf + 2},${shoulderY - 6}
+            L${cx},${shoulderY + 6}
+            L${cx - collarHalf - 2},${shoulderY - 6}
+            Z`}
+        fill={underlayer}
+        stroke="var(--line-2)"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+
+      {/* ---------- 4. Collar of the underlayer ---------- */}
+      <path d={`M${cx - 6},${neckTopY + 10} L${cx},${neckTopY} L${cx + 6},${neckTopY + 10} Z`} fill={underlayer} stroke="var(--line-2)" strokeWidth="1.5" strokeLinejoin="round" />
+
+      {/* ---------- 5. Neck ---------- */}
+      <rect x={cx - 6} y={neckTopY} width="12" height={shoulderY - neckTopY + 2} rx="3" fill={skin} stroke="var(--line-2)" strokeWidth="1.5" />
+
+      {/* ---------- 6. Head ---------- */}
+      <circle cx={cx} cy={headCy} r={headR} fill={skin} stroke="var(--line-2)" strokeWidth="2" />
+
+      {/* ---------- 7. Hair ---------- */}
+      {isFemale ? (
+        <>
+          {/* full scalp cap */}
+          <path
+            d="M48,40 Q46,20 70,18 Q94,20 92,40 Q92,28 70,24 Q48,28 48,40 Z"
+            fill={hair}
+            stroke="var(--line-2)"
+            strokeWidth="1.3"
+            strokeLinejoin="round"
+          />
+          {/* left braid — ends above the shoulder line (lab safety: tied hair clear of the shoulder) */}
+          <path
+            d={`M53,40 Q47,55 48,68 Q48,74 50,78 L54,78 Q53,74 52,63 Q52,50 57,42 Z`}
+            fill={hair}
+            stroke="var(--line-2)"
+            strokeWidth="1.2"
+            strokeLinejoin="round"
+          />
+          {/* braid plait texture */}
+          <path d="M50,47 L54,45 M50,53 L54,51 M50,59 L54,57 M50,65 L54,63 M50,71 L54,69" stroke="var(--line-2)" strokeWidth="0.7" opacity="0.5" strokeLinecap="round" />
+          {/* right braid — mirrored, also ends above the shoulder */}
+          <path
+            d={`M87,40 Q93,55 92,68 Q92,74 90,78 L86,78 Q87,74 88,63 Q88,50 83,42 Z`}
+            fill={hair}
+            stroke="var(--line-2)"
+            strokeWidth="1.2"
+            strokeLinejoin="round"
+          />
+          <path d="M90,47 L86,45 M90,53 L86,51 M90,59 L86,57 M90,65 L86,63 M90,71 L86,69" stroke="var(--line-2)" strokeWidth="0.7" opacity="0.5" strokeLinecap="round" />
+        </>
+      ) : (
+        <>
+          {/* taper fade: short, close-cropped crown */}
+          <path
+            d="M51,37 Q51,23 70,21 Q89,23 89,37 Q89,28 70,26 Q51,28 51,37 Z"
+            fill={hair}
+            stroke="var(--line-2)"
+            strokeWidth="1.3"
+            strokeLinejoin="round"
+          />
+          {/* fade gradation at the temples, built from flat layered shapes
+              (no gradient fills) so the hair visually melts into the skin */}
+          <path d="M51,37 Q48,40 49,44 Q50,41 52,38 Z" fill={hair} opacity="0.45" />
+          <path d="M49,43 Q47.5,46.5 50,48 Q49.5,45.5 51,43.5 Z" fill={hair} opacity="0.2" />
+          <path d="M89,37 Q92,40 91,44 Q90,41 88,38 Z" fill={hair} opacity="0.45" />
+          <path d="M91,43 Q92.5,46.5 90,48 Q90.5,45.5 89,43.5 Z" fill={hair} opacity="0.2" />
+          {/* clean barber line-up at the front hairline */}
+          <path d="M60,23.5 Q70,21.5 80,23.5" fill="none" stroke="var(--line-2)" strokeWidth="0.6" opacity="0.5" />
+        </>
+      )}
+
+      {/* ---------- 8. Face ---------- */}
+      <circle cx={eyeXLeft} cy={eyeY} r="2.4" fill={faceDot} />
+      <circle cx={eyeXRight} cy={eyeY} r="2.4" fill={faceDot} />
+      <path d="M63,54 Q70,58 77,54" fill="none" stroke={faceDot} strokeWidth="2" strokeLinecap="round" />
+
+      {/* ---------- 9. Arms ---------- */}
+      <path d={`M${shoulderXLeft},${shoulderY + 6} Q${cx - shoulderHalf - 6},${shoulderY + 48} ${handXLeft},${cuffY}`} fill="none" stroke="var(--line-2)" strokeWidth="13" strokeLinecap="round" />
+      <path d={`M${shoulderXLeft},${shoulderY + 6} Q${cx - shoulderHalf - 6},${shoulderY + 48} ${handXLeft},${cuffY}`} fill="none" stroke={underlayer} strokeWidth="10" strokeLinecap="round" />
+      <path d={`M${shoulderXRight},${shoulderY + 6} Q${cx + shoulderHalf + 6},${shoulderY + 48} ${handXRight},${cuffY}`} fill="none" stroke="var(--line-2)" strokeWidth="13" strokeLinecap="round" />
+      <path d={`M${shoulderXRight},${shoulderY + 6} Q${cx + shoulderHalf + 6},${shoulderY + 48} ${handXRight},${cuffY}`} fill="none" stroke={underlayer} strokeWidth="10" strokeLinecap="round" />
+
+      {/* ---------- 10. Hands ---------- */}
+      <Hand hx={handXLeft} hy={handY} mirrored={true} />
+      <Hand hx={handXRight} hy={handY} mirrored={false} />
+
+      {/* ---------- 11. Lab coat (donned only) ---------- */}
+      {stage === "donned" && (
+        <>
+          {/* sleeves — pinned to the hand anchor itself (cuffY), not to
+              shoulder width, so the narrower female silhouette still gets
+              full-length coverage all the way to the wrist */}
+          <path
+            d={`M${shoulderXLeft - 2},${shoulderY - 1} Q${cx - shoulderHalf - 9},${shoulderY + 46} ${handXLeft - 2},${cuffY - 4}
+                L${handXLeft + 9},${cuffY - 4}
+                Q${cx - shoulderHalf - 1},${shoulderY + 44} ${shoulderXLeft + 9},${shoulderY - 1} Z`}
+            fill={coatShade}
+            stroke="var(--line-2)"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+          />
+          <path
+            d={`M${shoulderXRight + 2},${shoulderY - 1} Q${cx + shoulderHalf + 9},${shoulderY + 46} ${handXRight + 2},${cuffY - 4}
+                L${handXRight - 9},${cuffY - 4}
+                Q${cx + shoulderHalf + 1},${shoulderY + 44} ${shoulderXRight - 9},${shoulderY - 1} Z`}
+            fill={coatShade}
+            stroke="var(--line-2)"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+          />
+
+          {/* wrist cuffs — wrap fully around the wrist so the sleeve reads
+              as closed all the way to the hand, not fading out short */}
+          <ellipse cx={handXLeft} cy={cuffY} rx="7.5" ry="5" fill={coatColor} stroke="var(--line-2)" strokeWidth="1.3" />
+          <line x1={handXLeft - 6} y1={cuffY + 1} x2={handXLeft + 6} y2={cuffY + 1} stroke="var(--line-2)" strokeWidth="0.6" opacity="0.5" />
+          <ellipse cx={handXRight} cy={cuffY} rx="7.5" ry="5" fill={coatColor} stroke="var(--line-2)" strokeWidth="1.3" />
+          <line x1={handXRight - 6} y1={cuffY + 1} x2={handXRight + 6} y2={cuffY + 1} stroke="var(--line-2)" strokeWidth="0.6" opacity="0.5" />
+
+          {/* coat body — hangs from shoulders, mild flare at chest, tapers slightly to the hem at mid-thigh */}
+          <path
+            d={`M${cx - collarHalf - 6},${coatNeckY - 6}
+                L${cx - coatShoulderHalf},${coatNeckY}
+                Q${cx - coatChestHalf},${(coatNeckY + hipY) / 2} ${cx - coatHemHalf},${coatHemY}
+                L${cx + coatHemHalf},${coatHemY}
+                Q${cx + coatChestHalf},${(coatNeckY + hipY) / 2} ${cx + coatShoulderHalf},${coatNeckY}
+                L${cx + collarHalf + 6},${coatNeckY - 6}
+                L${cx},${coatNeckY + 10}
+                Z`}
+            fill={coatColor}
+            stroke="var(--line-2)"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+
+          {/* lapels */}
+          <path d={`M${cx - collarHalf - 6},${coatNeckY - 6} L${cx - 7},${coatVPointY}`} fill="none" stroke="var(--line-2)" strokeWidth="1.5" />
+          <path d={`M${cx + collarHalf + 6},${coatNeckY - 6} L${cx + 7},${coatVPointY}`} fill="none" stroke="var(--line-2)" strokeWidth="1.5" />
+
+          {/* front seam */}
+          <line x1={cx} y1={coatVPointY} x2={cx} y2={coatHemY - 4} stroke="var(--line-2)" strokeWidth="1" opacity="0.7" />
+
+          {/* side seams */}
+          <path d={`M${cx - coatShoulderHalf + 4},${coatNeckY + 6} Q${cx - coatChestHalf + 4},${(coatNeckY + hipY) / 2} ${cx - coatHemHalf + 4},${coatHemY - 4}`} fill="none" stroke="var(--line-2)" strokeWidth="0.8" opacity="0.45" />
+          <path d={`M${cx + coatShoulderHalf - 4},${coatNeckY + 6} Q${cx + coatChestHalf - 4},${(coatNeckY + hipY) / 2} ${cx + coatHemHalf - 4},${coatHemY - 4}`} fill="none" stroke="var(--line-2)" strokeWidth="0.8" opacity="0.45" />
+
+          {/* ---------- MLS pocket + microscope emblem — wearer's left chest (x > 70) ---------- */}
+          <rect x="78" y="150" width="18" height="14" rx="2" fill={coatShade} stroke="var(--line-2)" strokeWidth="1.2" />
+          <line x1="79" y1="152" x2="95" y2="152" stroke="var(--line-2)" strokeWidth="0.8" opacity="0.6" />
+          <rect x="79.5" y="151.5" width="15" height="11" rx="1.5" fill="none" stroke="var(--line-2)" strokeWidth="0.5" strokeDasharray="1.2 1" opacity="0.5" />
+
+          {/* microscope, solid red + black for a clean, visible embroidered look */}
+          <g strokeLinecap="round" strokeLinejoin="round" fill="none">
+            {/* base + stage + column — red */}
+            <line x1="82" y1="161.5" x2="92" y2="161.5" stroke={mlsRed} strokeWidth="1.3" />
+            <line x1="83.5" y1="157.5" x2="90.5" y2="157.5" stroke={mlsRed} strokeWidth="1.1" />
+            <line x1="87" y1="161.5" x2="87" y2="158.3" stroke={mlsRed} strokeWidth="1.1" />
+            {/* arm, body tube, eyepiece, objective — black */}
+            <path d="M89,148.5 Q92,152 90.5,157.5 Q89.5,160 86.5,161.5" stroke={mlsBlack} strokeWidth="1" />
+            <line x1="89" y1="148.5" x2="85.5" y2="157" stroke={mlsBlack} strokeWidth="1.2" />
+            <line x1="89.8" y1="147" x2="87.5" y2="147.6" stroke={mlsBlack} strokeWidth="1.4" />
+            <line x1="85.5" y1="157" x2="86.3" y2="157.5" stroke={mlsBlack} strokeWidth="1.4" />
+            <circle cx="90.5" cy="153.5" r="1" fill={mlsBlack} stroke="none" />
+          </g>
+        </>
+      )}
+    </svg>
+  );
+}
 // ------------------------------------------------------------------
 // VitroCharacterPicker — the "choose your medical laboratory
 // scientist" screen. Two figures, side by side, one male and one
