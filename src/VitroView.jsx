@@ -2498,19 +2498,19 @@ const VITRO_SCRIPTS = {
       afterWrongTube:
         "That tube is not right for this test. Read the explanation that just appeared on the screen, then tap the button that says Try another tube and pick again.",
       afterCorrectTube:
-        "Correct. You have chosen the EDTA tube, purple top. Inside the tube is a chemical called EDTA, sprayed onto the wall as a thin film. When the blood hits it, the EDTA grabs the calcium in the blood. Calcium is what makes blood clot, so with the calcium held, the blood stays liquid. Just as importantly, the red cells keep their exact shape. This is the tube this test was designed around. Now tap the button that says Begin the practical to move to the bench.",
+        "Correct — the purple-top tube. Inside it is a chemical called EDTA, sprayed onto the wall as a thin film. When the blood hits it, the EDTA grabs the calcium in the blood. Calcium is what makes blood clot, so with the calcium held, the blood stays liquid. Just as importantly, the red cells keep their exact shape, so when you load the tube into the centrifuge later, they will pack down into a clean column you can measure. This is the tube the practical was designed around. Now tap the button that says Begin the practical to move to the bench.",
       labelling:
-        "Step one, labelling. Pick up the pen and write on the tube. Her name, the date and time you took the sample, and your initials. Do this at the bedside, before you leave the patient. A mislabelled tube is thrown away and the sample is taken again. Tap the button that says Write the label.",
+        "Step one, labelling. Write on the tube before you leave the patient's side: her name, the date and time you took the sample, and your initials. A tube with no label, or with a label written later from memory, is thrown away by the laboratory and the sample is taken again. This is not a formality — it is the single most common reason a blood sample is rejected. Tap the button that says Write the label.",
       filling:
-        "Step two, filling the capillary. A capillary tube is a thin glass tube, narrower than a drinking straw. You hold it against the drop of blood and the blood rises up on its own. Let it fill about three quarters of the way. Tap the button that says Fill the capillary.",
+        "Step two, filling the capillary. A capillary tube is a thin glass tube, narrower than a drinking straw. You will hold it against the drop of blood and the blood will rise up it on its own. Let it fill to about three-quarters of its length, then stop. Wipe the outside of the tube with gauze — blood left on the outside gets flung off inside the centrifuge and dirties the machine. Tap the button that says Fill the capillary.",
       sealing:
-        "Step three, sealing the dry end. One end of the tube touched the blood. The other end is dry. Push the dry end into the sealing clay. The clay plugs that end so nothing escapes when the tube spins. Tap the button that says Seal the dry end.",
+        "Step three, sealing the dry end. One end of the tube has touched the blood. The other end is still dry. Push the dry end into a block of sealing clay. The clay plugs that end and stops blood escaping when the tube spins. Never seal the wet end: the plug would push air into the tube and break the column of blood. Tap the button that says Seal the dry end.",
       loading:
-        "Step four, loading the centrifuge. Put your tube into one of the holes in the rotor, sealed end outward. Then put a second, empty capillary in the hole directly opposite, to balance the machine. Tap the button that says Load the centrifuge.",
+        "Step four, loading the centrifuge. The centrifuge is a machine that spins samples at very high speed. Put your tube into one of the holes in the rotor, with the sealed end facing the outside wall of the machine. Then put a second, empty capillary in the hole directly opposite yours, to balance the rotor. A centrifuge with a tube on only one side will shake itself and can be damaged. Tap the button that says Load the centrifuge.",
       spinning:
-        "Step five, spinning the sample. The centrifuge will run for five minutes at twelve thousand g. Then you will read the packed cell column against the reader card. Tap the button that says Start the spin.",
+        "Step five, spinning the sample. Spin for 5 minutes at 12,000 g. Then read the packed cell column against the haematocrit reader card — red cells at the bottom, buffy coat above, plasma at the top. Tap the button that says Start the spin.",
       reading:
-        "The spin is complete. The readout on the centrifuge shows your result, and the reference range is written underneath it. Now a question has appeared below. Read the question on the screen, and when you are ready, tap the option that you think is the correct answer.",
+        "The spin is complete. The readout on the centrifuge says PCV equals 0.31 litres per litre, that is 31 percent. The reference range is written underneath it: 0.36 to 0.46, for an adult female. Her result is below the range. Now a question has appeared below. Read the question on the screen, and when you are ready, tap the option that you think is the correct answer.",
       interpret:
         "Question one. Read the question and the four options on the screen, then tap the option you think is correct. This is the question the whole practical exists for.",
       action:
@@ -2810,15 +2810,33 @@ function vitroSpeakTick() {
   if (!vitroEngine.currentUtter) {
     // Nothing is speaking. Drain queue if there is anything.
     if (vitroEngine.queuedText) {
+      vitroEngine.idleTicks = 0;
       const next = vitroEngine.queuedText;
       const nextCb = vitroEngine.queuedOnEnd;
       vitroEngine.queuedText = null;
       vitroEngine.queuedOnEnd = null;
       vitroEngine.currentOnEnd = nextCb;
       vitroSpeakNow(next);
+      return;
+    }
+    // Truly idle. Stop polling after a short grace period instead of
+    // running every 400ms for the rest of the session once the
+    // student has left the lab - vitroStartTicker() restarts it the
+    // next time there's actually a line to speak.
+    vitroEngine.idleTicks = (vitroEngine.idleTicks || 0) + 1;
+    if (vitroEngine.idleTicks > 3 && vitroEngine.tickHandle) {
+      clearInterval(vitroEngine.tickHandle);
+      vitroEngine.tickHandle = null;
+      vitroEngine.idleTicks = 0;
     }
     return;
   }
+  vitroEngine.idleTicks = 0;
+  // Paused because the tab/app is backgrounded - the line isn't
+  // actually overrunning, the student just isn't here. Don't let the
+  // overrun cutoff below fire while we're waiting for them to come
+  // back; the visibility handler resumes this on its own.
+  if (vitroEngine.pausedByVisibility) return;
   const elapsed = Date.now() - vitroEngine.currentStartedAt;
   if (elapsed > VITRO_MAX_WAIT_MS && vitroEngine.queuedText) {
     // Current line has overrun. Cut it, then speak the queue.
@@ -2845,7 +2863,56 @@ function vitroSpeakTick() {
 
 function vitroStartTicker() {
   if (vitroEngine.tickHandle) return;
+  vitroEngine.idleTicks = 0;
   vitroEngine.tickHandle = setInterval(vitroSpeakTick, 400);
+}
+
+// ------------------------------------------------------------------
+// Pause/resume on tab visibility. speechSynthesis keeps talking even
+// when the tab is backgrounded or the app loses focus - without this
+// the narrator keeps going into an empty tab, or races ahead of a
+// student who isn't looking. We pause the actual audio (not cancel -
+// cancelling would lose the line entirely and desync the voice from
+// whatever the student is looking at when they return) and resume
+// from the same point once the tab is visible again.
+//
+// Known limitation: some versions of desktop Chrome silently fail to
+// resume a line paused longer than ~15s. If resume doesn't actually
+// produce audio shortly after we ask for it, we fall back to
+// restarting the same line from its beginning, rather than leaving
+// the student stuck on a permanently silent narrator.
+// ------------------------------------------------------------------
+vitroEngine.pausedByVisibility = false;
+vitroEngine.visHandlerInstalled = false;
+
+function vitroInstallVisibilityHandler() {
+  if (vitroEngine.visHandlerInstalled) return;
+  if (typeof document === "undefined") return;
+  vitroEngine.visHandlerInstalled = true;
+
+  document.addEventListener("visibilitychange", () => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+
+    if (document.visibilityState === "hidden") {
+      if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+        try { window.speechSynthesis.pause(); } catch {}
+        vitroEngine.pausedByVisibility = true;
+      }
+      return;
+    }
+
+    if (!vitroEngine.pausedByVisibility) return;
+    vitroEngine.pausedByVisibility = false;
+    const resumeText = vitroEngine.currentUtter ? vitroEngine.currentUtter.text : null;
+    try { window.speechSynthesis.resume(); } catch {}
+    setTimeout(() => {
+      if (window.speechSynthesis.paused && resumeText) {
+        try { window.speechSynthesis.cancel(); } catch {}
+        vitroEngine.currentUtter = null;
+        vitroSpeakNow(resumeText);
+      }
+    }, 400);
+  });
 }
 
 function vitroSpeak(text, onEnd, onStart) {
@@ -2860,6 +2927,7 @@ function vitroSpeak(text, onEnd, onStart) {
     vitroEngine.gender = window.localStorage.getItem("ascend_voice_gender") || "female";
   } catch {}
   vitroStartTicker();
+  vitroInstallVisibilityHandler();
 
   const clean = String(text || "").trim();
   if (!clean) return false;
@@ -2885,6 +2953,7 @@ function vitroStopSpeaking() {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
   vitroEngine.queuedText = null;
   vitroEngine.currentUtter = null;
+  vitroEngine.pausedByVisibility = false;
   try {
     window.speechSynthesis.cancel();
   } catch {}
@@ -3948,6 +4017,7 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
   const [pickedTube, setPickedTube] = useState(null);
   const [wrongFeedback, setWrongFeedback] = useState(null);
   const [analyserRan, setAnalyserRan] = useState(false);
+  const [rotorStopped, setRotorStopped] = useState(false);
   const [stepIdx, setStepIdx] = useState(0);
   // Narration on by default. A student can mute from the bench
   // header; the choice lasts for the session on this bench only.
@@ -4112,7 +4182,7 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
   };
 
   const pickTube = (cap) => {
-    if (phase !== "rack") return;
+     if (phase !== "rack") return;
     setPickedTube(cap);
     if (cap === script.correctTube) {
       setCompetency((c) => ({
@@ -4221,6 +4291,13 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
     // card that has just appeared on the bench. Without this,
     // the question card lands on top of a readout the student
     // has not had time to look at.
+    // The run is over — in a real machine the rotor coasts to
+    // a halt the moment the timer ends. Stop the animation
+    // here, on the same 3-second beat the spin itself uses,
+    // so the student sees the rotor wind down as the result
+    // appears on the readout.
+    setTimeout(() => setRotorStopped(true), 3000);
+
     const readingLine = (script.narration && script.narration.reading) || "";
     setTimeout(() => {
       if (readingLine) {
@@ -4241,7 +4318,6 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
     if (interpPick !== null) return;
     setInterpPick(idx);
     const wasCorrect = idx === interpretation.correctIndex;
-    console.log("INTERP", { idx, correctIndex: interpretation.correctIndex, wasCorrect, scriptId });
     setCompetency((c) => ({
       ...c,
       result_interpretation: wasCorrect,
@@ -4310,6 +4386,7 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
     setCapillarySealed(false);
     setCentrifugeLoaded(false);
     setSpinInProgress(false);
+    setRotorStopped(false);
     setCompetency({
       tube_selection: undefined,
       sample_handling: undefined,
@@ -4322,7 +4399,7 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
 
   
   const centrifugeState =
-    phase === "spinning" && !analyserRan
+    analyserRan && !rotorStopped
       ? "spin"
       : centrifugeLoaded
       ? "loaded"
@@ -5465,6 +5542,34 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
 // it. The wiring is here so that flip is a one-line change, not
 // a rebuild.
 // ------------------------------------------------------------------
+// Persistent "back" control shown above every stage of the practical
+// flow. A student who opened a practical by mistake, or who wants to
+// bail out partway through, otherwise has no way out - each stage
+// here is just internal component state, not a real route change, so
+// the device's own back button isn't reliable mid-flow.
+function VitroBackBar({ onBack, label = "Back to the course" }) {
+  return (
+    <button
+      onClick={onBack}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 6,
+        background: "none",
+        border: "none",
+        color: "var(--text-2)",
+        fontSize: 13.5,
+        fontWeight: 600,
+        cursor: "pointer",
+        padding: "4px 0 12px",
+      }}
+    >
+      <span style={{ fontSize: 16, lineHeight: 1 }}>←</span>
+      {label}
+    </button>
+  );
+}
+
 function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
   const donnedKey = "ascend_vitro_donned";
   const scientistKey = "ascend_vitro_scientist";
@@ -5564,9 +5669,24 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
     }
   };
 
+  // Stop the narrator the moment the student leaves the practical
+  // entirely (navigates away, closes the tab, etc.) - otherwise a
+  // line queued or mid-sentence here keeps playing into a screen
+  // that no longer matches it.
+  useEffect(() => {
+    return () => {
+      vitroStopSpeaking();
+    };
+  }, []);
+
   // ---- Stage 1: choose a scientist ----
   if (!character) {
-    return <VitroCharacterPicker onPick={pickScientist} />;
+    return (
+      <>
+        <VitroBackBar onBack={goBack} />
+        <VitroCharacterPicker onPick={pickScientist} />
+      </>
+    );
   }
 
   // ---- Stage 2: donning ----
@@ -5575,12 +5695,15 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
   // props, so muting once carries across both screens.
   if (!donned) {
     return (
-      <VitroDonning
-        onPass={passDonning}
-        character={character}
-        speak={vitroSpeak}
-        stopSpeaking={vitroStopSpeaking}
-      />
+      <>
+        <VitroBackBar onBack={() => { vitroStopSpeaking(); goBack(); }} />
+        <VitroDonning
+          onPass={passDonning}
+          character={character}
+          speak={vitroSpeak}
+          stopSpeaking={vitroStopSpeaking}
+        />
+      </>
     );
   }
 
@@ -5590,25 +5713,37 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
   // changing area into the laboratory itself.
   if (!entered) {
     return (
-      <VitroEnterLab
-        character={character}
-        onEnter={enterLab}
-        speak={vitroSpeak}
-      />
+      <>
+        <VitroBackBar onBack={() => { vitroStopSpeaking(); goBack(); }} />
+        <VitroEnterLab
+          character={character}
+          onEnter={enterLab}
+          speak={vitroSpeak}
+        />
+      </>
     );
   }
 
   // ---- Stage 4: leaving the lab / doffing ----
   // The student has left the bench (via Back to the course).
-  // If they have not doffed this session, they doff now.
+  // If they have not doffed this session, they doff now. The back
+  // control here means "actually, I want to stay" - it cancels the
+  // leaving intent and drops them back at the bench, rather than
+  // forcing them through an exit they didn't mean to start.
   if (leaving && !doffed) {
     return (
-      <VitroDoffing
-        character={character}
-        onPass={finishDoffing}
-        speak={vitroSpeak}
-        stopSpeaking={vitroStopSpeaking}
-      />
+      <>
+        <VitroBackBar
+          label="Stay in the lab"
+          onBack={() => { vitroStopSpeaking(); setLeaving(false); }}
+        />
+        <VitroDoffing
+          character={character}
+          onPass={finishDoffing}
+          speak={vitroSpeak}
+          stopSpeaking={vitroStopSpeaking}
+        />
+      </>
     );
   }
 
@@ -5623,20 +5758,26 @@ function VitroPracticalPlaceholder({ practicalTitle, courseId, app }) {
 
   if (scriptForThisPractical) {
     return (
-      <VitroTubeBench
-        script={scriptForThisPractical}
-        courseId={courseId}
-        app={app}
-        onComplete={(scriptId, competencyMap) => {
-          if (
-            app &&
-            typeof app.recordVitroAttempt === "function"
-          ) {
-            app.recordVitroAttempt(scriptId, competencyMap);
-          }
-        }}
-        onLeave={() => setLeaving(true)}
-      />
+      <>
+        <VitroBackBar
+          label="Leave the lab"
+          onBack={() => { vitroStopSpeaking(); setLeaving(true); }}
+        />
+        <VitroTubeBench
+          script={scriptForThisPractical}
+          courseId={courseId}
+          app={app}
+          onComplete={(scriptId, competencyMap) => {
+            if (
+              app &&
+              typeof app.recordVitroAttempt === "function"
+            ) {
+              app.recordVitroAttempt(scriptId, competencyMap);
+            }
+          }}
+          onLeave={() => setLeaving(true)}
+        />
+      </>
     );
   }
 
