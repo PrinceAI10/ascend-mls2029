@@ -214,7 +214,128 @@ function VitroHome() {
     </div>
   );
 }
-
+// ------------------------------------------------------------------
+// VitroBenchStyles — every keyframe used by the bench, the
+// capillary, the tube, and the doffing fade-outs, rendered
+// once at the top of VitroView. These used to live inside
+// VitroDonning's <style> block, which unmounted the moment the
+// student left the donning screen — so the bench's animations
+// (tube wipe, clay drop, capillary seal) silently did nothing.
+// Rendering them here means the keyframes exist for the whole
+// session, regardless of which component is mounted.
+//
+// React will keep this in the DOM as long as VitroView is
+// mounted, and it is cheap — a single <style> tag with a
+// dozen keyframes.
+// ------------------------------------------------------------------
+function VitroBenchStyles() {
+  return (
+    <style>{`
+      @keyframes vitro-fade-in { from { opacity: 0 } to { opacity: 1 } }
+      @keyframes vitro-coat-in {
+        from { transform: translate(-40px, -20px); opacity: 0 }
+        to   { transform: translate(0, 0);         opacity: 1 }
+      }
+      @keyframes vitro-mask-in {
+        from { transform: translateY(-30px); opacity: 0 }
+        to   { transform: translateY(0);     opacity: 1 }
+      }
+      @keyframes vitro-eye-in {
+        from { transform: translateX(30px); opacity: 0 }
+        to   { transform: translateX(0);    opacity: 1 }
+      }
+      @keyframes vitro-glove-in {
+        from { transform: translateY(30px) scale(0.6); opacity: 0 }
+        to   { transform: translateY(0)    scale(1);   opacity: 1 }
+      }
+      @keyframes vitro-wash-pulse {
+        0%   { opacity: 0; transform: scale(0.6) }
+        40%  { opacity: 1; transform: scale(1.15) }
+        100% { opacity: 1; transform: scale(1) }
+      }
+      .vitro-anim-coat  { animation: vitro-coat-in  550ms cubic-bezier(.2,.9,.3,1) both }
+      .vitro-anim-mask  { animation: vitro-mask-in  550ms cubic-bezier(.2,.9,.3,1) both }
+      .vitro-anim-eye   { animation: vitro-eye-in   550ms cubic-bezier(.2,.9,.3,1) both }
+      .vitro-anim-glove { animation: vitro-glove-in 550ms cubic-bezier(.2,.9,.3,1) both }
+      .vitro-anim-wash  { animation: vitro-wash-pulse 550ms ease-out both }
+      .vitro-anim-fade  { animation: vitro-fade-in 300ms ease-out both }
+      @keyframes vitro-label-appear {
+        0%   { opacity: 0; transform: scale(0.6) }
+        60%  { opacity: 1; transform: scale(1.08) }
+        100% { opacity: 1; transform: scale(1) }
+      }
+      @keyframes vitro-tube-shake {
+        0%, 100% { transform: rotate(0deg) }
+        25%      { transform: rotate(-3deg) }
+        75%      { transform: rotate(3deg) }
+      }
+      .vitro-anim-label-appear {
+        animation: vitro-label-appear 400ms cubic-bezier(.2,.9,.3,1) both;
+      }
+      .vitro-anim-tube-shake {
+        animation: vitro-tube-shake 400ms ease-in-out both;
+      }
+      @keyframes vitro-clay-drop {
+        0%   { transform: translateY(-12px); opacity: 0 }
+        60%  { transform: translateY(0);     opacity: 1 }
+        100% { transform: translateY(0);     opacity: 1 }
+      }
+      .vitro-anim-clay-drop {
+        animation: vitro-clay-drop 400ms cubic-bezier(.2,.9,.3,1) both;
+        transform-origin: center top;
+      }
+      @keyframes vitro-tube-wipe {
+        0%   { transform: translate(0, 0) rotate(0deg) }
+        30%  { transform: translate(-6px, 6px) rotate(-6deg) }
+        60%  { transform: translate(-4px, 4px) rotate(4deg) }
+        100% { transform: translate(0, 0) rotate(0deg) }
+      }
+      .vitro-anim-tube-wipe {
+        animation: vitro-tube-wipe 700ms ease-in-out both;
+        transform-origin: center bottom;
+      }
+      @keyframes vitro-capillary-seal {
+        0%   { transform: translate(0, 0) }
+        40%  { transform: translate(0, 12px) }
+        100% { transform: translate(0, 0) }
+      }
+      .vitro-anim-capillary-seal {
+        animation: vitro-capillary-seal 700ms ease-in-out both;
+      }
+      @keyframes vitro-rotor-spin {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+      }
+      @keyframes vitro-led-blink {
+        0%, 100% { opacity: 1 }
+        50%      { opacity: 0.25 }
+      }
+      .vitro-rotor-spinning {
+        animation: vitro-rotor-spin 0.35s linear infinite;
+        transform-origin: 100px 78px;
+      }
+      .vitro-led-on  { animation: vitro-led-blink 0.6s ease-in-out infinite }
+      @keyframes vitro-smear-appear {
+        0%   { opacity: 0; transform: scale(0.4) }
+        60%  { opacity: 1; transform: scale(1.08) }
+        100% { opacity: 1; transform: scale(1) }
+      }
+      .vitro-anim-smear-appear {
+        animation: vitro-smear-appear 400ms cubic-bezier(.2,.9,.3,1) both;
+        transform-origin: 30px 18px;
+      }
+      @keyframes vitro-pit-appear {
+        0%   { opacity: 0; transform: scale(0.3) }
+        60%  { opacity: 1; transform: scale(1.15) }
+        100% { opacity: 1; transform: scale(1) }
+      }
+      .vitro-anim-pit-appear {
+        animation: vitro-pit-appear 400ms cubic-bezier(.2,.9,.3,1) both;
+        transform-origin: 30px 15px;
+      }
+    `}</style>
+  );
+}
 // ------------------------------------------------------------------
 // VitroScientistSvg — one medical laboratory scientist, drawn
 // as a full-body SVG. Two figures exist, male and female, and
@@ -812,7 +933,137 @@ function VitroEnterLab({ character, onEnter, speak }) {
           gap: 24,
         }}
       >
-        <VitroScientistSvg sex={isFemale ? "female" : "male"} stage="donned" height={220} />
+        {/* The scientist at the lab door is fully dressed — mask,
+            eyewear, and gloves on, because donning is complete.
+            These are the same overlay paths VitroDonning uses
+            when the item is placed, in the same coordinate
+            space, so the figure renders identically to the last
+            frame of the donning screen. */}
+        <div style={{ position: "relative" }}>
+          <VitroScientistSvg
+            sex={isFemale ? "female" : "male"}
+            stage="donned"
+            height={220}
+          />
+
+          {/* Mask */}
+          <svg
+            viewBox="0 0 140 260"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              pointerEvents: "none",
+            }}
+          >
+            <path
+              d="M52,50 Q70,58 88,50 L86,64 Q70,68 54,64 Z"
+              fill="#E8EDF5"
+              stroke="var(--line-2)"
+              strokeWidth="1"
+              strokeLinejoin="round"
+            />
+          </svg>
+
+          {/* Eyewear */}
+          <svg
+            viewBox="0 0 140 260"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              pointerEvents: "none",
+            }}
+          >
+            <g
+              stroke="#2A2016"
+              strokeWidth="2.2"
+              fill="none"
+              strokeLinecap="round"
+            >
+              <rect x="54" y="37" width="13" height="11" rx="3" />
+              <rect x="73" y="37" width="13" height="11" rx="3" />
+              <line x1="67" y1="42" x2="73" y2="42" />
+            </g>
+          </svg>
+
+          {/* Gloves */}
+          <svg
+            viewBox="0 0 140 260"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              pointerEvents: "none",
+            }}
+          >
+            <g>
+              <path
+                d="M24,170 Q21,175 23,182 L23,187 Q23,191 28,191 L36,191 Q42,191 42,187 L42,171 Q42,165 36,165 Q30,165 26,167 Q24,168 24,170 Z"
+                fill="#5B8DEF"
+                stroke="var(--line-2)"
+                strokeWidth="1"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M26,169 Q27,166 29,166 M31,166 Q32,164 34,165 M36,167 Q37,165 39,166"
+                fill="none"
+                stroke="var(--line-2)"
+                strokeWidth="0.5"
+                opacity="0.55"
+              />
+              <path
+                d="M24,173 Q22,177 24,181"
+                fill="none"
+                stroke="var(--line-2)"
+                strokeWidth="0.7"
+                opacity="0.7"
+              />
+              <line
+                x1="23"
+                y1="187"
+                x2="42"
+                y2="187"
+                stroke="var(--line-2)"
+                strokeWidth="0.8"
+                opacity="0.6"
+              />
+              <path
+                d="M116,170 Q119,175 117,182 L117,187 Q117,191 112,191 L104,191 Q98,191 98,187 L98,171 Q98,165 104,165 Q110,165 114,167 Q116,168 116,170 Z"
+                fill="#5B8DEF"
+                stroke="var(--line-2)"
+                strokeWidth="1"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M114,169 Q113,166 111,166 M109,166 Q108,164 106,165 M104,167 Q103,165 101,166"
+                fill="none"
+                stroke="var(--line-2)"
+                strokeWidth="0.5"
+                opacity="0.55"
+              />
+              <path
+                d="M116,173 Q118,177 116,181"
+                fill="none"
+                stroke="var(--line-2)"
+                strokeWidth="0.7"
+                opacity="0.7"
+              />
+              <line
+                x1="98"
+                y1="187"
+                x2="117"
+                y2="187"
+                stroke="var(--line-2)"
+                strokeWidth="0.8"
+                opacity="0.6"
+              />
+            </g>
+          </svg>
+        </div>
       </div>
 
       <div style={{ marginTop: 16, textAlign: "center" }}>
@@ -2299,7 +2550,7 @@ const VITRO_SCRIPTS = {
     // description of the instruction.
     narration: {
       intro:
-        "This is the packed cell volume practical. The patient is Grace Owusu, a woman in her eighth month of pregnancy, referred to us by the antenatal clinic. Read her history on the card in front of you before you do anything else. When you are ready, tap one of the tubes in the tube rack to pick it. Think about which tube will keep her blood exactly as it is inside her body, and pick that one.",
+        "Here is the request. Antenatal clinic, Tuesday morning. Grace Owusu, a thirty-four-year-old woman at thirty-four weeks' gestation, has been referred by the midwife for a packed cell volume. Her booking haemoglobin was ten point eight grams per decilitre. Today she reports three weeks of progressive tiredness and shortness of breath on exertion. On examination she is pale. The midwife's note reads: Query anaemia. Please measure PCV today and report to the antenatal team. When you are ready, tap one of the tubes in the tube rack to pick it.",
       afterWrongTube:
         "That tube is not right for this test. Read the explanation that just appeared on the screen, then tap the button that says Try another tube and pick again.",
       afterCorrectTube:
@@ -3184,14 +3435,14 @@ function VitroCapillarySvg({ fill = "empty", sealed = false, height = 120 }) {
 // Naming an object that isn't there is the fastest way to lose a
 // student.
 // ------------------------------------------------------------------
-function VitroGauzeSvg({ size = 60 }) {
+function VitroGauzeSvg({ size = 60, used = false }) {
   return (
     <svg
       viewBox="0 0 60 40"
       width={size}
       style={{ display: "block" }}
       role="img"
-      aria-label="Gauze square"
+      aria-label={used ? "Gauze square, bloodied" : "Gauze square"}
     >
       {/* A stack of two gauze squares, offset, with a woven
           cross-hatch so it reads as gauze and not a napkin. */}
@@ -3205,18 +3456,30 @@ function VitroGauzeSvg({ size = 60 }) {
       {[14, 20, 26, 32, 38, 44].map((x) => (
         <line key={"v" + x} x1={x} y1="4" x2={x} y2="30" stroke="var(--line-2)" strokeWidth="0.4" opacity="0.4" />
       ))}
+      {/* The blood smear. Appears the moment the tube is wiped
+          on the gauze, stays on for the rest of the practical
+          so the student can see that this object has been
+          used. Irregular blob rather than a circle, so it
+          reads as a smear and not a stain. */}
+      {used && (
+        <g className="vitro-anim-smear-appear">
+          <ellipse cx="30" cy="18" rx="9" ry="4.5" fill="#8E2E2A" opacity="0.75" />
+          <ellipse cx="24" cy="16" rx="3.5" ry="2" fill="#8E2E2A" opacity="0.55" />
+          <ellipse cx="37" cy="20" rx="3" ry="1.6" fill="#8E2E2A" opacity="0.55" />
+        </g>
+      )}
     </svg>
   );
 }
 
-function VitroSealingClaySvg({ size = 56 }) {
+function VitroSealingClaySvg({ size = 56, used = false }) {
   return (
     <svg
       viewBox="0 0 56 40"
       width={size}
       style={{ display: "block" }}
       role="img"
-      aria-label="Sealing clay block"
+      aria-label={used ? "Sealing clay block, freshly used" : "Sealing clay block"}
     >
       {/* The clay block: a rounded rectangle in clay-tan, with
           a couple of small pits on top where previous capillaries
@@ -3227,6 +3490,15 @@ function VitroSealingClaySvg({ size = 56 }) {
       <ellipse cx="42" cy="15" rx="3.5" ry="1.4" fill="#8A6E45" opacity="0.6" />
       {/* A soft highlight across the top of the block */}
       <ellipse cx="28" cy="17" rx="22" ry="2" fill="#E0C89C" opacity="0.5" />
+      {/* A fresh pit, brighter than the older ones and slightly
+          deeper-looking, appears the moment the capillary is
+          pushed in. Reads as "this is the hole you just made." */}
+      {used && (
+        <g className="vitro-anim-pit-appear">
+          <ellipse cx="30" cy="15.2" rx="4" ry="1.6" fill="#5A4425" opacity="0.85" />
+          <ellipse cx="30" cy="16" rx="3.2" ry="1.2" fill="#3A2A12" opacity="0.7" />
+        </g>
+      )}
     </svg>
   );
 }
@@ -3282,6 +3554,434 @@ function VitroReaderCardSvg({ size = 90 }) {
         HAEMATOCRIT READER
       </text>
     </svg>
+  );
+}
+
+// ------------------------------------------------------------------
+// VitroLabReport — the clinical lab report the student's work
+// produces. Rendered between the second question and the
+// competencies screen.
+//
+// The shape mirrors a real clinical laboratory report form:
+//
+//   Header        — laboratory name and address block
+//   Patient       — name, age, sex, hospital number
+//   Request       — who asked, what for, clinical details
+//   Sample        — type, tube, date received
+//   Result        — the value, units, reference range, flag
+//   Interpretation — a short clinical comment
+//   Authorisation — who reported it, when, signature block
+//
+// The report pulls its values from the script, so a second
+// practical can reuse this component with a different script
+// and produce a completely different report.
+//
+// Nothing here is interactive. It is a document. The single
+// action is "Submit report", which advances to the competencies.
+// ------------------------------------------------------------------
+function VitroLabReport({ script, result, interpretationText, onDone, speak }) {
+  useEffect(() => {
+    if (typeof speak !== "function") return;
+    speak(
+      "Here is the report your work has produced. Read it as though you were the reporting scientist. Check the patient details, the sample details, the result against the reference range, and the interpretation. When you have read the whole report, tap the button that says Submit report."
+    );
+  }, [speak]);
+
+  const today = new Date().toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+  const now = new Date().toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return (
+    <div style={{ marginTop: 16 }}>
+      <div
+        className="card"
+        style={{
+          borderColor: "var(--amber)",
+          padding: 0,
+          overflow: "hidden",
+        }}
+      >
+        {/* Header — the laboratory letterhead. */}
+        <div
+          style={{
+            background: "var(--bg-3)",
+            padding: "16px 20px",
+            borderBottom: "1px solid var(--line)",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            gap: 16,
+            flexWrap: "wrap",
+          }}
+        >
+          <div>
+            <div
+              className="mono"
+              style={{
+                fontSize: 10,
+                letterSpacing: "0.14em",
+                color: "var(--amber-2)",
+                fontWeight: 700,
+                marginBottom: 4,
+              }}
+            >
+              ASCEND VITRO · TEACHING LABORATORY
+            </div>
+            <div style={{ fontWeight: 750, fontSize: 15.5 }}>
+              Clinical Laboratory Report
+            </div>
+            <div
+              style={{
+                color: "var(--text-3)",
+                fontSize: 11.5,
+                marginTop: 2,
+              }}
+            >
+              Simulation for training purposes only
+            </div>
+          </div>
+          <div
+            className="mono"
+            style={{
+              fontSize: 11,
+              color: "var(--text-3)",
+              textAlign: "right",
+              lineHeight: 1.6,
+            }}
+          >
+            <div>Report no: VITRO-{Date.now().toString().slice(-6)}</div>
+            <div>{today} · {now}</div>
+          </div>
+        </div>
+
+        {/* Two-column body: patient + request on the left,
+            sample + result on the right. Stacks on phones. */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: 0,
+          }}
+        >
+          {/* Left column — patient and request */}
+          <div
+            style={{
+              padding: "18px 20px",
+              borderRight: "1px solid var(--line)",
+            }}
+          >
+            <div
+              className="mono"
+              style={{
+                fontSize: 10,
+                letterSpacing: "0.12em",
+                color: "var(--text-3)",
+                fontWeight: 700,
+                marginBottom: 8,
+              }}
+            >
+              PATIENT
+            </div>
+            <div style={{ fontSize: 13.5, lineHeight: 1.8 }}>
+              <div>
+                <span style={{ color: "var(--text-3)" }}>Name: </span>
+                <strong>{script.patientLabel.split("·")[0].trim()}</strong>
+              </div>
+              <div>
+                <span style={{ color: "var(--text-3)" }}>Age / Sex: </span>
+                <strong>
+                  {script.patientLabel.split("·")[1]?.trim() || ""}
+                </strong>
+              </div>
+              <div>
+                <span style={{ color: "var(--text-3)" }}>
+                  Hospital no: {" "}
+                </span>
+                <span className="mono">AN-2024-08417</span>
+              </div>
+              <div>
+                <span style={{ color: "var(--text-3)" }}>Ward / Clinic: </span>
+                Antenatal clinic
+              </div>
+            </div>
+
+            <div
+              className="mono"
+              style={{
+                fontSize: 10,
+                letterSpacing: "0.12em",
+                color: "var(--text-3)",
+                fontWeight: 700,
+                marginTop: 18,
+                marginBottom: 8,
+              }}
+            >
+              REQUESTING CLINICIAN
+            </div>
+            <div style={{ fontSize: 13.5, lineHeight: 1.8 }}>
+              <div>
+                <span style={{ color: "var(--text-3)" }}>Requested by: </span>
+                Midwife, Antenatal team
+              </div>
+              <div>
+                <span style={{ color: "var(--text-3)" }}>Clinical details: </span>
+                Query anaemia at 34 weeks' gestation
+              </div>
+            </div>
+
+            <div
+              className="mono"
+              style={{
+                fontSize: 10,
+                letterSpacing: "0.12em",
+                color: "var(--text-3)",
+                fontWeight: 700,
+                marginTop: 18,
+                marginBottom: 8,
+              }}
+            >
+              SAMPLE
+            </div>
+            <div style={{ fontSize: 13.5, lineHeight: 1.8 }}>
+              <div>
+                <span style={{ color: "var(--text-3)" }}>Type: </span>
+                Venous whole blood
+              </div>
+              <div>
+                <span style={{ color: "var(--text-3)" }}>Tube: </span>
+                Purple-top, EDTA
+              </div>
+              <div>
+                <span style={{ color: "var(--text-3)" }}>Received: </span>
+                {today} · {now}
+              </div>
+              <div>
+                <span style={{ color: "var(--text-3)" }}>Condition: </span>
+                Suitable for analysis
+              </div>
+            </div>
+          </div>
+
+          {/* Right column — the result itself */}
+          <div style={{ padding: "18px 20px" }}>
+            <div
+              className="mono"
+              style={{
+                fontSize: 10,
+                letterSpacing: "0.12em",
+                color: "var(--text-3)",
+                fontWeight: 700,
+                marginBottom: 8,
+              }}
+            >
+              RESULT
+            </div>
+
+            <div
+              style={{
+                border: "1px solid var(--line)",
+                borderRadius: 10,
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  padding: "12px 14px",
+                  background: "var(--bg-3)",
+                  borderBottom: "1px solid var(--line)",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: 12,
+                  flexWrap: "wrap",
+                }}
+              >
+                <div style={{ fontWeight: 700, fontSize: 13.5 }}>
+                  Packed Cell Volume (PCV)
+                </div>
+                <div
+                  className="mono"
+                  style={{
+                    fontSize: 10,
+                    letterSpacing: "0.08em",
+                    color: "var(--bad)",
+                    border: "1px solid var(--bad)",
+                    borderRadius: 4,
+                    padding: "2px 8px",
+                    fontWeight: 800,
+                  }}
+                >
+                  LOW
+                </div>
+              </div>
+
+              <div
+                style={{
+                  padding: "16px 14px",
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 14,
+                }}
+              >
+                <div>
+                  <div
+                    className="mono"
+                    style={{
+                      fontSize: 10,
+                      color: "var(--text-3)",
+                      letterSpacing: "0.08em",
+                      marginBottom: 4,
+                    }}
+                  >
+                    VALUE
+                  </div>
+                  <div
+                    className="mono"
+                    style={{
+                      fontSize: 22,
+                      fontWeight: 800,
+                      color: "var(--amber-2)",
+                    }}
+                  >
+                    {result || "0.31 L/L"}
+                  </div>
+                </div>
+                <div>
+                  <div
+                    className="mono"
+                    style={{
+                      fontSize: 10,
+                      color: "var(--text-3)",
+                      letterSpacing: "0.08em",
+                      marginBottom: 4,
+                    }}
+                  >
+                    REFERENCE RANGE
+                  </div>
+                  <div
+                    className="mono"
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 700,
+                      color: "var(--text-2)",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    0.36 – 0.46 L/L
+                    <div style={{ fontSize: 11, fontWeight: 500 }}>
+                      (adult female, non-pregnant)
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="mono"
+              style={{
+                fontSize: 10,
+                letterSpacing: "0.12em",
+                color: "var(--text-3)",
+                fontWeight: 700,
+                marginTop: 18,
+                marginBottom: 8,
+              }}
+            >
+              INTERPRETATION
+            </div>
+            <div
+              style={{
+                fontSize: 13.5,
+                lineHeight: 1.7,
+                color: "var(--text)",
+                borderLeft: "3px solid var(--amber)",
+                paddingLeft: 12,
+              }}
+            >
+              {interpretationText ||
+                "PCV below the reference range. Report as anaemia. Recommend full blood count and blood film to identify the cause."}
+            </div>
+
+            <div
+              className="mono"
+              style={{
+                fontSize: 10,
+                letterSpacing: "0.12em",
+                color: "var(--text-3)",
+                fontWeight: 700,
+                marginTop: 18,
+                marginBottom: 8,
+              }}
+            >
+              AUTHORISATION
+            </div>
+            <div style={{ fontSize: 13.5, lineHeight: 1.7 }}>
+              <div>
+                <span style={{ color: "var(--text-3)" }}>Reported by: </span>
+                <span
+                  style={{
+                    fontFamily: "'Pacifico', cursive",
+                    fontSize: 17,
+                    color: "var(--amber-2)",
+                  }}
+                >
+                  {/* A signature-style mark so the report reads
+                      as an issued document, not a form. Same
+                      cursive face the ASCEND wordmark uses. */}
+                  A. Scientist
+                </span>
+              </div>
+              <div>
+                <span style={{ color: "var(--text-3)" }}>Designation: </span>
+                Medical Laboratory Scientist (trainee)
+              </div>
+              <div className="mono" style={{ color: "var(--text-3)" }}>
+                {today} · {now}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer — a small simulation notice and the action. */}
+        <div
+          style={{
+            borderTop: "1px solid var(--line)",
+            padding: "14px 20px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 12,
+            flexWrap: "wrap",
+            background: "var(--bg-2)",
+          }}
+        >
+          <div
+            style={{
+              color: "var(--text-3)",
+              fontSize: 11.5,
+              maxWidth: "48ch",
+              lineHeight: 1.5,
+            }}
+          >
+            This is a simulated report produced during VITRO training.
+            It is not a real clinical result.
+          </div>
+          <button
+            className="btn btn-a"
+            style={{ padding: "10px 22px", fontSize: 14 }}
+            onClick={() => onDone && onDone()}
+          >
+            Submit report
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 // ------------------------------------------------------------------
@@ -3427,28 +4127,17 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
     })();
       if (line) vitroSpeak(line);
 
-      // The two scored questions read the stem and every option
-      // aloud, so the student hears what they are choosing
-      // between. Not part of the switch above because reading
-      // an MCQ is a different shape from reading a one-line
-      // instruction.
-      if (phase === "interpret" && interpretation && interpPick === null) {
-        vitroReadMcq(
-          "Question one",
-          interpretation.question,
-          interpretation.options
-        );
-      } else if (
-        phase === "action" &&
-        script.reportableAction &&
-        actionPick === null
-      ) {
-        vitroReadMcq(
-          "Question two",
-          script.reportableAction.question,
-          script.reportableAction.options
-        );
-      }
+      // The two scored questions are NOT read aloud. The
+      // student reads them on screen. This matches the brief:
+      // the voice guides the lab procedure, the student reads
+      // the questions and thinks about them.
+      //
+      // Nothing to do for interpret/action here — the switch
+      // above already returns null for those phases, so no
+      // line fires. The `interpPick`/`actionPick` dependencies
+      // were only needed when the questions were spoken; kept
+      // in the array so the effect still re-runs when they
+      // change (harmless, no line to speak).
     }, 250);
     return () => clearTimeout(timer);
   }, [phase, analyserRan, muted, stepIdx, interpPick, actionPick]);
@@ -3582,20 +4271,24 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
 
     // Speak the "reading" line once the spin animation has
     // visually completed. Then, when that line has finished
-    // speaking, advance to the question. This replaces the old
-    // fixed 3-second timer, which was advancing the phase while
-    // the "spinning" narration was still playing — that is what
-    // caused the chop right before the questions.
+    // speaking, hold for a beat before showing the question —
+    // long enough for the student to read the result and the
+    // reference range on the readout, and to see the reader
+    // card that has just appeared on the bench. Without this,
+    // the question card lands on top of a readout the student
+    // has not had time to look at.
     const readingLine = (script.narration && script.narration.reading) || "";
     setTimeout(() => {
       if (readingLine) {
         vitroSpeak(readingLine, () => {
           setTimeout(() => {
             setPhase(interpretation ? "interpret" : "results");
-          }, 350);
+          }, 1800);
         });
       } else {
-        setPhase(interpretation ? "interpret" : "results");
+        setTimeout(() => {
+          setPhase(interpretation ? "interpret" : "results");
+        }, 1800);
       }
     }, 3000);
   };
@@ -3649,6 +4342,16 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
     if (typeof onComplete === "function") {
       onComplete(script.id, competency);
     }
+  };
+
+  // "See your competencies" now opens the lab report first.
+  // The competencies are the last thing the student sees, after
+  // the report has been reviewed and submitted.
+  const [showReport, setShowReport] = useState(false);
+  const openReport = () => setShowReport(true);
+  const submitReport = () => {
+    setShowReport(false);
+    goToResults();
   };
 
   const resetBench = () => {
@@ -4260,7 +4963,10 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
                 {/* Gauze appears while filling or sealing is
                     the active step, since the instruction tells
                     the student to wipe the tube on gauze. */}
-                {(phase === "filling" || phase === "sealing") && (
+                {(phase === "filling" ||
+                  phase === "sealing" ||
+                  phase === "loading" ||
+                  phase === "spinning") && (
                   <div
                     style={{
                       display: "flex",
@@ -4269,7 +4975,10 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
                       gap: 4,
                     }}
                   >
-                    <VitroGauzeSvg size={64} />
+                    <VitroGauzeSvg
+                      size={64}
+                      used={capillaryFill !== "empty"}
+                    />
                     <div
                       className="mono"
                       style={{
@@ -4286,7 +4995,9 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
                 {/* Sealing clay appears while sealing is the
                     active step, so the student can see what the
                     voice names. */}
-                {phase === "sealing" && (
+                {(phase === "sealing" ||
+                  phase === "loading" ||
+                  phase === "spinning") && (
                   <div
                     style={{
                       display: "flex",
@@ -4295,7 +5006,10 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
                       gap: 4,
                     }}
                   >
-                    <VitroSealingClaySvg size={62} />
+                    <VitroSealingClaySvg
+                      size={62}
+                      used={capillarySealed}
+                    />
                     <div
                       className="mono"
                       style={{
@@ -4558,7 +5272,7 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
               <button
                 className="btn btn-a btn-sm"
                 style={{ marginTop: 12 }}
-                onClick={goToResults}
+                onClick={openReport}
               >
                 See your competencies
               </button>
@@ -4567,8 +5281,29 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
         </div>
       )}
 
-      {/* ---- Results ---- */}
-      {phase === "results" && (
+      {/* ---- Lab report ----
+          Shown after question two, before the competencies.
+          The report is what the student's work would produce
+          if it were issued to the requesting clinician, so it
+          reads as the payoff of the whole practical. The
+          student reviews it, then taps Submit report to see
+          the competencies. */}
+      {showReport && (
+        <VitroLabReport
+          script={script}
+          result={script.analyser.result}
+          interpretationText={script.outcome}
+          onDone={submitReport}
+          speak={vitroSpeak}
+        />
+      )}
+
+      {/* ---- Results ----
+          Only rendered when the report has been submitted AND
+          the phase has moved to results. The showReport flag
+          keeps the report visible on top of the results state
+          until the student taps Submit. */}
+      {phase === "results" && !showReport && (
         <div style={{ marginTop: 12 }}>
           <div
             className="card"
@@ -5033,6 +5768,7 @@ export default function VitroView({ app }) {
 
   return (
     <div className="view">
+      <VitroBenchStyles />
       <div className="eyebrow">VITRO</div>
       <h1
         style={{
