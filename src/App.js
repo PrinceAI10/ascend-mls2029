@@ -63,53 +63,9 @@ if (typeof document !== "undefined" && !document.getElementById("ascend-pacifico
   setTimeout(revealWordmark, 700);
 }
 
-// ============================================================
-// LISTEN (PODCAST) VOICE HELPERS - module scope, shared by every
-// TopicView instance. The Web Speech API's getVoices() list is
-// populated asynchronously in most browsers (fires "voiceschanged"
-// once, some time after page load), so this caches the list once
-// it's ready instead of every TopicView re-querying it. Gender
-// isn't a real property the API gives us reliably across browsers,
-// so voices are matched by name against known male/female voice
-// names shipped by Chrome, Edge, and Safari/iOS, with pitch as a
-// fallback differentiator so the two options always sound distinct
-// even on a device with only one or two installed voices.
-const ASCEND_FEMALE_VOICE_HINTS = ["female", "zira", "samantha", "victoria", "susan", "karen", "moira", "tessa", "fiona", "google us english", "google uk english female", "aria", "jenny", "sonia", "libby", "hazel", "salli", "joanna", "amy"];
-const ASCEND_MALE_VOICE_HINTS = ["male", "david", "mark", "daniel", "alex", "fred", "google uk english male", "guy", "ryan", "tom", "matthew", "brian", "arthur"];
-let ascendVoicesCache = null;
-function ascendGetVoices() {
-  return new Promise((resolve) => {
-    if (!("speechSynthesis" in window)) { resolve([]); return; }
-    const existing = window.speechSynthesis.getVoices();
-    if (existing && existing.length) { ascendVoicesCache = existing; resolve(existing); return; }
-    if (ascendVoicesCache) { resolve(ascendVoicesCache); return; }
-    const onChange = () => {
-      const v = window.speechSynthesis.getVoices();
-      if (v && v.length) {
-        ascendVoicesCache = v;
-        window.speechSynthesis.removeEventListener("voiceschanged", onChange);
-        resolve(v);
-      }
-    };
-    window.speechSynthesis.addEventListener("voiceschanged", onChange);
-    // Safety timeout - some browsers never fire voiceschanged if the list
-    // genuinely stays empty (e.g. headless/embedded webviews).
-    setTimeout(() => resolve(window.speechSynthesis.getVoices() || []), 1200);
-  });
-}
-async function ascendPickVoice(gender) {
-  const voices = await ascendGetVoices();
-  if (!voices.length) return null;
-  const englishVoices = voices.filter((v) => /^en/i.test(v.lang)) ;
-  const pool = englishVoices.length ? englishVoices : voices;
-  const hints = gender === "female" ? ASCEND_FEMALE_VOICE_HINTS : ASCEND_MALE_VOICE_HINTS;
-  const byName = pool.find((v) => hints.some((h) => v.name.toLowerCase().includes(h)));
-  if (byName) return byName;
-  // No name match - fall back to a deterministic split of whatever's
-  // available so male/female still pick two different installed voices.
-  if (pool.length > 1) return gender === "female" ? pool[0] : pool[1];
-  return pool[0] || null;
-}
+// Speech engine is shared. See speech.js for the pickVoice,
+// getVoices, speak, and speakQueued implementations.
+import { speak as sharedSpeak, speakQueued as sharedSpeakQueued, stopSpeaking as sharedStopSpeaking, pickVoice as sharedPickVoice } from "./speech";
 
 // Dead code removed: extractTextFromImage() was never called anywhere in
 // the app (already flagged eslint no-unused-vars) but was still pulling in
@@ -4255,7 +4211,7 @@ function AITutor({ topicTitle, context }) {
   // to the dedicated Ask ASCEND AI tab), but a stray utterance from another
   // screen should never bleed into this one.
   useEffect(() => {
-    return () => { try { window.speechSynthesis.cancel(); } catch {} };
+    return () => { sharedStopSpeaking(); };
   }, []);
 
   const send = async () => {
@@ -5112,8 +5068,7 @@ function TopicView({ app, rootCls }) {
   const listenVoiceRef = useRef(null);
   const voiceGenderRef = useRef(voiceGender);
 
-  const GENDER_PITCH = { male: 0.82, female: 1.12 };
-  const GENDER_RATE = { male: 0.97, female: 1 };
+  
 
   // Each chunk carries `para` (index of the paragraph it belongs to, or null
   // for the step heading) so the page can scroll to exactly what is being
@@ -5168,35 +5123,30 @@ function TopicView({ app, rootCls }) {
     currentChunkRef.current = { stepIdx, chunks, i };
     setReadingPos({ step: stepIdx, para: chunk.para == null ? null : chunk.para });
     const myToken = ++speakTokenRef.current;
-    const genderKey = voiceGenderRef.current === "male" ? "male" : "female";
-        const utter = new SpeechSynthesisUtterance(chunk.text);
-    utter.rate = (chunk.rate || 0.96) * GENDER_RATE[genderKey] * speedRef.current;
-    utter.pitch = (chunk.pitch || 1) * GENDER_PITCH[genderKey];
-    if (listenVoiceRef.current) utter.voice = listenVoiceRef.current;
 
-    clearWatchdog();
-    const wordCount = Math.max(1, chunk.text.split(/\s+/).length);
-    watchdogRef.current = setTimeout(() => {
-      if (speakTokenRef.current !== myToken || !listenActiveRef.current || listenPausedRef.current) return;
-      advanceFrom(stepIdx, chunks, i);
-    }, Math.max(3500, (wordCount * 420) / speedRef.current) + 3000);
+    // The shared speak() takes care of voice picking, the
+    // keep-alive, the watchdog, and the pause/resume on tab
+    // visibility. We just supply the text and the completion
+    // callback. The pause and speed multipliers are folded
+    // into the rate we pass.
+    const rate = (chunk.rate || 0.94) * speedRef.current;
 
-    utter.onend = () => {
-      if (speakTokenRef.current !== myToken) return;
-      clearWatchdog();
-      if (!listenActiveRef.current || listenPausedRef.current) return;
-      gapTimeoutRef.current = setTimeout(() => advanceFrom(stepIdx, chunks, i), chunk.pauseAfterMs || 400);
-    };
-    utter.onerror = () => {
-      if (speakTokenRef.current !== myToken) return;
-      clearWatchdog();
-      // Don't treat an interruption as fatal - try to keep the podcast
-      // moving rather than stopping the whole reading on one glitch.
-      if (!listenActiveRef.current || listenPausedRef.current) return;
-      gapTimeoutRef.current = setTimeout(() => advanceFrom(stepIdx, chunks, i), 300);
-    };
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utter);
+    sharedSpeak(chunk.text, {
+      rate,
+      gender: voiceGenderRef.current,
+      onStart: () => {
+        // Token check in case a newer chunk has been queued
+        // while this one was loading.
+        if (speakTokenRef.current !== myToken) {
+          sharedStopSpeaking();
+        }
+      },
+      onEnd: () => {
+        if (speakTokenRef.current !== myToken) return;
+        if (!listenActiveRef.current || listenPausedRef.current) return;
+        gapTimeoutRef.current = setTimeout(() => advanceFrom(stepIdx, chunks, i), chunk.pauseAfterMs || 400);
+      },
+    });
   }, [advanceFrom]);
 
   // speakChunk and advanceFrom call each other; a ref sidesteps the
@@ -5213,21 +5163,13 @@ function TopicView({ app, rootCls }) {
     setVoiceGender(gender);
     voiceGenderRef.current = gender;
     try { localStorage.setItem("ascend_voice_gender", gender); } catch {}
-    listenVoiceRef.current = await ascendPickVoice(gender);
     const steps = (t && t.note) || [];
     const startIdx = activeStep < steps.length ? activeStep : 0;
-    window.speechSynthesis.cancel();
+    sharedStopSpeaking();
     listenActiveRef.current = true;
     listenPausedRef.current = false;
     setListening(true);
     setListenPaused(false);
-    if (keepAliveRef.current) clearInterval(keepAliveRef.current);
-    keepAliveRef.current = setInterval(() => {
-      if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
-        window.speechSynthesis.pause();
-        window.speechSynthesis.resume();
-      }
-    }, 6000);
     speakChunk(startIdx, buildChunksForStep(startIdx, steps[startIdx]), 0);
   };
 
@@ -5239,7 +5181,7 @@ function TopicView({ app, rootCls }) {
     speakTokenRef.current++;
     clearWatchdog();
     if (gapTimeoutRef.current) { clearTimeout(gapTimeoutRef.current); gapTimeoutRef.current = null; }
-    window.speechSynthesis.cancel();
+    sharedStopSpeaking();
   };
   const resumeListening = () => {
     if (!listenActiveRef.current) return;
@@ -5254,8 +5196,7 @@ function TopicView({ app, rootCls }) {
     speakTokenRef.current++;
     clearWatchdog();
     if (gapTimeoutRef.current) { clearTimeout(gapTimeoutRef.current); gapTimeoutRef.current = null; }
-    if (keepAliveRef.current) { clearInterval(keepAliveRef.current); keepAliveRef.current = null; }
-    window.speechSynthesis.cancel();
+    sharedStopSpeaking();
     currentChunkRef.current = null;
     setListening(false);
     setListenPaused(false);
@@ -5270,7 +5211,7 @@ function TopicView({ app, rootCls }) {
     speakTokenRef.current++;
     clearWatchdog();
     if (gapTimeoutRef.current) { clearTimeout(gapTimeoutRef.current); gapTimeoutRef.current = null; }
-    window.speechSynthesis.cancel();
+    sharedStopSpeaking();
     listenPausedRef.current = false;
     setListenPaused(false);
     setActiveStep(target);
@@ -5302,8 +5243,7 @@ function TopicView({ app, rootCls }) {
       speakTokenRef.current++;
       clearWatchdog();
       if (gapTimeoutRef.current) clearTimeout(gapTimeoutRef.current);
-      if (keepAliveRef.current) clearInterval(keepAliveRef.current);
-      window.speechSynthesis.cancel();
+      sharedStopSpeaking();
     };
   }, [t]);
 

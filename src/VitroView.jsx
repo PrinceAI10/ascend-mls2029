@@ -52,6 +52,7 @@
 //    covers the errors the student made.
 // ------------------------------------------------------------
 import React, { useState, useEffect, useRef } from "react";
+import { speakQueued as sharedSpeakQueued, stopSpeaking as sharedStopSpeaking, isSpeaking as sharedIsSpeaking } from "./speech";
 
 // ------------------------------------------------------------------
 // The four bench families. Each is a distinct interaction model,
@@ -2677,295 +2678,22 @@ const VITRO_COMPETENCIES = {
 //     — cancels whatever is speaking, silently. Called when the
 //       bench unmounts, or when the student mutes.
 // ------------------------------------------------------------------
-// ------------------------------------------------------------------
-// Vitro narration engine.
+// VITRO's narration now runs on the shared speech engine
+// (speech.js). These thin wrappers preserve the exact call
+// signatures every component in this file already uses, so no
+// component below this point needs to change.
 //
-// One utterance is a unit. The engine lets a sentence finish
-// before starting the next one, with a short silence between
-// them. That is the whole point: cutting speech mid-sentence
-// is what makes an app sound broken, and every transition in
-// this file — donning to bench, bench to question, question to
-// question — has to sound like narration, not like a switch.
-//
-//   playNext = the line currently being spoken, if any
-//   queued   = the line waiting to speak, if any
-//   MAX_WAIT = if the current line has been going longer than
-//              this, cut it and move on. Prevents a very long
-//              sentence from blocking the student's progress.
-//
-// External API, unchanged from the caller's point of view:
-//
-//   vitroSpeak(text)      — request a line
-//   vitroStopSpeaking()   — silence immediately
-//   vitroIsSpeaking()     — true if anything is currently audible
-//
-// Every request replaces the queue. Only one line is ever
-// pending. A second call before the first has finished will
-// not stack lines; it will wait for the current line, then
-// speak the newest request.
-// ------------------------------------------------------------------
-const VITRO_SPEAK_BEAT_MS = 350;
-const VITRO_MAX_WAIT_MS = 3200;
-
-const vitroEngine = {
-  currentUtter: null,
-  queuedText: null,
-  queuedStartedAt: 0,
-  currentStartedAt: 0,
-  tickHandle: null,
-  gender: "female",
-  // Callbacks fired when the currently speaking line finishes
-  // (naturally, or because the ticker cut it). Cleared after use.
-  currentOnEnd: null,
-  queuedOnEnd: null,
-  // Callback fired the moment the queued utterance actually
-  // begins producing audio. Used to distinguish "queued" from
-  // "actually playing" for the welcome autoplay detection.
-  queuedOnStart: null,
-};
-
-// Pick a good voice for the chosen gender, once per session.
-function vitroPickVoice() {
-  try {
-    const voices = window.speechSynthesis.getVoices() || [];
-    const englishVoices = voices.filter((v) => /^en/i.test(v.lang));
-    const pool = englishVoices.length ? englishVoices : voices;
-    const hints =
-      vitroEngine.gender === "male"
-        ? ["male", "david", "mark", "daniel", "alex", "fred", "guy", "ryan", "tom", "george"]
-        : ["female", "zira", "samantha", "victoria", "susan", "karen", "aria", "jenny", "joanna", "libby", "sonia"];
-    return pool.find((v) => hints.some((h) => v.name.toLowerCase().includes(h))) || null;
-  } catch {
-    return null;
-  }
-}
-
-// Build and speak one utterance. Returns true if the call was
-// accepted by the browser; the caller should verify actual
-// playback separately via `onStart`, because `speak()` does
-// not throw when autoplay is blocked — it silently drops the
-// utterance. `onStart` is fired the moment the browser
-// actually begins producing audio, which is the only reliable
-// signal that a line has really started.
-function vitroSpeakNow(text, onStart) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
-  const clean = String(text || "").replace(/\s*—\s*/g, ", ");
-  const utter = new SpeechSynthesisUtterance(clean);
-  utter.pitch = vitroEngine.gender === "male" ? 0.85 : 1.1;
-  utter.rate = 0.97;
-  const voice = vitroPickVoice();
-  if (voice) utter.voice = voice;
-
-  vitroEngine.currentUtter = utter;
-  vitroEngine.currentStartedAt = Date.now();
-
-  if (typeof onStart === "function") {
-    utter.onstart = onStart;
-  }
-  utter.onend = vitroEngine.onEnd;
-  utter.onerror = vitroEngine.onEnd;
-
-  try {
-    window.speechSynthesis.speak(utter);
-    return true;
-  } catch {
-    vitroEngine.currentUtter = null;
-    return false;
-  }
-}
-
-// Called when an utterance ends, naturally or otherwise.
-// Hands control to the next queued line, or clears the queue.
-vitroEngine.onEnd = function () {
-  vitroEngine.currentUtter = null;
-  // Fire the finished line's callback first, so the caller
-  // knows its own line ended before the next one starts.
-  const finishedCb = vitroEngine.currentOnEnd;
-  vitroEngine.currentOnEnd = null;
-  if (finishedCb) {
-    try { finishedCb(); } catch {}
-  }
-  if (vitroEngine.queuedText) {
-    // Brief beat, then speak the pending line.
-    setTimeout(() => {
-      const next = vitroEngine.queuedText;
-      const nextCb = vitroEngine.queuedOnEnd;
-      const nextStart = vitroEngine.queuedOnStart;
-      vitroEngine.queuedText = null;
-      vitroEngine.queuedOnEnd = null;
-      vitroEngine.queuedOnStart = null;
-      if (next) {
-        vitroEngine.currentOnEnd = nextCb;
-        vitroSpeakNow(next, nextStart);
-      }
-    }, VITRO_SPEAK_BEAT_MS);
-  }
-};
-
-// Called periodically while a line is speaking, to enforce
-// the MAX_WAIT cap and drain the queue if the browser fails
-// to fire onend (which happens occasionally on some mobile
-// speech engines).
-function vitroSpeakTick() {
-  if (!vitroEngine.currentUtter) {
-    // Nothing is speaking. Drain queue if there is anything.
-    if (vitroEngine.queuedText) {
-      vitroEngine.idleTicks = 0;
-      const next = vitroEngine.queuedText;
-      const nextCb = vitroEngine.queuedOnEnd;
-      vitroEngine.queuedText = null;
-      vitroEngine.queuedOnEnd = null;
-      vitroEngine.currentOnEnd = nextCb;
-      vitroSpeakNow(next);
-      return;
-    }
-    // Truly idle. Stop polling after a short grace period instead of
-    // running every 400ms for the rest of the session once the
-    // student has left the lab - vitroStartTicker() restarts it the
-    // next time there's actually a line to speak.
-    vitroEngine.idleTicks = (vitroEngine.idleTicks || 0) + 1;
-    if (vitroEngine.idleTicks > 3 && vitroEngine.tickHandle) {
-      clearInterval(vitroEngine.tickHandle);
-      vitroEngine.tickHandle = null;
-      vitroEngine.idleTicks = 0;
-    }
-    return;
-  }
-  vitroEngine.idleTicks = 0;
-  // Paused because the tab/app is backgrounded - the line isn't
-  // actually overrunning, the student just isn't here. Don't let the
-  // overrun cutoff below fire while we're waiting for them to come
-  // back; the visibility handler resumes this on its own.
-  if (vitroEngine.pausedByVisibility) return;
-  const elapsed = Date.now() - vitroEngine.currentStartedAt;
-  if (elapsed > VITRO_MAX_WAIT_MS && vitroEngine.queuedText) {
-    // Current line has overrun. Cut it, then speak the queue.
-    try {
-      window.speechSynthesis.cancel();
-    } catch {}
-    vitroEngine.currentUtter = null;
-    // Fire the cut line's callback, so the caller knows.
-    const cutCb = vitroEngine.currentOnEnd;
-    vitroEngine.currentOnEnd = null;
-    if (cutCb) {
-      try { cutCb(); } catch {}
-    }
-    const next = vitroEngine.queuedText;
-    const nextCb = vitroEngine.queuedOnEnd;
-    vitroEngine.queuedText = null;
-    vitroEngine.queuedOnEnd = null;
-    setTimeout(() => {
-      vitroEngine.currentOnEnd = nextCb;
-      vitroSpeakNow(next);
-    }, VITRO_SPEAK_BEAT_MS);
-  }
-}
-
-function vitroStartTicker() {
-  if (vitroEngine.tickHandle) return;
-  vitroEngine.idleTicks = 0;
-  vitroEngine.tickHandle = setInterval(vitroSpeakTick, 400);
-}
-
-// ------------------------------------------------------------------
-// Pause/resume on tab visibility. speechSynthesis keeps talking even
-// when the tab is backgrounded or the app loses focus - without this
-// the narrator keeps going into an empty tab, or races ahead of a
-// student who isn't looking. We pause the actual audio (not cancel -
-// cancelling would lose the line entirely and desync the voice from
-// whatever the student is looking at when they return) and resume
-// from the same point once the tab is visible again.
-//
-// Known limitation: some versions of desktop Chrome silently fail to
-// resume a line paused longer than ~15s. If resume doesn't actually
-// produce audio shortly after we ask for it, we fall back to
-// restarting the same line from its beginning, rather than leaving
-// the student stuck on a permanently silent narrator.
-// ------------------------------------------------------------------
-vitroEngine.pausedByVisibility = false;
-vitroEngine.visHandlerInstalled = false;
-
-function vitroInstallVisibilityHandler() {
-  if (vitroEngine.visHandlerInstalled) return;
-  if (typeof document === "undefined") return;
-  vitroEngine.visHandlerInstalled = true;
-
-  document.addEventListener("visibilitychange", () => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-
-    if (document.visibilityState === "hidden") {
-      if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
-        try { window.speechSynthesis.pause(); } catch {}
-        vitroEngine.pausedByVisibility = true;
-      }
-      return;
-    }
-
-    if (!vitroEngine.pausedByVisibility) return;
-    vitroEngine.pausedByVisibility = false;
-    const resumeText = vitroEngine.currentUtter ? vitroEngine.currentUtter.text : null;
-    try { window.speechSynthesis.resume(); } catch {}
-    setTimeout(() => {
-      if (window.speechSynthesis.paused && resumeText) {
-        try { window.speechSynthesis.cancel(); } catch {}
-        vitroEngine.currentUtter = null;
-        vitroSpeakNow(resumeText);
-      }
-    }, 400);
-  });
-}
-
+// The shared speakQueued uses a single options object; these
+// wrappers keep the positional (text, onEnd, onStart) shape
+// VITRO was written against.
 function vitroSpeak(text, onEnd, onStart) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) {
-    if (typeof onEnd === "function") onEnd();
-    return false;
-  }
-  // Refresh the gender preference at every call, so a student
-  // who changes the podcast voice mid-session hears the change
-  // on the next line.
-  try {
-    vitroEngine.gender = window.localStorage.getItem("ascend_voice_gender") || "female";
-  } catch {}
-  vitroStartTicker();
-  vitroInstallVisibilityHandler();
-
-  const clean = String(text || "").trim();
-  if (!clean) return false;
-
-  if (vitroEngine.currentUtter) {
-    // Something is speaking. Queue the new line; it will play
-    // when the current one finishes naturally, or when the
-    // ticker decides the current line has overrun.
-    vitroEngine.queuedText = clean;
-    vitroEngine.queuedStartedAt = Date.now();
-    vitroEngine.queuedOnEnd = typeof onEnd === "function" ? onEnd : null;
-    vitroEngine.queuedOnStart = typeof onStart === "function" ? onStart : null;
-    return true;
-  }
-
-  // Nothing speaking. Save the onEnd and onStart callbacks
-  // and speak now.
-  vitroEngine.currentOnEnd = typeof onEnd === "function" ? onEnd : null;
-  return vitroSpeakNow(clean, onStart);
+  sharedSpeakQueued(text, { onEnd, onStart });
 }
-
 function vitroStopSpeaking() {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-  vitroEngine.queuedText = null;
-  vitroEngine.currentUtter = null;
-  vitroEngine.pausedByVisibility = false;
-  try {
-    window.speechSynthesis.cancel();
-  } catch {}
+  sharedStopSpeaking();
 }
-
 function vitroIsSpeaking() {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
-  try {
-    return window.speechSynthesis.speaking;
-  } catch {
-    return false;
-  }
+  return sharedIsSpeaking();
 }
 
 // ------------------------------------------------------------------
@@ -4292,14 +4020,18 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
     // card that has just appeared on the bench. Without this,
     // the question card lands on top of a readout the student
     // has not had time to look at.
-    // The run is over — in a real machine the rotor coasts to
-    // a halt the moment the timer ends. Stop the animation
-    // here, on the same 3-second beat the spin itself uses,
-    // so the student sees the rotor wind down as the result
-    // appears on the readout.
+    // The run is over. In a real machine the rotor coasts to
+    // a halt the moment the timer ends, and the scientist
+    // reads the result only after the rotor has stopped. So:
+    // stop the rotor first, give the student a beat to see it
+    // stop, and only then speak the "spin is complete" line.
+    // If the voice said it the moment the timer expired, it
+    // would say "complete" while the rotor was still visibly
+    // turning — which is the bug this sequencing fixes.
     setTimeout(() => setRotorStopped(true), 3000);
 
     const readingLine = (script.narration && script.narration.reading) || "";
+    const ROTOR_SETTLE_MS = 800;
     setTimeout(() => {
       if (readingLine) {
         vitroSpeak(readingLine, () => {
@@ -4312,7 +4044,7 @@ function VitroTubeBench({ script, courseId, app, onComplete, onLeave }) {
           setPhase(interpretation ? "interpret" : "results");
         }, 1800);
       }
-    }, 3000);
+    }, 3000 + ROTOR_SETTLE_MS);
   };
 
   const answerInterpretation = (idx) => {

@@ -3260,44 +3260,8 @@ const LEGEND_SWATCHES = {
   ),
 };
 
-/* ---------------------------------------------------------------- */
-/* Narration helper - deliberately duplicated from App.js to avoid  */
-/* a circular import, using the same localStorage key.               */
-/* ---------------------------------------------------------------- */
-const FEMALE_HINTS = ["female", "zira", "samantha", "victoria", "susan", "karen", "moira", "tessa", "fiona", "google us english", "google uk english female", "aria", "jenny", "sonia", "libby", "hazel", "salli", "joanna", "amy"];
-const MALE_HINTS = ["male", "david", "mark", "daniel", "alex", "fred", "google uk english male", "guy", "ryan", "tom", "matthew", "brian", "arthur"];
-let voicesCache = null;
-function getVoices() {
-  return new Promise((resolve) => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) { resolve([]); return; }
-    const existing = window.speechSynthesis.getVoices();
-    if (existing && existing.length) { voicesCache = existing; resolve(existing); return; }
-    if (voicesCache) { resolve(voicesCache); return; }
-    const onChange = () => {
-      const v = window.speechSynthesis.getVoices();
-      if (v && v.length) {
-        voicesCache = v;
-        window.speechSynthesis.removeEventListener("voiceschanged", onChange);
-        resolve(v);
-      }
-    };
-    window.speechSynthesis.addEventListener("voiceschanged", onChange);
-    setTimeout(() => resolve(window.speechSynthesis.getVoices() || []), 1200);
-  });
-}
-async function pickVoice() {
-  let gender = "female";
-  try { gender = localStorage.getItem("ascend_voice_gender") || "female"; } catch {}
-  const voices = await getVoices();
-  if (!voices.length) return null;
-  const pool = voices.filter((v) => /^en/i.test(v.lang));
-  const list = pool.length ? pool : voices;
-  const hints = gender === "male" ? MALE_HINTS : FEMALE_HINTS;
-  const byName = list.find((v) => hints.some((h) => v.name.toLowerCase().includes(h)));
-  if (byName) return byName;
-  if (list.length > 1) return gender === "male" ? list[1] : list[0];
-  return list[0] || null;
-}
+// Speech engine is shared. See speech.js.
+import { speak as sharedSpeak, stopSpeaking as sharedStopSpeaking } from "./speech";
 
 /* ---------------------------------------------------------------- */
 /* Small shared bits                                                */
@@ -3653,12 +3617,11 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
     setPanX(0);
     setPanY(0);
     playTokenRef.current++;
-    cachedVoiceRef.current = undefined;
     if (watchdogRef.current) {
       clearTimeout(watchdogRef.current);
       watchdogRef.current = null;
     }
-    try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {}
+    sharedStopSpeaking();
 
     let restored = 0;
     try {
@@ -3787,7 +3750,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
 
   useEffect(() => () => {
     if (watchdogRef.current) clearTimeout(watchdogRef.current);
-    try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {}
+    sharedStopSpeaking();
   }, []);
 
   useEffect(() => {
@@ -3848,87 +3811,30 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
   }, [diagram]);
 
   const speakStepRef = useRef(() => {});
-  const cachedVoiceRef = useRef(undefined);
   const speakStep = useCallback((stepIdx) => {
     const text = diagram.narration[stepIdx];
     if (!text) return;
-
-    // Capture the current token AND the step index this utterance is
-    // responsible for. Both are carried through to advanceAfterStep so
-    // it can refuse to advance twice for the same step.
     const myToken = playTokenRef.current;
     const finishedStepIdx = stepIdx;
 
-    if (watchdogRef.current) {
-      clearTimeout(watchdogRef.current);
-      watchdogRef.current = null;
-    }
-
-    const words = text.trim().split(/\s+/).length;
-    const baseMs = Math.max(1200, (words / 2.6) * 1000);
-    const estimatedMs = baseMs / speed;
-
-    // Armed when a step begins speaking but speech never actually
-    // starts (mobile Safari sometimes silently drops a speak() call
-    // that arrives while another is still finishing). Disarmed the
-    // moment onstart fires, so after that ONLY onend can advance the
-    // step. This is what stops the watchdog from stealing the advance
-    // on slow voices.
-    const armStartupWatchdog = (ms) => {
-      if (watchdogRef.current) clearTimeout(watchdogRef.current);
-      watchdogRef.current = setTimeout(() => {
-        watchdogRef.current = null;
-        // Speech never started — advance so the diagram doesn't freeze.
-        advanceAfterStep(myToken, finishedStepIdx);
-      }, ms);
-    };
-
-    // When the diagram is muted (or there's no speech engine at all),
-    // there's no onend to listen for — the estimated duration IS the
-    // step duration. Use a fixed generous multiplier so the diagram
-    // and the on-screen narration text at least stay in lockstep.
+    // When muted, there's no onend to listen for — the estimated
+    // duration is the step duration. Same generous formula as
+    // before, kept so the diagram and the on-screen narration
+    // text stay in lockstep.
     if (muted || !("speechSynthesis" in window)) {
-      if (watchdogRef.current) clearTimeout(watchdogRef.current);
-      watchdogRef.current = setTimeout(() => {
-        watchdogRef.current = null;
-        advanceAfterStep(myToken, finishedStepIdx);
-      }, estimatedMs * 1.15 + 400);
+      const words = text.trim().split(/\s+/).length;
+      const baseMs = Math.max(1200, (words / 2.6) * 1000);
+      const estimatedMs = baseMs / speed;
+      setTimeout(() => advanceAfterStep(myToken, finishedStepIdx), estimatedMs * 1.15 + 400);
       return;
     }
 
-    (async () => {
-      if (cachedVoiceRef.current === undefined) {
-        cachedVoiceRef.current = (await pickVoice()) || null;
-      }
-      const voice = cachedVoiceRef.current;
-      if (myToken !== playTokenRef.current) return;
-      window.speechSynthesis.cancel();
-
-      const utter = new SpeechSynthesisUtterance(text);
-      if (voice) utter.voice = voice;
-      utter.rate = speed;
-
-      // The moment speech actually starts, the watchdog is no longer
-      // needed — onend will fire when the utterance finishes, and it
-      // will fire with the correct step index because we captured it
-      // above. Disarming the watchdog here is the whole fix.
-      utter.onstart = () => {
-        if (watchdogRef.current) {
-          clearTimeout(watchdogRef.current);
-          watchdogRef.current = null;
-        }
-      };
-      utter.onend = () => advanceAfterStep(myToken, finishedStepIdx);
-      utter.onerror = () => advanceAfterStep(myToken, finishedStepIdx);
-
-      window.speechSynthesis.speak(utter);
-
-      // Arm the startup watchdog — only fires if onstart never fires,
-      // which happens on some Android Chrome builds when the speech
-      // queue is stuck. If onstart does fire, this timer is cleared
-      // and the step advances only when the utterance actually ends.
-      armStartupWatchdog(2200);
-    })();
+    // The shared speak() takes care of voice picking, the
+    // keep-alive, the startup watchdog, and the token guard.
+    sharedSpeak(text, {
+      rate: speed,
+      onEnd: () => advanceAfterStep(myToken, finishedStepIdx),
+    });
   }, [diagram, speed, muted, advanceAfterStep]);
 
   useEffect(() => { speakStepRef.current = speakStep; }, [speakStep]);
@@ -3948,7 +3854,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
         clearTimeout(watchdogRef.current);
         watchdogRef.current = null;
       }
-      try { window.speechSynthesis.cancel(); } catch {}
+      sharedStopSpeaking();
       return;
     }
     const startAt = isFinished ? 0 : activeStep;
@@ -3978,7 +3884,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
       clearTimeout(watchdogRef.current);
       watchdogRef.current = null;
     }
-    try { window.speechSynthesis.cancel(); } catch {}
+    sharedStopSpeaking();
     setActiveStep(idx);
     if (playing) speakStep(idx);
     else setPaused(false);
@@ -4309,7 +4215,7 @@ function DiagramViewer({ diagramId, courseId, breadcrumb, onBreadcrumb, onDrill,
                     clearTimeout(watchdogRef.current);
                     watchdogRef.current = null;
                   }
-                  try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch {}
+                  sharedStopSpeaking();
                   setActiveStep(stepIdx);
                   if (playing) {
                     speakStep(stepIdx);
