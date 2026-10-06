@@ -823,17 +823,17 @@ const DONNING_ORDER_ERRORS = {
 // ------------------------------------------------------------------
 const DONNING_NARRATION = {
   welcome:
-    "Welcome to ASCEND VITRO. Before you can enter the laboratory, you need to put on your personal protective equipment in the correct order. There are five items. The order matters — a mistake at the bench can mean a contaminated sample, a false result, or a risk to you. I will talk you through it. Tap each item on the cart when you are ready.",
+    "Welcome to ASCEND VITRO. Before you can enter the laboratory, you need to put on your personal protective equipment in the correct order. There are five items. The order matters. A mistake at the bench can mean a contaminated sample, a false result, or a risk to you. I will talk you through it, one step at a time. When you are ready to begin, tap the Hand hygiene button on the right side of the screen.",
   step: {
-    wash: "First, hand hygiene. Wash your hands with soap and water, or with alcohol gel if your hands are not visibly soiled. Dry them fully. Everything else goes on after clean hands, not before.",
-    gown: "Next, the lab coat. Your own clothing is not lab-safe, so the coat becomes the outer layer. Fasten it before you touch the mask or eyewear — that way you are not reaching up past a clean face with contaminated sleeves.",
-    mask: "Now the mask. Fit it over your nose and mouth, and press the metal strip at the top so it seals against the bridge of your nose. A mask that sits below the nose is not doing anything.",
-    eye: "Next, eyewear. Glasses or goggles go on over your eyes, protecting you from splashes and aerosols. Fit them now, before gloves, so you can adjust the fit with clean hands.",
+    wash: "First, hand hygiene. Wash your hands with soap and water, or with alcohol gel if your hands are not visibly soiled. Dry them fully. Everything else goes on after clean hands, not before. Tap the Hand hygiene button on the right to do this.",
+    gown: "Next, the lab coat. Your own clothing is not lab-safe, so the coat becomes the outer layer. Fasten it before you touch the mask or eyewear, so you are not reaching up past a clean face with contaminated sleeves. Tap the Lab coat button on the right to put it on.",
+    mask: "Now the mask. Fit it over your nose and mouth, and press the metal strip at the top so it seals against the bridge of your nose. A mask that sits below the nose is not doing anything. Tap the Mask button on the right to fit it.",
+    eye: "Next, eyewear. Glasses or goggles go on over your eyes, protecting you from splashes and aerosols. Fit them now, before gloves, so you can adjust the fit with clean hands. Tap the Eyewear button on the right to put them on.",
     gloves:
-      "Finally, gloves. One pair, once, and only now. From this point on, your hands are the barrier — everything you touch from here until you take them off must be treated as contaminated.",
+      "Finally, gloves. One pair, once, and only now. From this point on, your hands are the barrier. Everything you touch from here until you take them off must be treated as contaminated. Tap the Gloves button on the right to put them on.",
   },
   wrongOrder:
-    "Not yet. That is not the next item in the sequence. Check the order and try again. If you are not sure why the order matters, think about what each item is protecting you from.",
+    "Not yet. That is not the next item in the sequence. Look at the cart on the right and tap the item that is highlighted with an amber border. If you are not sure why the order matters, the error panel on the screen explains what went wrong.",
   complete:
     "Your personal protective equipment is on correctly, in the right order. You are ready to enter the laboratory. I will take you there now.",
 };
@@ -873,6 +873,14 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
   // autoplay was blocked.
   const WELCOME_KEY = "ascend_vitro_welcome_played";
   const [welcomeBlocked, setWelcomeBlocked] = useState(false);
+
+  const markWelcomePlayed = () => {
+    welcomeSpokenRef.current = true;
+    try {
+      sessionStorage.setItem(WELCOME_KEY, "1");
+    } catch {}
+  };
+
   useEffect(() => {
     if (typeof speak !== "function") return;
 
@@ -886,42 +894,62 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
       return;
     }
 
-    // Attempt playback. Only mark the session as seen AFTER
-    // the browser confirms it actually began speaking — a
-    // blocked attempt should not consume the session flag.
-    const started = speak(DONNING_NARRATION.welcome);
-    if (started) {
-      welcomeSpokenRef.current = true;
-      try {
-        sessionStorage.setItem(WELCOME_KEY, "1");
-      } catch {}
-    } else {
-      setWelcomeBlocked(true);
-    }
+    // Attempt playback. The browser's speak() call does not
+    // throw when autoplay is blocked — it silently drops the
+    // utterance. The only reliable signal that speech actually
+    // began is the utterance's onstart event. We arm a short
+    // timer; if onstart has not fired by then, the browser
+    // blocked it, and we show the manual Play button instead
+    // of consuming the session flag.
+    let started = false;
+    let timer = null;
+    speak(
+      DONNING_NARRATION.welcome,
+      // onEnd
+      () => {},
+      // onStart
+      () => {
+        started = true;
+        if (timer) clearTimeout(timer);
+        markWelcomePlayed();
+      }
+    );
+
+    timer = setTimeout(() => {
+      if (!started && !welcomeSpokenRef.current) {
+        setWelcomeBlocked(true);
+      }
+    }, 500);
 
     return () => {
+      if (timer) clearTimeout(timer);
       if (typeof stopSpeaking === "function") stopSpeaking();
     };
   }, [speak, stopSpeaking]);
 
   const playWelcomeManually = () => {
     if (typeof speak !== "function") return;
-    const started = speak(DONNING_NARRATION.welcome);
-    if (started) {
-      setWelcomeBlocked(false);
-      welcomeSpokenRef.current = true;
-      try {
-        sessionStorage.setItem(WELCOME_KEY, "1");
-      } catch {}
-    }
+    speak(
+      DONNING_NARRATION.welcome,
+      () => {},
+      () => {
+        setWelcomeBlocked(false);
+        markWelcomePlayed();
+      }
+    );
   };
 
   // Speak the next step's guidance whenever a new step becomes
-  // active. Silent when animating (a step is in progress) or
-  // when done.
+  // active. The exception: do not speak on the very first step
+  // (placed.length === 0), because that is the welcome's job.
+  // The welcome itself ends with the "tap Hand hygiene" line,
+  // so the first step is already covered. Queuing the wash
+  // guidance on top of the welcome is what was cutting the
+  // welcome off mid-sentence.
   useEffect(() => {
     if (typeof speak !== "function") return;
     if (animating) return;
+    if (placed.length === 0) return;
     if (placed.length >= DONNING_STEPS.length) return;
     const upcoming = DONNING_STEPS[placed.length];
     if (!upcoming) return;
@@ -939,10 +967,28 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
         setAnimating(null);
       }, ANIM_MS);
       if (placed.length + 1 === DONNING_STEPS.length) {
+        // Speak the completion line with an onEnd callback.
+        // Only advance to the bench when the voice has actually
+        // finished the sentence — this is the fix for the
+        // donning-to-bench transition chopping the completion
+        // mid-word.
         if (typeof speak === "function") {
-          speak(DONNING_NARRATION.complete);
+          speak(DONNING_NARRATION.complete, () => {
+            // Small beat after the voice ends, before the
+            // screen changes. Feels like a natural pause,
+            // not a hard cut.
+            setTimeout(() => {
+              if (typeof onPass === "function") onPass();
+            }, 500);
+          });
+        } else {
+          // No voice available. Advance on a fixed timer so
+          // the student still sees the completed figure for
+          // a moment.
+          setTimeout(() => {
+            if (typeof onPass === "function") onPass();
+          }, ANIM_MS + 800);
         }
-        setTimeout(() => onPass && onPass(), ANIM_MS + 1800);
       }
       return;
     }
@@ -1148,17 +1194,64 @@ function VitroDonning({ onPass, character, speak, stopSpeaking }) {
                 }}
               >
                 <g className={animating === "gloves" ? "vitro-anim-glove" : ""}>
+                  {/* Left glove — wraps the whole hand: fingertips at
+                      top (y 166), thumb bulge on the outer side
+                      (x 21), wrist cuff at bottom (y 190).
+                      Encloses the hand shape entirely, so no skin
+                      shows through. */}
                   <path
-                    d="M28,170 Q24,170 24,174 L24,184 Q24,188 28,188 L36,188 Q40,188 40,184 L40,174 Q40,170 36,170 Z"
+                    d="
+                      M23,168
+                      Q21,172 22,178
+                      L22,184
+                      Q22,190 28,190
+                      L36,190
+                      Q42,190 42,184
+                      L42,170
+                      Q42,164 36,164
+                      Q30,164 26,166
+                      Q24,166 23,168
+                      Z
+                    "
                     fill="#5B8DEF"
                     stroke="var(--line-2)"
                     strokeWidth="1"
+                    strokeLinejoin="round"
+                  />
+                  {/* Fingertip ridges, so the glove reads as a glove */}
+                  <path
+                    d="M25,167 Q26,165 28,165 M31,165 Q32,163 34,164"
+                    fill="none"
+                    stroke="var(--line-2)"
+                    strokeWidth="0.5"
+                    opacity="0.6"
+                  />
+                  {/* Right glove — mirrored */}
+                  <path
+                    d="
+                      M117,168
+                      Q119,172 118,178
+                      L118,184
+                      Q118,190 112,190
+                      L104,190
+                      Q98,190 98,184
+                      L98,170
+                      Q98,164 104,164
+                      Q110,164 114,166
+                      Q116,166 117,168
+                      Z
+                    "
+                    fill="#5B8DEF"
+                    stroke="var(--line-2)"
+                    strokeWidth="1"
+                    strokeLinejoin="round"
                   />
                   <path
-                    d="M100,170 Q96,170 96,174 L96,184 Q96,188 100,188 L108,188 Q112,188 112,184 L112,174 Q112,170 108,170 Z"
-                    fill="#5B8DEF"
+                    d="M115,167 Q114,165 112,165 M109,165 Q108,163 106,164"
+                    fill="none"
                     stroke="var(--line-2)"
-                    strokeWidth="1"
+                    strokeWidth="0.5"
+                    opacity="0.6"
                   />
                 </g>
               </svg>
@@ -1689,6 +1782,14 @@ const vitroEngine = {
   currentStartedAt: 0,
   tickHandle: null,
   gender: "female",
+  // Callbacks fired when the currently speaking line finishes
+  // (naturally, or because the ticker cut it). Cleared after use.
+  currentOnEnd: null,
+  queuedOnEnd: null,
+  // Callback fired the moment the queued utterance actually
+  // begins producing audio. Used to distinguish "queued" from
+  // "actually playing" for the welcome autoplay detection.
+  queuedOnStart: null,
 };
 
 // Pick a good voice for the chosen gender, once per session.
@@ -1707,8 +1808,14 @@ function vitroPickVoice() {
   }
 }
 
-// Build and speak one utterance. Returns true if speech began.
-function vitroSpeakNow(text) {
+// Build and speak one utterance. Returns true if the call was
+// accepted by the browser; the caller should verify actual
+// playback separately via `onStart`, because `speak()` does
+// not throw when autoplay is blocked — it silently drops the
+// utterance. `onStart` is fired the moment the browser
+// actually begins producing audio, which is the only reliable
+// signal that a line has really started.
+function vitroSpeakNow(text, onStart) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
   const clean = String(text || "").replace(/\s*—\s*/g, ", ");
   const utter = new SpeechSynthesisUtterance(clean);
@@ -1720,6 +1827,9 @@ function vitroSpeakNow(text) {
   vitroEngine.currentUtter = utter;
   vitroEngine.currentStartedAt = Date.now();
 
+  if (typeof onStart === "function") {
+    utter.onstart = onStart;
+  }
   utter.onend = vitroEngine.onEnd;
   utter.onerror = vitroEngine.onEnd;
 
@@ -1736,12 +1846,26 @@ function vitroSpeakNow(text) {
 // Hands control to the next queued line, or clears the queue.
 vitroEngine.onEnd = function () {
   vitroEngine.currentUtter = null;
+  // Fire the finished line's callback first, so the caller
+  // knows its own line ended before the next one starts.
+  const finishedCb = vitroEngine.currentOnEnd;
+  vitroEngine.currentOnEnd = null;
+  if (finishedCb) {
+    try { finishedCb(); } catch {}
+  }
   if (vitroEngine.queuedText) {
     // Brief beat, then speak the pending line.
     setTimeout(() => {
       const next = vitroEngine.queuedText;
+      const nextCb = vitroEngine.queuedOnEnd;
+      const nextStart = vitroEngine.queuedOnStart;
       vitroEngine.queuedText = null;
-      if (next) vitroSpeakNow(next);
+      vitroEngine.queuedOnEnd = null;
+      vitroEngine.queuedOnStart = null;
+      if (next) {
+        vitroEngine.currentOnEnd = nextCb;
+        vitroSpeakNow(next, nextStart);
+      }
     }, VITRO_SPEAK_BEAT_MS);
   }
 };
@@ -1755,7 +1879,10 @@ function vitroSpeakTick() {
     // Nothing is speaking. Drain queue if there is anything.
     if (vitroEngine.queuedText) {
       const next = vitroEngine.queuedText;
+      const nextCb = vitroEngine.queuedOnEnd;
       vitroEngine.queuedText = null;
+      vitroEngine.queuedOnEnd = null;
+      vitroEngine.currentOnEnd = nextCb;
       vitroSpeakNow(next);
     }
     return;
@@ -1767,9 +1894,20 @@ function vitroSpeakTick() {
       window.speechSynthesis.cancel();
     } catch {}
     vitroEngine.currentUtter = null;
+    // Fire the cut line's callback, so the caller knows.
+    const cutCb = vitroEngine.currentOnEnd;
+    vitroEngine.currentOnEnd = null;
+    if (cutCb) {
+      try { cutCb(); } catch {}
+    }
     const next = vitroEngine.queuedText;
+    const nextCb = vitroEngine.queuedOnEnd;
     vitroEngine.queuedText = null;
-    setTimeout(() => vitroSpeakNow(next), VITRO_SPEAK_BEAT_MS);
+    vitroEngine.queuedOnEnd = null;
+    setTimeout(() => {
+      vitroEngine.currentOnEnd = nextCb;
+      vitroSpeakNow(next);
+    }, VITRO_SPEAK_BEAT_MS);
   }
 }
 
@@ -1778,7 +1916,7 @@ function vitroStartTicker() {
   vitroEngine.tickHandle = setInterval(vitroSpeakTick, 400);
 }
 
-function vitroSpeak(text, onEnd) {
+function vitroSpeak(text, onEnd, onStart) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) {
     if (typeof onEnd === "function") onEnd();
     return false;
@@ -1800,10 +1938,15 @@ function vitroSpeak(text, onEnd) {
     // ticker decides the current line has overrun.
     vitroEngine.queuedText = clean;
     vitroEngine.queuedStartedAt = Date.now();
+    vitroEngine.queuedOnEnd = typeof onEnd === "function" ? onEnd : null;
+    vitroEngine.queuedOnStart = typeof onStart === "function" ? onStart : null;
     return true;
   }
 
-  return vitroSpeakNow(clean);
+  // Nothing speaking. Save the onEnd and onStart callbacks
+  // and speak now.
+  vitroEngine.currentOnEnd = typeof onEnd === "function" ? onEnd : null;
+  return vitroSpeakNow(clean, onStart);
 }
 
 function vitroStopSpeaking() {
@@ -2467,35 +2610,43 @@ function VitroTubeBench({ script, courseId, app, onComplete }) {
       vitroStopSpeaking();
       return;
     }
-    const line = (() => {
-      switch (phase) {
-        case "rack":
-          return narration.intro;
-        case "picked":
-          return correct
-            ? narration.afterCorrectTube
-            : narration.afterWrongTube;
-        case "labelling":
-          return steps && steps[0] ? steps[0].instruction : null;
-        case "filling":
-          return steps && steps[1] ? steps[1].instruction : null;
-        case "sealing":
-          return steps && steps[2] ? steps[2].instruction : null;
-        case "loading":
-          return steps && steps[3] ? steps[3].instruction : null;
-        case "spinning":
-          return analyserRan ? narration.reading : script.analyser.action;
-        case "interpret":
-          return narration.interpret;
-        case "action":
-          return narration.action;
-        case "results":
-          return narration.results;
-        default:
-          return null;
-      }
-    })();
-    if (line) vitroSpeak(line);
+    // Small delay before the bench speaks anything. The
+    // donning screen only advances when its own completion
+    // line has finished, so in normal use the engine is idle
+    // when we mount. The delay is a safety net against any
+    // residual queued utterance from the previous screen.
+    const timer = setTimeout(() => {
+      const line = (() => {
+        switch (phase) {
+          case "rack":
+            return narration.intro;
+          case "picked":
+            return correct
+              ? narration.afterCorrectTube
+              : narration.afterWrongTube;
+          case "labelling":
+            return steps && steps[0] ? steps[0].instruction : null;
+          case "filling":
+            return steps && steps[1] ? steps[1].instruction : null;
+          case "sealing":
+            return steps && steps[2] ? steps[2].instruction : null;
+          case "loading":
+            return steps && steps[3] ? steps[3].instruction : null;
+          case "spinning":
+            return analyserRan ? narration.reading : script.analyser.action;
+          case "interpret":
+            return narration.interpret;
+          case "action":
+            return narration.action;
+          case "results":
+            return narration.results;
+          default:
+            return null;
+        }
+      })();
+      if (line) vitroSpeak(line);
+    }, 250);
+    return () => clearTimeout(timer);
   }, [phase, analyserRan, muted, stepIdx]);
 
   // Stop the voice the moment the student leaves the bench.
